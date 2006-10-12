@@ -65,7 +65,9 @@ all.equal(print(anova(roller.lm0), signif.st=FALSE),
 lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
 (IM <- influence.measures(lm.SR))
 summary(IM)
-all(dfbetas(lm.SR) == IM$infmat[, 1:5])
+## colnames will differ in the next line
+all.equal(dfbetas(lm.SR), IM$infmat[, 1:5], check.attributes = FALSE,
+          tol = 1e-12)
 
 signif(dfbeta(lm.SR), 3)
 covratio (lm.SR)

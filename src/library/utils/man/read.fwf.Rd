@@ -7,8 +7,8 @@
 }
 \usage{
 read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
-         skip = 0, row.names, col.names, n = -1, buffersize = 2000,
-         \dots)
+         skip = 0, row.names, col.names, n = -1,
+         buffersize = 2000, \dots)
 }
 \arguments{
   \item{file}{
@@ -20,11 +20,12 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   }
   \item{widths}{integer vector, giving the widths of the fixed-width
     fields (of one line), or list of integer vectors giving widths for
-    multiline records}
+    multiline records.}
   \item{header}{a logical value indicating whether the file contains the
-    names of the variables as its first line.}
+    names of the variables as its first line.  If present, the names
+    must be delimited by \code{sep}.}
   \item{sep}{character; the separator used internally; should be a
-    character that does not occur in the file.}
+    character that does not occur in the file (except in the header).}
   \item{as.is}{see \code{\link{read.table}}.}
   \item{skip}{number of initial lines to skip; see
     \code{\link{read.table}}.}
@@ -34,7 +35,9 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
     to no limit.}
   \item{buffersize}{Maximum number of lines to read at one time}
   \item{\dots}{further arguments to be passed to
-    \code{\link{read.table}}.}
+    \code{\link{read.table}}.  Useful further arguments include
+    \code{na.strings}, \code{colClasses} and \code{strip.white}.}
+    % PR#8083 mentions strip.white
 }
 \value{
   A \code{\link{data.frame}} as produced by \code{\link{read.table}}
@@ -46,12 +49,12 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   in \code{file} are replaced by \code{NA}.
   
   Negative-width fields are used to indicate columns to be skipped, eg
-  \code{-5} to skip 5 columns. These fields are not seen by
+  \code{-5} to skip 5 columns.  These fields are not seen by
   \code{read.table} and so should not be included in a \code{col.names}
-  or \code{colClasses} argument.
+  or \code{colClasses} argument (nor in the header line, if present).
   
-  Reducing the  \code{buffersize} argument may reduce memory use when
-  reading large files with long lines. Increasing \code{blocksize} may
+  Reducing the \code{buffersize} argument may reduce memory use when
+  reading large files with long lines.  Increasing \code{buffersize} may
   result in faster processing when enough memory is available.
 }
 \author{

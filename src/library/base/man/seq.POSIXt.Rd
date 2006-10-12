@@ -2,14 +2,14 @@
 \alias{seq.POSIXt}
 \title{Generate Regular Sequences of Dates}
 \description{
-  The methodw for \code{\link{seq}} for date-time classes
+  The method for \code{\link{seq}} for date-time classes.
 }
 \usage{
-\method{seq}{POSIXt}(from, to, by, length.out=NULL, along.with=NULL, \dots)
+\method{seq}{POSIXt}(from, to, by, length.out = NULL, along.with = NULL, \dots)
 }
 \arguments{
-  \item{from}{starting date. Required}
-  \item{to}{end date. Optional. If supplied must be after \code{from}.}
+  \item{from}{starting date. Required.}
+  \item{to}{end date. Optional.}
   \item{by}{increment of the sequence. Optional. See Details.}
   \item{length.out}{integer, optional. desired length of the sequence.}
   \item{along.with}{take the length from the length of this argument.}
@@ -23,13 +23,21 @@
     \item A character string, containing one of \code{"sec"},
     \code{"min"}, \code{"hour"}, \code{"day"}, \code{"DSTday"},
     \code{"week"}, \code{"month"} or \code{"year"}.  This can optionally be
-    preceded by an integer and a space, or followed by \code{"s"}.
+    preceded by a (positive or negative) integer and a space,
+    or followed by \code{"s"}.
   }
   The difference between \code{"day"} and \code{"DSTday"} is that the
   former ignores changes to/from daylight savings time and the latter takes
-  the same clock time each day.  (\code{"week"} ignores DST, but
-  \code{"7 DSTdays"}) can be used as an alternative.  \code{"month"} and
-  \code{"year"} allow for DST as from \R 1.5.0.)
+  the same clock time each day.  (\code{"week"} ignores DST (it is a
+  period of 144 hours), but \code{"7 DSTdays"}) can be used as an
+  alternative.  \code{"month"} and \code{"year"} allow for DST.)
+
+  The timezone of the result is taken from \code{from}: remember than
+  GMT does not have daylight savings time.
+
+  Using \code{"month"} first advances the month without changing the
+  day: if this results in an invalid day of the month, it is counted
+  forward into the next month: see the examples.
 }
 \value{
   A vector of class \code{"POSIXct"}.
@@ -40,13 +48,14 @@
 ## first days of years
 seq(ISOdate(1910,1,1), ISOdate(1999,1,1), "years")
 ## by month
-seq(ISOdate(2000,1,1), by="month", length=12)
+seq(ISOdate(2000,1,1), by = "month", length = 12)
+seq(ISOdate(2000,1,31), by = "month", length = 4)
 ## quarters
-seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by="3 months")
-## days vs DSTdays
-seq(ISOdate(2000,3,20), by="day", length = 10)
-seq(ISOdate(2000,3,20), by="DSTday", length = 10)
-seq(ISOdate(2000,3,20), by="7 DSTdays", length = 4)
+seq(ISOdate(1990,1,1), ISOdate(2000,1,1), by = "3 months")
+## days vs DSTdays: use c() to lose the timezone.
+seq(c(ISOdate(2000,3,20)), by = "day", length = 10)
+seq(c(ISOdate(2000,3,20)), by = "DSTday", length = 10)
+seq(c(ISOdate(2000,3,20)), by = "7 DSTdays", length = 4)
 }
 \keyword{manip}
 \keyword{chron}

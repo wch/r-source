@@ -1,18 +1,19 @@
 #
-##  Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
+##  Rd2dvi.sh -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
 ##
 ## Examples:
 ##  R CMD Rd2dvi.sh /path/to/Rsrc/src/library/base/man/Normal.Rd
 ##  R CMD Rd2dvi.sh `grep -l "\\keyword{distr" \
-##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
+##                  /path/to/Rsrc/src/library/stats/man/*.Rd | sort | uniq`
 
+## This is set by R CMD on Unix but not on Windows
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.19 $'
+revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
-Copyright (C) 2000-2001 The R Core Development Team.
+Copyright (C) 2000-2006 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty." 
 
@@ -28,7 +29,7 @@ equals the basename of argument 'files' if this specifies a package
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print Rd2dvi version info and exit
       --batch		no interaction
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
@@ -39,6 +40,8 @@ Options:
       --pdf		generate PDF output
       --title=NAME	use NAME as the title of the document
   -V, --verbose		report on what is done
+
+The output papersize is set by the environment variable R_PAPERSIZE.
 
 Report bugs to <r-bugs@r-project.org>."
 
@@ -73,7 +76,7 @@ while test -n "${1}"; do
     --pdf)
       out_ext="pdf";
       preview=false;
-      R_RD4DVI=${R_RD4PDF-"ae,hyper"};
+      R_RD4DVI=${R_RD4PDF-"times,hyper"};
       R_LATEXCMD=${PDFLATEX-pdflatex} ;;
     --title=*)
       title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
@@ -148,7 +151,9 @@ Rd_DESCRIPTION_to_LaTeX () {
   echo "\\begin{description}"
   echo "\\raggedright{}"
   for f in `echo "${fields}" | sed '/Package/d; /Bundle/d;'`; do
-    text=`get_dcf_field ${f} ${1}`
+    text=`get_dcf_field ${f} ${1} | \
+      tr '\n' ' ' | \
+      sed "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g"`
     echo "\\item[${f}] \\AsIs{${text}}"
   done
   echo "\\end{description}"
@@ -238,6 +243,7 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
+\\usepackage[@ENC@]{inputenc}
 \\makeindex{}
 \\begin{document}
 EOF
@@ -309,18 +315,42 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\end{document}
 EOF
 
+## Look for encodings
+ENCS=`grep '^\\\\inputencoding' ${build_dir}/Rd2.tex | uniq |\
+  sed -e 's/^\\\\inputencoding{\(.*\)}/\1/'`
+ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex |  uniq | \
+  sed -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
+  tr '\na-z0-9' ',a-z0-9' | sed -e s/,$//`
+
+## substitute for the encodings used
+mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
+if test -z "${ENCS}"; then
+  sed -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
+    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
+else
+  sed -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
+    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
+fi
+
 ## <FIXME>
 ## Need to do something smarter about the exit status in batch mode.
 status=0
 ## <FIXME>
 
+miktex=`latex --version | grep ^MiKTeX | wc -l`
+if test "${miktex}" = "1"; then
+R_TEXOPTS=--include-directory=${R_HOME}/share/texmf
+else
+R_TEXOPTS=
+fi
+
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD-latex} Rd2 || status=1
+${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2 || status=1
 ${R_MAKEINDEXCMD-makeindex} Rd2
-${R_LATEXCMD-latex} Rd2
+${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
-  ${R_LATEXCMD-latex} Rd2
+  ${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
 fi
 cd ${start_dir}
 echo "Saving output to '${output}' ..."

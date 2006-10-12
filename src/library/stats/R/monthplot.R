@@ -31,13 +31,13 @@ monthplot.ts <-
 
 monthplot.default <-
     function (x, labels = 1:12,
+              ylab = deparse(substitute(x)),
               times = 1:length(x),
-              phase = (times - 1)%%length(labels) + 1,
-              base = mean,
-              xlim = c(0.55, f + 0.45), ylim = range(x, na.rm = TRUE),
-              axes = TRUE, xlab = "", ylab = deparse(substitute(x)),
-              type = "l", box = TRUE, add = FALSE, ...)
+              phase = (times - 1)%%length(labels) + 1, base = mean,
+              axes = TRUE, type = c("l", "h"), box = TRUE, add = FALSE, ...)
 {
+    dots <- list(...); nmdots <- names(dots)
+    type <- match.arg(type)
     if (is.null(labels) || (missing(labels) && !missing(phase))) {
         labels <- unique(phase)
         phase <- match(phase, labels)
@@ -46,10 +46,18 @@ monthplot.default <-
     if (!is.null(base))
         means <- tapply(x, phase, base)
     if (!add) {
-        plot(NA, NA, axes = FALSE, xlim = xlim, ylim = ylim,
-             xlab = xlab, ylab = ylab, ...)
-        if (box)
-            box()
+        Call <- match.call()
+        Call[[1]] <- as.name("plot")
+        Call$x <- NA
+        Call$y <- NA
+        Call$axes <- FALSE
+        Call$xlim <- if("xlim" %in% nmdots) dots$xlim else c(0.55, f + 0.45)
+        Call$ylim <- if("ylim" %in% nmdots) dots$ylim else range(x, na.rm = TRUE)
+        Call$xlab <- if("xlab" %in% nmdots) dots$xlab else ""
+        if(box) Call$frame.plot <- TRUE
+        Call$labels <- Call$times <- Call$phase <- Call$base <-
+            Call$type <- Call$box <- Call$add <- NULL
+        eval(Call)
         if (axes) {
             axis(1, at = 1:f, labels = labels, ...)
             axis(2, ...)

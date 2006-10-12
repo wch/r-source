@@ -15,8 +15,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> char here is handled as a whole string */
 
 
 /* This provides a table of built-in C and Fortran functions.
@@ -28,19 +30,13 @@
 #include <config.h>
 #endif
 
+#include <Defn.h>
+#include <Rdynpriv.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <Defn.h>
-#include <Rdynpriv.h>
-
-#ifdef __APPLE_CC__
-/* # ifdef HAVE_DL_H */
-#  include "dlfcn-darwin.h"
-#  define HAVE_DYNAMIC_LOADING
-/* # endif */
-#else
 /* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
    this support is broken. So we force use of shlib even when dlfcn.h
    is available */
@@ -56,23 +52,21 @@
 #  endif
 # endif
 
-#endif /* __APPLE_CC__ */
-
 #ifdef HAVE_DYNAMIC_LOADING
 
 static void *loadLibrary(const char *path, int asLocal, int now);
 static void closeLibrary(void *handle);
 static void deleteCachedSymbols(DllInfo *);
-static DL_FUNC R_dlsym(DllInfo *info, char const *name);
+static DL_FUNC R_local_dlsym(DllInfo *info, char const *name);
 static void getFullDLLPath(SEXP call, char *buf, char *path);
 static void getSystemError(char *buf, int len);
 
 static int computeDLOpenFlag(int asLocal, int now);
 
-void InitFunctionHashing()
+void attribute_hidden InitFunctionHashing()
 {
     R_osDynSymbol->loadLibrary = loadLibrary;
-    R_osDynSymbol->dlsym = R_dlsym;
+    R_osDynSymbol->dlsym = R_local_dlsym;
     R_osDynSymbol->closeLibrary = closeLibrary;
     R_osDynSymbol->getError = getSystemError;
 
@@ -144,10 +138,10 @@ static int computeDLOpenFlag(int asLocal, int now)
 {
 #if !defined(RTLD_LOCAL) || !defined(RTLD_GLOBAL) || !defined(RTLD_NOW) || !defined(RTLD_LAZY)
     static char *warningMessages[] = {
-	"Explicit local dynamic loading not supported on this platform. Using default.",
-	"Explicit global dynamic loading not supported on this platform. Using default.",
-	"Explicit non-lazy dynamic loading not supported on this platform. Using default.",
-	"Explicit lazy dynamic loading not supported on this platform. Using default."
+	N_("Explicit local dynamic loading not supported on this platform. Using default."),
+	N_("Explicit global dynamic loading not supported on this platform. Using default."),
+	N_("Explicit non-lazy dynamic loading not supported on this platform. Using default."),
+	N_("Explicit lazy dynamic loading not supported on this platform. Using default.")
     };
     /* Define a local macro for issuing the warnings.
        This allows us to redefine it easily so that it only emits the
@@ -160,9 +154,9 @@ static int computeDLOpenFlag(int asLocal, int now)
        call time.
     */
 # define DL_WARN(i) \
-    if(asInteger(GetOption(install("warn"), R_NilValue)) == 1 || \
-       asInteger(GetOption(install("verbose"), R_NilValue)) > 0) \
-        warning(warningMessages[i]);
+    if(asInteger(GetOption(install("warn"), R_BaseEnv)) == 1 || \
+       asInteger(GetOption(install("verbose"), R_BaseEnv)) > 0) \
+        warning(_(warningMessages[i]));
 #endif
 
     int openFlag = 0;		/* Default value so no-ops for undefined
@@ -205,7 +199,7 @@ static int computeDLOpenFlag(int asLocal, int now)
   This is the system/OS-specific version for resolving a
   symbol in a shared library.
  */
-static DL_FUNC R_dlsym(DllInfo *info, char const *name)
+static DL_FUNC R_local_dlsym(DllInfo *info, char const *name)
 {
     return (DL_FUNC) dlsym(info->handle, name);
 }
@@ -230,7 +224,7 @@ static void getFullDLLPath(SEXP call, char *buf, char *path)
 #ifdef HAVE_GETCWD
 	if(!getcwd(buf, PATH_MAX))
 #endif
-	    errorcall(call, "can't get working directory!");
+	    errorcall(call, _("cannot get working directory!"));
 	strcat(buf, "/");
 	strcat(buf, path);
     }

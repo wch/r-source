@@ -19,7 +19,7 @@ replayPlot(x)
   \code{"recordedplot"}, and \code{replayPlot} acts as a \code{print}
   method for that class.
 }
-\section{WARNING}{
+\section{Warning}{
   The format of recorded plots may change between \R versions.
   Recorded plots should \strong{not} be used as a permanent
   storage format for \R plots.

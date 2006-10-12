@@ -15,8 +15,8 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
 #include "grid.h" 
@@ -39,6 +39,24 @@ void copyTransform(LTransform t1, LTransform t2)
     for (i=0; i<3; i++) 
 	for (j=0; j<3; j++)
 	    t2[i][j] = t1[i][j];
+}
+
+void invTransform(LTransform t, LTransform invt)
+{
+    double det = t[0][0]*(t[2][2]*t[1][1] - t[2][1]*t[1][2]) - 
+	t[1][0]*(t[2][2]*t[0][1] - t[2][1]*t[0][2]) +
+	t[2][0]*(t[1][2]*t[0][1] - t[1][1]*t[0][2]);
+    if (det == 0)
+	error(_("singular transformation matrix"));
+    invt[0][0] = 1/det*(t[2][2]*t[1][1] - t[2][1]*t[1][2]);
+    invt[0][1] = -1/det*(t[2][2]*t[0][1] - t[2][1]*t[0][2]);
+    invt[0][2] = 1/det*(t[1][2]*t[0][1] - t[1][1]*t[0][2]);
+    invt[1][0] = -1/det*(t[2][2]*t[1][0] - t[2][0]*t[1][2]);
+    invt[1][1] = 1/det*(t[2][2]*t[0][0] - t[2][0]*t[0][2]);
+    invt[1][2] = -1/det*(t[1][2]*t[0][0] - t[1][0]*t[0][2]);
+    invt[2][0] = 1/det*(t[2][1]*t[1][0] - t[2][0]*t[1][1]);
+    invt[2][1] = -1/det*(t[2][1]*t[0][0] - t[2][0]*t[0][1]);
+    invt[2][2] = 1/det*(t[1][1]*t[0][0] - t[1][0]*t[0][1]);
 }
 
 void identity(LTransform m) 

@@ -1,56 +1,35 @@
-#include <Rinternals.h>
 #include "embeddedRCall.h"
 
-static void doCtestExample();
-static void doMVAExample();
+static void doSplinesExample();
 extern int Rf_initEmbeddedR(int argc, char *argv[]);
-
+extern void Rf_endEmbeddedR(int fatal);
 
 int
 main(int argc, char *argv[])
 {
-  Rf_initEmbeddedR(argc, argv);
-  doCtestExample();
-  doMVAExample();
-  return(0);
+    Rf_initEmbeddedR(argc, argv);
+    doSplinesExample();
+    Rf_endEmbeddedR(0);
+    return(0);
 }
 
 static void
-doCtestExample()
+doSplinesExample()
 {
-  SEXP e, tmp;
-  int errorOccurred;
+    SEXP e;
+    int errorOccurred;
 
-  PROTECT(e = allocVector(LANGSXP, 2));
-  SETCAR(e, Rf_install("example"));
-  SETCAR(CDR(e),  tmp = allocVector(STRSXP, 1));
-  SET_STRING_ELT(tmp, 0, mkChar("t.test"));
-   
-  Test_tryEval(e, &errorOccurred);
+    PROTECT(e = lang2(install("library"), mkString("splines")));
+    R_tryEval(e, R_GlobalEnv, NULL);
+    UNPROTECT(1);
 
-  UNPROTECT(1);
-}
+    PROTECT(e = lang2(install("options"), ScalarLogical(0)));
+    SET_TAG(CDR(e), install("example.ask"));
+    PrintValue(e);
+    R_tryEval(e, R_GlobalEnv, NULL);
+    UNPROTECT(1);
 
-static void
-doMVAExample()
-{
-  SEXP e, tmp;
- 
-  PROTECT(e = allocVector(LANGSXP, 2));
-  SETCAR(e, Rf_install("library"));
-  SETCAR(CDR(e), tmp = allocVector(STRSXP, 1));
-  SET_STRING_ELT(tmp, 0, mkChar("mva"));
- 
-  Test_tryEval(e, NULL);
-  UNPROTECT(1);
-
-  PROTECT(e = allocVector(LANGSXP, 2));
-  SETCAR(e, Rf_install("example"));
-  SETCAR(CDR(e),  tmp = allocVector(STRSXP, 1));
-  SET_STRING_ELT(tmp, 0, mkChar("dist"));
-   
-  Rf_PrintValue(e);
-
-  Test_tryEval(e, NULL);
-  UNPROTECT(1);
+    PROTECT(e = lang2(install("example"), mkString("ns")));
+    R_tryEval(e, R_GlobalEnv, &errorOccurred);
+    UNPROTECT(1);
 }

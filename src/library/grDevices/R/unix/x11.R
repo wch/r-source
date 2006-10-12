@@ -3,24 +3,68 @@
 .X11env <- new.env()
 
 X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
-                gamma = 1, colortype = getOption("X11colortype"),
+                gamma = getOption("gamma"),
+                colortype = getOption("X11colortype"),
                 maxcubesize = 256, bg = "transparent", canvas = "white",
-                fonts = getOption("X11fonts"))
+                fonts = getOption("X11fonts"), xpos = NA, ypos = NA)
 {
 
   if(display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "")
       Sys.putenv(DISPLAY = ":0")
-  .Internal(X11(display, width, height, pointsize, gamma, colortype,
-                maxcubesize, bg, canvas, fonts, NA))
+  ## we need to know internally if the user has overridden X11 resources
+  if(missing(width)) width <- as.double(NA)
+  if(missing(height)) height <- as.double(NA)
+  .Internal(X11(display, width, height, pointsize,
+                if(is.null(gamma)) 1 else gamma, colortype,
+                maxcubesize, bg, canvas, fonts, NA, xpos, ypos))
 }
 
 x11 <- X11
 
-gnome <- function(display = "", width = 7, height = 7, pointsize = 12)
-    .Defunct(package="grDevices")
 
-## no Gnome <- .Alias(gnome)
-GNOME <- gnome
+png <- function(filename = "Rplot%03d.png",
+                width = 480, height = 480, pointsize = 12,
+                bg = "white",  res = NA, ...)
+{
+    dots <- list(...)
+    d <- list(gamma = 1, colortype = getOption("X11colortype"),
+              maxcubesize = 256, fonts = getOption("X11fonts"))
+    d[names(dots)] <- dots[names(dots)]
+    .Internal(X11(paste("png::", filename, sep=""),
+                  width, height, pointsize, d$gamma,
+                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res, 0, 0))
+}
+
+jpeg <- function(filename = "Rplot%03d.jpeg",
+                 width = 480, height = 480, pointsize = 12, quality = 75,
+                 bg = "white", res = NA, ...)
+{
+    dots <- list(...)
+    d <- list(gamma = 1, colortype = getOption("X11colortype"),
+              maxcubesize = 256, fonts = getOption("X11fonts"))
+    d[names(dots)] <- dots[names(dots)]
+    .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
+                  width, height, pointsize, d$gamma,
+                  d$colortype, d$maxcubesize, bg, bg, d$fonts, res, 0, 0))
+}
+## png <- function(filename = "Rplot%03d.png",
+##                 width=480, height=480, pointsize=12,
+##                 gamma = 1, colortype = getOption("X11colortype"),
+##                 maxcubesize = 256, bg = "white",
+##                 fonts = getOption("X11fonts"), res = NA)
+##     .Internal(X11(paste("png::", filename, sep=""),
+##                   width, height, pointsize, gamma,
+##                   colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
+
+## jpeg <- function(filename = "Rplot%03d.jpeg",
+##                  width=480, height=480, pointsize=12,
+##                  quality = 75,
+##                  gamma = 1, colortype = getOption("X11colortype"),
+##                  maxcubesize = 256, bg = "white",
+##                  fonts = getOption("X11fonts"), res = NA)
+##     .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
+##                   width, height, pointsize, gamma,
+##                   colortype, maxcubesize, bg, bg, fonts, res, 0, 0))
 
 ####################
 # X11 font database
@@ -30,9 +74,9 @@ GNOME <- gnome
 # for font metric afm files
 assign(".X11.Fonts", list(), envir = .X11env)
 
-X11FontError <- function(errDesc) {
-  stop(paste("Invalid X11 font specification:", errDesc))
-}
+X11FontError <- function(errDesc)
+    stop("invalid X11 font specification: ", errDesc)
+
 
 # Check that the font has the correct structure and information
 # Already checked that it had a name
@@ -85,12 +129,14 @@ X11Fonts <- function(...) {
     nnames <- length(fontNames)
     if (nnames == 0) {
       if (!all(sapply(fonts, is.character)))
-        stop("Invalid arguments in X11Fonts (must be font names)")
+          stop(gettextf("invalid arguments in '%s' (must be font names)",
+                        "X11Fonts"), domain = NA)
       else
         get(".X11.Fonts", envir=.X11env)[unlist(fonts)]
     } else {
       if (ndots != nnames)
-        stop("Invalid arguments in X11Fonts (need NAMED args)")
+          stop(gettextf("invalid arguments in '%s' (need named args)",
+                        "X11Fonts"), domain = NA)
       setX11Fonts(fonts, fontNames)
     }
   }

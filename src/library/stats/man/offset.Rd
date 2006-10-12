@@ -23,6 +23,7 @@ offset(object)
 \seealso{
   \code{\link{model.offset}}, \code{\link{model.frame}}.
   
-  For examples see \code{\link{glm}}, \code{\link[MASS]{Insurance}}.
+  For examples see \code{\link{glm}} and
+  \code{\link[MASS]{Insurance}} in package \pkg{MASS}.
 }
 \keyword{models}

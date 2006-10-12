@@ -20,23 +20,23 @@
 /* ---------------------------------------------------------------------- */
 
 
-/* text alignment */
+typedef enum {One_Font, Font_Set} R_FontType;
 
-#define NONE		 0
-#define TLEFT		 1
-#define TCENTRE		 2
-#define TRIGHT		 3
-#define MLEFT		 4
-#define MCENTRE		 5
-#define MRIGHT		 6
-#define BLEFT		 7
-#define BCENTRE		 8
-#define BRIGHT		 9
+typedef struct R_XFont
+{
+    R_FontType type;
+    XFontStruct *font;  
+    XFontSet fontset; 
+    int height;  
+    int ascent;
+    int descent;
+} R_XFont;
 
 
 /* ---------------------------------------------------------------------- */
 
 /* Protoized : C++ or ANSI C */
+/* only XRotDrawString is used in R */
 double	XRotVersion(char*, int);
 void	XRotSetMagnification(double);
 void	XRotSetBoundingBoxPad(int);
@@ -51,9 +51,9 @@ int	XRotDrawAlignedImageString(Display*, XFontStruct*, double,
 XPoint *XRotTextExtents(Display*, XFontStruct*, double,
 			int, int, char*, int);
 
+/* addition in 2.1.0 */
+int	XRfRotDrawString(Display*, R_XFont*, double,
+			 Drawable, GC, int, int, char*);
+
 /* ---------------------------------------------------------------------- */
-
 #endif /* _XVERTEXT_INCLUDED_ */
-
-
-

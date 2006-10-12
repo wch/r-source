@@ -8,7 +8,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xtsp <- tsp(x)
     x <- na.action(as.ts(x))
     if (any(is.na(x)))
-        stop("NAs in x")
+        stop("NAs in 'x'")
     if (ists)
         xtsp <- tsp(x)
     xfreq <- frequency(x)
@@ -24,9 +24,9 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         floor(10 * log10(n.used))
     else floor(order.max)
     if (order.max < 1)
-        stop("order.max must be >= 1")
+        stop("'order.max' must be >= 1")
     xacf <- acf(x, type = "cov", plot = FALSE, lag.max = order.max)$acf
-    z <- .C("multi_yw",
+    z <- .C(R_multi_yw,
             aperm(xacf, c(3, 2, 1)),
             as.integer(n.used),
             as.integer(order.max),
@@ -36,9 +36,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             var = double((1 + order.max) * nser * nser),
             aic = double(1 + order.max),
             order = integer(1),
-            as.integer(aic),
-####        as.integer(var.method),
-            PACKAGE = "stats")
+            as.integer(aic))
     partialacf <- aperm(array(z$pacf, dim = c(nser, nser, order.max +
         1)), c(3, 2, 1))[-1, , , drop = FALSE]
     var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max +
@@ -64,7 +62,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     }
     snames <- colnames(x)
     colnames(resid) <- snames
-    dimnames(ar) <- list(seq(length=order), snames, snames)
+    dimnames(ar) <- list(seq_len(order), snames, snames)
     dimnames(var.pred) <- list(snames, snames)
     dimnames(partialacf) <- list(1:order.max, snames, snames)
     res <- list(order = order, ar = ar, var.pred = var.pred,

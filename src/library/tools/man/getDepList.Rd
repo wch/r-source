@@ -1,7 +1,7 @@
 \name{getDepList}
 \alias{getDepList}
 \alias{pkgDepends}
-\title{Functions to retrieve dependency information}
+\title{Functions to Retrieve Dependency Information}
 \description{
   Given a dependency matrix, will create a \code{DependsList} object for that
   package which will include the dependencies for that matrix, which
@@ -9,9 +9,11 @@
   which unresolved dependencies were not found online, and any R dependencies.
 }
 \usage{
-getDepList(depMtrx, instPkgs, recursive=TRUE, local=TRUE, reduce=TRUE,
-           lib.loc=NULL)
-pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE, lib.loc=NULL)
+getDepList(depMtrx, instPkgs, recursive = TRUE, local = TRUE,
+           reduce = TRUE, lib.loc = NULL)
+
+pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE,
+           lib.loc = NULL)
 }
 \arguments{
   \item{depMtrx}{A dependency matrix as from \code{package.dependencies}}

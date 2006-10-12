@@ -20,6 +20,7 @@
 \alias{conformMethod}
 \alias{getGeneric}
 \alias{getGroup}
+\alias{getGroupMembers}
 \alias{getMethodsMetaData}
 \alias{assignMethodsMetaData}
 \alias{matchSignature}
@@ -27,7 +28,6 @@
 \alias{removeMethodsObject}
 \alias{findUnique}
 \alias{MethodAddCoerce}
-\alias{is.primitive}
 \alias{.saveImage}
 \alias{cacheMetaData}
 \alias{cacheGenericsMetaData}
@@ -51,9 +51,10 @@
   by the user.
 }
 \usage{
-getGeneric(f, mustFind=FALSE, where)
+getGeneric(f, mustFind=FALSE, where, package)
 
 getGroup(fdef, recursive, where)
+getGroupMembers(group, recursive = FALSE, character = TRUE)
 
 getMethodsMetaData(f, where)
 assignMethodsMetaData (f, value, fdef, where, deflt)
@@ -70,7 +71,8 @@ defaultDumpName(generic, signature)
 
 getAllMethods(f, fdef, where)
 
-doPrimitiveMethod(name, def, call= sys.call(-1), ev= sys.frame(sys.parent(2)))
+doPrimitiveMethod(name, def, call= sys.call(sys.parent()),
+                  ev = sys.frame(sys.parent(2)))
 
 conformMethod(signature, mnames, fnames, f)
 
@@ -82,8 +84,6 @@ findUnique(what, message, where)
 
 MethodAddCoerce(method, argName, thisClass, methodClass)
 
-is.primitive(fdef)
-
 cacheMetaData(where, attach = TRUE, searchWhere)
 
 cacheGenericsMetaData(f, fdef, attach = TRUE, where, package, methods)
@@ -94,7 +94,7 @@ missingArg(symbol, envir = parent.frame(), eval)
 
 balanceMethodsList(mlist, args, check = TRUE)
 
-sigToEnv(signature, genericSig)
+sigToEnv(signature, generic)
 
 rematchDefinition(definition, generic, mnames, fnames, signature)
 unRematchDefinition(definition)
@@ -108,7 +108,7 @@ addNextMethod(method, f, mlist, optional, envir)
   \describe{
 
     \item{\code{getGeneric}:}{
-      return the definition of the function named \code{f} as a generic.
+      returns the definition of the function named \code{f} as a generic.
 
       If no definition is found, throws an
       error or returns \code{NULL} according to the value of
@@ -125,22 +125,39 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
     \item{\code{getGroup}:}{
-      return the groups to which this generic belongs, searching from
+      returns the groups to which this generic belongs, searching from
       environment \code{where} (the global environment normally by default).
 
       If \code{recursive=TRUE}, also all the group(s) of these groups.
     }
 
+    \item{\code{getGroupMembers}:}{
+      Return all the members of the group generic function named
+      \code{group}.
+      If \code{recursive} is \code{TRUE}, and some members are group
+      generics, includes their members as well.
+      If \code{character} is \code{TRUE}, returns just a character
+      vector of the names; otherwise returns a list, whose elements may
+      (or may not) include either names with a package attribute or
+      actual generic functions.
+
+      Note that members that are not defined as generic functions will
+      \emph{not} be included in the returned value.  To see the raw data,
+      use \code{getGeneric(group)@groupMembers}.
+    }
+
     \item{\code{getMethodsMetaData},
       \code{assignMethodsMetaData},
-      \code{mlistMetaName}:}{
-      Utilities to get (\code{getMethodsMetaData}) and assign  (\code{assignMethodsMetaData}) the metadata object recording the
-      methods defined in a particular package, or to return the
-      mangled name for that object  (\code{mlistMetaName}).
+      \code{mlistMetaName}:}{Utilities to get
+      (\code{getMethodsMetaData}) and assign
+      (\code{assignMethodsMetaData}) the metadata object recording the
+      methods defined in a particular package, or to return the mangled
+      name for that object  (\code{mlistMetaName}).
 
       The assign function should not be used directly.  The get
-    function may be useful if you want explicitly only the outcome of
-    the methods assigned in this package.  Otherwise, use \code{\link{getMethods}}.
+      function may be useful if you want explicitly only the outcome of
+      the methods assigned in this package.  Otherwise, use
+      \code{\link{getMethods}}.
     }
 
     \item{\code{matchSignature}:}{
@@ -169,10 +186,6 @@ addNextMethod(method, f, mlist, optional, envir)
       explicitly defined.  Only modifies the method if an explicit
       coerce is required to coerce from \code{thisClass} to
       \code{methodClass}.
-    }
-
-    \item{\code{is.primitive}:}{
-      Is this object a primitive function (either a builtin or special)?
     }
 
     \item{\code{removeMethodsObject}:}{
@@ -352,5 +365,15 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
   }
+}
+\seealso{\code{\link{setGeneric}}, \code{\link{setClass}},
+  \code{\link{showMethods}}.
+}
+\examples{
+getGroup("exp")
+getGroup("==", recursive = TRUE)
+
+getGroupMembers("Arith")
+getGroupMembers("Math")
 }
 \keyword{internal}

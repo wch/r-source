@@ -130,11 +130,22 @@ static object newchildwin(char *kind, char *text,
 	ensure_window();
 	r = rcanon(r);
 
-	hwnd = CreateWindow(kind, text,
-		(WS_CHILD | WS_VISIBLE) | style,
-		r.x, r.y, r.width, r.height,
-		current_window->handle,
-		(HMENU) child_id, this_instance, NULL);
+	if(is_NT && (localeCP != GetACP())) {
+	    wchar_t wkind[100], wc[1000];
+	    mbstowcs(wkind, kind, 100);
+	    mbstowcs(wc, text, 1000);
+	    hwnd = CreateWindowW(wkind, wc,
+				 (WS_CHILD | WS_VISIBLE) | style,
+				 r.x, r.y, r.width, r.height,
+				 current_window->handle,
+				 (HMENU) child_id, this_instance, NULL);
+	} else
+	    hwnd = CreateWindow(kind, text,
+				(WS_CHILD | WS_VISIBLE) | style,
+				r.x, r.y, r.width, r.height,
+				current_window->handle,
+				(HMENU) child_id, this_instance, NULL);
+	    
 
 	obj = new_object(ControlObject, hwnd, current_window);
 	if (! obj) {
@@ -1084,11 +1095,11 @@ listbox newdroplist(char *list[], rect r, scrollfn fn)
 		r.height += h;
 
 	obj = newchildwin("combobox", NULL,
-				CBS_DROPDOWNLIST |
-				//CBS_DISABLENOSCROLL |
-				WS_BORDER |
-				WS_VSCROLL | WS_HSCROLL,
-				r, NULL);
+			  CBS_DROPDOWNLIST |
+			  //CBS_DISABLENOSCROLL |
+			  WS_BORDER |
+			  WS_VSCROLL | WS_HSCROLL,
+			  r, NULL);
 	if (! obj)
 		return obj;
 	obj->kind = DroplistObject;
@@ -1111,14 +1122,14 @@ listbox newdropfield(char *list[], rect r, scrollfn fn)
 		r.height += h;
 
 	obj = newchildwin("combobox", NULL,
-				CBS_DROPDOWN |
-				CBS_DISABLENOSCROLL |
-				WS_BORDER |
-				WS_VSCROLL | WS_HSCROLL,
-				r, NULL);
+			  CBS_DROPDOWN |
+			  // CBS_DISABLENOSCROLL |
+			  WS_BORDER |
+			  WS_VSCROLL | WS_HSCROLL,
+			  r, NULL);
 	if (! obj)
 		return obj;
-	obj->kind = DroplistObject;
+	obj->kind = DropfieldObject;
 	obj->hit = fn;
 
 	changelistbox(obj, list);

@@ -1,10 +1,10 @@
 .hsearch_db <- local({
     hdb <- NULL
     function(new) {
-        if(!missing(new))
-            hdb <<- new
-        else
-            hdb
+	if(!missing(new))
+	    hdb <<- new
+	else
+	    hdb
     }
 })
 
@@ -19,14 +19,12 @@ function(pattern, fields = c("alias", "concept", "title"),
     ### Argument handling.
     TABLE <- c("alias", "concept", "keyword", "name", "title")
 
-    ## Simplified version of tools:::wrong_args().
-    .wrong_args <- function(args, msg)
-        paste("argument", sQuote(args), msg)
+    .wrong_args <- function(args)
+	gettextf("argument '%s' must be a single character string", args)
 
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1))
-	    stop(.wrong_args("pattern",
-                             "must be a single character string"))
+	    stop(.wrong_args("pattern"), domain = NA)
 	i <- pmatch(fields, TABLE)
 	if(any(is.na(i)))
 	    stop("incorrect field specification")
@@ -34,39 +32,36 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    fields <- TABLE[i]
     } else if(!missing(apropos)) {
 	if(!is.character(apropos) || (length(apropos) > 1))
-	    stop(.wrong_args("apropos",
-                             "must be a single character string"))
+	    stop(.wrong_args("apropos"), domain = NA)
 	else {
 	    pattern <- apropos
 	    fields <- c("alias", "title")
 	}
     } else if(!missing(keyword)) {
 	if(!is.character(keyword) || (length(keyword) > 1))
-	    stop(.wrong_args("keyword",
-                             "must be a single character string"))
+	    stop(.wrong_args("keyword"), domain = NA)
 	else {
 	    pattern <- keyword
 	    fields <- "keyword"
-            if(is.null(agrep)) agrep <- FALSE
+	    if(is.null(agrep)) agrep <- FALSE
 	}
     } else if(!missing(whatis)) {
 	if(!is.character(whatis) || (length(whatis) > 1))
-	    stop(.wrong_args("whatis",
-                             "must be a single character string"))
+	    stop(.wrong_args("whatis"), domain = NA)
 	else {
 	    pattern <- whatis
 	    fields <- "alias"
 	}
     } else {
-	stop("don't know what to search")
+	stop("do not know what to search")
     }
 
     if(is.null(lib.loc))
 	lib.loc <- .libPaths()
 
     if(!missing(help.db))
-        warning(.wrong_args("help.db", "is deprecated"))
-        
+	warning("argument 'help.db' is deprecated")
+
 
     ### Set up the hsearch db.
     db <- eval(.hsearch_db())
@@ -80,148 +75,175 @@ function(pattern, fields = c("alias", "concept", "title"),
 	## Thus we need to rebuild the hsearch db in case the specified
 	## library path is different from the one used when building the
 	## hsearch db (stored as its "LibPaths" attribute).
-        if(!identical(lib.loc, attr(db, "LibPaths")) ||
-           ## We also need to rebuild the hsearch db in case an existing
-           ## dir in the library path was modified more recently than
-           ## the db, as packages might have been installed or removed.
-           any(attr(db, "mtime") <
-	       file.info(lib.loc[file.exists(lib.loc)])$mtime)
-           )
+	if(!identical(lib.loc, attr(db, "LibPaths")) ||
+	   ## We also need to rebuild the hsearch db in case an existing
+	   ## dir in the library path was modified more recently than
+	   ## the db, as packages might have been installed or removed.
+	   any(attr(db, "mtime") <
+	       file.info(lib.loc[file.exists(lib.loc)])$mtime) ||
+	   ## Or if the user changed the locale character type ...
+	   !identical(attr(db, "ctype"), Sys.getlocale("LC_CTYPE"))
+	   )
 	    rebuild <- TRUE
+        ## We also need to rebuild if 'packages' was used before and has
+        ## changed.
+        if (!is.null(package) &&
+            any(! package %in% db$Base[, "Package"]))
+            rebuild <- TRUE
     }
     if(rebuild) {
-        ## Check whether we can save the hsearch db lateron.
-        if(all(is.na(mem.limits()))) {
-            save_db <- save_db_to_memory <- TRUE
-        }
-        else {
-            save_db <- save_db_to_memory <- FALSE
-            dir <- file.path(tempdir(), ".R")
-            db_file <- file.path(dir, "hsearch.rds")
-            if((tools::file_test("-d", dir)
-                || ((unlink(dir) == 0) && dir.create(dir)))
-               && (unlink(db_file) == 0))
-                save_db <- TRUE
-        }
+	if(verbose) cat("Rebuilding the data base ...\n")
+	## Check whether we can save the hsearch db lateron.
+	if(all(is.na(mem.limits()))) {
+	    save_db <- save_db_to_memory <- TRUE
+	}
+	else {
+	    save_db <- save_db_to_memory <- FALSE
+	    dir <- file.path(tempdir(), ".R")
+	    db_file <- file.path(dir, "hsearch.rds")
+	    if((file_test("-d", dir)
+		|| ((unlink(dir) == 0) && dir.create(dir)))
+	       && (unlink(db_file) == 0))
+		save_db <- TRUE
+	}
 
-        ## If we cannot save the help db only use the given packages.
-        ## <NOTE>
-        ## Why don't we just use the given packages?  The current logic
-        ## for rebuilding cannot figure out that rebuilding is needed
-        ## the next time (unless we use the same given packages) ...
-        packages_in_hsearch_db <- if(!is.null(package))
-            package
-        else
-            .packages(all.available = TRUE, lib.loc = lib.loc)
-        ## </NOTE>
+	packages_in_hsearch_db <- if(!is.null(package))
+	    package
+	else
+	    .packages(all.available = TRUE, lib.loc = lib.loc)
 
 	## Create the hsearch db.
 	contents_DCF_fields <-
 	    c("Entry", "Aliases", "Description", "Keywords")
-        np <- 0
+	np <- 0
 	if(verbose)
-	    cat("Packages:\n")
+	    cat("Packages {.readRDS() sequentially}:\n")
 
-        ## Starting with R 1.8.0, prebuilt hsearch indices are available
-        ## in Meta/hsearch.rds, and the code to build this from the Rd
-        ## contents (as obtained from both new and old style Rd indices)
-        ## has been moved to tools:::.build_hsearch_index() which
-        ## creates a per-package list of base, aliases and keywords
-        ## information.  When building the global index, it seems (see
-        ## e.g. also the code in tools:::Rdcontents()), most efficient to
-        ## create a list *matrix* (dbMat below), stuff the individual
-        ## indices into its rows, and finally create the base, aliases
-        ## and keyword information in rbind() calls on the columns.
-        ## This is *much* more efficient than building incrementally.
-        dbMat <- vector("list", length(packages_in_hsearch_db) * 4)
-        dim(dbMat) <- c(length(packages_in_hsearch_db), 4)
+	## Starting with R 1.8.0, prebuilt hsearch indices are available
+	## in Meta/hsearch.rds, and the code to build this from the Rd
+	## contents (as obtained from both new and old style Rd indices)
+	## has been moved to tools:::.build_hsearch_index() which
+	## creates a per-package list of base, aliases and keywords
+	## information.	 When building the global index, it seems (see
+	## e.g. also the code in tools:::Rdcontents()), most efficient to
+	## create a list *matrix* (dbMat below), stuff the individual
+	## indices into its rows, and finally create the base, alias,
+	## keyword, and concept information in rbind() calls on the
+	## columns.  This is *much* more efficient than building
+	## incrementally.
+	dbMat <- vector("list", length(packages_in_hsearch_db) * 4)
+	dim(dbMat) <- c(length(packages_in_hsearch_db), 4)
+	defunct_standard_package_names <-
+	    tools:::.get_standard_package_names()$stubs
 
 	for(p in packages_in_hsearch_db) {
-            np <- np + 1
+	    np <- np + 1
 	    if(verbose)
 		cat("", p, if((np %% 5) == 0) "\n")
-            ## skip stub packages
-            if(p %in% tools:::.get_standard_package_names()$stubs)
-                next
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
-		stop(paste("could not find package", sQuote(p)))
+		stop(gettextf("could not find package '%s'", p), domain = NA)
 
-            if(file.exists(hsearch_file <-
-                           file.path(path, "Meta", "hsearch.rds"))) {
-                hDB <- .readRDS(hsearch_file)
-            }
-            else {
-                hDB <- contents <- NULL
-                ## Read the contents info from the respective Rd meta
-                ## files.
-                if(file.exists(contents_file <-
-                               file.path(path, "Meta", "Rd.rds"))) {
-                    contents <- .readRDS(contents_file)
-                }
-                else if(file.exists(contents_file
-                                    <- file.path(path, "CONTENTS"))) {
-                    contents <-
-                        read.dcf(contents_file,
-                                 fields = contents_DCF_fields)
-                }
-                ## If we found Rd contents information ...
-                if(!is.null(contents)) {
-                    ## build the hsearch index from it;
-                    hDB <- tools:::.build_hsearch_index(contents, p,
-                                                        dirname(path))
-                }
-                else {
-                    ## otherwise, issue a warning.
-                    warning(paste("No Rd contents for package",
-                                  sQuote(p), "in",
-                                  sQuote(dirname(path))))
-                }
-            }
-            if(!is.null(hDB)) {
-                ## Put the hsearch index for the np-th package into the
-                ## np-th row of the matrix used for aggregating.
-                dbMat[np, seq(along = hDB)] <- hDB
-            }
+	    ## Hsearch 'Meta/hsearch.rds' indices were introduced in
+	    ## R 1.8.0.	 If they are missing, we really cannot use
+	    ## the package (as library() will refuse to load it).
+	    if(file.exists(hs_file <- file.path(path, "Meta", "hsearch.rds"))) {
+		hDB <- .readRDS(hs_file)
+		if(!is.null(hDB)) {
+		    ## Fill up possibly missing information.
+		    if(is.na(match("Encoding", colnames(hDB[[1]]))))
+			hDB[[1]] <- cbind(hDB[[1]], Encoding = "")
+		    hDB[[1]][, "LibPath"] <- path
+		    ## Put the hsearch index for the np-th package into the
+		    ## np-th row of the matrix used for aggregating.
+		    dbMat[np, seq_along(hDB)] <- hDB
+		} else if(verbose)
+		    cat("package", p, "has empty hsearch data - strangely\n")
+	    }
+	    else warning("no hsearch.rds meta data for package ", p)
+	}
+
+	if(verbose)  {
+	    cat(ifelse(np %% 5 == 0, "\n", "\n\n"),
+		sprintf("Built dbMat[%d,%d]\n", nrow(dbMat), ncol(dbMat)))
+            ## DEBUG save(dbMat, file="~/R/hsearch_dbMat.rda", compress=TRUE)
         }
 
-        if(verbose)
-	    cat(ifelse(np %% 5 == 0, "\n", "\n\n"))
+	## workaround methods:::rbind() misbehavior:
+	if(.isMethodsDispatchOn()) {
+	    bind_was_on <- methods:::bind_activation(FALSE)
+	    if(bind_was_on) on.exit(methods:::bind_activation(TRUE))
+	}
 
-        ## Create the global base, aliases and keywords tables via calls
-        ## to rbind() on the columns of the matrix used for aggregating.
-        db <- list(Base = do.call("rbind", dbMat[, 1]),
-                   Aliases = do.call("rbind", dbMat[, 2]),
-                   Keywords = do.call("rbind", dbMat[, 3]),
-                   Concepts = do.call("rbind", dbMat[, 4]))
-        if(is.null(db$Concepts))
-            db$Concepts <-
-                matrix(character(), nc = 3,
-                       dimnames = list(NULL,
-                       c("Concepts", "ID", "Package")))
-        ## And finally, make the IDs globally unique by prefixing them
-        ## with the number of the package in the global index.
-        for(i in which(sapply(db, NROW) > 0)) {
-            db[[i]][, "ID"] <-
-                paste(rep.int(seq(along = packages_in_hsearch_db),
-                              sapply(dbMat[, i], NROW)),
-                      db[[i]][, "ID"],
-                      sep = "/")
-        }
+	## Create the global base, aliases, keywords and concepts tables
+	## via calls to rbind() on the columns of the matrix used for
+	## aggregating.
+	db <- list(Base     = do.call("rbind", dbMat[, 1]),
+		   Aliases  = do.call("rbind", dbMat[, 2]),
+		   Keywords = do.call("rbind", dbMat[, 3]),
+		   Concepts = do.call("rbind", dbMat[, 4]))
+	if(is.null(db$Concepts))
+	    db$Concepts <-
+		matrix(character(), nc = 3,
+		       dimnames = list(NULL,
+		       c("Concepts", "ID", "Package")))
+	## Make the IDs globally unique by prefixing them with the
+	## number of the package in the global index.
+	for(i in which(sapply(db, NROW) > 0)) {
+	    db[[i]][, "ID"] <-
+		paste(rep.int(seq_along(packages_in_hsearch_db),
+			      sapply(dbMat[, i], NROW)),
+		      db[[i]][, "ID"],
+		      sep = "/")
+	}
+	## And maybe re-encode ...
+	if(!identical(Sys.getlocale("LC_CTYPE"), "C") && capabilities("iconv")) {
+	    if(verbose) cat("reencoding ...")
+	    encoding <- db$Base[, "Encoding"]
+	    IDs_to_iconv <- db$Base[encoding != "", "ID"]
+	    encoding <- encoding[encoding != ""]
+	    ## As iconv is not vectorized in the 'from' argument, loop
+	    ## over groups of identical encodings.
+	    for(enc in unique(encoding)) {
+		IDs <- IDs_to_iconv[encoding == enc]
+		for(i in seq_along(db)) {
+		    ind <- db[[i]][, "ID"] %in% IDs
+		    db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
+		}
+	    }
+	    if(verbose) cat(" done\n")
+	}
+	## Let us be defensive about invalid multi-byte character data
+	## here.  We simple remove all Rd objects with at least one
+	## invalid entry, and warn in case we found one.
+	bad_IDs <-
+	    unlist(sapply(db,
+			  function(u)
+			  u[rowSums(is.na(nchar(u, "c"))) > 0, "ID"]))
+	if(length(bad_IDs)) {
+	    warning("removing all entries with invalid multi-byte character data")
+	    for(i in seq_along(db)) {
+		ind <- db[[i]][, "ID"] %in% bad_IDs
+		db[[i]] <- db[[i]][!ind, ]
+	    }
+	}
 
-        if(save_db) {
-            attr(db, "LibPaths") <- lib.loc
-            attr(db, "mtime") <- Sys.time()
-            if(save_db_to_memory)
-                .hsearch_db(db)
-            else {
-                ## If we cannot save to memory, serialize to a file ...
-                .saveRDS(db, file = db_file)
-                ## and store a promise to unserialize from this file.
-                .hsearch_db(substitute(.readRDS(con),
-                                       list(con = db_file)))
-            }
-        }
+	if(save_db) {
+	    if(verbose) cat("saving the database ...")
+	    attr(db, "LibPaths") <- lib.loc
+	    attr(db, "mtime") <- Sys.time()
+	    attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
+	    if(save_db_to_memory)
+		.hsearch_db(db)
+	    else {
+		## If we cannot save to memory, serialize to a file ...
+		.saveRDS(db, file = db_file, compress = TRUE)
+		## and store a promise to unserialize from this file.
+		.hsearch_db(substitute(.readRDS(con),
+				       list(con = db_file)))
+	    }
+	    if(verbose) cat(" done\n")
+	}
     }
 
     ### Matching.
@@ -229,18 +251,18 @@ function(pattern, fields = c("alias", "concept", "title"),
 	cat("Database of ",
 	    NROW(db$Base), " Rd objects (",
 	    NROW(db$Aliases), " aliases, ",
-            NROW(db$Concepts), " concepts, ",
+	    NROW(db$Concepts), " concepts, ",
 	    NROW(db$Keywords), " keywords),\n",
 	    sep = "")
     if(!is.null(package)) {
-	## Argument 'package' was given but we built a larger hsearch db
-        ## to save for future invocations.  Need to check that all given 
-	## packages exist, and only search the given ones.
+	## Argument 'package' was given.  Need to check that all given
+	## packages exist in the db, and only search the given ones.
 	pos_in_hsearch_db <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
+        ## This should not happen for R >= 2.4.0
 	if(any(pos_in_hsearch_db) == 0)
-	    stop(paste("could not find package",
-                       sQuote(package[pos_in_hsearch_db == 0][1])))
+	    stop(gettextf("no information in the data base for package '%s': need 'rebuild = TRUE'?",
+			  package[pos_in_hsearch_db == 0][1]), domain = NA)
 	db <-
 	    lapply(db,
 		   function(x) {
@@ -263,7 +285,7 @@ function(pattern, fields = c("alias", "concept", "title"),
     if(is.null(agrep) || is.na(agrep))
 	agrep <-
 	    ((regexpr("^([[:alnum:]]|[[:space:]]|-)+$", pattern) > 0)
-             && (nchar(pattern) > 4))
+	     && (nchar(pattern, type="c") > 4))
     if(is.logical(agrep)) {
 	if(agrep)
 	    max.distance <- 0.1
@@ -273,7 +295,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	agrep <- TRUE
     }
     else
-	stop("incorrect agrep specification")
+	stop("incorrect 'agrep' specification")
 
     searchFun <- function(x) {
 	if(agrep)
@@ -288,13 +310,13 @@ function(pattern, fields = c("alias", "concept", "title"),
 	       alias = {
 		   aliases <- db$Aliases
 		   match(aliases[searchFun(aliases[, "Aliases"]),
-                                 "ID"],
+				 "ID"],
 			 dbBase[, "ID"])
 	       },
 	       concept = {
 		   concepts <- db$Concepts
 		   match(concepts[searchFun(concepts[, "Concepts"]),
-                                  "ID"],
+				  "ID"],
 			 dbBase[, "ID"])
 	       },
 
@@ -316,15 +338,15 @@ function(pattern, fields = c("alias", "concept", "title"),
 
     ## Retval.
     y <- list(pattern = pattern, fields = fields,
-              type = if(agrep) "fuzzy" else "regexp",
-              matches = db)
+	      type = if(agrep) "fuzzy" else "regexp",
+	      matches = db)
     class(y) <- "hsearch"
     y
 }
 
-print.hsearch <- function(x,...){
-  printhsearchInternal(x,...)
-}
+print.hsearch <- function(x, ...)
+    printhsearchInternal(x, ...)
+
 
 printhsearchInternal  <- function(x, ...)
 {
@@ -335,25 +357,25 @@ printhsearchInternal  <- function(x, ...)
 	outFile <- tempfile()
 	outConn <- file(outFile, open = "w")
 	writeLines(c(strwrap(paste("Help files with", fields,
-                                   "matching", sQuote(x$pattern),
-                                   "using", type, "matching:")),
-                     "\n\n"),
+				   "matching", sQuote(x$pattern),
+				   "using", type, "matching:")),
+		     "\n\n"),
 		   outConn)
 	dbnam <- paste(db[ , "topic"], "(",
 		       db[, "Package"], ")",
 		       sep = "")
 	dbtit <- paste(db[ , "title"], sep = "")
 	writeLines(formatDL(dbnam, dbtit), outConn)
-        writeLines(c("\n\n",
-                     strwrap(paste("Type 'help(FOO, package = PKG)' to",
-                                   "inspect entry 'FOO(PKG) TITLE'."))),
-                   outConn)
+	writeLines(c("\n\n",
+		     strwrap(paste("Type 'help(FOO, package = PKG)' to",
+				   "inspect entry 'FOO(PKG) TITLE'."))),
+		   outConn)
 	close(outConn)
 	file.show(outFile, delete.file = TRUE)
     } else {
 	writeLines(strwrap(paste("No help files found with", fields,
-                                 "matching", sQuote(x$pattern),
-                                 "using", type, "matching.")))
+				 "matching", sQuote(x$pattern),
+				 "using", type, "matching.")))
     }
 
     invisible(x)

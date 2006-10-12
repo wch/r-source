@@ -60,9 +60,12 @@ summary.factor <- function(object, maxsum = 100, ...)
     if(any(nas)) c(tt, "NA's" = sum(nas)) else tt
 }
 
-summary.matrix <- function(object, ...)
-    summary.data.frame(data.frame(object), ...)
+summary.matrix <- function(object, ...) {
+    ## we do want this changed into separate columns, so use matrix method
+    summary.data.frame(as.data.frame.matrix(object), ...)
+}
 
+## <FIXME> use encodeString here, and its justify options
 summary.data.frame <-
     function(object, maxsum = 7, digits = max(3, getOption("digits") - 3), ...)
 {
@@ -83,9 +86,10 @@ summary.data.frame <-
                 tmp <- rbind(tmp, matrix("", nr - nrow(sms), ncol(sms)))
             sms <- apply(tmp, 1, function(x) paste(x, collapse="  "))
             ## produce a suitable colname: undoing padding
-            wid <- sapply(tmp[1,], nchar)
+            wid <- sapply(tmp[1,], nchar, type="w")
             blanks <- paste(character(max(wid)), collapse = " ")
-            pad0 <- floor((wid-nchar(cn))/2); pad1 <- wid - nchar(cn) - pad0
+            pad0 <- floor((wid-nchar(cn, type="w"))/2);
+            pad1 <- wid - nchar(cn, type="w") - pad0
             cn <- paste(substring(blanks, 1, pad0), cn,
                         substring(blanks, 1, pad1), sep = "")
             nm[i] <- paste(cn, collapse="  ")
@@ -94,7 +98,7 @@ summary.data.frame <-
             lbs <- format(names(sms))
             sms <- paste(lbs, ":", format(sms, digits = digits), "  ",
                          sep = "")
-            lw[i] <- nchar(lbs[1])
+            lw[i] <- nchar(lbs[1], type="w")
             length(sms) <- nr
             z[[i]] <- sms
         }
@@ -102,7 +106,7 @@ summary.data.frame <-
     z <- unlist(z, use.names=TRUE)
     dim(z) <- c(nr, nv)
     blanks <- paste(character(max(lw) + 2), collapse = " ")
-    pad <- floor(lw-nchar(nm)/2)
+    pad <- floor(lw-nchar(nm, type="w")/2)
     nm <- paste(substring(blanks, 1, pad), nm, sep = "")
     dimnames(z) <- list(rep.int("", nr), nm)
     attr(z, "class") <- c("table") #, "matrix")

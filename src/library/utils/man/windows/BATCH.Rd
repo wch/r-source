@@ -3,7 +3,9 @@
 \title{Batch Execution of R}
 \description{Run \R non-interactively with input from \code{infile} and
   send output (stdout/stderr) to another file.}
-\usage{R CMD BATCH [options] infile [outfile]}
+\usage{
+\special{R CMD BATCH [options] infile [outfile]}
+}
 \arguments{
   \item{infile}{the name of a file with \R code to be executed.}
   \item{options}{a list of \R command line options, e.g., for setting the
@@ -23,6 +25,10 @@
 
   Files with an incomplete last line (no end of line mark) are now
   accepted.
+
+  Additional options can be set by the environment variable
+  \code{R_BATCH_OPTIONS}: these come after \samp{--restore --save}
+  and before any options given on the command line.
 }
 \keyword{utilities}
 

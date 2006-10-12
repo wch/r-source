@@ -9,7 +9,7 @@
 \usage{
 boxplot(x, \dots)
 
-\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = stats::na.pass)
+\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action = NULL)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
         notch = FALSE, outline = TRUE, names, plot = TRUE,
@@ -33,13 +33,14 @@ boxplot(x, \dots)
     vectors. Additional unnamed arguments specify further data
     as separate vectors (each corresponding to a component boxplot).
     \code{\link{NA}}s are allowed in the data.}
-  \item{\dots}{For the \code{formula} method, arguments to the
-    default method and graphical parameters.
+  \item{\dots}{For the \code{formula} method, named arguments to be passed to
+    the default method.
 
     For the default method, unnamed arguments are additional data
     vectors (unless \code{x} is a list when they are ignored),
-    and named arguments are graphical parameters in addition to the ones
-    given by argument \code{pars}.
+    and named arguments are arguments and graphical parameters to be
+    passed to \code{\link{bxp}} in addition to the ones
+    given by argument \code{pars} (and override those in \code{pars}).
   }
   \item{range}{this determines how far the plot whiskers extend out
     from the box.  If \code{range} is positive, the whiskers extend
@@ -73,7 +74,8 @@ boxplot(x, \dots)
     boxplots.  The values in \code{border} are recycled if the
     length of \code{border} is less than the number of plots.}
   \item{col}{if \code{col} is non-null it is assumed to contain colors
-    to be used to colour the bodies of the box plots.}
+    to be used to colour the bodies of the box plots. By default they
+    are in the background colour.}
   \item{log}{character indicating if x or y or both coordinates should
     be plotted in log scale.}
   \item{pars}{a list of (potentially many) more graphical parameters,
@@ -90,21 +92,27 @@ boxplot(x, \dots)
   The generic function \code{boxplot} currently has a default method
   (\code{boxplot.default}) and a formula interface (\code{boxplot.formula}).
 
+  If multiple groups are supplied either as multiple arguments or via a
+  formula, parallel boxplots will be plotted, in the order of the
+  arguments or the order of the levels of the factor (see
+  \code{\link{factor}}).
+  
   Missing values are ignored when forming boxplots.
 }
 \value{
   List with the following components:
   \item{stats}{a matrix, each column contains the extreme of the lower
     whisker, the lower hinge, the median, the upper hinge and the
-    extreme of the upper whisker for one group/plot.}
+    extreme of the upper whisker for one group/plot.  If all the inputs
+    have the same class attribute, so will this component.}
   \item{n}{a vector with the number of observations in each group.}
   \item{conf}{a matrix where each column contains the lower and upper
     extremes of the notch.}
   \item{out}{the values of any data points which lie beyond the
     extremes of the whiskers.}
   \item{group}{a vector of the same length as \code{out} whose elements
-    indicate which group the outlier belongs to}
-  \item{names}{a vector of names for the groups}
+    indicate to which group the outlier belongs.}
+  \item{names}{a vector of names for the groups.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -113,6 +121,8 @@ boxplot(x, \dots)
 
   Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
   \emph{Graphical Methods for Data Analysis.}  Wadsworth \& Brooks/Cole.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 
   See also \code{\link{boxplot.stats}}.
 }
@@ -130,7 +140,7 @@ boxplot(count ~ spray, data = InsectSprays,
         notch = TRUE, add = TRUE, col = "blue")
 
 boxplot(decrease ~ treatment, data = OrchardSprays,
-        log = "y", col="bisque")
+        log = "y", col = "bisque")
 
 rb <- boxplot(decrease ~ treatment, data = OrchardSprays, col="bisque")
 title("Comparing boxplot()s and non-robust mean +/- SD")
@@ -154,13 +164,13 @@ boxplot(data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
 
 boxplot(len ~ dose, data = ToothGrowth,
         boxwex = 0.25, at = 1:3 - 0.2,
-        subset= supp == "VC", col="yellow",
-        main="Guinea Pigs' Tooth Growth",
-        xlab="Vitamin C dose mg",
-        ylab="tooth length", ylim=c(0,35))
+        subset = supp == "VC", col = "yellow",
+        main = "Guinea Pigs' Tooth Growth",
+        xlab = "Vitamin C dose mg",
+        ylab = "tooth length", ylim = c(0, 35), yaxs = "i")
 boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
         boxwex = 0.25, at = 1:3 + 0.2,
-        subset= supp == "OJ", col="orange")
+        subset = supp == "OJ", col = "orange")
 legend(2, 9, c("Ascorbic acid", "Orange juice"),
        fill = c("yellow", "orange"))
 

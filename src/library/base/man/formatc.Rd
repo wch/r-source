@@ -1,16 +1,24 @@
 \name{formatC}
+\alias{formatC}
+\alias{prettyNum}
+\description{
+    Formatting numbers individually and flexibly, using \code{C} style
+    format specifications.
+}
 \title{Formatting Using C-style Formats}
 \usage{
 formatC(x, digits = NULL, width = NULL,
         format = NULL, flag = "", mode = NULL,
         big.mark = "", big.interval = 3,
       small.mark = "", small.interval = 5,
-    decimal.mark = ".")
+    decimal.mark = ".", preserve.width = "individual")
 
-format.char(x, width = NULL, flag = "-")
+prettyNum(x, big.mark = "",   big.interval = 3,
+          small.mark = "", small.interval = 5,
+          decimal.mark = ".",
+          preserve.width = c("common", "individual", "none"),
+          zero.print = NULL, \dots)
 }
-\alias{formatC}
-\alias{format.char}
 \arguments{
   \item{x}{an atomic numerical or character object, typically a vector
     of real numbers.}
@@ -45,35 +53,49 @@ format.char(x, width = NULL, flag = "-")
     \code{\link{signif}} this prints large numbers with
     more significant digits than \code{digits}.}
 
-  \item{flag}{format modifier as in Kernighan and Ritchie (1988, page 243).
+  \item{flag}{For \code{formatC}, a character string giving a
+    format modifier as in Kernighan and Ritchie (1988, page 243).
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
-    others are \code{"+"}, \code{" "}, and \code{"#"}.}
+    others are \code{"+"}, \code{" "}, and \code{"#"}.  There can be
+    more than one of these, in any order.
+  }
 
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
     \code{"character"}.
     Default: Determined from the storage mode of \code{x}.}
 
-  \item{big.mark, big.interval,
-    small.mark, small.interval,
-    decimal.mark}{used for prettying longer decimal sequences, passed to
-    \code{\link{prettyNum}}: that help page explains the details.}
-}
-\description{
-    Formatting numbers individually and flexibly, using \code{C} style
-    format specifications.  \code{format.char} is a helper function for
-    \code{formatC}.
+  \item{big.mark}{character; if not empty used as mark between every
+    \code{big.interval} decimals \emph{before} (hence \code{big}) the
+    decimal point.}
+  \item{big.interval}{see \code{big.mark} above; defaults to 3.}
+  \item{small.mark}{character; if not empty used as mark between every
+    \code{small.interval} decimals \emph{after} (hence \code{small}) the
+    decimal point.}
+  \item{small.interval}{see \code{small.mark} above; defaults to 5.}
+  \item{decimal.mark}{the character to be used to indicate the numeric
+    decimal point.}
+  \item{preserve.width}{string specifying if the string widths should
+    be preserved where possible in those cases where marks
+    (\code{big.mark} or \code{small.mark}) are added.  \code{"common"},
+    the default, corresponds to \code{\link{format}}-like behavior
+    whereas \code{"individual"} is the default in
+    \code{formatC()}.}
+  \item{zero.print}{logical, character string or \code{NULL} specifying
+    if and how \emph{zeros} should be formatted specially.  Useful for
+    pretty printing \dQuote{sparse} objects.}
+  \item{\dots}{arguments passed to \code{format}.}
 }
 \value{
   A character object of same size and attributes as \code{x}.
   Unlike \code{\link{format}}, each number is formatted individually.
-  Looping over each element of \code{x}, \code{sprintf(\dots)} is
-  called (inside the C function \code{str_signif}).
+  Looping over each element of \code{x}, the C function
+  \code{sprintf(\dots)} is called (inside the C function \code{str_signif}).
 
-  \code{format.char(x)} and \code{formatC}, for character \code{x}, do
+  \code{formatC}: for character \code{x}, do
   simple (left or right) padding with white space.
 }
 \details{
-  If you set \code{format} it over-rides the setting of \code{mode}, so
+  If you set \code{format} it overrides the setting of \code{mode}, so
   \code{formatC(123.45, mode="double", format="d")} gives \code{123}.
 
   The rendering of scientific format is platform-dependent: some systems
@@ -83,18 +105,28 @@ format.char(x, width = NULL, flag = "-")
   point, so \code{formatC(c(6.11, 13.1), digits=2, format="fg")} gives
   \code{c("6.1", " 13")}.  If you want common formatting for several
   numbers, use \code{\link{format}}.
+
+  \code{prettyNum} is the utility function for prettifying \code{x}. If
+  \code{x} is not a character, \code{format(x[i], ...)} is applied to
+  each element, and then it is left unchanged if all the other arguments
+  are at their defaults.  Note that \code{prettyNum(x)} may behave
+  unexpectedly if \code{x} is a \code{character} vector not resulting from
+  something like \code{format(<number>)}: in particular it assumes that
+  a period is a decimal mark.
 }
 \author{
-  Originally written by Bill Dunlap, later much improved by Martin Maechler,
-  it was first adapted for \R by Friedrich Leisch.
+  \code{formatC} was originally written by Bill Dunlap, later much
+  improved by Martin Maechler.
+  It was first adapted for \R by Friedrich Leisch.
 }
 \references{
   Kernighan, B. W. and Ritchie, D. M. (1988)
   \emph{The C Programming Language.}  Second edition. Prentice Hall.
 }
 \seealso{
-  \code{\link{format}}, \code{\link{sprintf}} for more general C like
-  formatting.
+  \code{\link{format}}.
+
+  \code{\link{sprintf}} for more general C like formatting.
 }
 \examples{
 xx  <- pi * 10^(-5:4)
@@ -103,7 +135,6 @@ cbind(formatC(xx, wid = 9, flag = "-"))
 cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
 cbind(format(xx, digits=4), formatC(xx, dig = 4, format = "fg"))
 
-format.char(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 formatC(    c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 formatC(c((-1:1)/0,c(1,100)*pi), wid=8, dig=1)
 
@@ -112,6 +143,27 @@ xx <- c(1e-12,-3.98765e-10,1.45645e-69,1e-70,pi*1e37,3.44e4)
 formatC(xx)
 formatC(xx, format="fg")       # special "fixed" format.
 formatC(xx, format="f", dig=80)#>> also long strings
+
+r <- c("76491283764.97430", "29.12345678901", "-7.1234", "-100.1","1123")
+## American:
+prettyNum(r, big.mark = ",")
+## Some Europeans:
+prettyNum(r, big.mark = "'", decimal.mark = ",")
+
+(dd <- sapply(1:10, function(i)paste((9:0)[1:i],collapse="")))
+prettyNum(dd, big.mark="'")
+
+## examples of 'small.mark'
+pN <- stats::pnorm(1:7, lower=FALSE)
+cbind(format (pN, small.mark = " ", digits = 15))
+cbind(formatC(pN, small.mark = " ", digits = 17, format = "f"))
+
+cbind(ff <- format(1.2345 + 10^(0:5), width = 11, big.mark = "'"))
+## all with same width (one more than the specified minimum)
+
+## individual formatting to common width:
+fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
+cbind(fc)
 }
 \keyword{character}
 \keyword{print}

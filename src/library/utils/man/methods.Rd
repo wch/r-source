@@ -35,7 +35,9 @@ methods(generic.function, class)
   available for them.
 
   If \code{class} is used, we check that a matching generic can be found
-  for each user-visible object named.
+  for each user-visible object named.  If \code{generic.function} is
+  given, there is a warning if it appears not to be a generic function.
+  (The check for being generic used can be fooled.)
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
@@ -58,11 +60,12 @@ methods(generic.function, class)
 \examples{
 methods(summary)
 methods(class = "aov")
-methods("[[")    ##- does not list the C-internal ones...
-methods("$")     # currently none
+methods("[[")    # uses C-internal dispatching
+methods("$")
 methods("$<-")   # replacement function
 methods("+")     # binary operator
 methods("Math")  # group generic
-\dontrun{methods(print)
+methods("axis")  # looks like it has methods, but not generic
+\dontrun{methods(print)   # over 100
 }}
 \keyword{methods}

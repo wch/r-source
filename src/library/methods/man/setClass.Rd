@@ -107,7 +107,7 @@ sealClass(Class, where)
       remove the (first) definition found.
     }
     \item{\code{isClass}:}{
-      Is this a the name of a formally defined class? (Argument
+      Is this the name of a formally defined class? (Argument
       \code{formal} is for compatibility and is ignored.)
     }
     \item{\code{getClasses}:}{
@@ -167,26 +167,73 @@ sealClass(Class, where)
 
   Then extensions will add some new slots and new behavior.
 
-  Another variety of extension starts with one of the basic classes,
+  Another variety of extension starts with one of the built-in data types,
   perhaps with the intension of modifying R's standard behavior for that
-  class.  Perfectly legal and sometimes quite helpful, but you may need
-  to be more careful in this case:  your new class will inherit much of
-  the behavior of the basic (informally defined) class, and the results
-  can be surprising.  Just proceed with caution and plenty of testing.
+  class.  In this case, the new class inherits the built-in data type
+  as its \dQuote{data} part.  See the \dQuote{numWithId} example below.
 
-  As an example, the class \code{"matrix"} is included in the
-  pre-defined classes, to behave essentially as matrices do without
-  formal class definitions.  Suppose we don't like all of this; in
-  particular, we want the default matrix to have 0 rows and columns (not
-  1 by 1 as it is now).
+  When such a class definition is printed, the data part shows up as a
+  pseudo-slot named \dQuote{.Data}.
+}
 
-  \code{setClass("myMatrix", "matrix", prototype = matrix(0,0,0))}
+\section{S3 Classes}{
 
-  The arguments above illustrate two short-cuts relevant to such
-  examples.  We abbreviated the \code{representation} argument to the
-  single superclass, because the new class doesn't add anything to the
-  representation of class \code{"matrix"}.  Also, we provided an object
-  from the superclass as the prototype, not a list of slots.
+  Earlier, informal classes of objects (usually referred to as
+  \dQuote{S3} classes) are used by many R functions.  It's natural to
+  consider including them as the class for a slot in a formal class,
+  or even as a class to be extended by the new class.  This isn't
+  prohibited but there are some disadvantages, and if you do want to
+  include S3 classes, they should be declared by including them in a
+  call to \code{\link{setOldClass}}.  Here are some considerations:
+
+  \itemize{
+  \item Using S3 classes somewhat defeats the purpose of defining a
+    formal class:  An important advantage to your users is that a formal
+    class provides guarantees of what the object contains (minimally,
+    the classes of the slots and therfore what data they contain;
+    optionally, any other requirements imposed by a validity method).
+
+    But there is no guarantee whatever about the data in an object from
+    an S3 class.  It's entirely up to the functions that create or
+    modify such objects.  If you want to provide guarantees to your
+    users, you will need a valdity method that explicitly checks the
+    contents of S3-class objects.
+
+  \item To get the minimal guarantee (that the object in a slot has, or
+    extends, the class for the slot) you should ensure that the S3
+    classes are known to \emph{be} S3 classes, with the possible
+    inheritance.  To do this, include a call to
+    \code{\link{setOldClass}} for the S3 classes used.
+
+    Otherwise, the S3 class is undefined (and the code used by
+    \code{setClass} will issue a warning).  Slot assignments, for
+    example, will not then check for possible errors.
+
+  \item These caveats apply to S3 classes; that is, objects with a
+    class assigned by some R function but without a formal class
+    definition.  In contrast, the built-in data types (\code{numeric},
+    \code{list}, etc.) are generally fine as slots or for
+    \code{contains=} classes (see the previous section).  These data
+    types don't have formal slots, but the base code in the system
+    essentially forces them to contain the type of data they claim to
+    have.
+
+    The data types \code{matrix} and \code{array} are somewhat in
+    between.  They do not have an explicit S3 class, but do have one or
+    two attributes.  There is no general problem in having these as
+    slots, but because there is no guarantee of a dimnames slot, they
+    don't work as formal classes.  The \code{ts} class is treated as a
+    formal class, extending class \code{vector}.
+  }
+
+}% S3 classes
+
+\note{
+  Certain slot names are not allowed in the current implementation, as
+  they correspond to \link{attributes} which are treated
+  specially.  These are \code{class}, \code{comment}, \code{dim},
+  \code{dimnames}, \code{names}, (from \R 2.4.0) \code{row.names}
+  and \code{tsp}.
 }
 
 \references{
@@ -200,18 +247,19 @@ sealClass(Class, where)
   details in the reference that reflect the S4 implementation may appear
   differently in \R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
+  discussion of details see \code{?\link{Methods}}
+  and the links from that documentation.
+}
+\seealso{
+  \code{\link{setClassUnion}},
+  \code{\link{Methods}},
+  \code{\link{makeClassRepresentation}}
 }
 \examples{
 \dontshow{
-if(isClass("trackMultiCurve"))
-  removeClass("trackMultiCurve")
-if(isClass("trackCurve"))
-  removeClass("trackCurve")
-if(isClass("track"))
-  removeClass("track")
+ if(isClass("trackMultiCurve")) removeClass("trackMultiCurve")
+ if(isClass("trackCurve"))	removeClass("trackCurve")
+ if(isClass("track"))		removeClass("track")
 }
 ## A simple class with two slots
 setClass("track",
@@ -230,7 +278,7 @@ setClass("trackMultiCurve",
 ## only one column.
 ## First, the wrong way.
 try(setIs("trackMultiCurve", "trackCurve",
-  test = function(obj) {ncol(slot(obj, "y")) == 1}))
+    test = function(obj) {ncol(slot(obj, "y")) == 1}))
 
 ## Why didn't that work?  You can only override the slots "x", "y",
 ## and "smooth" if you provide an explicit coerce function to correct
@@ -244,6 +292,14 @@ setIs("trackMultiCurve", "trackCurve",
          y = as.numeric(slot(obj,"y")),
          smooth = as.numeric(slot(obj, "smooth")))
   })
+
+## A class that extends the built-in data type "numeric"
+
+setClass("numWithId", representation(id = "character"),
+         contains = "numeric")
+
+new("numWithId", 1:3, id = "An Example")
+
 \dontshow{
 tMC <- new("trackMultiCurve")
 is.matrix(slot(tMC, "y"))
@@ -258,7 +314,8 @@ stopifnot(identical(new("xNum")@x, xxx))
 ### tests of the C macros MAKE_CLASS and NEW
 ### FIXME:  there should be a separate man page for the C-level macros
 ### and the tests below should be there.
-stopifnot(identical(.Call("R_methods_test_MAKE_CLASS", "trackCurve", PACKAGE = "methods"),
+stopifnot(identical(.Call("R_methods_test_MAKE_CLASS", "trackCurve",
+                          PACKAGE = "methods"),
                     getClass("trackCurve")))
 
 stopifnot(identical(.Call("R_methods_test_NEW", "track", PACKAGE = "methods"),
@@ -280,12 +337,8 @@ resetClass("logical")
 removeClass("trackMultiCurve")
 removeClass("trackCurve")
 removeClass("track")
+}%dont show
 }
-}
-\seealso{
-  \code{\link{setClassUnion}},
-  \code{\link{Methods}},
-  \code{\link{makeClassRepresentation}}}
 \keyword{programming}
 \keyword{classes}
 \keyword{methods}

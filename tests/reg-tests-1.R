@@ -1,3 +1,7 @@
+postscript("reg-tests-1.ps", encoding = "ISOLatin1.enc")
+
+## force standard handling for data frames
+options(stringsAsFactors=TRUE)
 
 ## regression test for PR#376
 aggregate(ts(1:20), nfreq=1/3)
@@ -127,8 +131,6 @@ stopifnot(all.equal(dcauchy(-1:4), 1 / (pi*(1 + (-1:4)^2))))
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m) )
 stopifnot(abs(m	 -  t(cm) %*% cm) < 100* .Machine$double.eps)
-( Lcm <- La.chol(m) )
-stopifnot(abs(m - crossprod(Lcm))  < 100* .Machine$double.eps)
 
 ## check with pivoting
 ( m <- matrix(c(5,1,1,3),2,2) )
@@ -162,7 +164,6 @@ stopifnot(all.equal(t(Q) %*% Q, m[pivot, pivot]))
 ## chol2inv
 cma <- chol(ma	<- cbind(1, 1:3, c(1,3,7)))
 stopifnot(all.equal(diag(3), ma %*% chol2inv(cma)))
-stopifnot(all.equal(diag(3), ma %*% La.chol2inv(cma)))
 ## end of moved from chol2inv.Rd
 
 
@@ -182,16 +183,6 @@ m0 <- matrix(NA, 4, 0)
 rownames(m0, do.NULL = FALSE)
 colnames(m0, do.NULL = FALSE)
 ## end of moved from colnames.Rd
-
-
-## complex
-z <- 0i ^ (-3:3)
-stopifnot(Re(z) == 0 ^ (-3:3))
-set.seed(123)
-z <- complex(real = rnorm(100), imag = rnorm(100))
-stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
-	  < 20 * .Machine$double.eps)
-## end of moved from complex.Rd
 
 
 ## Constants
@@ -608,7 +599,7 @@ X <- X[, colSums(X) <= 3]
 X <- rbind(X, 3:3 - colSums(X))
 for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
   px <- apply(X, 2, function(x) dmultinom(x, prob = p))
-  stopifnot(identical(TRUE, all.equal(sum(px), 1)))
+  stopifnot(all.equal(sum(px), 1))
 }
 ## end of moved from Multinom.Rd
 
@@ -617,7 +608,7 @@ for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
 # which=4 failed in R 1.0.1
 par(mfrow=c(1,1), oma= rep(0,4))
 summary(lm.fm2 <- lm(Employed ~ . - Population - GNP.deflator, data = longley))
-for(wh in 1:4) plot(lm.fm2, which = wh)
+for(wh in 1:6) plot(lm.fm2, which = wh)
 ## end of moved from plot.lm.Rd
 
 
@@ -749,61 +740,6 @@ stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 ## end of moved from svd.Rd
 
-hasMethods <- .isMethodsDispatchOn() ## (for setting back)
-## was at end, as package `methods' once had persistent side effects
-stopifnot(require(methods))
-stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
-
-## trace (requiring methods):
-f <- function(x, y) { c(x,y)}
-xy <- 0
-
-trace(f, quote(x <- c(1, x)), exit = quote(xy <<- x), print = FALSE)
-
-fxy <- f(2,3)
-
-stopifnot(identical(fxy, c(1,2,3)))
-stopifnot(identical(xy, c(1,2)))
-
-untrace(f)
-
-## a generic and its methods
-
-setGeneric("f")
-
-setMethod("f", c("character", "character"), function(x,	 y) paste(x,y))
-
-## trace the generic
-trace("f", quote(x <- c("A", x)), exit = quote(xy <<- c(x, "Z")), print = FALSE)
-
-## should work for any method
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-stopifnot(identical(f("B", "C"), paste(c("A","B"), "C")))
-stopifnot(identical(xy, c("A", "B", "Z")))
-
-## trace a method
-
-trace("f", sig = c("character", "character"), quote(x <- c(x, "D")),
-      exit = quote(xy <<- xyy <<- c(x, "W")), print = FALSE)
-
-stopifnot(identical(f("B", "C"), paste(c("A","B","D"), "C")))
-# These two got broken by Luke's lexical scoping fix
-#stopifnot(identical(xy, c("A", "B", "D", "W")))
-#stopifnot(identical(xy, xyy))
-
-## but the default method is unchanged
-
-stopifnot(identical(f(4,5), c("A",4,5)))
-stopifnot(identical(xy, c("A", 4, "Z")))
-
-removeGeneric("f")
-
-if(!hasMethods) detach("package:methods")
-## end of moved from trace.Rd
-
 
 ## Trig
 ## many of these tested for machine accuracy, which seems a bit extreme
@@ -819,7 +755,7 @@ stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * .Machine$double.eps)
 
 x <- 1:99/100
 stopifnot(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 10 * .Machine$double.eps)
-## error is about 650* are x=0.01
+## error is about 650* at x=0.01:
 stopifnot(abs(1 - x / acos(cos(x))) < 1000 * .Machine$double.eps)
 stopifnot(abs(1 - x / asin(sin(x))) <= 10 * .Machine$double.eps)
 stopifnot(abs(1 - x / atan(tan(x))) <= 10 *.Machine$double.eps)
@@ -931,9 +867,10 @@ a1
 a2 <- glm(ncases/(ncases+ncontrols) ~ agegp + tobgp * alcgp,
 	  data = esoph, family = binomial(), weights=ncases+ncontrols)$aic
 a2
-stopifnot(a1 == a2)
+stopifnot(all.equal(a1, a2))
 ## Comments:
 # both should be 236.9645
+# changed to use all.equal rather than == in 2.1.0 -pd
 
 ## Follow up: example from Lindsey, purportedly of inaccuracy in aic
 y <- matrix(c(2, 0, 7, 3, 0, 9), ncol=2)
@@ -1043,14 +980,12 @@ try(eigen(m))
 
 
 ## 1.3.0 had poor compression on gzfile() with lots of small pieces.
-if (capabilities("libz")) {
-    zz <- gzfile("t1.gz", "w")
-    write(1:1000, zz)
-    close(zz)
-    (sz <- file.info("t1.gz")$size)
-    unlink("t1.gz")
-    stopifnot(sz < 2000)
-}
+zz <- gzfile("t1.gz", "w")
+write(1:1000, zz)
+close(zz)
+(sz <- file.info("t1.gz")$size)
+unlink("t1.gz")
+stopifnot(sz < 2000)
 
 
 ## PR 1010: plot.mts (type="p") was broken in 1.3.0 and this call failed.
@@ -1181,7 +1116,6 @@ pm <- promax(ability.FA$loadings)
 tmp1 <- as.vector(ability.FA$loadings %*% pm$rotmat)
 tmp2 <- as.vector(pm$loadings)
 stopifnot(all.equal(tmp1, tmp2))
-rm(ability.cov)
 
 
 ## PR 1155. On some systems strptime was not setting the month or mday
@@ -1449,7 +1383,7 @@ stopifnot(inherits(z, "try-error"))
 ## 1.4.1 gave +-Inf + random imaginary part
 
 
-## PR#1238  min/max(NULL) or (integer(0))
+## PR#1283  min/max(NULL) or (integer(0))
 z <- min(NULL)
 stopifnot(!is.na(z), mode(z) == "numeric", z == Inf)
 z <- min(integer(0))
@@ -1584,25 +1518,6 @@ stopifnot(length(x) == length(predict(ss,deriv=1)$x))# not yet in 1.5.0
 
 ## pweibull(large, log=T):
 stopifnot(pweibull(seq(1,50,len=1001), 2,3, log = TRUE) < 0)
-
-## selfStart.default() w/ no parameters:
-## --> make this into example(selfStart) {with data and nls()!}
-logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
-		function(x, Asym, xmid, scal){} )
-logistInit <- function(mCall, LHS, data) {
-    xy <- sortedXyData(mCall[["x"]], LHS, data)
-    if(nrow(xy) < 3) stop("Too few distinct input values to fit a logistic")
-    Asym <- max(abs(xy[,"y"]))
-    if (Asym != max(xy[,"y"])) Asym <- -Asym  # negative asymptote
-    xmid <- NLSstClosestX(xy, 0.5 * Asym)
-    scal <- NLSstClosestX(xy, 0.75 * Asym) - xmid
-    value <- c(Asym, xmid, scal)
-    names(value) <- mCall[c("Asym", "xmid", "scal")]
-    value
-}
-logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
-str(logist)
-
 
 ## part of PR 1662: fisher.test with total one
 fisher.test(cbind(0, c(0,0,0,1)))
@@ -1935,8 +1850,10 @@ stopifnot(length(res) == 1 && res == 1)
 tmp <- tempfile()
 long <- paste(rep("0123456789", 20), collapse="")
 cat(long, "\n", sep="", file=tmp)
-junk <- system(paste("cat", tmp), intern = TRUE)
-stopifnot(length(junk) == 1, nchar(junk[1]) == 200)
+# system(intern=TRUE) depends on popen.
+junk <- try(system(paste("cat", tmp), intern = TRUE))
+if(!inherits(junk, "try-error"))
+    stopifnot(length(junk) == 1, nchar(junk[1]) == 200)
 ## and split truncated on 1.6.1
 
 
@@ -2767,13 +2684,6 @@ stopifnot(ir == c(1, 3, -1),
 ## (*, fixed=TRUE) gave 0 2 -1 before R 1.8.1
 
 
-##-- S4 classes with S3 slots:
-setClass("test1", representation(date="POSIXct"))
-(x <- new("test1", date=as.POSIXct("2003-10-09")))
-stopifnot(format(x @ date) == "2003-10-09")
-## line 2 failed in 1.8.0 because of an extraneous space in "%in%"
-
-
 ## PR#5017: filter(init=) had the wrong time order
 xx <- filter(4:8, c(1, 0.5, 0.25), method="recursive", init=3:1)
 stopifnot(identical(xx[1:3], c(8.25, 15.25, 26.125)))
@@ -3017,7 +2927,7 @@ stopifnot(inherits(try(e == e), "try-error"))
 
 
 ## "nowhere" interpolation (PR#6809)
-approx(list(x=rep(NaN, 9), y=1:9), xout=NaN)
+try(approx(list(x=rep(NaN, 9), y=1:9), xout=NaN))
 ## gave a seg.fault in 1.9.0
 
 
@@ -3168,14 +3078,14 @@ stopifnot(identical(names(cumsum(x)), nm),
 
 
 ## complex superassignments
-e <- c(a=1,b=2)
-f <- c(a=1,b=2)
+e <- c(a=1, b=2)
+f <- c(a=1, b=2)
 g <- e
-h <- list(a=1,list(b=2,list(c=3,d=4),list(e=5)))
-j <- matrix(1,2,2)
+h <- list(a=1, list(b=2, list(c=3, d=4), list(e=5)))
+j <- matrix(1, 2, 2)
 a <- "A"
 local({
-  eold <- e <- c(A=10,B=11)
+  eold <- e <- c(A=10, B=11)
   hold <- h <- 2
   jold <- j <- 7
   gold <- g <- e
@@ -3186,32 +3096,1421 @@ local({
   g <<- 1
   h[[2]][[h]][[ f[e==10] ]] <<- h
   names(h[[2]][[h]])[f[e==10] ] <<- a
-  j[h,h] <<- h
+  j[h, h] <<- h
   colnames(j)[2] <<- a
 
-  stopifnot(identical(e,eold))
-  stopifnot(identical(h,hold))
-  stopifnot(identical(g,gold))
-  stopifnot(identical(j,jold))
+  stopifnot(identical(e, eold))
+  stopifnot(identical(h, hold))
+  stopifnot(identical(g, gold))
+  stopifnot(identical(j, jold))
 })
 
-stopifnot(identical(e, c(a=1,b=12)))
-stopifnot(identical(f, c(a=1,B=2)))
+stopifnot(identical(e, c(a=1, b=12)))
+stopifnot(identical(f, c(a=1, B=2)))
 stopifnot(identical(g, 1))
-stopifnot(identical(h, list(a=1,list(b=2, list(B=2,d=4), list(e=5)))))
-stopifnot(identical(as.vector(j), c(1,1,1,2)))
+stopifnot(identical(h, list(a=1, list(b=2, list(B=2, d=4), list(e=5)))))
+stopifnot(identical(as.vector(j), c(1, 1, 1, 2)))
 stopifnot(identical(colnames(j), c(NA,"B")))
-## gave error 'subscript out of bounds' in 1.x.x
+## gave error 'subscript out of bounds' in 1.9.1
 
 ## make sure we don't get cycles out of changes to subassign3.
-x <- list(a=1,y=2)
+x <- list(a=1, y=2)
 x$a <- x
 print(x)
-x$d<-x
+x$d <- x
 print(x)
 y <- x
 x$b <- y
 print(x)
-x$f<-y
+x$f <- y
 print(x)
+##
+
+
+## model.frame incorrectly preserved ts attributes
+x1 <- ts(c(1:10, NA))
+y1 <- ts(rnorm(11))
+lm(y1 ~ x1)
+lm(y1 ~ x1 + I(x1^2)) # second term has two classes
+## failed in 1.9.1
+
+
+## range checks missing in recursive assignments (PR#7196)
+l <- list()
+try(l[[2:3]] <- 1)
+l <- list(x=2)
+try(l[[2:3]] <- 1)
+l <- list(x=2, y=3)
+l[[2:3]] <- 1
+## first two segfaulted in 1.9.x
+
+
+## apply() on an array of dimension >=3 AND when for each iteration
+## the function returns a named vector of length >=2 (PR#7205)
+a <- array(1:24, dim=2:4)
+func1 <- function(x) c(a=mean(x), b=max(x))
+apply(a, 1:2, func1)
+## failed in 1.9.1
+
+
+# col2rgb must return a matrix for a single colour
+stopifnot(is.matrix(col2rgb("red")))
+## was vector at one point in pre-2.0.0
+
+
+## Subscripting matrices with NA's
+AAA <- array(1:6, c(6,1,1))
+idx <- c(1,2,NA,NA,5,6)
+B <- 10
+AAA[idx,1,1] <- B
+stopifnot(all.equal(as.vector(AAA), c(10,10,3,4,10,10)))
+## assigned only the first two elements in 1.9.1.
+## Tests for >= 2.0.0
+A <- c(1,2,3,4,5,6)
+A[idx] <- 27 # OK, one value
+stopifnot(identical(A, c(27,27,3,4,27,27)))
+try(A[idx] <- 6:1) # was 6 5 3 4 2 1 in 1.9.1
+stopifnot(inherits(.Last.value, "try-error"))
+
+AA <- matrix(c(1,2,3,4,5,6), 6, 1)
+AA[idx,] <- 27 # OK, one value
+stopifnot(identical(AA, matrix(c(27,27,3,4,27,27), 6, 1)))
+try(AA[idx,] <- 6:1) # was 6 5 3 4 4 3 in 1.9.1
+stopifnot(inherits(.Last.value, "try-error"))
+
+AAA <- array(c(1,2,3,4,5,6), c(6,1,1))
+AAA[idx,,] <- 27 # OK, one value
+stopifnot(identical(AAA, array(c(27,27,3,4,27,27), c(6,1,1))))
+try(AAA[idx,,] <- 6:1) # was 6 5 3 4 5 6 in 1.9.1
+stopifnot(inherits(.Last.value, "try-error"))
+## only length-1 values are allowed in >= 2.0.0.
+
+
+## hist with infinite values (PR#7220)
+hist(log(-5:100), plot = FALSE)
+## failed in 1.9.1: will warn, correctly.
+
+
+## merge problem with names/not in rbind.data.frame
+x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), .Dim = c(2, 3),
+               .Dimnames = list(c("1", "2"), c("P", "V", "2")))
+y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), .Dim = c(2, 3),
+               .Dimnames = list(c("1", "2"), c("P", "V", "1")))
+merge(x, y, all.y = TRUE)
+## failed for a while in pre-2.0.0
+
+
+## matrix responses in binomial glm lost names prior to 2.0.0
+y <- rbinom(10, 10, 0.5)
+x <- 1:10
+names(y) <- letters[1:10]
+ym <- cbind(y, 10-y)
+fit2 <- glm(ym ~ x, binomial)
+stopifnot(identical(names(resid(fit2)), names(y)))
+## Note: fit <- glm(y/10 ~ x, binomial, weights=rep(10, 10))
+## Does not preserve names in R < 2.0.1, but does in S.
+fit <- glm(y/10 ~ x, binomial, weights=rep(10, 10))
+stopifnot(identical(names(resid(fit)), names(y)))
+## The problem was glm.fit assumed a vector response.
+
+
+## dlogis(-2000) was NaN in <= 2.0.0.
+stopifnot(identical(dlogis(-2000), 0.0))
+##
+
+
+## short vectors in spline[fun]  (PR#7290)
+try(splinefun(1[0], 1[0])(1)) # segfault in <= 2.0.0
+for(meth in c("fmm", "nat", "per"))
+    stopifnot(all(splinefun(1, pi, method = meth)(0:2) == rep(pi, 3)))
+## exactly constant for n=1; was NA for "periodic" in <= 2.0.0
+
+
+## ecdf with NAs (part of PR#7292).
+x <- c(1,2,2,4,7, NA, 10,12, 15,20)
+ecdf(x)
+## failed in <= 2.0.0.
+
+
+## Incorrect use of as.Date segfaulted on some x86_64 systems.
+as.Date("2001", "%Y")
+## answer is usually current mon & day, but 2001-01-01 on Solaris.
+
+
+## rank and order accepted invalid inputs (and gave nonsense)
+x1 <- as.list(10:1)
+x2 <-  charToRaw("A test string")
+stopifnot(inherits(try(order(x1)), "try-error"),
+          inherits(try(order(x2)), "try-error"),
+          inherits(try(rank(x1)), "try-error"),
+          inherits(try(rank(x2)), "try-error"))
+## worked but gave 1:n in 2.0.0.
+stopifnot(inherits(try(sort(x1)), "try-error"),
+          inherits(try(sort(x2)), "try-error"),
+          inherits(try(sort(x1, partial=5)), "try-error"),
+          inherits(try(sort(x2, partial=5)), "try-error"))
+##
+
+
+## pmax failed with NA inputs
+pmax(c(1,2,NA), c(3,4,NA), na.rm=TRUE)
+## failed after for 2.0.0 change to subassignment
+
+
+## subassigning expression could segfault (PR#7326)
+foo <- expression(alpha, beta, gamma)
+foo[2]
+foo[2] <- NA
+foo
+## segfaulted in 2.0.0
+
+
+## incorrect arg matching in sum min max prod any all
+## Pat Burns, R-devel 2004-11-19
+stopifnot(identical(sum(1:4, NA, n = 78, na.rm = TRUE), 88))
+## was 11 in 2.0.1
+
+
+## segfault from text, P Ehlers, R-devel 2004-11-24
+plot(1:10)
+loc <- list(5, 6)
+try(text(loc, labels = "a"))
+## segfaulted in 2.0.1
+
+
+## automatic row.names can be number-like, MM, 2004-11-26
+d0 <- data.frame(x=1:3, y=pi*2:0)
+row.names(d0)[3] <- c("01.00")
+write.table(d0, (tf <- tempfile()))
+d <- read.table(tf)
+## gave error ("duplicate row.names") in 2.0.1
+stopifnot(all.equal(d,d0))
+unlink(tf)
+
+
+## seq() should be more consistent in returning "integer"
+stopifnot(typeof(seq(length=0)) == "integer",
+          identical(seq(length=0), seq(along=0[0])),
+          identical(seq(length=3), 1:3),
+          identical(seq(length=3), seq(along=1:3)))
+
+
+## labels.lm was broken (PR#7417)
+# part of example(lm)
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2,10,20, labels=c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+stopifnot(labels(lm.D9) == "group")
+## failed in 2.0.1, giving length 0
+
+
+## sprintf had no length check (PR#7554)
+a <- matrix (ncol=100, nrow=100, data=c(1,2,3,4,5))
+a.serial <- rawToChar(serialize(a, NULL, ascii=TRUE))
+try(sprintf('foo: %s\n', a.serial))
+## seqfaulted in 2.0.1
+
+
+## all/any did not coerce as the Blue Book described.
+for(x in c("F", "FALSE", "T", "TRUE", "NA")) {
+    print(all(x))
+    print(any(x))
+}
+all(list())
+any(list())
+## all failed in 2.0.1 with 'incorrect argument type'
+
+
+##---- named dimnames of  %*% and crossprod() -- matrices and 1-d arrays:
+tst1 <- function(m) {
+    stopifnot(identical(t(m) %*%  (m), crossprod(m)))
+    stopifnot(identical(m    %*% t(m), crossprod(t(m))))
+}
+tst2 <- function(x, y=x) {
+    stopifnot(identical(t(x) %*% (y),(crossprod(x,y) ->  C)))
+    stopifnot(identical(t(y) %*% (x),(crossprod(y,x) -> tC)))
+    stopifnot(identical(tC, t(C)))
+}
+
+{m1 <- array(1:2,1:2); dimnames(m1) <- list(D1="A", D2=c("a","b")); m1}
+tst1(m1)
+m2 <- m1; names(dimnames(m2)) <- c("", "d2"); tst1(m2)
+m3 <- m1; names(dimnames(m3)) <- c("", "")  ; tst1(m3)
+m4 <- m1; names(dimnames(m4)) <- NULL       ; tst1(m4)
+
+tst2(m1,m2)
+tst2(m1,m3)
+tst2(m1,m4)
+tst2(m2,m3)
+tst2(m2,m4)
+tst2(m3,m4)
+
+## 2) Now the 'same' with 1-d arrays:
+a1 <- m1; dim(a1) <- length(a1); dimnames(a1) <- dimnames(m1)[2]; a1 # named dn
+a2 <- a1; names(dimnames(a2)) <- NULL ; a2 # unnamed dn
+a3 <- a1; dimnames(a3) <- NULL ; a3 # no dn
+stopifnot(identical(dimnames(t(a1))[2], dimnames(a1)))
+## in version <= 2.0.1,  t(.) was loosing names of dimnames()
+tst1(a1)# failed in 2.0.1 ("twice")
+tst1(a2)# failed in 2.0.1
+tst1(a3)# ok
+## these all three failed in (2.0.1) for more than one reason:
+tst2(a1,a2)
+tst2(a1,a3)
+tst2(a2,a3)
+## end {testing named dimnames for %*% and crossprod()}
+
+
+## -- coercing as.data.frame(NULL) to a pairlist didn't work
+y<-1:10
+eval(quote(y), as.data.frame(NULL))
+## NULL as the second argument of eval should be treated
+## like a list or data frame
+eval(quote(y), NULL)
+## end
+
+
+## data frame with nothing to replace
+A <- matrix(1:4, 2, 2)
+A[is.na(A)] <- 0
+A <- as.data.frame(A)
+A[is.na(A)] <- 0
+## last not accepted prior to 2.1.0
+
+
+## scan on partial lines on an open connection
+cat("TITLE extra line", "235 335 535 735", "115 135 175",
+    file="ex.data", sep="\n")
+cn.x <- file("ex.data", open="r")
+res <- scan(cn.x, skip=1, n=2)
+res <- c(res, scan(cn.x, n=2))
+res <- c(res, scan(cn.x, n=2))
+res <- c(res, scan(cn.x, n=2))
+close(cn.x, sep=" ")
+unlink("ex.data")
+stopifnot(identical(res, c(235, 335, 535, 735, 115, 135, 175)))
+## dropped some first chars < 2.1.0
+
+
+## PR#7686 formatC does not pick up on incorrect 'flag' inputs
+try(formatC(1, flag="s"))
+## segfaulted in 2.0.1
+
+
+## PR#7695 contrasts needed coercion to double
+c <- matrix(c(0,1,2), nrow=3)
+storage.mode(c) <- "integer"
+f <- factor(1:3)
+contrasts(f, 1) <- c
+x <- model.matrix(~f)
+stopifnot(x == c(1,1,1,0,1,2))
+## gave machine-dependendent silly numbers in 2.0.1
+
+
+## extreme (de-normalized) axis range
+x <- 2^-seq(67, 1067, length=20)
+plot(x^.9, x, type="l", log="xy") # still warning and ugly labels because
+                                 ## e.g., 10^-323 |==> 9.881313e-324 numerically
+## gave error "log - axis(), 'at' creation, _LARGE_ range..." in 2.0.1
+
+
+## torture test of scan() with allowEscape=TRUE
+tf <- tempfile()
+x <- c('ABC', '"123"', "a'b")
+cat(shQuote(x, "cmd"), sep="\n", file=tf)
+(x2 <- scan(tf, ""))
+unlink(tf)
+stopifnot(identical(x, x2))
+## At one point pre-2.1.0 got confused
+
+
+## se.contrast failed in 2.0.1 with some effectively one-stratum designs.
+old <- getOption("contrasts")
+options(contrasts = c("contr.helmert", "contr.poly"))
+Lab <- factor(rep(c("1","2","3"), each=12))
+Material <- factor(rep(c("A","B","C","D"),each=3,times=3))
+Measurement <- c(12.20,12.28,12.16,15.51,15.02,15.29,18.14,18.08,18.21,
+                 18.54,18.36,18.45,12.59,12.30,12.67,14.98,15.46,15.22,
+                 18.54,18.31,18.60,19.21,18.77,18.69,12.72,12.78,12.66,
+                 15.33,15.19,15.24,18.00,18.15,17.93,18.88,18.12,18.03)
+testdata <- data.frame(Lab, Material, Measurement)
+(test.aov <- aov(Measurement ~ Material + Error(Lab/Material),
+                 data = testdata))
+eff.aovlist(test.aov)
+(res <- se.contrast(test.aov,
+                    list(Material=="A", Material=="B",
+                         Material=="C", Material=="D"),
+                    coef = c(1, 1, -1, -1), data = testdata))
+## failed in 2.0.1 as a matrix was 1 x 1.
+
+## 2.0.1 also failed to check for orthogonal contrasts
+## in calculating the efficiencies (which are 1 here).
+options(contrasts = c("contr.treatment", "contr.poly"))
+(test2.aov <- aov(Measurement ~ Material + Error(Lab/Material),
+                  data = testdata))
+(res2 <- se.contrast(test2.aov,
+                     list(Material=="A", Material=="B",
+                          Material=="C", Material=="D"),
+                     coef = c(1, 1, -1, -1), data = testdata))
+stopifnot(all.equal(res, res2))
+
+## related checks on eff.aovlist
+example(eff.aovlist) # helmert contrasts
+eff1 <- eff.aovlist(fit)
+fit <- aov(Yield ~ A * B * C + Error(Block), data = aovdat)
+eff2 <- eff.aovlist(fit)
+stopifnot(all.equal(eff1, eff2)) # will have rounding-error differences
+options(contrasts = old)
+## Were different in earlier versions
+
+
+## parts of PR#7742 and other examples
+sub('^','v_', 1:3, perl=TRUE)
+## 2.0.1 did not coerce to character (nor was it documented to).
+x <- LETTERS[1:3]
+stopifnot(identical(paste('v_', x, sep=""),
+                    sub('^','v_', x, perl = TRUE)))
+## 2.0.1 added random chars at the end
+stopifnot(identical(paste('v_', x, sep=""), sub('^','v_', x)))
+## 2.0.1 did not substitute at all
+(x <- gsub("\\b", "|", "The quick brown fox", perl = TRUE))
+stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
+## checked against sed: 2.0.1 infinite-looped.
+(x <- gsub("\\b", "|", "The quick brown fox"))
+stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
+## 2.0.1 gave wrong answer
+## Another boundary case,
+(x <- gsub("\\b", "|", " The quick "))
+stopifnot(identical(x, " |The| |quick| "))
+(x <- gsub("\\b", "|", " The quick ", perl = TRUE))
+stopifnot(identical(x, " |The| |quick| "))
+## and some from a comment in the GNU sed code
+x <- gsub("a*", "x", "baaaac")
+stopifnot(identical(x, "xbxcx"))
+x <- gsub("a*", "x", "baaaac", perl = TRUE)
+stopifnot(identical(x, "xbxcx"))
+## earlier versions got "bxc" or "xbxxcx"
+(x <- gsub("^12", "x", "1212")) # was "xx"
+stopifnot(identical(x, "x12"))
+(x <- gsub("^12", "x", "1212", perl = TRUE)) # was "xx"
+stopifnot(identical(x, "x12"))
+## various fixes in 2.1.0
+
+## length(0) "dist":
+(d01. <- dist(matrix(0., 0,1)))
+## failed in 2.0.1 and earlier
+
+
+## Wish of PR#7775
+x <- matrix(0, nrow=0, ncol=2)
+colSums(x); rowSums(x)
+x <- matrix(0, nrow=2, ncol=0)
+colSums(x); rowSums(x)
+## not allowed in 2.0.1
+
+
+## infinite recursion in 2.0.1 (and R-beta 2005-04-11):
+summary(data.frame(mat = I(matrix(1:8, 2))))
+summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
+##
+
+
+
+### fixes for 2.1.1 ###
+
+## PR#7792: predict.glm dropped names
+nm <- names(predict(glm(y ~ x, family=binomial,
+                        data=data.frame(y=c(1, 0, 1, 0), x=c(1, 1, 0, 0))),
+                    newdata=data.frame(x=c(0, 0.5, 1)), type="response"))
+stopifnot(identical(nm, as.character(1:3)))
+## no names in 2.1.0
+
+
+## PR#7808: as.data.frame: Error in "names<-.default"
+x1 <- array(1:9, c(3, 3, 3))
+FUN <- function(x1, x2, x3, x4) cbind(x1[, 1, 1:2], x1[, 2, 1:2])[, 1]
+as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
+                  x3 = c("a", "b"), x4 = c("a", "b")))
+## failed in 2.1.0
+
+
+## PR#7797 citation() chops "Roeland "
+stopifnot(as.personList("Roeland Lastname")[[1]]$name[1] == "Roeland")
+## was empty in 2.1.0.
+
+
+## runmed()'s Turlach algorithm seg.faulted in rare cases:
+t2 <- c(-2,-7,5,2,-3, 0,1,3,2,-1,2,1,2,1,1,1,-2,4, 1,1,1, 32)
+rS <- runmed(t2, k=21, algorithm= "Stuetzle")
+rT <- runmed(t2, k=21, algorithm= "Turlach")
+stopifnot(identical(rS, rT))
+## seg.fault in 2.1.0
+
+
+## duplicated and unique on a list
+x <- list(1, 2, 3, 2)
+duplicated(x)
+unique(x)
+## unique failed in 2.1.0
+
+
+## prog.aovlist on data with row.names
+N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
+P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
+K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
+yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
+	   55.0, 62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
+npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
+		  K=factor(K), yield=yield)
+row.names(npk) <- letters[2:25]
+npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
+pr <- proj(npk.aovE)
+## failed in 2.1.0
+
+
+## PR#7894: Reversing axis in a log plot
+x <- 1:3
+plot(x, exp(x), log = "y", ylim = c(30,1))
+## gave error (and warning) in  log - axis(), 'at' creation
+
+### end of tests added in 2.1.0 patched ###
+
+
+
+## Multibyte character set regular expressions had buffer overrun
+regexpr("[a-z]", NA)
+## crashed on 2.1.1 on Windows in MBCS build.
+
+
+## PR#8033: density with 'Inf' in x:
+d <- density(1/0:2, kern = "rect", bw=1, from=0, to=1, n=2)
+stopifnot(all.equal(rep(1/sqrt(27), 2), d$y, tol=1e-14))
+## failed in R 2.1.1 (since about 1.9.0)
+
+stopifnot(all.equal(Arg(-1), pi))
+## failed in R <= 2.1.1
+
+
+## PR#7973: reversed log-scaled axis
+plot(1:100, log="y", ylim=c(100,10))
+stopifnot(axTicks(2) == 10*c(1,2,5,10))
+## empty < 2.2.0
+
+
+## rounding errors in window.default (reported by Stefano Iacus)
+x <- ts(rnorm(50001), start=0, deltat=0.1)
+length(window(x, deltat=0.4))
+length(window(x, deltat=1))
+length(window(x, deltat=4.9))
+length(window(x, deltat=5))
+## last failed in 2.1.1
+
+
+## incorrect sort in order with na.last != NA
+x <- c("5","6",NA,"4",NA)
+y <- x[order(x,na.last=FALSE)]
+stopifnot(identical(y, c(NA, NA, "4", "5", "6")))
+## 2.1.1 sorted "4" first: the fence was wrong.
+
+
+## integer overflow in cor.test (PR#8087)
+n <- 46341
+(z <- cor.test(runif(n), runif(n), method = "spearman"))
+stopifnot(!is.na(z$p.value))
+##
+
+## seek on a file messed up in Windows (PR#7896)
+tf <- tempfile()
+f <- file(tf, "w+b")
+writeChar("abcdefghijklmnopqrstuvwxyz", f, eos=NULL)
+seek(f, 0, "end", rw="r")
+stopifnot(seek(f, NA, rw="r") == 26) # MinGW messed up seek to end of file that was open for writing
+close(f)
+f <- file(tf, "rb")
+seek(f, 12)
+stopifnot(readChar(f, 1) == "m")  # First patch messed up on read-only files
+close(f)
+unlink(tf)
+##
+
+### end of tests added in 2.1.1 patched ###
+
+
+
+## tests of hexadecimal constants
+x <- 0xAbc
+stopifnot(x == 2748)
+xx <- as.integer("0xAbc")
+stopifnot(x == xx)
+xx <- as.numeric("0xAbc")
+stopifnot(x == xx)
+stopifnot(as.integer("13.7") == 13)
+## new in 2.2.0
+
+
+## save() of raw vector was incorrect on big-endian system
+(y <- x <- charToRaw("12345"))
+save(x, file="x.Rda")
+rm(x)
+load("x.Rda")
+x
+stopifnot(identical(x, y))
+unlink("x.Rda")
+## 00 00 00 00 00 in 2.1.0 on MacOS X
+## fixed for 2.1.1, but test added only in 2.2.x
+
+
+## PR#7922:  Could not use expression() as an initial expression value
+setClass("test2", representation(bar = "expression"))
+new("test2", bar = expression())
+## failed
+
+
+## Ops.data.frame had the default check.names=TRUE
+DF <- data.frame("100"=1:2, "200"=3:4, check.names=FALSE)
+DF/DF
+stopifnot(identical(names(DF), names(DF/DF)))
+## DF/DF names had X prepended < 2.2.0
+
+
+## sum(T) was double
+x <- 1:10
+stopifnot(typeof(sum(x)) == "integer")
+x <- c(TRUE, FALSE)
+stopifnot(typeof(sum(x)) == "integer")
+## double < 2.2.0
+
+
+## Overflow in PrintGenericVector
+x <- paste(1:5000, collapse="+")
+as.matrix(list(a=1:2, b=2:3, c=x))
+## segfault in 2.1.1, silent truncation in 2.1.1 patched
+
+
+## weighted.residuals for glm fits (PR#7961)
+set.seed(1)
+x <- runif(10)
+y <- x + rnorm(10)
+w <- 0:9
+r1 <- weighted.residuals(lm(y ~ x, weights = w))
+r2 <- weighted.residuals(glm(y ~ x, weights = w))
+stopifnot(all.equal(r1, r2))
+## different in 2.1.1
+
+
+## errors in add1.{lm,glm} when adding vars with missing values(PR#8049)
+set.seed(2)
+y <- rnorm(10)
+x <- 1:10
+is.na(x[9]) <- TRUE
+
+lm0 <- lm(y ~ 1)
+lm1 <- lm(y ~ 1, weights = rep(1, 10))
+
+add1(lm0, scope = ~ x)
+add1(lm1, scope = ~ x)  ## error in 2.1.1
+
+glm0 <- glm(y ~ 1)
+glm1 <- glm(y ~ 1, weights = rep(1, 10))
+glm2 <- glm(y ~ 1, offset = rep(0, 10))
+
+add1(glm0, scope = ~ x)  ## error in 2.1.1
+add1(glm1, scope = ~ x)  ## error in 2.1.1
+add1(glm2, scope = ~ x)  ## error in 2.1.1
+##
+
+
+## levels<-.factor dropped other attributes.
+## Heinz Tuechler, R-help, 2005-07-18
+f1 <- factor(c("level c", "level b", "level a", "level c"), ordered=TRUE)
+attr(f1, "testattribute") <- "teststring"
+(old <- attributes(f1))
+levels(f1) <- c("L-A", "L-B", "L-C")
+f1
+(new <- attributes(f1))
+new$levels <- old$levels <- NULL
+stopifnot(identical(old, new))
+f2 <- factor(letters[1:4])
+levels(f2) <- as.character(c(1:3, NA))
+f2
+stopifnot(nlevels(f2) == 3)
+## dropped other attributes < 2.2.0.
+
+
+## regressed at one point in pre-2.2.0
+A <- matrix(pi, 0, 2)
+stopifnot(identical(dim(A), dim(format(A))))
+## dropped dim at one point
+
+
+## ls.diag with missing values (PR#8139)
+x <- matrix(c(1,-1,1,-1,1,-1,1,-1,1,-1,  1,2,3,4,5,6,7,8,9,10), 10, 2)
+y <- as.matrix(c(1,2,3,NA,3,4,3,4,5,4))
+wt <- c(1,1,1,1,1,1,1,1,1,0)
+regres <- lsfit(x, y, wt=wt)
+regdiag <- ls.diag(regres)
+## failed < 2.2.0.
+
+
+## window.default had an inappropriate tolerance
+a <- ts(1:5000, start = 0, freq = 10)
+b <- lag(a, 1)
+bb <- window(b, start = 0)
+stopifnot(length(bb) == length(a) - 1)
+## was length(a) - 2 in 2.1.1, since the tolerance was abs(start) * ts.end
+
+
+## subassignment of length zero vector to NULL gave garbage answer (PR#8157)
+x <- NULL
+x[[1]] <- numeric(0)
+stopifnot(length(x[[1]]) == 0)
+## failed < 2.2.0
+
+
+## some checks for raw in data frames and lists
+x <- charToRaw("test")
+(z <- data.frame(x))
+z$y <- x
+z[["y2"]] <- x
+z["y3"] <- x
+z
+## lists use separate code
+z <- list(x=x)
+z$y <- x
+z[["y2"]] <- x
+z["y3"] <- list(x)
+z
+## Not completely supported prior to 2.2.0
+
+
+### end of tests added in 2.2.0 ###
+
+
+## summary.matrix failed on some classed objects
+surv <- structure(c(2.06, 2.13, 0.09, 0.27, 1, 0.36, 3.04, 0.67, 0.35,
+                    0.24, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0),
+                  .Dim = c(10, 2),
+                  .Dimnames = list(NULL, c("time", "status")),
+                  type = "right", class = "Surv")
+summary(surv)
+## Had infinite recursion (sometimes segfault) on 2.2.0.
+
+## need fuzz even for ">=" :
+set.seed(1)
+stopifnot(all.equal(chisq.test(cbind(1:0, c(7,16)), simulate.p = TRUE)$p.value,
+                    0.3368315842, tol = 1e-6))
+## some i686 platforms gave 0.00049975
+
+
+## PR#8228 image() failed on a matrix with all NAs
+image(z=matrix(NA, 1, 1), x=0:1, y=0:1)
+
+
+## read.fwf(header=TRUE) failed (PR#8226)
+ff <- tempfile()
+cat(file=ff, "A\tB\tC", "123456", "987654", sep="\n")
+z <- read.fwf(ff, width=c(1,2,3), header=TRUE)
+stopifnot(identical(names(z), LETTERS[1:3]))
+unlink(ff)
+## failed in <= 2.2.0
+
+## diag() failed if matrix had NA dimnames
+x <- matrix(1, 2, 2)
+dimnames(x) <- list(c("a", NA), c("a", NA))
+diag(x)
+
+
+## colnames in pivoted decompositions (PR#8258)
+A <- 1:10
+X <- cbind(A,B=A^2, C=A^2-A, D=1)
+qrX <- qr(X)
+oo <- order(qrX$pivot)
+Q <- qr.Q(qrX)
+R <- qr.R(qrX)
+(z <- (Q%*%R)[,oo])
+stopifnot(identical(colnames(X), colnames(z)))
+
+qrX <- qr(X, LAPACK=TRUE)
+oo <- order(qrX$pivot)
+Q <- qr.Q(qrX)
+R <- qr.R(qrX)
+(z <- (Q%*%R)[,oo])
+stopifnot(identical(colnames(X), colnames(z)))
+
+Y <- crossprod(X)
+U <- chol(Y, pivot=TRUE)
+oo <- order(attr(U, "pivot"))
+(z <- t(U[,oo])%*% U[,oo])
+stopifnot(identical(colnames(X), colnames(z)))
+## unpivoted colnames in R <= 2.2.0
+
+
+## Im(-1) (PR#8272)
+stopifnot(all.equal(Im(c(1, 0, -1)), rep(0, 3)))
+## R <= 2.2.0 had Im and Arg the same for non-complex numbers
+
+
+## rounding errors in aggregate.ts
+aggregate(as.ts(c(1,2,3,4,5,6,7,8,9,10)),1/5,mean)
+## failed in 2.2.0
+
+
+## prcomp(tol=1e-6)
+x <- matrix(runif(30),ncol=10)
+s <- prcomp(x, tol=1e-6)
+stopifnot(length(s$sdev) == ncol(s$rotation))
+summary(s)
+## last failed in 2.2.0
+
+
+## mapply did not test type of MoreArgs
+try(mapply(rep,times=1:4, MoreArgs=42))
+## segfaulted in 2.2.0
+
+
+## qbinom had incorrect test for p with log=TRUE
+(z <- qbinom(-Inf, 1, 0.5, log.p = TRUE))
+stopifnot(is.finite(z))
+## was NaN in 2.2.0
+
+
+## t(.) with NULL dimnames
+x <- diag(2)
+dimnames(x) <- list(NULL, NULL)
+stopifnot(identical(x, t(x)),
+          identical(dimnames(x), dimnames(t(array(3, 1, dimnames=list(NULL))))))## dropped the length-2 list till 2.2.0
+
+
+## infinite influence measures (PR#8367)
+occupationalStatus <-
+    structure(as.integer(c(50, 16, 12, 11, 2, 12, 0, 0, 19, 40, 35,
+                           20, 8, 28, 6, 3, 26, 34, 65, 58, 12, 102,
+                           19, 14, 8, 18, 66, 110, 23, 162, 40, 32, 7,
+                           11, 35, 40, 25, 90, 21, 15, 11, 20, 88, 183,
+                           46, 554, 158, 126, 6, 8, 23, 64, 28, 230, 143,
+                           91, 2, 3, 21, 32, 12, 177, 71, 106)
+                         ), .Dim = as.integer(c(8, 8)), .Dimnames =
+              structure(list(origin = c("1", "2", "3", "4", "5", "6", "7", "8"),
+                             destination = c("1", "2", "3", "4", "5", "6", "7",
+                             "8")), .Names = c("origin", "destination")),
+              class = "table")
+Diag <- as.factor(diag(1:8))
+Rscore <- scale(as.numeric(row(occupationalStatus)), scale = FALSE)
+Cscore <- scale(as.numeric(col(occupationalStatus)), scale = FALSE)
+Uniform <- glm(Freq ~ origin + destination + Diag +
+               Rscore:Cscore, family = poisson, data = occupationalStatus)
+Ind <- as.logical(diag(8))
+residuals(Uniform)[Ind] #zero/near-zero
+stopifnot(is.nan(rstandard(Uniform)[Ind]))
+stopifnot(is.nan(rstudent(Uniform)[Ind]))
+stopifnot(is.nan(dffits(Uniform)[Ind]))
+stopifnot(is.nan(covratio(Uniform)[Ind]))
+stopifnot(is.nan(cooks.distance(Uniform)[Ind]))
+# had infinities in 2.2.0 on some platforms
+plot(Uniform)
+plot(Uniform, 6) # added 2006-01-10
+##
+
+
+### end of tests added in 2.2.1 ###
+
+## sub(fixed=TRUE), reported by Roger Peng 2005-12-21
+x <- 0:10
+v <- paste(x, "asdf", sep=".")
+(xx <- sub(".asdf", "", v, fixed = TRUE))
+stopifnot(nchar(xx) == nchar(x), xx == x)
+## had random trailing bytes from second element on in 2.2.1.
+## identical reported true, fixed in 2.3.0.
+
+## eigen(EISPACK=TRUE) problem reported to R-devel by Ole Christensen
+## 2006-01-03
+Gm <- rbind(c(-0.3194373786, 0.2444066686, 0.0428108831,  3.221983e-02),
+            c(0.0002071301, -0.0003282719,  0.0001211418, 5.128830e-12),
+            c(0.0621332005,  0.0545850010, -0.2098487035, 9.313050e-02),
+            c(0.0280936142,  0.0586642184,  0.1658310277, -2.525889e-01))
+temp <- eigen(Gm)
+temp
+temp2 <- eigen(Gm, EISPACK = TRUE)
+temp2$vectors <- apply(temp2$vectors, 2, function(x) x/sqrt(sum(Mod(x)^2)))
+temp2
+## segfaulted in 2.2.1
+
+## rbind on data frames with 0 rows (PR#8506)
+foo <- data.frame(x = 1:10, y = rnorm(10))
+bar1 <- rbind.data.frame(foo[1:5,], foo[numeric(0),])
+stopifnot(dim(bar1) == c(5,2))
+bar2 <- rbind.data.frame(a = foo[1:5,], b = foo[numeric(0),])
+stopifnot(dim(bar2) == c(5,2))
+## Last had 6 rows in 2.2.1, and was a corrupt data frame
+
+## environments are recursive but cannot be indexed - all.equal.default()
+d <- data.frame(k=1:7, n=2:8, x=0:6)
+r <- glm(cbind(k, n-k) ~ x, family=binomial, data=d)
+stopifnot(all.equal(r,r))
+## failed in 2.2.1
+
+### end of tests added in 2.2.1 patched ###
+
+
+## sort used to preserve inappropriate attributes and not always sort names.
+x <- runif(10)
+tsp(x) <- c(1,10,1)
+(z <- sort(x))                 # kept tsp attribute
+stopifnot(is.null(attributes(z)))
+(z <- sort(x, method="quick")) # same
+stopifnot(is.null(attributes(z)))
+(z <- sort(x, partial = 1:10)) # same
+stopifnot(is.null(attributes(z)))
+
+names(x) <- letters[1:10]
+o <- sort.list(x)
+z2 <- structure(c(x)[o], names=names(x)[o])
+(z <- sort(x))                 # sorted names, dropped the tsp attribute
+stopifnot(identical(z, z2))
+(z <- sort(x, method="quick")) # sorted names, kept the tsp attribute.
+stopifnot(identical(z, z2))
+(z <- sort(x, partial = 1:10)) # did not sort names, kept tsp attribute
+stopifnot(is.null(attributes(z)))
+## fixed for 2.3.0 to sort names (except partial), drop all other attributes.
+
+
+## formatC on as.single (PR#8211)
+# not documented to work but someone tried it.
+(z <- formatC(as.single(1)))
+stopifnot(identical(z, "1"))
+## was wrong < 2.3.0
+
+
+## outer on factors was broken in pre-2.3.0
+x <- factor(1:3)
+outer(x, x, "!=")
+## failed 2005-10-17
+
+
+## add tests for < 0 shape in [dpqr]gamma
+dgamma(1, -2)
+pgamma(1, -2)
+qgamma(0.95, -2)
+rgamma(3, -20)
+## all errors < 2.1.1, now NaNs
+
+
+## Make sure reference to local environment is serialized
+f <- function() { function(){} }
+serialize(f(), NULL)
+##
+
+
+## dummy_vfprintf with overlong format
+xx <- paste(rep("a", 10000), collapse="+")
+con <- gzfile("test.gz", "w")
+writeLines(xx, con)
+close(con)
+unlink("test.gz")
+## segfaulted in 2.2.0 on some x86_64 systems.
+
+
+## format() with *.marks:
+x <- 1.2345 + 10^(0:5)
+ff <- format(x, width = 11, big.mark = "'")
+stopifnot(nchar(ff) == 12)
+## small marks test
+f2 <- format(x, big.mark = "'", small.mark="_", small.interval = 2)
+nc <- nchar(f2)
+stopifnot(substring(f2, nc,nc) != "_", # no traling small mark
+          nc == nc[1])# all the same
+fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
+stopifnot(nchar(fc) == 11)
+## had non-adjusted strings before 2.3.0
+
+
+## data.matrix on zero-length columns
+DF <- data.frame(x=c("a", "b"), y=2:3)[FALSE,]
+stopifnot(is.numeric(data.matrix(DF)))
+# was logical in 2.2.1.
+DF <- data.frame(I(character(0)))
+X <- try(data.matrix(DF))
+stopifnot(inherits(X, "try-error"))
+## gave logical matrix in 2.2.1.
+
+stopifnot(pbirthday(950, coincident=250) == 0,
+          pbirthday(950, coincident=200) > 0)
+## gave error before 2.3.0
+
+
+## raw matrices (PR#8529/30)
+v <- as.raw(c(1:6))
+dim(v) <- c(2,3)
+dimnames(v) <- list(c("x","y"), c("P", "Q", "R"))
+v
+s <- as.raw(c(11:16))
+dim(s) <- c(2,3)
+s
+rbind(s,v,v)
+(m <- cbind(s,v,v,s))
+m[2,4] <- as.raw(254)
+m
+m[1:2,2:4] <- s
+m
+## unimplemented before 2.3.0
+
+
+## window with non-overlapping ranges (PR#8545)
+test <- ts(1:144, start=c(1,1), frequency=12)
+window(test, start=c(15,1), end=c(17,1), extend=TRUE)
+## failed < 2.3.0
+
+
+## pbinom(size=0) gave NaN (PR#8560)
+x <- c(-1,0,1,2)
+stopifnot(identical(pbinom(x, size = 0, p = 0.5), c(0,1,1,1)))
+## 2.2.1 gave NaN in all cases (forced explicitly in C code).
+
+
+## Limits on [dpqr]nbinom and [dqpr]geom
+stopifnot(is.nan(dnbinom(0, 1, 0)), dnbinom(0, 1, 1) == 1,
+          pnbinom(c(-1, 0, 1), 1, 1) == c(0, 1, 1),
+          is.nan(pnbinom(0, 1, 0)),
+          qnbinom(0.5, 1, 1) == 0,
+          is.nan(qnbinom(0.5, 1, 0)),
+          is.finite(rnbinom(1, 1, 1)),
+          !is.finite(rnbinom(1, 1, 0)))
+## d allowed p=0, [pq] disallowed p=1 for R < 2.3.0, r gave NaN for p=1.
+stopifnot(is.nan(dgeom(0, 0)), dgeom(0, 1) == 1,
+          pgeom(c(-1, 0, 1), 1) == c(0, 1, 1), is.nan(pgeom(0, 0)),
+          qgeom(0.5, 1) == 0, is.nan(qgeom(0.5, 0)),
+          is.finite(rgeom(1, 1)),
+          !is.finite(rgeom(1, 0)))
+
+
+## A response to PR#8528  incorrectly claimed these to be wrong.
+stopifnot(all.equal(df(0, 2, 2), 1))
+stopifnot(is.infinite(df(0, 1.3, 2)))
+x <- 1e-170
+stopifnot(all.equal(pbeta(x,x,x), 0.5))
+## just a regression check.
+## This underflowed
+stopifnot(all.equal(dbeta(x,x,x), 0.5))
+## this was slow
+stopifnot(system.time(qnbinom(1e-10, 1e3, 1e-7))[3] < 0.1)
+## but this failed
+qnbinom(0.5, 10000000000, 0.000000002)
+## infinite-looped in 2.2.1 (answer is approx 4e18)
+qpois(0.9, 1e50)
+## infinite-looped in 2.2.1
+z <- 10^seq(10, 300, 10)
+stopifnot(all.equal(pt(-z, 1, log=TRUE), pcauchy(-z, 1, log=TRUE)))
+## failed at about 1e150 in 2.2.1
+stopifnot(pt(-1e200, 0.001) > 0)
+## was 0 in 2.2.1, should be about 31%
+
+
+## is.factor differed from internal isFactor on hand-constructed factors
+## and this hit split. (The difference is still there.)
+fac2 <- rep(c(1,2,3), each=5)
+attr(fac2, "levels") <- as.character(1:3)
+oldClass(fac2) <- "factor"
+stopifnot(is.factor(fac2))
+split(rnorm(15), fac2)
+## failed in 2.2.1
+
+
+## all.equal.numeric overflowed for large integers
+set.seed(1); r1 <- .Random.seed
+set.seed(2); r2 <- .Random.seed
+stopifnot(is.character(all.equal(r1, r2)))
+## all.equal() gave NA in 2.2.1
+
+
+## support for raw indices in for() was added in 2.3.0
+xx <- as.raw(40:48)
+for(i in xx) print(i)
+## was error < 2.3.0
+
+
+## atan2 with one complex argument
+atan2(1, 1i)
+## was error in 2.2.1
+
+
+## as.list on a symbol, for S-compatibility
+as.list(as.name("data.frame"))
+## was error in 2.2.1
+
+
+## min ignored INT_MAX, (PR#8731)
+stopifnot(min(.Machine$integer.max) == .Machine$integer.max)
+stopifnot(max(-.Machine$integer.max) == -.Machine$integer.max)
+op <- options(warn=2)
+min(Inf)
+max(-Inf)
+options(op)
+## were +/-Inf with warning in 2.2.1.
+
+
+## PR#8718
+a <- matrix(2,2,2)
+apply(a,1,"$","a")
+apply(a,1,sum)
+## first apply was corrupting apply() code in 2.2.1
+
+
+## NULL results in apply()
+apply(as.matrix(1), 1, function(x) NULL)
+## was error in 2.2.1.
+
+
+## sum on data frames (PR#8385)
+DF <- data.frame(m1=1:2, m2=3:4)
+sum(DF)
+sum(DF=DF)  # needed arg named x
+sum(DF, DF) # failed
+DF[1, 1] <- NA
+stopifnot(is.na(sum(DF)), sum(DF, na.rm=TRUE) == 9)
+## failures < 2.4.0
+
+op <- par(mfrow = c(2,2), mar = .1+c(3,3,2,1), mgp = c(1.5, .6, 0))
+y <- rt(200, df= 3)
+plot(lm(y ~ 1))
+par(op)
+## 4th plot (which = 5: "leverages") failed in 2.2.0 <= R <= 2.3.0
+
+
+## Re-fix PR#8506
+z <- rbind(x = data.frame(a = 1, b = 2), y = data.frame(a = 1, b = 2))
+stopifnot(row.names(z) == c("x", "y"))
+## were NAs (and failed to print) in 2.3.0
+
+dd <- data.frame(x = 3:4)
+stopifnot(identical(rownames(dd), row.names(dd)),
+          identical(rownames(dd), c("1", "2")))
+## one was integer in an intermediate version of "pre 2.4.0"
+
+
+## mean on integer vector ignored NAs
+stopifnot(is.na(mean(NA)))
+## failed in R 2.3.0
+
+
+## title etc failed if passed col etc of length > 1
+plot(1:2)
+title("foo", col=1:3)
+title("foo", cex=1:3)
+title("foo", lty=1:3)
+title("foo", lwd=1:3)
+title("foo", bg=4:7)
+## threw errors in R <= 2.3.0
+
+
+## glm did not allow array offsets
+df1 <- data.frame(u=1:10,
+                  v=rpois(10,10),
+                  z=array(1,10, dimnames=list(1:10)))
+glm(v ~ u+offset(log(z)), data=df1, family=poisson)
+## was error in R <= 2.3.0
+
+
+## invalid values of a logical vector from bindingIsLocked
+## Martin Morgan, R-devel, 2006-05-14
+e <- new.env()
+e$x <- 1
+e$y <- 2
+lockBinding("x", e)
+stopifnot(bindingIsLocked("x", e), bindingIsLocked("x", e)==TRUE,
+          !bindingIsLocked("y", e), bindingIsLocked("y", e)==FALSE)
+## on some systems in R <= 2.3.0, bindingIsLocked("x", e)==TRUE was false
+
+
+## ccf on non-aligned time series
+x <- ts(rnorm(100), start=1)
+y <- ts(rnorm(120), start=3)
+ccf(x, y)
+## needed na.action=na.contiguous in 2.3.0
+
+
+## merge.data.frame was not making column names unique when
+## doing a Cartesian product.
+DF <- data.frame(col=1:3)
+DF2 <- merge(DF, DF, by=numeric(0))
+stopifnot(identical(names(DF2), c("col.x", "col.y")))
+## both were 'col' in 2.3.0.
+
+
+## [pq]unif were not consistent on infinite ranges.
+stopifnot(is.na(qunif(.5, 0, Inf)))
+## was Inf in 2.3.1.
+stopifnot(is.na(punif(1, 0, Inf)))
+## was 0 in 2.3.1
+## and failed on zero ranges despite the documentation.
+stopifnot(punif(c(0, 1, 2), 1, 1) == c(0, 1, 1))
+stopifnot(qunif(c(0, 0.5, 1), 1, 1) == 1)
+## were all NaN on 2.3.1
+
+
+## cbind segfaulted if coercion of the result to list failed.
+cbind(as.name("foo"), 1:3)
+# segfaulted in 2.3.1
+(x <- cbind(y ~ x, 1))
+x[,1]
+## last is 3 x 2 list matrix
+
+
+## empty point set
+r <- xy.coords(numeric(0))
+## gave an error with misleading message in 2.3.1
+
+
+## [<- could extend a ts but not change tsp.
+xx <- x <- ts(rnorm(6), frequency=7)
+try(x[8] <- NA)
+stopifnot(identical(x, xx))
+## Allowed in R < 2.4.0, but corrupted tsp.
+
+
+## Looking up generic in UseMethod
+mycoef <- function(object, ....) UseMethod("coef")
+x <- list(coefficients=1:3)
+mycoef(x)
+## failed to find default method < 2.4.0
+
+
+## regression tests on changes to model.frame and model.matrix
+A <- data.frame(y = 1:10, z = 1:10+1i,
+                x = rep(c("a", "b"), each = 5),
+                r = as.raw(1:10),
+                stringsAsFactors = FALSE)
+model.frame(z ~ x+y+r, data = A) # includes character, raw and complex
+lm(z ~ x+y, data = A) # complex response, character RHS
+# but we do not allow complex nor raw variables on the rhs
+stopifnot(inherits(try(model.matrix(y ~ x+z, data = A)), "try-error"))
+stopifnot(inherits(try(model.matrix(y ~ r, data = A)), "try-error"))
+## new in 2.4.0
+
+
+## tests of stringsAsFactors
+a <- letters[1:8]
+aa <- matrix(a, 4, 2)
+aaa <- list(aaa=letters[20:23])
+colnames(aa) <- paste("aa", 1:2, sep=".")
+(A <- data.frame(a=a[1:4], aa, aaa, stringsAsFactors = FALSE))
+stopifnot(all(sapply(A, class) == "character"))
+stopifnot(class(as.data.frame(list(a=a), stringsAsFactors = TRUE)$a)
+          == "factor")
+## new in 2.4.0
+
+
+## failure to duplicate in environment<-().
+## Thomas Petzoldt, R-help, 2006-06-23.
+envfun <- function(L) {
+  p <- parent.frame()
+  assign("test", L$test, p)
+  environment(p$test) <- p
+}
+solver <- function(L) envfun(L)
+L <- list(test = function() 1 + 2)
+
+environment(L$test)
+solver(L)
+(e <- environment(L$test))
+stopifnot(identical(e, .GlobalEnv))
+## failed to look at NAMED
+
+
+## sort.list(<a factor>, method="radix") stopped working at some point
+x <- factor(sample(letters, 1000, replace=TRUE))
+o <- sort.list(x, method = "radix")
+## failed in 2.3.1
+
+
+## qt() bisection search: PR#9050
+x <- -2:2
+stopifnot(isTRUE(all.equal(x, qt(pt(x, df=20, ncp=1),df=20,ncp=1))))
+## failed in 2.3.1
+
+
+## poly() didn't pass 'raw' to polym()
+x <- -3:3
+y <- 10*(1:7)
+stopifnot(identical(poly (x,y, degree = 2, raw = TRUE),
+		    polym(x,y, degree = 2, raw = TRUE)))
+## failed in 2.3.1
+
+
+## plot.xy( type = "s" | "S" ) was missing an initial test: PR#9046
+types <- c("p", "l", "b", "o", "h", "s", "S")
+p <- palette(hcl(h = seq(30,330, length= length(types))))
+plot(c(1,6), c(-.4, 1.5), type="n", ann = FALSE);  off <- 1:6 / 16
+for(i in seq(types)) {
+    lines(i*off /-1:4, type = types[i], col = i, pch = types[i])
+    mtext(types[i], 4, line= .5, at = i*off[6]/4, col = i, las = 1)
+}
+palette(p)# restored to previous
+## failed in 2.3.1
+
+
+## qf for large df2
+stopifnot(isTRUE(all.equal(qf(0.9,df1=1,df2=1e10,ncp=0),
+                           qf(0.9,df1=1,df2=1e10))))
+## failed in 2.3.1
+
+
+## some regression tests of as.vector() and as.list()
+x <- list(a=1, b=2)
+stopifnot(identical(x, as.list(x)))  # was said to drop names
+x <- pairlist(a=1, b=2)
+stopifnot(is.list(x))
+xx <- as.vector(x, "list")
+stopifnot(typeof(xx) == "list")
+stopifnot(!identical(x, xx))
+stopifnot(identical(names(x), names(xx)))
+
+x <- expression(a=2+3, b=pi)
+xx <- as.vector(x, "list") # not allowed in 2.3.1
+stopifnot(identical(names(x), names(xx)))
+xx <- as.list(x)           # lost names in 2.3.1
+stopifnot(identical(names(x), names(xx)))
+## was incorrectly documented in 2.3.1
+
+
+## subsetting arrays preserved attributes, although it did not for matrices
+x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,2,2))
+stopifnot(is.null(attr(x[,,], "comm")))
+x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,4))
+stopifnot(is.null(attr(x[,], "comm")))
+x <- structure(1:8, names=letters[1:8], comm="a comment")
+stopifnot(!is.null(attr(x[], "comm")))  # this does preserve
+stopifnot(is.null(attr(x[1:8], "comm")))
+##  2.3.1 preserved the first.
+
+
+## diff() for POSIX(cl)t :
+ds1 <- diff(lsec <- .leap.seconds[1:12])
+(ds2 <- diff(llsec <- as.POSIXlt(lsec))) # in days
+stopifnot(ds1 == ds2)
+## gave different result for POSIXlt up to 2.3.1
+
+
+## format(trim = TRUE, big.mark=",") did not work correctly (PR#9118)
+(a <- format(c(-1,1,10,999,1e6), trim=TRUE))
+(b <- format(c(-1,1,10,999,1e6), big.mark=",", trim=TRUE))
+stopifnot(a[1:4] == b[1:4])
+## no trim in 2.3.1 if big.mark was used.
+
+
+## residuals.glm needed 'y = TRUE' (PR#9124)
+# example for poisson GLM from ?glm
+d.AD <- data.frame(treatment = gl(3,3), outcome = gl(3,1,9),
+                   counts = c(18,17,15,20,10,20,25,13,12))
+glm.D93 <- glm(counts ~ outcome + treatment, family = poisson,
+               data = d.AD, y = FALSE)
+residuals(glm.D93, type = "working")
+residuals(glm.D93, type = "partial")
+residuals(glm.D93, type = "response")
+residuals(glm.D93, type = "deviance")
+residuals(glm.D93, type = "pearson")
+## all failed in 2.3.1
+
+
+## anova.mlm failed
+dat<-matrix( c(9,7,8,8,12,11,8,13,     6,5,6,3,6,7,10,9,
+               10,13,8,13,12,14,14,16, 9,11,13,14,16,12,15,14),
+            ncol = 4, dimnames = list(s=1:8, c=1:4))
+mlmfit <- lm(dat ~ 1)
+anova(mlmfit, X = ~1)
+## worked in 2.2.1, failed in 2.3.1
+
+
+## stopifnot(<expr>)  for a long expression (do not wrap the following line!!):
+r <- try(stopifnot(c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O")),
+	 silent = TRUE)
+if(length(grep("TRUE.*TRUE",r)))
+    stop("stopifnot() gives bad message for long expression")
+## happened in 2.3.[01]
+
+
+## rownames on 0-extent matrix (PR#9136)
+A <- matrix(NA, 0, 0)
+stopifnot(identical(rownames(A, do.NULL = FALSE), character(0)))
+stopifnot(identical(colnames(A, do.NULL = FALSE), character(0)))
+## were 'row' etc in 2.3.1.
+
+
+## misuse of a method (based on example from package mmlcr)
+model.matrix.lm(height ~ weight, women)
+# although it is an incorrect call, it should not crash in NextMethod.
+## fixed in 2.4.0
+
+
+## grep(value = TRUE) sometimes preserved names, sometimes not
+x <- 1:3
+xx <- letters[1:3]
+names(x) <- names(xx) <- xx
+z <- grep(1, x, value = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+z <- grep(1, x, value = TRUE, perl = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+z <- grep("a", xx, value = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+z <- grep("a", xx, value = TRUE, perl = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1])
+z <- agrep("a", xx, value = TRUE)
+stopifnot(!is.null(names(z)), names(z) == xx[1:3])
+## perl=TRUE, agrep did not in 2.3.1, all did not for pre-2.4.0
+x[2] <- xx[2] <- NA
+z <- grep(NA, x, value = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- grep(NA, x, value = TRUE, perl = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- grep(NA, xx, value = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- grep(NA, xx, value = TRUE, perl = TRUE)
+stopifnot(identical(names(z), names(xx)))
+z <- agrep(NA, xx, value = TRUE)
+stopifnot(identical(names(z), names(xx)))
+## always dropped names on NA matches < 2.4.0
+
+
+oo <- options(max.print = 20)
+cc <- capture.output(women)
+options(oo)
+c2 <- capture.output(women[1:10,])
+stopifnot(length(cc) == 1 + 20/2 + 1,
+	  identical(cc[-12], c2[1:11]))
+## was wrong for some days in Aug.2006
+
+
+## errors in identical()
+stopifnot(!identical(pairlist(a=1, b=2), pairlist(a=1, aa=2)))
+stopifnot(!identical(structure(pi, a=1, b=2), structure(pi, a=1, aa=2)))
+stopifnot(identical(structure(pi, a=1, b=2), structure(pi, b=2, a=1)))
+## ignored names of pairlists, but tested order of attributes < 2.4.0
+
+
+## failed subassign could leave '*tmp*' around
+## Parlamis Franklin, R-devel, 2006-09-20
+test <- 1:10
+try(test[2:4] <- ls) # fails
+stopifnot(!exists("*tmp*", where=1))
+## was true < 2.4.0
+
+
+## Needlessly failing subassignments
+e <- 1:10
+e[2] <- expression(e)
+e <- pi
+e[2] <- expression(e)
+e <- letters
+e[2] <- expression(e)
+e <- as.raw(1:3)
+e[2] <- list(e=pi)
+## all failed < 2.5.0
+
+
+## merge on zero-row data frames
+L3 <- LETTERS[1:3]
+d <- data.frame(cbind(x=1, y=1), fac=sample(L3, 1, repl=TRUE))
+e <- d[-1,]
+merge(d, e, by.x = "x", by.y = "x", all.x = TRUE)
 ##

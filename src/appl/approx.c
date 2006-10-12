@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -25,6 +25,13 @@
 #include <R_ext/Arith.h>
 #include <R_ext/Error.h>
 #include <R_ext/Applic.h>
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
 
 /* Linear and Step Function Interpolation */
 
@@ -91,7 +98,7 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
 	      int *method, double *yleft, double *yright, double *f)
 {
     int i;
-    appr_meth M;
+    appr_meth M = {0.0, 0.0, 0.0, 0.0, 0}; /* -Wall */
 
     /* check interpolation method */
 
@@ -100,18 +107,18 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
 	break;
     case 2: /* constant */
 	if(!R_FINITE(*f) || *f < 0 || *f > 1)
-	    error("approx(): invalid f value");
+	    error(_("approx(): invalid f value"));
 	M.f2 = *f;
 	M.f1 = 1 - *f;
 	break;
     default:
-	error("approx(): invalid interpolation method");
+	error(_("approx(): invalid interpolation method"));
 	break;
     }
 
     for(i=0 ; i<*nxy ; i++)
 	if(ISNA(x[i]) || ISNA(y[i]))
-	    error("approx(): attempted to interpolate NA values");
+	    error(_("approx(): attempted to interpolate NA values"));
 
     M.kind = *method;
     M.ylow = *yleft;

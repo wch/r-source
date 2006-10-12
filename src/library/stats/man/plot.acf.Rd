@@ -6,7 +6,8 @@
 }
 \usage{
 \method{plot}{acf}(x, ci = 0.95, type = "h", xlab = "Lag", ylab = NULL,
-     ylim = NULL, main = NULL, ci.col="blue", ci.type = c("white", "ma"),
+     ylim = NULL, main = NULL,
+     ci.col = "blue", ci.type = c("white", "ma"),
      max.mfrow = 6, ask = Npgs > 1 && dev.interactive(),
      mar = if(nser > 2) c(3,2,2,0.8) else par("mar"),
      oma = if(nser > 2) c(1,1.2,1,1) else par("oma"),
@@ -37,8 +38,6 @@
   \item{mar, oma, mgp, xpd, cex.main}{graphics parameters as in
     \code{\link{par}(*)}, by default adjusted to use smaller than
     default margins for multivariate \code{x} only.
-    % drop the following line after year 2002
-    \code{xpd = NA} used to be the default for R version <= 1.4.0.
   }
   \item{verbose}{logical.  Should \R report extra information on
     progress?}

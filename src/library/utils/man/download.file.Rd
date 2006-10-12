@@ -5,7 +5,7 @@
   This function can be used to download a file from the Internet.
 }
 \usage{
-download.file(url, destfile, method, quiet = FALSE, mode="w",
+download.file(url, destfile, method, quiet = FALSE, mode = "w",
               cacheOK = TRUE)
 }
 \arguments{
@@ -17,9 +17,9 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
 
   \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
-    are available.  The default is to choose the first of these which
-    will be \code{"internal"}. The method can also be set through the
-    option \code{"download.file.method"}: see \code{\link{options}()}.}
+    are available, and there is a value \code{"auto"}: see Details.  The
+    method can also be set through the option
+    \code{"download.file.method"}: see \code{\link{options}()}.}
 
   \item{quiet}{If \code{TRUE}, suppress status messages (if any).}
 
@@ -27,7 +27,7 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Only used for the \code{"internal"} method.}
 
-  \item{cacheOK}{logical. Is a server-side cached value acceptable?
+  \item{cacheOK}{logical.  Is a server-side cached value acceptable?
     Implemented for the \code{"internal"} and \code{"wget"} methods.}
 }
 \details{
@@ -37,12 +37,26 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   The \code{url} must start with a scheme such as
   \code{"http://"}, \code{"ftp://"} or \code{"file://"}.
 
+#ifdef unix
+  If \code{method = "auto"} is chosen (the default), the internal method
+  is chosen for \code{"file://"} URLs, and for the others provided
+  \code{\link{capabilities}("http/ftp")} is true (which it almost always
+  is).  Otherwise methods \code{"wget"} and \code{"lynx"} are tried in turn.
+#endif
+#ifdef windows
+  If \code{method = "auto"} is chosen (the default), the internal method
+  is used on Windows.
+#endif
+
   \code{cacheOK = FALSE} is useful for \code{"http://"} URLs, and will
   attempt to get a copy directly from the site rather than from an
   intermediate cache.  (Not all platforms support it.)
-  It is used by \code{\link{CRAN.packages}}.
+  It is used by \code{\link{available.packages}}.
 
   The remaining details apply to method \code{"internal"} only.
+
+  See \code{\link{url}} for how \code{"file://"} URLs are interpreted,
+  especially on Windows.  This function does decode encoded URLs.
 
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.
@@ -64,17 +78,21 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   later installed.   You can use the flag \option{--internet2}, when
   the \sQuote{Internet Options} of the system are used to choose proxies
   and so on; these are set in the Control Panel and are those used for
-  Internet Explorer.
-  This version does not support \code{cacheOK = FALSE}.
-
+  Internet Explorer.  This version does not support \code{cacheOK = FALSE}.
 #endif
+#ifdef unix
+  A progress bar tracks the transfer. If the file length is known, an
+  equals represents 2\% of the transfer completed: otherwise a dot
+  represents 10Kb.
+#endif
+
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the
   configuration file for \code{wget}.
 }
 \note{
   Methods \code{"wget"} and \code{"lynx"} are for historical
-  compatibility. They will block all other activity on the \R process.
+  compatibility.  They will block all other activity on the \R process.
 
   For methods \code{"wget"} and \code{"lynx"} a system call is made to
   the tool given by \code{method}, and the respective program must be
@@ -112,13 +130,19 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   further prompt per download.
 #endif
 }
+\value{
+  An (invisible) integer code, \code{0} for success and non-zero for
+  failure.  For the \code{"wget"} and \code{"lynx"} methods this is the
+  status code returned by the external program.  The \code{"internal"}
+  method can return \code{1}, but will in most cases throw an error.
+}
 \seealso{
   \code{\link{options}} to set the \code{timeout} and
   \code{internet.info} options.
 
   \code{\link{url}} for a finer-grained way to read data from URLs.
 
-  \code{\link{url.show}}, \code{\link{CRAN.packages}},
+  \code{\link{url.show}}, \code{\link{available.packages}},
   \code{\link{download.packages}} for applications
 }
 \keyword{utilities}

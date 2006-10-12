@@ -5,8 +5,10 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     else terms(formula, "Error", data = data)
     indError <- attr(Terms, "specials")$Error
     if(length(indError) > 1)
-        stop(paste("There are", length(indError),
-                   "Error terms: only 1 is allowed"))
+        stop(sprintf(ngettext(length(indError),
+                              "there are %d Error terms: only 1 is allowed",
+                              "there are %d Error terms: only 1 is allowed"),
+                     length(indError)), domain = NA)
     lmcall <- Call <- match.call()
     lmcall[[1]] <- as.name("lm")
     lmcall$singular.ok <- TRUE
@@ -49,7 +51,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         qr.e <- er.fit$qr
         rank.e <- er.fit$rank
         if(rank.e < length(er.fit$coef))
-            warning("Error model is singular")
+            warning("Error() model is singular")
         qty <- er.fit$resid
         maov <- is.matrix(qty)
         asgn.e <- er.fit$assign[qr.e$piv[1:rank.e]]
@@ -93,7 +95,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         } else dimnames(qty) <- list(seq(nrow(qty)), NULL)
         qtx <- qr.qty(qr.e, qtx)
         dimnames(qtx) <- list(seq(nrow(qtx)) , dnx)
-        for(i in seq(along=nmstrata)) {
+        for(i in seq_along(nmstrata)) {
             select <- asgn.e==(i-1)
             ni <- sum(select)
             if(!ni) next
@@ -138,7 +140,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     asgn <- x$assign[x$qr$pivot[1:x$rank]]
     effects <- x$effects
     if(!is.null(effects))
-        effects <- as.matrix(effects)[seq(along=asgn),,drop=FALSE]
+        effects <- as.matrix(effects)[seq_along(asgn),,drop=FALSE]
     rdf <- x$df.resid
     resid <- as.matrix(x$residuals)
     wt <- x$weights
@@ -219,6 +221,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         if(sum(abs(R))/d2 > tol)
             cat("Estimated effects may be unbalanced\n")
         else cat("Estimated effects are balanced\n")
+        if(nchar(mess <- naprint(x$na.action))) cat(mess, "\n", sep="")
     }
     invisible(x)
 }
@@ -258,7 +261,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                     term.coefs <- strsplit(df.names[asgn == i], ":", fixed=TRUE)
                     ttc <- sapply(term.coefs, function(x) x[sp])
                     new <- lapply(old, function(x)
-                                  seq(along=ttc)[ttc %in% marg.coefs[x]])
+                                  seq_along(ttc)[ttc %in% marg.coefs[x]])
                     split[[ names[i+1] ]] <- new
                 }
             }
@@ -271,7 +274,7 @@ summary.aov <- function(object, intercept = FALSE, split,
     nterms <- length(uasgn)
     effects <- object$effects
     if(!is.null(effects))
-        effects <- as.matrix(effects)[seq(along=asgn),,drop=FALSE]
+        effects <- as.matrix(effects)[seq_along(asgn),,drop=FALSE]
     rdf <- object$df.resid
     nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
     coef <- as.matrix(object$coef)
@@ -293,9 +296,9 @@ summary.aov <- function(object, intercept = FALSE, split,
         ns <- names(split)
         if(!is.null(Terms <- object$terms)) {
             if(!is.list(split))
-                stop("The split argument must be a list")
+                stop("the 'split' argument must be a list")
             if(!all(ns %in% nmeffect))
-                stop("Unknown name(s) in the split list")
+                stop("unknown name(s) in the 'split' list")
         }
         if(expand.split) {
             df.names <- names(coef(object))
@@ -322,7 +325,7 @@ summary.aov <- function(object, intercept = FALSE, split,
                 if(!missing(split) && !is.na(int <- match(nmi, ns))) {
                     df <- c(df, unlist(lapply(split[[int]], length)))
                     if(is.null(nms <- names(split[[int]])))
-                        nms <- paste("C", seq(along = split[[int]]), sep = "")
+                        nms <- paste("C", seq_along(split[[int]]), sep = "")
                     ss <- c(ss, unlist(lapply(split[[int]],
                                               function(i, e)
                                               sum(e[i]^2), effects[ai, y])))
@@ -354,6 +357,7 @@ summary.aov <- function(object, intercept = FALSE, split,
         ans[[y]] <- x
     }
     class(ans) <- c("summary.aov", "listof")
+    attr(ans, "na.action") <- object$na.action
     ans
 }
 
@@ -363,6 +367,7 @@ print.summary.aov <-
 {
     if (length(x) == 1)  print(x[[1]], ...)
     else NextMethod()
+    if(nchar(mess <- naprint(attr(x, "na.action")))) cat(mess, "\n", sep="")
     invisible(x)
 }
 
@@ -385,12 +390,7 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
 {
     CompPatt <- function(x, ...) {
         x[abs(x) < 1e-6] <- 0
-        if(exists("fractions", mode="function")) fractions(x)
-        else {
-            class(x) <- "mtable"
-            x[abs(x) < 1e-6] <- NA
-            x
-        }
+        MASS::fractions(x)
     }
     PartPatt <- function(x) {
         z <- zapsmall(x) != 0
@@ -402,9 +402,8 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
         }
         x[!z] <- ""
         collabs <- colnames(x)
-        if(length(collabs)) {
-            collabs <- abbreviate(sub("\\.", "", collabs), 3)
-        } else  collabs <-1:ncol(x)
+        collabs <- if(length(collabs)) abbreviate(sub("\\.", "", collabs), 3)
+        else 1:ncol(x)
         colnames(x) <- collabs
         class(x) <- "mtable"
         x
@@ -413,7 +412,7 @@ alias.lm <- function(object, complete = TRUE, partial = FALSE,
     attributes(Model) <- NULL
     value <- list(Model = Model)
     R <- object$qr$qr
-    R <- R[1:min(dim(R)),, drop=FALSE]
+    R <- R[1:min(dim(R)), , drop=FALSE]
     R[lower.tri(R)] <- 0
     d <- dim(R)
     rank <- object$rank
@@ -461,7 +460,7 @@ print.aovlist <- function(x, ...)
         } else cat("\nGrand Mean:", format(mn[1]), "\n")
         nx <- nx[-1]
     }
-    for(ii in seq(along = nx)) {
+    for(ii in seq_along(nx)) {
         i <- nx[ii]
         cat("\nStratum ", ii, ": ", i, "\n", sep = "")
         xi <- x[[i]]
@@ -482,7 +481,7 @@ summary.aovlist <- function(object, ...)
     }
     x <- vector(length = length(strata), mode = "list")
     names(x) <- paste("Error:", strata)
-    for(i in seq(along = strata))
+    for(i in seq_along(strata))
         x[[i]] <- do.call("summary", c(list(object = object[[i]]), dots))
     class(x) <- "summary.aovlist"
     x
@@ -502,7 +501,7 @@ coef.listof <- function(object, ...)
 {
     val <- vector("list", length(object))
     names(val) <- names(object)
-    for(i in seq(along=object)) val[[i]] <- coef(object[[i]])
+    for(i in seq_along(object)) val[[i]] <- coef(object[[i]])
     class(val) <- "listof"
     val
 }
@@ -525,7 +524,7 @@ se.contrast.aov <-
                       dimnames = list(nmeffect, colnames(contrast)))
         for(i in seq(nterms)) {
             select <- (asgn == uasgn[i])
-            res[i,] <- colSums(effects[seq(along=asgn)[select], , drop = FALSE]^2)
+            res[i,] <- colSums(effects[seq_along(asgn)[select], , drop = FALSE]^2)
         }
         res
     }
@@ -534,30 +533,32 @@ se.contrast.aov <-
     if(!is.matrix(contrast.obj)) { # so a list
         if(!missing(coef)) {
             if(sum(coef) != 0)
-                stop("coef must define a contrast, i.e., sum to 0")
+                stop("'coef' must define a contrast, i.e., sum to 0")
             if(length(coef) != length(contrast.obj))
-                stop("coef must have same length as contrast.obj")
+                stop("'coef' must have same length as 'contrast.obj'")
         }
         contrast <-
             sapply(contrast.obj, function(x)
                {
                    if(!is.logical(x))
-                       stop(paste("Each element of", substitute(contrasts.list),
-                                  " must be\nlogical"))
+                           stop(gettextf("each element of '%s' must be logical",
+                                         substitute(contrasts.list)),
+                                domain = NA)
                    x/sum(x)
                })
         contrast <- contrast %*% coef
         if(!any(contrast) || all(is.na(contrast)))
-            stop("The contrast defined is empty (has no TRUE elements)")
+            stop("the contrast defined is empty (has no TRUE elements)")
     } else {
         contrast <- contrast.obj
         if(any(abs(colSums(contrast)) > 1e-8))
-            stop("Columns of contrast.obj must define a contrast (sum to zero)")
+            stop("columns of 'contrast.obj' must define a contrast (sum to zero)")
         if(length(colnames(contrast)) == 0)
             colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
     }
     weights <- contrast.weight.aov(object, contrast)
     rdf <- object$df.resid
+    if(rdf == 0) stop("no degrees of freedom for residuals")
     resid <- as.matrix(object$residuals)
     wt <- object$weights
     if(!is.null(wt)) resid <- resid * wt^0.5
@@ -574,7 +575,7 @@ se.contrast.aovlist <-
     {
         e.qr <- attr(object, "error.qr")
         if(!is.qr(e.qr))
-            stop("Argument does not include an error qr component")
+            stop("'object' does not include an error 'qr' component")
         c.qr <- qr.qty(e.qr, contrast)
         e.assign <- attr(e.qr$qr, "assign")
         n.object <- length(object)
@@ -582,7 +583,7 @@ se.contrast.aovlist <-
                       rep.int(n.object - 1, nrow(c.qr) - length(e.assign)))
         res <- vector(length = n.object, mode = "list")
         names(res) <- names(object)
-        for(j in seq(along=names(object))) {
+        for(j in seq_along(names(object))) {
             strata <- object[[j]]
             if(is.qr(strata$qr)) {
                 scontrast <- c.qr[e.assign == (j - 1), , drop = FALSE]
@@ -591,12 +592,12 @@ se.contrast.aovlist <-
                 uasgn <- unique(asgn)
                 nm <- c("(Intercept)", attr(strata$terms, "term.labels"))
                 res.i <-
-                    matrix(0, length(asgn), ncol(effects),
+                    matrix(0, length(uasgn), ncol(effects),
                            dimnames = list(nm[1 + uasgn], colnames(contrast)))
-                for(i in seq(along = asgn)) {
+                for(i in seq_along(uasgn)) {
                     select <- (asgn == uasgn[i])
                     res.i[i, ] <-
-                        colSums(effects[seq(along=asgn)[select], , drop = FALSE]^2)
+                        colSums(effects[seq_along(asgn)[select], , drop = FALSE]^2)
                 }
                 res[[j]] <- res.i
             }
@@ -611,6 +612,7 @@ se.contrast.aovlist <-
             rank <- aov.object$rank
             rdf <- nobs - rank
         }
+        if(rdf == 0) return(NA)
         resid <- as.matrix(aov.object$residuals)
         wt <- aov.object$weights
         if(!is.null(wt)) resid <- resid * wt^0.5
@@ -626,27 +628,27 @@ se.contrast.aovlist <-
     if(!is.matrix(contrast.obj)) {
         if(!missing(coef)) {
             if(sum(coef) != 0)
-                stop("coef must define a contrast, i.e., sum to 0")
+                stop("'coef' must define a contrast, i.e., sum to 0")
             if(length(coef) != length(contrast.obj))
-                stop("coef must have same length as contrast.obj")
+                stop("'coef' must have same length as 'contrast.obj'")
         }
         contrast <-
             sapply(contrast.obj,
                    function(x) {
                        if(!is.logical(x))
-                           stop(paste("Each element of",
-                                      substitute(contrast.obj),
-                                      " must be\n logical"))
+                           stop(gettextf("each element of '%s' must be logical",
+                                         substitute(contrasts.obj)),
+                                domain = NA)
                        x/sum(x)
                    })
         contrast <- contrast %*% coef
         if(!any(contrast))
-            stop("The contrast defined is empty (has no TRUE elements)")
+            stop("the contrast defined is empty (has no TRUE elements)")
     }
     else {
         contrast <- contrast.obj
         if(any(abs(colSums(contrast)) > 1e-8))
-            stop("Columns of contrast.obj must define a contrast(sum to zero)")
+            stop("columns of 'contrast.obj' must define a contrast(sum to zero)")
         if(length(colnames(contrast)) == 0)
             colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
     }
@@ -655,17 +657,22 @@ se.contrast.aovlist <-
     effic <- eff.aovlist(object)
     ## Need to identify the lowest stratum where each nonzero term appears
     eff.used <- apply(effic, 2,
-                      function(x, ind = seq(length(x))) {
+                      function(x, ind = seq_along(x)) {
                           temp <- (x > 0)
                           if(sum(temp) == 1) temp
                           else max(ind[temp]) == ind
                       })
-    strata.nms <- rownames(effic)[row(eff.used)[eff.used]]
-    var.nms <- colnames(effic)[col(eff.used)[eff.used]]
+    if(is.matrix(eff.used)) {
+        strata.nms <- rownames(effic)[row(eff.used)[eff.used]]
+        var.nms <- colnames(effic)[col(eff.used)[eff.used]]
+    } else {
+        strata.nms <- rownames(effic)
+        var.nms <- colnames(effic)
+    }
     rse.list <- sapply(object[unique(strata.nms)], SS)
     wgt <- matrix(0, nrow = length(var.nms), ncol = ncol(contrast),
                   dimnames = list(var.nms, colnames(contrast)))
-    for(i in seq(length(var.nms)))
+    for(i in seq_along(var.nms))
         wgt[i, ] <- weights[[strata.nms[i]]][var.nms[i], , drop = FALSE]
     rse <- rse.list[strata.nms]
     eff <- effic[eff.used]

@@ -21,14 +21,17 @@ Sys.putenv(\dots)
   Non-standard \R names must be quoted: see the Examples section.
 }
 \note{
-  Not all systems need support \code{Sys.putenv}.
+  Not all systems need support \code{Sys.putenv} (although all known
+  current platforms do).
 }
 \seealso{
-  \code{\link{Sys.getenv}},
+  \code{\link{Sys.getenv}}, \link{Startup} for ways to set environment
+  variables for the \R session.
+  
   \code{\link{setwd}} for the working directory.
 }
 \examples{
-print(Sys.putenv("R_TEST"="testit", ABC=123))
+print(Sys.putenv(R_TEST="testit", "A+C"=123))
 Sys.getenv("R_TEST")
 }
 \keyword{environment}

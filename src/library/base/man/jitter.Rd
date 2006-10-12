@@ -5,7 +5,7 @@
 jitter(x, factor=1, amount = NULL)
 }
 \arguments{
-  \item{x}{numeric to which \emph{jitter} should be added.}
+  \item{x}{numeric vector to which \emph{jitter} should be added.}
   \item{factor}{numeric }
   \item{amount}{numeric; if positive, used as \emph{amount} (see below),
     otherwise, if \code{= 0} the default is \code{factor * z/50}.

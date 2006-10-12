@@ -10,12 +10,12 @@
 bquote(expr, where = parent.frame())
 }
 \arguments{
-  \item{expr}{An expression }
-  \item{where}{ An environment }
+  \item{expr}{A language object.}
+  \item{where}{An environment.}
 }
 
 \value{
- An expression
+  A language object.
 }
 \seealso{
   \code{\link{quote}}, \code{\link{substitute}}
@@ -23,13 +23,13 @@ bquote(expr, where = parent.frame())
 \examples{
 a <- 2
 
-bquote(a==a)
-quote(a==a)
+bquote(a == a)
+quote(a == a)
 
-bquote(a==.(a))
-substitute(a==A, list(A=a))
+bquote(a == .(a))
+substitute(a == A, list(A = a))
 
-plot(1:10, a*(1:10), main = bquote(a==.(a)))
+plot(1:10, a*(1:10), main = bquote(a == .(a)))
 }
 \keyword{programming}
 \keyword{data}

@@ -42,10 +42,24 @@ rexp(n, rate = 1)
     f(x) = lambda e^(- lambda x)}
   for \eqn{x \ge 0}.
 }
+\source{
+  \code{dexp}, \code{pexp} and \code{qexp} are all calculated
+  from numerically stable versions of the definitions.
+
+  \code{rexp} uses
+  
+  Ahrens, J. H. and Dieter, U. (1972).
+  Computer methods for sampling from the exponential and normal distributions.
+  \emph{Communications of the ACM}, \bold{15}, 873--882.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 1, chapter 19.
+  Wiley, New York.
 }
 \seealso{
   \code{\link{exp}} for the exponential function,

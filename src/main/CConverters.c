@@ -16,8 +16,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> char here is handled as a whole string */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -34,7 +36,9 @@ static R_toCConverter   *StoCConverters = NULL;
    than vectors and lists unaltered.
    This is is accessed in do_dotCode() in dotcode.c. It is not for public use.
 */
-void *Rf_convertToC(SEXP s, R_CConvertInfo *info, int *success, R_toCConverter **converter)
+attribute_hidden void *
+Rf_convertToC(SEXP s, R_CConvertInfo *info, int *success,
+              R_toCConverter **converter)
 {
     void *ans;
     R_toCConverter *tmp = StoCConverters;
@@ -213,7 +217,7 @@ static int Rf_getNumRtoCConverters()
  Returns the number of registered converters to S.
 */
 
-SEXP
+SEXP attribute_hidden
 do_getNumRtoCConverters(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
@@ -226,7 +230,7 @@ do_getNumRtoCConverters(SEXP call, SEXP op, SEXP args, SEXP env)
 /*
   Return a character vector describing each of the converter elements.
  */
-SEXP
+SEXP attribute_hidden
 do_getRtoCConverterDescriptions(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int n = 0, i;
@@ -252,7 +256,7 @@ do_getRtoCConverterDescriptions(SEXP call, SEXP op, SEXP args, SEXP env)
  Return a logical vector indicating whether each converter element
  is active or inactive
 */
-SEXP
+SEXP attribute_hidden
 do_getRtoCConverterStatus(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int n = 0, i;
@@ -282,7 +286,7 @@ do_getRtoCConverterStatus(SEXP call, SEXP op, SEXP args, SEXP env)
  This is also used to remove an element. The op contains a different value
  to indicate this.
 */
-SEXP
+SEXP attribute_hidden
 do_setToCConverterActiveStatus(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     R_toCConverter *el;
@@ -297,7 +301,7 @@ do_setToCConverterActiveStatus(SEXP call, SEXP op, SEXP args, SEXP env)
 	el = R_getToCConverterByIndex(asInteger(id) - 1);
     }
     if(el == NULL) {
-	error("no R-to-C converter found corresponding to identifier");
+	error(_("no R-to-C converter found corresponding to identifier"));
     }
 
     PROTECT(status = allocVector(LGLSXP, 1));

@@ -48,7 +48,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     mf <- model.frame(Terms, dummy, na.action=function(x)x, xlev=xl)
     mm <- model.matrix(Terms, mf, object$contrasts, xl)
     if(any(is.na(mm))) {
-        warning("Some terms will have NAs due to the limits of the method")
+        warning("some terms will have NAs due to the limits of the method")
         mm[is.na(mm)] <- NA
     }
     coef <- object$coef
@@ -56,7 +56,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     asgn <- attr(mm,"assign")
     res <- vector("list", length(tl))
     names(res) <- tl
-    for(j in seq(along=tl)) {
+    for(j in seq_along(tl)) {
 	keep <- asgn == j
 	ans <- drop(mm[rn == tl[j], keep, drop=FALSE] %*% coef[keep])
 	names(ans) <- rnn[rn == tl[j]]

@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
- *  Copyright (C) 2001-2002 the R Development Core Team
+ *  Copyright (C) 2001-2005 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  *  I want you to preserve the copyright of the original author(s),
  *  and encourage you to send me any improvements by e-mail. (MM).
@@ -37,7 +37,7 @@
  *  BDR 2001-10-30 use R_alloc not Calloc as memory was not
  *  reclaimed on error (and there are many error exits).
  *
- *	type	"double" or "integer" (R - numeric `mode').
+ *	type	"double" or "integer" (R - numeric 'mode').
  *
  *	width	The total field width; width < 0 means to left justify
  *		the number in this field (equivalent to flag = "-").
@@ -62,6 +62,8 @@
  *	  New (Feb.98): if flag has more than one character, all are passed..
  */
 
+/* <UTF8> char here is either ASCII or handled as a whole */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -69,14 +71,17 @@
 #include <string.h>
 #include <math.h>
 
-#ifdef Win32
-#include <ctype.h>
-#endif
-
 #include <R_ext/Error.h>	/* error */
 #include <R_ext/Memory.h>	/* R_alloc */
 #include <R_ext/Applic.h>
 #include <Rmath.h>		/* fround */
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
+#endif
 
 /*
    The declaration for x is unusual for a .C() but is managed by
@@ -97,7 +102,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
     char *form = R_alloc(len_flag+4 + strlen(*format), sizeof(char));
 
     if (wid == 0)
-	error(".C(..): Width cannot be zero");
+	error(_(".C(..): Width cannot be zero"));
 
     if (strcmp("d", *format) == 0) {
 	if (len_flag == 0)
@@ -111,7 +116,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	    for (i=0; i < nn; i++)
 		sprintf(result[i], form, wid, ((int *)x)[i]);
 	else
-	    error(".C(..): `type' must be \"integer\" for  \"d\"-format");
+	    error(_(".C(..): 'type' must be \"integer\" for  \"d\"-format"));
     }
     else { /* --- floating point --- */
 	if (len_flag == 0)
@@ -131,9 +136,9 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	else
 	    strcat(form, *format);
 #ifdef DEBUG
-	fprintf(stderr, "strsignif.c: form=«%s», wid=%d, dig=%d\n",
+	fprintf(stderr, "strsignif.c: form='%s', wid=%d, dig=%d\n",
 		form, wid, dig);
-	if(do_fg) fprintf(stderr, "\t\"fg\": f0=«%s».", f0);
+	if(do_fg) fprintf(stderr, "\t\"fg\": f0='%s'.", f0);
 #endif
 	if (strcmp("double", *type) == 0) {
 	    if(do_fg) /* do smart "f" : */
@@ -186,23 +191,8 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	    else
 		for (i=0; i < nn; i++) {
 		    sprintf(result[i], form, wid, dig, ((double *)x)[i]);
-#ifdef Win32
-		    {
-			/* change e+/-00n to e+/-0n etc */
-			char *p = result[i];
-			int len = strlen(p);
-			if (tolower(p[len-5]) == 'e' &&
-			   (p[len-4] == '+' || p[len-4] == '-') &&
-			   p[len-3] == '0' &&
-			   isdigit(p[len-2]) && isdigit(p[len-1])) {
-			    p[len-3] = p[len-2];
-			    p[len-2] = p[len-1];
-			    p[len-1] = '\0';
-			}
-		    }
-#endif
 		}
 	} else
-	    error(".C(..): `type' must be \"real\" for this format");
+	    error(_(".C(..): 'type' must be \"real\" for this format"));
     }
 }

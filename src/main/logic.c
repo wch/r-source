@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -32,7 +32,7 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2);
 
 
 /* & | ! */
-SEXP do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
 
@@ -44,7 +44,7 @@ SEXP do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2:
 	return lbinary(call, op, args);
     default:
-	error("binary operations require two arguments");
+	error(_("binary operations require two arguments"));
 	return R_NilValue;	/* for -Wall */
     }
 }
@@ -60,7 +60,8 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     y = CADR(args);
     if (isRaw(x) && isRaw(y)) {
     } else if (!isNumeric(x) || !isNumeric(y))
-	errorcall(call, "operations are possible only for numeric or logical types");
+	errorcall(call, 
+		  _("operations are possible only for numeric or logical types"));
     tsp = R_NilValue;		/* -Wall */
     class = R_NilValue;		/* -Wall */
     xarray = isArray(x);
@@ -70,7 +71,7 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     if (xarray || yarray) {
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
-		error("binary operation non-conformable arrays");
+		error(_("binary operation on non-conformable arrays"));
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
 	else if (xarray) {
@@ -96,7 +97,7 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     if (xts || yts) {
 	if (xts && yts) {
 	    if (!tsConform(x, y))
-		errorcall(call, "Non-conformable time-series");
+		errorcall(call, _("non-conformable time series"));
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(class = getAttrib(x, R_ClassSymbol));
 	}
@@ -114,13 +115,15 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	}
     }
     if(mismatch)
-	warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
+	warningcall(call, 
+		    _("longer object length\n\tis not a multiple of shorter object length"));
 
     if (isRaw(x) && isRaw(y)) {
 	PROTECT(x = binaryLogic2(PRIMVAL(op), x, y));
     } else {
 	if (!isNumeric(x) || !isNumeric(y))
-	    errorcall(call, "operations are possible only for numeric or logical types");
+	    errorcall(call, 
+		      _("operations are possible only for numeric or logical types"));
 	x = SETCAR(args, coerceVector(x, LGLSXP));
 	y = SETCADR(args, coerceVector(y, LGLSXP));
 	PROTECT(x = binaryLogic(PRIMVAL(op), x, y));
@@ -158,7 +161,7 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
     len = LENGTH(arg);
     if(len == 0) return(allocVector(LGLSXP, 0));
     if (!isLogical(arg) && !isNumeric(arg) && !isRaw(arg))
-	errorcall(call, "invalid argument type");
+	errorcall(call, _("invalid argument type"));
     PROTECT(names = getAttrib(arg, R_NamesSymbol));
     PROTECT(dim = getAttrib(arg, R_DimSymbol));
     PROTECT(dimnames = getAttrib(arg, R_DimNamesSymbol));
@@ -183,6 +186,8 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	for (i = 0; i < len; i++)
 	    RAW(x)[i] = 0xFF ^ RAW(arg)[i];
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("lunary", arg);
     }
     if(names != R_NilValue) setAttrib(x, R_NamesSymbol, names);
     if(dim != R_NilValue) setAttrib(x, R_DimSymbol, dim);
@@ -192,7 +197,7 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 }
 
 /* && || */
-SEXP do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /*  &&	and  ||	 */
     SEXP s1, s2;
@@ -200,7 +205,7 @@ SEXP do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans;
 
     if (length(args) != 2)
-	error("`%s' operator requires 2 arguments",
+	error(_("'%s' operator requires 2 arguments"),
 	      PRIMVAL(op) == 1 ? "&&" : "||");
 
     s1 = CAR(args);
@@ -208,14 +213,14 @@ SEXP do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(LGLSXP, 1));
     s1 = eval(s1, env);
     if (!isNumeric(s1))
-	errorcall(call, "invalid `x' type in `x %s y'",
+	errorcall(call, _("invalid 'x' type in 'x %s y'"),
 		  PRIMVAL(op) == 1 ? "&&" : "||"); 
     x1 = asLogical(s1);
 
 #define get_2nd							\
 	s2 = eval(s2, env);					\
 	if (!isNumeric(s2))					\
-	    errorcall(call, "invalid `y' type in `x %s y'",	\
+	    errorcall(call, _("invalid 'y' type in 'x %s y'"),	\
 		      PRIMVAL(op) == 1 ? "&&" : "||");		\
 	x2 = asLogical(s2);
 
@@ -286,6 +291,9 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = NA_LOGICAL;
 	}
 	break;
+    case 3:
+	error(_("Unary operator `!' called with two arguments"));
+	break;
     }
     return ans;
 }
@@ -324,10 +332,22 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
-static void checkValues(int * x, int n, Rboolean *haveFalse, Rboolean *haveTrue, Rboolean *haveNA);
+static void checkValues(int * x, int n, Rboolean *haveFalse, 
+			Rboolean *haveTrue, Rboolean *haveNA)
+{
+    int i;
+    for (i = 0; i < n; i++) {
+	if (x[i] == NA_LOGICAL)
+	    *haveNA = TRUE;
+	else if (x[i])
+	    *haveTrue = TRUE;
+	else
+	    *haveFalse = TRUE;
+    }
+}
 
 /* all, any */
-SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, s, t;
     int narm;
@@ -338,7 +358,7 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
     if(DispatchGroup("Summary", call, op, args, env, &s))
 	return s;
 
-    ans = matchArg(R_NaRmSymbol, &args);
+    ans = matchArgExact(R_NaRmSymbol, &args);
     narm = asLogical(ans);
     haveTrue = FALSE;
     haveFalse = FALSE;
@@ -346,14 +366,10 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (s = args; s != R_NilValue; s = CDR(s)) {
 	t = CAR(s);
-	if (LGLSXP <= TYPEOF(t) && TYPEOF(t) <= CPLXSXP) {
-	    /* coerceVector protects its argument so this actually works
-	       just fine */
-	    t = coerceVector(t, LGLSXP);
-	    checkValues(LOGICAL(t), LENGTH(t), &haveFalse, &haveTrue, &haveNA);
-	}
-	else if(!isNull(t))
-	    errorcall(call, "incorrect argument type");
+	/* coerceVector protects its argument so this actually works
+	   just fine */
+	if (TYPEOF(t)  != LGLSXP) t = coerceVector(t, LGLSXP);
+	checkValues(LOGICAL(t), LENGTH(t), &haveFalse, &haveTrue, &haveNA);
     }
     if (narm)
 	haveNA = FALSE;
@@ -365,17 +381,4 @@ SEXP do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 	LOGICAL(s)[0] = haveNA ? (haveTrue  ? TRUE  : NA_LOGICAL) : haveTrue;
     }
     return s;
-}
-
-static void checkValues(int * x, int n, Rboolean *haveFalse, Rboolean *haveTrue, Rboolean *haveNA)
-{
-    int i;
-    for (i = 0; i < n; i++) {
-	if (x[i] == NA_LOGICAL)
-	    *haveNA = TRUE;
-	else if (x[i])
-	    *haveTrue = TRUE;
-	else
-	    *haveFalse = TRUE;
-    }
 }

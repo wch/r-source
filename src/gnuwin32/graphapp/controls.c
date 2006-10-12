@@ -31,10 +31,12 @@
 
     sort out resize (confused screen and client coords)
     add printer and metafile handling
+    Remove assumption of current->dest being non-NULL
 
  */
 
 #include "internal.h"
+# define alloca(x) __builtin_alloca((x))
 
 /*
  *  Setting control call-backs.
@@ -165,14 +167,16 @@ void clear(control obj)
 	old = currentrgb();
 	setrgb(obj->bg);
 	fillrect(getrect(obj));
-	setrgb(old);
-	drawto(prev);
+	if (prev) {
+		setrgb(old);
+		drawto(prev);
+    	}
 }
 
 void draw(control obj)
 {
 	drawing prev;
-	drawstate old;
+	drawstate old = NULL;
 
 	if (! obj)
 		return;
@@ -189,11 +193,13 @@ void draw(control obj)
 		return;
 	prev = current->dest;
 	drawto(obj);
-	old = copydrawstate();
+	if (prev) old = copydrawstate();
 	moveto(pt(0,0));
 	obj->call->redraw(obj, getrect(obj));
-	restoredrawstate(old);
-	drawto(prev);
+	if (prev) {
+		restoredrawstate(old);
+		drawto(prev);
+    	}
 }
 
 void redraw(control obj)
@@ -650,6 +656,8 @@ void *getdata(control obj)
 		return NULL;
 }
 
+/* These two are in none of the headers */
+#ifdef UNUSED
 void _setextradata(control obj, void *data)
 {
 	if (obj)
@@ -663,6 +671,7 @@ void *_getextradata(control obj)
 	else
 		return NULL;
 }
+#endif
 
 /*
  *  Set the text of an object. This will set the names appearing
@@ -675,7 +684,7 @@ void settext(control obj, char *text)
 		return;
 	if (! text)
 		text = "";
-	if (strcmp(gettext(obj), text) == 0)
+	if (strcmp(GA_gettext(obj), text) == 0)
 		return; /* no changes to be made */
 	if (obj->text) {
 		/* discard prior information */
@@ -687,13 +696,25 @@ void settext(control obj, char *text)
 	if (text) {
 		if (obj->kind & ControlObject) {
 			text = to_dos_string(text);
-			SetWindowText(obj->handle, text);
+			if(is_NT && (localeCP != GetACP())) {
+			    wchar_t *wc;
+			    int nc = strlen(text) + 1;
+			    wc = (wchar_t*) alloca(nc*sizeof(wchar_t));
+			    mbstowcs(wc, text, nc);
+			    SetWindowTextW(obj->handle, wc);
+			} else SetWindowText(obj->handle, text);
 			discard(text);
 		}
-                if (obj->kind==MenuitemObject) {
+                if (obj->kind == MenuitemObject) {
+		    if(is_NT && (localeCP != GetACP())) {
+			wchar_t wc[1000];
+			mbstowcs(wc, text, 1000);
+                        ModifyMenuW(obj->parent->handle, obj->id,
+				    MF_BYCOMMAND|MF_STRING, obj->id, wc);
+			
+		    } else
                         ModifyMenu(obj->parent->handle, obj->id,
-                                   MF_BYCOMMAND|MF_STRING,obj->id,
-                                   text);
+                                   MF_BYCOMMAND|MF_STRING, obj->id, text);
                 }
 
 	}
@@ -707,7 +728,7 @@ void settext(control obj, char *text)
  *  control. This may be a button's name, for example, or
  *  the value inside a text field.
  */
-char *gettext(control obj)
+char *GA_gettext(control obj)
 {
 	static char *empty = "";
 	char *text;
@@ -828,19 +849,20 @@ rect objrect(object obj)
 
 	switch (obj->kind)
 	{
-	  case Image8: case Image32:
+	case Image8: case Image32:
 		img = (image) obj;
 		r = rect(0,0,img->width,img->height);
 		break;
-	  case BitmapObject:
-	  case FontObject: case CursorObject:
-	 case PrinterObject:
+	case BitmapObject:
+	case FontObject: 
+	case CursorObject:
+	case PrinterObject:
 		r = obj->rect;
 		break;
-	 case MetafileObject:
+	case MetafileObject:
 		r = obj->rect;
 		break;
-	  default:
+	default:
 		GetClientRect(obj->handle, (RECT *) &r);
 		break;
 	}

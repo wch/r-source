@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* Pretty Intervals
@@ -44,6 +44,13 @@
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) gettext (String)
+#else
+#define _(String) (String)
 #endif
 
 #include <R_ext/Applic.h>
@@ -94,10 +101,10 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
     }
 
     if(cell < 20*DBL_MIN) {
-      warning("Internal(pretty()): very small range.. corrected");
+      warning(_("Internal(pretty()): very small range.. corrected"));
       cell = 20*DBL_MIN;
     } else if(cell * 10 > DBL_MAX) {
-      warning("Internal(pretty()): very large range.. corrected");
+      warning(_("Internal(pretty()): very large range.. corrected"));
       cell = .1*DBL_MAX;
     }
     base = pow(10., floor(log10(cell))); /* base <= cell < 10*base */

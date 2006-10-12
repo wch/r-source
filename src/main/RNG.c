@@ -16,8 +16,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> char here is handled as a whole string */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -133,21 +135,25 @@ double unif_rand(void)
     case USER_UNIF:
 	return *((double *) User_unif_fun());
 
-    default:/* can never happen (enum type)*/ return -1.;
+    default:
+	error(_("unif_rand: unimplemented RNG kind %d"), RNG_kind);
+	return -1.;
     }
 }
 
-static void FixupSeeds(RNGtype kind, int initial)
+/* we must mask global variable here, as I1-I3 hide RNG_kind
+   and we want the argument */
+static void FixupSeeds(RNGtype RNG_kind, int initial)
 {
 /* Depending on RNG, set 0 values to non-0, etc. */
 
     int j, notallzero = 0;
 
     /* Set 0 to 1 :
-       for(j = 0; j <= RNG_Table[kind].n_seed - 1; j++)
-       if(!RNG_Table[kind].i_seed[j]) RNG_Table[kind].i_seed[j]++; */
+       for(j = 0; j <= RNG_Table[RNG_kind].n_seed - 1; j++)
+       if(!RNG_Table[RNG_kind].i_seed[j]) RNG_Table[RNG_kind].i_seed[j]++; */
 
-    switch(kind) {
+    switch(RNG_kind) {
     case WICHMANN_HILL:
 	I1 = I1 % 30269; I2 = I2 % 30307; I3 = I3 % 30323;
 
@@ -174,11 +180,11 @@ static void FixupSeeds(RNGtype kind, int initial)
 	if(I1 <= 0) I1 = 624; 
 	/* check for all zeroes */
 	for (j = 1; j <= 624; j++)
-	    if(RNG_Table[kind].i_seed[j] != 0) {
+	    if(RNG_Table[RNG_kind].i_seed[j] != 0) {
 		notallzero = 1;
 		break;
 	    }
-	if(!notallzero) Randomize(kind);
+	if(!notallzero) Randomize(RNG_kind);
 	break;
 
     case KNUTH_TAOCP:
@@ -186,14 +192,16 @@ static void FixupSeeds(RNGtype kind, int initial)
 	if(KT_pos <= 0) KT_pos = 100;
 	/* check for all zeroes */
 	for (j = 0; j < 100; j++)
-	    if(RNG_Table[kind].i_seed[j] != 0) {
+	    if(RNG_Table[RNG_kind].i_seed[j] != 0) {
 		notallzero = 1;
 		break;
 	    }
-	if(!notallzero) Randomize(kind);	
+	if(!notallzero) Randomize(RNG_kind);	
 	break;
     case USER_UNIF:
 	break;
+    default:
+	error(_("FixupSeeds: unimplemented RNG kind %d"), RNG_kind);
     }
 }
 
@@ -213,6 +221,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
     case MARSAGLIA_MULTICARRY:
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
+	/* i_seed[0] is mti, *but* this is needed for historical consistency */
 	for(j = 0; j < RNG_Table[kind].n_seed; j++) {
 	    seed = (69069 * seed + 1);
 	    RNG_Table[kind].i_seed[j] = seed;
@@ -227,7 +236,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	break;
     case USER_UNIF:
 	User_unif_fun = R_FindSymbol("user_unif_rand", "", NULL);
-	if (!User_unif_fun) error("`user_unif_rand' not in load table");
+	if (!User_unif_fun) error(_("'user_unif_rand' not in load table"));
 	User_unif_init = R_FindSymbol("user_unif_init", "", NULL);
 	if (User_unif_init) (void) User_unif_init(seed);
 	User_unif_nseed = R_FindSymbol("user_unif_nseed", "", NULL);
@@ -235,18 +244,20 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	if (User_unif_seedloc) {
 	    int ns = 0;
 	    if (!User_unif_nseed) {
-		warning("cannot read seeds unless `user_unif_nseed' is supplied");
+		warning(_("cannot read seeds unless 'user_unif_nseed' is supplied"));
 		break;
 	    }
 	    ns = *((int *) User_unif_nseed());
 	    if (ns < 0 || ns > 625) {
-		warning("seed length must be in 0...625; ignored");
+		warning(_("seed length must be in 0...625; ignored"));
 		break;
 	    }
 	    RNG_Table[kind].n_seed = ns;
 	    RNG_Table[kind].i_seed = (Int32 *) User_unif_seedloc();
 	}
 	break;
+    default:
+	error(_("RNG_Init: unimplemented RNG kind %d"), kind);
     }
 }
 
@@ -274,12 +285,12 @@ void GetRNGstate()
     else {
 	seeds = coerceVector(seeds, INTSXP);
 	if (seeds == R_MissingArg)
-	    error(".Random.seed is a missing argument with no default");
+	    error(_(".Random.seed is a missing argument with no default"));
 	if (!isVector(seeds))
-	    error(".Random.seed is not a vector");
+	    error(_(".Random.seed is not a vector"));
 	tmp = INTEGER(seeds)[0];
 	if (tmp == NA_INTEGER)
-	    error(".Random.seed[1] is not a valid integer");
+	    error(_(".Random.seed[1] is not a valid integer"));
 	newRNG = tmp % 100;
 	newN01 = tmp / 100;
 	/*if (RNG_kind > USER_UNIF || RNG_kind < 0) {
@@ -287,7 +298,7 @@ void GetRNGstate()
 	    RNG_kind = RNG_DEFAULT;
 	    }*/
 	if (newN01 < 0 || newN01 > KINDERMAN_RAMAGE)
-	    error(".Random.seed[0] is not a valid Normal type");
+	    error(_(".Random.seed[0] is not a valid Normal type"));
  	switch(newRNG) {
  	case WICHMANN_HILL:
  	case MARSAGLIA_MULTICARRY:
@@ -298,16 +309,17 @@ void GetRNGstate()
 	    break;
  	case USER_UNIF:
 	    if(!User_unif_fun)
-		error(".Random.seed[1] = 5 but no user-supplied generator");
+		error(_(".Random.seed[1] = 5 but no user-supplied generator"));
 	    break;
 	default:
-	    error(".Random.seed[1] is NOT a valid RNG kind (code)");
+	    error(_(".Random.seed[1] is not a valid RNG kind (code)"));
 	}
 	RNG_kind = newRNG; N01_kind = newN01;
 	len_seed = RNG_Table[RNG_kind].n_seed;
+	/* Not sure whether this test is needed: wrong for USER_UNIF */
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
-	    error(".Random.seed has wrong length");
-	if(LENGTH(seeds) == 1)
+	    error(_(".Random.seed has wrong length"));
+	if(LENGTH(seeds) == 1 && RNG_kind != USER_UNIF)
 	    Randomize(RNG_kind);
 	else {
 	    for(j = 1; j <= len_seed; j++) {
@@ -363,7 +375,7 @@ static void RNGkind(RNGtype newkind)
     case USER_UNIF:
 	break;
     default:
-	error("RNGkind: unimplemented RNG kind %d", newkind);
+	error(_("RNGkind: unimplemented RNG kind %d"), newkind);
     }
     GetRNGstate();
     RNG_Init(newkind, unif_rand() * UINT_MAX);
@@ -375,10 +387,10 @@ static void Norm_kind(N01type kind)
 {
     if (kind == -1) kind = N01_DEFAULT;
     if (kind < 0 || kind > KINDERMAN_RAMAGE)
-	error("invalid Normal type in RNGkind");
+	error(_("invalid Normal type in RNGkind"));
     if (kind == USER_NORM) {
 	User_norm_fun = R_FindSymbol("user_norm_rand", "", NULL);
-	if (!User_norm_fun) error("`user_norm_rand' not in load table");
+	if (!User_norm_fun) error(_("'user_norm_rand' not in load table"));
     }
     GetRNGstate(); /* might not be initialized */
     if (kind == BOX_MULLER) 
@@ -390,7 +402,7 @@ static void Norm_kind(N01type kind)
 
 /*------ .Internal interface ------------------------*/
 
-SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, rng, norm;
 
@@ -411,7 +423,7 @@ SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-SEXP do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP skind;
     int seed;
@@ -420,7 +432,7 @@ SEXP do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     seed = asInteger(CAR(args));
     if (seed == NA_INTEGER)
-	error("supplied seed is not a valid integer");
+	error(_("supplied seed is not a valid integer"));
     skind = CADR(args);
     if (!isNull(skind)) {
 	kind = asInteger(skind);
@@ -641,12 +653,12 @@ void ran_start(seed)    /* do this before using ran_array */
 /* after calling ran_start, get new randoms by, e.g., "x=ran_arr_next()" */
 
 #define QUALITY 1009 /* recommended quality level for high-res use */
-long ran_arr_buf[QUALITY];
-long ran_arr_sentinel=-1;
-long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
+static long ran_arr_buf[QUALITY];
+static long ran_arr_sentinel=(long)-1;
+static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 
 #define ran_arr_next() (*ran_arr_ptr>=0? *ran_arr_ptr++: ran_arr_cycle())
-long ran_arr_cycle()
+static long ran_arr_cycle()
 {
   ran_array(ran_arr_buf,QUALITY);
   ran_arr_buf[100]=-1;

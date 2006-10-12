@@ -10,7 +10,7 @@
   references that should be used for citing the packages.
 }
 \usage{
-citEntry(entry, textVersion, header=NULL, footer=NULL, ...)
+citEntry(entry, textVersion, header = NULL, footer = NULL, ...)
 citHeader(...)
 citFooter(...)
 readCitationFile(file)

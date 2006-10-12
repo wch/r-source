@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -43,9 +43,9 @@
 
 #include "nmath.h"
 
-double lgammacor(double x)
+double attribute_hidden lgammacor(double x)
 {
-    const double algmcs[15] = {
+    const static double algmcs[15] = {
 	+.1666389480451863247205729650822e+0,
 	-.1384948176067563840732986059135e-4,
 	+.9810825646924729426157171547487e-8,
@@ -90,7 +90,7 @@ double lgammacor(double x)
     if (x < 10)
 	ML_ERR_return_NAN
     else if (x >= xmax) {
-	ML_ERROR(ME_UNDERFLOW);
+	ML_ERROR(ME_UNDERFLOW, "lgammacor");
 	return ML_UNDERFLOW;
     }
     else if (x < xbig) {

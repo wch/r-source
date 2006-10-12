@@ -9,22 +9,25 @@
 \alias{unsplit}
 \description{
   \code{split} divides the data in the vector \code{x} into the groups
-  defined by \code{f}.  The assignment forms replace values
-  corresponding to such a division.  Unsplit reverses the effect of
+  defined by \code{f}.  The replacement forms replace values
+  corresponding to such a division.  \code{unsplit} reverses the effect of
   \code{split}.
 }
 \usage{
-split(x, f)
-split(x, f) <- value
-unsplit(value, f)
+split(x, f, drop = FALSE, ...)
+split(x, f, drop = FALSE, ...) <- value
+unsplit(value, f, drop = FALSE)
 }
 \arguments{
   \item{x}{vector or data frame containing values to be divided into groups.}
-  \item{f}{a \dQuote{factor} such that \code{factor(f)} defines the
-    grouping, or a list of such factors in which case their interaction
-    is used for the grouping.}
+  \item{f}{a \dQuote{factor} in the sense that \code{\link{as.factor}(f)}
+    defines the grouping, or a list of such factors in which case their
+    interaction is used for the grouping.}
+  \item{drop}{logical indicating if levels that do not occur should be dropped
+    (if \code{f} is a \code{factor} or a list).}
   \item{value}{a list of vectors or data frames compatible with a
-    splitting of \code{x}}
+    splitting of \code{x}. Recycling applies if the lengths do not match.}
+  \item{\dots}{further potential arguments passed to methods.}
 }
 \details{
   \code{split} and \code{split<-} are generic functions with default and
@@ -32,9 +35,9 @@ unsplit(value, f)
 
   \code{f} is recycled as necessary and if the length of \code{x} is not
   a multiple of the length of \code{f} a warning is printed.
-  \code{unsplit} works only with  lists of vectors. The data frame
+  \code{unsplit} works only with lists of vectors.  The data frame
   method can also be used to split a matrix into a list of matrices,
-  and the assignment form likewise, provided they are invoked
+  and the replacement form likewise, provided they are invoked
   explicitly.
 
   Any missing values in \code{f} are dropped together with the
@@ -46,7 +49,7 @@ unsplit(value, f)
   the \emph{used} factor levels given by \code{f}.  (If \code{f} is
   longer than \code{x} then some of the components will be of zero length.)
 
-  The assignment forms return their right hand side. \code{unsplit}
+  The replacement forms return their right hand side.  \code{unsplit}
   returns a vector for which \code{split(x, f)} equals \code{value}
 }
 \seealso{

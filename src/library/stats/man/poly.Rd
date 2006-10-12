@@ -5,21 +5,24 @@
 \alias{makepredictcall.poly}
 \title{Compute Orthogonal Polynomials}
 \usage{
-poly(x, \dots, degree = 1, coefs = NULL)
-polym(\dots, degree = 1)
+poly(x, \dots, degree = 1, coefs = NULL, raw = FALSE)
+polym(\dots, degree = 1, raw = FALSE)
 
 \method{predict}{poly}(object, newdata, \dots)
 }
 \description{
   Returns or evaluates orthogonal polynomials of degree 1 to
   \code{degree} over the specified set of points \code{x}. These are all
-  orthogonal to the constant polynomial of degree 0.
+  orthogonal to the constant polynomial of degree 0.  Alternatively,
+  evaluate raw polynomials.
 }
 \arguments{
  \item{x, newdata}{a numeric vector at which to evaluate the
-   polynomial. \code{x} can also be a matrix.}
+   polynomial. \code{x} can also be a matrix.  Missing values are not
+   allowed in \code{x}.}
  \item{degree}{the degree of the polynomial}
  \item{coefs}{for prediction, coefficients from a previous fit.}
+ \item{raw}{if true, use raw and not orthogonal polynomials.}
  \item{object}{an object inheriting from class \code{"poly"}, normally
    the result of a call to \code{poly} with a single vector argument.}
  \item{\dots}{\code{poly, polym}: further vectors.\cr
@@ -30,10 +33,10 @@ polym(\dots, degree = 1)
   For \code{poly} with a single vector argument:\cr
   A matrix with rows corresponding to points in \code{x} and columns
   corresponding to the degree, with attributes \code{"degree"} specifying
-  the degrees of the columns and \code{"coefs"} which contains the
-  centering and normalization constants used in constructing the
-  orthogonal polynomials.  The matrix is given class
-  \code{c("poly", "matrix")} as from \R 1.5.0.
+  the degrees of the columns and (unless \code{raw = TRUE})
+  \code{"coefs"} which contains the centering and normalization
+  constants used in constructing the orthogonal polynomials.  The matrix
+  has given class \code{c("poly", "matrix")}.
 
   Other cases of \code{poly} and \code{polym}, and \code{predict.poly}:
   a matrix.
@@ -45,7 +48,7 @@ polym(\dots, degree = 1)
   
   The orthogonal polynomial is summarized by the coefficients, which can
   be used to evaluate it via the three-term recursion given in Kennedy
-  \& Gentle (1980, pp. 343-4), and used in the \dQuote{predict} part of
+  \& Gentle (1980, pp. 343--4), and used in the \dQuote{predict} part of
   the code.
 }
 \note{
@@ -62,7 +65,11 @@ polym(\dots, degree = 1)
   \emph{Statistical Computing} Marcel Dekker.
 }
 
-\seealso{\code{\link{contr.poly}}}
+\seealso{
+  \code{\link{contr.poly}}.
+
+  \code{\link{cars}} for an example of polynomial regression.
+}
 
 \examples{
 (z <- poly(1:10, 3))

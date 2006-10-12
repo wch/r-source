@@ -1,21 +1,16 @@
 \name{load}
 \alias{load}
-\alias{loadURL}
 \title{Reload Saved Datasets}
 \description{
-  Reload the datasets written to a file with the function \code{save}.
+  Reload datasets written with the function \code{save}.
 }
 \usage{
 load(file, envir = parent.frame())
-loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 }
 \arguments{
-  \item{file}{a connection or a character string giving the name of the
-    file to load.}
+  \item{file}{a (readable binary) connection or a character string
+    giving the name of the file to load.}
   \item{envir}{the environment where the data should be loaded.}
-  \item{url}{a character string naming a URL.}
-  \item{quiet, \dots}{additional arguments to
-    \code{\link{download.file}}.}
 }
 \details{
   \code{load} can load \R objects saved in the current or any earlier
@@ -23,34 +18,51 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
   directly from a file or from a suitable connection (including a call
   to \code{\link{url}}).
 
-  \code{loadURL} is a convenience wrapper which downloads a file, loads
-  it and deletes the downloaded copy.
+  Only \R objects saved in the current format (used since \R 1.4.0)
+  can be read from a connection.  If no input is available on a
+  connection a warning will be given, but any input not in the current
+  format will result in a error.
+  
+  Loading from an earlier version will give a warning about the
+  \sQuote{magic number}: magic numbers \code{1971:1977} are from \R <
+  0.99.0, and \code{R[ADX]1} from \R 0.99.0 to \R 1.3.1.
 }
 \value{
   A character vector of the names of objects created, invisibly.
 }
 \section{Warning}{
   Saved \R objects are binary files, even those saved with
-  \code{ascii=TRUE}, so ensure that they are transferred without
-  conversion of end of line markers.
+  \code{ascii = TRUE}, so ensure that they are transferred without
+  conversion of end of line markers.  \code{load} tries to detect this
+  case and give an informative error message.
+}
+\note{
+  Prior to  \R 2.4.0 an object saved as a \code{\link{pairlist}} was
+  coerced to a \code{list}, silently (and undocumented). 
 }
 \seealso{
   \code{\link{save}}, \code{\link{download.file}}.
 }
 \examples{
 ## save all data
-save(list = ls(), file= "all.Rdata")
+xx <- pi # to ensure there is some data
+save(list = ls(all=TRUE), file= "all.Rdata")
+rm(xx)
 
 ## restore the saved values to the current environment
-load("all.Rdata")
-
+local({
+   load("all.Rdata")
+   ls()
+})
 ## restore the saved values to the user's workspace
 load("all.Rdata", .GlobalEnv)
 
-\dontrun{## This example is not real
+unlink("all.Rdata")
+
+\dontrun{
+con <- url("http://some.where.net/R/data/kprats.rda")
 ## print the value to see what objects were created.
-print(loadURL("http://some.where.net/R/data/kprats.rda"))
-# or, avoiding making a local copy,
-print(load(url("http://some.where.net/R/data/kprats.rda")))
+print(load(con))
+close(con)
 }}
 \keyword{file}

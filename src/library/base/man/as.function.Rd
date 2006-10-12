@@ -23,6 +23,12 @@ as.function(x, \dots)
   The function will be defined in a specified environment, by default
   that of the caller.
 }
+\note{
+  For ancient historical reasons, \code{envir = NULL} uses the global
+  environment rather than the base environment.  
+  Please use \code{envir = \link{globalenv}()} instead if this is what you want,
+  as the special handling of \code{NULL} may change in a future release.
+}
 \value{
   The desired function.
 }

@@ -2,11 +2,11 @@
 include ../gnuwin32/MkRules
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
-FFLAGS=$(OPTFLAGS)
+FFLAGS=$(FOPTFLAGS)
 CSOURCES = \
 	approx.c \
-	bakslv.c bandwidths.c binning.c \
-	chull.c cpoly.c cumsum.c \
+	bakslv.c binning.c \
+	cpoly.c cumsum.c \
 	fft.c fmin.c integrate.c interv.c \
 	lbfgsb.c loglin.c lowess.c \
 	machar.c maxcol.c massdist.c \

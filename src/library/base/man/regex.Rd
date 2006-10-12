@@ -6,8 +6,9 @@
 \title{Regular Expressions as used in R}
 \description{
   This help page documents the regular expression patterns supported by
-  \code{\link{grep}} and related functions \code{regexpr}, \code{sub}
-  and \code{gsub}, as well as by \code{\link{strsplit}}.
+  \code{\link{grep}} and related functions \code{regexpr},
+  \code{gregexpr}, \code{sub} and \code{gsub}, as well as by
+  \code{\link{strsplit}}.
 }
 \details{
   A \sQuote{regular expression} is a pattern that describes a set of
@@ -29,10 +30,10 @@
   strings from the keyboard.
 }
 \section{Extended Regular Expressions}{
-  This section covers the regular expressions allowed
-  if \code{extended = TRUE} in \code{grep}, \code{regexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.  They use the GNU implementation of
-  the POSIX 1003.2 standard.
+  This section covers the regular expressions allowed if \code{extended
+  = TRUE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
+  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.3.6}
+  implementation of the POSIX 1003.2 standard.
 
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller expressions.
@@ -44,14 +45,28 @@
   a backslash.  The metacharacters are \code{. \\ | ( ) [ \{ ^ $ * + ?}.
 
   A \emph{character class} is a list of characters enclosed by \code{[}
-  and \code{]} matches any single character in that list; if the first
+  and \code{]} which matches any single character in that list; if the first
   character of the list is the caret \code{^}, then it matches any
   character \emph{not} in the list.  For example, the regular expression
   \code{[0123456789]} matches any single digit, and \code{[^abc]} matches
   anything except the characters \code{a}, \code{b} or \code{c}.  A range
   of characters may be specified by giving the first and last characters,
-  separated by a hyphen.  (Character ranges are interpreted in the
-  collation order of the current locale.)
+  separated by a hyphen.  (Because their interpretation is so
+  system-dependent, they are best avoided.)
+
+  The precise way character ranges are interpreted depends on the values
+  of \code{perl} and \code{ignore.case}.  For basic and extended regular
+  expressions the the collation order is taken from the OS's
+  implementation of the setting of the locale category
+  \code{LC_COLLATE}, so \code{[W-Z]} may include \code{x} and if it
+  does may or may not include \code{w}.  (In most English locales the
+  collation order is \code{wWxXyYzZ}.)  For caseless matching the
+  characters in a range are interpreted as if in lower case, so in an
+  English locale \code{[W-z]} matches \code{WXYZwxyz}.
+
+  For Perl regexps, the ranges are interpreted in the numerical order of
+  the characters, either as bytes in an 8-bit locale or as Unicode
+  points in a UTF-8 locale.
 
   Certain named classes of characters are predefined.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the
@@ -159,15 +174,10 @@
   The backreference \code{\\N}, where N is a single digit, matches the
   substring previously matched by the Nth parenthesized subexpression of
   the regular expression.
-
-  The current code attempts to support traditional usage by assuming
-  that \code{\{} is not special if it would be the start of an invalid
-  interval specification.  (POSIX allows this behaviour as an extension but
-  we advise users not to rely on it.)
 }
 \section{Basic Regular Expressions}{
-  This section covers the regular expressions allowed if
-  \code{extended = FALSE} in \code{grep}, \code{regexpr}, \code{sub},
+  This section covers the regular expressions allowed if \code{extended
+  = FALSE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
   \code{gsub} and \code{strsplit}.
 
   In basic regular expressions the metacharacters \code{?}, \code{+},
@@ -177,17 +187,18 @@
   metacharacters are \code{. \\ [ ^ $ *}.
 }
 \section{Perl Regular Expressions}{
-  The \code{perl = TRUE} argument to \code{grep}, \code{regexpr}, \code{sub},
-  \code{gsub} and \code{strsplit} switches to the PCRE library that
-  \sQuote{implements regular expression pattern matching using the same
-    syntax and semantics as Perl 5.6 or later, with just a few differences}.
+  The \code{perl = TRUE} argument to \code{grep}, \code{regexpr},
+  \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit} switches
+  to the PCRE library that \sQuote{implements regular expression pattern
+  matching using the same syntax and semantics as Perl 5.6 or later,
+  with just a few differences}.
 
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from
   the sources at
   \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}. If PCRE
-  support was compiled from the sources within \R, the PCRE version is 4.5
-  as described here (version \eqn{\ge}{>=} 4.0 is required even if \R is
+  support was compiled from the sources within \R, the PCRE version is 6.7
+  as described here (version \eqn{\ge}{>=} 4.0 is required if \R is
   configured to use the system's PCRE library).
 
   All the regular expressions described for extended regular expressions
@@ -271,13 +282,14 @@
   and recursive patterns are not covered here.
 }
 \author{
-  This help page is based on the documentation of GNU grep 2.4.2, from
-  which the C code used by \R has been taken, the \code{pcre} man
-  page from PCRE 3.9 and the \code{pcrepattern} man page from PCRE 4.4.
+  This help page is based on the documentation of GNU grep 2.4.2 and the
+  \code{pcrepattern} man page from PCRE 6.7.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
-  \code{\link{help.search}}, \code{\link{list.files}},
+  \code{\link{glob2rx}}, \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}} and \code{\link{strsplit}}.
+  
+  \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html}
 }
 \keyword{character}

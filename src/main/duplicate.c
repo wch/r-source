@@ -2,6 +2,7 @@
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *            (C) 2004  The R Foundation
+ *  Copyright (C) 1998-2006 the R Development Core Group.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -23,6 +24,8 @@
 #endif
 
 #include "Defn.h"
+
+#include <R_ext/RS.h> /* S4 bit */
 
 /*  duplicate  -  object duplication  */
 
@@ -37,7 +40,9 @@
 
 /* This macro pulls out the common code in copying an atomic vector.
    The special handling of the scalar case (__n__ == 1) seems to make
-   a small but measurable difference, at least for some cases. */
+   a small but measurable difference, at least for some cases.
+   <FIXME>: surely memcpy would be faster here?
+*/
 #define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from) do {\
   int __n__ = LENGTH(from);\
   PROTECT(from); \
@@ -60,7 +65,7 @@
    will have been set to by the allocation function */
 #define DUPLICATE_ATTRIB(to, from) do {\
   SEXP __a__ = ATTRIB(from); \
-  if (__a__ != R_NilValue) SET_ATTRIB(to, duplicate(__a__)); \
+  if (__a__ != R_NilValue) SET_ATTRIB(to, duplicate1(__a__)); \
 } while (0)
 
 #define COPY_TAG(to, from) do { \
@@ -68,7 +73,56 @@
   if (__tag__ != R_NilValue) SET_TAG(to, __tag__); \
 } while (0)
 
-SEXP duplicate(SEXP s)
+
+/* For memory profiling.  */
+/* We want a count of calls to duplicate from outside 
+   which requires a wrapper function.
+
+   The original duplicate() function is now duplicate1().
+   
+   I don't see how to make the wrapper go away when R_PROFILING
+   is not defined, because we still need to be able to 
+   optionally rename duplicate() as Rf_duplicate().
+*/
+static SEXP duplicate1(SEXP);
+
+#ifdef R_PROFILING
+static unsigned long duplicate_counter = -1;
+
+unsigned long  attribute_hidden
+get_duplicate_counter(void)
+{
+    return duplicate_counter;
+}
+
+void attribute_hidden reset_duplicate_counter(void)
+{
+    duplicate_counter = 0;
+    return;
+}
+#endif
+
+SEXP duplicate(SEXP s){
+    SEXP t;
+
+#ifdef R_PROFILING
+    duplicate_counter++;	
+#endif
+    t = duplicate1(s);
+#ifdef R_MEMORY_PROFILING
+    if (TRACE(s) && !(TYPEOF(s) == CLOSXP || TYPEOF(s) == BUILTINSXP || 
+		      TYPEOF(s) == SPECIALSXP || TYPEOF(s) == PROMSXP || 
+		      TYPEOF(s) == ENVSXP)){
+	    memtrace_report(s,t);
+	    SET_TRACE(t,1);
+    }
+#endif
+    return t;
+}
+
+/*****************/
+
+static SEXP duplicate1(SEXP s)
 {
     SEXP h, t,  sp;
     int i, n;
@@ -98,7 +152,7 @@ SEXP duplicate(SEXP s)
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
 	while(sp != R_NilValue) {
-	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
+	    SETCDR(t, CONS(duplicate1(CAR(sp)), R_NilValue));
 	    t = CDR(t);
 	    COPY_TAG(t, sp);
 	    DUPLICATE_ATTRIB(t, sp);
@@ -111,7 +165,7 @@ SEXP duplicate(SEXP s)
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
 	while(sp != R_NilValue) {
-	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
+	    SETCDR(t, CONS(duplicate1(CAR(sp)), R_NilValue));
 	    t = CDR(t);
 	    COPY_TAG(t, sp);
 	    DUPLICATE_ATTRIB(t, sp);
@@ -126,7 +180,7 @@ SEXP duplicate(SEXP s)
 	PROTECT(sp = s);
 	PROTECT(h = t = CONS(R_NilValue, R_NilValue));
 	while(sp != R_NilValue) {
-	    SETCDR(t, CONS(duplicate(CAR(sp)), R_NilValue));
+	    SETCDR(t, CONS(duplicate1(CAR(sp)), R_NilValue));
 	    t = CDR(t);
 	    COPY_TAG(t, sp);
 	    DUPLICATE_ATTRIB(t, sp);
@@ -150,7 +204,7 @@ SEXP duplicate(SEXP s)
 	PROTECT(s);
 	PROTECT(t = allocVector(TYPEOF(s), n));
 	for(i = 0 ; i < n ; i++)
-	    SET_VECTOR_ELT(t, i, duplicate(VECTOR_ELT(s, i)));
+	    SET_VECTOR_ELT(t, i, duplicate1(VECTOR_ELT(s, i)));
 	DUPLICATE_ATTRIB(t, s);
 	SET_TRUELENGTH(t, TRUELENGTH(s));
 	UNPROTECT(2);
@@ -169,12 +223,20 @@ SEXP duplicate(SEXP s)
     case PROMSXP:
 	return s;
 	break;
+    case S4SXP:
+        PROTECT(s);
+	PROTECT(t = allocS4Object());
+	DUPLICATE_ATTRIB(t, s);
+	UNPROTECT(2);
+	break;
     default:
-	UNIMPLEMENTED("duplicate");
+	UNIMPLEMENTED_TYPE("duplicate", s);
 	t = s;/* for -Wall */
     }
-    if(TYPEOF(t) == TYPEOF(s) ) /* surely it only makes sense in this case*/
+    if(TYPEOF(t) == TYPEOF(s) ) { /* surely it only makes sense in this case*/
 	SET_OBJECT(t, OBJECT(s));
+	(IS_S4_OBJECT(s) ? SET_S4_OBJECT(t) : UNSET_S4_OBJECT(t));
+    }
     return t;
 }
 
@@ -186,6 +248,9 @@ void copyVector(SEXP s, SEXP t)
     ns = LENGTH(s);
     switch (TYPEOF(s)) {
     case STRSXP:
+	for (i = 0; i < ns; i++)
+	    SET_STRING_ELT(s, i, STRING_ELT(t, i % nt));
+	break;
     case EXPRSXP:
 	for (i = 0; i < ns; i++)
 	    SET_VECTOR_ELT(s, i, VECTOR_ELT(t, i % nt));
@@ -215,11 +280,11 @@ void copyVector(SEXP s, SEXP t)
 	    RAW(s)[i] = RAW(t)[i % nt];
 	break;
     default:
-	UNIMPLEMENTED("copyVector");
+	UNIMPLEMENTED_TYPE("copyVector", s);
     }
 }
 
-void copyListMatrix(SEXP s, SEXP t, Rboolean byrow)
+void attribute_hidden copyListMatrix(SEXP s, SEXP t, Rboolean byrow)
 {
     SEXP pt, tmp;
     int i, j, nr, nc, ns;
@@ -299,7 +364,7 @@ void copyMatrix(SEXP s, SEXP t, Rboolean byrow)
 		    RAW(s)[i + j * nr] = RAW(t)[k++ % nt];
 	    break;
 	default:
-	    UNIMPLEMENTED("copyMatrix");
+	    UNIMPLEMENTED_TYPE("copyMatrix", s);
 	}
     }
     else

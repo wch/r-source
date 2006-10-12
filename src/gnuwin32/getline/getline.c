@@ -1,6 +1,5 @@
-#ifndef lint
-static char    *copyright = "Copyright (C) 1991, 1992, 1993, Chris Thewalt";
-#endif
+#include <R_ext/Boolean.h>
+#include <R_ext/Error.h>
 
 /*
  * Copyright (C) 1991, 1992, 1993 by Chris Thewalt (thewalt@ce.berkeley.edu)
@@ -32,6 +31,11 @@ int 		(*gl_in_hook)() = 0;
 int 		(*gl_out_hook)() = 0;
 int 		(*gl_tab_hook)() = gl_tab;
 
+#define SUPPORT_MBCS
+#include <R_ext/rlocale.h>
+#include <wchar.h>
+extern Rboolean mbcslocale;
+#define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 
 /******************** imported interface *********************************/
 
@@ -65,10 +69,12 @@ static int      gl_pos, gl_cnt = 0;     /* position and size of input */
 static char    *gl_buf;                 /* input buffer */
 static char    *gl_killbuf;             /* killed text */
 static char    *gl_prompt;		/* to save the prompt string */
+#ifdef POSIX
 static char     gl_intrc = 0;		/* keyboard SIGINT char */
 static char     gl_quitc = 0;		/* keyboard SIGQUIT char */
 static char     gl_suspc = 0;		/* keyboard SIGTSTP char */
 static char     gl_dsuspc = 0;		/* delayed SIGTSTP char */
+#endif
 static int      gl_search_mode = 0;	/* search mode flag */
 
 static jmp_buf  gl_jmp;
@@ -135,6 +141,7 @@ static void     gl_beep(void);          /* try to play a system beep sound */
 
 #ifdef Win32
 /* guido masarotto (3/12/98)*/
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 static HANDLE Win32OutputStream, Win32InputStream = NULL;
 static DWORD OldWin32Mode, AltIsDown;
@@ -244,7 +251,7 @@ gl_char_init()			/* turn off input echo */
        Win32OutputStream = GetStdHandle(STD_OUTPUT_HANDLE);	
    }
    GetConsoleMode(Win32InputStream,&OldWin32Mode);
-   SetConsoleMode(Win32InputStream, 0);
+   SetConsoleMode(Win32InputStream, ENABLE_PROCESSED_INPUT); /* So ^C works */
    AltIsDown = 0;
 #endif      
    
@@ -358,7 +365,7 @@ gl_getc(void)
     DWORD st;
     WORD vk;
     CONSOLE_SCREEN_BUFFER_INFO csb;
-    int bbb = 0, nAlt=0, n, d;
+    int bbb = 0, nAlt=0, n;
 
     c = 0; 
     while (!c) {
@@ -510,7 +517,10 @@ int
 getline(char *prompt, char *buf, int buflen)
 {
     int             c, loc, tmp;
-
+    int mb_len;
+    mbstate_t mb_st;
+    int i;
+    wchar_t wc;
 #ifdef __unix__
     int	            sig;
 #endif
@@ -556,13 +566,24 @@ getline(char *prompt, char *buf, int buflen)
 		break; 
 	      case '\001': gl_fixup(gl_prompt, -1, 0);		/* ^A */
 		break;
-	      case '\002': gl_fixup(gl_prompt, -1, gl_pos-1);	/* ^B */
+	      case '\002': 	/* ^B */
+		if(mbcslocale) {
+		    mb_len = 0;
+		    mbs_init(&mb_st);
+		    for(i = 0; i< gl_pos ;) {
+			mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+			mb_len = Ri18n_wcwidth(wc);
+			i += (wc==0) ? 0 : mb_len;
+		    }
+		    gl_fixup(gl_prompt, -1, gl_pos - mb_len);
+		} else
+		    gl_fixup(gl_prompt, -1, gl_pos-1);
 		break;
 	      case '\003':                                      /* ^C */
-                gl_fixup(gl_prompt,-1,gl_cnt);
-		gl_puts("^C\n");
-                gl_kill(0);
-                gl_fixup(gl_prompt,-2,BUF_SIZE);
+		  gl_fixup(gl_prompt, -1, gl_cnt);
+		  gl_puts("^C\n");
+		  gl_kill(0);
+		  gl_fixup(gl_prompt, -2, BUF_SIZE);
 		break;
 	      case '\004':					/* ^D */
 		if (gl_cnt == 0) {
@@ -576,7 +597,20 @@ getline(char *prompt, char *buf, int buflen)
 		break;
 	      case '\005': gl_fixup(gl_prompt, -1, gl_cnt);	/* ^E */
 		break;
-	      case '\006': gl_fixup(gl_prompt, -1, gl_pos+1);	/* ^F */
+		case '\006': /* ^F */
+		  if(mbcslocale) { 
+		      if(gl_pos >= gl_cnt)break;
+		      mb_len = 0;
+		      mbs_init(&mb_st);
+		      for(i = 0; i<= gl_pos ;){
+			  mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+			  mb_len = Ri18n_wcwidth(wc);
+			  i += (wc==0) ? 0 : mb_len;
+		      }
+		      gl_fixup(gl_prompt, -1, gl_pos + mb_len);
+		  }
+		else
+		  gl_fixup(gl_prompt, -1, gl_pos+1);
 		break;
 	      case '\010': case '\177': gl_del(-1);	/* ^H and DEL */
 		break;
@@ -644,10 +678,32 @@ getline(char *prompt, char *buf, int buflen)
 	                    gl_in_hook(gl_buf);
 		        gl_fixup(gl_prompt, 0, BUF_SIZE);
 		        break;
-		      case 'C': gl_fixup(gl_prompt, -1, gl_pos+1); /* right */
+		    case 'C': /* right */
+			if(mbcslocale) { 
+			    mb_len = 0;
+			    mbs_init(&mb_st);
+			    for(i = 0; i<= gl_pos ;){
+				mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+				mb_len = Ri18n_wcwidth(wc);
+				i += (wc==0) ? 0 : mb_len;
+			    }
+			    gl_fixup(gl_prompt, -1, gl_pos + mb_len);
+			} else
+			    gl_fixup(gl_prompt, -1, gl_pos+1);
 		        break;
-		      case 'D': gl_fixup(gl_prompt, -1, gl_pos-1); /* left */
-		        break;
+		    case 'D': /* left */
+		       if(mbcslocale) {
+			   mb_len = 0;
+			   mbs_init(&mb_st);
+			   for(i = 0; i <= gl_pos ;){
+			       mbrtowc(&wc, gl_buf+i, MB_CUR_MAX, &mb_st);
+			       mb_len = Ri18n_wcwidth(wc);
+			       i += (wc==0) ? 0 :mb_len;
+			   }
+			   gl_fixup(gl_prompt, -1, gl_pos - mb_len);
+		       } else
+			 gl_fixup(gl_prompt, -1, gl_pos-1);
+			break;
 		      default: gl_putc('\007');         /* who knows */
 		        break;
 		    }
@@ -705,16 +761,51 @@ gl_addchar(int c)
             gl_putc('\a');
             return; 
     }
-    if (gl_overwrite == 0 || gl_pos == gl_cnt) {
-        for (i=gl_cnt; i >= gl_pos; i--)
-            gl_buf[i+1] = gl_buf[i];
-        gl_buf[gl_pos] = (char) c;
-        gl_fixup(gl_prompt, gl_pos, gl_pos+1);
-    } else {
-	gl_buf[gl_pos] = (char) c;
-	gl_extent = 1;
-        gl_fixup(gl_prompt, gl_pos, gl_pos+1);
-    }
+    if(mbcslocale) {
+	mbstate_t mb_st;
+	wchar_t wc;
+	char s[9];
+	int res;
+	int clen ;
+      
+	s[0] = c;
+	clen = 1;
+	res = 0;
+	if((unsigned int)c >= (unsigned int)0x80) {
+            while(clen <= MB_CUR_MAX) {
+	        mbs_init(&mb_st);
+	        res = mbrtowc(&wc, s, clen, &mb_st);
+	        if(res >= 0) break;
+	        if(res == -1) 
+		    gl_error("invalid multibyte character in mbcs_get_next");
+  	        /* so res == -2 */
+	        c = gl_getc();
+	        if(c == EOF) 
+		    gl_error("EOF whilst reading MBCS char");
+	        s[clen++] = c;
+	    } /* we've tried enough, so must be complete or invalid by now */
+	}
+	if( res >= 0 ) {
+	    if (!(gl_overwrite == 0 || gl_pos == gl_cnt))  
+		gl_del(0); 
+	    for (i=gl_cnt; i >= gl_pos; i--)
+                gl_buf[i+clen] = gl_buf[i];
+	    for (i=0; i<clen; i++)
+                gl_buf[gl_pos + i] = s[i];
+	    gl_fixup(gl_prompt, gl_pos, gl_pos+clen);
+	}
+       
+    } else
+	if (gl_overwrite == 0 || gl_pos == gl_cnt) {
+	    for (i = gl_cnt; i >= gl_pos; i--)
+		gl_buf[i+1] = gl_buf[i];
+	    gl_buf[gl_pos] = (char) c;
+	    gl_fixup(gl_prompt, gl_pos, gl_pos+1);
+	} else {
+	    gl_buf[gl_pos] = (char) c;
+	    gl_extent = 1;
+	    gl_fixup(gl_prompt, gl_pos, gl_pos+1);
+	}
 }
 
 static void
@@ -755,11 +846,36 @@ gl_transpose(void)
     int    c;
 
     if (gl_pos > 0 && gl_cnt > gl_pos) {
-	c = gl_buf[gl_pos-1];
-	gl_buf[gl_pos-1] = gl_buf[gl_pos];
-	gl_buf[gl_pos] = (char) c;
-	gl_extent = 2;
-	gl_fixup(gl_prompt, gl_pos-1, gl_pos);
+	if(mbcslocale) {
+	    int l_len = 0;
+	    int r_len = 0;
+	    int i = 0;
+	    int j = 0;
+	    mbstate_t mb_st;
+
+	    mbs_init(&mb_st);
+	    for (i = 0; i < gl_pos;) {
+		l_len = mbrlen(gl_buf+i, MB_CUR_MAX, &mb_st);
+		i += l_len;
+	    }
+	    mbs_init(&mb_st);
+	    r_len = mbrlen(gl_buf+gl_pos, MB_CUR_MAX, &mb_st);
+	    for (i = 0; i < r_len; i++) {
+		for(j = 0; j < l_len; j++) {
+		    c = gl_buf[gl_pos+i-j];
+		    gl_buf[gl_pos+i-j] = gl_buf[gl_pos+i-j-1];
+		    gl_buf[gl_pos+i-j-1] = (char)c;
+		}
+	    }
+	    gl_extent = l_len + r_len;
+	    gl_fixup(gl_prompt, gl_pos - l_len, gl_pos + (r_len - l_len)); 
+	} else {
+	    c = gl_buf[gl_pos-1];
+	    gl_buf[gl_pos-1] = gl_buf[gl_pos];
+	    gl_buf[gl_pos] = (char) c;
+	    gl_extent = 2;
+	    gl_fixup(gl_prompt, gl_pos-1, gl_pos);
+	}
     } else
 	gl_beep();
 }
@@ -797,14 +913,34 @@ gl_del(int loc)
  *     0 : delete character under cursor
  */
 {
-    int i;
+   int i;
 
-    if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
-        for (i=gl_pos+loc; i < gl_cnt; i++)
-	    gl_buf[i] = gl_buf[i+1];
-	gl_fixup(gl_prompt, gl_pos+loc, gl_pos+loc);
-    } else
-	gl_beep();
+   if(mbcslocale) {
+       int mb_len;
+       mbstate_t mb_st;
+       wchar_t wc;
+
+       mb_len=0;
+       mbs_init(&mb_st);
+   
+       if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
+	   for(i = 0; i<= gl_pos + loc;) {
+	       mbrtowc(&wc,gl_buf+i, MB_CUR_MAX, &mb_st);
+	       mb_len = Ri18n_wcwidth(wc);
+	       i += (wc==0) ? 0 : mb_len;
+	   }
+	   for (i = gl_pos+(loc*mb_len); i <= gl_cnt - mb_len; i++)
+	       gl_buf[i] = gl_buf[i + mb_len];
+	   gl_fixup(gl_prompt,gl_pos+(loc * mb_len) , gl_pos+(loc * mb_len));
+       } else
+	   gl_beep();
+   } else   
+       if ((loc == -1 && gl_pos > 0) || (loc == 0 && gl_pos < gl_cnt)) {
+	   for (i = gl_pos+loc; i < gl_cnt; i++)
+	       gl_buf[i] = gl_buf[i+1];
+	   gl_fixup(gl_prompt, gl_pos+loc, gl_pos+loc);
+       } else
+	   gl_beep();
 }
 
 static void
@@ -1047,7 +1183,7 @@ size_t (*func)();
 
 static int	HIST_SIZE = 512;
 static int      hist_pos = 0, hist_last = 0, gl_beep_on = 1;
-static char    **hist_buf;
+static char     **hist_buf;
 
 void
 gl_hist_init(int size, int beep)
@@ -1080,30 +1216,19 @@ gl_histadd(char *buf)
     while (*p == ' ' || *p == '\t' || *p == '\n') 
 	p++;
     if (*p) {
-#ifdef SKIP_DUPLICATES
-	int len;
-	len = strlen(buf);
-	if (strchr(p, '\n')) 	/* previously line already has NL stripped */
-	    len--;
-	if ((prev == 0) || ((int) strlen(prev) != len) || 
-			    strncmp(prev, buf, (size_t) len) != 0) {
-            hist_buf[hist_last] = hist_save(buf);
-	    prev = hist_buf[hist_last];
-            hist_last = (hist_last + 1) % HIST_SIZE;
-            if (hist_buf[hist_last] && *hist_buf[hist_last]) {
-	        free(hist_buf[hist_last]);
-            }
-	    hist_buf[hist_last] = "";
-	}
-#else
 	hist_buf[hist_last] = hist_save(buf);
 	prev = hist_buf[hist_last];
-	hist_last = (hist_last + 1) % HIST_SIZE;
-	if (hist_buf[hist_last] && *hist_buf[hist_last]) {
-	    free(hist_buf[hist_last]);
+	hist_last = hist_last + 1;
+	if(hist_last > HIST_SIZE - 1) {
+	    int i, size = HIST_SIZE + 512;
+	    hist_buf = (char **) realloc(hist_buf, size * sizeof(char *));
+	    if(!hist_buf)
+		gl_error("\n*** Error: gl_histadd() failed on realloc\n");
+	    for(i = HIST_SIZE; i < size; i++)
+		hist_buf[i] = (char *)0;
+	    HIST_SIZE = size;
 	}
 	hist_buf[hist_last] = "";
-#endif
     }
     hist_pos = hist_last;
 }
@@ -1113,9 +1238,9 @@ gl_hist_prev(void)
 /* loads previous hist entry into input buffer, sticks on first */
 {
     char *p = 0;
-    int   next = (hist_pos - 1 + HIST_SIZE) % HIST_SIZE;
+    int   next = hist_pos - 1;
 
-    if (hist_buf[hist_pos] != 0 && next != hist_last) {
+    if (hist_buf[hist_pos] != 0 && next >= 0) {
         hist_pos = next;
         p = hist_buf[hist_pos];
     } 
@@ -1133,7 +1258,7 @@ gl_hist_next(void)
     char *p = 0;
 
     if (hist_pos != hist_last) {
-        hist_pos = (hist_pos+1) % HIST_SIZE;
+        hist_pos = hist_pos+1;
 	p = hist_buf[hist_pos];
     } 
     if (p == 0) {
@@ -1167,10 +1292,10 @@ hist_save(char *p)
     return s;
 }
 
-void gl_savehistory(char *file)
+void gl_savehistory(char *file, int size)
 {
     FILE *fp;
-    int i;
+    int i, init;
 
     if (!file || !hist_last) return;
     fp = fopen(file, "w");
@@ -1180,13 +1305,10 @@ void gl_savehistory(char *file)
        R_ShowMessage(msg);
        return;
     }
-    /* It is a circular buffer */
-    for (i = hist_last; i < HIST_SIZE; i++) {
-       if(!(hist_buf + i)) fprintf(fp, "%s\n", hist_buf[i]);
-    }
-    for (i = 0; i < hist_last; i++) {
+    init = hist_last - size;
+    init = (init < 0) ? 0 : init;
+    for (i = init; i < hist_last; i++)
        fprintf(fp, "%s\n", hist_buf[i]);
-    }
     fclose(fp); 
 }
 

@@ -1,14 +1,18 @@
 \name{symnum}
 \alias{symnum}
 \title{Symbolic Number Coding}
+\concept{matrix visualization}
 \description{
   Symbolically encode a given numeric or logical vector or array.
+  Particularly useful for \dQuote{visualization} of structured matrices,
+  e.g., correlation, sparse, or logical ones.
 }
 \usage{
-symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
-       symbols=c(" ", ".", ",", "+", "*", "B"),
+symnum(x, cutpoints = c(0.3, 0.6, 0.8, 0.9, 0.95),
+       symbols= if(numeric.x) c(" ", ".", ",", "+", "*", "B") else c(".", "|"),
        legend = length(symbols) >= 3,
-       na = "?", eps = 1e-5, corr = missing(cutpoints),
+       na = "?", eps = 1e-5, numeric.x = is.numeric(x),
+       corr = missing(cutpoints) && numeric.x,
        show.max = if(corr) "1", show.min = NULL,
        abbr.colnames = has.colnames,
        lower.triangular = corr && is.numeric(x) && is.matrix(x),
@@ -24,7 +28,8 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
     \code{symbols[j]}\eqn{= s_j}{ == s[j]} are used as \dQuote{code} for
     the (half open) interval \eqn{(c_j,c_{j+1}]}{(c[j], c[j+1]]}.
 
-    For \code{logical} argument \code{x}, the default is
+    When \code{numeric.x} is \code{FALSE}, i.e., by default when
+    argument \code{x} is \code{logical}, the default is
     \code{c(".","|")} (graphical 0 / 1 s).}
   \item{legend}{logical indicating if a \code{"legend"} attribute is
     desired.}
@@ -33,6 +38,8 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
     the \code{"legend"} attribute below, which otherwise mentions NA
     coding.}
   \item{eps}{absolute precision to be used at left and right boundary.}
+  \item{numeric.x}{logical indicating if \code{x} should be treated as numbers,
+    otherwise as logical.}
   \item{corr}{logical.  If \code{TRUE}, \code{x} contains correlations.
     The cutpoints are augmented by \code{0} and \code{1} and
     \code{abs(x)} is coded.}
@@ -54,26 +61,37 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
     this are \code{TRUE}, the \emph{diagonal} part of the matrix is
     shown.}
 }
+\note{
+  The optional (mostly logical) arguments all try to use smart defaults.
+  Specifying them explicitly may lead to considerably improved output in
+  many cases.
+}
 \value{
   An atomic character object of class \code{\link{noquote}} and the same
   dimensions as \code{x}.
 
-  If \code{legend} (\code{TRUE} by default when there more than 2 classes),
-  it has an attribute \code{"legend"} containing a legend
-  of the returned character codes, in the form
+  If \code{legend} is \code{TRUE} (as by default when there are more
+  than two classes), the result has an attribute \code{"legend"}
+  containing a legend of the returned character codes, in the form
   \deqn{c_1 s_1 c_2 s_2 \dots s_n c_{n+1}}{% the dots are UGLY in LaTeX Math
     c[1] \sQuote{s[1]} c[2] \sQuote{s[2]} \dots \sQuote{s[n]} c_[n+1]}
   where \eqn{c_j}{c[j]}\code{ = cutpoints[j]} and
   \eqn{s_j}{s[j]}\code{ = symbols[j]}.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
-\seealso{\code{\link{as.character}}}
+\seealso{\code{\link{as.character}}; \code{\link[graphics]{image}}}
 \examples{
 ii <- 0:8; names(ii) <- ii
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"))
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"), show.max=TRUE)
 
-symnum(1:12 \%\% 3 == 0)# use for logical
+symnum(1:12 \%\% 3 == 0)# --> "|" = TRUE, "." = FALSE  for logical
+
+## Pascal's Triangle modulo 2 -- odd and even numbers:
+N <- 38
+pascal <- t(sapply(0:N, function(n) round(choose(n, 0:N - (N-n)\%/\%2))))
+rownames(pascal) <- rep("", 1+N) # <-- to improve "graphic"
+symnum(pascal \%\% 2, symbols = c(" ", "A"), numeric = FALSE)
 
 ##-- Symbolic correlation matrices:
 symnum(cor(attitude), diag = FALSE)

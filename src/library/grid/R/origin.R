@@ -3,7 +3,7 @@ valid.origin <- function(origin) {
                              c("bottom.left", "top.left",
                                "bottom.right", "top.right")) - 1)
   if (any(is.na(origin)))
-    stop("Invalid origin")
+    stop("Invalid 'origin'")
   origin
 }
 
@@ -38,7 +38,7 @@ origin.top <- function(origin) {
           top.left = TRUE,
           top.right = TRUE)
 }
-  
+
 swap.origin.horizontal <- function(origin) {
   switch (origin,
           bottom.left = "bottom.right",

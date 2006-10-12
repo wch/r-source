@@ -13,7 +13,6 @@
 setClassUnion(name, members, where)
 isClassUnion(Class)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{name}{ the name for the new union class. }
   \item{members}{ the classes that should be members of this union.}
@@ -67,13 +66,11 @@ isClassUnion(Class)
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
+  discussion of details see \code{?\link{Methods}}
+  and the links from that documentation.
 }
 
 \examples{
-
 ## a class for either numeric or logical data
 setClassUnion("maybeNumber", c("numeric", "logical"))
 

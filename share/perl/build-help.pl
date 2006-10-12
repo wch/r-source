@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2003 R Development Core Team
+# Copyright (C) 1997-2006 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
 #
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-# writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA.
+# writing to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301  USA.
 
 use File::Basename;
 use Cwd;
@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.14 $ ';
+my $revision = ' $Rev$ ';
 my $version;
 my $name;
 
@@ -33,7 +33,7 @@ $version = $1;
 ($name = $0) =~ s|.*/||;
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "htmllists", "help|h", "version|v", "os|OS:s", 
+		 "dosnames", "help|h", "version|v", "os|OS:s", 
 		 "index");
 GetOptions (@knownoptions) || usage();
 &R_version($name, $version) if $opt_version;
@@ -66,17 +66,6 @@ print STDERR "Current directory (cwd): '$current'\n" if $opt_debug;
 
 my $mainlib = file_path($R_HOME, "library");
 
-# if option --htmllists is set we only rebuild some list files and
-# exit
-
-if($opt_htmllists){
-    build_htmlpkglist($mainlib);
-
-    %anindex = read_anindex($mainlib);
-    %htmlindex = read_htmlindex($mainlib);
-
-    exit 0;
-}
 
 # default is to build all documentation formats
 if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
@@ -86,7 +75,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
     $opt_example = 1;
 }
 
-($pkg, $lib, @mandir) = buildinit();
+($pkg, $version, $lib, @mandir) = buildinit();
 
 
 ## !!! Attempting to create the ability to have packages stored in a 
@@ -100,7 +89,7 @@ if (!$dest) {
 
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
-build_index($lib, $dest, "");
+build_index($lib, $dest, $version, "");
 if($opt_index){
     exit 0;
 }
@@ -152,8 +141,11 @@ format STDOUT =
 .
 
 foreach $manfile (@mandir) {
-    if($manfile =~ /\.[Rr]d$/ && !($manfile =~ /^\.#/)) {
+    ## Should only process files starting with [A-Za-z0-9] and with
+    ## suffix .Rd or .rd, according to `Writing R Extensions'.
+    if($manfile =~ /\.[Rr]d$/) {
 	$manfilebase = basename($manfile, (".Rd", ".rd"));
+	if(! ($manfilebase =~ /^[A-Za-z0-9]/) ) {next;}
 	$manage = (-M $manfile);
 	$manfiles{$manfilebase} = $manfile;
 
@@ -164,7 +156,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg);
+		Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -175,7 +167,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg);
+		Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -184,7 +176,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile");
+		Rdconv($manfile, "latex", "", "$destfile", $version);
 	    }
 	}
 
@@ -193,7 +185,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
-		Rdconv($manfile, "example", "", "$destfile");
+		Rdconv($manfile, "example", "", "$destfile", $version);
 		if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
@@ -265,12 +257,12 @@ Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
   -d, --debug           print debugging information
+  -os, --OS             OS to assume: unix (default) or windows
   --rhome               R home directory, defaults to environment R_HOME
   --html                build HTML files    (default is all)
   --txt                 build text files    (default is all)
   --latex               build LaTeX files   (default is all)
   --example             build example files (default is all)
-  --htmllists           build HTML function and package lists
   --dosnames            use 8.3 filenames
   --index               build index file only
 

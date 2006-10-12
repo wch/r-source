@@ -7,7 +7,7 @@ diag <- function(x = 1, nrow, ncol = n)
         y <- c(x)[1 + 0:(m - 1) * (dim(x)[1] + 1)]
         nms <- dimnames(x)
         if (is.list(nms) && !any(sapply(nms, is.null)) &&
-            all((nm <- nms[[1]][1:m]) == nms[[2]][1:m]))
+            identical((nm <- nms[[1]][1:m]), nms[[2]][1:m]))
             names(y) <- nm
         return(y)
     }
@@ -34,7 +34,7 @@ diag <- function(x = 1, nrow, ncol = n)
     dx <- dim(x)
     if(length(dx) != 2 || prod(dx) != length(x))
 	stop("only matrix diagonals can be replaced")
-    i <- seq(length=min(dx))
+    i <- seq_len(min(dx))
     if(length(value) != 1 && length(value) != length(i))
 	stop("replacement diagonal has wrong length")
     if(length(i) > 0) x[cbind(i, i)] <- value

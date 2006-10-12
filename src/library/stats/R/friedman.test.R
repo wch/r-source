@@ -16,9 +16,15 @@ function(y, groups, blocks, ...)
         DNAME <- paste(DNAME, ", ", deparse(substitute(groups)),
                        " and ", deparse(substitute(blocks)), sep = "")
         if (any(table(groups, blocks) != 1))
-            stop("Not an unreplicated complete block design")
+            stop("not an unreplicated complete block design")
         groups <- factor(groups)
         blocks <- factor(blocks)
+        ## Need to ensure consistent order of observations within
+        ## blocks.
+        o <- order(groups, blocks)
+        y <- y[o]
+        groups <- groups[o]
+        blocks <- blocks[o]
     }
 
     k <- nlevels(groups)
@@ -27,7 +33,7 @@ function(y, groups, blocks, ...)
     n <- nrow(y)
     r <- t(apply(y, 1, rank))
     TIES <- tapply(r, row(r), table)
-    STATISTIC <- ((12 * sum((apply(r, 2, sum) - n * (k + 1) / 2)^2)) /
+    STATISTIC <- ((12 * sum((colSums(r) - n * (k + 1) / 2)^2)) /
                   (n * k * (k + 1)
                    - (sum(unlist(lapply(TIES, function (u) {u^3 - u}))) /
                       (k - 1))))
@@ -57,7 +63,7 @@ function(formula, data, subset, na.action, ...)
        || (formula[[3]][[1]] != as.name("|"))
        || (length(formula[[3]][[2]]) != 1)
        || (length(formula[[3]][[3]]) != 1))
-        stop(paste("incorrect specification for", sQuote("formula")))
+        stop("incorrect specification for 'formula'")
     formula[[3]][[1]] <- as.name("+")
     ## </FIXME>
     m <- match.call(expand.dots = FALSE)

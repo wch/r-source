@@ -1,6 +1,6 @@
 ## Subroutines for building R documentation
 
-## Copyright (C) 1997-2003 R Development Core Team
+## Copyright (C) 1997-2006 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
 ##
 ## A copy of the GNU General Public License is available via WWW at
 ## http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-## writing to the Free Software Foundation, Inc., 59 Temple Place, Suite
-## 330, Boston, MA 02111-1307 USA.
+## writing to the Free Software Foundation, Inc., 51 Franklin Street,
+## Fifth Floor, Boston, MA 02110-1301  USA.
 
 ## Send any bug reports to r-bugs@r-project.org.
 
@@ -23,9 +23,8 @@ package R::Rdlists;
 
 require  Exporter;
 @ISA     = qw(Exporter);
-@EXPORT  = qw(buildinit read_titles read_htmlindex read_htmlpkgindex
-	      read_anindex build_htmlpkglist build_index fileolder
-	      foldorder);
+@EXPORT  = qw(buildinit read_htmlindex read_htmlpkgindex read_anindex
+	      build_index fileolder foldorder aliasorder);
 
 use Cwd;
 use File::Basename;
@@ -81,6 +80,15 @@ sub buildinit {
     }
     $pkg_name = basename($tmp) unless($pkg_name);
 
+    my $version;
+    if(-r &file_path($lib, $pkg_name, "DESCRIPTION")) {
+	$description =
+	    new R::Dcf(&file_path($lib, $pkg_name, "DESCRIPTION"));
+	if(defined($description->{"Version"})) {
+	    $version = $description->{"Version"};
+	} else {$version = "";}
+    } else {$version = "";}
+
     chdir "man" or die("There are no man pages in ${pkg_dir}\n");
 
     ## <FIXME>
@@ -112,46 +120,8 @@ sub buildinit {
     }
     ## </FIXME>
 
-    ($pkg_name, $lib, @mandir);
+    ($pkg_name, $version, $lib, @mandir);
 }
-
-
-### Read the titles of all installed packages into an hash array
-
-sub read_titles {
-
-    my $lib = $_[0];
-
-    my %tit;
-    my $pkg;
-
-    opendir lib, $lib;
-    my @libs = readdir(lib);
-    closedir lib;
-
-    foreach $pkg (@libs) {
-	if(-d file_path($lib, $pkg)){
-	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r file_path($lib, $pkg, "DESCRIPTION")){
-		    my $rdcf = R::Dcf->new(file_path($lib, $pkg, "DESCRIPTION"));
-		    my $pkgname = $pkg;
-		    if($rdcf->{"Package"}) {
-			 $pkgname = $rdcf->{"Package"};
-		    }
-		    if($rdcf->{"Title"}) {
-			$tit{$pkgname} = $rdcf->{"Title"};
-		    } else {
-			$tit{$pkgname} = "-- Title is missing --";
-		    }
-		}
-	    }
-	}
-    }
-
-    close titles;
-    %tit;
-}
-
 
 ### Read all aliases into two hash arrays with basenames and
 ### (relative) html-paths.
@@ -229,43 +199,6 @@ sub read_anindex {
     %anindex;
 }
 
-
-
-### Build $R_HOME/doc/html/packages.html from the $pkg/DESCRIPTION files
-
-sub build_htmlpkglist {
-
-    my $lib = $_[0];
-
-    my %htmltitles = read_titles($lib);
-    my $key;
-
-    open(htmlfile, ">". file_path($main::R_HOME, "doc", "html", 
-				  "packages".$HTML)) or
-	die "Could not open " . 
-	    file_path($main::R_HOME, "doc", "html", "packages".$HTML);
-
-    print htmlfile html_pagehead("Package Index", ".",
-				 "index$HTML", "Top",
-				 "", "",
-				 "", "", "./R.css");
-
-    print htmlfile "<p><h3>Packages in the standard library</h3>\n", 
-    "<p>\n<table width=\"100%\" summary=\"R Package list\">\n";
-
-    foreach $key (sort(keys %htmltitles)) {
-	print htmlfile "<tr align=\"left\" valign=\"top\">\n";
-	print htmlfile "<td width=\"25%\"><a href=\"../../library/$key/html/00Index$HTML\">";
-	print htmlfile encodealias($key), "</a></td><td>";
-	print htmlfile $htmltitles{$key}, "</td></tr>\n";
-    }
-
-    print htmlfile "</table>\n\n";
-    print htmlfile "</body></html>\n";
-
-    close htmlfile;
-}
-
 sub striptitle { # text
     my $text = $_[0];
     $text =~ s/\\//go;
@@ -284,10 +217,20 @@ sub encodealias { # text
 
 sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 
-sub build_index { # lib, dest
+## Put -package topic first
+
+sub aliasorder {($b =~ /-package$/) cmp ($a =~ /-package$/) or uc($a) cmp uc($b) or $a cmp $b;}
+
+
+sub isNonASCII {
+    return $_[0] =~ /[^A-Za-z0-9[:punct:][:space:]]/
+}
+
+sub build_index { # lib, dest, version, [chmdir]
     my $lib = $_[0];
     my $dest = $_[1];
-    my $chmdir = $_[2];
+    my $version = $_[2];
+    my $chmdir = $_[3];
 
     if(! -d $lib){
         mkdir("$lib", $dir_mod) or die "Could not create directory $lib: $!\n";
@@ -298,11 +241,24 @@ sub build_index { # lib, dest
     }
 
     my $title = "";
-    if(-r "../DESCRIPTION") {
-	my $rdcf = R::Dcf->new("../DESCRIPTION");
+    my $pkg_name = "";
+    my $pkg_encoding = "unknown";
+    ## did not work if builddir ne srcdir
+    if(-r &file_path($dest, "DESCRIPTION")) {
+	my $rdcf = R::Dcf->new(&file_path($dest, "DESCRIPTION"));
+	if($rdcf->{"Package"}) {
+	    $pkg_name = $rdcf->{"Package"};
+	    chomp $pkg_name;
+	}
 	if($rdcf->{"Title"}) {
 	    $title = $rdcf->{"Title"};
 	    chomp $title;
+	}
+	if($rdcf->{"Encoding"}) {
+	    ## we use this even if the pkg title is ASCII
+	    $pkg_encoding = $rdcf->{"Encoding"};
+	    chomp $pkg_encoding;
+	    $pkg_encoding = mime_canonical_encoding($pkg_encoding);
 	}
     }
 
@@ -324,10 +280,14 @@ sub build_index { # lib, dest
     my $tfile;
 
     foreach $manfile (@mandir) {
-	if($manfile =~ /\.Rd$/i){
+	## Should only process files starting with [A-Za-z0-9] and with
+	## suffix .Rd or .rd, according to `Writing R Extensions'.
+	if($manfile =~ /\.[Rr]d$/){
 
 	    my $rdname = basename($manfile, (".Rd", ".rd"));
+	    if(! ($rdname =~ /^[A-Za-z0-9]/) ) { next; }
 	    my $internal = 0;
+	    my $encoding = "unknown";
 
 	    if($main::opt_dosnames){
 		$manfilebase = "x" . $nmanfiles++;
@@ -347,7 +307,19 @@ sub build_index { # lib, dest
 	    $rdtitle =~ s/\n/ /sg;
 	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
 	    $internal = 1 if $text =~ /\\keyword\{\s*internal\s*\}/;
-
+	    if($text =~ /\\encoding\{\s*([^\}]+)\s*\}/s) {
+		$encoding = mime_canonical_encoding($1);
+		if(isNonASCII($rdtitle)) {
+		    if($pkg_encoding eq "unknown") {
+			$pkg_encoding = $encoding;
+		    } elsif($encoding ne $pkg_encoding) {
+			warn "Warning: " .
+			    "encoding of Rd title in '$encoding'".
+			    " is inconsistent with ".
+			    "earlier encoding '$pkg_encoding'\n";
+		    }
+		}
+	    }
 	    $main::filenm{$rdname} = $manfilebase;
 	    if($main::opt_chm) {
 		$main::title2file{$rdtitle} = $manfilebase;
@@ -380,7 +352,7 @@ sub build_index { # lib, dest
     }
 
     open(anindex, "> ${anindex}") or die "Could not open ${anindex}";
-    foreach $alias (sort foldorder keys %main::aliasnm) {
+    foreach $alias (sort aliasorder keys %main::aliasnm) {
 	print anindex "$alias\t$main::aliasnm{$alias}\n";
     }
     close anindex;
@@ -393,22 +365,33 @@ sub build_index { # lib, dest
 	open(chmfile, "> $chmdir/00Index$HTML") or
 	    die "Could not open $chmdir/00Index$HTML";
     }
+    $pkg_encoding = mime_canonical_encoding($pkg_encoding);
+
+    $pkg_encoding = "iso-8859-1" if $pkg_encoding eq "unknown";
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
 				 "../../../doc/html/index$HTML", "Top",
 				 "../../../doc/html/packages$HTML",
-				 "Package List", "", "", "../../R.css");
+				 "Package List", "", "", "../../R.css",
+				 $pkg_encoding);
 
     if($main::opt_chm) {
 	print chmfile chm_pagehead("$title");
+	print chmfile "<h2>Help pages for package `", $pkg_name, "'"; 
+	print chmfile " version ", $version if $version != "";
+	print chmfile "</h2>\n\n";
     }
+
+    print htmlfile "<h2>Documentation for package `", $pkg_name, "'"; 
+    print htmlfile " version ", $version if $version != "";
+    print htmlfile "</h2>\n\n";
 
     if(-d file_path($dest, "doc")){
 	print htmlfile "<h2>User Guides and Package Vignettes</h2>\n"
 	    . "Read <a href=\"../doc/index.html\">overview</a> or "
-	    . "browse <a href=\"../doc\">directory</a>.\n\n"
-	    . "<h2>Help Pages</h2>\n\n";
+	    . "browse <a href=\"../doc\">directory</a>.\n\n";
     }
+    print htmlfile "<h2>Help Pages</h2>\n\n";
 	
     if($naliases>100){
 	print htmlfile html_alphabet(keys(%firstlettersfound));
@@ -480,14 +463,17 @@ sub fileolder {
 
 
 ## Return the first letter in uppercase, empty string for <=A and
-## "misc" for >=Z 
+## or "*-package" and "misc" for >=Z 
 ## used for indexing various HTML lists.
 sub firstLetterCategory {
     my ($x) = @_;
     
-    $x = uc substr($x, 0, 1);
-    if($x lt "A") { $x = ""; }
-    if($x gt "Z") { $x = "misc"; }
+    if ($x =~ /-package$/) { $x = " "; }
+    else {
+    	$x = uc substr($x, 0, 1);
+    	if($x lt "A") { $x = ""; }
+    	if($x gt "Z") { $x = "misc"; }
+    }
     $x;
 }
 
@@ -508,10 +494,12 @@ sub html_alphabet
 sub html_pagehead
 {
     my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext, 
-	$cssloc) = @_;
+	$cssloc, $enc) = @_;
 
-    my $retval = "<html><head><title>R: $title</title>\n" .
-	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n" .
+    my $retval = 
+	"<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n" .
+	"<html><head><title>R: $title</title>\n" .
+	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$enc\">\n" .
 	"<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssloc\">\n" .
 	"</head><body>\n" .
 	"<h1>$title " .

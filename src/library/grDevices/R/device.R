@@ -1,5 +1,9 @@
-dev.interactive <- function()
-    interactive() && .Device %in% c("X11", "GTK", "gnome", "quartz", "windows")
+dev.interactive <- function(orNone = FALSE) {
+    iDevs <- c("X11", "GTK", "gnome", "quartz", "windows", "JavaGD")
+    interactive() &&
+    (.Device %in% iDevs ||
+     (orNone && .Device == "null device" && getOption("device") %in% iDevs))
+}
 
 dev.list <- function()
 {
@@ -58,7 +62,7 @@ dev.off <-
     function(which = dev.cur())
 {
     if(which == 1)
-	stop("Cannot shut down device 1 (the null device)")
+	stop("cannot shut down device 1 (the null device)")
     .Internal(dev.off(as.integer(which)))
     dev.cur()
 }
@@ -66,20 +70,20 @@ dev.off <-
 dev.copy <- function(device, ..., which = dev.next())
 {
     if(!missing(which) & !missing(device))
-	stop("Cannot supply which and device at the same time.")
+	stop("cannot supply 'which' and 'device' at the same time")
     old.device <- dev.cur()
     if(old.device == 1)
-	stop("Cannot copy the null device.")
+	stop("cannot copy from the null device")
     if(missing(device)) {
 	if(which == 1)
-	    stop("Cannot copy to the null device.")
+	    stop("cannot copy to the null device")
 	else if(which == dev.cur())
-	    stop("Cannot copy device to itself")
+	    stop("cannot copy device to itself")
 	dev.set(which)
     }
     else {
 	if(!is.function(device))
-	    stop("Argument 'device' should be a function")
+	    stop("'device' should be a function")
 	else device(...)
     }
     .Internal(dev.copy(old.device))
@@ -96,7 +100,7 @@ dev.print <- function(device = postscript, ...)
     oc <- match.call()
     oc[[1]] <- as.name("dev.copy")
     oc$device <- device
-    din <- par("din"); w <- din[1]; h <- din[2]
+    din <- graphics::par("din"); w <- din[1]; h <- din[2]
     if(missing(device)) { ## safe way to recognize postscript
         if(is.null(oc$file)) oc$file <- ""
         hz0 <- oc$horizontal
@@ -132,6 +136,10 @@ dev.print <- function(device = postscript, ...)
         if(is.null(oc$width)) oc$width <- w
         if(is.null(oc$height)) oc$height <- h
     } else {
+        devname <- deparse(substitute(device))
+        if(devname %in% c("png", "jpeg", "bmp") &&
+           is.null(oc$width) && is.null(oc$height))
+            warning("need to specify one of 'width' and 'height'")
         if(is.null(oc$width))
             oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
         if(is.null(oc$height))
@@ -155,7 +163,7 @@ dev.copy2eps <- function(...)
     oc$horizontal <- FALSE
     if(is.null(oc$paper))
         oc$paper <- "special"
-    din <- par("din"); w <- din[1]; h <- din[2]
+    din <- graphics::par("din"); w <- din[1]; h <- din[2]
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
     if(is.null(oc$height))
@@ -174,6 +182,10 @@ dev.control <- function(displaylist = c("inhibit", "enable"))
 	.Internal(dev.control(displaylist == "enable"))
     } else stop("argument is missing with no default")
     invisible()
+}
+
+recordGraphics <- function(expr, list, env) {
+  .Internal(recordGraphics(substitute(expr), list, env))
 }
 
 graphics.off <- function ()

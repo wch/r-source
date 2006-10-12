@@ -41,15 +41,14 @@ qr.R(qr, complete = FALSE)
   \code{ncol(X)}, additional columns from an arbitrary orthogonal
   (unitary) completion of \code{X} are returned.
 
-  \code{qr.Q} returns \bold{Q}, the order-nrow(X) orthogonal (unitary)
-  transformation represented by \code{qr}.  If \code{complete} is
-  \code{TRUE}, \bold{Q} has \code{nrow(X)} columns.  If \code{complete}
-  is \code{FALSE}, \bold{Q} has \code{ncol(X)} columns.  When
-  \code{Dvec} is specified, each column of \bold{Q} is multiplied by the
-  corresponding value in \code{Dvec}.
+  \code{qr.Q} returns part or all of \bold{Q}, the order-nrow(X)
+  orthogonal (unitary) transformation represented by \code{qr}.  If
+  \code{complete} is \code{TRUE}, \bold{Q} has \code{nrow(X)} columns.
+  If \code{complete} is \code{FALSE}, \bold{Q} has \code{ncol(X)}
+  columns.  When \code{Dvec} is specified, each column of \bold{Q} is
+  multiplied by the corresponding value in \code{Dvec}.
 
-  \code{qr.R} returns \bold{R}, the upper triangular matrix such that
-  \code{X == Q \%*\% R}.  The number of rows of \bold{R} is
+  \code{qr.R} returns \bold{R}.  The number of rows of \bold{R} is
   \code{nrow(X)} or \code{ncol(X)}, depending on whether \code{complete}
   is \code{TRUE} or \code{FALSE}.
 }
@@ -65,7 +64,7 @@ Q <- qr.Q(qrstr) # dim(Q) == dim(x)
 R <- qr.R(qrstr) # dim(R) == ncol(x)
 X <- qr.X(qrstr) # X == x
 range(X - as.matrix(x))# ~ < 6e-12
-## X == Q \%*\% R :
+## X == Q \%*\% R if there has been no pivoting, as here.
 Q \%*\% R
 }
 \keyword{algebra}

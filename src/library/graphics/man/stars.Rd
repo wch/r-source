@@ -16,8 +16,9 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
       main = NULL, sub = NULL, xlab = "", ylab = "",
       cex = 0.8, lwd = 0.25, lty = par("lty"), xpd = FALSE,
       mar = pmin(par("mar"),
-                 1.1+ c(2*axes+ (xlab != ""), 2*axes+ (ylab != ""), 1,0)),
-      add=FALSE, plot=TRUE, \dots)
+                 1.1+ c(2*axes+ (xlab != ""),
+                 2*axes+ (ylab != ""), 1,0)),
+      add = FALSE, plot = TRUE, \dots)
 }
 \arguments{
   \item{x}{matrix or data frame of data.

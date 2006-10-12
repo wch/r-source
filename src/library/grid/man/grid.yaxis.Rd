@@ -6,18 +6,28 @@
   These functions create and draw a y-axis.
 }
 \usage{
-grid.yaxis(at = NULL, label = TRUE, main = TRUE, name = NULL, gp  =gpar(),
-           draw = TRUE, vp = NULL)
-yaxisGrob(at = NULL, label = TRUE, main = TRUE, name = NULL, gp  =gpar(),
-          vp = NULL)
+grid.yaxis(at = NULL, label = TRUE, main = TRUE,
+           edits = NULL, name = NULL,
+           gp = gpar(), draw = TRUE, vp = NULL)
+
+yaxisGrob(at = NULL, label = TRUE, main = TRUE,
+          edits = NULL, name = NULL,
+          gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{at}{A numeric vector of y-value locations for the tick marks.}
   \item{label}{A logical value indicating whether to draw the labels
-    on the tick marks.}
+    on the tick marks, or an expression or string vector which
+    specify the labels to use.  If not logical, must be the same
+    length as the \code{at} argument.}
   \item{main}{A logical value indicating whether to draw the axis
     at the left (\code{TRUE}) or at the right (\code{FALSE}) of the
     viewport.}
+  \item{edits}{A gEdit or gEditList containing edit operations
+    to apply (to the children of the axis)
+    when the axis is first created and during redrawing
+    whenever \code{at} is \code{NULL}.
+    }
   \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically

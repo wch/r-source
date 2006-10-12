@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003 The R Development Core Team
+ *                2003-5 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
 #include "grid.h"
@@ -42,11 +42,17 @@ int gridRegisterIndex;
  * GSS_ENGINERECORDING 13 = are we already inside a .Call.graphics call?
  *   Used by grid.Call.graphics to avoid unnecessary recording on 
  *   engine display list
+ * GSS_ASK 14 = should we prompt the user before starting a new page?
+ * GSS_SCALE 15 = a scale or "zoom" factor for all output 
+ *   (to support "fit to window" resizing on windows device)
+ * 
+ * NOTE: if you add to this list you MUST change the size of the vector
+ * allocated in createGridSystemState() below.
 */
 
 SEXP createGridSystemState()
 {
-    return allocVector(VECSXP, 14);
+    return allocVector(VECSXP, 16);
 }
 
 void initDL(GEDevDesc *dd)
@@ -92,7 +98,7 @@ void initOtherState(GEDevDesc* dd)
 void fillGridSystemState(SEXP state, GEDevDesc* dd) 
 {
     SEXP devsize, currloc, prevloc, dlon, enginedlon, recording;
-    SEXP griddev;
+    SEXP griddev, gridask, gridscale;
     PROTECT(devsize = allocVector(REALSXP, 2));
     REAL(devsize)[0] = 0;
     REAL(devsize)[1] = 0;
@@ -130,7 +136,13 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
     PROTECT(griddev = allocVector(LGLSXP, 1));
     LOGICAL(griddev)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_GRIDDEVICE, griddev);
-    UNPROTECT(7);
+    PROTECT(gridask = allocVector(LGLSXP, 1));
+    LOGICAL(gridask)[0] = FALSE;
+    SET_VECTOR_ELT(state, GSS_ASK, gridask);
+    PROTECT(gridscale = allocVector(REALSXP, 1));
+    REAL(gridscale)[0] = 1.0;
+    SET_VECTOR_ELT(state, GSS_SCALE, gridscale);
+    UNPROTECT(9);
 }
 
 SEXP gridStateElement(GEDevDesc *dd, int elementIndex)
@@ -163,7 +175,7 @@ static int findStateSlot()
 	    break;
 	}
     if (result < 0)
-	error("Unable to store grid state.  Too many devices open?");
+	error(_("Unable to store grid state.  Too many devices open?"));
     return result;
 }
 
@@ -183,7 +195,7 @@ static void globaliseState(SEXP state)
 
 SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     SEXP result = R_NilValue;
-    SEXP valid;
+    SEXP valid, scale;
     SEXP gridState;
     GESystemDesc *sd;
     SEXP currentgp;
@@ -253,32 +265,8 @@ SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 		 * to the dev->newPage primitive
 		 */ 
 		currentgp = gridStateElement(dd, GSS_GPAR);
-		gcontextFromgpar(currentgp, 0, &gc);
+		gcontextFromgpar(currentgp, 0, &gc, dd);
 		GENewPage(&gc, dd);
-		/*
-		 * Instead of using the current fill, use ".grid.redraw.fill"
-		 * because if the current fill is transparent then the 
-		 * screen will not be cleared on a redraw
-		 * NOTE that this is a temporary fix awaiting a more complete
-		 * and complex fix (requiring changes to base)
-		 *
-		 
-		 fillsxp = getSymbolValue(".grid.redraw.fill");
-		 
-		*/
-		/*
-		 * Just fill a rect rather than calling GENewPage
-		 
-		 if (isNull(fillsxp))
-		 fill = NA_INTEGER;
-		 else
-		 fill = RGBpar(fillsxp, 0);
-		 GERect(toDeviceX(-.1, GE_NDC, dd), toDeviceY(-.1, GE_NDC, dd),
-		 toDeviceX(1.1, GE_NDC, dd), toDeviceY(1.1, GE_NDC, dd),
-		 NA_INTEGER, fill, gpGamma(currentgp), 
-		 gpLineType(currentgp), gpLineWidth(currentgp), dd);
-		 
-		*/
 		initGPar(dd);
 		initVP(dd);
 		initOtherState(dd);
@@ -306,6 +294,14 @@ SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     case GE_RestoreSnapshotState:
 	break;
     case GE_ScalePS:
+	/*
+	 * data is a numeric scale factor
+	 */
+	PROTECT(scale = allocVector(REALSXP, 1));
+	REAL(scale)[0] = REAL(gridStateElement(dd, GSS_SCALE))[0]*
+	    REAL(data)[0];
+	setGridStateElement(dd, GSS_SCALE, scale);
+	UNPROTECT(1);
 	break;
     }
     return result;

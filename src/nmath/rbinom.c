@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -30,7 +30,7 @@
  *
  *	Kachitvichyanukul, V. and Schmeiser, B. W. (1988).
  *	Binomial random variate generation.
- *	Communications of the ACM 31, p216.
+ *	Communications of the ACM 31, 216-222.
  *	(Algorithm BTPEC).
  */
 
@@ -54,10 +54,11 @@ double rbinom(double nin, double pp)
     double p, q, np, g, r, al, alv, amaxp, ffm, ynorm;
     int i,ix,k, n;
 
+    if (!R_FINITE(nin)) ML_ERR_return_NAN;
     n = floor(nin + 0.5);
     if (n != nin) ML_ERR_return_NAN;
 
-    if (!R_FINITE(n) || !R_FINITE(pp) ||
+    if (!R_FINITE(pp) ||
 	/* n=0, p=0, p=1 are not errors <TSL>*/
 	n < 0 || pp < 0. || pp > 1.)	ML_ERR_return_NAN;
 

@@ -2,8 +2,12 @@ binom.test <-
 function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
          conf.level = 0.95)
 {
-    if(any(is.na(x) || (x < 0) || (x != round(x))))
-        stop("x must be nonnegative and integer")
+    DNAME <- deparse(substitute(x))
+    xr <- round(x)
+
+    if(any(is.na(x) | (x < 0)) || max(abs(x-xr)) > 1e-7)
+        stop("'x' must be nonnegative and integer")
+    x <- xr
     if(length(x) == 2) {
         ## x gives successes and failures
         n <- sum(x)
@@ -11,22 +15,23 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
     }
     else if(length(x) == 1) {
         ## x gives successes, n gives trials
-        if((length(n) > 1) || is.na(n) || (n < 1) || (n != round(n))
-           || (x > n))
-            stop("n must be a positive integer >= x")
+        nr <- round(n)
+        if((length(n) > 1) || is.na(n) || (n < 1) || abs(n-nr) > 1e-7
+           || (x > nr))
+            stop("'n' must be a positive integer >= 'x'")
+        DNAME <- paste(DNAME, "and", deparse(substitute(n)))
+        n <- nr
     }
     else
-        stop("incorrect length of x")
+        stop("incorrect length of 'x'")
 
     if(!missing(p) && (length(p) > 1 || is.na(p) || p < 0 || p > 1))
-        stop ("p must be a single number between 0 and 1")
+        stop ("'p' must be a single number between 0 and 1")
     alternative <- match.arg(alternative)
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level > 0) && (conf.level < 1)))
-        stop("conf.level must be a single number between 0 and 1")
-
-    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(n)))
+        stop("'conf.level' must be a single number between 0 and 1")
 
     PVAL <- switch(alternative,
                    less = pbinom(x, n, p),
@@ -46,7 +51,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                            d <- dbinom(x, n, p)
 			   ## This is tricky: need to be sure
 			   ## only to sum values in opposite tail
-			   ## and not count x twice. 
+			   ## and not count x twice.
 			   ## For the binomial dist., the mode will
 			   ## equal the mean if it is an integer.
 			   m <- n * p

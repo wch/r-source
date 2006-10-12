@@ -10,7 +10,8 @@
 match.fun(FUN, descend = TRUE)
 }
 \arguments{
- \item{FUN}{item to match as function.}
+ \item{FUN}{item to match as function: a function, symbol or
+    character string.  See Details.}
  \item{descend}{logical; control whether to search past non-function
      objects.}
 }
@@ -21,7 +22,8 @@ match.fun(FUN, descend = TRUE)
   \code{match.fun} is not intended to be used at the top level since it
   will perform matching in the \emph{parent} of the caller.
 
-  If \code{FUN} is a function, it is returned.  If it is a symbol or a
+  If \code{FUN} is a function, it is returned.  If it is a symbol (for
+  example, enclosed in backquotes) or a
   character vector of length one, it will be looked up using \code{get}
   in the environment of the parent of the caller.  If it is of any other
   mode, it is attempted first to get the argument to the caller as a
@@ -32,7 +34,7 @@ match.fun(FUN, descend = TRUE)
   objects with the given name; otherwise if \code{FUN} points to a
   non-function object then an error is generated.
 
-  This is now used in base functions such as \code{\link{apply}},
+  This is used in base functions such as \code{\link{apply}},
   \code{\link{lapply}}, \code{\link{outer}}, and \code{\link{sweep}}.
 }
 \author{
@@ -44,8 +46,9 @@ match.fun(FUN, descend = TRUE)
   actually needed by anything.  It may go away in the future.
 
   It is impossible to fully foolproof this.  If one \code{attach}es a
-  list or data frame containing a character object with the same name
-  of a system function, it will be used.
+  list or data frame containing a length-one character vector with the
+  same name as a function, it may be used (although namespaces
+  will help).
 }
 \seealso{
   \code{\link{match.arg}}, \code{\link{get}}

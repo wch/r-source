@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1997  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2005  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,20 +15,23 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+#ifndef R_IOSTUFF_H
+#define R_IOSTUFF_H
 
 /*
  *  I/O Support for Consoles and Character Vectors
  *
  *  This code provides analogues for the stdio routines "fgetc" and
- *  "ungetc" for "consoles" and character vectors.  These routines
+ *  (formerly) "ungetc" for "consoles" and character vectors.  These routines
  *  are used for parsing input from the console window and character
  *  vectors.
  */
 
+#include <Defn.h>
 #include <stdio.h>
-#include "Defn.h"
 
 #define IOBSIZE 4096
 
@@ -58,6 +62,8 @@ typedef struct TextBuffer {
 
 #ifndef __MAIN__
 extern
+#else
+attribute_hidden
 #endif
 IoBuffer R_ConsoleIob;	    			/* Console IO Buffer */
 
@@ -67,11 +73,11 @@ int R_IoBufferFree(IoBuffer*);
 int R_IoBufferReadReset(IoBuffer*);
 int R_IoBufferWriteReset(IoBuffer*);
 int R_IoBufferGetc(IoBuffer*);
-int R_IoBufferUngetc(int, IoBuffer*);
 int R_IoBufferPutc(int, IoBuffer*);
 int R_IoBufferPuts(char*, IoBuffer*);
 
 int R_TextBufferInit(TextBuffer*, SEXP);
 int R_TextBufferFree(TextBuffer*);
 int R_TextBufferGetc(TextBuffer*);
-int R_TextBufferUngetc(int, TextBuffer*);
+
+#endif /* not R_IOSTUFF_H */

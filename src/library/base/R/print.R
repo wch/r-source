@@ -2,15 +2,14 @@ print <- function(x, ...) UseMethod("print")
 
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
-                          print.gap = NULL, right = FALSE, ...)
+                          print.gap = NULL, right = FALSE, max = NULL, ...)
 {
     noOpt <- missing(digits) && missing(quote) && missing(na.print) &&
-      missing(print.gap) && missing(right) && length(list(...)) == 0
-    .Internal(print.default(x, digits, quote, na.print, print.gap, right,
-                            noOpt))
+	missing(print.gap) && missing(right) && missing(max) &&
+	length(list(...)) == 0
+    .Internal(print.default(x, digits, quote, na.print, print.gap, right, max,
+			    noOpt))
 }
-
-print.matrix <- print.default  ## back-compatibility
 
 prmatrix <-
     function (x, rowlab = dn[[1]], collab = dn[[2]],
@@ -54,8 +53,8 @@ print.listof <- function(x, ...)
 {
     nn <- names(x)
     ll <- length(x)
-    if(length(nn) != ll) nn <- paste("Component", seq(ll))
-    for(i in seq(length=ll)) {
+    if(length(nn) != ll) nn <- paste("Component", seq.int(ll))
+    for(i in seq_len(ll)) {
 	cat(nn[i], ":\n"); print(x[[i]], ...); cat("\n")
     }
     invisible(x)

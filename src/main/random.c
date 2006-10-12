@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *  Copyright (C) 2003-4      The R Foundation
  *
@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -31,7 +31,7 @@
 
 static void invalid(SEXP call)
 {
-    errorcall(call, "invalid arguments");
+    errorcall(call, _("invalid arguments"));
 }
 
 static Rboolean random1(double (*f) (), double *a, int na, double *x, int n)
@@ -57,7 +57,7 @@ static Rboolean random1(double (*f) (), double *a, int na, double *x, int n)
 /* "do_random1" - random sampling from 1 parameter families. */
 /* See switch below for distributions. */
 
-SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a;
     int i, n, na;
@@ -93,10 +93,10 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND1(4, rt);
 	    RAND1(5, rsignrank);
 	default:
-	    error("internal error in do_random1");
+	    error(_("internal error in do_random1"));
 	}
 	if (naflag)
-	    warningcall(call, "NAs produced");
+	    warningcall(call, _("NAs produced"));
 
 	PutRNGstate();
 	UNPROTECT(1);
@@ -128,7 +128,7 @@ static Rboolean random2(double (*f) (), double *a, int na, double *b, int nb,
 /* "do_random2" - random sampling from 2 parameter families. */
 /* See switch below for distributions. */
 
-SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a, b;
     int i, n, na, nb;
@@ -175,10 +175,10 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND2(11, rwilcox);
 	    RAND2(12, rnchisq);
 	default:
-	    error("internal error in do_random2");
+	    error(_("internal error in do_random2"));
 	}
 	if (naflag)
-	    warningcall(call,"NAs produced");
+	    warningcall(call, _("NAs produced"));
 
 	PutRNGstate();
 	UNPROTECT(2);
@@ -213,7 +213,7 @@ static Rboolean random3(double (*f) (), double *a, int na, double *b, int nb,
 /* "do_random3" - random sampling from 3 parameter families. */
 /* See switch below for distributions. */
 
-SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, a, b, c;
     int i, n, na, nb, nc;
@@ -253,10 +253,10 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (PRIMVAL(op)) {
 	    RAND3(0, rhyper);
 	default:
-	    error("internal error in do_random3");
+	    error(_("internal error in do_random3"));
 	}
 	if (naflag)
-	    warningcall(call,"NAs produced");
+	    warningcall(call, _("NAs produced"));
 
 	PutRNGstate();
 	UNPROTECT(3);
@@ -304,6 +304,69 @@ static void ProbSampleReplace(int n, double *p, int *perm, int nans, int *ans)
 	ans[i] = perm[j];
     }
 }
+
+static Rboolean Walker_warn = FALSE;
+
+/* A  version using Walker's alias method, based on Alg 3.13B in
+   Ripley (1987).
+ */
+static void 
+walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans) 
+{
+    double *q, rU;
+    int i, j, k;
+    int *HL, *H, *L;
+
+    if (!Walker_warn) {
+	Walker_warn = TRUE;
+	warning("Walker's alias method used: results are different from R < 2.2.0");
+    }
+    
+    
+    /* Create the alias tables.
+       The idea is that for HL[0] ... L-1 label the entries with q < 1
+       and L ... H[n-1] label those >= 1.
+       By rounding error we could have q[i] < 1. or > 1. for all entries.
+     */
+    if(n <= 10000) {
+	/* might do this repeatedly, so speed matters */
+	HL = (int *)alloca(n * sizeof(int));
+	q = (double *) alloca(n * sizeof(double));
+	R_CheckStack();
+    } else {
+	/* Slow enough anyway not to risk overflow */
+	HL = Calloc(n, int);
+	q = Calloc(n, double);
+    }
+    H = HL - 1; L = HL + n;
+    for (i = 0; i < n; i++) {
+	q[i] = p[i] * n;
+	if (q[i] < 1.) *++H = i; else *--L = i;
+    }
+    if (H >= HL && L < HL + n) { /* So some q[i] are >= 1 and some < 1 */
+	for (k = 0; k < n - 1; k++) {
+	    i = HL[k];
+	    j = *L;
+	    a[i] = j;
+	    q[j] += q[i] - 1;
+	    if (q[j] < 1.) L++;
+	    if(L >= HL + n) break; /* now all are >= 1 */
+	}
+    }
+    for (i = 0; i < n; i++) q[i] += i;
+
+    /* generate sample */
+    for (i = 0; i < nans; i++) {
+	rU = unif_rand() * n;
+	k = (int) rU;
+	ans[i] = (rU < q[k]) ? k+1 : a[k]+1;
+    }
+    if(n > 100000) {
+	Free(HL);
+	Free(q);
+    }
+}
+
 
 /* Unequal probability sampling; without-replacement case */
 
@@ -371,16 +434,16 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
     sum = 0.;
     for (i = 0; i < n; i++) {
 	if (!R_FINITE(p[i]))
-	    errorcall(call, "NA in probability vector");
+	    errorcall(call, _("NA in probability vector"));
 	if (p[i] < 0)
-	    errorcall(call, "non-positive probability");
+	    errorcall(call, _("non-positive probability"));
 	if (p[i] > 0) {
 	    npos++;
 	    sum += p[i];
 	}
     }
     if (npos == 0 || (!replace && k > npos))
-	errorcall(call, "insufficient positive probabilities");
+	errorcall(call, _("too few positive probabilities"));
     for (i = 0; i < n; i++)
 	p[i] /= sum;
 }
@@ -388,41 +451,53 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
 /* do_sample - equal probability sampling with/without replacement. */
 /* Implements sample(n, k, r) - choose k elements from 1 to n */
 /* with/without replacement according to r. */
-SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, y, prob;
+    SEXP x, y, prob, sreplace;
     int k, n, replace;
+    double *p;
+
     checkArity(op, args);
     n = asInteger(CAR(args)); args = CDR(args);
     k = asInteger(CAR(args)); args = CDR(args);
-    replace = asLogical(CAR(args)); args = CDR(args);
+    sreplace = CAR(args); args = CDR(args);
+    if( length(sreplace) != 1 )
+         errorcall(call, _("invalid '%s' argument"), "replace");
+    replace = asLogical(sreplace);
     prob = CAR(args);
     if (replace == NA_LOGICAL)
-	errorcall(call, "invalid third argument");
+	errorcall(call, _("invalid '%s' argument"), "replace");
     if (n == NA_INTEGER || n < 1)
-	errorcall(call, "invalid first argument");
+	errorcall(call, _("invalid '%s' argument"), "x");
     if (k == NA_INTEGER || k < 0)
-	errorcall(call, "invalid second argument");
+	errorcall(call, _("invalid '%s' argument"), "size");
     if (!replace && k > n)
-	errorcall(call, "can't take a sample larger than the population\n when replace = FALSE");
+	errorcall(call, _("cannot take a sample larger than the population\n when 'replace = FALSE'"));
     GetRNGstate();
     PROTECT(y = allocVector(INTSXP, k));
     if (!isNull(prob)) {
 	prob = coerceVector(prob, REALSXP);
 	if (NAMED(prob)) prob = duplicate(prob);
 	PROTECT(prob);
+	p = REAL(prob);
 	if (length(prob) != n)
-	    errorcall(call, "incorrect number of probabilities");
-	FixupProb(call, REAL(prob), n, k, replace);
+	    errorcall(call, _("incorrect number of probabilities"));
+	FixupProb(call, p, n, k, replace);
 	PROTECT(x = allocVector(INTSXP, n));
-	if (replace)
-	    ProbSampleReplace(n, REAL(prob), INTEGER(x), k, INTEGER(y));
-	else
-	    ProbSampleNoReplace(n, REAL(prob), INTEGER(x), k, INTEGER(y));
+	if (replace) {
+	    int i, nc = 0;
+	    for (i = 0; i < n; i++) if(n * p[i] > 0.1) nc++;
+	    if (nc > 200)
+		walker_ProbSampleReplace(n, p, INTEGER(x), k, INTEGER(y));
+	    else
+		ProbSampleReplace(n, p, INTEGER(x), k, INTEGER(y));
+	} else
+	    ProbSampleNoReplace(n, p, INTEGER(x), k, INTEGER(y));
 	UNPROTECT(2);
     }
     else {
-	if (replace) SampleReplace(k, n, INTEGER(y));
+	/* avoid allocation for a single sample */
+	if (replace || k < 2) SampleReplace(k, n, INTEGER(y));
 	else {
 	    x = allocVector(INTSXP, n);
 	    SampleNoReplace(k, n, INTEGER(y), INTEGER(x));
@@ -433,7 +508,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     return y;
 }
 
-SEXP do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP prob, ans, nms;
     int n, size, k, i, ik;
@@ -441,9 +516,9 @@ SEXP do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
     n	 = asInteger(CAR(args)); args = CDR(args);/* n= #{samples} */
     size = asInteger(CAR(args)); args = CDR(args);/* X ~ Multi(size, prob) */
     if (n == NA_INTEGER || n < 0)
-	errorcall(call, "invalid first argument `n'");
+	errorcall(call, _("invalid first argument 'n'"));
     if (size == NA_INTEGER || size < 0)
-	errorcall(call, "invalid second argument `size'");
+	errorcall(call, _("invalid second argument 'size'"));
     prob = CAR(args);
     prob = coerceVector(prob, REALSXP);
     k = length(prob);/* k = #{components or classes} = X-vector length */
@@ -485,7 +560,7 @@ R_r2dtable(SEXP n, SEXP r, SEXP c)
     if(!isInteger(n) || (length(n) == 0) ||
        !isInteger(r) || (nr <= 1) ||
        !isInteger(c) || (nc <= 1))
-	error("invalid arguments");
+	error(_("invalid arguments"));
 
     n_of_samples = INTEGER(n)[0];
     row_sums = INTEGER(r);

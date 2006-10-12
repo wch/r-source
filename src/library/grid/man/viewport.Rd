@@ -16,8 +16,9 @@ viewport(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
          gp = gpar(), clip = "inherit",
          xscale = c(0, 1), yscale = c(0, 1),
          angle = 0,
-         layout = NULL, layout.pos.row = NULL, layout.pos.col = NULL,
-         name=NULL)
+         layout = NULL,
+         layout.pos.row = NULL, layout.pos.col = NULL,
+         name = NULL)
 vpList(...)
 vpStack(...)
 vpTree(parent, children)
@@ -30,12 +31,15 @@ vpTree(parent, children)
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
     are only given as numeric vectors.}  
-  \item{just}{A string vector specifying the justification of the viewport
+  \item{just}{A string or numeric
+    vector specifying the justification of the viewport
     relative to its (x, y) location.  If there are two values, the first
     value specifes horizontal justification and the second value specifies
-    vertical justification.  Possible values are: \code{"left"},
+    vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
-    and \code{"top"}.}
+    and \code{"top"}.  For numeric values, 0 means left alignment
+    and 1 means right alignment.
+  }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}
@@ -103,7 +107,7 @@ vpTree(parent, children)
     sharing the same parent must have unique names, which means that
     if you push a viewport with the same name as an existing viewport,
     the existing viewport will be replaced in the viewport tree.
-    A viewport name can be any valid \R symbol name, but
+    A viewport name can be any string, but
     grid uses the
     reserved name \code{"ROOT"} for the top-level viewport.  Also,
     when specifying a viewport name in \code{downViewport}

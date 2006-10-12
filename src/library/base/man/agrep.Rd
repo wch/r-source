@@ -8,12 +8,15 @@
   edit distance.
 }
 \usage{
-agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
+agrep(pattern, x, ignore.case = FALSE, value = FALSE,
+      max.distance = 0.1)
 }
 \arguments{
   \item{pattern}{a non-empty character string to be matched (\emph{not}
-    a regular expression!)}
-  \item{x}{character vector where matches are sought.}
+    a regular expression!).  Coerced by \code{as.character} to a string
+    if possible.}
+  \item{x}{character vector where matches are sought.  Coerced by
+    \code{as.character} to a character vector if possible.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{value}{if \code{FALSE}, a vector containing the (integer)
@@ -45,7 +48,8 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
 }
 \value{
   Either a vector giving the indices of the elements that yielded a
-  match, of, if \code{value} is \code{TRUE}, the matched elements.
+  match, of, if \code{value} is \code{TRUE}, the matched elements (after
+  coercion, preserving names but no other attributes).
 }
 \author{
   David Meyer \email{David.Meyer@wu-wien.ac.at} (based on C code

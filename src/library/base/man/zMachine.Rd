@@ -73,6 +73,10 @@
 }
 \details{
   The algorithm is based on Cody's (1988) subroutine MACHAR.
+
+  Note that on most platforms smaller positive values than
+  \code{.Machine$double.xmin} can occur.  On a typical \R platform the
+  smallest positive double is about \code{5e-324}.
 }
 \references{
   Cody, W. J. (1988)

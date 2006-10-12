@@ -1,7 +1,6 @@
 \name{fileutils}
 \alias{file_path_as_absolute}
 \alias{file_path_sans_ext}
-\alias{file_test}
 \alias{list_files_with_exts}
 \alias{list_files_with_type}
 \title{File Utilities}
@@ -11,17 +10,12 @@
 \usage{
 file_path_as_absolute(x)
 file_path_sans_ext(x)
-file_test(op, x, y)
 list_files_with_exts(dir, exts, all.files = FALSE, full.names = TRUE)
-list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE)
+list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE,
+                     OS_subdirs = .OStype())
 }
 \arguments{
-  \item{x,y}{character vectors giving file paths.}
-  \item{op}{a character string specifying the test to be performed.
-    Unary tests (only \code{x} is used) are \code{"-f"} (existence and
-    not being a directory) and \code{"-d"} (existence and directory);
-    binary tests are \code{"-nt"} (newer than, using the modification
-    dates) and \code{"-ot"}.}
+  \item{x}{character vector giving file paths.}
   \item{dir}{a character string with the path name to a directory.}
   \item{exts}{a character vector of possible file extensions.}
   \item{all.files}{a logical.  If \code{FALSE} (default), only visible
@@ -33,6 +27,11 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE)
     possible values are \code{"code"} (R code), \code{"data"} (data
     sets), \code{"demo"} (demos), \code{"docs"} (R documentation), and
     \code{"vignette"} (vignettes).}
+  \item{OS_subdirs}{a character vector with the names of OS-specific
+    subdirectories to possibly include in the listing of R code and
+    documentation files.  By default, the value of the environment
+    variable \env{R\_OSTYPE}, or if this is empty, the value of
+    \code{\link{.Platform}$OS.type}, is used.}
 }
 \details{
   \code{file_path_as_absolute} turns a possibly relative file path
@@ -42,10 +41,6 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE)
   \code{file_path_sans_ext} returns the file paths without extensions.
   (Only purely alphanumeric extensions are recognized.)
 
-  \code{file_test} performs shell-style file tests.  Note that
-  \code{\link{file.exists}} only tests for existence (\code{test -e} on
-  some systems) but not for not being a directory.
-
   \code{list_files_with_exts} returns the paths or names of the files in
   directory \code{dir} with extension matching one of the elements of
   \code{exts}.  Note that by default, full paths are returned, and that
@@ -54,9 +49,9 @@ list_files_with_type(dir, type, all.files = FALSE, full.names = TRUE)
   \code{list_files_with_type} returns the paths of the files in \code{dir}
   of the given \dQuote{type}, as determined by the extensions recognized
   by \R.  When listing R code and documentation files, files in
-  OS-specific subdirectories are included if present.  Note that by
-  default, full paths are returned, and that only visible files are
-  used.
+  OS-specific subdirectories are included if present according to the
+  value of \code{OS_subdirs}.  Note that by default, full paths are
+  returned, and that only visible files are used.
 }
 \seealso{
   \code{\link{file.path}},

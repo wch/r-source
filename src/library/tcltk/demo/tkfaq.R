@@ -3,7 +3,9 @@ local({
 
     tt <- tktoplevel()
     tkwm.title(tt, "R FAQ")
-    txt <- tktext(tt, bg="white", font="courier")
+#    Gave tiny font on some systems
+#    txt <- tktext(tt, bg="white", font="courier")
+    txt <- tktext(tt, bg="white")
     scr <- tkscrollbar(tt, repeatinterval=5,
                        command=function(...)tkyview(txt,...))
     ## Safest to make sure scr exists before setting yscrollcommand
@@ -11,10 +13,10 @@ local({
     tkpack(txt, side="left", fill="both", expand=TRUE)
     tkpack(scr, side="right", fill="y")
 
-    chn <- tkcmd("open", file.path(R.home(), "FAQ"))
-    tkinsert(txt, "end", tkcmd("read", chn))
-    tkcmd("close", chn)
-    
+    chn <- tclopen(file.path(R.home("doc"), "FAQ"))
+    tkinsert(txt, "end", tclread(chn))
+    tclclose(chn)
+
     tkconfigure(txt, state="disabled")
     tkmark.set(txt,"insert","0.0")
     tkfocus(txt)

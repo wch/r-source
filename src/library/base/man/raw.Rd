@@ -33,11 +33,28 @@ as.raw(x)
   pair of hex digits.  If you want to see a character representation
   (with escape sequences for non-printing characters) use
   \code{\link{rawToChar}}.
+
+  Coercion to raw treats the input values as representing a small
+  (decimal) integers, so the input is first coerced to integer, and then
+  values which are outside the range \code{[0 \dots 255]} or are
+  \code{NA} are set to \code{0} (the \code{nul} byte).
+}
+\seealso{
+  \code{\link{charToRaw}}, \code{\link{rawShift}}, etc.
 }
 \examples{
+xx <- raw(2)
+xx[1] <- as.raw(40)     # NB, not just 40.
+xx[2] <- charToRaw("A")
+xx
+
 x <- "A test string"
 (y <- charToRaw(x))
 is.vector(y) # TRUE
 rawToChar(y)
+
+isASCII <-  function(txt) all(charToRaw(txt) <= as.raw(127))
+isASCII(x)  # true
+isASCII("\x9c25.63") # false  (in Latin-1, this is an amount in UK pounds)
 }
 \keyword{classes}

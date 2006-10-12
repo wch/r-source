@@ -7,8 +7,8 @@
   upper or lower triangular.
 }
 \usage{
-   backsolve(r, x, k= ncol(r), upper.tri = TRUE, transpose = FALSE)
-forwardsolve(l, x, k= ncol(l), upper.tri = FALSE, transpose = FALSE)
+   backsolve(r, x, k=ncol(r), upper.tri=TRUE, transpose=FALSE)
+forwardsolve(l, x, k=ncol(l), upper.tri=FALSE, transpose=FALSE)
 }
 \arguments{
   % Name 'r' is not really making sense for upper.tri = FALSE

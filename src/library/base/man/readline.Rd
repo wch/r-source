@@ -1,5 +1,7 @@
 \name{readline}
 \title{Read a Line from the Terminal}
+\concept{waiting for input}
+\concept{user prompting}
 \usage{
 readline(prompt = "")
 }
@@ -17,6 +19,10 @@ readline(prompt = "")
 }
 \value{
   A character vector of length one.
+}
+\seealso{ \code{\link{readLines}} for reading text lines of connections,
+  including files.
+}
 }
 \examples{
 fun <- function() {

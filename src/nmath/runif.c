@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  DESCRIPTION
  *
@@ -29,6 +29,11 @@ double runif(double a, double b)
 
     if (a == b)
 	return a;
-    else
-	return a + (b - a) * unif_rand();
+    else {
+	double u;
+	/* This is true of all builtin generators, but protect against
+	   user-supplied ones */
+	do {u = unif_rand();} while (u <= 0 || u >= 1);
+	return a + (b - a) * u;
+    }
 }

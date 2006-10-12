@@ -3,9 +3,9 @@ proj <- function(object, ...) UseMethod("proj")
 proj.default <- function(object, onedf = TRUE, ...)
 {
     if(!is.qr(object$qr))
-	stop("Argument does not include a qr component")
+	stop("argument does not include a 'qr' component")
     if(is.null(object$effects))
-	stop("Argument does not include an effects component")
+	stop("argument does not include an 'effects' component")
     RB <- c(object$effects[seq(object$rank)],
 	    rep.int(0, nrow(object$qr$qr) - object$rank))
     prj <- as.matrix(qr.Q(object$qr, Dvec = RB))
@@ -17,7 +17,7 @@ proj.default <- function(object, onedf = TRUE, ...)
 proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     if(inherits(object, "mlm"))
-	stop("proj is not implemented for mlm fits")
+	stop("'proj' is not implemented for \"mlm\" fits")
     rank <- object$rank
     if(rank > 0) {
 	prj <- proj.default(object, onedf = TRUE)[, 1:rank, drop = FALSE]
@@ -33,7 +33,7 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	    df <- vector("numeric", nterms)
 	    result <- matrix(0, length(object$residuals), nterms)
 	    dimnames(result) <- list(rownames(object$fitted.values), nmeffect)
-	    for(i in seq(along=uasgn)) {
+	    for(i in seq_along(uasgn)) {
 		select <- (asgn == uasgn[i])
 		df[i] <- sum(select)
 		result[, i] <- prj[, select, drop = FALSE] %*% rep.int(1, df[i])
@@ -76,7 +76,7 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 proj.aov <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     if(inherits(object, "maov"))
-	stop("proj is not implemented for multiple responses")
+	stop("'proj' is not implemented for multiple responses")
     factors.aov <- function(pnames, tfactor)
     {
 	if(!is.na(int <- match("(Intercept)", pnames)))
@@ -158,7 +158,7 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
     n.object <- length(object)
     result <- vector("list", n.object)
     names(result) <- names(object)
-    D1 <- rownames(err.qr$qr)
+    D1 <- seq_len(NROW(err.qr$qr))
     if(unweighted.scale) wt <- attr(object, "weights")
     for(i in names(object)) {
 	prj <- proj.lm(object[[i]], onedf = onedf)

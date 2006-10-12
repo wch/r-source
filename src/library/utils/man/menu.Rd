@@ -12,12 +12,27 @@ menu(choices, graphics = FALSE, title = "")
 \arguments{
   \item{choices}{a character vector of choices}
   \item{graphics}{a logical indicating whether a graphics menu should be
-    used.  Currently unused.}
-  \item{title}{a character string to be used as the title of the menu}
+    used if available.}
+  \item{title}{a character string to be used as the title of the menu.
+    \code{NULL} is also accepted.}
+}
+\details{
+  If \code{graphics = TRUE} and a windowing system is available
+  (Windows, MacOS X or X11 \emph{via} Tcl/Tk) a listbox widget is
+  used, otherwise a text menu.
+  
+  Ten or fewer items will be displayed in a single column, more in
+  multiple columns if possible within the current display width.
+
+  No title is displayed if \code{title} is \code{NULL} or \code{""}.
 }
 \value{
   The number corresponding to the selected item, or 0 if no choice was
   made.
+}
+\seealso{
+  \code{\link{select.list}}, which is used to implement the graphical
+  menu, and allows multiple selections.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

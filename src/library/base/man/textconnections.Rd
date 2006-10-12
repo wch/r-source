@@ -1,17 +1,20 @@
 \name{textConnection}
 \alias{textConnection}
+\alias{textConnectionValue}
 \title{Text Connections}
 \description{
   Input and output text connections.
 }
 \usage{
 textConnection(object, open = "r", local = FALSE)
+
+textConnectionValue(con)
 }
 \arguments{
   \item{object}{character.  A description of the connection. 
     For an input this is an \R character vector object, and for an output
     connection the name for the \R character vector to receive the
-    output.
+    output, or \code{NULL} (for none).
   }
   \item{open}{character.  Either \code{"r"} (or equivalently \code{""})
     for an input connection or \code{"w"} or \code{"a"} for an output
@@ -19,6 +22,7 @@ textConnection(object, open = "r", local = FALSE)
   \item{local}{logical.  Used only for output connections.  If \code{TRUE},
     output is assigned to a variable in the calling environment.  Otherwise
     the global environment is used.}
+  \item{con}{An output text connection.}
 }
 \details{
   An input text connection is opened and the character vector is copied
@@ -32,21 +36,27 @@ textConnection(object, open = "r", local = FALSE)
   \code{\link{isIncomplete}} will indicate if there is an incomplete
   final line.  Closing the connection will output the final line,
   complete or not.  (A line is complete once it has been terminated by
-  end-of-line, represented by \code{"\\n"} in \R.)
+  end-of-line, represented by \code{"\\n"} in \R.)  The output character
+  vector has locked bindings (see \code{\link{lockBinding}}) until
+  \code{close} is called on the connection.  The character vector can
+  also be retrieved \emph{via} \code{textConnectionValue}, which is the
+  only way to do so if \code{object = NULL}.
 
   Opening a text connection with \code{mode = "a"} will attempt to
   append to an existing character vector with the given name in the
   user's workspace or the calling environment.  If none is found (even
   if an object exists of the right name but the wrong type) a new
-  character vector wil be created, with a warning.
+  character vector will be created, with a warning.
 
   You cannot \code{seek} on a text connection, and \code{seek} will
   always return zero as the position.
 }
 
 \value{
-  A connection object of class \code{"textConnection"} which inherits
-  from class \code{"connection"}.
+  For \code{textConnection}, a connection object of class
+  \code{"textConnection"} which inherits from class \code{"connection"}.
+
+  For \code{textConnectionValue, a character vector.}
 }
 
 \note{
@@ -61,6 +71,12 @@ textConnection(object, open = "r", local = FALSE)
   with a warning.
 }
  
+\references{
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language.} Springer.\cr
+[S has input text conections only.]
+}
+
 \seealso{
   \code{\link{connections}}, \code{\link{showConnections}},
   \code{\link{pushBack}}, \code{\link{capture.output}}.

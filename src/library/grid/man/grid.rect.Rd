@@ -7,23 +7,33 @@
 }
 \usage{
 grid.rect(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-      width = unit(1, "npc"), height = unit(1, "npc"),
-      just = "centre", default.units = "npc", name = NULL,
-      gp=gpar(), draw = TRUE, vp = NULL)
+          width = unit(1, "npc"), height = unit(1, "npc"),
+          just = "centre", hjust = NULL, vjust = NULL,
+          default.units = "npc", name = NULL,
+          gp=gpar(), draw = TRUE, vp = NULL)
 rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-      width = unit(1, "npc"), height = unit(1, "npc"),
-      just = "centre", default.units = "npc", name = NULL,
-      gp=gpar(), vp = NULL)
+         width = unit(1, "npc"), height = unit(1, "npc"),
+         just = "centre", hjust = NULL, vjust = NULL, 
+         default.units = "npc", name = NULL,
+         gp=gpar(), vp = NULL)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-location.}
   \item{y}{A numeric vector or unit object specifying y-location.}
   \item{width}{A numeric vector or unit object specifying width.}
   \item{height}{A numeric vector or unit object specifying height.}
-  \item{just}{The justification of the rectangle about its (x, y)
-    location.  If two values are given, the first specifies
-    horizontal justification and the second specifies vertical
-    justification.}
+  \item{just}{The justification of the rectangle 
+    relative to its (x, y) location.  If there are two values, the first
+    value specifes horizontal justification and the second value specifies
+    vertical justification.  Possible string values are: \code{"left"},
+    \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
+    and \code{"top"}.  For numeric values, 0 means left alignment
+    and 1 means right alignment.
+  }
+  \item{hjust}{A numeric vector specifying horizontal justification.
+    If specified, overrides the \code{just} setting.}
+  \item{vjust}{A numeric vector specifying vertical justification.
+    If specified, overrides the \code{just} setting.}
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
     are only given as numeric vectors.}  

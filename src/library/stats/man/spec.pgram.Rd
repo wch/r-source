@@ -4,7 +4,7 @@
     Periodogram}
 \usage{
 spec.pgram(x, spans = NULL, kernel, taper = 0.1,
-           pad = 0, fast = TRUE, demean = FALSE, detrend =TRUE,
+           pad = 0, fast = TRUE, demean = FALSE, detrend = TRUE,
            plot = TRUE, na.action = na.fail, \dots)
 }
 \arguments{
@@ -13,9 +13,9 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
     Daniell smoothers to be used to smooth the periodogram.}
   \item{kernel}{alternatively, a kernel smoother of class
     \code{"tskernel"}.}
-  \item{taper}{proportion of data to taper.  A split cosine bell taper
-    is applied to this proportion of the data at the beginning and
-    end of the series.}
+  \item{taper}{specifies theproportion of data to taper.  A split
+    cosine bell taper is applied to this proportion of the data at the
+    beginning and end of the series.}
   \item{pad}{proportion of data to pad. Zeros are added to the end of
     the series to increase its length by the proportion \code{pad}.}
   \item{fast}{logical; if \code{TRUE}, pad the series to a highly composite
@@ -56,7 +56,7 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
   \item{kernel}{The \code{kernel} argument, or the kernel constructed
     from \code{spans}.}
   \item{df}{The distribution of the spectral density estimate can be
-    approximated by a chi square distribution with \code{df} degrees
+    approximated by a (scaled) chi square distribution with \code{df} degrees
     of freedom.}
   \item{bandwidth}{The equivalent bandwidth of the kernel smoother as
     defined by Bloomfield (1976, page 201).}

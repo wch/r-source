@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-4  the R Development Core Team
+ *  Copyright (C) 2000-6  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,60 +14,77 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-#include "Defn.h"
-
-/* Code to handle lapply/apply */
+#include <Defn.h>
 
 /* .Internal(lapply(X, FUN)) */
 
-SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
+/* This is a special, so has unevaluated arguments.  It is called from a
+   closure wrapper, so X and FUN are promises. */
+
+SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP R_fcall, ans, X, FUN, ind, tmp;
+    SEXP R_fcall, ans, names, X, XX, FUN;
     int i, n;
+    PROTECT_INDEX px;
 
     checkArity(op, args);
-    X = CAR(args);
-    FUN = CADR(args);
-    if (!isSymbol(X) || !isSymbol(FUN))
-	errorcall(call, "arguments must be symbolic");
-    n = length(eval(X, rho));
-    if (n == NA_INTEGER)
-	errorcall(call, "invalid length");
-    args = CDR(args);
-
-    /* Build call: FUN(X[[<ind>]], ...) */
-
-    /* Notice that it is OK to have one arg to LCONS do memory
-       allocation and not PROTECT the result (LCONS does memory
-       protection of its args internally), but not both of them,
-       since the computation of one may destroy the other */
-
-
-    ind = allocVector(INTSXP, 1);
-    PROTECT(tmp = LCONS(R_Bracket2Symbol, LCONS(X, LCONS(ind, R_NilValue))));
-    PROTECT(R_fcall = LCONS(FUN, LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
+    PROTECT_WITH_INDEX(X = CAR(args), &px);
+    PROTECT(XX = eval(CAR(args), rho));
+    FUN = CADR(args);  /* must be unevaluated for use in e.g. bquote */
+    n = length(XX);
+    if (n == NA_INTEGER) errorcall(call, _("invalid length"));
 
     PROTECT(ans = allocVector(VECSXP, n));
-    for(i = 0; i < n; i++) {
-	INTEGER(ind)[0] = i + 1;
-	SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
+    names = getAttrib(XX, R_NamesSymbol);
+    if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
+
+    /* The R level code has ensured that XX is a vector.
+       If it is atomic we can speed things up slightly by
+       using the evaluated version.
+    */
+    {
+	SEXP ind, tmp;
+	/* Build call: FUN(XX[[<ind>]], ...) */
+
+	/* Notice that it is OK to have one arg to LCONS do memory
+	   allocation and not PROTECT the result (LCONS does memory
+	   protection of its args internally), but not both of them,
+	   since the computation of one may destroy the other */
+
+	PROTECT(ind = allocVector(INTSXP, 1));
+	if(isVectorAtomic(XX))
+	    PROTECT(tmp = LCONS(R_Bracket2Symbol, 
+				LCONS(XX, LCONS(ind, R_NilValue))));
+	else
+	    PROTECT(tmp = LCONS(R_Bracket2Symbol, 
+				LCONS(X, LCONS(ind, R_NilValue))));
+	PROTECT(R_fcall = LCONS(FUN, 
+				LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
+
+	for(i = 0; i < n; i++) {
+	    INTEGER(ind)[0] = i + 1;
+	    SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
+	}
+	UNPROTECT(3);	    
     }
-    UNPROTECT(3);
+
+    UNPROTECT(3); /* X, XX, ans */
     return ans;
 }
 
+#ifdef UNUSED
 /* .Internal(apply(X, X1, FUN)) */
-/* X is a matrix, and the last dimension is the one we want to 
+/* X is a matrix, and the last dimension is the one we want to
    loop over */
 
-SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, X, Xd, X1, ans, FUN;
     int i, j, nr, nc, inr;
@@ -75,7 +92,7 @@ SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     X = CAR(args); args = CDR(args);
     if(!isMatrix(X))
-	errorcall(call, "First arg is not a matrix");
+	errorcall(call, _("first argument is not a matrix"));
     Xd = getAttrib(X, R_DimSymbol);
     nr = INTEGER(Xd)[0];
     nc = INTEGER(Xd)[1];
@@ -113,11 +130,137 @@ SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
 		RAW(X1)[j] = RAW(X)[j + inr];
 	    break;
 	default:
-	    error("unsupported type of array in apply");
+	    UNIMPLEMENTED_TYPE("apply", X);
 	}
 	/* careful: we have altered X1 and might have FUN = function(x) x */
 	SET_VECTOR_ELT(ans, i, duplicate(eval(R_fcall, rho)));
     }
     UNPROTECT(3);
     return ans;
+}
+#endif
+
+static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt, 
+		   Rboolean replace, SEXP rho)
+{
+    SEXP ans, names, class, R_fcall;
+    int i, j, n;
+    Rboolean matched = FALSE;
+    
+    /* if X is a list, recurse.  Otherwise if it matches classes call f */
+    if(isNewList(X)) {
+	n = length(X);
+	PROTECT(ans = allocVector(VECSXP, n));
+	names = getAttrib(X, R_NamesSymbol);
+	/* or copy attributes if replace = TRUE? */
+	if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
+	for(i = 0; i < n; i++)
+	    SET_VECTOR_ELT(ans, i, do_one(VECTOR_ELT(X, i), FUN, classes, 
+					  deflt, replace, rho));
+	UNPROTECT(1);
+	return ans;
+    }
+    if(strcmp(CHAR(STRING_ELT(classes, 0)), "ANY") == 0)
+	matched = TRUE;
+    else {
+	PROTECT(class = R_data_class(X, FALSE));
+	for(i = 0; i < LENGTH(class); i++)
+	    for(j = 0; j < length(classes); j++)
+		if(strcmp(CHAR(STRING_ELT(class, i)),
+		      CHAR(STRING_ELT(classes, j))) == 0) matched = TRUE;
+	UNPROTECT(1);
+    }
+    if(matched) {
+	/* PROTECT(R_fcall = lang2(FUN, X)); */
+	PROTECT(R_fcall = lang3(FUN, X, R_DotsSymbol));
+	ans = eval(R_fcall, rho);
+	UNPROTECT(1);
+	return(ans);
+    } else if(replace) return duplicate(X);
+    else return duplicate(deflt);
+}
+
+/* This is a special, so has unevaluated arguments.  It is called from a
+   closure wrapper, so X and FUN are promises. */
+
+SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP X, FUN, classes, deflt, how, ans, names;
+    int i, n;
+    Rboolean replace;
+    
+    checkArity(op, args);
+    PROTECT(X = eval(CAR(args), rho)); args = CDR(args);
+    FUN = CAR(args); args = CDR(args);
+    classes = CAR(args); args = CDR(args);
+    deflt = CAR(args); args = CDR(args);
+    how = CAR(args);
+    replace = strcmp(CHAR(STRING_ELT(how, 0)), "replace") == 0;
+    n = length(X);
+    PROTECT(ans = allocVector(VECSXP, n));
+    names = getAttrib(X, R_NamesSymbol);
+    /* or copy attributes if replace = TRUE? */
+    if(!isNull(names)) setAttrib(ans, R_NamesSymbol, names);
+    for(i = 0; i < n; i++)
+	SET_VECTOR_ELT(ans, i, do_one(VECTOR_ELT(X, i), FUN, classes, deflt,
+				      replace, rho));
+    UNPROTECT(2);
+    return ans;
+}
+
+static Rboolean islistfactor(SEXP X)
+{
+    int i, n = length(X);
+
+    if(n == 0) return FALSE;
+    switch(TYPEOF(X)) {
+    case VECSXP:
+    case EXPRSXP:
+	for(i = 0; i < LENGTH(X); i++)
+	    if(!islistfactor(VECTOR_ELT(X, i))) return FALSE;
+	return TRUE;
+	break;
+    }
+    return isFactor(X);
+}
+
+
+/* is this a tree with only factor leaves? */
+
+SEXP attribute_hidden do_islistfactor(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP X;
+    Rboolean lans = TRUE, recursive;
+    int i, n;
+
+    checkArity(op, args);
+    X = CAR(args);
+    recursive = asLogical(CADR(args));
+    n = length(X);
+    if(n == 0 || !isVectorList(X)) {
+	lans = FALSE;
+	goto do_ans;
+    }
+    if(!recursive) {
+    for(i = 0; i < LENGTH(X); i++)
+	if(!isFactor(VECTOR_ELT(X, i))) {
+	    lans = FALSE;
+	    break;
+	}
+    } else {
+	switch(TYPEOF(X)) {
+	case VECSXP:
+	case EXPRSXP:
+	    break;
+	default:
+	    goto do_ans;
+	}
+	for(i = 0; i < LENGTH(X); i++)
+	    if(!islistfactor(VECTOR_ELT(X, i))) {
+		lans = FALSE;
+		break;
+	    }
+    }
+do_ans:
+    return ScalarLogical(lans);
 }

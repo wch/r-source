@@ -9,8 +9,9 @@ stat.anova(table, test = c("Chisq", "F", "Cp"), scale, df.scale, n)
    \code{\link{anova.glm}(\dots, test=NULL)}.}
  \item{test}{a character string, matching one of \code{"Chisq"},
    \code{"F"} or \code{"Cp"}.}
- \item{scale}{a weighted residual sum of squares.}
- \item{df.scale}{degrees of freedom corresponding to scale.}
+ \item{scale}{a residual mean square or other scale estimate to be used
+   as the denominator in an F test.}
+ \item{df.scale}{degrees of freedom corresponding to \code{scale}.}
  \item{n}{number of observations.}
 }
 \description{This is a utility function, used in \code{lm} and

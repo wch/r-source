@@ -1,19 +1,20 @@
-
-ls.base <- ls("package:base")
+## being a 'builtin' function is not the same as being in base
+## and what about objects starting with '.'?
+ls.base <- ls("package:base", all=TRUE)
 base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
 bi <- ls.base[base.is.f]
 cat("\nNumber of base objects:\t\t", length(ls.base),
-    "\nNumber of builtin functions:\t", sum(base.is.f),
-    "\n\t starting with 'is.' :\t ",
+    "\nNumber of functions in base:\t", sum(base.is.f),
+    "\n\t starting with 'is.' :\t  ",
     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
-## 0.14 : 31
-## 0.50 : 33
-## 0.60 : 34
-## 0.62 : 35
-## 0.63 : 37
-
-## This can be useful:	Which of the  builtin functions are "primitive" ?
-is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
+## 0.14  : 31
+## 0.50  : 33
+## 0.60  : 34
+## 0.63  : 37
+## 1.0.0 : 38
+## 1.3.0 : 41
+## 1.6.0 : 45
+## 2.0.0 : 45
 
 ## Do we have a method (probably)?
 is.method <- function(fname) {
@@ -22,7 +23,7 @@ is.method <- function(fname) {
     np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
     if(np <= 1 )
         FALSE
-    else 
+    else
         (isFun(paste(sp[1:(np-1)], collapse = '.')) ||
          (np>=3 &&
           isFun(paste(sp[1:(np-2)], collapse = '.'))))
@@ -73,7 +74,7 @@ print.isList <- function(x, ..., verbose = getOption("verbose"))
     if(is.list(x)) {
         if(verbose) cat("print.isList(): list case (length=",length(x),")\n")
 	nm <- format(names(x))
-	rr <- lapply(x, symnum, na = "NA")
+	rr <- lapply(x, stats::symnum, na = "NA")
 	for(i in seq(along=x)) cat(nm[i],":",rr[[i]],"\n", ...)
     } else NextMethod("print", ...)
 }

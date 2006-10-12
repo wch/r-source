@@ -1,7 +1,3 @@
-#include <R.h>
-#include <Rinternals.h>
-#include <Rdefines.h>
-
 #include "embeddedRCall.h"
 
 void bar1() ;
@@ -14,12 +10,13 @@ void source(const char *name);
 int
 main(int argc, char *argv[])
 {
-  char *localArgs[] = {"R", "--gui=none", "--silent"};
-  init_R(sizeof(localArgs)/sizeof(localArgs[0]), localArgs);
-  source("foo.R");
-  bar1();
+    char *localArgs[] = {"R", "--silent"};
+    init_R(sizeof(localArgs)/sizeof(localArgs[0]), localArgs);
+    source("foo.R");
+    bar1();
 
-  return(0);
+    end_R();
+    return(0);
 }
 
 
@@ -31,15 +28,11 @@ main(int argc, char *argv[])
 void
 source(const char *name)
 {
-  SEXP e, tmp, fun;
+    SEXP e;
 
-   PROTECT(e = allocVector(LANGSXP, 2));
-   PROTECT(fun = Rf_findFun(Rf_install("source"), R_GlobalEnv));
-   SETCAR(e, fun);
-   SETCAR(CDR(e), tmp = NEW_CHARACTER(1));
-   SET_STRING_ELT(tmp, 0, COPY_TO_USER_STRING("foo.R"));
-
-   Test_tryEval(e, NULL);
+    PROTECT(e = lang2(install("source"), mkString(name)));
+    R_tryEval(e, R_GlobalEnv, NULL);
+    UNPROTECT(1);
 }
 
 /* 
@@ -47,52 +40,43 @@ source(const char *name)
   are named.
    foo(pch="+", id = 123, c(T,F))
 
-  Note that Rf_PrintValue() of the expression seg-faults.
+  Note that PrintValue() of the expression seg-faults.
   We have to set the print name correctly.
 */
 
 void
 bar1() 
 {
-  SEXP fun, pch;
-  SEXP e;
-  int n = 7;
+    SEXP fun, pch;
+    SEXP e;
 
     PROTECT(e = allocVector(LANGSXP, 4));
-    fun = Rf_findFun(Rf_install("foo"), R_GlobalEnv);
-    if(GET_LENGTH(fun) == 0) {
-      fprintf(stderr, "No definition for function foo. Source foo.R and save the session.\n");
-      UNPROTECT(1);
-      exit(1);
+    fun = findFun(install("foo"), R_GlobalEnv);
+    if(fun == R_NilValue) {
+	fprintf(stderr, "No definition for function foo. Source foo.R and save the session.\n");
+	UNPROTECT(1);
+	exit(1);
     }
-    PROTECT(fun);
     SETCAR(e, fun);
 
-    PROTECT(pch = NEW_CHARACTER(1));
-    SET_STRING_ELT(pch, 0, COPY_TO_USER_STRING("+"));
-    SETCAR(CDR(e), pch);   
+    SETCADR(e, mkString("+"));
+    SET_TAG(CDR(e), install("pch"));
 
-    SET_TAG(CDR(e), Rf_install("pch"));
+    SETCADDR(e, ScalarInteger(123));   
+    SET_TAG(CDR(CDR(e)), install("id"));
 
+    pch = allocVector(LGLSXP, 2);
+    LOGICAL(pch)[0] = TRUE;
+    LOGICAL(pch)[1] = FALSE;
+    SETCADDDR(e, pch);   
 
-    PROTECT(pch = NEW_INTEGER(1));
-    INTEGER_DATA(pch)[0] = 123;
-    SETCAR(CDR(CDR(e)), pch);   
-
-    SET_TAG(CDR(CDR(e)), Rf_install("id"));
-
-    PROTECT(pch = NEW_LOGICAL(2));
-     LOGICAL_DATA(pch)[0] = TRUE;
-     LOGICAL_DATA(pch)[1] = FALSE;
-    SETCAR(CDR(CDR(CDR(e))), pch);   
-
-    Rf_PrintValue(e);
+    PrintValue(e);
     eval(e, R_GlobalEnv);
 
-    SETCAR(e, Rf_install("foo"));
-    Rf_PrintValue(e);
-    Test_tryEval(e, NULL);
+    SETCAR(e, install("foo"));
+    PrintValue(e);
+    R_tryEval(e, R_GlobalEnv, NULL);
 
-    UNPROTECT(n);
+    UNPROTECT(1);
 }
 

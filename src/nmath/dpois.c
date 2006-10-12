@@ -18,7 +18,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *
  * DESCRIPTION
@@ -35,12 +35,16 @@
 #include "nmath.h"
 #include "dpq.h"
 
-double dpois_raw(double x, double lambda, int give_log)
+double attribute_hidden dpois_raw(double x, double lambda, int give_log)
 {
+    /*       x >= 0 ; integer for dpois(), but not e.g. for pgamma()!
+        lambda >= 0
+    */
     if (lambda == 0) return( (x == 0) ? R_D__1 : R_D__0 );
-    if (x == 0) return( R_D_exp(-lambda) );
-    if (x < 0)  return( R_D__0 );
-
+    if (!R_finite(lambda)) return R_D__0;
+    if (x < 0) return( R_D__0 );
+    if (x <= lambda * DBL_MIN) return(R_D_exp(-lambda) );
+    if (lambda < x * DBL_MIN) return(R_D_exp(-lambda + x*log(lambda) -lgammafn(x+1)));
     return(R_D_fexp( M_2PI*x, -stirlerr(x)-bd0(x,lambda) ));
 }
 
@@ -53,7 +57,9 @@ double dpois(double x, double lambda, int give_log)
 
     if (lambda < 0) ML_ERR_return_NAN;
     R_D_nonint_check(x);
-    if (x < 0 || !R_FINITE(x)) return R_D__0;
+    if (x < 0 || !R_FINITE(x))
+	return R_D__0;
+
     x = R_D_forceint(x);
 
     return( dpois_raw(x,lambda,give_log) );

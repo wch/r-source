@@ -12,6 +12,6 @@ state = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
   2, 2, 2, 2, 2, 2, 2, 2),
   .Label = c("treated", "untreated"), class = "factor")),
 .Names = c("conc", "rate", "state"),
-row.names = as.character(1:23),
+row.names = 1:23,
 class = "data.frame",
 reference = "A1.3, p. 269")

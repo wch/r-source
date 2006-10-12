@@ -14,10 +14,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #define NONAMELESSUNION
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdio.h>
 #include <Rversion.h>
@@ -34,7 +35,7 @@ extern char *getDLLVersion();
 static char Rversion[25];
 char *getRVersion()
 {
-    sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
+    snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     return(Rversion);
 }
 

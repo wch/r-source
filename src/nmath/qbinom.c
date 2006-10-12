@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000, 2002 The R Development Core Team
- *  Copyright (C) 2003--2004 The R Foundation
+ *  Copyright (C) 2000-2006 The R Development Core Team
+ *  Copyright (C) 2003-2004 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  DESCRIPTION
  *
@@ -33,6 +33,34 @@
 #include "nmath.h"
 #include "dpq.h"
 
+static double 
+do_search(double y, double *z, double p, double n, double pr, double incr)
+{
+    if(*z >= p) {
+			/* search to the left */
+#ifdef DEBUG_qbinom
+	REprintf("\tnew z=%7g >= p = %7g  --> search to left (y--) ..\n", z,p);
+#endif
+	for(;;) {
+	    if(y == 0 ||
+	       (*z = pbinom(y - incr, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
+		return y;
+	    y = fmax2(0, y - incr);
+	}
+    }
+    else {		/* search to the right */
+#ifdef DEBUG_qbinom
+	REprintf("\tnew z=%7g < p = %7g  --> search to right (y++) ..\n", z,p);
+#endif
+	for(;;) {
+	    y = fmin2(y + incr, n);
+	    if(y == n ||
+	       (*z = pbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
+		return y;
+	}
+    }    
+}
+
 
 double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 {
@@ -42,17 +70,19 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(n) || ISNAN(pr))
 	return p + n + pr;
 #endif
-    if(!R_FINITE(p) || !R_FINITE(n) || !R_FINITE(pr))
+    if(!R_FINITE(n) || !R_FINITE(pr))
 	ML_ERR_return_NAN;
-    R_Q_P01_check(p);
+    /* if log_p is true, p = -Inf is a legitimate value */
+    if(!R_FINITE(p) && !log_p)
+	ML_ERR_return_NAN;
 
     if(n != floor(n + 0.5)) ML_ERR_return_NAN;
     if (pr < 0 || pr > 1 || n < 0)
 	ML_ERR_return_NAN;
 
+    R_Q_P01_boundaries(p, 0, n);
+
     if (pr == 0. || n == 0) return 0.;
-    if (p == R_DT_0) return 0.;
-    if (p == R_DT_1) return n;
 
     q = 1 - pr;
     if(q == 0.) return n; /* covers the full range of the distribution */
@@ -77,6 +107,7 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     /* y := approx.value (Cornish-Fisher expansion) :  */
     z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
+
     if(y > n) /* way off */ y = n;
 
 #ifdef DEBUG_qbinom
@@ -87,34 +118,15 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     /* fuzz to ensure left continuity: */
     p *= 1 - 64*DBL_EPSILON;
 
-/*-- Fixme, here y can be way off --
-  should use interval search instead of primitive stepping down or up */
-
-#ifdef maybe_future
-    if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
-#else
-    if(z >= p) {
-#endif
-			/* search to the left */
-#ifdef DEBUG_qbinom
-	REprintf("\tnew z=%7g >= p = %7g  --> search to left (y--) ..\n", z,p);
-#endif
-	for(;;) {
-	    if(y == 0 ||
-	       (z = pbinom(y - 1, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) < p)
-		return y;
-	    y = y - 1;
-	}
-    }
-    else {		/* search to the right */
-#ifdef DEBUG_qbinom
-	REprintf("\tnew z=%7g < p = %7g  --> search to right (y++) ..\n", z,p);
-#endif
-	for(;;) {
-	    y = y + 1;
-	    if(y == n ||
-	       (z = pbinom(y, n, pr, /*l._t.*/TRUE, /*log_p*/FALSE)) >= p)
-		return y;
-	}
+    if(n < 1e5) return do_search(y, &z, p, n, pr, 1);
+    /* Otherwise be a bit cleverer in the search */
+    {
+	double incr = floor(n * 0.001), oldincr;
+	do {
+	    oldincr = incr;
+	    y = do_search(y, &z, p, n, pr, incr);
+	    incr = fmax2(1, floor(incr/100));
+	} while(oldincr > 1 && incr > n*1e-15);
+	return y;
     }
 }

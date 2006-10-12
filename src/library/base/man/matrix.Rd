@@ -15,8 +15,11 @@
   specific classes of objects, see \link{InternalMethods}.
 }
 \usage{
-matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)
+matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE,
+       dimnames = NULL)
+
 as.matrix(x)
+
 is.matrix(x)
 }
 \arguments{
@@ -27,7 +30,7 @@ is.matrix(x)
     (the default) the matrix is filled by columns, otherwise the matrix is
     filled by rows.}
   \item{dimnames}{A \code{\link{dimnames}} attribute for the matrix: a
-    \code{list} of length 2.}
+    \code{list} of length 2 giving the row and column names respectively.}
   \item{x}{an \R object.}
 }
 \details{
@@ -47,7 +50,9 @@ is.matrix(x)
   \code{as.matrix} is a generic function. The method for data frames
   will convert any non-numeric/complex column into a character
   vector using \code{\link{format}} and so return a character matrix,
-  except that all-logical data frames will be coerced to a logical matrix.
+  except that all-logical data frames will be coerced to a logical
+  matrix.  When coercing a vector, it produces a one-column matrix, and
+  promotes the names (if any) of the vector to the rownames of the matrix.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -62,6 +67,11 @@ is.matrix(as.matrix(1:10))
 !is.matrix(warpbreaks)# data.frame, NOT matrix!
 warpbreaks[1:10,]
 as.matrix(warpbreaks[1:10,]) #using as.matrix.data.frame(.) method
+
+# Example of setting row and column names
+mdat <- matrix(c(1,2,3, 11,12,13), nrow = 2, ncol=3, byrow=TRUE,
+               dimnames = list(c("row1", "row2"), c("C.1", "C.2", "C.3")))
+mdat
 }
 \keyword{array}
 \keyword{algebra}

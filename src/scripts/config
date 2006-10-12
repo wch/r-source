@@ -7,7 +7,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002 The R Core Development Team
+## Copyright (C) 2002-6 The R Core Development Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
 ##
 ## A copy of the GNU General Public License is available via WWW at
 ## http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-## writing to the Free Software Foundation, Inc., 59 Temple Place,
-## Suite 330, Boston, MA  02111-1307, U.S.A.
+## writing to the Free Software Foundation, Inc., 51 Franklin Street,
+## Fifth Floor, Boston, MA 02110-1301  USA.
 
-revision='$Revision: 1.3 $'
+revision='$Revision$'
 version=`set - ${revision}; echo ${2}`
 version="R configuration information retrieval script ${version}
 
-Copyright (C) 2002 The R Core Development Team.
+Copyright (C) 2002-6 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -40,7 +40,7 @@ library flags necessary for linking against R.
 
 Options:
   -h, --help            print short help message and exit
-  -v, --version         print version info and exit
+  -v, --version         print 'config' version info and exit
       --cppflags        print pre-processor flags required to compile
                         a program using R as a shared library
       --ldflags         print linker flags needed for linking against
@@ -64,7 +64,6 @@ Variables:
                 object files from a C or Fortran compiler only
   DYLIB_LDFLAGS
                 special flags used by DYLIB_LD
-  F2C           Fortran-to-C converter command
   F77           Fortran 77 compiler command
   FFLAGS        Fortran 77 compiler flags
   FLIBS         linker flags needed to link Fortran code
@@ -74,6 +73,7 @@ Variables:
   LDFLAGS       linker flags, e.g. -L<dir> if you have libraries in a
                 nonstandard directory <dir> 
   MAKE          Make command
+  SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared libraries
   SHLIB_CXXLD   command for linking shared libraries which contain
                 object files from a C++ compiler 
@@ -112,7 +112,7 @@ if test $# = 0; then
   exit 1
 fi
 
-makefiles="-f ${R_HOME}/etc/Makeconf -f ${R_HOME}/share/make/config.mk"
+makefiles="-f ${R_HOME}/etc${R_ARCH}/Makeconf -f ${R_SHARE_DIR}/make/config.mk"
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 LIBR=`eval $query VAR=LIBR`
@@ -128,7 +128,7 @@ while test -n "${1}"; do
       if test -z "${LIBR}"; then
         echo "R was not built as a shared library" >&2
       else
-        echo "-I${R_HOME}/include"
+        echo "-I${R_INCLUDE_DIR} -I${R_INCLUDE_DIR}${R_ARCH}"
       fi
       exit 0
       ;;
@@ -155,7 +155,7 @@ done
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
 ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
-ok_f77_vars="F2C F77 FFLAGS FPICFLAGS FLIBS"
+ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"

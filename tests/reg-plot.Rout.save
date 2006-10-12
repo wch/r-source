@@ -1,6 +1,7 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Patched (2004-05-12), ISBN 3-900051-00-3
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2005-10-31 r36106)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,7 +9,7 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -20,6 +21,8 @@ Type 'q()' to quit R.
 +            encoding ="ISOLatin1.enc")
 > ## since we supply the font metrics, the results depend only on
 > ## the encoding used: Windows is different from Unix by default.
+> ## As from 2.1.0 we only test genuine Latin-1 chars: Adobe has dotlessi
+> ## and accents at 144:152, 154, 155, 157:159, but Unicode does not.
 > 
 > options(warn = 1)# print them as they occur
 > 
@@ -40,7 +43,7 @@ List of 3
 > plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
 > title("Centred chars in default char set (ISO Latin1)")
 > grid(17, 17, lty=1)
-> known <- c(32:126, 144:152, 154, 155, 157:255)
+> known <- c(32:126, 160:255)
 > 
 > for(i in known) {
 +     x <- i %% 16
@@ -110,6 +113,18 @@ Warning in xy.coords(x = matrix(rep.int(tx, k), ncol = k), y = x, log = log) :
 > plot(1:10, pch = NA) # gave error till 1.9.0
 > points(1:3, pch=c("o",NA,"x"))# used "N"
 > try(points(4, pch=c(NA,FALSE)))# still give an error
-Error in plot.xy(xy.coords(x, y), type = type, pch = pch, col = col, bg = bg,  : 
+Error in plot.xy(xy.coords(x, y), type = type, ...) : 
 	only NA allowed in logical plotting symbol
+> 
+> ## 'lwd' should transfer to plot symbols
+> legend(1,10, c("A","bcd"), lwd = 2:3, pch= 21:22, pt.bg="skyblue",
++        col = 2:3, bg = "thistle")
+> ## (gave an error for 2 days in "2.0.0 unstable")
+> 
+> x <- 2^seq(1,1001, length=20)
+> plot(x, x^0.9, type="l", log="xy")
+> ## gave error 'Infinite axis extents [GEPretty(1.87013e-12,inf,5)]' for R 2.0.1
+> 
+> plot(as.Date("2001/1/1") + 12*(1:9), 1:9)
+> ## used bad 'xlab/ylab' in some versions of R 2.2.0(unstable)
 > 

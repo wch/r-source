@@ -29,7 +29,5 @@ grid.collection(..., gp=gpar(), draw=TRUE, vp=NULL)
 \seealso{
   \code{\link{grid.grob}}.
 }
-\examples{
-}
 \keyword{dplot}
 

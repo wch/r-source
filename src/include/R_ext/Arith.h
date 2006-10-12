@@ -15,12 +15,16 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef R_ARITH_H_
 #define R_ARITH_H_
 
+#if defined(HAVE_GLIBC2) && !defined(_BSD_SOURCE)
+/* ensure that finite and isnan are declared */
+# define _BSD_SOURCE 1
+#endif
 #include <math.h>
 
 #include <R_ext/libextern.h>
@@ -51,8 +55,18 @@ int R_finite(double);		/* True if none of NA, NaN, +/-Inf */
 
 #define ISNA(x)	       R_IsNA(x)
 /* True for *both* NA and NaN.
-   NOTE: some systems do not return 1 for TRUE. */
-#define ISNAN(x)       (isnan(x)!=0)
+   NOTE: some systems do not return 1 for TRUE. 
+   Also note that C++ math headers specifically undefine
+   isnan if it is a macro (it is on OS X and in C99),
+   hence the workaround.  This code also appears in Rmath.h
+*/
+#ifdef __cplusplus
+  int R_isnancpp(double); /* in arithmetic.c */
+#  define ISNAN(x)     R_isnancpp(x)
+#else
+#  define ISNAN(x)     (isnan(x)!=0)
+#endif
+
 #ifdef HAVE_WORKING_ISFINITE
 /* isfinite is defined in <math.h> according to C99 */
 # define R_FINITE(x)    isfinite(x)

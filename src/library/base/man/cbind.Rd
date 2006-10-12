@@ -3,6 +3,8 @@
 \alias{rbind}
 \alias{cbind.data.frame}
 \alias{rbind.data.frame}
+\alias{.__H__.cbind}
+\alias{.__H__.rbind}
 \concept{insert}
 \title{Combine R Objects by Rows or Columns}
 \description{
@@ -15,29 +17,31 @@ cbind(\dots, deparse.level = 1)
 rbind(\dots, deparse.level = 1)
 }
 \arguments{
-  \item{\dots}{vectors or matrices.  These can be given as named arguments.}
-  \item{deparse.level}{integer controlling the construction of labels;
-    currently, \code{1} is the only possible value.}
+  \item{\dots}{vectors or matrices.  These can be given as named
+    arguments.  Other \R objects will be coerced as appropriate: see
+    section Details and Value.  (For the \code{"data.frame"} method of
+    \code{cbind} these can be further arguments to
+    \code{\link{data.frame}} such as \code{stringsAsFactors} and
+    \code{check.names}.)}
+  \item{deparse.level}{integer controlling the construction of labels in
+    the case of \dQuote{non-matrix-like} arguments (i.e., for the
+    default method):\cr
+    \code{deparse.level = 0} constructs no labels; the default,
+    \code{deparse.level = 1 or 2} constructs labels from the argument
+    names, see the \sQuote{Value} section below.}
 }
 \details{
-  The functions \code{cbind} and \code{rbind} are generic, with methods
-  for data frames.  The data frame method will be used if an argument is
-  a data frame and the rest are vectors or matrices.  There can be other
-  methods; in particular, there is one for time series objects.
+  The functions \code{cbind} and \code{rbind} are S3 generic, with
+  methods for data frames.  The data frame method will be used if at
+  least one argument is a data frame and the rest are vectors or
+  matrices.  There can be other methods; in particular, there is one for
+  time series objects.
 
-  In the matrix case, all the vectors/matrices must be atomic or lists
-  (e.g. not expressions). 
-
-  Data frames can be \code{cbind}-ed with matrices, in which case
-  each matrix forms a single column in the result, unlike calling
-  \code{\link{data.frame}}.
-
-  The \code{rbind} data frame method takes the classes of the columns
-  from the first
-  data frame.  Factors have their levels expanded as necessary (in
-  the order of the levels of the levelsets of the factors encountered)
-  and the result is an ordered factor if and only if all the components
-  were ordered factors.  (The last point differs from S-PLUS.)
+  In the default method, all the vectors/matrices must be atomic (see
+  \code{\link{vector}}) or lists.  Expressions are not allowed.
+  Language objects (such as formulae and calls) and pairlists will be
+  coerced to lists: other objects (such as names and external pointers)
+  will be included as elements in a list result.
 
   If there are several matrix arguments, they must all have the same
   number of columns (or rows) and this will be the number of columns (or
@@ -54,18 +58,35 @@ rbind(\dots, deparse.level = 1)
 
   For \code{cbind} (\code{rbind}), vectors of zero length (including
   \code{NULL}) are ignored unless the result would have zero rows
-  (columns),  for S compatibility.
+  (columns), for S compatibility.
   (Zero-extent matrices do not occur in S3 and are not ignored in \R.)
+
+  The \code{rbind} data frame method takes the classes of the columns
+  from the first data frame, and matches columns by name (rather than by
+  position).  Factors have their levels expanded as necessary (in
+  the order of the levels of the levelsets of the factors encountered)
+  and the result is an ordered factor if and only if all the components
+  were ordered factors.  (The last point differs from S-PLUS.)
 }
 \value{
   A matrix or data frame combining the \code{\dots} arguments
-  column-wise or row-wise.
+  column-wise or row-wise.  (Exception: if all the inputs are
+  \code{NULL}, the value is \code{NULL}.)
 
   For \code{cbind} (\code{rbind}) the column (row) names are taken from
-  the names of the arguments, or where those are not supplied by
-  deparsing the expressions given (if that gives a sensible name).
+  the \code{colnames} (\code{rownames}) of the arguments if these are
+  matrix-like.  Otherwise from the names of the arguments or where those
+  are not supplied and \code{deparse.level > 0}, by deparsing the
+  expressions given, for \code{deparse.level = 1} only if that gives a
+  sensible name (a \sQuote{symbol}, see \code{\link{is.symbol}}).
+
   The names will depend on whether data frames are included:
   see the examples.
+
+  If a matrix is created, it will be a list if any of the inputs is not
+  NULL nor an atomic vector.   Otherwise its type is determined from the
+  highest type of the inputs in the hierarchy NULL < raw < logical <
+  integer < real < complex < character < list.
 }
 \note{
   The method dispatching is \emph{not} done via
@@ -106,7 +127,7 @@ rbind(\dots, deparse.level = 1)
 \examples{
 m <- cbind(1, 1:7) # the '1' (= shorter vector) is recycled
 m
-m <- cbind(m, 8:14)[, c(1, 3, 2)] # insert a column 
+m <- cbind(m, 8:14)[, c(1, 3, 2)] # insert a column
 m
 cbind(1:7, diag(3))# vector is subset -> warning
 
@@ -117,6 +138,12 @@ cbind(xx, X=rbind(a=1, b=1:3))   # named differently
 
 cbind(0, matrix(1, nrow=0, ncol=4))#> Warning (making sense)
 dim(cbind(0, matrix(1, nrow=2, ncol=0)))#-> 2 x 1
+
+## deparse.level
+dd <- 10
+rbind(1:4, c=2, "a++" = 10, dd, deparse.level=0)# middle 2 rownames
+rbind(1:4, c=2, "a++" = 10, dd, deparse.level=1)# 3 rownames (default)
+rbind(1:4, c=2, "a++" = 10, dd, deparse.level=2)# 4 rownames
 }
 \keyword{array}
 \keyword{manip}

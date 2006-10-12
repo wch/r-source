@@ -32,27 +32,16 @@ rcauchy <-
     function(n, location=0, scale=1) .Internal(rcauchy(n, location, scale))
 
 dgamma <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE)
-{
-    if(any(shape <= 0)) stop("shape must be strictly positive")
     .Internal(dgamma(x, shape, scale, log))
-}
 pgamma <- function(q, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
-{
-    if(any(shape <= 0)) stop("shape must be strictly positive")
     .Internal(pgamma(q, shape, scale, lower.tail, log.p))
-}
+
 qgamma <- function(p, shape, rate = 1, scale = 1/rate,
                    lower.tail = TRUE, log.p = FALSE)
-{
-    if(any(shape <= 0)) stop("shape must be strictly positive")
     .Internal(qgamma(p, shape, scale, lower.tail, log.p))
-}
 rgamma <- function(n, shape, rate = 1, scale = 1/rate)
-{
-    if(any(shape <= 0)) stop("shape must be strictly positive")
     .Internal(rgamma(n, shape, scale))
-}
 
 dlnorm <- function(x, meanlog=0, sdlog=1, log=FALSE)
     .Internal(dlnorm(x, meanlog, sdlog, log))
@@ -86,9 +75,17 @@ pbeta <- function(q, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     if(missing(ncp)) .Internal(pbeta(q, shape1, shape2, lower.tail, log.p))
     else .Internal(pnbeta(q, shape1, shape2, ncp, lower.tail, log.p))
 }
-qbeta <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
-    .Internal(qbeta(p, shape1, shape2, lower.tail, log.p))
-rbeta <- function(n, shape1, shape2) .Internal(rbeta(n, shape1, shape2))
+qbeta <- function(p, shape1, shape2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
+    if(missing(ncp)) .Internal(qbeta(p, shape1, shape2, lower.tail, log.p))
+    else .Internal(qnbeta(p, shape1, shape2, ncp, lower.tail, log.p))
+}
+rbeta <- function(n, shape1, shape2, ncp = 0) {
+    if(ncp == 0) .Internal(rbeta(n, shape1, shape2))
+    else {
+        X <- rchisq(n, 2*shape1, ncp =ncp)
+        X/(X + rchisq(n, 2*shape2))
+    }
+}
 
 dbinom <- function(x, size, prob, log = FALSE)
     .Internal(dbinom(x, size, prob, log))
@@ -108,7 +105,7 @@ dmultinom <- function(x, size=NULL, prob, log = FALSE)
     prob <- prob / s
 
     x <- as.integer(x + 0.5)
-    if(any(x < 0)) stop("`x' must be non-negative")
+    if(any(x < 0)) stop("'x' must be non-negative")
     N <- sum(x)
     if(is.null(size)) size <- N
     else if (size != N) stop("size != sum(x), i.e. one is wrong")
@@ -118,7 +115,7 @@ dmultinom <- function(x, size=NULL, prob, log = FALSE)
 	if(any(x[i0] != 0))
             ##  prob[j] ==0 and x[j] > 0 ==>  "impossible" => P = 0
 	    return(if(log)-Inf else 0)
-	## otherwise : `all is fine': prob[j]= 0 = x[j] ==> drop j and continue
+	## otherwise : 'all is fine': prob[j]= 0 = x[j] ==> drop j and continue
 	if(all(i0)) return(if(log)0 else 1)
 	## else
 	x <- x[!i0]
@@ -146,14 +143,23 @@ rchisq <- function(n, df, ncp=0) {
     else .Internal(rnchisq(n, df, ncp))
 }
 
-df <- function(x, df1, df2, log = FALSE) .Internal(df(x, df1, df2, log))
+df <- function(x, df1, df2, ncp=0, log = FALSE) {
+    if(missing(ncp)) .Internal(df(x, df1, df2, log))
+    else .Internal(dnf(x, df1, df2, ncp, log))
+}
 pf <- function(q, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     if(missing(ncp)) .Internal(pf(q, df1, df2, lower.tail, log.p))
     else .Internal(pnf(q, df1, df2, ncp, lower.tail, log.p))
 }
-qf <- function(p, df1, df2, lower.tail = TRUE, log.p = FALSE)
-    .Internal(qf(p, df1, df2, lower.tail, log.p))
-rf <- function(n, df1, df2) .Internal(rf(n, df1, df2))
+qf <- function(p, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE) {
+    if(missing(ncp)) .Internal(qf(p, df1, df2, lower.tail, log.p))
+    else .Internal(qnf(p, df1, df2, ncp, lower.tail, log.p))
+}
+rf <- function(n, df1, df2, ncp = 0)
+{
+    if(ncp == 0) .Internal(rf(n, df1, df2))
+    else (rchisq(n, df1, ncp=ncp)/df1)/(rchisq(n, df2)/df2)
+}
 
 dgeom <- function(x, prob, log = FALSE) .Internal(dgeom(x, prob, log))
 pgeom <- function(q, prob, lower.tail = TRUE, log.p = FALSE)
@@ -172,7 +178,7 @@ rhyper <- function(nn, m, n, k) .Internal(rhyper(nn, m, n, k))
 dnbinom <- function(x, size, prob, mu, log = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(dnbinom(x, size, prob, log))
@@ -180,7 +186,7 @@ dnbinom <- function(x, size, prob, mu, log = FALSE)
 pnbinom <- function(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(pnbinom(q, size, prob, lower.tail, log.p))
@@ -188,7 +194,7 @@ pnbinom <- function(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 qnbinom <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(qnbinom(p, size, prob, lower.tail, log.p))
@@ -196,7 +202,7 @@ qnbinom <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 rnbinom <- function(n, size, prob, mu)
 {
     if (!missing(mu)) {
-        if (!missing(prob)) stop("prob and mu both specified")
+        if (!missing(prob)) stop("'prob' and 'mu' both specified")
         prob <- size/(size + mu)
     }
     .Internal(rnbinom(n, size, prob))
@@ -209,22 +215,22 @@ qpois <- function(p, lambda, lower.tail = TRUE, log.p = FALSE)
     .Internal(qpois(p, lambda, lower.tail, log.p))
 rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 
-dt <- function(x, df, ncp=0, log = FALSE) {
-    if(missing(ncp))
-	.Internal(dt(x, df, log))
-    else
-	.Internal(dnt(x, df, ncp, log))
+dt <- function(x, df, ncp = 0, log = FALSE) {
+    if(missing(ncp)) .Internal(dt(x, df, log))
+    else .Internal(dnt(x, df, ncp, log))
 }
-
-pt <- function(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {
-    if(missing(ncp))
-	.Internal(pt(q, df, lower.tail, log.p))
-    else
-	.Internal(pnt(q, df, ncp, lower.tail, log.p))
+pt <- function(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
+    if(missing(ncp)) .Internal(pt(q, df, lower.tail, log.p))
+    else .Internal(pnt(q, df, ncp, lower.tail, log.p))
 }
-qt <- function(p, df, lower.tail = TRUE, log.p = FALSE)
-    .Internal(qt(p, df, lower.tail, log.p))
-rt <- function(n, df) .Internal(rt(n, df))
+qt <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
+    if(missing(ncp)) .Internal(qt(p, df, lower.tail, log.p))
+    else .Internal(qnt(p, df, ncp, lower.tail, log.p))
+}
+rt <- function(n, df, ncp = 0) {
+    if(missing(ncp)) .Internal(rt(n, df))
+    else rnorm(n, ncp)/sqrt(rchisq(n, df)/df)
+}
 
 ptukey <- function(q, nmeans, df, nranges=1, lower.tail = TRUE, log.p = FALSE)
     .Internal(ptukey(q, nranges, nmeans, df, lower.tail, log.p))

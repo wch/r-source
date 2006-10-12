@@ -14,9 +14,24 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
     in the call be included or left as a \code{\dots} argument?}
 }
 \description{
-  \code{match.call} returns a call in which all of the arguments are
-  specified by their names.  The most common use is to get the call of
-  the current function, with all arguments named.
+  \code{match.call} returns a call in which all of the specified arguments are
+  specified by their full names.
+}
+\details{
+  \code{match.call} is most commonly used in two circumstamces:
+  \itemize{
+    \item To record the call for later re-use: for example most
+    model-fitting functions record the call as element \code{call} of
+    the list they return.  Here the default \code{expand.dots = TRUE}
+    is appropriate.
+
+    \item To pass most of the call to another function, often
+    \code{model.frame}.  Here the common idiom is that
+    \code{expand.dots = FALSE} is used, and the \code{\dots} elememt
+    of the matched call is removed.  An alternative is to
+    explicitly select the arguments to be passed on, as is done in
+    \code{lm}.
+  }
 }
 \value{
   An object of class \code{call}.

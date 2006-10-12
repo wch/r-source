@@ -38,6 +38,10 @@ circleGrob(x=0.5, y=0.5, r=0.5, default.units="npc", name=NULL,
   the smaller of these two values will be the result.  To see the
   effect, type \code{grid.circle()} and adjust the size of the window.
 }
+\section{Warning}{
+  Negative values for the radius are silently converted to their
+  absolute value.
+  }
 \value{
   A circle grob.  \code{grid.circle()} returns the value invisibly.
 }

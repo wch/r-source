@@ -16,8 +16,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> chars are only handled as a whole */
 
 /* Simple sockets interface derived from the sockets UICI
    implementation in Appendix B of Practical UNIX Programming,
@@ -25,6 +27,9 @@
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+#ifdef HAVE_GLIBC2
+# define _POSIX_SOURCE
 #endif
 
 #include <stdio.h>
@@ -71,6 +76,7 @@ static int Sock_error(Sock_error_t perr, int e, int he)
     return -1;
 }
 
+/* <FIXME> is this classic MacOS X? */
 #ifdef MACINTOSH
 extern void __sinit(void);
 extern int __initialize (void *ignoredParameter);
@@ -79,6 +85,7 @@ int __initialize(void *ignoredParameter) {
     return(0);
 }
 #endif
+/* </FIXME> */
 
 /* Initialize the socket services */
 int Sock_init()
@@ -167,7 +174,7 @@ int Sock_listen(int fd, char *cname, int buflen, Sock_error_t perr)
 {
 #ifdef HAVE_SOCKETS 
     struct sockaddr_in net_client;
-    SOCKLEN_T len = sizeof(struct sockaddr);
+    R_SOCKLEN_T len = sizeof(struct sockaddr);
     int retval;
     struct hostent *hostptr;
 

@@ -15,10 +15,9 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
 
 .onLoad <- function(lib, pkg)
 {
-    library.dynam( "grid", pkg, lib )
     ## want eval in C code to see unexported objects
     environment(.GridEvalEnv) <- asNamespace("grid")
-    .Call("L_initGrid", .GridEvalEnv, PACKAGE="grid")
+    .Call(L_initGrid, .GridEvalEnv)
     .grid.loaded <<- TRUE
 }
 
@@ -30,17 +29,17 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
         ## Not very friendly to other registered graphics systems
         ## but its safety first for now
         graphics.off()
-        .Call("L_killGrid", PACKAGE="grid")
+        .Call(L_killGrid)
     }
     library.dynam.unload("grid", libpath)
 }
 
-.gridplot.hook <- function()
-{
-    pushViewport(viewport(width=unit(1, "npc") - unit(1, "lines"),
-			  x=0, just="left"))
-    grid.text(paste("help(", ..nameEx, ")"),
-	      x=unit(1, "npc") + unit(0.5, "lines"),
-	      y=unit(0.8, "npc"), rot=90,
-	      gp=gpar(col="orchid"))
-}
+## .gridplot.hook <- function()
+## {
+##     pushViewport(viewport(width=unit(1, "npc") - unit(1, "lines"),
+## 			  x=0, just="left"))
+##     grid.text(paste("help(", ..nameEx, ")"),
+## 	      x=unit(1, "npc") + unit(0.5, "lines"),
+## 	      y=unit(0.8, "npc"), rot=90,
+## 	      gp=gpar(col="orchid"))
+## }

@@ -32,8 +32,13 @@ get.gpar(names = NULL)
   \tabular{ll}{
     col \tab Colour for lines and borders. \cr
     fill \tab Colour for filling rectangles, polygons, ... \cr
+    alpha \tab Alpha channel for transparency \cr
     lty \tab Line type \cr
     lwd \tab Line width \cr
+    lex \tab Multiplier applied to line width \cr
+    lineend \tab Line end style (round, butt, square) \cr
+    linejoin \tab Line join style (round, mitre, bevel) \cr
+    linemitre \tab Line mitre limit (number greater than 1) \cr
     fontsize \tab The size of text (in points) \cr
     cex \tab Multiplier applied to fontsize \cr
     fontfamily \tab The font family \cr
@@ -43,14 +48,22 @@ get.gpar(names = NULL)
     backward compatibility) \cr
   }
 
+  The \code{alpha} setting is combined with the alpha channel for
+  individual colours by multiplying (with both alpha settings
+  normalised to the range 0 to 1).
+
   The size of text is \code{fontsize}*\code{cex}.  The size of a line
   is \code{fontsize}*\code{cex}*\code{lineheight}.
-  
-  For most devices, the \code{fontfamily} is specified when the device
-  is first opened and may not be changed thereafter -- i.e., specifying
-  a different font family via \code{fontfamily} will be ignored.  This
-  will hopefully change in future versions of R.  Also, there is an
-  important exception:  \code{fontfamily} may be used to specify one
+
+  The \code{cex} setting is cumulative;  if a viewport is pushed
+  with a \code{cex} of 0.5 then another viewport is pushed with a
+  \code{cex} of 0.5, the effective \code{cex} is 0.25.
+
+  The \code{alpha} and \code{lex} settings are also cumulative.
+
+  Changes to the \code{fontfamily} may be ignored by some devices,
+  but is supported by PostScript, PDF, X11, Windows, and Quartz.  The
+  \code{fontfamily} may be used to specify one
   of the Hershey Font families (e.g., \code{HersheySerif})
   and this specification will be honoured
   on all devices.
@@ -65,7 +78,7 @@ get.gpar(names = NULL)
   For the special case of the HersheySerif font family,
   \code{"cyrillic"}, \code{"cyrillic.oblique"}, and \code{"EUC"}
   are also available.
-  
+
   Specifying the value \code{NULL} for a parameter is the same as not
   specifying any value for that parameter, except for \code{col} and
   \code{fill}, where \code{NULL} indicates not to draw a border or
@@ -74,6 +87,8 @@ get.gpar(names = NULL)
   All parameter values can be vectors of multiple values.  (This will
   not always make sense -- for example, viewports will only take
   notice of the first parameter value.)
+
+  The \code{gamma} parameter is deprecated.
 
   \code{get.gpar()} returns all current graphical parameter settings.
 }
@@ -85,7 +100,9 @@ get.gpar(names = NULL)
 }
 \author{Paul Murrell}
 \examples{
-get.gpar()
+gp <- get.gpar()
+utils::str(gp)
+## These *do* nothing but produce a "gpar" object:
 gpar(col = "red")
 gpar(col = "blue", lty = "solid", lwd = 3, fontsize = 16)
 get.gpar(c("col", "lty"))

@@ -4,6 +4,9 @@ for MsWindows). Extensions and changes are copyrighted by
 Guido Masarotto (guido@stat.unipd.it) and Brian D. Ripley
 (ripley@stats.ox.ac.uk).
 
+The COPYLIB.TXT was a copy of the GNU Library General Public License,
+as in file ../../../share/licenses/LGPL-2
+
 Extesion include:
 (1) Better support for MDI applications (MDI clients can have
     menus, toolbar and status bar which are displayed, in the

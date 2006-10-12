@@ -19,8 +19,8 @@ include $(top_builddir)/Makeconf
 
 SOURCES_C = \
 	approx.c \
-	bakslv.c bandwidths.c binning.c \
-	chull.c cpoly.c cumsum.c \
+	bakslv.c binning.c \
+	cpoly.c cumsum.c \
 	fft.c fmin.c integrate.c interv.c \
 	lbfgsb.c loglin.c lowess.c \
 	machar.c maxcol.c massdist.c \
@@ -37,8 +37,9 @@ SOURCES_F = \
 	eigen.f \
 	lminfl.f
 DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS_BLAS = @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplxblas.o
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
-  @USE_EXTERNAL_BLAS_FALSE@ blas.o @COMPILE_DOUBLE_COMPLEX_FALSE@ zgemm.o
+  @BLAS_SHLIB_FALSE@ $(OBJECTS_BLAS)
 HEADERS =
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -46,21 +47,13 @@ DISTFILES = COPYRIGHT COPYRIGHT.ftn README lowess.doc \
 	Makefile.in Makefile.win \
 	$(HEADERS) \
 	$(SOURCES_C) \
-	$(SOURCES_F) \
-	blas.f zgemm.f
+	$(SOURCES_F)
 
-noinst_LIBRARIES = libappl.a
-libappl_a_SOURCES = $(SOURCES)
-libappl_a_OBJECTS = $(OBJECTS)
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
+@WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
 
-## <FIXME>
-## We most likely will not want a separate shared library.
-## If we have a final decision, remove libappl.la target.
-noinst_LTLIBRARIES = libappl.la
-## </FIXME>
-libappl_la_SOURCES = $(SOURCES)
-libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
+Rblas_la = libRblas$(DYLIB_EXT)
+Rblas_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ -flat_namespace -undefined suppress
 
 all: Makefile Makedeps R
 
@@ -73,23 +66,27 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
+@WANT_R_SHLIB_FALSE@	@$(MAKE) libappl.a
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
-libappl.a: $(libappl_a_OBJECTS)
+libappl.a: $(OBJECTS)
 	rm -f $@
-	$(AR) cr $@ $(libappl_a_OBJECTS)
+	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
-stamp-lo: $(libappl_la_OBJECTS)
+stamp-lo: $(OBJECTS)
 	@touch $@
-libappl.la: stamp-lo
-	$(SHLIB_LINK) -o $@ $(libappl_la_LDFLAGS) $(libappl_la_OBJECTS)
+
+blas.o: $(top_srcdir)/src/extra/blas/blas.f
+	$(F77) $(ALL_FFLAGS) -c $< -o $@
+cmplxblas.o: $(top_srcdir)/src/extra/blas/cmplxblas.f
+	$(F77) $(ALL_FFLAGS) -c $< -o $@
 
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo $(Rblas_la)
+
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

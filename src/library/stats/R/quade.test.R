@@ -10,14 +10,14 @@ function(y, groups, blocks, ...)
     }
     else {
         if(any(is.na(groups)) || any(is.na(blocks)))
-            stop("NA's are not allowed in groups or blocks")
+            stop("NA's are not allowed in 'groups' or 'blocks'")
         if(any(diff(c(length(y), length(groups), length(blocks)))))
-            stop("y, groups and blocks must have the same length")
+            stop("'y', 'groups' and 'blocks' must have the same length")
         DNAME <- paste(DNAME, ", ",
                        deparse(substitute(groups)), " and ",
                        deparse(substitute(blocks)), sep = "")
         if(any(table(groups, blocks) != 1))
-            stop("Not an unreplicated complete block design")
+            stop("not an unreplicated complete block design")
         groups <- factor(groups)
         blocks <- factor(blocks)
     }
@@ -32,7 +32,7 @@ function(y, groups, blocks, ...)
     ## S is a matrix of ranks within blocks (minus the average rank)
     ## multiplied by the ranked ranges of the blocks
     A <- sum(s^2)
-    B <- sum(apply(s, 2, sum)^2) / b
+    B <- sum(colSums(s)^2) / b
     if(A == B) {
         ## Treat zero denominator case as suggested by Conover (1999),
         ## p.374.
@@ -60,7 +60,7 @@ quade.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula))
-        stop("formula missing")
+        stop("'formula' missing")
     ## <FIXME>
     ## Maybe put this into an internal rewriteTwoWayFormula() when
     ## adding support for strata()
@@ -69,7 +69,7 @@ function(formula, data, subset, na.action, ...)
        || (formula[[3]][[1]] != as.name("|"))
        || (length(formula[[3]][[2]]) != 1)
        || (length(formula[[3]][[3]]) != 1))
-        stop(paste("incorrect specification for", sQuote("formula")))
+        stop("incorrect specification for 'formula'")
     formula[[3]][[1]] <- as.name("+")
     ## </FIXME>
     m <- match.call(expand.dots = FALSE)

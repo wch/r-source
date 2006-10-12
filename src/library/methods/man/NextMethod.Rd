@@ -13,28 +13,38 @@ callNextMethod(...)
 }
 \arguments{
   \item{\dots}{
-Optionally, the arguments to the function in its next call
-(but note that the dispatch is as in the detailed description below;
-the arguments have no effect on selecting the next method.) 
+    Optionally, the arguments to the function in its next call
+    (but note that the dispatch is as in the detailed description below;
+    the arguments have no effect on selecting the next method.) 
 
-If no arguments are included in the call to \code{callNextMethod}, the
+    If no arguments are included in the call to \code{callNextMethod}, the
     effect is to call the method with the current arguments.
     See the detailed description for what this really means.
 
-Calling with no arguments is often the natural way to use
+    Calling with no arguments is often the natural way to use
     \code{callNextMethod}; see the examples.
     }
 }
 \details{
-  The \dQuote{next} method (i.e., the first inherited method) is defined to
-    be that method
-  which \emph{would} have been called if the current method did not
-  exist.
-  This is more-or-less literally what happens: The current method is
-  deleted from a copy of the methods for the current generic, and
-  \code{\link{selectMethod}} is called to find the next method (the
+  The \dQuote{next} method (i.e., the first inherited method) is defined
+  to be that method which \emph{would} have been called if the current
+  method did not exist. This is more-or-less literally what happens: The
+  current method (to be precise, the method with signature given by the
+  \code{defined} slot of the method from which \code{callNextMethod} is
+  called) is deleted from a copy of the methods for the current generic,
+  and \code{\link{selectMethod}} is called to find the next method (the
   result is cached in a special object, so the search only typically
   happens once per session per combination of argument classes).
+  
+  Note that the preceding definition means that the next method is
+  defined uniquely when \code{setMethod} inserts the method containing
+  the \code{callNextMethod} call, given the definitions of the classes
+  in the signature. The choice does not depend on the path that gets us
+  to that method (for example, through inheritance or from another
+  \code{callNextMethod} call). This definition was not enforced in
+  versions of \R prior to 2.3.0, where the method was selected based on
+  the target signature, and so could vary depending on the actual
+  arguments.
 
   It is also legal, and often useful, for the method called by
   \code{callNextMethod} to itself have a call to
@@ -71,9 +81,8 @@ Calling with no arguments is often the natural way to use
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming 
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
+  discussion of details see \code{?\link{Methods}}
+  and the links from that documentation.
 }
 \seealso{\link{Methods} for the general behavior of method dispatch}
 
@@ -111,7 +120,7 @@ stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), b2@b0^2, "B2")))
 ## next methods calling next methods, with arguments; using group generics
 setMethod("Ops", "B2",
     function(e1, e2) callNextMethod())
-setMethod("Ops", c("B0","numeric"),
+setMethod("Ops", c("B0"),
     function(e1, e2) callNextMethod(e1@b0, e2))
 
 b2 + 1 # 11

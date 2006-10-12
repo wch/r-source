@@ -8,24 +8,27 @@ all(\dots, na.rm = FALSE)
   Given a set of logical vectors, are all of the values true?
 }
 \arguments{
-  \item{\dots}{one or more logical vectors.}
-  \item{na.rm}{logical. If true \code{NA} values are removed before
+  \item{\dots}{one or more logical vectors.  Other objects are coerced in
+    a similar way as \code{as.logical.default}.}
+  \item{na.rm}{logical.  If true \code{NA} values are removed before
     the result is computed.}
+}
+\details{
+  This is a generic function: methods can be defined for it
+  directly or via the \code{\link[base:groupGeneric]{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots} should be
+  unnamed, and dispatch is on the first argument.
 }
 \value{
   Given a sequence of logical arguments, a logical value indicating
   whether or not all of the elements of \code{x} are \code{TRUE}.
 
-  The value returned is \code{TRUE} if all the values in \code{x}
-  are \code{TRUE}, and \code{FALSE} if any the values in \code{x}
+  The value returned is \code{TRUE} if all of the values in \code{x}
+  are \code{TRUE}, and \code{FALSE} if any of the values in \code{x}
   are \code{FALSE}.
 
-  If \code{x} consists of a mix of \code{TRUE} and \code{NA} values,
-  then value is \code{NA}.
-}
-\details{
-  This is a generic function: methods can be defined for it
-  directly or via the \code{\link{Summary}} group generic.
+  If \code{na.rm = FALSE} and \code{x} consists of a mix of \code{TRUE}
+  and \code{NA} values, the value is \code{NA}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -38,7 +41,7 @@ all(\dots, na.rm = FALSE)
   \dQuote{insurance}.
 }
 \examples{
-range(x <- sort(round(rnorm(10) - 1.2,1)))
+range(x <- sort(round(rnorm(10) - 1.2, 1)))
 if(all(x < 0)) cat("all x values are negative\n")
 }
 \keyword{logic}

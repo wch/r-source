@@ -11,9 +11,9 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     if(!is.data.frame(x))
         x <- as.data.frame(x)
     if(!is.list(by))
-        stop(paste(sQuote("by"), "must be a list"))
+        stop("'by' must be a list")
     if(is.null(names(by)))
-        names(by) <- paste("Group", seq(along = by), sep = ".")
+        names(by) <- paste("Group", seq_along(by), sep = ".")
     else {
         nam <- names(by)
         ind <- which(nchar(nam) == 0)
@@ -21,13 +21,13 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     }
     y <- lapply(x, tapply, by, FUN, ..., simplify = FALSE)
     if(any(sapply(unlist(y, recursive = FALSE), length) > 1))
-        stop(paste(sQuote("FUN"), "must always return a scalar"))
+        stop("'FUN' must always return a scalar")
     z <- y[[1]]
     d <- dim(z)
     w <- NULL
-    for (i in seq(along = d)) {
+    for (i in seq_along(d)) {
         j <- rep.int(rep.int(seq(1 : d[i]),
-                     prod(d[seq(length = i - 1)]) * rep.int(1, d[i])),
+                     prod(d[seq_len(i - 1)]) * rep.int(1, d[i])),
                  prod(d[seq(from = i + 1, length = length(d) - i)]))
         w <- cbind(w, dimnames(z)[[i]][j])
     }
@@ -51,9 +51,10 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
 
     if(nfrequency == ofrequency)
         return(x)
-    if(abs(ofrequency %% nfrequency) > ts.eps)
-        stop(paste("cannot change frequency from",
-                   ofrequency, "to", nfrequency))
+    ratio <- ofrequency /nfrequency
+    if(abs(ratio - round(ratio)) > ts.eps)
+        stop(gettextf("cannot change frequency from %g to %g",
+                      ofrequency, nfrequency), domain = NA)
     ## The desired result is obtained by applying FUN to blocks of
     ## length ofrequency/nfrequency, for each of the variables in x.
     ## We first get the new start and end right, and then break x into

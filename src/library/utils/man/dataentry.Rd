@@ -171,6 +171,13 @@ de(\dots, Modes = list(), Names = NULL)
   50 characters (and by the window width).
 #endif
 }
+#ifdef unix
+\section{Resources}{
+  The data entry window responds to X resources of class
+  \code{R_dataentry}.  Resources \code{foreground}, \code{background} and
+  \code{geometry} are utilized.
+}
+#endif
 \seealso{
   \code{\link{vi}}, \code{\link{edit}}: \code{edit} uses
   \code{dataentry} to edit data frames.

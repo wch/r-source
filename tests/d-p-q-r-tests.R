@@ -22,11 +22,10 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 	   true - approx)     # absolute error (e.g. when true=0)
 }
 ## Numerical equality: Here want "rel.error" almost always:
-All.eq <- function(x,y)
+All.eq <- function(x,y) {
     all.equal.numeric(x,y, tolerance= 64*.Machine$double.eps,
-                      scale = {r <- mean(abs(x),na.rm=TRUE)
-                               if(r > 0) r else 0})
-
+                      scale = max(0, mean(abs(x), na.rm=TRUE)))
+}
 if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))
 
@@ -56,11 +55,10 @@ for(n in rbinom(n1, size = 2*n0, p = .4)) {
 	    tst <- all.equal(if(k==n || p==0) 1 else
 			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
 			     sum(dbinom(0:k, size = n, prob = p)))
-	    if(!(is.logical(tst1) && tst1) ||
-	       !(is.logical(tst)  && tst ) ) {
+	    if(!isTRUE(tst1) || !isTRUE(tst)) {
 		cat("n=", n,"; p =",format(p),".  k =",k)
-		if(!is.logical(tst1)) cat("; tst1=",tst1)
-		if(!is.logical(tst )) cat("; tst=", tst)
+		if(!isTRUE(tst1)) cat("; tst1=",tst1)
+		if(!isTRUE(tst )) cat("; tst=", tst)
 		cat("\n")
 	    }
 	}
@@ -69,7 +67,7 @@ for(n in rbinom(n1, size = 2*n0, p = .4)) {
 }
 
 ##__ 2. Geometric __
-for(pr in seq(0,1,len=15)) {
+for(pr in seq(1e-10,1,len=15)) { # p=0 is not a distribution
     print(All.eq((dg <- dgeom(0:10, pr)),
 		 pr * (1-pr)^(0:10)))
     print(All.eq(cumsum(dg), pgeom(0:10, pr)))
@@ -103,13 +101,13 @@ for(lambda in rexp(n1))
     for(k in rpois(n2, lambda)) {
 	tst <- all.equal(1 - pchisq(2*lambda, 2*(1+ 0:k)),
 			 pp <- cumsum(dpois(0:k, lambda=lambda)), tol= 100*Meps)
-	if(!(is.logical(tst) && tst))
+	if(!isTRUE(tst))
 	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
 	tst2 <- all.equal(pp, ppois(0:k, lambda=lambda), tol = 100*Meps)
-	if(!(is.logical(tst2) && tst2))
+	if(!isTRUE(tst2))
 	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
 	tst3 <- all.equal(1 - pp, ppois(0:k, lambda=lambda, lower.tail=FALSE))
-	if(!(is.logical(tst3) && tst3))
+	if(!isTRUE(tst3))
 	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
     }
 
@@ -117,8 +115,8 @@ for(lambda in rexp(n1))
 ##__ 6. SignRank __
 for(n in rpois(32, lam=8)) {
     x <- -1:(n + 4)
-    eq <- All.eq(psignrank(x, n), cumsum(dsignrank(x, n)))
-    if(!is.logical(eq) || !eq) print(eq)
+    if(!isTRUE(eq <- All.eq(psignrank(x, n), cumsum(dsignrank(x, n)))))
+        print(eq)
 }
 
 ##__ 7. Wilcoxon (symmetry & cumulative) __
@@ -129,8 +127,8 @@ for(n in rpois(5, lam=6))
 	fx <- dwilcox(x, n, m)
 	Fx <- pwilcox(x, n, m)
 	is.sym <- is.sym & all(fx == dwilcox(x, m, n))
-	eq <- All.eq(Fx, cumsum(fx))
-	if(!is.logical(eq) || !eq) print(eq)
+	if(!isTRUE(eq <- All.eq(Fx, cumsum(fx))))
+            print(eq)
     }
 is.sym
 
@@ -145,24 +143,33 @@ for(sh in round(rlnorm(30),2)) {
 	tst <- all.equal((d1 <- dgamma(	 x,   shape = sh, scale = sig)),
 			 (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig),
 			 tol = 1e-14)## __ad interim__ was 1e-15
-	if(!(is.logical(tst) && tst))
+	if(!isTRUE(tst))
 	    cat("ERROR: dgamma() doesn't scale:",tst,"\n",
 		"  x =", formatC(x),"\n	 shape,scale=",formatC(c(sh, sig)),"\n")
 	tst <- All.eq(d1, (d3 <- 1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig)))
-	if(!(is.logical(tst) && tst))
+	if(!isTRUE(tst))
 	    cat("NOT Equal:",tst,"\n x =", formatC(x),
 		"\n  shape,scale=",formatC(c(sh, sig)),"\n")
     }
 }
 pgamma(1,Inf,scale=Inf) == 0
-all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
-pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
+## Also pgamma(Inf,Inf) == 1 for which NaN was slightly more appropriate
+all(is.nan(c(pgamma(Inf,  1,scale=Inf),
+             pgamma(Inf,Inf,scale=Inf))))
+scLrg <- c(2,100, 1e300*c(.1, 1,10,100), 1e307, xMax, Inf)
+stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
+          pgamma(xMax,1, scale=Inf) == 0,
+          all.equal(pgamma(1e300, 2, scale= scLrg, log=TRUE),
+                    c(0, 0, -0.000499523968713701, -1.33089326820406,
+                      -5.36470502873211, -9.91015144019122,
+                      -32.9293385491433, -38.707517174609, -Inf), tol=2e-15)
+          )
 
 p <- 7e-4; df <- 0.9
 abs(1-c(pchisq(qchisq(p, df),df)/p, # was 2.31e-8 for R <= 1.8.1
         pchisq(qchisq(1-p, df,lower=FALSE),df,lower=FALSE)/(1-p),# was 1.618e-11
         pchisq(qchisq(log(p), df,log=TRUE),df, log=TRUE)/log(p), # was 3.181e-9
-        pchisq(qchisq(log(1-p),df,log=T,lower=F),df, log=T,lower=F)/log(1-p),
+        pchisq(qchisq(log(1-p),df,log=T,lower=F),df, log=T,lower=F)/log(1-p)
         )# 32b-i386: (2.2e-16, 0,0, 3.3e-16); Opteron: (2.2e-16, 0,0, 2.2e-15)
     ) < 1e-14
 
@@ -176,20 +183,22 @@ for(df in c(0.1, 0.5, 1.5, 4.7, 10, 20,50,100)) {
     cat("df =", formatC(df, wid=3))
     xx <- c(10^-(5:1), .9, 1.2, df + c(3,7,20,30,35,38))
     pp <- pchisq(xx, df=df, ncp = 1) #print(pp)
-    dtol <- 1e-12 *(if(2 < df && df <= 50) 64 else if(df > 50) 20000 else 500)
+    dtol <- 1e-12 *(if(2 < df && df <= 50) 64 else if(df > 50) 20000 else 501)
     print(all.equal(xx, qchisq(pp, df=df, ncp=1), tol = dtol))# TRUE
     ##or print(mapply(rErr, xx, qchisq(pp, df=df,ncp=1)), digits = 3)
 }
 
 ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
+options(warn=-1) # ignore warnings from R's version of log1p
 psml <- 2^-(10:54)
 q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
-q1 <- qchisq(1 -psml, df=1.2, ncp=10)
+q1 <- qchisq(1-psml, df=1.2, ncp=10) # inaccurate in the tail
 p0 <- pchisq(q0, df=1.2, ncp=10, lower.tail=FALSE)
 p1 <- pchisq(q1, df=1.2, ncp=10, lower.tail=FALSE)
-iO <- 1:10
-all.equal(q0[iO], q1[iO])
-all.equal(p0[iO], psml[iO], tol = 0.08)# bad tol (0.0744 on 386-Linux).
+iO <- 1:30
+all.equal(q0[iO], q1[iO], 1e-5)
+all.equal(p0[iO], psml[iO])
+options(warn=0)
 
 ##--- Beta (need more):
 
@@ -224,7 +233,7 @@ all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
 z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
 z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))
 z.ok <- z > -37.5 | !is.finite(z)
-for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
+for(df in 1:10) if(!isTRUE(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
     cat("ERROR -- df = ", df, "\n")
 All.eq(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE))
 All.eq(pz,		 pnorm(-z, lower=FALSE))
@@ -435,8 +444,19 @@ All.eq(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
 abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
 All.eq(1, pcauchy(-1e20)           /  3.18309886183791e-21)
 All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
-for(x in 10^c(15,25,50,100,200))
-    print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
+x <- 10^(ex <- c(1,2,5*(1:5),50,100,200,300,Inf))
+for(a in x[ex > 10]) ## improve pt() : cbind(x,t= pt(-x, df=1), C=pcauchy(-x))
+    print(all.equal(pt(-a, df=1), pcauchy(-a), tol = 1e-15))
+## for PR#7902:
+ex <- -c(rev(1/x), ex)
+All.eq(-x, qcauchy(pcauchy(-x)))
+All.eq(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
+All.eq(1/x, pcauchy(qcauchy(1/x)))
+All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
+II <- c(-Inf,Inf)
+stopifnot(pcauchy(II) == 0:1, qcauchy(0:1) == II,
+          pcauchy(II, log=TRUE) == c(-Inf,0),
+          qcauchy(c(-Inf,0), log=TRUE) == II)
 
 pr <- 1e-23 ## PR#6757
 stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
@@ -445,5 +465,104 @@ stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
 pp <- 1e-17 ## PR#6792
 stopifnot(all.equal(2*pp, pgeom(1, pp), scale= 1e-20))
 ## pgeom(.) gave 0 in R 1.9.0
+
+x <- 10^(100:295)
+sapply(c(1e-250, 1e-25, 0.9, 1.1, 101, 1e10, 1e100),
+       function(shape)
+       All.eq(-x, pgamma(x, shape=shape, lower=FALSE, log=TRUE)))
+x <- 2^(-1022:-900)
+## where all completely off in R 2.0.1
+all.equal(pgamma(x, 10, log = TRUE) - 10*log(x),
+          rep(-15.104412573076, length(x)), tol = 1e-12)# 3.984e-14 (i386)
+all.equal(pgamma(x, 0.1, log = TRUE) - 0.1*log(x),
+          rep(0.0498724412598364, length(x)), tol = 1e-13)# 7e-16 (i386)
+
+All.eq(dpois(  10, 2e-308, log=TRUE), -7100.13502718914)
+All.eq(dpois(  20, 3e-308, log=TRUE), -14204.2875435307)
+All.eq(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
+## all gave -Inf in R 2.0.1
+
+
+## Inf df in pf etc.
+# apparently pf(df2=Inf) worked in 2.0.1 (undocumented) but df did not.
+x <- c(1/pi, 1, pi)
+oo <- options(digits = 8)
+df(x, 3, 1e6)
+df(x, 3, Inf)
+pf(x, 3, 1e6)
+pf(x, 3, Inf)
+
+df(x, 1e6, 5)
+df(x, Inf, 5)
+pf(x, 1e6, 5)
+pf(x, Inf, 5)
+
+df(x, Inf, Inf)# (0, Inf, 0)  - since 2.1.1
+pf(x, Inf, Inf)# (0, 1/2, 1)
+
+pf(x, 5, Inf, ncp=0)
+pf(x, 5, 1e6, ncp=1)
+pf(x, 5, 1e7, ncp=1)
+all.equal(pf(x, 5, 1e8, ncp=1), tol = 1e-6,
+          c(0.0659330751, 0.4708802996, 0.9788764591))
+pf(x, 5, Inf, ncp=1)
+
+dt(1, Inf)
+dt(1, Inf, ncp=0)
+dt(1, Inf, ncp=1)
+dt(1, 1e6, ncp=1)
+dt(1, 1e7, ncp=1)
+dt(1, 1e8, ncp=1)
+dt(1, 1e10, ncp=1) # = Inf
+## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
+
+sml.x <- c(10^-c(2:8,100), 0)
+cbind(x = sml.x, `dt(x,*)` = dt(sml.x, df = 2, ncp=1))
+## small 'x' used to suffer from cancellation
+options(oo)
+
+## PR#7099 : pf() with large df1 or df2:
+nu <- 2^seq(25,34, 0.5)
+y <- 1e9*(pf(1,1,nu) - 0.68268949)
+stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
+          diff(y) > 0, # i.e. pf(1,1, *) is monotone increasing
+          All.eq(y [1], -5.07420372386491),
+          All.eq(y[19],  2.12300110824515))
+## not at all in R 2.1.0 or earlier
+
+stopifnot(pgamma(Inf, 1.1) == 1)
+## didn't not terminate in R 2.1.x (only)
+
+## qgamma(q, *) should give {0,Inf} for q={0,1}
+sh <- c(1.1, 0.5, 0.2, 0.15, 1e-2, 1e-10)
+stopifnot(Inf == qgamma(1, sh))
+stopifnot(0   == qgamma(0, sh))
+## the first gave Inf, NaN, and 99.425 in R 2.1.1 and earlier
+
+f2 <- c(0.5, 1:4)
+stopifnot(df(0, 1, f2) == Inf,
+          df(0, 2, f2) == 1,
+          df(0, 3, f2) == 0)
+## only the last one was ok in R 2.2.1 and earlier
+
+x0 <- -2 * 10^-c(22,10,7,5)
+stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
+          dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
+## very small negatives were rounded to 0 in R 2.2.1 and earlier
+
+## dbeta(*, ncp):
+a <- rlnorm(100)
+stopifnot(All.eq(a, dbeta(0, 1, a, ncp=0)),
+          dbeta(0, 0.9, 2.2, ncp = c(0, a)) == Inf
+          )
+## the first gave 0, the 2nd NaN in R <= 2.3.0
+
+## df(*, ncp):
+x <- seq(0, 10, length=101)
+h <- 1e-7
+dx.h <- (pf(x+h, 7, 5, ncp= 2.5) - pf(x-h, 7, 5, ncp= 2.5)) / (2*h)
+stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tol = 1e-6),# (1.50 | 1.65)e-8
+          All.eq(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
+          )
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

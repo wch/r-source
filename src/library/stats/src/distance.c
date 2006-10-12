@@ -17,12 +17,19 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+/* do this first to get the right options for math.h */
+#include <R_ext/Arith.h>
 
 #include <R.h>
 #include <Rmath.h>
 #include "mva.h"
+#include "stats.h"
 
 #define both_FINITE(a,b) (R_FINITE(a) && R_FINITE(b))
 #ifdef R_160_and_older
@@ -141,7 +148,7 @@ static double R_dist_binary(double *x, int nr, int nc, int i1, int i2)
     for(j = 0 ; j < nc ; j++) {
 	if(both_non_NA(x[i1], x[i2])) {
 	    if(!both_FINITE(x[i1], x[i2])) {
-		warning("dist(.,\"binary\"): treating non-finite values as NA");
+		warning(_("dist(.,\"binary\"): treating non-finite values as NA"));
 	    }
 	    else {
 		if(x[i1] || x[i2]) {
@@ -210,10 +217,10 @@ void R_distance(double *x, int *nr, int *nc, double *d, int *diag,
 	break;
     case MINKOWSKI:
 	if(!R_FINITE(*p) || *p <= 0)
-	    error("distance(): invalid p");
+	    error(_("distance(): invalid p"));
 	break;
     default:
-	error("distance(): invalid distance");
+	error(_("distance(): invalid distance"));
     }
     dc = (*diag) ? 0 : 1; /* diag=1:  we do the diagonal */
     ij = 0;

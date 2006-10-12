@@ -5,9 +5,11 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
 }
 \alias{pmatch}
 \arguments{
-  \item{x}{the values to be matched.}
-  \item{table}{the values to be matched against.}
-  \item{nomatch}{the value returned at non-matching or multiply
+  \item{x}{the values to be matched: converted to a character vector by
+    \code{\link{as.character}}.}
+  \item{table}{the values to be matched against: converted to a character
+    vector.}
+  \item{nomatch}{the value to be returned at non-matching or multiply
     partially matching positions.}
   \item{duplicates.ok}{should elements be in \code{table} be used more
     than once?}
@@ -39,6 +41,8 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
   \code{duplicates.ok} true, the differences being that it
   differentiates between no match and an ambiguous partial match,  it
   does match empty strings, and it does not allow multiple exact matches.
+
+  \code{NA} values are treated as if they were the string constant \code{"NA"}.
 }
 \value{
   A numeric vector of integers (including \code{NA} if \code{nomatch =

@@ -1,0 +1,431 @@
+The main problems we found were with the use of iconv
+
+1) On Solaris this finds iconv, but as it does not use the same charset
+names as glibc/libiconv's iconv, it does not work.
+
+2) On Windows we have a load-on-demand iconv, and no shipped iconv.h.
+
+So we modified the iconv references to use our extra test and to use Riconv.
+
+
+Since we do not use relocation (and it was not easy to get to compile on
+Windows) we have removed it, as well as OS/2 compatibility.  Also, we
+do not install or use locale.alias, and charset.alias is compiled in
+(via localecharset.h) rather than read at runtime.
+
+
+Since the packages will need libintl.h, we need to install it.  We also
+need to ensure that we get our version and not, e.g. the Solaris version.
+
+
+On Windows we got the warning
+printf-args.c: In function `libintl_vasnprintf':
+printf-args.c:83: warning: `wint_t' is promoted to `int' when passed through `...'
+as wint_t is unsigned short.
+
+Also, we needed to override the way the locale_charset is found, and map some
+Windows locale names to XPG ones.
+
+BDR
+
+
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/dcigettext.c ./dcigettext.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/dcigettext.c	2005-05-20 21:06:17.000000000 +0100
++++ ./dcigettext.c	2005-12-30 11:07:37.175948000 +0000
+@@ -837,13 +837,11 @@
+     }
+ 
+   if (
+-# ifdef _LIBC
+-      domain->conv != (__gconv_t) -1
+-# else
+-#  if HAVE_ICONV
+-      domain->conv != (iconv_t) -1
+-#  endif
+-# endif
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
++      domain->conv != (void *) -1
++#else
++      0
++#endif
+       )
+     {
+       /* We are supposed to do a conversion.  First allocate an
+@@ -895,31 +893,7 @@
+ 	  while (1)
+ 	    {
+ 	      transmem_block_t *newmem;
+-# ifdef _LIBC
+-	      size_t non_reversible;
+-	      int res;
+-
+-	      if (freemem_size < sizeof (size_t))
+-		goto resize_freemem;
+-
+-	      res = __gconv (domain->conv,
+-			     &inbuf, inbuf + resultlen,
+-			     &outbuf,
+-			     outbuf + freemem_size - sizeof (size_t),
+-			     &non_reversible);
+-
+-	      if (res == __GCONV_OK || res == __GCONV_EMPTY_INPUT)
+-		break;
+-
+-	      if (res != __GCONV_FULL_OUTPUT)
+-		{
+-		  __libc_lock_unlock (lock);
+-		  goto converted;
+-		}
+-
+-	      inbuf = result;
+-# else
+-#  if HAVE_ICONV
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+ 	      const char *inptr = (const char *) inbuf;
+ 	      size_t inleft = resultlen;
+ 	      char *outptr = (char *) outbuf;
+@@ -929,8 +903,8 @@
+ 		goto resize_freemem;
+ 
+ 	      outleft = freemem_size - sizeof (size_t);
+-	      if (iconv (domain->conv,
+-			 (ICONV_CONST char **) &inptr, &inleft,
++	      if (Riconv (domain->conv,
++			 (char **) &inptr, &inleft,
+ 			 &outptr, &outleft)
+ 		  != (size_t) (-1))
+ 		{
+@@ -942,8 +916,7 @@
+ 		  __libc_lock_unlock (lock);
+ 		  goto converted;
+ 		}
+-#  endif
+-# endif
++#endif
+ 
+ 	    resize_freemem:
+ 	      /* We must allocate a new buffer or resize the old one.  */
+@@ -1162,6 +1135,13 @@
+       locale = _nl_locale_name_default ();
+       locale_defaulted = 1;
+     }
++#ifdef WIN32
++  /* Need to translate some Windows locale names */
++  if(strcmp(locale, "chs") == 0) locale = "zh_CN";
++  if(strcmp(locale, "chinese") == 0) locale = "zh_TW";
++  if(strcmp(locale, "cht") == 0) locale = "zh_TW";
++  if(strcmp(locale, "ptb") == 0) locale = "pt_BR";
++#endif
+ #endif
+ 
+   /* Ignore LANGUAGE and its system-dependent analogon if the locale is set
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/finddomain.c ./finddomain.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/finddomain.c	2005-05-20 21:06:45.000000000 +0100
++++ ./finddomain.c	2005-12-27 11:07:32.660418000 +0000
+@@ -59,7 +59,9 @@
+   const char *special;
+   const char *sponsor;
+   const char *revision;
+-  const char *alias_value;
++#ifdef NOT_USED
++  const char *alias_value = NULL;
++#endif
+   int mask;
+ 
+   /* LOCALE can consist of up to four recognized parts for the XPG syntax:
+@@ -111,6 +113,7 @@
+       /* NOTREACHED */
+     }
+ 
++#ifdef NOT_USED /* R change */
+   /* See whether the locale value is an alias.  If yes its value
+      *overwrites* the alias name.  No test for the original value is
+      done.  */
+@@ -130,6 +133,7 @@
+       memcpy (locale, alias_value, len);
+ #endif
+     }
++#endif
+ 
+   /* Now we determine the single parts of the locale name.  First
+      look for the language.  Termination symbols are `_' and `@' if
+@@ -163,8 +167,10 @@
+     }
+ 
+   /* The room for an alias was dynamically allocated.  Free it now.  */
++#ifdef NOT_USED
+   if (alias_value != NULL)
+-    free (locale);
++      free (locale);
++#endif
+ 
+   /* The space for normalized_codeset is dynamically allocated.  Free it.  */
+   if (mask & XPG_NORM_CODESET)
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/gettextP.h ./gettextP.h
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/gettextP.h	2005-05-20 21:06:54.000000000 +0100
++++ ./gettextP.h	2005-12-18 16:19:44.769664000 +0000
+@@ -22,12 +22,8 @@
+ 
+ #include <stddef.h>		/* Get size_t.  */
+ 
+-#ifdef _LIBC
+-# include "../iconv/gconv_int.h"
+-#else
+-# if HAVE_ICONV
+-#  include <iconv.h>
+-# endif
++#if HAVE_ICONV
++# include <R_ext/Riconv.h>
+ #endif
+ 
+ #include "loadinfo.h"
+@@ -113,13 +109,9 @@
+   int must_swap_hash_tab;
+ 
+   int codeset_cntr;
+-#ifdef _LIBC
+-  __gconv_t conv;
+-#else
+ # if HAVE_ICONV
+-  iconv_t conv;
++  void * conv;
+ # endif
+-#endif
+   char **conv_tab;
+ 
+   struct expression *plural;
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/loadmsgcat.c ./loadmsgcat.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/loadmsgcat.c	2005-05-20 21:07:47.000000000 +0100
++++ ./loadmsgcat.c	2005-12-18 16:19:45.199659000 +0000
+@@ -783,12 +783,8 @@
+   /* Preinitialize fields, to avoid recursion during _nl_find_msg.  */
+   domain->codeset_cntr =
+     (domainbinding != NULL ? domainbinding->codeset_cntr : 0);
+-#ifdef _LIBC
+-  domain->conv = (__gconv_t) -1;
+-#else
+-# if HAVE_ICONV
+-  domain->conv = (iconv_t) -1;
+-# endif
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
++  domain->conv = (void *) -1;
+ #endif
+   domain->conv_tab = NULL;
+ 
+@@ -833,7 +829,7 @@
+ # ifdef _LIBC
+ 		  outcharset = _NL_CURRENT (LC_CTYPE, CODESET);
+ # else
+-#  if HAVE_ICONV
++#  if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+ 		  extern const char *locale_charset (void);
+ 		  outcharset = locale_charset ();
+ #  endif
+@@ -841,16 +837,7 @@
+ 		}
+ 	    }
+ 
+-# ifdef _LIBC
+-	  /* We always want to use transliteration.  */
+-	  outcharset = norm_add_slashes (outcharset, "TRANSLIT");
+-	  charset = norm_add_slashes (charset, NULL);
+-	  if (__gconv_open (outcharset, charset, &domain->conv,
+-			    GCONV_AVOID_NOCONV)
+-	      != __GCONV_OK)
+-	    domain->conv = (__gconv_t) -1;
+-# else
+-#  if HAVE_ICONV
++#  if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+ 	  /* When using GNU libc >= 2.2 or GNU libiconv >= 1.5,
+ 	     we want to use transliteration.  */
+ #   if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 \
+@@ -865,15 +852,14 @@
+ 	      memcpy (tmp + len, "//TRANSLIT", 10 + 1);
+ 	      outcharset = tmp;
+ 
+-	      domain->conv = iconv_open (outcharset, charset);
++	      domain->conv = Riconv_open ((char *)outcharset, charset);
+ 
+ 	      freea (outcharset);
+ 	    }
+ 	  else
+ #   endif
+-	    domain->conv = iconv_open (outcharset, charset);
++	    domain->conv = Riconv_open ((char *)outcharset, charset);
+ #  endif
+-# endif
+ 
+ 	  freea (charset);
+ 	}
+@@ -891,15 +877,10 @@
+   if (domain->conv_tab != NULL && domain->conv_tab != (char **) -1)
+     free (domain->conv_tab);
+ 
+-#ifdef _LIBC
+-  if (domain->conv != (__gconv_t) -1)
+-    __gconv_close (domain->conv);
+-#else
+-# if HAVE_ICONV
+-  if (domain->conv != (iconv_t) -1)
+-    iconv_close (domain->conv);
++#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
++  if (domain->conv != (void *) -1)
++    Riconv_close (domain->conv);
+ # endif
+-#endif
+ }
+ 
+ /* Load the message catalogs specified by FILENAME.  If it is no valid
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/localcharset.c ./localcharset.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/localcharset.c	2005-05-20 21:07:51.000000000 +0100
++++ ./localcharset.c	2005-12-30 11:07:37.105949000 +0000
+@@ -115,104 +115,7 @@
+   if (cp == NULL)
+     {
+ #if !(defined VMS || defined WIN32)
+-      FILE *fp;
+-      const char *dir;
+-      const char *base = "charset.alias";
+-      char *file_name;
+-
+-      /* Make it possible to override the charset.alias location.  This is
+-	 necessary for running the testsuite before "make install".  */
+-      dir = getenv ("CHARSETALIASDIR");
+-      if (dir == NULL || dir[0] == '\0')
+-	dir = relocate (LIBDIR);
+-
+-      /* Concatenate dir and base into freshly allocated file_name.  */
+-      {
+-	size_t dir_len = strlen (dir);
+-	size_t base_len = strlen (base);
+-	int add_slash = (dir_len > 0 && !ISSLASH (dir[dir_len - 1]));
+-	file_name = (char *) malloc (dir_len + add_slash + base_len + 1);
+-	if (file_name != NULL)
+-	  {
+-	    memcpy (file_name, dir, dir_len);
+-	    if (add_slash)
+-	      file_name[dir_len] = DIRECTORY_SEPARATOR;
+-	    memcpy (file_name + dir_len + add_slash, base, base_len + 1);
+-	  }
+-      }
+-
+-      if (file_name == NULL || (fp = fopen (file_name, "r")) == NULL)
+-	/* Out of memory or file not found, treat it as empty.  */
+-	cp = "";
+-      else
+-	{
+-	  /* Parse the file's contents.  */
+-	  char *res_ptr = NULL;
+-	  size_t res_size = 0;
+-
+-	  for (;;)
+-	    {
+-	      int c;
+-	      char buf1[50+1];
+-	      char buf2[50+1];
+-	      size_t l1, l2;
+-	      char *old_res_ptr;
+-
+-	      c = getc (fp);
+-	      if (c == EOF)
+-		break;
+-	      if (c == '\n' || c == ' ' || c == '\t')
+-		continue;
+-	      if (c == '#')
+-		{
+-		  /* Skip comment, to end of line.  */
+-		  do
+-		    c = getc (fp);
+-		  while (!(c == EOF || c == '\n'));
+-		  if (c == EOF)
+-		    break;
+-		  continue;
+-		}
+-	      ungetc (c, fp);
+-	      if (fscanf (fp, "%50s %50s", buf1, buf2) < 2)
+-		break;
+-	      l1 = strlen (buf1);
+-	      l2 = strlen (buf2);
+-	      old_res_ptr = res_ptr;
+-	      if (res_size == 0)
+-		{
+-		  res_size = l1 + 1 + l2 + 1;
+-		  res_ptr = (char *) malloc (res_size + 1);
+-		}
+-	      else
+-		{
+-		  res_size += l1 + 1 + l2 + 1;
+-		  res_ptr = (char *) realloc (res_ptr, res_size + 1);
+-		}
+-	      if (res_ptr == NULL)
+-		{
+-		  /* Out of memory. */
+-		  res_size = 0;
+-		  if (old_res_ptr != NULL)
+-		    free (old_res_ptr);
+-		  break;
+-		}
+-	      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
+-	      strcpy (res_ptr + res_size - (l2 + 1), buf2);
+-	    }
+-	  fclose (fp);
+-	  if (res_size == 0)
+-	    cp = "";
+-	  else
+-	    {
+-	      *(res_ptr + res_size) = '\0';
+-	      cp = res_ptr;
+-	    }
+-	}
+-
+-      if (file_name != NULL)
+-	free (file_name);
+-
++#include "localecharset.h"
+ #else
+ 
+ # if defined VMS
+@@ -269,6 +172,10 @@
+   return cp;
+ }
+ 
++#ifdef WIN32
++# include <locale.h>
++#endif
++
+ /* Determine the current locale's character encoding, and canonicalize it
+    into one of the canonical names listed in config.charset.
+    The result must not be freed; it is statically allocated.
+@@ -325,9 +232,19 @@
+ 
+   static char buf[2 + 10 + 1];
+ 
+-  /* Woe32 has a function returning the locale's codepage as a number.  */
++  /* Woe32 has a function returning the locale's codepage as a number.
+   sprintf (buf, "CP%u", GetACP ());
+   codeset = buf;
++  */
++  /* But that is the system codepage, not that for the current locale */
++  {
++      char *ctype = setlocale(LC_CTYPE, NULL), *p;
++      p = strrchr(ctype, '.');
++      if(p && isdigit(p[1])) {
++	  sprintf (buf, "CP%s", p + 1);
++      } else sprintf (buf, "CP%u", GetACP ());
++      codeset = buf;
++  }
+ 
+ #elif defined OS2
+ 
+diff -u /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/printf-args.c ./printf-args.c
+--- /users/ripley/src-new/gettext-0.14.5/gettext-runtime/intl/printf-args.c	2005-05-20 21:09:09.000000000 +0100
++++ ./printf-args.c	2005-12-18 16:19:45.799657000 +0000
+@@ -80,7 +80,7 @@
+ 	break;
+ #ifdef HAVE_WINT_T
+       case TYPE_WIDE_CHAR:
+-	ap->a.a_wide_char = va_arg (args, wint_t);
++        ap->a.a_wide_char = va_arg (args, /* wint_t */ int);
+ 	break;
+ #endif
+       case TYPE_STRING:

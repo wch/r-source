@@ -1,12 +1,11 @@
 demo <-
-function(topic, device = getOption("device"),
-	 package = NULL, lib.loc = NULL,
+function(topic, package = NULL, lib.loc = NULL,
 	 character.only = FALSE, verbose = getOption("verbose"))
 {
     paths <- .find.package(package, lib.loc, verbose = verbose)
 
     ## Find the directories with a 'demo' subdirectory.
-    paths <- paths[tools::file_test("-d", file.path(paths, "demo"))]
+    paths <- paths[file_test("-d", file.path(paths, "demo"))]
     ## Earlier versions remembered given packages with no 'demo'
     ## subdirectory, and warned about them.
 
@@ -18,9 +17,7 @@ function(topic, device = getOption("device"),
 	for(path in paths) {
 	    entries <- NULL
 	    ## Check for new-style 'Meta/demo.rds', then for '00Index'.
-	    if(tools::file_test("-f",
-                                INDEX <-
-                                file.path(path, "Meta", "demo.rds"))) {
+	    if(file_test("-f", INDEX <- file.path(path, "Meta", "demo.rds"))) {
 		entries <- .readRDS(INDEX)
 	    }
 	    if(NROW(entries) > 0) {
@@ -58,19 +55,15 @@ function(topic, device = getOption("device"),
 	    available <- c(available, file.path(p, files))
     }
     if(length(available) == 0)
-	stop(paste("No demo found for topic", sQuote(topic)))
+	stop(gettextf("No demo found for topic '%s'", topic), domain = NA)
     if(length(available) > 1) {
 	available <- available[1]
-	warning(paste("Demo for topic ",
-		      sQuote(topic),
-		      " found more than once,\n",
-		      "using the one found in ",
-		      sQuote(dirname(available[1])),
-		      sep = ""))
+	warning(gettextf("Demo for topic '%s' found more than once,\nusing the one found in '%s'",
+                topic, dirname(available[1])), domain = NA)
     }
     cat("\n\n",
 	"\tdemo(", topic, ")\n",
-	"\t---- ", rep.int("~", nchar(topic)), "\n",
+	"\t---- ", rep.int("~", nchar(topic, type="w")), "\n",
 	sep="")
     if(interactive()) {
 	cat("\nType  <Return>	 to start : ")

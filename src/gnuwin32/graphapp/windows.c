@@ -448,22 +448,37 @@ window newwindow(char *name, rect r, long flags)
 	}
 	else {
 		if ((flags & Workspace) && (! work_class_name)) {
-			work_class_name = register_new_class(" Workspace", app_work_proc);
+		    work_class_name = register_new_class(" Workspace", app_work_proc);
                 }
 		else if (! win_class_name)
-			win_class_name = register_new_class("", app_win_proc);
+		    win_class_name = register_new_class("", app_win_proc);
 
-		hwnd = CreateWindowEx (
+		if(is_NT && (localeCP != GetACP())) {
+		    wchar_t wkind[100], wc[1000];
+		    mbstowcs(wkind, (flags & Workspace) ? work_class_name 
+			     : win_class_name, 100);
+		    mbstowcs(wc, name, 1000);
+		    hwnd = CreateWindowExW(
 			ex_style,
-			(flags & Workspace) ?
-				work_class_name : win_class_name,
+			wkind,
+			wc, win_style,
+			r.x, r.y, r.width, r.height,
+			(HWND) ((flags & ChildWindow) ?
+				current_window->handle : 0),
+			((HMENU) ((flags & ChildWindow) ? child_id : 0)),
+			this_instance, NULL);
+		} else {
+		    hwnd = CreateWindowEx(
+			ex_style,
+			(flags & Workspace) ? work_class_name : win_class_name,
 			name, win_style,
 			r.x, r.y, r.width, r.height,
 			(HWND) ((flags & ChildWindow) ?
 				current_window->handle : 0),
-			   ((HMENU) ((flags & ChildWindow) ? child_id : 0)),
-                         this_instance, NULL);}
-
+			((HMENU) ((flags & ChildWindow) ? child_id : 0)),
+			this_instance, NULL);
+		}
+	}
 	if (! hwnd)
 		return NULL;
 	if (flags & Closebox)

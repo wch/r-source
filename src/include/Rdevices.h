@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef DEVICES_H_
@@ -55,26 +55,6 @@ void KillAllDevices(void);
  * PostScript, Xfig, and PDF devices
  */
 void freeType1Fonts(void);
-
-/* Drivers from ../main/devices.c , 
- * description there;   platform-specific drivers in platform directories! */
-
-Rboolean 
-PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, Rboolean);
-
-Rboolean 
-PSDeviceDriver(DevDesc*, char*, char*, char*, char**,
-	       char*, char*, char*, double, double, Rboolean, double, 
-	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
-Rboolean 
-XFigDeviceDriver(DevDesc*, char*, char*, char*,
-		 char*, char*, double, double, 
-		 Rboolean, double, Rboolean, Rboolean);
-Rboolean
-PDFDeviceDriver(DevDesc* dd, char *, char *, char *, 
-		char *, char *, double, double, double,
-		int, char*, SEXP, int, int);
-
 
 
 /*-------------------------------------------------------------------

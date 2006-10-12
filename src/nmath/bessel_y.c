@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*  DESCRIPTION --> see below */
@@ -46,11 +46,11 @@ double bessel_y(double x, double alpha)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE);
+	ML_ERROR(ME_RANGE, "bessel_y");
 	return ML_NAN;
     }
     if (alpha < 0) {
-	/* Using Abramowitz & Stegun  9.1.2 
+	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(bessel_y(x, -alpha) + bessel_j(x, -alpha) * sin(-M_PI * alpha));
     }
@@ -58,7 +58,7 @@ double bessel_y(double x, double alpha)
     alpha -= (nb-1);
 #ifdef MATHLIB_STANDALONE
     by = (double *) calloc(nb, sizeof(double));
-    if (!by) MATHLIB_ERROR("%s", "bessel_y allocation error");
+    if (!by) MATHLIB_ERROR("%s", _("bessel_y allocation error"));
 #else
     vmax = vmaxget();
     by = (double *) R_alloc(nb, sizeof(double));
@@ -68,10 +68,10 @@ double bessel_y(double x, double alpha)
 	if(ncalc == -1)
 	    return ML_POSINF;
 	else if(ncalc < -1)
-	    MATHLIB_WARNING4("bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n",
+	    MATHLIB_WARNING4(_("bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
 			     x, ncalc, nb, alpha);
 	else /* ncalc >= 0 */
-	    MATHLIB_WARNING2("bessel_y(%g,nu=%g): precision lost in result\n",
+	    MATHLIB_WARNING2(_("bessel_y(%g,nu=%g): precision lost in result\n"),
 			     x, alpha+nb-1);
     }
     x = by[nb-1];
@@ -171,14 +171,14 @@ static void Y_bessel(double *x, double *alpha, long *nb,
     FIVPI = 5*PI
     PIM5 = 5*PI - 15
  ----------------------------------------------------------------------*/
-    const double fivpi = 15.707963267948966192;
-    const double pim5	=   .70796326794896619231;
+    const static double fivpi = 15.707963267948966192;
+    const static double pim5	=   .70796326794896619231;
 
     /*----------------------------------------------------------------------
       Coefficients for Chebyshev polynomial expansion of
       1/gamma(1-x), abs(x) <= .5
       ----------------------------------------------------------------------*/
-    const double ch[21] = { -6.7735241822398840964e-24,
+    const static double ch[21] = { -6.7735241822398840964e-24,
 	    -6.1455180116049879894e-23,2.9017595056104745456e-21,
 	    1.3639417919073099464e-19,2.3826220476859635824e-18,
 	    -9.0642907957550702534e-18,-1.4943667065169001769e-15,
@@ -203,9 +203,11 @@ static void Y_bessel(double *x, double *alpha, long *nb,
     nu = *alpha;
     if (*nb > 0 && 0. <= nu && nu < 1.) {
 	if(ex < DBL_MIN || ex > xlrg_BESS_Y) {
-	    ML_ERROR(ME_RANGE);
+	    /* Warning is not really appropriate, give
+	     * proper limit:
+	     * ML_ERROR(ME_RANGE, "Y_bessel"); */
 	    *ncalc = *nb;
-	    if(ex > xlrg_BESS_Y)  by[0]=ML_POSINF;
+	    if(ex > xlrg_BESS_Y)  by[0]= 0.; /*was ML_POSINF */
 	    else if(ex < DBL_MIN) by[0]=ML_NEGINF;
 	    for(i=0; i < *nb; i++)
 		by[i] = by[0];

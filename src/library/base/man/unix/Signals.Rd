@@ -7,8 +7,8 @@
   function and \code{\link{on.exit}} expressions will not be called.
 }
 \usage{
-kill -USR1 pid
-kill -USR2 pid
+\special{kill -USR1 pid}
+\special{kill -USR2 pid}
 }
 \arguments{
   \item{pid}{The process ID of the R process}

@@ -29,7 +29,8 @@ biplot.default <-
     }
     else if(length(col) == 1) col <- c(col, col)
 
-    unsigned.range <- function(x) c(-abs(min(x)), abs(max(x)))
+    unsigned.range <- function(x)
+        c(-abs(min(x, na.rm=TRUE)), abs(max(x, na.rm=TRUE)))
     rangx1 <- unsigned.range(x[, 1])
     rangx2 <- unsigned.range(x[, 2])
     rangy1 <- unsigned.range(y[, 1])
@@ -50,8 +51,8 @@ biplot.default <-
     par(new = TRUE)
     plot(y, axes = FALSE, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,
 	 xlab = "", ylab = "", col = col[1], ...)
-    axis(3, col = col[2])
-    axis(4, col = col[2])
+    axis(3, col = col[2], ...)
+    axis(4, col = col[2], ...)
     box(col = col[1])
     text(y, labels=ylabs, cex = cex[2], col = col[2], ...)
     if(var.axes)
@@ -63,11 +64,12 @@ biplot.princomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$scores))
-	stop(paste("object", deparse(substitute(x)), "has no scores"))
+	stop(gettextf("object '%s' has no scores", deparse(substitute(x))),
+             domain = NA)
     lam <- x$sdev[choices]
     if(is.null(n <- x$n.obs)) n <- 1
     lam <- lam * sqrt(n)
-    if(scale < 0 || scale > 1) warning("scale is outside [0, 1]")
+    if(scale < 0 || scale > 1) warning("'scale' is outside [0, 1]")
     if(scale != 0) lam <- lam^scale else lam <- 1
     if(pc.biplot) lam <- lam / sqrt(n)
     biplot.default(t(t(scores[, choices]) / lam),
@@ -79,13 +81,14 @@ biplot.prcomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
 {
     if(length(choices) != 2) stop("length of choices must be 2")
     if(!length(scores <- x$x))
-	stop(paste("object", deparse(substitute(x)), "has no scores"))
+	stop(gettextf("object '%s' has no scores", deparse(substitute(x))),
+             domain = NA)
     if(is.complex(scores))
         stop("biplots are not defined for complex PCA")
     lam <- x$sdev[choices]
     n <- NROW(scores)
     lam <- lam * sqrt(n)
-    if(scale < 0 || scale > 1) warning("scale is outside [0, 1]")
+    if(scale < 0 || scale > 1) warning("'scale' is outside [0, 1]")
     if(scale != 0) lam <- lam^scale else lam <- 1
     if(pc.biplot) lam <- lam / sqrt(n)
     biplot.default(t(t(scores[, choices]) / lam),

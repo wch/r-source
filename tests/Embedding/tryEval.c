@@ -1,24 +1,20 @@
-#include <Rdefines.h>
-extern int Rf_initEmbeddedR(int argc, char *argv[]);
+#include <Rinternals.h>
+#include <Rembedded.h>
 
 int 
 main(int argc, char *argv[])
 {
-
     SEXP e, val;
     int errorOccurred;
     argv[0] = "R";
     Rf_initEmbeddedR(argc, argv);
 
-    PROTECT(e = allocVector(LANGSXP, 2));
-    SETCAR(e, Rf_install("sqrt"));
-    SETCAR(CDR(e), NEW_CHARACTER(1));
+    PROTECT(e = lang2(install("sqrt"), mkString("")));
     val = R_tryEval(e, NULL, &errorOccurred); 
     if(errorOccurred) {
 	fprintf(stderr, "Caught an error calling sqrt(). Try again with a different argument.\n");fflush(stderr);
     }
-    SETCAR(CDR(e), val = NEW_INTEGER(1));
-    INTEGER(val)[0] = 9;
+    SETCAR(CDR(e), ScalarInteger(9));
     val = R_tryEval(e, NULL, &errorOccurred); 
     if(errorOccurred) {
 	fprintf(stderr, "Caught another error calling sqrt()\n");fflush(stderr);

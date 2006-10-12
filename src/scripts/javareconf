@@ -1,0 +1,145 @@
+#!/bin/sh
+
+if test -z "${R_HOME}"; then
+    echo "This command can be executed via R CMD only!"
+    exit 1
+fi
+
+SED=sed
+
+tools_classpath=${R_SHARE_DIR}/java
+
+usage="
+Usage: R CMD javareconf [options]
+
+Detect current Java setup and update the corresponding configuration in R.
+
+Options:
+  -h, --help     print short help message and exit
+  -n, --dry-run  perform Java detection, but don't touch any
+                 configurations files
+  xxx=yyy        evaluate the corresponding expression
+                 (e.g. JAVA_HOME=/usr/lib/java)
+
+Environment variables that can be used to influence the detection:
+  JAVA           path to a Java interpreter executable
+                 By default first 'java' command found on the PATH
+                 is taken (unless JAVA_HOME is also specified).
+  JAVA_HOME      home of the Java environment. If not specified,
+                 it will be detected automatically from the Java
+                 interpreter.
+
+Report bugs to <r-bugs@r-project.org>."
+
+
+dry_run=no
+while test -n "${1}"; do
+    case ${1} in
+	-help | --help | -h) echo "${usage}"; exit 0 ;;
+	-n | --dry-run) dry_run=yes ;;
+	*=*) eval ${1} ;;
+    esac
+    shift
+done
+
+## find java compiler binaries
+if test -z "${JAVA_HOME}" ; then
+    JAVA_PATH=${PATH}
+else
+    if test ! -e "${JAVA_HOME}"; then
+	echo "*** JAVA_HOME is not a valid path, ignoring"
+	JAVA_HOME=
+    fi
+
+    ## try jre/bin first just in case we don't have full JDK
+    JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${PATH}
+fi
+## if 'java' is not on the PATH or JAVA_HOME, add some guesses as of
+## where java could live
+JAVA_PATH=${JAVA_PATH}:/usr/java/bin:/usr/jdk/bin:/usr/lib/java/bin:/usr/lib/jdk/bin:/usr/local/java/bin:/usr/local/jdk\
+/bin:/usr/local/lib/java/bin:/usr/local/lib/jdk/bin
+
+if test -z "$JAVA"; then
+    save_IFS=$IFS; IFS=:
+    for dir in ${JAVA_PATH}; do
+	if test -f "$dir/java"; then
+	    JAVA="$dir/java"
+	    break
+	fi
+    done
+    IFS=${save_IFS}
+fi
+
+if test -z "$JAVA"; then
+    echo "~*** Cannot find any Java interpreter~*** Please make sure 'java' is on you PATH or set JAVA_HOME correspondingly"|${SED} -e 'y/~/\n/' >&2
+    exit 1
+fi
+
+echo "Java interpreter : $JAVA"
+jires=`$JAVA -classpath ${tools_classpath} getsp -test`
+if test "$jires" != "Test1234OK"; then
+    echo "$jires"
+    echo "~*** Java interpreter doesn't work properly.~"|${SED} -e 'y/~/\n/' >&2
+    exit 1
+fi
+
+if test -z "${JAVA_HOME}"; then
+    JAVA_HOME=`$JAVA -classpath ${tools_classpath} getsp java.home`
+fi
+
+if test -z "${JAVA_HOME}"; then
+    echo "~*** Cannot find Java environemnt.~*** Please set JAVA_HOME correspondingly.~"|${SED} -e 'y/~/\n/' >&2
+    exit 1
+fi
+
+echo "Java version     : `$JAVA -classpath ${tools_classpath} getsp java.version 2>/dev/null`"
+echo "Java home path   : ${JAVA_HOME}"
+
+hostos=`uname 2>/dev/null`
+case "$hostos" in
+    Darwin*)
+	JAVA_LD_LIBRARY_PATH=
+	JAVA_LIBS="-framework JavaVM"
+	;;
+    *)
+	## we need to reset LD_LIBRARY_PATH, because Java automatically
+	## adds all LD_LIBRARY_PATH to Java path
+	save_LDLP=${LD_LIBRARY_PATH}
+	LD_LIBRARY_PATH=
+	export LD_LIBRARY_PATH
+	# remove trailing : (if any) and replace occurrences of JAVA_HOME
+	# with $(JAVA_HOME)
+	JAVA_LD_LIBRARY_PATH=`$JAVA -classpath ${tools_classpath} getsp java.library.path| ${SED} -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g -e 's/:$//'`
+	LD_LIBRARY_PATH=${save_LDLP}
+	export LD_LIBRARY_PATH
+	# build JAVA_LIBS from the detected path
+	JAVA_LIBS=`echo ${JAVA_LD_LIBRARY_PATH}|${SED} -e 's|:| -L|g'`
+	if test -n "${JAVA_LIBS}"; then JAVA_LIBS="-L${JAVA_LIBS}"; fi
+	JAVA_LIBS="${JAVA_LIBS} -ljvm"
+	# create shell-version to be used in scripts
+	JAVA_LD_LIBRARY_PATH_SH=`echo ${JAVA_LD_LIBRARY_PATH}|${SED} -e 's:$(JAVA_HOME):\$\{JAVA_HOME\}:g'`
+	;;
+esac
+
+echo "Java library path: ${JAVA_LD_LIBRARY_PATH}"
+echo "JNI linker flags : ${JAVA_LIBS}"
+
+echo ""
+
+if test "${dry_run}" = yes; then exit 0; fi
+
+echo "Updating Java configuration in ${R_HOME}"
+
+files="${R_HOME}/etc${R_ARCH}/Makeconf ${R_HOME}/etc${R_ARCH}/ldpaths"
+for file in $files; do
+    ${SED} -e "s|JAVA =.\{0,\}|JAVA = $JAVA|" -e "s|JAVA_HOME =.\{0,\}|JAVA_HOME = ${JAVA_HOME}|" -e "s|: \${JAVA_HOME=.\{1,\}|: \${JAVA_HOME=${JAVA_HOME}}|" -e "s|: \${R_JAVA_LD_LIBRARY_PATH=.\{1,\}|: \${R_JAVA_LD_LIBRARY_PATH=${JAVA_LD_LIBRARY_PATH_SH}}|" -e "s|JAVA_LIBS =.\{0,\}|JAVA_LIBS = ${JAVA_LIBS}|g" -e "s|JAVA_LD_LIBRARY_PATH =.\{0,\}|JAVA_LD_LIBRARY_PATH = ${JAVA_LD_LIBRARY_PATH}|" "$file" > "${file}.new"
+    if test -f "${file}.new"; then
+	mv "${file}" "${file}.old"
+	mv "${file}.new" "${file}"
+    else
+	echo "*** cannot create ${file}.new~*** Please run as root if required.~" | ${SED} -e 'y/~/\n/' >&2
+	exit 1
+    fi
+done
+
+echo "Done."

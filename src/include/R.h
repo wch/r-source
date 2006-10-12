@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef R_R_H
@@ -54,6 +54,10 @@ typedef double Sfloat;
 typedef int Sint;
 #define SINT_MAX INT_MAX
 #define SINT_MIN INT_MIN
+
+void R_FlushConsole(void);
+/* always declared, but only usable under Win32 and Aqua */
+void R_ProcessEvents(void);
 
 #ifdef __cplusplus
 }

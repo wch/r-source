@@ -28,9 +28,9 @@ hist(x, \dots)
   }
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
-    the result; if \code{FALSE}, \emph{relative} frequencies
-    (\dQuote{probabilities}), component \code{density},
-    are plotted.   Defaults to \code{TRUE} \emph{iff} \code{breaks} are
+    the result; if \code{FALSE}, probability densities, component
+    \code{density}, are plotted (so that the histogram has a total area
+    of one).  Defaults to \code{TRUE} \emph{iff} \code{breaks} are
     equidistant (and \code{probability} is not specified).}
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
   \item{include.lowest}{logical; if \code{TRUE}, an \code{x[i]} equal to
@@ -64,7 +64,9 @@ hist(x, \dots)
   \item{nclass}{numeric (integer).  For S(-PLUS) compatibility only,
     \code{nclass} is equivalent to \code{breaks} for a scalar or
     character argument.}
-  \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
+  \item{\dots}{further graphical parameters passed to
+    \code{\link{plot.histogram}} and their to \code{\link{title}} and
+    \code{\link{axis}} (if \code{plot=TRUE}).}
 }
 \description{
   The generic function \code{hist} computes a histogram of the given
@@ -144,7 +146,11 @@ hist(x, \dots)
 
 \seealso{
   \code{\link{nclass.Sturges}}, \code{\link{stem}},
-  \code{\link{density}},  \code{\link[MASS]{truehist}}.
+  \code{\link{density}},  \code{\link[MASS]{truehist}} in package \pkg{MASS}.
+
+  Typical plots with vertical bars are \emph{not} histograms.  Consider
+  \code{\link{barplot}} or \code{\link{plot}(*, type = "h")}
+  for such bar plots.
 }
 
 \examples{
@@ -166,6 +172,17 @@ utils::str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = FALSE))
 
 hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE,
      main = "WRONG histogram") # and warning
+
+set.seed(14)
+x <- rchisq(100, df = 4)
+\dontshow{op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))}
+## Comparing data with a model distribution should be done with qqplot()!
+qqplot(x, qchisq(ppoints(x), df = 4)); abline(0,1, col = 2, lty = 2)
+
+## if you really insist on using hist() ... :
+hist(x, freq = FALSE, ylim = c(0, 0.2))
+curve(dchisq(x, df = 4), col = 2, lty = 2, lwd = 2, add = TRUE)
+\dontshow{par(op)}
 }
 \keyword{dplot}
 \keyword{hplot}

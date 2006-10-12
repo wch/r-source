@@ -12,16 +12,20 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   \item{sub}{Sub-title (at bottom) using font and size
     \code{par("font.sub")} and color \code{par("col.sub")}.}
   \item{xlab}{X axis label using font and character expansion
-    \code{par("font.axis")} and color \code{par("col.axis")}.}
+    \code{par("font.lab")} and color \code{par("col.lab")}.}
   \item{ylab}{Y axis label, same font attributes as \code{xlab}.}
   \item{line}{specifying a value for \code{line} overrides the
     default placement of labels, and places them this many lines
-    from the plot.}
+    outwards from the plot edge.}
   \item{outer}{a logical value.  If \code{TRUE}, the titles are
     placed in the outer margins of the plot.}
-  \item{\dots}{further graphical parameters from
-    \code{\link{par}}.  Use e.g., \code{col.main} or \code{cex.sub}
-    instead of just \code{col} or \code{cex}.}
+  \item{\dots}{further graphical parameters from \code{\link{par}}.  Use
+    e.g., \code{col.main} or \code{cex.sub} instead of just \code{col}
+    or \code{cex}.  \code{xpd} can be used to set the clipping region:
+    this defaults to the figure region unless \code{outer = TRUE},
+    otherwise the device region and can only be increased.  \code{mgp}
+    controls the default placing of the axis titles.
+  }
 }
 \description{
   This function can be used to add labels to a plot.  Its first four
@@ -32,10 +36,11 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   greek letters, fractions, etc.
 }
 \details{
-  The labels passed to title can be simple strings or expressions,
-  or they can be a list containing the string to be plotted, and
-  a selection of the optional modifying graphical parameters
-  \code{cex=}, \code{col=}, \code{font=}.
+  The labels passed to \code{title} can be a character vector or a
+  language object (names, calls or expressions), or a list
+  containing the string to be plotted, and a selection of the optional
+  modifying graphical parameters \code{cex=}, \code{col=} and
+  \code{font=}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -70,7 +75,7 @@ matplot(x, y, type = "l", xaxt = "n",
         xlab = expression(paste("Phase Angle ", phi)),
         col.main = "blue")
 axis(1, at = c(-pi, -pi/2, 0, pi/2, pi),
-     lab = expression(-pi, -pi/2, 0, pi/2, pi))
+     labels = expression(-pi, -pi/2, 0, pi/2, pi))
 abline(h = 0, v = pi/2 * c(-1,1), lty = 2, lwd = .1, col = "gray70")
 }
 \keyword{aplot}

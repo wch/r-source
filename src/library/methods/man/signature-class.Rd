@@ -1,6 +1,7 @@
 \name{signature-class}
 \docType{class}
 \alias{signature-class}
+\alias{show,signature-method}
 \title{Class "signature" For Method Definitions}
 \description{This class represents the mapping of some of the formal
   arguments of a function onto the names of some classes.  It is used as

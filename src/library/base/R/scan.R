@@ -1,17 +1,17 @@
 scan <-
 function(file = "", what = double(0), nmax = -1, n = -1, sep = "",
-         quote = if (sep=="\n") "" else "'\"",
+         quote = if(identical(sep, "\n")) "" else "'\"",
          dec = ".", skip = 0, nlines = 0,
          na.strings = "NA", flush = FALSE, fill = FALSE,
          strip.white = FALSE, quiet = FALSE, blank.lines.skip = TRUE,
-         multi.line = TRUE, comment.char = "")
+         multi.line = TRUE, comment.char = "", allowEscapes = FALSE)
 {
     na.strings <- as.character(na.strings)# allow it to be NULL
     if(!missing(n)) {
         if(missing(nmax))
             nmax <- n / pmax(length(what), 1)
         else
-            stop("Either specify `nmax' or `n', but not both.")
+            stop("either specify 'nmax' or 'n', but not both.")
     }
     if(is.character(file))
         if(file == "") file <- stdin()
@@ -20,9 +20,9 @@ function(file = "", what = double(0), nmax = -1, n = -1, sep = "",
             on.exit(close(file))
         }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop("'file' must be a character string or connection")
     .Internal(scan(file, what, nmax, sep, dec, quote, skip, nlines,
                    na.strings, flush, fill, strip.white, quiet,
-                   blank.lines.skip, multi.line, comment.char))
+                   blank.lines.skip, multi.line, comment.char,
+                   allowEscapes))
 }

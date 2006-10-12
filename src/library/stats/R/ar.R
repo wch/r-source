@@ -33,8 +33,8 @@ ar.yw.default <-
     xfreq <- frequency(x)
     x <- as.matrix(x)
     if(!is.numeric(x))
-        stop("`x' must be numeric")
-    if(any(is.na(x))) stop("NAs in x")
+        stop("'x' must be numeric")
+    if(any(is.na(x))) stop("NAs in 'x'")
     nser <- ncol(x)
     if (demean) {
         xm <- colMeans(x)
@@ -43,7 +43,7 @@ ar.yw.default <-
     n.used <- nrow(x)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
                  else round(order.max)
-    if (order.max < 1) stop("order.max must be >= 1")
+    if (order.max < 1) stop("'order.max' must be >= 1")
     xacf <- acf(x, type = "covariance", lag.max = order.max, plot = FALSE,
                 demean = demean)$acf
     if(nser > 1) {
@@ -112,12 +112,12 @@ ar.yw.default <-
     } else {
         ## univariate case
         r <- as.double(drop(xacf))
-        z <- .Fortran("eureka",
+        z <- .Fortran(R_eureka,
                       as.integer(order.max),
                       r, r,
                       coefs=double(order.max^2),
                       vars=double(order.max),
-                      double(order.max), PACKAGE="stats")
+                      double(order.max))
         coefs <- matrix(z$coefs, order.max, order.max)
         partialacf <- array(diag(coefs), dim=c(order.max, 1, 1))
         var.pred <- c(r[1], z$vars)
@@ -143,7 +143,7 @@ ar.yw.default <-
                 series=series, frequency=xfreq, call=match.call())
     if(nser == 1 && order > 0)
         res$asy.var.coef <-
-            solve(toeplitz(drop(xacf)[seq(length=order)]))*var.pred/n.used
+            solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
     class(res) <- "ar"
     res
 }
@@ -162,7 +162,7 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
         if(x$order > 0) {
             cat("Coefficients:\n")
             coef <- drop(round(x$ar, digits = digits))
-            names(coef) <- seq(length=x$order)
+            names(coef) <- seq_len(x$order)
             print.default(coef, print.gap = 2)
         }
         if(!is.null(xint <- x$x.intercept) && !is.na(xint))
@@ -192,7 +192,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
     tsp(newdata) <- NULL
     class(newdata) <- NULL
     if(NCOL(ar) != nser)
-        stop("number of series in fit and newdata do not match")
+        stop("number of series in 'object' and 'newdata' do not match")
     n <- NROW(newdata)
     if(nser > 1) {
         if(is.null(object$x.intercept)) xint <- rep(0, nser)
@@ -212,7 +212,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
         pred <- pred + matrix(object$x.mean, n.ahead, nser, byrow=TRUE)
         colnames(pred) <- colnames(object$var.pred)
         if(se.fit) {
-            warning("se.fit not yet implemented for multivariate models")
+            warning("'se.fit' not yet implemented for multivariate models")
             se <- matrix(NA, n.ahead, nser)
         }
     } else {
@@ -226,10 +226,10 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
             pred <- x[n+(1:n.ahead)]
             if(se.fit) {
                 npsi <- n.ahead - 1
-                psi <- .C("artoma",
+                psi <- .C(R_artoma,
                         as.integer(object$order), as.double(ar),
                         psi = double(npsi+object$order+1),
-                        as.integer(npsi), PACKAGE="stats")$psi[1:npsi]
+                        as.integer(npsi))$psi[1:npsi]
                 vars <- cumsum(c(1, psi^2))
                 se <- sqrt(object$var.pred*vars)[1:n.ahead]
             }

@@ -1,18 +1,25 @@
-traceback <- function()
+traceback <-
+function(x = NULL, max.lines = getOption("deparse.max.lines"))
 {
-    if (exists(".Traceback", env = .GlobalEnv))
-	.Traceback <- get(".Traceback", env = .GlobalEnv)
-    else .Traceback <- NULL
-    if(is.null(.Traceback) || length(.Traceback) == 0)
-        cat("No traceback available\n")
+    if(is.null(x) && (exists(".Traceback", env = baseenv())))
+	x <- get(".Traceback", env = baseenv())
+    n <- length(x)
+    if(n == 0)
+        cat(gettext("No traceback available"), "\n")
     else {
-        n <- length(.Traceback)
         for(i in 1:n) {
             label <- paste(n-i+1, ": ", sep="")
-            if((m <- length(.Traceback[[i]])) > 1)
-                label <- c(label, rep(substr("          ", 1, nchar(label)),
+            m <- length(x[[i]])
+            if(m > 1)
+                label <- c(label, rep(substr("          ", 1,
+                                             nchar(label, type="w")),
                                       m - 1))
-            cat(paste(label, .Traceback[[i]], sep=""), sep="\n")
+            if(is.numeric(max.lines) && max.lines > 0 && max.lines < m) {
+                cat(paste(label[1:max.lines], x[[i]][1:max.lines], sep = ""),
+                    sep = "\n")
+                cat(label[max.lines+1], " ...\n")
+            } else
+            cat(paste(label, x[[i]], sep=""), sep="\n")
         }
     }
     invisible()

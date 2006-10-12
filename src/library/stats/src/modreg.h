@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef R_MODREG_H
@@ -70,6 +70,11 @@ void Trunmed(Sint *nn,/* = length(data) */
 	     double *window,/* (2k+1) */
 	     Sint   *end_rule,
 	     Sint   *print_level);
+void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl, 
+		  int *pmaxiter, int *nc, double *wss);
+
+void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk, 
+		     int *cl, int *pmaxiter, int *nc, double *wss);
 
 /* Fortran : */
 
@@ -82,6 +87,7 @@ void F77_SUB(smart)(int *m, int *mu, int *p, int * q, int *n,
 		    double *w, double *x, double *y,
 		    double *ww, double *smod, int *nsmod, double *sp,
 		    int *nsp, double *dp, int *ndp, double *edf);
+void F77_SUB(setsmu)();
 void F77_SUB(pppred)(int *np, double *x, double *smod,
 		     double *y, double *sc);
 void F77_SUB(qsbart)(double *penalt, double *dofoff,

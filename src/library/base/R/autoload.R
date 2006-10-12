@@ -1,7 +1,7 @@
 autoload <- function(name, package, reset=FALSE, ...)
 {
     if (!reset && exists(name, envir = .GlobalEnv, inherits = FALSE))
-	stop("Object with that name already exists")
+	stop("an object with that name already exists")
     m <- match.call()
     m[[1]] <- as.name("list")
     newcall <- eval(m, parent.frame())
@@ -9,7 +9,7 @@ autoload <- function(name, package, reset=FALSE, ...)
     newcall$reset <- NULL
     if (is.na(match(package, .Autoloaded)))
 	assign(".Autoloaded", c(package, .Autoloaded), env =.AutoloadEnv)
-    assign(name, do.call("delay", list(newcall)), env = .AutoloadEnv)
+    do.call("delayedAssign", list(name, newcall, .GlobalEnv, .AutoloadEnv))
     ## no longer return the result, which is a promise
     invisible()
 }
@@ -30,6 +30,6 @@ autoloader <- function (name, package, ...)
     if (exists(name, where = where, inherits = FALSE))
 	eval(as.name(name), as.environment(where))
     else
-	stop(paste("autoloader didn't find `", name, "' in `", package,
-                   "'.", sep = ""))
+	stop(gettextf("autoloader did not find '%s' in '%s'", name, package),
+             domain = NA)
 }

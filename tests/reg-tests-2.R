@@ -1,8 +1,12 @@
 ## Regression tests for which the printed output is the issue
 ### _and_ must work (no Recommended packages, please)
 
-postscript("reg-tests-2.ps")
+postscript("reg-tests-2.ps", encoding = "ISOLatin1.enc")
 RNGversion("1.6.2")
+
+## force standard handling for data frames
+options(stringsAsFactors=TRUE)
+
 
 ### moved from various .Rd files
 ## abbreviate
@@ -208,6 +212,10 @@ ll <- list(pi,"C",NaN,Inf, 1:3, c(0,NA), NA)
 is.na (ll)
 is.nan(ll)
 ## end of moved from NA.Rd
+
+## is.na was returning unset values on nested lists
+ll <- list(list(1))
+for (i in 1:5) print(as.integer(is.na(ll)))
 
 ## scale
 ## test out NA handling
@@ -656,6 +664,7 @@ tt1 <- ts(x,start=c(1960,2), freq=12)
 tt2 <- ts(10+x,start=c(1960,2), freq=12)
 cbind(tt1, tt2)
 ## 1.4.1 had `Jan 1961' as `NA 1961'
+## ...and 1.9.1 had it as `Jan 1960'!!
 
 ## glm boundary bugs (related to PR#1331)
 x <- c(0.35, 0.64, 0.12, 1.66, 1.52, 0.23, -1.99, 0.42, 1.86, -0.02,
@@ -825,35 +834,6 @@ par(mfrow = c(1,1))
 ## >> do sloppy testing
 ## 2003-02-03 hopefully no more.  BDR
 ## end of PR 390
-
-
-## print/show dispatch
-hasMethods <- .isMethodsDispatchOn()
-require(methods)
-setClass("bar", representation(a="numeric"))
-foo <- new("bar", a=pi)
-foo
-show(foo)
-print(foo)
-
-setMethod("show", "bar", function(object){cat("show method\n")})
-show(foo)
-foo
-print(foo)
-print(foo, digits = 4)
-
-print.bar <- function(x, ...) cat("print method\n")
-foo
-print(foo)
-show(foo)
-
-setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
-foo
-print(foo)
-show(foo)
-print(foo, digits = 4)
-if(!hasMethods) detach("package:methods")
-##
 
 
 ## scoping rules calling step inside a function
@@ -1034,7 +1014,7 @@ try(x[1, c("a", "c")])
 
 ## methods(class = ) with namespaces, .Primitives etc (many missing in 1.7.x):
 meth2gen <- function(cl)
-    noquote(sub(paste("\\.",cl,"$",sep=""),"", methods(class = cl)))
+    noquote(sub(paste("\\.",cl,"$",sep=""),"", c(methods(class = cl))))
 meth2gen("data.frame")
 meth2gen("dendrogram")
 ## --> the output may need somewhat frequent updating..
@@ -1320,6 +1300,7 @@ seek(zz, 0, "start")
 readBin(zz, "character", 100)  # is confused by embedded nul.
 seek(zz, 0, "start")
 readChar(zz, length(xx)) # correct
+seek(zz) # make sure current position is reported properly
 close(zz)
 unlink("testbin")
 
@@ -1347,3 +1328,663 @@ eval(quote({Girth[1]<-NA;Girth}),a)
 a[1, ]
 trees[1, ]
 ## both a and trees got altered in 1.9.1
+
+
+## write.table did not apply qmethod to col.names (PR#7171)
+x <- data.frame("test string with \"" = c("a \" and a '"), check.names=FALSE)
+write.table(x)
+write.table(x, qmethod = "double")
+## Quote in col name was unescaped in 1.9.1.
+
+
+## extensions to read.table
+Mat <- matrix(c(1:3, letters[1:3], 1:3, LETTERS[1:3],
+                c("2004-01-01", "2004-02-01", "2004-03-01"),
+                c("2004-01-01 12:00", "2004-02-01 12:00", "2004-03-01 12:00")),
+              3, 6)
+foo <- tempfile()
+write.table(Mat, foo, col.names = FALSE, row.names = FALSE)
+read.table(foo, colClasses = c(NA, NA, "NULL", "character", "Date", "POSIXct"))
+unlist(sapply(.Last.value, class))
+read.table(foo, colClasses = c("factor",NA,"NULL","factor","Date","POSIXct"))
+unlist(sapply(.Last.value, class))
+read.table(foo, colClasses = c(V4="character"))
+unlist(sapply(.Last.value, class))
+unlink(foo)
+## added in 2.0.0
+
+
+## write.table with complex columns (PR#7260, in part)
+write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "")
+# printed all as complex in 2.0.0.
+write.table(data.frame(x = 0.5+1:4, y = 1:4 + 1.5i), file = "", dec=",")
+## used '.' not ',' in 2.0.0
+
+## splinefun() value test
+(x <- seq(0,6, length=25))
+mx <- sapply(c("fmm", "nat", "per"),
+             function(m) splinefun(1:5, c(1,2,4,3,1), method = m)(x))
+cbind(x,mx)
+
+
+## infinite loop in read.fwf (PR#7350)
+cat(file="test.txt", sep = "\n", "# comment 1", "1234567   # comment 2",
+    "1 234567  # comment 3", "12345  67 # comment 4", "# comment 5")
+read.fwf("test.txt", width=c(2,2,3), skip=1, n=4) # looped
+read.fwf("test.txt", width=c(2,2,3), skip=1)      # 1 line short
+read.fwf("test.txt", width=c(2,2,3), skip=0)
+unlink("test.txt")
+##
+
+
+## split was not handling lists and raws
+split(as.list(1:3), c(1,1,2))
+(y <- charToRaw("A test string"))
+(z <- split(y, rep(1:5, times=c(1,1,4,1,6))))
+sapply(z, rawToChar)
+## wrong results in 2.0.0
+
+
+## tests of changed S3 implicit classes in 2.1.0
+foo <- function(x, ...) UseMethod("foo")
+foo.numeric <- function(x) cat("numeric arg\n")
+foo(1:10)
+foo(pi)
+foo(matrix(1:10, 2, 5))
+foo.integer <- function(x) cat("integer arg\n")
+foo.double <- function(x) cat("double arg\n")
+foo(1:10)
+foo(pi)
+foo(matrix(1:10, 2, 5))
+##
+
+
+## str() interpreted escape sequences prior to 2.1.0
+x <- "ab\bc\ndef"
+str(x)
+str(x, vec.len=0)# failed in rev 32244
+str(factor(x))
+
+x <- c("a", NA, "b")
+factor(x)
+factor(x, exclude="")
+str(x)
+str(factor(x))
+str(factor(x, exclude=""))
+##
+
+
+## print.factor(quote=TRUE) was not quoting levels
+x <- c("a", NA, "b", 'a " test') #" (comment for fontification)
+factor(x)
+factor(x, exclude="")
+print(factor(x), quote=TRUE)
+print(factor(x, exclude=""), quote=TRUE)
+## last two printed levels differently from values in 2.0.1
+
+
+## write.table in marginal cases
+x <- matrix(, 3, 0)
+write.table(x) # 3 rows
+write.table(x, row.names=FALSE)
+# note: scan and read.table won't read this as they take empty fields as NA
+## was 1 row in 2.0.1
+
+
+## More tests of write.table
+x <- list(a=1, b=1:2, c=3:4, d=5)
+dim(x) <- c(2,2)
+x
+write.table(x)
+
+x1 <- data.frame(a=1:2, b=I(matrix(LETTERS[1:4], 2, 2)), c = c("(i)", "(ii)"))
+x1
+write.table(x1) # In 2.0.1 had 3 headers, 4 cols
+write.table(x1, quote=c(2,3,4))
+
+x2 <- data.frame(a=1:2, b=I(list(a=1, b=2)))
+x2
+write.table(x2)
+
+x3 <- seq(as.Date("2005-01-01"), len=6, by="day")
+x4 <- data.frame(x=1:6, y=x3)
+dim(x3) <- c(2,3)
+x3
+write.table(x3) # matrix, so loses class
+x4
+write.table(x4) # preserves class, does not quote
+##
+
+
+## Problem with earlier regexp code spotted by KH
+grep("(.*s){2}", "Arkansas", v = TRUE)
+grep("(.*s){3}", "Arkansas", v = TRUE)
+grep("(.*s){3}", state.name, v = TRUE)
+## Thought Arkansas had 3 s's.
+
+
+## Replacing part of a non-existent column could create a short column.
+xx<- data.frame(a=1:4, b=letters[1:4])
+xx[2:3, "c"] <- 2:3
+## gave short column in R < 2.1.0.
+
+
+## add1/drop1 could give misleading results if missing values were involved
+y <- rnorm(1:20)
+x <- 1:20; x[10] <- NA
+x2 <- runif(20); x2[20] <- NA
+fit <- lm(y ~ x)
+drop1(fit)
+res <-  try(stats:::drop1.default(fit))
+stopifnot(inherits(res, "try-error"))
+add1(fit, ~ . +x2)
+res <-  try(stats:::add1.default(fit, ~ . +x2))
+stopifnot(inherits(res, "try-error"))
+## 2.0.1 ran and gave incorrect answers.
+
+
+## (PR#7789) escaped quotes in the first five lines for read.table
+tf <- tempfile()
+x <- c("6 'TV2  Shortland Street'",
+       "2 'I don\\\'t watch TV at 7'",
+       "1 'I\\\'m not bothered, whatever that looks good'",
+       "2 'I channel surf'")
+writeLines(x, tf)
+read.table(tf)
+x <- c("6 'TV2  Shortland Street'",
+       "2 'I don''t watch TV at 7'",
+       "1 'I''m not bothered, whatever that looks good'",
+       "2 'I channel surf'")
+writeLines(x, tf)
+read.table(tf, sep=" ")
+unlink(tf)
+## mangled in 2.0.1
+
+
+## (PR#7802) printCoefmat(signif.legend =FALSE) failed
+set.seed(123)
+cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
+cmat <- cbind(cmat, cmat[,1]/cmat[,2])
+cmat <- cbind(cmat, 2*pnorm(-cmat[,3]))
+colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
+printCoefmat(cmat, signif.stars = TRUE)
+printCoefmat(cmat, signif.stars = TRUE, signif.legend = FALSE)
+# no stars, so no legend
+printCoefmat(cmat, signif.stars = FALSE)
+printCoefmat(cmat, signif.stars = TRUE, signif.legend = TRUE)
+## did not work in 2.1.0
+
+
+## PR#7824 subscripting an array by a matrix
+x <- matrix(1:6, ncol=2)
+x[rbind(c(1,1), c(2,2))]
+x[rbind(c(1,1), c(2,2), c(0,1))]
+x[rbind(c(1,1), c(2,2), c(0,0))]
+x[rbind(c(1,1), c(2,2), c(0,2))]
+x[rbind(c(1,1), c(2,2), c(0,3))]
+x[rbind(c(1,1), c(2,2), c(1,0))]
+x[rbind(c(1,1), c(2,2), c(2,0))]
+x[rbind(c(1,1), c(2,2), c(3,0))]
+x[rbind(c(1,0), c(0,2), c(3,0))]
+x[rbind(c(1,0), c(0,0), c(3,0))]
+x[rbind(c(1,1), c(2,2), c(1,2))]
+x[rbind(c(1,1), c(2,NA), c(1,2))]
+x[rbind(c(1,0), c(2,NA), c(1,2))]
+try(x[rbind(c(1,1), c(2,2), c(-1,2))])
+try(x[rbind(c(1,1), c(2,2), c(-2,2))])
+try(x[rbind(c(1,1), c(2,2), c(-3,2))])
+try(x[rbind(c(1,1), c(2,2), c(-4,2))])
+try(x[rbind(c(1,1), c(2,2), c(-1,-1))])
+try(x[rbind(c(1,1,1), c(2,2,2))])
+
+# verify that range checks are applied to negative indices
+x <- matrix(1:6, ncol=3)
+try(x[rbind(c(1,1), c(2,2), c(-3,3))])
+try(x[rbind(c(1,1), c(2,2), c(-4,3))])
+## generally allowed in 2.1.0.
+
+
+## printing RAW matrices/arrays was not implemented
+s <- sapply(0:7, function(i) rawShift(charToRaw("my text"),i))
+s
+dim(s) <- c(7,4,2)
+s
+## empty < 2.1.1
+
+
+## interpretation of '.' directly by model.matrix
+dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
+model.matrix(~ .^2, data = dd)
+## lost ^2 in 2.1.1
+
+
+## add1.lm and drop.lm did not know about offsets (PR#8049)
+set.seed(2)
+y <- rnorm(10)
+z <- 1:10
+lm0 <- lm(y ~ 1)
+lm1 <- lm(y ~ 1, offset = 1:10)
+lm2 <- lm(y ~ z, offset = 1:10)
+
+add1(lm0, scope = ~ z)
+anova(lm1, lm2)
+add1(lm1, scope = ~ z)
+drop1(lm2)
+## Last two ignored the offset in 2.1.1
+
+
+## tests of raw conversion
+as.raw(1234)
+as.raw(list(a=1234))
+## 2.1.1: spurious and missing messages, wrong result for second.
+
+
+### end of tests added in 2.1.1 patched ###
+
+
+## Tests of logical matrix indexing with NAs
+df1 <- data.frame(a = c(NA, 0, 3, 4)); m1 <- as.matrix(df1)
+df2 <- data.frame(a = c(NA, 0, 0, 4)); m2 <- as.matrix(df2)
+df1[df1 == 0] <- 2; df1
+m1[m1 == 0] <- 2;   m1
+df2[df2 == 0] <- 2; df2  # not allowed in 2.{0,1}.z
+m2[m2 == 0] <- 2;   m2
+df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
+df3 <- data.frame(a=1:2, b=2:3)
+df3[df3 == 2]            # had spurious names
+# but not allowed
+try(df2[df2 == 2] <- 1:2)
+try(m2[m2 == 2] <- 1:2)
+##
+
+
+## vector indexing of matrices: issue is when rownames are used
+# 1D array
+m1 <- c(0,1,2,0)
+dim(m1) <- 4
+dimnames(m1) <- list(1:4)
+m1[m1 == 0]                        # has rownames
+m1[which(m1 == 0)]                 # has rownames
+m1[which(m1 == 0, arr.ind = TRUE)] # no names < 2.2.0 (side effect of PR#937)
+
+# 2D array with 2 cols
+m2 <- as.matrix(data.frame(a=c(0,1,2,0), b=0:3))
+m2[m2 == 0]                        # a vector, had names < 2.2.0
+m2[which(m2 == 0)]                 # a vector, had names < 2.2.0
+m2[which(m2 == 0, arr.ind = TRUE)] # no names (PR#937)
+
+# 2D array with one col: could use rownames but do not.
+m21 <- m2[, 1, drop = FALSE]
+m21[m21 == 0]
+m21[which(m21 == 0)]
+m21[which(m21 == 0, arr.ind = TRUE)]
+## not consistent < 2.2.0: S never gives names
+
+
+## tests of indexing as quoted in Extract.Rd
+x <- NULL
+x$foo <- 2
+x # length-1 vector
+x <- NULL
+x[[2]] <- pi
+x # numeric vector
+x <- NULL
+x[[1]] <- 1:3
+x # list
+##
+
+
+## printing of a kernel:
+kernel(1, 0)
+## printed wrongly in R <= 2.1.1
+
+
+## using NULL as a replacement value
+DF <- data.frame(A=1:2, B=3:4)
+try(DF[2, 1:3] <- NULL)
+## wrong error message in R < 2.2.0
+
+
+## tests of signif
+ob <- 0:9 * 2000
+print(signif(ob, 3), digits=17) # had rounding error in 2.1.1
+signif(1.2347e-305, 4)
+signif(1.2347e-306, 4)  # only 3 digits in 2.1.1
+signif(1.2347e-307, 4)
+##
+
+### end of tests added in 2.2.0 patched ###
+
+
+## printing lists with NA names
+A <- list(1, 2)
+names(A) <- c("NA", NA)
+A
+## both printed as "NA" in 2.2.0
+
+
+## subscripting with both NA and "NA" names
+x <- 1:4
+names(x) <- c(NA, "NA", "a", "")
+x[names(x)]
+## 2.2.0 had the second matching the first.
+lx <- as.list(x)
+lx[[as.character(NA)]]
+lx[as.character(NA)]
+## 2.2.0 had both matching element 1
+
+
+## data frame replacement subscripting
+# Charles C. Berry, R-devel, 2005-10-26
+a.frame <- data.frame( x=letters[1:5] )
+a.frame[ 2:5, "y" ] <- letters[2:5]
+a.frame  # added rows 1:4
+# and adding and replacing matrices failed
+a.frame[ ,"y" ] <- matrix(1:10, 5, 2)
+a.frame
+a.frame[3:5 ,"y" ] <- matrix(1:6, 3, 2)
+a.frame
+a.frame <- data.frame( x=letters[1:5] )
+a.frame[3:5 ,"y" ] <- matrix(1:6, 3, 2)
+a.frame
+## failed/wrong ans in 2.2.0
+
+
+### end of tests added in 2.2.0 patched ###
+
+
+## test of fix of trivial warning PR#8252
+pairs(iris[1:4], oma=rep(3,4))
+## warned in 2.2.0 only
+
+
+## str(<dendrogram>)
+dend <- as.dendrogram(hclust(dist(USArrests), "ave")) # "print()" method
+dend2 <- cut(dend, h=70)
+str(dend2$upper)
+## gave much too many spaces in 2.2.[01]
+
+
+## formatC on Windows (PR#8337)
+xx  <- pi * 10^(-5:4)
+cbind(formatC(xx, wid = 9))
+cbind(formatC(xx, wid = 9, flag = "-"))
+cbind(formatC(xx, wid = 9, flag = "0"))
+## extra space on 2.2.1
+
+
+## an impossible glm fit
+success <- c(13,12,11,14,14,11,13,11,12)
+failure <- c(0,0,0,0,0,0,0,2,2)
+predictor <- c(0, 5^(0:7))
+try(glm(cbind(success,failure) ~ 0+predictor, family = binomial(link="log")))
+# no coefficient is possible as the first case will have mu = 1
+## 2.2.1 gave a subscript out of range warning instead.
+
+
+## error message from solve (PR#8494)
+temp <- diag(1, 5)[, 1:4]
+rownames(temp) <- as.character(1:5)
+colnames(temp) <- as.character(1:4)
+try(solve(temp))
+# also complex
+try(solve(temp+0i))
+# and non-comformant systems
+try(solve(temp, diag(3)))
+## gave errors from rownames<- in 2.2.1
+
+
+## PR#8462 terms.formula(simplify = TRUE) needs parentheses.
+update.formula (Reaction ~ Days + (Days | Subject), . ~ . + I(Days^2))
+## < 2.3.0 dropped parens on second term.
+
+
+## PR#8528: errors in the post-2.1.0 pgamma
+pgamma(seq(0.75, 1.25, by=0.05)*1e100, shape = 1e100, log=TRUE)
+pgamma(seq(0.75, 1.25, by=0.05)*1e100, shape = 1e100, log=TRUE, lower=FALSE)
+pgamma(c(1-1e-10, 1+1e-10)*1e100, shape = 1e100)
+pgamma(0.9*1e25, 1e25, log=TRUE)
+## were NaN, -Inf etc in 2.2.1.
+
+
+## + for POSIXt objects was non-commutative
+# SPSS-style dates
+c(10485849600,10477641600,10561104000,10562745600)+ISOdate(1582,10,14)
+## was in the local time zone in 2.2.1.
+
+
+## Limiting lines on deparse (wishlist PR#8638)
+op <- options(deparse.max.lines = 3)
+f <- function(...) browser()
+do.call(f, mtcars)
+c
+
+options(error = expression(NULL))
+f <- function(...) stop()
+do.call(f, mtcars)
+traceback()
+
+options(op)
+## unlimited < 2.3.0
+
+
+## row names in as.table (PR#8652)
+as.table(matrix(1:60, ncol=2))
+## rows past 26 had NA row names
+
+
+## summary on a glm with zero weights and estimated dispersion (PR#8720)
+y <- rnorm(10)
+x <- 1:10
+w <- c(rep(1,9), 0)
+summary(glm(y ~ x, weights = w))
+summary(glm(y ~ x, subset = w > 0))
+## has NA dispersion in 2.2.1
+
+
+## substitute was losing "..." after r37269
+yaa <- function(...) substitute(list(...))
+yaa(foo(...))
+## and wasn't substituting after "..."
+substitute(list(..., x), list(x=1))
+## fixed for 2.3.0
+
+
+## uniroot never warned (PR#8750)
+ff <- function(x) (x-pi)^3
+uniroot(ff, c(-10,10), maxiter=10)
+## should warn, did not < 2.3.0
+
+
+### end of tests added in 2.3.0 ###
+
+
+## prod etc on empty lists and raw vectors
+try(min(list()))
+try(max(list()))
+try(sum(list()))
+try(prod(list()))
+try(min(raw()))
+try(max(raw()))
+try(sum(raw()))
+try(prod(raw()))
+## Inf, -Inf, list(NULL) etc in 2.2.1
+
+r <- hist(rnorm(100), plot = FALSE, breaks = 12,
+          ## arguments which don't make sense for plot=FALSE - give a warning:
+          right = FALSE, col = "blue")
+## gave no warning in 2.3.0 and earlier
+
+
+## rbind.data.frame on permuted cols (PR#8868)
+d1 <- data.frame(x=1:10, y=letters[1:10], z=1:10)
+d2 <- data.frame(y=LETTERS[1:5], z=5:1, x=7:11)
+rbind(d1, d2)
+# got factor y  wrong in 2.3.0
+# and failed with duplicated col names.
+d1 <- data.frame(x=1:2, y=5:6, x=8:9, check.names=FALSE)
+d2 <- data.frame(x=3:4, x=-(1:2), y=8:9, check.names=FALSE)
+rbind(d1, d2)
+## corrupt in 2.3.0
+
+
+## sort.list on complex vectors was unimplemented prior to 2.4.0
+x <- rep(2:1, c(2, 2)) + 1i*c(4, 1, 2, 3)
+(o <- sort.list(x))
+x[o]
+sort(x)  # for a cross-check
+##
+
+
+## PR#9044 write.table(quote=TRUE, row.names=FALSE) did not quote column names
+m <- matrix(1:9, nrow=3, dimnames=list(c("A","B","C"),  c("I","II","III")))
+write.table(m)
+write.table(m, col.names=FALSE)
+write.table(m, row.names=FALSE)
+# wrong < 2.3.1 patched.
+write.table(m, quote=FALSE)
+write.table(m, col.names=FALSE, quote=FALSE)
+write.table(m, row.names=FALSE, quote=FALSE)
+d <- as.data.frame(m)
+write.table(d)
+write.table(d, col.names=FALSE)
+write.table(d, row.names=FALSE)
+write.table(d, quote=FALSE)
+write.table(d, col.names=FALSE, quote=FALSE)
+write.table(d, row.names=FALSE, quote=FALSE)
+write.table(m, quote=numeric(0)) # not the same as FALSE
+##
+
+
+## removing variable from baseenv
+try(remove("ls", envir=baseenv()))
+try(remove("ls", envir=asNamespace("base")))
+## no message in 2.3.1
+
+
+## tests of behaviour of factors
+(x <- factor(LETTERS[1:5])[2:4])
+x[2]
+x[[2]]
+stopifnot(identical(x[2], x[[2]]))
+as.list(x)
+unlist(as.list(x))
+stopifnot(identical(x, unlist(as.list(x))))
+as.vector(x, "list")
+sapply(x, na.pass)
+stopifnot(identical(x, sapply(x, na.pass)))
+## changed in 2.4.0
+
+
+## as.character on a factor with "NA" level
+as.character(as.factor(c("AB", "CD", NA)))
+as.character(as.factor(c("NA", "CD", NA)))  # use <NA> is 2.3.x
+as.vector(as.factor(c("NA", "CD", NA)))     # but this did not
+## used <NA> before
+
+
+## [ on a zero-column data frame, names of such
+data.frame()[FALSE]
+names(data.frame())
+# gave NULL names and hence spurious warning.
+
+
+## residuals from zero-weight glm fits
+d.AD <- data.frame(treatment = gl(3,3), outcome = gl(3,1,9),
+                   counts = c(18,17,15,20,10,20,25,13,12))
+fit <- glm(counts ~ outcome + treatment, family = poisson,
+           data = d.AD, weights = c(0, rep(1,8)))
+residuals(fit, type="working") # first was NA < 2.4.0
+## working residuals were NA for zero-weight cases.
+fit2 <- glm(counts ~ outcome + treatment, family = poisson,
+           data = d.AD, weights = c(0, rep(1,8)), y = FALSE)
+for(z in c("response", "working", "deviance", "pearson"))
+    stopifnot(all.equal(residuals(fit, type=z), residuals(fit2, type=z),
+                        scale = 1, tol = 1e-10))
+
+## apply on arrays with zero extents
+## Robin Hankin, R-help, 2006-02-13
+A <- array(0, c(3, 0, 4))
+dimnames(A) <- list(a = letters[1:3], b = NULL, c = LETTERS[1:4])
+f <- function(x) 5
+apply(A, 1:2, f)
+apply(A, 1, f)
+apply(A, 2, f)
+## dropped dims in 2.3.1
+
+
+## print a factor with names
+structure(factor(1:4), names = letters[1:4])
+## dropped names < 2.4.0
+
+
+## some tests of factor matrices
+A <- factor(7:12)
+dim(A) <- c(2, 3)
+A
+str(A)
+A[, 1:2]
+A[, 1:2, drop=TRUE]
+A[1,1] <- "9"
+A
+## misbehaved < 2.4.0
+
+
+## [dpqr]t with vector ncp
+nc <- c(0, 0.0001, 1)
+dt(1.8, 10, nc)
+pt(1.8, 10, nc)
+qt(0.95, 10, nc)
+## gave warnings in 2.3.1, short answer for qt.
+dt(1.8, 10, -nc[-1])
+pt(1.8, 10, -nc[-1])
+qt(0.95, 10, -nc[-1])
+## qt in 2.3.1 did not allow negative ncp.
+
+
+## merge() used to insert row names as factor, not character, so
+## sorting was unexpected.
+A <- data.frame(a = 1:4)
+row.names(A) <- c("2002-11-15", "2002-12-15", "2003-01-15", "2003-02-15")
+B <- data.frame(b = 1:4)
+row.names(B) <- c("2002-09-15", "2002-10-15", "2002-11-15", "2002-12-15")
+merge(A, B, by=0, all=TRUE)
+
+
+## assigning to a list loop index could alter the index (PR#9216)
+L <- list(a = list(txt = "original value"))
+f <- function(LL) {
+    for (ll in LL) ll$txt <- "changed in f"
+    LL
+}
+f(L)
+L
+## both were changed < 2.4.0
+
+
+## summary.mlm misbehaved with na.action = na.exclude
+n <- 50
+x <- runif(n=n)
+y1 <- 2 * x + rnorm(n=n)
+y2 <- 5 * x + rnorm(n=n)
+y2[sample(1:n, size=5)] <- NA
+y <- cbind(y1, y2)
+fit <- lm(y ~ 1, na.action="na.exclude")
+summary(fit)
+## failed < 2.4.0
+
+
+## prettyNum lost attributes (PR#8695)
+format(matrix(1:16, 4), big.mark = ",")
+## was a vector < 2.4.0
+
+
+## printing of complex numbers of very different magnitudes
+1e100  + 1e44i
+1e100 + pi*1i*10^(c(-100,0,1,40,100))
+## first was silly, second not rounded correctly in 2.2.0 - 2.3.1
+## We don't get them lining up, but that is a printf issue
+## that only happens for very large complex nos.
+
+
+### end of tests added in 2.4.0 ###

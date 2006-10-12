@@ -13,14 +13,16 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = bzip2 pcre xdr zlib
-SUBDIRS_WITH_NO_BUILD =
+SUBDIRS = blas bzip2 pcre xdr zlib @USE_NLS_TRUE@ intl
+SUBDIRS_WITH_NO_BUILD = trio @USE_NLS_FALSE@ intl
 
-LIBBZ2 = @BUILD_BZLIB_TRUE@ bzip2
-LIBPCRE = @BUILD_PCRE_TRUE@ pcre
-LIBZ = @BUILD_ZLIB_TRUE@ zlib
-LIBXDR = @BUILD_XDR_TRUE@ xdr
-EXTRA_LIBS = $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR)
+RBLAS =@BLAS_SHLIB_TRUE@ blas
+LIBBZ2 =@BUILD_BZLIB_TRUE@ bzip2
+LIBPCRE =@BUILD_PCRE_TRUE@ pcre
+LIBZ =@BUILD_ZLIB_TRUE@ zlib
+LIBXDR =@BUILD_XDR_TRUE@ xdr
+LIBINTL =@BUILD_LIBINTL_TRUE@ intl
+EXTRA_LIBS = $(RBLAS) $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR) $(LIBINTL)
 
 all: Makefile R
 
@@ -44,7 +46,12 @@ distclean: clean
 	-@rm -f Makefile
 maintainer-clean: distclean
 
-install install-strip uninstall TAGS info dvi check:
+install:
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
+
+install-strip uninstall TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

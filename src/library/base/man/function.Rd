@@ -39,8 +39,8 @@ return(value)
   \code{\link{args}} and \code{\link{body}} for accessing the arguments
   and body of a function.
 
-  \code{\link{debug}} for debugging; \code{\link{invisible}} for
-  \code{return(.)}ing \emph{invisibly}.
+  \code{\link{debug}} for debugging; using \code{\link{invisible}} inside
+  \code{return(.)} for returning \emph{invisibly}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

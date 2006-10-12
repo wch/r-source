@@ -18,10 +18,14 @@ prcomp(x, \dots)
 \method{prcomp}{formula}(formula, data = NULL, subset, na.action, \dots)
 
 \method{prcomp}{default}(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL, \dots)
+
+\method{predict}{prcomp}(object, newdata, \dots)
 }
 \arguments{
-  \item{formula}{a formula with no response variable.}
-  \item{data}{an optional data frame containing the variables in the
+  \item{formula}{a formula with no response variable, referring only to
+    numeric variables.}
+  \item{data}{an optional data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
     \code{environment(formula)}.}
   \item{subset}{an optional vector used to select rows (observations) of the
@@ -54,10 +58,18 @@ prcomp(x, \dots)
     With the default null setting, no components
     are omitted.  Other settings for tol could be \code{tol = 0} or
     \code{tol = sqrt(.Machine$double.eps)}, which would omit
-    essentially constant components.} 
+    essentially constant components.}
+  \item{object}{Object of class inheriting from \code{"prcomp"}}
+  \item{newdata}{An optional data frame or matrix in which to look for
+    variables with which to predict.  If omitted, the scores are used.
+    If the original fit used a formula or a data frame or a matrix with
+    column names, \code{newdata} must contain columns with the same
+    names. Otherwise it must contain the same number of columns, to be
+    used in the same order.
+  }
 }
 \value{
-  \code{prcomp} returns an list with class \code{"prcomp"}
+  \code{prcomp} returns a list with class \code{"prcomp"}
   containing the following components:
   \item{sdev}{the standard deviations of the principal components
     (i.e., the square roots of the eigenvalues of the
@@ -68,7 +80,10 @@ prcomp(x, \dots)
     \code{princomp} returns this in the element \code{loadings}.}
   \item{x}{if \code{retx} is true the value of the rotated data (the
     centred (and scaled if requested) data multiplied by the
-    \code{rotation} matrix) is returned.}
+    \code{rotation} matrix) is returned.  Hence, \code{cov(x)} is the
+    diagonal matrix \code{diag(sdev^2)}.  For the formula method,
+    \code{napredict} is applied to handle the treatment of values
+    omitted by the \code{na.action}.}
   \item{center, scale}{the centering and scaling used, or \code{FALSE}.}
 }
 \details{
@@ -78,6 +93,9 @@ prcomp(x, \dots)
   is generally the preferred method for numerical accuracy.  The
   \code{print} method for the these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.
+
+  Note that \code{scale = TRUE} cannot be used if there are zero or
+  constant (for \code{center = TRUE}) variables.
 }
 \note{
   The signs of the columns of the rotation matrix are arbitrary, and

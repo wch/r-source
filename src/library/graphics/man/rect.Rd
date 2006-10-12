@@ -2,8 +2,8 @@
 \title{Draw One or More Rectangles}
 \usage{
 rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
-     col = NULL, border = NULL, lty = NULL, lwd = par("lwd"),
-     xpd = NULL, \dots)
+     col = NA, border = NULL, lty = par("lty"), lwd = par("lwd"),
+     \dots)
 }
 \alias{rect}
 \arguments{
@@ -18,15 +18,18 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
     color filling).}
   \item{angle}{angle (in degrees) of the shading lines.}
   \item{col}{color(s) to fill or shade the rectangle(s) with.
-    The default \code{NULL}, or also \code{\link{NA}} do not fill,
+    The default \code{NA} (or also \code{NULL}) means do not fill,
     i.e., draw transparent rectangles, unless \code{density} is specified.}
-  \item{border}{color for rectangle border(s). Can also be \code{FALSE}
-    to suppress the border, or \code{TRUE} in which case \code{col} is used.}
+  \item{border}{color for rectangle border(s).  The default means
+    \code{par("fg")}.  Use \code{border = NA} to omit borders.
+
+    Can also be \code{FALSE} to suppress the border, or \code{TRUE} in
+    which case \code{col} is used.}
   \item{lty}{line type for borders and shading; defaults to \code{"solid"}.}
   \item{lwd}{line width for borders and shading.}
-  \item{xpd}{logical (\dQuote{e\bold{xp}an\bold{d}}); defaults to
-    \code{par("xpd")}.  See \code{\link{par}(xpd= )}.}
-  \item{\dots}{other graphical parameters can be given as arguments.}
+  \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
+    \code{ljoin} and \code{lmitre} can be given as
+    arguments.}
 }
 \description{
   \code{rect} draws a rectangle (or sequence of rectangles) with the
@@ -54,12 +57,14 @@ op <- par(bg = "thistle")
 plot(c(100, 250), c(300, 450), type = "n", xlab="", ylab="",
      main = "2 x 11 rectangles; 'rect(100+i,300+i,  150+i,380+i)'")
 i <- 4*(0:10)
-## draw rectangles with bottom left (100, 300)+i and top right (150, 380)+i
+## draw rectangles with bottom left (100, 300)+i
+## and top right (150, 380)+i
 rect(100+i, 300+i, 150+i, 380+i, col=rainbow(11, start=.7,end=.1))
 rect(240-i, 320+i, 250-i, 410+i, col=heat.colors(11), lwd=i/5)
 ## Background alternating  ( transparent / "bg" ) :
 j <- 10*(0:5)
-rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0), border = "gold", lwd = 2)
+rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0),
+     border = "gold", lwd = 2)
 rect(125+j, 296+j/2, 141+j, 331+j/5, col = c(NA,"midnightblue"))
 mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\"))")
 

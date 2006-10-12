@@ -11,10 +11,12 @@
 \usage{
 printCoefmat(x, digits=max(3, getOption("digits") - 2),
              signif.stars = getOption("show.signif.stars"),
+             signif.legend = signif.stars,
              dig.tst = max(1, min(5, digits - 1)),
              cs.ind = 1:k, tst.ind = k + 1, zap.ind = integer(0),
              P.values = NULL,
-             has.Pvalue = nc >= 4 && substr(colnames(x)[nc],1,3) == "Pr(",
+             has.Pvalue = nc >= 4 &&
+                          substr(colnames(x)[nc],1,3) == "Pr(",
              eps.Pvalue = .Machine$double.eps,
              na.print = "NA", \dots)
 }
@@ -26,6 +28,8 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
     encoded visually as \dQuote{significance stars} in order to help scanning
     of long coefficient tables.  It defaults to the
     \code{show.signif.stars} slot of \code{\link{options}}.}
+  \item{signif.legend}{logical; if \code{TRUE}, a legend for the 
+    \dQuote{significance stars} is printed provided \code{signif.stars=TRUE}.}
   \item{dig.tst}{minimum number of significant digits for the test statistics,
     see \code{tst.ind}.}
   \item{cs.ind}{indices (integer) of column numbers which are (like)

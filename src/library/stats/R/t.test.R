@@ -8,11 +8,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     alternative <- match.arg(alternative)
 
     if(!missing(mu) && (length(mu) != 1 || is.na(mu)))
-        stop("mu must be a single number")
+        stop("'mu' must be a single number")
     if(!missing(conf.level) &&
        (length(conf.level) != 1 || !is.finite(conf.level) ||
         conf.level < 0 || conf.level > 1))
-        stop("conf.level must be a single number between 0 and 1")
+        stop("'conf.level' must be a single number between 0 and 1")
     if( !is.null(y) ) {
 	dname <- paste(deparse(substitute(x)),"and",
 		       deparse(substitute(y)))
@@ -26,7 +26,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     }
     else {
 	dname <- deparse(substitute(x))
-	if( paired ) stop("y is missing for paired test")
+	if( paired ) stop("'y' is missing for paired test")
 	xok <- !is.na(x)
 	yok <- NULL
     }
@@ -36,19 +36,21 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	y <- NULL
     }
     nx <- length(x)
-    if(nx < 2) stop("not enough x observations")
+    if(nx < 2) stop("not enough 'x' observations")
     mx <- mean(x)
     vx <- var(x)
     estimate <- mx
     if(is.null(y)) {
 	df <- nx-1
 	stderr <- sqrt(vx/nx)
+        if(stderr < 10 *.Machine$double.eps * abs(mx))
+            stop("data are essentially constant")
 	tstat <- (mx-mu)/stderr
 	method <- ifelse(paired,"Paired t-test","One Sample t-test")
 	names(estimate) <- ifelse(paired,"mean of the differences","mean of x")
     } else {
 	ny <- length(y)
-	if(ny < 2) stop("not enough y observations")
+	if(ny < 2) stop("not enough 'y' observations")
 	my <- mean(y)
 	vy <- var(y)
 	method <- paste(if(!var.equal)"Welch", "Two Sample t-test")
@@ -64,6 +66,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	    stderr <- sqrt(stderrx^2 + stderry^2)
 	    df <- stderr^4/(stderrx^4/(nx-1) + stderry^4/(ny-1))
 	}
+        if(stderr < 10 *.Machine$double.eps * max(abs(mx), abs(my)))
+            stop("data are essentially constant")
         tstat <- (mx - my - mu)/stderr
     }
     if (alternative == "less") {
@@ -98,9 +102,8 @@ function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
        || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1)
-       || (length(attr(terms(formula[-3]), "term.labels")) != 1))
-        stop("formula missing or incorrect")
+       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

@@ -1,10 +1,11 @@
 \name{remove}
 \title{Remove Objects from a Specified Environment}
 \usage{
-remove(\dots, list = character(0), pos = -1, envir = as.environment(pos),
-       inherits = FALSE)
-rm    (\dots, list = character(0), pos = -1, envir = as.environment(pos),
-       inherits = FALSE)
+remove(\dots, list = character(0), pos = -1,
+       envir = as.environment(pos), inherits = FALSE)
+
+rm    (\dots, list = character(0), pos = -1,
+       envir = as.environment(pos), inherits = FALSE)
 }
 \alias{rm}
 \alias{remove}
@@ -41,7 +42,11 @@ rm    (\dots, list = character(0), pos = -1, envir = as.environment(pos),
   access the currently active function calls).
   The \code{envir} argument is an alternative way to specify an
   environment, but is primarily there for back compatibility.
-   }
+
+  It is not allowed to remove variables from the base environment and
+  base namespace, nor from any environment which is locked (see
+  \code{\link{lockEnvironment}}).
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

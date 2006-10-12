@@ -40,7 +40,7 @@ dkwtest <- function(stub = "norm", ...,
     }
     rval <- (s < qdkwbound(sample.size,pthreshold))
     if (print.result)
-        cat(c(" FAILED\n"," PASSED\n",)[rval+1])
+        cat(c(" FAILED\n"," PASSED\n")[rval+1])
     if (stop.on.failure && !rval)
         stop("dkwtest failed")
     rval
@@ -122,6 +122,16 @@ dkwtest("f",df1 = 30,df2 =  3)
 
 dkwtest("weibull",shape = 1)
 dkwtest("weibull",shape = 4,scale = 4)
+
+## regression test for PR#7314
+dkwtest("hyper", m=60, n=100, k=50)
+dkwtest("hyper", m=6, n=10, k=5)
+dkwtest("hyper", m=600, n=1000, k=500)
+
+## regression test for non-central t bug
+dkwtest("t", df=20, ncp=3)
+## regression test for non-central F bug
+dkwtest("f", df1=10, df2=2, ncp=3)
 
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')

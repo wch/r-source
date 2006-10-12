@@ -123,17 +123,16 @@ apse_t *apse_create(unsigned char*	pattern,
 apse_bool_t apse_match(apse_t*		ap,
 		       unsigned char*	text,
 		       apse_size_t	text_size);
+#if 0
 apse_bool_t apse_match_next(apse_t*		ap,
 			    unsigned char*	text,
 			    apse_size_t		text_size);
-
 apse_ssize_t apse_index(apse_t*		ap,
 			unsigned char*	text,
 			apse_size_t 	text_size);
 apse_ssize_t apse_index_next(apse_t*		ap,
 			     unsigned char*	text,
 			     apse_size_t 	text_size);
-
 apse_bool_t apse_slice(apse_t*		ap,
 		       unsigned char*	text,
 		       apse_size_t	text_size,
@@ -166,19 +165,24 @@ apse_size_t apse_get_text_final_position(apse_t *ap);
 apse_bool_t apse_set_text_position_range(apse_t *ap,
 					   apse_size_t text_position_range);
 apse_size_t apse_get_text_position_range(apse_t *ap);
+#endif
 
 apse_bool_t apse_set_insertions(apse_t *ap, apse_size_t insertions);
 apse_bool_t apse_set_deletions(apse_t *ap, apse_size_t deletions);
 apse_bool_t apse_set_substitutions(apse_t *ap, apse_size_t substitutions);
+
+#if 0
 apse_size_t apse_get_insertions(apse_t *ap);
 apse_size_t apse_get_deletions(apse_t *ap);
 apse_size_t apse_get_substitutions(apse_t *ap);
+#endif
 
 apse_bool_t apse_set_caseignore_slice(apse_t*		ap,
 				      apse_ssize_t	caseignore_begin,
 				      apse_ssize_t	caseignore_size,
 				      apse_bool_t	caseignore);
 
+#if 0
 void apse_set_greedy(apse_t *ap, apse_bool_t greedy);
 apse_bool_t apse_get_greedy(apse_t *ap);
 
@@ -216,6 +220,7 @@ void apse_set_custom_data(apse_t*	ap,
 			  apse_size_t	custom_data_size);
 void* apse_get_custom_data(apse_t*	ap,
 			   apse_size_t*	custom_data_size);
+#endif
 
 void apse_destroy(apse_t *ap);
 

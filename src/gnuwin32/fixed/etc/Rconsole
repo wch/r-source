@@ -4,7 +4,9 @@
 
 ## Style
 # This can be `yes' (for MDI) or `no' (for SDI).
-MDI = yes
+  MDI = yes
+# MDI = no
+
 # the next two are only relevant for MDI
 toolbar = yes
 statusbar = yes
@@ -57,7 +59,15 @@ usertext = Red
 highlight = DarkRed
 
 
-## Initial position of the graphics window 
+## Initial position of the graphics window
 ## (pixels, <0 values from opposite edge)
 xgraphics = -25
 ygraphics = 0
+
+
+## Language for messages
+language = 
+
+
+## Default setting for console buffering: 'yes' or 'no'
+buffered = yes

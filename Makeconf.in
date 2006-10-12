@@ -19,7 +19,7 @@ CC = @CC@
 CFLAGS = @CFLAGS@
 CPICFLAGS = @CPICFLAGS@
 CPPFLAGS = @CPPFLAGS@
-DEFS = @DEFS@
+DEFS = @DEFS@ @R_DEFS@
 DISTDIR_TAR_EXCLUDE = --exclude=.svn --exclude=CVS --exclude=Makefile --exclude="*.o" --exclude="*$(SHLIB_EXT)"
 DVIPS = @DVIPS@
 DYLIB_EXT = @DYLIB_EXT@
@@ -32,39 +32,39 @@ ECHO_T = @ECHO_T@
 FFLAGS = @FFLAGS@
 FLIBS = @FLIBS@
 FPICFLAGS = @FPICFLAGS@
-F2C = @F2C@
-F2CFLAGS = @F2CFLAGS@
 F77 = @F77@
 GETWD = @GETWD@
-GNOMEUI_LIBS = @GNOMEUI_LIBS@
-GNOME_LIBDIR = @GNOME_LIBDIR@
-GNOME_INCLUDEDIR = @GNOME_INCLUDEDIR@
+GZIP = --best
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_DIR = ${INSTALL} -d
+JAVA = @JAVA@
+JAVA_HOME = @JAVA_HOME@
+JAVA_LD_LIBRARY_PATH = @JAVA_LD_LIBRARY_PATH@
+JAVA_LIBS = @JAVA_LIBS0@
 JAVAC = @JAVAC@
 LATEX = @LATEX@
 LDFLAGS = @LDFLAGS@
-LIBGLADE_CFLAGS = @LIBGLADE_CFLAGS@
-LIBGLADE_LIBS = @LIBGLADE_LIBS@
 LIBM = @LIBM@
 LIBR = @LIBR@
 LIBS = @LIBS@
+LIBnn = @LIBnn@
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 MAIN_CFLAGS = @MAIN_CFLAGS@
 MAIN_FFLAGS = @MAIN_FFLAGS@
 MAIN_LD = @MAIN_LD@
 MAIN_LDFLAGS = @MAIN_LDFLAGS@
-@USE_LIBTOOL_FALSE@MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
-@USE_LIBTOOL_TRUE@MAIN_LINK = $(LIBTOOL) --mode=link $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
+MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
 MAKEINDEX = @MAKEINDEX@
 MKINSTALLDIRS = $(SHELL) $(top_srcdir)/src/scripts/mkinstalldirs
 PERL = @PERL@
+R_ARCH = @R_ARCH@
 R_FRAMEWORK_DIR = $(prefix)/R.framework
-R_GUIS = @R_GUIS@
+R_GZIPCMD = @R_GZIPCMD@
+R_MODULES = @R_MODULES@
 R_OSTYPE = @R_OSTYPE@
 R_PKGS = $(R_PKGS_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(R_PKGS_RECOMMENDED)
 R_PLATFORM = @R_PLATFORM@
@@ -73,6 +73,7 @@ R_XTRA_CPPFLAGS = @R_XTRA_CPPFLAGS@ -I. -I$(top_builddir)/src/include -I$(top_sr
 R_XTRA_FFLAGS = @R_XTRA_FFLAGS@
 R_XTRA_LIBS = @R_XTRA_LIBS@
 RANLIB = @RANLIB@
+READLINE_LIBS = @READLINE_LIBS@
 SED = @SED@
 SHELL = @SHELL@
 SHLIB_EXT = @SHLIB_EXT@
@@ -80,8 +81,7 @@ SHLIB_CFLAGS = @SHLIB_CFLAGS@
 SHLIB_FFLAGS = @SHLIB_FFLAGS@
 SHLIB_LD = @SHLIB_LD@
 SHLIB_LDFLAGS = @SHLIB_LDFLAGS@
-@USE_LIBTOOL_FALSE@SHLIB_LINK = $(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS)
-@USE_LIBTOOL_TRUE@SHLIB_LINK = $(LIBTOOL) --mode=link $(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS)
+SHLIB_LINK = $(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS)
 TAR = @TAR@
 X_CFLAGS = @X_CFLAGS@
 X_LIBS = @X_LIBS@
@@ -92,35 +92,46 @@ YACC = @YACC@
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(MAIN_CFLAGS) $(CFLAGS)
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 ALL_FFLAGS = $(R_XTRA_FFLAGS) $(MAIN_FFLAGS) $(FFLAGS)
-
 ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
-ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
+ALL_FFLAGS_LO = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 .SUFFIXES:
-.SUFFIXES: .c .f .d .lo .o
+.SUFFIXES: .c .f .d .o
 
 @r_cc_rules_frag@
-@r_f77_rules_frag@
+.f.o:
+	$(F77) $(ALL_FFLAGS) -c $< -o $@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
+datarootdir = @datarootdir@
+## only used for installing 'R'.
 bindir = @bindir@
+## not used
 datadir = @datadir@
+## used for 'rhome' and installation of standalone Rmath
 libdir = @libdir@
+## used for man page
 mandir = @mandir@
+## used for installation of standalone Rmath headers
 includedir = @includedir@
 
-rhome = @libdir@/R
+rhome = ${libdir}/R
+rsharedir = @rsharedir@
+rincludedir = @rincludedir@
+rdocdir = @rdocdir@
 
-## Overrides for installing R as a framework (MacOSX).
-@WANT_R_FRAMEWORK_TRUE@rhome = $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources
+## Overrides for installing R as a framework (MacOS X).
+@WANT_R_FRAMEWORK_TRUE@FW_VERSION = @FW_VERSION@
+@WANT_R_FRAMEWORK_TRUE@rhome = $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources
 @WANT_R_FRAMEWORK_TRUE@bindir = $(rhome)
 @WANT_R_FRAMEWORK_TRUE@mandir = $(rhome)
 
 Rexecbindir = $(rhome)/bin
-Rexeclibdir = $(rhome)/lib
+Rexecbindir2 = $(rhome)/bin/exec$(R_ARCH)
+Rexeclibdir = $(rhome)/lib$(R_ARCH)
 ## FIXME:
 ## Alternatively, we could try to set pkglibdir = $(rhome)/lib when
 ## switching to automake.
 ## </FIXME>
-Rexecmodulesdir = $(rhome)/modules
+Rexecmodulesdir = $(rhome)/modules$(R_ARCH)

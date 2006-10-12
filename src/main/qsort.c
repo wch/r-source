@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* **********************************************************************
@@ -36,7 +36,7 @@
 
 
 /* R function  qsort(x, index.return) */
-SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, sx;
     int indx_ret, n;
@@ -47,13 +47,15 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     x = CAR(args);
     if (!isNumeric(x))
-	errorcall(call, "Argument is not a numeric vector");
+	errorcall(call, _("argument is not a numeric vector"));
     x_real= TYPEOF(x) == REALSXP;
     x_int = !x_real && (TYPEOF(x) == INTSXP || TYPEOF(x) == LGLSXP);
     PROTECT(sx = (x_real || x_int) ? duplicate(x) : coerceVector(x, REALSXP));
-    /* if x has names, drop them, since they won't be ordered : */
-    if (!isNull(getAttrib(sx, R_NamesSymbol)))
-	setAttrib(sx, R_NamesSymbol, R_NilValue);
+    SET_ATTRIB(sx, R_NilValue);
+    SET_OBJECT(sx, 0);
+    /* if x has names, drop them, since they won't be ordered
+       if (!isNull(getAttrib(sx, R_NamesSymbol)))
+           setAttrib(sx, R_NamesSymbol, R_NilValue); */
     indx_ret = asLogical(CADR(args));
     n = LENGTH(x);
     if(x_int) ivx = INTEGER(sx); else vx = REAL(sx);
@@ -75,8 +77,8 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	SET_VECTOR_ELT(ans, 0, sx);
 	SET_VECTOR_ELT(ans, 1, indx);
-	SET_VECTOR_ELT(ansnames, 0, mkChar("x"));
-	SET_VECTOR_ELT(ansnames, 1, mkChar("ix"));
+	SET_STRING_ELT(ansnames, 0, mkChar("x"));
+	SET_STRING_ELT(ansnames, 1, mkChar("ix"));
 	setAttrib(ans, R_NamesSymbol, ansnames);
 	UNPROTECT(4);
 	return ans;

@@ -15,5 +15,7 @@ struct structEditorData {
     Rboolean stealconsole;  /* set when using fix() or edit(), so that no events are sent to console until this editor is closed */
     menuitem mcut, mcopy, mdelete, mfind, mreplace,
 	mpopcut, mpopcopy, mpopdelete;
+    HelpMenuItems hmenu;
+    PkgMenuItems pmenu;
 };
 typedef struct structEditorData *EditorData;

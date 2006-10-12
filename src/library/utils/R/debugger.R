@@ -7,7 +7,9 @@ dump.frames <- function(dumpto = "last.dump", to.file = FALSE)
     attr(last.dump, "error.message") <- geterrmessage()
     class(last.dump) <- "dump.frames"
     if(dumpto != "last.dump") assign(dumpto, last.dump)
-    if (to.file) save(list=dumpto, file = paste(dumpto, "rda", sep="."))
+    if (to.file)
+        save(list=dumpto, file = paste(dumpto, "rda", sep="."),
+             compress = TRUE)
     else assign(dumpto, last.dump, envir=.GlobalEnv)
     invisible()
 }
@@ -18,25 +20,25 @@ debugger <- function(dump = last.dump)
     {
         for(.obj in ls(envir=dump[[.selection]], all.names=TRUE))
             assign(.obj, get(.obj, envir=dump[[.selection]]))
-        cat("Browsing in the environment with call:\n   ",
+        cat(gettext("Browsing in the environment with call:\n   "),
             calls[.selection], "\n", sep="")
         rm(.obj, .selection)
         browser()
     }
     if (class(dump) != "dump.frames") {
-        cat("`dump' is not an object of class `dump.frames'\n")
+        cat(gettext("'dump' is not an object of class 'dump.frames'\n"))
         return(invisible())
     }
     err.action <- getOption("error")
     on.exit(options(error=err.action))
     if (length(msg <- attr(dump, "error.message")))
-        cat("Message: ", msg)
+        cat(gettext("Message: "), msg)
     n <- length(dump)
     calls <- names(dump)
     repeat {
-        cat("Available environments had calls:\n")
+        cat(gettext("Available environments had calls:\n"))
         cat(paste(1:n, ": ", calls,  sep=""), sep="\n")
-        cat("\nEnter an environment number, or 0 to exit  ")
+        cat(gettext("\nEnter an environment number, or 0 to exit  "))
         repeat {
             ind <- .Internal(menu(as.character(calls)))
             if(ind <= n) break
@@ -46,16 +48,13 @@ debugger <- function(dump = last.dump)
     }
 }
 
-limitedLabels <- function(value, maxwidth = options()$width)
+## allow for the numbering by menu here
+limitedLabels <- function(value, maxwidth = getOption("width") - 5)
 {
     value <- as.character(value)
     if(is.null(maxwidth) || maxwidth < 40)
         maxwidth <- 40
-    if(any(nchar(value) > maxwidth)) {
-        trim <- nchar(value) > maxwidth
-        value[trim] <- substr(value[trim], 1, maxwidth)
-    }
-    value
+    strtrim(value, maxwidth)
 }
 
 recover <-
@@ -66,14 +65,29 @@ recover <-
         tState <- tracingState(FALSE)
         on.exit(tracingState(tState))
     }
-    ## find an interesting environment to dump from
+    ## find an interesting environment to start from
     calls <- sys.calls()
     from <- 0
     n <- length(calls)
     if(identical(sys.function(n), recover))
         ## options(error=recover) produces a call to this function as an object
         n <- n - 1
-    for(i in rev(seq(length=n))) {
+    ## look for a call inserted by trace() (and don't show frames below)
+    ## this level.
+    for(i in rev(seq_len(n))) {
+        calli <- calls[[i]]
+        fname <- calli[[1]]
+        ## deparse can use more than one line
+        if(!is.na(match(deparse(fname)[1],
+                        c("methods::.doTrace", ".doTrace")))) {
+            from <- i-1
+            break
+        }
+    }
+  ## if no trace, look for the first frame from the bottom that is not
+    ## stop or recover
+    if(from == 0)
+      for(i in rev(seq_len(n))) {
         calli <- calls[[i]]
         fname <- calli[[1]]
         if(!is.name(fname) ||
@@ -85,7 +99,7 @@ recover <-
     if(from > 0) {
         if(!interactive()) {
             try(dump.frames())
-            message("recover called non-interactively; frames dumped, use debugger() to view")
+            cat(gettext("recover called non-interactively; frames dumped, use debugger() to view\n"))
             return(NULL)
         }
         else if(identical(options()$show.error.messages, FALSE)) { # from try(silent=TRUE)?
@@ -101,5 +115,5 @@ recover <-
         }
     }
     else
-        cat("No suitable frames for recover()\n")
+        cat(gettext("No suitable frames for recover()\n"))
 }

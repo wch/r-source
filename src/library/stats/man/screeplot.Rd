@@ -3,7 +3,8 @@
 \title{Screeplot of PCA Results}
 \usage{
 screeplot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), main = deparse(substitute(x)), \dots)
+          type = c("barplot", "lines"),
+          main = deparse(substitute(x)), \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"princomp"}, as

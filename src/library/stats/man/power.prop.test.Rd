@@ -1,13 +1,15 @@
 \name{power.prop.test}
 \alias{power.prop.test}
-\title{Power calculations two sample test for of proportions}
+\encoding{latin1}
+\title{Power calculations two sample test for proportions}
 \description{
   Compute power of test, or determine parameters to obtain target power.
 }
 \usage{
-power.prop.test(n=NULL, p1=NULL, p2=NULL, sig.level=0.05,
-                power=NULL,
-                alternative=c("two.sided", "one.sided"), strict=FALSE)
+power.prop.test(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
+                power = NULL,
+                alternative = c("two.sided", "one.sided"),
+                strict = FALSE)
 }
 \arguments{
   \item{n}{Number of observations (per group)}
@@ -25,7 +27,7 @@ power.prop.test(n=NULL, p1=NULL, p2=NULL, sig.level=0.05,
   has a non-NULL default so NULL must be explicitly passed if you want
   it  computed.
 
-  If \code{strict=TRUE} is used, the power will include the probability of
+  If \code{strict = TRUE} is used, the power will include the probability of
   rejection in the opposite direction of the true effect, in the two-sided 
   case. Without this the power will be half the significance level if the 
   true difference is zero.
@@ -35,7 +37,9 @@ power.prop.test(n=NULL, p1=NULL, p2=NULL, sig.level=0.05,
   (including the computed one) augmented with \code{method} and
   \code{note} elements. 
 }
-\author{Peter Dalgaard.  Based on previous work by Claus Ekstrøm}
+\author{Peter Dalgaard.  Based on previous work by Claus
+  \enc{Ekstrøm}{Ekstrom}}
+
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so
   you may see errors from it, notably about inability to bracket the
@@ -48,8 +52,8 @@ power.prop.test(n=NULL, p1=NULL, p2=NULL, sig.level=0.05,
 
 
 \examples{
- power.prop.test(n=50, p1=.50, p2=.75)
- power.prop.test(p1=.50, p2=.75, power=.90)
- power.prop.test(n=50, p1=.5, power=.90)
+ power.prop.test(n = 50, p1 = .50, p2 = .75)
+ power.prop.test(p1 = .50, p2 = .75, power = .90)
+ power.prop.test(n = 50, p1 = .5, power = .90)
 }
 \keyword{ htest }

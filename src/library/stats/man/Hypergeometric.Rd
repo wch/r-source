@@ -34,6 +34,8 @@ rhyper(nn, m, n, k)
   \code{phyper} gives the distribution function,
   \code{qhyper} gives the quantile function, and
   \code{rhyper} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The hypergeometric distribution is used for sampling \emph{without}
@@ -44,6 +46,23 @@ rhyper(nn, m, n, k)
     p(x) = \left. {m \choose x}{n \choose k-x} \right/ {m+n \choose k}%
   }{p(x) =      choose(m, x) choose(n, k-x) / choose(m+n, k)}
   for \eqn{x = 0, \ldots, k}{x = 0, ..., k}.
+}
+\source{
+  \code{dhyper} computes via binomial probabilities, using code
+  contributed by Catherine Loader (see \code{\link{dbinom}}).
+
+  \code{phyper} is based on calculating \code{dhyper} and
+  \code{phyper(...)/dhyper(...)} (as a summation), based on ideas of Ian
+  Smith and Morten Welinder.
+
+  \code{qhyper} is based on inversion.
+
+  \code{rhyper} is based on a corrected version of
+
+  Kachitvichyanukul, V. and Schmeiser, B. (1985).
+  Computer generation of hypergeometric random variates.
+  \emph{Journal of Statistical Computation and Simulation},
+  \bold{22}, 127--145.
 }
 \references{
   Johnson, N. L., Kotz, S., and Kemp, A. W. (1992)

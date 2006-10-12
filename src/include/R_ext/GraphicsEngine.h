@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-4 The R Development Core Team.
+ *  Copyright (C) 2001-5 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -14,10 +14,37 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* Used by third-party graphics devices */
+
+#ifndef R_GRAPHICSENGINE_H_
+#define R_GRAPHICSENGINE_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*
+ * The current graphics engine (including graphics device) API version
+ * MUST be integer
+ * 
+ * This number should be bumped whenever there are changes to 
+ * GraphicsEngine.h or GraphicsDevice.h so that add-on packages
+ * that compile against these headers (graphics systems such as
+ * graphics and grid;  graphics devices such as gtkDevice, RSvgDevice)
+ * can detect any version mismatch.
+ *
+ * Version 1:  Introduction of the version number.
+ * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
+ */
+
+#define R_GE_version 2
+
+int R_GE_getVersion();
+
+void R_GE_checkVersionOrDie(int version);
 
 /* The graphics engine will only accept locations and dimensions 
  * in native device coordinates, but it provides the following functions
@@ -116,12 +143,46 @@ typedef struct {
 
 struct _GEDevDesc {
     int newDevStruct;
+    /* 
+     * Stuff that the devices can see (and modify).
+     * All detailed in GraphicsDevice.h
+     */
     NewDevDesc *dev;
-    /* Information about a device which has nothing to do with
-     * R's concept of a graphics engine.
+    /*
+     * Stuff about the device that only the graphics engine sees
+     * (the devices don't see it).
+     * Display list stuff should come here from NewDevDesc struct.
+     */
+    Rboolean dirty;  /* Has the device received any output? */
+    Rboolean recordGraphics; /* Should a graphics call be stored
+			      * on the display list?
+			      * Set to FALSE by do_recordGraphics,
+			      * do_dotcallgr, and do_Externalgr 
+			      * so that nested calls are not
+			      * recorded on the display list
+			      */
+    /* 
+     * Stuff about the device that only graphics systems see.
+     * The graphics engine has no idea what is in here.
+     * Used by graphics systems to store system state per device.
      */
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
 };
+
+/*
+ *  Some line end/join constants
+ */
+typedef enum {
+  GE_ROUND_CAP  = 1,
+  GE_BUTT_CAP   = 2,
+  GE_SQUARE_CAP = 3
+} R_GE_lineend;
+
+typedef enum {
+  GE_ROUND_JOIN = 1,
+  GE_MITRE_JOIN = 2,
+  GE_BEVEL_JOIN = 3
+} R_GE_linejoin;
 
 /* 
  * A structure containing graphical parameters 
@@ -147,7 +208,9 @@ typedef struct {
      */
     double lwd;          /* Line width (roughly number of pixels) */
     int lty;             /* Line type (solid, dashed, dotted, ...) */
-                         /* FIXME: need to add line end/joins */
+    R_GE_lineend lend;   /* Line end */
+    R_GE_linejoin ljoin; /* line join */
+    double lmitre;       /* line mitre */
     /*
      * Text characteristics
      */
@@ -155,7 +218,7 @@ typedef struct {
     double ps;           /* Font size in points */
     double lineheight;   /* Line height (multiply by font size) */
     int fontface;        /* Font face (plain, italic, bold, ...) */
-    char fontfamily[50]; /* Font family */
+    char fontfamily[201]; /* Font family */
 } R_GE_gcontext;
 
 GEDevDesc* GEcreateDevDesc(NewDevDesc* dev);
@@ -166,6 +229,15 @@ void GEregisterSystem(GEcallback callback, int *systemRegisterIndex);
 void GEunregisterSystem(int registerIndex);
 
 SEXP GEHandleEvent(GEevent event, NewDevDesc *dev, SEXP data);
+
+#define fromDeviceX		GEfromDeviceX
+#define toDeviceX		GEtoDeviceX
+#define fromDeviceY		GEfromDeviceY
+#define toDeviceY		GEtoDeviceY
+#define fromDeviceWidth		GEfromDeviceWidth
+#define toDeviceWidth		GEtoDeviceWidth
+#define fromDeviceHeight	GEfromDeviceHeight
+#define toDeviceHeight		GEtoDeviceHeight
 
 double fromDeviceX(double value, GEUnit to, GEDevDesc *dd); 
 double toDeviceX(double value, GEUnit from, GEDevDesc *dd);
@@ -218,6 +290,11 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 #define LTY_LONGDASH	7 + (3<<4)
 #define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
 
+R_GE_lineend LENDpar(SEXP value, int ind);
+SEXP LENDget(R_GE_lineend lend);
+R_GE_linejoin LJOINpar(SEXP value, int ind);
+SEXP LJOINget(R_GE_linejoin ljoin);
+
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
 void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd);
 void GELine(double x1, double y1, double x2, double y2, 
@@ -225,6 +302,9 @@ void GELine(double x1, double y1, double x2, double y2,
 void GEPolyline(int n, double *x, double *y, 
 		R_GE_gcontext *gc, GEDevDesc *dd);
 void GEPolygon(int n, double *x, double *y, 
+	       R_GE_gcontext *gc, GEDevDesc *dd);
+SEXP GEXspline(int n, double *x, double *y, double *s, Rboolean open, 
+	       Rboolean repEnds, Rboolean draw,
 	       R_GE_gcontext *gc, GEDevDesc *dd);
 void GECircle(double x, double y, double radius,
 	      R_GE_gcontext *gc, GEDevDesc *dd);
@@ -263,8 +343,7 @@ void GEMathText(double x, double y, SEXP expr,
  * From plot3d.c 
  */
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
-		    double *z, double *levels, int nl,
-		    GEDevDesc *dd);
+		    double *z, double *levels, int nl);
 /* 
  * (End from plot3d.c)
  */
@@ -303,8 +382,22 @@ void R_GE_VText(double x, double y, char *s,
 #define	DEG2RAD 0.01745329251994329576
 
 GEDevDesc* GEcurrentDevice();
+Rboolean GEdeviceDirty(GEDevDesc *dd);
+void GEdirtyDevice(GEDevDesc *dd);
+Rboolean GEcheckState(GEDevDesc *dd);
+Rboolean GErecording(SEXP call, GEDevDesc *dd);
+void GErecordGraphicOperation(SEXP op, SEXP args, GEDevDesc *dd);
 void GEinitDisplayList(GEDevDesc *dd);
 void GEplayDisplayList(GEDevDesc *dd);
 void GEcopyDisplayList(int fromDevice);
 SEXP GEcreateSnapshot(GEDevDesc *dd);
 void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);
+void GEonExit();
+void GEnullDevice();
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* R_GRAPHICSENGINE_ */

@@ -1,6 +1,6 @@
 ## ${R_HOME}/share/make/tests.mk
 
-include $(R_HOME)/etc/Makeconf
+include $(R_HOME)/etc${R_ARCH}/Makeconf
 
 makevars =
 srcdir = .
@@ -8,9 +8,10 @@ srcdir = .
 test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
-R = srcdir=$(srcdir) $(R_HOME)/bin/R --vanilla
+R = srcdir=$(srcdir) LANGUAGE=C $(R_HOME)/bin/R --vanilla
 RDIFF = $(R_HOME)/bin/R CMD Rdiff
 USE_GCT = 0
+R_OPTS =
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -23,7 +24,7 @@ USE_GCT = 0
 	@rm -f $@ $@.fail
 	@echo "  Running '$<'"
 	@(if test "$(USE_GCT)" != 0; then echo "gctorture(TRUE)"; fi; \
-	  cat $<) | R_LIBS=$(R_LIBS) $(R) > $@ 2>&1 || \
+	  cat $<) | R_LIBS=$(R_LIBS) $(R) $(R_OPTS) > $@ 2>&1 || \
 	  (mv $@ $@.fail && exit 1)
 	@if test -f $(srcdir)/$@.save; then \
 	  mv $@ $@.fail; \
@@ -36,7 +37,7 @@ USE_GCT = 0
 all:
 	@(out=`echo "$(test-out)" | sed 's/ $$//g'`; \
 	  if test -n "$${out}"; then \
-	    $(MAKE) -f $(R_HOME)/share/make/tests.mk $(makevars) $${out}; \
+	    $(MAKE) -f $(R_SHARE_DIR)/make/tests.mk $(makevars) $${out}; \
 	  fi)
 
 clean:

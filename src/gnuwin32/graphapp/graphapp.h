@@ -5,6 +5,8 @@
  *  Version 2.4 (c) Lachlan Patrick 1996-1998.
  *  This header file is designed to be platform-independent.
  *
+ *  Copyright 2006 	The R Foundation
+ *
  */
 
 /*
@@ -194,8 +196,458 @@ typedef void (*dropfn)(control c, char *data);
 #define newmenu    GA_newmenu
 #define newcontrol GA_newcontrol
 #define newwindow  GA_newwindow
-#define gettext    GA_gettext
+/* #define gettext    GA_gettext */
 #define settext    GA_settext
+
+#define R_REMAP
+#ifdef R_REMAP
+#define BringToTop		GA_BringToTop
+#define activatecontrol		GA_activatecontrol
+#define add_context		GA_add_context
+#define add_strings		GA_add_strings
+#define addstatusbar		GA_addstatusbar
+#define addto		GA_addto
+#define addtooltip		GA_addtooltip
+#define adjust_menu		GA_adjust_menu
+#define app_cleanup		GA_appcleanup
+#define apperror		GA_apperror
+#define apply_to_list		GA_apply_to_list
+#define askUserPass		GA_askUserPass
+#define askcdstring		GA_askcdstring
+#define askchangedir		GA_askchangedir
+#define askfilename		GA_askfilename
+#define askfilenames		GA_askfilenames
+#define askfilenamewithdir		GA_askfilenamewithdir
+#define askfilesave		GA_askfilesave
+#define askfilesavewithdir		GA_askfilesavewithdir
+#define askok		GA_askok
+#define askokcancel		GA_askokcancel
+#define askpassword		GA_askpassword
+#define askstring		GA_askstring
+#define askyesno		GA_askyesno
+#define askyesnocancel		GA_askyesnocancel
+#define bitblt		GA_bitblt
+#define bitmaptoimage		GA_bitmaptoimage
+#define bottomleft		GA_bottomleft
+#define bottomright		GA_bottomright
+#define brighter		GA_brighter
+#define changelistbox		GA_changelistbox
+#define changescrollbar		GA_changescrollbar
+#define char_to_string		GA_char_to_string
+#define check		GA_check
+#define checklimittext		GA_checklimittext
+#define clear		GA_clear
+#define cleartext		GA_cleartext
+#define clipboardhastext		GA_clipboardhastext
+#define clipr		GA_clipr
+#define compare_strings		GA_compare_strings
+#define convert32to8		GA_convert32to8
+#define convert8to32		GA_convert8to32
+#define copy_string		GA_copy_string
+#define copydrawstate		GA_copydrawstate
+#define copyimage		GA_copyimage
+#define copyrect		GA_copyrect
+#define copystringtoclipboard		GA_copystringtoclipboard
+#define copytext		GA_copytext
+#define copytoclipboard		GA_copytoclipboard
+#define countFilenames		GA_countFilenames
+#define createbitmap		GA_createbitmap
+#define createcursor		GA_createcursor
+#define currentcursor		GA_currentcursor
+#define currentdrawing		GA_currentdrawing
+#define currentfont		GA_currentfont
+#define currentlinewidth		GA_currentlinewidth
+#define currentmode		GA_currentmode
+#define currentpoint		GA_currentpoint
+#define currentrgb		GA_currentrgb
+#define currenttime		GA_currenttime
+#define cuttext		GA_cuttext
+#define darker		GA_darker
+#define decrease_refcount		GA_decrease_refcount
+#define del_all_contexts		GA_del_all_contexts
+#define del_context		GA_del_context
+#define del_string		GA_del_string
+#define delay		GA_delay
+#define deletion_traversal		GA_deletion_traversal
+#define delimage		GA_delimage
+#define delobj		GA_delobj
+#define deviceheight		GA_deviceheight
+#define deviceheightmm		GA_deviceheightmm
+#define devicepixelsx		GA_devicepixelsx
+#define devicepixelsy		GA_devicepixelsy
+#define devicewidth		GA_devicewidth
+#define devicewidthmm		GA_devicewidthmm
+#define dialog_bg		GA_dialog_bg
+#define disable		GA_disable
+#define divpt		GA_divpt
+#define doevent		GA_doevent
+#define draw		GA_draw
+#define drawall		GA_drawall
+#define drawarc		GA_drawarc
+#define drawbrighter		GA_drawbrighter
+#define drawdarker		GA_drawdarker
+#define drawellipse		GA_drawellipse
+#define drawgreyscale		GA_drawgreyscale
+#define drawimage		GA_drawimage
+#define drawline		GA_drawline
+#define drawmonochrome		GA_drawmonochrome
+#define drawpoint		GA_drawpoint
+#define drawpolygon		GA_drawpolygon
+#define drawrect		GA_drawrect
+#define drawroundrect		GA_drawroundrect
+#define drawstr		GA_drawstr
+#define drawtext		GA_drawtext
+#define drawto		GA_drawto
+#define enable		GA_enable
+#define equalr		GA_equalr
+#define execapp		GA_execapp
+#define exitapp		GA_exitapp
+#define fillarc		GA_fillarc
+#define fillellipse		GA_fillellipse
+#define fillpolygon		GA_fillpolygon
+#define fillrect		GA_fillrect
+#define fillroundrect		GA_fillroundrect
+#define find_object		GA_find_object
+#define find_valid_sibling		GA_find_valid_sibling
+#define finddialog		GA_finddialog
+#define finish_contexts		GA_finish_contexts
+#define finish_events		GA_finish_events
+#define finish_objects		GA_finish_objects
+#define fix_brush		GA_fix_brush
+#define flashcontrol		GA_flashcontrol
+#define float_to_string		GA_float_to_string
+#define fontascent		GA_fontascent
+#define fontdescent		GA_fontdescent
+#define fontheight		GA_fontheight
+#define fontwidth		GA_fontwidth
+#define gabeep		GA_gabeep
+#define gamainloop		GA_gamainloop
+#define gbitblt		GA_gbitblt
+#define gchangemenubar		GA_gchangemenubar
+#define gchangepopup		GA_gchangepopup
+#define gchangescrollbar		GA_gchangescrollbar
+#define gcharmetric		GA_gcharmetric
+#define gdrawellipse		GA_gdrawellipse
+#define gdrawline		GA_gdrawline
+#define gdrawpolyline		GA_gdrawpolyline
+#define gdrawrect		GA_gdrawrect
+#define gdrawstr		GA_gdrawstr
+#define gdrawstr1		GA_gdrawstr1
+#define getHandle		GA_getHandle
+#define getSysFontSize		GA_getSysFontSize
+#define get_context		GA_get_context
+#define get_grey_pixel		GA_get_grey_pixel
+#define get_image_pixel		GA_get_image_pixel
+#define get_modeless		GA_get_modeless
+#define get_monochrome_pixel		GA_get_monochrome_pixel
+#define getbackground		GA_getbackground
+#define getbitmapdata		GA_getbitmapdata
+#define getbitmapdata2		GA_getbitmapdata2
+#define getcliprect		GA_getcliprect
+#define getcurrentline		GA_getcurrentline
+#define getdata		GA_getdata
+#define getforeground		GA_getforeground
+#define getkeystate		GA_getkeystate
+#define getlimittext		GA_getlimittext
+#define getlinelength		GA_getlinelength
+#define getlistitem		GA_getlistitem
+#define getpalette		GA_getpalette
+#define getpalettesize		GA_getpalettesize
+#define getpastelength		GA_getpastelength
+#define getpixel		GA_getpixel
+#define getpixels		GA_getpixels
+#define getseltext		GA_getseltext
+#define getstringfromclipboard		GA_getstringfromclipboard
+#define gettextfont		GA_gettextfont
+#define getvalue		GA_getvalue
+#define gfillellipse		GA_gfillellipse
+#define gfillpolygon		GA_gfillpolygon
+#define gfillrect		GA_gfillrect
+#define ggetcliprect		GA_ggetcliprect
+#define ggetkeystate		GA_ggetkeystate
+#define ggetmodified		GA_ggetmodified
+#define ggetpixel		GA_ggetpixel
+#define ghasfixedwidth		GA_ghasfixedwidth
+#define ginvert		GA_ginvert
+#define gmenubar		GA_gmenubar
+#define gnewfont		GA_gnewfont
+#define goldfillellipse		GA_goldfillellipse
+#define gpopup		GA_gpopup
+#define gprintf		GA_gprintf
+#define growr		GA_growr
+#define gscroll		GA_gscroll
+#define gsetcliprect		GA_gsetcliprect
+#define gsetcursor		GA_gsetcursor
+#define gsetmodified		GA_gsetmodified
+#define gsetpixel		GA_gsetpixel
+#define gstrrect		GA_gstrrect
+#define gstrsize		GA_gstrsize
+#define gstrwidth		GA_gstrwidth
+#define gwcharmetric		GA_gwcharmetric
+#define gwdrawstr1		GA_gwdrawstr1
+#define handle_control		GA_handle_control
+#define handle_findreplace		GA_handle_findreplace
+#define handle_menu_id		GA_handle_menu_id
+#define handle_menu_key		GA_handle_menu_key
+#define has_transparent_pixels		GA_has_transparent_pixels
+#define hide		GA_hide
+#define hide_window		GA_hide_window
+#define highlight		GA_highlight
+#define imagedepth		GA_imagedepth
+#define imageheight		GA_imageheight
+#define imagetobitmap		GA_imagetobitmap
+#define imagewidth		GA_imagewidth
+#define increase_refcount		GA_increase_refcount
+#define init_contexts		GA_init_contexts
+#define init_cursors		GA_init_cursors
+#define init_events		GA_init_events
+#define init_fonts		GA_init_fonts
+#define init_menus		GA_init_menus
+#define init_objects		GA_init_objects
+#define initapp		GA_initapp
+#define inserttext		GA_inserttext
+#define insetr		GA_insetr
+#define int_to_string		GA_int_to_string
+#define invertrect		GA_invertrect
+#define isTopmost		GA_isTopmost
+#define ischecked		GA_ischecked
+#define isenabled		GA_isenabled
+#define ishighlighted		GA_ishighlighted
+#define isiconic		GA_isiconic
+#define ismdi		GA_ismdi
+#define isselected		GA_isselected
+#define isvisible		GA_isvisible
+#define lineto		GA_lineto
+#define load_gif		GA_load_gif
+#define loadbitmap		GA_loadbitmap
+#define loadcursor		GA_loadcursor
+#define loadimage		GA_loadimage
+#define memalloc		GA_memalloc
+#define memexpand		GA_memexpand
+#define memfree		GA_memfree
+#define memjoin		GA_memjoin
+#define memlength		GA_memlength
+#define memrealloc		GA_memrealloc
+#define midpt		GA_midpt
+#define modeless_active		GA_modeless_active
+#define move_to_front		GA_move_to_front
+#define moveto		GA_moveto
+#define mulpt		GA_mulpt
+#define myAppendMenu		GA_myAppendMenu
+#define myGetSysColor		GA_myGetSysColor
+#define myMessageBox		GA_myMessageBox
+#define nametorgb		GA_nametorgb
+#define new_font_object		GA_new_font_object
+#define new_object		GA_new_object
+#define new_string		GA_new_string
+#define newbitmap		GA_newbitmap
+#define newbutton		GA_newbutton
+#define newcheckbox		GA_newcheckbox
+#define newcursor		GA_newcursor
+#define newdrawing		GA_newdrawing
+#define newdropfield		GA_newdropfield
+#define newdroplist		GA_newdroplist
+#define newfield		GA_newfield
+#define newfield_no_border		GA_newfield_no_border
+#define newfont		GA_newfont
+#define newimage		GA_newimage
+#define newimagebutton		GA_newimagebutton
+#define newimagecheckbox		GA_newimagecheckbox
+#define newlabel		GA_newlabel
+#define newlistbox		GA_newlistbox
+#define newmdimenu		GA_newmdimenu
+#define newmenubar		GA_newmenubar
+#define newmenuitem		GA_newmenuitem
+#define newmetafile		GA_newmetafile
+#define newmultilist		GA_newmultilist
+#define newpassword		GA_newpassword
+#define newpicture		GA_newpicture
+#define newpoint		GA_newpoint
+#define newpopup		GA_newpopup
+#define newprinter		GA_newprinter
+#define newprogressbar		GA_newprogressbar
+#define newradiobutton		GA_newradiobutton
+#define newradiogroup		GA_newradiogroup
+#define newrect		GA_newrect
+#define newrichtextarea		GA_newrichtextarea
+#define newscrollbar		GA_newscrollbar
+#define newsubmenu		GA_newsubmenu
+#define newtextarea		GA_newtextarea
+#define newtextbox		GA_newtextbox
+#define newtoolbar		GA_newtoolbar
+#define newtoolbutton		GA_newtoolbutton
+#define nextpage		GA_nextpage
+#define objdepth		GA_objdepth
+#define objheight		GA_objheight
+#define objrect		GA_objrect
+#define objwidth		GA_objwidth
+#define oldfillellipse		GA_oldfillellipse
+#define parentwindow		GA_parentwindow
+#define pastetext		GA_pastetext
+#define peekevent		GA_peekevent
+#define protect_object		GA_protect_object
+#define ptinr		GA_ptinr
+#define raddpt		GA_raddpt
+#define rcanon		GA_rcanon
+#define rcenter		GA_rcenter
+#define rdiv		GA_rdiv
+#define redraw		GA_redraw
+#define remove_context		GA_remove_context
+#define remove_menu_item		GA_remove_menu_item
+#define replacedialog		GA_replacedialog
+#define resetdrawstate		GA_resetdrawstate
+#define resize		GA_resize
+#define restoredrawstate		GA_restoredrawstate
+#define rgbtoname		GA_rgbtoname
+#define rgbtonum		GA_rgbtonum
+#define richeditfind		GA_richeditfind
+#define richeditreplace		GA_richeditreplace
+#define rinr		GA_rinr
+#define rmove		GA_rmove
+#define rmul		GA_rmul
+#define rpt		GA_rpt
+#define rsubpt		GA_rsubpt
+#define rxr		GA_rxr
+#define save_gif		GA_save_gif
+#define saveimage		GA_saveimage
+#define scaleimage		GA_scaleimage
+#define screen_coords		GA_screen_coords
+#define scrollcaret		GA_scrollcaret
+#define scrollrect		GA_scrollrect
+#define scrolltext		GA_scrolltext
+#define selecttext		GA_selecttext
+#define selecttextex		GA_selecttextex
+#define setaction		GA_setaction
+#define setbackground		GA_setbackground
+#define setbitmapdata		GA_setbitmapdata
+#define setcliprect		GA_setcliprect
+#define setclose		GA_setclose
+#define setcursor		GA_setcursor
+#define setdata		GA_setdata
+#define setdel		GA_setdel
+#define setdrawmode		GA_setdrawmode
+#define setdrawstate		GA_setdrawstate
+#define setdrop		GA_setdrop
+#define setfont		GA_setfont
+#define setforeground		GA_setforeground
+#define sethit		GA_sethit
+#define setimage		GA_setimage
+#define setkeyaction		GA_setkeyaction
+#define setkeydown		GA_setkeydown
+#define setlimittext		GA_setlimittext
+#define setlinewidth		GA_setlinewidth
+#define setlistitem		GA_setlistitem
+#define setmousedown		GA_setmousedown
+#define setmousedrag		GA_setmousedrag
+#define setmousemove		GA_setmousemove
+#define setmouserepeat		GA_setmouserepeat
+#define setmousetimer		GA_setmousetimer
+#define setmouseup		GA_setmouseup
+#define setonfocus		GA_setonfocus
+#define setpalette		GA_setpalette
+#define setpixel		GA_setpixel
+#define setpixels		GA_setpixels
+#define setprogressbar		GA_setprogressbar
+#define setprogressbarrange		GA_setprogressbarrange
+#define setredraw		GA_setredraw
+#define setresize		GA_setresize
+#define setrgb		GA_setrgb
+#define setstatus		GA_setstatus
+#define settextfont		GA_settextfont
+#define settimer		GA_settimer
+#define settimerfn		GA_settimerfn
+#define setuserfilter		GA_setuserfilter
+#define setvalue		GA_setvalue
+#define show		GA_show
+#define show_window		GA_show_window
+#define simple_window		GA_simple_window
+#define sortpalette		GA_sortpalette
+#define startgraphapp		GA_startgraphapp
+#define stepprogressbar		GA_stepprogressbar
+#define string_diff		GA_string_diff
+#define string_length		GA_string_length
+#define strrect		GA_strrect
+#define strsize		GA_strsize
+#define strwidth		GA_strwidth
+#define textheight		GA_textheight
+#define textselection		GA_textselection
+#define textselectionex		GA_textselectionex
+#define texturerect		GA_texturerect
+#define to_c_string		GA_to_c_string
+#define to_dos_string		GA_to_dos_string
+#define topleft		GA_topleft
+#define topright		GA_topright
+#define tree_search		GA_tree_search
+#define uncheck		GA_uncheck
+#define undotext		GA_undotext
+#define unhighlight		GA_unhighlight
+#define updatestatus		GA_updatestatus
+
+#define ColorName		GA_ColorName
+#define Courier			GA_Courier
+#define FixedFont		GA_FixedFont
+#define Helvetica		GA_Helvetica
+#define MDIFrame		GA_MDIFrame
+#define MDIStatus		GA_MDIStatus
+#define MDIToolbar		GA_MDIToolbar
+#define SystemFont		GA_SystemFont
+#define Times			GA_Times
+#define TopmostDialogs		GA_TopmostDialogs
+#define active_windows		GA_active_windows
+#define app_control_procedure	GA_app_control_procedure
+#define app_doc_proc		GA_app_doc_proc
+#define app_drawstate		GA_app_drawstate
+#define app_initialised		GA_app_initialised
+#define app_name		GA_app_name
+#define app_timer_procedure	GA_app_timer_procedure
+#define app_win_proc		GA_app_win_proc
+#define app_work_proc		GA_app_work_proc
+#define child_id		GA_child_id
+#define cmd_show		GA_cmd_show
+#define current			GA_current
+#define current_menu		GA_current_menu
+#define current_menubar		GA_current_menubar
+#define current_window		GA_current_window
+#define dc			GA_dc
+#define hAccel			GA_hAccel
+#define hwndClient		GA_hwndClient
+#define hwndFrame		GA_hwndFrame
+#define hwndMain		GA_hwndMain
+#define is_NT			GA_isNT
+#define keystate		GA_keystate
+#define menus_active		GA_menus_active
+#define prev_instance		GA_prev_instance
+#define the_brush		GA_the_brush
+#define the_pen			GA_the_pen
+#define this_instance		GA_this_instance
+#define win_rgb			GA_win_rgb
+
+#define ArrowCursor		GA_ArrowCursor
+#define BlankCursor		GA_BlankCursor
+#define CaretCursor		GA_CaretCursor
+#define CrossCursor		GA_CrossCursor
+#define HandCursor		GA_HandCursor
+#define TextCursor		GA_TextCursor
+#define WatchCursor		GA_WatchCursor
+
+#define cam_image		GA_cam_image
+#define color_image		GA_color_image
+#define console1_image		GA_console1_image
+#define console_image		GA_console_image
+#define copy1_image		GA_copy1_image
+#define copy_image		GA_copy_image
+#define copypaste_image		GA_copypaste_image
+#define cut_image		GA_cut_image
+#define erase_image		GA_erase_image
+#define help_image		GA_help_image
+#define open1_image		GA_open1_image
+#define open_image		GA_open_image
+#define paste1_image		GA_paste1_image
+#define paste_image		GA_paste_image
+#define print_image		GA_print_image
+#define save_image		GA_save_image
+#define stop_image		GA_stop_image
+#endif
 
 /*
  *  General functions.
@@ -595,9 +1047,9 @@ void	activatecontrol(control c);
  */
 
 void	settext(control c, char *newtext);
-char *	gettext(control c);
+char *	GA_gettext(control c);
 #define setname(c,newname) settext(c,newname)
-#define getname(c) gettext(c)
+#define getname(c) GA_gettext(c)
 
 void	settextfont(control c, font f);
 font	gettextfont(control c);
@@ -703,6 +1155,7 @@ int 	askyesnocancel(char *question);
 char *	askstring(char *question, char *default_string);
 char *	askpassword(char *question, char *default_string);
 char *	askfilename(char *title, char *default_name);
+char *  askfilenamewithdir(char *title, char *default_name, char *dir);
 char *	askfilesave(char *title, char *default_name);
 char *	askUserPass(char *title);
 
@@ -740,18 +1193,19 @@ void	resetdrawstate(void);
  */
 
 extern	font	SystemFont;	/* system font */
-extern	font	FixedFont;	/* fixed-width font */
 extern	font	Times;  	/* times roman font (serif) */
 extern	font	Helvetica;	/* helvetica font (sans serif) */
 extern	font	Courier;	/* courier font (fixed width) */
 
 #include <R_ext/libextern.h>
+LibExtern font		FixedFont;	/* fixed-width font */
 LibExtern cursor	ArrowCursor;	/* normal arrow cursor */
 LibExtern cursor	BlankCursor;	/* invisible cursor */
 LibExtern cursor	WatchCursor;	/* wait for the computer */
 LibExtern cursor	CaretCursor;	/* insert text */
 LibExtern cursor	TextCursor;	/* insert text */
 LibExtern cursor	HandCursor;	/* hand pointer */
+LibExtern cursor	CrossCursor;	/* cross pointer */
 #undef LibExtern
 #undef extern
 

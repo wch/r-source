@@ -59,6 +59,12 @@ codocData(package, lib.loc = NULL)
   values of the argument \code{use.values}.  Synopsis sections are used
   if present; their occurrence is reported if \code{verbose} is true.
 
+  If a package has a namespace both exported and unexported objects are
+  checked, as well as registered S3 methods.  (In the unlikely event of
+  differences the order is exported objects in the package, registered
+  S3 methods and finally objects in the namespace and only the first
+  found is checked.)
+
   Currently, the R documentation format has no high-level markup for the
   basic \dQuote{structure} of classes and data sets (similar to the usage
   sections for function synopses).  Variable names for data frames in
@@ -68,6 +74,10 @@ codocData(package, lib.loc = NULL)
   frame (i.e., only has one alias).  \code{codocClasses} analogously
   handles slot names for classes in documentation objects obtained by
   editing shells created by \code{\link{promptClass}}.
+
+  Help files named \code{pkg_name-defunct.Rd} for the appropriate
+  \code{pkg_name} are checked more loosely, as they may have
+  undocumented arguments.
 }
 \value{
   \code{codoc} returns an object of class \code{"codoc"}.  Currently,
@@ -85,7 +95,7 @@ codocData(package, lib.loc = NULL)
   contained in such objects.
 }
 \seealso{
-  \code{\link{undoc}}
+  \code{\link{undoc}}, \code{\link{QC}}
 }
 \section{Warning}{
   Both \code{codocClasses} and \code{codocData} are still experimental.

@@ -1,8 +1,12 @@
 package R::Utils;
 
 use Carp;
+use File::Basename;
+use File::Path;
 use FileHandle;
+use IO::File;
 use Exporter;
+use R::Dcf;
 use R::Vars;
 use Text::Wrap;
 use Text::Tabs;
@@ -14,7 +18,9 @@ use Text::Tabs;
 	     make_file_exts
 	     read_lines
 	     shell_quote_file_path
-	     sQuote dQuote);
+	     sQuote dQuote
+	     config_val_to_logical
+	     mime_canonical_encoding latex_canonical_encoding);
 
 ### ********************************************************************
 
@@ -50,9 +56,9 @@ sub R_version {
     my ($name, $version) = @_;
 
     print STDERR <<END;
-$name $version
+'$name' SVN revision $version
 
-Copyright (C) 1997-2003 R Core Development Team.
+Copyright (C) 1997-2006 R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty.
 END
@@ -69,7 +75,7 @@ sub R_tempfile {
 			   $pat . $$ . sprintf("%05d", rand(10**5)));
 
     my $n=0;
-    while(-f $retval){
+    while(-e $retval) { # was -f, but want to be able to create such a file
 	$retval = file_path($R::Vars::TMPDIR,
 			    $pat . $$ . sprintf("%05d", rand(10**5)));
 	croak "Cannot find unused name for temporary file"
@@ -175,10 +181,12 @@ sub env_path {
 ### * list_files
 
 sub list_files {
-    my $dir = $_[0];
+    my ($dir, $dirs_and_files) = @_;
     my @files;
     opendir(DIR, $dir) or die "cannot opendir $dir: $!";
-    @files = grep { -f &file_path($dir, $_) } readdir(DIR);
+    @files = readdir(DIR);
+    @files = grep { -f &file_path($dir, $_) } @files
+	unless($dirs_and_files);
     closedir(DIR);
     my @paths;
     foreach my $file (@files) {
@@ -274,6 +282,61 @@ sub dQuote {
     return('"' . $_[0] . '"');
 }
 
+### * config_val_to_logical
+
+sub config_val_to_logical {
+    my ($val) = @_;
+    if($val =~ /^(1|yes|true)$/i) {
+	return 1;
+    }
+    elsif($val =~ /^(0|no|false)$/i) {
+	return 0;
+    }
+    carp "Warning: cannot coerce '$val' to logical";
+}
+
+### * canonical_encoding
+
+## use preferred MIME encoding, not IANA registered name
+sub mime_canonical_encoding {
+    my $encoding = lc($_[0]);
+    if(/iso_8859-([0-9]+)/) {$encoding = "iso-8859-$1";}
+    $encoding = "iso-8859-1"  if $encoding eq "latin1";
+    $encoding = "iso-8859-2"  if $encoding eq "latin2";
+    $encoding = "iso-8859-3"  if $encoding eq "latin3";
+    $encoding = "iso-8859-4"  if $encoding eq "latin4";
+    $encoding = "iso-8859-5"  if $encoding eq "cyrillic";
+    $encoding = "iso-8859-6"  if $encoding eq "arabic";
+    $encoding = "iso-8859-7"  if $encoding eq "greek";
+    $encoding = "iso-8859-8"  if $encoding eq "hebrew";
+    $encoding = "iso-8859-9"  if $encoding eq "latin5";
+    $encoding = "iso-8859-10" if $encoding eq "latin6";
+    $encoding = "iso-8859-14" if $encoding eq "latin8";
+    $encoding = "iso-8859-15" if $encoding eq "latin-9";
+    $encoding = "iso-8859-16" if $encoding eq "latin10";
+    $encoding = "utf-8"       if $encoding eq "utf8";
+    return $encoding;
+}
+
+sub latex_canonical_encoding {
+    my $encoding = lc($_[0]);
+    if(/iso_8859-([0-9]+)/) {$encoding = "iso-8859-$1";}
+    $encoding = "latin1"  if $encoding eq "iso-8859-1";
+    $encoding = "latin2"  if $encoding eq "iso-8859-2";
+    $encoding = "latin3"  if $encoding eq "iso-8859-3";
+    $encoding = "latin4"  if $encoding eq "iso-8859-4";
+    $encoding = "latin5"  if $encoding eq "iso-8859-9";
+    $encoding = "latin6"  if $encoding eq "iso-8859-10";
+    $encoding = "latin8"  if $encoding eq "iso-8859-14";
+    $encoding = "latin9"  if $encoding eq "latin-9";
+    $encoding = "latin9"  if $encoding eq "iso-8859-15";
+    $encoding = "latin10" if $encoding eq "iso-8859-16";
+    $encoding = "utf8"    if $encoding eq "utf-8";
+    return $encoding;
+}
+
+
+
 ### * Non-exported functions
 
 sub get_exclude_patterns {
@@ -282,13 +345,20 @@ sub get_exclude_patterns {
     ## exported.
     ## <NOTE>
     ## Has Unix-style '/' path separators hard-coded.
-    my @exclude_patterns = ("^.Rbuildignore\$", "(^|/)\\.DS_Store\$",
+    my @exclude_patterns = ("^\\.Rbuildignore\$",
+			    "(^|/)\\.DS_Store\$",
 			    "\~\$", "\\.bak\$", "\\.swp\$",
 			    "(^|/)\\.#[^/]*\$", "(^|/)#[^/]*#\$",
+			    ## Outdated ...
 			    "^TITLE\$", "^data/00Index\$",
-			    "^inst/doc/00Index.dcf\$",
+			    "^inst/doc/00Index\\.dcf\$",
+			    ## Autoconf
 			    "^config\\.(cache|log|status)\$",
-			    "^autom4te.cache\$"
+			    "^autom4te\\.cache\$",
+			    ## Windows dependency files
+			    "^src/.*\\.d\$", "^src/Makedeps\$",
+			    ## IRIX
+			    "^src/so_locations\$"
 			    );
     ## </NOTE>
     @exclude_patterns;
@@ -308,6 +378,87 @@ sub text2html {
     s/>/&gt;/g;
     s/</&lt;/g;
     $_;
+}
+
+## This is currently shared between build and check.
+sub check_package_description {
+    
+    my ($pkgdir, $pkgname, $log, $in_bundle, $is_base_pkg, $full) = @_;
+    
+    my ($dfile, $dir, $description);
+
+    if($is_base_pkg) {
+	$dfile = "DESCRIPTION.in";
+    }
+    elsif(!$in_bundle) {
+	$dfile = "DESCRIPTION";
+    }
+    else {
+	## Bundles are a bit tricky, as their package (DESCRIPTION)
+	## metadata come from merging the bundle DESCRIPTION file
+	## with the package DESCRIPTION.in one.  Hence, we
+	## concatenate these files to a temporary one.
+	$log->checking("for file 'DESCRIPTION.in'");
+	if(-r "DESCRIPTION.in") {
+	    $log->result("OK");
+	}
+	else {
+	    $log->result("NO");
+	    exit(1);
+	}
+	## Checking metadata currently also includes verifying that
+	## the package name and "directory name" are the same.
+	$dir = &file_path(${R::Vars::TMPDIR}, "check$$");
+	mkdir($dir, 0755)
+	    or die ("Error: cannot create directory '$dir'\n");
+	$dir = &file_path($dir, $pkgname);
+	mkdir($dir, 0755)
+	    or die ("Error: cannot create directory '$dir'\n");
+	$dfile = &file_path($dir, "DESCRIPTION");
+	my $fh = new IO::File($dfile, "w")
+	    or die "Error: cannot open file '$dpath' for writing\n";
+	my @lines = (&read_lines(&file_path(dirname($pkgdir),
+					    "DESCRIPTION")),
+		     &read_lines("DESCRIPTION.in"));
+	@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+	$fh->print(join("\n", @lines), "\n");
+	$fh->close();
+    }
+
+    $log->checking("DESCRIPTION meta-information");
+
+    my $description = new R::Dcf($dfile);
+
+    if($full) {
+	my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
+	my @out = R_runR($Rcmd, "--vanilla --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    rmtree(dirname($dir)) if($in_bundle);
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	    exit(1);
+	}
+    }
+
+    rmtree(dirname($dir)) if($in_bundle);    
+
+    ## Also check whether the package name has two dots, which is not
+    ## portable as it is not guaranteed to work in Windows.  (Do this
+    ## here as R currently turns non-empty package meta data check
+    ## results into installation errors.)
+    if(grep(/\..*\./, $description->{"Package"})) {
+	$log->warning();
+	$log->print(wrap("", "",
+			 ("Package name contains more than one dot.\n",
+			  "Names should contain at most one dot to",
+			  "be guaranteed to portably work on all",
+			  "supported platforms.\n")));
+    }
+    else {
+	$log->result("OK");
+    }
 }
 
 

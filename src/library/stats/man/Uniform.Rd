@@ -16,7 +16,7 @@ runif(n, min=0, max=1)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{min,max}{lower and upper limits of the distribution.}
+  \item{min,max}{lower and upper limits of the distribution.  Must be finite.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -37,7 +37,12 @@ runif(n, min=0, max=1)
   for \eqn{min \le x \le max}.
 
   For the case of \eqn{u := min == max}, the limit case of
-  \eqn{X \equiv u}{X == u} is assumed.
+  \eqn{X \equiv u}{X == u} is assumed, although there is no density in
+  that case and \code{dunif} will return \code{NaN} (the error condition).
+
+  \code{runif} will not generate either of the extreme values unless
+  \code{max = min} or \code{max-min} is small compared to \code{min},
+  and in particular not for the default arguments.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -2,20 +2,21 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
                         x=NULL, h=NULL, border=2, cluster=NULL)
 {
     if(length(h)>1 | length(k)>1)
-        stop("k and h must be a scalar")
+        stop("'k' and 'h' must be a scalar")
 
     if(!is.null(h)){
         if(!is.null(k))
-            stop("specify exactly one of k and h")
+            stop("specify exactly one of 'k' and 'h'")
         k <- min(which(rev(tree$height)<h))
         k <- max(k, 2)
     }
     else
         if(is.null(k))
-            stop("specify exactly one of k and h")
+            stop("specify exactly one of 'k' and 'h'")
 
     if(k < 2 | k > length(tree$height))
-        stop(paste("k must be between 2 and", length(tree$height)))
+        stop(gettextf("k must be between 2 and %d", length(tree$height)),
+             domain = NA)
 
     if(is.null(cluster))
         cluster <- cutree(tree, k=k)
@@ -26,7 +27,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
 
     if(!is.null(x)){
         if(!is.null(which))
-            stop("specify exactly one of which and x")
+            stop("specify exactly one of 'which' and 'x'")
         which <- x
         for(n in 1:length(x))
             which[n] <- max(which(m<x[n]))
@@ -36,7 +37,8 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
             which <- 1:k
 
     if(any(which>k))
-        stop(paste("all elements of which must be between 1 and", k))
+        stop(gettextf("all elements of 'which' must be between 1 and %d", k),
+             domain = NA)
 
     border <- rep(border, length.out = length(which))
 
@@ -58,11 +60,11 @@ identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
     retval <- list()
     oldk <- NULL
     oldx <- NULL
-    DEV.x <- dev.cur()
+    DEV.x <- grDevices::dev.cur()
 
     for(n in 1:N){
 
-        dev.set(DEV.x)
+        grDevices::dev.set(DEV.x)
         X <- locator(1)
         if(is.null(X))
             break
@@ -78,7 +80,7 @@ identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
                                           border = "red"))
         if(!is.null(FUN)){
             if(!is.null(DEV.FUN)){
-                dev.set(DEV.FUN)
+                grDevices::dev.set(DEV.FUN)
             }
             retval[[n]] <- FUN(retval[[n]], ...)
         }
@@ -86,10 +88,6 @@ identify.hclust <- function(x, FUN = NULL, N = 20, MAXCLUSTER = 20,
         oldx <- X$x
         oldk <- k
     }
-    dev.set(DEV.x)
+    grDevices::dev.set(DEV.x)
     invisible(retval)
 }
-
-
-
-

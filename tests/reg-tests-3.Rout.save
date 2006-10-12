@@ -1,6 +1,7 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-03-06), ISBN 3-900051-00-3
+R : Copyright 2006, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2006-03-02 r37458)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,16 +9,16 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ### Regression tests for which the printed output is the issue
 > ### May fail, e.g. by needing Recommended packages
 > 
-> # postscript("reg-tests-3.ps")
+> postscript("reg-tests-3.ps")
 > 
 > ## str() for character & factors with NA (levels), and for Surv objects:
 > ff <- factor(c(2:1,  NA),  exclude = NULL)
@@ -33,8 +34,9 @@ Type 'q()' to quit R.
 +     str(sa)
 +     detach("package:survival")
 + }
-Loading required package: survival 
- Surv [1:23, 1:2]  9  13  13+ 18  23  28+ 31  34  45+ 48  ...
+Loading required package: survival
+Loading required package: splines
+ Surv [1:23, 1:2]   9   13   13+  18   23   28+  31   34   45+  48  ...
  - attr(*, "dimnames")=List of 2
   ..$ : NULL
   ..$ : chr [1:2] "time" "status"
@@ -49,7 +51,7 @@ Loading required package: survival
 +     ## row 57 should have hat = 1 and resid=0.
 +     summary(influence.measures(fit))
 + }
-Loading required package: MASS 
+Loading required package: MASS
 $hat
          1          2          3          4          5          6          7 
 0.09313909 0.07134091 0.19138434 0.08101081 0.24991662 0.10448752 0.12591828 
@@ -138,7 +140,7 @@ $coefficients
 54  0.0989545407 -1.357243e-05 -3.683573e-02 -0.028339562 -0.025145841
 55  0.1644148644 -1.347342e-04  1.507463e-01  0.272775865  0.355144259
 56 -1.0973102505  2.844224e-04 -2.939639e-01 -0.267067176 -0.586604116
-57           NaN           NaN           NaN          NaN          NaN
+57  0.0000000000  0.000000e+00  0.000000e+00  0.000000000  0.000000000
 58  1.1181936467 -1.814925e-04  1.820092e-01  0.230407448  0.281788680
 59 -0.1289781075  2.595372e-05 -3.776833e-02 -0.058580136 -0.126069473
 60  0.4827651281 -1.458463e-04  9.396412e-02 -0.005593267  0.099263965
@@ -232,7 +234,7 @@ $coefficients
 54 -0.0150792891   -0.0425585103  6.777594e-03  0.0030583353 -0.0591176911
 55  0.4668348880   -0.0212547234  4.732189e-01  0.4185931034  0.2944838529
 56 -0.7432312183   -0.2735589895 -6.870778e-02 -0.0393632338  0.1816128390
-57           NaN             NaN           NaN           NaN           NaN
+57  0.0000000000    0.0000000000  0.000000e+00  0.0000000000  0.0000000000
 58  0.1945880055   -0.5587521455 -2.266734e-01 -0.3613221042 -0.5509923750
 59 -0.0900361434    0.0807855154 -8.877433e-04 -0.0437027380  0.0203231292
 60  0.2757970992   -0.3494459094  2.397384e-01  0.1279587545 -0.1512732820
@@ -326,7 +328,7 @@ $coefficients
 54 -0.0052948316  0.0043390590 -0.0062558306   -0.0100922249  -0.0036764450
 55  0.3245941919  0.4533108376 -0.1196342985   -0.0946588832   0.0778256270
 56  0.1438282891 -0.5411631576  0.0968253310    0.3927869929   0.2777652749
-57           NaN           NaN           NaN             NaN            NaN
+57  0.0000000000  0.0000000000  0.0000000000    0.0000000000   0.0000000000
 58 -0.5770947483 -0.1184054962 -0.1740228604   -0.0285545091   0.7693037902
 59  0.0412280879 -0.0075198458  0.0438882586    0.0121450418  -0.1252262379
 60  0.3533541160  0.2760694598 -0.1036620689    0.1001975219   0.0703124944
@@ -380,7 +382,7 @@ $sigma
       49       50       51       52       53       54       55       56 
 3.588734 3.589710 3.583459 3.581755 3.599157 3.599895 3.528075 3.559578 
       57       58       59       60       61       62       63       64 
-     NaN 3.523963 3.598459 3.571771 3.582319 3.600406 3.596626 3.592960 
+3.601231 3.523963 3.598459 3.571771 3.582319 3.600406 3.596626 3.592960 
       65       66       67       68       69       70       71       72 
 3.583325 3.600828 3.569987 3.592482 3.599979 3.580547 3.600799 3.599768 
       73       74       75       76       77       78       79       80 
@@ -439,7 +441,7 @@ Potentially influential observations of
 28  0.11  -0.15     0.04     0.02     0.02     0.02     0.04     0.07   
 39 -0.19   0.05     0.34     0.21     0.25     0.18     0.18    -0.01   
 42  0.12  -0.04    -0.30    -0.17    -0.28    -0.26    -0.11    -0.03   
-57   NaN    NaN      NaN      NaN      NaN      NaN      NaN      NaN   
+57  0.00   0.00     0.00     0.00     0.00     0.00     0.00     0.00   
 66 -0.03   0.04    -0.02    -0.03    -0.01     0.00    -0.02    -0.01   
 80  0.18   0.00    -0.31    -0.17    -0.24    -0.19    -0.15     0.00   
 83  0.01   0.01    -0.04    -0.03    -0.04    -0.03    -0.02     0.00   
@@ -452,26 +454,26 @@ Potentially influential observations of
 28  0.08    -0.08     -0.09      0.16     0.06     0.09     0.12    -0.26
 39 -0.01     0.04      0.01     -0.06     0.01    -0.08    -0.08    -0.44
 42  0.01    -0.42      0.01     -0.03     0.18    -0.10    -0.11    -0.89
-57   NaN      NaN       NaN       NaN      NaN      NaN      NaN      NaN
+57  0.00     0.00      0.00      0.00     0.00     0.00     0.00      NaN
 66 -0.02     0.01      0.01      0.02    -0.03     0.05     0.03     0.08
 80  0.01     0.01     -0.02     -0.07     0.01    -0.18    -0.14     0.45
 83  0.00     0.00      0.00      0.00     0.00     0.01     0.01     0.05
 87  0.03     0.02      0.03      0.06    -0.02    -0.03    -0.02     0.14
 89 -0.07     0.05      0.04      0.08    -0.06     0.12     0.10     0.64
 93 -0.07     0.05      0.04      0.08    -0.06     0.12     0.10    -0.64
-   cov.r   cook.d  hat    
-8   1.71_*  0.04    0.39  
-19  2.09_*  0.00    0.43  
-28  1.86_*  0.00    0.36  
-39  1.76_*  0.01    0.36  
-42  0.13_*  0.05    0.06  
-57   NaN     Inf_*  1.00_*
-66  1.63_*  0.00    0.26  
-80  1.92_*  0.01    0.40  
-83  1.88_*  0.00    0.36  
-87  1.60_*  0.00    0.25  
-89  2.68_*  0.03    0.57_*
-93  2.68_*  0.03    0.57_*
+   cov.r   cook.d hat    
+8   1.71_*  0.04   0.39  
+19  2.09_*  0.00   0.43  
+28  1.86_*  0.00   0.36  
+39  1.76_*  0.01   0.36  
+42  0.13_*  0.05   0.06  
+57   NaN     NaN   1.00_*
+66  1.63_*  0.00   0.26  
+80  1.92_*  0.01   0.40  
+83  1.88_*  0.00   0.36  
+87  1.60_*  0.00   0.25  
+89  2.68_*  0.03   0.57_*
+93  2.68_*  0.03   0.57_*
 > ## only last two cols in row 57 should be influential
 > 
 > 
@@ -481,4 +483,122 @@ Potentially influential observations of
 +     plot(fm1)
 + }
 > ## gave warnings in 1.8.1
+> 
+> 
+> ## PR#7829 model.tables & replications
+> if(require(MASS)) {
++ oats.aov <- aov(Y ~ B + V + N + V:N, data=oats[-1,])
++ model.tables(oats.aov, "means", cterms=c("N", "V:N"))
++ }
+Tables of means
+Grand mean
+         
+103.8732 
+
+ N 
+    0.0cwt 0.2cwt 0.4cwt 0.6cwt
+     78.74   98.5  113.8    123
+rep  17.00   18.0   18.0     18
+
+ V:N 
+             N
+V             0.0cwt 0.2cwt 0.4cwt 0.6cwt
+  Golden.rain  79.53  98.03 114.20 124.37
+  rep           6.00   6.00   6.00   6.00
+  Marvellous   86.20 108.03 116.70 126.37
+  rep           6.00   6.00   6.00   6.00
+  Victory      69.77  89.20 110.37 118.03
+  rep           5.00   6.00   6.00   6.00
+> ## wrong printed output in 2.1.0
+> 
+> 
+> ## drop1 on weighted lm() fits
+> if(require(MASS)) {
++     hills.lm <- lm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
++     print(drop1(hills.lm))
++     print(stats:::drop1.default(hills.lm))
++     hills.lm2 <- lm(time/dist ~ 1 + I(climb/dist), data=hills)
++     drop1(hills.lm2)
++ }
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df Sum of Sq    RSS    AIC
+<none>              442.22  92.78
+dist    1    330.92 773.14 110.33
+climb   1      9.73 451.95  91.54
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df     AIC
+<none>     92.776
+dist    1 110.329
+climb   1  91.538
+Single term deletions
+
+Model:
+time/dist ~ 1 + I(climb/dist)
+              Df Sum of Sq    RSS    AIC
+<none>                     442.22  92.78
+I(climb/dist)  1      9.73 451.95  91.54
+> ## quoted unweighted RSS etc in 2.2.1
+> 
+> 
+> ## tests of ISO C99 compliance (Windows fails without a workaround)
+> sprintf("%g", 123456789)
+[1] "1.23457e+08"
+> sprintf("%8g", 123456789)
+[1] "1.23457e+08"
+> sprintf("%9.7g", 123456789)
+[1] "1.234568e+08"
+> sprintf("%10.9g", 123456789)
+[1] " 123456789"
+> sprintf("%g", 12345.6789)
+[1] "12345.7"
+> sprintf("%10.9g", 12345.6789)
+[1] "12345.6789"
+> sprintf("%10.7g", 12345.6789)
+[1] "  12345.68"
+> sprintf("%.7g", 12345.6789)
+[1] "12345.68"
+> sprintf("%.5g", 12345.6789)
+[1] "12346"
+> sprintf("%.4g", 12345.6789)
+[1] "1.235e+04"
+> sprintf("%9.4g", 12345.6789)
+[1] "1.235e+04"
+> sprintf("%10.4g", 12345.6789)
+[1] " 1.235e+04"
+> ## Windows used e+008 etc prior to 2.3.0
+> 
+> 
+> ## weighted glm() fits
+> if(require(MASS)) {
++     hills.glm <- glm(time ~ 0 + dist + climb, data=hills, weights=1/dist^2)
++     print(AIC(hills.glm))
++     print(extractAIC(hills.glm))
++     print(drop1(hills.glm))
++     stats:::drop1.default(hills.glm)
++ }
+[1] 322.2318
+[1]   2.0000 322.2318
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df Deviance    AIC
+<none>      442.22 322.23
+dist    1   773.14 339.78
+climb   1   451.95 320.99
+Single term deletions
+
+Model:
+time ~ 0 + dist + climb
+       Df    AIC
+<none>    322.23
+dist    1 339.78
+climb   1 320.99
+> ## wrong AIC() and drop1 prior to 2.3.0.
 > 

@@ -5,7 +5,7 @@
   Add elements to a vector.
 }
 \usage{
-append(x, values, after=length(x))
+append(x, values, after = length(x))
 }
 \arguments{
   \item{x}{the vector to be modified.}
@@ -25,3 +25,4 @@ append(x, values, after=length(x))
 append(1:5, 0:1, after=3)
 }
 \keyword{manip}
+\concept{insert}

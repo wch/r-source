@@ -4,7 +4,7 @@ apropos <- function (what, where = FALSE, mode = "any")
 	what <- as.character(substitute(what))
     x <- character(0)
     check.mode <- mode != "any"
-    for (i in seq(search())) {
+    for (i in seq_along(search())) {
 	ll <- length(li <- ls(pos = i, pattern = what, all.names = TRUE))
 	if (ll) {
 	    if(check.mode)
@@ -44,7 +44,9 @@ find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE) {
                 mode.ok <- sapply(li, exists, where = i, mode = mode,
                                   inherits = FALSE)
                 ll <- sum(mode.ok)
-                if(ll >= 2) warning(paste(ll, "occurrences in", sp[i]))
+                if(ll >= 2)
+                    warning(gettextf("%d occurrences in %s", ll, sp[i]),
+                            domain = NA)
             }
             ind[i] <- ll > 0
         }

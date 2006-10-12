@@ -1,9 +1,9 @@
 link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 {
-    if(!file.exists(file.path(R.home(), "doc", "html", "search")))
+    if(!file.exists(file.path(R.home("doc"), "html", "search")))
        return(invisible(NULL))
     if(verbose) {
-        cat("updating HTML package descriptions\n")
+        cat(gettext("updating HTML package descriptions\n"))
         flush.console()
     }
     make.packages.html(lib.loc)
@@ -13,8 +13,8 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 
 make.packages.html <- function(lib.loc=.libPaths())
 {
-    f.tg <- file.path(R.home(), "doc/html/packages.html")
-    f.hd <- file.path(R.home(), "doc/html/packages-head.html")
+    f.tg <- file.path(R.home("doc"), "html", "packages.html")
+    f.hd <- file.path(R.home("doc"), "html", "packages-head-utf8.html")
     if(!file.create(f.tg)) {
         warning("cannot update HTML package index")
         return(FALSE)
@@ -30,7 +30,7 @@ make.packages.html <- function(lib.loc=.libPaths())
             libname <- chartr("/", "\\", lib)
             lib0 <- if(substring(lib, 2, 2) != ":")
                 paste(drive, lib, sep="") else lib
-            lib0 <- paste("file:///", lib0, sep="")
+            lib0 <- paste("file:///", URLencode(lib0), sep="")
         } else {
             lib0 <- "../../library"
             libname <- "the standard library"
@@ -43,7 +43,8 @@ make.packages.html <- function(lib.loc=.libPaths())
         cat("<p>\n<table width=\"100%\" summary=\"R Package list\">\n",
             file = out)
         for (i in  pg) {
-            title <- packageDescription(i, fields="Title", lib.loc = lib)[1]
+            title <- packageDescription(i, lib.loc = lib, field = "Title",
+                                        encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
                 '<td width="25%"><a href="', lib0, '/', i,
@@ -59,7 +60,7 @@ make.packages.html <- function(lib.loc=.libPaths())
 
 make.search.html <- function(lib.loc=.libPaths())
 {
-    f.tg <- file.path(R.home(), "doc/html/search/index.txt")
+    f.tg <- file.path(R.home("doc"), "html", "search", "index.txt")
     if(file.access(f.tg, mode=2) == -1) {
         warning("cannot update HTML search index")
         return()
@@ -78,7 +79,7 @@ make.search.html <- function(lib.loc=.libPaths())
         if(is.na(pmatch(rh, lib))) {
             lib0 <- if(substring(lib, 2, 2) != ":") paste(drive, lib, sep="")
             else lib
-            lib0 <- paste("URL: file:///", lib0, sep="")
+            lib0 <- paste("URL: file:///", URLencode(lib0), sep="")
             sed.it <- TRUE
         } else {
             sed.it <- FALSE
@@ -86,10 +87,14 @@ make.search.html <- function(lib.loc=.libPaths())
         for (i in pg) {
             cfile <- file.path(lib, i, "CONTENTS")
             if(!file.exists(cfile)) next
-            contents <- if(sed.it)
-                gsub("^URL: ../../../library", lib0, readLines(cfile))
-            else readLines(cfile)
-            writeLines(contents, out)
+            contents <- readLines(cfile)
+            isURL <- grep("URL: ../../../library", contents,
+                          fixed = TRUE, useBytes = TRUE)
+            if(length(isURL) && sed.it)
+                contents[isURL] <- gsub("URL: ../../../library", lib0,
+                                        contents[isURL],
+                                        fixed = TRUE, useBytes = TRUE)
+            writeLines(c(contents, ""), out) # space between packages
         }
     }
     close(out)
@@ -101,21 +106,28 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     fixedfile <- file.path(pkg, "fixedHTMLlinks")
     if(file.exists(fixedfile)) {
         oldtop <- readLines(fixedfile)
-        if(!force && (length(oldtop)==1) && top == oldtop) return(TRUE)
+        if(!force && (length(oldtop) == 1) && top == oldtop) return(TRUE)
         olddoc <- paste(oldtop, "/doc", sep="")
         oldbase <- paste(oldtop, "/library/base", sep="")
         oldutils <- paste(oldtop, "/library/utils", sep="")
         oldgraphics <- paste(oldtop, "/library/graphics", sep="")
         oldstats <- paste(oldtop, "/library/stats", sep="")
+        olddata <- paste(oldtop, "/library/datasets", sep="")
+        oldgrD <- paste(oldtop, "/library/grDevices", sep="")
+        oldmeth <- paste(oldtop, "/library/methods", sep="")
     } else {
         olddoc <- "../../../doc"
         oldbase <- "../../base"
         oldutils <- "../../utils"
         oldgraphics <- "../../graphics"
+        oldgrDevices <- "../../grDevices"
         oldstats <- "../../stats"
+        olddata <- "../../datasets"
+        oldgrD <- "../../grDevices"
+        oldmeth <- "../../methods"
     }
     if(!file.create(fixedfile)) return(FALSE)
-    cat(top, "\n", sep="", file=fixedfile)
+    cat(top, "\n", sep = "", file = fixedfile)
     htmldir <- file.path(pkg, "html")
     if(!file.exists(htmldir)) return(FALSE)
     files <- list.files(htmldir, pattern = "\\.html$", full.names = TRUE)
@@ -124,18 +136,26 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     utils <- paste(top, "/library/utils", sep="")
     graphics <- paste(top, "/library/graphics", sep="")
     stats <- paste(top, "/library/stats", sep="")
+    datasets <- paste(top, "/library/datasets", sep="")
+    grD <- paste(top, "/library/grDevices", sep="")
+    meth <- paste(top, "/library/methods", sep="")
     for(f in files) {
         page <- readLines(f)
+        ## <FIXME> use useBytes=TRUE later
+        page <- gsub(olddoc, doc, page, fixed = TRUE)
+        page <- gsub(oldbase, base, page, fixed = TRUE)
+        page <- gsub(oldutils, utils, page, fixed = TRUE)
+        page <- gsub(oldgraphics, graphics, page, fixed = TRUE)
+        page <- gsub(oldstats, stats, page, fixed = TRUE)
+        page <- gsub(olddata, datasets, page, fixed = TRUE)
+        page <- gsub(oldgrD, grD, page, fixed = TRUE)
+        page <- gsub(oldmeth, meth, page, fixed = TRUE)
+        ## only do this if the substitutions worked
         out <- try(file(f, open = "w"), silent = TRUE)
         if(inherits(out, "try-error")) {
-            warning("cannot update", sQuote(f))
+            warning(gettextf("cannot update '%s'", f), domain = NA)
             next
         }
-        page <- gsub(olddoc, doc, page)
-        page <- gsub(oldbase, base, page)
-        page <- gsub(oldutils, utils, page)
-        page <- gsub(oldgraphics, graphics, page)
-        page <- gsub(oldstats, stats, page)
         writeLines(page, out)
         close(out)
     }
@@ -147,6 +167,6 @@ fixup.libraries.URLs <- function(lib.loc = .libPaths())
     for (lib in lib.loc) {
         if(lib == .Library) next
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
-        for(pkg in pg) fixup.package.URLs(file.path(lib,pkg))
+        for(pkg in pg) try(fixup.package.URLs(file.path(lib,pkg)))
     }
 }

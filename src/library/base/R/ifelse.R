@@ -5,9 +5,9 @@ ifelse <-
     ans <- test
     nas <- is.na(test)
     if (any(test[!nas]))
-        ans[test] <- rep(yes, length.out = length(ans))[test]
+        ans[test & !nas] <- rep(yes, length.out = length(ans))[test & !nas]
     if (any(!test[!nas]))
-        ans[!test] <- rep(no, length.out = length(ans))[!test]
+        ans[!test & !nas] <- rep(no, length.out = length(ans))[!test & !nas]
     ans[nas] <- NA
     ans
 }

@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 
 SOURCES = g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.lo)
+OBJECTS = $(SOURCES:.c=.o)
 HEADERS = g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -21,16 +21,11 @@ DISTFILES = \
 	Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
 	dllversion.rc
 
-## <FIXME>
-## Change to 'vfonts.la' when using libtool for shlibs.
-## Remove when using automake ... also fix target 'install' then.
 vfonts_la = vfonts$(SHLIB_EXT)
-## </FIXME>
-Rexecmodulesdir_LTLIBRARIES = $(vfonts_la)
-vfonts_la_SOURCES = $(SOURCES)
-vfonts_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@vfonts_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
-vfonts_la_LIBADD = $(LIBR)
+## AIX needs LIBM
+vfonts_la_LIBADD = $(LIBR) $(LIBM)
+
+ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
 all: Makefile Makedeps R
 
@@ -45,18 +40,17 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
+	@$(MAKE) $(vfonts_la)
 
-$(vfonts_la): $(vfonts_la_OBJECTS) $(vfonts_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(vfonts_la_LDFLAGS) $(vfonts_la_OBJECTS) $(vfonts_la_LIBADD) $(LIBS)
+$(vfonts_la): $(OBJECTS)
+	$(SHLIB_LINK) -o $@ $(OBJECTS) $(vfonts_la_LIBADD)
 ## <FIXME>
 ## Not sure if we want to do this ...
 	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(vfonts_la) "$(Rexecmodulesdir)/vfonts$(SHLIB_EXT)"
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(vfonts_la) "$(Rexecmodulesdir)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(vfonts_la) "$(Rexecmodulesdir)/$(vfonts_la)"
 installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:

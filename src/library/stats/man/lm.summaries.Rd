@@ -2,6 +2,7 @@
 \alias{family.lm}
 \alias{formula.lm}
 \alias{residuals.lm}
+\alias{labels.lm}
 \alias{weights}
 \alias{weights.default}
 \title{Accessing Linear Model Fits}
@@ -11,8 +12,11 @@
 \method{formula}{lm}(x, \dots)
 
 \method{residuals}{lm}(object,
-          type = c("working", "response", "deviance","pearson", "partial"),
+          type = c("working", "response", "deviance", "pearson",
+                   "partial"),
           \dots)
+
+\method{labels}{lm}(object, \dots)
 
 weights(object, \dots)
 }
@@ -35,8 +39,18 @@ weights(object, \dots)
   square root of the weights used in fitting.  The partial residuals
   are a matrix with each column formed by omitting a term from the
   model.  In all these, zero weight cases are never omitted (as opposed
-  to the standardized \code{\link{rstudent}} residuals).
+  to the standardized \code{\link{rstudent}} residuals, and the
+  \code{\link{weighted.residuals}}).
 
+  How \code{residuals} treats cases with missing values in the original
+  fit is determined by the \code{na.action} argument of that fit.
+  If \code{na.action = na.omit} omitted cases will not appear in the
+  residuals, whereas if \code{na.action = na.exclude} they will appear,
+  with residual value \code{NA}.  See also \code{\link{naresid}}.
+
+  The \code{"lm"} method for generic \code{\link{labels}} returns the
+  term labels for estimable terms, that is the names of the terms with
+  an least one estimable coefficient.
 }
 \seealso{
   The model fitting function \code{\link{lm}}, \code{\link{anova.lm}}.

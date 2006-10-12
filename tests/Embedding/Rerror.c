@@ -4,55 +4,35 @@
  We also provide an on.exit() also.
  */
 
-#include <R.h>
-#include <Rdefines.h>
-
-#include "Startup.h"
-
 #include "embeddedRCall.h"
+#include "R_ext/RStartup.h"
 
 
 int
 main(int argc, char *argv[])
 {
-  SEXP fun, e, arg;
-  int errorOccurred;
-  char *localArgs[] = {"R", "--gui=none", "--silent"};
-  init_R(sizeof(localArgs)/sizeof(localArgs[0]), localArgs);
+    SEXP e;
+    int errorOccurred;
+    char *localArgs[] = {"R", "--silent"};
+    init_R(sizeof(localArgs)/sizeof(localArgs[0]), localArgs);
 
-  /*
-     Evaluates the two expressions:
-       source("error.R")
-     and then calls foo()  twice
-     where foo is defined in the file error.R
-   */
-  PROTECT(fun = Rf_findFun(Rf_install("source"),  R_GlobalEnv));  
-  PROTECT(e = allocVector(LANGSXP, 2));
-  PROTECT(arg = NEW_CHARACTER(1));
-  SET_STRING_ELT(arg, 0, COPY_TO_USER_STRING("error.R"));
-  SETCAR(e, fun);
-  SETCAR(CDR(e), arg);
-  
-  Test_tryEval(e, &errorOccurred);
+    /*
+      Evaluates the two expressions:
+      source("error.R")
+      and then calls foo()  twice
+      where foo is defined in the file error.R
+    */
+    PROTECT(e = lang2(install("source"), mkString("error.R")));
+    R_tryEval(e, R_GlobalEnv, &errorOccurred);
+    UNPROTECT(1);
 
-  UNPROTECT(2);
-
-    fun = Rf_findFun(Rf_install("foo"),  R_GlobalEnv);
-    PROTECT(fun);
-    PROTECT(arg = NEW_INTEGER(10));
-    e = allocVector(LANGSXP, 1);
-    PROTECT(e);
-    SETCAR(e, fun);
-
-    Test_tryEval(e, &errorOccurred);
-
+    PROTECT(e = lang1(install("foo")));
+    R_tryEval(e, R_GlobalEnv, &errorOccurred);
     fprintf(stderr, "Trying again (yes it will fail also!)\n");fflush(stderr);
+    R_tryEval(e, R_GlobalEnv, &errorOccurred);
+    UNPROTECT(1);
 
-    Test_tryEval(e, &errorOccurred);
-    UNPROTECT(2);
+    end_R();
 
-    R_CleanUp(SA_NOSAVE, 0, FALSE);
-
-  return(0);
+    return(0);
 }
-

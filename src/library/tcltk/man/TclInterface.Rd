@@ -7,8 +7,6 @@
 \alias{.Tcl.callback}
 \alias{.Tcl.args}
 \alias{.Tcl.args.objv}
-\alias{$.tclvar}
-\alias{$<-.tclvar}
 \alias{tclvar}
 \alias{tclVar}
 \alias{as.character.tclVar}
@@ -43,7 +41,6 @@
 \alias{.Tk.subwin}
 \alias{is.tkwin}
 \alias{tkdestroy}
-\alias{.TkWin}
 \alias{.TkRoot}
 \alias{addTclPath}
 \alias{tclRequire}
@@ -63,7 +60,6 @@
 .Tk.ID(win)
 .Tk.newwin(ID)
 .Tk.subwin(parent)
-.TkWin
 .TkRoot
 
 tkdestroy(win)
@@ -82,8 +78,9 @@ tclArray()
 \method{[[}{tclArray}(x,...) <- value
 \method{$}{tclArray}(x, i)
 \method{$}{tclArray}(x, i) <- value
-\method{names}{tclArray}
-\method{length}{tclArray}
+
+\method{names}{tclArray}(x)
+\method{length}{tclArray}(x)
 
 tclObj(x)
 tclObj(x) <- value
@@ -109,6 +106,7 @@ tclRequire(package, warn = TRUE)
   \item{objv}{a named vector of Tcl objects}
   \item{win}{a window structure}
   \item{x}{an object}
+  \item{i}{character or (unquoted) name}
   \item{drop}{logical. Indicates whether a single-element vector should
     be made into a simple Tcl object or a list of length one}
   \item{value}{For \code{tclvalue} assignments, a character string. For
@@ -225,7 +223,7 @@ tclRequire(package, warn = TRUE)
   \code{tclvalue} and \code{as.character} differ on an object whose
   string representation has embedded spaces, the former is sometimes to
   be preferred, in particular when applied to the result of
-  \code{tkread}, \code{tkgetOpenFile}, and similar functions. 
+  \code{tclread}, \code{tkgetOpenFile}, and similar functions. 
 
   The object behind a \code{tclVar} object
   is extracted using \code{tclObj(x)} which also allows an assignment
@@ -268,7 +266,7 @@ xyzzy <- tclVar(7913)
 tclvalue(xyzzy)
 tclvalue(xyzzy) <- "foo"
 as.character(xyzzy)
-tkcmd("set", as.character(xyzzy))
+tcl("set", as.character(xyzzy))
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir=top$env, all=TRUE)

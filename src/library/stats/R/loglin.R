@@ -10,7 +10,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     conf <- matrix(0, nrow = nvar, ncol = ncon)
     nmar <- 0
     varnames <- names(dimnames(table))
-    for (k in seq(along = margin)) {
+    for (k in seq_along(margin)) {
         tmp <- margin[[k]]
         if (is.character(tmp)) {
             ## Rewrite margin names to numbers
@@ -22,7 +22,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     }
 
     ntab <- length(table)
-    if (length(start) != ntab ) stop("start and table must be same length")
+    if (length(start) != ntab ) stop("'start' and 'table' must be same length")
 
     storage.mode(conf) <- "integer"
     ## NOTE: We make no use of the arguments locmar, nmar, marg, nu, and
@@ -48,11 +48,11 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             ifault = integer(1),
             PACKAGE = "base")
     switch(z$ifault,
-           stop("This should not happen"),
-           stop("This should not happen"),
-           warning("Algorithm did not converge"),
-           stop(paste("Incorrect specification of", sQuote("table"),
-                      "or", sQuote("start"))))
+           stop("this should not happen"),
+           stop("this should not happen"),
+           warning("algorithm did not converge"),
+           stop("incorrect specification of 'table' or 'start'")
+           )
 
     if (print)
         cat(z$nlast, "iterations: deviation", z$dev[z$nlast], "\n")
@@ -77,21 +77,21 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     ## See also the code for 'dyadic' below which computes the u_i(B).
     subsets <- function(x) {
         y <- list(vector(mode(x), length = 0))
-        for (i in seq(along = x)) {
+        for (i in seq_along(x)) {
             y <- c(y, lapply(y, "c", x[i]))
         }
         y[-1]
     }
     df <- rep.int(0, 2^nvar)
-    for (k in seq(along = margin)) {
+    for (k in seq_along(margin)) {
         terms <- subsets(margin[[k]])
-        for (j in seq(along = terms))
+        for (j in seq_along(terms))
             df[sum(2 ^ (terms[[j]] - 1))] <- prod(dtab[terms[[j]]] - 1)
     }
 
     ## Rewrite margin numbers to names if possible
     if (!is.null(varnames) && all(nchar(varnames) > 0)) {
-        for (k in seq(along = margin))
+        for (k in seq_along(margin))
             margin[[k]] <- varnames[margin[[k]]]
     } else {
         varnames <- as.character(1 : ntab)
@@ -107,7 +107,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
 
     if (param) {
         fit <- log(fit)
-        terms <- seq(length(df))[df > 0]
+        terms <- seq_along(df)[df > 0]
 
         parlen <- length(terms) + 1
         parval <- list(parlen)
@@ -123,7 +123,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
             dyadic <- cbind(dyadic, terms %% 2)
             terms <- terms %/% 2
         }
-        dyadic <- dyadic[order(apply(dyadic, 1, sum)), ]
+        dyadic <- dyadic[order(rowSums(dyadic)), ]
 
         for (i in 2 : parlen) {
             vars <- which(dyadic[i - 1, ] > 0)

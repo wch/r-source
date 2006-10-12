@@ -2,59 +2,64 @@
 *      Perl-Compatible Regular Expressions       *
 *************************************************/
 
-/*
-PCRE is a library of functions to support regular expressions whose syntax
+/* PCRE is a library of functions to support regular expressions whose syntax
 and semantics are as close as possible to those of the Perl 5 language.
 
-Written by: Philip Hazel <ph10@cam.ac.uk>
-
-           Copyright (c) 1997-2003 University of Cambridge
+                       Written by Philip Hazel
+           Copyright (c) 1997-2006 University of Cambridge
 
 -----------------------------------------------------------------------------
-Permission is granted to anyone to use this software for any purpose on any
-computer system, and to redistribute it freely, subject to the following
-restrictions:
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-1. This software is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
 
-2. The origin of this software must not be misrepresented, either by
-   explicit claim or by omission.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
 
-3. Altered versions must be plainly marked as such, and must not be
-   misrepresented as being the original software.
+    * Neither the name of the University of Cambridge nor the names of its
+      contributors may be used to endorse or promote products derived from
+      this software without specific prior written permission.
 
-4. If PCRE is embedded in any software that is released under the GNU
-   General Purpose Licence (GPL), then the terms of that licence shall
-   supersede any condition above with which it is incompatible.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------
-
-See the file Tech.Notes for some information on the internals.
 */
 
 
-/* This is a support program to generate the file chartables.c, containing
-character tables of various kinds. They are built according to the default C
-locale and used as the default tables by PCRE. Now that pcre_maketables is
-a function visible to the outside world, we make use of its code from here in
-order to be consistent. */
+/* This is a freestanding support program to generate a file containing default
+character tables for PCRE. The tables are built according to the default C
+locale. Now that pcre_maketables is a function visible to the outside world, we
+make use of its code from here in order to be consistent. */
 
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "internal.h"
+#include "pcre_internal.h"
 
-#define DFTABLES          /* maketables.c notices this */
-#include "maketables.c"
+#define DFTABLES          /* pcre_maketables.c notices this */
+#include "pcre_maketables.c"
 
+#undef fprintf /* remapped on Windows */
 
 int main(int argc, char **argv)
 {
 int i;
 FILE *f;
 const unsigned char *tables = pcre_maketables();
+const unsigned char *base_of_tables = tables;
 
 if (argc != 2)
   {
@@ -62,7 +67,7 @@ if (argc != 2)
   return 1;
   }
 
-f = fopen(argv[1], "w");
+f = fopen(argv[1], "wb");
 if (f == NULL)
   {
   fprintf(stderr, "dftables: failed to open %s for writing\n", argv[1]);
@@ -80,10 +85,10 @@ fprintf(f,
   "program. If you edit it by hand, you might like to edit the Makefile to \n"
   "prevent its ever being regenerated.\n\n");
 fprintf(f,
-  "This file is #included in the compilation of pcre.c to build the default\n"
-  "character tables which are used when no tables are passed to the compile\n"
-  "function. */\n\n"
-  "static unsigned char pcre_default_tables[] = {\n\n"
+  "This file contains the default tables for characters with codes less than\n"
+  "128 (ASCII characters). These tables are used when no external tables are\n"
+  "passed to PCRE. */\n\n"
+  "const unsigned char _pcre_default_tables[] = {\n\n"
   "/* This table is a lower casing table. */\n\n");
 
 fprintf(f, "  ");
@@ -161,6 +166,7 @@ if (isprint(i-1)) fprintf(f, " %c ", i-1);
 fprintf(f, " */\n\n/* End of chartables.c */\n");
 
 fclose(f);
+free((void *)base_of_tables);
 return 0;
 }
 

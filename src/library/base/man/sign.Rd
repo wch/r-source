@@ -16,7 +16,7 @@ sign(x)
 }
 \details{
   This is a generic function: methods can be defined for it
-  directly or via the \code{\link{Math}} group generic.
+  directly or via the \code{\link[base:groupGeneric]{Math}} group generic.
 }
 \seealso{
   \code{\link{abs}}

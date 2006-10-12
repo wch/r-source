@@ -4,27 +4,31 @@ memory.limit <- function(size = NA) .Internal(memory.size(size))
 
 DLL.version <- function(path) .Internal(DLL.version(path))
 
-select.list <- function(list, preselect=NULL, multiple=FALSE)
-    .Internal(select.list(list, preselect, multiple))
+getClipboardFormats <- function()
+    .Internal(getClipboardFormats())
+    
+readClipboard <- function(format = 1, raw = FALSE) {
+    result <- .Internal(readClipboard(format, raw))
+    if (!is.null(result) && !raw) {
+    	result <- strsplit(result,"\r\n")[[1]]
+    	if (length(result) == 1) result <- strsplit(result,"\n")[[1]]
+    	if (length(result) == 1) result <- strsplit(result,"\r")[[1]]
+    }
+    result
+}
 
-flush.console <- function() .Internal(flush.console())
-
-readClipboard <- function()
-    strsplit(.Internal(readClipboard()), "\r\n")[[1]]
-
-
-writeClipboard <- function(str)
-    .Internal(writeClipboard(str))
+writeClipboard <- function(str, format = 1)
+    .Internal(writeClipboard(str, format))
 
 getIdentification <- function()
     .Internal(getIdentification())
-    
+
 setWindowTitle <- function(suffix, title = paste(getIdentification(), suffix))
     .Internal(setWindowTitle(title))
 
 getWindowTitle <- function()
     .Internal(getWindowTitle())
-    
+
 getWindowsHandle <- function(which = "Console") {
     if (is.numeric(which)) {
 	which <- as.integer(which)
@@ -34,3 +38,13 @@ getWindowsHandle <- function(which = "Console") {
     }
     .Internal(getWindowHandle(which))
 }
+
+menuShowCRAN <- function()
+{
+    CRAN <- as.vector(getOption("repos")["CRAN"])
+    if(is.na(CRAN) || identical(CRAN, "@CRAN@"))
+        CRAN <- "http://cran.r-project.org"
+    shell.exec(CRAN)
+}
+
+shortPathName <- function(path) .Internal(shortPathName(path))

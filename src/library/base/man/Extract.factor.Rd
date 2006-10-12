@@ -2,23 +2,25 @@
 \title{Extract or Replace Parts of a Factor}
 \alias{[.factor}
 \alias{[<-.factor}
+\alias{[[.factor}
 \description{
   Extract or replace subsets of factors.
 }
 \usage{
-x[i, drop = FALSE]
-
-x[i] <- value
+\method{[}{factor}(x, \dots, drop = FALSE)
+\method{[[}{factor}(x, i)
+\method{[}{factor}(x, \dots) <- value
 }
 \arguments{
   \item{x}{a factor}
-  \item{i}{a specification of indices -- see \code{\link{Extract}}.}
+  \item{\dots, i}{a specification of indices -- see \code{\link{Extract}}.}
   \item{drop}{logical.  If true, unused levels are dropped.}
   \item{value}{character: a set of levels.  Factor values are coerced to
     character.}
 }
 \value{
-  A factor with the same set of levels as \code{x} unless \code{drop=TRUE}.
+  A factor with the same set of levels as \code{x} unless
+  \code{drop=TRUE}.  (Prior to \R 2.4.0, \code{[[} returned the integer code.)
 }
 \details{
   When unused levels are dropped the ordering of the remaining levels is

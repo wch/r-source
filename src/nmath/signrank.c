@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -74,7 +74,7 @@ w_init_maybe(int n)
 	allocated_n = n = imax2(n, SIGNRANK_MAX);
 	w = (double **) calloc(n + 1, sizeof(double *));
 	if (!w)
-	    MATHLIB_ERROR("%s", "signrank allocation error");
+	    MATHLIB_ERROR("%s", _("signrank allocation error"));
     }
 }
 
@@ -97,7 +97,7 @@ csignrank(int k, int n)
     if (w[n] == 0) {
 	w[n] = (double *) calloc(c + 1, sizeof(double));
 	if (!w[n]) {
-	    MATHLIB_ERROR("%s", "signrank allocation error");
+	    MATHLIB_ERROR("%s", _("signrank allocation error"));
 	}
 	for (i = 0; i <= c; i++)
 	    w[n][i] = -1;

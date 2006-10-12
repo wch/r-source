@@ -21,6 +21,8 @@
    allocating any.  It is a good idea to use alloca(0) in
    your main control loop, etc. to force garbage collection.  */
 
+/* <UTF8> char here is handled as a whole string */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

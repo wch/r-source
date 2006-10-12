@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef RGRAPHICS_H_
@@ -43,18 +43,31 @@ extern "C" {
  *		blue  = ((color >> 16) & 255)
  */
 /*
- *	Changes from 1.4.0: use top 8 bits as an alpha channel.
+ *	Changes as from 1.4.0: use top 8 bits as an alpha channel.
  * 	0 = opaque, 255 = transparent.
  *	At present only 0 and >0 are used, with no semi-transparent.
  */
-#define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16))
+/*
+ * Changes as from 2.0.0:  use top 8 bits as full alpha channel
+ *      1 = opaque, 0 = transparent
+ *      [to conform with SVG, PDF and others]
+ *      and everything in between is used
+ *      [which means that NA is not stored as an internal colour;
+ *       it is converted to R_RGBA(255, 255, 255, 0)]
+ */
+/* #define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16)|(255<<24)) overflows */
+#define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16)|0xFF000000)
 #define R_RGBA(r,g,b,a)	((r)|((g)<<8)|((b)<<16)|((a)<<24))
 #define R_RED(col)	(((col)	   )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
 #define R_BLUE(col)	(((col)>>16)&255)
 #define R_ALPHA(col)	(((col)>>24)&255)
-#define R_OPAQUE(col)	(R_ALPHA(col) == 0)
-#define R_TRANSPARENT(col) (R_ALPHA(col) == 255)
+#define R_OPAQUE(col)	(R_ALPHA(col) == 255)
+#define R_TRANSPARENT(col) (R_ALPHA(col) == 0)
+    /* 
+     * A transparent white
+     */
+#define R_TRANWHITE     (R_RGBA(255, 255, 255, 0))
 
 /*
  *	Some Notes on Line Textures
@@ -157,13 +170,8 @@ int dummy;
 #define curDevice		Rf_curDevice
 #define CurrentDevice		Rf_CurrentDevice
 #define currentFigureLocation	Rf_currentFigureLocation
-#define FixupCex		Rf_FixupCex
-#define FixupCol		Rf_FixupCol
-#define FixupFont		Rf_FixupFont
-#define FixupLty		Rf_FixupLty
-#define FixupLwd		Rf_FixupLwd
-#define FixupPch		Rf_FixupPch
-#define FixupVFont		Rf_FixupVFont
+#define doKeybd			Rf_doKeybd
+#define doMouseEvent		Rf_doMouseEvent
 #define GArrow			Rf_GArrow
 #define GBox			Rf_GBox
 #define GCheckState		Rf_GCheckState
@@ -216,10 +224,9 @@ int dummy;
 #define LTYpar			Rf_LTYpar
 #define NewFrameConfirm		Rf_NewFrameConfirm
 #define NoDevices		Rf_NoDevices
-#define ProcessInlinePars	Rf_ProcessInlinePars
 #define RGBpar			Rf_RGBpar
+#define col2name                Rf_col2name
 #define selectDevice		Rf_selectDevice
-#define Specify2		Rf_Specify2
 /* which of these conversions should be public? maybe all?*/
 #define xDevtoNDC		Rf_xDevtoNDC
 #define xDevtoNFC		Rf_xDevtoNFC
@@ -249,21 +256,6 @@ void GRestore(DevDesc*);
 void GSavePars(DevDesc*);
 /* Restore the temporary copy saved by GSavePars */
 void GRestorePars(DevDesc*);
-
-		/* More Programmer GPar functions */
-
-void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
-void Specify2(char*, SEXP, DevDesc*, SEXP call);
-void RecordGraphicsCall(SEXP);
-
-SEXP FixupPch(SEXP, int);
-SEXP FixupLty(SEXP, int);
-SEXP FixupFont(SEXP, int);
-SEXP FixupCol(SEXP, unsigned int);
-SEXP FixupCex(SEXP, double);
-SEXP FixupLwd(SEXP, double);
-SEXP FixupVFont(SEXP);
-
 
 
 /*-------------------------------------------------------------------
@@ -333,7 +325,7 @@ void GStartPath(DevDesc*);
 void GEndPath(DevDesc*);
 
 void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
-void GMMathText(SEXP, int, double, int, double, int, DevDesc*);
+void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
 typedef void (*GVTextRoutine)(double x, double y, int unit, char* s, int typeface, int fontindex,
@@ -370,7 +362,7 @@ void GBox(int, DevDesc*);
 void GPretty(double*, double*, int*);
 void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
-void GMtext(char*, int, double, int, double, int, DevDesc*);
+void GMtext(char*, int, double, int, double, int, double, DevDesc*);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, DevDesc*);
 
@@ -388,6 +380,8 @@ double GExpressionWidth(SEXP, GUnit, DevDesc*);
 /* Convert an R colour specification (which might be a number or */
 /* a string) into an internal colour specification. */
 unsigned int RGBpar(SEXP, int);
+    /* Convert an internal colour specification into a colour name */
+char *col2name(unsigned int col);
 
 
 /*-------------------------------------------------------------------

@@ -1,7 +1,7 @@
 \name{read.socket}
 \title{ Read from or Write to a Socket}
 \usage{
-read.socket(socket, maxlen=256, loop=FALSE)
+read.socket(socket, maxlen = 256, loop = FALSE)
 write.socket(socket, string)
 }
 \alias{read.socket}
@@ -45,6 +45,7 @@ finger <- function(user, host = "localhost", port = 79, print = TRUE)
     if (print) cat(output)
     invisible(output)
 }
-\dontrun{finger("root")  ## only works if your site provides a finger daemon}
+\dontrun{
+finger("root")  ## only works if your site provides a finger daemon}
 }
 \keyword{misc}

@@ -17,7 +17,7 @@ na.omit.default <- function(object, ...)
     if (!is.atomic(object)) return(object)
     d <- dim(object)
     if (length(d) > 2) return(object)
-    omit <- seq(along=object)[is.na(object)]
+    omit <- seq_along(object)[is.na(object)]
     if (length(omit) == 0) return(object)
     if (length(d)){
         omit <- unique(((omit-1) %% d[1]) + 1)
@@ -40,7 +40,7 @@ na.omit.data.frame <- function(object, ...)
     ## Assuming a data.frame like object
     n <- length(object)
     omit <- FALSE
-    vars <- seq(length = n)
+    vars <- seq_len(n)
     for(j in vars) {
 	x <- object[[j]]
 	if(!is.atomic(x)) next
@@ -71,7 +71,7 @@ na.exclude.default <- function(object, ...)
     if (!is.atomic(object)) return(object)
     d <- dim(object)
     if (length(d) > 2) return(object)
-    omit <- seq(along=object)[is.na(object)]
+    omit <- seq_along(object)[is.na(object)]
     if (length(omit) == 0) return(object)
     if (length(d)){
         omit <- unique(((omit-1) %% d[1]) + 1)
@@ -94,7 +94,7 @@ na.exclude.data.frame <- function(object, ...)
     ## Assuming a data.frame like object
     n <- length(object)
     omit <- FALSE
-    vars <- seq(length = n)
+    vars <- seq_len(n)
     for(j in vars) {
 	x <- object[[j]]
 	if(!is.atomic(x)) next
@@ -124,7 +124,7 @@ naresid.default <- function(omit, x, ...) x
 naresid.exclude <- function(omit, x, ...)
 {
     if (length(omit) == 0 || !is.numeric(omit))
-	stop("Invalid argument for ", sQuote('omit'))
+	stop("invalid argument 'omit'")
     if(length(x) == 0)## << FIXME? -- reconstructing all NA object
         return(x)
 
@@ -155,7 +155,9 @@ naresid.exclude <- function(omit, x, ...)
 naprint <- function(x, ...) UseMethod("naprint")
 naprint.default <- function(x, ...) return("")
 naprint.exclude <- naprint.omit <- function(x, ...)
-    paste(length(x), "observations deleted due to missing")
+    sprintf(ngettext(n <- length(x), "%d observation deleted due to missingness",
+                     "%d observations deleted due to missingness"),
+            n)
 
 napredict <- function(omit, x, ...) UseMethod("napredict")
 napredict.default <- function(omit, x, ...) x

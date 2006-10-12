@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU Library General Public
 # License along with this library; if not, write to the Free
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 embed <- function (x, dimension = 1)
 {
@@ -35,5 +35,5 @@ embed <- function (x, dimension = 1)
         m <- n - dimension + 1
         return(matrix(x[1:m + rep(dimension:1, rep(m, dimension)) - 1], m))
     } else
-        stop ("x is not a vector or matrix")
+        stop ("'x' is not a vector or matrix")
 }

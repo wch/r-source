@@ -85,36 +85,36 @@ will be called on the completion of the next top-level task.
   \url{http://developer.r-project.org/TaskHandlers.pdf}
 }
 \examples{
-  times <- function(total = 3, str="Task a") {
-    ctr <- 0
+ times <- function(total = 3, str="Task a") {
+   ctr <- 0
 
-    function(expr, value, ok, visible) {
-     ctr <<- ctr + 1
-     cat(str, ctr, "\n")
-     if(ctr == total) {
-       cat("handler removing itself\n")
-     }
-     return(ctr < total)
+   function(expr, value, ok, visible) {
+    ctr <<- ctr + 1
+    cat(str, ctr, "\n")
+    if(ctr == total) {
+      cat("handler removing itself\n")
     }
-  }
+    return(ctr < total)
+   }
+ }
 
-  # add the callback that will work for
-  # 4 top-level tasks and then remove itself.
-  n <- addTaskCallback(times(4))
+ # add the callback that will work for
+ # 4 top-level tasks and then remove itself.
+ n <- addTaskCallback(times(4))
 
-  # now remove it, assuming it is still first in the list.
-  removeTaskCallback(n)
+ # now remove it, assuming it is still first in the list.
+ removeTaskCallback(n)
 
 \dontrun{
- # There is no point in running this
- # as 
-  addTaskCallback(times(4))
+# There is no point in running this
+# as 
+ addTaskCallback(times(4))
 
-  sum(1:10)
-  sum(1:10)
-  sum(1:10)
-  sum(1:10)
-  sum(1:10)
+ sum(1:10)
+ sum(1:10)
+ sum(1:10)
+ sum(1:10)
+ sum(1:10)
 }
 }
 \keyword{environment}

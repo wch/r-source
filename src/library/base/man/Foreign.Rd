@@ -20,7 +20,9 @@
 }
 \arguments{
   \item{name}{a character string giving the name of a C function or
-    Fortran subroutine.}
+    Fortran subroutine, or an object of class
+    \code{"\link{NativeSymbolInfo}"} or \code{"\link{NativeSymbol}"}
+    referring to such a name.}
   \item{\dots}{arguments to be passed to the foreign function.}
   \item{NAOK}{if \code{TRUE} then any \code{\link{NA}} or
     \code{\link{NaN}} or \code{\link{Inf}} values in the arguments are
@@ -68,13 +70,12 @@
   \code{.External}, see the chapter on \dQuote{System and foreign language
   interfaces} in \dQuote{Writing \R Extensions} in the \file{doc/manual}
   subdirectory of the \R source tree.
-
 #ifdef windows
+  
   For Windows-specific details on producing the external code, see the
-  file \file{readme.packages}.
+  \dQuote{R Installation and Administration} manual.
 #endif
 }
-%%-- This note based on BDR's understanding, edited TSL
 \section{Argument types}{
   The mapping of the types of \R arguments to C or Fortran arguments
   in \code{.C} or \code{.Fortran} is
@@ -87,6 +88,7 @@
     complex \tab Rcomplex * \tab double complex\cr
     logical \tab int * \tab integer \cr
     character \tab char ** \tab [see below]\cr
+    raw \tab unsigned char * \tab not allowed\cr
     list \tab SEXP *\tab not allowed\cr
     other \tab SEXP\tab not allowed\cr
   }
@@ -106,7 +108,8 @@
   dependent.
 
   \emph{Note:} The C types corresponding to \code{integer} and
-  \code{logical} are \code{int}, not \code{long} as in S.
+  \code{logical} are \code{int}, not \code{long} as in S.  This
+  difference matters on 64-bit platforms.
 
   The first character string of a character vector is passed as a C
   character array to Fortran: that string may be usable as
@@ -128,9 +131,9 @@
   Note that you cannot assign values to the elements of the list within
   the C routine. Assigning values to elements of the array corresponding
   to the list bypasses R's memory management/garbage collection and will
-  cause problems.  Essentially, the array corresponding to the list is read-only.
-  If you need to return S objects created within the C routine,  use the
-  \code{.Call} interface.
+  cause problems.  Essentially, the array corresponding to the list is
+  read-only. If you need to return S objects created within the C
+  routine,  use the \code{.Call} interface.
 
 
   \R functions can be invoked using \code{call_S} or \code{call_R} and
@@ -138,7 +141,7 @@
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
-\note{\emph{\code{DUP=FALSE} is dangerous.}
+\section{Warning}{\emph{\code{DUP=FALSE} is dangerous.}
 
   There are two dangers with using \code{DUP=FALSE}.
 
@@ -157,10 +160,9 @@
   written using \code{.Call} or \code{.External}, so this is now only a
   minor issue.
 
-  (Prior to \R version 1.2.0 there has a third danger, that objects
-  could be moved in memory by the garbage collector. The current garbage
-  collector never moves objects.)
-
+  In addition, character vectors and lists cannot be used with
+  \code{DUP=FALSE}.
+  
   It is safe and useful to set \code{DUP=FALSE} if you do not change any
   of the variables that might be affected, e.g.,
 
@@ -175,12 +177,29 @@
   read-only.
 }
 
+\section{Fortran symbol names}{
+  All compilers that can be used with \R map symbol names to lower case,
+  and so does \code{.Fortran}.
+  
+  Symbol names containing underscores are not valid Fortran 77 (although
+  they are valid in Fortran 9x).  Many Fortran 77 compilers (including
+  \code{g77}) will allow them but translate them in a different way to
+  names not containing underscores.  As from \R 2.4.0 such names will
+  work with \code{.Fortran}, but portable code should not use Fortran
+  names containing underscores.
+
+  Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
+  work if the Fortran 9x compiler used differs from the Fortran compiler
+  used when configuring \R, especially if the subroutine name is not
+  lower-case or includes an underscore.
+}
+
 \section{Header files for external code}{
-    Writing code for use with \code{.External} and \code{.Call} will
-    use internal \R structures. If possible use just those defined in
-    \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
-    as other header files are not installed and are even more
-    likely to be changed.
+  Writing code for use with \code{.External} and \code{.Call} will need to
+  use internal \R structures.  If possible use just those defined in
+  \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
+  as other header files are not installed and are even more
+  likely to be changed.
 }
 
 \references{

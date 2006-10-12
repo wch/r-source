@@ -27,14 +27,15 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
     of each group.}
   \item{cex}{the character size to be used.  Setting \code{cex}
     to a value smaller than one can be a useful way of avoiding label
-    overlap.}
+    overlap.  Unlike many other graphics functions, this sets the actual
+    size, not a multiplet of \code{par("cex")}.}
   \item{pch}{the plotting character or symbol to be used.}
   \item{gpch}{the plotting character or symbol to be used for group
     values.}
   \item{bg}{the background color of plotting characters or symbols to be
     used; use \code{\link{par}(bg= *)} to set the background color of
     the whole plot.}
-  \item{color}{the color(s) to be used for points an labels.}
+  \item{color}{the color(s) to be used for points and labels.}
   \item{gcolor}{the single color to be used for group labels and
     values.}
   \item{lcolor}{the color(s) to be used for the horizontal lines.}
@@ -58,6 +59,8 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
   Cleveland, W. S. (1985)
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \examples{
 dotchart(VADeaths, main = "Death Rates in Virginia - 1940")

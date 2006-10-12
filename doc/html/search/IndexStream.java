@@ -18,15 +18,13 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
-  $Source: /scratch/CVS-ARCHIVE/R/doc/html/search/IndexStream.java,v $
-  
-  $Revision: 1.4 $
+  $Rev$
 
-  $Date: 2002/05/05 22:34:52 $
+  $LastChangedDate$
   
-  $Author: pd $
+  $Author$
 
 ==============================================================================*/
 

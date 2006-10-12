@@ -14,7 +14,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
                )
 {
     if(is.data.frame(data)) data <- data.matrix(data)
-#   if(!is.numeric(data)) stop("`data'  must be a numeric vector or matrix")
+#   if(!is.numeric(data)) stop("'data'  must be a numeric vector or matrix")
     if(is.matrix(data)) {
 	nseries <- ncol(data)
 	ndata <- nrow(data)
@@ -23,7 +23,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 	nseries <- 1
 	ndata <- length(data)
     }
-    if(ndata == 0) stop("ts object must have one or more observations")
+    if(ndata == 0) stop("'ts' object must have one or more observations")
 
     if(missing(frequency)) frequency <- 1/deltat
     else if(missing(deltat)) deltat <- 1/frequency
@@ -45,7 +45,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
     else if(missing(start))
 	start <- end - (ndata - 1)/frequency
 
-    if(start > end) stop("start cannot be after end")
+    if(start > end) stop("'start' cannot be after 'end'")
     nobs <- floor((end - start) * frequency + 1.01)
 
     if(nobs != ndata)
@@ -86,9 +86,11 @@ hasTsp <- function(x)
     x
 }
 
-is.ts <- function (x) inherits(x, "ts") && length(x)
+is.ts <- function(x) inherits(x, "ts") && length(x)
 
-as.ts <- function (x)
+as.ts <- function(x, ...) UseMethod("as.ts")
+
+as.ts.default <- function(x, ...)
 {
     if (is.ts(x)) x
     else if(!is.null(xtsp <- tsp(x))) ts(x, xtsp[1], xtsp[2], xtsp[3])
@@ -111,7 +113,7 @@ as.ts <- function (x)
     tsps <- sapply(sers[tsser], tsp)
     freq <- mean(tsps[3,])
     if(max(abs(tsps[3,] - freq)) > getOption("ts.eps")) {
-        stop("Not all series have the same frequency")
+        stop("not all series have the same frequency")
     }
     if(union) {
         st <- min(tsps[1,])
@@ -120,7 +122,7 @@ as.ts <- function (x)
         st <- max(tsps[1,])
         en <- min(tsps[2,])
         if(st > en) {
-            warning("Non-intersecting series")
+            warning("non-intersecting series")
             return(NULL)
         }
     }
@@ -175,12 +177,12 @@ as.ts <- function (x)
 {
     l <- as.list(substitute(list(...)))[-1]
     nm <- names(l)
-    fixup <- if(is.null(nm)) seq(along = l) else nm == ""
+    fixup <- if(is.null(nm)) seq_along(l) else nm == ""
     ## <NOTE>
     dep <- sapply(l[fixup], function(x) deparse(x)[1])
-    ## We could add support for `deparse.level' here by creating dep
+    ## We could add support for 'deparse.level' here by creating dep
     ## as in list.names() inside table().  But there is a catch: we
-    ## need deparse.level = 2 to get the `usual' deparsing when the
+    ## need deparse.level = 2 to get the 'usual' deparsing when the
     ## method is invoked by the generic ...
     ## </NOTE>
     if(is.null(nm)) return(dep)
@@ -225,7 +227,7 @@ ts.intersect <- function(..., dframe = FALSE)
 diff.ts <- function (x, lag = 1, differences = 1, ...)
 {
     if (lag < 1 | differences < 1)
-        stop("Bad value for lag or differences")
+        stop("bad value for 'lag' or 'differences'")
     if (lag * differences >= NROW(x)) return(x[0])
     ## <FIXME>
     ## lag() and its default method are defined in package ts, so we
@@ -336,6 +338,14 @@ print.ts <- function(x, calendar, ...)
     fr.x <- frequency(x)
     if(missing(calendar))
 	calendar <- any(fr.x == c(4,12))
+    ## sanity check
+    Tsp <- tsp(x)
+    nn <- 1 + round((Tsp[2] - Tsp[1]) * Tsp[3])
+    if(NROW(x) != nn) {
+        warning(gettextf("series is corrupt: length %d with 'tsp' implying %d",
+                         NROW(x), nn), domain=NA, call.=FALSE)
+        calendar <- FALSE
+    }
     if(!calendar)
         header <- function(x) {
             if((fr.x <- frequency(x))!= 1)
@@ -358,7 +368,7 @@ print.ts <- function(x, calendar, ...)
                 if(NROW(x) <= fr.x && start(x)[1] == end(x)[1]) {
                     ## not more than one period
                     dn1 <- start(x)[1]
-                    dn2 <- dn2[1 + (start(x)[2] - 2 + seq(along=x))%%fr.x]
+                    dn2 <- dn2[1 + (start(x)[2] - 2 + seq_along(x))%%fr.x]
                     x <- matrix(format(x, ...), nrow = 1 , byrow = TRUE,
                                 dimnames = list(dn1, dn2))
                 } else { # more than one period
@@ -374,7 +384,7 @@ print.ts <- function(x, calendar, ...)
                 attributes(x) <- NULL
                 names(x) <- tx
             }
-        } else { ##-- no `calendar' --
+        } else { ##-- no 'calendar' --
             header(x)
             attr(x, "class") <- attr(x, "tsp") <- attr(x, "na.action") <- NULL
         }
@@ -382,7 +392,7 @@ print.ts <- function(x, calendar, ...)
 	if(calendar && fr.x > 1) {
 	    tm <- time(x)
 	    t2 <- 1 + round(fr.x*((tm+0.001) %%1))
-	    p1 <- format(floor(tm))# yr
+	    p1 <- format(floor(zapsmall(tm)))# yr
 	    rownames(x) <-
 		if(fr.x == 12)
 		    paste(month.abb[t2], p1, sep=" ")
@@ -428,7 +438,7 @@ plot.ts <-
 		      cex=cex.main, font=font.main, col=col.main, ...)
 	    panel <- match.fun(panel)
 	    nser <- NCOL(x)
-	    if(nser > 10) stop("Can't plot more than 10 series as \"multiple\"")
+	    if(nser > 10) stop("cannot plot more than 10 series as \"multiple\"")
 	    if(is.null(main)) main <- xlabel
 	    nm <- colnames(x)
 	    if(is.null(nm)) nm <- paste("Series", 1:nser)
@@ -483,7 +493,7 @@ plot.ts <-
 	    if(missing(xy.labels)) xy.labels <- (n <= 150)
 	    if(!is.logical(xy.labels)) {
 		if(!is.character(xy.labels))
-		    stop("`xy.labels' must be logical or character")
+		    stop("'xy.labels' must be logical or character")
 		do.lab <- TRUE
 	    } else do.lab <- xy.labels
 
@@ -499,7 +509,7 @@ plot.ts <-
 		text(xy, labels =
 		     if(is.character(xy.labels)) xy.labels
 		     else if(all(tsp(x) == tsp(y))) formatC(time(x), wid = 1)
-		     else seq(along = x),
+		     else seq_along(x),
 		     col = col, cex = cex)
 	    if(xy.lines)
 		lines(xy, col = col, lty = lty, lwd = lwd,
@@ -527,7 +537,7 @@ plot.ts <-
 	plot.new()
 	plot.window(xlim, ylim, log, ...)
 	if(is.matrix(x)) {
-	    for(i in seq(length=k))
+	    for(i in seq_len(k))
 		lines.default(xy$x, x[,i],
 			      col = col[(i-1) %% length(col) + 1],
 			      lty = lty[(i-1) %% length(lty) + 1],
@@ -572,12 +582,12 @@ window.default <- function(x, start = NULL, end = NULL,
 
     if(!is.null(frequency) && !is.null(deltat) &&
        abs(frequency*deltat - 1) > ts.eps)
-        stop("frequency and deltat are both supplied and are inconsistent")
+        stop("'frequency' and 'deltat' are both supplied and are inconsistent")
     if (is.null(frequency) && is.null(deltat)) yfreq <- xfreq
     else if (is.null(deltat)) yfreq <- frequency
     else if (is.null(frequency)) yfreq <- 1/deltat
-    if (yfreq > 0 && xfreq%%yfreq < ts.eps) {
-        thin <- round(xfreq/yfreq)
+    thin <- round(xfreq/yfreq)
+    if (yfreq > 0 && abs(xfreq/yfreq -thin) < ts.eps) {
         yfreq <- xfreq/thin
     } else {
         thin <- 1
@@ -589,10 +599,10 @@ window.default <- function(x, start = NULL, end = NULL,
     else switch(length(start),
 		start,
 		start[1] + (start[2] - 1)/xfreq,
-		stop("Bad value for start"))
+		stop("bad value for 'start'"))
     if(start < xtsp[1] && !extend) {
 	start <- xtsp[1]
-	warning("start value not changed")
+	warning("'start' value not changed")
     }
 
     end <- if(is.null(end))
@@ -600,20 +610,20 @@ window.default <- function(x, start = NULL, end = NULL,
     else switch(length(end),
 		end,
 		end[1] + (end[2] - 1)/xfreq,
-		stop("Bad value for end"))
+		stop("bad value for 'end'"))
     if(end > xtsp[2] && !extend) {
 	end <- xtsp[2]
-	warning("end value not changed")
+	warning("'end' value not changed")
     }
 
     if(start > end)
-	stop("start cannot be after end")
+	stop("'start' cannot be after 'end'")
 
     if(!extend) {
-        if(all(abs(start - xtime) > abs(start) * ts.eps))
+        if(all(abs(start - xtime) > ts.eps/xfreq))
             start <- xtime[(xtime > start) & ((start + 1/xfreq) > xtime)]
 
-        if(all(abs(end - xtime) > abs(end) * ts.eps))
+        if(all(abs(end - xtime) > ts.eps/xfreq))
             end <- xtime[(xtime < end) & ((end - 1/xfreq) < xtime)]
 
         i <- seq(trunc((start - xtsp[1]) * xfreq + 1.5),
@@ -630,10 +640,15 @@ window.default <- function(x, start = NULL, end = NULL,
         yend <- xtsp[2] + enoff/xfreq
         nold <- round(xfreq*(xtsp[2] - xtsp[1])) + 1
         ## both start and end could be outside time base
-        i0 <- 1+max(0, stoff); i1 <- nold + min(0, enoff)
-        i <- c(rep.int(nold+1, max(0, -stoff)),
-                   if(i0 <= i1) i0:i1,
-                   rep.int(nold+1, max(0, enoff)))
+        ## and indeed the new ad old ranges might not intersect.
+        i <- if(start > xtsp[2]+ts.eps/xfreq || end < xtsp[1] - ts.eps/xfreq)
+            rep(nold+1, floor(1+(end-start)*xfreq + ts.eps))
+        else {
+            i0 <- 1+max(0, stoff); i1 <- nold + min(0, enoff)
+            c(rep.int(nold+1, max(0, -stoff)),
+              if(i0 <= i1) i0:i1,
+              rep.int(nold+1, max(0, enoff)))
+        }
         y <- if(is.matrix(x)) rbind(x, NA)[i, , drop = FALSE] else c(x, NA)[i]
         attr(y, "tsp") <- c(ystart, yend, xfreq)
         if(yfreq != xfreq) y <- Recall(y, frequency = yfreq)
@@ -705,6 +720,12 @@ window.ts <- function (x, ...) as.ts(window.default(x, ...))
     else y
 }
 
+"[<-.ts" <- function (x, i, j, value) {
+    y <- NextMethod("[<-")
+    if (NROW(y) != NROW(x)) stop("only replacement of elements is allowed")
+    y
+}
+
 t.ts <- function(x) {
     cl <- oldClass(x)
     other <- !(cl %in% c("ts","mts"))
@@ -730,28 +751,32 @@ ts.plot <- function(..., gpars = list())
 }
 
 arima.sim <- function(model, n, rand.gen = rnorm,
-                      innov = rand.gen(n, ...), n.start = NA, ...)
+                      innov = rand.gen(n, ...), n.start = NA,
+                      start.innov = rand.gen(n.start, ...), ...)
 {
-    if(!is.list(model)) stop("`model' must be list")
+    if(!is.list(model)) stop("'model' must be list")
     p <- length(model$ar)
     if(p) {
         minroots <- min(Mod(polyroot(c(1, -model$ar))))
-        if(minroots <= 1) stop("ar part of model is not stationary")
+        if(minroots <= 1) stop("'ar' part of model is not stationary")
     }
     q <- length(model$ma)
     if(is.na(n.start)) n.start <- p + q +
         ifelse(p > 0, ceiling(6/log(minroots)), 0)
-    if(n.start < p + q) stop("burn-in must be as long as ar + ma")
+    if(n.start < p + q) stop("burn-in 'n.start' must be as long as 'ar + ma'")
     d <- 0
     if(!is.null(ord <- model$order)) {
-        if(length(ord) != 3) stop("`model$order' must be of length 3")
-        if(p != ord[1]) stop("inconsistent specification of ar order")
-        if(q != ord[3]) stop("inconsistent specification of ma order")
+        if(length(ord) != 3) stop("'model$order' must be of length 3")
+        if(p != ord[1]) stop("inconsistent specification of 'ar' order")
+        if(q != ord[3]) stop("inconsistent specification of 'ma' order")
         d <- ord[2]
         if(d != round(d) || d < 0)
             stop("number of differences must be a positive integer")
     }
-    x <- ts(c(rand.gen(n.start, ...), innov[1:n]), start = 1 - n.start)
+    if(!missing(start.innov) && length(start.innov) < n.start)
+        stop(gettextf("'start.innov' is too short: need %d points", n.start),
+             domain = NA)
+    x <- ts(c(start.innov[1:n.start], innov[1:n]), start = 1 - n.start)
     if(length(model$ma)) x <- filter(x, c(1, model$ma), sides = 1)
     if(length(model$ar)) x <- filter(x, model$ar, method = "recursive")
     if(n.start > 0) x <- x[-(1:n.start)]

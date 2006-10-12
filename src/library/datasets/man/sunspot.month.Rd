@@ -24,13 +24,6 @@ sunspot.month
   Royal Observatory of Belgium, Av. Circulaire, 3, B-1180 BRUSSELS
   \url{http://www.oma.be/KSB-ORB/SIDC/sidc_txt.html}
 }
-\note{
-  Prior to \R 2.0.0 \code{sunspot.month} and \code{\link{sunspot.year}}
-  were copied to the user's workspace (or elsewhere) by
-  \code{data(sunspot)}. However, as package \pkg{lattice} has a dataset
-  \code{sunspot} which can be retrieved by the same command, that usage
-  has been removed.
-}
 \examples{
 require(stats)
 ## Compare the monthly series 

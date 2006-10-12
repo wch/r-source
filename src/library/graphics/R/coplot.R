@@ -37,7 +37,8 @@ coplot <-
 	     number = 6, overlap = 0.5, xlim, ylim, ...)
 {
     deparen <- function(expr) {
-	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]])== "(")
+	while (is.language(expr) && !is.name(expr) &&
+               deparse(expr[[1]])[1] == "(")
 	    expr <- expr[[2]]
 	expr
     }
@@ -51,12 +52,12 @@ coplot <-
 	bad.formula()
     y <- deparen(formula[[2]])
     rhs <- deparen(formula[[3]])
-    if (deparse(rhs[[1]]) != "|")
+    if (deparse(rhs[[1]])[1] != "|")
 	bad.formula()
     x <- deparen(rhs[[2]])
     rhs <- deparen(rhs[[3]])
     if (is.language(rhs) && !is.name(rhs)
-	&& (deparse(rhs[[1]]) == "*" || deparse(rhs[[1]]) == "+")) {
+	&& (deparse(rhs[[1]])[1] == "*" || deparse(rhs[[1]])[1] == "+")) {
 	have.b <- TRUE
 	a <- deparen(rhs[[2]])
 	b <- deparen(rhs[[3]])
@@ -97,28 +98,29 @@ coplot <-
     ## generate the given value intervals
 
     number <- as.integer(number)
-    if(length(number)==0 || any(number < 1)) stop("number must be integer >= 1")
-    if(any(overlap >= 1)) stop("overlap must be < 1 (and typically >= 0).")
+    if(length(number) == 0 || any(number < 1))
+        stop("'number' must be integer >= 1")
+    if(any(overlap >= 1)) stop("'overlap' must be < 1 (and typically >= 0).")
 
-    bad.givens <- function() stop("invalid given.values")
+    bad.givens <- function() stop("invalid 'given.values'")
     if(missing(given.values)) {
 	a.intervals <-
 	    if(a.is.fac) {
-		i <- seq(along = a.levels <- levels(a))
+		i <- seq_along(a.levels <- levels(a))
 		a <- as.numeric(a)
 		cbind(i - 0.5, i + 0.5)
-	    } else co.intervals(a,number=number[1],overlap=overlap[1])
+	    } else co.intervals(unclass(a), number=number[1], overlap=overlap[1])
 	b.intervals <-
 	    if (have.b) {
 		if(b.is.fac) {
-                    i <- seq(along = b.levels <- levels(b))
+                    i <- seq_along(b.levels <- levels(b))
 		    b <- as.numeric(b)
 		    cbind(i - 0.5, i + 0.5)
 		}
 		else {
 		    if(length(number)==1) number  <- rep.int(number,2)
 		    if(length(overlap)==1)overlap <- rep.int(overlap,2)
-		    co.intervals(b,number=number[2],overlap=overlap[2])
+		    co.intervals(unclass(b), number=number[2], overlap=overlap[2])
 		}
 	    }
     } else {
@@ -217,7 +219,7 @@ coplot <-
                 lab <- axlabels(x)
                 axis(side, labels = lab, at = seq(lab), xpd = NA)
             } else
-                axis(side, xpd = NA)
+                Axis(x, side=side, xpd = NA)
         }
 	istart <- (total.rows - rows) + 1
 	i <- total.rows - ((index - 1)%/%columns)
@@ -262,8 +264,10 @@ coplot <-
 	    do.panel(i, subscripts, id)
 	}
     }
-    mtext(xlab[1], side=1, at=0.5*f.col, outer=TRUE, line=3.5, xpd=NA)
-    mtext(ylab[1], side=2, at=0.5*f.row, outer=TRUE, line=3.5, xpd=NA)
+    mtext(xlab[1], side = 1, at = 0.5*f.col, outer = TRUE, line = 3.5,
+          xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
+    mtext(ylab[1], side = 2, at = 0.5*f.row, outer = TRUE, line = 3.5,
+          xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
 
     if(length(xlab) == 1)
         xlab <- c(xlab, paste("Given :", a.name))
@@ -283,14 +287,16 @@ coplot <-
 	    text(apply(a.intervals, 1, mean), 1:nint, a.levels)
         }
         else {
-            axis(3, xpd=NA)
+            Axis(a, side = 3, xpd=NA)
             axis(1, labels=FALSE)
         }
 	box()
-	mtext(xlab[2], 3, line = 3 - a.is.fac, at=mean(par("usr")[1:2]), xpd=NA)
+	mtext(xlab[2], 3, line = 3 - a.is.fac, at=mean(par("usr")[1:2]),
+              xpd=NA, font = par("font.lab"), cex = par("cex.lab"))
     }
     else { ## i. e. !show.given
-	mtext(xlab[2], 3, line = 3.25, outer= TRUE, at= 0.5*f.col, xpd=NA)
+	mtext(xlab[2], 3, line = 3.25, outer= TRUE, at= 0.5*f.col, xpd=NA,
+              font = par("font.lab"), cex = par("cex.lab"))
     }
     if(have.b) {
 	if(length(ylab) == 1)
@@ -310,19 +316,21 @@ coplot <-
                 text(1:nint, apply(b.intervals, 1, mean), b.levels, srt = 90)
             }
             else {
-                axis(4, xpd=NA)
+                Axis(b, side=4, xpd=NA)
                 axis(2, labels=FALSE)
             }
 	    box()
 	    mtext(ylab[2], 4, line = 3 - b.is.fac,
-                  at=mean(par("usr")[3:4]), xpd=NA)
+                  at = mean(par("usr")[3:4]), xpd = NA,
+                  font = par("font.lab"), cex = par("cex.lab"))
 	}
 	else {
-	    mtext(ylab[2], 4, line = 3.25, at=0.5*f.row, outer=TRUE, xpd=NA)
+	    mtext(ylab[2], 4, line = 3.25, at=0.5*f.row, outer = TRUE,
+                  xpd = NA, font = par("font.lab"), cex = par("cex.lab"))
 	}
     }
     if (length(missingrows) > 0) {
-	cat("\nMissing rows:",missingrows,"\n")
+	cat("\n", gettext("Missing rows"), ": ",  missingrows, "\n", sep ="")
 	invisible(missingrows)
     }
 }

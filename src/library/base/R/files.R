@@ -1,9 +1,15 @@
 #Platform <- function()
 #.Internal(Platform())
 
-R.home <- function()
-.Internal(R.home())
-
+R.home <- function(component="home")
+{
+    rh <- .Internal(R.home())
+    switch(component,
+           "home" = rh,
+           "share"= if(nchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p else file.path(rh, component),
+	   "doc"=if(nchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p else file.path(rh, component),
+           file.path(rh, component))
+}
 file.show <-
 function (..., header=rep("", nfiles), title="R Information",
           delete.file=FALSE, pager=getOption("pager"))
@@ -61,7 +67,7 @@ file.copy <- function(from, to, overwrite=FALSE)
     if (!overwrite) okay <- !file.exists(to)
     else okay <- rep.int(TRUE, length(to))
     if (any(from[okay] %in% to[okay]))
-        stop("file can't be copied both from and to")
+        stop("file can not be copied both 'from' and 'to'")
     if (any(okay)) { ## care: create could fail but append work.
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
@@ -71,7 +77,7 @@ file.copy <- function(from, to, overwrite=FALSE)
 
 file.symlink <- function(from, to) {
     if (!(length(from))) stop("no files to link from")
-    if (!(nt <- length(to)))   stop("no files/dir to link to")
+    if (!(nt <- length(to)))   stop("no files/directory to link to")
     if (nt == 1 && file.exists(to) && file.info(to)$isdir)
         to <- file.path(to, basename(from))
     .Internal(file.symlink(from, to))
@@ -94,12 +100,11 @@ file.access <- function(names, mode = 0)
     res
 }
 
-dir.create <- function(path, showWarnings = TRUE)
-    invisible(.Internal(dir.create(path, showWarnings)))
+dir.create <- function(path, showWarnings = TRUE, recursive = FALSE)
+    invisible(.Internal(dir.create(path, showWarnings, recursive)))
 
 format.octmode <- function(x, ...)
 {
-    if(!inherits(x, "octmode")) stop("calling wrong method")
     isna <- is.na(x)
     y <- x[!isna]
     class(y) <- NULL
@@ -130,13 +135,48 @@ print.octmode <- function(x, ...)
     y
 }
 
+format.hexmode <- function(x, ...)
+{
+    isna <- is.na(x)
+    y <- x[!isna]
+    class(y) <- NULL
+    ans0 <- character(length(y))
+    z <- NULL
+    while(any(y > 0) || is.null(z)) {
+        z <- y%%16
+        y <- floor(y/16)
+        ans0 <- paste(c(0:9, letters)[1+z], ans0, sep="")
+    }
+    ans <- rep.int(as.character(NA), length(x))
+    ans[!isna] <- ans0
+    dim(ans) <- dim(x)
+    dimnames(ans) <- dimnames(x)
+    names(ans) <- names(x)
+    ans
+}
+as.character.hexmode <- format.hexmode
+
+print.hexmode <- function(x, ...)
+{
+    print(format(x), ...)
+    invisible(x)
+}
+
+"[.hexmode" <- function (x, i)
+{
+    cl <- oldClass(x)
+    y <- NextMethod("[")
+    oldClass(y) <- cl
+    y
+}
+
 system.file <-
 function(..., package = "base", lib.loc = NULL)
 {
     if(nargs() == 0)
         return(file.path(.Library, "base"))
     if(length(package) != 1)
-        stop(paste("argument", sQuote("package"), "must be of length 1"))
+        stop("'package' must be of length 1")
     packagePath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(packagePath) == 0)
         return("")

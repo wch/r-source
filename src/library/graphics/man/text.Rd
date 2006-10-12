@@ -1,11 +1,12 @@
 \name{text}
 \title{Add Text to a Plot}
+\encoding{latin1}
 \usage{
 text(x, \dots)
 
 \method{text}{default} (x, y = NULL, labels = seq(along = x), adj = NULL,
      pos = NULL, offset = 0.5, vfont = NULL,
-     cex = 1, col = NULL, font = NULL, xpd = NULL, \dots)
+     cex = 1, col = NULL, font = NULL, \dots)
 }
 \alias{text}
 \alias{text.default}
@@ -14,9 +15,11 @@ text(x, \dots)
     \code{labels} should be written.  If the length of \code{x} and
     \code{y} differs, the shorter one is recycled.}
   \item{labels}{one or more character strings or expressions specifying
-    the \emph{text} to be written.  An attempt is made
-    to coerce other vectors to character, and other language objects
-    to expressions.}
+    the \emph{text} to be written.  An attempt is made to coerce other
+    vectors (and factors) to character, and other language objects
+    (names and calls) to expressions.  If \code{labels} is longer than
+    \code{x} and \code{y}, the coordinates are recycled to the length of
+    \code{labels}.}
   \item{adj}{one or two values in \eqn{[0,1]} which specify the x
     (and optionally y) adjustment of the labels.  On most devices values
     outside that interval will also work.}
@@ -32,13 +35,13 @@ text(x, \dots)
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a style.}
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
-    by \code{\link{par}("cex")} yields the final character size.}
-  \item{col, font}{the color and font to be used; these default to the
-    values of the global graphical parameters in \code{\link{par}()}.}
-  \item{xpd}{(where) should clipping take place?  Defaults to
-    \code{\link{par}("xpd")}.}
-  \item{\dots}{further graphical parameters (from \code{\link{par}}).}
-%% such as ???, etc.
+    by \code{\link{par}("cex")} yields the final character size.
+    \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
+  \item{col, font}{the color and font to be used, possibly vectors.
+    These default to the values of the global graphical parameters in
+    \code{\link{par}()}.}
+  \item{\dots}{further graphical parameters (from \code{\link{par}}),
+    such as \code{family} and \code{xpd}.}
 }
 \description{
   \code{text} draws the strings given in the vector \code{labels} at the
@@ -69,15 +72,39 @@ text(x, \dots)
 
   Graphical parameters \code{col}, \code{cex} and \code{font} can be
   vectors and will then be applied cyclically to the \code{labels} (and
-  extra values will be ignored).
+  extra values will be ignored).  \code{NA} values of \code{font} are
+  replaced by \code{par("font")}.
 
   Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{col}
   value is \code{NA} are omitted from the plot.
+}
+\section{Euro symbol}{
+  The Euro symbol was introduced relatively recently, and may not be
+  available in older fonts.  In recent versions of Adobe symbol fonts it
+  is character 160, so \code{text(x, y, "\xA0", font = 5)} will work.
+  People using Western European locales on Unix-alikes can probably
+  select ISO-8895-15 (Latin-9) which has the Euro as character 165: this
+  can also be used for \code{\link{postscript}} and \code{\link{pdf}}.
+#ifdef unix
+
+  The Euro should be rendered correctly by \code{\link{X11}} in UTF-8
+  locales, but the corresponding single-byte encoding in
+  \code{\link{postscript}} and \code{\link{pdf}} will be to be selected
+  as \code{ISOLatin9.enc}.
+#endif
+#ifdef windows
+
+  In all the European Windows encoding the Euro is symbol 128, although
+  not all fonts support it.  It is not in the symbol font used for
+  \code{\link{windows}} and related devices, including the Windows printer.
+#endif
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{title}},
@@ -93,7 +120,7 @@ K <- 16; text(exp(1i * 2 * pi * (1:K) / K), col = 2)
 ## appear correctly (or be omitted entirely).
 plot(1:10, 1:10, main = "text(...) examples\n~~~~~~~~~~~~~~",
      sub = "R is GNU ©, but not ® ...")
-mtext("«ISO-accents»: ± éè øØ å<Å æ<Æ", side=3)
+mtext("«Latin-1 accented chars»: éè øØ å<Å æ<Æ", side=3)
 points(c(6,2), c(2,1), pch = 3, cex = 4, col = "red")
 text(6, 2, "the text is CENTERED around (x,y) = (6,2) by default",
      cex = .8)

@@ -7,7 +7,7 @@
   of a package.
 }
 \usage{
-buildVignettes(package, dir, lib.loc = NULL, quiet=TRUE)
+buildVignettes(package, dir, lib.loc = NULL, quiet = TRUE)
 pkgVignettes(package, dir, lib.loc = NULL)
 }
 \arguments{

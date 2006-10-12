@@ -1,7 +1,7 @@
 sapply <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
 {
     FUN <- match.fun(FUN)
-    answer <- lapply(as.list(X), FUN, ...)
+    answer <- lapply(X, FUN, ...)
     if(USE.NAMES && is.character(X) && is.null(names(answer)))
                 names(answer) <- X
     if(simplify && length(answer) &&

@@ -3,8 +3,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
 {
     KalmanLike2 <- function (y, mod, nit = 0)
     {
-        x <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V,
-                   mod$h, mod$Pn, as.integer(nit), FALSE, PACKAGE = "stats")
+        x <- .Call(R_KalmanLike, y, mod$Z, mod$a, mod$P, mod$T, mod$V,
+                   mod$h, mod$Pn, as.integer(nit), FALSE, fast=TRUE)
         0.5 * sum(x)/length(y)
     }
     makeLevel <- function(x)
@@ -67,7 +67,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         stop("only implemented for univariate time series")
     x <- as.ts(x)
     if(!is.numeric(x))
-        stop("`x' must be numeric")
+        stop("'x' must be numeric")
     storage.mode(x) <- "double"
     if(is.na(x[1]))
         stop("the first value of the time series must not be missing")
@@ -95,8 +95,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
                  lower = rep(0, np+1), upper = rep(Inf, np+1),
                  control = optim.control)
         if(res$convergence > 0)
-            warning(paste("possible convergence problem: optim gave code=",
-                          res$convergence, res$message))
+            warning("possible convergence problem: optim gave code=",
+                    res$convergence, " ", res$message)
     coef <- cf
     coef[mask] <- res$par
     Z$V[cbind(1:np, 1:np)] <- coef[1:np]*vx

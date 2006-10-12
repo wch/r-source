@@ -8,9 +8,11 @@
 }
 \usage{
 RweaveLatex()
-RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
-                 echo=TRUE, eval = TRUE, split=FALSE, stylepath=TRUE,
-                 pdf=TRUE, eps=TRUE)
+
+RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
+                 debug = FALSE, echo = TRUE, eval  =  TRUE,
+                 split = FALSE, stylepath = TRUE,
+                 pdf = TRUE, eps = TRUE)
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
@@ -64,15 +66,16 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
     \item{split:}{logical (\code{FALSE}). If \code{TRUE}, text output is
       written to separate files 
       for each code chunk.}
-    \item{strip.white:}{logical (\code{TRUE}). If \code{TRUE}, blank
-      lines at the beginning and end of output are removed.}
+    \item{strip.white:}{character string (\code{false}). If \code{true}, blank
+      lines at the beginning and end of output are removed. If
+      \code{all}, then all blank lines are removed from the output.}
     \item{prefix:}{logical (\code{TRUE}). If \code{TRUE} generated filenames of
       figures and output have a common prefix.}
     \item{prefix.string:}{a character string, default is the name of the
       \file{.Snw} source file.}
     \item{include:}{logical (\code{TRUE}), indicating whether input
       statements for text output and includegraphics statements
-      for figures should be auto-generated. Use \code{include=FALSE} if
+      for figures should be auto-generated. Use \code{include = FALSE} if
       the output should appear in a different place than the code chunk
       (by placing the input line manually).}
     \item{fig:}{logical (\code{FALSE}), indicating whether the code
@@ -80,9 +83,9 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
       graphical output. Note that only one figure per code chunk can be
       processed this way.}
     \item{eps:}{logical (\code{TRUE}), indicating whether EPS figures shall be
-      generated. Ignored if \code{fig=FALSE}.} 
+      generated. Ignored if \code{fig = FALSE}.} 
     \item{pdf:}{logical (\code{TRUE}), indicating whether PDF figures shall be
-      generated. Ignored if \code{fig=FALSE}.}
+      generated. Ignored if \code{fig = FALSE}.}
     \item{width:}{numeric (6), width of figures in inch.}
     \item{height:}{numeric (6), height of figures in inch.}
   }

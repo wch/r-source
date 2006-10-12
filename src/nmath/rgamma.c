@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2002 The R Development Core Team
+ *  Copyright (C) 2000-2005 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -54,28 +54,28 @@
 double rgamma(double a, double scale)
 {
 /* Constants : */
-    const double sqrt32 = 5.656854;
-    const double exp_m1 = 0.36787944117144232159;/* exp(-1) = 1/e */
+    const static double sqrt32 = 5.656854;
+    const static double exp_m1 = 0.36787944117144232159;/* exp(-1) = 1/e */
 
     /* Coefficients q[k] - for q0 = sum(q[k]*a^(-k))
      * Coefficients a[k] - for q = q0+(t*t/2)*sum(a[k]*v^k)
      * Coefficients e[k] - for exp(q)-1 = sum(e[k]*q^k)
      */
-    const double q1 = 0.04166669;
-    const double q2 = 0.02083148;
-    const double q3 = 0.00801191;
-    const double q4 = 0.00144121;
-    const double q5 = -7.388e-5;
-    const double q6 = 2.4511e-4;
-    const double q7 = 2.424e-4;
+    const static double q1 = 0.04166669;
+    const static double q2 = 0.02083148;
+    const static double q3 = 0.00801191;
+    const static double q4 = 0.00144121;
+    const static double q5 = -7.388e-5;
+    const static double q6 = 2.4511e-4;
+    const static double q7 = 2.424e-4;
 
-    const double a1 = 0.3333333;
-    const double a2 = -0.250003;
-    const double a3 = 0.2000062;
-    const double a4 = -0.1662921;
-    const double a5 = 0.1423657;
-    const double a6 = -0.1367177;
-    const double a7 = 0.1233795;
+    const static double a1 = 0.3333333;
+    const static double a2 = -0.250003;
+    const static double a3 = 0.2000062;
+    const static double a4 = -0.1662921;
+    const static double a5 = 0.1423657;
+    const static double a6 = -0.1367177;
+    const static double a7 = 0.1233795;
 
     /* State variables [FIXME for threading!] :*/
     static double aa = 0.;
@@ -85,7 +85,7 @@ double rgamma(double a, double scale)
 
     double e, p, q, r, t, u, v, w, x, ret_val;
 
-    if (!R_FINITE(a) || !R_FINITE(scale))
+    if (!R_FINITE(a) || !R_FINITE(scale) || a <= 0.0 || scale <= 0.0)
 	ML_ERR_return_NAN;
 
     if (a < 1.) { /* GS algorithm for parameters a < 1 */

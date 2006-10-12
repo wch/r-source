@@ -6,13 +6,13 @@ function(x, y, ratio = 1,
          conf.level = 0.95, ...)
 {
     if (!((length(ratio) == 1) && is.finite(ratio) && (ratio > 0)))
-        stop("ratio must be a single positive number")
+        stop("'ratio' must be a single positive number")
 
     alternative <- match.arg(alternative)
 
     if (!((length(conf.level) == 1) && is.finite(conf.level) &&
           (conf.level > 0) && (conf.level < 1)))
-        stop("conf.level must be a single number between 0 and 1")
+        stop("'conf.level' must be a single number between 0 and 1")
 
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
@@ -25,11 +25,11 @@ function(x, y, ratio = 1,
         x <- x[is.finite(x)]
         DF.x <- length(x) - 1
         if (DF.x < 1)
-            stop("not enough x observations")
+            stop("not enough 'x' observations")
         y <- y[is.finite(y)]
         DF.y <- length(y) - 1
         if (DF.y < 1)
-            stop("not enough y observations")
+            stop("not enough 'y' observations")
         V.x <- var(x)
         V.y <- var(y)
     }
@@ -72,9 +72,8 @@ function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
        || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1)
-       || (length(attr(terms(formula[-3]), "term.labels")) != 1))
-        stop("formula missing or incorrect")
+       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

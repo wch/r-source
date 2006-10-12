@@ -1,9 +1,11 @@
 \name{warnings}
 \alias{warnings}
+\alias{last.warning}
+\alias{print.warnings}
 \title{Print Warning Messages}
 \description{
-  \code{warnings} prints the top-level variable \code{last.warning} in a
-  pleasing form.
+  \code{warnings} and its \code{print} method print the
+  variable \code{last.warning} in a pleasing form.
 }
 \usage{
 warnings(\dots)
@@ -16,8 +18,27 @@ warnings(\dots)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
-\seealso{\code{\link{warning}}.}
+\details{
+  See the decription of \code{\link{options}("warn")} for the
+  circumstances under which there is a \code{last.warning} object and
+  \code{warnings()} is used.  In essence this is if \code{options(warn =
+    0)} and \code{warning} has been called at least once.
+
+  It is possible that \code{last.warning} refers to the last recorded
+  warning and not to the last warning, for example if \code{options(warn)} has
+  been changed or if a catastrophic error occurred. 
+}
+\section{Warning}{
+  It is undocumented where \code{last.warning} is stored nor that it is
+  visible, and this is subject to change.  Prior to \R 2.4.0 it was
+  stored in the workspace, but no longer.
+}
+\seealso{
+  \code{\link{warning}}.
+}
 \examples{
+## NB this example is intended to be pasted in,
+##    rather than run by example()
 ow <- options("warn")
 for(w in -1:1) {
    options(warn = w); cat("\n warn =",w,"\n")

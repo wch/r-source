@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka and the R Development Core Team
- *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2000-2006 The R Development Core Team
  *  based on AS243 (C) 1989 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 /*  Algorithm AS 243  Lenth,R.V. (1989). Appl. Statist., Vol.38, 185-189.
@@ -59,17 +59,18 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
     /* note - itrmax and errmax may be changed to suit one's needs. */
 
     const int itrmax = 1000;
-    const double errmax = 1.e-12;
+    const static double errmax = 1.e-12;
 
-    if (df <= 0.) ML_ERR_return_NAN;
+    if (df <= 0.0) ML_ERR_return_NAN;
+    if(delta == 0.0) return pt(t, df, lower_tail, log_p);
 
     if(!R_FINITE(t))
 	return (t < 0) ? R_DT_0 : R_DT_1;
     if (t >= 0.) {
-	negdel = FALSE;	tt = t;		del = delta;
+	negdel = FALSE; tt = t;	 del = delta;
     }
     else {
-	negdel = TRUE;		tt = -t;	del = -delta;
+	negdel = TRUE;	tt = -t; del = -delta;
     }
 
     if (df > 4e5 || del*del > 2*M_LN2*(-(DBL_MIN_EXP))) {
@@ -99,8 +100,8 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	if(p == 0.) { /* underflow! */
 
 	    /*========== really use an other algorithm for this case !!! */
-	    ML_ERROR(ME_UNDERFLOW);
-	    ML_ERROR(ME_RANGE); /* |delta| too large */
+	    ML_ERROR(ME_UNDERFLOW, "pnt");
+	    ML_ERROR(ME_RANGE, "pnt"); /* |delta| too large */
 	    return R_DT_0;
 	}
 #ifdef DEBUG_pnt
@@ -113,12 +114,13 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	s = .5 - p;
 	a = .5;
 	b = .5 * df;
-	rxb = pow(1. - x, b);
+	rxb = pow(1. - x, b); /* ~ 1 - b*x for tiny x */
 	albeta = M_LN_SQRT_PI + lgammafn(b) - lgammafn(.5 + b);
 	xodd = pbeta(x, a, b, /*lower*/TRUE, /*log_p*/FALSE);
 	godd = 2. * rxb * exp(a * log(x) - albeta);
-	xeven = 1. - rxb;
-	geven = b * x * rxb;
+	tnc = b * x;
+	xeven = (tnc < DBL_EPSILON) ? tnc : 1. - rxb;
+	geven = tnc * rxb;
 	tnc = p * xodd + q * xeven;
 
 	/* repeat until convergence or iteration limit */
@@ -132,13 +134,15 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	    q *= lambda / (2 * it + 1);
 	    tnc += p * xodd + q * xeven;
 	    s -= p;
-	    if(s <= 0.) { /* happens e.g. for (t,df,delta)=(40,10,38.5), after 799 it.*/
-		ML_ERROR(ME_PRECISION);
+	    /* R 2.4.0 added test for rounding error here. */
+	    if(s < -1.e-10) { /* happens e.g. for (t,df,delta)=(40,10,38.5), after 799 it.*/
+		ML_ERROR(ME_PRECISION, "pnt");
 #ifdef DEBUG_pnt
 		REprintf("s = %#14.7g < 0 !!! ---> non-convergence!!\n", s);
 #endif
 		goto finis;
 	    }
+	    if(s <= 0) goto finis;
 	    errbd = 2. * s * (xodd - godd);
 #ifdef DEBUG_pnt
 	    REprintf("%3d %#9.4g %#9.4g	 %#9.4g %#9.4g %#9.4g %#14.10g %#9.4g\n",
@@ -147,7 +151,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
 	    if(errbd < errmax) goto finis;/*convergence*/
 	}
 	/* non-convergence:*/
-	ML_ERROR(ME_PRECISION);
+	ML_ERROR(ME_NOCONV, "pnt");
     }
     else { /* x = t = 0 */
 	tnc = 0.;
@@ -156,5 +160,12 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
     tnc += pnorm(- del, 0., 1., /*lower*/TRUE, /*log_p*/FALSE);
 
     lower_tail = lower_tail != negdel; /* xor */
-    return R_DT_val(tnc);
+    /* return R_DT_val(tnc);
+       We want to warn about cancellation here */
+    if(lower_tail) return log_p	? log(tnc) : tnc;
+    else {
+	if(tnc > 1 - 1e-10) ML_ERROR(ME_PRECISION, "pnt");
+	tnc = fmin2(tnc, 1.0);  /* Precaution */
+	return log_p ? log1p(-tnc) : (0.5 - tnc + 0.5);
+    }
 }

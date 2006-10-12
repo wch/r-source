@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2003 R Development Core Team
+ *  Copyright (C) 1998-2005 R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,38 +14,40 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
+#ifndef R_PARSE_H
+#define R_PARSE_H
+
 #include <R_ext/Parse.h>
+#include <IOStuff.h>
 
-	/* Parse A Single Expression */
-
-SEXP R_Parse1File(FILE*, int, ParseStatus *);
-SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *);
-SEXP R_Parse1Vector(TextBuffer*, int, ParseStatus *);
-SEXP R_Parse1General(int (*)(), int (*)(), int, ParseStatus *);
-
-	/* Parse Several Expressions */
-
-SEXP R_ParseFile(FILE*, int, ParseStatus *);
-SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP);
+/* Public interface */
 /* SEXP R_ParseVector(SEXP, int, ParseStatus *); in R_ext/Parse.h */
+
+/* Private interface */
+SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *); /* in ReplIteration,
+						       R_ReplDLLdo1 */
+SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP); /* in source.c */
+SEXP R_Parse1File(FILE*, int, ParseStatus *); /* in R_ReplFile */
+SEXP R_ParseFile(FILE*, int, ParseStatus *);  /* in edit.c */
+
+/* Unused */
+#ifdef PARSE_UNUSED
+SEXP R_Parse1General(int (*)(), int (*)(), int, ParseStatus *);
 SEXP R_ParseGeneral(int (*)(), int (*)(), int, ParseStatus *);
-
-
-	/* Source related declarations */
-
-int KeepAllSource;	/* Should all source be kept? */
-SEXP SavedSource;  	/* CHARSXP of whole source, used while parsing */
-PROTECT_INDEX SSpi;	/* Protection index for the above */
-
-SEXP collectLines(char*, char*);
-SEXP convertSource(SEXP e);
-
+SEXP R_Parse1Vector(TextBuffer*, int, ParseStatus *);
+#endif
 
 #ifndef HAVE_RCONNECTION_TYPEDEF
 typedef struct Rconn  *Rconnection;
 #define HAVE_RCONNECTION_TYPEDEF
 #endif
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status);
+
+	/* Report a parse error */
+	
+void parseError(SEXP call, int linenum);
+
+#endif /* not R_PARSE_H */

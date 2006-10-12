@@ -2,7 +2,8 @@
 \title{Add Arrows to a Plot}
 \usage{
 arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
-       col = par("fg"), lty = NULL, lwd = par("lwd"), xpd = NULL)
+       col = par("fg"), lty = par("lty"), lwd = par("lwd"),
+       \dots)
 }
 \alias{arrows}
 \arguments{
@@ -13,8 +14,11 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
     arrow head.}
   \item{code}{integer code, determining \emph{kind} of arrows to be
     drawn.}
-  \item{col, lty, lwd, xpd}{usual graphical parameters as in
-    \code{\link{par}}.}
+  \item{col, lty, lwd}{graphical parameters, possible vectors.
+    \code{NA} values in \code{col} cause the arrow to be omitted.}
+  \item{\dots}{graphical parameters such as \code{xpd} and the line
+    characteristics \code{lend}, \code{ljoin} and \code{lmitre}:
+    see \code{\link{par}}.}
 }
 \description{
   Draw arrows between pairs of points.
@@ -23,14 +27,14 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   For each \code{i}, an arrow is drawn between the point \code{(x0[i],
     y0[i])} and the point \code{(x1[i],y1[i])}.
 
-  If \code{code=2} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
-  \code{code=1} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If
+  If \code{code=1} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
+  \code{code=2} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If
   \code{code=3} a head is drawn at both ends of the arrow.  Unless
   \code{length = 0}, when no head is drawn.
 
-  The graphical parameters \code{col} and \code{lty} can be used
-  to specify a color and line texture for the line segments which
-  make up the arrows (\code{col} may be a vector).
+  The graphical parameters \code{col}, \code{lty} and \code{lwd} can be
+  vectors of length greater than one and will be recycled if necessary.
+
 
   The direction of a zero-length arrow is indeterminate, and hence so is
   the direction of the arrowheads.  To allow for rounding error,
@@ -44,6 +48,9 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
 }
 \seealso{
   \code{\link{segments}} to draw segments.
+}
+\note{The first four arguments in the comparable S function are named
+  \code{x1,y1,x2,y2}.
 }
 \examples{
 x <- runif(12); y <- rnorm(12)

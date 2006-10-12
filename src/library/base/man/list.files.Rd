@@ -22,8 +22,8 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
   \item{recursive}{logical. Should the listing recurse into directories?}
 }
 \description{
-  This function produces a list containing the names of files
-  in the named directory. \code{dir} is an alias.
+  These functions produce a character vector of the names of files
+  in the named directory.
 }
 \value{
   A character vector containing the names of the files in the
@@ -47,7 +47,11 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
 #ifdef windows
 and \code{\link{choose.files}}
 #endif
-for interactive selection.}
+for interactive selection.
+
+  \code{\link{glob2rx}} to convert wildcards (as used by system file
+  commands and shells) to regular expressions.
+}
 \examples{
 list.files(R.home())
 ## Only files starting with a-l or r (*including* uppercase):

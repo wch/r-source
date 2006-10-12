@@ -9,13 +9,10 @@
 \method{plot}{default}(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
      log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
      ann = par("ann"), axes = TRUE, frame.plot = axes,
-     panel.first = NULL, panel.last = NULL,
-     col = par("col"), bg = NA, pch = par("pch"),
-     cex = 1, lty = par("lty"), lab = par("lab"),
-     lwd = par("lwd"), asp = NA, \dots)
+     panel.first = NULL, panel.last = NULL, asp = NA, \dots)
 }
 \arguments{
-  \item{x,y}{the \code{x} and \code{y} arguments provide the x and y
+  \item{x, y}{the \code{x} and \code{y} arguments provide the x and y
     coordinates for the plot.  Any reasonable way of defining the
     coordinates is acceptable.  See the function \code{\link{xy.coords}}
     for details.}
@@ -27,21 +24,23 @@
     \code{"s"} and \code{"S"} for stair steps and
     \code{"h"} for histogram-like vertical lines.  Finally,
     \code{"n"} does not produce any points or lines.}
-  \item{xlim}{the x limits (min,max) of the plot.}
+  \item{xlim}{the x limits (x1, x2) of the plot.  Note that \code{x1 > x2}
+    is allowed and leads to a \dQuote{reversed axis}.}
   \item{ylim}{the y limits of the plot.}
   \item{log}{a character string which contains \code{"x"} if the x axis
     is to be logarithmic, \code{"y"} if the y axis is to be logarithmic
     and \code{"xy"} or \code{"yx"} if both axes are to be logarithmic.}
 
-  \item{main}{a main title for the plot.}
+  \item{main}{a main title for the plot, see also \code{\link{title}}.}
   \item{sub}{a sub title for the plot.}
-  \item{xlab}{a label for the x axis.}
-  \item{ylab}{a label for the y axis.}
+  \item{xlab}{a label for the x axis, defaults to a description of \code{x}.}
+  \item{ylab}{a label for the y axis, defaults to a description of \code{y}.}
 
   \item{ann}{a logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
-  \item{axes}{a logical value indicating whether axes should be drawn on
-    the plot.}
+  \item{axes}{a logical value indicating whether both axes should be drawn on
+    the plot.  Use graphical parameter \code{"xaxt"} or \code{"yaxt"}
+    to suppress just one of the axes.}
   \item{frame.plot}{a logical indicating whether a box should be drawn
     around the plot.}
 
@@ -51,22 +50,32 @@
   \item{panel.last}{an expression to be evaluated after plotting has
     taken place.}
 
-  \item{col}{The colors for lines and points.  Multiple colors can be
-    specified so that each point can be given its own color.  If there
-    are fewer colors than points they are recycled in the standard
-    fashion.  Lines will all be plotted in the first colour specified.}
-  \item{bg}{background color for open plot symbols, see
-    \code{\link{points}}.}
-  \item{pch}{a vector of plotting characters or symbols: see \code{\link{points}}.}
-  \item{cex}{a numerical vector giving the amount by which plotting text
-    and symbols should be scaled relative to the default.}
-  \item{lty}{the line type, see \code{\link{par}}.}
-  \item{lab}{the specification for the (approximate) numbers of tick
-    marks on the x and y axes.}
-  \item{lwd}{the positive line width.}
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
-  \item{\dots}{graphical parameters as in \code{\link{par}} may also be
-    passed as arguments.}
+  \item{\dots}{other graphical parameters (see \code{\link{par}} and
+    section \sQuote{Details} below).}
+}
+\details{
+  Commonly used graphical parameters are:
+  \describe{
+    \item{\code{col}}{The colors for lines and points.  Multiple colors can be
+      specified so that each point can be given its own color.  If there
+      are fewer colors than points they are recycled in the standard
+      fashion.  Lines will all be plotted in the first colour specified.}
+    \item{\code{bg}}{a vector of background colors for open plot symbols, see
+      \code{\link{points}}.  Note: this is \bold{not} the same setting
+      as \code{\link{par}("bg")}.}
+    \item{\code{pch}}{a vector of plotting characters or symbols:
+      see \code{\link{points}}.}
+    \item{\code{cex}}{a numerical vector giving the amount by which
+      plotting text and symbols should be scaled relative to the
+      default.  This works as a multiple of \code{\link{par}("cex")}.
+      \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
+    \item{\code{lty}}{the line type, see \code{\link{par}}.}
+    \item{\code{cex.main, col.lab, font.sub}, etc}{settings for main- and
+      sub-title and axis annotation, see \code{\link{title}} and
+      \code{\link{par}}.}
+    \item{\code{lwd}}{the line width, see \code{\link{par}}.}
+  }
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -76,6 +85,8 @@
   Cleveland, W. S. (1985)
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{plot.window}}, \code{\link{xy.coords}}.

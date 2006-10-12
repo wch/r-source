@@ -18,9 +18,8 @@
   \item{formula}{a \code{\link{formula}}, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
-  \item{\dots}{Further graphical parameters may also be passed as
-    arguments, see \code{\link{par}}.  \code{horizontal = TRUE}
-    is also accepted.}
+  \item{\dots}{Arguments to be passed to or from other methods.
+    \code{horizontal = TRUE} is also accepted.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}
   \item{ylab}{the y label of the plot(s).}
@@ -40,7 +39,7 @@
   Missing values are not considered in these methods, and in particular
   cases with missing values are not removed.
 
-  If \code{y} is an object (ie. has a \code{\link[base]{class}} attribute)
+  If \code{y} is an object (i.e. has a \code{\link[base]{class}} attribute)
   then \code{plot.formula} looks for a plot method for that class first.
   Otherwise, the class of \code{x} will determine the type of the plot.
   For factors this will be a parallel boxplot, and argument
@@ -51,7 +50,8 @@
   in the active graphics device.
 }
 \seealso{
-  \code{\link{plot.default}}, \code{\link{plot.factor}}.
+  \code{\link{plot.default}}, \code{\link{points}}, \code{\link{lines}},
+  \code{\link{plot.factor}}.
 }
 \examples{
 op <- par(mfrow=c(2,1))

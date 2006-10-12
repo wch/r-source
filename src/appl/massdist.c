@@ -1,7 +1,14 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1996-2004     Robert Gentleman and Ross Ihaka and the
+ *  Copyright (C) 1996-2004	Robert Gentleman and Ross Ihaka and the
  *				R Development Core Team
+ *  Copyright (C) 2005		The R Foundation
+
+ *  "HACKED" to allow weights by Adrian Baddeley
+ *  Changes indicated by 'AB'
+ * -------
+ *  FIXME   Does he want 'COPYRIGHT' ?
+ * -------
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +22,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -25,38 +32,41 @@
 #include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
 
-void massdist(double *x, int *nx, double *xlow, double *xhigh,
+void massdist(double *x,
+	      double *xmass, /* AB: new variable */
+	      int *nx,
+	      double *xlow, double *xhigh,
 	      double *y, int *ny)
 {
-    double fx, xdelta, xmass, xpos;
+    double fx, xdelta, xmi, xpos;   /* AB */
     int i, ix, ixmax, ixmin;
 
     ixmin = 0;
     ixmax = *ny - 2;
-    xmass = 1.0 / *nx;
+    /* AB: line deleted */
     xdelta = (*xhigh - *xlow) / (*ny - 1);
 
     for(i=0; i < *ny ; i++)
 	y[i] = 0;
 
     for(i=0; i < *nx ; i++) {
-      if(R_FINITE(x[i])) {
-	xpos = (x[i] - *xlow) / xdelta;
-	ix = floor(xpos);
-	fx = xpos - ix;
-	if(ixmin <= ix && ix <= ixmax) {
-	    y[ix] += (1 - fx);
-	    y[ix + 1] += fx;
+	if(R_FINITE(x[i])) {
+	    xpos = (x[i] - *xlow) / xdelta;
+	    ix = floor(xpos);
+	    fx = xpos - ix;
+	    xmi = xmass[i];   /* AB: new line  */
+	    if(ixmin <= ix && ix <= ixmax) {
+		y[ix] += (1 - fx) * xmi;   /* AB */
+		y[ix + 1] += fx * xmi; /* AB */
+	    }
+	    else if(ix == -1) {
+		y[0] += fx * xmi;  /* AB */
+	    }
+	    else if(ix == ixmax + 1) {
+		y[ix] += (1 - fx) * xmi;  /* AB */
+	    }
 	}
-	else if(ix == -1) {
-	    y[0] += fx;
-	}
-	else if(ix == ixmax + 1) {
-	    y[ix] += (1 - fx);
-	}
-      }
     }
 
-    for(i=0; i < *ny; i++)
-	y[i] *= xmass;
+    /* AB: lines deleted */
 }

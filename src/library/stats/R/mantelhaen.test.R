@@ -12,22 +12,22 @@ function(x, y = NULL, z = NULL,
                 stop("each dimension in table must be >= 2")
         }
         else
-            stop("x must be a 3-dimensional array")
+            stop("'x' must be a 3-dimensional array")
     }
     else {
         if(is.null(y))
-            stop("If x is not an array, y must be given")
+            stop("if 'x' is not an array, 'y' must be given")
         if(is.null(z))
-            stop("If x is not an array, z must be given")
+            stop("if 'x' is not an array, 'z' must be given")
         if(any(diff(c(length(x), length(y), length(z)))))
-            stop("x, y, and z must have the same length")
+            stop("'x', 'y', and 'z' must have the same length")
         DNAME <- paste(DNAME, "and", deparse(substitute(y)), "and",
                        deparse(substitute(z)))
         OK <- complete.cases(x, y, z)
         x <- factor(x[OK])
         y <- factor(y[OK])
         if((nlevels(x) < 2) || (nlevels(y) < 2))
-            stop("x and y must have at least 2 levels")
+            stop("'x' and 'y' must have at least 2 levels")
         else
             x <- table(x, y, z[OK])
     }
@@ -45,7 +45,7 @@ function(x, y = NULL, z = NULL,
         if(!missing(conf.level) &&
            (length(conf.level) != 1 || !is.finite(conf.level) ||
             conf.level < 0 || conf.level > 1))
-            stop("conf.level must be a single number between 0 and 1")
+            stop("'conf.level' must be a single number between 0 and 1")
 
         NVAL <- 1
         names(NVAL) <- "common odds ratio"
@@ -120,13 +120,12 @@ function(x, y = NULL, z = NULL,
             ## Density of the *central* product hypergeometric
             ## distribution on its support: store for once as this is
             ## needed quite a bit.
-            dc <- .C("d2x2xk",
+            dc <- .C(R_d2x2xk,
                      as.integer(K),
                      as.double(m),
                      as.double(n),
                      as.double(t),
-                     d = double(hi - lo + 1),
-                     PACKAGE = "stats")$d
+                     d = double(hi - lo + 1))$d
             logdc <- log(dc)
 
             dn2x2xk <- function(ncp) {
@@ -250,7 +249,10 @@ function(x, y = NULL, z = NULL,
     }
     else {
         ## Generalized Cochran-Mantel-Haenszel I x J x K test
-        ## Agresti (1990), pages 234--235
+        ## Agresti (1990), pages 234--235.
+        ## Agresti (2002), pages 295ff.
+        ## Note that n in the reference is in column-major order.
+        ## (Thanks to Torsten Hothorn for spotting this.)
         df <- (I - 1) * (J - 1)
         n <- m <- double(length = df)
         V <- matrix(0, nr = df, nc = df)
@@ -263,14 +265,14 @@ function(x, y = NULL, z = NULL,
                                         # n_{.jk}, j = 1 to J-1
             n <- n + c(f[-I, -J])
             m <- m + c(outer(rowsums, colsums, "*")) / ntot
-            V <- V + (kronecker(diag(ntot * rowsums, nrow = I - 1)
-                                - outer(rowsums, rowsums),
-                                diag(ntot * colsums, nrow = J - 1)
-                                - outer(colsums, colsums))
+            V <- V + (kronecker(diag(ntot * colsums, nrow = J - 1)
+                                - outer(colsums, colsums),
+                                diag(ntot * rowsums, nrow = I - 1)
+                                - outer(rowsums, rowsums))
                       / (ntot^2 * (ntot - 1)))
         }
         n <- n - m
-        STATISTIC <- crossprod(n, qr.solve(V, n))
+        STATISTIC <- c(crossprod(n, qr.solve(V, n)))
         PARAMETER <- df
         PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
         names(STATISTIC) <- "Cochran-Mantel-Haenszel M^2"

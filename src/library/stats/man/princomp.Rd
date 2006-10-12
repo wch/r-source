@@ -18,8 +18,10 @@ princomp(x, \dots)
 \method{predict}{princomp}(object, newdata, \dots)
 }
 \arguments{
-  \item{formula}{a formula with no response variable.}
-  \item{data}{an optional data frame containing the variables in the
+  \item{formula}{a formula with no response variable, referring only to
+    numeric variables.}
+  \item{data}{an optional data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
     formula \code{formula}.  By default the variables are taken from
     \code{environment(formula)}.}
   \item{subset}{an optional vector used to select rows (observations) of the
@@ -32,19 +34,25 @@ princomp(x, \dots)
   \item{x}{a numeric matrix or data frame which provides the data for the
     principal components analysis.}
   \item{cor}{a logical value indicating whether the calculation should
-    use the correlation matrix or the covariance matrix.}
+    use the correlation matrix or the covariance matrix.  (The
+    correlation matrix can only be used if there are no constant variables.)}
   \item{scores}{a logical value indicating whether the score on each
     principal component should be calculated.}
   \item{covmat}{a covariance matrix, or a covariance list as returned by
-    \code{\link{cov.wt}}, \code{\link[MASS]{cov.mve}} or
-    \code{\link[MASS]{cov.mcd}}.
+    \code{\link{cov.wt}} (and \code{\link[MASS]{cov.mve}} or
+    \code{\link[MASS]{cov.mcd}} from package \pkg{MASS}).
     If supplied, this is used rather than the covariance matrix of
     \code{x}.}
   \item{\dots}{arguments passed to or from other methods. If \code{x} is
     a formula one might specify \code{cor} or \code{scores}.}
   \item{object}{Object of class inheriting from \code{"princomp"}}
-  \item{newdata}{An optional data frame in which to look for variables with
-    which to predict.  If omitted, the scores are used.}
+  \item{newdata}{An optional data frame or matrix in which to look for
+    variables with which to predict.  If omitted, the scores are used.
+    If the original fit used a formula or a data frame or a matrix with
+    column names, \code{newdata} must contain columns with the same
+    names. Otherwise it must contain the same number of columns, to be
+    used in the same order.
+  }
 }
 \description{
   \code{princomp} performs a principal components analysis on the given
@@ -65,7 +73,8 @@ princomp(x, \dots)
   \item{scores}{if \code{scores = TRUE}, the scores of the supplied
     data on the principal components.  These are non-null only if
     \code{x} was supplied, and if \code{covmat} was also supplied if it
-    was a covariance list.}
+    was a covariance list.  For the formula method, \code{napredict} is
+    applied to handle the treatment of values omitted by the \code{na.action}.}
   \item{call}{the matched call.}
   \item{na.action}{If relevant.}
 }
@@ -91,7 +100,7 @@ princomp(x, \dots)
   the scores (if requested): see \code{\link{napredict}}.
 
   \code{princomp} only handles so-called R-mode PCA, that is feature
-  extraction of variables. If a data matrix is supplied (possibly via a
+  extraction of variables.  If a data matrix is supplied (possibly via a
   formula) it is required that there are at least as many units as
   variables.  For Q-mode PCA use \code{\link{prcomp}}.
 }

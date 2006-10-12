@@ -2,10 +2,11 @@
 #include <R.h>
 #include <Rdefines.h>
 #include <Rinternals.h>
+#include "methods.h"
 
 SEXP R_dummy_extern_place()
 {
-    error("calling the C routine used as an initializer for \"externalptr\" objects");
+    error(_("calling the C routine used as an initializer for 'externalptr' objects"));
     return R_NilValue; /* -Wall */
 }
 

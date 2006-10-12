@@ -1,4 +1,4 @@
-parse <- function(file = "", n = NULL, text = NULL, prompt = "?", keep.all.source = FALSE)
+parse <- function(file = "", n = NULL, text = NULL, prompt = "?")
 {
     if(!is.null(text) && length(as.character(text)) == 0)
         return(expression())
@@ -8,5 +8,5 @@ parse <- function(file = "", n = NULL, text = NULL, prompt = "?", keep.all.sourc
             file <- file(file, "r")
             on.exit(close(file))
         }
-    .Internal(parse(file, n, text, prompt, keep.all.source))
+    .Internal(parse(file, n, text, prompt))
 }

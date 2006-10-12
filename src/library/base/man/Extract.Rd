@@ -8,107 +8,187 @@
 \alias{[<-}
 \alias{[[<-}
 \alias{$<-}
-\alias{.subset}
-\alias{.subset2}
 \concept{delete}
 \description{
-  Operators act on vectors, arrays and lists to extract or
-  replace subsets.
+  Operators acting on vectors, matrices, arrays and lists to extract or
+  replace parts.
 }
 \usage{
 x[i]
-x[i, j, \dots , drop=TRUE]
+x[i, j, \dots , drop = TRUE]
 x[[i]]
 x[[i, j, \dots]]
 x$name
-
-.subset(x, \dots)
-.subset2(x, \dots)
 }
 \arguments{
-  \item{x}{object from which to extract elements or in which to replace
-    elements.}
-  \item{i, j, \dots, name}{elements to extract or replace. \code{i, j} are
-    \code{numeric} or \code{character} or empty whereas \code{name} must be
-    character or an (unquoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}}.
-    
-    For \code{[}-indexing only: \code{i, j, \dots} can be
-    logical vectors, indicating elements/slices to select. Such vectors
-    are recycled if necessary to match the corresponding extent. When
-    indexing arrays, \code{i} can be a (single) matrix with as many
-    columns as there are dimensions of \code{x}; the result is then a
-    vector with elements corresponding to the sets of indices in each
-    row of \code{i}.
-    
-    \code{i, j, \dots} can also be negative integers, indicating 
-    elements/slices to leave out of the selection.
-    }
-  \item{drop}{For matrices, and arrays.  If \code{TRUE} the
-    result is coerced to the lowest possible dimension (see examples
-    below). This only works for extracting elements, not for the
-    replacement forms.}
+  \item{x}{
+    object from which to extract element(s) or in which to replace element(s).
+  }
+  \item{i, j, \dots, name}{
+    indices specifying elements to extract or replace.  \code{i, j} are
+    \code{numeric} or \code{character} vectors or empty (missing) or
+    \code{NULL} whereas \code{name} must be a character string or an
+    (unquoted or backtick quoted) name.  Numeric values are coerced to
+    integer as by \code{\link{as.integer}}.  For extraction with
+    \code{[[} and \code{$} character strings are normally (see under
+    Environments) partially matched to the \code{\link{names}} of the
+    object if exact matching does not succeed.
+
+    For \code{[}-indexing only: \code{i, j, \dots} can be logical
+    vectors, indicating elements/slices to select.  Such vectors are
+    recycled if necessary to match the corresponding extent. \code{i, j,
+      \dots} can also be negative integers, indicating elements/slices
+    to leave out of the selection.
+
+    When indexing arrays by \code{[} a single argument \code{i} can be a
+    matrix with as many columns as there are dimensions of \code{x}; the
+    result is then a vector with elements corresponding to the sets of
+    indices in each row of \code{i}.
+
+    An index value of \code{NULL} is treated as if it were \code{integer(0)}.
+  }
+  \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
+    coerced to the lowest possible dimension (see the examples).  This
+    only works for extracting elements, not for the replacement.}
 }
 \details{
-  These operators are generic.  You can write methods to handle subsetting
+  These operators are generic.  You can write methods to handle indexing
   of specific classes of objects, see \link{InternalMethods} as well as
   \code{\link{[.data.frame}} and \code{\link{[.factor}}.  The
-  descriptions here apply only to the default methods.
+  descriptions here apply only to the default methods.  Note that
+  separate methods are required for the replacement functions
+  \code{[<-}, \code{[[<-} and \code{$<-} for use when indexing occurs on
+  the assignment side of an expression.
 
   The most important distinction between \code{[}, \code{[[} and
   \code{$} is that the \code{[} can select more than one element whereas
-  the other two select a single element.  \code{$} does not allow
-  computed indices, whereas \code{[[} does.  \code{x$name} is equivalent
-  to \code{x[["name"]]} if \code{x} is recursive
-  (see \code{\link{is.recursive}}) and \code{NULL} otherwise.
-  
-  The \code{[[} operator requires all relevant subscripts to be supplied.
-  With the \code{[} operator an empty index (a comma separated blank)
-  indicates that all entries in that dimension are selected.
+  the other two select a single element.
 
-  If one of these expressions appears on the left side of an assignment
-  then that part of \code{x} is set to the value of the right hand side
-  of the assignment.
+  The default methods work somewhat differently for atomic vectors,
+  matrices/arrays and for recursive (list-like, see
+  \code{\link{is.recursive}}) objects.  \code{$} returns \code{NULL}
+  except for recursive objects, and is only discussed in the section
+  below on recursive objects.
 
+  Subsetting (except by an empty index) will drop all attributes except
+  \code{names}, \code{dim} and \code{dimnames}.
+
+  Indexing can occur on the right-hand-side of an expression for
+  extraction, or on the left-hand-side for replacement. When an index
+  expression appears on the left side of an assignment (known as
+  \emph{subassignment}) then that part of \code{x} is set to the value
+  of the right hand side of the assignment.  In this case no partial
+  matching of indices is done, and the left-hand-side is coerced as
+  needed to accept the values.  Attributes are preserved (although
+  \code{names}, \code{dim} and \code{dinmanes} will be adjusted
+  suitably).
+}
+\section{Atomic vectors}{
+  The usual form of indexing is \code{"["}.  \code{"[["} can be used to
+  select a single element, but \code{"["} can also do so (but will not
+  partially match a character index).
+
+  The index object \code{i} can be numeric, logical, character or empty.
   Indexing by factors is allowed and is equivalent to indexing by the
   numeric codes (see \code{\link{factor}}) and not by the character
   values which are printed (for which use \code{[as.character(i)]}).
 
-  When operating on a list, the \code{[[} operator gives the specified
-  element of the list while the \code{[} operator returns a list with
-  the specified element(s) in it.
+  An empty index selects all values: this is most often used to replace
+  all the entries but keep the \code{\link{attributes}}.
+}
+\section{Matrices and arrays}{
+  Matrices and arrays are vectors with a dimension attribute and so all
+  the vector forms of indexing can be used with a single index.  The
+  result will be an unnamed vector unless \code{x} is one-dimensional
+  when it will be a one-dimensional array.
 
-  As from \R 1.7.0 \code{[[} can be applied recursively to lists, so
-  that if the single index \code{i} is a vector of length \code{p},
-  \code{alist[[i]]} is equivalent to \code{alist[[i1]]\dots[[ip]]}
-  providing all but the final indexing results in a list.
+  The most common form of indexing a \eqn{k}-dimensional array is to
+  specify \eqn{k} indices to \code{[}.  As for vector indexing, the
+  indices can be numeric, logical, character, empty or even factor.
+  An empty index (a comma separated blank) indicates that all entries in
+  that dimension are selected.
+  The argument \code{drop} applies to this form of indexing.
+  
+  A third form of indexing is via a numeric matrix with the one column
+  for each dimension: each row of the index matrix then selects a single
+  element of the array, and the result is a vector.  Negative indices are
+  not allowed in the index matrix.  \code{NA} and zero values are allowed:
+  rows of an index matrix containing a zero are ignored, whereas rows
+  containing an \code{NA} produce an \code{NA} in the result.
 
-  The operators \code{$} and \code{$<-} do not evaluate their second
-  argument.  It is translated to a string and that string is used to
-  locate the correct component of the first argument.
+  A vector obtained by matrix indexing will be unnamed unless \code{x}
+  is one-dimensional when the row names (if any) will be indexed to
+  provide names for the result.
+}
+\section{Recursive (list-like) objects}{
+  Indexing by \code{[} is similar to atomic vectors and selects a list
+  of the specified element(s).
 
-  When \code{$<-} is applied to a \code{NULL} \code{x}, it coerces
-  \code{x} to \code{list()}.  This is what happens with \code{[[<-} is
-  \code{y} is of length greater than one: if \code{y} has length 1 or 0,
-  \code{x} is coerced to a zero-length vector of the type of \code{value}, 
+  Both \code{[[} and \code{$} select a single element of the list.  The
+  main difference is that \code{$} does not allow computed indices,
+  whereas \code{[[} does.  \code{x$name} is equivalent to
+  \code{x[["name"]]}.
 
-  The functions \code{.subset} and \code{.subset2} are essentially
-  equivalent to the \code{[} and \code{[[} operators, except that
-  methods dispatch does not take place.  This is to avoid expensive
-  unclassing when applying the default method to an object.  They
-  should not normally be invoked by end users.
+  \code{[} and \code{[[} are sometimes applied to other recursive
+  objects such as \link{call}s and \link{expression}s.  Pairlists are
+  coerced to lists for extraction by \code{[}, but all three operators
+  can be used for replacement.
 
-  As from \R 1.9.0 both \code{$} and \code{[[} can be applied to
-  environments. Only character arguments are allowed and no partial
-  matching is done (this is in contrast to the behavior for lists). The
-  semantics of these operations is basically that of \code{get(i, env=x,
-    inherits=FALSE)}. If no match is found then \code{NULL} is
-  returned. The assignment versions, \code{$<-} and
-  \code{[[<-}, can also be used. Again, only character arguments are
-  allowed and no partial matching is done. The semantics in this case
-  are those of \code{assign(i, value, env=x, inherits=FALSE)}. Such an
-  assignment will either create a new binding or change the existing
-  binding in \code{x}.
+  \code{[[} can be applied recursively to lists, so that if the single
+  index \code{i} is a vector of length \code{p}, \code{alist[[i]]} is
+  equivalent to \code{alist[[i1]]\dots[[ip]]} providing all but the
+  final indexing results in a list.
+
+  When \code{$<-} is applied to a \code{NULL} \code{x}, it first coerces
+  \code{x} to \code{list()}.  This is what also happens with \code{[[<-}
+  if the replacement value \code{value} is of length greater than one:
+  if \code{value} has length 1 or 0, \code{x} is first coerced to a
+  zero-length vector of the type of \code{value}.
+}
+\section{Environments}{
+  Both \code{$} and \code{[[} can be applied to environments.  Only
+  character arguments are allowed and no partial matching is done. The
+  semantics of these operations are those of \code{get(i, env=x,
+    inherits=FALSE)}.  If no match is found then \code{NULL} is
+  returned.  The assignment versions, \code{$<-} and \code{[[<-}, can
+  also be used.  Again, only character arguments are allowed.  The
+  semantics in this case are those of \code{assign(i, value, env=x,
+    inherits=FALSE)}.  Such an assignment will either create a new
+  binding or change the existing binding in \code{x}.
+}
+\section{NAs in indexing}{
+  When extracting, a numerical, logical or character \code{NA} index picks
+  an unknown element and so returns \code{NA} in the corresponding
+  element of a logical, integer, numeric, complex or character result,
+  and \code{NULL} for a list.  (It returns \code{00} for a raw result.]
+
+  When replacing (that is using indexing on the lhs of an
+  assignment) \code{NA} does not select any element to be replaced.  As
+  there is ambiguity as to whether an element of the rhs should
+  be used or not, this is only allowed if the rhs value is of length one
+  (so the two interpretations would have the same outcome).
+}
+\section{Argument matching}{
+  Note that these operations do not match their index arguments in the
+  standard way: argument names are ignored and positional matching only is
+  used.  So \code{m[j=2,i=1]} is equivalent to \code{m[2,1]} and
+  \strong{not} to \code{m[1,2]}.
+
+  This may not be true for methods defined for them; for example it is
+  not true for the \code{data.frame} methods described in
+  \code{\link{[.data.frame}}.
+
+  To avoid confusion, do not name index arguments (but \code{drop} must
+  be named).
+}
+\note{
+  S uses partial matching when extracting by \code{[}
+  (Becker \emph{et al} p. 358) whereas \R does not.
+
+  The documented behaviour of S is that an \code{NA} replacement index
+  \sQuote{goes nowhere} but uses up an element of \code{value}
+  (Becker \emph{et al} p. 359).  However, that is not the current
+  behaviour of S-PLUS.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -152,7 +232,7 @@ z[[c(1, 2, 1)]]  # both "hello"
 z[[c("a", "b")]] <- "new"
 unlist(z)
 
-##check $ and [[ for environments
+## check $ and [[ for environments
 e1 <- new.env()
 e1$a <- 10
 e1[["a"]]

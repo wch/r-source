@@ -1,6 +1,7 @@
 /*
  *  A simple 'reading' pipe (and a command executor)
  *  Copyright (C) 1999  Guido Masarotto
+ *            (C) 2004  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,10 +15,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 
 struct structRPIPE {
@@ -32,6 +34,7 @@ typedef struct structRPIPE rpipe;
  * runcmd and rpipeClose return the exit code of the process
  * if runcmd return -1, problems in process start
 */
+#define runcmd Rf_runcmd
 int   runcmd(char *cmd, int wait, int visible, char *finput);
 
 rpipe *rpipeOpen(char *cmd, int visible, char *finput, int io);

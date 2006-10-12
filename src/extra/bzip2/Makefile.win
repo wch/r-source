@@ -2,22 +2,26 @@
 
 include ../../gnuwin32/MkRules
 
-CFLAGS=-Wall -I../../include -O2 -fomit-frame-pointer -fno-strength-reduce
+all: makeMakedeps libbz2.a
 
-OBJS= blocksort.o  \
-      huffman.o    \
-      crctable.o   \
-      randtable.o  \
-      compress.o   \
-      decompress.o \
-      bzlib.o
+CFLAGS=-I../../include $(OPTFLAGS)
 
-all: libbz2.a
+CSOURCES= blocksort.c huffman.c crctable.c randtable.c compress.c \
+          decompress.c bzlib.c
+OBJS=$(CSOURCES:.c=.o)
 
 libbz2.a: $(OBJS)
-	rm -f libbz2.a
-	$(AR) cq libbz2.a $(OBJS)
-	$(RANLIB) libbz2.a
 
 clean:
-	$(RM) *.o *~ libbz2.a
+	$(RM) *.o *~ *.d Makedeps
+distclean: clean
+	@$(RM) libbz2.a
+
+# Dependencies
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

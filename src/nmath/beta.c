@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  *  SYNOPSIS
  *
@@ -80,7 +80,7 @@ double beta(double a, double b)
     val = lbeta(a, b);
     if (val < lnsml) {
 	/* a and/or b so big that beta underflows */
-	ML_ERROR(ME_UNDERFLOW);
+	ML_ERROR(ME_UNDERFLOW, "beta");
 	return ML_UNDERFLOW;
     }
     return exp(val);

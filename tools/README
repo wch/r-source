@@ -15,11 +15,13 @@ The files are as follows.
   GETCONFIG
 	create API 'Rconfig.h' from the configure information in
 	'config.h'.
+  GETDISTNAME
+	get the name of the distribution tarball.
   GETMAKEVAL
 	get the value of a Make variable from a Makefile [this needs to
 	be improved].
   GETVERSION
-	create API 'Rversion.h' from 'VERSION' and 'date-stamp'.
+	create API 'Rversion.h' from 'VERSION' and 'SVN-REVISION'.
   
   Rdnewer.pl
 	determine whether any Rd file in an Rd tree is newer than a
@@ -27,6 +29,13 @@ The files are as follows.
   
   copy-if-change
 	copy a file if changed; otherwise, do nothing.
+
+  getsp.class
+  getsp.java
+	Java class (source and compiled bytecode) used for extracting
+	system properties when detecting Java support in configure.
+	We don't require the existence of a Java compiler, so we need
+	to supply the compiled version as well.
 
   help2man.pl
 	generate simple manual pages from program output.  Taken from
@@ -66,3 +75,7 @@ The files are as follows.
   rsync-recommended
 	obtain sources for the recommended packages using rsync, and then
 	create links with simplified names to these.
+
+  updatefat
+	updates a fat file by adding a new architecture (Mac OS X only)
+	it is essentially a smart wrapper for "lipo".

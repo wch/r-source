@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-3  the R Development Core Team
+ *  first part Copyright (C) 2002-5  the R Development Core Team
  *  second part Copyright (C) 1998 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,12 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
+ */
+
+/* <UTF8>
+   Looks OK as byte-level comparions are all with ASCII chars.
+   Has own case-insensitive comparisons which we never use (as from R 2.1.0).
  */
 
 #ifdef HAVE_CONFIG_H
@@ -34,13 +39,14 @@
 #include <io.h> /* for mkdir */
 #endif
 
+/* cf do_dircreate in platform.c */
 static int R_mkdir(char *path)
 {
 #ifdef Win32
-    char *p, local[PATH_MAX];
-    /* Looks like `/' only works on NT4 with no drive in the path */
+    char local[PATH_MAX];
     strcpy(local, path);
-    for (p = local; *p; p++) if (*p == '/') *p = '\\';
+    /* need DOS paths on Win 9x */
+    R_fixbackslash(local);
     return mkdir(local);
 #endif
 #ifdef Unix
@@ -73,8 +79,7 @@ extract_one(unzFile uf, char *dest, char *filename, SEXP names, int *nnames)
 	strcat(outname, filename_inzip);
     }
 #ifdef Win32
-    for (p = outname; *p; p++)
-	if (*p == '\\') *p = '/';
+    R_fixslash(outname);
 #endif
     p = outname + strlen(outname) - 1;
     if(*p == '/') { /* Don't know how these are stored in Mac zip files */
@@ -83,7 +88,7 @@ extract_one(unzFile uf, char *dest, char *filename, SEXP names, int *nnames)
     } else {
 	/* make parents as required: have already checked dest exists */
 	pp = outname + strlen(dest) + 1;
-	while((p = strrchr(pp, '/'))) {
+	while((p = Rf_strrchr(pp, '/'))) {
 	    strcpy(dirs, outname);
 	    dirs[p - outname] = '\0';
 	    /* Rprintf("dirs is %s\n", dirs); */
@@ -94,7 +99,7 @@ extract_one(unzFile uf, char *dest, char *filename, SEXP names, int *nnames)
 	fout = R_fopen(outname, "wb");
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
-	    error("cannot open file %s", outname);
+	    error(_("cannot open file '%s'"), outname);
 	    return 3;		/* not reached */
 	}
 	while (1) {
@@ -143,7 +148,7 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files,
 	}
     } else {
 	for (i = 0; i < nfiles; i++) {
-	    if ((err = unzLocateFile(uf, files[i], 0)) != UNZ_OK) break;
+	    if ((err = unzLocateFile(uf, files[i], 1)) != UNZ_OK) break;
 	    if ((err = extract_one(uf, dest, files[i], names, nnames)) != UNZ_OK) break;
 #ifdef Win32
 	    R_ProcessEvents();
@@ -157,37 +162,36 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files,
     return err;
 }
 
-SEXP 
-do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans, names = R_NilValue;
     char  zipname[PATH_MAX], *topics[500], dest[PATH_MAX], *p;
     int   i, ntopics, rc, nnames = 0;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid zip name argument");
+	errorcall(call, _("invalid zip name argument"));
     p = CHAR(STRING_ELT(CAR(args), 0));
     if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, "zip path is too long");
+	errorcall(call, _("zip path is too long"));
     strcpy(zipname, p);
     args = CDR(args);
     fn = CAR(args);
     ntopics = length(fn);
     if (ntopics > 0) {
 	if (!isString(fn) || ntopics > 500)
-	    errorcall(call, "invalid topics argument");
+	    errorcall(call, _("invalid '%s' argument"), "topics");
 	for (i = 0; i < ntopics; i++)
 	    topics[i] = CHAR(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid destination argument");
+	errorcall(call, _("invalid '%s' argument"), "destination");
     p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, "destination is too long");
+	errorcall(call, _("'destination' is too long"));
     strcpy(dest, p);
     if(!R_FileExists(dest))
-	errorcall(call, "destination does not exist");
+	errorcall(call, _("'destination' does not exist"));
     
     if(ntopics > 0)
 	PROTECT(names = allocVector(STRSXP, ntopics));
@@ -197,23 +201,23 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     if(rc != UNZ_OK)
 	switch(rc) {
 	case UNZ_END_OF_LIST_OF_FILE:
-	    warning("requested file not found in the zip file");
+	    warning(_("requested file not found in the zip file"));
 	    break;
 	case UNZ_BADZIPFILE:
-	    warning("zip file is corrupt");
+	    warning(_("zip file is corrupt"));
 	    break;
 	case UNZ_CRCERROR:
-	    warning("CRC error in zip file");
+	    warning(_("CRC error in zip file"));
 	    break;
 	case UNZ_PARAMERROR:
 	case UNZ_INTERNALERROR:
-	    warning("internal error in unz code");
+	    warning(_("internal error in unz code"));
 	    break;
 	case -200:
-	    warning("write error in extracting from zip file");
+	    warning(_("write error in extracting from zip file"));
 	    break;
 	default:
-	    warning("error %d in extracting from zip file", rc);
+	    warning(_("error %d in extracting from zip file"), rc);
 	}
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = rc;
@@ -233,28 +237,29 @@ static Rboolean unz_open(Rconnection con)
     char path[2*PATH_MAX], *p;
 
     if(con->mode[0] != 'r') {
-	warning("unz connections can only be opened for reading");
+	warning(_("unz connections can only be opened for reading"));
 	return FALSE;
     }
     p = R_ExpandFileName(con->description);
     if (strlen(p) > PATH_MAX - 1) {
-	warning("zip path is too long");
+	warning(_("zip path is too long"));
 	return FALSE;
     }
     strcpy(path, p);
-    p = strrchr(path, ':');
+    p = Rf_strrchr(path, ':');
     if(!p) {
-	warning("invalid description of unz connection");
+	warning(_("invalid description of unz connection"));
 	return FALSE;
     }
     *p = '\0';
     uf = unzOpen(path);
     if(!uf) {
-	warning("cannot open zip file `%s'", path);
+	warning(_("cannot open zip file '%s'"), path);
 	return FALSE;
     }
-    if (unzLocateFile(uf, p+1, 0) != UNZ_OK) {
-	warning("cannot locate file `%s' in zip file `%s'", p+1, path);
+    if (unzLocateFile(uf, p+1, 1) != UNZ_OK) {
+	warning(_("cannot locate file '%s' in zip file '%s'"), p+1, path);
+	unzClose(uf);
 	return FALSE;
     }
     unzOpenCurrentFile(uf);
@@ -264,6 +269,7 @@ static Rboolean unz_open(Rconnection con)
     con->canread = TRUE;
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    /* set_iconv(); not yet */
     con->save = -1000;
     return TRUE;
 }
@@ -276,7 +282,7 @@ static void unz_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int unz_fgetc(Rconnection con)
+static int unz_fgetc_internal(Rconnection con)
 {
     unzFile uf = ((Runzconn)(con->private))->uf;
     char buf[1];
@@ -284,8 +290,7 @@ static int unz_fgetc(Rconnection con)
 
     err = unzReadCurrentFile(uf, buf, 1);
     p = buf[0] % 256;
-    if(err < 1) return R_EOF;
-    else return con->encoding[p];
+    return (err < 1) ? R_EOF : p;
 }
 
 static size_t unz_read(void *ptr, size_t size, size_t nitems,
@@ -297,20 +302,20 @@ static size_t unz_read(void *ptr, size_t size, size_t nitems,
 
 static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
-    error("printing not enabled for this connection");
+    error(_("printing not enabled for this connection"));
     return 0; /* -Wall */
 }
 
 static size_t null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
-    error("write not enabled for this connection");
+    error(_("write not enabled for this connection"));
     return 0; /* -Wall */
 }
 
-static long null_seek(Rconnection con, int where, int origin, int rw)
+static double null_seek(Rconnection con, double where, int origin, int rw)
 {
-    error("seek not enabled for this connection");
+    error(_("seek not enabled for this connection"));
     return 0; /* -Wall */
 }
 
@@ -319,21 +324,21 @@ static int null_fflush(Rconnection con)
     return 0;
 }
 
-Rconnection R_newunz(char *description, char *mode)
+Rconnection attribute_hidden R_newunz(char *description, char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of file connection failed");
+    if(!new) error(_("allocation of unz connection failed"));
     new->class = (char *) malloc(strlen("unz") + 1);
     if(!new->class) {
 	free(new);
-	error("allocation of unz connection failed");
+	error(_("allocation of unz connection failed"));
     }
     strcpy(new->class, "unz");
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);
-	error("allocation of unz connection failed");
+	error(_("allocation of unz connection failed"));
     }
     init_con(new, description, mode);
 
@@ -341,7 +346,8 @@ Rconnection R_newunz(char *description, char *mode)
     new->open = &unz_open;
     new->close = &unz_close;
     new->vfprintf = &null_vfprintf;
-    new->fgetc = &unz_fgetc;
+    new->fgetc_internal = &unz_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->seek = &null_seek;
     new->fflush = &null_fflush;
     new->read = &unz_read;
@@ -349,14 +355,16 @@ Rconnection R_newunz(char *description, char *mode)
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
-	error("allocation of unz connection failed");
+	error(_("allocation of unz connection failed"));
     }
     return new;
 }
 
        /* =================== second part ====================== */
 
-/* From minizip contribution to zlib 1.1.3, reformatted by indent */
+/* From minizip contribution to zlib 1.1.3, reformatted by indent,
+   unz_copyright is now static.
+*/
 
 /* unzip.c -- IO on .zip files using zlib
    Version 0.15 beta, Mar 19th, 1998,
@@ -416,7 +424,7 @@ extern int errno;
 #define SEEK_SET    0
 #endif
 
-const char unz_copyright[] =
+static const char unz_copyright[] =
 " unzip 0.15 Copyright 1998 Gilles Vollant ";
 
 /* unz_file_info_interntal contain internal info about a file in zipfile*/
@@ -509,7 +517,7 @@ static int
 unzlocal_getShort(FILE * fin, uLong * pX)
 {
     uLong x;
-    int   i, err;
+    int   i = 0 /* -Wall */, err;
 
     err = unzlocal_getByte(fin, &i);
     x = (uLong) i;
@@ -523,7 +531,7 @@ static int
 unzlocal_getLong(FILE * fin, uLong * pX)
 {
     uLong x;
-    int   i, err;
+    int   i = 0 /* -Wall */, err;
 
     err = unzlocal_getByte(fin, &i);
     x = (uLong) i;
@@ -539,7 +547,7 @@ unzlocal_getLong(FILE * fin, uLong * pX)
 }
 
 
-/* My own strcmpi / strcasecmp */
+/* My own strcmpi / strcasecmp NOT USED in R */
 static int 
 strcmpcasenosensitive_internal(const char *fileName1, const char *fileName2)
 {
@@ -569,10 +577,10 @@ strcmpcasenosensitive_internal(const char *fileName1, const char *fileName2)
 
 /*
    Compare two filename (fileName1,fileName2).
-   If iCaseSenisivity = 1, comparision is case sensitivity (like strcmp)
-   If iCaseSenisivity = 2, comparision is not case sensitivity (like strcmpi
+   If iCaseSensitivity = 1, comparision is case sensitivity (like strcmp)
+   If iCaseSensitivity = 2, comparision is not case sensitivity (like strcmpi
                                                                 or strcasecmp)
-   If iCaseSenisivity = 0, case sensitivity is defaut of your operating system
+   If iCaseSensitivity = 0, case sensitivity is defaut of your operating system
         (like 1 on Unix, 2 on Windows)
 
 */

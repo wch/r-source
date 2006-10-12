@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2001	Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2006	Robert Gentleman, Ross Ihaka and the
  *				R Development Core Team
  *  Copyright (C) 2003		The R Foundation
  *
@@ -16,8 +16,8 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -108,9 +108,11 @@
 
 
 static void cov_pairwise1(int n, int ncx, double *x,
-			  double *ans, Rboolean *sd_0, Rboolean cor, Rboolean kendall)
+			  double *ans, Rboolean *sd_0, Rboolean cor, 
+			  Rboolean kendall)
 {
-    double sum, xmean =0., ymean =0., xsd, ysd, *xx, *yy, xm, ym;
+    LDOUBLE sum, xmean =0., ymean =0., xsd, ysd, xm, ym;
+    double *xx, *yy;
     int i, j, k, nobs, n1 = -1;	/* -Wall initializing */
 
     for (i = 0 ; i < ncx ; i++) {
@@ -125,9 +127,11 @@ static void cov_pairwise1(int n, int ncx, double *x,
 }
 
 static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
-			  double *ans, Rboolean *sd_0, Rboolean cor, Rboolean kendall)
+			  double *ans, Rboolean *sd_0, Rboolean cor, 
+			  Rboolean kendall)
 {
-    double sum, xmean =0., ymean =0., xsd, ysd, *xx, *yy, xm, ym;
+    LDOUBLE sum, xmean =0., ymean =0., xsd, ysd, xm, ym;
+    double *xx, *yy;
     int i, j, k, nobs, n1 = -1;	/* -Wall initializing */
 
     for (i = 0 ; i < ncx ; i++) {
@@ -146,7 +150,8 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 #define ANS(I,J)  ans[I + J * ncx]
 
 #define COV_init(_ny_)				\
-    double sum, xxm, yym, *xx, *yy;		\
+    LDOUBLE sum, tmp, xxm, yym;			\
+    double *xx, *yy;				\
     int i, j, k, nobs, n1=-1;/* -Wall */	\
 						\
     /* total number of complete observations */	\
@@ -162,6 +167,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
     }
 
 
+/* This uses two passes for better accuracy */
 #define MEAN(_X_)				\
     /* variable means */			\
     for (i = 0 ; i < nc##_X_ ; i++) {		\
@@ -170,13 +176,22 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y,
 	for (k = 0 ; k < n ; k++)		\
 	    if(ind[k] != 0)			\
 		sum += xx[k];			\
-	_X_##m [i] = sum / nobs;		\
+        tmp = sum / nobs;			\
+        if(R_FINITE((double)tmp)) {		\
+ 	    sum = 0.;				\
+	    for (k = 0 ; k < n ; k++)		\
+	        if(ind[k] != 0)			\
+		    sum += (xx[k] - tmp);      	\
+             tmp = tmp + sum / nobs;		\
+	}					\
+	_X_##m [i] = tmp;			\
     }
 
 
 static void
 cov_complete1(int n, int ncx, double *x, double *xm,
-	      int *ind, double *ans, Rboolean *sd_0, Rboolean cor, Rboolean kendall)
+	      int *ind, double *ans, Rboolean *sd_0, Rboolean cor,
+	      Rboolean kendall)
 {
     COV_init(ncx);
 
@@ -327,7 +342,7 @@ cov_complete2(int n, int ncx, int ncy, double *x, double *y,
 #define NA_LOOP								\
 	for (i = 0 ; i < n ; i++)					\
 	    if (ISNAN(z[i])) {						\
-		if (na_fail) error("missing observations in cov/cor");	\
+		if (na_fail) error(_("missing observations in cov/cor"));\
 		else ind[i] = 0;					\
 	    }
 
@@ -362,7 +377,7 @@ complete2(int n, int ncx, int ncy, double *x, double *y, int *ind, Rboolean na_f
 /* cov | cor( x, y, use = {1,		2,		3}
 			"all.obs", "complete.obs", "pairwise.complete.obs",
 		    kendall = TRUE/FALSE) */
-SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, ans, xm, ym, ind;
     Rboolean cor, kendall, pair, na_fail, sd_0;
@@ -375,7 +390,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     cor = PRIMVAL(op);
 
     /* Arg.1: x */
-    if (isNull(CAR(args)) || !LENGTH(CAR(args))) error("`x' is empty");
+    if (isNull(CAR(args)) || !LENGTH(CAR(args))) error(_("'x' is empty"));
     x = SETCAR(args, coerceVector(CAR(args), REALSXP));
     if ((ansmat = isMatrix(x))) {
 	n = nrows(x);
@@ -395,13 +410,13 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	y = SETCAR(args, coerceVector(CAR(args), REALSXP));
 	if (isMatrix(y)) {
 	    if (nrows(y) != n)
-		errorcall(call, "incompatible dimensions");
+		errorcall(call, _("incompatible dimensions"));
 	    ncy = ncols(y);
 	    ansmat = (1);
 	}
 	else {
 	    if (length(y) != n)
-		errorcall(call, "incompatible dimensions");
+		errorcall(call, _("incompatible dimensions"));
 	    ncy = 1;
 	}
     }
@@ -426,7 +441,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	pair = TRUE;
 	break;
     default:
-	errorcall(call, "invalid `use' (computational method)");
+	errorcall(call, _("invalid 'use' (computational method)"));
     }
     if (ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
     else PROTECT(ans = allocVector(REALSXP, ncx * ncy));
@@ -486,7 +501,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if(sd_0)/* only in cor() */
-	warningcall(call, "The standard deviation is zero");
+	warningcall(call, _("the standard deviation is zero"));
     UNPROTECT(1);
     return ans;
 }

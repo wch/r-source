@@ -24,8 +24,10 @@ quade.test(y, \dots)
   \item{formula}{a formula of the form \code{a ~ b | c}, where \code{a},
     \code{b} and \code{c} give the data values and corresponding groups
     and blocks, respectively.}
-  \item{data}{an optional data frame containing the variables in the
-    model formula.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when

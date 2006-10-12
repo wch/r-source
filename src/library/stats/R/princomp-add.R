@@ -1,7 +1,19 @@
-## copyright (C) 1998 W. N. Venables and B. D. Ripley
-##
-predict.princomp <- function(object, newdata, ...) {
+predict.princomp <- function(object, newdata, ...)
+{
     if (missing(newdata)) return(object$scores)
+    if(length(dim(newdata)) != 2)
+        stop("'newdata' must be a matrix or data frame")
+    p <- NCOL(object$loadings)
+    nm <- rownames(object$loadings)
+    if(!is.null(nm)) {
+        if(!all(nm %in% colnames(newdata)))
+            stop("'newdata' does not have named columns matching one or more of the original columns")
+        newdata <- newdata[, nm]
+    } else {
+        if(NCOL(newdata) != p)
+            stop("'newdata' does not have the correct number of columns")
+    }
+    ## next line does as.matrix
     scale(newdata, object$center, object$scale) %*% object$loadings
 }
 
@@ -27,7 +39,7 @@ print.summary.princomp <-
         cat("\nLoadings:\n")
         cx <- format(round(x$loadings, digits = digits))
         cx[abs(x$loadings) < cutoff] <-
-            substring("       ", 1, nchar(cx[1,1]))
+            paste(rep(" ", nchar(cx[1,1], type="w")), collapse="")
         print(cx, quote = FALSE, ...)
     }
     invisible(x)
@@ -44,7 +56,7 @@ function(x, npcs = min(10, length(x$sdev)),
     main
     type <- match.arg(type)
     pcs <- x$sdev^2
-    xp <- seq(length=npcs)
+    xp <- seq_len(npcs)
     if(type=="barplot")
         barplot(pcs[xp], names = names(pcs[xp]), main = main,
                 ylab = "Variances", ...)

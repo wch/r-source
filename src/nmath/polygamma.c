@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -144,7 +144,7 @@
 
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 {
-    const double bvalues[] = {	/* Bernoulli Numbers */
+    const static double bvalues[] = {	/* Bernoulli Numbers */
 	 1.00000000000000000e+00,
 	-5.00000000000000000e-01,
 	 1.66666666666666667e-01,
@@ -168,7 +168,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	 4.88332318973593167e+14,
 	-1.92965793419400681e+16
     };
-    const double *b = (double *)&bvalues -1; /* ==> b[1] = bvalues[0], etc */
+    const static double *b = (double *)&bvalues -1; /* ==> b[1] = bvalues[0], etc */
     const int nmax = n_max;
 
     int i, j, k, mm, mx, nn, np, nx, fn;
@@ -470,7 +470,7 @@ double psigamma(double x, double deriv)
     deriv = floor(deriv + 0.5);
     n = (int)deriv;
     if(n > n_max) {
-	MATHLIB_WARNING2("deriv = %d > %d (= n_max)", n, n_max);
+	MATHLIB_WARNING2(_("deriv = %d > %d (= n_max)\n"), n, n_max);
 	return ML_NAN;
     }
     dpsifn(x, n, 1, 1, &ans, &nz, &ierr);

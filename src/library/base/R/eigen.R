@@ -1,36 +1,43 @@
+
+isSymmetric <- function(object, ...) UseMethod("isSymmetric")
+
+isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...) {
+    if(!is.matrix(object)) return(FALSE) ## we test for  symmetric *matrix*
+    ## cheap pretest: is it square?
+    d <- dim(object)
+    if(d[1] != d[2]) return(FALSE)
+    test <-
+        if(is.complex(object))
+            all.equal.numeric(object, Conj(t(object)), tol = tol, ...)
+        else # numeric, character, ..
+            all.equal(object, t(object), tol = tol, ...)
+    isTRUE(test)
+}
+
 eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 {
     x <- as.matrix(x)
-    dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
+    if(!is.null(dimnames(x)))
+        dimnames(x) <- list(NULL, NULL)  # or they appear on eigenvectors
     n <- nrow(x)
     if (!n) stop("0 x 0 matrix")
-    if (n != ncol(x)) stop("non-square matrix in eigen")
+    if (n != ncol(x)) stop("non-square matrix in 'eigen'")
 
     complex.x <- is.complex(x)
+    if(!complex.x && !is.numeric(x))
+        stop("numeric or complex values required in 'eigen'")
+    if (any(!is.finite(x))) stop("infinite or missing values in 'x'")
 
-    if (any(!is.finite(x))) stop("infinite or missing values in x")
+    if(is.numeric(x)) storage.mode(x) <- "double"
+    if(missing(symmetric)) symmetric <- isSymmetric.matrix(x)
 
-    if(complex.x) {
-	if(missing(symmetric)) {
-            test <- all.equal.numeric(x, Conj(t(x)), 100*.Machine$double.eps)
-	    symmetric <- is.logical(test) && test
-        }
-    }
-    else if(is.numeric(x)) {
-	storage.mode(x) <- "double"
-	if(missing(symmetric)) {
-            test <- all.equal.numeric(x, t(x), 100*.Machine$double.eps)
-	    symmetric <- is.logical(test) && test
-        }
-    }
-    else stop("numeric or complex values required in eigen")
     if (!EISPACK) {
         if (symmetric) {
             z <- if(!complex.x)
-                .Call("La_rs", x, only.values, "dsyevr", PACKAGE = "base")
+                .Call("La_rs", x, only.values, PACKAGE = "base")
             else
                 .Call("La_rs_cmplx", x, only.values, PACKAGE = "base")
-            ord <- rev(seq(along = z$values))
+            ord <- rev(seq_along(z$values))
         } else {
             z <- if(!complex.x)
                 .Call("La_rg", x, only.values, PACKAGE = "base")
@@ -62,7 +69,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("ch returned code ", z$ierr, " in eigen"))
+		stop(gettextf("'ch' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	    if(!only.values)
 		z$vectors <- matrix(complex(re=z$vectors,
 					    im=z$ivectors), nc=n)
@@ -80,7 +88,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("rs returned code ", z$ierr, " in eigen"))
+		stop(gettextf("'rs' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	}
 	ord <- sort.list(z$values, decreasing = TRUE)
     }
@@ -104,7 +113,8 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("cg returned code ", z$ierr, " in eigen"))
+		stop(gettextf("'cg' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	    z$values <- complex(re=z$values,im=z$ivalues)
 	    if(!only.values)
 		z$vectors <- matrix(complex(re=z$vectors,
@@ -124,10 +134,11 @@ eigen <- function(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 			  ierr = integer(1),
                           PACKAGE="base")
 	    if (z$ierr)
-		stop(paste("rg returned code ", z$ierr, " in eigen"))
+		stop(gettextf("'rg' returned code %d in 'eigen'", z$ierr),
+                     domain = NA)
 	    ind <- z$ivalues > 0
 	    if(any(ind)) {#- have complex (conjugated) values
-		ind <- seq(n)[ind]
+		ind <- seq.int(n)[ind]
 		z$values <- complex(re=z$values,im=z$ivalues)
 		if(!only.values) {
 		    z$vectors[, ind] <- complex(re=z$vectors[,ind],

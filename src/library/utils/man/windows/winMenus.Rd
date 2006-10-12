@@ -64,9 +64,12 @@ winMenuItems(menuname)
   
   The \code{winMenuDel} function will delete a menu and all of its items
   and submenus.  \code{winMenuDelItem} just deletes one menu item.
+
+  The total path to an item (menu string plus item string) cannot exceed
+  1000 bytes, and the menu string cannot exceed 500 bytes.
 }
 \value{
-  \code{NULL}, invisibly. If an error occurs, an informative error
+  \code{NULL}, invisibly.  If an error occurs, an informative error
   message will be given.
 }
 \seealso{\code{\link{winDialog}}}

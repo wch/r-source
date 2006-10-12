@@ -1,0 +1,28 @@
+Authors of R.
+
+R was initially written by Robert Gentleman and Ross Ihaka of the
+Statistics Department of the University of Auckland.
+
+Since mid-1997 there has been a core group with write access to the R
+source, currently consisting of
+
+Douglas Bates		<bates@stat.wisc.edu>
+John Chambers		<jmc@R-project.org>
+Peter Dalgaard		<p.dalgaard@biostat.ku.dk>
+Robert Gentleman	<rgentlem@fhcrc.org>
+Kurt Hornik		<Kurt.Hornik@wu-wien.ac.at>
+Stefano Iacus		<stefano.iacus@unimi.it>
+Ross Ihaka		<ihaka@stat.auckland.ac.nz>
+Friedrich Leisch	<Friedrich.Leisch@tuwien.ac.at>
+Thomas Lumley		<tlumley@u.washington.edu>
+Martin Maechler		<maechler@stat.math.ethz.ch>
+Duncan Murdoch		<murdoch@stats.uwo.ca>
+Paul Murrell		<paul@stat.auckland.ac.nz>
+Martyn Plummer		<plummer@iarc.fr>
+Brian Ripley		<ripley@stats.ox.ac.uk>
+Duncan Temple Lang	<duncan@wald.ucdavis.edu>
+Luke Tierney		<luke@stat.uiowa.edu>
+Simon Urbanek		<urbanek@research.att.com>
+
+plus Heiner Schwarte <h.schwarte@bluewin.ch> up to October 1999
+and Guido Masarotto <guido@hal.stat.unipd.it> up to June 2003.

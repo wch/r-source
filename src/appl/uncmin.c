@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
  *  USA
  */
 
@@ -878,7 +878,7 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
 
     Rboolean fstdog, nwtake;
     int i;
-    double fplsp, rnwtln, eta, cln, tmp;
+    double fplsp, rnwtln, eta = 0.0, cln = 0.0, tmp; /* -Wall */
 
     *iretcd = 4;
     fstdog = TRUE;
@@ -2228,12 +2228,12 @@ optdrv(int nr, int n, double *x, fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
  *	rnf		 relative noise in optimization function fcn.
  *			      noise=10.**(-ndigit)
  */
-    Rboolean mxtake, noupdt;
+    Rboolean mxtake = FALSE, noupdt;
     int i, iretcd, icscmx;
-    double dltp, epsm, phip0, f, analtl;
+    double dltp = 0., epsm, phip0 = 0., f, analtl;
     double dlpsav = 0., phisav = 0., dltsav = 0.;/* -Wall */
     double amusav = 0., phpsav = 0.;		/* -Wall */
-    double phi, amu, rnf, wrk;
+    double phi = 0., amu = 0., rnf, wrk;
 
     for (i = 0; i < n; ++i)
 	p[i] = 0.;

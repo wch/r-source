@@ -19,23 +19,17 @@ as.single.default <- function(x,...) {
 # as.character is now internal.  The default method remains here to
 # preserve the semantics that for a call with an object argument
 # dispatching is done first on as.character and then on as.vector.
-as.character.default <- function(x,...) .Internal(as.vector(x,"character"))
+as.character.default <- function(x,...) .Internal(as.vector(x, "character"))
 
 as.expression <- function(x,...) UseMethod("as.expression")
-as.expression.default <- function(x,...) .Internal(as.vector(x,"expression"))
+as.expression.default <- function(x,...) .Internal(as.vector(x, "expression"))
 
 as.list <- function(x,...) UseMethod("as.list")
-as.list.default <- function (x,...)
+as.list.default <- function (x, ...)
 {
+    if (typeof(x) == "list") return(x)
     if (is.function(x))
 	return(c(formals(x), list(body(x))))
-    if (is.expression(x)) {
-	n <- length(x)
-	l <- vector("list", n)
-	i <- 0
-	for (sub in x) l[[i <- i + 1]] <- sub
-	return(l)
-    }
     .Internal(as.vector(x, "list"))
 }
 ## FIXME:  Really the above  as.vector(x, "list")  should work for data.frames!
@@ -49,7 +43,8 @@ as.list.environment <- function(x, all.names=FALSE, ...)
     .Internal(env2list(x, all.names))
 
 ##as.vector dispatches internally so no need for a generic
-as.vector <- function(x, mode="any") .Internal(as.vector(x,mode))
+as.vector <- function(x, mode = "any") .Internal(as.vector(x, mode))
+
 as.matrix <- function(x) UseMethod("as.matrix")
 as.matrix.default <- function(x) {
     if (is.matrix(x))

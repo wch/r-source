@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  *  SYNOPSIS
  *
@@ -45,7 +45,7 @@
 /* NaNs propagated correctly */
 
 
-int chebyshev_init(double *dos, int nos, double eta)
+int attribute_hidden chebyshev_init(double *dos, int nos, double eta)
 {
     int i, ii;
     double err;
@@ -66,7 +66,7 @@ int chebyshev_init(double *dos, int nos, double eta)
 }
 
 
-double chebyshev_eval(double x, const double *a, const int n)
+double attribute_hidden chebyshev_eval(double x, const double *a, const int n)
 {
     double b0, b1, b2, twox;
     int i;

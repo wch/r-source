@@ -54,7 +54,8 @@ graphics.off()
   \code{dev.set} returns the name and number of the new active device.
 }
 \seealso{
-  \code{\link{Devices}}, such as \code{\link{postscript}}, etc;
+  \code{\link{Devices}}, such as \code{\link{postscript}}, etc.
+
   \code{\link{layout}} and its links for setting up plotting regions
   on the current device.
 }

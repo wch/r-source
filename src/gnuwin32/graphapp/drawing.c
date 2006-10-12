@@ -26,6 +26,14 @@
    See the file COPYLIB.TXT for details.
 */
 
+/*  Copyright (C) 2004 	The R Foundation
+
+    Changes for R:
+
+    Remove assumption of current->dest being non-NULL
+
+ */
+
 #include "internal.h"
 
 #if (WINVER < 0x030a)
@@ -236,7 +244,9 @@ void bitblt(bitmap db, bitmap sb, point p, rect r, int mode)
 
 void scrollrect(point dp, rect r)
 {
-	rect cliprect = getrect(current->dest);
+	rect cliprect;
+	if (current->dest) cliprect = getrect(current->dest);
+	else return;
 
 	enable_drawing();
 	ScrollDC(dc, dp.x-r.x, dp.y-r.y,
@@ -246,7 +256,7 @@ void scrollrect(point dp, rect r)
 void copyrect(bitmap sb, point p, rect r)
 {
 	enable_drawing();
-	bitblt(current->dest, sb, p, r, S);
+	if (current->dest) bitblt(current->dest, sb, p, r, S);
 }
 
 void texturerect(bitmap sb, rect dr)

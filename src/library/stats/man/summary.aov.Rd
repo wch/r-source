@@ -6,7 +6,7 @@
 \title{Summarize an Analysis of Variance Model}
 \usage{
 \method{summary}{aov}(object, intercept = FALSE, split,
-         expand.split = TRUE, keep.zero.df = TRUE, \dots)
+        expand.split = TRUE, keep.zero.df = TRUE, \dots)
 
 \method{summary}{aovlist}(object, \dots)
 }
@@ -29,6 +29,18 @@
 \value{
   An object of class \code{c("summary.aov", "listof")} or
   \code{"summary.aovlist"} respectively.
+
+  For a fits with a single stratum the result will be a list of
+  ANOVA tables, one for each response (even if there is only one response):
+  the tables are of class \code{"anova"} inheriting from class
+  \code{"data.frame"}.  They have columns \code{"Df"}, \code{"Sum Sq"},
+  \code{"Mean Sq"}, as well as \code{"F value"} and \code{"Pr(>F)"} if
+  there are non-zero residual degrees of freedom.  There is a row for
+  each term in the model, plus one for \code{"Residuals"} if there
+  are any.
+
+  For multistratum fits the return value is a list of such summaries,
+  one for each stratum.
 }
 \note{
   The use of \code{expand.split = TRUE} is little tested: it is always
@@ -63,7 +75,8 @@ CC.aov <- aov(y ~ N * P, data = CC , weights = rep(12, 9))
 summary(CC.aov)
 
 # Split both main effects into linear and quadratic parts.
-summary(CC.aov, split = list(N = list(L = 1, Q = 2), P = list(L = 1, Q = 2)))
+summary(CC.aov, split = list(N = list(L = 1, Q = 2),
+                             P = list(L = 1, Q = 2)))
 
 # Split only the interaction
 summary(CC.aov, split = list("N:P" = list(L.L = 1, Q = 2:4)))

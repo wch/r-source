@@ -1,15 +1,15 @@
 \name{system.time}
 \title{CPU Time Used}
 \usage{
-system.time(expr, gcFirst)
-unix.time(expr, gcFirst)
+system.time(expr, gcFirst = TRUE)
+unix.time(expr, gcFirst = TRUE)
 }
 \alias{system.time}
 \alias{unix.time}
 \arguments{
   \item{expr}{Valid \R expression to be \dQuote{timed}}
   \item{gcFirst}{Logical - should a garbage collection be performed
-    immediately before the timing?  Default is \code{FALSE}.}
+    immediately before the timing?  Default is \code{TRUE}.}
 }
 \description{Return CPU (and other) times that \code{expr} used.
 }    
@@ -17,9 +17,6 @@ unix.time(expr, gcFirst)
   \code{system.time} calls the builtin \code{\link{proc.time}},
   evaluates \code{expr}, and then calls \code{proc.time} once more,
   returning the difference between the two \code{proc.time} calls.
-
-  The values returned by the \code{proc.time} are (on Unix) those
-  returned by the C library function \code{times}(3v), if available.
 
   \code{unix.time} is an alias of \code{system.time}, for
   compatibility reasons.
@@ -35,20 +32,20 @@ unix.time(expr, gcFirst)
   subproc1, subproc2 times. The subproc times are the user and
   system cpu time used by child processes (and so are usually zero).
 #ifdef windows
+
   On Windows the subproc times are not available and so are always
   \code{NA}. The first two components are not available on Windows 9x,
   and so are reported as \code{NA}; they do return real values on
-  Windows NT4/2000/XP.
+  NT-based versions of Windows.
 #endif
 
-  The resolution of the times will be system-specific; it is common for
-  them to be recorded to of the order of 1/100 second, and elapsed
-  time is rounded to the nearest 1/100.
+  The resolution of the times will be system-specific; see
+  \code{\link{proc.time}} for details.
 }
 #ifdef unix
 \note{
   It is possible to compile \R without support for \code{system.time},
-  when all the values will be \code{NA}.
+  when the function will throw an error.
 }
 #endif
 \seealso{

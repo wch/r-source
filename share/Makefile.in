@@ -14,11 +14,9 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS_WITH_NO_BUILD = R glade make perl sh texmf
+SUBDIRS_WITH_NO_BUILD = R encodings licenses make perl sh texmf java
 ## subdirectories of R_HOME/share/perl
 SUBDIRS_SHARE_PERL = R Text
-
-GNOME_IF_FILES = @GNOME_IF_FILES@
 
 all: Makefile R
 
@@ -27,7 +25,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R: FORCE
 	@if test "$(BUILDDIR_IS_SRCDIR)" = "no" ; then \
-	  $(MAKE) rhome=$(top_builddir) install-sources; \
+	  $(MAKE) rsharedir=$(top_builddir)/share install-sources; \
 	fi
 FORCE:
 
@@ -35,56 +33,61 @@ docs:
 
 install: install-message installdirs install-sources
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)/share"
-	@$(MKINSTALLDIRS) "$(rhome)/share/R"
-	@if test -n "$(GNOME_IF_FILES)"; then \
-	  $(MKINSTALLDIRS) "$(rhome)/share/glade"; \
-	fi
-	@$(MKINSTALLDIRS) "$(rhome)/share/make"
-	@$(MKINSTALLDIRS) "$(rhome)/share/perl"
+	@$(MKINSTALLDIRS) "$(rsharedir)"
+	@$(MKINSTALLDIRS) "$(rsharedir)/R"
+	@$(MKINSTALLDIRS) "$(rsharedir)/encodings"
+	@$(MKINSTALLDIRS) "$(rsharedir)/java"
+	@$(MKINSTALLDIRS) "$(rsharedir)/licenses"
+	@$(MKINSTALLDIRS) "$(rsharedir)/make"
+	@$(MKINSTALLDIRS) "$(rsharedir)/perl"
 	@for d in $(SUBDIRS_SHARE_PERL); do \
-	  $(MKINSTALLDIRS) "$(rhome)/share/perl/$${d}"; \
+	  $(MKINSTALLDIRS) "$(rsharedir)/perl/$${d}"; \
 	done
-	@$(MKINSTALLDIRS) "$(rhome)/share/sh"
-	@$(MKINSTALLDIRS) "$(rhome)/share/texmf"
+	@$(MKINSTALLDIRS) "$(rsharedir)/sh"
+	@$(MKINSTALLDIRS) "$(rsharedir)/texmf"
 install-message:
 	@echo "installing share ..."
 install-sources: installdirs
 	@for f in $(srcdir)/R/*.R; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/share/R"; \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/R"; \
 	done
-	@if test -n "$(GNOME_IF_FILES)"; then \
-	  for f in $(srcdir)/glade/*.glade; do \
-	    $(INSTALL_DATA) $${f} "$(rhome)/share/glade"; \
-	  done; \
-	fi
+	@for f in $(srcdir)/encodings/*; do \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/encodings"; \
+	done
+	@for f in $(srcdir)/java/*; do \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/java"; \
+	done
+	@for f in $(srcdir)/licenses/*; do \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/licenses"; \
+	done
 	@for f in $(srcdir)/make/*.mk; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/share/make"; \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/make"; \
 	done
 	@for d in $(SUBDIRS_SHARE_PERL); do \
 	  for f in $(srcdir)/perl/$${d}/*.pm; do \
-	    $(INSTALL_DATA) $${f} "$(rhome)/share/perl/$${d}"; \
+	    $(INSTALL_DATA) $${f} "$(rsharedir)/perl/$${d}"; \
 	  done; \
 	done
 	@for f in $(srcdir)/perl/*.pl; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/share/perl"; \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/perl"; \
 	done
 	@for f in $(srcdir)/sh/*.sh; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/share/sh"; \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/sh"; \
 	done
 	@for f in $(srcdir)/texmf/*.sty \
 		  $(srcdir)/texmf/*.fd; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/share/texmf"; \
+	  $(INSTALL_DATA) $${f} "$(rsharedir)/texmf"; \
 	done
 install-strip: install
 
 uninstall:
 	@echo "uninstalling share ..."
-	@rm -rf "$(rhome)/share"
+	@rm -rf "$(rsharedir)"
 
 ## we cannot remove make/vars.mk until distclean as etc/Makeconf includes it.
 mostlyclean:
 clean:
+	@rm -rf locale
 
 distclean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \

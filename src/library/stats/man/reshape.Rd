@@ -92,8 +92,9 @@ reshape(wide, idvar="Subject", varying=list(names(wide)[2:12]),
         v.names="conc", direction="long")
 
 ## times need not be numeric
-df <- data.frame(id=rep(1:4,rep(2,4)), visit=I(rep(c("Before","After"),4)),
-              x=rnorm(4), y=runif(4))
+df <- data.frame(id=rep(1:4,rep(2,4)),
+                 visit=I(rep(c("Before","After"),4)),
+                 x=rnorm(4), y=runif(4))
 df
 reshape(df, timevar="visit", idvar="id", direction="wide")
 ## warns that y is really varying
@@ -123,7 +124,8 @@ reshape(long, direction="wide")
 reshape(long, direction="wide", new.row.names=unique(long$state))
 
 ## multiple id variables
-df3 <- data.frame(school=rep(1:3,each=4), class=rep(9:10,6), time=rep(c(1,1,2,2),3),
+df3 <- data.frame(school=rep(1:3,each=4), class=rep(9:10,6),
+                  time=rep(c(1,1,2,2),3),
 score=rnorm(12))
 wide <- reshape(df3, idvar=c("school","class"), direction="wide")
 wide

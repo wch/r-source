@@ -5,20 +5,22 @@
 \alias{.userHooksEnv}
 \title{Functions to Get and Set Hooks for Load, Attach, Detach and Unload}
 \description{
-  These function allow users to set actions to be taken before packages
+  These functions allow users to set actions to be taken before packages
   are attached/detached and namespaces are (un)loaded.
 }
 \usage{
 getHook(hookName)
 setHook(hookName, value, action = c("append", "prepend", "replace"))
 
-packageEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
+packageEvent(pkgname,
+             event = c("onLoad", "attach", "detach", "onUnload"))
 }
 \arguments{
   \item{hookName}{character string: the hook name}
   \item{pkgname}{character string: the package/namespace name.
-    If versioned install has been used, \code{pkgname} should the unversioned
-    name of the package and any version information will be stripped.}
+    If versioned install has been used, \code{pkgname} should be
+    the unversioned name of the package (but any version information
+    will be stripped).}
   \item{event}{character string: an event for the package}
   \item{value}{A function, or for \code{action="replace"}, \code{NULL}.}
   \item{action}{The action to be taken.  The names can be appreviated.}
@@ -55,7 +57,7 @@ packageEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
   in reverse order so the default for package events is to add hooks
   \sQuote{inside} existing ones.
   
-  Note that when an \R is finished, packages are not detached and
+  Note that when an \R session is finished, packages are not detached and
   namespaces are not unloaded, so the corresponding hooks will not be
   run.
 
@@ -74,7 +76,7 @@ packageEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
   \code{\link{persp}} already have them.
 }
 \examples{
-setHook(packageEvent("graphics", "onLoad"),
+setHook(packageEvent("grDevices", "onLoad"),
         function(...) grDevices::ps.options(horizontal=FALSE)) 
 }
 \keyword{utilities}

@@ -1,11 +1,13 @@
 \name{expand.grid}
 \title{Create a Data Frame from All Combinations of Factors}
 \usage{
-expand.grid(\dots)
+expand.grid(\dots, KEEP.OUT.ATTRS = TRUE)
 }
 \alias{expand.grid}
 \arguments{
-  \item{\dots}{Vectors, factors or a list containing these. }
+  \item{\dots}{vectors, factors or a list containing these. }
+  \item{KEEP.OUT.ATTRS}{a logical indicating the \code{"out.attrs"}
+    attribute (see below) should be computed and returned.}
 }
 \description{
   Create a data frame from all combinations of the supplied vectors or
@@ -20,6 +22,7 @@ expand.grid(\dots)
 
   Attribute \code{"out.attrs"} is a list which gives the dimension and
   dimnames for use by \code{\link{predict}} methods.
+  %% currently, from "base R", only predict.loess() makes use of it.
 }
 
 \references{
@@ -30,6 +33,14 @@ expand.grid(\dots)
 \examples{
 expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
             sex = c("Male","Female"))
+
+x <- seq(0,10, length=100)
+y <- seq(-1,1, length=20)
+d1 <- expand.grid(x=x, y=y)
+d2 <- expand.grid(x=x, y=y, KEEP.OUT.ATTRS = FALSE)
+object.size(d1) - object.size(d2)
+##-> 5992 or 8832 (on 32- / 64-bit platform)
+\dontshow{stopifnot(object.size(d1) > object.size(d2))}
 }
 \keyword{models}
 \keyword{array}

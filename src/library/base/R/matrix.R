@@ -20,7 +20,10 @@ rownames <- function(x, do.NULL = TRUE, prefix = "row")
     if(!is.null(dn[[1]]))
 	dn[[1]]
     else {
-	if(do.NULL) NULL else paste(prefix, seq(length=NROW(x)), sep="")
+        nr <- NROW(x)
+	if(do.NULL) NULL
+        else if(nr > 0) paste(prefix, seq_len(nr), sep="")
+        else character(0)
     }
 }
 
@@ -46,7 +49,10 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
     if(!is.null(dn[[2]]))
 	dn[[2]]
     else {
-	if(do.NULL) NULL else paste(prefix, seq(length=NCOL(x)), sep="")
+        nc <- NCOL(x)
+	if(do.NULL) NULL
+        else if(nc > 0) paste(prefix, seq_len(nc), sep="")
+        else character(0)
     }
 }
 
@@ -77,6 +83,7 @@ col <- function(x, as.factor=FALSE) {
 }
 
 crossprod <- function(x, y=NULL) .Internal(crossprod(x,y))
+tcrossprod <- function(x, y=NULL) .Internal(tcrossprod(x,y))
 
 t <- function(x) UseMethod("t")
 ## t.default is <primitive>

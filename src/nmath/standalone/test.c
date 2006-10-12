@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000  The R Development Core Team
+ *  Copyright (C) 2000-6  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,17 +14,20 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  */
 
 #define MATHLIB_STANDALONE 1
 #include <Rmath.h>
 
+#include <stdio.h>
+
 int
-main()
+main(int argc, char** argv)
 {
 /* something to force the library to be included */
-    qnorm(0.7, 0.0, 1.0, 0, 0); 
+    qnorm(0.7, 0.0, 1.0, 0, 0);
+    printf("*** loaded '%s'\n", argv[0]);
     return 0;
 }

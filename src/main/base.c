@@ -10,11 +10,11 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
-int baseRegisterIndex = -1;
+int attribute_hidden baseRegisterIndex = -1;
 
 void restoredpSaved(DevDesc *dd);
 
-SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
+static SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
     GEDevDesc *curdd;
     GESystemDesc *sd;
     NewDevDesc *dev;
@@ -66,6 +66,10 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	/* Initialise the gp settings too.
 	 */
 	/* copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp)); */
+	/*
+	 * The device has not yet received any base output
+	 */
+	((baseSystemState*) sd->systemSpecific)->baseDevice = FALSE;
 	break;
     case GE_CopyState:
 	sd = dd->gesd[baseRegisterIndex];
@@ -119,7 +123,17 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	 */
 	sd = dd->gesd[baseRegisterIndex];
 	PROTECT(valid = allocVector(LGLSXP, 1));
-	LOGICAL(valid)[0] = ((baseSystemState*) sd->systemSpecific)->gp.valid;
+	/*
+	 * If there has not been any base output on the device
+	 * then ignore "valid" setting
+	 */
+	if (((baseSystemState*) sd->systemSpecific)->baseDevice) {
+	    LOGICAL(valid)[0] = 
+		(((baseSystemState*) sd->systemSpecific)->gp.state == 1) &&
+		((baseSystemState*) sd->systemSpecific)->gp.valid;
+	} else {
+	    LOGICAL(valid)[0] = TRUE;
+	}
 	UNPROTECT(1);
 	result = valid;
 	break;
@@ -130,25 +144,17 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	ddpSaved = &(((baseSystemState*) sd->systemSpecific)->dpSaved);
 	if (isReal(data) && LENGTH(data) == 1) {
 	  double rf = REAL(data)[0];
-	  /* The pointsize appears to be being scaled somewhere else
-	   * Can't see where yet;  this seems to work and will have
-	   * to do while we're in feature freeze (!?)
-	   * ddp->ps *= rf;
-	   */
+	  ddp->scale *= rf;
 	  ddp->cra[0] *= rf; 
 	  ddp->cra[1] *= rf;
 	  /* Modify the saved settings so effects dislpay list too
 	   */
-	  /* The pointsize appears to be being scaled somewhere else
-	   * Can't see where yet;  this seems to work and will have
-	   * to do while we're in feature freeze (!?)
-	   * ddpSaved->ps *= rf;
-	   */
+	  ddpSaved->scale *= rf;
 	  ddpSaved->cra[0] *= rf; 
 	  ddpSaved->cra[1] *= rf;
 	}
 	else 
-	  error("Event UpdatePS requires a single numeric value");
+	  error(_("Event UpdatePS requires a single numeric value"));
 	break;
     }
     return result;
@@ -162,19 +168,32 @@ void registerBase() {
 
 /* FIXME: Make this a macro to avoid function call overhead?
  */
+attribute_hidden
 GPar* Rf_gpptr(DevDesc *dd) {
     return &(((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
 					       baseRegisterIndex))->gp);
 }
 
+attribute_hidden
 GPar* Rf_dpptr(DevDesc *dd) {
     return &(((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
 					       baseRegisterIndex))->dp);
 }
 
+attribute_hidden
 GPar* Rf_dpSavedptr(DevDesc *dd) {
     return &(((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
 					       baseRegisterIndex))->dpSaved);
+}
+
+Rboolean Rf_baseDevice(DevDesc *dd) {
+    return ((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+					     baseRegisterIndex))->baseDevice;
+}
+
+void Rf_setBaseDevice(Rboolean val, DevDesc *dd) {
+    ((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+				      baseRegisterIndex))->baseDevice = val;
 }
 
 SEXP Rf_displayList(DevDesc *dd) {

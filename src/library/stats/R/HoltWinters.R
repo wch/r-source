@@ -23,15 +23,15 @@ function (x,
     f <- frequency(x)
 
     if(!is.null(alpha) && alpha==0)
-        stop ("cannot fit models without level (alpha must not be 0).")
+        stop ("cannot fit models without level ('alpha' must not be 0).")
     if(!all(is.null(c(alpha, beta, gamma))) &&
         any(c(alpha, beta, gamma) < 0 || c(alpha, beta, gamma) > 1))
-        stop ("alpha, beta and gamma must be within the unit interval.")
+        stop ("'alpha', 'beta' and 'gamma' must be within the unit interval.")
     if((is.null(gamma) || gamma > 0)) {
         if (seasonal == "multiplicative" && any(x <= 0))
             stop ("data must be strictly non-negative for multiplicative Holt-Winters")
         if (start.periods < 3)
-            stop ("Need at least 3 periods to compute seasonal start values")
+            stop ("need at least 3 periods to compute seasonal start values")
     }
 
     ## initialization
@@ -316,7 +316,7 @@ decompose <- function (x, type = c("additive", "multiplicative"), filter = NULL)
     l <- length(x)
     f <- frequency(x)
     if (f <= 1 || length(na.omit(x)) < 3 * f)
-      stop ("Time series has no or less than 3 periods!")
+      stop ("time series has no or less than 3 periods")
 
     ## filter out seasonal components
     if (is.null(filter))

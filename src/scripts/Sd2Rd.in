@@ -16,13 +16,13 @@
 #
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-# writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA.
+## writing to the Free Software Foundation, Inc., 51 Franklin Street,
+## Fifth Floor, Boston, MA 02110-1301  USA.
 
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.21 $ ';
+my $revision = ' $Rev$ ';
 my $version;
 my $name;
 
@@ -38,7 +38,7 @@ Convert S documentation in FILE to R documentation format.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit
+  -v, --version		print Sd2Rd version info and exit
   -n			render examples non-executable by wrapping them
 			into a \\dontrun{} environment
   -x			(S3 docs) interpret all single-quoted names 
@@ -330,6 +330,9 @@ my $text = "";
 my $fun;
 my $InArgs = 0;
 
+my $nalias = 0;
+my $nexamples = 0;
+
 sub doS4 {
   foreach $_ (@lines) {
     # skip header
@@ -349,7 +352,7 @@ sub doS4 {
 
   ($type, $text, $rest) = get_group($text); # s-function-doc or whatever
   if($type ne "function-doc" && $type ne "method-doc") {
-    die "Document class `s-$type' is not supported";
+    die "Document class 's-$type' is not supported";
   }
 
   chomp $text;
@@ -377,7 +380,7 @@ sub get_group
 	$body = $1;
 	$rest = $2;
     } else { 
-	warn "no match for `s-$tt'";
+	warn "no match for 's-$tt'";
 	$text =~ /^\s*<s-\Q$type\E>\s*(.*)/s;
 	$body = $1;
 	$rest = "";
@@ -515,12 +518,13 @@ sub process_group {
 	process_sub_groups($text, "keyword");
 
     } else {
-	warn "unknown SGML entity `$type'";
+	warn "unknown SGML entity '$type'";
 	print "%type:\n%$text\n";
     }
 }
 
-sub process_sub_groups{
+sub process_sub_groups {
+  
     my $text = $_[0];
     my $topic = $_[1];
 
@@ -531,11 +535,10 @@ sub process_sub_groups{
     }
 }
 
-sub process_sub_group{
+sub process_sub_group {
+  
     my $topic = $_[0];
     my $text = $_[1];
-    my $nalias = 0;
-    my $example = 0;
 
     $text =~ s/^\n*//;
     $text =~ s/\n*$//;
@@ -562,7 +565,7 @@ sub process_sub_group{
 	$name =~ s/\.\.\./\\dots/;
 	print "\\item{$name}{\n", sub4($text), "\n}\n";	
     } else {
-	warn "unknown SGML entity `$type'";
+	warn "unknown SGML entity '$type'";
 	print "%type:\n%$text\n";
     }
 }
@@ -611,6 +614,7 @@ sub sub4 {
     $text =~ s+<bf>(.*?)</bf>+\\bold{$1}+go;
     $text =~ s+<tt>(.*?)</tt>+\\code{$1}+go;
     $text =~ s+<url>(.*?)</url>+\\url{$1}+go;
+    $text =~ s+<code>(.*?)</code>+\\code{$1}+go;
     $text =~ s/\n*<p>\n*/\n\n/go;
     $text =~ s/(<br>\n*)+/\n/go;
     $text =~ s/\$/\\\$/go;

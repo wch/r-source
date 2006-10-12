@@ -17,31 +17,29 @@ capabilities(what = NULL)
     \item{jpeg}{Is the \code{\link{jpeg}} function operational?}
     \item{png}{Is the \code{\link{png}} function operational?}
     \item{tcltk}{Is the \pkg{tcltk} package operational?}
-    \item{X11}{(Unix)  Are \code{X11} and the data editor available?}
-    \item{GNOME}{(Unix)  Is the GNOME GUI in use and are \code{GTK} and
-      \code{GNOME} graphics devices available?}
-    \item{libz}{Is \code{\link{gzfile}} available?  From \R 1.5.0 this
-      will always be true.}
+    \item{X11}{(Unix)  Are the \code{X11} graphics device and the
+      X11-based data editor available?  This loads the
+      X11 module if not already loaded, and checks that the default
+      display can be contacted unless a \code{X11} device has already
+      been used.}
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
     \item{sockets}{Are \code{\link{make.socket}} and related functions
       available?}
     \item{libxml}{Is there support for integrating \code{libxml} with
       the \R event loop?}
+    \item{fifo}{are FIFO connections supported?}
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix
-      It will be true if \code{readline} supported has been compiled in
-      and \option{--no-readline} was \emph{not} invoked.
+      It will be true for the command-line interface if \code{readline}
+      support has been compiled in and \option{--no-readline} was
+      \emph{not} invoked.
 #endif
       }
-    \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note
-      that this is more correctly known by the international standard
-      IEC 60559, and will always be true from \R version 2.0.0.}
-    \item{bzip2}{Is \code{\link{bzfile}} available?}
-    \item{PCRE}{Is the Perl-Compatible Regular Expression library
-      available?  This is needed for the \code{perl = TRUE} option to
-      \code{\link{grep}} are related function.}
+    \item{iconv}{is internationalization conversion via
+      \code{\link{iconv}} supported?}
+    \item{NLS}{is there Natural Language Support (for message translations)?}
 }
 \seealso{\code{\link{.Platform}}}
 

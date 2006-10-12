@@ -10,11 +10,11 @@
 stepfun <-
     function(x, y, f = as.numeric(right), ties = "ordered", right = FALSE)
 {
-    if(is.unsorted(x)) stop("stepfun: x must be ordered increasingly")
+    if(is.unsorted(x)) stop("stepfun: 'x' must be ordered increasingly")
     n <- length(x)
-    if(n < 1) stop("x must have length >= 1")
+    if(n < 1) stop("'x' must have length >= 1")
     n1 <- n+ 1:1
-    if(length(y) != n1) stop("y must be one longer than x")
+    if(length(y) != n1) stop("'y' must be one longer than 'x'")
     rval <- approxfun(x, y[- if(right)n1 else 1], method = "constant",
 		      yleft = y[1], yright = y[n1], f = f, ties = ties)
     class(rval) <- c("stepfun", class(rval))
@@ -28,7 +28,7 @@ as.stepfun <- function(x, ...) UseMethod("as.stepfun")
 as.stepfun.default <- function(x, ...)
 {
     if(is.stepfun(x)) x
-    else stop("no `as.stepfun' method available for `x'")
+    else stop("no 'as.stepfun' method available for 'x'")
 }
 
 ## Quite obvious  that I will want to have  knots.spline(..)  etc......
@@ -48,7 +48,7 @@ print.stepfun <- function (x, digits = getOption("digits") - 2, ...)
     cat(" x[1:", n, "] = ", numform(xx[i1(n)]),
 	if(n > 3) ", ", if(n > 5) " ..., ", numform(xx[i2(n)]), "\n", sep = "")
     y <- eval(expression(c(yleft, y)), env = env)
-    cat(n+1, " step heights = ", numform(y[i1(n+1)]),
+    cat(n+1, " plateau levels = ", numform(y[i1(n+1)]),
 	if(n+1 > 3) ", ", if(n+1 > 5) " ..., ", numform(y[i2(n+1)]), "\n",
 	sep = "")
     invisible(x)
@@ -61,17 +61,19 @@ summary.stepfun <- function(object, ...)
     ## n <- n-1
     cat("Step function with continuity 'f'=",
 	format(eval(expression(f),env = environment(object))),
-	", ", n, "knots at\n")
+	", ", n, if(n <= 6) "knots at\n" else "knots with summary\n")
     summ <- if(n>6) summary else function(x) x
     print(summ(knots(object)))
-    cat(if(n>6)"\n" else"  ", "and	", n+1," step heights (y) at\n", sep="")
+    cat(if(n>6) "\n" else "  ", "and	", n+1,
+        " plateau levels (y) ", if(n <= 6) "at\n" else "with summary\n",
+        sep="")
     print(summ(eval(expression(c(yleft,y)),env = environment(object))))
     invisible()
 }
 
 ## Purpose: plot method for  stepfun (step function) objects
 ## --------------------------------------------------------------------
-## Arguments: for numeric `x', do empirical CDF;	  ==> `` ?plot.step ''
+## Arguments: for numeric 'x', do empirical CDF;	  ==> `` ?plot.step ''
 ## --------------------------------------------------------------------
 ## Author: Martin Maechler <maechler@stat.math.ethz.ch>
 ##	      1990, U.Washington, Seattle; improved, Dec.1993
@@ -90,8 +92,7 @@ plot.stepfun <-
 	    sarg <- substitute(x)
 	    x <- ecdf(x)
 	    attr(x,"call") <- call("ecdf", sarg)
-	} else stop(paste("plot.stepfun called with wrong argument",
-                          sQuote("x")))
+	} else stop("'plot.stepfun' called with wrong type of argument 'x'")
     }
     if(missing(main))
 	main <- {
@@ -143,12 +144,11 @@ plot.stepfun <-
 
 lines.stepfun <- function(x, ...) plot(x, add = TRUE, ...)
 
-as.stepfun.isoreg <- function(x, ...) {
-    with(x,
-         sf <<- stepfun(x = (if(isOrd) x else x[ord])[iKnots],
-                        y = c(yf[iKnots],yf[length(yf)]), right = TRUE))
+as.stepfun.isoreg <- function(x, ...)
+{
+    sf <- stepfun(x = (if(x$isOrd) x$x else x$x[x$ord])[x$iKnots],
+                        y = c(x$yf[x$iKnots], x$yf[length(x$yf)]),
+                  right = TRUE)
     attr(sf, "call") <- x$call
     sf
 }
-
-.noGenerics <- TRUE

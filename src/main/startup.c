@@ -16,9 +16,11 @@
 
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
-  U.S.A.
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
+  USA.
  */
+
+/* <UTF8> char here is handled as a whole string */
 
 /*
   See ../unix/system.txt for a description of some of these functions
@@ -35,16 +37,16 @@
 
 /* These are used in ../gnuwin32/system.c, ../unix/sys-std.c */
 SA_TYPE SaveAction = SA_SAVEASK;
-static SA_TYPE	RestoreAction = SA_RESTORE;
+SA_TYPE	RestoreAction = SA_RESTORE;
 static Rboolean LoadSiteFile = TRUE;
-Rboolean LoadInitFile = TRUE;  /* Used in R_OpenInitFile */
+attribute_hidden Rboolean LoadInitFile = TRUE;  /* Used in R_OpenInitFile */
 static Rboolean DebugInitFile = FALSE;
 
 /*
  *  INITIALIZATION AND TERMINATION ACTIONS
  */
 
-void R_InitialData(void)
+void attribute_hidden R_InitialData(void)
 {
     R_RestoreGlobalEnv();
 }
@@ -63,7 +65,7 @@ FILE *R_OpenLibraryFile(char *file)
 char *R_LibraryFileName(char *file, char *buf, size_t bsize)
 {
     if (snprintf(buf, bsize, "%s/library/base/R/%s", R_Home, file) < 0)
-	error("R_LibraryFileName: buffer too small");
+	error(_("R_LibraryFileName: buffer too small"));
     return buf;
 }     
      
@@ -91,9 +93,9 @@ FILE *R_OpenSiteFile(void)
 	snprintf(buf, 256, "%s/etc/Rprofile.site", R_Home);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
-	snprintf(buf, 256, "%s/etc/Rprofile", R_Home);
+	/* snprintf(buf, 256, "%s/etc/Rprofile", R_Home);
 	if ((fp = R_fopen(buf, "r")))
-	    return fp;
+	return fp; */
     }
     return fp;
 }
@@ -102,10 +104,12 @@ FILE *R_OpenSiteFile(void)
 
 static char workspace_name[100] = ".RData";
 
+#ifdef Win32
 void set_workspace_name(char *fn)
 {
     strcpy(workspace_name, fn);
 }
+#endif
 
 void R_RestoreGlobalEnv(void)
 {
@@ -182,14 +186,15 @@ static void SetSize(R_size_t vsize, R_size_t nsize)
     }
     if(vsize < Min_Vsize || vsize > Max_Vsize) {
 	sprintf(msg, "WARNING: invalid v(ector heap)size `%lu' ignored\n"
-		 "using default = %gM\n", vsize, R_VSIZE / Mega);
+		 "using default = %gM\n", (unsigned long) vsize, 
+		R_VSIZE / Mega);
 	R_ShowMessage(msg);
 	R_VSize = R_VSIZE;
     } else
 	R_VSize = vsize;
     if(nsize < Min_Nsize || nsize > Max_Nsize) {
 	sprintf(msg, "WARNING: invalid language heap (n)size `%lu' ignored,"
-		 " using default = %ld\n", nsize, R_NSIZE);
+		 " using default = %ld\n", (unsigned long) nsize, R_NSIZE);
 	R_ShowMessage(msg);
 	R_NSize = R_NSIZE;
     } else

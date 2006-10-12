@@ -1,7 +1,7 @@
 \name{stop}
 \title{Stop Function Execution}
 \usage{
-stop(\dots, call. = TRUE)
+stop(\dots, call. = TRUE, domain = NULL)
 geterrmessage()
 }
 \alias{stop}
@@ -11,6 +11,8 @@ geterrmessage()
     separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     error message.}
+  \item{domain}{see \code{\link{gettext}}. If \code{NA}, messages will
+    not be translated.}
 }
 \description{
   \code{stop} stops execution of the current expression and executes
@@ -35,9 +37,11 @@ geterrmessage()
 
   Errors will be truncated to \code{getOption("warning.length")}
   characters, default 1000.
+
+  An attempt is made to coerce other types of inputs to character vectors.
 }
 \value{
-  \code{geterrmessage} gives the last error message, as character string
+  \code{geterrmessage} gives the last error message, as a character string
   ending in \code{"\\n"}.
 }
 \references{
@@ -51,18 +55,22 @@ geterrmessage()
   \code{\link{stopifnot}} for validity testing.  \code{tryCatch}
   and \code{withCallingHandlers} can be used to establish custom handlers
   while executing an expression.
+
+  \code{\link{gettext}} for the mechanisms for the automated translation
+  of messages.
 }
 \examples{
-options(error = expression(NULL))# don't stop on stop(.)  << Use with CARE! >>
+options(error = expression(NULL))
+# don't stop on stop(.)  << Use with CARE! >>
 
 iter <- 12
 if(iter > 10) stop("too many iterations")
 
 tst1 <- function(...) stop("dummy error")
-tst1(1:10,long,calling,expression)
+tst1(1:10, long, calling, expression)
 
 tst2 <- function(...) stop("dummy error", call. = FALSE)
-tst2(1:10,long,calling,expression,but.not.seen.in.Error)
+tst2(1:10, longcalling, expression, but.not.seen.in.Error)
 
 options(error = NULL)# revert to default
 }

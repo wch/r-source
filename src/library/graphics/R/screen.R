@@ -6,7 +6,8 @@
 .SSexists <- function(x) exists(paste(x, dev.cur(), sep=":"), envir=.SSenv, inherits=FALSE)
 .SSassign <- function(x, value) assign(paste(x, dev.cur(), sep=":"), value, envir=.SSenv)
 assign("par.list",
-       c("adj", "bty", "cex", "col", "crt", "err", "font", "lab",
+       c("xlog","ylog",
+         "adj", "bty", "cex", "col", "crt", "err", "font", "lab",
          "las", "lty", "lwd", "mar", "mex", "mfg", "mgp", "pch",
          "pty", "smo", "srt", "tck", "usr", "xaxp", "xaxs", "xaxt", "xpd",
          "yaxp", "yaxs", "yaxt", "fig"), envir=.SSenv)
@@ -25,15 +26,15 @@ split.screen <-
 	    return(.valid.screens)
     if ((first.split && screen != 0) ||
 	(!first.split && !(screen %in% .valid.screens)))
-	stop("Invalid screen number\n")
+	stop("invalid screen number")
     ## if figs isn't a matrix, make it one
     if (!is.matrix(figs)) {
 	if (!is.vector(figs))
-	    stop("figs must be a vector or a matrix with 4 columns\n")
+	    stop("'figs' must be a vector or a matrix with 4 columns")
 	nr <- figs[1]
 	nc <- figs[2]
-	x <- seq(0, 1, len=nc+1)
-	y <- seq(1, 0, len=nr+1)
+	x <- seq.int(0, 1, len=nc+1)
+	y <- seq.int(1, 0, len=nr+1)
 	figs <- matrix(c(rep.int(x[-(nc+1)], nr), rep.int(x[-1], nr),
 			 rep.int(y[-1], rep.int(nc, nr)),
 			 rep.int(y[-(nr+1)], rep.int(nc, nr))),
@@ -41,7 +42,7 @@ split.screen <-
     }
     num.screens <- nrow(figs)
     if (num.screens < 1)
-	stop("figs must specify at least one screen\n")
+	stop("'figs' must specify at least one screen")
     new.screens <- valid.screens <- cur.screen <- 0
     if (first.split) {
         if (erase) plot.new()
@@ -100,7 +101,7 @@ screen <- function(n = cur.screen, new = TRUE)
     if (missing(n) && missing(new))
 	return(cur.screen)
     if (!(n %in% .SSget("sp.valid.screens")))
-	stop("Invalid screen number\n")
+	stop("invalid screen number")
     split.screens <- .SSget("sp.screens")
     split.screens[[cur.screen]] <- par(get("par.list", envir=.SSenv))
     .SSassign("sp.screens", split.screens)
@@ -117,7 +118,7 @@ erase.screen <- function(n = cur.screen)
 	return(FALSE)
     cur.screen <- .SSget("sp.cur.screen")
     if (!(n %in% .SSget("sp.valid.screens")) && n != 0)
-	stop("Invalid screen number\n")
+	stop("invalid screen number")
     old <- par(usr=c(0,1,0,1), mar=c(0,0,0,0),
 	       fig = if (n > 0)
 	       .SSget("sp.screens")[[n]]$fig

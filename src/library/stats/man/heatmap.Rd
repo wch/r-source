@@ -16,7 +16,8 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	scale=c("row", "column", "none"), na.rm = TRUE,
 	margins = c(5, 5), ColSideColors, RowSideColors,
 	cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
-	labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
+	labRow = NULL, labCol = NULL, main = NULL,
+        xlab = NULL, ylab = NULL,
         keep.dendro = FALSE, verbose = getOption("verbose"), \dots)
 }
 \arguments{

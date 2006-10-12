@@ -1,0 +1,5 @@
+#! /bin/sh
+
+R_EXE="${R_HOME}/bin/R"
+echo "library(\"utils\"); Sweave(\"$1\")" | \
+  "${R_EXE}" --no-save --no-restore --quiet

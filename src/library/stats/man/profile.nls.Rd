@@ -1,33 +1,33 @@
-% $Id: profile.nls.Rd,v 1.1 2003/12/11 07:16:06 ripley Exp $
 \name{profile.nls}
 \alias{profile.nls}
-\title{ Method for Profiling nls Objects}
+\title{Method for Profiling nls Objects}
+\description{
+  Investigates the profilelog-likelihood function for a fitted model of
+  class \code{"nls"}.
+}
 \usage{
-\method{profile}{nls}(fitted, which=1:npar, maxpts=100, alphamax=0.01,
-        delta.t=cutoff/5, \dots)
+\method{profile}{nls}(fitted, which = 1:npar, maxpts = 100, alphamax = 0.01,
+        delta.t = cutoff/5, \dots)
 }
 \arguments{
-  \item{fitted}{ the original fitted model object.}
-  \item{which}{ the original model parameters which should be
-    profiled. By default, all parameters are profiled.}
-  \item{maxpts}{ maximum number of points to be used for profiling each
+  \item{fitted}{the original fitted model object.}
+  \item{which}{the original model parameters which should be profiled.
+    This can be a numeric or character vector.
+    By default, all non-linear parameters are profiled.}
+  \item{maxpts}{maximum number of points to be used for profiling each
     parameter.}
-  \item{alphamax}{ maximum significance level allowed for the profile
+  \item{alphamax}{maximum significance level allowed for the profile
     t-statistics.}
-  \item{delta.t}{ suggested change on the scale of the profile
-    t-statistics. Default value chosen to allow profiling at about
+  \item{delta.t}{suggested change on the scale of the profile
+    t-statistics.  Default value chosen to allow profiling at about
     10 parameter values.}
   \item{\dots}{further arguments passed to or from other methods.}
-}
-\description{
-  Investigates behavior of the log-likelihood function near the solution
-  represented by \code{fitted}.
 }
 \value{
   A list with an element for each parameter being profiled. The elements
   are data-frames with two variables 
-  \item{par.vals}{ a matrix of parameter values for each fitted model.}
-  \item{tau}{ The profile t-statistics.}
+  \item{par.vals}{a matrix of parameter values for each fitted model.}
+  \item{tau}{the profile t-statistics.}
 }
 \details{
   The profile t-statistics is defined as the square root of change in
@@ -35,11 +35,15 @@
   appropriate sign.
 }
 \references{
-  Bates, D.M. and Watts, D.G. (1988), \emph{Nonlinear Regression Analysis
-	and Its Applications}, Wiley (chapter 6)}
-\author{Douglas M. Bates and Saikat DebRoy}
-\seealso{\code{\link{nls}}, \code{\link{profile}},
-    \code{\link{profiler.nls}}, \code{\link{plot.profile.nls}}
+  Bates, D. M. and Watts, D. G. (1988), \emph{Nonlinear Regression Analysis
+    and Its Applications}, Wiley (chapter 6).
+}
+\author{
+  Of the original version, 
+  Douglas M. Bates and Saikat DebRoy
+}
+\seealso{
+  \code{\link{nls}}, \code{\link{profile}}, \code{\link{plot.profile.nls}}
 }
 \examples{
 # obtain the fitted object

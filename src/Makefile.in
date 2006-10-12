@@ -13,7 +13,8 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = scripts include appl nmath unix extra main modules library
+## need extra early to get libintl.h installed
+SUBDIRS = scripts include extra appl nmath unix main modules library
 SUBDIRS_WITH_NO_BUILD = gnuwin32
 
 all: Makefile R

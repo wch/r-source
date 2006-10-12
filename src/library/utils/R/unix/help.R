@@ -18,14 +18,14 @@ function(file, topic)
                      "style sheet and hyperlinks may be incorrect")
         warning(paste(strwrap(msg), collapse = "\n"))
     }
-    file <- paste("file://", file, sep = "")
+    file <- paste("file://", URLencode(file), sep = "")
     if(is.null(browser <- getOption("browser")))
         stop("options(\"browser\") not set")
     browseURL(file)
     writeLines(c(paste("Help for", sQuote(topic),
                        "is shown in browser", browser, "..."),
                  "Use",
-                 paste("\thelp(", dQuote(topic), ", htmlhelp = FALSE)",
+                 paste("\thelp(\"", topic, "\", htmlhelp = FALSE)",
                        sep = ""),
                  "or\n\toptions(htmlhelp = FALSE)\nto revert."))
     return(invisible())
@@ -58,13 +58,12 @@ function(file, topic)
     ## Seems that now we can---rewrite this along the lines of
     ## tools:::.install_package_vignettes().
     system(paste(paste("TEXINPUTS=",
-                       file.path(R.home(), "share", "texmf"),
+                       file.path(R.home("share"), "texmf"),
                        ":",
                        "$TEXINPUTS",
                        sep = ""),
                  "/bin/sh",
-                 shQuote(file.path(R.home(), "share", "sh",
-                                   "help-print.sh")),
+                 shQuote(file.path(R.home("share"), "sh", "help-print.sh")),
                  con,
                  topic,
                  getOption("latexcmd"),

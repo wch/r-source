@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2003	The R Development Core Team.
+ *  Copyright (C) 2002-2006	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  *  This header contains the declarations of code to be used by
  *  .C, .Fortran, .Call or .External within the base package.
@@ -49,11 +49,6 @@ SEXP det_ge_real(SEXP, SEXP);
 
 void signrank_free();
 void wilcox_free();
-void band_ucv_bin(int *, int *, double *, int *, double *, double *);
-void band_bcv_bin(int *, int *, double *, int *, double *, double *);
-void band_phi4_bin(int *, int *, double *, int *, double *, double *);
-void band_phi6_bin(int *, int *, double *, int *, double *, double *);
-void band_den_bin(int *, int *, double *, int *, double *, double *);
 
 SEXP R_getTaskCallbackNames();
 SEXP R_removeTaskCallback(SEXP);
@@ -65,9 +60,12 @@ SEXP R_getRegisteredRoutines(SEXP);
 
 SEXP R_isMethodsDispatchOn(SEXP);
 SEXP R_traceOnOff(SEXP);
+SEXP R_isS4Object(SEXP);
+SEXP R_setS4Object(SEXP, SEXP);
+SEXP R_do_new_object(SEXP);
 
-SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP);
-SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP);
+SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP do_mapply(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_r2dtable(SEXP, SEXP, SEXP);
@@ -89,6 +87,9 @@ SEXP R_unserialize(SEXP, SEXP);
 SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBfetch(SEXP, SEXP, SEXP, SEXP);
+SEXP R_lazyLoadDBflush(SEXP);
+
+SEXP R_get_primname(SEXP op) ;
 
 #ifdef BYTECODE
 SEXP R_getbcprofcounts();

@@ -1,41 +1,16 @@
 
-recycle.data <- function(data, data.per, max.n) {
-  # VERY IMPORTANT:  Even if there is only one data specified
-  # and/or only one data needed, we want this to be a LIST of
-  # data values so that a single data and several data can be
-  # handled equivalently
-  # The test for whether it is only a single value currently
-  # consists of a check for mode="character" (i.e., a single
-  # string) or mode="expression" (i.e., a single expression)
-  # or class="grob" (i.e., a single grob) or class="gPath"
-  if (is.character(data) || is.expression(data) ||
-      is.grob(data) || inherits(data, "gPath"))
-    data <- list(data)
-  if (data.per)
-    n <- max.n
-  else
-    n <- length(data)
-  original <- data
-  index <- 1
-  while (length(data) < n) {
-    data <- c(data, list(original[[(index - 1) %% length(original) + 1]]))
-    index <- index + 1
-  }
-  data
-}
-
 # Create an object of class "unit"
-# Simple units are of the form `unit(1, "cm")' or `unit(1:3, "cm")' or
-# `unit(c(1,3,6), c("cm", "inch", "npc"))'
-# More complicated units are of the form `unit(1, "string", "a string")'
-# or `unit(1, "grob", a.grob)'
+# Simple units are of the form 'unit(1, "cm")' or 'unit(1:3, "cm")' or
+# 'unit(c(1,3,6), c("cm", "inch", "npc"))'
+# More complicated units are of the form 'unit(1, "string", "a string")'
+# or 'unit(1, "grob", a.grob)'
 unit <- function(x, units, data=NULL) {
   if (!is.numeric(x))
-    stop("x must be numeric")
+    stop("'x' must be numeric")
   units <- as.character(units)
   if (length(x) == 0 || length(units) == 0)
-    stop("x and units must have length > 0")
-  valid.unit(x, units, recycle.data(data, FALSE, length(x)))
+    stop("'x' and 'units' must have length > 0")
+  valid.unit(x, units, recycle.data(data, FALSE, length(x), units))
 }
 
 valid.unit <- function(x, units, data) {
@@ -63,9 +38,9 @@ convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
   whatto <- match(axisTo, c("x", "y")) - 1 +
     2*(match(typeTo, c("location", "dimension")) - 1)
   if (!is.unit(x))
-    stop("`x' argument must be a unit object")
+    stop("'x' argument must be a unit object")
   if (is.na(whatfrom) || is.na(whatto))
-    stop("Invalid axis or type")
+    stop("Invalid 'axis' or 'type'")
   value <- grid.Call("L_convert", x, as.integer(whatfrom),
                  as.integer(whatto), valid.units(unitTo))
   if (!valueOnly)
@@ -122,62 +97,89 @@ convertNative <- function(unit, dimension="x", type="location") {
 
 # NOTE: the order of the strings in these conversion functions must
 # match the order of the enums in ../src/grid.h
+# AND in ../src/unit.c (see UnitTable)
 .grid.unit.list <- c("npc", "cm", "inches", "lines",
                      "native", "null", "snpc", "mm",
                      "points", "picas", "bigpts",
                      "dida", "cicero", "scaledpts",
                      "strwidth", "strheight",
                      "vplayoutwidth", "vplayoutheight", "char",
-                     "grobwidth", "grobheight",
+                     "grobx", "groby", "grobwidth", "grobheight",
                      "mylines", "mychar", "mystrwidth", "mystrheight")
+
+stringUnit <- function(unit) {
+    unit == "strwidth" | unit == "strheight"
+}
+
+grobUnit <- function(unit) {
+    unit == "grobwidth" | unit == "grobheight" |
+    unit == "grobx" | unit == "groby"
+}
+
+dataUnit <- function(unit) {
+    stringUnit(unit) | grobUnit(unit)
+}
+
+recycle.data <- function(data, data.per, max.n, units) {
+    # FIRST STEP:  check that data needs to be recycled
+    if (any(dataUnit(units))) {
+        # VERY IMPORTANT:  Even if there is only one data specified
+        # and/or only one data needed, we want this to be a LIST of
+        # data values so that a single data and several data can be
+        # handled equivalently
+        # The test for whether it is only a single value currently
+        # consists of a check for mode="character" (i.e., a single
+        # string) or mode="expression" (i.e., a single expression)
+        # or class="grob" (i.e., a single grob) or class="gPath"
+        if (is.character(data) || is.language(data) ||
+            is.grob(data) || inherits(data, "gPath"))
+            data <- list(data)
+        if (data.per)
+            n <- max.n
+        else
+            n <- length(data)
+        original <- data
+        length(data) <- n
+        if (length(original) < length(data)) {
+            for (i in (length(original) + 1):length(data)) {
+                data[[i]] <- original[[(i - 1) %% length(original) + 1]]
+            }
+        }
+    }
+    data
+}
 
 # Make sure that and "str*" and "grob*" units have data
 valid.data <- function(units, data) {
-  n <- length(units)
-  str.units <- (units == "strwidth" | units == "mystrwidth")
-  if (any(str.units != 0))
-    for (i in (1:n)[str.units])
-      if (!(length(data) >= i &&
-            (is.character(data[[i]]) || is.expression(data[[i]]))))
-        stop("No string supplied for `strwidth' unit")
-  str.units <- (units == "strheight" | units == "mystrheight")
-  if (any(str.units != 0))
-    for (i in (1:n)[str.units])
-      if (!(length(data) >= i &&
-            (is.character(data[[i]]) || is.expression(data[[i]]))))
-        stop("No string supplied for `strheight' unit")
-  # Make sure that a grob has been specified
-  grob.units <- units == "grobwidth"
-  if (any(grob.units != 0))
-    for (i in (1:n)[grob.units]) {
-      if (!(length(data) >= i &&
-            (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
-             is.character(data[[i]]))))
-        stop("No grob supplied for `grobwidth' unit")
-      if (is.character(data[[i]]))
-        data[[i]] <- gPathDirect(data[[i]])
-      if (inherits(data[[i]], "gPath"))
-        if (depth(data[[i]]) > 1)
-          stop("gPath must have depth 1 in grobwidth/height units")
-    }
-  grob.units <- units == "grobheight"
-  if (any(grob.units != 0))
-    for (i in (1:n)[grob.units]) {
-      if (!(length(data) >= i &&
-            (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
-             is.character(data[[i]]))))
-        stop("No grob supplied for `grobheight' unit")
-      if (is.character(data[[i]]))
-        data[[i]] <- gPathDirect(data[[i]])
-      if (inherits(data[[i]], "gPath"))
-        if (depth(data[[i]]) > 1)
-          stop("gPath must have depth 1 in grobwidth/height units")
-    }
-  data
+    n <- length(units)
+    str.units <- stringUnit(units)
+    if (any(str.units))
+        for (i in (1:n)[str.units])
+            if (!(length(data) >= i &&
+                  (is.character(data[[i]]) || is.language(data[[i]]))))
+                stop("No string supplied for 'strwidth/height' unit")
+    # Make sure that a grob has been specified
+    grob.units <- grobUnit(units)
+    if (any(grob.units))
+        for (i in (1:n)[grob.units]) {
+            if (!(length(data) >= i &&
+                  (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
+                   is.character(data[[i]]))))
+                stop("No 'grob' supplied for 'grobwidth/height' unit")
+            if (is.character(data[[i]]))
+                data[[i]] <- gPathDirect(data[[i]])
+            if (inherits(data[[i]], "gPath"))
+                if (depth(data[[i]]) > 1)
+                    stop("'gPath' must have depth 1 in 'grobwidth/height' units")
+        }
+    # Make sure that where no data is required, the data is NULL
+    if (!all(sapply(data[!(str.units | grob.units)], is.null)))
+        stop("Non-NULL value supplied for plain unit")
+    data
 }
 
 valid.units <- function(units) {
-  .Call("validUnits", units, PACKAGE="grid")
+  .Call(validUnits, units)
 }
 
 as.character.unit <- function(unit) {
@@ -198,7 +200,8 @@ unit.arithmetic <- function(func.name, arg1, arg2=NULL) {
 Ops.unit <- function(e1, e2) {
   ok <- switch(.Generic, "+"=TRUE, "-"=TRUE, "*"=TRUE, FALSE)
   if (!ok)
-    stop(paste("Operator", .Generic, "not meaningful for units"))
+    stop(gettextf("Operator '%s' not meaningful for units", .Generic),
+         domain = NA)
   if (.Generic == "*")
     # can only multiply a unit by a scalar
     if (nchar(.Method[1])) {
@@ -235,7 +238,8 @@ Summary.unit <- function(..., na.rm=FALSE) {
   x <- unit.c(...)
   ok <- switch(.Generic, "max"=TRUE, "min"=TRUE, "sum"=TRUE, FALSE)
   if (!ok)
-    stop(paste("Summary function", .Generic, "not meaningful for units"))
+    stop(gettextf("'Summary' function '%s' not meaningful for units",
+                  .Generic), domain = NA)
   unit.arithmetic(.Generic, x)
 }
 
@@ -267,8 +271,8 @@ unit.pmax <- function(...) {
   # how long will the result be?
   maxlength <- 0
   for (i in 1:numargs)
-    if (unit.length(x[[i]]) > maxlength)
-      maxlength <- unit.length(x[[i]])
+    if (length(x[[i]]) > maxlength)
+      maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
   result <- max(unit.list.from.list(lapply(x, select.i, 1)))
   for (i in 2:maxlength)
@@ -289,8 +293,8 @@ unit.pmin <- function(...) {
   # how long will the result be?
   maxlength <- 0
   for (i in 1:numargs)
-    if (unit.length(x[[i]]) > maxlength)
-      maxlength <- unit.length(x[[i]])
+    if (length(x[[i]]) > maxlength)
+      maxlength <- length(x[[i]])
   # maxlength guaranteed >= 1
   result <- min(unit.list.from.list(lapply(x, select.i, 1)))
   for (i in 2:maxlength)
@@ -309,7 +313,7 @@ unit.list <- function(unit) {
   if (is.unit.list(unit))
     unit
   else {
-    l <- unit.length(unit)
+    l <- length(unit)
     result <- list()
     for (i in 1:l)
       result[[i]] <- unit[i]
@@ -323,9 +327,9 @@ is.unit.list <- function(x) {
 }
 
 as.character.unit.list <- function(ul) {
-  l <- unit.length(ul)
+  l <- length(ul)
   result <- rep("", l)
-  for (i in 1:unit.length(ul))
+  for (i in 1:length(ul))
     result[i] <- as.character(ul[[i]])
   result
 }
@@ -379,7 +383,7 @@ print.unit <- function(x, ...) {
 # NOTE that units will be recycled to the length of the largest
 # of the arguments
 "[.unit.arithmetic" <- function(x, index, top=TRUE, ...) {
-  this.length <- unit.length(x)
+  this.length <- length(x)
   if (is.logical(index))
     index <- (1:this.length)[index]
   if (top && index > this.length)
@@ -398,7 +402,7 @@ print.unit <- function(x, ...) {
 }
 
 "[.unit.list" <- function(x, index, top=TRUE, ...) {
-  this.length <- unit.length(x)
+  this.length <- length(x)
   if (is.logical(index))
     index <- (1:this.length)[index]
   if (top && index > this.length)
@@ -427,143 +431,204 @@ print.unit <- function(x, ...) {
 # If any arguments are unit.arithmetic or unit.list, then the result will be
 # unit.list
 unit.c <- function(...) {
-  x <- list(...)
-  ual <- FALSE
-  for (i in 1:length(x))
-    if (inherits(x[[i]], "unit.list") ||
-        inherits(x[[i]], "unit.arithmetic"))
-      ual <- TRUE
-  if (ual)
-    unit.list.from.list(x)
-  else {
-    values <- NULL
-    units <- NULL
-    data <- NULL
-    for (i in 1:length(x))
-      if (is.unit(x[[i]])) {
-        values <- c(values, x[[i]])
-        units <- c(units, rep(attr(x[[i]], "unit"), length.out=length(x[[i]])))
-        data <- c(data, recycle.data(attr(x[[i]], "data"), TRUE,
-                                     length(x[[i]])))
-      }
-      else
+    x <- list(...)
+    if (!all(sapply(x, is.unit)))
         stop("It is invalid to combine unit objects with other types")
-    unit(values, units, data=data)
-  }
+    listUnit <- function(x) {
+        inherits(x, "unit.list") ||
+        inherits(x, "unit.arithmetic")
+    }
+    ual <- any(sapply(x, listUnit))
+    if (ual)
+        unit.list.from.list(x)
+    else {
+        values <- unlist(x)
+        unitUnits <- function(x) {
+            rep(attr(x, "unit"), length.out=length(x))
+        }
+        units <- unlist(lapply(x, unitUnits))
+        unitData <- function(x) {
+            data <- attr(x, "data")
+            if (is.null(data))
+                vector("list", length(x))
+            else
+                recycle.data(data, TRUE, length(x), unitUnits(x))
+        }
+        data <- do.call("c", lapply(x, unitData))
+        unit(values, units, data=data)
+    }
 }
 
 unit.list.from.list <- function(x) {
-  if (length(x) == 1)
-    unit.list(x[[1]])
-  else {
-    result <- c(unit.list(x[[1]]), unit.list.from.list(x[2:length(x)]))
+    result <- do.call("c", lapply(x, unit.list))
     class(result) <- c("unit.list", "unit")
     result
-  }
-}
-
-# OLD unit.list.from.list <-
-function(x) {
-  result <- unit.list(x[[1]])
-  i <- 2
-  while (i < length(x) + 1) {
-    result <- c(result, unit.list(x[[i]]))
-    i <- i + 1
-  }
-  class(result) <- c("unit.list", "unit")
-  result
 }
 
 #########################
 # rep'ing unit objects
 #########################
 
-# NOTE that rep() is not a generic -- it does have different "methods"
-# for some different data types, but this is ALL handled internally
-# in seq.c
+rep.unit.arithmetic <- function(x, times=1, length.out, ...) {
+    if (length(x) == 0)
+        return(x)
+    if (!missing(length.out))
+        times <- ceiling(length.out/length(x))
 
-unit.arithmetic.rep <- function(x, times) {
-  switch(x$fname,
-         "+"=unit.rep(x$arg1, times) + unit.rep(x$arg2, times),
-         "-"=unit.rep(x$arg1, times) - unit.rep(x$arg2, times),
-         "*"=x$arg1 * unit.rep(x$arg2, times),
-         "min"=unit.list.rep(unit.list(x), times),
-         "max"=unit.list.rep(unit.list(x), times),
-         "sum"=unit.list.rep(unit.list(x), times))
+    switch(x$fname,
+           "+"=rep(x$arg1, times) + rep(x$arg2, times),
+           "-"=rep(x$arg1, times) - rep(x$arg2, times),
+           "*"=x$arg1 * rep(x$arg2, times),
+           "min"=rep(unit.list(x), times),
+           "max"=rep(unit.list(x), times),
+           "sum"=rep(unit.list(x), times))
 }
 
-unit.list.rep <- function(x, times) {
-  # Make use of the subsetting code to replicate the unit list
-  # top=FALSE allows the subsetting to go beyond the original length
-  "["(x, 1:(unit.length(x)*times), top=FALSE)
+rep.unit.list <- function(x, times=1, length.out, ...) {
+    if (length(x) == 0)
+        return(x)
+    if (!missing(length.out))
+        times <- ceiling(length.out/length(x))
+
+    # Make use of the subsetting code to replicate the unit list
+    # top=FALSE allows the subsetting to go beyond the original length
+    "["(x, 1:(length(x)*times), top=FALSE)
 }
 
-unit.rep <- function (x, times, length.out)
-{
-  if (unit.length(x) == 0)
-    return(x)
-  if (missing(times))
-    times <- ceiling(length.out/length(x))
-
-  if (is.unit.list(x))
-    unit <- unit.list.rep(x, times)
-  else if (is.unit.arithmetic(x))
-    unit <- unit.arithmetic.rep(x, times)
-  else {
-    values <- rep(x, times)
+rep.unit <- function(x, ...) {
+    if (length(x) == 0)
+        return(x)
+    values <- rep(unclass(x), ...)
     # Do I need to replicate the "unit"s?
-    unit <- attr(x, "unit")
+    units <- attr(x, "unit")
     # If there are any data then they must be explicitly replicated
     # because the list of data must be the same length as the
     # vector of values
-    data <- recycle.data(attr(x, "data"), TRUE, length(values))
-    unit <- unit(values, unit, data=data)
-  }
-  if (!missing(length.out))
-    return(unit[if (length.out > 0) 1:length.out else integer(0)])
-  unit
+    data <- recycle.data(attr(x, "data"), TRUE, length(values), units)
+    unit <- unit(values, units, data=data)
+    unit
+}
+
+# Vestige from when rep() was not generic
+unit.rep <- function (x, ...)
+{
+  warning("unit.rep has been deprecated in favour of a unit method for the generic rep function")
+  rep(x, ...)
 }
 
 #########################
 # Length of unit objects
 #########################
 
-unit.length <- function(unit) {
-  UseMethod("unit.length")
+length.unit <- function(unit) {
+  length(unclass(unit))
 }
 
-unit.length.unit <- function(unit) {
-  length(unit)
+length.unit.list <- function(unit) {
+  length(unclass(unit))
 }
 
-unit.length.unit.list <- function(unit) {
-  length(unit)
-}
-
-unit.length.unit.arithmetic <- function(unit) {
+length.unit.arithmetic <- function(unit) {
   switch(unit$fname,
-         "+"=max(unit.length(unit$arg1), unit.length(unit$arg2)),
-         "-"=max(unit.length(unit$arg1), unit.length(unit$arg2)),
-         "*"=max(length(unit$arg1), unit.length(unit$arg2)),
+         "+"=max(length(unit$arg1), length(unit$arg2)),
+         "-"=max(length(unit$arg1), length(unit$arg2)),
+         "*"=max(length(unit$arg1), length(unit$arg2)),
          "min"=1,
          "max"=1,
          "sum"=1)
 }
 
+# Vestige of when length was not generic
+unit.length <- function(unit) {
+   warning("unit.length has been deprecated in favour of a unit method for the generic length function")
+   length(unit)
+}
+
 #########################
-# Convenience functions 
+# Convenience functions
 #########################
 
 stringWidth <- function(string) {
-  string <- as.character(string)
-  unit(rep(1, length(string)), "strwidth", data=as.list(string))
+    n <- length(string)
+    if (is.language(string)) {
+        data <- vector("list", n)
+        for (i in 1:n)
+            data[[i]] <- string[i]
+    } else {
+        data <- as.list(as.character(string))
+    }
+    unit(rep(1, n), "strwidth", data=data)
 }
 
 stringHeight <- function(string) {
-  string <- as.character(string)
-  unit(rep(1, length(string)), "strheight", data=as.list(string))
+    n <- length(string)
+    if (is.language(string)) {
+        data <- vector("list", n)
+        for (i in 1:n)
+            data[[i]] <- string[i]
+    } else {
+        data <- as.list(as.character(string))
+    }
+    unit(rep(1, n), "strheight", data=data)
 }
 
+convertTheta <- function(theta) {
+    if (is.character(theta))
+        # Allow some aliases for common angles
+        switch(theta,
+               east=0,
+               north=90,
+               west=180,
+               south=270,
+               stop("Invalid theta"))
+    else
+        # Ensure theta in [0, 360)
+        theta <- as.numeric(theta) %% 360
+}
+
+# grobX
+grobX <- function(x, theta) {
+    UseMethod("grobX", x)
+}
+
+grobX.grob <- function(x, theta) {
+  unit(convertTheta(theta), "grobx", data=x)
+}
+
+grobX.gList <- function(x, theta) {
+  unit(rep(convertTheta(theta), length(gList)), "grobx", data=x)
+}
+
+grobX.gPath <- function(x, theta) {
+  unit(convertTheta(theta), "grobx", data=x)
+}
+
+grobX.default <- function(x, theta) {
+  unit(convertTheta(theta), "grobx", data=gPathDirect(as.character(x)))
+}
+
+# grobY
+grobY <- function(x, theta) {
+    UseMethod("grobY", x)
+}
+
+grobY.grob <- function(x, theta) {
+  unit(convertTheta(theta), "groby", data=x)
+}
+
+grobY.gList <- function(x, theta) {
+  unit(rep(convertTheta(theta), length(gList)), "groby", data=x)
+}
+
+grobY.gPath <- function(x, theta) {
+  unit(convertTheta(theta), "groby", data=x)
+}
+
+grobY.default <- function(x, theta) {
+  unit(convertTheta(theta), "groby", data=gPathDirect(as.character(x)))
+}
+
+# grobWidth
 grobWidth <- function(x) {
   UseMethod("grobWidth")
 }
@@ -584,6 +649,7 @@ grobWidth.default <- function(x) {
   unit(1, "grobwidth", data=gPathDirect(as.character(x)))
 }
 
+# grobHeight
 grobHeight <- function(x) {
   UseMethod("grobHeight")
 }
@@ -609,7 +675,7 @@ grobHeight.default <- function(x) {
 # on parent's drawing context or size)
 #########################
 
-# Only deals with unit of unit.length() 1
+# Only deals with unit of length() 1
 absolute <- function(unit) {
   !is.na(match(attr(unit, "unit"),
                c("cm", "inches", "lines", "null",
@@ -625,7 +691,7 @@ absolute.units <- function(unit) {
 }
 
 absolute.units.unit <- function(unit) {
-  n <- unit.length(unit)
+  n <- length(unit)
   if (absolute(unit[1]))
     abs.unit <- unit[1]
   else

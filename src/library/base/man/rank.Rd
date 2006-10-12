@@ -2,7 +2,7 @@
 \alias{rank}
 \title{Sample Ranks}
 \description{
-  Returns the sample ranks of the values in a numeric vector.
+  Returns the sample ranks of the values in a vector.
   Ties, i.e., equal values, result in ranks being averaged, by default.
 }
 \usage{
@@ -10,7 +10,7 @@ rank(x, na.last = TRUE,
      ties.method = c("average", "first", "random", "max", "min"))
 }
 \arguments{
-  \item{x}{a numeric vector.}
+  \item{x}{a numeric, complex, character or logical vector.}
   \item{na.last}{for controlling the treatment of \code{\link{NA}}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed; if

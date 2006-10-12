@@ -1,4 +1,5 @@
 \name{Special}
+\title{Special Functions of Mathematics}
 \alias{Special}
 \alias{beta}
 \alias{lbeta}
@@ -11,7 +12,10 @@
 \alias{lchoose}
 \alias{factorial}
 \alias{lfactorial}
-\title{Special Functions of Mathematics}
+\concept{tetragamma}% existed till 1.9.0
+\concept{pentagamma}
+\concept{binomial coefficient}
+\concept{psi function}
 \description{
   Special mathematical functions related to the beta and gamma
   functions.
@@ -30,8 +34,8 @@ factorial(x)
 lfactorial(x)
 }
 \arguments{
-  \item{a, b, x}{numeric vectors.}
-  \item{n, k, deriv}{integer vectors.}
+  \item{a, b, x, n}{numeric vectors.}
+  \item{k, deriv}{integer vectors.}
 }
 \details{
   The functions \code{beta} and \code{lbeta} return the beta function
@@ -41,10 +45,11 @@ lfactorial(x)
   The formal definition is
   \deqn{B(a, b) = \int_0^1 t^{a-1} (1-t)^{b-1} dt}{integral_0^1 t^(a-1) (1-t)^(b-1) dt}
   (Abramowitz and Stegun (6.2.1), page 258).
-  
+
   The functions \code{gamma} and \code{lgamma} return the gamma function
   \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
-  gamma function.  The gamma function is defined by (Abramowitz and Stegun (6.1.1), page 255)
+  gamma function.  The gamma function is defined by
+  (Abramowitz and Stegun (6.1.1), page 255)
   \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral_0^Inf t^(a-1) exp(-t) dt}
   \code{factorial(x)} is \eqn{x!} and identical to
   \code{gamma(x+1)} and \code{lfactorial} is \code{lgamma(x+1)}.
@@ -58,10 +63,18 @@ lfactorial(x)
     \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
 
   The functions \code{choose} and \code{lchoose} return binomial
-  coefficients and their logarithms.
+  coefficients and their logarithms.  Note that \code{choose(n,k)} is
+  defined for all real numbers \eqn{n} and integer \eqn{k}.  For \eqn{k
+    \ge 1}{k >= 1} as \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
+  as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
+  \cr \code{choose(*,k)} uses direct arithmetic (instead of
+  \code{[l]gamma} calls) for small \code{k}, for speed and accuracy
+  reasons.  Note the function \code{\link[utils]{combn}} (package
+  \pkg{utils}) for enumeration of all possible combinations.
 
-  All the \code{*gamma*} functions are generic: methods can be
-  defined for them individually or via the \code{\link{Math}} group generic.
+  The \code{gamma}, \code{lgamma}, \code{digamma} and \code{trigamma}
+  functions are generic: methods can be defined for them individually or
+  via the \code{\link[base:groupGeneric]{Math}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -87,10 +100,14 @@ factorial(100)
 lfactorial(10000)
 
 ## gamma has 1st order poles at 0, -1, -2, ...
+## this will generate loss of precision warnings, so turn off
+op <- options("warn")
+options(warn = -1)
 x <- sort(c(seq(-3,4, length=201), outer(0:-3, (-1:1)*1e-6, "+")))
 plot(x, gamma(x), ylim=c(-20,20), col="red", type="l", lwd=2,
      main=expression(Gamma(x)))
 abline(h=0, v=-3:0, lty=3, col="midnightblue")
+options(op)
 
 x <- seq(.1, 4, length = 201); dx <- diff(x)[1]
 par(mfrow = c(2, 3))
@@ -110,6 +127,30 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
   abline(h = 0, col = "lightgray")
   if (is.deriv) lines(x[-1], dy, col = "blue", lty = 2)
 }
+par(mfrow = c(1, 1))
 
+## "Extended" Pascal triangle:
+fN <- function(n) formatC(n, wid=2)
+for (n in -4:10) cat(fN(n),":", fN(choose(n, k= -2:max(3,n+2))), "\n")
+
+## R code version of choose()  [simplistic; warning for k < 0]:
+mychoose <- function(r,k)
+    ifelse(k <= 0, (k==0),
+           sapply(k, function(k) prod(r:(r-k+1))) / factorial(k))
+k <- -1:6
+cbind(k=k, choose(1/2, k), mychoose(1/2, k))
+
+## Binomial theorem for n=1/2 ;
+## sqrt(1+x) = (1+x)^(1/2) = sum_{k=0}^Inf  choose(1/2, k) * x^k :
+k <- 0:10 # 10 is sufficient for ~ 9 digit precision:
+sqrt(1.25)
+sum(choose(1/2, k)* .25^k)
+
+\dontshow{
+stopifnot(all.equal(  choose(1/2, -1:9),
+                    mychoose(1/2, -1:9)),
+          all.equal(sqrt(1.25),
+                    sum(choose(1/2, k)* .25^k)))
+}
 }
 \keyword{math}

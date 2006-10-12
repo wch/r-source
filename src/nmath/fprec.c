@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000, 2001 The R Development Core Team
+ *  Copyright (C) 2000, 2001, 2005-2006 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -35,8 +35,19 @@
  *    conform to the IEEE 754 standard.
  */
 
+#include <config.h>
 #include "nmath.h"
 
+#ifndef HAVE_RINT
+#define USE_BUILTIN_RINT
+#endif
+
+#ifdef USE_BUILTIN_RINT
+#define R_rint private_rint
+extern double private_rint(double x);
+#else
+#define R_rint rint
+#endif
 /* Improvements by Martin Maechler, May 1997;
    further ones, Feb.2000:
    Replace  pow(x, (double)i) by  R_pow_di(x, i) {and use  int dig} */
@@ -59,7 +70,7 @@ double fprec(double x, double digits)
     double l10, pow10, sgn, p10, P10;
     int e10, e2, do_round, dig;
     /* Max.expon. of 10 (=308.2547) */
-    const double max10e = DBL_MAX_EXP * M_LOG10_2;
+    const static int max10e = DBL_MAX_EXP * M_LOG10_2;
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(digits))
@@ -86,15 +97,18 @@ double fprec(double x, double digits)
     e10 = (int)(dig-1-floor(l10));
     if(fabs(l10) < max10e - 2) {
 	p10 = 1.0;
-	if(e10 > max10e) {
+	if(e10 > max10e) { /* numbers less than 10^(dig-1) * 1e-308 */
 	    p10 =  R_pow_di(10., e10-max10e);
 	    e10 = max10e;
-	} else if(e10 < - max10e) {
-	    p10 =  R_pow_di(10., e10+max10e);
-	    e10 = -max10e;	    
+	} 
+	if(e10 > 0) { /* Try always to have pow >= 1
+			 and so exactly representable */
+	    pow10 = R_pow_di(10., e10);
+	    return(sgn*(R_rint((x*pow10)*p10)/pow10)/p10);
+	} else {
+	    pow10 = R_pow_di(10., -e10);
+	    return(sgn*(R_rint((x/pow10))*pow10));
 	}
-	pow10 = R_pow_di(10., e10);
-	return(sgn*(floor((x*pow10)*p10+0.5)/pow10)/p10);
     } else { /* -- LARGE or small -- */
 	do_round = max10e - l10	 >= R_pow_di(10., -dig);
 	e2 = dig + ((e10>0)? 1 : -1) * MAX_DIGITS;

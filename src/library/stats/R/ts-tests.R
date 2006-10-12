@@ -42,7 +42,7 @@ PP.test <- function (x, lshort = TRUE)
     tt <- (1:n)-n/2
     res <- lm (yt~1+tt+yt1)
     if (res$rank < 3)
-        stop ("Singularities in regression")
+        stop ("singularities in regression")
     res.sum <- summary (res)
     tstat <- (res.sum$coefficients[3,1]-1)/res.sum$coefficients[3,2]
     u <- residuals (res)

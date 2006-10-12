@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  DESCRIPTION
  *
@@ -37,7 +37,6 @@ double qhyper(double p, double NR, double NB, double n,
 #endif
     if(!R_FINITE(p) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n))
 	ML_ERR_return_NAN;
-    R_Q_P01_check(p);
 
     NR = floor(NR + 0.5);
     NB = floor(NB + 0.5);
@@ -52,8 +51,8 @@ double qhyper(double p, double NR, double NB, double n,
 
     xstart = fmax2(0, n - NB);
     xend = fmin2(n, NR);
-    if(p == R_DT_0) return xstart;
-    if(p == R_DT_1) return xend;
+
+    R_Q_P01_boundaries(p, xstart, xend);
 
     xr = xstart;
     xb = n - xr;/* always ( = #{black balls in sample} ) */
@@ -69,7 +68,7 @@ double qhyper(double p, double NR, double NB, double n,
     if(!lower_tail || log_p) {
 	p = R_DT_qIv(p);
     }
-    p *= 1 - 64*DBL_EPSILON;
+    p *= 1 - 1000*DBL_EPSILON; /* was 64, but failed on FreeBSD sometimes */
     sum = small_N ? term : exp(term);
 
     while(sum < p && xr < xend) {

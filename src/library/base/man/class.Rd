@@ -22,7 +22,8 @@ oldClass(x) <- value
 }
 \arguments{
   \item{x}{a \R object}
-  \item{what, value}{a character vector naming classes.}
+  \item{what, value}{a character vector naming classes.  \code{value}
+    can also be \code{NULL}.}
   \item{which}{logical affecting return value: see Details.}
 }
 
@@ -47,10 +48,12 @@ oldClass(x) <- value
 
   The function \code{class} prints the vector of names of classes an
   object inherits from.  Correspondingly, \code{class<-} sets the
-  classes an object inherits from.
+  classes an object inherits from.  Assigning a zero-length vector or
+  \code{NULL} removes the class attribute.
 
   \code{unclass} returns (a copy of) its argument with its class
-  attribute removed.
+  attribute removed.  (It is not allowed for objects which cannot be
+  copied, namely environments and external pointers.)
 
   \code{inherits} indicates whether its first argument inherits from any
   of the classes specified in the \code{what} argument.  If \code{which}
@@ -66,8 +69,9 @@ oldClass(x) <- value
   Functions \code{oldClass} and \code{oldClass<-} behave in the same way
   as functions of those names in S-PLUS 5/6, \emph{but} in \R
   \code{\link{UseMethod}} dispatches on the class as returned by
-  \code{class} rather than \code{oldClass}.  \emph{However},
-  \link{group generic}s dispatch on the \code{oldClass} for efficiency.
+  \code{class} (with some interpolated classes: see the link) rather
+  than \code{oldClass}.  \emph{However}, \link{group generic}s dispatch
+  on the \code{oldClass} for efficiency.
 }
 
 \section{Formal classes}{

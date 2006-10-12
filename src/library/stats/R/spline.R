@@ -1,27 +1,41 @@
+#### 'spline' and 'splinefun' are very similar --- keep in sync!
+####  also consider ``compatibility'' with  'approx' and 'approxfun'
+
 spline <-
-    function(x, y=NULL, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x))
+    function(x, y=NULL, n=3*length(x), method="fmm", xmin=min(x), xmax=max(x),
+             ties = mean)
 {
     x <- xy.coords(x, y)
     y <- x$y
     x <- x$x
-    ## ensured by  xy.coords(.) :
-    ##	if (!is.numeric(x) || !is.numeric(y))
-    ##		stop("spline: x and y must be numeric")
     nx <- length(x)
-    ## ensured by  xy.coords(.) :
-    ##	if (nx != length(y))
-    ##		stop("x and y must have equal lengths")
-    method <- match(method, c("periodic", "natural", "fmm"))
+    method <- pmatch(method, c("periodic", "natural", "fmm"))
     if(is.na(method))
-	stop("spline: invalid interpolation method")
-    if(is.unsorted(x)) {
-	o <- order(x)
+	stop("invalid interpolation method")
+    if(any(o <- is.na(x) | is.na(y))) {
+	o <- !o
 	x <- x[o]
 	y <- y[o]
+	nx <- length(x)
     }
-    if(method == 1 && y[1] != y[nx]) {
-	warning("spline: first and last y values differ - using y[1] for both")
-	y[nx] <- y[1]
+    if (!identical(ties, "ordered")) {
+	if (length(ux <- unique(x)) < nx) {
+	    if (missing(ties))
+		warning("collapsing to unique 'x' values")
+	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
+	    x <- sort(ux)
+	    nx <- length(x)
+	    rm(ux)
+	} else {
+	    o <- order(x)
+	    x <- x[o]
+	    y <- y[o]
+	}
+    }
+    if(nx == 0) stop("zero non-NA points")
+    if(method == 1 && y[1] != y[nx]) { # periodic
+        warning("spline: first and last y values differ - using y[1] for both")
+        y[nx] <- y[1]
     }
     z <- .C("spline_coef",
 	    method=as.integer(method),
@@ -32,11 +46,8 @@ spline <-
 	    c=double(nx),
 	    d=double(nx),
 	    e=double(if(method == 1) nx else 0),
-            PACKAGE="base")
+	    PACKAGE="base")
     u <- seq(xmin, xmax, length.out=n)
-    ##-	 cat("spline(.): result of  .C(\"spline_coef\",...):\n")
-    ##-	 str(z, vec.len=10)
-    ##-	 cat("spline(.): now calling .C(\"spline_eval\", ...)\n")
 
     .C("spline_eval",
        z$method,
@@ -51,5 +62,3 @@ spline <-
        z$d,
        PACKAGE="base")[c("x","y")]
 }
-
-

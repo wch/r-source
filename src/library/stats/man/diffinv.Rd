@@ -7,16 +7,11 @@
   Computes the inverse function of the lagged differences function
   \code{\link{diff}}. 
 }
-\synopsis{
-diffinv(x, ...)
-diffinv.default(x, lag = 1, differences = 1,
-    xi = rep(0, lag * differences * dim(as.matrix(x))[2]), ...) 
-diffinv.ts(x, lag = 1, differences = 1,
-    xi = rep(0, lag * differences * NCOL(x)), ...) 
-}
 \usage{
-diffinv(x, lag = 1, differences = 1,
-        xi = rep(0.0, lag*differences*NCOL(x)), \dots)
+diffinv(x, ...)
+
+\method{diffinv}{default}(x, lag = 1, differences = 1, xi, \dots)
+\method{diffinv}{ts}(x, lag = 1, differences = 1, xi, \dots)
 }
 \arguments{
   \item{x}{a numeric vector, matrix, or time series.}
@@ -24,7 +19,7 @@ diffinv(x, lag = 1, differences = 1,
   \item{differences}{an integer representing the order of the
     difference.}
   \item{xi}{a numeric vector, matrix, or time series containing the
-    initial values for the integrals.}
+    initial values for the integrals.  If missing, zeros are used.}
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
@@ -34,8 +29,8 @@ diffinv(x, lag = 1, differences = 1,
   Missing values are not handled.
 }
 \value{
-  A numeric vector, matrix, or time series representing the discrete
-  integral of \code{x}. 
+  A numeric vector, matrix, or time series (the latter for the
+  \code{"ts"} method) representing the discrete integral of \code{x}. 
 }
 \author{A. Trapletti}
 \seealso{

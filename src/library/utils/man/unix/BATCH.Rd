@@ -4,7 +4,7 @@
 \description{Run \R non-interactively with input from \code{infile} and
   send output (stdout/stderr) to another file.}
 \usage{
-R CMD BATCH [options] infile [outfile]
+\special{R CMD BATCH [options] infile [outfile]}
 }
 \arguments{
   \item{infile}{the name of a file with \R code to be executed.}
@@ -27,8 +27,9 @@ R CMD BATCH [options] infile [outfile]
   just CR), and files with an incomplete last line (missing end of line
   (EOL) mark) are processed correctly.
 
-  Using \code{R CMD BATCH} sets the GUI to \code{"none"}, so none of
-  \code{\link{x11}}, \code{\link{jpeg}} and \code{\link{png}} are available.
+  Additional options can be set by the environment variable
+  \code{R_BATCH_OPTIONS}: these come after \samp{--restore --save
+    --no-readline} and before any options given on the command line.
 }
 \note{
   Unlike \code{Splus BATCH}, this does not run the \R process in the

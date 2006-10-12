@@ -98,6 +98,12 @@ PROTECTED font new_font_object(HFONT hf)
 	return (font) obj;
 }
 
+rect getSysFontSize()
+{
+    return  SystemFont->rect;
+}
+
+
 /*
  *  Private font initialisation function.
  */
@@ -105,6 +111,7 @@ PROTECTED
 void init_fonts(void)
 {
 	HDC info;
+	NONCLIENTMETRICS ncm;
 
 	/* get system information */
 	info = CreateIC("DISPLAY", NULL, NULL, NULL);
@@ -113,9 +120,15 @@ void init_fonts(void)
 	DeleteDC(info);
 
 	/* set up standard fonts */
-	SystemFont = new_font_object(GetStockObject(DEFAULT_GUI_FONT));
-	if (SystemFont)
-		SystemFont->text = new_string("SystemFont");
+	/* Claim that this was wrong:
+	   http://blogs.msdn.com/oldnewthing/archive/2005/07/07/436435.aspx
+
+	   SystemFont = new_font_object(GetStockObject(DEFAULT_GUI_FONT));
+	*/
+	ncm.cbSize = sizeof(NONCLIENTMETRICS);
+	SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0);
+	SystemFont = new_font_object(CreateFontIndirect(&ncm.lfMenuFont));
+	if (SystemFont) SystemFont->text = new_string("SystemFont");
 
 	FixedFont = new_font_object(GetStockObject(OEM_FIXED_FONT));
 	Times = newfont("Times New Roman", Plain, -10);

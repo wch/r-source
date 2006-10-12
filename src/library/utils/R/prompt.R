@@ -12,20 +12,43 @@ function(object, filename = NULL, name = NULL,
         typeof(arg) == "symbol" && deparse(arg) == ""
 
     if(missing(name))
-        name <-
-            if(is.character(object))
-                object
-            else {
-                name <- substitute(object)
-                if(is.language(name) && !is.name(name))
-                    name <- eval(name)
+        name <- if(is.character(object))
+            object
+        else {
+            name <- substitute(object)
+            ## <FIXME>
+            ## This used to be:
+            ##     if(is.language(name) && !is.name(name))
+            ##         name <- eval(name)
+            ##     as.character(name)
+            ## but what is this trying to do?
+            ## It seems that the eval() will typically give the given
+            ## object, and surely we cannot use that as the name (even
+            ## if the subsequent as.character() does not fail ...)
+            ## Better to be defensive about this, and handle only cases
+            ## we know will make sense ...
+            if(is.name(name))
                 as.character(name)
+            else if(is.call(name)
+                    && (as.character(name[[1]]) %in%
+                        c("::", ":::", "getAnywhere"))) {
+                name <- as.character(name)
+                name[length(name)]
             }
+            else
+                stop("cannot determine a usable name")
+            ## </FIXME>
+        }
+
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
-    ## Better than get(); works when called in fun :
-    x <- get(name, envir = parent.frame())
+    x <- if(!missing(object))
+        object
+    else {
+        ## Better than get(); works when called in fun :
+        x <- get(name, envir = parent.frame())
+    }
 
     ## <FIXME>
     ## If not a function or forced to document a function (?), always
@@ -40,14 +63,14 @@ function(object, filename = NULL, name = NULL,
         arg.n[arg.n == "..."] <- "\\dots"
     }
     ## Construct the 'call' for \usage.
-    call <- paste0(name, "(")
-    for(i in seq(length = n)) {                       # i-th argument
-        call <- paste0(call, arg.names[i],
+    Call <- paste0(name, "(")
+    for(i in seq_len(n)) {                       # i-th argument
+        Call <- paste0(Call, arg.names[i],
                        if(!is.missing.arg(argls[[i]]))
                        paste0(" = ",
                               paste(deparse(argls[[i]], width.cutoff= 500),
                                     collapse="\n")))
-        if(i != n) call <- paste0(call, ", ")
+        if(i != n) Call <- paste0(Call, ", ")
     }
 
     ## Construct the definition for \examples.
@@ -56,6 +79,9 @@ function(object, filename = NULL, name = NULL,
         x.def <- deparse(x)
     if(any(br <- substr(x.def, 1, 1) == "}"))
         x.def[br] <- paste(" ", x.def[br])
+
+    ## escape "%" :
+    x.def <- gsub("%", "\\\\%", x.def)
 
     Rdtxt <-
         list(name = paste0("\\name{", name, "}"),
@@ -67,13 +93,13 @@ function(object, filename = NULL, name = NULL,
              paste("  ~~ A concise (1-5 lines) description of what",
                    "the function does. ~~"),
              "}"),
-             usage = c("\\usage{", paste0(call, ")"), "}",
+             usage = c("\\usage{", paste0(Call, ")"), "}",
              paste("%- maybe also 'usage' for other objects",
                    "documented here.")),
              arguments = NULL,
              details = c("\\details{",
              paste("  ~~ If necessary, more details than the",
-                   "__description__  above ~~"),
+                   "description above ~~"),
              "}"),
              value = c("\\value{",
              "  ~Describe the value returned",
@@ -85,13 +111,13 @@ function(object, filename = NULL, name = NULL,
              references = paste("\\references{ ~put references to the",
              "literature/web site here ~ }"),
              author = "\\author{ ~~who you are~~ }",
-             note = c("\\note{ ~~further notes~~ }",
+             note = c("\\note{ ~~further notes~~ ",
              "",
              paste(" ~Make other sections like Warning with",
                    "\\section{Warning }{....} ~"),
-             ""),
+             "}"),
              seealso = paste("\\seealso{ ~~objects to See Also as",
-             "\\code{\\link{~~fun~~}}, ~~~ }"),
+             "\\code{\\link{help}}, ~~~ }"),
              examples = c("\\examples{",
              "##---- Should be DIRECTLY executable !! ----",
              "##-- ==>  Define data, use random,",
@@ -100,8 +126,10 @@ function(object, filename = NULL, name = NULL,
              "## The function is currently defined as",
              x.def,
              "}"),
-             keywords = c(paste("\\keyword{ ~kwd1 }% at least one,",
-             "from doc/KEYWORDS"),
+             keywords = c(paste("% Add one or more standard keywords,",
+             "see file 'KEYWORDS' in the"),
+             "% R documentation directory.",
+             "\\keyword{ ~kwd1 }",
              "\\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line"))
 
     Rdtxt$arguments <- if(n > 0)
@@ -113,10 +141,11 @@ function(object, filename = NULL, name = NULL,
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste("Created file named ", sQuote(filename), ".", sep=""),
-                  paste("Edit the file and move it to the appropriate",
-                        "directory."))),
-        sep = "\n")
+
+    message(gettextf("Created file named '%s'.", filename),
+            "\n",
+            gettext("Edit the file and move it to the appropriate directory."),
+            domain = NA)
 
     invisible(filename)
 }
@@ -132,14 +161,20 @@ function(object, filename = NULL, name = NULL, ...)
                 object
             else {
                 name <- substitute(object)
-                if(is.language(name) && !is.name(name))
-                    name <- eval(name)
-                as.character(name)
+                if(is.name(name))
+                    as.character(name)
+                else
+                    stop("cannot determine a usable name")
             }
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
-    x <- get(name, envir = parent.frame())
+    x <- if(!missing(object))
+        object
+    else {
+        ## Better than get(); works when called in fun :
+        x <- get(name, envir = parent.frame())
+    }
 
     ## <FIXME>
     ## Always assume data set ???
@@ -158,15 +193,20 @@ function(object, filename = NULL, name = NULL)
                 object
             else {
                 name <- substitute(object)
-                if(is.language(name) && !is.name(name))
-                    name <- eval(name)
-                as.character(name)
+                if(is.name(name))
+                    as.character(name)
+                else
+                    stop("cannot determine a usable name")
             }
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
 
-    ## Better than get(); works when called in fun :
-    x <- get(name, envir = parent.frame())
+    x <- if(!missing(object))
+        object
+    else {
+        ## Better than get(); works when called in fun :
+        x <- get(name, envir = parent.frame())
+    }
 
     ## Construct the format.
     if(is.data.frame(x)) {
@@ -182,7 +222,7 @@ function(object, filename = NULL, name = NULL)
             xi <- x[[i]]
             fmt <-
                 c(fmt,
-                  paste0("    \\item{", i, "}{",
+                  paste0("    \\item{\\code{", i, "}}{",
                          if(inherits(xi, "ordered")) {
                              paste("an", data.class(xi),
                                    "factor with levels",
@@ -244,10 +284,113 @@ function(object, filename = NULL, name = NULL)
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste("Created file named ", sQuote(filename), ".", sep=""),
-                  paste("Edit the file and move it to the appropriate",
-                        "directory."))),
-        sep = "\n")
+
+    message(gettextf("Created file named '%s'.", filename),
+            "\n",
+            gettext("Edit the file and move it to the appropriate directory."),
+            domain = NA)
+
+    invisible(filename)
+}
+
+promptPackage <-
+function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
+{
+    ## need to do this as packageDescription and library(help=) have
+    ## different conventions
+    if (is.null(lib.loc)) lib.loc <- .libPaths()
+
+    paste0 <- function(...) paste(..., sep = "")
+    insert1 <- function(field, new) {
+    	prev <- Rdtxt[[field]]
+    	Rdtxt[[field]] <<- c(prev[-length(prev)], new, prev[length(prev)])
+    }
+    insert2 <- function(field, new) insert1(field, paste("~~", new, "~~"))
+    tabular <- function(col1, col2)
+        c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
+
+    if(missing(name))
+        name <- paste0(package, "-package");
+
+    if(is.null(filename))
+        filename <- paste0(name, ".Rd")
+
+    Rdtxt <-
+    	    list(name = paste0("\\name{", name, "}"),
+    	         aliases = paste0("\\alias{", name, "}"),
+    	         docType = "\\docType{package}",
+    	         title = c("\\title{", "}"),
+    	         description = c("\\description{","}"),
+    	         details = c("\\details{","}"),
+    	         author = c("\\author{","}"),
+    	         references = character(0),
+
+    	         keywords = c("\\keyword{ package }")
+    	     )
+
+    desc <- packageDescription(package, lib.loc)
+
+    if (length(desc) > 1) {
+    	info <- library(help = package, lib.loc = lib.loc,
+                        character.only = TRUE)
+
+    	if (!length(grep(paste0("^", package, " "), info$info[[2]])))
+    	    Rdtxt$aliases <- c(Rdtxt$aliases, paste0("\\alias{", package, "}"))
+
+        insert1("title", desc$Title)
+	insert1("description", desc$Description)
+	insert1("author", c(desc$Author, "",
+                            paste(gettext("Maintainer:"),desc$Maintainer)))
+
+	desc <- desc[!(names(desc) %in%
+                       c("Title", "Description", "Author", "Maintainer"))]
+
+	insert1("details", tabular(paste0(names(desc), ":"), unlist(desc)))
+
+	if (!is.null(info$info[[2]]))
+	    insert1("details",  c("", gettext("Index:"), "\\preformatted{",
+	                          info$info[[2]], "}"))
+	if (!is.null(info$info[[3]]))
+	    insert1("details",
+                    c("",
+        gettext("Further information is available in the following vignettes:"),
+                      tabular(paste0("\\code{", info$info[[3]][,1], "}"),
+                              info$info[[3]][,2])))
+    }
+
+    if (!final) {
+        insert2("title", gettext("package title"))
+        insert2("description",
+                gettext("A concise (1-5 lines) description of the package"))
+        insert2("details",
+                strwrap(gettext("An overview of how to use the package, including the most important functions")))
+        insert2("author",
+                gettext("The author and/or maintainer of the package"))
+        Rdtxt$references <-
+            c("\\references{",
+              paste("~~",
+                    gettext("Literature or other references for background information"),
+                    "~~"),
+              "}")
+        Rdtxt$seealso <- c("\\seealso{", "}")
+        insert2("seealso",
+                c(gettext("Optional links to other man pages, e.g."),
+                  "\\code{\\link[<pkg>:<pkg>-package]{<pkg>}}"))
+        Rdtxt$examples <- c("\\examples{","}")
+        insert2("examples",
+                gettext("simple examples of the most important functions"))
+        insert2("keywords",
+                strwrap(gettext("Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory")))
+    }
+
+    if(is.na(filename)) return(Rdtxt)
+
+    cat(unlist(Rdtxt), file = filename, sep = "\n")
+
+    message(gettextf("Created file named '%s'.", filename),
+            "\n",
+            gettext("Edit the file and move it to the appropriate directory."),
+            domain = NA)
 
     invisible(filename)
 }

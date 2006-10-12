@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,8 +16,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> char here is handled as a whole string */
+
 
 /* See system.txt for a description of functions
  */
@@ -26,8 +29,15 @@
 # include <config.h>
 #endif
 
+#include <Defn.h>
+
+/* On most systems libintl.h includes this, but not Fedora Core 1 */
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#endif
+
 /* necessary for some (older, i.e., ~ <= 1997) Linuxen, and apparently
-   also some AIX systems.
+   also some AIX systems.  NB, included unconditionally later on.
    */
 #ifndef FD_SET
 # ifdef HAVE_SYS_TIME_H
@@ -39,23 +49,19 @@
 # include <unistd.h>		/* isatty() */
 #endif
 
-#include "Defn.h"
 #include "Fileio.h"
-#include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
+#include <Rdevices.h>		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
-#include "devUI.h"		/* includes Startup.h */
+#define R_INTERFACE_PTRS 1
+#include <Rinterface.h>
 #undef __SYSTEM__
 
 #include "Runix.h"
 
 
-#ifdef HAVE_AQUA
-void R_StartConsole(Rboolean OpenConsole) { ptr_R_StartConsole(); }
-#endif
-
+attribute_hidden
 Rboolean UsingReadline = TRUE;  /* used in sys-std.c & ../main/platform.c */
-extern SA_TYPE SaveAction;
 
 /* call pointers to allow interface switching */
 
@@ -77,10 +83,7 @@ int R_ChooseFile(int new, char *buf, int len)
 { return ptr_R_ChooseFile(new, buf, len); }
 
 
-void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
-
 void R_setStartTime(void); /* in sys-unix.c */
-void R_load_gnome_shlib(void); /* in dynload.c */
 
 
 #ifdef HAVE_AQUA
@@ -88,18 +91,96 @@ void R_load_gnome_shlib(void); /* in dynload.c */
 	and in unix/aqua.c
 */
 Rboolean useaqua = FALSE;
-Rboolean CocoaGUI = FALSE;
-Rboolean useCocoa = FALSE;
 #endif
 
 
+void R_setupHistory()
+{
+    int value, ierr;
+    char *p;
+
+    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
+        R_HistoryFile = ".Rhistory";
+    R_HistorySize = 512;
+    if ((p = getenv("R_HISTSIZE"))) {
+        value = R_Decode2Long(p, &ierr);
+        if (ierr != 0 || value < 0)
+            R_ShowMessage("WARNING: invalid R_HISTSIZE ignored;");
+        else
+            R_HistorySize = value;
+    }
+}
+
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
+/* on MacOS X it seems sys/resource.h needs sys/time.h first */
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# endif
+# include <sys/resource.h>
+# ifdef HAVE_LIBC_STACK_END
+extern void * __libc_stack_end;
+# endif
+# ifdef HAVE_KERN_USRSTACK
+#  include <unistd.h>
+#  include <sys/types.h>
+#  include <sys/sysctl.h>
+# endif
+#endif
+
+int R_running_as_main_program = 0;
+
 int Rf_initialize_R(int ac, char **av)
 {
-    int i, ioff = 1, j, value, ierr;
-    Rboolean useX11 = TRUE, usegnome = FALSE, useTk = FALSE;
+    int i, ioff = 1, j;
+    Rboolean useX11 = TRUE, useTk = FALSE;
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
+
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX+20];
+#endif
+
+#if defined(HAVE_SYS_RESOURCE_H) && defined(HAVE_GETRLIMIT)
+{
+    struct rlimit rlim;
+
+    {
+        int ii;
+	/* 1 is downwards */
+        R_CStackDir = ((uintptr_t)&i > (uintptr_t)&ii) ? 1 : -1;
+    }
+
+    if(getrlimit(RLIMIT_STACK, &rlim) == 0) {
+	unsigned long lim1, lim2;
+	lim1 = (unsigned long) rlim.rlim_cur;
+	lim2 = (unsigned long) rlim.rlim_max; /* Usually unlimited */
+        R_CStackLimit = lim1 < lim2 ? lim1 : lim2;
+    }
+#if defined(HAVE_LIBC_STACK_END)
+    R_CStackStart = (uintptr_t) __libc_stack_end;
+#elif defined(HAVE_KERN_USRSTACK)
+    {
+	/* Borrowed from mzscheme/gc/os_dep.c */
+	int nm[2] = {CTL_KERN, KERN_USRSTACK};
+	void * base;
+	size_t len = sizeof(void *);
+	int r = sysctl(nm, 2, &base, &len, NULL, 0);
+	R_CStackStart = (uintptr_t) base;
+    }
+#else
+    if(R_running_as_main_program) {
+	/* This is not the main program, but unless embedded it is 
+	   near the top, 5540 bytes away when checked. */
+	R_CStackStart = (uintptr_t) &i + (6000 * R_CStackDir);
+    }
+#endif
+    if(R_CStackStart == -1) R_CStackLimit = -1; /* never set */
+    
+    /* printf("stack limit %ld, start %lx dir %d \n", R_CStackLimit, 
+              R_CStackStart, R_CStackDir); */
+}
+#endif
 
     ptr_R_Suicide = Rstd_Suicide;
     ptr_R_ShowMessage = Rstd_ShowMessage;
@@ -114,6 +195,8 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_ChooseFile = Rstd_ChooseFile;
     ptr_R_loadhistory = Rstd_loadhistory;
     ptr_R_savehistory = Rstd_savehistory;
+    ptr_R_addhistory = Rstd_addhistory;
+    ptr_R_EditFile = NULL; /* for future expansion */
     R_timeout_handler = NULL;
     R_timeout_val = 0;
 
@@ -121,6 +204,21 @@ int Rf_initialize_R(int ac, char **av)
 
     if((R_Home = R_HomeDir()) == NULL)
 	R_Suicide("R home directory is not defined");
+#ifdef ENABLE_NLS
+    setlocale(LC_MESSAGES,"");
+    textdomain(PACKAGE);
+    {
+	char *p = getenv("R_SHARE_DIR");
+	if(p) {
+	    strcpy(localedir, p);
+	    strcat(localedir, "/locale");
+	} else {
+	    strcpy(localedir, R_Home);
+	    strcat(localedir, "/share/locale");
+	}
+    }
+    bindtextdomain(PACKAGE, localedir);
+#endif
 
     process_system_Renviron();
 
@@ -142,7 +240,8 @@ int Rf_initialize_R(int ac, char **av)
 		if(i+1 < ac) {
 		    avv++; p = *avv; ioff++;
 		} else {
-		    sprintf(msg, "WARNING: --gui or -g without value ignored");
+		    sprintf(msg,
+			    _("WARNING: --gui or -g without value ignored"));
 		    R_ShowMessage(msg);
 		    p = "X11";
 		}
@@ -150,12 +249,12 @@ int Rf_initialize_R(int ac, char **av)
 	    if(!strcmp(p, "none"))
 		useX11 = FALSE;
 	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
-		usegnome = TRUE;
+		;
 #ifdef HAVE_AQUA
 	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
 		useaqua = TRUE;
-	    else if(!strcmp(p, "cocoa") || !strcmp(p, "COCOA"))
-		useCocoa = TRUE;
+	    else if(!strcmp(p, "cocoa") || !strcmp(p, "Cocoa"))
+		useaqua = TRUE;
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
@@ -164,10 +263,10 @@ int Rf_initialize_R(int ac, char **av)
 	    else {
 #ifdef HAVE_X11
 		snprintf(msg, 1024,
-			 "WARNING: unknown gui `%s', using X11\n", p);
+			 _("WARNING: unknown gui '%s', using X11\n"), p);
 #else
 		snprintf(msg, 1024,
-			 "WARNING: unknown gui `%s', using none\n", p);
+			 _("WARNING: unknown gui '%s', using none\n"), p);
 #endif
 		R_ShowMessage(msg);
 	    }
@@ -181,26 +280,11 @@ int Rf_initialize_R(int ac, char **av)
     }
 
 #ifdef HAVE_X11
-    if(useX11) {
-	if(!usegnome) {
-	    R_GUIType = "X11";
-	} else {
-#ifndef HAVE_GNOME
-	    R_Suicide("GNOME GUI is not available in this version");
-#endif
-	    R_load_gnome_shlib();
-	    R_GUIType = "GNOME";
-	    ptr_gnome_start(ac, av, Rp);
-	    /* this will never return, but for safety */
-	    return 0;
-	}
-    }
+    if(useX11) R_GUIType = "X11";
 #endif /* HAVE_X11 */
 #ifdef HAVE_AQUA
-    if(useaqua) {
-	R_load_aqua_shlib();
+    if(useaqua)
 	R_GUIType = "AQUA";
-    }
 #endif
 #ifdef HAVE_TCLTK
     if(useTk) {
@@ -220,11 +304,11 @@ int Rf_initialize_R(int ac, char **av)
 		    break; 
 		else
 #endif
-		snprintf(msg, 1024, "WARNING: unknown option %s\n", *av);
+		snprintf(msg, 1024, _("WARNING: unknown option '%s'\n"), *av);
 		R_ShowMessage(msg);
 	    }
 	} else {
-	    snprintf(msg, 1024, "ARGUMENT '%s' __ignored__\n", *av);
+	    snprintf(msg, 1024, _("ARGUMENT '%s' __ignored__\n"), *av);
 	    R_ShowMessage(msg);
 	}
     }
@@ -262,26 +346,12 @@ int Rf_initialize_R(int ac, char **av)
  */
     if (!R_Interactive && Rp->SaveAction != SA_SAVE && 
 	Rp->SaveAction != SA_NOSAVE)
-	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
+	R_Suicide(_("you must specify '--save', '--no-save' or '--vanilla'"));
 
-    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
-	R_HistoryFile = ".Rhistory";
-    R_HistorySize = 512;
-    if ((p = getenv("R_HISTSIZE"))) {
-	value = R_Decode2Long(p, &ierr);
-	if (ierr != 0 || value < 0)
-	    R_ShowMessage("WARNING: invalid R_HISTSIZE ignored;");
-	else
-	    R_HistorySize = value;
-    }
+    R_setupHistory();
     if (R_RestoreHistory)
 	Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
-
-#ifdef HAVE_AQUA
-    if(useaqua & !CocoaGUI)
-		R_StartConsole(TRUE);
-#endif
 
  return(0);
 }
@@ -291,7 +361,7 @@ int Rf_initialize_R(int ac, char **av)
        editors.  If the file does not exist then the editor should be
        opened to create a new file.  On GUI platforms multiple files
        can be opened in separate editor windows, but this currently
-       only works on Windows, not Aqua.
+       only works on Windows and Aqua.
     */
 
     /*
@@ -299,22 +369,30 @@ int Rf_initialize_R(int ac, char **av)
      *     file    = array of filenames
      *     editor  = editor to be used.
      */
-
+/*#ifdef HAVE_AQUA
+extern DL_FUNC ptr_Raqua_Edit;
+#endif
+*/
 int R_EditFiles(int nfile, char **file, char **title, char *editor)
 {
     char  buf[1024];
+#if defined(HAVE_AQUA)
+	if (useaqua){
+		return(ptr_R_EditFiles(nfile, file, title, editor));		
+	}
+#endif
 
     if (nfile > 0) {
 	if (nfile > 1)
-	    R_ShowMessage("WARNING: Only editing the first in the list of files");
+	    R_ShowMessage(_("WARNING: Only editing the first in the list of files"));
 
 #if defined(HAVE_AQUA)
-	if (!strcmp(R_GUIType, "AQUA"))
-	    Raqua_Edit(file[0]);
+	if (ptr_R_EditFile)
+	    ptr_R_EditFile(file[0]);
 	else {
 #endif
 	    /* Quote path if necessary */
-	    if (editor[0] != '"' && strchr(editor, ' '))
+	    if (editor[0] != '"' && Rf_strchr(editor, ' '))
 		snprintf(buf, 1024, "\"%s\" \"%s\"", editor, file[0]);
 	    else
 		snprintf(buf, 1024, "%s \"%s\"", editor, file[0]);

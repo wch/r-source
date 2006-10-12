@@ -15,21 +15,21 @@ acf <-
     x.freq <- frequency(x)
     x <- as.matrix(x)
     if(!is.numeric(x))
-        stop("`x' must be numeric")
+        stop("'x' must be numeric")
     sampleT <- nrow(x)
     nser <- ncol(x)
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
-    if (lag.max < 1) stop("lag.max must be at least 1")
+    if (lag.max < 1) stop("'lag.max' must be at least 1")
     if(demean) x <- sweep(x, 2, colMeans(x, na.rm = TRUE))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
-    acf <- array(.C("acf",
+    acf <- array(.C(R_acf,
                     as.double(x), as.integer(sampleT), as.integer(nser),
                     as.integer(lag.max), as.integer(type=="correlation"),
-                    acf=double((lag.max+1) * nser * nser), NAOK = TRUE,
-                    PACKAGE = "stats")$acf, c(lag.max + 1, nser, nser))
+                    acf=double((lag.max+1) * nser * nser), NAOK = TRUE
+                    )$acf, c(lag.max + 1, nser, nser))
     lag <- outer(0:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = type,
         n.used = sampleT, lag = lag, series = series, snames = colnames(x)),
@@ -47,17 +47,17 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
 {
     series <- deparse(substitute(x))
     x <- drop(na.action(as.ts(x)))  # use univariate code for a single series
-    if(!is.numeric(x)) stop("`x' must be numeric")
+    if(!is.numeric(x)) stop("'x' must be numeric")
     x.freq <- frequency(x)
     sampleT <- NROW(x)
     if (is.null(lag.max))
         lag.max <- if(is.matrix(x)) floor(10 * (log10(sampleT) - log10(ncol(x))))
         else floor(10 * (log10(sampleT)))
     lag.max <- min(lag.max, sampleT - 1)
-    if (lag.max < 1) stop("lag.max must be at least 1")
+    if (lag.max < 1) stop("'lag.max' must be at least 1")
 
     if(is.matrix(x)) {
-        if(any(is.na(x))) stop("NAs in x")
+        if(any(is.na(x))) stop("NAs in 'x'")
         nser <- ncol(x)
         x <- sweep(x, 2, colMeans(x))
         lag <- matrix(1, nser, nser)
@@ -69,10 +69,10 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
         x <- scale(x, TRUE, FALSE)
         acf <- drop(acf(x, lag.max = lag.max, plot = FALSE,
                         na.action = na.action)$acf)
-        pacf <- array(.C("uni_pacf",
+        pacf <- array(.C(R_uni_pacf,
                          as.double(acf),
                          pacf = double(lag.max),
-                         as.integer(lag.max), PACKAGE="stats")$pacf,
+                         as.integer(lag.max))$pacf,
                       dim=c(lag.max,1,1))
         lag <- array((1:lag.max)/x.freq, dim=c(lag.max,1,1))
         snames <- NULL
@@ -141,8 +141,20 @@ plot.acf <-
         }
     }
 
+    if (is.null(ylim)) {
+        ## Calculate a common scale
+        ylim <- range(x$acf[, 1:nser, 1:nser], na.rm = TRUE)
+        if (with.ci) ylim <- range(c(-clim0, clim0, ylim))
+        if (with.ci.ma) {
+	    for (i in 1:nser) {
+                clim <- clim0 * sqrt(cumsum(c(1, 2*x$acf[-1, i, i]^2)))
+                ylim <- range(c(-clim, clim, ylim))
+            }
+        }
+    }
+
     for (I in 1:Npgs) for (J in 1:Npgs) {
-        ## Page [ I , J ] : Now do   nr x nr  `panels' on this page
+        ## Page [ I , J ] : Now do   nr x nr  'panels' on this page
         iind <- (I-1)*nr + 1:nr
         jind <- (J-1)*nr + 1:nr
         if(verbose)
@@ -158,11 +170,6 @@ plot.acf <-
             else {
                 clim <- if (with.ci.ma && i == j)
                     clim0 * sqrt(cumsum(c(1, 2*x$acf[-1, i, j]^2))) else clim0
-                if (is.null(ylim)) {
-                    ymin <- min(c(x$acf[, i, j], -clim), na.rm = TRUE)
-                    ymax <- max(c(x$acf[, i, j], clim), na.rm = TRUE)
-                    ylim <- c(ymin, ymax)
-                }
                 plot(x$lag[, i, j], x$acf[, i, j], type = type, xlab = xlab,
                      ylab = if(j==1) ylab else "", ylim = ylim, ...)
                 abline(h = 0)
@@ -191,8 +198,8 @@ ccf <- function(x, y, lag.max = NULL,
     type <- match.arg(type)
     if(is.matrix(x) || is.matrix(y))
         stop("univariate time series only")
-    X <- na.action(ts.union(as.ts(x), as.ts(y)))
-    colnames(X) <- c(deparse(substitute(x)), deparse(substitute(y)))
+    X <- na.action(ts.intersect(as.ts(x), as.ts(y)))
+    colnames(X) <- c(deparse(substitute(x))[1], deparse(substitute(y))[1])
     acf.out <- acf(X, lag.max = lag.max, plot = FALSE, type = type)
     lag <- c(rev(acf.out$lag[-1,2,1]), acf.out$lag[,1,2])
     y   <- c(rev(acf.out$acf[-1,2,1]), acf.out$acf[,1,2])
@@ -205,12 +212,13 @@ ccf <- function(x, y, lag.max = NULL,
     } else return(acf.out)
 }
 
-"[.acf" <- function(x, i, j=1:nser)
+"[.acf" <- function(x, i, j)
 {
-    nser <- ncol(x$lag)
-    ii <- match(i, x$lag[,1,1], nomatch=NA)
-    x$acf <- x$acf[ii,j,j, drop=FALSE]
-    x$lag <- x$lag[ii,j,j, drop=FALSE]
+    if(missing(j)) j <- seq_len(ncol(x$lag))
+    ii <- if(missing(i)) seq_len(nrow(x$lag))
+    else match(i, x$lag[, 1, 1], nomatch = NA)
+    x$acf <- x$acf[ii, j, j, drop = FALSE]
+    x$lag <- x$lag[ii, j, j, drop = FALSE]
     x
 }
 

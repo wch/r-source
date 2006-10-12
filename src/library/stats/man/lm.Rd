@@ -19,43 +19,50 @@ lm(formula, data, subset, weights, na.action,
   \item{formula}{a symbolic description of the model to be fit.
     The details of model specification are given below.}
 
-  \item{data}{an optional data frame containing the variables
-    in the model.  If not found in \code{data}, the variables are taken
-    from \code{environment(formula)}, typically the environment from which
-    \code{lm} is called.}
+  \item{data}{an optional data frame, list or environment (or object
+    coercible by \code{\link{as.data.frame}} to a data frame) containing
+    the variables in the model.  If not found in \code{data}, the
+    variables are taken from \code{environment(formula)},
+    typically the environment from which \code{lm} is called.}
 
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}
 
-  \item{weights}{an optional vector of weights to be used
-    in the fitting process. If specified, weighted least squares is used
-    with weights \code{weights} (that is, minimizing \code{sum(w*e^2)});
-    otherwise ordinary least squares is used.}
+  \item{weights}{an optional vector of weights to be used in the fitting
+    process.  Should be \code{NULL} or a numeric vector.
+    If non-NULL, weighted least squares is used with weights
+    \code{weights} (that is, minimizing \code{sum(w*e^2)}); otherwise
+    ordinary least squares is used.}
 
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
     the \code{na.action} setting of \code{\link{options}}, and is
-    \code{\link{na.fail}} if that is unset. The \dQuote{factory-fresh}
-    default is \code{\link{na.omit}}.}
+    \code{\link{na.fail}} if that is unset.  The \dQuote{factory-fresh}
+    default is \code{\link{na.omit}}.  Another possible value is
+    \code{NULL}, no action.  Value \code{\link{na.exclude}} can be useful.}
 
   \item{method}{the method to be used; for fitting, currently only
-    \code{method="qr"} is supported; \code{method="model.frame"} returns
+    \code{method = "qr"} is supported; \code{method = "model.frame"} returns
     the model frame (the same as with \code{model = TRUE}, see below).}
 
   \item{model, x, y, qr}{logicals.  If \code{TRUE} the corresponding
     components of the fit (the model frame, the model matrix, the
-    response, the QR decomposition) are returned.}
+    response, the QR decomposition) are returned.
+  }
 
   \item{singular.ok}{logical. If \code{FALSE} (the default in S but
     not in \R) a singular fit is an error.}
 
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
-    of \code{model.matrix.default}.}
+    of \code{\link{model.matrix.default}}.}
 
   \item{offset}{this can be used to specify an \emph{a priori}
     known component to be included in the linear predictor
-    during fitting.  An \code{\link{offset}} term can be included in the
-    formula instead or as well, and if both are specified their sum is used.}
+    during fitting.  This should be \code{NULL} or a numeric vector of
+    length either one or equal to the number of cases.
+    One or more \code{\link{offset}} terms can be included in the
+    formula instead or as well, and if both are specified their sum is
+    used.  See \code{\link{model.offset}}.}
 
   \item{\dots}{additional arguments to be passed to the low level
     regression fitting functions (see below).}
@@ -71,17 +78,24 @@ lm(formula, data, subset, weights, na.action,
   terms obtained by taking the interactions of all terms in \code{first}
   with all terms in \code{second}.  The specification \code{first*second}
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
-  the same as \code{first + second + first:second}.  If \code{response} 
-  is a matrix a linear model is fitted to each column of the matrix.
+  the same as \code{first + second + first:second}.
+
+  If the formula includes an \code{\link{offset}}, this is evaluated and
+  subtracted from the response.
+
+  If \code{response} is a matrix a linear model is fitted separately by
+  least-squares to each column of the matrix.
+
   See \code{\link{model.matrix}} for some further details.  The terms in
   the formula will be re-ordered so that main effects come first,
   followed by the interactions, all second-order, all third-order and so
-  on: to avoid this pass a \code{terms} object as the formula.
+  on: to avoid this pass a \code{terms} object as the formula (see
+  \code{\link{aov}} and \code{demo(glm.vr)} for an example).
 
   A formula has an implied intercept term.  To remove this use either
   \code{y ~ x - 1} or \code{y ~ 0 + x}.  See \code{\link{formula}} for
   more details of allowed formulae.
-  
+
   \code{lm} calls the lower level functions \code{\link{lm.fit}}, etc,
   see below, for the actual numerical computations.  For programming
   only, you may consider doing likewise.
@@ -114,6 +128,7 @@ lm(formula, data, subset, weights, na.action,
   \item{contrasts}{(only where relevant) the contrasts used.}
   \item{xlevels}{(only where relevant) a record of the levels of the
     factors used in fitting.}
+  \item{offset}{the offset used (missing if none were used).}
   \item{y}{if requested, the response used.}
   \item{x}{if requested, the model matrix used.}
   \item{model}{if requested (the default), the model frame used.}
@@ -123,6 +138,23 @@ lm(formula, data, subset, weights, na.action,
   fit, for use by extractor functions such as \code{summary} and
   \code{\link{effects}}.
 }
+\section{Using time series}{
+  Considerable care is needed when using \code{lm} with time series.
+
+  Unless \code{na.action = NULL}, the time series attributes are
+  stripped from the variables before the regression is done.  (This is
+  necessary as omitting \code{NA}s would invalidate the time series
+  attributes, and if \code{NA}s are omitted in the middle of the series
+  the result would no longer be a regular time series.)
+
+  Even if the time series attributes are retained, they are not used to
+  line up series, so that the time shift of a lagged or differenced
+  regressor would be ignored.  It is good practice to prepare a
+  \code{data} argument by \code{\link{ts.intersect}(\dots, dframe = TRUE)},
+  then apply a suitable \code{na.action} to that data frame and call
+  \code{lm} with \code{na.action = NULL} so that residuals and fitted
+  values are time series.
+}
 \seealso{
   \code{\link{summary.lm}} for summaries and \code{\link{anova.lm}} for
   the ANOVA table; \code{\link{aov}} for a different interface.
@@ -131,7 +163,8 @@ lm(formula, data, subset, weights, na.action,
   \code{\link{residuals}}, \code{\link{fitted}}, \code{\link{vcov}}.
 
   \code{\link{predict.lm}} (via \code{\link{predict}}) for prediction,
-  including confidence and prediction intervals.
+  including confidence and prediction intervals;
+  \code{\link{confint}} for confidence intervals of \emph{parameters}.
 
   \code{\link{lm.influence}} for regression diagnostics, and
   \code{\link{glm}} for \bold{generalized} linear models.
@@ -139,6 +172,15 @@ lm(formula, data, subset, weights, na.action,
   The underlying low level functions,
   \code{\link{lm.fit}} for plain, and \code{\link{lm.wfit}} for weighted
   regression fitting.
+
+  More \code{lm()} examples are available e.g., in
+  \code{\link[datasets]{anscombe}},
+  \code{\link[datasets]{attitude}},
+  \code{\link[datasets]{freeny}},
+  \code{\link[datasets]{LifeCycleSavings}},
+  \code{\link[datasets]{longley}},
+  \code{\link[datasets]{stackloss}},
+  \code{\link[datasets]{swiss}}.
 }
 \references{
   Chambers, J. M. (1992)
@@ -179,5 +221,7 @@ par(opar)
 ## model frame :
 stopifnot(identical(lm(weight ~ group, method = "model.frame"),
                     model.frame(lm.D9)))
+
+### less simple examples in "See Also" above
 }
 \keyword{regression}

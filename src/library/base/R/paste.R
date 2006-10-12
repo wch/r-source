@@ -4,7 +4,7 @@ paste <- function (..., sep = " ", collapse = NULL)
     if(length(args) == 0)
         if(length(collapse) == 0) character(0) else ""
     else {
-	for(i in seq(along = args)) args[[i]] <- as.character(args[[i]])
+	for(i in seq_along(args)) args[[i]] <- as.character(args[[i]])
 	.Internal(paste(args, sep, collapse))
     }
 }

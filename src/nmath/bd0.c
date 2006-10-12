@@ -18,7 +18,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *
  *  DESCRIPTION
@@ -28,16 +28,18 @@
  *	where M = E[X] = n*p (or = lambda), for	  x, M > 0
  *
  *	in a manner that should be stable (with small relative error)
- *	for all x and np. In particular for x/np close to 1, direct
+ *	for all x and M=np. In particular for x/np close to 1, direct
  *	evaluation fails, and evaluation is based on the Taylor series
  *	of log((1+v)/(1-v)) with v = (x-np)/(x+np).
  */
 #include "nmath.h"
 
-double bd0(double x, double np)
+double attribute_hidden bd0(double x, double np)
 {
     double ej, s, s1, v;
     int j;
+
+    if(!R_FINITE(x) || !R_FINITE(np) || np == 0.0) ML_ERR_return_NAN;
 
     if (fabs(x-np) < 0.1*(x+np)) {
 	v = (x-np)/(x+np);

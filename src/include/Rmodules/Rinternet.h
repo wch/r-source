@@ -9,7 +9,7 @@ typedef SEXP (*R_DownloadRoutine)(SEXP call, SEXP op, SEXP args, SEXP env);
 typedef Rconnection (*R_NewUrlRoutine)(char *description, char *mode);
 typedef Rconnection (*R_NewSockRoutine)(char *host, int port, int server, char *mode); 
 
-typedef void * (*R_HTTPOpenRoutine)(const char *url, const int cacheOK);
+typedef void * (*R_HTTPOpenRoutine)(const char *url, const char *headers, const int cacheOK);
 typedef int    (*R_HTTPReadRoutine)(void *ctx, char *dest, int len);
 typedef void   (*R_HTTPCloseRoutine)(void *ctx);
 	      

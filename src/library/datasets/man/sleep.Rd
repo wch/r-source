@@ -1,5 +1,6 @@
 \name{sleep}
 \docType{data}
+\encoding{latin1}
 \alias{sleep}
 \title{Student's Sleep Data}
 \description{
@@ -20,7 +21,7 @@
   \emph{Biometrika}, \bold{6}, 20.
 }
 \references{
-  Scheffé, Henry (1959)
+  \enc{Scheffé}{Scheffe}, Henry (1959)
   \emph{The Analysis of Variance}.
   New York, NY: Wiley.
 }

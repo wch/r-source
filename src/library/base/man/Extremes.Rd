@@ -15,31 +15,28 @@ pmax(\dots, na.rm=FALSE)
 pmin(\dots, na.rm=FALSE)
 }
 \arguments{
-  \item{\dots}{numeric arguments.}
+  \item{\dots}{numeric arguments (see Note).}
   \item{na.rm}{a logical indicating whether missing values should be
     removed.}
 }
 \value{
-  \code{max} and \code{min} return the maximum or minimum of all the
-  values present in their arguments, as \code{\link{integer}} if all are
-  \code{integer}, % and at least one is nonempty
+  \code{max} and \code{min} return the maximum or minimum of \emph{all}
+  the  values present in their arguments, as \code{\link{integer}} if
+  all are \code{integer}, % and at least one is nonempty
   or as \code{\link{double}} otherwise.
 
   The minimum and maximum of an empty set are \code{+Inf} and \code{-Inf}
   (in this order!) which ensures \emph{transitivity}, e.g.,
-  \code{min(x1, min(x2)) == min(x1,x2)}.
-  In \R versions before 1.5, \code{min(integer(0)) == .Machine$integer.max},
-  and analogously for \code{max}, preserving argument \emph{type},
-  whereas from \R version 1.5.0, \code{max(x) == -Inf} and
-  \code{min(x) == +Inf} whenever \code{length(x) == 0} (after removing
-  missing values if requested).
+  \code{min(x1, min(x2)) == min(x1, x2)}.  From \R version 1.5.0,
+  \code{max(x) == -Inf} and \code{min(x) == +Inf} whenever
+  \code{length(x) == 0} (after removing missing values if requested).
 
   If \code{na.rm} is \code{FALSE} an \code{NA} value in any of the
   arguments will cause a value of \code{NA} to be returned, otherwise
   \code{NA} values are ignored.
 
   \code{pmax} and \code{pmin} take several vectors (or matrices) as arguments and
-  return a single vector giving the parallel maxima (or minima) of the
+  return a single vector giving the \dQuote{parallel} maxima (or minima) of the
   vectors.  The first element of the result is the maximum (minimum) of
   the first elements of all the arguments, the second element of the
   result is the maximum (minimum) of the second elements of all the
@@ -51,12 +48,26 @@ pmin(\dots, na.rm=FALSE)
   \code{\link{dim}}) are transferred from the first argument (if applicable).
 
   \code{max} and \code{min} are generic functions: methods can be defined
-  for them individually or via the \code{\link{Summary}} group generic.
+  for them individually or via the \code{\link[base:groupGeneric]{Summary}}
+  group generic.
+  For this to work properly, the arguments \code{\dots} should be
+  unnamed, and dispatch is on the first argument.
+
+  By definition the min/max of any vector containing an \code{NaN} is
+  \code{NaN}, except that the min/max of any vector containing an \code{NA}
+  is \code{NA} even if it also contains an \code{NaN}.  Note that
+  \code{max(NA, Inf) == NA} even though the maximum would be \code{inf}
+  whatever the missing value actually is.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+}
+\note{
+  \sQuote{Numeric} arguments are vectors of type integer and numeric,
+  and logical (coerced to integer).  For historical reasons, \code{NULL}
+  is accepted as equivalent to \code{integer(0)}.% PR#1283
 }
 \seealso{
   \code{\link{range}} (\emph{both} min and max) and
@@ -65,8 +76,9 @@ pmin(\dots, na.rm=FALSE)
 }
 \examples{
 require(stats)
-min(5:1,pi)
-pmin(5:1, pi)
+ min(5:1, pi) #-> one number
+pmin(5:1, pi) #->  5  numbers
+
 x <- sort(rnorm(100));  cH <- 1.35
 pmin(cH, quantile(x)) # no names
 pmin(quantile(x), cH) # has names

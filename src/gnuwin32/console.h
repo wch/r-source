@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file console.h
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 2004-6      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 typedef window console;
@@ -29,7 +29,7 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
 		  int rows, int cols, int consx, int consy,
 		  rgb nfg, rgb nufg, rgb nbg, rgb high,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,
-		  int bufbytes, int buflines);
+		  int bufbytes, int buflines, int buffered);
 pager newpager(char *title, char *filename, char *header, int unlinkonexit);
 console newconsole(char *name, int flags);
 int  consolereads(console c, char *prompt, char *buf, int len,
@@ -54,7 +54,6 @@ void drawconsole(control c, rect r);
 void consoleclear(control c);
 
 extern int setWidthOnResize;
+extern int consolebuffered;
 int consolecols(console c);
 void pagerbclose(control m);
-
-int graphicsx, graphicsy;

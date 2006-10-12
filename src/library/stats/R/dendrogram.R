@@ -9,7 +9,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     z <- list()
     nMerge <- length(oHgt <- object$height)
     if (nMerge != nrow(object$merge))
-	stop("`merge' and `height' do not fit!")
+	stop("'merge' and 'height' do not fit!")
     hMax <- oHgt[nMerge]
     one <- 1:1;	   two <- 2:2 # integer!
     for (k in 1:nMerge) {
@@ -60,7 +60,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     z
 }
 
-### MM: `FIXME'	 (2002-05-14):
+### MM: 'FIXME'	 (2002-05-14):
 ###	 =====
 ## We currently (mis)use a node's "members" attribute for two things:
 ## 1) #{sub nodes}
@@ -114,7 +114,7 @@ midcache.dendrogram <- function (x, type = "hclust")
 ##  Martin Maechler, 15 May 2002
 print.dendrogram <- function(x, digits = getOption("digits"), ...)
 {
-    cat("`dendrogram' ")
+    cat("'dendrogram' ")
     if(is.leaf(x))
 	cat("leaf '", format(attr(x, "label"), digits = digits),"'", sep='')
     else
@@ -134,17 +134,14 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 ## -- e.g. when 'object' is part of a larger structure which *is* str()ed
 ## with default max.level= 0,  the dendrogram shouldn't be str()ed to all levels
 
-    ## FIXME: `wid' argument is currently disregarded
     pasteLis <- function(lis, dropNam, sep = " = ") {
 	## drop uninteresting "attributes" here
 	lis <- lis[!(names(lis) %in% dropNam)]
-	fl <- sapply(lis, format, digits=digits.d, wid=wid)
+	fl <- sapply(lis, format, digits=digits.d)
 	paste(paste(names(fl), fl, sep=sep), collapse = ", ")
     }
 
-    nind <- nchar(istr <- indent.str)
-    if(substr(istr, nind,nind) == " ")
-       substr(istr, nind,nind) <- "`"
+    istr <- sub(" $", "`", indent.str)
     cat(istr, stem, sep="")
 
     at <- attributes(object)
@@ -200,10 +197,10 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 plot.dendrogram <-
     function (x, type = c("rectangle", "triangle"), center = FALSE,
 	      edge.root = is.leaf(x) || !is.null(attr(x, "edgetext")),
-	      nodePar = NULL, xaxt="n", yaxt="s",
-	      edgePar = list(), leaflab= c("perpendicular", "textlike", "none"),
-              dLeaf = NULL, xlab = "", ylab = "",
-              horiz = FALSE, frame.plot = FALSE, ...)
+	      nodePar = NULL, edgePar = list(),
+	      leaflab = c("perpendicular", "textlike", "none"), dLeaf = NULL,
+	      xlab = "", ylab = "", xaxt="n", yaxt="s",
+	      horiz = FALSE, frame.plot = FALSE, ...)
 {
     type <- match.arg(type)
     leaflab <- match.arg(leaflab)
@@ -420,7 +417,7 @@ cut.dendrogram <- function(x, h, ...)
     assignNodes <- function(subtree, h) {
 	if(!is.leaf(subtree)) {
 	    if(!(K <- length(subtree)))
-		stop("non leaf ", sQuote("subtree"), " of length 0 !!")
+		stop("non-leaf subtree of length 0")
 	    new.mem <- 0:0
 	    for(k in 1:K) {
                 sub <- subtree[[k]]
@@ -458,7 +455,7 @@ is.leaf <- function(object) (is.logical(L <- attr(object, "leaf"))) && L
 ## *Not* a method (yet):
 order.dendrogram <- function(x) {
     if( !inherits(x, "dendrogram") )
-	stop("order.dendrogram requires a dendrogram")
+	stop("'order.dendrogram' requires a dendrogram")
     unlist(x)
 }
 
@@ -533,7 +530,7 @@ dendrapply <- function(X, FUN, ...)
 	r <- FUN(d, ...)
 	if(!is.leaf(d)) {
             if(!is.list(r)) r <- as.list(r) # fixing unsafe FUN()s
-            for(j in seq(length = length(d)))
+            for(j in seq_along(d))
                 r[[j]] <- Napply(d[[j]])
         }
 	r
@@ -557,13 +554,13 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 {
     scale <- if(symm && missing(scale)) "none" else match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
-	stop("`x' must be a numeric matrix")
+	stop("'x' must be a numeric matrix")
     nr <- di[1]
     nc <- di[2]
     if(nr <= 1 || nc <= 1)
-	stop("`x' must have at least 2 rows and 2 columns")
+	stop("'x' must have at least 2 rows and 2 columns")
     if(!is.numeric(margins) || length(margins) != 2)
-	stop("`margins' must be a numeric vector of length 2")
+	stop("'margins' must be a numeric vector of length 2")
 
     doRdend <- !identical(Rowv,NA)
     doCdend <- !identical(Colv,NA)

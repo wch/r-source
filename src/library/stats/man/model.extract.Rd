@@ -15,8 +15,8 @@ model.weights(x)
  \item{component}{literal character string or name. The name of a
    component to extract, such as \code{"weights"}, \code{"subset"}.}
  \item{type}{One of \code{"any"}, \code{"numeric"}, \code{"double"}.
-   Using the either of latter two coerces the result to have
-   storage mode \code{"double"}.}
+   Using either of latter two coerces the result to have storage mode
+   \code{"double"}.}
 }
 \description{Returns the response, offset, subset, weights or other
   special components of a model frame passed as optional arguments to
@@ -29,8 +29,11 @@ model.weights(x)
   \code{\link{glm}} fit.
 
   \code{model.offset} and \code{model.response} are equivalent to
-  \code{model.frame(, "offset")} and \code{model.frame(, "response")}
-  respectively.
+  \code{model.extract(, "offset")} and \code{model.extract(, "response")}
+  respectively.  \code{model.offset} sums any terms specified by
+  \code{\link{offset}} terms in the formula or by \code{offset} arguments
+  in the call producing the model frame: it does check that the offset
+  is numeric.
 
   \code{model.weights} is slightly different from
   \code{model.frame(, "weights")} in not naming the vector it returns.

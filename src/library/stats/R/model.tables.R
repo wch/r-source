@@ -3,11 +3,12 @@ model.tables <- function(x, ...) UseMethod("model.tables")
 model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
 {
     if(inherits(x, "maov"))
-	stop("model.tables is not implemented for multiple responses")
+	stop("'model.tables' is not implemented for multiple responses")
     type <- match.arg(type, c("effects", "means", "residuals"))
     if(type == "residuals")
-	stop(paste("type", type, "not implemented yet"))
+	stop(gettextf("type '%s' is not implemented yet", type), domain = NA)
     prjs <- proj(x, unweighted.scale = TRUE)
+    if(is.null(x$call)) stop("this fit does not inherit from \"lm\"")
     mf <- model.frame(x)
     factors <- attr(prjs, "factors")
     dn.proj <- as.list(names(factors))
@@ -22,7 +23,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
     ## with cterms, can specify subset of tables by name
     if(!missing(cterms)) {
 	if(any(is.na(match(cterms, names(factors)))))
-	    stop("cterms parameter must match terms in model object")
+	    stop("'cterms' argument must match terms in model object")
 	dn.proj <- dn.proj[cterms]
 	m.factors <- m.factors[cterms]
     }
@@ -36,11 +37,14 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
     }
     tables <- make.tables.aovproj(dn.proj, m.factors, prjs, mf)
 
-    n <- replications(paste("~", paste(names(tables), collapse = "+")),
-		      data = mf)
+    ## This was reordering some interaction terms, e.g. N + V:N
+    ##n <- replications(paste("~", paste(names(tables), collapse = "+")),
+    ##		      data = mf)
+    n <- NULL
+    for(xx in names(tables)) n <- c(n, replications(paste("~", xx), data=mf))
     if(se)
 	if(is.list(n)) {
-	    cat("Design is unbalanced - use se.contrast() for se's\n")
+	    message("Design is unbalanced - use se.contrast() for se's")
 	    se <- FALSE
 	} else se.tables <- se.aov(x, n, type = type)
     if(type == "means") {
@@ -81,7 +85,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 {
     type <- match.arg(type, c("effects", "means", "residuals"))
     if(type == "residuals")
-	stop(paste("type", type, "not implemented yet"))
+	stop(gettextf("type '%s' is not implemented yet", type), domain = NA)
     prjs <- proj(x, unweighted.scale = TRUE)
     mf <- model.frame.aovlist(x)
     factors <- lapply(prjs, attr, "factors")
@@ -138,10 +142,11 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     n <- replications(attr(x, "call"), data = mf)
     if(se)
 	if(type == "effects"  && is.list(n)) {
-	    cat("Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through se.contrast.\n")
+	    message("Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through 'se.contrast'.")
 	    se <- FALSE
 	} else if(type != "effects") {
-	    warning(paste("SEs for type ", type, " are not yet implemented"))
+	    warning(gettextf("SEs for type '%s' are not yet implemented",
+                             type), domain = NA)
 	    se <- FALSE
 	} else {
 	    se.tables <- se.aovlist(x, dn.proj, dn.strata, factors, mf,
@@ -158,7 +163,8 @@ se.aovlist <- function(object, dn.proj, dn.strata, factors, mf, efficiency, n,
 		       type = "diff.means", ...)
 {
     if(type != "effects")
-	stop(paste("SEs for type ", type, " are not yet implemented"))
+	stop(gettextf("SEs for type '%s' are not yet implemented", type),
+             domain = NA)
     RSS <- sapply(object, function(x) sum(x$residuals^2)/x$df.resid)
     res <- vector(length = length(n), mode = "list")
     names(res) <- names(n)
@@ -290,18 +296,18 @@ replications <- function(formula, data = NULL, na.action)
     dummy <- numeric(length(attr(data, "row.names")))
     notfactor <- !sapply(data, function(x) inherits(x, "factor"))
     balance <- TRUE
-    for(i in seq(length = n)) {
+    for(i in seq_len(n)) {
 	l <- labels[i]
 	if(o[i] < 1 || substring(l, 1, 5) == "Error") { z[[l]] <- NULL; next }
 	select <- vars[f[, i] > 0]
 	if(any(nn <- notfactor[select])) {
-	    warning(paste("non-factors ignored:",
-			  paste(names(nn), collapse = ", ")))
+	    warning("non-factors ignored: ",
+                    paste(names(nn), collapse = ", "))
 	    next
 	}
 	if(length(select) > 0)
 	    tble <- tapply(dummy, unclass(data[select]), length)
-	nrep <- unique(tble)
+	nrep <- unique(as.vector(tble))
 	if(length(nrep) > 1) {
 	    balance <- FALSE
 	    tble[is.na(tble)] <- 0
@@ -395,33 +401,41 @@ eff.aovlist <- function(aovlist)
     if(names(aovlist)[[1]] == "(Intercept)") aovlist <- aovlist[-1]
     pure.error.strata <- sapply(aovlist, function(x) is.null(x$qr))
     aovlist <- aovlist[!pure.error.strata]
-    proj.len <-
+    s.labs <- names(aovlist)
+    ## find which terms are in which strata
+    s.terms <-
+        lapply(aovlist, function(x) {
+            asgn <- x$assign[x$qr$pivot[1:x$rank]]
+            attr(terms(x), "term.labels")[asgn]
+        })
+    t.labs <- attr(Terms, "term.labels")
+    t.labs <- t.labs[t.labs %in% unlist(s.terms)]
+    eff <- matrix(0, ncol = length(t.labs), nrow = length(s.labs),
+		  dimnames = list(s.labs, t.labs))
+    for(i in names(s.terms)) eff[i, s.terms[[i]] ] <- 1
+    cs <- colSums(eff)
+    ## if all terms are in just one stratum we are done
+    if(all(cs <= 1)) return(eff[, cs > 0, drop = FALSE])
+
+    nm <- t.labs[ cs > 1]
+    pl <-
 	lapply(aovlist, function(x)
 	   {
 	       asgn <- x$assign[x$qr$pivot[1:x$rank]]
-	       sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
-	       sapply(sp, function(x, y) sum(y[x]), y=diag(x$qr$qr)^2)
+	       sp <- split(seq_along(asgn), attr(terms(x), "term.labels")[asgn])
+               sp <- sp[names(sp) %in% nm]
+	       sapply(sp, function(x, y) {
+                   y <- y[x, x, drop = FALSE]
+                   res <- sum(diag(y)^2)
+                   if(nrow(y) > 1 && sum(y^2) > 1.01 * res)
+                       stop("eff.aovlist: non-orthogonal contrasts would give an incorrect answer")
+                   res
+               }, y=x$qr$qr)
 	   })
-    x.len <-
-	lapply(aovlist, function(x) {
-	    X <- as.matrix(qr.X(x$qr)^2)
-	    asgn <- x$assign[x$qr$pivot[1:x$rank]]
-	    sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
-	    sapply(sp, function(x, y) sum(y[,x, drop = FALSE]), y=X)
-	})
-    t.labs <- attr(Terms, "term.labels")
-    s.labs <- names(aovlist)
-    eff <- matrix(0, ncol = length(t.labs), nrow = length(s.labs),
-		  dimnames = list(s.labs, t.labs))
-    ind <- NULL
-    for(i in names(proj.len))
-	ind <- rbind(ind, cbind(match(i, s.labs),
-				match(names(proj.len[[i]]), t.labs)))
-    eff[ind] <- unlist(x.len)
-    x.len <- t(eff) %*% rep.int(1, length(s.labs))
-    eff[ind] <- unlist(proj.len)
-    eff <- sweep(eff, 2, x.len, "/")
-    eff[, x.len != 0, drop = FALSE]
+    for(i in names(pl)) eff[i, names(pl[[i]]) ] <- pl[[i]]
+    cs <- colSums(eff)
+    eff <- eff/rep(cs, each = nrow(eff))
+    eff[, cs != 0, drop = FALSE]
 }
 
 

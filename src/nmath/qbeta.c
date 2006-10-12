@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  The R Development Core Team
+ *  Copyright (C) 1998--2005  The R Development Core Team
  *  based on code (C) 1979 and later Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
 
  * Reference:
@@ -55,25 +55,21 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     double acu;
     volatile double xinbta;
 
-    /* define accuracy and initialize */
-
-    xinbta = alpha;
-
     /* test for admissibility of parameters */
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(q) || ISNAN(alpha))
 	return p + q + alpha;
 #endif
-    R_Q_P01_check(alpha);
-
     if(p < 0. || q < 0.) ML_ERR_return_NAN;
+
+    R_Q_P01_boundaries(alpha, 0, 1);
 
     p_ = R_DT_qIv(alpha);/* lower_tail prob (in any case) */
 
-    if (p_ == 0. || p_ == 1.)
-	return p_;
+    /* initialize */
 
+    xinbta = alpha;
     logbeta = lbeta(p, q);
 
     /* change tail if necessary;  afterwards   0 < a <= 1/2	 */
@@ -137,7 +133,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     tx = prev = 0.;	/* keep -Wall happy */
 
     for (i_pb=0; i_pb < 1000; i_pb++) {
-	y = pbeta_raw(xinbta, pp, qq, /*lower_tail = */ TRUE);
+	y = pbeta_raw(xinbta, pp, qq, /*lower_tail = */ TRUE, FALSE);
 	/* y = pbeta_raw2(xinbta, pp, qq, logbeta) -- to SAVE CPU; */
 #ifdef IEEE_754
 	if(!R_FINITE(y))
@@ -166,13 +162,13 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 	}
 	xtrunc = tx;	/* this prevents trouble with excess FPU */
 				/* precision on some machines. */
-	if (xtrunc == xinbta)
+	if (fabs(xtrunc - xinbta) < 1e-15*xinbta)
 	    goto L_converged;
 	xinbta = tx;
 	yprev = y;
     }
     /*-- NOT converged: Iteration count --*/
-    ML_ERROR(ME_PRECISION);
+    ML_ERROR(ME_PRECISION, "qbeta");
 
  L_converged:
     if (swap_tail)

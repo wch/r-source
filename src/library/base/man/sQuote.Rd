@@ -16,7 +16,8 @@ dQuote(x)
 \details{
   The purpose of the functions is to provide a simple means of markup
   for quoting text to be used in the R output, e.g., in warnings or
-  error messages.
+  error messages.  Note that English quoting conventions are used,
+  whatever the locale in use.
 
   The choice of the appropriate quotation marks depends on both the
   locale and the available character sets.  Older Unix/X11 fonts
@@ -33,8 +34,14 @@ dQuote(x)
   employed, than the ASCII quotation mark (0x22) should be used as both
   the left and right double quotation mark.
 
-  \code{sQuote} and \code{dQuote} currently only provide undirectional
-  ASCII quotation style, but may be enhanced in the future.
+  By default, \code{sQuote} and \code{dQuote} employ undirectional 
+  ASCII quotation style.  In a UTF-8 locale (see \code{\link{l10n_info}}),
+  the Unicode directional quotes are used.
+}
+\seealso{
+  \code{Quotes} for quoting \R code.
+
+  \code{\link{shQuote}} for quoting OS commands.
 }
 \references{
   Markus Kuhn, \dQuote{ASCII and Unicode quotation marks}.

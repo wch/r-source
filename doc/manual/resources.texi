@@ -86,7 +86,7 @@ binaries, with the master site at @uref{http://CRAN.R-project.org/} and
 information on daily mirrors available from
 
 @quotation
-@uref{http://CRAN.R-project.org/mirrors.html}
+@uref{http://cran.r-project.org/mirrors.html}
 @end quotation
 
 @node Bug-tracking system,  , Archives, Top
@@ -105,9 +105,6 @@ and via e-mail to @email{r-bugs@@R-project.org}.  The R function
 session and send the report to the right address.  It also fills in some
 basic information, such as your R version and operating system, which
 has proved helpful in the debugging process.
-
-The source distribution has a file @file{BUGS} at the top level giving a
-summary of the entries at the time this distribution was prepared.
 
 @bye
 

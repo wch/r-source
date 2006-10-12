@@ -12,7 +12,14 @@ while(<>){
 	    print "$1<a href=\"$2\">$3</a>\n";
 	}
 	else{
-	    print "$1<!a href=\"$2\">$3 (not installed)\n";
+	    $link = $2;
+	    $text = $3;
+	    if ($link =~ /R-[A-Za-z]+\.html$/) {
+		$link =~ s+../manual+http://cran.r-project.org/doc/manuals+;
+		print "$1<a href=\"$link\">$text</a> (on CRAN)\n";
+	    } else {
+		print "$1<!a href=\"$link\">$text (not installed)\n";
+	    }
 	}
     }
     else{

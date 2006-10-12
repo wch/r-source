@@ -9,8 +9,9 @@
 }
 \usage{
 plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
-            ylim = NULL, xlab = "Factors", ylab = NULL, main = NULL,
-            ask = NULL, xaxt = par("xaxt"), axes = TRUE, xtick = FALSE)
+            ylim = NULL, xlab = "Factors", ylab = NULL,
+            main = NULL, ask = NULL, xaxt = par("xaxt"),
+            axes = TRUE, xtick = FALSE)
 }
 \arguments{
   \item{x}{either a data frame containing the design factors and
@@ -74,8 +75,9 @@ plot.design(esoph) ## two plots; if interactive you are "ask"ed
 
 ## or rather, compare mean and median:
 op <- par(mfcol = 1:2)
-plot.design(ncases/ncontrols ~ ., data = esoph, ylim = c(0,0.8))
-plot.design(ncases/ncontrols ~ ., data = esoph, ylim = c(0,0.8), fun = median)
+plot.design(ncases/ncontrols ~ ., data = esoph, ylim = c(0, 0.8))
+plot.design(ncases/ncontrols ~ ., data = esoph, ylim = c(0, 0.8),
+            fun = median)
 par(op)
 }
 \keyword{hplot}

@@ -19,10 +19,6 @@
 \source{
   AT&T (1961) \emph{The World's Telephones}.
 }
-\section{Warning}{
-  Prior to \R 2.0.0 this dataset was called \code{phones} and conflicted
-  with a dataset in package \pkg{MASS}.
-}
 \references{
   McNeil, D. R. (1977)
   \emph{Interactive Data Analysis}.

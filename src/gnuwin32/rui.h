@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #define RW_MDI         0x0001
@@ -23,11 +23,15 @@
 #define RW_STATUSBAR   0x0100
 #define RW_LARGEICONS   0x1000
 
-extern int RguiMDI;
 extern int MDIset;
 
+#include <R_ext/Boolean.h>
 #include <R_ext/libextern.h>
+LibExtern int RguiMDI;
 LibExtern window RConsole;
+LibExtern window RFrame;
+LibExtern int Rwin_graphicsx, Rwin_graphicsy;
+LibExtern Rboolean AllDevicesKilled;
 #undef LibExtern
 
 typedef struct {
@@ -42,10 +46,23 @@ typedef struct {
   Uitem *mItems;
 } menuItems;
 
+struct structHelpMenuItems {
+  menuitem mhelp, mmanintro, mmanref, mmandata,
+    mmanext, mmanint, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, 
+    mhelpsearch, msearchRsite, mFAQ, mrwFAQ, mCRAN;
+  menu mman;
+};
+typedef struct structHelpMenuItems *HelpMenuItems;
+
+struct structPkgMenuItems {
+  menuitem mpkgl, mpkgm, mpkgi, mpkgil, mpkgu,
+    mrepos;
+};
+typedef struct structPkgMenuItems *PkgMenuItems;
+
 #include <R_ext/Error.h> /* for R_ShowMessage */
 int check_doc_file(char *);
 void internal_shellexec(char *);
-int internal_ShowFile(char *, char *);
 
 int winaddmenu(char * name, char *errmsg);
 int winaddmenuitem(char * item, char * menu, char * action, char *errmsg);
@@ -74,5 +91,7 @@ int RgetMDIheight();
 void menuconfig();
 void menuclear(control m);
 int RguiPackageMenu();
+void pkgmenuact(PkgMenuItems pmenu);
 int RguiCommonHelp();
+void helpmenuact(HelpMenuItems hmenu);
 void closeconsole(control m);

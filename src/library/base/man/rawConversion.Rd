@@ -11,13 +11,13 @@
 }
 \usage{
 charToRaw(x)
-rawToChar(x, multiple=FALSE)
+rawToChar(x, multiple = FALSE)
 
 rawShift(x, n)
 
 rawToBits(x)
 intToBits(x)
-packBits(x, type=c("raw", "integer"))
+packBits(x, type = c("raw", "integer"))
 }
 \arguments{
   \item{x}{object to be converted or shifted.}
@@ -44,7 +44,12 @@ packBits(x, type=c("raw", "integer"))
 }
 \details{
   \code{packBits} accepts raw, integer or logical inputs, the last two
-  without an NAs.
+  without any NAs.
+#ifdef unix
+
+  Note that \sQuote{bytes} are not necessarily the same as characters,
+  e.g. in UTF-8 domains.
+#endif
 }
 \examples{
 x <- "A test string"

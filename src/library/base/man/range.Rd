@@ -20,7 +20,9 @@ range(\dots, na.rm = FALSE)
 }
 \details{
   \code{range} is a generic function: methods can be defined for it
-  directly or via the \code{\link{Summary}} group generic.
+  directly or via the \code{\link[base:groupGeneric]{Summary}} group generic.
+  For this to work properly, the arguments \code{\dots} should be
+  unnamed, and dispatch is on the first argument.
 
   If \code{na.rm} is \code{FALSE}, \code{NA}
   and \code{NaN} values in any of the arguments will cause \code{NA} values
@@ -39,8 +41,8 @@ range(\dots, na.rm = FALSE)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{min}},
-  \code{\link{max}},
+  The \code{\link[grDevices]{extendrange}()} utility;
+  \code{\link{min}}, \code{\link{max}},
   \code{\link[base]{Methods}}.
 }
 \examples{

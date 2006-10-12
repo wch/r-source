@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*  DESCRIPTION --> see below */
@@ -47,7 +47,7 @@ double bessel_k(double x, double alpha, double expo)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     if (x < 0) {
-	ML_ERROR(ME_RANGE);
+	ML_ERROR(ME_RANGE, "bessel_k");
 	return ML_NAN;
     }
     ize = (long)expo;
@@ -57,7 +57,7 @@ double bessel_k(double x, double alpha, double expo)
     alpha -= (nb-1);
 #ifdef MATHLIB_STANDALONE
     bk = (double *) calloc(nb, sizeof(double));
-    if (!bk) MATHLIB_ERROR("%s", "bessel_k allocation error");
+    if (!bk) MATHLIB_ERROR("%s", _("bessel_k allocation error"));
 #else
     vmax = vmaxget();
     bk = (double *) R_alloc(nb, sizeof(double));
@@ -65,10 +65,10 @@ double bessel_k(double x, double alpha, double expo)
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4("bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n",
+	MATHLIB_WARNING4(_("bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
 			 x, ncalc, nb, alpha);
       else
-	MATHLIB_WARNING2("bessel_k(%g,nu=%g): precision lost in result\n",
+	MATHLIB_WARNING2(_("bessel_k(%g,nu=%g): precision lost in result\n"),
 			 x, alpha+nb-1);
     }
     x = bk[nb-1];
@@ -176,32 +176,32 @@ static void K_bessel(double *x, double *alpha, long *nb,
      *	A = LOG(2) - Euler's constant
      *	D = SQRT(2/PI)
      ---------------------------------------------------------------------*/
-    const double a = .11593151565841244881;
+    const static double a = .11593151565841244881;
 
     /*---------------------------------------------------------------------
       P, Q - Approximation for LOG(GAMMA(1+ALPHA))/ALPHA + Euler's constant
       Coefficients converted from hex to decimal and modified
       by W. J. Cody, 2/26/82 */
-    const double p[8] = { .805629875690432845,20.4045500205365151,
+    const static double p[8] = { .805629875690432845,20.4045500205365151,
 	    157.705605106676174,536.671116469207504,900.382759291288778,
 	    730.923886650660393,229.299301509425145,.822467033424113231 };
-    const double q[7] = { 29.4601986247850434,277.577868510221208,
+    const static double q[7] = { 29.4601986247850434,277.577868510221208,
 	    1206.70325591027438,2762.91444159791519,3443.74050506564618,
 	    2210.63190113378647,572.267338359892221 };
     /* R, S - Approximation for (1-ALPHA*PI/SIN(ALPHA*PI))/(2.D0*ALPHA) */
-    const double r[5] = { -.48672575865218401848,13.079485869097804016,
+    const static double r[5] = { -.48672575865218401848,13.079485869097804016,
 	    -101.96490580880537526,347.65409106507813131,
 	    3.495898124521934782e-4 };
-    const double s[4] = { -25.579105509976461286,212.57260432226544008,
+    const static double s[4] = { -25.579105509976461286,212.57260432226544008,
 	    -610.69018684944109624,422.69668805777760407 };
     /* T    - Approximation for SINH(Y)/Y */
-    const double t[6] = { 1.6125990452916363814e-10,
+    const static double t[6] = { 1.6125990452916363814e-10,
 	    2.5051878502858255354e-8,2.7557319615147964774e-6,
 	    1.9841269840928373686e-4,.0083333333333334751799,
 	    .16666666666666666446 };
     /*---------------------------------------------------------------------*/
-    const double estm[6] = { 52.0583,5.7607,2.7782,14.4303,185.3004, 9.3715 };
-    const double estf[7] = { 41.8341,7.1075,6.4306,42.511,1.35633,84.5096,20.};
+    const static double estm[6] = { 52.0583,5.7607,2.7782,14.4303,185.3004, 9.3715 };
+    const static double estf[7] = { 41.8341,7.1075,6.4306,42.511,1.35633,84.5096,20.};
 
     /* Local variables */
     long iend, i, j, k, m, ii, mplus1;
@@ -217,7 +217,7 @@ static void K_bessel(double *x, double *alpha, long *nb,
     if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2)) {
 	if(ex <= 0 || (*ize == 1 && ex > xmax_BESS_K)) {
 	    if(ex <= 0) {
-		ML_ERROR(ME_RANGE);
+		if(ex < 0) ML_ERROR(ME_RANGE, "K_bessel");
 		for(i=0; i < *nb; i++)
 		    bk[i] = ML_POSINF;
 	    } else /* would only have underflow */

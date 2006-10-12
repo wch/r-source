@@ -2,7 +2,9 @@
 \title{Modify Terms Objects}
 \usage{
 delete.response(termobj)
+
 reformulate(termlabels, response = NULL)
+
 drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 }
 \alias{reformulate}

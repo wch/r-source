@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  The R Development Core Team
+ *  Copyright (C) 1997--2005  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
  *  See ./printutils.c	 for general remarks on Printing
@@ -24,11 +24,14 @@
  *  See ./format.c	 for the  format_Foo_  functions.
  */
 
+/* <UTF8> char here is handled as a whole */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include "Defn.h"
+#include "Rmath.h" /* imax2 */
 #include "Print.h"
 
 /*  .Internal(paste(args, sep, collapse))
@@ -37,7 +40,7 @@
  * The first pass calculates the width of the paste buffer,
  * then it is alloc-ed and the second pass stuffs the information in.
  */
-SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x, tmpchar;
     int i, j, k, maxlen, nx, pwidth, sepw;
@@ -54,18 +57,18 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     if (!isVectorList(x))
-	errorcall(call, "invalid first argument");
+	errorcall(call, _("invalid first argument"));
 
     sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0)
-	errorcall(call, "invalid separator");
+	errorcall(call, _("invalid separator"));
     sep = STRING_ELT(sep, 0);
     sepw = strlen(CHAR(sep)); /* not LENGTH as might contain \0 */
 
     collapse = CADDR(args);
     if (!isNull(collapse))
 	if(!isString(collapse) || LENGTH(collapse) <= 0)
-	    errorcall(call, "invalid collapse argument");
+	    errorcall(call, _("invalid '%s' argument"), "collapse");
 
     /* Maximum argument length and */
     /* check for arguments of list type */
@@ -74,7 +77,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     maxlen = 0;
     for (j = 0; j < nx; j++) {
 	if (!isString(VECTOR_ELT(x, j)))
-	    error("non-string argument to Internal paste");
+	    error(_("non-string argument to Internal paste"));
 	if(length(VECTOR_ELT(x, j)) > maxlen)
 	    maxlen = length(VECTOR_ELT(x, j));
     }
@@ -138,109 +141,175 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* format.default(x, trim, nsmall) : ../library/base/R/format.R
- * --------------   See "FIXME" in that file !
- */
-SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
+/* format.default(x, trim, digits, nsmall, width, justify, na.encode, 
+                  scientific) */
+SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP l, x, y;
-    int i, n, trim=0, nsmall=0;
+    SEXP l, x, y, swd;
+    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
     int w, d, e;
     int wi, di, ei;
     char *strp;
 
+    checkArity(op, args);
     PrintDefaults(env);
-
-    switch (length(args)) {
-    case 1:
-	break;
-    case 3:
-	nsmall = asInteger(CADDR(args));
-	if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
-	    errorcall(call, "invalid \"nsmall\" argument");
-	/* drop through */
-    case 2:
-	trim = asLogical(CADR(args));
-	if (trim == NA_INTEGER)
-	    errorcall(call, "invalid \"trim\" argument");
-	break;
-    default:
-	errorcall(call, "incorrect number of arguments");
-    }
-
+    
     if (!isVector(x = CAR(args)))
-	errorcall(call, "first argument must be atomic");
+	errorcall(call, _("first argument must be atomic"));
+    args = CDR(args);
 
-    if ((n = LENGTH(x)) <= 0)
-	return allocVector(STRSXP, 0);
+    trim = asLogical(CAR(args));
+    if (trim == NA_INTEGER)
+	errorcall(call, _("invalid '%s' argument"), "trim");
+    args = CDR(args);
 
-    switch (TYPEOF(x)) {
-
-    case LGLSXP:
-	PROTECT(y = allocVector(STRSXP, n));
-	if (trim)
-	    w = 0;
-	else
-	    formatLogical(LOGICAL(x), n, &w);
-	for (i = 0; i < n; i++) {
-	    strp = EncodeLogical(LOGICAL(x)[i], w);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
-
-    case INTSXP:
-	PROTECT(y = allocVector(STRSXP, n));
-	if (trim) w = 0;
-	else formatInteger(INTEGER(x), n, &w);
-	for (i = 0; i < n; i++) {
-	    strp = EncodeInteger(INTEGER(x)[i], w);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
-
-    case REALSXP:
-	formatReal(REAL(x), n, &w, &d, &e, nsmall);
-	if (trim) w = 0;
-	PROTECT(y = allocVector(STRSXP, n));
-	for (i = 0; i < n; i++) {
-	    strp = EncodeReal(REAL(x)[i], w, d, e);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
-
-    case CPLXSXP:
-	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
-	if (trim) wi = w = 0;
-	PROTECT(y = allocVector(STRSXP, n));
-	for (i = 0; i < n; i++) {
-	    strp = EncodeComplex(COMPLEX(x)[i], w, d, e, wi, di, ei);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
-
-    case STRSXP: /* this is *UN*used now (1.2) */
-
-	formatString(STRING_PTR(x), n, &w, 0);
-	if (trim) w = 0;
-	PROTECT(y = allocVector(STRSXP, n));
-	for (i = 0; i < n; i++) {
-	    strp = EncodeString(STRING_ELT(x, i), w, 0, Rprt_adj_left);
-	    SET_STRING_ELT(y, i, mkChar(strp));
-	}
-	UNPROTECT(1);
-	break;
-    default:
-	errorcall(call, "Impossible mode ( x )"); y = R_NilValue;/* -Wall */
+    if (!isNull(CAR(args))) {
+	digits = asInteger(CAR(args));
+	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
+	    || digits > R_MAX_DIGITS_OPT)
+	    errorcall(call, _("invalid '%s' argument"), "digits");
+	R_print.digits = digits;
     }
-    PROTECT(y);
-    if((l = getAttrib(x, R_DimSymbol)) != R_NilValue)
+    args = CDR(args);
+
+    nsmall = asInteger(CAR(args));
+    if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
+	errorcall(call, _("invalid '%s' argument"), "nsmall");
+    args = CDR(args);
+
+    if (isNull(swd = CAR(args))) wd = 0; else wd = asInteger(swd);
+    if(wd == NA_INTEGER)
+	errorcall(call, _("invalid '%s' argument"), "width");
+    args = CDR(args);
+
+    adj = asInteger(CAR(args));
+    if(adj == NA_INTEGER || adj < 0 || adj > 3)
+	errorcall(call, _("invalid '%s' argument"), "justify");
+    args = CDR(args);
+
+    na = asLogical(CAR(args));
+    if(na == NA_LOGICAL)
+	errorcall(call, _("invalid '%s' argument"), "na.encode");
+    args = CDR(args);
+    if(LENGTH(CAR(args)) != 1)
+	errorcall(call, _("invalid '%s' argument"), "scientific");
+    if(isLogical(CAR(args))) {
+	int tmp = LOGICAL(CAR(args))[0];
+	if(tmp == NA_LOGICAL) sci = NA_INTEGER;
+	else sci = tmp > 0 ?-100 : 100;
+    } else if (isNumeric(CAR(args))) {
+	sci = asInteger(CAR(args));
+    } else
+	errorcall(call, _("invalid '%s' argument"), "scientific");
+    if(sci != NA_INTEGER) R_print.scipen = sci;
+
+    if ((n = LENGTH(x)) <= 0) {
+	PROTECT(y = allocVector(STRSXP, 0));
+    } else {
+	switch (TYPEOF(x)) {
+
+	case LGLSXP:
+	    PROTECT(y = allocVector(STRSXP, n));
+	    if (trim) w = 0; else formatLogical(LOGICAL(x), n, &w);
+	    w = imax2(w, wd);
+	    for (i = 0; i < n; i++) {
+		strp = EncodeLogical(LOGICAL(x)[i], w);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
+
+	case INTSXP:
+	    PROTECT(y = allocVector(STRSXP, n));
+	    if (trim) w = 0;
+	    else formatInteger(INTEGER(x), n, &w);
+	    w = imax2(w, wd);
+	    for (i = 0; i < n; i++) {
+		strp = EncodeInteger(INTEGER(x)[i], w);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
+
+	case REALSXP:
+	    formatReal(REAL(x), n, &w, &d, &e, nsmall);
+	    if (trim) w = 0;
+	    w = imax2(w, wd);
+	    PROTECT(y = allocVector(STRSXP, n));
+	    for (i = 0; i < n; i++) {
+		strp = EncodeReal(REAL(x)[i], w, d, e, OutDec);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
+
+	case CPLXSXP:
+	    formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
+	    if (trim) wi = w = 0;
+	    w = imax2(w, wd); wi = imax2(wi, wd);
+	    PROTECT(y = allocVector(STRSXP, n));
+	    for (i = 0; i < n; i++) {
+		strp = EncodeComplex(COMPLEX(x)[i], w, d, e, wi, di, ei, OutDec);
+		SET_STRING_ELT(y, i, mkChar(strp));
+	    }
+	    break;
+
+	case STRSXP:
+	{
+	    /* this has to be different from formatString/EncodeString as
+	       we don't actually want to encode here */
+	    char *s, *buff, *q;
+	    int b, b0, cnt = 0, j;
+	    SEXP s0;
+
+	    w = wd; 
+	    if (adj != Rprt_adj_none) {
+		for (i = 0; i < n; i++)
+		    if (STRING_ELT(x, i) != NA_STRING)
+			w = imax2(w, Rstrlen(STRING_ELT(x, i), 0));
+		    else if (na) w = imax2(w, R_print.na_width);
+	    } else w = 0;
+	    /* now calculate the buffer size needed, in bytes */
+	    for (i = 0; i < n; i++)
+		if (STRING_ELT(x, i) != NA_STRING) {
+		    il = Rstrlen(STRING_ELT(x, i), 0);
+		    cnt = imax2(cnt, LENGTH(STRING_ELT(x, i)) + imax2(0, w-il));
+		} else if (na) cnt  = imax2(cnt, R_print.na_width);
+	    buff = alloca(cnt+1);
+	    R_CheckStack();
+	    PROTECT(y = allocVector(STRSXP, n));
+	    for (i = 0; i < n; i++) {
+		if(!na && STRING_ELT(x, i) == NA_STRING) {
+		    SET_STRING_ELT(y, i, NA_STRING);
+		} else {
+		    q = buff;
+		    if(STRING_ELT(x, i) == NA_STRING) s0 = R_print.na_string;
+		    else s0 = STRING_ELT(x, i) ;
+		    s = CHAR(s0);
+		    il = Rstrlen(s0, 0);
+		    b = w - il;
+		    if(b > 0 && adj != Rprt_adj_left) {
+			b0 = (adj == Rprt_adj_centre) ? b/2 : b;
+			for(j = 0 ; j < b0 ; j++) *q++ = ' ';
+			b -= b0;
+		    }
+		    for(j = 0; j < LENGTH(s0); j++) *q++ = *s++;
+		    if(b > 0 && adj != Rprt_adj_right)
+			for(j = 0 ; j < b ; j++) *q++ = ' ';
+		    *q = '\0';
+		    SET_STRING_ELT(y, i, mkChar(buff));
+		}
+	    }
+	}
+	break;
+	default:
+	    errorcall(call, _("Impossible mode ( x )")); y = R_NilValue;/* -Wall */
+	}
+    }
+    if((l = getAttrib(x, R_DimSymbol)) != R_NilValue) {
 	setAttrib(y, R_DimSymbol, l);
-    if((l = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
-	setAttrib(y, R_DimNamesSymbol, l);
+	if((l = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
+	    setAttrib(y, R_DimNamesSymbol, l);
+    } else if((l = getAttrib(x, R_NamesSymbol)) != R_NilValue)
+	setAttrib(y, R_NamesSymbol, l);
+
     UNPROTECT(1);
     return y;
 }
@@ -254,19 +323,36 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
  * for complex : 2 x 3 integers for (Re, Im)
  */
 
-SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x;
-    int n, nsmall, w, d, e;
-    int wi, di, ei;
+    int n, digits, nsmall, no = 1, w, d, e, wi, di, ei;
+
     checkArity(op, args);
     x = CAR(args);
     n = LENGTH(x);
-    nsmall = asInteger(CADR(args));
+    PrintDefaults(env);
+
+    digits = asInteger(CADR(args));
+    if (!isNull(CADR(args))) {
+	digits = asInteger(CADR(args));
+	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
+	    || digits > R_MAX_DIGITS_OPT)
+	    errorcall(call, _("invalid '%s' argument"), "digits");
+	R_print.digits = digits;
+    }
+    nsmall = asInteger(CADDR(args));
+    if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
+	errorcall(call, _("invalid '%s' argument"), "nsmall");
+
     w = 0;
     d = 0;
     e = 0;
     switch (TYPEOF(x)) {
+
+    case RAWSXP:
+	formatRaw(RAW(x), n, &w);
+	break;
 
     case LGLSXP:
 	formatLogical(LOGICAL(x), n, &w);
@@ -277,27 +363,37 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case REALSXP:
+	no = 3;
 	formatReal(REAL(x), n, &w, &d, &e, nsmall);
 	break;
 
     case CPLXSXP:
+	no = 6;
 	wi = di = ei = 0;
 	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
-	n = -1;/* complex 'code' */
 	break;
 
     case STRSXP:
-	formatString(STRING_PTR(x), n, &w, 0);
+    {
+	int i, il;
+	for (i = 0; i < n; i++)
+	    if (STRING_ELT(x, i) != NA_STRING) {
+		il = Rstrlen(STRING_ELT(x, i), 0);
+		if (il > w) w = il;
+	    }
+    }
 	break;
 
     default:
-	errorcall(call, "vector arguments only");
+	errorcall(call, _("atomic vector arguments only"));
     }
-    x = allocVector(INTSXP, (n >= 0) ? 3 : 6);
+    x = allocVector(INTSXP, no);
     INTEGER(x)[0] = w;
-    INTEGER(x)[1] = d;
-    INTEGER(x)[2] = e;
-    if(n < 0) { /*- complex -*/
+    if(no > 1) {
+	INTEGER(x)[1] = d;
+	INTEGER(x)[2] = e;
+    }
+    if(no > 3) {
 	INTEGER(x)[3] = wi;
 	INTEGER(x)[4] = di;
 	INTEGER(x)[5] = ei;

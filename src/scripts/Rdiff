@@ -10,27 +10,38 @@ ffile=${1}
 tfile=${2}
 exitstatus=${3}
 
-## sed script to get rid of the startup message
-script='/^R : Copyright/,/quit R.$/{d;}'
-## egrep pattern to get rid of some more???
-pattern='(^Number of.*:|^Time |^Loading required package.*'
+## sed scripts to get rid of the startup message
+scriptold='/^R : Copyright /,/quit R.$/{d;}'
+scriptnew='/^R version /,/quit R.$/{d;}'
+
+## egrep pattern to get rid of some more
+## <= 2.2.x was pattern='(^Number of.*:|^Time |^Loading required package.*'
+pattern='(^Time |^Loading required package.*'
 case "${ffile}" in
   *primitive-funs*)
     pattern=${pattern}'|^\[1\] [19][0-9][0-9])'
     ;;
   *)
-    pattern=${pattern}'|^<environment)'
+    pattern=${pattern}'|^<(environment|promise|pointer): )'
     ;;
-esac  
+esac
 
-tmpfile=${TMPDIR-/tmp}/${ffile}-d.${$}
-
-if test ${ffile} = '-' ; then 
+if test ${ffile} = '-' ; then
   ffile=''
+  bfile=''
+else
+  if test -f ${ffile} ; then
+      bfile=`basename "${ffile}"`
+  else
+      echo "no valid file ${ffile}"
+      exit 1
+  fi
 fi
 
-sed -e "${script}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
-(sed -e "${script}" ${tfile} | \
+tmpfile=${TMPDIR-/tmp}/${bfile}-d.${$}
+
+sed -e "${scriptold}" -e "${scriptnew}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
+(sed -e "${scriptold}" -e "${scriptnew}" ${tfile} | \
   ${EGREP} -v "${pattern}" | \
   diff -bw ${tmpfile} - ) && exitstatus=0
 

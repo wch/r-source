@@ -10,7 +10,7 @@ tapply <- function (X, INDEX, FUN=NULL, ..., simplify=TRUE)
     one <- as.integer(1)
     group <- rep.int(one, nx)#- to contain the splitting vector
     ngroup <- one
-    for (i in seq(INDEX)) {
+    for (i in seq.int(INDEX)) {
 	index <- as.factor(INDEX[[i]])
 	if (length(index) != nx)
 	    stop("arguments must have same length")

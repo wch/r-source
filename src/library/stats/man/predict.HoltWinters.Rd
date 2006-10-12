@@ -7,7 +7,7 @@
 }
 \usage{
 \method{predict}{HoltWinters}(object, n.ahead=1, prediction.interval = FALSE,
-                    level = 0.95, ...)
+       level = 0.95, ...)
 }
 \arguments{
   \item{object}{An object of class \code{HoltWinters}.}

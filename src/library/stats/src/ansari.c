@@ -4,8 +4,8 @@
 
 #include <R.h>
 #include <Rmath.h>		/* uses choose() */
-
 #include "ctest.h"
+#include "stats.h"
 
 /*
   Removed the non-local variable `double ***w' and moved to R_alloc from
@@ -126,7 +126,7 @@ qansari(Sint *len, double *x, Sint *m, Sint *n)
     for (i = 0; i < *len; i++) {
 	xi = x[i];
         if(xi < 0 || xi > 1)
-	    error("probabilities outside [0,1] in qansari()");
+	    error(_("probabilities outside [0,1] in qansari()"));
 	if(xi == 0)
 	    x[i] = l;
 	else if(xi == 1)

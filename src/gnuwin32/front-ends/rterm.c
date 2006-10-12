@@ -14,10 +14,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #define NONAMELESSUNION
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdio.h>
 #include <io.h> /* for isatty */
@@ -28,7 +29,7 @@
 
 extern void cmdlineoptions(int, char **);
 extern void readconsolecfg();
-extern int initapp(int, char **);
+extern int GA_initapp(int, char **);
 extern void Rf_mainloop(void);
 __declspec(dllimport) extern UImode CharacterMode;
 __declspec(dllimport) extern int UserBreak;
@@ -43,7 +44,7 @@ extern void saveConsoleTitle();
 static char Rversion[25];
 char *getRVersion()
 {
-    sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
+    snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
     return(Rversion);
 }
 
@@ -67,7 +68,7 @@ int AppMain (int argc, char **argv)
     cmdlineoptions(argc, argv);
     mainThreadId = GetCurrentThreadId() ;
     signal(SIGBREAK, my_onintr);
-    initapp(0, NULL);
+    GA_initapp(0, NULL);
     readconsolecfg();
     if(R_Interactive) {
 	gl_hist_init(R_HistorySize, 1);

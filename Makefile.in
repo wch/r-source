@@ -10,52 +10,46 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
+INSTFILES = COPYING NEWS
+NON_SVN_INSTFILES = SVN-REVISION
 DISTFILES = $(INSTFILES) \
-	BUGS ChangeLog INSTALL ONEWS README VERSION Y2K \
+	ChangeLog INSTALL ONEWS OONEWS README VERSION \
 	Makeconf.in Makefile.in \
-	acinclude.m4 aclocal.m4 \
-	config.site configure configure.ac \
-	date-stamp
-SUBDIRS = m4 tools afm doc etc share src tests
-SUBDIRS_WITH_NO_BUILD = debian
+	config.site configure configure.ac
+SUBDIRS = m4 tools doc etc share src tests @USE_NLS_TRUE@ po
+SUBDIRS_WITH_NO_BUILD = @USE_NLS_FALSE@ po
 
-GZIP = --best
-
-all: Makefile Makeconf R docs @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
+all: Makefile Makeconf R docs recommended
+recommended: @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $@
 Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $@
 
-ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-ACLOCAL_DEPENDENCIES = \
-	configure.ac \
-	acinclude.m4
+ACLOCAL_M4 = aclocal.m4
 ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
+	m4/clibs.m4 \
 	m4/codeset.m4 \
-	m4/gnome-gnorba-check.m4 \
-	m4/gnome-orbit-check.m4 \
-	m4/gnome.m4 \
-	m4/libglade.m4 \
+	m4/gettext.m4 m4/gettext-lib.m4 \
+	m4/java.m4 \
 	m4/libtool.m4
 CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
 $(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
-	@cd $(srcdir) && $(AUTOCONF)
-$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_DEPENDENCIES)
-	@cd $(srcdir) && $(ACLOCAL)
-$(srcdir)/acinclude.m4: @MAINTAINER_MODE_TRUE@ $(ACINCLUDE_DEPENDENCIES)
-	@cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES) > $@
+	@BD=`pwd`; cd $(srcdir) && $(AUTOCONF) -B $${BD}
+$(ACLOCAL_M4): $(srcdir)/configure.ac acinclude.m4
+	@BD=`pwd`; cd $(srcdir) && $(ACLOCAL) --output=$${BD}/$@ -I $${BD}
+acinclude.m4: $(srcdir)/configure.ac $(ACINCLUDE_DEPENDENCIES)
+	@(cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES)) > $@
 
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
-R: Makefile
+R: Makefile svnonly
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  for f in $(INSTFILES); do \
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
@@ -77,23 +71,56 @@ FORCE:
 stamp-recommended: R docs
 	@(cd src/library/Recommended && $(MAKE))
 
-install: installdirs
+vignettes: stamp-recommended
+	@(cd src/library && $(MAKE) $@)
+
+install: installdirs svnonly
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)"; \
 	done
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)"; \
+	done
+	@for f in $(NON_SVN_INSTFILES); do \
+	  $(INSTALL_DATA) $${f} "$(rhome)"; \
+	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
-@WANT_R_FRAMEWORK_TRUE@		@(sed 's/^LIBR =.*/LIBR = -framework R/' \
-@WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > "$(rhome)/etc/Makeconf")
-@WANT_R_FRAMEWORK_TRUE@		@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' \
+@WANT_R_FRAMEWORK_TRUE@		@(sed 's|^LIBR =.*|LIBR = -F$(R_FRAMEWORK_DIR)/.. -framework R|' \
+@WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > "$(rhome)/etc${R_ARCH}/Makeconf")
+@WANT_R_FRAMEWORK_TRUE@		@(sed 's/Versions\/$(FW_VERSION)\/Resources/Resources/' \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/R > \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
 @WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RR $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
+@WANT_R_FRAMEWORK_TRUE@		@(chmod -R g+w $(R_FRAMEWORK_DIR))
 
+svnonly:
+	@if test ! -f "$(srcdir)/doc/FAQ" || test -f non-tarball ; then \
+	  (cd doc/manual && $(MAKE) front-matter html-non-svn) ; \
+	  touch non-tarball ; \
+	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
+	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
+	    | cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
+	  $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
+	  rm -f SVN-REVISION-tmp ; \
+	else \
+	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	    for f in $(NON_SVN_INSTFILES); do \
+	      $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
+	    done \
+	  fi \
+	fi
+
+libR_la = lib/libR$(DYLIB_EXT)
+install-libR:
+	@if test -f $(libR_la); then $(MAKE) install-libR-exists; fi
+install-libR-exists:
+	@$(MKINSTALLDIRS) "${libdir}"
+	@$(INSTALL_DATA) -m755 $(libR_la) "${libdir}"
 
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)"
@@ -102,13 +129,13 @@ install-strip:
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
-	@for f in $(INSTFILES); do \
+	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
 	  rm -f "$(rhome)/$${f}"; \
 	done
-	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
-	@rm -rf "$(rhome)/demos"
-	@rm -rf "$(rhome)/gnome"
-
+	@rm -rf "$(Rexecbindir)" "$(rhome)/lib"
+	@rmdir "$(rhome)" 2>/dev/null \
+          || echo "  dir $(rhome) not removed"
+	@rm -f "${libdir}/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
 clean:
@@ -121,8 +148,15 @@ distclean: clean
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@rm -rf bin include lib library modules gnome
+	@if test -f non-tarball ; then \
+	  rm -f $(NON_SVN_INSTFILES) non-tarball doc/FAQ doc/RESOURCES doc/html/resources.html ; \
+	fi
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -f $(NON_SVN_INSTFILES); \
+	fi
 	-@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
-	  config.cache config.log config.status libtool
+	  config.cache config.log config.status libtool \
+	  $(ACLOCAL_M4) acinclude.m4 $(distdir).tar.gz
 maintainer-clean: distclean
 	@echo "This command is intended for maintainers to use; it"
 	@echo "deletes files that may need special rules to rebuild"
@@ -134,10 +168,15 @@ dist: dist-unix
 dist-unix: distdir
 	-chmod -R a+r $(distdir)
 	-chmod -R go-w $(distdir)
-	GZIP=$(GZIP) $(TAR) czf $(distdir).tar.gz $(distdir)
-	rm -rf $(distdir)
+	distname=`$(srcdir)/tools/GETDISTNAME`; \
+	  dirname=`echo $${distname} | sed -e s/_.*//`; \
+          if test $(distdir) != $${dirname} ; then \
+            mv $(distdir) $${dirname}; \
+          fi ; \
+	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $${dirname}; \
+	  rm -rf $${dirname}
 dist-win:
-distdir: $(DISTFILES)
+distdir: $(DISTFILES) vignettes
 	@rm -rf $(distdir)
 	@mkdir $(distdir)
 	@-chmod 755 $(distdir)
@@ -145,6 +184,9 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for f in $(NON_SVN_INSTFILES) ; do \
+	  cp -p $${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \
 	  test -d $(distdir)/$${d} \
@@ -159,6 +201,9 @@ distdir: $(DISTFILES)
 	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
+	@cp library/grid/doc/*.pdf library/grid/doc/index.html \
+	  $(distdir)/src/library/grid/inst/doc
+	@(cd $(distdir); tools/link-recommended)
 
 dvi info pdf:
 	-@(cd doc && $(MAKE) $@)
@@ -174,48 +219,58 @@ reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
 
 install-R-framework:
-	@(cd $(top_builddir)/src/modules/aqua && \
-	  cp Info.plist "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources")
-	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
+	@echo "Creating R framework ..."
+	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)" && \
 	  ln -f -s -n Resources/include Headers && \
-	  ln -f -s -n Resources/bin/libR.dylib R && \
-	  test -d "Resources/bin/Frameworks" || mkdir -p "Resources/bin/Frameworks" && \
-	  cd Resources/bin/exec && \
-	  ln -f -s -n ../Frameworks Frameworks)
+	  ln -f -s -n Resources/lib/libR.dylib R)
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
-	  ln -f -s -n $(VERSION) Current)
+	  ln -f -s -n $(FW_VERSION) Current)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
+	  ln -f -s -n Versions/Current/PrivateHeaders PrivateHeaders&& \
 	  ln -f -s -n Versions/Current/Headers Headers&& \
 	  ln -f -s -n Versions/Current/R R && \
 	  ln -f -s -n Versions/Current/Resources Resources)
-	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	  cp -R * "$(R_FRAMEWORK_DIR)/Resources/bin/exec/")
-	@(cd "$(R_FRAMEWORK_DIR)/Resources/bin" && \
-	  sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
-	  chmod 755 RAqua && \
-	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/bin/libR.dylib" libR.dylib)
-	@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' $(R_FRAMEWORK_DIR)/Resources/bin/RAqua > \
-	  $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua)
-	@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
-	@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
-	@(cp $(srcdir)/src/modules/aqua/CHANGES "$(R_FRAMEWORK_DIR)/Resources/NEWS.aqua")
-	@(cp $(srcdir)/src/modules/aqua/RMacOSX-FAQ.html "$(R_FRAMEWORK_DIR)/Resources/RMacOSX-FAQ.html")
+	@## the resulting libR will point dyld to the fat libR regardless of its origin
+	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" $(Rexeclibdir)/libR.dylib)
+	@(for lib in Rlapack Rblas R; do \
+	   if test -e "$(Rexeclibdir)/lib$${lib}.dylib"; then echo "  lib$${lib}"; \
+	    find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
+	    xargs -n 1 install_name_tool -change \
+	    `otool -L $(Rexeclibdir)/lib$${lib}.dylib |sed -n -e '2 s/.\(.*\) (compat.*/\1/p'` \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
+	    find "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/" -name '*.so' -or -name '*.dylib' | \
+	    xargs -n 1 install_name_tool -change lib$${lib}.dylib \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" ; \
+	    install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
+	    "$(Rexeclibdir)/lib$${lib}.dylib"; \
+	    if [ "$(Rexeclibdir)" != "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib" ]; then \
+	      $(srcdir)/tools/updatefat "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" "$(Rexeclibdir)/lib$${lib}.dylib"; \
+	      install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" \
+	      "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib"; \
+	    fi; \
+	    for rexe in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)"/Resources/bin/exec/*/R "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/exec/R" 2>/dev/null`; do \
+	     install_name_tool -change lib$${lib}.dylib \
+	     "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/lib$${lib}.dylib" "$$rexe" ; \
+	    done; \
+           fi; \
+          done)
+	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders && \
+	  cp src/include/config.h $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders/ && \
+	  find $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders -name .svn | xargs rm -rf)
+	@(install_name_tool -change libR.dylib \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
+	    $(Rexecbindir2)/R)
+	@(if [ -n "${R_ARCH}" ]; then \
+	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 ]; then \
+	    echo "\
+	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, ppc or ppc64 as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
+	  else \
+	    for f in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/${R_ARCH}/"*.h|xargs basename`; do \
+	      echo "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include <i386/$$f>~#else~#ifdef __ppc__~#include <ppc/$$f>~#else~#ifdef __ppc64__~#include <ppc64/$$f>~#else~#error Cannot determine the correct architecture. To force a certain configuration, include architecture-specific include path *before* general R headers path.~#endif~#endif~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/$$f"; \
+	    done; \
+	  fi; \
+	fi )
+	@( echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">~<plist version=\"1.0\">~<dict>~ <key>CFBundleIdentifier</key>~ <string>org.r-project.R-framework</string>~ <key>CFBundleInfoDictionaryVersion</key>~ <string>6.0</string>~ <key>CFBundleName</key>~ <string>R</string>~ <key>CFBundlePackageType</key>~ <string>FMWK</string>~ <key>CFBundleVersion</key>~ <string>$(VERSION)</string>~</dict>~</plist>" |sed -e 'y/~/\n/' > $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/Info.plist)
 
-
-
-install-aqua:
-	@(rm -rf /Applications/R.app)
-	@(mkdir -p /Applications/R.app/Contents/Resources)
-	@(cd "$(srcdir)/src/modules/aqua/Contents" && \
-	  cp PkgInfo /Applications/R.app/Contents)
-	@(cd "$(top_builddir)/src/modules/aqua/Contents" && \
-	  cp Info.plist  /Applications/R.app/Contents)
-	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
-	  cp -R * /Applications/R.app/Contents/Resources)
-	@(mkdir -p /Applications/R.app/Contents/MacOS)
-	@test -f "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua"  \
-	  || (echo "please, make install-R-framework first" &&  exit 1)
-	@(cd /Applications/R.app/Contents/MacOS && \
-	  ln -f -n "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua" R && \
-	  chmod 755 R)
 TAGS:

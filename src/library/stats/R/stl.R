@@ -18,7 +18,7 @@ stl <- function(x, s.window,
     deg.check <- function(deg) {
 	degname <- deparse(substitute(deg))
 	deg <- as.integer(deg)
-	if(deg < 0 || deg > 1) stop(paste(degname, "must be 0 or 1"))
+	if(deg < 0 || deg > 1) stop(degname, " must be 0 or 1")
 	deg
     }
     x <- na.action(as.ts(x))
@@ -42,7 +42,7 @@ stl <- function(x, s.window,
     l.degree <- deg.check(l.degree)
     if(is.null(t.window))
 	t.window <- nextodd(ceiling( 1.5 * period / (1- 1.5/s.window)))
-    z <- .Fortran("stl",
+    z <- .Fortran(R_stl,
 		  as.double(x),
 		  as.integer(n),
 		  as.integer(period),
@@ -58,8 +58,7 @@ stl <- function(x, s.window,
 		  weights = double(n),
 		  seasonal = double(n),
 		  trend = double(n),
-		  double((n+2*period)*5),
-		  PACKAGE="stats")
+		  double((n+2*period)*5))
     if(periodic) {
 	## make seasonal part exactly periodic
 	which.cycle <- cycle(x)
@@ -110,7 +109,8 @@ summary.stl <- function(object, digits = getOption("digits"), ...)
 plot.stl <- function(x, labels = colnames(X),
 		     set.pars = list(mar = c(0, 6, 0, 6), oma = c(6, 0, 4, 0),
 				     tck = -0.01, mfrow = c(nplot, 1)),
-		     main = NULL, range.bars = TRUE, ...)
+		     main = NULL, range.bars = TRUE, ...,
+                     col.range = "light gray")
 {
     sers <- x$time.series
     ncomp <- ncol(sers)
@@ -132,7 +132,7 @@ plot.stl <- function(x, labels = colnames(X),
 	    dx <- 1/64 * diff(ux <- par("usr")[1:2])
 	    y <- mean(rx[,i])
 	    rect(ux[2] - dx, y + mx/2, ux[2] - 0.4*dx, y - mx/2,
-		 col = "light gray", xpd = TRUE)
+		 col = col.range, xpd = TRUE)
 	}
 	if(i == 1 && !is.null(main))
 	    title(main, line = 2, outer = par("oma")[3] > 0)

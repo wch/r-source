@@ -19,7 +19,7 @@ ecdf(x)
   \item{ylab}{label for the y-axis.}
   \item{verticals}{see \code{\link{plot.stepfun}}.}
   \item{col.01line}{numeric or character specifying the color of the
-    horizontal lines at y=0 and 1, see \code{\link{colors}}.}
+    horizontal lines at y = 0 and 1, see \code{\link{colors}}.}
   \item{digits}{number of significant digits to use, see
     \code{\link{print}}.}
 }
@@ -28,9 +28,9 @@ ecdf(x)
 }
 \details{
   The e.c.d.f. (empirical cumulative distribution function)
-  \eqn{F_n}{Fn} is a step
-  function with jump \eqn{1/n} at each observation (possibly with
-  multiple jumps at one place if there are ties).
+  \eqn{F_n}{Fn} is a step function with jumps \eqn{i/n} at
+  observation values, where \eqn{i} is the number of tied observations
+  at that value.  Missing values are ignored.
 
   For observations
   \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2}, \ldots \eqn{x_n)}{xn)},
@@ -49,7 +49,8 @@ ecdf(x)
   \code{"\link{stepfun}"} class.
 }
 \author{
-  Martin Maechler, \email{maechler@stat.math.ethz.ch}.
+  Martin Maechler, \email{maechler@stat.math.ethz.ch}.\cr
+  Corrections by R-core.
 }
 \seealso{\code{\link{stepfun}}, the more general class of step functions,
   \code{\link{approxfun}} and \code{\link{splinefun}}.
@@ -57,21 +58,24 @@ ecdf(x)
 \examples{
 ##-- Simple didactical  ecdf  example:
 Fn <- ecdf(rnorm(12))
-Fn; summary(Fn)
-12*Fn(knots(Fn)) == 1:12 ## == 1:12  if and only if there are no ties !
+Fn
+tt <- seq(-2,2, by = 0.1)
+12* Fn(tt) # Fn is a `simple' function {with values k/12}
+summary(Fn)
+knots(Fn)# the unique data values {12 of them if there were no ties}
 
 y <- round(rnorm(12),1); y[3] <- y[1]
 Fn12 <- ecdf(y)
 Fn12
-print(knots(Fn12), dig=2)
-12*Fn12(knots(Fn12)) ## ~= 1:12  if there where no ties
-
+knots(Fn12)# unique values (always less than 12!)
 summary(Fn12)
 summary.stepfun(Fn12)
-print(ls.Fn12 <- ls(env= environment(Fn12)))
-##[1] "f"  "method"  "n"  "ties"   "x"  "y"  "yleft"  "yright"
 
-12 * Fn12((-20:20)/10)
+## Advanced: What's inside the function closure?
+print(ls.Fn12 <- ls(env= environment(Fn12)))
+##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
+utils::ls.str(environment(Fn12))
+
 
 ###----------------- Plotting --------------------------
 
@@ -83,19 +87,22 @@ summary(F10)
 plot(F10)
 plot(F10, verticals= TRUE, do.p = FALSE)
 
-plot(Fn12)# , lwd=2) dis-regarded
+plot(Fn12 , lwd = 2) ; mtext("lwd = 2", adj=1)
 xx <- unique(sort(c(seq(-3,2, length=201), knots(Fn12))))
 lines(xx, Fn12(xx), col='blue')
 abline(v=knots(Fn12),lty=2,col='gray70')
 
-plot(xx, Fn12(xx), type='b', cex=.1)#- plot.default
+plot(xx, Fn12(xx), type='o', cex=.1)#- plot.default {ugly}
 plot(Fn12, col.h='red', add= TRUE)  #- plot method
 abline(v=knots(Fn12),lty=2,col='gray70')
+## luxury plot
 plot(Fn12, verticals=TRUE, col.p='blue', col.h='red',col.v='bisque')
-par(op)
 
 ##-- this works too (automatic call to  ecdf(.)):
 plot.ecdf(rnorm(24))
+title("via  simple  plot.ecdf(x)", adj=1)
+
+par(op)
 }
 \keyword{dplot}
 \keyword{hplot}

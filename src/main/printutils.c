@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2004  The R Development Core Team
+ *  Copyright (C) 1999--2006  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,18 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8>
+
+   char here is either ASCII or handled as a whole, apart from Rstrlen
+   and EncodeString.
+
+   Octal representation of strings replaced by \u+4/8hex (can that be
+   improved?).
+*/
+
 
 /* =========
  * Printing:
@@ -47,7 +57,7 @@
  * string in its escaped rather than literal form.
  *
  * Finally there is a routine called EncodeElement which will encode
- * a single R-vector element.  This is mainly used in gizmos like deparse.
+ * a single R-vector element.  This is used in deparse and write.table.
  */
 
 /* if ESC_BARE_QUOTE is defined, " in an unquoted string is replaced
@@ -69,9 +79,6 @@ extern int R_OutputCon; /* from connections.c */
 
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
-static R_StringBuffer gBuffer = {NULL, 0, BUFSIZE};
-static R_StringBuffer *buffer = &gBuffer; /*XX Add appropriate const here
-                                            and in the routines that use it. */
 
 R_size_t R_Decode2Long(char *p, int *ierr)
 {
@@ -103,162 +110,252 @@ R_size_t R_Decode2Long(char *p, int *ierr)
     }
 }
 
+/* There is no documented (or enforced) limit on 'w' here,
+   so use snprintf */
+#define NB 1000
 char *EncodeLogical(int x, int w)
 {
-    R_AllocStringBuffer(0, buffer);
-    if(x == NA_LOGICAL) sprintf(buffer->data, "%*s", w, CHAR(R_print.na_string));
-    else if(x) sprintf(buffer->data, "%*s", w, "TRUE");
-    else sprintf(buffer->data, "%*s", w, "FALSE");
-    return buffer->data;
+    static char buff[NB];
+    if(x == NA_LOGICAL) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
+    else if(x) snprintf(buff, NB, "%*s", w, "TRUE");
+    else snprintf(buff, NB, "%*s", w, "FALSE");
+    buff[NB-1] = '\0';
+    return buff;
 }
 
 char *EncodeInteger(int x, int w)
 {
-    R_AllocStringBuffer(0, buffer);
-    if(x == NA_INTEGER) sprintf(buffer->data, "%*s", w, CHAR(R_print.na_string));
-    else sprintf(buffer->data, "%*d", w, x);
-    return buffer->data;
+    static char buff[NB];
+    if(x == NA_INTEGER) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
+    else snprintf(buff, NB, "%*d", w, x);
+    buff[NB-1] = '\0';
+    return buff;
 }
 
 char *EncodeRaw(Rbyte x)
 {
-    R_AllocStringBuffer(0, buffer);
-    sprintf(buffer->data, "%02x", x);
-    return buffer->data;
+    static char buff[10];
+    sprintf(buff, "%02x", x);
+    return buff;
 }
 
-char *EncodeReal(double x, int w, int d, int e)
+char *EncodeReal(double x, int w, int d, int e, char cdec)
 {
-    char fmt[20];
+    static char buff[NB];
+    char *p, fmt[20];
 
-    R_AllocStringBuffer(0, buffer);
     /* IEEE allows signed zeros (yuck!) */
     if (x == 0.0) x = 0.0;
     if (!R_FINITE(x)) {
-	if(ISNA(x)) sprintf(buffer->data, "%*s", w, CHAR(R_print.na_string));
-	else if(ISNAN(x)) sprintf(buffer->data, "%*s", w, "NaN");
-	else if(x > 0) sprintf(buffer->data, "%*s", w, "Inf");
-	else sprintf(buffer->data, "%*s", w, "-Inf");
+	if(ISNA(x)) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
+	else if(ISNAN(x)) snprintf(buff, NB, "%*s", w, "NaN");
+	else if(x > 0) snprintf(buff, NB, "%*s", w, "Inf");
+	else snprintf(buff, NB, "%*s", w, "-Inf");
     }
     else if (e) {
-#ifndef Win32
 	if(d) {
 	    sprintf(fmt,"%%#%d.%de", w, d);
-	    sprintf(buffer->data, fmt, x);
+	    snprintf(buff, NB, fmt, x);
 	}
 	else {
 	    sprintf(fmt,"%%%d.%de", w, d);
-	    sprintf(buffer->data, fmt, x);
+	    snprintf(buff, NB, fmt, x);
 	}
-#else
-	/* Win32 libraries always use e+xxx format so avoid them */
-	double X= x, xx = prec(x, (double)(d+1)); /* might have 9.99997e-7 */
-	int kp = (xx == 0.0) ? 0 : floor(log10(fabs(xx))+1e-12), ee = 1;
-	if(kp > 0) {
-	    x = x / pow(10.0, (double)kp);
-	} else if (kp < 0) {
-	    x = x * pow(10.0, (double)(-kp));
-	}
-	if(abs(kp) >= 100) {
-	    if(d) sprintf(fmt,"%%#%d.%de", w, d);
-	    else sprintf(fmt,"%%%d.%de", w, d);
-	    sprintf(buffer->data, fmt, X);
-	} else {
-	    if(d) sprintf(fmt, "%%#%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
-	    else sprintf(fmt, "%%%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
-	    sprintf(buffer->data, fmt, x, kp);
-	}
-#endif
     }
     else { /* e = 0 */
 	sprintf(fmt,"%%%d.%df", w, d);
-	sprintf(buffer->data, fmt, x);
+	snprintf(buff, NB, fmt, x);
     }
-    return buffer->data;
+    buff[NB-1] = '\0';
+
+    if(cdec != '.')
+      for(p = buff; *p; p++) if(*p == '.') *p = cdec;
+
+    return buff;
 }
 
-char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
-{
-    char *Re, *Im, *tmp;
-    int  flagNegIm = 0;
+void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
 
-    R_AllocStringBuffer(0, buffer);
+char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
+		    char cdec)
+{
+    static char buff[NB];
+    char Re[NB], *Im, *tmp;
+    int  flagNegIm = 0;
+    Rcomplex y;
+
     /* IEEE allows signed zeros; strip these here */
     if (x.r == 0.0) x.r = 0.0;
     if (x.i == 0.0) x.i = 0.0;
 
     if (ISNA(x.r) || ISNA(x.i)) {
-	sprintf(buffer->data, "%*s%*s", R_print.gap, "", wr+wi+2,
+	snprintf(buff, NB, "%*s%*s", R_print.gap, "", wr+wi+2,
 		CHAR(R_print.na_string));
-    }
-    else {
-	/* EncodeReal returns pointer to static storage so copy */
-
-	tmp = EncodeReal(x.r, wr, dr, er);
-	Re = Calloc(strlen(tmp)+1, char);
+    } else {
+	/* formatComplex rounded, but this does not, and we need to
+	   keep it that way so we don't get strange trailing zeros.
+	   But we do want to avoid printing small exponentials that
+	   are probably garbage.
+	 */
+	z_prec_r(&y, &x, R_print.digits);
+	/* EncodeReal has static buffer, so copy */
+	if(y.r == 0.) tmp = EncodeReal(y.r, wr, dr, er, cdec);
+	else tmp = EncodeReal(x.r, wr, dr, er, cdec);
 	strcpy(Re, tmp);
-
-	if ( (flagNegIm = (x.i < 0)) )
-	    x.i = -x.i;
-	tmp = EncodeReal(x.i, wi, di, ei);
-	Im = Calloc(strlen(tmp)+1, char);
-	strcpy(Im, tmp);
-
-	sprintf(buffer->data, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
-
-	Free(Re); Free(Im);
+	if ( (flagNegIm = (x.i < 0)) ) x.i = -x.i;
+	if(y.i == 0.) Im = EncodeReal(y.i, wi, di, ei, cdec);
+	else Im = EncodeReal(x.i, wi, di, ei, cdec);
+	snprintf(buff, NB, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
     }
-    return buffer->data;
+    buff[NB-1] = '\0';
+    return buff;
 }
 
+/* <FIXME>
+   encodeString and Rstrwid assume that the wchar_t representation
+   used to hold multibyte chars is Unicode.  This is usually true, and
+   we warn if it is not known to be true.  Potentially looking at
+   wchar_t ranges as we do is incorrect, but that is even less likely to
+   be problematic.
 
-/* strlen() using escaped rather than literal form, 
-   and allows for embedded nuls */
-int Rstrlen(SEXP s, int quote)
+   On Windows with surrogate pairs it will not be canonical, but AFAIK
+   they do not occur in any MBCS (so it would only matter if we implement
+   UTF-8).
+*/
+
+#ifdef SUPPORT_MBCS
+# include <R_ext/rlocale.h>
+#include <wchar.h>
+#include <wctype.h>
+#endif
+/* strlen() using escaped rather than literal form,
+   and allowing for embedded nuls.
+   In MBCS locales it works in characters, and reports in display width.
+ */
+int Rstrwid(char *str, int slen, int quote)
 {
-    char *p;
-    int len, i;
+    char *p = str;
+    int len = 0, i;
 
-    len = 0;
-    p = CHAR(s);
-    for (i = 0; i < LENGTH(s); i++) {
-	if(isprint((int)*p)) {
-	    switch(*p) {
-	    case '\\':
-#ifdef ESCquote
-	    case '\'':
-#endif
-		 len += 2; break;
-#ifdef ESC_BARE_QUOTE
-	    case '\"': len += 2; break;
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	int res;
+	mbstate_t mb_st;
+	wchar_t wc;
+	unsigned int k; /* not wint_t as it might be signed */
+
+	mbs_init(&mb_st);
+	for (i = 0; i < slen; i++) {
+	    res = mbrtowc(&wc, p, MB_CUR_MAX, NULL);
+	    if(res >= 0) {
+		k = wc;
+		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
+		    switch(wc) {
+		    case L'\\':
+			len += 2;
+			break;
+		    case L'\'':
+		    case L'"':
+			len += (quote == *p) ? 2 : 1;
+			break;
+		    default:
+			len++; /* assumes these are all width 1 */
+			break;
+		    }
+		    p++;
+		} else if (k < 0x80) {
+		    switch(wc) {
+		    case L'\a':
+		    case L'\b':
+		    case L'\f':
+		    case L'\n':
+		    case L'\r':
+		    case L'\t':
+		    case L'\v':
+		    case L'\0':
+			len += 2; break;
+		    default:
+			/* print in octal */
+			len += 4; break;
+		    }
+		    p++;
+		} else {
+		    len += iswprint((wint_t)wc) ? Ri18n_wcwidth(wc) :
+#ifdef Win32
+			6;
 #else
-	    case '\"': len += quote ? 2 : 1; break;
+		    (k > 0xffff ? 10 : 6);
 #endif
-	    default: len += 1; break;
+		    i += (res - 1);
+		    p += res;
+		}
+	    } else {
+		len += 4;
+		p++;
 	    }
-	} else switch(*p) {
-	case '\a':
-	case '\b':
-	case '\f':
-	case '\n':
-	case '\r':
-	case '\t':
-	case '\v':
-	case '\0':
-	    len += 2; break;
-	default: /* print in octal */
-	    len += 5; break;
 	}
-	p++;
-    }
+    } else
+#endif
+	for (i = 0; i < slen; i++) {
+	    /* ASCII */
+	    if((unsigned char) *p < 0x80) {
+		if(isprint((int)*p)) {
+		    switch(*p) {
+		    case '\\':
+			len += 2; break;
+		    case '\'':
+		    case '"':
+			len += (quote == *p)? 2 : 1; break;
+		    default:
+			len++; break;
+		    }
+		} else switch(*p) {
+		case '\a':
+		case '\b':
+		case '\f':
+		case '\n':
+		case '\r':
+		case '\t':
+		case '\v':
+		case '\0':
+		    len += 2; break;
+		default:
+		    /* print in octal */
+		    len += 4; break;
+		}
+		p++;
+	    } else { /* 8 bit char */
+#ifdef Win32 /* It seems Windows does not know what is printable! */
+		len++;
+#else
+		len += isprint((int)*p) ? 1 : 4;
+#endif
+		p++;
+	    }
+	}
+
     return len;
 }
 
-/* Here w appears to be the minimum field width */
-char *EncodeString(SEXP s, int w, int quote, int right)
+int Rstrlen(SEXP s, int quote)
 {
-    int b, i, j, cnt;
-    char *p, *q, buf[5];
+    return Rstrwid(CHAR(s), LENGTH(s), quote);
+}
+
+/* Here w is the minimum field width
+   If 'quote' is non-zero the result should be quoted (and internal quotes
+   escaped and NA strings handled differently).
+ */
+char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
+{
+    int b, b0, i, j, cnt;
+    char *p, *q, buf[11];
+
+    /* We have to do something like this as the result is returned, and
+       passed on by EncodeElement -- so no way could be enduser be
+       responsible for freeing it.  However, this is not thread-safe. */
+    static R_StringBuffer gBuffer = {NULL, 0, BUFSIZE};
+    R_StringBuffer *buffer = &gBuffer;
 
     if (s == NA_STRING) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
@@ -271,106 +368,200 @@ char *EncodeString(SEXP s, int w, int quote, int right)
 	cnt = LENGTH(s);
     }
 
-    R_AllocStringBuffer((i+2 >= w)?(i+2):w, buffer); /* +2 allows for quotes */
+    /* We need enough space for the encoded string, including escapes.
+       Octal encoding turns one byte into four.
+       Unicode encoding can turn a multibyte into six or ten,
+       but it turns 2/3 into 6, and 4 (and perhaps 5/6) into 10.
+       Let's be wasteful here (the worst case appears to be an MBCS with
+       two bytes for an upper-plane Unicode point output as ten bytes).
+     */
+    R_AllocStringBuffer(imax2(5*cnt+2, w), buffer); /* +2 allows for quotes */
     q = buffer->data;
-    if(right) { /* Right justifying */
-	b = w - i - (quote ? 2 : 0);
-	for(i=0 ; i<b ; i++) *q++ = ' ';
+    b = w - i - (quote ? 2 : 0); /* total amount of padding */
+    if(justify == Rprt_adj_none) b = 0;
+    if(b > 0 && justify != Rprt_adj_left) {
+	b0 = (justify == Rprt_adj_centre) ? b/2 : b;
+	for(i = 0 ; i < b0 ; i++) *q++ = ' ';
+	b -= b0;
     }
     if(quote) *q++ = quote;
-    for (i = 0; i < cnt; i++) {
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	int j, res;
+	mbstate_t mb_st;
+	wchar_t wc;
+	unsigned int k; /* not wint_t as it might be signed */
+        Rboolean Unicode_warning=FALSE;
 
-	/* ASCII */
+	mbs_init(&mb_st);
+	for (i = 0; i < cnt; i++) {
+	    res = Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
+	    if(res >= 0) { /* res = 0 is a terminator */
+		k = wc;
+		/* To be portable, treat \0 explicitly */
+		if(res == 0) {k = 0; wc = L'\0';}
+		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
+		    switch(wc) {
+		    case L'\\': *q++ = '\\'; *q++ = '\\'; p++;
+			break;
+		    case L'\'':
+		    case L'"':
+			if(quote == *p)  *q++ = '\\'; *q++ = *p++;
+			break;
+		    default:
+			for(j = 0; j < res; j++) *q++ = *p++;
+			break;
+		    }
+		} else if (k < 0x80) {
+		    /* ANSI Escapes */
+		    switch(wc) {
+		    case L'\a': *q++ = '\\'; *q++ = 'a'; break;
+		    case L'\b': *q++ = '\\'; *q++ = 'b'; break;
+		    case L'\f': *q++ = '\\'; *q++ = 'f'; break;
+		    case L'\n': *q++ = '\\'; *q++ = 'n'; break;
+		    case L'\r': *q++ = '\\'; *q++ = 'r'; break;
+		    case L'\t': *q++ = '\\'; *q++ = 't'; break;
+		    case L'\v': *q++ = '\\'; *q++ = 'v'; break;
+		    case L'\0': *q++ = '\\'; *q++ = '0'; break;
 
-	if(isprint((int)*p)) {
-	    switch(*p) {
-	    case '\\': *q++ = '\\'; *q++ = '\\'; break;
-#ifdef ESCquote
-	    case '\'': *q++ = '\\'; *q++ = '\''; break;
+		    default:
+			/* print in octal */
+			snprintf(buf, 5, "\\%03o", k);
+			for(j = 0; j < 4; j++) *q++ = buf[j];
+			break;
+		    }
+		    p++;
+		} else {
+		    if(iswprint(wc)) {
+			for(j = 0; j < res; j++) *q++ = *p++;
+		    } else {
+#ifndef Win32
+			Unicode_warning = TRUE;
+			if(k > 0xffff)
+			    snprintf(buf, 11, "\\U%08x", k);
+			else
 #endif
-#ifdef ESC_BARE_QUOTE
-	    case '\"': *q++ = '\"'; break;
+			    snprintf(buf, 11, "\\u%04x", k);
+			for(j = 0; j < strlen(buf); j++) *q++ = buf[j];
+			p += res;
+		    }
+		    i += (res - 1);
+		}
+
+	    } else { /* invalid char */
+		snprintf(q, 5, "<%02x>", *((unsigned char *)p));
+		q += 4; p++;
+	    }
+	}
+#ifndef __STDC_ISO_10646__
+	if(Unicode_warning)
+	    warning(_("it is not known that wchar_t is Unicode on this platform"));
+#endif
+
+    } else
+#endif
+	for (i = 0; i < cnt; i++) {
+
+	    /* ASCII */
+	    if((unsigned char) *p < 0x80) {
+		if(*p != '\t' && isprint((int)*p)) { /* Windows has \t as printable */
+		    switch(*p) {
+		    case '\\': *q++ = '\\'; *q++ = '\\'; break;
+		    case '\'':
+		    case '"':
+			if(quote == *p)  *q++ = '\\'; *q++ = *p; break;
+		    default: *q++ = *p; break;
+		    }
+		} else switch(*p) {
+		    /* ANSI Escapes */
+		case '\a': *q++ = '\\'; *q++ = 'a'; break;
+		case '\b': *q++ = '\\'; *q++ = 'b'; break;
+		case '\f': *q++ = '\\'; *q++ = 'f'; break;
+		case '\n': *q++ = '\\'; *q++ = 'n'; break;
+		case '\r': *q++ = '\\'; *q++ = 'r'; break;
+		case '\t': *q++ = '\\'; *q++ = 't'; break;
+		case '\v': *q++ = '\\'; *q++ = 'v'; break;
+		case '\0': *q++ = '\\'; *q++ = '0'; break;
+
+		default:
+		    /* print in octal */
+		    snprintf(buf, 5, "\\%03o", (unsigned char) *p);
+		    for(j = 0; j < 4; j++) *q++ = buf[j];
+		    break;
+		}
+		p++;
+	    } else {  /* 8 bit char */
+#ifdef Win32 /* It seems Windows does not know what is printable! */
+		*q++ = *p++;
 #else
-	    case '\"': if(quote) *q++ = '\\'; *q++ = '\"'; break;
+		if(!isprint((int)*p & 0xff)) {
+		    /* print in octal */
+		    snprintf(buf, 5, "\\%03o", (unsigned char) *p);
+		    for(j = 0; j < 4; j++) *q++ = buf[j];
+		    p++;
+		} else *q++ = *p++;
 #endif
-	    default: *q++ = *p; break;
 	    }
 	}
 
-	/* ANSI Escapes */
-
-	else switch(*p) {
-	case '\a': *q++ = '\\'; *q++ = 'a'; break;
-	case '\b': *q++ = '\\'; *q++ = 'b'; break;
-	case '\f': *q++ = '\\'; *q++ = 'f'; break;
-	case '\n': *q++ = '\\'; *q++ = 'n'; break;
-	case '\r': *q++ = '\\'; *q++ = 'r'; break;
-	case '\t': *q++ = '\\'; *q++ = 't'; break;
-	case '\v': *q++ = '\\'; *q++ = 'v'; break;
-	case '\0': *q++ = '\\'; *q++ = '0'; break;
-
-	default: /* print in octal */
-	    snprintf(buf, 5, "\\%03o", (unsigned char) *p);
-	    for(j = 0; j < 4; j++) *q++ = buf[j];
-	    break;
-	}
-	p++;
-    }
     if(quote) *q++ = quote;
-    if(!right) { /* Left justifying */
-	*q = '\0';
-	b = w - strlen(buffer->data);
-	for(i=0 ; i<b ; i++) *q++ = ' ';
+    if(b > 0 && justify != Rprt_adj_right) {
+	for(i = 0 ; i < b ; i++) *q++ = ' ';
     }
     *q = '\0';
     return buffer->data;
 }
 
-char *EncodeElement(SEXP x, int indx, int quote)
+char *EncodeElement(SEXP x, int indx, int quote, char dec)
 {
     int w, d, e, wi, di, ei;
+    char *res;
 
     switch(TYPEOF(x)) {
     case LGLSXP:
-	formatLogical(&INTEGER(x)[indx], 1, &w);
-	EncodeLogical(INTEGER(x)[indx], w);
+	formatLogical(&LOGICAL(x)[indx], 1, &w);
+	res = EncodeLogical(LOGICAL(x)[indx], w);
 	break;
     case INTSXP:
 	formatInteger(&INTEGER(x)[indx], 1, &w);
-	EncodeInteger(INTEGER(x)[indx], w);
+	res = EncodeInteger(INTEGER(x)[indx], w);
 	break;
     case REALSXP:
 	formatReal(&REAL(x)[indx], 1, &w, &d, &e, 0);
-	EncodeReal(REAL(x)[indx], w, d, e);
+	res = EncodeReal(REAL(x)[indx], w, d, e, dec);
 	break;
     case STRSXP:
 	formatString(&STRING_PTR(x)[indx], 1, &w, quote);
-	EncodeString(STRING_ELT(x, indx), w, quote, Rprt_adj_left);
+	res = EncodeString(STRING_ELT(x, indx), w, quote, Rprt_adj_left);
 	break;
     case CPLXSXP:
-	formatComplex(&COMPLEX(x)[indx], 1,
-		      &w, &d, &e, &wi, &di, &ei, 0);
-	EncodeComplex(COMPLEX(x)[indx],
-		      w, d, e, wi, di, ei);
+	formatComplex(&COMPLEX(x)[indx], 1, &w, &d, &e, &wi, &di, &ei, 0);
+	res = EncodeComplex(COMPLEX(x)[indx], w, d, e, wi, di, ei, dec);
 	break;
     case RAWSXP:
-	EncodeRaw(RAW(x)[indx]);
+	res = EncodeRaw(RAW(x)[indx]);
 	break;
+    default:
+	res = NULL; /* -Wall */
+	UNIMPLEMENTED_TYPE("EncodeElement", x);
     }
-    return buffer->data;
+    return res;
 }
 
+#if 0
 char *Rsprintf(char *format, ...)
 {
+    static char buffer[1001]; /* unsafe, as assuming max length, but all
+				 internal uses are for a few characters */
     va_list(ap);
 
-    R_AllocStringBuffer(0, buffer); /* unsafe, as assuming length, but all internal
- 		                       uses are for a few characters */
     va_start(ap, format);
-    vsprintf(buffer->data, format, ap);
+    vsnprintf(buffer, 1000, format, ap);
     va_end(ap);
-    return buffer->data;
+    buffer[1000] = '\0';
+    return buffer;
 }
+#endif
 
 void Rprintf(char *format, ...)
 {
@@ -394,45 +585,98 @@ void REprintf(char *format, ...)
     va_end(ap);
 }
 
+#if defined(HAVE_VASPRINTF) && !HAVE_DECL_VASPRINTF
+int vasprintf(char **strp, const char *fmt, va_list ap);
+#endif
+
+#if !HAVE_VA_COPY && HAVE___VA_COPY
+# define va_copy __va_copy
+# undef HAVE_VA_COPY
+# define HAVE_VA_COPY 1
+#endif
+
+#ifdef HAVE_VA_COPY
+# define R_BUFSIZE BUFSIZE
+#else
+# define R_BUFSIZE 100000
+#endif
 void Rcons_vprintf(const char *format, va_list arg)
 {
-    char buf[BUFSIZE], *p = buf, *vmax = vmaxget();
+    char buf[R_BUFSIZE], *p = buf;
     int res;
+#ifdef HAVE_VA_COPY
+    char *vmax = vmaxget();
+    int usedRalloc = FALSE, usedVasprintf = FALSE;
+    va_list aq;
 
-    res = vsnprintf(p, BUFSIZE, format, arg);
-    if(res >= BUFSIZE) { /* res is the desired output length */
+    va_copy(aq, arg);
+    res = vsnprintf(buf, R_BUFSIZE, format, aq);
+    va_end(aq);
+#ifdef HAVE_VASPRINTF
+    if(res >= R_BUFSIZE || res < 0)
+	vasprintf(&p, format, arg);
+#else
+    if(res >= R_BUFSIZE) { /* res is the desired output length */
+	usedRalloc = TRUE;
 	p = R_alloc(res+1, sizeof(char));
 	vsprintf(p, format, arg);
     } else if(res < 0) { /* just a failure indication */
-	p = R_alloc(10*BUFSIZE, sizeof(char));
-	res = vsnprintf(p, 10*BUFSIZE, format, arg);
+	p = R_alloc(10*R_BUFSIZE, sizeof(char));
+	res = vsnprintf(p, 10*R_BUFSIZE, format, arg);
 	if (res < 0) {
-	    *(p + 10*BUFSIZE) = '\0';
+	    *(p + 10*R_BUFSIZE) = '\0';
 	    warning("printing of extremely long output is truncated");
 	}
     }
-    R_WriteConsole(p, strlen(buf));
-    vmaxset(vmax);
+#endif /* HAVE_VASPRINTF */
+#else
+    res = vsnprintf(p, R_BUFSIZE, format, arg);
+    if(res >= R_BUFSIZE || res < 0) {
+	/* res is the desired output length or just a failure indication */
+	    buf[R_BUFSIZE - 1] = '\0';
+	    warning(_("printing of extremely long output is truncated"));
+	    res = R_BUFSIZE;
+    }
+#endif /* HAVE_VA_COPY */
+    R_WriteConsole(p, strlen(p));
+#ifdef HAVE_VA_COPY
+    if(usedRalloc) vmaxset(vmax);
+    if(usedVasprintf) free(p);
+#endif
 }
 
 void Rvprintf(const char *format, va_list arg)
 {
     int i=0, con_num=R_OutputCon;
     Rconnection con;
+#ifdef HAVE_VA_COPY
+    va_list argcopy;
+#endif
     static int printcount = 0;
+
     if (++printcount > 100) {
 	R_CheckUserInterrupt();
 	printcount = 0 ;
     }
-    
+
     do{
       con = getConnection(con_num);
-      con->vfprintf(con, format, arg);
+#ifdef HAVE_VA_COPY
+      va_copy(argcopy, arg);
+      /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
+      (con->vfprintf)(con, format, argcopy);
+      va_end(argcopy);
+#else /* don't support sink(,split=TRUE) */
+      (con->vfprintf)(con, format, arg);
+#endif
       con->fflush(con);
       con_num = getActiveSink(i++);
+#ifndef HAVE_VA_COPY
+      if (con_num>0) error("Internal error: this platform does not support split output");
+#endif
     } while(con_num>0);
-    
-    
+
+
 }
 
 /*
@@ -452,7 +696,8 @@ void REvprintf(const char *format, va_list arg)
 	    /* should never happen, but in case of corruption... */
 	    R_ErrorCon = 2;
 	} else {
-	    con->vfprintf(con, format, arg);
+	    /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
+	    (con->vfprintf)(con, format, arg);
 	    con->fflush(con);
 	    return;
 	}
@@ -466,27 +711,25 @@ void REvprintf(const char *format, va_list arg)
 	} else vfprintf(R_Consolefile, format, arg);
     } else {
 	char buf[BUFSIZE];
-	int slen;
 
 	vsnprintf(buf, BUFSIZE, format, arg);
 	buf[BUFSIZE-1] = '\0';
-	slen = strlen(buf);
-	R_WriteConsole(buf, slen);
+	R_WriteConsole(buf, strlen(buf));
     }
 }
 
-int IndexWidth(int n)
+int attribute_hidden IndexWidth(int n)
 {
     return (int) (log10(n + 0.5) + 1);
 }
 
-void VectorIndex(int i, int w)
+void attribute_hidden VectorIndex(int i, int w)
 {
 /* print index label "[`i']" , using total width `w' (left filling blanks) */
     Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);
 }
 
-void MatrixColumnLabel(SEXP cl, int j, int w)
+void attribute_hidden MatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
     SEXP tmp;
@@ -503,7 +746,7 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
     }
 }
 
-void RightMatrixColumnLabel(SEXP cl, int j, int w)
+void attribute_hidden RightMatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
     SEXP tmp;
@@ -512,15 +755,18 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
         tmp = STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(tmp, 0);
+	/* This does not work correctly at least on FC3
 	Rprintf("%*s", R_print.gap+w,
-		EncodeString(tmp, l, 0, Rprt_adj_right));
+		EncodeString(tmp, l, 0, Rprt_adj_right)); */
+	Rprintf("%*s%s", R_print.gap+w-l, "",
+	        EncodeString(tmp, l, 0, Rprt_adj_right));
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
     }
 }
 
-void LeftMatrixColumnLabel(SEXP cl, int j, int w)
+void attribute_hidden LeftMatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
     SEXP tmp;
@@ -537,7 +783,7 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
     }
 }
 
-void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
+void attribute_hidden MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
 {
     int l;
     SEXP tmp;

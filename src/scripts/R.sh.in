@@ -8,16 +8,18 @@ if test -n "${R_HOME}" && \
 fi
 R_HOME="${R_HOME_DIR}"
 export R_HOME
+R_SHARE_DIR="${R_HOME_DIR}/share"
+export R_SHARE_DIR
+R_INCLUDE_DIR="${R_HOME_DIR}/include"
+export R_INCLUDE_DIR
+R_DOC_DIR="${R_HOME_DIR}/doc"
+export R_DOC_DIR
 
-## NOTE:
-## We must set this here rather than in the main binary.
-: ${R_LD_LIBRARY_PATH=${R_HOME}/lib:@R_LD_LIBRARY_PATH@}
-if test -z "${@shlibpath_var@}"; then
-  @shlibpath_var@="${R_LD_LIBRARY_PATH}"
-else
-  @shlibpath_var@="${R_LD_LIBRARY_PATH}:${@shlibpath_var@}"
-fi
-export @shlibpath_var@
+# Since this script can be called recursively, we allow R_ARCH to
+# be overridden from the environment.
+# This script is shared by parallel installs, so nothing in it should
+# depend on the sub-architecture except the default here.
+: ${R_ARCH=@R_ARCH@}
 
 usage="
 Usage: R [options] [< infile] [> outfile]
@@ -29,6 +31,7 @@ specified options, or invoke an R tool via the 'R CMD' interface.
 Options:
   -h, --help            Print short help message and exit
   --version             Print version info and exit
+  --encoding=ENC        Specify encoding to be used for stdin
   RHOME			Print path to R home directory and exit
   --save                Do save workspace at the end of the session
   --no-save             Don't save it
@@ -54,7 +57,8 @@ Options:
   -d, --debugger=NAME   Run R through debugger NAME
   --debugger-args=ARGS  Pass ARGS as arguments to the debugger
   -g, --gui=TYPE	Use TYPE as GUI; possible values are 'X11'
-			(default), 'none' and 'gnome'
+			(default), 'Tk' and (with package gnomeGUI) 'gnome'
+  --arch=NAME		Specify a sub-architecture
   --args                Skip the rest of the command line
 
 Commands:
@@ -71,6 +75,8 @@ Commands:
   Rd2dvi		Convert Rd format to DVI/PDF
   Rd2txt		Convert Rd format to pretty text
   Sd2Rd			Convert S documentation to Rd format
+  Stangle		Extract S/R code from Sweave documentation
+  Sweave		Process Sweave documentation
   config                Obtain configuration information about R
 
 Please use 'R CMD command --help' to obtain further information about
@@ -78,13 +84,14 @@ the usage of 'command'.
 
 Report bugs to <r-bugs@r-project.org>."
 
-version="R REPLACE_BY_VERSION.
-Copyright (C) REPLACE_BY_YEAR R Development Core Team
+### We also have this in compiled code -> use that one to always be in sync
+# version="R REPLACE_BY_VERSION.
+# Copyright (C) REPLACE_BY_YEAR R Development Core Team
 
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under the terms of the GNU
-General Public License.  For more information about these matters,
-see http://www.gnu.org/copyleft/gpl.html."
+# R is free software and comes with ABSOLUTELY NO WARRANTY.
+# You are welcome to redistribute it under the terms of the GNU
+# General Public License.  For more information about these matters,
+# see http://www.gnu.org/copyleft/gpl.html."
 
 error () {
   echo "ERROR: $*" >&2
@@ -95,15 +102,28 @@ error () {
 args=
 debugger=
 debugger_args=
+gui=
 while test -n "${1}"; do
   case ${1} in
     RHOME|--print-home)
       echo "${R_HOME}"; exit 0 ;;
     CMD)
       shift;
+      export R_ARCH
+      . ${R_HOME}/etc${R_ARCH}/ldpaths
       exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
-    --gnome)
-      error "option '${1}' is defunct, use '--gui=gnome'"
+    -g|--gui)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
+	gui="${2}"
+        args="${args} ${1} ${2}"
+	shift
+      else
+	error "option '${1}' requires an argument"
+      fi
+      ;;
+    --gui=*)
+      gui=`echo "${1}" | sed -e 's/[^=]*=//'`
+      args="${args} ${1}"
       ;;
     -d|--debugger)
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
@@ -118,37 +138,56 @@ while test -n "${1}"; do
       debugger_args=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -h|--help)
       echo "${usage}"; exit 0 ;;
-    --version)
-      echo "${version}"; exit 0 ;;
+## use the version in compiled code to always be in sync      
+#    --version)
+#      echo "${version}"; exit 0 ;;
+    --args)
+      break ;;
+   --arch)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then
+	R_ARCH="/${2}"
+        shift
+      else
+        error "option '${1}' requires an argument"
+      fi
+      ;;
+    --arch=*)
+      r_arch=`echo "${1}" | sed -e 's/[^=]*=//'`
+      R_ARCH="/${r_arch}"
+      ;;
     *)
       args="${args} ${1}" ;;
   esac
   shift
 done
 
+. ${R_HOME}/etc${R_ARCH}/ldpaths
+
+R_binary="${R_HOME}/bin/exec${R_ARCH}/R"
+export R_ARCH
+
+case "${gui}" in
+gnome|GNOME)
+  R_binary="${R_HOME}/bin/exec${R_ARCH}/Rgnome"
+  ;;
+Tk|tk|X11|x11)
+  ;;
+"")
+  ;;
+*)
+  error "unknown GUI ${gui}"
+esac
+
 ## R_HOME may have moved, so check
-## (or you get "GUI X11 is not supported")
 if test -x "${R_HOME}"; then
   :
 else
   error "R_HOME ('${R_HOME}') not found"
 fi
 
-## Create a per-session dir
-: ${TMPDIR=/tmp}
-{ tmp=`(umask 077 && mktemp -d -q "${TMPDIR}/RtmpXXXXXX") 2>/dev/null` \
-    && test -n "${tmp}" && test -d "${tmp}" ; } ||
-  { test -n "${RANDOM}" && tmp=${TMPDIR}/Rtmp$$-${RANDOM} \
-      && (umask 077 && mkdir "${tmp}") ; } ||
-  { tmp=${TMPDIR}/Rtmp$$ && (umask 077 && mkdir "${tmp}") ; } ||
-  error "cannot create temporary R session directory"
-R_SESSION_TMPDIR="${tmp}"
-export R_SESSION_TMPDIR
-
 ## Startup
-R_binary="${R_HOME}/bin/exec/R"
 if test -z "${debugger}"; then
-  exec "${R_binary}" @R_BATCHSAVE@ ${args}
+  exec "${R_binary}" @R_BATCHSAVE@ ${args} "${@}"
 else
   ## Ideally, we would like the debugger to start R with additional
   ## ('inferior') arguments, but not all debuggers can do this.  We know
@@ -168,13 +207,14 @@ else
       args_ok=yes
       ;;
   esac
-  if test -n "${args}" && test "${args_ok}" = no; then
+  if test -n "${args}${*}" && test "${args_ok}" = no; then
+    args=`expr "${args} ${*}" : " *\(.*\)"`
     echo "*** Further command line arguments ('${args}') disregarded"
     echo "*** (maybe use 'run ${args}' from *inside* ${debugger})"
     echo ""
     exec ${debugger} ${debugger_args} "${R_binary}"
   else
-    exec ${debugger} ${debugger_args} "${R_binary}" ${args}
+    exec ${debugger} ${debugger_args} "${R_binary}" ${args} "${@}"
   fi
 fi
 

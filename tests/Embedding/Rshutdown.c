@@ -5,17 +5,17 @@ int R_embeddedShutdown(Rboolean ask);
 
 main(int argc, char *argv[])
 {
-  SEXP objs[100];
-  int i;
-  Rf_initEmbeddedR(sizeof(argv)/sizeof(argv[0]), argv);
+    SEXP objs[100];
+    int i;
+    Rf_initEmbeddedR(sizeof(argv)/sizeof(argv[0]), argv);
 
-  for(i = 0; i < 100; i++) {
-    objs[i] = allocVector(VECSXP, 1000);
-    R_PreserveObject(objs[i]);
-    callLength(objs[i]);
-  }
+    for(i = 0; i < 100; i++) {
+	objs[i] = allocVector(VECSXP, 1000);
+	R_PreserveObject(objs[i]);
+	callLength(objs[i]);
+    }
 
-  R_embeddedShutdown(FALSE);
+    R_embeddedShutdown(FALSE);
 }
 
 int
@@ -25,13 +25,10 @@ callLength(SEXP obj)
     int errorOccurred;
     int len = -1;
 
-    PROTECT(e = allocVector(LANGSXP,2));
-    SETCAR(e, Rf_install("length"));
-    SETCAR(CDR(e), obj);
-
-    PROTECT(val = Test_tryEval(e, &errorOccurred));
+    PROTECT(e = lang2(install("length"), obj));
+    val = R_tryEval(e, R_GlobalEnv, &errorOccurred);
     len = INTEGER(val)[0];
-    UNPROTECT(2);
+    UNPROTECT(1);
    
     return(len);
 }

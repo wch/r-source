@@ -9,7 +9,9 @@
 }
 \usage{
 options(\dots)
+
 getOption(x)
+
 .Options
 }
 %%-- NOTE : Keep the list up-to-date,
@@ -29,79 +31,90 @@ getOption(x)
   use \code{getOption("width")}, e.g., rather than
   \code{options("width")} which is a \emph{list} of length one.
 
-  \code{.Options} also always contains the \code{options()} list, for
-  S compatibility.  You must use it \dQuote{read only} however.
+  \code{.Options} also always contains the \code{options()} list (as a
+  pairlist, unsorted), for S compatibility.  Assigning to it will make a
+  local copy and not change the original.
 }
 \value{
-  For \code{options}, a list (in any case) with the previous values of
-  the options changed, or all options when no arguments were given.
+  For \code{getOption}, the current value set for option \code{x}, or
+  \code{NULL} if the option is unset.
+
+  For \code{options()}, a list of all set options sorted by name.  For
+  \code{options(name)}, a list of length one containing the set value,
+  or \code{NULL} if it is unset.  For uses setting one or more options,
+  a list with the previous values of the options changed (returned
+  invisibly).
 }
 \section{Options used in base \R}{
   \describe{
-    \item{\code{prompt}:}{a string, used for \R's prompt; should usually
-      end in a blank (\code{" "}).}
+    \item{\code{add.smooth}:}{typically logical, defaulting to
+      \code{TRUE}.  Could also be set to an integer for specifying how
+      many (simulated) smooths should be added.  This is currently only
+      used by \code{\link[stats]{plot.lm}}.}
 
-    \item{\code{continue}:}{a string setting the prompt used for lines
-      which continue over one line.}
+      \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
+      true, a \link{warning} is produced whenever a \dQuote{generalized
+      vector} (atomic or \code{\link{list}}) is extended, by something
+      like \code{x <- 1:3; x[5] <- 6}.}
 
-    \item{\code{width}:}{controls the number of characters on a line.
-      You may want to change this if you re-size the window that \R is
-      running in.  Valid values are 10\dots10000 with default normally
-      80.  (The valid values are in file \file{Print.h} and can be
-      changed by re-compiling \R.)}
+    \item{\code{continue}:}{a non-empty string setting the prompt used
+      for lines which continue over one line.}
+
+    \item{\code{defaultPackages}:}{the packages that are attached by
+      default when \R starts up.  Initially set from value of the
+      environment variable \env{R\_DEFAULT\_PACKAGES}, or if that is unset
+      %%  default is set in ../../profile/Common.R :
+      to \code{c("datasets", "utils", "grDevices", "graphics", "stats",
+	"methods")}.  (Set \env{R\_DEFAULT\_PACKAGES} to \code{NULL} or
+      a comma-separated list of package names.)   A call to
+      \code{options} should be in your \file{.Rprofile} file to ensure
+      that the change takes effect before the base package is
+      initialized (see \code{\link{Startup}}).}
+
+    \item{\code{deparse.max.lines}:}{controls the number of lines used
+      when deparsing in \code{\link{traceback}} and
+      \code{\link{browser}}.  Initially unset, and only used if set to
+      a positive integer.}
 
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
       are 1\dots22 with default 7.  See \code{\link{print.default}}.}
 
-    \item{\code{editor}:}{sets the default text editor, e.g., for
-      \code{\link{edit}}.  Set from the environment variable
-      \code{VISUAL} on UNIX.}
+    \item{\code{digits.secs}:}{controls the maximum number of digits to
+      print when formatting time values in seconds.  Valid values
+      are 0\dots6 with default 0.  See \code{\link{strftime}}.}
 
-    \item{\code{pager}:}{the (stand-alone) program used for displaying
-      ASCII files on \R's console, also used by \code{\link{file.show}} and
-      sometimes \code{\link{help}}.
-#ifdef unix
-      Defaults to \file{\$R\_HOME/bin/pager}.
-#endif
-#ifdef windows
-      Defaults to \code{"internal"}, which uses a pager similar to the
-      GUI console.  Another possibility is \code{"console"} to use the
-      console itself.
-#endif
-    }
+    \item{\code{download.file.method}:}{Method to be used for
+      \code{download.file}.  Currently download methods
+      \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.
+      There is no default for this option, when \code{method = "auto"}
+      is chosen: see \code{\link{download.file}}.}
 
-    \item{\code{browser}:}{default HTML browser used by
-      \code{\link{help.start}()} on UNIX, or a non-default browser on
-      Windows.}
+    % note use of \code as otherwise -- is an en-dash.
+    \item{\code{echo}:}{logical.  Only used in non-interactive mode,
+      when it controls whether input is echoed.  Command-line option
+      \code{--slave} sets this initially to \code{FALSE}.}
 
-#ifdef unix
-    \item{\code{pdfviewer}:}{default PDF viewer.  Set from the
-      environment variable \env{R\_PDFVIEWER}.}
-#endif
+    \item{\code{encoding}:}{The name of an encoding, default
+      \code{"native.enc"}).  See \code{\link{connections}}.}
 
-    \item{\code{mailer}:}{default mailer used by
-      \code{\link{bug.report}()}.  Can be \code{"none"}.}
-
-    \item{\code{contrasts}:}{the default \code{\link{contrasts}} used in
-      model fitting such as with \code{\link{aov}} or \code{\link{lm}}.
-      A character vector of length two, the first giving the function to
-      be used with unordered factors and the second the function to be
-      used with ordered factors.}
-
-    \item{\code{defaultPackages}:}{the packages that are attached by
-      default when \R starts up.  Initially set from value of the
-      environment variables \env{R\_DefaultPackages}, or if that is unset
-      %%  default is set in ../../profile/Common.R :
-      to \code{c("utils", "stats", "graphics", "methods")}.  (Set
-      \env{R\_DEFAULT\_PACKAGES} to \code{NULL} or a comma-separated list
-      of package names.)  A call to \code{options} should be in your
-      \file{.Rprofile} file to ensure that the change takes effect
-      before the base package is initialized (see \code{\link{Startup}}).}
+    \item{\code{error}:}{either a function or an expression governing
+      the handling of non-catastrophic errors such as those generated by
+      \code{\link{stop}} as well as by signals and internally detected
+      errors.  If the option is a function, a call to that function,
+      with no arguments, is generated as the expression.  The default
+      value is \code{NULL}: see \code{\link{stop}} for the behaviour in
+      that case.  The functions \code{\link{dump.frames}} and
+      \code{\link{recover}} provide alternatives that allow post-mortem
+      debugging.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
-      expressions that will be evaluated.
-      Valid values are 25\dots100000 with default 500.}
+      expressions that will be evaluated.  Valid values are
+      25\dots500000 with default 5000.  If you increase it, you may
+      also want to start \R with a larger protection stack;
+      see \code{--max-ppsize} in \code{\link{Memory}}.  Note too that
+      you may cause a segfault from overflow of the C stack, and on OSes
+      where it is possible you may want to increase that.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their
@@ -115,117 +128,288 @@ getOption(x)
       functions in packages loaded by \code{\link{library}} or
       \code{\link{require}}.  Defaults to \code{FALSE} unless the
       environment variable \env{R\_KEEP\_PKG\_SOURCE} is set to
-      \code{yes}.}
+      \code{yes}.
 
-    \item{\code{na.action}:}{the name of a function for treating missing
-      values (\code{\link{NA}}'s) for certain situations.}
+      Note this does not apply to packages using lazy-loading or saved
+      images.  Whether they have kept source is determined when they are
+      installed (and is almost certainly false).}
+
+    \item{\code{mailer}:}{default mailer used by
+      \code{\link{bug.report}()}.  Can be \code{"none"}.}
+
+    \item{\code{max.contour.segments}:}{positive integer, defaulting to
+      \code{250000} and usually not set.  A limit on the number of
+      segments in a single contour line in \code{\link{contour}} or
+      \code{\link{contourLines}}.}
+
+    \item{\code{max.print}:}{integer, defaulting to \code{99999}.
+      \code{\link{print}} or \code{\link{show}} methods can make use of
+      this option, to limit the amount of information that is printed,
+      to something in the order of (and typically slightly less than)
+      \code{max.print} \emph{entries}.}
+
+    \item{\code{OutDec}:}{one-character string.  The character to be
+      used as the decimal point in output conversions, that is in
+      printing, plotting and \code{as.character} but not deparsing.}
+
+    \item{\code{pager}:}{the (stand-alone) program used for displaying
+      text files on \R's console, also used by \code{\link{file.show}} and
+      sometimes \code{\link{help}}.
+#ifdef unix
+      Defaults to \file{\$R\_HOME/bin/pager}.}
+#endif
+#ifdef windows
+      Defaults to \code{"internal"}, which uses a pager similar to the
+      GUI console.  Another possibility is \code{"console"} to use the
+      console itself.}
+#endif
 
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
-      \env{R\_PAPERSIZE} when \R is started and defaulting to
-      \code{"a4"} if that is unset or invalid.}
+      \env{R\_PAPERSIZE} when \R is started: if that is unset or invalid
+      it defaults to
+#ifdef unix
+      a value derived from the locale category \code{LC_PAPER}, or
+      if that is unavailable to a default set when \R was built.}
+#endif
+#ifdef windows
+      \code{"a4"}, or \code{"letter"} in US and Canadian locales.}
+#endif
 
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}
       for printing; set by environment variable \env{R\_PRINTCMD} when
       \R is started.  This should be a command that expects either input
       to be piped to \file{stdin} or to be given a single filename
-      argument.
-#ifdef windows
-      See \code{\link{postscript}} for ways to set this up.
-#endif
-    }
+      argument.}
 
-#ifdef unix
-    \item{\code{latexcmd, dvipscmd}:}{character strings giving commands
-      to be used in off-line printing of help pages.}
-#endif
+    \item{\code{prompt}:}{a non-empty string to be used for \R's prompt;
+      should usually end in a blank (\code{" "}).}
 
-    \item{\code{show.signif.stars, show.coef.Pvalues}:}{logical,
-      affecting P value printing, see \code{\link{printCoefmat}}.}
+    \item{\code{save.defaults}, \code{save.image.defaults}:}{
+      see \code{\link{save}}.}
 
-    \item{\code{ts.eps}:}{the relative tolerance for certain time series
-      (\code{\link{ts}}) computations.}
-
-    \item{\code{error}:}{either a function or an expression governing
-      the handling of non-catastrophic errors such as those generated by
-      \code{\link{stop}} as well as by signals and internally detected
-      errors.  If the option is a function, a call to that function,
-      with no arguments, is generated as the expression.  The default
-      value is \code{NULL}: see \code{\link{stop}} for the behaviour in
-      that case.  The function \code{\link{dump.frames}} provides one
-      alternative that allows post-mortem debugging.}
+    \item{\code{scipen}:}{integer.  A penalty to be applied
+      when deciding to print numeric values in fixed or exponential
+      notation.  Positive values bias towards fixed and negative towards
+      scientific notation: fixed notation will be preferred unless it is
+      more than \code{scipen} digits wider.}
 
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
+
+    \item{\code{stringsAsFactors}:}{The default setting for arguments of
+      \code{\link{data.frame}} and \code{\link{read.table}}.}
+
+    \item{\code{texi2dvi}:}{used by the unexported function
+      \code{texi2dvi} in namespace \pkg{tools}.}
+
+    \item{\code{timeout}:}{integer.  The timeout for some Internet
+      operations, in seconds.  Default 60 seconds.  See
+      \code{\link{download.file}} and \code{\link{connections}}.}
+
+    \item{\code{topLevelEnvironment}:}{see \code{\link{topenv}} and
+      \code{\link{sys.source}}.}
+
+    \item{\code{verbose}:}{logical.  Should \R report extra information
+      on progress?  Set to \code{TRUE} by the command-line option
+      \option{--verbose}.}
 
     \item{\code{warn}:}{sets the handling of warning messages.  If
       \code{warn} is negative all warnings are ignored.  If \code{warn}
       is zero (the default) warnings are stored until the top--level
       function returns.  If fewer than 10 warnings were signalled they
       will be printed otherwise a message saying how many (max 50) were
-      signalled.  A top--level variable called \code{last.warning} is
-      created and can be viewed through the function
+      signalled.  An object called \code{last.warning} is
+      created and can be printed through the function
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
 
-    \item{\code{warning.length}:}{sets the truncation limit for error
-      and warning messages.  A non-negative integer, with allowed values
-      100--8192, default 1000.}
-
     \item{\code{warning.expression}:}{an \R code expression to be called
       if a warning is generated, replacing the standard message.  If
-      non-null is called irrespective of the value of option
+      non-null it is called irrespective of the value of option
       \code{warn}.}
-#ifdef windows
 
-	\item{\code{warn.FPU}:}{logical, by default undefined.  If true,
-	  a \link{warning} is produced whenever \link{dyn.load} repairs the
-	  control word damaged by a buggy DLL.}
-#endif
+    \item{\code{warnings.length}:}{sets the truncation limit for error
+      and warning messages.  A non-negative integer, with allowed values
+      100\dots8192, default 1000.}
 
-    \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
-      true, a \link{warning} is produced whenever a \dQuote{generalized
-      vector} (atomic or \code{\link{list}}) is extended, by something
-      like \code{x <- 1:3; x[5] <- 6}.}
+    \item{\code{width}:}{controls the number of characters on a line.
+      You may want to change this if you re-size the window that \R is
+      running in.  Valid values are 10\dots10000 with default normally
+      80.  (The limits on valid values are in file \file{Print.h} and can be
+      changed by re-compiling \R.)}
+ }
 
-    \item{\code{echo}:}{logical.  Only used in non-interactive mode,
-      when it controls whether input is echoed.  Command-line option
-      \option{--slave} sets this initially to \code{FALSE}.}
-
-    \item{\code{verbose}:}{logical.  Should \R report extra information
-      on progress?  Set to \code{TRUE} by the command-line option
-      \option{--verbose}.}
-
+  The \sQuote{factory-fresh} default settings of some of these options are
+  \tabular{ll}{
+    \code{add.smooth} \tab \code{TRUE}\cr
+    \code{check.bounds} \tab \code{FALSE}\cr
+    \code{continue} \tab \code{"+ "}\cr
+    \code{digits} \tab \code{7}\cr
+    \code{echo} \tab \code{TRUE}\cr
+    \code{encoding} \tab \code{"native.enc"}\cr
+    \code{error} \tab \code{NULL}\cr
+    \code{expressions} \tab \code{5000}\cr
+    \code{keep.source} \tab \code{interactive()}\cr
+    \code{keep.source.pkgs} \tab \code{FALSE}\cr
+    \code{max.print} \tab \code{99999}\cr
+    \code{OutDec} \tab \code{"."}\cr
+    \code{prompt} \tab \code{"> "}\cr
+    \code{scipen} \tab \code{0} \cr
+    \code{show.error.messages} \tab \code{TRUE}\cr
+    \code{timeout} \tab \code{60}\cr
+    \code{verbose} \tab \code{FALSE}\cr
+    \code{warn} \tab \code{0}\cr
+    \code{warnings.length} \tab \code{1000}\cr
+    \code{width}  \tab \code{80}\cr
+  }
+  Others are set from environment variables or are platform-dependent.
+}
+\section{Options set in package grDevices}{
+  These will be set when package \pkg{grDevices} (or its name space)
+  is loaded if not already set.
+  \describe{
     \item{\code{device}:}{a character string giving the default device
       for that session.  This defaults to the normal screen device
-      (e.g., \code{x11}, \code{windows} or \code{gtk}) for an
+      (e.g., \code{x11}, \code{windows} or \code{quartz}) for an
       interactive session, and \code{postscript} in batch use or if a
       screen is not available.}
 
+    \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
+      and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
+      Honoured at least on \code{X11} and \code{windows} devices.}
+
+    \item{\code{par.ask.default}:}{logical.  The default for
+      \code{\link{par}("ask")} when a device is opened.}
+
 #ifdef unix
     \item{\code{X11colortype}:}{The default colour type for
-      \code{\link{X11}} devices.}
+      \code{\link{X11}} devices.  Default \code{"true"}.}
+
+    \item{\code{X11fonts}:}{character vector of length 2.
+      See \code{\link{X11}}.}
+
+    \item{\code{gamma}:}{double.  The default value of
+      \code{gamma} for \code{\link{X11}} devices, defaulting to 1
+      if unset (the default).}
+#endif
+#ifdef windows
+    \item{\code{gamma}:}{double. The default value of
+      \code{gamma} for \code{\link{windows}} devices, defaulting to 1
+      if unset (the default).}
+
+    \item{\code{graphics.record}:}{logical.  The default value of
+      \code{record} for \code{\link{windows}} devices.  Default
+      \code{FALSE}.}
+
+    \item{\code{windowsBuffered}:}{logical.  Should
+      \code{\link{windows}} devices be double-buffered?.  Default
+      \code{TRUE}.}
+
+    \item{\code{windowsTimeout}:}{integer vector of length 2
+      representing two times in milliseconds.  These control the
+      double-buffering of \code{\link{windows}} devices when that is
+      enabled: the first is the delay after plotting finishes
+      (default 100) and the second is the update interval during
+      continuous plotting (default 500).}
+
+    \item{\code{xpinch, ypinch}:}{double.  Pixels per inch, horizontally and
+      vertically.  If unset (the default), taken from Windows.}
+#endif
+  }
+}
+\section{Options set in package stats}{
+  These will be set when package \pkg{stats} (or its name space)
+  is loaded if not already set.
+  \describe{
+    \item{\code{contrasts}:}{the default \code{\link{contrasts}} used in
+      model fitting such as with \code{\link{aov}} or \code{\link{lm}}.
+      A character vector of length two, the first giving the function to
+      be used with unordered factors and the second the function to be
+      used with ordered factors.  By default the elements are named
+      \code{c("unordered", "ordered")}, but the names are unused.}
+
+    \item{\code{na.action}:}{the name of a function for treating missing
+      values (\code{\link{NA}}'s) for certain situations.}
+
+    \item{\code{show.coef.Pvalues}:}{logical, affecting whether P
+      values are printed in summary tables of coefficients.  See
+      \code{\link{printCoefmat}}.}
+
+    \item{\code{show.signif.stars}:}{logical, should stars be printed on
+      summary tables of coefficients?  See \code{\link{printCoefmat}}.}
+
+    \item{\code{ts.eps}:}{the relative tolerance for certain time series
+      (\code{\link{ts}}) computations.  Default \code{1e-05}.}
+
+    \item{\code{ts.S.compat}:}{logical.  Used to select S compatibility
+      for plotting time-series spectra.  See the description of argument
+      \code{log} in \code{\link{plot.spec}}.}
+  }
+}
+\section{Options set in package utils}{
+  These will be set when package \pkg{utils} (or its name space)
+  is loaded if not already set.
+  \describe{
+    \item{\code{browser}:}{default HTML browser used by
+      \code{\link{help.start}()} on UNIX, or a non-default browser on
+      Windows.}
+
+    \item{\code{de.cellwidth}:}{integer: the cell widths (number of
+      characters) to be used in the data editor \code{\link{dataentry}}.
+      If this is unset (the default), 0, negative or \code{NA}, variable
+      cell widths are used.}
+
+    \item{\code{editor}:}{a non-empty string.
+      Sets the default text editor, e.g., for
+      \code{\link{edit}}.  Set from the environment variable
+      \code{VISUAL} on UNIX.}
+
+    \item{\code{example.ask}:}{default for the \code{ask} argument of
+      \code{\link{example}}.}
+
+    \item{\code{help.try.all.packages}:}{default for an argument of
+      \code{\link{help}}.}
+
+    \item{\code{HTTPUserAgent}:}{string used as the user agent in HTTP
+      requests.  If \code{NULL}, HTTP requests will be made without a
+      user agent header.  The default is \code{R (<version> <platform>
+      <arch> <os>)}}
+
+    \item{\code{internet.info}:}{The minimum level of information to be
+      printed on URL downloads etc.  Default is 2, for failure causes.
+      Set to 1 or 0 to get more information.}
+
+    \item{\code{menu.graphics}:}{Logical: should graphical menus be
+      used if available?.  Defaults to \code{TRUE}.  Currently applies
+      to \code{\link{chooseCRANmirror}}, \code{\link{setRepositories}}
+      and to select from multiple help files in \code{\link{help}}.}
+
+    \item{\code{pkgType}:}{The default type of packages to be downloaded
+      and installed -- see \code{\link{install.packages}}.
+#ifdef windows
+      Possible values are \code{"win.binary"} (the default) and
+      \code{"source"}.}
+#endif
+#ifdef unix
+      Possible values are \code{"source"} (the default except under the
+      CRAN Mac OS X build) and \code{"mac.binary"}.}
 #endif
 
-    \item{\code{CRAN}:}{The URL of the preferred CRAN node for use by
+    \item{\code{repos}:}{URLs of the repositories for use by
       \code{\link{update.packages}}.  Defaults to
-      \url{http://cran.r-project.org}.}
+      \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
+      prompt for a CRAN mirror.  To avoid this do set the CRAN mirror,
+      by something like
+      \code{local({r <- getOption("repos"); r["CRAN"] <- "http://my.local.cran";
+                   options(repos=r)})}.
 
-    \item{\code{repositories}:}{A function that when evaluated returns a
-      named vector of URLs which can be used to specify the set and
-      order of any online repositories the user would like used in
-      functions such as \code{\link{pkgDepends}}.  The default
-      return value for the function is a vector with two components, one the
-      value of \code{contrib.url(getOption("CRAN"))} and the second
-      \code{contrib.url(getOption("BIOC"))}.}
-
-    \item{\code{download.file.method}:}{Method to be used for
-      \code{download.file}.  Currently download methods
-      \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.
-      There is no default for this option, when \code{method = "auto"}
-      is chosen: see \code{\link{download.file}}.}
+      Note that you can add more repositories (Bioconductor and
+      Omegahat, notably) using \code{\link{setRepositories}()}.
+    }
+    \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 
     \item{\code{unzip}:}{the command used for unzipping help files.
 #ifdef unix
@@ -237,61 +421,30 @@ getOption(x)
       Defaults to \code{"internal"} when the internal unzip code is
       used.}
 #endif
-
-    \item{\code{de.cellwidth}:}{integer: the cell widths (number of
-      characters) to be used in the data editor \code{\link{dataentry}}.
-      If this is unset, 0, negative or \code{NA}, variable cell widths
-      are used.}
-
-    \item{\code{encoding}:}{An integer vector of length 256 holding an
-      input encoding.  Defaults to \code{native.enc} (= \code{0:255}).
-      See \code{\link{connections}}.}
-
-    \item{\code{timeout}:}{integer.  The timeout for some Internet
-      operations, in seconds.  Default 60 seconds.
-      See \code{\link{download.file}} and \code{\link{connections}}.}
-
-    \item{\code{internet.info}:}{The minimum level of information to be
-      printed on URL downloads etc.  Default is 2, for failure causes.
-      Set to 1 or 0 to get more information.}
-
-    \item{\code{scipen}:}{integer.  A penalty to be applied
-      when deciding to print numeric values in fixed or exponential
-      notation.  Positive values bias towards fixed and negative towards
-      scientific notation: fixed notation will be preferred unless it is
-      more than \code{scipen} digits wider.}
-
-    \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
-      and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
-      Honoured at least on \code{X11} and \code{windows} devices.}
-#ifdef unix
-    \item{\code{X11fonts}:}{character vector of length 2.
-      See \code{\link{X11}}.}
-#endif
   }
-
-  The default settings of some of these options are
-  \tabular{llll}{
-    \code{prompt} \tab \code{"> "} \tab
-    \code{continue} \tab \code{"+ "}\cr
-    \code{width}  \tab \code{80} \tab
-    \code{digits} \tab \code{7}\cr
-    \code{expressions} \tab \code{500} \tab
-    \code{keep.source} \tab \code{TRUE}\cr
-    \code{show.signif.stars} \tab \code{TRUE} \tab
-    \code{show.coef.Pvalues} \tab \code{TRUE}\cr
-    \code{na.action} \tab \code{na.omit} \tab
-    \code{ts.eps} \tab \code{1e-5}\cr
-    \code{error} \tab \code{NULL} \tab
-    \code{show.error.messages} \tab \code{TRUE} \cr
-    \code{warn} \tab \code{0}\tab
-    \code{warning.length} \tab \code{1000}\cr
-    \code{echo} \tab \code{TRUE} \tab
-    \code{verbose} \tab \code{FALSE} \cr
-    \code{scipen} \tab \code{0} \tab \code{locatorBell} \tab \code{TRUE}
-  }
-  Others are set from environment variables or are platform-dependent.
 }
+
+#ifdef unix
+\section{Options used on Unix only}{
+  \describe{
+    \item{\code{latexcmd, dvipscmd}:}{character strings giving commands
+      to be used in off-line printing of help pages.}
+
+    \item{\code{pdfviewer}:}{default PDF viewer.  Set from the
+      environment variable \env{R\_PDFVIEWER}.}
+  }
+}
+#endif
+#ifdef windows
+\section{Options used on Windows only}{
+  \describe{
+    \item{\code{warn.FPU}:}{logical, by default undefined.  If true,
+      a \link{warning} is produced whenever \link{dyn.load} repairs the
+      control word damaged by a buggy DLL.}
+  }
+}
+#endif
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
@@ -301,19 +454,15 @@ getOption(x)
 options() # printing all current options
 op <- options(); str(op) # nicer printing
 
-# .Options is the same:
-all(sapply(1:length(op), function(i) if(is.atomic(op[[i]]))
-                         {all(.Options[[i]] == op[[i]])} else TRUE))
-
 options('width')[[1]] == options()$width # the latter needs more memory
-options(digits=20)
+options(digits = 20)
 pi
 
 # set the editor, and save previous value
-old.o <- options(editor="nedit")
+old.o <- options(editor = "nedit")
 old.o
 
-options(check.bounds = TRUE)
+options(check.bounds = TRUE, warn = 1)
 x <- NULL; x[4] <- "yes" # gives a warning
 
 options(digits=5)
@@ -324,16 +473,19 @@ options(op)     # reset (all) initial options
 options('digits')
 
 \dontrun{## set contrast handling to be like S
-options(contrasts=c("contr.helmert", "contr.poly"))
+options(contrasts = c("contr.helmert", "contr.poly"))
 }
 \dontrun{## on error, terminate the R session with error status 66
-options(error=quote(q("no", status=66, runLast=FALSE)))
+options(error = quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
 }
-\dontrun{## set an error action for debugging: see ?debugger.
-options(error=dump.frames)
+\dontrun{## Set error actions for debugging:
+## enter browser on error, see ?recover:
+options(error = recover)
+## allows to call debugger() afterwards, see ?debugger:
+options(error = dump.frames)
 ## A possible setting for non-interactive sessions
-options(error=quote({dump.frames(to.file=TRUE); q()}))
+options(error = quote({dump.frames(to.file=TRUE); q()}))
 }}
 \keyword{environment}
 \keyword{error}

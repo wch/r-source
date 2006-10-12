@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2003    Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2005    Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
  * Generally useful  UTILITIES  *NOT* relying on R internals (from Defn.h)
@@ -59,7 +59,10 @@ void R_qsort    (double *v,         int i, int j);
 void R_qsort_I  (double *v, int *I, int i, int j);
 void R_qsort_int  (int *iv,         int i, int j);
 void R_qsort_int_I(int *iv, int *I, int i, int j);
-
+#ifdef R_RS_H
+void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
+void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
+#endif
 
 /* ../../main/printutils.c : */
 int	IndexWidth(int);
@@ -80,6 +83,23 @@ void	rgb2hsv(double r, double g, double b,
 		double *h, double *s, double *v);
 
 void R_CheckUserInterrupt(void);
+void R_CheckStack(void);
+    
+
+/* ../../appl/interv.c: also in Applic.h */
+int findInterval(double *xt, int n, double x,
+		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
+		 int *mflag);
+#ifdef R_RS_H
+int F77_SUB(interv)(double *xt, int *n, double *x,
+		    Rboolean *rightmost_closed, Rboolean *all_inside,
+		    int *ilo, int *mflag);
+#endif
+void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
+		     int *rightmost_closed, int *all_inside, int *indx);
+
+/* ../../appl/maxcol.c: also in Applic.h */
+void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
 
 #ifdef  __cplusplus
 }

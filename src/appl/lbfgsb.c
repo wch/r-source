@@ -14,10 +14,12 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 /* l-bfgs-b.f -- translated by f2c (version 19991025).
 */
+
+/* <UTF8> all char uses here are ASCII */
 
 /* Exports setulb()
  *         ======
@@ -577,7 +579,7 @@ static void mainlb(int n, int m, double *x,
     int nfgv, ifun, iter, nint;
     char word[4]; /* allow for terminator */
     double time1, time2;
-    int i, iback, k;
+    int i, iback, k = 0; /* -Wall */
     double gdold;
     int nfree;
     int boxed;

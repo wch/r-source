@@ -13,6 +13,15 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 		  "--please do not edit the information below--\\n\\n",
 		  "Version:\\n ",
 		  paste(names(R.version),R.version, sep=" = ",collapse="\\n "),
+                  if (nchar(Sys.getenv("R_GUI_APP_VERSION"))>0)
+                      paste("\\n\\nGUI:\\n R-GUI ",Sys.getenv("R_GUI_APP_VERSION"),
+                            " (",Sys.getenv("R_GUI_APP_REVISION"),")",sep='')
+                  else
+                      ""
+                  ,
+                  "\\n\\n",
+                  "Locale:\\n",
+                  Sys.getlocale(),
 		  "\\n\\n",
 		  "Search Path:\\n ",
 		  paste(search(), collapse=", "),
@@ -47,8 +56,7 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
     }
     else if(method == "mailx"){
 
-        if(missing(subject))
-            stop("Subject missing")
+        if(missing(subject)) stop("'subject' missing")
 
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=FALSE)

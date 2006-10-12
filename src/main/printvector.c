@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  *
  *  EXPORTS	printVector()
  *		printNamedVector()
@@ -100,7 +100,7 @@ void printRealVector(double *x, int n, int indx)
 	if (i > 0 && width + w > R_print.width) {
 	    DO_newline;
 	}
-	Rprintf("%s", EncodeReal(x[i], w, d, e));
+	Rprintf("%s", EncodeReal(x[i], w, d, e, OutDec));
 	width += w;
     }
     Rprintf("\n");
@@ -121,10 +121,10 @@ void printComplexVector(Rcomplex *x, int n, int indx)
 	    DO_newline;
 	}
 	if (ISNA(x[i].r) || ISNA(x[i].i))
-	    Rprintf("%s", EncodeReal(NA_REAL, w, 0, 0));
+	    Rprintf("%s", EncodeReal(NA_REAL, w, 0, 0, OutDec));
 	else
 	    Rprintf("%s", EncodeComplex(x[i], wr + R_print.gap , dr, er,
-					wi, di, ei));
+					wi, di, ei, OutDec));
 	width += w;
     }
     Rprintf("\n");
@@ -171,35 +171,41 @@ void printVector(SEXP x, int indx, int quote)
 /* print R vector x[];	if(indx) print indices; if(quote) quote strings */
     int n;
 
-    if ((n = LENGTH(x)) != 0)
+    if ((n = LENGTH(x)) != 0) {
+	int n_pr = (n <= R_print.max +1) ? n : R_print.max;
+	/* '...max +1'  ==> will omit at least 2 ==> plural in msg below */
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    printLogicalVector(LOGICAL(x), n, indx);
+	    printLogicalVector(LOGICAL(x), n_pr, indx);
 	    break;
 	case INTSXP:
-	    printIntegerVector(INTEGER(x), n, indx);
+	    printIntegerVector(INTEGER(x), n_pr, indx);
 	    break;
 	case REALSXP:
-	    printRealVector(REAL(x), n, indx);
+	    printRealVector(REAL(x), n_pr, indx);
 	    break;
 	case STRSXP:
 	    if (quote)
-		printStringVector(STRING_PTR(x), n, '"', indx);
+		printStringVector(STRING_PTR(x), n_pr, '"', indx);
 	    else
-		printStringVector(STRING_PTR(x), n, 0, indx);
+		printStringVector(STRING_PTR(x), n_pr, 0, indx);
 	    break;
 	case CPLXSXP:
-	    printComplexVector(COMPLEX(x), n, indx);
+	    printComplexVector(COMPLEX(x), n_pr, indx);
 	    break;
 	case RAWSXP:
-	    printRawVector(RAW(x), n, indx);
+	    printRawVector(RAW(x), n_pr, indx);
 	    break;
 	}
+	if(n_pr < n)
+		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]]\n",
+			n - n_pr);
+    }
     else
 #define PRINT_V_0						\
 	switch (TYPEOF(x)) {					\
 	case LGLSXP:	Rprintf("logical(0)\n");	break;	\
-	case INTSXP:						\
+	case INTSXP:	Rprintf("integer(0)\n");	break;	\
 	case REALSXP:	Rprintf("numeric(0)\n");	break;	\
 	case CPLXSXP:	Rprintf("complex(0)\n");	break;	\
 	case STRSXP:	Rprintf("character(0)\n");	break;	\
@@ -259,7 +265,7 @@ static void printNamedIntegerVector(int * x, int n, SEXP * names)
 
 static void printNamedRealVector(double * x, int n, SEXP * names)
     PRINT_N_VECTOR(INI_F_REAL,
-		   Rprintf("%s%*s", EncodeReal(x[k],w,d,e),R_print.gap,""))
+		   Rprintf("%s%*s", EncodeReal(x[k],w,d,e, OutDec),R_print.gap,""))
 
 #undef INI_F_CPLX
 #define INI_F_CPLX					\
@@ -278,15 +284,15 @@ static void printNamedComplexVector(Rcomplex * x, int n, SEXP * names)
 	{ /* PRINT_1 */
 	    if(j) Rprintf("%*s", R_print.gap, "");
 	    if (ISNA(x[j].r) || ISNA(x[j].i)) {
-		Rprintf("%s", EncodeReal(NA_REAL, w, 0, 0));
+		Rprintf("%s", EncodeReal(NA_REAL, w, 0, 0, OutDec));
 	    }
 	    else {
-		Rprintf("%s", EncodeReal(x[k].r, wr, dr, er));
+		Rprintf("%s", EncodeReal(x[k].r, wr, dr, er, OutDec));
 		P_IMAG_NA
 		if (x[k].i >= 0)
-		    Rprintf("+%si", EncodeReal(x[k].i, wi, di, ei));
+		    Rprintf("+%si", EncodeReal(x[k].i, wi, di, ei, OutDec));
 		else
-		    Rprintf("-%si", EncodeReal(-x[k].i, wi, di, ei));
+		    Rprintf("-%si", EncodeReal(-x[k].i, wi, di, ei, OutDec));
 	    }
 	})
 
@@ -297,7 +303,7 @@ static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
 			   R_print.gap, ""))
 
 static void printNamedRawVector(Rbyte * x, int n, SEXP * names)
-    PRINT_N_VECTOR(formatRaw(x, n, &w), 
+    PRINT_N_VECTOR(formatRaw(x, n, &w),
                    Rprintf("%s%*s", EncodeRaw(x[k]), R_print.gap,""))
 
 void printNamedVector(SEXP x, SEXP names, int quote, char *title)
@@ -307,28 +313,35 @@ void printNamedVector(SEXP x, SEXP names, int quote, char *title)
     if (title != NULL)
 	 Rprintf("%s\n", title);
 
-    if ((n = LENGTH(x)) != 0)
+    if ((n = LENGTH(x)) != 0) {
+	int n_pr = (n <= R_print.max +1) ? n : R_print.max;
+	/* '...max +1'  ==> will omit at least 2 ==> plural in msg below */
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    printNamedLogicalVector(LOGICAL(x), n, STRING_PTR(names));
+	    printNamedLogicalVector(LOGICAL(x), n_pr, STRING_PTR(names));
 	    break;
 	case INTSXP:
-	    printNamedIntegerVector(INTEGER(x), n, STRING_PTR(names));
+	    printNamedIntegerVector(INTEGER(x), n_pr, STRING_PTR(names));
 	    break;
 	case REALSXP:
-	    printNamedRealVector(REAL(x), n, STRING_PTR(names));
+	    printNamedRealVector(REAL(x), n_pr, STRING_PTR(names));
 	    break;
 	case CPLXSXP:
-	    printNamedComplexVector(COMPLEX(x), n, STRING_PTR(names));
+	    printNamedComplexVector(COMPLEX(x), n_pr, STRING_PTR(names));
 	    break;
 	case STRSXP:
 	    if(quote) quote = '"';
-	    printNamedStringVector(STRING_PTR(x), n, quote, STRING_PTR(names));
+	    printNamedStringVector(STRING_PTR(x), n_pr, quote, STRING_PTR(names));
 	    break;
 	case RAWSXP:
-	    printNamedRawVector(RAW(x), n, STRING_PTR(names));
+	    printNamedRawVector(RAW(x), n_pr, STRING_PTR(names));
 	    break;
 	}
+	if(n_pr < n)
+		Rprintf(" [ reached getOption(\"max.print\") -- omitted %d entries ]]\n",
+			n - n_pr);
+
+    }
     else {
 	Rprintf("named ");
 	PRINT_V_0;

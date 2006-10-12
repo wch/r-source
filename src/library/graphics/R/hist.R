@@ -11,14 +11,13 @@ hist.default <-
 	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL, ...)
 {
     if (!is.numeric(x))
-	stop("`x' must be numeric")
-    xname <- deparse(substitute(x))
-    n <- length(x <- x[!is.na(x)])
+	stop("'x' must be numeric")
+    xname <- paste(deparse(substitute(x), 500), collapse="\n")
+    n <- length(x <- x[is.finite(x)])
     use.br <- !missing(breaks)
     if(use.br) {
 	if(!missing(nclass))
-	    warning(paste(sQuote("nclass"), "not used when",
-                          sQuote("breaks"), "specified"))
+	    warning("'nclass' not used when 'breaks' is specified")
     }
     else if(!is.null(nclass) && length(nclass) == 1)
 	breaks <- nclass
@@ -28,8 +27,7 @@ hist.default <-
     else {				# construct vector of breaks
 	if(!include.lowest) {
 	    include.lowest <- TRUE
-	    warning(paste(sQuote("include.lowest"), "ignored as",
-                          sQuote("breaks"), "is not a vector"))
+	    warning("'include.lowest' ignored as 'breaks' is not a vector")
 	}
 	if(is.character(breaks)) {
 	    breaks <- match.arg(tolower(breaks),
@@ -40,17 +38,16 @@ hist.default <-
 			     "freedman-diaconis" =,
 			     fd = nclass.FD(x),
 			     scott = nclass.scott(x),
-			     stop("Unknown breaks algorithm"))
+			     stop("unknown 'breaks' algorithm"))
 	} else if(is.function(breaks)) {
 	    breaks <- breaks(x)
 	}
 	if(!is.numeric(breaks) || is.na(breaks) || breaks < 2)
-	    stop("invalid number of breaks")
+	    stop("invalid number of 'breaks'")
 	breaks <- pretty (range(x), n = breaks, min.n = 1)
 	nB <- length(breaks)
 	if(nB <= 1) ##-- Impossible !
-	    stop(paste("hist.default: pretty() error, breaks=",
-		       format(breaks)))
+	    stop("hist.default: pretty() error, breaks=", format(breaks))
     }
 
     ## Do this *before* adding fuzz or logic breaks down...
@@ -58,11 +55,11 @@ hist.default <-
     h <- diff(breaks)
     equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     if (!use.br && any(h <= 0))
-	stop("not strictly increasing `breaks'.")
+	stop("'breaks' are not strictly increasing")
     if (is.null(freq)) {
 	freq <- if(!missing(probability)) !as.logical(probability) else equidist
     } else if(!missing(probability) && any(probability == freq))
-	stop("`probability' is an alias for `!freq', however they differ.")
+	stop("'probability' is an alias for '!freq', however they differ.")
 
     ## Fuzz to handle cases where points are "effectively on"
     ## the boundaries
@@ -94,9 +91,9 @@ hist.default <-
 		 include= as.logical(include.lowest), naok = FALSE,
 		 NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
     if (any(counts < 0))
-	stop("negative `counts'. Internal Error in C-code for \"bincount\"")
+	stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
-	stop("some `x' not counted; maybe `breaks' do not span range of `x'")
+	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
     dens <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     r <- structure(list(breaks = breaks, counts = counts,
@@ -111,13 +108,28 @@ hist.default <-
 	     axes = axes, labels = labels, ...)
 	invisible(r)
     }
-    else r
+    else { ## plot is FALSE
+        ## make an effort to warn about "non sensical" arguments:
+        nf <- names(formals()) ## all formals but those:
+        nf <- nf[is.na(match(nf, c("x", "breaks", "freq", "nclass", "plot", "probability")))]
+        missE <- lapply(nf, function(n)
+                        substitute(missing(.), list(. = as.name(n))))
+        not.miss <- ! sapply(missE, eval, envir = environment())
+        if(any(not.miss))
+            warning(sprintf(ngettext(sum(not.miss),
+                                     "argument %s is not made use of",
+                                     "arguments %s are not made use of"),
+                            paste(sQuote(nf[not.miss]), collapse=", ")),
+		    domain = NA)
+        r
+    }
 }
 
 plot.histogram <-
     function (x, freq = equidist, density = NULL, angle = 45,
 	      col = NULL, border = par("fg"), lty = NULL,
-	      main = paste("Histogram of", x$xname), sub = NULL,
+	      main = paste("Histogram of", paste(x$xname, collapse="\n")),
+              sub = NULL,
 	      xlab = x$xname, ylab,
 	      xlim = range(x$breaks), ylim = NULL,
 	      axes = TRUE, labels = FALSE, add = FALSE, ...)
@@ -126,14 +138,13 @@ plot.histogram <-
 	if(is.logical(x$equidist)) x$equidist
 	else { h <- diff(x$breaks) ; diff(range(h)) < 1e-7 * mean(h) }
     if(freq && !equidist)
-	warning(paste("the AREAS in the plot are wrong -- rather use ",
-                      sQuote("freq=FALSE"), "!", sep = ""))
+	warning("the AREAS in the plot are wrong -- rather use freq=FALSE")
 
     y <- if (freq) x$counts else { ## x$density -- would be enough, but
 	## for back compatibility
 	y <- x$density; if(is.null(y)) x$intensities else y}
     nB <- length(x$breaks)
-    if(is.null(y) || 0 == nB) stop("`x' is wrongly structured")
+    if(is.null(y) || 0 == nB) stop("'x' is wrongly structured")
 
     if(!add) {
 	if(is.null(ylim))
@@ -162,17 +173,3 @@ plot.histogram <-
 
 lines.histogram <- function(x, ...) plot.histogram(x, ..., add = TRUE)
 
-nclass.Sturges <- function(x) ceiling(log2(length(x)) + 1)
-
-nclass.scott <- function(x)
-{
-    h <- 3.5 * sqrt(var(x)) * length(x)^(-1/3)
-    ceiling(diff(range(x))/h)
-}
-
-nclass.FD <- function(x)
-{
-    r <- as.vector(quantile(x, c(0.25, 0.75)))
-    h <- 2 * (r[2] - r[1]) * length(x)^(-1/3)
-    ceiling(diff(range(x))/h)
-}

@@ -15,23 +15,23 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     else outside <- FALSE #rep(FALSE, length = length(x))
 
     ord <- 1 + (degree <- as.integer(degree))
-    if(ord <= 1) stop("degree must be integer >= 1")
+    if(ord <= 1) stop("'degree' must be integer >= 1")
     if(!missing(df) && missing(knots)) {
         nIknots <- df - ord + (1 - intercept)
         if(nIknots < 0) {
             nIknots <- 0
-            warning("df was too small; have used  ", ord - (1 - intercept))
+            warning("'df' was too small; have used  ", ord - (1 - intercept))
         }
         knots <-
             if(nIknots > 0) {
                 knots <- seq(from = 0, to = 1,
                              length = nIknots + 2)[-c(1, nIknots + 2)]
-                quantile(x[!outside], knots)
+                stats::quantile(x[!outside], knots)
             }
     }
     Aknots <- sort(c(rep(Boundary.knots, ord), knots))
     if(any(outside)) {
-        warning("Some x values beyond boundary knots may cause ill-conditioned bases")
+        warning("some 'x' values beyond boundary knots may cause ill-conditioned bases")
         derivs <- 0:degree
         scalef <- gamma(1:ord)# factorials
         basis <- array(0, c(length(x), length(Aknots) - degree - 1))
@@ -85,11 +85,11 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         nIknots <- df - 1 - intercept
         if(nIknots < 0) {
             nIknots <- 0
-            warning(paste("df was too small; have used ", 1 + intercept))
+            warning("'df' was too small; have used ", 1 + intercept)
         }
         knots <- if(nIknots > 0) {
             knots <- seq(0, 1, length = nIknots + 2)[-c(1, nIknots + 2)]
-            quantile(x[!outside], knots)
+            stats::quantile(x[!outside], knots)
         } ## else  NULL
     } else nIknots <- length(knots)
     Aknots <- sort(c(rep(Boundary.knots, 4), knots))
@@ -117,7 +117,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
         basis <- basis[, -1 , drop = FALSE]
     }
     qr.const <- qr(t(const))
-    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1:2)])
+    basis <- as.matrix((t(qr.qty(qr.const, t(basis))))[,  - (1:2), drop = FALSE])
     n.col <- ncol(basis)
     if(nas) {
         nmat <- matrix(NA, length(nax), n.col)
@@ -171,9 +171,10 @@ makepredictcall.bs <- function(var, call)
 }
 
 
-spline.des <- function(knots, x, ord = 4, derivs = integer(length(x)))
+spline.des <-
+    function(knots, x, ord = 4, derivs = integer(length(x)), outer.ok = FALSE)
 {
     list(knots = sort(as.vector(knots)), order = ord, derivs = derivs,
-         design = splineDesign(knots, x, ord, derivs))
+         design = splineDesign(knots, x, ord, derivs, outer.ok = outer.ok))
 }
 ## splineDesign() is in ./splineClasses.R

@@ -8,7 +8,6 @@
 \usage{USJudgeRatings}
 \format{
   A data frame containing 43 observations on 12 numeric variables.
-
   \tabular{rll}{
     [,1] \tab CONT \tab Number of contacts of lawyer with judge.\cr
     [,2] \tab INTG \tab Judicial integrity.\cr

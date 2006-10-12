@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*
@@ -28,6 +28,8 @@
    This file is an add-on  to GraphApp, a cross-platform C graphics library.
  */
 
+#define ENABLE_NLS 1
+#include "../win-nls.h"
 #include "internal.h"
 #include "rui.h"
 
@@ -49,7 +51,7 @@ void copytoclipboard(drawing sb)
     DeleteDC(hdcDest);
 
     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-	R_ShowMessage("Unable to open the clipboard");
+	R_ShowMessage(G_("Unable to open the clipboard"));
 	DeleteObject(hbmpNew);
 	return;
     }
@@ -65,17 +67,17 @@ int copystringtoclipboard(char *str)
     int ll = strlen(str) + 1;
 
     if (!(hglb = GlobalAlloc(GHND, ll))){
-        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
+        R_ShowMessage(G_("Insufficient memory: cell not copied to the clipboard"));
 	return 1;
     }
     if (!(s = (char *)GlobalLock(hglb))){
-        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
+        R_ShowMessage(G_("Insufficient memory: cell not copied to the clipboard"));
 	return 1;
     }
     strcpy(s, str);
     GlobalUnlock(hglb);
     if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-        R_ShowMessage("Unable to open the clipboard");
+        R_ShowMessage(G_("Unable to open the clipboard"));
         GlobalFree(hglb);
         return 1;
     }

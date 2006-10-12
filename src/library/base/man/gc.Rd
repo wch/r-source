@@ -1,7 +1,7 @@
 \name{gc}
 \title{Garbage Collection}
 \usage{
-gc(verbose = getOption("verbose"))
+gc(verbose = getOption("verbose"), reset=FALSE)
 gcinfo(verbose)
 }
 \alias{gc}
@@ -9,6 +9,8 @@ gcinfo(verbose)
 \arguments{
   \item{verbose}{logical; if \code{TRUE}, the garbage collection prints
     statistics about cons cells and the vector heap.}
+  \item{reset}{logical; if \code{TRUE} the values for maximum space used
+    are reset to the current values}
 }
 \description{
   A call of \code{gc} causes a garbage collection to take place.
@@ -28,7 +30,7 @@ gcinfo(verbose)
 
 \value{
   \code{gc} returns a matrix with rows \code{"Ncells"} (\emph{cons
-    cells}, usually 28 bytes each on 32-bit systems and 56 bytes on
+    cells}), usually 28 bytes each on 32-bit systems and 56 bytes on
   64-bit systems, and \code{"Vcells"} (\emph{vector cells}, 8 bytes
   each), and columns \code{"used"} and \code{"gc trigger"},
   each also interpreted in megabytes (rounded up to the next 0.1Mb).
@@ -37,6 +39,9 @@ gcinfo(verbose)
   a fifth column is printed giving the current limits in Mb (with
   \code{NA} denoting no limit).
 
+  The final two columns show the maximum space used since the last call
+  to \code{gc(reset=TRUE)} (or since \R started).
+  
   \code{gcinfo} returns the previous value of the flag.
 }
 \seealso{\code{\link{Memory}} on \R's memory management,
@@ -51,5 +56,7 @@ x <- integer(100000); for(i in 1:18) x <- c(x,i)
 gcinfo(verbose = FALSE)#-- don't show it anymore
 
 gc(TRUE)
+
+gc(reset=TRUE)
 }
 \keyword{environment}

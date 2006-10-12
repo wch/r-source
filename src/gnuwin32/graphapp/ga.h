@@ -3,7 +3,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file ga.h
  *  Copyright (C) 1998--1999  Guido Masarotto
- *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 2004--2006   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*
@@ -85,7 +85,8 @@ void    askchangedir();
 char *	askcdstring(char *question, char *default_string);
 char *	askfilesavewithdir(char *title, char *default_name, char *dir);
 char *  askfilenames(char *title, char *default_name, int multi,
-			       char *filters, int filterindex, char *strbuf, int bufsize);
+			       char *filters, int filterindex, char *strbuf, int bufsize,
+			       char *dir);
 int	    countFilenames(char *strbuf); /* Note that first name is path when there are multiple names */
 
 /*  rgb.c */
@@ -136,14 +137,17 @@ void  ginvert(drawing d, rect r);
 rgb   ggetpixel(drawing d, point p);
 void  gsetpixel(drawing d, point p, rgb c);
 void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2,
-		int fast);
-void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast);
+		int fast, int lend, int ljoin, float lmitre);
+void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast,
+		int lend, int ljoin, float lmitre);
 void  gfillrect(drawing d, rgb fill, rect r);
-void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast);
+void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
+		   int lend, int ljoin, float lmitre);
 void  gfillellipse(drawing d, rgb fill, rect r);
 void  gdrawpolyline(drawing d, int width, int style, rgb c,
-                    point *p, int n, int closepath, int fast);
-#define gdrawpolygon(d,w,s,c,p,n,f) gdrawpolyline(d,w,s,c,p,n,1,f)
+                    point *p, int n, int closepath, int fast,
+		    int lend, int ljoin, float lmitre);
+#define gdrawpolygon(d,w,s,c,p,n,f,e,j,m) gdrawpolyline(d,w,s,c,p,n,1,f,e,j,m)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
 int   gdrawstr(drawing d, font f, rgb c, point p, char *s);
 void  gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
@@ -155,6 +159,15 @@ void  gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 font  gnewfont(drawing d,char *face, int style, int size, double rot);
 int   ghasfixedwidth(font f);
 field newfield_no_border(char *text, rect r);
+
+#ifdef SUPPORT_UTF8
+void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj);
+int gwstrwidth(drawing d, font f, char *s);
+#endif
+void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
+		  int *width);
+void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj);
+
 
 /* pixels */
 int   devicewidth(drawing dev);
@@ -200,9 +213,6 @@ void finddialog(textbox t);
 void replacedialog(textbox t);
 int modeless_active();
 
-
-/* cursor.c */
-extern cursor CrossCursor;
 
 /* menus.h */
 void 	remove_menu_item(menuitem obj);

@@ -29,18 +29,6 @@ void setListElement(SEXP list, char *str, SEXP value)
     }
 }
     
-SEXP getSymbolValue(char *symbolName)
-{
-    SEXP t;
-    t = findVar(install(symbolName), R_GlobalEnv);
-    return t;
-}
-
-void setSymbolValue(char *symbolName, SEXP value)
-{
-    setVar(install(symbolName), value, R_GlobalEnv);
-}
-
 /* The lattice R code checks values to make sure that they are numeric
  * BUT we do not know whether the values are integer or real
  * SO we have to be careful when extracting numeric values.

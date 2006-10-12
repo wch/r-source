@@ -24,6 +24,7 @@ Sys.sleep(time)
   specified interval, and it may well take slightly longer in real time
   to resume execution.  The resolution of the time interval is
   system-dependent, but will normally be down to 0.02 secs or better.
+  (On modern Unix-alikes it will be better than 1ms.)
 }
 \value{
   Invisible \code{NULL}.

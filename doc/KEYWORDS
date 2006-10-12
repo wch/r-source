@@ -23,6 +23,7 @@ Basics
 	    & NA	&	Missing Values			[!= S]
 	list		&	Lists
 	chron		&	Dates and Times
+	package		&	Package Summaries
 
 Mathematics
 	array		&	Matrices and Arrays

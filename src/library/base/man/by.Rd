@@ -13,14 +13,15 @@ by(data, INDICES, FUN, \dots)
 }
 \arguments{
  \item{data}{an \R object, normally a data frame, possibly a matrix.}
- \item{INDICES}{a factor or a list of factors, each of length \code{nrow(x)}.}
- \item{FUN}{a function to be applied to data frame subsets of \code{x}.}
+ \item{INDICES}{a factor or a list of factors, each of length
+   \code{nrow(data)}.}
+ \item{FUN}{a function to be applied to data frame subsets of \code{data}.}
  \item{\dots}{further arguments to \code{FUN}.}
 }
 \details{
   A data frame is split by row into data frames
   subsetted by the values of one or more factors, and function
-  \code{FUN} is applied to each subset in term.
+  \code{FUN} is applied to each subset in turn.
 
   Object \code{data} will be coerced to a data frame by default.
 }
@@ -33,11 +34,11 @@ by(data, INDICES, FUN, \dots)
 require(stats)
 attach(warpbreaks)
 by(warpbreaks[, 1:2], tension, summary)
-by(warpbreaks[, 1], list(wool=wool, tension=tension), summary)
-by(warpbreaks, tension, function(x) lm(breaks ~ wool, data=x))
+by(warpbreaks[, 1], list(wool = wool, tension = tension), summary)
+by(warpbreaks, tension, function(x) lm(breaks ~ wool, data = x))
 
 ## now suppose we want to extract the coefficients by group
-tmp <- by(warpbreaks, tension, function(x) lm(breaks ~ wool, data=x))
+tmp <- by(warpbreaks, tension, function(x) lm(breaks ~ wool, data = x))
 sapply(tmp, coef)
 
 detach("warpbreaks")

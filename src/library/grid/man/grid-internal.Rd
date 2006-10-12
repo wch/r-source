@@ -188,6 +188,8 @@
 \alias{layoutRegion}
 \alias{viewport.layout}
 \alias{viewport.transform}
+\alias{layout.heights}
+\alias{layout.widths}
 %% </LIST>
 %% Currently (?) exported as used in the grid.layout.Rd \example ...
 %% <LIST>

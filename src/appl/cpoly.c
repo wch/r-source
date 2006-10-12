@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
  *
  *	cpoly finds the zeros of a complex polynomial.
@@ -57,11 +57,11 @@
 #include <config.h>
 #endif
 
+#include <R_ext/Arith.h> /* for declaration of hypot */
 
-#include <float.h>
+#include <float.h> /* for FLT_RADIX */
 
 #include <Rmath.h> /* for R_pow_di */
-#include <R_ext/Arith.h>
 #include <R_ext/Applic.h>
 
 

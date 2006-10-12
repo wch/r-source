@@ -10,8 +10,6 @@
 \usage{
 getTaskCallbackNames()
 }
-\arguments{
-}
 \value{
   A character vector giving the name for each of the
   registered callbacks which are invoked when
@@ -28,29 +26,29 @@ getTaskCallbackNames()
   more directly.
 }
 \seealso{
-  \code{\link{addTaskCallback}}
-  \code{\link{removeTaskCallback}}
-  \code{\link{taskCallbackManager}}
+  \code{\link{addTaskCallback}},
+  \code{\link{removeTaskCallback}},
+  \code{\link{taskCallbackManager}}\\
   \url{http://developer.r-project.org/TaskHandlers.pdf}  
 }
 \examples{
-  n <- addTaskCallback(function(expr, value, ok, visible) {
-                         cat("In handler\n")
-                         return(TRUE)
-                       }, name = "simpleHandler")
+ n <- addTaskCallback(function(expr, value, ok, visible) {
+			cat("In handler\n")
+			return(TRUE)
+		      }, name = "simpleHandler")
 
-  getTaskCallbackNames()
+ getTaskCallbackNames()
 
-    # now remove it by name
-  removeTaskCallback("simpleHandler")
+   # now remove it by name
+ removeTaskCallback("simpleHandler")
 
 
-  h <- taskCallbackManager()
-  h$add(function(expr, value, ok, visible) {
-                         cat("In handler\n")
-                         return(TRUE)
-                       }, name = "simpleHandler")
-  getTaskCallbackNames()
-  removeTaskCallback("R-taskCallbackManager")
+ h <- taskCallbackManager()
+ h$add(function(expr, value, ok, visible) {
+			cat("In handler\n")
+			return(TRUE)
+		      }, name = "simpleHandler")
+ getTaskCallbackNames()
+ removeTaskCallback("R-taskCallbackManager")
 }
 \keyword{environment}

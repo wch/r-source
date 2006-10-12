@@ -62,7 +62,7 @@ all.equal(as.list(a3),
 ## Didn't work up to and including 1.2.2
 
 f <- function(...) {
-	val <- match.call(expand.dots=F)$...
+	val <- match.call(expand.dots=FALSE)$...
         x <- val[[1]]
 	eval.parent(substitute(missing(x)))
 }

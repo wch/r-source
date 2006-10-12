@@ -1,15 +1,17 @@
 \name{read.ftable}
+\title{Manipulate Flat Contingency Tables}
 \alias{read.ftable}
 \alias{write.ftable}
-\alias{as.table.ftable}
-\title{Manipulate Flat Contingency Tables}
+\alias{format.ftable}
 \description{Read, write and coerce \dQuote{flat} contingency tables.}
 \usage{
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
-write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
 
-\method{as.table}{ftable}(x, \dots)
+write.ftable(x, file = "", quote = TRUE, append = FALSE,
+             digits = getOption("digits"))
+
+\method{format}{ftable}(x, quote = TRUE, digits = getOption("digits"), \dots)
 }
 \arguments{
   \item{file}{either a character string naming a file or a connection
@@ -29,6 +31,10 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
   \item{skip}{the number of lines of the data file to skip before
     beginning to read data.}
   \item{x}{an object of class \code{"ftable"}.}
+  \item{append}{logical.  If \code{TRUE} and \code{file} is the name of
+    a file (and not a connection or \code{"|cmd"}), the output from
+    \code{write.ftable} is appended to the file.  If \code{FALSE},
+    the contents of \code{file} will be overwritten.}
   \item{digits}{an integer giving the number of significant digits to
     use for (the cell entries of) \code{x}.}
   \item{\dots}{further arguments to be passed to or from methods.}
@@ -54,10 +60,6 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
 
   \code{write.ftable} writes a flat table to a file, which is useful for
   generating \dQuote{pretty} ASCII representations of contingency tables.
-
-  \code{as.table.ftable} converts a contingency table in flat matrix
-  form to one in standard array form.  This is a method for the generic
-  function \code{as.table}.
 }
 \seealso{
   \code{\link{ftable}} for more information on flat contingency tables.
@@ -66,7 +68,7 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
   Agresti, A. (1990)
   \emph{Categorical data analysis}.
   New York: Wiley.
-}  
+}
 \examples{
 ## Agresti (1990), page 157, Table 5.8.
 ## Not in ftable standard format, but o.k.
@@ -98,5 +100,13 @@ ft <- read.ftable(file, skip = 2,
                       c("Not Enl.", "Enl.", "Greatly Enl.")))
 ft
 unlink(file)
+
+ft22 <- ftable(Titanic, row.vars = 2:1, col.vars = 4:3)
+write.ftable(ft22, quote = FALSE)
+\dontshow{
+stopifnot(dim(format(ft)) == 4:5,
+          dim(format(ftable(UCBAdmissions))) == c(6,9),
+          dim(format(ft22)) == c(11,7))
+}
 }
 \keyword{category}

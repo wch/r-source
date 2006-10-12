@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002   The R Development Core Team.
+ *  Copyright (C) 2002-2006   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,8 +14,19 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#if !defined(atanh) && defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
+extern double atanh(double x);
+#endif
+
+/* do this first to get the right options for math.h */
+#include <R_ext/Arith.h>
 
 #include <R.h>
 #include "ts.h"
@@ -43,29 +54,37 @@
  */
 SEXP 
 KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
-	   SEXP sV, SEXP sh, SEXP sPn, SEXP sUP, SEXP op)
+	   SEXP sV, SEXP sh, SEXP sPn, SEXP sUP, SEXP op, SEXP fast)
 {
     SEXP res, ans = R_NilValue, resid = R_NilValue, states = R_NilValue;
-    int n = LENGTH(sy), p = LENGTH(sa), lop = asLogical(op);
-    double *y = REAL(sy), *Z = REAL(sZ), *a = REAL(sa), *P = REAL(sP), 
-	*T = REAL(sT), *V = REAL(sV), h = asReal(sh), *Pnew = REAL(sPn);
+    int n, p, lop = asLogical(op);
+    double *y, *Z, *a, *P, *T, *V, h = asReal(sh), *Pnew;
     double sumlog = 0.0, ssq = 0, resid0, gain, tmp, *anew, *mm, *M;
     int i, j, k, l;
 
-    /* It would be better to check types before using LENGTH and REAL
-       on these, but should still work this way.  LT */
     if (TYPEOF(sy) != REALSXP || TYPEOF(sZ) != REALSXP ||
 	TYPEOF(sa) != REALSXP || TYPEOF(sP) != REALSXP ||
+	TYPEOF(sPn) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
-	error("invalid argument type");
+	error(_("invalid argument type"));
+    n = LENGTH(sy); p = LENGTH(sa);
+    y = REAL(sy); Z = REAL(sZ); T = REAL(sT); V = REAL(sV);
+
+    /* Avoid modifying arguments unless fast=TRUE */
+    if (!LOGICAL(fast)[0]){
+	    PROTECT(sP = duplicate(sP));
+	    PROTECT(sa = duplicate(sa));
+	    PROTECT(sPn = duplicate(sPn));
+    }
+    P = REAL(sP); a = REAL(sa); Pnew = REAL(sPn);
 
     anew = (double *) R_alloc(p, sizeof(double));
     M = (double *) R_alloc(p, sizeof(double));
     mm = (double *) R_alloc(p * p, sizeof(double));
     if(lop) {
 	PROTECT(ans = allocVector(VECSXP, 3));
-	SET_VECTOR_ELT(ans, 1, resid=allocVector(REALSXP, n));	
-	SET_VECTOR_ELT(ans, 2, states=allocMatrix(REALSXP, n, p));
+	SET_VECTOR_ELT(ans, 1, resid = allocVector(REALSXP, n));	
+	SET_VECTOR_ELT(ans, 2, states = allocMatrix(REALSXP, n, p));
     }
     for (l = 0; l < n; l++) {
 	for (i = 0; i < p; i++) {
@@ -91,6 +110,8 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 		}
 	}
 	if (!ISNAN(y[l])) {
+	    double *rr = NULL /* -Wall */;
+	    if(lop) rr = REAL(resid);
 	    resid0 = y[l];
 	    for (i = 0; i < p; i++)
 		resid0 -= Z[i] * anew[i];
@@ -103,7 +124,7 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 		gain += Z[i] * M[i];
 	    }
 	    ssq += resid0 * resid0 / gain;
-	    if(lop) REAL(resid)[l] = resid0 / sqrt(gain);
+	    if(lop) rr[l] = resid0 / sqrt(gain);
 	    sumlog += log(gain);
 	    for (i = 0; i < p; i++)
 		a[i] = anew[i] + M[i] * resid0 / gain;
@@ -111,23 +132,32 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 		for (j = 0; j < p; j++)
 		    P[i + j * p] = Pnew[i + j * p] - M[i] * M[j] / gain;
 	} else {
+	    double *rr = NULL /* -Wall */;
+	    if(lop) rr = REAL(resid);
 	    for (i = 0; i < p; i++)
 		a[i] = anew[i];
 	    for (i = 0; i < p * p; i++)
 		P[i] = Pnew[i];
-	    if(lop) REAL(resid)[l] = NA_REAL;
+	    if(lop) rr[l] = NA_REAL;
 	}
-	if(lop)
-	    for(j = 0; j < p; j++) REAL(states)[l + n*j] = a[j];
+	if(lop) {
+	    double *rs = REAL(states);
+	    for(j = 0; j < p; j++) rs[l + n*j] = a[j];
+	}
     }
+
     if(lop) {
 	SET_VECTOR_ELT(ans, 0, res=allocVector(REALSXP, 2));	
 	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
 	UNPROTECT(1);
+	if (!LOGICAL(fast)[0])
+	    UNPROTECT(3);
 	return ans;
     } else {
 	res = allocVector(REALSXP, 2);
 	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
+	if (!LOGICAL(fast)[0])
+	    UNPROTECT(3);
 	return res;
     }
 }
@@ -150,7 +180,7 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
     if (TYPEOF(sy) != REALSXP || TYPEOF(sZ) != REALSXP ||
 	TYPEOF(sa) != REALSXP || TYPEOF(sP) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
-	error("invalid argument type");
+	error(_("invalid argument type"));
 
     PROTECT(ssa = duplicate(sa)); a = REAL(ssa);
     PROTECT(ssP = duplicate(sP)); P = REAL(ssP);
@@ -312,7 +342,7 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 
 SEXP 
 KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV, 
-	   SEXP sh)
+	   SEXP sh, SEXP fast)
 {
     SEXP res, forecasts, se;
     int  n = asReal(nahead), p = LENGTH(sa0);
@@ -326,7 +356,7 @@ KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
     if (TYPEOF(sZ) != REALSXP ||
 	TYPEOF(sa0) != REALSXP || TYPEOF(sP0) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
-	error("invalid argument type");
+	error(_("invalid argument type"));
 
     anew = (double *) R_alloc(p, sizeof(double));
     Pnew = (double *) R_alloc(p * p, sizeof(double));
@@ -334,7 +364,12 @@ KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
     PROTECT(res = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(res, 0, forecasts = allocVector(REALSXP, n));
     SET_VECTOR_ELT(res, 1, se = allocVector(REALSXP, n));
-
+    if (!LOGICAL(fast)[0]){
+	PROTECT(sa0=duplicate(sa0));
+	a=REAL(sa0);
+	PROTECT(sP0=duplicate(sP0));
+	P=REAL(sP0);
+    }
     for (l = 0; l < n; l++) {
 	fc = 0.0;
 	for (i = 0; i < p; i++) {
@@ -380,7 +415,7 @@ static void partrans(int p, double *raw, double *new)
     int j, k;
     double a, work[100];
 
-    if(p > 100) error("can only transform 100 pars in arima0");
+    if(p > 100) error(_("can only transform 100 pars in arima0"));
 
     /* Step one: map (-Inf, Inf) to (-1, 1) via tanh
        The parameters are now the pacf phi_{kk} */
@@ -459,16 +494,12 @@ SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans)
 }
 
 
-#ifdef WIN32
-extern double atanh(double);
-#endif
-
 static void invpartrans(int p, double *phi, double *new)
 {
     int j, k;
     double a, work[100];
 
-    if(p > 100) error("can only transform 100 pars in arima0");
+    if(p > 100) error(_("can only transform 100 pars in arima0"));
 
     for(j = 0; j < p; j++) work[j] = new[j] = phi[j];
     /* Run the Durbin-Levinson recursions backwards
@@ -546,12 +577,16 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 	*M;
     int i, j, k, l, nu = 0;
     Rboolean useResid = asLogical(giveResid);
+    double *rsResid = NULL /* -Wall */;
 
     anew = (double *) R_alloc(rd, sizeof(double));
     M = (double *) R_alloc(rd, sizeof(double));
     if (d > 0) mm = (double *) R_alloc(rd * rd, sizeof(double));
 
-    if (useResid) PROTECT(sResid = allocVector(REALSXP, n));
+    if (useResid) {
+	PROTECT(sResid = allocVector(REALSXP, n));
+	rsResid = REAL(sResid);
+    }
 
     for (l = 0; l < n; l++) {
 	for (i = 0; i < r; i++) {
@@ -643,7 +678,7 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 		ssq += resid * resid / gain;
 		sumlog += log(gain);
 	    }
-	    if (useResid) REAL(sResid)[l] = resid / sqrt(gain);
+	    if (useResid) rsResid[l] = resid / sqrt(gain);
 	    for (i = 0; i < rd; i++)
 		a[i] = anew[i] + M[i] * resid / gain;
 	    for (i = 0; i < rd; i++)
@@ -652,7 +687,7 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 	} else {
 	    for (i = 0; i < rd; i++) a[i] = anew[i];
 	    for (i = 0; i < rd * rd; i++) P[i] = Pnew[i];
-	    if (useResid) REAL(sResid)[l] = NA_REAL;
+	    if (useResid) rsResid[l] = NA_REAL;
 	}
     }
 
@@ -730,6 +765,7 @@ SEXP TSconv(SEXP a, SEXP b)
 {
     int i, j, na, nb, nab;
     SEXP ab;
+    double *ra, *rb, *rab;
 
     PROTECT(a = coerceVector(a, REALSXP));
     PROTECT(b = coerceVector(b, REALSXP));
@@ -737,11 +773,11 @@ SEXP TSconv(SEXP a, SEXP b)
     nb = LENGTH(b);
     nab = na + nb - 1;
     PROTECT(ab = allocVector(REALSXP, nab));
-    for (i = 0; i < nab; i++)
-	REAL(ab)[i] = 0.0;
+    ra = REAL(a); rb = REAL(b); rab = REAL(ab);
+    for (i = 0; i < nab; i++) rab[i] = 0.0;
     for (i = 0; i < na; i++)
 	for (j = 0; j < nb; j++)
-	    REAL(ab)[i + j] += REAL(a)[i] * REAL(b)[j];
+	    rab[i + j] += ra[i] * rb[j];
     UNPROTECT(3);
     return (ab);
 }

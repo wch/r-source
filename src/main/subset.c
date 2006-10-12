@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2004   The R Development Core Team
+ *  Copyright (C) 1997-2006   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
  *  Vector and List Subsetting
@@ -61,6 +61,11 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	    ii--;
 	switch (mode) {
 	case LGLSXP:
+            if (0 <= ii && ii < nx && ii != NA_LOGICAL)
+                LOGICAL(result)[i] = LOGICAL(x)[ii];
+            else
+                LOGICAL(result)[i] = NA_INTEGER;
+            break;
 	case INTSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
 		INTEGER(result)[i] = INTEGER(x)[ii];
@@ -96,6 +101,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 		SET_VECTOR_ELT(result, i, R_NilValue);
 	    break;
 	case LISTSXP:
+	    /* cannot happen: pairlists are coerced to lists */
 	case LANGSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER) {
 		tmp2 = nthcdr(x, ii);
@@ -120,14 +126,14 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 }
 
 
+/* This is for all cases with a single index, including 1D arrays and
+   matrix indexing of arrays */
 static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 {
     int n, mode, stretch = 1;
     SEXP indx, result, attrib, nattrib;
-    Rboolean isMatrixSubscript = FALSE;
 
-    if (s == R_MissingArg)
-	return duplicate(x);
+    if (s == R_MissingArg) return duplicate(x);
 
     PROTECT(s);
     attrib = getAttrib(x, R_DimSymbol);
@@ -137,7 +143,6 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
     if (isMatrix(s) && isArray(x) && (isInteger(s) || isReal(s)) &&
 	    ncols(s) == length(attrib)) {
-	isMatrixSubscript = TRUE;
 	s = mat2indsub(attrib, s);
 	UNPROTECT(1);
 	PROTECT(s);
@@ -152,6 +157,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     /* Allocate the result. */
 
     mode = TYPEOF(x);
+    /* No protection needed as ExtractSubset does not allocate */
     result = allocVector(mode, n);
     if (mode == VECSXP || mode == EXPRSXP)
 	/* we do not duplicate the values when extracting the subset,
@@ -160,12 +166,16 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
     PROTECT(result = ExtractSubset(x, result, indx, call));
     if (result != R_NilValue &&
-	!isMatrixSubscript &&
-	(((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue) ||
-	 ((attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue &&
-	  (attrib = GetRowNames(attrib)) != R_NilValue))) {
+	(
+	    ((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue) ||
+	    ( /* here we might have an array.  Use row names if 1D */
+		isArray(x) && LENGTH(getAttrib(x, R_DimNamesSymbol)) == 1 &&
+		(attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue &&
+		(attrib = GetRowNames(attrib)) != R_NilValue
+		)
+	    )) {
 	nattrib = allocVector(TYPEOF(attrib), n);
-	PROTECT(nattrib);
+	PROTECT(nattrib); /* seems unneeded */
 	nattrib = ExtractSubset(attrib, nattrib, indx, call);
 	setAttrib(result, R_NamesSymbol, nattrib);
 	UNPROTECT(1);
@@ -236,7 +246,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    RAW(result)[ij] = (Rbyte) 0;
 		    break;
 		default:
-		    error("matrix subscripting not handled for this type");
+		    error(_("matrix subscripting not handled for this type"));
 		    break;
 		}
 	    }
@@ -244,6 +254,8 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		iijj = ii + jj * nr;
 		switch (TYPEOF(x)) {
 		case LGLSXP:
+                    LOGICAL(result)[ij] = LOGICAL(x)[iijj];
+                    break;
 		case INTSXP:
 		    INTEGER(result)[ij] = INTEGER(x)[iijj];
 		    break;
@@ -263,7 +275,7 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    RAW(result)[ij] = RAW(x)[iijj];
 		    break;
 		default:
-		    error("matrix subscripting not handled for this type");
+		    error(_("matrix subscripting not handled for this type"));
 		    break;
 		}
 	    }
@@ -420,7 +432,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		RAW(result)[i] = (Rbyte) 0;
 	    break;
 	default:
-	    error("matrix subscripting not handled for this type");
+	    error(_("array subscripting not handled for this type"));
 	    break;
 	}
 	if (n > 1) {
@@ -479,7 +491,8 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 	setAttrib(result, R_DimNamesSymbol, xdims);
 	UNPROTECT(1);
     }
-    copyMostAttrib(x, result);
+    /* This was removed for matrices in 1998
+       copyMostAttrib(x, result); */
     /* Free temporary memory */
     vmaxset(vmaxsave);
     if (drop)
@@ -509,7 +522,7 @@ static void ExtractDropArg(SEXP el, int *drop)
 /* The "[" subset operator.
  * This provides the most general form of subsetting. */
 
-SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -527,7 +540,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subset_dflt(call, op, ans, rho);
 }
 
-SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ax, px, x, subs;
     int drop, i, nsubs, type;
@@ -649,7 +662,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else {
 	if (nsubs != length(getAttrib(x, R_DimSymbol)))
-	    errorcall(call, "incorrect number of dimensions");
+	    errorcall(call, _("incorrect number of dimensions"));
 	if (nsubs == 2)
 	    ans = MatrixSubset(ax, subs, call, drop);
 	else
@@ -670,6 +683,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	setAttrib(ans, R_DimSymbol, getAttrib(ax, R_DimSymbol));
 	setAttrib(ans, R_DimNamesSymbol, getAttrib(ax, R_DimNamesSymbol));
 	setAttrib(ans, R_NamesSymbol, getAttrib(ax, R_NamesSymbol));
+	SET_NAMED(ans, NAMED(ax)); /* PR#7924 */
     }
     else {
 	PROTECT(ans);
@@ -686,7 +700,7 @@ SEXP do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* The [[ subset operator.  It needs to be fast. */
 /* The arguments to this call are evaluated on entry. */
 
-SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
@@ -705,7 +719,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     return do_subset2_dflt(call, op, ans, rho);
 }
 
-SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, dimnames, indx, subs, x;
     int i, ndims, nsubs, offset = 0;
@@ -728,18 +742,26 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     subs = CDR(args);
     if(0 == (nsubs = length(subs)))
-	errorcall(call, "no index specified");
+	errorcall(call, _("no index specified"));
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
     if(nsubs > 1 && nsubs != ndims)
-	errorcall(call, "incorrect number of subscripts");
+	errorcall(call, _("incorrect number of subscripts"));
 
     /* split out ENVSXP for now */
     if( TYPEOF(x) == ENVSXP ) {
       if( nsubs != 1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
-	error("wrong arguments for subsetting an environment");
+	error(_("wrong arguments for subsetting an environment"));
       ans = findVarInFrame(x, install(CHAR(STRING_ELT(CAR(subs),
 						      0))));
+      if( TYPEOF(ans) == PROMSXP ) {
+	    PROTECT(ans);
+	    ans = eval(ans, R_GlobalEnv);
+	    UNPROTECT(1);
+      } else {
+	    SET_NAMED(ans, 2);
+      }
+      
       UNPROTECT(1);
       if(ans == R_UnboundValue )
         return(R_NilValue);
@@ -758,11 +780,11 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(isVectorList(x) && length(CAR(subs)) > 1) {
 	    for(i = 0; i < len - 1; i++) {
 		if(!isVectorList(x))
-		    error("recursive indexing failed at level %d\n", i+1);
+		    error(_("recursive indexing failed at level %d\n"), i+1);
 		offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
 				   length(x), /*partial ok*/TRUE, i);
 		if(offset < 0 || offset >= length(x))
-		    error("no such index at level %d\n", i+1);
+		    error(_("no such index at level %d\n"), i+1);
 		x = VECTOR_ELT(x, offset);
 	    }
 	}
@@ -813,7 +835,10 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (NAMED(x) > NAMED(ans))
 	    SET_NAMED(ans, NAMED(x));
     } else if(isVectorList(x)) {
-	ans = duplicate(VECTOR_ELT(x, offset));
+	/* did unconditional duplication before 2.4.0 */
+	ans = VECTOR_ELT(x, offset);
+	if (NAMED(x) > NAMED(ans))
+	    SET_NAMED(ans, NAMED(x));
     } else {
 	ans = allocVector(TYPEOF(x), 1);
 	switch (TYPEOF(x)) {
@@ -834,7 +859,7 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAW(ans)[0] = RAW(x)[offset];
 	    break;
 	default:
-	    UNIMPLEMENTED("do_subset2");
+	    UNIMPLEMENTED_TYPE("do_subset2", x);
 	}
     }
     UNPROTECT(1);
@@ -879,7 +904,7 @@ pstrmatch(SEXP target, SEXP input, int slen)
    We need to be sure to only evaluate the first argument.
    The second will be a symbol that needs to be matched, not evaluated.
 */
-SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP input, nlist, ans;
 
@@ -895,11 +920,15 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     else if(isString(nlist) )
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
     else {
-	errorcall_return(call, "invalid subscript type");
+	errorcall_return(call, _("invalid subscript type"));
     }
 
     /* replace the second argument with a string */
-    SETCADR(args, input);
+
+    /* Previously this was SETCADR(args, input); */
+    /* which could cause problems when nlist was */
+    /* ..., as in PR#8718 */
+    PROTECT(args = CONS(CAR(args), CONS(input, R_NilValue)));
 
     /* If the first argument is an object and there is */
     /* an approriate method, we dispatch to that method, */
@@ -908,15 +937,16 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* evaluation retains any missing argument indicators. */
 
     if(DispatchOrEval(call, op, "$", args, env, &ans, 0, 0)) {
-	UNPROTECT(1);
+	UNPROTECT(2);
 	return(ans);
     }
 
-    UNPROTECT(1);
+    UNPROTECT(2);
     return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0));
 }
 
-SEXP R_subset3_dflt(SEXP x, SEXP input)
+/* used in eval.c */
+SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input)
 {
     SEXP y, nlist;
     int slen;
@@ -973,13 +1003,21 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
 		return y;
 	    case PARTIAL_MATCH:
 		havematch++;
+		if (havematch==1) {
+		    /* partial matches can cause aliasing in eval.c:evalseq 
+                       This is overkill, but alternative ways to prevent 
+                       the aliasing appear to be even worse */
+		    y=VECTOR_ELT(x,i);
+		    SET_NAMED(y,2);
+		    SET_VECTOR_ELT(x,i,y);
+		}
 		imatch = i;
 		break;
 	    case NO_MATCH:
 		break;
 	    }
 	}
-	if(havematch ==1) {
+	if(havematch == 1) {
 	    y = VECTOR_ELT(x, imatch);
 	    if (NAMED(x) > NAMED(y))
 		SET_NAMED(y, NAMED(x));
@@ -988,10 +1026,18 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
 	return R_NilValue;
     }
     else if( isEnvironment(x) ){
-      UNPROTECT(2);
-      y = findVarInFrame(x, install(CHAR(input)));
-      if( y != R_UnboundValue )
-	return(y);
+      	y = findVarInFrame(x, install(CHAR(input)));
+      	if( TYPEOF(y) == PROMSXP ) {
+	    PROTECT(y);
+	    y = eval(y, R_GlobalEnv);
+	    UNPROTECT(1);
+      	}   	
+        UNPROTECT(2);      
+        if( y != R_UnboundValue ) {
+            if (NAMED(x) > NAMED(y))
+	    	SET_NAMED(y, NAMED(x));
+	    return(y);
+	}
       return R_NilValue;
     }
     UNPROTECT(2);

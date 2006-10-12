@@ -2,7 +2,7 @@ logLik <- function(object, ...) UseMethod("logLik")
 
 print.logLik <- function(x, digits = getOption("digits"), ...)
 {
-    cat("`log Lik.' ",format(c(x), digits=digits),
+    cat("'log Lik.' ",format(c(x), digits=digits),
         " (df=",format(attr(x,"df")),")\n",sep="")
     invisible(x)
 }
@@ -11,14 +11,14 @@ str.logLik <- function(object, digits = max(2, getOption("digits") - 3), ...)
 {
     cl <- oldClass(object)
     cat("Class", if (length(cl) > 1) "es",
-        " `", paste(cl, collapse = "', `"), "' : ",
+        " '", paste(cl, collapse = "', '"), "' : ",
         format(c(object), digits=digits),
         " (df=",format(attr(object,"df")),")\n",sep="")
 }
 
 ## rather silly (but potentially used in pkg nlme):
-as.data.frame.logLik <- function (x, row.names = NULL, optional = FALSE)
-    as.data.frame(c(x), row.names=row.names, optional=optional)
+as.data.frame.logLik <- function (x, ...)
+    as.data.frame(c(x), ...)
 
 ## >> logLik.nls() in ../../nls/R/nls.R
 
@@ -42,12 +42,13 @@ logLik.glm <- function(object, ...)
 ## log-likelihood for lm objects
 logLik.lm <- function(object, REML = FALSE, ...)
 {
-    res <- resid(object)
+    res <- object$residuals # not resid(object) because of NA methods
     p <- object$rank
     N <- length(res)
     if(is.null(w <- object$weights)) {
         w <- rep.int(1, N)
     } else {
+        ## this is OK as both resids and weights are for the cases used
         excl <- w == 0			# eliminating zero weights
         if (any(excl)) {
             res <- res[!excl]

@@ -31,34 +31,46 @@ rweibull(n, shape, scale = 1)
   \code{pweibull} gives the distribution function,
   \code{qweibull} gives the quantile function, and
   \code{rweibull} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The Weibull distribution with \code{shape} parameter \eqn{a} and
   \code{scale} parameter \eqn{\sigma}{b} has density given by
   \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{%
         f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
-  for \eqn{x > 0}.
-  The cumulative is
-  \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}, the
+  for \eqn{x \ge 0}.
+  The cumulative distribution function is
+  \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}
+  on \eqn{x \ge 0}, the
   mean is \eqn{E(X) = \sigma \Gamma(1 + 1/a)}{E(X) = b Gamma(1 + 1/a)}, and
   the \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{%
-           Var(X) = b^2 * (gamma(1 + 2/a) - (gamma(1 + 1/a))^2)}.
+           Var(X) = b^2 * (Gamma(1 + 2/a) - (Gamma(1 + 1/a))^2)}.
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-pweibull(t, a, b, lower = FALSE, log = TRUE)} which is just
   \eqn{H(t) = {(t/b)}^a}.
 }
+\source{
+  \code{[dpq]weibull} are calculated directly from the definitions.
+  \code{rweibull} uses inversion.
+}
+\references{
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 1, chapter 21.
+  Wiley, New York.
+}
 \seealso{
-  \code{\link{dexp}} for the Exponential which is a special case of a
-  Weibull distribution.
+  The \link{Exponential} is a special case of the Weibull distribution.
 }
 \examples{
 x <- c(0,rlnorm(50))
 all.equal(dweibull(x, shape = 1), dexp(x))
 all.equal(pweibull(x, shape = 1, scale = pi), pexp(x, rate = 1/pi))
 ## Cumulative hazard H():
-all.equal(pweibull(x, 2.5, pi, lower=FALSE, log=TRUE), -(x/pi)^2.5, tol=1e-15)
+all.equal(pweibull(x, 2.5, pi, lower=FALSE, log=TRUE), -(x/pi)^2.5,
+          tol = 1e-15)
 all.equal(qweibull(x/11, shape = 1, scale = pi), qexp(x/11, rate = 1/pi))
 }
 \keyword{distribution}

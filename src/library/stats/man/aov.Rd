@@ -47,11 +47,15 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 \note{
   \code{aov} is designed for balanced designs, and the results can be
   hard to interpret without balance: beware that missing values in the
-  reponse(s) will likely lose the balance.  If there are two or more
+  response(s) will likely lose the balance.  If there are two or more
   error strata, the methods used are statistically inefficient without
   balance, and it may be better to use \code{\link[nlme]{lme}}.
 
   Balance can be checked with the \code{\link{replications}} function.
+
+  The default \sQuote{contrasts} in \R are not orthogonal contrasts, and
+  \code{aov} and its helper functions will work better with such
+  contrasts: see the examples for how to select these.
 }
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
@@ -76,15 +80,10 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 }
 \examples{
 ## From Venables and Ripley (2002) p.165.
-N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
-P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
-K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
-yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,55.0,
-           62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
-npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
-                  K=factor(K), yield=yield)
+data(npk, package="MASS")
 
-op <- options(contrasts=c("contr.helmert", "contr.treatment"))
+## Set orthogonal contrasts.
+op <- options(contrasts=c("contr.helmert", "contr.poly"))
 ( npk.aov <- aov(yield ~ block + N*P*K, npk) )
 summary(npk.aov)
 coefficients(npk.aov)

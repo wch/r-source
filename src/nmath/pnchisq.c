@@ -1,12 +1,18 @@
 /*
  *  Algorithm AS 275 Appl.Statist. (1992), vol.41, no.2
  *  original  (C) 1992	     Royal Statistical Society
- *  Copyright (C) 2000--2002 The R Development Core Team
- *  Copyright (C) 2003--2004 The R Foundation
  *
  *  Computes the noncentral chi-squared distribution function with
  *  positive real degrees of freedom f and nonnegative noncentrality
- *  parameter theta
+ *  parameter theta.  pnchisq_raw is based on
+ *
+ *    Ding, C. G. (1992)
+ *    Algorithm AS275: Computing the non-central chi-squared
+ *    distribution function. Appl.Statist., 41, 478-482.
+
+ *  Other parts
+ *  Copyright (C) 2000-2006  The R Development Core Team
+ *  Copyright (C) 2003-2004  The R Foundation
  */
 
 #include "nmath.h"
@@ -22,6 +28,7 @@
 
 double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 {
+    double ans;
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(f) || ISNAN(theta))
 	return x + f + theta;
@@ -31,11 +38,18 @@ double pnchisq(double x, double f, double theta, int lower_tail, int log_p)
 
     if (f < 0. || theta < 0.) ML_ERR_return_NAN;
 
-    return (R_DT_val(pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000)));
+    ans = pnchisq_raw(x, f, theta, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail);
+    if(lower_tail || theta < 80) return log_p ? log(ans) : ans;
+    else {
+	if(ans < 1e-10) ML_ERROR(ME_PRECISION, "pnchisq");
+	ans = fmax2(ans, 0.0);  /* Precaution PR#7099 */
+	return log_p ? log(ans) : ans;
+    }
 }
 
-double pnchisq_raw(double x, double f, double theta,
-		   double errmax, double reltol, int itrmax)
+double attribute_hidden
+pnchisq_raw(double x, double f, double theta,
+	    double errmax, double reltol, int itrmax, Rboolean lower_tail)
 {
     double ans, lam, u, v, x2, f2, t, term, bound, f_x_2n, f_2n, lt;
     double lu = -1., l_lam = -1., l_x = -1.; /* initialized for -Wall */
@@ -47,6 +61,20 @@ double pnchisq_raw(double x, double f, double theta,
 
     if (x <= 0.)	return 0.;
     if(!R_FINITE(x))	return 1.;
+
+    /* This is principally for use from qnchisq */
+#ifndef MATHLIB_STANDALONE
+    R_CheckUserInterrupt();
+#endif
+
+    if(theta < 80) {
+	double sum = 0, lambda = 0.5*theta, pr = exp(-lambda);
+	int i;
+	for(i = 0; i < 100;  pr *= lambda/++i)
+	    sum += pr * pchisq(x, f+2*i, lower_tail, FALSE);
+	return sum;
+    }
+
 
 #ifdef DEBUG_pnch
     REprintf("pnchisq(x=%g, f=%g, theta=%g): ",x,f,theta);
@@ -113,6 +141,9 @@ double pnchisq_raw(double x, double f, double theta,
 #ifdef DEBUG_pnch
 	REprintf("\n _OL_: n=%d",n);
 #endif
+#ifndef MATHLIB_STANDALONE
+	if(n % 1000) R_CheckUserInterrupt();
+#endif
 	/* f_2n    === f + 2*n
 	 * f_x_2n  === f - x + 2*n   > 0  <==> (f+2n)  >   x */
 	if (f_x_2n > 0) {
@@ -178,11 +209,11 @@ double pnchisq_raw(double x, double f, double theta,
     } /* for(n ...) */
 
     if (is_it) {
-	MATHLIB_WARNING2("pnchisq(x=%g, ..): not converged in %d iter.",
+	MATHLIB_WARNING2(_("pnchisq(x=%g, ..): not converged in %d iter."),
 			 x, itrmax);
     }
 #ifdef DEBUG_pnch
     REprintf("\n == L_End: n=%d; term= %g; bound=%g\n",n,term,bound);
 #endif
-    return (ans);
+    return lower_tail ? ans : 1 - ans;
 }

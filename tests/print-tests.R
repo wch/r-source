@@ -127,9 +127,9 @@ DIG(7)
 umach <- unlist(.Machine)[paste("double.x", c("min","max"), sep='')]
 xmin <- umach[1]
 xmax <- umach[2]
-tx <- unique(outer(-1:1,c(.1,1e-3,1e-7)))# 7 values  (out of 9)
-tx <- unique(sort(c(outer(umach,1+tx))))# 11 values  (out of 14)
-tx <- tx[is.finite(tx)] #-- all kept
+tx <- unique(c(outer(-1:1,c(.1,1e-3,1e-7))))# 7 values  (out of 9)
+tx <- unique(sort(c(outer(umach,1+tx))))# 11 values (+ 1 Inf)
+length(tx <- tx[is.finite(tx)]) # 11
 (txp <- tx[tx >= 1])#-- Positive exponent -- 4 values
 (txn <- tx[tx <	 1])#-- Negative exponent -- 7 values
 

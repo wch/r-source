@@ -7,7 +7,7 @@
   \code{.checkMFClasses} checks if the variables used in a predict
   method agree in type with those used for fitting.
 
-  \code{.MFclass} categories variables for this purpose.
+  \code{.MFclass} categorizes variables for this purpose.
 }
 \usage{
 .checkMFClasses(cl, m, ordNotOK = FALSE)

@@ -16,7 +16,8 @@
   Third Edition. Holden-Day. Series G.
 }
  \examples{
-\dontrun{## These are quite slow and so not run by example(AirPassengers)
+\dontrun{
+## These are quite slow and so not run by example(AirPassengers)
 
 ## The classic 'airline model', by full ML
 (fit <- arima(log10(AirPassengers), c(0, 1, 1),

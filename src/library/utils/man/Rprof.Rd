@@ -5,7 +5,8 @@
   Enable or disable profiling of the execution of \R expressions.
 }
 \usage{
-Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
+Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
+       memory.profiling=FALSE)
 }
 \arguments{
   \item{filename}{
@@ -18,6 +19,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   \item{interval}{
     real: time interval between samples.
   }
+  \item{memory.profiling}{logical: write memory use information to the file?}
 }
 \details{
   Enabling profiling automatically disables any existing profiling to
@@ -68,6 +70,9 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   of the \R source tree).
 
   \code{\link{summaryRprof}}
+
+  \code{\link{tracemem}}, \code{\link{Rprofmem}} for other ways to track
+  memory use.
 }
 \examples{
 \dontrun{Rprof()

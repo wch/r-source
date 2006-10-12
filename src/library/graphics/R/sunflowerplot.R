@@ -2,7 +2,7 @@ sunflowerplot <-
     function(x, y = NULL, number, log = "", digits = 6,
              xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
              add = FALSE, rotate = FALSE,
-             pch = 16, cex = 0.8, cex.fact =  1.5,
+             pch = 16, cex = 0.8, cex.fact =  1.5, col = par("col"), bg = NA,
              size = 1/8, seg.col = 2, seg.lwd = 1.5, ...)
 {
     ## Argument "checking" as plot.default:
@@ -29,7 +29,7 @@ sunflowerplot <-
         number <- diff(c((1:n)[first], n + 1))
     } else {
         if(length(number) != n)
-            stop("number must have same length as x & y !")
+            stop("'number' must have same length as 'x' and 'y'")
         np <- number > 0
         x <- xy$x[np]
         y <- xy$y[np]
@@ -42,9 +42,9 @@ sunflowerplot <-
 
     n.is1 <- number == 1
     if(any(n.is1))
-        points(x[ n.is1], y[ n.is1], pch = pch, cex = cex)
+        points(x[ n.is1], y[ n.is1], pch=pch, col=col, bg=bg, cex= cex)
     if(any(!n.is1)) {
-        points(x[!n.is1], y[!n.is1], pch = pch, cex = cex / cex.fact)
+        points(x[!n.is1], y[!n.is1], pch=pch, col=col, bg=bg, cex= cex/cex.fact)
         i.multi <- (1:n)[number > 1]
         ppin <- par("pin")
         pusr <- par("usr")
@@ -54,7 +54,7 @@ sunflowerplot <-
         i.rep <- rep.int(i.multi, number[number > 1])
         z <- numeric()
         for(i in i.multi)
-            z <- c(z, 1:number[i] + if(rotate) runif(1) else 0)
+            z <- c(z, 1:number[i] + if(rotate) stats::runif(1) else 0)
         deg <- (2 * pi * z)/number[i.rep]
         segments(x[i.rep], y[i.rep],
                  x[i.rep] + xr * sin(deg),

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2004  The R Development Core Team.
+ *  Copyright (C) 2000-2006  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,11 +14,13 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
  *      Interfaces to POSIX date and time functions.
  */
+
+/* <UTF8> char here is either ASCII or handled as a whole */
 
 /*
     These use POSIX functions that are not available on all platforms,
@@ -38,29 +40,30 @@
 # include <config.h>
 #endif
 
-#if defined(HAVE_GLIBC2) && !defined(__USE_BSD)
-# define __USE_BSD		/* so that we get unsetenv() */
-# include <stdlib.h>
-# undef __USE_BSD		/* used later */
-#else
-# include <stdlib.h>
+#if defined(HAVE_GLIBC2)
+#include <features.h>
+# ifndef __USE_POSIX
+#  define __USE_POSIX		/* for tzset */
+# endif
+# ifndef __USE_BSD
+#  define __USE_BSD		/* so that we get unsetenv() */
+# endif
+# ifndef __USE_MISC
+#  define __USE_MISC		/* for finite */
+# endif
 #endif
 
-#if defined(HAVE_WORKING_STRPTIME) && defined(HAVE_GLIBC2) && !defined(__USE_XOPEN)
-# define __USE_XOPEN		/* so that we get strptime() */
-# include <time.h>
-# undef __USE_XOPEN		/* just to make sure */
-#else
-# include <time.h>
-#endif
-
-#include "Defn.h"
+#include <time.h>
+#include <stdlib.h> /* for putenv */
+#include <Defn.h>
 
 /* The glibc in RH8.0 is broken and assumes that dates before 1970-01-01
    do not exist. So does Windows, but at least there we do not need a
    run-time test.  As from 1.6.2, test the actual mktime code and cache the
    result on glibc >= 2.2. (It seems this started between 2.2.5 and 2.3,
    and RH8.0 has an unreleased version in that gap.)
+
+   Sometime in late 2004 this was reverted in glibc.
 */
 
 static Rboolean have_broken_mktime(void)
@@ -88,10 +91,8 @@ static Rboolean have_broken_mktime(void)
 
 }
 
-#ifndef HAVE_WORKING_STRPTIME
 /* Substitute based on glibc code. */
-# include "Rstrptime.h"
-#endif
+#include "Rstrptime.h"
 
 static const int days_in_month[12] =
 {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -100,11 +101,35 @@ static const int days_in_month[12] =
 #define days_in_year(year) (isleap(year) ? 366 : 365)
 
 #ifndef HAVE_POSIX_LEAPSECONDS
+/* There have been 23 leapseconds, the last being on 2005-12-31.
+   But older OSes will not necessarily know about number 23, so we do 
+   a run-time test (the OS could have been patched since configure).
+ */
+static int n_leapseconds = -1;
 static const time_t leapseconds[] =
 {  78796800, 94694400,126230400,157766400,189302400,220924800,252460800,
-  283996800,315532800,362793600,425865600,489024000,520560000,567993600,
+  283996800,315532800,362793600,394329600,425865600,489024000,567993600,
   631152000,662688000,709948800,741484800,773020800,820454400,867715200,
-  915148800 };
+  915148800,1136073600};
+
+static void set_n_leapseconds(void)
+{
+    struct tm tm;
+    int t1, t2;
+
+    tm.tm_year = 105;
+    tm.tm_mon = 11;
+    tm.tm_mday = 31;
+    tm.tm_hour = 12;
+    tm.tm_min = 0;
+    tm.tm_sec = 0;
+    t1 = mktime(&tm);
+    tm.tm_year = 106;
+    tm.tm_mon = 0;
+    tm.tm_mday = 1;
+    t2 = mktime(&tm);
+    n_leapseconds = t2 - t1 == 84601) ? 23 : 22;
+}
 #endif
 
 /*
@@ -188,13 +213,20 @@ static int validate_tm (struct tm *tm)
 /* Substitute for mktime -- no checking, always in GMT */
 static double mktime00 (struct tm *tm)
 {
-    long day = 0;
+    int day = 0;
     int i, year, year0;
-
+    double excess = 0.0;
+    
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
     /* safety check for unbounded loops */
-    if (abs(year0 - 1970) > 5000) return (double)(-1);
+    if (year0 > 3000) {
+	excess = (int)(year0/2000) - 1;
+	year0 -= excess * 2000;
+    } else if (year0 < 0) {
+	excess = -1 - (int)(-year0/2000);
+	year0 -= excess * 2000;
+    }
 
     for(i = 0; i < tm->tm_mon; i++) day += days_in_month[i];
     if (tm->tm_mon > 1 && isleap(year0)) day++;
@@ -212,28 +244,51 @@ static double mktime00 (struct tm *tm)
     if ((tm->tm_wday = (day + 4) % 7) < 0) tm->tm_wday += 7;
 
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
-	+ (day * 86400.0);
+	+ (day + excess * 730485) * 86400.0;
 }
 
 static double guess_offset (struct tm *tm)
 {
     double offset, offset1, offset2;
-    int oldmonth, oldyear, olddst, oldwday, oldyday;
+    int i, wday, year, oldmonth, oldyear, olddst, oldwday, oldyday, oldmday;
 
     /*
-       adjust as best we can for timezones: if isdst is unknown,
-       use the smaller offset at same day in Jan or July 2000
+       Adjust as best we can for timezones: if isdst is unknown, use
+       the smaller offset at same day in Jan or July of a valid year.
+       We don't know the timezone rules, but if we choose a year with
+       July 1 on the same day of the week we will likely get guess
+       right (since they are usually on Sunday mornings).
     */
     oldmonth = tm->tm_mon;
     oldyear = tm->tm_year;
     olddst = tm->tm_isdst;
     oldwday = tm->tm_wday;
     oldyday = tm->tm_yday;
+    oldmday = tm->tm_mday;
+
+    /* so now look for a suitable year */
+    tm->tm_mon = 6;
+    tm->tm_mday = 1;
+    tm->tm_isdst = -1;
+    mktime00(tm);  /* to get wday valid */
+    wday = tm->tm_wday;
+    /* We cannot use 1970 because of the Windows bug with 1970-01-01 east
+       of GMT. */
+    for(i = 71; i < 82; i++) { /* These cover all the possibilities */
+	tm->tm_year = i;
+	mktime(tm);
+	if(tm->tm_wday == wday) break;
+    }
+    year = i;
+
+    /* Now look up offset in January */
+    tm->tm_mday = oldmday;
     tm->tm_mon = 0;
-    tm->tm_year = 100;
+    tm->tm_year = year;
     tm->tm_isdst = -1;
     offset1 = (double) mktime(tm) - mktime00(tm);
-    tm->tm_year = 100;
+    /* and in July */
+    tm->tm_year = year;
     tm->tm_mon = 6;
     tm->tm_isdst = -1;
     offset2 = (double) mktime(tm) - mktime00(tm);
@@ -277,8 +332,10 @@ static double mktime0 (struct tm *tm, const int local)
 #endif
     if(OK) {
 	res = (double) mktime(tm);
+	if (res == (double)-1) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
-        for(i = 0; i < 22; i++)
+	if (n_leapseconds < 0) set_n_leapseconds();
+        for(i = 0; i < n_leapseconds; i++)
             if(res > leapseconds[i]) res -= 1.0;
 #endif
         return res;
@@ -290,20 +347,21 @@ static double mktime0 (struct tm *tm, const int local)
 static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
-    long day;
-    int y, tmp, mon, left, diff;
+    int day;
+    int y, tmp, mon, left, diff, diff2;
     struct tm *res= ltm;
     time_t t;
 
     if(d < 2147483647.0 && d > (have_broken_mktime() ? 0. : -2147483647.0)) {
 	t = (time_t) d;
 #ifndef HAVE_POSIX_LEAPSECONDS
-        for(y = 0; y < 22; y++) if(t > leapseconds[y] + y - 1) t++;
+	if (n_leapseconds < 0) set_n_leapseconds();
+        for(y = 0; y < n_leapseconds; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif
 	return local ? localtime(&t) : gmtime(&t);
     }
 
-    day = (long) floor(d/86400.0);
+    day = (int) floor(d/86400.0);
     left = (int) (d - day * 86400.0 + 0.5);
 
     /* hour, min, and sec */
@@ -333,13 +391,24 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
     res->tm_mday = day + 1;
 
     if(local) {
+	int shift;
 	/*  daylight saving time is unknown */
 	res->tm_isdst = -1;
 
 	/* Try to fix up timezone differences */
-        diff = guess_offset(res);
-	res->tm_min -= diff/60;
+        diff = guess_offset(res)/60;
+	shift = res->tm_min + 60*res->tm_hour;
+	res->tm_min -= diff;
 	validate_tm(res);
+	res->tm_isdst = -1;
+	/* now this might be a different day */
+	if(shift - diff < 0) res->tm_yday--;
+	if(shift - diff > 24) res->tm_yday++;	
+	diff2 = guess_offset(res)/60;
+	if(diff2 != diff) {
+	    res->tm_min += (diff - diff2);
+	    validate_tm(res);
+	}
 	return res;
     } else {
 	res->tm_isdst = 0; /* no dst in GMT */
@@ -348,17 +417,49 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 }
 
 
-
-SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    time_t res = time(NULL);
-    SEXP ans = allocVector(REALSXP, 1);
-#ifndef HAVE_POSIX_LEAPSECONDS
-    res -= 22;
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>
 #endif
-    if(res != (time_t)(-1)) REAL(ans)[0] = (double) res;
-    else REAL(ans)[0] = NA_REAL;
+#ifdef Win32
+# define WIN32_LEAN_AND_MEAN 1
+# include <windows.h>
+#endif
+
+SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans = allocVector(REALSXP, 1);
+#ifdef HAVE_GETTIMEOFDAY
+    struct timeval tv;
+    int res = gettimeofday(&tv, NULL);
+    if(res == 0) {
+	double tmp = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+#ifndef HAVE_POSIX_LEAPSECONDS
+	if (n_leapseconds < 0) set_n_leapseconds();
+	tmp -= n_leapseconds;
+#endif
+	REAL(ans)[0] = tmp;
+    } else 
+	REAL(ans)[0] = NA_REAL;
     return ans;
+#else
+    time_t res = time(NULL);
+    double tmp = res;
+    if(res != (time_t)(-1)) {
+#ifndef HAVE_POSIX_LEAPSECONDS
+	if (n_leapseconds < 0) set_n_leapseconds();
+	tmp -= n_leapseconds;
+#endif
+#ifdef Win32
+	{
+	    SYSTEMTIME st;
+	    GetSystemTime(&st);
+	    tmp += 1e-3 * st.wMilliseconds;
+	}
+#endif
+	REAL(ans)[0] = tmp;
+    }
+    return ans;
+#endif
 }
 
 
@@ -386,7 +487,7 @@ static int set_tz(char *tz, char *oldtz)
     setenv("TZ", tz, 1);
     settz = 1;
 # else
-    warning("cannot set timezones on this system");
+    warning(_("cannot set timezones on this system"));
 # endif
 #endif
     tzset();
@@ -410,6 +511,8 @@ static void reset_tz(char *tz)
 	unsetenv("TZ");
 #else
 # ifdef HAVE_PUTENV
+	/* This ought (POSIX) to set the value to "", but on MinGW
+	   it removes the variable which happens to be what we want. */
 	putenv("TZ=");
 # endif
 #endif
@@ -422,12 +525,12 @@ static const char ltnames [][6] =
 { "sec", "min", "hour", "mday", "mon", "year", "wday", "yday", "isdst" };
 
 
-static void makelt(struct tm *tm, SEXP ans, int i, int valid)
+static void makelt(struct tm *tm, SEXP ans, int i, int valid, double frac_secs)
 {
     int j;
 
     if(valid) {
-	INTEGER(VECTOR_ELT(ans, 0))[i] = tm->tm_sec;
+	REAL(VECTOR_ELT(ans, 0))[i] = tm->tm_sec + frac_secs;
 	INTEGER(VECTOR_ELT(ans, 1))[i] = tm->tm_min;
 	INTEGER(VECTOR_ELT(ans, 2))[i] = tm->tm_hour;
 	INTEGER(VECTOR_ELT(ans, 3))[i] = tm->tm_mday;
@@ -437,14 +540,15 @@ static void makelt(struct tm *tm, SEXP ans, int i, int valid)
 	INTEGER(VECTOR_ELT(ans, 7))[i] = tm->tm_yday;
 	INTEGER(VECTOR_ELT(ans, 8))[i] = tm->tm_isdst;
     } else {
-	for(j = 0; j < 8; j++)
+	REAL(VECTOR_ELT(ans, 0))[i] = NA_REAL;
+	for(j = 1; j < 8; j++)
 	    INTEGER(VECTOR_ELT(ans, j))[i] = NA_INTEGER;
 	INTEGER(VECTOR_ELT(ans, 8))[i] = -1;
     }
 }
 
 
-SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, class, tzone;
     int i, n, isgmt = 0, valid, settz = 0;
@@ -453,15 +557,21 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), REALSXP));
     if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
-	error("invalid `tz' value");
+	error(_("invalid '%s' value"), "tz");
     tz = CHAR(STRING_ELT(stz, 0));
+    if(strlen(tz) == 0) {
+	/* do a direct look up here as this does not otherwise
+	   work on Windows */
+	char *p = getenv("TZ");
+	if(p) tz = p;
+    }
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
     n = LENGTH(x);
     PROTECT(ans = allocVector(VECSXP, 9));
     for(i = 0; i < 9; i++)
-	SET_VECTOR_ELT(ans, i, allocVector(INTSXP, n));
+	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
 
     PROTECT(ansnames = allocVector(STRSXP, 9));
     for(i = 0; i < 9; i++)
@@ -469,15 +579,15 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
         struct tm dummy, *ptm = &dummy;
-	if(R_FINITE(REAL(x)[i])){
-	    double d = REAL(x)[i];
+	double d = REAL(x)[i];
+	if(R_FINITE(d)) {
 	    ptm = localtime0(&d, 1 - isgmt, &dummy);
 	    /* in theory localtime/gmtime always return a valid
 	       struct tm pointer, but Windows uses NULL for error
 	       conditions (like negative times). */
 	    valid = (ptm != NULL);
 	} else valid = 0;
-	makelt(ptm, ans, i, valid);
+	makelt(ptm, ans, i, valid, d - floor(d));
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(class = allocVector(STRSXP, 2));
@@ -500,7 +610,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans;
     int i, n = 0, isgmt = 0, nlen[9], settz = 0;
@@ -509,13 +619,19 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     double tmp;
 
     checkArity(op, args);
-    x = CAR(args);
+    PROTECT(x = duplicate(CAR(args))); /* coerced below */
     if(!isVectorList(x) || LENGTH(x) != 9)
-	error("invalid `x' argument");
+	error(_("invalid '%s' argument"), "x");
     if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
-	error("invalid `tz' value");
+	error(_("invalid '%s' value"), "tz");
 
     tz = CHAR(STRING_ELT(stz, 0));
+    if(strlen(tz) == 0) {
+	/* do a direct look up here as this does not otherwise
+	   work on Windows */
+	char *p = getenv("TZ");
+	if(p) tz = p;
+    }
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
@@ -525,18 +641,21 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(i = 0; i < 6; i++)
 	    if(nlen[i] == 0)
-		error("zero length component in non-empty POSIXlt structure");
+		error(_("zero length component in non-empty POSIXlt structure"));
 	if(nlen[8] == 0)
-	    error("zero length component in non-empty POSIXlt structure");
+	    error(_("zero length component in non-empty POSIXlt structure"));
     }
-    /* coerce fields to integer */
+    /* coerce fields to integer or real */
+    SET_VECTOR_ELT(x, 0, coerceVector(VECTOR_ELT(x, 0), REALSXP));
     for(i = 0; i < 6; i++)
-	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i),
+					  i > 0 ? INTSXP: REALSXP));
     SET_VECTOR_ELT(x, 8, coerceVector(VECTOR_ELT(x, 8), INTSXP));
 
     PROTECT(ans = allocVector(REALSXP, n));
     for(i = 0; i < n; i++) {
-	tm.tm_sec   = INTEGER(VECTOR_ELT(x, 0))[i%nlen[0]];
+	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
+	tm.tm_sec   = fsecs;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
@@ -544,23 +663,24 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_year  = INTEGER(VECTOR_ELT(x, 5))[i%nlen[5]];
 	/* mktime ignores tm.tm_wday and tm.tm_yday */
 	tm.tm_isdst = isgmt ? 0:INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
-	if(tm.tm_sec == NA_INTEGER || tm.tm_min == NA_INTEGER ||
+	if(!R_FINITE(secs) || tm.tm_min == NA_INTEGER ||
 	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
 	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER)
 	    REAL(ans)[i] = NA_REAL;
 	else {
 	    tmp = mktime0(&tm, 1 - isgmt);
-	    REAL(ans)[i] = (tmp == (double)(-1)) ? NA_REAL : tmp;
+	    REAL(ans)[i] = (tmp == (double)(-1)) ? 
+		NA_REAL : tmp + (secs - fsecs);
 	}
     }
 
     if(settz) reset_tz(oldtz);
 
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
 }
 
-SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, tz;
     int i, n = 0, m, N, nlen[9], UseTZ;
@@ -568,37 +688,35 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     struct tm tm;
 
     checkArity(op, args);
-    x = CAR(args);
+    PROTECT(x = duplicate(CAR(args))); /* coerced below */
     if(!isVectorList(x) || LENGTH(x) != 9)
-	error("invalid `x' argument");
+	error(_("invalid '%s' argument"), "x");
     if(!isString((sformat = CADR(args))) || LENGTH(sformat) == 0)
-	error("invalid `format' argument");
+	error(_("invalid '%s' argument"), "format");
     m = LENGTH(sformat);
     UseTZ = asLogical(CADDR(args));
     if(UseTZ == NA_LOGICAL)
-	error("invalid `usetz' argument");
+	error(_("invalid '%s' argument"), "usetz");
     tz = getAttrib(x, install("tzone"));
 
-    /* workaround for glibc bug in strftime */
-#if defined HAVE_GLIBC2
-#ifdef __USE_BSD
-    tm.tm_zone = NULL;
-#else
-    tm.__tm_zone = NULL;
-#endif
-#endif
+    /* workaround for glibc & MacOS X bugs in strftime: they have
+       undocumented and non-POSIX/C99 time zone components 
+     */
+    memset(&tm, 0, sizeof(tm));
 
-    /* coerce fields to integer, find length of longest one */
+    /* coerce fields to integer or real, find length of longest one */
     for(i = 0; i < 9; i++) {
 	nlen[i] = LENGTH(VECTOR_ELT(x, i));
 	if(nlen[i] > n) n = nlen[i];
-	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
+	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), 
+					  i > 0 ? INTSXP : REALSXP));
     }
     if(n > 0) N = (m > n) ? m:n; else N = 0;
 
     PROTECT(ans = allocVector(STRSXP, N));
     for(i = 0; i < N; i++) {
-	tm.tm_sec   = INTEGER(VECTOR_ELT(x, 0))[i%nlen[0]];
+	double secs = REAL(VECTOR_ELT(x, 0))[i%nlen[0]], fsecs = floor(secs);
+	tm.tm_sec   = fsecs;
 	tm.tm_min   = INTEGER(VECTOR_ELT(x, 1))[i%nlen[1]];
 	tm.tm_hour  = INTEGER(VECTOR_ELT(x, 2))[i%nlen[2]];
 	tm.tm_mday  = INTEGER(VECTOR_ELT(x, 3))[i%nlen[3]];
@@ -607,14 +725,37 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_wday  = INTEGER(VECTOR_ELT(x, 6))[i%nlen[6]];
 	tm.tm_yday  = INTEGER(VECTOR_ELT(x, 7))[i%nlen[7]];
 	tm.tm_isdst = INTEGER(VECTOR_ELT(x, 8))[i%nlen[8]];
-	if(tm.tm_sec == NA_INTEGER || tm.tm_min == NA_INTEGER ||
+	if(!R_FINITE(secs) || tm.tm_min == NA_INTEGER ||
 	   tm.tm_hour == NA_INTEGER || tm.tm_mday == NA_INTEGER ||
 	   tm.tm_mon == NA_INTEGER || tm.tm_year == NA_INTEGER) {
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	} else {
 	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
-		strftime(buff, 256, CHAR(STRING_ELT(sformat, i%m)), &tm);
+		char *q = CHAR(STRING_ELT(sformat, i%m)), buf2[500];
+		strcpy(buf2,  q);
+		p = strstr(q, "%OS");
+		if(p) {
+		    int ns, nused = 4;
+		    char *p2 = strstr(buf2, "%OS");
+		    *p2 = '\0';
+		    ns = *(p+3) - '0';
+		    if(ns < 0 || ns > 9) { /* not a digit */
+			ns = asInteger(GetOption(install("digits.secs"),
+						 R_BaseEnv));
+			if(ns == NA_INTEGER) ns = 0;
+			nused = 3;
+		    }
+		    if(ns > 6) ns = 6;
+		    if(ns > 0) {
+			sprintf(p2, "%0*.*f", ns+3, ns, secs);
+			strcat(buf2, p+nused);
+		    } else {
+			strcat(p2, "%S");
+			strcat(buf2, p+nused);
+		    }
+		}
+		strftime(buff, 256, buf2, &tm);
 		if(UseTZ && !isNull(tz)) {
 		    int i = 0;
 		    if(LENGTH(tz) == 3) {
@@ -632,7 +773,7 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
 }
 
@@ -647,7 +788,8 @@ static void glibc_fix(struct tm *tm, int *invalid)
     struct tm *tm0;
     int tmp;
 #ifndef HAVE_POSIX_LEAPSECONDS
-    t -= 22;
+    if (n_leapseconds < 0) set_n_leapseconds();
+    t -= n_leapseconds;
 #endif
     tm0 = localtime(&t);
     if(tm->tm_year == NA_INTEGER) tm->tm_year = tm0->tm_year;
@@ -675,23 +817,30 @@ static void glibc_fix(struct tm *tm, int *invalid)
 }
 
 
-SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans, ansnames, class;
-    int i, n, m, N, invalid;
-    struct tm tm;
+    SEXP x, sformat, ans, ansnames, class, stz;
+    int i, n, m, N, invalid, isgmt = 0;
+    struct tm tm, tm2;
+    char *tz = NULL;
+    double psecs = 0.0;
 
     checkArity(op, args);
     if(!isString((x= CAR(args))))
-	error("invalid `x' argument");
+	error(_("invalid '%s' argument"), "x");
     if(!isString((sformat = CADR(args))) || LENGTH(sformat) == 0)
-	error("invalid `format' argument");
+	error(_("invalid '%s' argument"), "x");
+    if(!isString((stz = CADDR(args))) || LENGTH(stz) != 1)
+	error(_("invalid '%s' value"), "tz");
+    tz = CHAR(STRING_ELT(stz, 0));
+    if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
+
     n = LENGTH(x); m = LENGTH(sformat);
     if(n > 0) N = (m > n)?m:n; else N = 0;
 
     PROTECT(ans = allocVector(VECSXP, 9));
     for(i = 0; i < 9; i++)
-	SET_VECTOR_ELT(ans, i, allocVector(INTSXP, N));
+	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, N));
 
     PROTECT(ansnames = allocVector(STRSXP, 9));
     for(i = 0; i < 9; i++)
@@ -702,11 +851,12 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* for glibc's sake. That only sets some unspecified fields,
 	   sometimes. */
 	tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
-	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = NA_INTEGER;
+	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = 
+	    tm.tm_wday = NA_INTEGER;
+	tm.tm_isdst = -1;
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||
-	    !strptime(CHAR(STRING_ELT(x, i%n)),
-		      CHAR(STRING_ELT(sformat, i%m)), &tm);
-	/* it seems glibc cannot valid at all consistently */
+	    !R_strptime(CHAR(STRING_ELT(x, i%n)),
+			CHAR(STRING_ELT(sformat, i%m)), &tm, &psecs);
 	if(!invalid) {
 	    /* Solaris sets missing fields to 0 */
 	    if(tm.tm_mday == 0) tm.tm_mday = NA_INTEGER;
@@ -714,10 +864,16 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	       || tm.tm_year == NA_INTEGER)
 		glibc_fix(&tm, &invalid);
 	    tm.tm_isdst = -1;
-	    mktime0(&tm, 1); /* set wday, yday, isdst */
+	    /* we do want to set wday, yday, isdst, but not to
+	       adjust structure at DST boundaries */
+	    memcpy(&tm2, &tm, sizeof(struct tm));
+	    mktime0(&tm2, 1-isgmt); /* set wday, yday, isdst */
+	    tm.tm_wday = tm2.tm_wday;
+	    tm.tm_yday = tm2.tm_yday;
+	    tm.tm_isdst = isgmt ? 0: tm2.tm_isdst;
 	}
 	invalid = invalid || validate_tm(&tm) != 0;
-	makelt(&tm, ans, i, !invalid);
+	makelt(&tm, ans, i, !invalid, psecs - floor(psecs));
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(class = allocVector(STRSXP, 2));
@@ -728,11 +884,11 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans, ansnames, class;
     int n, i, valid;
-    long day;
+    int day;
     int y, tmp, mon;
     struct tm tm;
 
@@ -741,7 +897,7 @@ SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(x);
     PROTECT(ans = allocVector(VECSXP, 9));
     for(i = 0; i < 9; i++)
-	SET_VECTOR_ELT(ans, i, allocVector(INTSXP, n));
+	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
 
     PROTECT(ansnames = allocVector(STRSXP, 9));
     for(i = 0; i < 9; i++)
@@ -749,7 +905,7 @@ SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
 	if(R_FINITE(REAL(x)[i])) {
-	    day = (long) REAL(x)[i];
+	    day = (int) REAL(x)[i];
 	    tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
 	    /* weekday: 1970-01-01 was a Thursday */
 	    if ((tm.tm_wday = ((4 + day) % 7)) < 0) tm.tm_wday += 7;
@@ -775,28 +931,29 @@ SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    valid = 1;
 	} else valid = 0;
-	makelt(&tm, ans, i, valid);
+	makelt(&tm, ans, i, valid, 0.0);
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("POSIXt"));
     SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
     classgets(ans, class);
+    setAttrib(ans, install("tzone"), mkString("UTC"));
     UNPROTECT(4);
 
     return ans;
 }
 
-SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans, class;
     int i, n = 0, nlen[9];
     struct tm tm;
 
     checkArity(op, args);
-    x = CAR(args);
+    PROTECT(x = duplicate(CAR(args)));
     if(!isVectorList(x) || LENGTH(x) != 9)
-	error("invalid `x' argument");
+	error(_("invalid '%s' argument"), "x");
 
     for(i = 3; i < 6; i++)
 	if((nlen[i] = LENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];
@@ -804,14 +961,13 @@ SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     if(n > 0) {
 	for(i = 3; i < 6; i++)
 	    if(nlen[i] == 0)
-		error("zero length component in non-empty POSIXlt structure");
+		error(_("zero length component in non-empty POSIXlt structure"));
 	if(nlen[8] == 0)
-	    error("zero length component in non-empty POSIXlt structure");
+	    error(_("zero length component in non-empty POSIXlt structure"));
     }
-    /* coerce fields to integer */
-    for(i = 0; i < 6; i++)
+    /* coerce relevant fields to integer */
+    for(i = 3; i < 6; i++)
 	SET_VECTOR_ELT(x, i, coerceVector(VECTOR_ELT(x, i), INTSXP));
-    SET_VECTOR_ELT(x, 8, coerceVector(VECTOR_ELT(x, 8), INTSXP));
 
     PROTECT(ans = allocVector(REALSXP, n));
     for(i = 0; i < n; i++) {
@@ -824,12 +980,15 @@ SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(tm.tm_mday == NA_INTEGER || tm.tm_mon == NA_INTEGER ||
 	   tm.tm_year == NA_INTEGER || validate_tm(&tm) < 0)
 	    REAL(ans)[i] = NA_REAL;
-	else REAL(ans)[i] = mktime00(&tm)/86400;
+	else {
+	    double tmp = mktime00(&tm);
+	    REAL(ans)[i] = (tmp == -1) ? NA_REAL : tmp/86400;
+	}
     }
 
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("Date"));
     classgets(ans, class);
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ans;
 }

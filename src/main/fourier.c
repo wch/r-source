@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* These are the R interface routines to the plain FFT code 
@@ -30,7 +30,7 @@
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 
-SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP z, d;
     int i, inv, maxf, maxmaxf, maxmaxp, maxp, n, ndims, nseg, nspn;
@@ -52,7 +52,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (NAMED(z)) z = duplicate(z);
 	break;
     default:
-	errorcall(call, "non-numeric argument");
+	errorcall(call, _("non-numeric argument"));
     }
     PROTECT(z);
 
@@ -71,7 +71,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    n = length(z);
 	    fft_factor(n, &maxf, &maxp);
 	    if (maxf == 0)
-		errorcall(call, "fft factorization error");
+		errorcall(call, _("fft factorization error"));
 	    work = (double*)R_alloc(4 * maxf, sizeof(double));
 	    iwork = (int*)R_alloc(maxp, sizeof(int));
 	    fft_work(&(COMPLEX(z)[0].r), &(COMPLEX(z)[0].i),
@@ -86,7 +86,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (INTEGER(d)[i] > 1) {
 		    fft_factor(INTEGER(d)[i], &maxf, &maxp);
 		    if (maxf == 0)
-			errorcall(call, "fft factorization error");
+			errorcall(call, _("fft factorization error"));
 		    if (maxf > maxmaxf)
 			maxmaxf = maxf;
 		    if (maxp > maxmaxp)
@@ -118,7 +118,7 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Fourier Transform for Vector-Valued ("multivariate") Series */
 /* Not to be confused with the spatial case (in do_fft). */
 
-SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP z, d;
     int i, inv, maxf, maxp, n, p;
@@ -132,7 +132,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 
     d = getAttrib(z, R_DimSymbol);
     if (d == R_NilValue || length(d) > 2)
-	errorcall(call, "vector-valued (multivariate) series required");
+	errorcall(call, _("vector-valued (multivariate) series required"));
     n = INTEGER(d)[0];
     p = INTEGER(d)[1];
 
@@ -146,7 +146,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (NAMED(z)) z = duplicate(z);
 	break;
     default:
-	errorcall(call, "non-numeric argument");
+	errorcall(call, _("non-numeric argument"));
     }
     PROTECT(z);
 
@@ -161,7 +161,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmax = vmaxget();
 	fft_factor(n, &maxf, &maxp);
 	if (maxf == 0)
-	    errorcall(call, "fft factorization error");
+	    errorcall(call, _("fft factorization error"));
 	work = (double*)R_alloc(4 * maxf, sizeof(double));
 	iwork = (int*)R_alloc(maxp, sizeof(int));
 	for (i = 0; i < p; i++) {
@@ -194,7 +194,7 @@ static int nextn(int n, int *f, int nf)
     return n;
 }
 
-SEXP do_nextn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_nextn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP n, f, ans;
     int i, nn, nf;
@@ -206,10 +206,10 @@ SEXP do_nextn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* check the factors */
 
-    if (nf == 0) errorcall(call, "no factors");
+    if (nf == 0) errorcall(call, _("no factors"));
     for (i = 0; i < nf; i++)
 	if (INTEGER(f)[i] == NA_INTEGER || INTEGER(f)[i] <= 1)
-	    errorcall(call, "invalid factors");
+	    errorcall(call, _("invalid factors"));
 
     ans = allocVector(INTSXP, nn);
     for (i = 0; i < nn; i++) {

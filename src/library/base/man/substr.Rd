@@ -11,7 +11,7 @@ substr(x, start, stop) <- value
 substring(text, first, last = 1000000) <- value
 }
 \arguments{
-  \item{x, text}{a character vector}
+  \item{x, text}{a character vector.}
   \item{start, first}{integer. The first element to be replaced.}
   \item{stop, last}{integer. The last element to be replaced.}
   \item{value}{a character vector, recycled if necessary.}
@@ -20,10 +20,13 @@ substring(text, first, last = 1000000) <- value
   Extract or replace substrings in a character vector.
 }
 \value{
-  For \code{substr}, a character vector of the same length as \code{x}.
+  For \code{substr}, a character vector of the same length and with the
+  same attributes as \code{x} (after possible coercion).
 
   For \code{substring}, a character vector of length the longest of the
-  arguments.
+  arguments.  This will have names taken from \code{x} (if it has any
+  after coercion, repeated as needed), and other attributes copied from
+  \code{x} if it is the longest of the arguments).
 }
 \details{
   \code{substring} is compatible with S, with \code{first} and
@@ -34,6 +37,10 @@ substring(text, first, last = 1000000) <- value
   When extracting, if \code{start} is larger than the string length then
   \code{""} is returned.
 
+  For the extraction functions, \code{x} or \code{text} will be
+  converted to a character vector by \code{\link{as.character}} if it is not
+  already one.
+
   For the replacement functions, if \code{start} is larger than the
   string length then no replacement is done.  If the portion to be
   replaced is longer than the replacement string, then only the
@@ -42,6 +49,12 @@ substring(text, first, last = 1000000) <- value
 \note{
   The S4 version of \code{substring<-} ignores \code{last}; this version
   does not.
+
+  These functions are often used with \code{\link{nchar}} to truncate a
+  display.  That does not really work (you want to limit the width, not
+  the number of characters, so it would be better to use
+  \code{\link{strtrim}}), but at least make sure you use
+  \code{nchar(type="c")}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -6,9 +6,11 @@
   Remove a grob from a gTree or a descendant of a gTree.
 }
 \usage{
-grid.remove(gPath, warn=TRUE, strict = FALSE, grep=FALSE, global=FALSE,
-            allDevices=FALSE, redraw=TRUE) 
-removeGrob(gTree, gPath, strict=FALSE, grep=FALSE, global=FALSE, warn=TRUE) 
+grid.remove(gPath, warn = TRUE, strict  =  FALSE, grep = FALSE,
+            global = FALSE, allDevices = FALSE, redraw = TRUE)
+
+removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
+           global = FALSE, warn = TRUE) 
 }
 \arguments{
   \item{gTree}{A gTree object.}
@@ -22,12 +24,10 @@ removeGrob(gTree, gPath, strict=FALSE, grep=FALSE, global=FALSE, warn=TRUE)
     elements of the \code{gPath} (e.g., \code{c(TRUE, FALSE)} means
     that every odd element of the \code{gPath} will be treated as
     a regular expression).
-    NOT YET IMPLEMENTED.
   }
   \item{global}{ A boolean indicating whether the function should affect
     just the first match of the \code{gPath}, or whether all matches
     should be affected.
-    NOT YET IMPLEMENTED.
   }
   \item{allDevices}{ A boolean indicating whether all open devices
     should
@@ -48,13 +48,12 @@ removeGrob(gTree, gPath, strict=FALSE, grep=FALSE, global=FALSE, warn=TRUE)
 
 }
 \value{
-  \code{removeGrob} returns a grob object;  \code{grid.remove} returns \code{NULL}.
+  \code{removeGrob} returns a grob object;  \code{grid.remove} returns
+  \code{NULL}.
 }
 \author{Paul Murrell}
 \seealso{
   \code{\link{grob}}, \code{\link{getGrob}},
   \code{\link{removeGrob}}, \code{\link{removeGrob}}.
-}
-\examples{
 }
 \keyword{dplot}

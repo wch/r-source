@@ -13,15 +13,16 @@
 SEXP out(SEXP x, SEXP y)
 {
     int i, j, nx, ny;
-    double tmp;
+    double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
     SEXP ans, dim, dimnames, dd;
 
     nx = length(x); ny = length(y);
     PROTECT(ans = allocVector(REALSXP, nx*ny));
+    rans = REAL(ans);
     for(i = 0; i < nx; i++) {
-	tmp = REAL(x)[i];
+	tmp = rx[i];
 	for(j = 0; j < ny; j++)
-	    REAL(ans)[i + nx*j] = tmp * REAL(y)[j];
+	    rans[i + nx*j] = tmp * ry[j];
     }
     PROTECT(dim = allocVector(INTSXP, 2));
     INTEGER(dim)[0] = nx; INTEGER(dim)[1] = ny;
@@ -132,33 +133,66 @@ SEXP convolveE(SEXP args)
 
 SEXP showArgs(SEXP args)
 {
-    int i, nargs;
+    int i;
     Rcomplex cpl;
     char *name;
+    SEXP el;
 
-    if((nargs = length(args) - 1) > 0) {
-	for(i = 0; i < nargs; i++) {
-	    args = CDR(args);
-	    name = CHAR(PRINTNAME(TAG(args)));
-	    switch(TYPEOF(CAR(args))) {
-	    case REALSXP:
-		Rprintf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
-		break;
-	    case LGLSXP:
-	    case INTSXP:
-		Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
-		break;
-	    case CPLXSXP:
-		cpl = COMPLEX(CAR(args))[0];
-		Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
-		break;
-	    case STRSXP:
-		Rprintf("[%d] '%s' %s\n", i+1, name,
-		       CHAR(STRING_ELT(CAR(args), 0)));
-		break;
-	    default:
-		Rprintf("[%d] '%s' R type\n", i+1, name);
-	    }
+    args = CDR(args); /* skip 'name' */
+    for(i = 0; args != R_NilValue; i++, args = CDR(args)) {
+	name = CHAR(PRINTNAME(TAG(args)));
+	el = CAR(args);
+	switch(TYPEOF(el)) {
+	case REALSXP:
+	    Rprintf("[%d] '%s' %f\n", i+1, name, REAL(el)[0]);
+	    break;
+	case LGLSXP:
+	case INTSXP:
+	    Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(el)[0]);
+	    break;
+	case CPLXSXP:
+	    cpl = COMPLEX(el)[0];
+	    Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
+	    break;
+	case STRSXP:
+	    Rprintf("[%d] '%s' %s\n", i+1, name,
+		    CHAR(STRING_ELT(el, 0)));
+	    break;
+	default:
+	    Rprintf("[%d] '%s' R type\n", i+1, name);
+	}
+    }
+    return(R_NilValue);
+}
+
+SEXP showArgs1(SEXP largs)
+{
+    int i, nargs = LENGTH(largs);
+    Rcomplex cpl;
+    SEXP el, names = getAttrib(largs, R_NamesSymbol);
+    char *name;
+
+    for(i = 0; i < nargs; i++) {
+	el = VECTOR_ELT(largs, i);
+	name = isNull(names) ? "" : CHAR(STRING_ELT(names, i));
+	switch(TYPEOF(el)) {
+	case REALSXP:
+	    Rprintf("[%d] '%s' %f\n", i+1, name, REAL(el)[0]);
+	    break;
+	case LGLSXP:
+	case INTSXP:
+	    Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(el)[0]);
+	    break;
+	case CPLXSXP:
+	    cpl = COMPLEX(el)[0];
+	    Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
+	    break;
+	case STRSXP:
+	    Rprintf("[%d] '%s' %s\n", i+1, name,
+		    CHAR(STRING_ELT(el, 0)));
+	    break;
+	default:
+	    Rprintf("[%d] '%s' R type\n", i+1, name);
 	}
     }
     return(R_NilValue);
@@ -252,7 +286,7 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
 SEXP numeric_deriv(SEXP args)
 {
     SEXP theta, expr, rho, ans, ans1, gradient, par, dimnames;
-    double tt, xx, delta, eps = sqrt(DOUBLE_EPS);
+    double tt, xx, delta, eps = sqrt(DOUBLE_EPS), *rgr, *rans;
     int start, i, j;
 
     expr = CADR(args);
@@ -263,6 +297,7 @@ SEXP numeric_deriv(SEXP args)
 
     PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
     PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
+    rgr = REAL(gradient); rans = REAL(ans);
 
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) {
 	PROTECT(par = findVar(install(CHAR(STRING_ELT(theta, i))), rho));
@@ -272,8 +307,7 @@ SEXP numeric_deriv(SEXP args)
 	REAL(par)[0] += delta;
 	PROTECT(ans1 = coerceVector(eval(expr, rho), REALSXP));
 	for(j = 0; j < LENGTH(ans); j++)
-	    REAL(gradient)[j + start] =
-		(REAL(ans1)[j] - REAL(ans)[j])/delta;
+            rgr[j + start] = (REAL(ans1)[j] - rans[j])/delta;
 	REAL(par)[0] = tt;
 	UNPROTECT(2); /* par, ans1 */
     }

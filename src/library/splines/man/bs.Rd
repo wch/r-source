@@ -1,7 +1,7 @@
 \name{bs}
 \alias{bs}
 %\alias{makepredictcall.bs}
-\title{Generate a Basis for Polynomial Splines}
+\title{B-Spline Basis for Polynomial Splines}
 \description{
   Generate the B-spline basis matrix for a polynomial spline.
 }
@@ -10,14 +10,14 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
    Boundary.knots = range(x))
 }
 \arguments{
-  \item{x}{the predictor variable.}
+  \item{x}{the predictor variable.  Missing values are allowed.}
   \item{df}{degrees of freedom; one can specify \code{df} rather than
     \code{knots}; \code{bs()} then chooses \code{df-degree-1} knots at
-    suitable quantiles of \code{x}.}
+    suitable quantiles of \code{x} (which will ignore missing values).}
   \item{knots}{the \emph{internal} breakpoints that define the
     spline.  The default is \code{NULL}, which results in a basis for
-    ordinary polynomial regression. Typical values are the mean or
-    median for one knot, quantiles for more knots. See also
+    ordinary polynomial regression.  Typical values are the mean or
+    median for one knot, quantiles for more knots.  See also
     \code{Boundary.knots}.}
   \item{degree}{degree of the piecewise polynomial---default is 3 for
     cubic splines.}
@@ -58,6 +58,7 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats)
 bs(women$height, df = 5)
 summary(fm1 <- lm(weight ~ bs(height, df = 5), data = women))
 

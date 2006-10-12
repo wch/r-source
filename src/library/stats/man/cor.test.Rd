@@ -43,8 +43,10 @@ cor.test(x, \dots)
   \item{formula}{a formula of the form \code{~ u + v}, where each of
     \code{u} and \code{v} are numeric variables giving the data values
     for one sample.  The samples must be of the same length.}
-  \item{data}{an optional data frame containing the variables in the
-    model formula.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when

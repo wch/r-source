@@ -15,3 +15,6 @@ packBits <- function(x, type=c("raw", "integer"))
     type <- match.arg(type)
     .Internal(packBits(x, type))
 }
+
+utf8ToInt <- function(x) .Internal(utf8ToInt(x))
+intToUtf8 <- function(x, multiple=FALSE) .Internal(intToUtf8(x, multiple))

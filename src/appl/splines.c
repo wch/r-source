@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*	Spline Interpolation
@@ -331,48 +331,45 @@ void spline_coef(int *method, int *n, double *x, double *y,
 {
     switch(*method) {
     case 1:
-	periodic_spline(*n, x, y, b, c, d, e);
-	break;
+	periodic_spline(*n, x, y, b, c, d, e);	break;
 
     case 2:
-	natural_spline(*n, x, y, b, c, d);
-	break;
+	natural_spline(*n, x, y, b, c, d);	break;
 
     case 3:
-	fmm_spline(*n, x, y, b, c, d);
-	break;
+	fmm_spline(*n, x, y, b, c, d);	break;
     }
 }
 
 void spline_eval(int *method, int *nu, double *u, double *v,
 		 int *n, double *x, double *y, double *b, double *c, double *d)
 {
+/* Evaluate  v[l] := spline(u[l], ...),	    l = 1,..,nu, i.e. 0:(nu-1)
+ * Nodes x[i], coef (y[i]; b[i],c[i],d[i]); i = 1,..,n , i.e. 0:(*n-1)
+ */
+    const int n_1 = *n - 1;
     int i, j, k, l;
     double ul, dx, tmp;
 
-    u--; v--;
-    x--; y--;
-    b--; c--; d--;
-
-    if(*method == 1) {
-	dx = x[*n] - x[1];
-	for( l=1 ; l<=*nu ; l++) {
-	    v[l] = fmod(u[l]-x[1], dx);
+    if(*method == 1 && *n > 1) {
+	dx = x[n_1] - x[0];
+	for(l = 0; l < *nu; l++) {
+	    v[l] = fmod(u[l]-x[0], dx);
 	    if(v[l] < 0.0) v[l] += dx;
-	    v[l] = v[l] + x[1];
+	    v[l] += x[0];
 	}
     }
     else {
-	for( l=1 ; l<=*nu ; l++)
+	for(l = 0; l < *nu; l++)
 	    v[l] = u[l];
     }
 
-    i = 1;
-    for( l=1 ; l<=*nu ; l++) {
+    i = 0;
+    for(l = 0; l < *nu; l++) {
 	ul = v[l];
-	if(ul < x[i] || x[i+1] < ul) {
-	    i = 1;
-	    j = *n + 1;
+	if(ul < x[i] || (i < n_1 && x[i+1] < ul)) {
+	    i = 0;
+	    j = *n;
 	    do {
 		k = (i+j)/2;
 		if(ul < x[k]) j = k;
@@ -382,8 +379,8 @@ void spline_eval(int *method, int *nu, double *u, double *v,
 	}
 	dx = ul - x[i];
 	/* for natural splines extrapolate linearly left */
-	tmp = d[i];
-	if(*method == 2 && ul < x[1]) tmp = 0.0;
+	tmp = (*method == 2 && ul < x[0]) ? 0.0 : d[i];
+
 	v[l] = y[i] + dx*(b[i] + dx*(c[i] + dx*tmp));
     }
 }

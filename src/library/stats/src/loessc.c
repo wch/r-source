@@ -12,6 +12,10 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
+/* <UTF8> chars are handled as whole strings.
+   They are passed from Fortran so had better be ASCII.
+ */
+
 /*
  *  Altered by B.D. Ripley to use F77_*, declare routines before use.
  *
@@ -20,6 +24,12 @@
 
 #include <string.h>
 #include <R.h>
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 /* Forward declarations */
 static
@@ -58,8 +68,8 @@ void F77_SUB(ehg184a)(char *s, int *nc, double *x, int *n, int *inc);
 #define	GAUSSIAN	1
 #define SYMMETRIC	0
 
-static Sint	*iv, liv, lv, tau;
-static double	*v;
+static Sint	*iv = NULL, liv, lv, tau;
+static double	*v = NULL;
 
 /* these are set in an earlier call to loess_workspace or loess_grow */
 static void loess_free(void)
@@ -77,7 +87,7 @@ loess_raw(double *y, double *x, double *weights, double *robust, Sint *d,
 	  double *trL, double *one_delta, double *two_delta, Sint *setLf)
 {
     Sint zero = 0, one = 1, two = 2, nsing, i, k;
-    double *hat_matrix, *LL;
+    double *hat_matrix, *LL, dzero=0.0;
 
     *trL = 0;
 
@@ -85,7 +95,7 @@ loess_raw(double *y, double *x, double *weights, double *robust, Sint *d,
 		    sum_drop_sqr, setLf);
     v[1] = *cell;/* = v(2) in Fortran (!) */
     if(!strcmp(*surf_stat, "interpolate/none")) {
-	F77_CALL(lowesb)(x, y, robust, &zero, &zero, iv, &liv, &lv, v);
+	F77_CALL(lowesb)(x, y, robust, &dzero, &zero, iv, &liv, &lv, v);
 	F77_CALL(lowese)(iv, &liv, &lv, v, n, x, surface);
 	loess_prune(parameter, a, xi, vert, vval);
     }
@@ -102,7 +112,7 @@ loess_raw(double *y, double *x, double *weights, double *robust, Sint *d,
 	loess_prune(parameter, a, xi, vert, vval);
     }
     else if (!strcmp(*surf_stat, "interpolate/2.approx")) {
-	F77_CALL(lowesb)(x, y, robust, &zero, &zero, iv, &liv, &lv, v);
+	F77_CALL(lowesb)(x, y, robust, &dzero, &zero, iv, &liv, &lv, v);
 	F77_CALL(lowese)(iv, &liv, &lv, v, n, x, surface);
 	nsing = iv[29];
 	F77_CALL(ehg196)(&tau, d, span, trL);
@@ -213,7 +223,7 @@ loess_workspace(Sint *d, Sint *n, double *span, Sint *degree,
     N = *n;
     nvmax = max(200, N);
     nf = min(N, floor(N * (*span) + 1e-5));
-    if(nf <= 0) error("span is too small");
+    if(nf <= 0) error(_("span is too small"));
     tau0 = ((*degree) > 1) ? ((D + 2) * (D + 1) * 0.5) : (D + 1);
     tau = tau0 - (*sum_drop_sqr);
     lv = 50 + (3 * D + 3) * nvmax + N + (tau0 + 2) * nf;
@@ -320,11 +330,11 @@ loess_grow(Sint *parameter, Sint *a, double *xi,
 
 
 /* begin ehg's FORTRAN-callable C-codes */
+#define MSG(_m_)	msg = _(_m_) ; break ;
 
 void F77_SUB(ehg182)(int *i)
 {
     char *msg, msg2[50];
-#define MSG(_m_)	msg = _m_ ; break ;
 
 switch(*i){
  case 100:MSG("wrong version number in lowesd.   Probably typo in caller.")

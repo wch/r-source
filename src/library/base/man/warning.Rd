@@ -7,7 +7,7 @@
   (optionally) the expression or function from which it was called.
 }
 \usage{
-warning(\dots, call. = TRUE)
+warning(\dots, call. = TRUE, immediate. = FALSE, domain = NULL)
 suppressWarnings(expr)
 }
 \arguments{
@@ -15,7 +15,11 @@ suppressWarnings(expr)
     separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
+  \item{immediate.}{logical, indicating if the call should be output
+    immediately, even if \code{\link{getOption}(warn) <= 0}.}
   \item{expr}{expression to evaluate.}
+  \item{domain}{see \code{\link{gettext}}. If \code{NA}, messages will
+    not be translated.}
 }
 \details{
   The result \emph{depends} on the value of
@@ -29,9 +33,10 @@ suppressWarnings(expr)
   ignored; if it is zero they are stored and printed after the
   top--level function has completed; if it is one they are printed as
   they occur and if it is 2 (or larger) warnings are turned into
-  errors.
+  errors.  Calling \code{warning(immediate. = TRUE)} turns
+  \code{warn <= 0} into \code{warn = 1} for this call only.
 
-  If \code{warn} is zero (the default), a top-level variable
+  If \code{warn} is zero (the default), a read-only variable
   \code{last.warning} is created.  It contains the warnings which can be
   printed via a call to \code{\link{warnings}}.
 
@@ -42,8 +47,11 @@ suppressWarnings(expr)
   is available.  If this restart is invoked with \code{invokeRestart},
   then \code{warning} returns immediately.
 
-   \code{suppressWarnings} evaluates its expression in a context that
-   ignores all warnings.
+  An attempt is made to coerce other types of inputs to \code{warning}
+  to character vectors.
+
+  \code{suppressWarnings} evaluates its expression in a context that
+  ignores all warnings.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -52,8 +60,12 @@ suppressWarnings(expr)
 }
 \seealso{
   \code{\link{stop}} for fatal errors,
+  \code{\link{message}} for diagnostic messages,
   \code{\link{warnings}},
   and \code{\link{options}} with argument \code{warn=}.
+
+  \code{\link{gettext}} for the mechanisms for the automated translation
+  of messages.
 }
 \examples{
 \dontshow{oldopt <- options(warn=1)}

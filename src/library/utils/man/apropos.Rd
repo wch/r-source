@@ -11,7 +11,7 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   \item{what}{name of an object, or \link{regular expression} to match against}
   \item{where, numeric.}{a logical indicating whether positions in the
     search list should also be returned}
-  \item{mode}{character; if not \code{"any"}, only objects who's
+  \item{mode}{character; if not \code{"any"}, only objects whose
     \code{\link{mode}} equals \code{mode} are searched.}
   \item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
     only searched as whole word.}
@@ -34,6 +34,8 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 }
 \author{Kurt Hornik and Martin Maechler (May 1997).}
 \seealso{
+  \code{\link{glob2rx}} to convert wildcard patterns to regular expressions.
+  
   \code{\link{objects}} for listing objects from one place,
   \code{\link{help.search}} for searching the help system,
   \code{\link{search}} for the search path.

@@ -26,8 +26,8 @@ SOURCES_NMATH = \
 	dunif.c punif.c qunif.c runif.c \
 	dnorm.c pnorm.c qnorm.c rnorm.c \
 	dlnorm.c plnorm.c qlnorm.c rlnorm.c \
-	df.c pf.c qf.c rf.c \
-	dt.c pt.c qt.c rt.c \
+	df.c pf.c qf.c rf.c dnf.c \
+	dt.c pt.c qt.c rt.c dnt.c \
 	dchisq.c pchisq.c qchisq.c rchisq.c rnchisq.c \
 	dbinom.c pbinom.c qbinom.c rbinom.c \
 	rmultinom.c \
@@ -40,10 +40,10 @@ SOURCES_NMATH = \
 	dweibull.c pweibull.c qweibull.c rweibull.c \
 	dlogis.c plogis.c qlogis.c rlogis.c \
 	dnchisq.c pnchisq.c qnchisq.c \
-	dnbeta.c pnbeta.c \
-	pnf.c pnt.c \
+	dnbeta.c pnbeta.c qnbeta.c \
+	pnf.c pnt.c qnf.c qnt.c \
 	ptukey.c qtukey.c \
-	wilcox.c \
+	toms708.c wilcox.c \
 	signrank.c
 SOURCES = $(SOURCES_NMATH) std_unif.c
 DEPENDS = $(SOURCES:.c=.d)
@@ -75,7 +75,13 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
 .SUFFIXES:
 .SUFFIXES: .c .d .o .lo
 
-all: Makefile static shared
+@r_cc_lo_rules_frag@
+
+
+all: Makefile inc static shared
+
+inc:
+	(cd ../../include; $(MAKE) Rmath.h)
 
 ## can't run test, as that depends on OS-specific way to set library path.
 ## clean is useful, but forces a remake each time which MM did not want
@@ -88,14 +94,10 @@ Copy:
 	  test -f $${f} || $(LN_S) $(srcdir)/../$${f} . ; \
 	done
 
-static: Makefile ../../include/Rconfig.h
-	@$(MAKE) Copy
-	@$(MAKE) Makedeps
+static: Makefile ../../include/Rconfig.h Copy Makedeps
 	@$(MAKE) $(Rexeclibdir_LIBRARIES)
 
-shared: Makefile ../../include/Rconfig.h
-	@$(MAKE) Copy
-	@$(MAKE) Makedeps
+shared: Makefile ../../include/Rconfig.h Copy Makedeps
 	@$(MAKE) $(Rexeclibdir_LTLIBRARIES)
 
 ../../include/Rconfig.h:
@@ -104,9 +106,9 @@ shared: Makefile ../../include/Rconfig.h
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-Makedeps: Makefile ../../include/Rconfig.h $(DEPENDS)
-	@cat $(DEPENDS) >> Makefile
-	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
+Makedeps: Makefile ../../include/Rconfig.h
+	@$(MAKE) $(DEPENDS)
+	@cat $(DEPENDS) | $(SED) -e 's/^\([^:]*\)\.o\([ 	]\)*:/\1.o \1.lo\2:/' >> Makefile
 	@touch $@
 
 libRmath.a: $(libRmath_a_OBJECTS)
@@ -121,20 +123,38 @@ test: $(srcdir)/test.c
 	  -L. -lRmath $(LIBM)
 
 install: installdirs install-header
-	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(libdir)/$(libRmath_la)
-	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(libdir)/libRmath.a
+@WANT_R_FRAMEWORK_FALSE@	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(libdir)/$(libRmath_la)
+@WANT_R_FRAMEWORK_FALSE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(libdir)/libRmath.a
+@WANT_R_FRAMEWORK_TRUE@	@!(test -f $(libRmath_la)) || cp $(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la) && install_name_tool -id $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la)
+@WANT_R_FRAMEWORK_TRUE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRmath.a
 
 install-header:
 	@(cd ../../include; $(MAKE) Rmath.h)
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(includedir)/Rmath.h
-
+@WANT_R_FRAMEWORK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(includedir)/Rmath.h
+@WANT_R_FRAMEWORK_TRUE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include/Rmath.h
 
 installdirs:
-	@$(MKINSTALLDIRS) $(includedir)
-	@$(MKINSTALLDIRS) $(libdir)
+@WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(includedir)
+@WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(libdir)
+@WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include
+@WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib
+
+## ?= is not portable make syntax, so we conditionalize this.
+@WANT_R_FRAMEWORK_TRUE@RMATH_FRAMEWORK_DIR ?= /Library/Frameworks/Rmath.framework
+install-Rmath-framework: $(libRmath_la)
+	@(cd ../../include; $(MAKE) Rmath.h)
+	@$(MKINSTALLDIRS) $(RMATH_FRAMEWORK_DIR)/Versions/$(VERSION)/Headers
+	@cp $(libRmath_la) $(RMATH_FRAMEWORK_DIR)/Versions/$(VERSION)/Rmath
+	@install_name_tool -id $(RMATH_FRAMEWORK_DIR)/Versions/$(VERSION)/Rmath $(RMATH_FRAMEWORK_DIR)/Versions/$(VERSION)/Rmath
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(RMATH_FRAMEWORK_DIR)/Versions/$(VERSION)/Headers/Rmath.h
+	@rm -f $(RMATH_FRAMEWORK_DIR)/Versions/Current $(RMATH_FRAMEWORK_DIR)/Headers $(RMATH_FRAMEWORK_DIR)/Rmath
+	@ln -sf $(VERSION) $(RMATH_FRAMEWORK_DIR)/Versions/Current
+	@ln -sf Versions/Current/Headers $(RMATH_FRAMEWORK_DIR)/Headers
+	@ln -sf Versions/Current/Rmath $(RMATH_FRAMEWORK_DIR)/Rmath
 
 uninstall:
 	@rm -f $(includedir)/Rmath.h $(libdir)/$(libRmath_la) $(libdir)/libRmath.a
+@WANT_R_FRAMEWORK_TRUE@	@rm -f $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/include/Rmath.h $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libRmath.a $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/$(libRmath_la)
 
 mostlyclean: clean
 clean:

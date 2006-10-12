@@ -4,7 +4,7 @@ ftable.default <- function(..., exclude = c(NA, NaN),
                            row.vars = NULL, col.vars = NULL) {
     args <- list(...)
     if (length(args) == 0)
-        stop("Nothing to tabulate")
+        stop("nothing to tabulate")
     x <- args[[1]]
     if(is.list(x))
         x <- table(x, exclude = exclude)
@@ -21,23 +21,19 @@ ftable.default <- function(..., exclude = c(NA, NaN),
         if(is.character(row.vars)) {
             i <- pmatch(row.vars, names(dn))
             if(any(is.na(i)))
-                stop(paste("incorrect specification for",
-                           sQuote("row.vars")))
+                stop("incorrect specification for 'row.vars'")
             row.vars <- i
         } else if(any((row.vars < 1) | (row.vars > n)))
-            stop(paste("incorrect specification for",
-                       sQuote("row.vars")))
+            stop("incorrect specification for 'row.vars'")
     }
     if(!is.null(col.vars)) {
         if(is.character(col.vars)) {
             i <- pmatch(col.vars, names(dn))
             if(any(is.na(i)))
-                stop(paste("incorrect specification for",
-                           sQuote("col.vars")))
+             stop("incorrect specification for 'col.vars'")
             col.vars <- i
         } else if(any((col.vars < 1) | (col.vars > n)))
-            stop(paste("incorrect specification for",
-                       sQuote("col.vars")))
+            stop("incorrect specification for 'col.vars'")
     }
     i <- 1 : n
     if(!is.null(row.vars) && !is.null(col.vars)) {
@@ -70,18 +66,21 @@ ftable.default <- function(..., exclude = c(NA, NaN),
 ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
 {
     if(missing(formula) || !inherits(formula, "formula"))
-        stop("formula is incorrect or missing")
+        stop("'formula' missing or incorrect")
     if(length(formula) != 3)
-        stop("formula must have both left and right hand sides")
-    if(any(attr(terms(formula), "order") > 1))
+        stop("'formula' must have both left and right hand sides")
+    ## need to cope with '.' in formula
+    tt <- if(is.data.frame(data)) terms(formula, data=data)
+    else terms(formula, allowDotAsName=TRUE)
+    if(any(attr(tt, "order") > 1))
         stop("interactions are not allowed")
-    rvars <- attr(terms(formula[-2]), "term.labels")
-    cvars <- attr(terms(formula[-3]), "term.labels")
+    ## here we do NOT want '.' expanded
+    rvars <- attr(terms(formula[-2], allowDotAsName=TRUE), "term.labels")
+    cvars <- attr(terms(formula[-3], allowDotAsName=TRUE), "term.labels")
     rhs.has.dot <- any(rvars == ".")
     lhs.has.dot <- any(cvars == ".")
     if(lhs.has.dot && rhs.has.dot)
-        stop(paste("formula has", sQuote("."),
-                   "in both left and right hand side"))
+        stop("'formula' has '.' in both left and right hand side")
     m <- match.call(expand.dots = FALSE)
     edata <- eval(m$data, parent.frame())
     if(inherits(edata, "ftable")
@@ -116,9 +115,9 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
         if(!is.null(data) && is.environment(data)) {
             varnames <- names(data)
             if(rhs.has.dot)
-                rvars <- seq(along = varnames)[-cvars]
+                rvars <- seq_along(varnames)[-cvars]
             if(lhs.has.dot)
-                cvars <- seq(along = varnames)[-rvars]
+                cvars <- seq_along(varnames)[-rvars]
         }
         else {
             if(lhs.has.dot || rhs.has.dot)
@@ -137,7 +136,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
 as.table.ftable <- function(x, ...)
 {
     if(!inherits(x, "ftable"))
-        stop(paste("x must be an", sQuote("ftable")))
+        stop("'x' must be an \"ftable\" object")
     xrv <- rev(attr(x, "row.vars"))
     xcv <- rev(attr(x, "col.vars"))
     x <- array(data = c(x),
@@ -152,12 +151,10 @@ as.table.ftable <- function(x, ...)
     x
 }
 
-write.ftable <- function(x, file = "", quote = TRUE,
-                         digits = getOption("digits"))
+format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
 {
     if(!inherits(x, "ftable"))
-        stop(paste("x must be an", sQuote("ftable")))
-    ox <- x
+        stop("'x' must be an \"ftable\" object")
     charQuote <- function(s)
         if(quote) paste("\"", s, "\"", sep = "") else s
     makeLabels <- function(lst) {
@@ -165,7 +162,7 @@ write.ftable <- function(x, file = "", quote = TRUE,
         cplensU <- c(1, cumprod(lens))
         cplensD <- rev(c(1, cumprod(rev(lens))))
         y <- NULL
-        for (i in rev(seq(along = lst))) {
+        for (i in rev(seq_along(lst))) {
             ind <- 1 + seq(from = 0, to = lens[i] - 1) * cplensD[i + 1]
             tmp <- character(length = cplensD[i])
             tmp[ind] <- charQuote(lst[[i]])
@@ -190,10 +187,17 @@ write.ftable <- function(x, file = "", quote = TRUE,
     DATA <- rbind(if(length(xcv)) t(makeLabels(xcv)),
                   rep("", times = ncol(x)),
                   format(unclass(x), digits = digits))
-    x <- cbind(apply(LABS, 2, format, justify = "left"),
-               apply(DATA, 2, format, justify = "right"))
-    cat(t(x), file = file, sep = c(rep(" ", ncol(x) - 1), "\n"))
-    invisible(ox)
+    cbind(apply(LABS, 2, format, justify = "left"),
+	  apply(DATA, 2, format, justify = "right"))
+}
+
+write.ftable <- function(x, file = "", quote = TRUE, append = FALSE,
+			 digits = getOption("digits"))
+{
+    r <- format.ftable(x, quote = quote, digits = digits)
+    cat(t(r), file = file, append = append,
+	sep = c(rep(" ", ncol(r) - 1), "\n"))
+    invisible(x)
 }
 
 print.ftable <- function(x, digits = getOption("digits"), ...)
@@ -207,8 +211,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop("'file' must be a character string or connection")
     if(!isSeekable(file)) {
         ## We really need something seekable, see below.  If it is not,
         ## the best we can do is write everything to a tempfile.
@@ -218,7 +221,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         on.exit(unlink(file))
     }
 
-    z <- count.fields(file, sep, quote, skip)
+    z <- utils::count.fields(file, sep, quote, skip)
     n.row.vars <- z[max(which(z == max(z)))] - z[length(z)] + 1
 
     seek(file, where = 0)
@@ -281,20 +284,20 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             if(missing(row.var.names)) {
                 ## 'row.var.names' should be a character vector (or
                 ## factor) with the names of the row variables.
-                stop("row.var.names missing")
+                stop("'row.var.names' missing")
             }
             n.row.vars <- length(row.var.names)
             row.vars <- vector("list", length = n.row.vars)
             names(row.vars) <- as.character(row.var.names)
             if(missing(col.vars) || !is.list(col.vars)) {
                 ## 'col.vars' should be a list.
-                stop("col.vars missing or incorrect")
+                stop("'col.vars' missing or incorrect")
             }
             col.vars <- lapply(col.vars, as.character)
             n.col.vars <- length(col.vars)
             if(is.null(names(col.vars)))
                 names(col.vars) <-
-                    paste("Factor", seq(along = col.vars), sep = ".")
+                    paste("Factor", seq_along(col.vars), sep = ".")
             else {
                 nam <- names(col.vars)
                 ind <- which(nchar(nam) == 0)
@@ -331,3 +334,6 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
               col.vars = col.vars,
               class = "ftable")
 }
+
+as.data.frame.ftable <- function(x, row.names = NULL, optional = FALSE, ...)
+    as.data.frame(as.table(x), row.names, optional)

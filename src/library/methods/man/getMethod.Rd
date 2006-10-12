@@ -20,7 +20,7 @@
   The other functions are support functions: see the details below.
 }
 \usage{
-getMethod(f, signature=character(), where, optional=FALSE, mlist)
+getMethod(f, signature=character(), where, optional=FALSE, mlist, fdef)
 
 findMethod(f, signature, where)
 
@@ -31,7 +31,8 @@ existsMethod(f, signature = character(), where)
 hasMethod(f, signature=character(), where)
 
 selectMethod(f, signature, optional = FALSE, useInherited = TRUE,
-             mlist = (if (is.null(fdef)) NULL else getMethods(fdef)),
+             mlist = (if (is.null(fdef)) NULL else
+                      getMethodsForDispatch(f, fdef)),
              fdef = getGeneric(f, !optional))
 
 MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
@@ -39,10 +40,8 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
 
 }
 \arguments{
-  \item{f}{ The character-string name of the generic function.
-
-    }
-  \item{signature}{ The signature of classes to match to the arguments
+  \item{f}{The character-string name of the generic function.}
+  \item{signature}{the signature of classes to match to the arguments
     of \code{f}.  See the details below.
 
     For \code{selectMethod}, the signature can optionally be an
@@ -52,9 +51,8 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     are not likely to find this approach convenient, but it is used
     internally and is marginally more efficient.)
   }
-  \item{where}{ The position or environment in which to look for the method(s):  by default,
-      anywhere in
-    the current search list.}
+  \item{where}{The position or environment in which to look for the
+    method(s):  by default, anywhere in the current search list.}
   \item{optional}{ If the selection does not produce a unique result,
     an error is generated, unless this argument is \code{TRUE}.  In that
     case, the value returned is either a \code{MethodsList} object, if
@@ -67,11 +65,9 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     \code{getMethodsMetaData(f,where)}.  For \code{selectMethod}, see
     the discussion of argument \code{fdef}.
     }
-
-  \item{fdef}{In \code{selectMethod}, the \code{MethodsList} object
-    and/or the generic function object can be explicitly supplied.  (Unlikely to be used, except in the
-    recursive call that finds matches to more than one argument.)}
-
+  \item{fdef}{Optionally, the generic function from which the method is 
+      to be retrieved.
+    (Unlikely to be used, except internally in the package source.)}
   \item{env}{The environment in which argument evaluations are done in
     \code{MethodsListSelect}.  Currently must be supplied, but should
     usually be \code{sys.frame(sys.parent())} when calling the function
@@ -155,8 +151,6 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
   for this generic function and signature.  (The value returned is
   stored by the evaluator so that the search is not required next
   time.)
-
-
 }
 \value{
   The call to \code{selectMethod} or \code{getMethod} returns a
@@ -186,10 +180,10 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
+  discussion of details see \code{?\link{Methods}}
+  and the links from that documentation.
 }
+\seealso{\code{\link{GenericFunctions}}}
 \examples{
 setGeneric("testFun", function(x)standardGeneric("testFun"))
 setMethod("testFun", "numeric", function(x)x+1)
@@ -204,12 +198,12 @@ hasMethod("testFun") # default method
 hasMethod("testFun", "ANY")
 \dontrun{[1] FALSE}
 \dontshow{
-stopifnot(isGeneric("testFun"))
-stopifnot(hasMethod("testFun", "numeric"))
-stopifnot(hasMethod("testFun", "integer"))
-stopifnot(!existsMethod("testFun", "integer"))
-stopifnot(!hasMethod("testFun"))
-stopifnot(!hasMethod("testFun", "ANY"))
+stopifnot(isGeneric("testFun"),
+	  hasMethod("testFun", "numeric"),
+	  hasMethod("testFun", "integer"),
+	  !existsMethod("testFun", "integer"),
+	  !hasMethod("testFun"),
+	  !hasMethod("testFun", "ANY") )
 removeGeneric("testFun")
 }
 }

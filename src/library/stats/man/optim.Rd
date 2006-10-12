@@ -32,7 +32,8 @@ optim(par, fn, gr = NULL,
  \item{control}{A list of control parameters. See \bold{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
- \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
+ \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.
+   Beware of partial matching to earlier arguments.}
 }
 \details{
   By default this function performs minimization, but it will maximize
@@ -40,17 +41,17 @@ optim(par, fn, gr = NULL,
 
   The default method is an implementation of that of Nelder and Mead
   (1965), that uses only function values and is robust but relatively
-  slow. It will work reasonably well for non-differentiable functions.
+  slow.  It will work reasonably well for non-differentiable functions.
 
   Method \code{"BFGS"} is a quasi-Newton method (also known as a variable
   metric algorithm), specifically that published simultaneously in 1970
-  by Broyden, Fletcher, Goldfarb and Shanno. This uses function values
+  by Broyden, Fletcher, Goldfarb and Shanno.  This uses function values
   and gradients to build up a picture of the surface to be optimized.
 
   Method \code{"CG"} is a conjugate gradients method based on that by
   Fletcher and Reeves (1964) (but with the option of Polak--Ribiere or
   Beale--Sorenson updates).  Conjugate gradient methods will generally
-  be more fragile that the BFGS method, but as they do not store a
+  be more fragile than the BFGS method, but as they do not store a
   matrix they may be successful in much larger optimization problems.
 
   Method \code{"L-BFGS-B"} is that of Byrd \emph{et. al.} (1995) which
@@ -62,7 +63,7 @@ optim(par, fn, gr = NULL,
 
   Nocedal and Wright (1999) is a comprehensive reference for the
   previous three methods.
-  
+
   Method \code{"SANN"} is by default a variant of simulated annealing
   given in Belisle (1992). Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
@@ -73,10 +74,14 @@ optim(par, fn, gr = NULL,
   actual temperature. If a function to generate a new candidate point is
   given, method \code{"SANN"} can also be used to solve combinatorial
   optimization problems. Temperatures are decreased according to the
-  logarithmic cooling schedule as given in Belisle (1992, p. 890). Note
-  that the \code{"SANN"} method depends critically on the settings of
-  the control parameters. It is not a general-purpose method but can be 
-  very useful in getting to a good value on a very rough surface.
+  logarithmic cooling schedule as given in Belisle (1992, p. 890);
+  specifically, the temperature is set to
+  \code{temp / log(((t-1) \%/\% tmax)*tmax + exp(1))}, where \code{t} is
+  the current iteration step and \code{temp} and \code{tmax} are
+  specifiable via \code{control}, see below.  Note that the
+  \code{"SANN"} method depends critically on the settings of the control
+  parameters. It is not a general-purpose method but can be very useful
+  in getting to a good value on a very rough surface.
 
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
   cannot be evaluated at the supplied value, but the initial value must
@@ -144,6 +149,9 @@ optim(par, fn, gr = NULL,
     \item{\code{tmax}}{is the number of function evaluations at each
       temperature for the \code{"SANN"} method. Defaults to \code{10}.}
   }
+
+  Any names given to \code{par} will be copied to the vectors passed to
+  \code{fn} and \code{gr}.
 }
 \value{
   A list with components:
@@ -172,32 +180,12 @@ optim(par, fn, gr = NULL,
     that this is the Hessian of the unconstrained problem even if the
     box constraints are active.}
 }
-\references{
-  Belisle, C. J. P. (1992) Convergence theorems for a class of simulated
-  annealing algorithms on \eqn{R^d}{Rd}. \emph{J Applied Probability},
-  \bold{29}, 885--895.
-
-  Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
-  memory algorithm for bound constrained optimization.
-  \emph{SIAM J. Scientific Computing}, \bold{16}, 1190--1208.
-
-  Fletcher, R. and Reeves, C. M. (1964) Function minimization by
-  conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
-  
-  Nash, J. C. (1990) \emph{Compact Numerical Methods for
-    Computers. Linear Algebra and Function Minimisation.} Adam Hilger.
-
-  Nelder, J. A. and Mead, R. (1965) A simplex algorithm for function
-  minimization. \emph{Computer Journal} \bold{7}, 308--313.
-
-  Nocedal, J. and Wright, S. J. (1999) \emph{Numerical Optimization}.
-  Springer.
-}
 \note{
   \code{optim} will work with one-dimensional \code{par}s, but the
   default method does not work well (and will warn).  Use
   \code{\link{optimize}} instead.
-  
+}
+\source{
   The code for methods \code{"Nelder-Mead"}, \code{"BFGS"} and
   \code{"CG"} was based originally on Pascal code in Nash (1990) that was
   translated by \code{p2c} and then hand-optimized.  Dr Nash has agreed
@@ -209,8 +197,34 @@ optim(par, fn, gr = NULL,
 
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
+\references{
+  Belisle, C. J. P. (1992) Convergence theorems for a class of simulated
+  annealing algorithms on \eqn{R^d}{Rd}. \emph{J Applied Probability},
+  \bold{29}, 885--895.
 
-\seealso{\code{\link{nlm}}, \code{\link{optimize}}, \code{\link{constrOptim}}}
+  Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C.  (1995) A limited
+  memory algorithm for bound constrained optimization.
+  \emph{SIAM J. Scientific Computing}, \bold{16}, 1190--1208.
+
+  Fletcher, R. and Reeves, C. M. (1964) Function minimization by
+  conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
+
+  Nash, J. C. (1990) \emph{Compact Numerical Methods for
+    Computers. Linear Algebra and Function Minimisation.} Adam Hilger.
+
+  Nelder, J. A. and Mead, R. (1965) A simplex algorithm for function
+  minimization. \emph{Computer Journal} \bold{7}, 308--313.
+
+  Nocedal, J. and Wright, S. J. (1999) \emph{Numerical Optimization}.
+  Springer.
+}
+
+\seealso{
+  \code{\link{nlm}}, \code{\link{nlminb}}.
+
+  \code{\link{optimize}} for one-dimensional minimization and
+  \code{\link{constrOptim}} for constrained optimization.
+}
 
 \examples{
 fr <- function(x) {   ## Rosenbrock Banana function
@@ -259,7 +273,7 @@ distance <- function(sq) {  # Target function
     return(sum(eurodistmat[cbind(sq2[,2],sq2[,1])]))
 }
 
-genseq <- function(sq) {  # Generate new candidate sequence 
+genseq <- function(sq) {  # Generate new candidate sequence
     idx <- seq(2, NROW(eurodistmat)-1, by=1)
     changepoints <- sample(idx, size=2, replace=FALSE)
     tmp <- sq[changepoints[1]]
@@ -286,14 +300,14 @@ s <- seq(NROW(tspres)-1)
 plot(x, y, type="n", asp=1, xlab="", ylab="",
      main="initial solution of traveling salesman problem")
 arrows(tspinit[s,1], -tspinit[s,2], tspinit[s+1,1], -tspinit[s+1,2],
-       angle=10, col="green") 
-text(x, y, names(eurodist), cex=0.8)
+       angle=10, col="green")
+text(x, y, labels(eurodist), cex=0.8)
 
 plot(x, y, type="n", asp=1, xlab="", ylab="",
-     main="optim() 'solving' traveling salesman problem") 
+     main="optim() 'solving' traveling salesman problem")
 arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
        angle=10, col="red")
-text(x, y, names(eurodist), cex=0.8)
+text(x, y, labels(eurodist), cex=0.8)
 }
 \keyword{nonlinear}
 \keyword{optimize}

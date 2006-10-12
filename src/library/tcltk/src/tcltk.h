@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <tcl.h>
@@ -14,10 +15,6 @@
 
 #include <Rinternals.h>
 #include <R_ext/PrtUtil.h>
-#ifndef Win32
-#include <R_ext/eventloop.h>
-#endif
-
 #include <R_ext/Parse.h>
 
 /* Globals exported from  ./tcltk.c : */
@@ -25,6 +22,7 @@
 void tcltk_init(void);
 
 SEXP dotTcl(SEXP args);
+SEXP dotTclObjv(SEXP args);
 SEXP dotTclcallback(SEXP args);
 
 /* Used by .C */
@@ -48,3 +46,7 @@ SEXP RTcl_ObjAsIntVector(SEXP args);
 SEXP RTcl_ObjFromCharVector(SEXP args);
 SEXP RTcl_ObjFromDoubleVector(SEXP args);
 SEXP RTcl_ObjFromIntVector(SEXP args);
+SEXP RTcl_GetArrayElem(SEXP args);
+SEXP RTcl_SetArrayElem(SEXP args);
+SEXP RTcl_RemoveArrayElem(SEXP args);
+SEXP RTcl_ServiceMode(SEXP args);

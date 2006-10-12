@@ -24,20 +24,22 @@ interaction.plot <-
     }
     xlabs <- rownames(cells)
     ylabs <- colnames(cells)
-    nch <- max(sapply(ylabs, nchar))
+    nch <- max(sapply(ylabs, nchar, type="width"))
     if(is.null(xlabs)) xlabs <- as.character(xvals)
     if(is.null(ylabs)) ylabs <- as.character(1:nc)
     xlim <- range(xvals)
     xleg <- xlim[2] + 0.05 * diff(xlim)
     xlim <- xlim + c(-0.2/nr, if(legend) 0.2 + 0.02*nch else 0.2/nr) * diff(xlim)
-    matplot(xvals, cells, ..., type = type,  xlim = xlim, ylim = ylim,
+    matplot(xvals, cells, ..., type = type, xlim = xlim, ylim = ylim,
             xlab = xlab, ylab = ylab, axes = axes, xaxt = "n",
             col = col, lty = lty, pch = pch)
-    ## old (<= 1.6.x)  mtext(xlabs, 1, at = xvals)
-    ## new:
     if(axes && xaxt != "n") {
-        mgp. <- par("mgp") ; if(!xtick) mgp.[2] <- 0
-        axis(1, at = xvals, labels = xlabs, tick = xtick, mgp = mgp., xaxt = xaxt, ...)
+	## swallow ... arguments intended for matplot():
+	axisInt <- function(x, main, sub, lwd, bg, log, asp, ...)
+	    axis(1, x, ...)
+	mgp. <- par("mgp") ; if(!xtick) mgp.[2] <- 0
+	axisInt(1, at = xvals, labels = xlabs, tick = xtick, mgp = mgp.,
+		xaxt = xaxt, ...)
     }
     if(legend) {
         yrng <- diff(ylim)

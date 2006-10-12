@@ -1,9 +1,9 @@
 dataentry <- function (data, modes) {
     if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
-        stop("invalid data argument")
+        stop("invalid 'data' argument")
     if(!is.list(modes) ||
        (length(modes) && !all(sapply(modes, is.character))))
-        stop("invalid modes argument")
+        stop("invalid 'modes' argument")
     .Internal(dataentry(data, modes))
 }
 
@@ -32,7 +32,7 @@ edit.data.frame <-
     is.vector.unclass <- function(x) is.vector(unclass(x))
     if (length(name) > 0 && !all(sapply(name, is.vector.unclass)
                                  | sapply(name, is.factor)))
-        stop("Can only handle vector and factor elements")
+        stop("can only handle vector and factor elements")
 
     factor.mode <- match.arg(factor.mode)
 
@@ -61,6 +61,7 @@ edit.data.frame <-
         datalist <- c(list(row.names=row.names(name)), datalist)
         modes <- c(list(row.names="character"), modes)
     }
+    rn <- attr(name, "row.names")
     out <- .Internal(dataentry(datalist, modes))
     lengths <- sapply(out, length)
     maxlength <- max(lengths)
@@ -71,15 +72,16 @@ edit.data.frame <-
         out <- out[-1]
         if((ln <- length(rn)) < maxlength)
             rn <- c(rn, paste("row", (ln+1):maxlength, sep=""))
-    }
+    } else if(length(rn) != maxlength) rn <- seq(len=maxlength)
     for (i in factors) {
-        if(mode(out[[i]]) == "numeric") next # user might have switched mode
+        if(factor.mode != mode(out[[i]])) next # user might have switched mode
         a <- attrlist[[i]]
         if (factor.mode == "numeric") {
             o <- as.integer(out[[i]])
             ok <- is.na(o) | (o > 0 & o <= length(a$levels))
             if (any(!ok)) {
-                warning(paste("invalid factor levels in", names(out)[i]))
+                warning(gettextf("invalid factor levels in '%s'", names(out)[i]),
+                        domain = NA)
                 o[!ok] <- NA
             }
 	    attributes(o) <- a
@@ -87,7 +89,8 @@ edit.data.frame <-
             o <- out[[i]]
             if (any(new <- is.na(match(o, c(a$levels, NA))))) {
                 new <- unique(o[new])
-                warning(paste("added factor levels in", names(out)[i]))
+                warning(gettextf("added factor levels in '%s'", names(out)[i]),
+                        domain = NA)
                 o <- factor(o, levels=c(a$levels, new), ordered=is.ordered(o))
             } else {
                 o <- match(o, a$levels)
@@ -98,17 +101,19 @@ edit.data.frame <-
     }
     for (i in logicals) out[[i]] <- as.logical(out[[i]])
 
-    out <- as.data.frame(out) # will convert cols switched to char into factors
+    attr(out, "row.names") <- rn
+    attr(out, "class") <- "data.frame"
     if (edit.row.names) {
-        if(any(duplicated(rn)))
+        if(any(duplicated(rn))) {
             warning("edited row names contain duplicates and will be ignored")
-        else row.names(out) <- rn
+            attr(out, "row.names") <- seq(len=maxlength)
+        }
     }
     out
 }
 
 edit.matrix <-
-    function(name, edit.row.names = any(rownames(name) != 1:nrow(name)), ...)
+    function(name, edit.row.names = !is.null(dn[[1]]), ...)
 {
     if (.Platform$OS.type == "unix" && .Platform$GUI != "AQUA")
         if(.Platform$GUI == "unknown" || Sys.getenv("DISPLAY")=="" )
@@ -120,14 +125,13 @@ edit.matrix <-
     logicals <- is.logical(name)
     if (logicals) mode(name) <- "character"
     dn <- dimnames(name)
-    if(is.null(dn[[1]])) edit.row.names <- FALSE
     datalist <- split(name, col(name))
     if(!is.null(dn[[2]])) names(datalist) <- dn[[2]]
     else names(datalist) <- paste("col", 1:ncol(name), sep = "")
     modes <- as.list(rep.int(mode(name), ncol(name)))
     if (edit.row.names) {
-        datalist <- c(list(row.names=dn[[1]]), datalist)
-        modes <- c(list(row.names="character"), modes)
+        datalist <- c(list(row.names = dn[[1]]), datalist)
+        modes <- c(list(row.names = "character"), modes)
     }
     out <- .Internal(dataentry(datalist, modes))
     lengths <- sapply(out, length)
@@ -141,9 +145,10 @@ edit.matrix <-
             rn <- c(rn, paste("row", (ln+1):maxlength, sep=""))
     }
     out <- do.call("cbind", out)
-    if (edit.row.names) rownames(out) <- rn
-    else if(!is.null(dn[[1]]))  rownames(out) <- dn[[1]]
-    if(!is.null(dn[[2]]))  colnames(out) <- dn[[2]]
+    if (edit.row.names)
+        rownames(out) <- rn
+    else if(!is.null(dn[[1]]) && length(dn[[1]]) == maxlength)
+        rownames(out) <- dn[[1]]
     if (logicals) mode(out) <- "logical"
     out
 }

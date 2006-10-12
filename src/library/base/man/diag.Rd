@@ -1,7 +1,7 @@
 \name{diag}
 \title{Matrix Diagonals}
 \usage{
-diag(x = 1, nrow, ncol= )
+diag(x = 1, nrow, ncol = n)
 diag(x) <- value
 }
 \alias{diag}
@@ -30,7 +30,7 @@ diag(x) <- value
   dimension of the returned matrix can be specified by \code{nrow} and
   \code{ncol} (the default is square).
 
-  The assignment form sets the diagonal of the matrix \code{x} to the
+  The replacement form sets the diagonal of the matrix \code{x} to the
   given value(s).
 }
 \note{

@@ -2,13 +2,13 @@ stdin <- function() .Internal(stdin())
 stdout <- function() .Internal(stdout())
 stderr <- function() .Internal(stderr())
 
-readLines <- function(con = stdin(), n = -1, ok = TRUE)
+readLines <- function(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
 {
     if(is.character(con)) {
         con <- file(con, "r")
         on.exit(close(con))
     }
-    .Internal(readLines(con, n, ok))
+    .Internal(readLines(con, n, ok, warn))
 }
 
 
@@ -84,10 +84,11 @@ socketConnection <- function(host= "localhost", port, server = FALSE,
     .Internal(socketConnection(host, port, server, blocking, open, encoding))
 
 textConnection <- function(object, open = "r", local = FALSE) {
-    if (local) env <- parent.frame()
-    else env <- .GlobalEnv
+    env <- if (local) parent.frame() else .GlobalEnv
     .Internal(textConnection(deparse(substitute(object)), object, open, env))
 }
+
+textConnectionValue <- function(con) .Internal(textConnectionValue(con))
 
 seek <- function(con, ...)
     UseMethod("seek")
@@ -97,8 +98,8 @@ seek.connection <- function(con, where = NA, origin = "start", rw = "", ...)
     origin <- pmatch(origin, c("start", "current", "end"))
     rw <- pmatch(rw, c("read", "write"), 0)
     if(is.na(origin))
-        stop("`origin' must be one of `start', `current` or `end'")
-    .Internal(seek(con, as.integer(where), origin, rw))
+        stop("'origin' must be one of 'start', 'current' or 'end'")
+    .Internal(seek(con, as.double(where), origin, rw))
 }
 
 truncate <- function(con, ...)
@@ -130,7 +131,7 @@ showConnections <- function(all = FALSE)
     set <- getAllConnections()
     if(!all) set <- set[set > 2]
     ans <- matrix("", length(set), 7)
-    for(i in seq(along=set)) ans[i, ] <- unlist(summary.connection(set[i]))
+    for(i in seq_along(set)) ans[i, ] <- unlist(summary.connection(set[i]))
     rownames(ans) <- set
     colnames(ans) <- c("description", "class", "mode", "text", "isopen",
                        "can read", "can write")
@@ -160,7 +161,7 @@ closeAllConnections <- function()
     set <- getAllConnections()
     set <- set[set > 2]
     # and close all user connections.
-    for(i in seq(along=set)) close(getConnection(set[i]))
+    for(i in seq_along(set)) close(getConnection(set[i]))
     invisible()
 }
 
@@ -188,12 +189,8 @@ writeBin <- function(object, con, size = NA, endian = .Platform$endian)
         con <- file(con, "wb")
         on.exit(close(con))
     }
-    invisible(.Internal(writeBin(object, con, size, swap)))
+    .Internal(writeBin(object, con, size, swap))
 }
-
-## encoding vectors
-native.enc <- 0:255
-# rest in Rprofile.*
 
 readChar <- function(con, nchars)
 {
@@ -204,7 +201,8 @@ readChar <- function(con, nchars)
     .Internal(readChar(con, as.integer(nchars)))
 }
 
-writeChar <- function(object, con, nchars = nchar(object), eos = "")
+writeChar <- function(object, con, nchars = nchar(object, type="chars"),
+                      eos = "")
 {
     if(!is.character(object))
         stop("can only write character objects")
@@ -212,7 +210,7 @@ writeChar <- function(object, con, nchars = nchar(object), eos = "")
         con <- file(con, "wb")
         on.exit(close(con))
     }
-    invisible(.Internal(writeChar(object, con, as.integer(nchars), eos)))
+    .Internal(writeChar(object, con, as.integer(nchars), eos))
 }
 
 gzcon <- function(con, level = 6, allowNonCompressed = TRUE)

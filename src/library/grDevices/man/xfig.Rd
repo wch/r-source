@@ -11,17 +11,23 @@
 }
 \usage{
 xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
-     onefile = FALSE, \dots)
+     onefile = FALSE, encoding = "none", \dots)
 }
 \arguments{
-  \item{file}{a character string giving the name of the file.  If it is
-    \code{""}, the output is piped to the command given by the argument
-    \code{command}.  For use with \code{onefile=FALSE} give a
-    \code{printf} format such as \code{"Rplot\%d.fig"} (the default in
-    that case).}
+  \item{file}{a character string giving the name of the file.   For use
+    with \code{onefile = FALSE} give a C integer format such as
+    \code{"Rplot\%03d.fig"} (the default in that case).
+    (See \code{\link{postscript}} for further details.)
+  }
   \item{onefile}{logical: if true allow multiple figures
     in one file. If false, assume only one page per file and generate a
     file number containing the page number.}
+  \item{encoding}{The encoding in which to write text strings.  The
+    default is not to re-encode.  This can be any encoding recognized by
+    \code{\link{iconv}}: in a Western UTF-8 locale you probably want to
+    select an 8-bit encoding such as \code{latin1}, and in an East Asian
+    locale an \code{EUC} encoding.  If re-encoding fails, the text
+    strings will be written in the current encoding with a warning.}
   \item{\dots}{further arguments to \code{\link{ps.options}} accepted by
     \code{xfig()}:
     \describe{
@@ -40,7 +46,8 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 	of \code{"AvantGarde"}, \code{"Bookman"}, \code{"Courier"},
 	\code{"Helvetica"}, \code{"Helvetica-Narrow"},
 	\code{"NewCenturySchoolbook"}, \code{"Palatino"} or
-	\code{"Times"}.}
+	\code{"Times"}.  Any other value is replaced by
+	\code{"Helvetica"} with a warning.}
       \item{\code{pointsize}}{the default point size to be used.}
       \item{\code{bg}}{the default background color to be used.}
       \item{\code{fg}}{the default foreground color to be used.}
@@ -53,10 +60,22 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 \details{
   Although \code{xfig} can produce multiple plots in one file, the XFig
   format does not say how to separate or view them.  So
-  \code{onefile=FALSE} is the default.
+  \code{onefile = FALSE} is the default.
+
+  The \code{file} argument is interpreted as a C integer format as used
+  by \code{\link{sprintf}}, with integer argument the page number.
+  The default gives files \file{Rplot001.fig}, \dots, \file{Rplot999.fig},
+  \file{Rplot1000.fig}, \dots.  
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  5/6*1/72 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
+  \code{cex = 1} corresponds to a square of side 1/72 inch.  
+
+  Windows users can make use of WinFIG
+  (\url{http://www.schmidt-web-berlin.de/WinFIG.htm}).
 }
 \note{
-  On some line textures (\code{0 <= lty > 4}) are used.  Eventually this
+  Only some line textures (\code{0 <= lty < 4}) are used.  Eventually this
   will be partially remedied, but the XFig file format does not allow as
   general line textures as the \R model.  Unimplemented line textures
   are displayed as \emph{dash-double-dotted}.
@@ -65,7 +84,7 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
 }
 \seealso{
   \code{\link{Devices}},
-  \code{postscript},
+  \code{\link{postscript}},
   \code{\link{ps.options}}.
 }
 \keyword{device}

@@ -54,7 +54,8 @@ biplot(x, \dots)
   The function \code{biplot.default} merely provides the
   underlying code to plot two sets of variables on the same figure.
 
-  Graphical parameters can also be given to \code{biplot}.
+  Graphical parameters can also be given to \code{biplot}: the size of
+  \code{xlabs} and \code{ylabs} is controlled by \code{cex}.
 }
 \section{Side Effects}{
   a plot is produced on the current graphics device.

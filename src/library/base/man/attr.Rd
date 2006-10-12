@@ -11,19 +11,32 @@ attr(x, which) <- value
 }
 \arguments{
   \item{x}{an object whose attributes are to be accessed.}
-  \item{which}{a character string specifying which attribute is to be
-    accessed.}
-  \item{value}{an object, the new value of the attribute.}
+  \item{which}{a non-empty character string specifying which attribute
+    is to be accessed.}
+  \item{value}{an object, the new value of the attribute, or \code{NULL}
+    to remove the attribute.}
+}
+\details{
+  These functions provide access to a single attribute of an object.
+  The replacement form causes the named attribute to take the value
+  specified (or create a new attribute with the value given).
+
+  The extraction function first looks for an exact match to \code{which}
+  amongst the attributes of \code{x}, then a unique partial match.  The
+  replacement function only uses exact matches.
+
+  Note that some attributes (namely \code{\link{class}},
+  \code{\link{comment}}, \code{\link{dim}}, \code{\link{dimnames}},
+  \code{\link{names}}, (from \R 2.4.0) \code{\link{row.names}} and
+  \code{\link{tsp}}) are treated specially and have restrictions on
+  the values which can be set.
+
+  Specifying \code{which} as a character \code{NA} is interpreted as
+  \code{"NA"} and not as a missing value.
 }
 \value{
-  This function provides access to a single object attribute.  The
-  simple form above returns the value of the named attribute.  The
-  assignment form causes the named attribute to take the value on the
-  right of the assignment symbol.
-
-  The first form first looks for an exact match to \code{code} amongst the
-  attributed of \code{x}, then a partial match.  If no exact match is
-  found and more than one partial match is found, the result is \code{NULL}.
+  For the first form, the value of the attribute matched, or \code{NULL}
+  if no exact match is found and no or more than one partial match is found.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

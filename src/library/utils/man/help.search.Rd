@@ -7,7 +7,7 @@
   given character string in the (file) name, alias, title, concept or
   keyword entries (or any combination thereof), using either
   \link{fuzzy matching} or \link{regular expression} matching.  Names
-  and titles of the matched help entries are displayed nicely.
+  and titles of the matched help entries are displayed nicely formatted.
 }
 \usage{
 help.search(pattern, fields = c("alias", "concept", "title"),
@@ -49,7 +49,9 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     built and saved help data base, or \code{NULL}.}
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
   \item{rebuild}{a logical indicating whether the help data base should
-    be rebuilt.}
+    be rebuilt.  This will be done automatically if \code{lib.loc} or
+    the search path is changed, or if \code{package} is used and a value
+    is not found.}
   \item{agrep}{if \code{NULL} (the default unless \code{keyword} is
     used) and the character string to
     be matched consists of alphanumeric characters, whitespace or a dash
@@ -62,32 +64,28 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     \code{max.distance} in the documentation for \code{\link{agrep}}.}
 }
 \details{
-  Upon installation of a package, a contents data base which contains
-  the information on name, title, aliases and keywords and, concepts
-  starting with \R 1.8.0, is computed from the Rd files in the package and
-  serialized as \file{Rd.rds} in the \file{Meta} subdirectory of the
-  top-level package installation directory (or, prior to \R 1.7.0, as
-  \file{CONTENTS} in Debian Control Format with aliases and keywords
-  collapsed to character strings in the top-level package installation
-  directory).  This, or a pre-built help.search index serialized as
-  \file{hsearch.rds} in the \file{Meta} directory, is the data base
-  searched by \code{help.search()}.
+  Upon installation of a package, a pre-built help.search index is
+  serialized as \file{hsearch.rds} in the \file{Meta} directory.  These
+  files are used to create the data base.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
 
-  If possible, the help data base is saved to the file \file{help.db} in
-  the \file{.R} subdirectory of the user's home directory or the current
-  working directory.
-
-  Note that currently, the aliases in the matching help files are not
+  If possible, the help data base is saved in memory or (if memory
+  limits have been set: see \code{\link{mem.limits}}) to a file in the
+  session temporary directory for use by subsequent calls in the
+  session.
+  
+  Note that currently the aliases in the matching help files are not
   displayed.
 }
 \value{
-  The results are returned in an object of class \code{"hsearch"}, which
-  has a print method for nicely displaying the results of the query.
-  This mechanism is experimental, and may change in future versions of
-  R.
+  The results are returned in a list object of class \code{"hsearch"},
+  which has a print method for nicely formatting the results of the
+  query.  This mechanism is experimental, and may change in future
+  versions of \R.
+
+  The internal format of the class is undocumented and subject to change.
 }
 \seealso{
   \code{\link{help}};
@@ -95,6 +93,8 @@ help.search(pattern, fields = c("alias", "concept", "title"),
   version of \R's online documentation, which offers a similar search
   mechanism.
 
+  \code{\link{RSiteSearch}} to access an on-line search of \R resources.
+  
   \code{\link{apropos}} uses regexps and has nice examples.
 }
 \examples{

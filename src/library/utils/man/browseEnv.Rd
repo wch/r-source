@@ -7,7 +7,8 @@
   currently in \code{sys.frame()} environment.
 }
 \usage{
-browseEnv(envir = .GlobalEnv, pattern, excludepatt = "^last\\.warning",
+browseEnv(envir = .GlobalEnv, pattern,
+          excludepatt = "^last\\.warning",
           html = .Platform$OS.type != "mac",
           expanded = TRUE, properties = NULL,
           main = NULL, debugMe = FALSE)

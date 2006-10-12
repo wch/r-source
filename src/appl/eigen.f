@@ -841,9 +841,11 @@ C
 C     .......... FORM THE MATRIX OF ACCUMULATED TRANSFORMATIONS
 C                FROM THE INFORMATION LEFT BY CORTH ..........
       IEND = IGH - LOW - 1
-      IF (IEND) 180, 150, 105
+C      IF (IEND) 180, 150, 105
+      IF (IEND .GT. 0) GOTO 180
+      IF (IEND .EQ. 0) GOTO 150
 C     .......... FOR I=IGH-1 STEP -1 UNTIL LOW+1 DO -- ..........
-  105 DO 140 II = 1, IEND
+      DO 140 II = 1, IEND
          I = IGH - II
          IF (ORTR(I) .EQ. 0.0D0 .AND. ORTI(I) .EQ. 0.0D0) GO TO 140
          IF (HR(I,I-1) .EQ. 0.0D0 .AND. HI(I,I-1) .EQ. 0.0D0) GO TO 140
@@ -2067,9 +2069,11 @@ C     .......... FOR EN=N STEP -1 UNTIL 1 DO -- ..........
          P = WR(EN)
          Q = WI(EN)
          NA = EN - 1
-         IF (Q) 710, 600, 800
+C         IF (Q) 710, 600, 800
+         IF (Q .GT. 0.0D0) GOTO 710
+         IF (Q .LT. 0.0D0) GOTO 800
 C     .......... REAL VECTOR ..........
-  600    M = EN
+         M = EN
          H(EN,EN) = 1.0D0
          IF (NA .EQ. 0) GO TO 800
 C     .......... FOR I=EN-1 STEP -1 UNTIL 1 DO -- ..........
@@ -2122,6 +2126,8 @@ C     .......... END REAL VECTOR ..........
          GO TO 800
 C     .......... COMPLEX VECTOR ..........
   710    M = NA
+C        R correction
+         IF (NA .EQ. 0) GO TO 800
 C     .......... LAST VECTOR COMPONENT CHOSEN IMAGINARY SO THAT
 C                EIGENVECTOR MATRIX IS TRIANGULAR ..........
          IF (DABS(H(EN,NA)) .LE. DABS(H(NA,EN))) GO TO 720

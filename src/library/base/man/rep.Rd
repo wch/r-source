@@ -1,55 +1,61 @@
 \name{rep}
 \alias{rep}
-\alias{rep.default}
+\alias{rep.factor}
 \alias{rep.int}
 \alias{rep.POSIXct}
 \alias{rep.POSIXlt}
 \alias{rep.Date}
+
 \title{Replicate Elements of Vectors and Lists}
 \description{
-  \code{rep} replicates the values in \code{x}. It is a generic
-  function, and the default method is described here.
+  \code{rep} replicates the values in \code{x}.  It is a generic
+  function, and the (internal) default method is described here.
 
   \code{rep.int} is a faster simplified version for the commonest case.
 }
 \usage{
-rep(x, times, \dots)
-
-\method{rep}{default}(x, times, length.out, each, \dots)
+rep(x, \dots)
 
 rep.int(x, times)
 }
 \arguments{
   \item{x}{a vector (of any mode including a list) or a pairlist or a
-    \code{POSIXct} or \code{POSIXlt} or \code{date} object.}
-  \item{times}{optional non-negative integer.  A vector giving the number of
-    times to repeat each element if of length \code{length(x)}, or to
-    repeat the whole vector if of length 1.}
-  \item{length.out}{optional integer. The desired length of the
-    output vector.}
-  \item{each}{optional integer. Each element of \code{x} is
-    repeated \code{each} times.}
-  \item{\dots}{further arguments to be passed to or from other methods.}
+    factor or (except for \code{rep.int}) a \code{POSIXct} or
+    \code{POSIXlt} or \code{date} object.}
+  \item{\dots}{further arguments to be passed to or from other methods.
+    For the internal default method these can include:
+    \describe{
+      \item{\code{times}}{A vector giving the number of
+	times to repeat each element if of length \code{length(x)}, or to
+	repeat the whole vector if of length 1.}
+      \item{\code{length.out}}{non-negative integer. The desired length of the
+	output vector.  Ignored if \code{NA} or invalid.}
+      \item{\code{each}}{non-negative integer.  Each element of \code{x} is
+	repeated \code{each} times.  Treated as \code{1} if \code{NA} or
+	invalid.}
+    }
+  }
+  \item{times}{see \code{\dots}.}
 }
 
 \details{
-  A least one of \code{times}, \code{length.out} and \code{each} must be
-  specified, and normally exactly one is.  If \code{length.out} is
-  given, \code{times} is ignored. If \code{each} is specified with
-  either of the other two, its replication is performed first, and then
-  that implied by \code{times} or \code{length.out}.
-  
-  If \code{times} consists of a single integer,
-  the result consists of the values in
-  \code{x} repeated this many times.
-  If \code{times} is a vector of the same length as
-  \code{x}, the result consists of \code{x[1]}
-  repeated \code{times[1]} times,
-  \code{x[2]} repeated \code{times[2]} times and so on.
+  The default behaviour is as if the call was \code{rep(x, times=1,
+    length.out=NA, each=1)}.  Normally just one of the additional
+  arguments is specified, but if code{each} is specified with either
+  of the other two, its replication is performed first, and then that
+  implied by \code{times} or \code{length.out}.
+
+  If \code{times} consists of a single integer, the result consists of
+  the whole input repeated this many times.  If \code{times} is a
+  vector of the same length as \code{x} (after replication by
+  \code{each}), the result consists of \code{x[1]} repeated
+  \code{times[1]} times, \code{x[2]} repeated \code{times[2]} times and
+  so on.
 
   \code{length.out} may be given in place of \code{times},
   in which case \code{x} is repeated as many times as is
-  necessary to create a vector of this length.
+  necessary to create a vector of this length.  If both are given,
+  \code{length.out} takes priority and \code{times} is ignored.
 
   Non-integer values of \code{times} will be truncated towards zero.
   If \code{times} is a computed quantity it is prudent to add a small fuzz.
@@ -60,17 +66,22 @@ rep.int(x, times)
   (\code{0} for raw vectors) and \code{NULL} for a list.  
 }
 \value{
-  A vector of the same class as \code{x}.
+  An object of the same type as \code{x} (except that \code{rep} will
+  coerce pairlists to vector lists).
+
+  \code{rep.int} returns no attributes.
+
+  The default method of \code{rep} gives the result names (which will
+  almost always contain duplicates) if \code{x} had names, but retains
+  no other attributes except for factors.
 }
 \note{
-  If the original vector has names, these are also replicated and so
-  will almost always contain duplicates.  (In contrast, S strips the names.)
-%
-%  If \code{length.out} is used to extend the vector, the behaviour is
-%  different from that of S-PLUS, which recycles the existing vector.
-
   Function \code{rep.int} is a simple case handled by internal code, and
   provided as a separate function purely for S compatibility.
+
+  As from \R 2.4.0, function \code{rep} is a primitive, but (partial)
+  matching of argument names is performed as for normal functions.
+  You can no longer pass a missing argument to. e.g. \code{length.out}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -100,6 +111,13 @@ rep(fred, 5)
 x <- .leap.seconds[1:3]
 rep(x, 2)
 rep(as.POSIXlt(x), rep(2, 3))
+
+## named factor
+x <- factor(LETTERS[1:4]); names(x) <- letters[1:4]
+x
+rep(x, 2)
+rep(x, each=2)
+rep.int(x, 2)  # no names
 }
 \keyword{manip}
 \keyword{chron}

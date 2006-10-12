@@ -17,8 +17,10 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
     a matrix of counts; in the latter case, the columns are interpreted
     as corresponding to the levels of a variable.  This is useful if the
     data has already been tabulated, see the examples below.}
-  \item{data}{a data frame, list or environment containing the variables
-    to be cross-tabulated.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
@@ -35,8 +37,7 @@ xtabs(formula = ~., data = parent.frame(), subset, na.action,
   There is a \code{summary} method for contingency table objects created
   by \code{table} or \code{xtabs}, which gives basic information and
   performs a chi-squared test for independence of factors (note that the
-  function \code{\link{chisq.test}} in package \pkg{ctest}
-  currently only handles 2-d tables).
+  function \code{\link{chisq.test}} currently only handles 2-d tables).
 
   If a left hand side is given in \code{formula}, its entries are simply
   summed over the cells corresponding to the right hand side; this also

@@ -1,7 +1,18 @@
+/* <UTF8> 
+   needed widechar version.
+*/
+
 /* For inclusion by datetime.c if needed. A slightly modified version of
    code from the GNU C library with locale support removed. */
 
+#ifdef HAVE_LOCALE_H
+# include <locale.h>
+#endif
+
 static void get_locale_strings(void);
+#ifdef SUPPORT_MBCS
+static void get_locale_w_strings(void);
+#endif
 
 /* Convert a string representation of time to a time value.
    Copyright (C) 1996, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
@@ -20,8 +31,8 @@ static void get_locale_strings(void);
 
    You should have received a copy of the GNU Library General Public
    License along with the GNU C Library; see the file COPYING.LIB.  If not,
-   write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-   Boston, MA 02111-1307, USA.  */
+   write to the Free Software Foundation, Inc., 51 Franklin Street, 
+   Fifth Floor, Boston, MA 02110-1301  USA.   */
 
 /* XXX This version of the implementation is not really complete.
    Some of the fields cannot add information alone.  But if seeing
@@ -74,7 +85,7 @@ static void get_locale_strings(void);
   get_number(from, to, n)
 #define recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
-   && (rp = strptime_internal (rp, (new_fmt), tm, decided)) != NULL)
+   && (rp = strptime_internal (rp, (new_fmt), tm, decided, psecs)) != NULL)
 
 /* This version: may overwrite these with versions for the locale,
  * hence the extra length of the fields
@@ -129,14 +140,21 @@ day_of_the_week (struct tm *tm)
     /* We know that January 1st 1970 was a Thursday (= 4).  Compute the
        the difference between this data in the one on TM and so determine
        the weekday.  */
-    int corr_year = 1900 + tm->tm_year - (tm->tm_mon < 2);
-    int wday = (-473
-		+ (365 * (tm->tm_year - 70))
-		+ (corr_year / 4)
-		- ((corr_year / 4) / 25) + ((corr_year / 4) % 25 < 0)
-		+ (((corr_year / 4) / 25) / 4)
-		+ __mon_yday[0][tm->tm_mon]
-		+ tm->tm_mday - 1);
+    int corr_year, wday;
+
+    /* R bug fix: day_of_the_week needs year, month, mday set */
+    if(tm->tm_year == NA_INTEGER || 
+       tm->tm_mon == NA_INTEGER || 
+       tm->tm_mday == NA_INTEGER) return;
+    
+    corr_year = 1900 + tm->tm_year - (tm->tm_mon < 2);
+    wday = (-473
+	    + (365 * (tm->tm_year - 70))
+	    + (corr_year / 4)
+	    - ((corr_year / 4) / 25) + ((corr_year / 4) % 25 < 0)
+	    + (((corr_year / 4) / 25) / 4)
+	    + __mon_yday[0][tm->tm_mon]
+	    + tm->tm_mday - 1);
     tm->tm_wday = ((wday % 7) + 7) % 7;
 }
 
@@ -144,13 +162,501 @@ day_of_the_week (struct tm *tm)
 static void
 day_of_the_year (struct tm *tm)
 {
+    /* R bug fix: day_of_the_year needs year, month, mday set */
+    if(tm->tm_year == NA_INTEGER || 
+       tm->tm_mon == NA_INTEGER || 
+       tm->tm_mday == NA_INTEGER) return;
+
     tm->tm_yday = (__mon_yday[__isleap (1900 + tm->tm_year)][tm->tm_mon]
 		   + (tm->tm_mday - 1));
 }
 
+#ifdef SUPPORT_MBCS
+#include <wchar.h>
+#include <wctype.h>
+
+static wchar_t w_weekday_name[][20] =
+{
+    L"Sunday", L"Monday", L"Tuesday", L"Wednesday",
+    L"Thursday", L"Friday", L"Saturday"
+};
+static wchar_t w_ab_weekday_name[][10] =
+{
+    L"Sun", L"Mon", L"Tue", L"Wed", L"Thu", L"Fri", L"Sat"
+};
+static wchar_t w_month_name[][20] =
+{
+    L"January", L"February", L"March", L"April", L"May", L"June",
+    L"July", L"August", L"September", L"October", L"November", L"December"
+};
+static wchar_t w_ab_month_name[][10] =
+{
+    L"Jan", L"Feb", L"Mar", L"Apr", L"May", L"Jun",
+    L"Jul", L"Aug", L"Sep", L"Oct", L"Nov", L"Dec"
+};
+
+static wchar_t w_am_pm[][4] = {L"AM", L"PM"};
+
+/* Need case-insensitive version */
+static int wcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
+{
+    size_t i, n = wcslen(cs1);
+    const wchar_t *a = cs1, *b = s2;
+    for(i = 0; i < n; i++, a++, b++) {
+	if(*b == L'\0' || towlower(*a) != towlower(*b)) return 1;
+    }
+    return 0;
+}
+
+#define w_match_string(cs1, s2) \
+  (wcsncasecmp ((cs1), (s2)) ? 0 : ((s2) += wcslen (cs1), 1))
+
+#define w_recursive(new_fmt) \
+  (*(new_fmt) != '\0'							      \
+   && (rp = w_strptime_internal (rp, (new_fmt), tm, decided, psecs)) != NULL)
+
+static wchar_t * 
+w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm, 
+		     enum locale_status *decided, double *psecs)
+{
+    const wchar_t *rp_backup;
+    int cnt;
+    size_t val;
+    int have_I, is_pm;
+    int century, want_century;
+    int have_wday, want_xday;
+    int have_yday;
+    int have_mon, have_mday;
+    int have_uweek, have_wweek;
+    int week_no = 0; /* -Wall */
+
+    have_I = is_pm = 0;
+    century = -1;
+    want_century = 0;
+    have_wday = want_xday = have_yday = have_mon = have_mday = 0;
+    have_uweek = have_wweek = 0;
+
+    while (*fmt != L'\0')
+    {
+	/* A white space in the format string matches 0 more or white
+	   space in the input string.  */
+	if (iswspace (*fmt))
+	{
+	    while (iswspace (*rp))
+		++rp;
+	    ++fmt;
+	    continue;
+	}
+
+	/* Any character but `%' must be matched by the same character
+	   in the input string.  */
+	if (*fmt != L'%')
+	{
+	    match_char (*fmt++, *rp++);
+	    continue;
+	}
+
+	++fmt;
+
+	/* We need this for handling the `E' modifier.  */
+    start_over:
+
+        /* Make back up of current processing pointer.  */
+	rp_backup = rp;
+
+	switch (*fmt++)
+	{
+	case L'%':
+	    /* Match the `%' character itself.  */
+	    match_char (L'%', *rp++);
+	    break;
+	case L'a':
+	case L'A':
+	    /* Match day of week.  */
+	    for (cnt = 0; cnt < 7; ++cnt)
+	    {
+		if (*decided != loc
+		    && (w_match_string (w_weekday_name[cnt], rp)
+			|| w_match_string (w_ab_weekday_name[cnt], rp)))
+		{
+		    *decided = raw;
+		    break;
+		}
+	    }
+	    if (cnt == 7)
+		/* Does not match a weekday name.  */
+		return NULL;
+	    tm->tm_wday = cnt;
+	    have_wday = 1;
+	    break;
+	case L'b':
+	case L'B':
+	case L'h':
+	    /* Match month name.  */
+	    for (cnt = 0; cnt < 12; ++cnt)
+	    {
+		if (w_match_string (w_month_name[cnt], rp)
+		    || w_match_string (w_ab_month_name[cnt], rp))
+		{
+		    *decided = raw;
+		    break;
+		}
+	    }
+	    if (cnt == 12)
+		/* Does not match a month name.  */
+		return NULL;
+	    tm->tm_mon = cnt;
+	    want_xday = 1;
+	    break;
+	case L'c':
+	    /* Match locale's date and time format.  */
+	    if (!w_recursive (L"%I:%M:%S %p"))
+		return NULL;
+	    break;
+	case L'C':
+	  /* Match century number.  */
+	  get_number (0, 99, 2);
+	  century = val;
+	  want_xday = 1;
+	  break;
+	case L'd':
+	case L'e':
+	  /* Match day of month.  */
+	  get_number (1, 31, 2);
+	  tm->tm_mday = val;
+	  have_mday = 1;
+	  want_xday = 1;
+	  break;
+	case L'F':
+	  if (!w_recursive (L"%Y-%m-%d"))
+	    return NULL;
+	  want_xday = 1;
+	  break;
+	case L'x':
+	  /* Fall through.  */
+	case L'D':
+	  /* Match standard day format.  */
+	  if (!w_recursive (L"%y/%m/%d"))
+	    return NULL;
+	  want_xday = 1;
+	  break;
+	case L'k':
+	case L'H':
+	  /* Match hour in 24-hour clock.  */
+	  get_number (0, 23, 2);
+	  tm->tm_hour = val;
+	  have_I = 0;
+	  break;
+	case L'l':
+	  /* Match hour in 12-hour clock.  GNU extension.  */
+	case L'I':
+	  /* Match hour in 12-hour clock.  */
+	  get_number (1, 12, 2);
+	  tm->tm_hour = val % 12;
+	  have_I = 1;
+	  break;
+	case L'j':
+	  /* Match day number of year.  */
+	  get_number (1, 366, 3);
+	  tm->tm_yday = val - 1;
+	  have_yday = 1;
+	  break;
+	case L'm':
+	  /* Match number of month.  */
+	  get_number (1, 12, 2);
+	  tm->tm_mon = val - 1;
+	  have_mon = 1;
+	  want_xday = 1;
+	  break;
+	case L'M':
+	  /* Match minute.  */
+	  get_number (0, 59, 2);
+	  tm->tm_min = val;
+	  break;
+	case L'n':
+	case L't':
+	  /* Match any white space.  */
+	  while (iswspace (*rp))
+	    ++rp;
+	  break;
+	case L'p':
+	  /* Match locale's equivalent of AM/PM.  */
+	  if (!w_match_string (w_am_pm[0], rp)) {
+	    if (w_match_string (w_am_pm[1], rp))
+	      is_pm = 1;
+	    else
+		return NULL;
+	  }
+	  break;
+	case L'r':
+	  if (!w_recursive (L"%I:%M:%S %p"))
+	    return NULL;
+	  break;
+	case L'R':
+	    if (!w_recursive (L"%H:%M"))
+		return NULL;
+	    break;
+	case L's':
+	{
+	    /* The number of seconds may be very high so we cannot use
+	       the `get_number' macro.  Instead read the number
+	       character for character and construct the result while
+	       doing this.  */
+	    time_t secs = 0;
+	    if (*rp < L'0' || *rp > L'9')
+		/* We need at least one digit.  */
+		return NULL;
+
+	    do
+	    {
+		secs *= 10;
+		secs += *rp++ - L'0';
+	    }
+	    while (*rp >= L'0' && *rp <= L'9');
+
+	    if ((tm = localtime (&secs)) == NULL)
+		/* Error in function.  */
+		return NULL;
+	}
+	break;
+	case L'S':
+	    get_number (0, 61, 2);
+	    tm->tm_sec = val;
+	    break;
+	case L'X':
+	    /* Fall through.  */
+	case L'T':
+	    if (!w_recursive (L"%H:%M:%S"))
+		return NULL;
+	    break;
+	case L'u':
+	    get_number (1, 7, 1);
+	    tm->tm_wday = val % 7;
+	    have_wday = 1;
+	    break;
+	case L'g':
+	    get_number (0, 99, 2);
+	    /* XXX This cannot determine any field in TM.  */
+	    break;
+	case L'G':
+	    if (*rp < L'0' || *rp > L'9')
+		return NULL;
+	    /* XXX Ignore the number since we would need some more
+	       information to compute a real date.  */
+	    do
+		++rp;
+	    while (*rp >= L'0' && *rp <= L'9');
+	    break;
+	case L'U':
+	  get_number (0, 53, 2);
+	  week_no = val;
+	  have_uweek = 1;
+	  break;
+	case L'W':
+	  get_number (0, 53, 2);
+	  week_no = val;
+	  have_wweek = 1;
+	  break;
+	case L'V':
+	    get_number (0, 53, 2);
+	    /* XXX This cannot determine any field in TM without some
+	       information.  */
+	    break;
+	case L'w':
+	    /* Match number of weekday.  */
+	    get_number (0, 6, 1);
+	    tm->tm_wday = val;
+	    have_wday = 1;
+	    break;
+	case L'y':
+	    /* Match year within century.  */
+	    get_number (0, 99, 2);
+	    /* The "Year 2000: The Millennium Rollover" paper suggests that
+	       values in the range 69-99 refer to the twentieth century.  */
+	    tm->tm_year = val >= 69 ? val : val + 100;
+	    /* Indicate that we want to use the century, if specified.  */
+	    want_century = 1;
+	    want_xday = 1;
+	    break;
+	case L'Y':
+	    /* Match year including century number.  */
+	    get_number (0, 9999, 4);
+	    tm->tm_year = val - 1900;
+	    want_century = 0;
+	    want_xday = 1;
+	    break;
+	case L'Z':
+	    /* XXX How to handle this?  */
+	    break;
+	case L'E':
+	    /* We have no information about the era format.  Just use
+	       the normal format.  */
+	    if (*fmt != L'c' && *fmt != L'C' && *fmt != L'y' && *fmt != L'Y'
+		&& *fmt != L'x' && *fmt != L'X')
+		/* This is an illegal format.  */
+		return NULL;
+
+	    goto start_over;
+	case L'O':
+	    switch (*fmt++)
+	    {
+	    case L'd':
+	    case L'e':
+		/* Match day of month using alternate numeric symbols.  */
+		get_alt_number (1, 31, 2);
+		tm->tm_mday = val;
+		have_mday = 1;
+		want_xday = 1;
+		break;
+	    case L'H':
+		/* Match hour in 24-hour clock using alternate numeric
+		   symbols.  */
+		get_alt_number (0, 23, 2);
+		tm->tm_hour = val;
+		have_I = 0;
+		break;
+	    case L'I':
+		/* Match hour in 12-hour clock using alternate numeric
+		   symbols.  */
+		get_alt_number (1, 12, 2);
+		tm->tm_hour = val % 12;
+		have_I = 1;
+		break;
+	    case L'm':
+		/* Match month using alternate numeric symbols.  */
+		get_alt_number (1, 12, 2);
+		tm->tm_mon = val - 1;
+		have_mon = 1;
+		want_xday = 1;
+		break;
+	    case L'M':
+		/* Match minutes using alternate numeric symbols.  */
+		get_alt_number (0, 59, 2);
+		tm->tm_min = val;
+		break;
+	    case L'S':
+		/* Match seconds using alternate numeric symbols.
+		get_alt_number (0, 61, 2); */
+		{  
+		    double sval;
+		    wchar_t *end;
+		    sval = wcstod(rp, &end);
+		    if( sval >= 0.0 && sval <= 61.0) {
+			tm->tm_sec = sval;
+			*psecs = sval;
+		    }
+		    rp = end;
+		}
+	    break;
+	    case L'U':
+	      get_alt_number (0, 53, 2);
+	      week_no = val;
+	      have_uweek = 1;
+	      break;
+	    case L'W':
+	      get_alt_number (0, 53, 2);
+	      week_no = val;
+	      have_wweek = 1;
+	      break;
+	    case L'V':
+		get_alt_number (0, 53, 2);
+		/* XXX This cannot determine any field in TM without
+		   further information.  */
+		break;
+	    case L'w':
+		/* Match number of weekday using alternate numeric symbols.  */
+		get_alt_number (0, 6, 1);
+		tm->tm_wday = val;
+		have_wday = 1;
+		break;
+	    case L'y':
+		/* Match year within century using alternate numeric symbols.  */
+		get_alt_number (0, 99, 2);
+		tm->tm_year = val >= 69 ? val : val + 100;
+		want_xday = 1;
+		break;
+	    default:
+		return NULL;
+	    }
+	    break;
+	default:
+	    return NULL;
+	}
+    }
+
+    if (have_I && is_pm)
+	tm->tm_hour += 12;
+
+    if (century != -1)
+    {
+	if (want_century)
+	    tm->tm_year = tm->tm_year % 100 + (century - 19) * 100;
+	else
+	    /* Only the century, but not the year.  Strange, but so be it.  */
+	    tm->tm_year = (century - 19) * 100;
+    }
+
+    if (want_xday && !have_wday) {
+	if ( !(have_mon && have_mday) && have_yday)  {
+	    /* We don't have tm_mon and/or tm_mday, compute them. */
+	    int t_mon = 0;
+	    while (__mon_yday[__isleap(1900 + tm->tm_year)][t_mon] <= tm->tm_yday)
+		t_mon++;
+	    if (!have_mon)
+		tm->tm_mon = t_mon - 1;
+	    if (!have_mday)
+		tm->tm_mday = (tm->tm_yday - __mon_yday[__isleap(1900 + tm->tm_year)][t_mon - 1] + 1);
+	}
+	day_of_the_week (tm);
+    }
+
+    if (want_xday && !have_yday)
+	day_of_the_year (tm);
+
+  if ((have_uweek || have_wweek) && have_wday) {
+      int save_wday = tm->tm_wday;
+      int save_mday = tm->tm_mday;
+      int save_mon = tm->tm_mon;
+      int w_offset = have_uweek ? 0 : 1;
+
+      tm->tm_mday = 1;
+      tm->tm_mon = 0;
+      day_of_the_week (tm);
+      if (have_mday)
+	  tm->tm_mday = save_mday;
+      if (have_mon)
+	  tm->tm_mon = save_mon;
+
+      if (!have_yday)
+	  tm->tm_yday = ((7 - (tm->tm_wday - w_offset)) % 7
+			 + (week_no - 1) *7
+			 + save_wday - w_offset);
+
+      if (!have_mday || !have_mon)
+      {
+	  int t_mon = 0;
+	  while (__mon_yday[__isleap(1900 + tm->tm_year)][t_mon]
+		 <= tm->tm_yday)
+	      t_mon++;
+	  if (!have_mon)
+	      tm->tm_mon = t_mon - 1;
+	  if (!have_mday)
+	      tm->tm_mday =
+		  (tm->tm_yday
+		   - __mon_yday[__isleap(1900 + tm->tm_year)][t_mon - 1] + 1);
+      }
+
+      tm->tm_wday = save_wday;
+  }
+
+  return rp;
+}
+#endif
+
+
 static char * 
 strptime_internal (const char *rp, const char *fmt, struct tm *tm, 
-		   enum locale_status *decided)
+		   enum locale_status *decided, double *psecs)
 {
     const char *rp_backup;
     int cnt;
@@ -173,9 +679,9 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
     {
 	/* A white space in the format string matches 0 more or white
 	   space in the input string.  */
-	if (isspace (*fmt))
+	if (isspace ((int)*fmt))
 	{
-	    while (isspace (*rp))
+	    while (isspace ((int)*rp))
 		++rp;
 	    ++fmt;
 	    continue;
@@ -309,7 +815,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	case 'n':
 	case 't':
 	  /* Match any white space.  */
-	  while (isspace (*rp))
+	  while (isspace ((int)*rp))
 	    ++rp;
 	  break;
 	case 'p':
@@ -468,9 +974,18 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		tm->tm_min = val;
 		break;
 	    case 'S':
-		/* Match seconds using alternate numeric symbols.  */
-		get_alt_number (0, 61, 2);
-		tm->tm_sec = val;
+		/* Match seconds using alternate numeric symbols.
+		   get_alt_number (0, 61, 2); */
+		   {  
+		       double sval;
+		       char *end;
+		       sval = strtod(rp, &end);
+		       if( sval >= 0.0 && sval <= 61.0) {
+			   tm->tm_sec = sval;
+			   *psecs = sval;
+		       }
+		       rp = end;
+		   }
 		break;
 	    case 'U':
 	      get_alt_number (0, 53, 2);
@@ -576,28 +1091,53 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
     return (char *) rp;
 }
 
-static int have_used_strptime=0;
-
+/* We only care if the result is null or not */
 static char *
-strptime (const char *buf, const char *format, struct tm *tm)
+R_strptime (const char *buf, const char *format, struct tm *tm, double *psecs)
 {
     enum locale_status decided;
-#ifdef HAVE_LOCALE_H
-    if(!have_used_strptime) {
-	get_locale_strings();
-	/* have_used_strptime = 1; might change locale during session */
-    }
-#endif
     decided = raw;
-    return strptime_internal (buf, format, tm, &decided);
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	wchar_t wbuf[1001], wfmt[1001]; size_t n;
+#if defined(HAVE_LOCALE_H) && defined(HAVE_WCSFTIME)
+	get_locale_w_strings();
+#endif
+	n = mbstowcs(NULL, buf, 1000);
+	if(n > 1000) error(_("input string is too long"));
+	n = mbstowcs(wbuf, buf, 1000);
+	if(n == -1) error(_("invalid multibyte input string"));
+	
+	n = mbstowcs(NULL, format, 1000);
+	if(n > 1000) error(_("format string is too long"));
+	n = mbstowcs(wfmt, format, 1000);
+	if(n == -1) error(_("invalid multibyte format string"));
+	return (char *) w_strptime_internal (wbuf, wfmt, tm, &decided, psecs);
+    } else
+#endif
+    {
+#ifdef HAVE_LOCALE_H
+    get_locale_strings();
+#endif
+    return strptime_internal (buf, format, tm, &decided, psecs);
+    }
 }
 
 #ifdef HAVE_LOCALE_H
+/* We check for a changed locale here, as setting the locale strings is
+   on some systems slow compared to the conversions. */
+
 static void get_locale_strings(void)
 {
     int i;
     struct tm tm;
     char buff[4];
+
+    static char *last_LC_TIME="unknown";
+    char *tmp;
+    tmp = setlocale(LC_TIME, NULL);
+    if (streql(tmp, last_LC_TIME)) return;
+    last_LC_TIME = tmp;
 
     tm.tm_sec = tm.tm_min = tm.tm_hour = tm.tm_mday = tm.tm_mon
 	= tm.tm_isdst = 0;
@@ -623,4 +1163,43 @@ static void get_locale_strings(void)
     strftime(buff, 4, "%p", &tm);
     if(strlen(buff)) strcpy(am_pm[1], buff);
 }
+
+#if defined(SUPPORT_MBCS) && defined(HAVE_WCSFTIME)
+static void get_locale_w_strings(void)
+{
+    int i;
+    struct tm tm;
+    wchar_t buff[4];
+
+    static char *last_LC_TIME="unknown";
+    char *tmp;
+    tmp = setlocale(LC_TIME, NULL);
+    if (streql(tmp, last_LC_TIME)) return;
+    last_LC_TIME = tmp;
+
+    tm.tm_sec = tm.tm_min = tm.tm_hour = tm.tm_mday = tm.tm_mon
+	= tm.tm_isdst = 0;
+    tm.tm_year = 30;
+    for(i = 0; i < 12; i++) {
+	tm.tm_mon = i;
+	wcsftime(w_ab_month_name[i], 10, L"%b", &tm);
+	wcsftime(w_month_name[i], 20, L"%B", &tm);
+    }
+    tm.tm_mon = 0;
+    for(i = 0; i < 7; i++) {
+	tm.tm_mday = tm.tm_yday = i+1; /* 2000-1-2 was a Sunday */
+	tm.tm_wday = i;
+	wcsftime(w_ab_weekday_name[i], 10, L"%a", &tm);
+	wcsftime(w_weekday_name[i], 20, L"%A", &tm);
+    }
+    tm.tm_hour = 1;
+    /* in locales where these are unused, they may be empty: better
+       not to reset them then */
+    wcsftime(buff, 4, L"%p", &tm);
+    if(wcslen(buff)) wcscpy(w_am_pm[0], buff);
+    tm.tm_hour = 13;
+    wcsftime(buff, 4, L"%p", &tm);
+    if(wcslen(buff)) wcscpy(w_am_pm[1], buff);
+}
+#endif
 #endif

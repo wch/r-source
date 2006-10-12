@@ -9,46 +9,55 @@
 }
 \usage{
 eval(expr, envir = parent.frame(),
-     enclos = if(is.list(envir) || is.pairlist(envir)) parent.frame())
+    	   enclos = if(is.list(envir) || is.pairlist(envir))
+                       parent.frame() else baseenv())
 evalq(expr, envir, enclos)
 eval.parent(expr, n = 1)
 local(expr, envir = new.env())
 }
 \arguments{
-  \item{expr}{object of mode \code{\link{expression}} or \code{call} or
-    an \dQuote{unevaluated expression}.}
+  \item{expr}{an object to be evaluated.  See Details.}
   \item{envir}{the \code{\link{environment}} in which \code{expr} is to
-    be evaluated.  May also be a list, a data frame, or an integer as in
-    \code{sys.call}.}
-  \item{enclos}{Relevant when \code{envir} is a list or a data frame.
-    Specifies the
-    enclosure, i.e., where \R looks for objects not found in
-    \code{envir}.}
-  \item{n}{parent generations to go back}
+    be evaluated.  May also be \code{NULL}, a list, a data frame,
+    a pairlist or an integer as specified to \code{\link{sys.call}}.}
+  \item{enclos}{Relevant when \code{envir} is a (pair)list or a data frame.
+    Specifies the enclosure, i.e., where \R looks for objects not found
+    in \code{envir}.  This can be \code{NULL} (interpreted as the base
+    package environment) or an environment.}
+  \item{n}{number of parent generations to go back}
 }
 \details{
-  \code{eval} evaluates the expression \code{expr} argument in the
+  \code{eval} evaluates the \code{expr} argument in the
   environment specified by \code{envir} and returns the computed value.
-  If \code{envir} is not specified, then
-  \code{\link{sys.frame}(\link{sys.parent}())}, the environment where
-  the call to \code{eval} was made is used.
+  If \code{envir} is not specified, then the default is
+  \code{\link{parent.frame}()} (the environment where the call to
+  \code{eval} was made).
+
+  Objects to be evaluated can be of types \code{\link{call}} or
+  \code{\link{expression}} or \link{symbol} (when the symbol is looked
+  up in the current scope and its binding is evaluated), a \link{promise}
+  or any of the basic types such as vectors, functions and environments
+  (which are returned unchanged).
 
   The \code{evalq} form is equivalent to \code{eval(quote(expr), \dots)}.
+  \code{eval} evaluates its first argument in the current scope
+  before passing it to the evaluator: \code{evalq} avoids this.
 
-  As \code{eval} evaluates its first argument before passing it to the
-  evaluator, it allows you to assign complicated expressions to symbols
-  and then evaluate them.  \code{evalq} avoids this.
+  \code{eval.parent(expr, n)} is a shorthand for
+  \code{eval(expr, parent.frame(n))}.
 
-  \code{eval.parent(expr, n)} is a shorthand for \code{eval(expr,
-    parent.frame(n))}.
+  If \code{envir} is a list (such as a data frame) or pairlist, it is
+  copied into a temporary environment (with enclosure \code{enclos}),
+  and the temporary environment is used for evaluation.  So if
+  \code{expr} changes any of the components named in the (pair)list, the
+  changes are lost.
 
-  If \code{envir} is a data frame or list, it is copied into a temporary
-  environment, and the copy is used for evaluation.  So if \code{expr}
-  changes any of the components named in the data frame/list, the changes
-  are lost.
-
+  If \code{envir} is \code{NULL} it is interpreted as an empty list so
+  no values could be found in \code{envir} and look-up goes directly to
+  \code{enclos}.
+  
   \code{local} evaluates an expression in a local environment.  It is
-  equivalent to \code{evalq} except the its default argument creates a
+  equivalent to \code{evalq} except that its default argument creates a
   new, empty environment.  This is useful to create anonymous recursive
   functions and as a kind of limited namespace feature since variables
   defined in the environment are not visible from the outside.
@@ -61,6 +70,9 @@ local(expr, envir = new.env())
 \seealso{
   \code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
   \code{\link{parent.frame}}, \code{\link{environment}}.
+
+  Further, \code{\link{force}} to \emph{force} evaluation, typically of
+  function arguments.
 }
 \note{
   Due to the difference in scoping rules, there are some differences
@@ -78,7 +90,7 @@ mEx <- expression(2^2^3); mEx; 1 + eval(mEx)
 eval({ xx <- pi; xx^2}) ; xx
 
 a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, list(a=1)), list(b=5)) # == 10
-a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, -1), list(b=5))         # == 12
+a <- 3 ; aa <- 4 ; evalq(evalq(a+b+aa, -1), list(b=5))        # == 12
 
 ev <- function() {
    e1 <- parent.frame()
@@ -90,6 +102,27 @@ ev <- function() {
 }
 tst.ev <- function(a = 7) { x <- pi; y <- 1; ev() }
 tst.ev()#-> aa : 7,  eval : 4.14
+
+a <- list(a=3, b=4)
+with(a, a <- 5) # alters the copy of a from the list, discarded.
+
+##
+## Example of evalq()
+##
+
+N <- 3
+env <- new.env()
+assign("N", 27, envir=env)
+## this version changes the visible copy of N only, since the argument
+## passed to eval is '4'.
+eval(N <- 4, env)
+N
+get("N", envir=env)
+## this version does the assignment in env, and changes N only there.
+evalq(N <- 5, env)
+N
+get("N", envir=env)
+
 
 ##
 ## Uses of local()

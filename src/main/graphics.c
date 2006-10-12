@@ -1,9 +1,9 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
- *  Copyright (C) 2002--2003  The R Foundation
+ *  Copyright (C) 2002--2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
 
 
  *  This is an extensive reworking by Paul Murrell of an original
@@ -27,6 +27,10 @@
  *
  *  NOTE : ./plotmath.c	 has partly similar functionality for "math graphics"
 	    ~~~~~~~~~~~
+ */
+
+/* <UTF8>
+   OK if we assume GMetricInfo is passed a suitable int (e.g. Unicode)
  */
 
 #ifdef HAVE_CONFIG_H
@@ -104,7 +108,7 @@ static char HexDigits[] = "0123456789ABCDEF";
  *
  */
 
-double R_Log10(double x)
+double attribute_hidden R_Log10(double x)
 {
     return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
@@ -297,7 +301,7 @@ static double yDevtoCharUnits(double y, DevDesc *dd)
 
 static void BadUnitsError(char *where)
 {
-    error("Bad units specified in %s, please report!", where);
+    error(_("bad units specified in %s, please report!"), where);
 }
 
 /* GConvertXUnits() and GConvertYUnits() convert
@@ -1002,9 +1006,10 @@ static void figureExtent(int *minCol, int *maxCol, int *minRow, int *maxRow,
     int minr = -1;
     int maxr = -1;
     int i, j;
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
+    int nr = Rf_gpptr(dd)->numrows;
+    for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->order[i][j] == figureNum) {
+	    if (Rf_gpptr(dd)->order[i + j*nr] == figureNum) {
 		if ((minc == -1) || (j < minc))
 		    minc = j;
 		if ((maxc == -1) || (j > maxc))
@@ -1117,14 +1122,15 @@ static void widthsRespectingHeights(double widths[],
     int respectedCols[MAX_LAYOUT_COLS];
     double widthLeft;
     double disrespectedWidth = 0;
+    int nr = Rf_gpptr(dd)->numrows;
     for (j = 0; j < Rf_gpptr(dd)->numcols; j++) {
 	respectedCols[j] = 0;
 	widths[j] = Rf_gpptr(dd)->widths[j];
     }
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
+    for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->respect[i][j] && !Rf_gpptr(dd)->cmWidths[j])
-		respectedCols[j] = 1;
+	    if (Rf_gpptr(dd)->respect[i + j * nr] &&
+		!Rf_gpptr(dd)->cmWidths[j]) respectedCols[j] = 1;
     for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
 	if (!respectedCols[j])
 	    disrespectedWidth += Rf_gpptr(dd)->widths[j];
@@ -1151,14 +1157,15 @@ static void heightsRespectingWidths(double heights[],
     int respectedRows[MAX_LAYOUT_ROWS];
     double heightLeft;
     double disrespectedHeight = 0;
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++) {
+    int nr = Rf_gpptr(dd)->numrows;
+    for (i = 0; i < nr; i++) {
 	respectedRows[i] = 0;
 	heights[i] = Rf_gpptr(dd)->heights[i];
     }
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
+    for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->respect[i][j] && !Rf_gpptr(dd)->cmHeights[i])
-		respectedRows[i] = 1;
+	    if (Rf_gpptr(dd)->respect[i + j*nr] &&
+		!Rf_gpptr(dd)->cmHeights[i]) respectedRows[i] = 1;
     for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
 	if (!respectedRows[i])
 	    disrespectedHeight += Rf_gpptr(dd)->heights[i];
@@ -1392,13 +1399,13 @@ static void updateOuterMargins(DevDesc *dd)
 	Rf_gpptr(dd)->omi[3] = Rf_dpptr(dd)->omi[3] =
 	    GConvertXUnits(Rf_gpptr(dd)->oma[3], LINES, INCHES, dd);
 	Rf_gpptr(dd)->omd[0] = Rf_dpptr(dd)->omd[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->oma[0], LINES, NDC, dd);
-	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
 	    GConvertXUnits(Rf_gpptr(dd)->oma[1], LINES, NDC, dd);
+	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
+	    1 - GConvertXUnits(Rf_gpptr(dd)->oma[3], LINES, NDC, dd);
 	Rf_gpptr(dd)->omd[2] = Rf_dpptr(dd)->omd[2] =
-	    GConvertYUnits(Rf_gpptr(dd)->oma[2], LINES, NDC, dd);
+	    GConvertYUnits(Rf_gpptr(dd)->oma[0], LINES, NDC, dd);
 	Rf_gpptr(dd)->omd[3] = Rf_dpptr(dd)->omd[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->oma[3], LINES, NDC, dd);
+	    1 - GConvertYUnits(Rf_gpptr(dd)->oma[2], LINES, NDC, dd);
 	break;
     case INCHES:
 	Rf_gpptr(dd)->oma[0] = Rf_dpptr(dd)->oma[0] =
@@ -1410,31 +1417,31 @@ static void updateOuterMargins(DevDesc *dd)
 	Rf_gpptr(dd)->oma[3] = Rf_dpptr(dd)->oma[3] =
 	    GConvertXUnits(Rf_gpptr(dd)->omi[3], INCHES, LINES, dd);
 	Rf_gpptr(dd)->omd[0] = Rf_dpptr(dd)->omd[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->omi[0], INCHES, NDC, dd);
-	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
 	    GConvertXUnits(Rf_gpptr(dd)->omi[1], INCHES, NDC, dd);
+	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
+	    1 - GConvertXUnits(Rf_gpptr(dd)->omi[3], INCHES, NDC, dd);
 	Rf_gpptr(dd)->omd[2] = Rf_dpptr(dd)->omd[2] =
-	    GConvertYUnits(Rf_gpptr(dd)->omi[2], INCHES, NDC, dd);
+	    GConvertYUnits(Rf_gpptr(dd)->omi[0], INCHES, NDC, dd);
 	Rf_gpptr(dd)->omd[3] = Rf_dpptr(dd)->omd[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->omi[3], INCHES, NDC, dd);
+	    1 - GConvertYUnits(Rf_gpptr(dd)->omi[2], INCHES, NDC, dd);
 	break;
     case NDC:
 	Rf_gpptr(dd)->oma[0] = Rf_dpptr(dd)->oma[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->omd[0], NDC, LINES, dd);
-	Rf_gpptr(dd)->oma[1] = Rf_dpptr(dd)->oma[1] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[1], NDC, LINES, dd);
-	Rf_gpptr(dd)->oma[2] = Rf_dpptr(dd)->oma[2] =
 	    GConvertYUnits(Rf_gpptr(dd)->omd[2], NDC, LINES, dd);
+	Rf_gpptr(dd)->oma[1] = Rf_dpptr(dd)->oma[1] =
+	    GConvertXUnits(Rf_gpptr(dd)->omd[0], NDC, LINES, dd);
+	Rf_gpptr(dd)->oma[2] = Rf_dpptr(dd)->oma[2] =
+	    GConvertYUnits(1 - Rf_gpptr(dd)->omd[3], NDC, LINES, dd);
 	Rf_gpptr(dd)->oma[3] = Rf_dpptr(dd)->oma[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[3], NDC, LINES, dd);
+	    GConvertXUnits(1 - Rf_gpptr(dd)->omd[1], NDC, LINES, dd);
 	Rf_gpptr(dd)->omi[0] = Rf_dpptr(dd)->omi[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->omd[0], NDC, INCHES, dd);
-	Rf_gpptr(dd)->omi[1] = Rf_dpptr(dd)->omi[1] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[1], NDC, INCHES, dd);
-	Rf_gpptr(dd)->omi[2] = Rf_dpptr(dd)->omi[2] =
 	    GConvertYUnits(Rf_gpptr(dd)->omd[2], NDC, INCHES, dd);
+	Rf_gpptr(dd)->omi[1] = Rf_dpptr(dd)->omi[1] =
+	    GConvertXUnits(Rf_gpptr(dd)->omd[0], NDC, INCHES, dd);
+	Rf_gpptr(dd)->omi[2] = Rf_dpptr(dd)->omi[2] =
+	    GConvertYUnits(1 - Rf_gpptr(dd)->omd[3], NDC, INCHES, dd);
 	Rf_gpptr(dd)->omi[3] = Rf_dpptr(dd)->omi[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[3], NDC, INCHES, dd);
+	    GConvertXUnits(1 - Rf_gpptr(dd)->omd[1], NDC, INCHES, dd);
 	break;
     default: break; /*nothing (-Wall) */
     }
@@ -1743,6 +1750,11 @@ static void invalidError(char* message, DevDesc *dd)
     error(message);
 }
 
+Rboolean attribute_hidden GRecording(SEXP call, DevDesc *dd)
+{
+    return GErecording(call, (GEDevDesc *) dd);
+}
+
 /*  GNewPlot -- Begin a new plot (advance to new frame if needed)  */
 DevDesc *GNewPlot(Rboolean recording)
 {
@@ -1760,6 +1772,10 @@ DevDesc *GNewPlot(Rboolean recording)
      * If Rf_gpptr(dd)->new is TRUE, any subsequent drawing will dirty the plot
      * and reset Rf_gpptr(dd)->new to FALSE
      */
+
+    /* we can call par(mfg) before any plotting.
+       That sets new = TRUE and also sets currentFigure <= lastFigure
+       so treat separately. */
     if (!Rf_gpptr(dd)->new) {
 	R_GE_gcontext gc;
 	gcontextFromGP(&gc, dd);
@@ -1770,7 +1786,7 @@ DevDesc *GNewPlot(Rboolean recording)
 		if (Rf_gpptr(dd)->ask) {
 		    NewFrameConfirm();
 		    if (NoDevices())
-			error("attempt to plot on null device");
+			error(_("attempt to plot on null device"));
 		    else
 			dd = CurrentDevice();
 		}
@@ -1780,6 +1796,23 @@ DevDesc *GNewPlot(Rboolean recording)
 	    Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = 1;
 	}
 
+	GReset(dd);
+	GForceClip(dd);
+    } else if(!Rf_gpptr(dd)->state) { /* device is unused */
+	R_GE_gcontext gc;
+	gcontextFromGP(&gc, dd);
+	if (recording) {
+	    if (Rf_gpptr(dd)->ask) {
+		NewFrameConfirm();
+		if (NoDevices())
+		    error(_("attempt to plot on null device"));
+		else
+		    dd = CurrentDevice();
+	    }
+	    GEinitDisplayList((GEDevDesc*) dd);
+	}
+	GENewPage(&gc, (GEDevDesc*) dd);
+	Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = 1;
 	GReset(dd);
 	GForceClip(dd);
     }
@@ -1803,15 +1836,25 @@ DevDesc *GNewPlot(Rboolean recording)
 
     Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = FALSE;
     if (!validOuterMargins(dd)) {
-	G_ERR_MSG("Outer margins too large (fig.region too small)");
+	G_ERR_MSG(_("outer margins too large (fig.region too small)"));
     } else if (!validFigureRegion(dd)) {
-	G_ERR_MSG("Figure region too large");
+	G_ERR_MSG(_("figure region too large"));
     } else if (!validFigureMargins(dd)) {
-	G_ERR_MSG("Figure margins too large");
+	G_ERR_MSG(_("figure margins too large"));
     } else if (!validPlotRegion(dd)) {
-	G_ERR_MSG("Plot region too large");
-    } else
+	G_ERR_MSG(_("plot region too large"));
+    } else {
 	Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = TRUE;
+	/*
+	 * At this point, base output has been successfully
+	 * produced on the device, so mark the device "dirty"
+	 * with respect to base graphics.
+	 * This is used when checking whether the device is
+	 * "valid" with respect to base graphics
+	 */
+	Rf_setBaseDevice(TRUE, dd);
+	GEdirtyDevice((GEDevDesc*) dd);
+    }
 
     return dd;
 }
@@ -1821,13 +1864,14 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 {
 /* GScale: used to default axis information
  *	   i.e., if user has NOT specified par(usr=...)
+ * NB: can have min > max !
  */
 #define EPS_FAC_1  16
 #define EPS_FAC_2 100
 
     Rboolean swap, is_xaxis = (axis == 1 || axis == 3);
     int log, n, style;
-    double temp;
+    double temp, min_o = 0., max_o = 0., tmp2 = 0.;/*-Wall*/
 
     if(is_xaxis) {
 	n = Rf_gpptr(dd)->lab[0];
@@ -1841,11 +1885,13 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
 
     if (log) {
+	/*  keep original  min, max - to use in extremis */
+	min_o = min; max_o = max;
 	min = log10(min);
 	max = log10(max);
     }
     if(!R_FINITE(min) || !R_FINITE(max)) {
-	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]",
+	warning(_("nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"),
 		min, max, axis, log);
 	if(!R_FINITE(min)) min = - .45 * DBL_MAX;
 	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
@@ -1875,32 +1921,47 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     case 's':/* FIXME --- implement  's' and 'e' axis styles ! */
     case 'e':
     default:
-	error("axis style \"%c\" unimplemented", style);
+	error(_("axis style \"%c\" unimplemented"), style);
     }
 
+    if (log) { /* 10^max may have gotten +Inf ; or  10^min has become 0 */
+	if((temp = pow(10., min)) == 0.) {/* or < 1.01*DBL_MIN */
+	    temp = fmin2(min_o, 1.01* DBL_MIN); /* allow smaller non 0 */
+	    min = log10(temp);
+	}
+	if((tmp2 = pow(10., max)) == R_PosInf) { /* or  > .95*DBL_MAX */
+	    tmp2 = fmax2(max_o, .99 * DBL_MAX);
+	    max = log10(tmp2);
+	}
+    }
     if(is_xaxis) {
 	if (log) {
-	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = pow(10.,min);
-	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = pow(10.,max);
+	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = temp;
+	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = tmp2;
 	    Rf_gpptr(dd)->logusr[0] = Rf_dpptr(dd)->logusr[0] = min;
 	    Rf_gpptr(dd)->logusr[1] = Rf_dpptr(dd)->logusr[1] = max;
 	} else {
 	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = min;
 	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = max;
+/* MM: logusr is only used " when (log)" : */
+#ifdef NEVER_USED
 	    Rf_gpptr(dd)->logusr[0] = Rf_dpptr(dd)->logusr[0] = log10(min);
 	    Rf_gpptr(dd)->logusr[1] = Rf_dpptr(dd)->logusr[1] = log10(max);
+#endif
 	}
     } else {
 	if (log) {
-	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = pow(10.,min);
-	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = pow(10.,max);
+	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = temp;
+	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = tmp2;
 	    Rf_gpptr(dd)->logusr[2] = Rf_dpptr(dd)->logusr[2] = min;
 	    Rf_gpptr(dd)->logusr[3] = Rf_dpptr(dd)->logusr[3] = max;
 	} else {
 	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = min;
 	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = max;
+#ifdef NEVER_USED
 	    Rf_gpptr(dd)->logusr[2] = Rf_dpptr(dd)->logusr[2] = log10(min);
 	    Rf_gpptr(dd)->logusr[3] = Rf_dpptr(dd)->logusr[3] = log10(max);
+#endif
 	}
     }
 
@@ -1918,6 +1979,8 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     if(swap) { /* Feature: in R, something like  xlim = c(100,0)  just works */
 	temp = min; min = max; max = temp;
     }
+    /* save only for the extreme case (EPS_FAC_2): */
+    min_o = min; max_o = max;
 
     if(log) {
 	min = pow(10., min);
@@ -1926,20 +1989,24 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
     else GPretty(&min, &max, &n);
 
-    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))*
-       EPS_FAC_2 * DBL_EPSILON) {
+    tmp2 = EPS_FAC_2 * DBL_EPSILON;/* << prevent overflow in product below */
+    if(fabs(max - min) < (temp = fmax2(fabs(max), fabs(min)))* tmp2) {
 	/* Treat this case somewhat similar to the (min ~= max) case above */
 	/* Too much accuracy here just shows machine differences */
-	warning("relative range of values =%4.0f * EPS, is small (axis %d)."
+	warning(_("relative range of values =%4.0f * EPS, is small (axis %d)")
 		/*"to compute accurately"*/,
 		fabs(max - min) / (temp*DBL_EPSILON), axis);
 
 	/* No pretty()ing anymore */
-	min = Rf_dpptr(dd)->usr[2]; /* original  (min,max) ..*/
-	max = Rf_dpptr(dd)->usr[3];
-	temp = .01 * fabs(max - min);
+	min = min_o;
+	max = max_o;
+	temp = .005 * fabs(max - min);/* .005: not to go to DBL_MIN/MAX */
 	min += temp;
 	max -= temp;
+	if(log) {
+	    min = pow(10., min);
+	    max = pow(10., max);
+	}
 	n = 1;
     }
 
@@ -2002,36 +2069,41 @@ void GSetupAxis(int axis, DevDesc *dd)
  * This initialises the plot state, plus the other graphical
  * parameters that are not the responsibility of the device initialisation.
 
- * Typically called from  do_<dev>(.)  as  GInit(&dd->dp)
+ * Called from baseCallback.
  */
-void GInit(GPar *dp)
+int Rf_GetOptionParAsk(); /* from options.c */
+
+void attribute_hidden GInit(GPar *dp)
 {
     dp->state = 0;
     dp->valid = FALSE;
 
     dp->ann = TRUE;
-    dp->ask = FALSE;
+    dp->ask = Rf_GetOptionParAsk();
     dp->err = 0;
     dp->bty = 'o';
 
     dp->mkh = .001;/* dummy value > 0  --- FIXME : */
     /* GREset has Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * Rf_gpptr(dd)->ipr[0]; */
     dp->cex = 1.0;
+    dp->lheight = 1.0;
     dp->cexbase = 1.0;
     dp->cexmain = 1.2;
     dp->cexlab = 1.0;
     dp->cexsub = 1.0;
     dp->cexaxis = 1.0;
 
-    dp->col = 0;
-    dp->colmain = 0;
-    dp->collab = 0;
-    dp->colsub = 0;
-    dp->colaxis = 0;
+    dp->col = R_RGB(0, 0, 0);
+    dp->colmain = R_RGB(0, 0, 0);
+    dp->collab = R_RGB(0, 0, 0);
+    dp->colsub = R_RGB(0, 0, 0);
+    dp->colaxis = R_RGB(0, 0, 0);
     dp->gamma = 1;
 
+    dp->scale = 1.0;
     /* dp->ps = 10; */	/* Device Specific */
     dp->metricInfo = 0;
+    strcpy(dp->family, "");
     dp->font = 1;
     dp->fontmain = 2;
     dp->fontlab = 1;
@@ -2040,6 +2112,9 @@ void GInit(GPar *dp)
 
     dp->pch = 1;
     dp->lty = LTY_SOLID;
+    dp->lend = GE_ROUND_CAP;
+    dp->ljoin = GE_ROUND_JOIN;
+    dp->lmitre = 10.0;
     dp->smo = 1;
 
     /* String Adjustment and rotation */
@@ -2059,8 +2134,6 @@ void GInit(GPar *dp)
     dp->las = 0;
     dp->tck = NA_REAL;
     dp->tcl = -0.5;
-    dp->tmag = 1.2;
-    dp->type = 'p';
     dp->xaxp[0] = 0.0;
     dp->xaxp[1] = 1.0;
     dp->xaxp[2] = 5.0;
@@ -2113,9 +2186,9 @@ void GInit(GPar *dp)
     dp->widths[0] = 1;
     dp->cmHeights[0] = 0;
     dp->cmWidths[0] = 0;
-    dp->order[0][0] = 1;
+    dp->order[0] = 1;
     dp->rspct = 0;
-    dp->respect[0][0] = 0;
+    dp->respect[0] = 0;
 
     /* Misc plotting parameters */
     dp->new = FALSE;
@@ -2142,7 +2215,7 @@ void copyGPar(GPar *source, GPar *dest)
 void GRestore(DevDesc *dd)
 {
     if (NoDevices())
-	error("No graphics device is active");
+	error(_("No graphics device is active"));
     copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
 }
 
@@ -2156,6 +2229,7 @@ static double	adjsave;	/* adj */
 static int	annsave;	/* ann */
 static int	btysave;	/* bty */
 static double	cexsave;	/* cex */
+static double   lheightsave;
 static double	cexbasesave;	/* cexbase */
 static double	cexmainsave;	/* cex.main */
 static double	cexlabsave;	/* cex.lab */
@@ -2169,6 +2243,7 @@ static int	collabsave;	/* col.lab */
 static int	colsubsave;	/* col.sub */
 static int	colaxissave;	/* col.axis */
 static double	crtsave;	/* character rotation */
+static char     familysave[201];
 static int	fontsave;	/* font */
 static int	fontmainsave;	/* font.main */
 static int	fontlabsave;	/* font.lab */
@@ -2179,6 +2254,9 @@ static int	labsave[3];	/* axis labelling parameters */
 static int	lassave;	/* label style */
 static int	ltysave;	/* line type */
 static double	lwdsave;	/* line width */
+static R_GE_lineend lendsave;
+static R_GE_linejoin ljoinsave;
+static double   lmitresave;
 static double	mgpsave[3];	/* margin position for annotation */
 static double	mkhsave;	/* mark height */
 static int	pchsave;	/* plotting character */
@@ -2201,6 +2279,7 @@ void GSavePars(DevDesc *dd)
     annsave = Rf_gpptr(dd)->ann;
     btysave = Rf_gpptr(dd)->bty;
     cexsave = Rf_gpptr(dd)->cex;
+    lheightsave = Rf_gpptr(dd)->lheight;
     cexbasesave = Rf_gpptr(dd)->cexbase;
     cexlabsave = Rf_gpptr(dd)->cexlab;
     cexmainsave = Rf_gpptr(dd)->cexmain;
@@ -2215,6 +2294,7 @@ void GSavePars(DevDesc *dd)
     colaxissave = Rf_gpptr(dd)->colaxis;
     crtsave = Rf_gpptr(dd)->crt;
     errsave = Rf_gpptr(dd)->err;
+    strncpy(familysave, Rf_gpptr(dd)->family, 201);
     fontsave = Rf_gpptr(dd)->font;
     fontmainsave = Rf_gpptr(dd)->fontmain;
     fontlabsave = Rf_gpptr(dd)->fontlab;
@@ -2227,6 +2307,9 @@ void GSavePars(DevDesc *dd)
     lassave = Rf_gpptr(dd)->las;
     ltysave = Rf_gpptr(dd)->lty;
     lwdsave = Rf_gpptr(dd)->lwd;
+    lendsave = Rf_gpptr(dd)->lend;
+    ljoinsave = Rf_gpptr(dd)->ljoin;
+    lmitresave = Rf_gpptr(dd)->lmitre;
     mgpsave[0] = Rf_gpptr(dd)->mgp[0];
     mgpsave[1] = Rf_gpptr(dd)->mgp[1];
     mgpsave[2] = Rf_gpptr(dd)->mgp[2];
@@ -2256,6 +2339,7 @@ void GRestorePars(DevDesc *dd)
     Rf_gpptr(dd)->ann = annsave;
     Rf_gpptr(dd)->bty = btysave;
     Rf_gpptr(dd)->cex = cexsave;
+    Rf_gpptr(dd)->lheight = lheightsave;
     Rf_gpptr(dd)->cexbase = cexbasesave;
     Rf_gpptr(dd)->cexlab = cexlabsave;
     Rf_gpptr(dd)->cexmain = cexmainsave;
@@ -2270,6 +2354,7 @@ void GRestorePars(DevDesc *dd)
     Rf_gpptr(dd)->colaxis = colaxissave;
     Rf_gpptr(dd)->crt = crtsave;
     Rf_gpptr(dd)->err = errsave;
+    strncpy(Rf_gpptr(dd)->family, familysave, 201);
     Rf_gpptr(dd)->font = fontsave;
     Rf_gpptr(dd)->fontmain = fontmainsave;
     Rf_gpptr(dd)->fontlab = fontlabsave;
@@ -2282,6 +2367,9 @@ void GRestorePars(DevDesc *dd)
     Rf_gpptr(dd)->las = lassave;
     Rf_gpptr(dd)->lty = ltysave;
     Rf_gpptr(dd)->lwd = lwdsave;
+    Rf_gpptr(dd)->lend = lendsave;
+    Rf_gpptr(dd)->ljoin = ljoinsave;
+    Rf_gpptr(dd)->lmitre = lmitresave;
     Rf_gpptr(dd)->mgp[0] = mgpsave[0];
     Rf_gpptr(dd)->mgp[1] = mgpsave[1];
     Rf_gpptr(dd)->mgp[2] = mgpsave[2];
@@ -2322,12 +2410,12 @@ void GSetState(int newstate, DevDesc *dd)
 void GCheckState(DevDesc *dd)
 {
     if(Rf_gpptr(dd)->state == 0)
-	error("plot.new has not been called yet");
+	error(_("plot.new has not been called yet"));
     if (!Rf_gpptr(dd)->valid)
 #ifdef OLD
 	onintr();
 #else
-        error("invalid graphics state");
+        error(_("invalid graphics state"));
 #endif
 }
 
@@ -2411,27 +2499,28 @@ void GForceClip(DevDesc *dd)
  * In some cases, the settings made here will need to be overridden
  * (eps. the fill setting)
  */
+attribute_hidden
 void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
 {
     gc->col = Rf_gpptr(dd)->col;
     gc->fill = Rf_gpptr(dd)->bg;  /* This may need manual adjusting */
     gc->gamma = Rf_gpptr(dd)->gamma;
-    gc->lwd = Rf_gpptr(dd)->lwd;
+    /* 
+     * Scale by "zoom" factor to allow for fit-to-window resizing in Windows
+     */
+    gc->lwd = Rf_gpptr(dd)->lwd * Rf_gpptr(dd)->scale;
     gc->lty = Rf_gpptr(dd)->lty;
+    gc->lend = Rf_gpptr(dd)->lend;
+    gc->ljoin = Rf_gpptr(dd)->ljoin;
+    gc->lmitre = Rf_gpptr(dd)->lmitre;
     gc->cex = Rf_gpptr(dd)->cex;
-    gc->ps = (double) Rf_gpptr(dd)->ps;
-    /*
-     * FIXME:  Need to add a lineheight par so user can control this
+    /* 
+     * Scale by "zoom" factor to allow for fit-to-window resizing in Windows
      */
-    gc->lineheight = 1;
+    gc->ps = (double) Rf_gpptr(dd)->ps * Rf_gpptr(dd)->scale;
+    gc->lineheight = Rf_gpptr(dd)->lheight;
     gc->fontface = Rf_gpptr(dd)->font;
-    /*
-     * FIXME:  Need to add a fontfamily par so user can control this
-     *
-     * A font family of "" means that the default font
-     * set up by the device will be used.
-     */
-    strcpy(gc->fontfamily, "");
+    strncpy(gc->fontfamily, Rf_gpptr(dd)->family, 201);
 }
 
 /* Draw a line. */
@@ -2451,14 +2540,15 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
      * Ensure that the base clipping region is set on the device
      */
     GClip(dd);
-    GELine(x1, y1, x2, y2, &gc, (GEDevDesc*) dd);
+    if(R_FINITE(x1) && R_FINITE(y1) && R_FINITE(x2) && R_FINITE(y2))
+	GELine(x1, y1, x2, y2, &gc, (GEDevDesc*) dd);
 }
 
 /* Read the current "pen" position. */
 Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 {
     if(!((GEDevDesc*) dd)->dev->locator)
-	error("no locator capability in device driver");
+	error(_("no locator capability in device driver"));
     if(((GEDevDesc*) dd)->dev->locator(x, y, ((GEDevDesc*) dd)->dev)) {
 	GConvert(x, y, DEVICE, coords, dd);
 	return TRUE;
@@ -2493,7 +2583,7 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 void GMode(int mode, DevDesc *dd)
 {
     if (NoDevices())
-	error("No graphics device is active");
+	error(_("No graphics device is active"));
     if(mode != Rf_gpptr(dd)->devmode) {
 	((GEDevDesc*) dd)->dev->mode(mode, ((GEDevDesc*) dd)->dev);
     }
@@ -2601,7 +2691,7 @@ void clipPoint (Edge b, double x, double y,
 		double *xout, double *yout, int *cnt, int store,
 		GClipRect *clip, GClipState *cs)
 {
-    double ix, iy;
+    double ix = 0.0, iy = 0.0 /* -Wall */;
 
     if (!cs[b].first) {
 	/* No previous point exists for this edge. */
@@ -2652,7 +2742,7 @@ static
 void closeClip (double *xout, double *yout, int *cnt, int store,
 		GClipRect *clip, GClipState *cs)
 {
-    double ix, iy;
+    double ix = 0.0, iy = 0.0 /* -Wall */;
     Edge b;
 
     for (b = Left; b <= Top; b++) {
@@ -2725,7 +2815,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
-	fg = R_RGBA(255, 255, 255, 255); /* transparent for the border */
+	fg = R_TRANWHITE; /* transparent for the border */
 
     /*
      * Work in device coordinates because that is what the
@@ -2734,7 +2824,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     xx = (double*) R_alloc(n, sizeof(double));
     yy = (double*) R_alloc(n, sizeof(double));
     if (!xx || !yy)
-	error("unable to allocate memory (in GPolygon)");
+	error(_("unable to allocate memory (in GPolygon)"));
     for (i=0; i<n; i++) {
 	xx[i] = x[i];
 	yy[i] = y[i];
@@ -2770,7 +2860,7 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
     xx = (double*) R_alloc(n, sizeof(double));
     yy = (double*) R_alloc(n, sizeof(double));
     if (!xx || !yy)
-	error("unable to allocate memory (in GPolygon)");
+	error(_("unable to allocate memory (in GPolygon)"));
     for (i=0; i<n; i++) {
 	xx[i] = x[i];
 	yy[i] = y[i];
@@ -2802,7 +2892,7 @@ void GCircle(double x, double y, int coords,
     ir = (ir > 0) ? ir : 1;
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
-	fg = R_RGBA(255, 255, 255, 255); /* transparent for the border */
+	fg = R_TRANWHITE; /* transparent for the border */
 
     /*
      * Work in device coordinates because that is what the
@@ -2827,7 +2917,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
-	fg = R_RGBA(255, 255, 255, 255); /* transparent for the border */
+	fg = R_TRANWHITE; /* transparent for the border */
 
     /*
      * Work in device coordinates because that is what the
@@ -2921,7 +3011,7 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
     if(pythag(xfromInch - xtoInch, yfromInch - ytoInch) < eps) {
 #endif
 	/* effectively 0-length arrow */
-	warning("zero-length arrow is of indeterminate angle and so skipped");
+	warning(_("zero-length arrow is of indeterminate angle and so skipped"));
 	return;
     }
     angle *= DEG2RAD;
@@ -2976,8 +3066,8 @@ void GBox(int which, DevDesc *dd)
 	switch(Rf_gpptr(dd)->bty) {
 	case 'o':
 	case 'O':
-	    GPolygon(4, x, y, NFC, 
-		     R_RGBA(255, 255, 255, 255), Rf_gpptr(dd)->col, dd);
+	    GPolygon(4, x, y, NFC,
+		     R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	    break;
 	case 'l':
 	case 'L':
@@ -3002,24 +3092,24 @@ void GBox(int which, DevDesc *dd)
 	case 'N': /* nothing */
 	    break;
 	default:
-	    warning("invalid par(\"bty\") = '%c'; no box() drawn.",
+	    warning(_("invalid par(\"bty\") = '%c'; no box() drawn"),
 		    Rf_gpptr(dd)->bty);
 	}
 	break;
     case 2: /* Figure */
-	GPolygon(4, x, y, NFC, 
-		 R_RGBA(255, 255, 255, 255), Rf_gpptr(dd)->col, dd);
+	GPolygon(4, x, y, NFC,
+		 R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	break;
     case 3: /* Inner Region */
-	GPolygon(4, x, y, NIC, 
-		 R_RGBA(255, 255, 255, 255), Rf_gpptr(dd)->col, dd);
+	GPolygon(4, x, y, NIC,
+		 R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	break;
     case 4: /* "outer": Device border */
-	GPolygon(4, x, y, NDC, 
-		 R_RGBA(255, 255, 255, 255), Rf_gpptr(dd)->col, dd);
+	GPolygon(4, x, y, NDC,
+		 R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	break;
     default:
-	error("invalid GBox argument");
+	error(_("invalid argument to GBox"));
     }
 }
 
@@ -3034,10 +3124,15 @@ void GLPretty(double *ul, double *uh, int *n)
  * This only does a very simple setup.
  * The real work happens when the axis is drawn. */
     int p1, p2;
-    p1 = ceil(log10(*ul));
-    p2 = floor(log10(*uh));
+    double dl = *ul, dh = *uh;
+    p1 = ceil(log10(dl));
+    p2 = floor(log10(dh));	
+    if(p2 <= p1 &&  dh/dl > 10.0) {
+	p1 = ceil(log10(dl) - 0.5);
+	p2 = floor(log10(dh) + 0.5);
+    }
 
-    if (p2 - p1 <= 0) { /* floor(log10(uh)) <= ceil(log10(ul))
+    if (p2 <= p1) { /* floor(log10(uh)) <= ceil(log10(ul))
 			 * <==>	 log10(uh) - log10(ul) < 2
 			 * <==>		uh / ul	       < 100 */
 	/* Very small range : Use tickmarks from a LINEAR scale
@@ -3046,6 +3141,7 @@ void GLPretty(double *ul, double *uh, int *n)
 	*n = -*n;
     }
     else { /* extra tickmarks --> CreateAtVector() in ./plot.c */
+	/* round to nice "1e<N>" */
 	*ul = pow(10., (double)p1);
 	*uh = pow(10., (double)p2);
 	if (p2 - p1 <= LPR_SMALL)
@@ -3094,13 +3190,17 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
      * i.e., current par(lty) is ignored when drawing symbols
      */
     gc.lty = LTY_SOLID;
+    /*
+     * special case for pch = "."
+     */
+    if(pch == 46) size = Rf_gpptr(dd)->cex;
     GESymbol(x, y, pch, size, &gc, ((GEDevDesc*) dd));
 }
 
 
 /* Draw text in plot margins. */
 void GMtext(char *str, int side, double line, int outer, double at, int las,
-	    DevDesc *dd)
+	    double yadj, DevDesc *dd)
 {
 /* "las" gives the style of axis labels:
 	 0 = always parallel to the axis [= default],
@@ -3108,7 +3208,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	 2 = always perpendicular to the axis.
 	 3 = always vertical.
 */
-    double angle, xadj, yadj;
+    double angle, xadj;
     int coords, subcoords;
 
     /* Init to keep -Wall happy: */
@@ -3116,7 +3216,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     coords = 0;
 
     xadj = Rf_gpptr(dd)->adj;	/* ALL cases */
-    yadj = 0.;		/* Default; currently all cases */
     if(outer) {
 	switch(side) {
 	case 1:	    coords = OMA1;	break;
@@ -3137,11 +3236,14 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     }
     /* Note: I changed Rf_gpptr(dd)->yLineBias to 0.3 here. */
     /* Purely visual tuning. RI */
+    /* This has been replaced by a new argument padj (=yadj here) to axis()
+       and mtext() and that can either be set manually or is determined in
+       a somehow fuzzy manner in repsect to current side and las settings.
+       Uwe L.
+    */
     switch(side) {
     case 1:
 	if(las == 2 || las == 3) {
-	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
-	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -3151,17 +3253,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 2:
 	if(las == 1 || las == 2) {
-	    /* subcoords could be USER and the user could have set log="y"
-	     * If that's the case then converting a height to USER
-	     * coordinates will not work
-	     * SO to be safe, we convert "at" to a LINES location,
-	     * add the 0.3 and then convert the result back to a USER
-	     * lcoation (ok because converting _locations_ is ok)
-	     * The old, bad way to do it was:
-	     *     at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
-	     */
-	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
-	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {
@@ -3171,8 +3262,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 3:
 	if(las == 2 || las == 3) {
-	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
-	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -3182,8 +3271,6 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 4:
 	if(las == 1 || las == 2) {
-	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
-	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {
@@ -3221,7 +3308,7 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
     case 4:	*r = t;		*g = p;		*b = v; break;
     case 5:	*r = v;		*g = p;		*b = q;	break;
     default:
-	error("bad hsv to rgb color conversion");
+	error(_("bad hsv to rgb color conversion"));
     }
 }
 
@@ -3302,6 +3389,7 @@ void rgb2hsv(double r, double g, double b,
  * in response to user suggestion
  */
 
+attribute_hidden
 char *DefaultPalette[] = {
     "black",
     "red",
@@ -3322,6 +3410,7 @@ char *DefaultPalette[] = {
 
 static int ColorDataBaseSize;
 
+attribute_hidden
 ColorDataBaseEntry ColorDataBase[] = {
     /* name		rgb         code -- filled in by InitColors() */
     {"white",		"#FFFFFF",	0},
@@ -3995,7 +4084,7 @@ static unsigned int hexdigit(int digit)
     if('0' <= digit && digit <= '9') return digit - '0';
     if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
     if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
-    /*else */ error("invalid hex digit in color or lty");
+    /*else */ error(_("invalid hex digit in 'color' or 'lty'"));
     return digit; /* never occurs (-Wall) */
 }
 
@@ -4029,21 +4118,34 @@ int StrMatch(char *s, char *t)
 
 
 /* #RRGGBB String to Internal Color Code */
-
+/*
+ * Paul:  Add ability to handle #RRGGBBAA
+ */
 unsigned int rgb2col(char *rgb)
 {
-    unsigned int r, g, b;
-    if(rgb[0] != '#' || strlen(rgb) != 7)
-	error("invalid RGB specification");
-    r = 16 * hexdigit(rgb[1]) + hexdigit(rgb[2]);
-    g = 16 * hexdigit(rgb[3]) + hexdigit(rgb[4]);
-    b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
-    return R_RGB(r, g, b);
+    unsigned int r=0, g=0, b=0, a=0; /* -Wall */
+    if(rgb[0] != '#')
+	error(_("invalid RGB specification"));
+    switch (strlen(rgb)) {
+    case 9:
+	a = 16 * hexdigit(rgb[7]) + hexdigit(rgb[8]);
+    case 7:
+	r = 16 * hexdigit(rgb[1]) + hexdigit(rgb[2]);
+	g = 16 * hexdigit(rgb[3]) + hexdigit(rgb[4]);
+	b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
+	break;
+    default:
+	error(_("invalid RGB specification"));
+    }
+    if (strlen(rgb) == 7)
+	return R_RGB(r, g, b);
+    else
+	return R_RGBA(r, g, b, a);
 }
 
 /* External Color Name to Internal Color Code */
 
-unsigned int name2col(char *nm)
+unsigned int attribute_hidden name2col(char *nm)
 {
     int i;
     if(strcmp(nm, "NA") == 0 || strcmp(nm, "transparent") == 0)
@@ -4061,31 +4163,31 @@ unsigned int name2col(char *nm)
 	 * All devices should respond to fully transparent by
 	 * not drawing.
 	 */
-	return R_RGBA(255, 255, 255, 255);
+	return R_TRANWHITE;
     for(i = 0; ColorDataBase[i].name ; i++) {
 	if(StrMatch(ColorDataBase[i].name, nm))
 	    return ColorDataBase[i].code;
     }
-    error("invalid color name");
+    error(_("invalid color name"));
     return 0;		/* never occurs but avoid compiler warnings */
 }
 
 /* Index (as string) to Internal Color Code */
 
-unsigned int number2col(char *nm)
+unsigned int attribute_hidden number2col(char *nm)
 {
     int indx;
     char *ptr;
     indx = strtod(nm, &ptr);
-    if(*ptr) error("invalid color specification");
+    if(*ptr) error(_("invalid color specification"));
     if(indx == 0) return Rf_dpptr(CurrentDevice())->bg;
     else return R_ColorTable[(indx-1) % R_ColorTableSize];
 }
 
 
-static char ColBuf[8];
+static char ColBuf[10];
 
-char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
+attribute_hidden char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
 {
     ColBuf[0] = '#';
     ColBuf[1] = HexDigits[(r >> 4) & 15];
@@ -4098,35 +4200,68 @@ char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
     return &ColBuf[0];
 }
 
+attribute_hidden char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
+	       unsigned int a)
+{
+    ColBuf[0] = '#';
+    ColBuf[1] = HexDigits[(r >> 4) & 15];
+    ColBuf[2] = HexDigits[r & 15];
+    ColBuf[3] = HexDigits[(g >> 4) & 15];
+    ColBuf[4] = HexDigits[g & 15];
+    ColBuf[5] = HexDigits[(b >> 4) & 15];
+    ColBuf[6] = HexDigits[b & 15];
+    ColBuf[7] = HexDigits[(a >> 4) & 15];
+    ColBuf[8] = HexDigits[a & 15];
+    ColBuf[9] = '\0';
+    return &ColBuf[0];
+}
+
 
 /* Internal to External Color Representation */
 /* Search the color name database first */
 /* If this fails, create an #RRGGBB string */
 
+/* used in grid */
 char *col2name(unsigned int col)
 {
     int i;
 
-    if(R_ALPHA(col) != 0) return "transparent";
-    for(i=0 ; ColorDataBase[i].name ; i++) {
-	if(col == ColorDataBase[i].code)
-	    return ColorDataBase[i].name;
+    if(R_OPAQUE(col)) {
+	for(i=0 ; ColorDataBase[i].name ; i++) {
+	    if(col == ColorDataBase[i].code)
+		return ColorDataBase[i].name;
+	}
+	ColBuf[0] = '#';
+	ColBuf[1] = HexDigits[(col >>  4) & 15];
+	ColBuf[2] = HexDigits[(col	    ) & 15];
+	ColBuf[3] = HexDigits[(col >> 12) & 15];
+	ColBuf[4] = HexDigits[(col >>  8) & 15];
+	ColBuf[5] = HexDigits[(col >> 20) & 15];
+	ColBuf[6] = HexDigits[(col >> 16) & 15];
+	ColBuf[7] = '\0';
+	return &ColBuf[0];
+    } else if (R_TRANSPARENT(col)) {
+	return "transparent";
+    } else {
+	ColBuf[0] = '#';
+	ColBuf[1] = HexDigits[(col >>  4) & 15];
+	ColBuf[2] = HexDigits[(col	) & 15];
+	ColBuf[3] = HexDigits[(col >> 12) & 15];
+	ColBuf[4] = HexDigits[(col >>  8) & 15];
+	ColBuf[5] = HexDigits[(col >> 20) & 15];
+	ColBuf[6] = HexDigits[(col >> 16) & 15];
+	ColBuf[7] = HexDigits[(col >> 28) & 15];
+	ColBuf[8] = HexDigits[(col >> 24) & 15];
+	ColBuf[9] = '\0';
+	return &ColBuf[0];
     }
-    ColBuf[0] = '#';
-    ColBuf[1] = HexDigits[(col >>  4) & 15];
-    ColBuf[2] = HexDigits[(col	    ) & 15];
-    ColBuf[3] = HexDigits[(col >> 12) & 15];
-    ColBuf[4] = HexDigits[(col >>  8) & 15];
-    ColBuf[5] = HexDigits[(col >> 20) & 15];
-    ColBuf[6] = HexDigits[(col >> 16) & 15];
-    ColBuf[7] = '\0';
-    return &ColBuf[0];
 }
 
 /* NOTE that this is called with dd == NULL by */
 /* the initialisation code in which case, str2col */
 /* assumes that `s' is a name */
 
+/* used in grDevices */
 unsigned int str2col(char *s)
 {
     if(s[0] == '#') return rgb2col(s);
@@ -4143,35 +4278,47 @@ unsigned int RGBpar(SEXP x, int i)
     if(isString(x)) {
 	return str2col(CHAR(STRING_ELT(x, i)));
     }
-    else if(isInteger(x) || isLogical(x)) {
-	if(INTEGER(x)[i] == NA_INTEGER) 
+    else if(isLogical(x)) {
+        if(LOGICAL(x)[i] == NA_LOGICAL)
+            /*
+             * Paul 01/07/04
+             * Used to be set to NA_INTEGER (see comment in name2col).
+             */
+            return R_TRANWHITE;
+        indx = LOGICAL(x)[i] - 1;
+        if(indx < 0) return Rf_dpptr(CurrentDevice())->bg;
+        else return R_ColorTable[indx % R_ColorTableSize];
+    }
+    else if(isInteger(x)) {
+	if(INTEGER(x)[i] == NA_INTEGER)
 	    /*
 	     * Paul 01/07/04
 	     * Used to be set to NA_INTEGER (see comment in name2col).
 	     */
-	    return R_RGBA(255, 255, 255, 255);
+	    return R_TRANWHITE;
 	indx = INTEGER(x)[i] - 1;
 	if(indx < 0) return Rf_dpptr(CurrentDevice())->bg;
 	else return R_ColorTable[indx % R_ColorTableSize];
     }
     else if(isReal(x)) {
-	if(!R_FINITE(REAL(x)[i])) 
+	if(!R_FINITE(REAL(x)[i]))
 	    /*
 	     * Paul 01/07/04
 	     * Used to be set to NA_INTEGER (see comment in name2col).
 	     */
-	    return R_RGBA(255, 255, 255, 255);
+	    return R_TRANWHITE;
 	indx = REAL(x)[i] - 1;
 	if(indx < 0) return Rf_dpptr(CurrentDevice())->bg;
 	else return R_ColorTable[indx % R_ColorTableSize];
     }
-    return 0;		/* should not occur */
+    warning(_("supplied color is not numeric nor character"));
+    return 0;
 }
 
 /*
  * Is element i of a colour object NA (or NULL)?
  */
-Rboolean isNAcol(SEXP col, int index, int ncol) 
+Rboolean attribute_hidden isNAcol(SEXP col, int index, int ncol)
 {
     Rboolean result = TRUE; /* -Wall */
 
@@ -4187,14 +4334,14 @@ Rboolean isNAcol(SEXP col, int index, int ncol)
 	else if (isReal(col))
 	    result = !R_FINITE(REAL(col)[index % ncol]);
 	else
-	    error("Invalid colour");
+	    error(_("Invalid color"));
     }
     return result;
 }
 
 /* Initialize the Color Databases */
 
-void InitColors(void)
+void attribute_hidden InitColors(void)
 {
     int i;
 
@@ -4226,11 +4373,11 @@ void InitColors(void)
 
 typedef struct {
     char *name;
-    unsigned int pattern;
+    int pattern;
 } LineTYPE;
 
 static LineTYPE linetype[] = {
-    { "blank",   LTY_BLANK   },/* 0 */
+    { "blank",   LTY_BLANK   },/* -1 */
     { "solid",	 LTY_SOLID   },/* 1 */
     { "dashed",	 LTY_DASHED  },/* 2 */
     { "dotted",	 LTY_DOTTED  },/* 3 */
@@ -4259,9 +4406,11 @@ unsigned int LTYpar(SEXP value, int ind)
 	p = CHAR(STRING_ELT(value, ind));
 	len = strlen(p);
 	if(len < 2 || len > 8 || len % 2 == 1)
-	    error("invalid line type: must be length 2, 4, 6 or 8");
+	    error(_("invalid line type: must be length 2, 4, 6 or 8"));
 	for(; *p; p++) {
 	    digit = hexdigit(*p);
+	    if(digit == 0)
+		error(_("invalid line type: zeroes are not allowed"));
 	    code  |= (digit<<shift);
 	    shift += 4;
 	}
@@ -4270,7 +4419,7 @@ unsigned int LTYpar(SEXP value, int ind)
     else if(isInteger(value)) {
 	code = INTEGER(value)[ind];
 	if(code == NA_INTEGER || code < 0)
-	    error("invalid line type");
+	    error(_("invalid line type"));
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
@@ -4278,14 +4427,14 @@ unsigned int LTYpar(SEXP value, int ind)
     else if(isReal(value)) {
 	rcode = REAL(value)[ind];
 	if(!R_FINITE(rcode) || rcode < 0)
-	    error("invalid line type");
+	    error(_("invalid line type"));
 	code = rcode;
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
     }
     else {
-	error("invalid line type"); /*NOTREACHED, for -Wall : */ return 0;
+	error(_("invalid line type")); /*NOTREACHED, for -Wall : */ return 0;
     }
 }
 #undef LTY_do_int
@@ -4355,8 +4504,8 @@ SEXP LTYget(unsigned int lty)
 void DevNull(void) {}
 
 static int R_CurrentDevice = 0;
-int R_NumDevices = 1;
-DevDesc* R_Devices[R_MaxDevices];
+static int R_NumDevices = 1;
+static DevDesc* R_Devices[R_MaxDevices];
 static int R_LastDeviceEntry = R_MaxDevices - 1;  /* used to catch creation
 						     of too many devices */
 static int R_MaxRegularDevices =  R_MaxDevices - 1; /* not coulting the
@@ -4364,7 +4513,7 @@ static int R_MaxRegularDevices =  R_MaxDevices - 1; /* not coulting the
 
 /* a dummy description to point to when there are no active devices */
 
-DevDesc nullDevice;
+static DevDesc nullDevice;
 
 /* unused
 void devError(void)
@@ -4392,11 +4541,11 @@ DevDesc* CurrentDevice(void)
      * check the options for a "default device".
      * If there is one, start it up. */
     if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_NilValue);
+	SEXP defdev = GetOption(install("device"), R_BaseEnv);
 	if (isString(defdev) && length(defdev) > 0)
 	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
 	else
-	    error("No active or default device");
+	    error(_("no active or default device"));
 	eval(defdev, R_GlobalEnv);
 	UNPROTECT(1);
     }
@@ -4413,7 +4562,7 @@ DevDesc* GetDevice(int i)
 void R_CheckDeviceAvailable(void)
 {
     if (R_NumDevices >= R_MaxRegularDevices)
-	error("too many open devices");
+	error(_("too many open devices"));
 }
 
 Rboolean R_CheckDeviceAvailableBool(void)
@@ -4422,21 +4571,20 @@ Rboolean R_CheckDeviceAvailableBool(void)
     else return TRUE;
 }
 
-void InitGraphics(void)
+void attribute_hidden InitGraphics(void)
 {
     int i;
     SEXP s, t;
 
-    /* init R_Devices */
     R_Devices[0] = &nullDevice;
     for (i = 1; i < R_MaxDevices; i++)
 	R_Devices[i] = NULL;
 
     /* init .Device and .Devices */
     PROTECT(s = mkString("null device"));
-    gsetVar(install(".Device"), s, R_NilValue);
+    gsetVar(install(".Device"), s, R_BaseEnv);
     PROTECT(t = mkString("null device"));
-    gsetVar(install(".Devices"), CONS(t, R_NilValue), R_NilValue);
+    gsetVar(install(".Devices"), CONS(t, R_NilValue), R_BaseEnv);
     UNPROTECT(2);
 
     /* Register the base graphics system with the graphics engine
@@ -4448,7 +4596,7 @@ void InitGraphics(void)
 static SEXP getSymbolValue(char *symbolName)
 {
     SEXP t;
-    t = findVar(install(symbolName), R_NilValue);
+    t = findVar(install(symbolName), R_BaseEnv);
     return t;
 }
 
@@ -4552,12 +4700,12 @@ void addDevice(DevDesc *dd)
 
     /* In case a device driver did not call R_CheckDeviceAvailable
        before starting its allocation, we complete the allocation and
-       then call killDevice here.  This insures that the device gets a
+       then call killDevice here.  This ensures that the device gets a
        chance to deallocate its resources and the current active
        device is restored to a sane value. */
     if (i == R_LastDeviceEntry) {
         killDevice(i);
-        error("too many devices open");
+        error(_("too many open devices"));
     }
 }
 
@@ -4604,7 +4752,7 @@ int selectDevice(int devNum)
 	/* maintain .Device */
 	gsetVar(install(".Device"),
 		elt(getSymbolValue(".Devices"), devNum),
-		R_NilValue);
+		R_BaseEnv);
 
 	dd = CurrentDevice();
 	if (!NoDevices()) {
@@ -4647,7 +4795,7 @@ void removeDevice(int devNum)
 	    gsetVar(install(".Device"),
 		    elt(getSymbolValue(".Devices"),
 			R_CurrentDevice),
-		    R_NilValue);
+		    R_BaseEnv);
 
 	    if (!NoDevices()) {
 		dd = CurrentDevice();
@@ -4687,11 +4835,13 @@ void KillAllDevices(void)
     /* don't try to close or remove the null device ! */
     while (R_NumDevices > 1)
 	killDevice(R_CurrentDevice);
+    /* <FIXME> Disable this for now */
     /*
      * Free the font and encoding structures used by
      * PostScript, Xfig, and PDF devices
      */
-    freeType1Fonts();
+    /* freeType1Fonts();
+       </FIXME>*/
     /* FIXME: There should really be a formal graphics finaliser
      * but this is a good proxy for now.
      */
@@ -4711,15 +4861,7 @@ void initDisplayList(DevDesc *dd)
 
 void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 {
-    SEXP lastOperation = lastElt(((GEDevDesc*) dd)->dev->displayList);
-    if (((GEDevDesc*) dd)->dev->displayListOn) {
-	SEXP newOperation = CONS(op, args);
-	if (lastOperation == R_NilValue)
-	    ((GEDevDesc*) dd)->dev->displayList = CONS(newOperation,
-						       R_NilValue);
-	else
-	    SETCDR(lastOperation, CONS(newOperation, R_NilValue));
-    }
+    GErecordGraphicOperation(op, args, ((GEDevDesc*) dd));
 }
 
 /* NOTE this is not declared static because it is also used in
@@ -4727,12 +4869,13 @@ void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
  * Once graphics.c gets hacked to pieces and split into engine.c and base.c
  * then this can be made static again.
  */
+attribute_hidden
 void restoredpSaved(DevDesc *dd)
 {
     /* NOTE that not all params should be restored before playing */
     /* the display list (e.g., don't restore the device size) */
 
-    int i, j;
+    int i, j, nr, nc;
 
     /* do NOT restore basic device driver properties;  they are */
     /* either meant to be different (e.g., left, right, bottom, top */
@@ -4744,11 +4887,13 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->bg = Rf_dpSavedptr(dd)->bg;
     Rf_dpptr(dd)->bty = Rf_dpSavedptr(dd)->bty;
     Rf_dpptr(dd)->cex = Rf_dpSavedptr(dd)->cex;
+    Rf_gpptr(dd)->lheight = Rf_dpSavedptr(dd)->lheight;
     Rf_dpptr(dd)->col = Rf_dpSavedptr(dd)->col;
     Rf_dpptr(dd)->crt = Rf_dpSavedptr(dd)->crt;
     Rf_dpptr(dd)->err = Rf_dpSavedptr(dd)->err;
     Rf_dpptr(dd)->fg = Rf_dpSavedptr(dd)->fg;
     Rf_dpptr(dd)->font = Rf_dpSavedptr(dd)->font;
+    strncpy(Rf_dpptr(dd)->family, Rf_dpSavedptr(dd)->family, 201);
     Rf_dpptr(dd)->gamma = Rf_dpSavedptr(dd)->gamma;
     Rf_dpptr(dd)->lab[0] = Rf_dpSavedptr(dd)->lab[0];
     Rf_dpptr(dd)->lab[1] = Rf_dpSavedptr(dd)->lab[1];
@@ -4756,6 +4901,9 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->las = Rf_dpSavedptr(dd)->las;
     Rf_dpptr(dd)->lty = Rf_dpSavedptr(dd)->lty;
     Rf_dpptr(dd)->lwd = Rf_dpSavedptr(dd)->lwd;
+    Rf_dpptr(dd)->lend = Rf_dpSavedptr(dd)->lend;
+    Rf_dpptr(dd)->ljoin = Rf_dpSavedptr(dd)->ljoin;
+    Rf_dpptr(dd)->lmitre = Rf_dpSavedptr(dd)->lmitre;
     Rf_dpptr(dd)->mgp[0] = Rf_dpSavedptr(dd)->mgp[0];
     Rf_dpptr(dd)->mgp[1] = Rf_dpSavedptr(dd)->mgp[1];
     Rf_dpptr(dd)->mgp[2] = Rf_dpSavedptr(dd)->mgp[2];
@@ -4766,8 +4914,6 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->srt = Rf_dpSavedptr(dd)->srt;
     Rf_dpptr(dd)->tck = Rf_dpSavedptr(dd)->tck;
     Rf_dpptr(dd)->tcl = Rf_dpSavedptr(dd)->tcl;
-    Rf_dpptr(dd)->tmag = Rf_dpSavedptr(dd)->tmag;
-    Rf_dpptr(dd)->type = Rf_dpSavedptr(dd)->type;
     Rf_dpptr(dd)->xaxp[0] = Rf_dpSavedptr(dd)->xaxp[0];
     Rf_dpptr(dd)->xaxp[1] = Rf_dpSavedptr(dd)->xaxp[1];
     Rf_dpptr(dd)->xaxp[2] = Rf_dpSavedptr(dd)->xaxp[2];
@@ -4819,23 +4965,22 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->mai[3] = Rf_dpSavedptr(dd)->mai[3];
     Rf_dpptr(dd)->mUnits = Rf_dpSavedptr(dd)->mUnits;
     Rf_dpptr(dd)->mex = Rf_dpSavedptr(dd)->mex;
-    Rf_dpptr(dd)->numrows = Rf_dpSavedptr(dd)->numrows;
-    Rf_dpptr(dd)->numcols = Rf_dpSavedptr(dd)->numcols;
+    nr = Rf_dpptr(dd)->numrows = Rf_dpSavedptr(dd)->numrows;
+    nc = Rf_dpptr(dd)->numcols = Rf_dpSavedptr(dd)->numcols;
     Rf_dpptr(dd)->currentFigure = Rf_dpSavedptr(dd)->currentFigure;
     Rf_dpptr(dd)->lastFigure = Rf_dpSavedptr(dd)->lastFigure;
-    for (i = 0; i < Rf_dpSavedptr(dd)->numrows && i < MAX_LAYOUT_ROWS; i++) {
+    for (i = 0; i < nr && i < MAX_LAYOUT_ROWS; i++) {
 	Rf_dpptr(dd)->heights[i] = Rf_dpSavedptr(dd)->heights[i];
 	Rf_dpptr(dd)->cmHeights[i] = Rf_dpSavedptr(dd)->cmHeights[i];
     }
-    for (j = 0; j < Rf_dpSavedptr(dd)->numcols && j < MAX_LAYOUT_COLS; j++) {
+    for (j = 0; j < nc && j < MAX_LAYOUT_COLS; j++) {
 	Rf_dpptr(dd)->widths[j] = Rf_dpSavedptr(dd)->widths[j];
 	Rf_dpptr(dd)->cmWidths[j] = Rf_dpSavedptr(dd)->cmWidths[j];
     }
-    for (i = 0; i < Rf_dpSavedptr(dd)->numrows && i < MAX_LAYOUT_ROWS; i++)
-	for (j=0; j<Rf_dpSavedptr(dd)->numcols && j < MAX_LAYOUT_COLS; j++) {
-	    Rf_dpptr(dd)->order[i][j] = Rf_dpSavedptr(dd)->order[i][j];
-	    Rf_dpptr(dd)->respect[i][j] = Rf_dpSavedptr(dd)->respect[i][j];
-	}
+    for (i = 0; i < nr*nc && i < MAX_LAYOUT_CELLS; i++) {
+	Rf_dpptr(dd)->order[i] = Rf_dpSavedptr(dd)->order[i];
+	Rf_dpptr(dd)->respect[i] = Rf_dpSavedptr(dd)->respect[i];
+    }
     Rf_dpptr(dd)->rspct = Rf_dpSavedptr(dd)->rspct;
     Rf_dpptr(dd)->layout = Rf_dpSavedptr(dd)->layout;
     Rf_dpptr(dd)->mfind = Rf_dpSavedptr(dd)->mfind;

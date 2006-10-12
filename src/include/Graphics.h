@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef GRAPHICS_H_
@@ -25,18 +25,19 @@
 
 #include <R_ext/Boolean.h>
 
+#include <R_ext/GraphicsDevice.h>
+#include <R_ext/GraphicsEngine.h>
+
 #define R_MaxDevices 64
 
 #define	DEG2RAD 0.01745329251994329576
 
 #define COLOR_TABLE_SIZE 1024
 
-#define MAX_LAYOUT_ROWS 15
-#define MAX_LAYOUT_COLS 15
-
-/* NOTE: during replays, call == R_NilValue;
-   ----  the following adds readability: */
-#define GRecording(call)  (call != R_NilValue)
+#define MAX_LAYOUT_ROWS 50
+#define MAX_LAYOUT_COLS 50
+#define MAX_LAYOUT_CELLS 500 /* must be less than 65535, 
+				3 copies, 3bytes each */
 
 typedef unsigned int rcolor;
 
@@ -128,11 +129,20 @@ typedef struct {
     rcolor bg;		/* **R ONLY** Background color */
     int	bty;		/* Box type */
     double cex;		/* Character expansion */
+    double lheight;     /* Line height
+			   The height of a line of text is:
+			   ps * cex * lheight */
     rcolor col;		/* Plotting Color */
     double crt;		/* Character/string rotation */
     double din[2];	/* device size in inches */
     int	err;		/* Error repporting level */
     rcolor fg;		/* **R ONLY** Foreground Color */
+    char family[201];  /* **R ONLY** Font family 
+			   Simple name which is mapped by device-specific
+			   font database to device-specific name.
+			   Only used if not "".
+			   Default is "".
+			   Ignored by some devices. */
     int	font;		/* Text font */
     double gamma;	/* Device Gamma Correction */
     int	lab[3];		/* Axis labelling */
@@ -142,19 +152,23 @@ typedef struct {
     int	las;		/* Label style (rotation) */
     int	lty;		/* Line texture */
     double lwd;		/* Line width */
+    R_GE_lineend lend;  /* **R ONLY** Line end style */
+    R_GE_linejoin ljoin;/* **R ONLY** Line join style */
+    double lmitre;      /* **R ONLY** Line mitre limit */
     double mgp[3];	/* Annotation location */
 			/* [0] = location of axis title */
 			/* [1] = location of axis label */
 			/* [2] = location of axis line */
     double mkh;		/* Mark size in inches */
     int	pch;		/* Plotting character */
-    int	ps;		/* Text & symbol pointsize */
+    int ps;		/* Text & symbol pointsize */
     int	smo;		/* Curve smoothness */
     double srt;		/* String Rotation */
     double tck;		/* Tick size as in S */
     double tcl;		/* Tick size in "lines" */
-    double tmag;	/* **R ONLY** Title Magnification */
-    int	type;		/* type of plot desired */
+    /* kept to avoid changing the structure */
+    double tmag;	/* **DEFUNCT** Title Magnification */
+    /* int	type;	    type of plot desired -- removed in 2.3.0 */
     double xaxp[3];	/* X Axis annotation */
 			/* [0] = coordinate of lower tick */
 			/* [1] = coordinate of upper tick */
@@ -200,9 +214,9 @@ typedef struct {
     double widths[MAX_LAYOUT_COLS];
     int	cmHeights[MAX_LAYOUT_ROWS];
     int	cmWidths[MAX_LAYOUT_COLS];
-    int	order[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+    unsigned short order[MAX_LAYOUT_CELLS];
     int	rspct;		/* 0 = none, 1 = full, 2 = see respect */
-    int	respect[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+    unsigned char respect[MAX_LAYOUT_CELLS];
 
     int	mfind;		/* By row/col indicator */
 
@@ -296,6 +310,9 @@ typedef struct {
     /* NOTE: if user has not set fig and/or plt then */
     /* they need to be updated per plot.new too */
 
+    double scale;       /* An internal "zoom" factor to apply to ps and lwd */
+                        /* (for fit-to-window resizing in Windows) */
+
     /* device operations */
     Rboolean (*open)();
     void (*close)();
@@ -346,21 +363,36 @@ typedef struct {
 /* always remap private functions */
 #include <Rgraphics.h>
 #define char2col		Rf_char2col
+#define CheckColor		Rf_CheckColor
 #define col2name		Rf_col2name
 #define copyGPar		Rf_copyGPar
 #define curDevice               Rf_curDevice
+#define FixupCex		Rf_FixupCex
+#define FixupCol		Rf_FixupCol
+#define FixupFont		Rf_FixupFont
+#define FixupLty		Rf_FixupLty
+#define FixupLwd		Rf_FixupLwd
+#define FixupPch		Rf_FixupPch
+#define FixupVFont		Rf_FixupVFont
 #define GetDevice               Rf_GetDevice
 #define GInit			Rf_GInit
 #define name2col		Rf_name2col
 #define nextDevice              Rf_nextDevice
 #define number2col		Rf_number2col
 #define NumDevices              Rf_NumDevices
+#define ProcessInlinePars	Rf_ProcessInlinePars
 #define rgb2col			Rf_rgb2col
 #define RGB2rgb			Rf_RGB2rgb
+#define RGBA2rgb		Rf_RGBA2rgb
 #define ScaleColor		Rf_ScaleColor
+#define Specify2		Rf_Specify2
 #define str2col			Rf_str2col
 #define StrMatch		Rf_StrMatch
 #define isNAcol                 Rf_isNAcol
+
+/* NOTE: during replays, call == R_NilValue;
+   ----  the following adds readability: */
+Rboolean GRecording(SEXP, DevDesc*);
 
 /* Default the settings for general graphical parameters
  * (i.e., defaults that do not depend on the device type: */
@@ -395,13 +427,26 @@ unsigned int CheckColor(int x);
 Rboolean isNAcol(SEXP col, int index, int ncol);
 
 char* RGB2rgb(unsigned int, unsigned int, unsigned int);
+char* RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
 
 int StrMatch(char *s, char *t);
 
 double R_Log10(double);
 
-#include <R_ext/GraphicsDevice.h>
-#include <R_ext/GraphicsEngine.h>
+void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
+void Specify2(char*, SEXP, DevDesc*, SEXP call);
+#ifdef UNUSED
+void RecordGraphicsCall(SEXP);
+#endif
+
+SEXP FixupPch(SEXP, int);
+SEXP FixupLty(SEXP, int);
+SEXP FixupFont(SEXP, int);
+SEXP FixupCol(SEXP, unsigned int);
+SEXP FixupCex(SEXP, double);
+SEXP FixupLwd(SEXP, double);
+SEXP FixupVFont(SEXP);
+
 #include <R_ext/GraphicsBase.h>
 
 /* 
@@ -415,5 +460,25 @@ GPar* Rf_gpptr(DevDesc *dd);
 GPar* Rf_dpptr(DevDesc *dd);
 GPar* Rf_dpSavedptr(DevDesc *dd);
 SEXP Rf_displayList(DevDesc *dd);
+
+/* Graphics events */
+
+/* These give the indices of some known keys */    
+
+typedef enum {knUNKNOWN = -1,
+              knLEFT = 0, knUP, knRIGHT, knDOWN,
+              knF1, knF2, knF3, knF4, knF5, knF6, knF7, knF8, knF9, knF10,
+              knF11, knF12,
+              knPGUP, knPGDN, knEND, knHOME, knINS, knDEL} R_KeyName;
+              
+/* These are the three possible mouse events */
+
+typedef enum {meMouseDown = 0,
+	      meMouseUp,
+	      meMouseMove} R_MouseEvent;
+
+SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event, 
+                  int buttons, double x, double y);
+SEXP doKeybd	(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey, char *keyname);
 
 #endif /* GRAPHICS_H_ */

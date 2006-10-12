@@ -9,13 +9,13 @@
 \usage{
 persp(x, \dots)
 
-\method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
-      xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE),
+\method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+      z, xlim = range(x), ylim = range(y),
+      zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
       theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1,
       col = "white", border = NULL, ltheta = -135, lphi = 0, shade = NA,
-      box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
-      \dots)
+      box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple", \dots)
 }
 \arguments{
   \item{x, y}{locations of grid lines at which the values in \code{z} are
@@ -52,7 +52,8 @@ persp(x, \dots)
   \item{col}{the color(s) of the surface facets.  Transparent colours are
     ignored.  This is recycled to the \eqn{(nx-1)(ny-1)} facets.}
   \item{border}{the color of the line drawn around the surface facets.
-    A value of \code{NA} will disable the drawing of borders.  This is
+    The default, \code{NULL}, corresponds to \code{par("fg")}.
+    A value of \code{NA} will disable the drawing of borders: this is
     sometimes useful when the surface is shaded.}
   \item{ltheta, lphi}{if finite values are specified for \code{ltheta}
     and \code{lphi}, the surface is shaded as though it was being
@@ -79,14 +80,13 @@ persp(x, \dots)
   \item{\dots}{additional graphical parameters (see \code{\link{par}}).}
 }
 \value{
-  The \emph{viewing transformation matrix}, say \code{VT}, a
-  \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D coordinates
+  \code{persp()} returns the \emph{viewing transformation matrix}, say
+  \code{VT}, a \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D coordinates
   \eqn{(x,y,z)} into the 2D plane using homogenous 4D coordinates
   \eqn{(x,y,z,t)}.
   It can be used to superimpose additional graphical elements on the 3D
-  plot, by \code{\link{lines}()} or \code{\link{points}()}, e.g.
-  using the function \code{trans3d} given in the last examples section
-  below.
+  plot, by \code{\link{lines}()} or \code{\link{points}()},
+  using the simple function \code{\link{trans3d}()}.
 }
 \details{
   The plots are produced by first transforming the
@@ -101,6 +101,12 @@ persp(x, \dots)
   called after the plot is completed, which is used in the
   testing code to annotate the plot page.  The hook function(s) are
   called with no argument.
+
+  Notice that \code{persp} interprets the \code{z} matrix as a table of
+  \code{f(x[i], y[j])} values, so that the x axis corresponds to row
+  number and the y axis to column number, with column 1 at the bottom,
+  so that with the standard rotation angles, the top left corner of the
+  matrix is displayed at the left hand side, closest to the user.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -108,7 +114,7 @@ persp(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{contour}} and \code{\link{image}}.
+  \code{\link{contour}} and \code{\link{image}}; \code{\link{trans3d}}.
 }
 \examples{
 ## More examples in  demo(persp) !!
@@ -130,12 +136,8 @@ persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
 ) -> res
 round(res, 3)
 
-# (2) Add to existing persp plot :
+# (2) Add to existing persp plot - using trans3d() :
 
-trans3d <- function(x,y,z, pmat) {
-  tr <- cbind(x,y,z,1) \%*\% pmat
-  list(x = tr[,1]/tr[,4], y= tr[,2]/tr[,4])
-}
 xE <- c(-10,10); xy <- expand.grid(xE, xE)
 points(trans3d(xy[,1], xy[,2], 6, pm = res), col = 2, pch =16)
 lines (trans3d(x, y=10, z= 6 + sin(x), pm = res), col = 3)
@@ -144,7 +146,8 @@ phi <- seq(0, 2*pi, len = 201)
 r1 <- 7.725 # radius of 2nd maximum
 xr <- r1 * cos(phi)
 yr <- r1 * sin(phi)
-lines(trans3d(xr,yr, f(xr,yr), res), col = "pink", lwd=2)## (no hidden lines)
+lines(trans3d(xr,yr, f(xr,yr), res), col = "pink", lwd = 2)
+## (no hidden lines)
 
 # (3) Visualizing a simple DEM model
 

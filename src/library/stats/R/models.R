@@ -17,7 +17,10 @@ formula.formula <- function(x, ...) x
 formula.terms <- function(x, ...) {
     env<- environment(x)
     attributes(x) <- list(class="formula")
-    environment(x) <- env
+    if (!is.null(env))
+    	environment(x) <- env
+    else
+    	environment(x) <- globalenv()
     x
 }
 
@@ -57,8 +60,8 @@ as.formula <- function(object,env=parent.frame()){
     if(inherits(object, "formula"))
            object
     else{
-        rval<-formula(object,env=NULL)
-        if (is.null(environment(rval)) || !missing(env))
+        rval<-formula(object,env=baseenv())
+        if (identical(environment(rval), baseenv()) || !missing(env))
             environment(rval)<-env
         rval
     }
@@ -74,6 +77,9 @@ terms.default <- function(x, ...) {
 
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) print.default(unclass(x))
+
+## moved from base/R/labels.R
+labels.terms <- function(object, ...) attr(object, "term.labels")
 
 ### do this `by hand' as previous approach was vulnerable to re-ordering.
 delete.response <- function (termobj)
@@ -142,11 +148,14 @@ drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
 
 terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 			  neg.out = TRUE, keep.order = FALSE,
-                          simplify = FALSE, ...)
+                          simplify = FALSE, ..., allowDotAsName = FALSE)
 {
     fixFormulaObject <- function(object) {
         Terms <- terms(object)
 	tmp <- attr(Terms, "term.labels")
+        ## fix up terms involving | : PR#8462
+        ind <- grep("|", tmp, fixed = TRUE)
+        if(length(ind)) tmp[ind] <- paste("(", tmp[ind], ")")
         ## need to add back any offsets
         if(length(ind <- attr(Terms, "offset"))) {
             ## can't look at rownames of factors, as not there y ~ offset(x)
@@ -161,8 +170,9 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     }
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
-	data <- as.data.frame(data)
-    terms <- .Internal(terms.formula(x, specials, data, keep.order))
+	data <- as.data.frame(data, optional=TRUE)
+    terms <- .Internal(terms.formula(x, specials, data, keep.order,
+                                     allowDotAsName))
     if (simplify) {
         a <- attributes(terms)
         terms <- fixFormulaObject(terms)
@@ -206,6 +216,8 @@ variable.names.default <- function(object, ...) colnames(object)
 case.names <- function(object, ...) UseMethod("case.names")
 case.names.default <- function(object, ...) rownames(object)
 
+simulate <- function(object, nsim = 1, seed = NULL, ...) UseMethod("simulate")
+
 offset <- function(object) object
 ## ?
 
@@ -223,14 +235,15 @@ offset <- function(object) object
     if(!identical(old, new)) {
         wrong <- old != new
         if(sum(wrong) == 1)
-            stop(paste("variable", sQuote(names(old)[wrong]),
-                       "was fitted with", old[wrong], "but",
-                       new[wrong], "was supplied"), call.=FALSE)
+            stop(gettextf(
+    "variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied",
+                          names(old)[wrong], old[wrong], new[wrong]),
+                 call. = FALSE, domain = NA)
         else
-            stop(paste("variables",
-                       paste(sQuote(names(old)[wrong]), collapse=", "),
-                       "were specified differently from the fit"),
-                 call.=FALSE)
+            stop(gettextf(
+    "variables %s were specified with different classes from the fit",
+                 paste(sQuote(names(old)[wrong]), collapse=", ")),
+                 call. = FALSE, domain = NA)
     }
 }
 
@@ -261,11 +274,12 @@ model.frame.default <-
     (nr <- nrow(data)) > 0
 
     ## were we passed just a fitted model object?
+    ## the fit might have a saved model object
+    if(!missing(formula) && nargs() == 1 && is.list(formula)
+       && !is.null(m <- formula$model)) return(m)
+    ## if not use the saved call (if there is one).
     if(!missing(formula) && nargs() == 1 && is.list(formula)
        && all(c("terms", "call") %in% names(formula))) {
-        ## the fit might have a saved model object
-        if(!is.null(m <- formula$model)) return(m)
-        ## if not use the saved call.
         fcall <- formula$call
         m <- match(c("formula", "data", "subset", "weights", "na.action"),
                    names(fcall), 0)
@@ -299,7 +313,7 @@ model.frame.default <-
              && !is.null(attr(data, "class")))
         data <- as.data.frame(data)
     else if (is.array(data))
-        stop("`data' must be a data.frame, not a matrix or  array")
+        stop("'data' must be a data.frame, not a matrix or an array")
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     env <- environment(formula)
@@ -307,29 +321,29 @@ model.frame.default <-
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
     if(is.null(predvars)) predvars <- vars
-    varnames <- as.character(vars[-1])
+    varnames <- sapply(vars, deparse, width.cutoff=500)[-1]
     variables <- eval(predvars, data, env)
+    if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
+        ## see if we can get rownames from the response
+        lhs <- variables[[resp]]
+        rownames <- if(is.matrix(lhs)) rownames(lhs) else names(lhs)
+    }
     if(possible_newdata && length(variables)) {
         ## need to do this before subsetting and na.action
         nr2 <- max(sapply(variables, NROW))
         if(nr2 != nr)
-            warning(paste("'newdata' had", nr,
-                          "rows but variable(s) found have",
-                          nr2, "rows"), call.=FALSE)
+            warning(gettextf(
+                   "'newdata' had %d rows but variable(s) found have %d rows",
+                             nr, nr2), call.=FALSE)
     }
     if(is.null(attr(formula, "predvars"))) {
-        for (i in seq(along = varnames))
+        for (i in seq_along(varnames))
             predvars[[i+1]] <- makepredictcall(variables[[i]], vars[[i+1]])
         attr(formula, "predvars") <- predvars
     }
-    extranames <- names(substitute(list(...))[-1])
     extras <- substitute(list(...))
+    extranames <- names(extras[-1])
     extras <- eval(extras, data, env)
-    ##if(length(extras)) { # remove NULL args
-    ##    keep <- !sapply(extras, is.null)
-    ##    extras <- extras[keep]
-    ##    extranames <- extranames[keep]
-    ##}
     subset <- eval(substitute(subset), data, env)
     data <- .Internal(model.frame(formula, rownames, variables, varnames,
 				  extras, extranames, subset, na.action))
@@ -339,11 +353,15 @@ model.frame.default <-
 	    if(!is.null(xl <- xlev[[nm]])) {
 		xi <- data[[nm]]
 		if(is.null(nxl <- levels(xi)))
-		    warning(paste("variable", nm, "is not a factor"))
+		    warning(gettextf("variable '%s' is not a factor", nm),
+                            domain = NA)
 		else {
-		    xi <- xi[, drop= TRUE] # drop unused levels
+		    xi <- xi[, drop = TRUE] # drop unused levels
+                    nxl <- levels(xi)
 		    if(any(m <- is.na(match(nxl, xl))))
-			stop(paste("factor", nm, "has new level(s)", nxl[m]))
+			stop(gettextf("factor '%s' has new level(s) %s",
+                                      nm, paste(nxl[m], collapse=", ")),
+                             domain = NA)
 		    data[[nm]] <- factor(xi, levels=xl)
 		}
 	    }
@@ -360,39 +378,55 @@ model.frame.default <-
     data
 }
 
+## we don't assume weights are numeric or a vector, leaving this to the
+## calling application
 model.weights <- function(x) x$"(weights)"
+
+## we do check that offsets are numeric.
 model.offset <- function(x) {
     offsets <- attr(attr(x, "terms"),"offset")
     if(length(offsets) > 0) {
 	ans <- x$"(offset)"
-        if (is.null(ans))
-	   ans <- 0
+        if (is.null(ans)) ans <- 0
 	for(i in offsets) ans <- ans+x[[i]]
 	ans
     }
-    else x$"(offset)"
+    else ans <- x$"(offset)"
+    if(!is.null(ans) && !is.numeric(ans)) stop("'offset' must be numeric")
+    ans
 }
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
+
 model.matrix.default <- function(object, data = environment(object),
 				 contrasts.arg = NULL, xlev = NULL, ...)
 {
-    t <- terms(object)
+    t <- if(missing(data)) terms(object) else terms(object, data=data)
     if (is.null(attr(data, "terms")))
 	data <- model.frame(object, data, xlev=xlev)
     else {
-	reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
+	reorder <- match(sapply(attr(t,"variables"),deparse,
+                                width.cutoff=500)[-1],
+                         names(data))
 	if (any(is.na(reorder)))
 	    stop("model frame and formula mismatch in model.matrix()")
-	data <- data[,reorder, drop=FALSE]
+	if(!identical(reorder, seq_len(ncol(data))))
+	    data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")
-    if(length(data)) { # no rhs terms, so skip all this
+    if(length(data)) { # otherwise no rhs terms, so skip all this
         contr.funs <- as.character(getOption("contrasts"))
+        namD <- names(data)
+        ## turn any character columns into factors
+        for(i in namD)
+            if(is.character(data[[i]])) {
+                data[[i]] <- factor(data[[i]])
+                warning(gettextf("variable '%s' converted to a factor", i),
+                        domain = NA)
+            }
         isF <- sapply(data, function(x) is.factor(x) || is.logical(x) )
         isF[int] <- FALSE
         isOF <- sapply(data, is.ordered)
-        namD <- names(data)
         for(nn in namD[isF])            # drop response
             if(is.null(attr(data[[nn]], "contrasts")))
                 contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
@@ -400,10 +434,11 @@ model.matrix.default <- function(object, data = environment(object),
         ##	  get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
         if (!is.null(contrasts.arg) && is.list(contrasts.arg)) {
             if (is.null(namC <- names(contrasts.arg)))
-                stop("invalid contrasts argument")
+                stop("invalid 'contrasts.arg' argument")
             for (nn in namC) {
                 if (is.na(ni <- match(nn, namD)))
-                    warning(paste("Variable", nn, "absent, contrast ignored"))
+                    warning(gettextf("variable '%s' is absent, its contrast will be ignored", nn),
+                            domain = NA)
                 else {
                     ca <- contrasts.arg[[nn]]
                     if(is.matrix(ca)) contrasts(data[[ni]], ncol(ca)) <- ca
@@ -439,7 +474,7 @@ model.response <- function (data, type = "any")
 			dimnames(v) <- list(rows, dn[[2]])
 	    }
 	    return(v)
-	} else stop("invalid data argument")
+	} else stop("invalid 'data' argument")
     } else return(NULL)
 }
 
@@ -483,7 +518,7 @@ makepredictcall.default  <- function(var, call)
 
 .getXlevels <- function(Terms, m)
 {
-    xvars <- as.character(attr(Terms, "variables"))[-1]
+    xvars <- sapply(attr(Terms, "variables"),deparse,width.cutoff=500)[-1]
     if((yvar <- attr(Terms, "response")) > 0) xvars <- xvars[-yvar]
     if(length(xvars) > 0) {
         xlev <- lapply(m[xvars], levels)

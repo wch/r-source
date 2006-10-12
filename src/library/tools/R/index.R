@@ -26,12 +26,16 @@ function(dataDir, contents)
     ## </NOTE>
 
     if(!file_test("-d", dataDir))
-        stop(paste("directory", sQuote(dataDir), "does not exist"))
+        stop(gettextf("directory '%s' does not exist", dataDir),
+             domain = NA)
     ## dataFiles <- list_files_with_type(dataDir, "data")
     dataTopics <- list_data_in_pkg(dataDir=dataDir)
     if(!length(dataTopics)) return(matrix("", 0, 2))
     names(dataTopics) <- paste(names(dataTopics), "/", sep="")
     datasets <- unlist(dataTopics)
+    ## it is possible to have topics that create no object:
+    ## BioC's makecdfenv did.
+    if(!length(datasets)) return(matrix("", 0, 2))
     names(datasets) <- sub("/[^/]*$", "", names(datasets))
     datasets <- sort(datasets)
     dataIndex <- cbind(datasets, "")
@@ -69,18 +73,23 @@ function(demoDir)
     ## </NOTE>
 
     if(!file_test("-d", demoDir))
-        stop(paste("directory", sQuote(demoDir), "does not exist"))
+        stop(gettextf("directory '%s' does not exist", demoDir),
+             domain = NA)
     demoFiles <- list_files_with_type(demoDir, "demo")
     demoTopics <- unique(basename(file_path_sans_ext(demoFiles)))
     if(!length(demoTopics)) return(matrix("", 0, 2))
     demoIndex <- cbind(demoTopics, "")
     if(file_test("-f", INDEX <- file.path(demoDir, "00Index"))) {
-        demoEntries <- try(read.00Index(INDEX))
-        if(inherits(demoEntries, "try-error"))
-            warning(paste("cannot read index information in file",
-                          sQuote(INDEX)))
-        idx <- match(demoTopics, demoEntries[ , 1], 0)
-        demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
+        demoEntries <- tryCatch(read.00Index(INDEX),
+                                error = .identity)
+        if(inherits(demoEntries, "error"))
+            warning(gettextf("cannot read index information in file '%s'",
+                             INDEX),
+                    domain = NA)
+        else {
+            idx <- match(demoTopics, demoEntries[ , 1], 0)
+            demoIndex[which(idx != 0), 2] <- demoEntries[idx, 2]
+        }
     }
     dimnames(demoIndex) <- NULL
     demoIndex
@@ -92,12 +101,15 @@ function(demoDir)
 function(demoDir)
 {
     if(!file_test("-d", demoDir))
-        stop(paste("directory", sQuote(demoDir), "does not exist"))
+        stop(gettextf("directory '%s' does not exist", demoDir),
+             domain = NA)
     info_from_build <- .build_demo_index(demoDir)
-    info_from_index <- try(read.00Index(file.path(demoDir, "00Index")))
-    if(inherits(info_from_index, "try-error"))
-        stop(paste("cannot read index information in file",
-                   sQuote(file.path(demoDir, "00Index"))))
+    info_from_index <-
+        tryCatch(read.00Index(file.path(demoDir, "00Index")),
+                 error = function(e)
+                 stop(gettextf("cannot read index information in file '%s'",
+                               file.path(demoDir, "00Index")),
+                      domain = NA))
     bad_entries <-
         list(missing_from_index =
              info_from_build[grep("^[[:space:]]*$",
@@ -128,18 +140,19 @@ function(x, ...)
 ### * .build_hsearch_index
 
 .build_hsearch_index <-
-function(contents, packageName, libDir)
+function(contents, packageName)
 {
     ## Build an index of the Rd contents in 'contents', of a package
-    ## named 'packageName' (to be) installed in 'libDir', in a form
-    ## useful for help.search().
+    ## named 'packageName' in a form useful for help.search().
+    ## As from 2.3.0 the installation directory is no longer recorded,
+    ## but the format is kept for back-compatibility.
 
     dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), nc = 3)
 
     if((nr <- NROW(contents)) > 0) {
         ## IDs are used for indexing the Rd objects in the help.search
         ## db.
-        IDs <- seq(length = nr)
+        IDs <- seq_len(nr)
         if(!is.data.frame(contents)) {
             colnames(contents) <-
                 c("Name", "Aliases", "Title", "Keywords")
@@ -151,11 +164,15 @@ function(contents, packageName, libDir)
             aliases <- strsplit(contents[, "Aliases"], " +")
             ## Don't do this for keywords though, as these might be
             ## non-standard (and hence contain white space ...).
+            encoding <- NULL
         }
         else {
             base <- as.matrix(contents[, c("Name", "Title")])
             aliases <- contents[, "Aliases"]
+            encoding <- contents $ Encoding # may not be there ...
         }
+        if(is.null(encoding))
+            encoding <- character(length = nr)
         keywords <- contents[, "Keywords"]
         ## We create 4 character matrices (cannot use data frames for
         ## efficiency reasons): 'dbBase' holds all character string
@@ -164,8 +181,8 @@ function(contents, packageName, libDir)
         ## with entry, ID of the Rd object the entry comes from, and the
         ## package the object comes from.  The latter is useful when
         ## subscripting the help.search db according to package.
-        dbBase <- cbind(packageName, libDir, IDs, base,
-                        topic = sapply(aliases, "[", 1))
+        dbBase <- cbind(packageName, "", IDs, base,
+                        topic = sapply(aliases, "[", 1), encoding)
         ## If there are no aliases at all, cbind() below would give
         ## matrix(packageName, nc = 1).  (Of course, Rd objects without
         ## aliases are useless ...)
@@ -188,11 +205,12 @@ function(contents, packageName, libDir)
         }
     }
     else {
-        dbBase <- matrix(character(), nc = 6)
+        dbBase <- matrix(character(), nc = 7)
     }
 
     colnames(dbBase) <-
-        c("Package", "LibPath", "ID", "name", "title", "topic")
+        c("Package", "LibPath", "ID", "name", "title", "topic",
+          "Encoding")
     colnames(dbAliases) <-
         c("Aliases", "ID", "Package")
     colnames(dbKeywords) <-

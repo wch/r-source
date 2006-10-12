@@ -1,14 +1,27 @@
 \name{Rwin configuration}
 \alias{Rconsole}
 \alias{Rdevga}
+\alias{loadRconsole}
 \concept{console}
 \concept{fonts}
 \concept{preferences}
 \title{R for Windows Configuration}
 \description{
   The file \file{Rconsole} configures the R GUI console in this
-  Windows port. The file \file{Rdevga} configures the graphics devices
-  \code{windows}, \code{win.graph}, \code{win.metafile} and \code{win.print}.
+  Windows port. The \code{loadRconsole} function loads a new 
+  configuration.
+  
+  The file \file{Rdevga} configures the graphics devices
+  \code{windows}, \code{win.graph}, \code{win.metafile} and
+  \code{win.print}, as well as the bitmap devices \code{bmp},
+  \code{jpeg} and \code{png} (which use \code{windows} internally).
+}
+\usage{
+  loadRconsole(file)
+}
+\arguments{
+  \item{file}{The file from which to load a new \file{Rconsole} configuration.
+   By default a file dialog is used to select a file. }
 }
 \value{
   Each of the files contains details in its comments of how to set the
@@ -27,6 +40,9 @@
   \file{Rconsole} can also set the initial positions of the console and
   the graphics device, as well as the size and position of the MDI
   workspace in MDI mode.
+  
+  \code{loadRconsole} is called for its side effect of loading new 
+  defaults.  It returns no useful value.
 }
 \details{
   There are system copies of these files in \file{R\_HOME\\etc}.  Users
@@ -36,18 +52,27 @@
 
   If the environment variable \env{R\_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
-  otherwise to the Windows "personal" directory, 
+  otherwise to the Windows \dQuote{personal}  directory, 
   otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} and
   \code{HOMEDRIVE} are both set
   otherwise to the working directory.  This is as described in the file
   \file{rw-FAQ}.
 }
+\section{Chinese/Japanese/Korean}{
+  Users of these languages will need to select a suitable font for the
+  console (perhaps \code{FixedSys} or \code{MS Mincho}) and for the
+  graphics device (\code{Arial} can be replaced by \code{Arial Unicode MS}).
+
+  Which fonts are available depends on the version of Windows.
+}
 \note{
   The \code{GUI preferences} item on the \code{Edit} menu brings up an
-  form which can be used to edit the console settings, and to save them
+  dialog box which can be used to edit the console settings, and to save them
   to a file.
 }
-\author{Guido Masarotto}
+\author{
+  Guido Masarotto and R-core members
+}
 \seealso{\code{\link{windows}}}
 \examples{
 ruser <- Sys.getenv("R_USER")

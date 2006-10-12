@@ -1,9 +1,9 @@
 ## based on code by Martyn Plummer, plus kernel code by Adrian Trapletti
-spectrum <- function (..., method = c("pgram", "ar"))
+spectrum<- function (x, ..., method = c("pgram", "ar"))
 {
     switch(match.arg(method),
-	   pgram = spec.pgram(...),
-	   ar	 = spec.ar(...)
+	   pgram = spec.pgram(x, ...),
+	   ar	 = spec.ar(x, ...)
 	   )
 }
 
@@ -11,14 +11,14 @@ spectrum <- function (..., method = c("pgram", "ar"))
 spec.taper <- function (x, p = 0.1)
 {
     if (any(p < 0) || any(p > 0.5))
-        stop("p must be between 0 and 0.5")
+        stop("'p' must be between 0 and 0.5")
     a <- attributes(x)
     x <- as.matrix(x)
     nc <- ncol(x)
     if (length(p) == 1)
         p <- rep(p, nc)
     else if (length(p) != nc)
-        stop("length of p must be 1 or equal the number of columns of x")
+        stop("length of 'p' must be 1 or equal the number of columns of 'x'")
     nr <- nrow(x)
     for (i in 1:nc) {
         m <- floor(nr * p[i])
@@ -43,7 +43,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     } else {
         cn <- match(c("ar", "var.pred", "order"), names(x))
         if(any(is.na(cn)))
-            stop("x must be a time series or an ar() fit")
+            stop("'x' must be a time series or an ar() fit")
         series <- x$series
         xfreq <- x$frequency
         if(is.array(x$ar)) nser <- dim(x$ar)[2] else nser <- 1
@@ -85,10 +85,12 @@ spec.pgram <-
     N <- N0 <- nrow(x)
     nser <- ncol(x)
     if(!is.null(spans)) # allow user to mistake order of args
-        if(is.tskernel(spans)) kernel <- spans
-        else kernel <- kernel("modified.daniell", spans %/% 2)
+        kernel <- {
+            if(is.tskernel(spans)) spans else
+            kernel("modified.daniell", spans %/% 2)
+        }
     if(!is.null(kernel) && !is.tskernel(kernel))
-        stop("must specify spans or a valid kernel")
+        stop("must specify 'spans' or a valid kernel")
     if (detrend) {
         t <- 1:N - (N + 1)/2
         sumt2 <- N * (N^2 - 1)/12
@@ -127,7 +129,7 @@ spec.pgram <-
 	    pgram[, i, j] <- kernapply(pgram[, i, j], kernel, circular = TRUE)
 	df <- df.kernel(kernel)
 	bandwidth <- bandwidth.kernel(kernel)
-    } else {
+    } else { # raw periodogram
 	df <- 2
 	bandwidth <- sqrt(1/12)
     }
@@ -170,7 +172,8 @@ spec.pgram <-
 plot.spec <-
     function (x, add = FALSE, ci = 0.95, log = c("yes", "dB", "no"),
               xlab = "frequency", ylab = NULL,
-              type = "l", ci.col="blue", main = NULL, sub = NULL,
+              type = "l", ci.col = "blue", ci.lty = 3,
+              main = NULL, sub = NULL,
               plot.type = c("marginal", "coherency", "phase"), ...)
 {
     spec.ci <- function (spec.obj, coverage = 0.95)
@@ -248,7 +251,7 @@ plot.spec <-
                           x$method, sep = "\n")
         if (is.null(sub) && is.numeric(x$bandwidth))
              sub <- paste("bandwidth = ", format(x$bandwidth, digits = 3),
-                         ci.text, sep="")
+                          ci.text, sep="")
         title(main = main, sub = sub)
     }
     invisible(x)
@@ -258,7 +261,7 @@ plot.spec <-
 plot.spec.coherency <-
     function(x, ci = 0.95,
              xlab = "frequency", ylab = "squared coherency", ylim=c(0,1),
-             type = "l", main = NULL, ci.lty = 3, ci.col="blue", ...)
+             type = "l", main = NULL, ci.col="blue",  ci.lty = 3, ...)
 {
     nser <- NCOL(x$spec)
     ## Formulae from Bloomfield (1976, p.225)
@@ -307,7 +310,7 @@ plot.spec.coherency <-
 plot.spec.phase <-
     function(x, ci = 0.95,
              xlab = "frequency", ylab = "phase", ylim=c(-pi, pi),
-             type = "l", main = NULL, ci.lty = 3, ci.col="blue", ...)
+             type = "l", main = NULL, ci.col = "blue", ci.lty = 3, ...)
 {
     nser <- NCOL(x$spec)
     ## Formulae from Bloomfield (1976, p.225)

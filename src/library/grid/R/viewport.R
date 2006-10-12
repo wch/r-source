@@ -12,42 +12,47 @@ vpAutoName <- initvpAutoName()
 # NOTE: The order of the elements in viewports and pushedvps are
 # VERY IMPORTANT because the C code accesses them using constant
 # indices (i.e., if you change the order here the world will end!
-valid.viewport <- function(x, y, width, height, just, 
+valid.viewport <- function(x, y, width, height, just,
                            gp, clip,
                            xscale, yscale, angle,
                            layout, layout.pos.row, layout.pos.col,
                            name) {
-  if (unit.length(x) > 1 || unit.length(y) > 1 ||
-      unit.length(width) > 1 || unit.length(height) > 1)
-    stop("`x', `y', `width', and `height' must all be units of length 1")
+  if (length(x) > 1 || length(y) > 1 ||
+      length(width) > 1 || length(height) > 1)
+    stop("'x', 'y', 'width', and 'height' must all be units of length 1")
   if (!is.gpar(gp))
     stop("Invalid graphics parameters")
-  if (!is.logical(clip)) 
+  if (!is.logical(clip))
     clip <- switch(as.character(clip),
                    on=TRUE,
                    off=NA,
                    inherit=FALSE,
-                   stop("Invalid clip value"))
+                   stop("Invalid 'clip' value"))
   if (!is.numeric(xscale) || length(xscale) != 2 ||
       any(!is.finite(xscale)))
-    stop("Invalid xscale in viewport")
+    stop("Invalid 'xscale' in viewport")
   if (!is.numeric(yscale) || length(yscale) != 2 ||
       any(!is.finite(yscale)))
-    stop("Invalid yscale in viewport")
-  if (!is.numeric(angle) || length(angle) != 1)
-    stop("Invalid angle in viewport")
+    stop("Invalid 'yscale' in viewport")
+  if (!is.numeric(angle) || length(angle) != 1 ||
+      !is.finite(angle))
+    stop("Invalid 'angle' in viewport")
   if (!(is.null(layout) || is.layout(layout)))
-    stop("Invalid layout in viewport")
-  if (!is.null(layout.pos.row))
-    layout.pos.row <- as.integer(rep(range(layout.pos.row), length.out=2))
-  if (!is.null(layout.pos.col))
-    layout.pos.col <- as.integer(rep(range(layout.pos.col), length.out=2))
+    stop("Invalid 'layout' in viewport")
+  if (!is.null(layout.pos.row)) {
+    layout.pos.row <- as.integer(range(layout.pos.row))
+    if (any(!is.finite(layout.pos.row)))
+      stop("Invalid 'layout.pos.row' in viewport")
+  }
+  if (!is.null(layout.pos.col)) {
+    layout.pos.col <- as.integer(range(layout.pos.col))
+    if (any(!is.finite(layout.pos.col)))
+      stop("Invalid 'layout.pos.col' in viewport")
+  }
   # If name is NULL then we give it a default
   # Otherwise it should be a valid R name
   if (is.null(name))
     name <- vpAutoName()
-  else
-    name <- make.names(name)
   # Put all the valid things first so that are found quicker
   vp <- list(x = x, y = y, width = width, height = height,
              justification = just,
@@ -83,7 +88,7 @@ pushedvp <- function(vp) {
                     parent = NULL,
                     # Children of this pushedvp will be stored
                     # in an environment
-                    children = new.env(hash=TRUE, parent=NULL),
+                    children = new.env(hash=TRUE, parent=baseenv()),
                     # Initial value of 0 means that the viewport will
                     # be pushed "properly" the first time, calculating
                     # transformations, etc ...
@@ -190,7 +195,7 @@ viewport <- function(x = unit(0.5, "npc"),
                      just = "centre",
                      gp = gpar(),
                      clip = "inherit",
-                     # FIXME: scales are only linear at the moment 
+                     # FIXME: scales are only linear at the moment
                      xscale = c(0, 1),
                      yscale = c(0, 1),
                      angle = 0,
@@ -210,7 +215,7 @@ viewport <- function(x = unit(0.5, "npc"),
     width <- unit(width, default.units)
   if (!is.unit(height))
     height <- unit(height, default.units)
-  valid.viewport(x, y, width, height, just, 
+  valid.viewport(x, y, width, height, just,
                  gp, clip, xscale, yscale, angle,
                  layout, layout.pos.row, layout.pos.col, name)
 }
@@ -228,7 +233,7 @@ vpListFromList <- function(vps) {
     class(vps) <- c("vpList", "viewport")
     vps
   } else {
-    stop("Only viewports allowed in vpList")
+    stop("Only viewports allowed in 'vpList'")
   }
 }
 
@@ -245,7 +250,7 @@ vpStack <- function(...) {
     class(vps) <- c("vpStack", "viewport")
     vps
   } else {
-    stop("Only viewports allowed in vpStack")
+    stop("Only viewports allowed in 'vpStack'")
   }
 }
 
@@ -256,7 +261,7 @@ vpTree <- function(parent, children) {
     class(tree) <- c("vpTree", "viewport")
     tree
   } else {
-    stop("Parent must be viewport and children must be vpList in vpTree")
+    stop("'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'")
   }
 }
 
@@ -317,11 +322,20 @@ as.character.path <- function(x, ...) {
     x$name
   else
     paste(x$path, x$name, sep=.grid.pathSep)
-
 }
 
 print.path <- function(x, ...) {
   cat(as.character(x), "\n")
+}
+
+"[.vpPath" <- function(x, index, ...) {
+  names <- unlist(strsplit(as.character(x), .grid.pathSep))[index]
+  vpPathFromVector(names)
+}
+
+# Explode path$path
+explodePath <- function(path) {
+  unlist(strsplit(path, .grid.pathSep))
 }
 
 #############
@@ -329,7 +343,7 @@ print.path <- function(x, ...) {
 #############
 
 # Create a viewport with margins given in number of lines
-plotViewport <- function(margins, ...) {
+plotViewport <- function(margins=c(5.1, 4.1, 4.1, 2.1), ...) {
   margins <- rep(as.numeric(margins), length.out=4)
   viewport(x=unit(margins[2], "lines"),
            width=unit(1, "npc") - unit(sum(margins[c(2,4)]), "lines"),
@@ -342,17 +356,19 @@ plotViewport <- function(margins, ...) {
 # Create a viewport from data
 # If xscale not specified then determine from x
 # If yscale not specified then determine from y
-dataViewport <- function(xData=NULL, yData=NULL, xscale=NULL, yscale=NULL,
-                         extension=0.05, ...) {
-  if (is.null(xscale)) {
-    if (is.null(xData))
-      stop("Must specify at least one of x or xscale")
-    xscale <- range(xData) + c(-1, 1)*diff(range(xData))*extension
-  }
-  if (is.null(yscale)) {
-    if (is.null(yData))
-      stop("Must specify at least one of y or yscale")
-    yscale <- range(yData) + c(-1, 1)*diff(range(yData))*extension
-  }
-  viewport(xscale=xscale, yscale=yscale, ...)
+dataViewport <- function(xData = NULL, yData = NULL,
+                         xscale = NULL, yscale = NULL, extension = 0.05, ...)
+{
+    extension <- rep(extension, length.out = 2)
+    if (is.null(xscale)) {
+        if (is.null(xData))
+            stop("Must specify at least one of 'x' or 'xscale'")
+        xscale <- extendrange(xData, f = extension[1])
+    }
+    if (is.null(yscale)) {
+        if (is.null(yData))
+            stop("Must specify at least one of 'y' or 'yscale'")
+        yscale <- extendrange(yData, f = extension[2])
+    }
+    viewport(xscale = xscale, yscale = yscale, ...)
 }

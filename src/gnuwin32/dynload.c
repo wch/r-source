@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*  Dynamic Loading Support: See ../main/Rdynload.c and ../include/Rdynpriv.h
@@ -30,6 +30,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <direct.h>
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 
 #include <R_ext/Rdynload.h>
@@ -86,6 +87,17 @@ static void R_deleteCachedSymbols(DllInfo *dll)
 	}
 }
 
+#ifndef _MCW_EM
+_CRTIMP unsigned int __cdecl 
+_controlfp (unsigned int unNew, unsigned int unMask);
+_CRTIMP unsigned int __cdecl _clearfp (void);
+/* Control word masks for unMask */
+#define	_MCW_EM		0x0008001F	/* Error masks */
+#define	_MCW_IC		0x00040000	/* Infinity */
+#define	_MCW_RC		0x00000300	/* Rounding */
+#define	_MCW_PC		0x00030000	/* Precision */
+#endif
+
 HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;
@@ -97,8 +109,8 @@ HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
     dllcw = _controlfp(0,0) & ~_MCW_IC;
     if (dllcw != rcw) {
 		_controlfp(rcw, _MCW_EM | _MCW_IC | _MCW_RC | _MCW_PC);
-		if (LOGICAL(GetOption(install("warn.FPU"), R_NilValue))[0])
-			warning("DLL attempted to change FPU control word from %x to %x",
+		if (LOGICAL(GetOption(install("warn.FPU"), R_BaseEnv))[0])
+			warning(_("DLL attempted to change FPU control word from %x to %x"),
 					rcw,dllcw);
 	}
     return(tdlh);
@@ -136,7 +148,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 
     if ((path[0] != '/') && (path[0] != '\\') && (path[1] != ':')) {
 	if (!getcwd(buf, MAX_PATH))
-	    errorcall(call, "can't get working directory!");
+	    errorcall(call, _("cannot get working directory"));
 	strcat(buf, "\\");
 	strcat(buf, path);
     } else

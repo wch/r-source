@@ -1,0 +1,41 @@
+*This is no currently operational*
+==================================
+
+For UTF-8 support in Win9x and WinME, R needs a Unicode
+support layer.  
+
+Microsoft released MSLU in 2001; see these pages for details:
+
+    http://www.microsoft.com/globaldev/handson/dev/mslu_announce.mspx
+    http://msdn.microsoft.com/msdnmag/nettop.asp?page=/msdnmag/issues/01/10/MSLU/MSLU.asp&ad=ads.ddj.com/msdnmag/premium.htm
+
+Unfortunately, the license for MSLU is incompatible with the GPL under
+which R is released, so R is distributed with the Opencow library
+instead.  See
+
+    http://opencow.sourceforge.net
+    
+We use the statically linked library libunicows to import the Unicode
+functions from opencows.dll (or from MSLU's unicows.dll, if it is
+present).  See
+
+    http://libunicows.sourceforge.net
+
+INSTALLATION
+
+Obtain a current binary version of opencow.dll from
+http://opencow.sourceforge.net or from
+http://www.murdoch-sutherland.com/Rtools.  Obtain a current binary
+version of libunicows from http://libunicows.sourceforge.net or from
+http://www.murdoch-sutherland.com/Rtools.  Install opencow.dll in this
+directory (src/gnuwin32/unicode), and install libunicows.a in the lib
+directory of your MinGW installation.
+
+Define the variable SUPPORT_UTF8 in src/gnuwin32/MkRules, and build R.
+
+LIMITATIONS
+
+This library allows Unicode executables to run, but it doesn't provide
+full Unicode support.  In particular:
+
+[to be filled in]

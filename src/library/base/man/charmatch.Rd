@@ -5,9 +5,11 @@ charmatch(x, table, nomatch = NA)
 }
 \alias{charmatch}
 \arguments{
-  \item{x}{the values to be matched.}
-  \item{table}{the values to be matched against.}
-  \item{nomatch}{the value returned at non-matching positions.}
+  \item{x}{the values to be matched: converte to a character vector by
+    \code{\link{as.character}}.}
+  \item{table}{the values to be matched against: converted to a character
+    vector.}
+  \item{nomatch}{the value to be returned at non-matching positions.}
 }
 \description{
   \code{charmatch} seeks matches for the elements of its first argument
@@ -21,7 +23,9 @@ charmatch(x, table, nomatch = NA)
   If there is a single exact match or no exact match and a unique
   partial match then the index of the matching value is returned; if
   multiple exact or multiple partial matches are found then \code{0} is
-  returned and if no match is found then \code{NA} is returned.
+  returned and if no match is found then \code{nomatch} is returned.
+
+  \code{NA} values are treated as the string constant \code{"NA"}.
 }
 \author{
   This function is based on a C function written by Terry Therneau.

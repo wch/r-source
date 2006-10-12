@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-3   The R Development Core Team.
+ *  Copyright (C) 2001-6   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ */
+
+/* <UTF8> the only interpretation of char is ASCII 
+   <MBCS> all the char quantities should be ASCII
  */
 
 
@@ -28,12 +32,26 @@
  *
  * See Copyright for the status of this software.
  *
- * Daniel.Veillard@w3.org
+ * daniel@veillard.com
  */
 
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
+#undef HAVE_ZLIB_H
+
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#ifdef Win32
+#define _(String) libintl_gettext (String)
+#undef gettext /* needed for graphapp */
+#else
+#define _(String) gettext (String)
+#endif
+#else /* not NLS */
+#define _(String) (String)
 #endif
 
 #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
@@ -87,15 +105,26 @@ extern void R_FlushConsole(void);
 #ifdef SUPPORT_IP6
 #include <resolv.h>
 #endif
+#ifdef HAVE_ZLIB_H
+#include <zlib.h>
+#endif
 
 /* #define DEBUG_HTTP */
 
 #define BAD_CAST (unsigned char *)
 
+#if !defined(strdup) && defined(HAVE_DECL_STRDUP) && !HAVE_DECL_STRDUP
+extern char *strdup(const char *s1);
+#endif
+
 #define xmlFree free
 #define xmlMalloc malloc
 #define xmlRealloc realloc
 #define xmlMemStrdup strdup
+#define xmlStrndup(a, b) strdup(a)
+#define xmlStrstr(a, b) strstr((const char *)a, (const char *)b) 
+#define xmlStrcat strcat
+#define xmlStrdup(a) strdup((char *)a)
 
 static void RxmlNanoHTTPScanProxy(const char *URL);
 static void *RxmlNanoHTTPMethod(const char *URL, const char *method,
@@ -138,7 +167,7 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 #if defined(HAVE_STRINGS_H) && !defined(Win32)
 # include <strings.h>
 #endif
-#if defined(HAVE_DECL_STRNCASECMP) || !HAVE_DECL_STRNCASECMP
+#if !defined(strncasecmp) && defined(HAVE_DECL_STRNCASECMP) && !HAVE_DECL_STRNCASECMP
 extern int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 #define xmlStrncasecmp(a, b, n) strncasecmp((char *)a, (char *)b, n)
@@ -157,6 +186,7 @@ typedef struct RxmlNanoHTTPCtxt {
     char *hostname;	/* the host name */
     int port;		/* the port */
     char *path;		/* the path within the URL */
+    char *query;	/* the query string */
     SOCKET fd;		/* the file descriptor for the socket */
     int state;		/* WRITE / READ / CLOSED */
     char *out;		/* buffer sent (zero terminated) */
@@ -173,6 +203,12 @@ typedef struct RxmlNanoHTTPCtxt {
     int contentLength;	/* the reported length */
     char *location;	/* the new URL in case of redirect */
     char *authHeader;	/* contents of {WWW,Proxy}-Authenticate header */
+    char *encoding;	/* encoding extracted from the contentType */
+    char *mimeType;	/* Mime-Type extracted from the contentType */
+#ifdef HAVE_ZLIB_H
+    z_stream *strm;	/* Zlib stream object */
+    int usesGzip;	/* "Content-Encoding: gzip" was detected */
+#endif
 } RxmlNanoHTTPCtxt, *RxmlNanoHTTPCtxtPtr;
 
 static int initialized = 0;
@@ -223,7 +259,7 @@ RxmlNanoHTTPInit(void)
     if (proxy == NULL) {
 	proxyPort = 80;
 	env = getenv("no_proxy");
-	if (env != NULL)
+	if (env && ((env[0] == '*') && (env[1] == 0)))
 	    goto done;
 	env = getenv("http_proxy");
 	if (env != NULL) {
@@ -291,11 +327,13 @@ RxmlNanoHTTPTimeout(int delay)
  * the protocol host port and path it indicates.
  */
 
+/* GET URLs can be very long, so use more generous limit here */
+
 static void
 RxmlNanoHTTPScanURL(RxmlNanoHTTPCtxtPtr ctxt, const char *URL)
 {
     const char *cur = URL;
-    char buf[4096];
+    char buf[40960];
     int indx = 0;
     int port = 0;
 
@@ -321,7 +359,8 @@ RxmlNanoHTTPScanURL(RxmlNanoHTTPCtxtPtr ctxt, const char *URL)
             cur += 3;
 	    break;
 	}
-	buf[indx++] = *cur++;
+	if(indx >= 40959)
+	    RxmlMessage(2, _("RxmlNanoHTTPScanURL: overlong (invalid?) URL"));	buf[indx++] = *cur++;
     }
     if (*cur == 0) return;
 
@@ -348,15 +387,19 @@ RxmlNanoHTTPScanURL(RxmlNanoHTTPCtxtPtr ctxt, const char *URL)
 	    indx = 0;
 	    break;
 	}
-	buf[indx++] = *cur++;
+	if(indx >= 40959)
+	    RxmlMessage(2, _("RxmlNanoHTTPScanURL: overlong (invalid?) URL"));	buf[indx++] = *cur++;
     }
     if (*cur == 0)
         ctxt->path = xmlMemStrdup("/");
     else {
         indx = 0;
         buf[indx] = 0;
-	while (*cur != 0)
+	while (*cur != 0) {   
+	    if(indx >= 40959)
+		RxmlMessage(2, _("RxmlNanoHTTPScanURL: overlong (invalid?) URL"));	   
 	    buf[indx++] = *cur++;
+	}
 	buf[indx] = 0;
 	ctxt->path = xmlMemStrdup(buf);
     }
@@ -388,9 +431,9 @@ RxmlNanoHTTPScanProxy(const char *URL)
 	proxyPort = 0;
 	}*/
     if (URL == NULL)
-	RxmlMessage(0, "Removing HTTP proxy info");
+	RxmlMessage(0, _("removing HTTP proxy info"));
     else
-	RxmlMessage(1, "Using HTTP proxy %s", URL);
+	RxmlMessage(1, _("using HTTP proxy '%s'"), URL);
     if (URL == NULL) return;
     buf[indx] = 0;
     while (*cur != 0) {
@@ -400,6 +443,8 @@ RxmlNanoHTTPScanProxy(const char *URL)
             cur += 3;
 	    break;
 	}
+	if(indx >= 4095)
+	    RxmlMessage(2, _("RxmlNanoHTTPScanProxy: overlong (invalid?) URL"));
 	buf[indx++] = *cur++;
     }
     if (*cur == 0) return;
@@ -434,7 +479,8 @@ RxmlNanoHTTPScanProxy(const char *URL)
 	    indx = 0;
 	    break;
 	}
-	buf[indx++] = *cur++;
+	if(indx >= 4095)
+	    RxmlMessage(2, _("RxmlNanoHTTPScanProxy: overlong (invalid?) URL"));	buf[indx++] = *cur++;
     }
 }
 
@@ -453,7 +499,10 @@ RxmlNanoHTTPNewCtxt(const char *URL)
     RxmlNanoHTTPCtxtPtr ret;
 
     ret = (RxmlNanoHTTPCtxtPtr) xmlMalloc(sizeof(RxmlNanoHTTPCtxt));
-    if (ret == NULL) return(NULL);
+    if (ret == NULL) {
+        RxmlMessage(1, "error allocating context");
+	return(NULL);
+    }
 
     memset(ret, 0, sizeof(RxmlNanoHTTPCtxt));
     ret->port = 80;
@@ -481,11 +530,21 @@ RxmlNanoHTTPFreeCtxt(RxmlNanoHTTPCtxtPtr ctxt)
     if (ctxt->hostname != NULL) xmlFree(ctxt->hostname);
     if (ctxt->protocol != NULL) xmlFree(ctxt->protocol);
     if (ctxt->path != NULL) xmlFree(ctxt->path);
+    if (ctxt->query != NULL) xmlFree(ctxt->query);
     if (ctxt->out != NULL) xmlFree(ctxt->out);
     if (ctxt->in != NULL) xmlFree(ctxt->in);
     if (ctxt->contentType != NULL) xmlFree(ctxt->contentType);
+    if (ctxt->encoding != NULL) xmlFree(ctxt->encoding);
+    if (ctxt->mimeType != NULL) xmlFree(ctxt->mimeType);
     if (ctxt->location != NULL) xmlFree(ctxt->location);
     if (ctxt->authHeader != NULL) xmlFree(ctxt->authHeader);
+#ifdef HAVE_ZLIB_H
+    if (ctxt->strm != NULL) {
+	inflateEnd(ctxt->strm);
+	xmlFree(ctxt->strm);
+    }
+#endif
+
     ctxt->state = XML_NANO_HTTP_NONE;
     if (ctxt->fd >= 0) closesocket(ctxt->fd);
     ctxt->fd = -1;
@@ -536,6 +595,7 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
 	if (ctxt->in == NULL) {
 	    ctxt->in = (char *) xmlMalloc(65000 * sizeof(char));
 	    if (ctxt->in == NULL) {
+		RxmlMessage(1, "error allocating input");
 	        ctxt->last = -1;
 		return(-1);
 	    }
@@ -555,10 +615,13 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
 	    int d_inptr = ctxt->inptr - ctxt->in;
 	    int d_content = ctxt->content - ctxt->in;
 	    int d_inrptr = ctxt->inrptr - ctxt->in;
+	    char *	tmp_ptr = ctxt->in;
 
 	    ctxt->inlen *= 2;
-            ctxt->in = (char *) xmlRealloc(ctxt->in, ctxt->inlen);
+            ctxt->in = (char *) xmlRealloc(tmp_ptr, ctxt->inlen);
 	    if (ctxt->in == NULL) {
+		RxmlMessage(1, "error allocating input buffer");
+		xmlFree( tmp_ptr );
 	        ctxt->last = -1;
 		return(-1);
 	    }
@@ -638,6 +701,7 @@ RxmlNanoHTTPRecv(RxmlNanoHTTPCtxtPtr ctxt)
 		case EAGAIN:
 #endif
 		    break;
+
 		default:
 		    return(0);
 		}
@@ -664,15 +728,19 @@ RxmlNanoHTTPReadLine(RxmlNanoHTTPCtxtPtr ctxt)
 {
     char buf[4096];
     char *bp = buf;
+    int	rc;
 
     while (bp - buf < 4095) {
 	if (ctxt->inrptr == ctxt->inptr) {
-	    if (RxmlNanoHTTPRecv(ctxt) == 0) {
+	    if ( (rc = RxmlNanoHTTPRecv(ctxt)) == 0) {
 		if (bp == buf)
 		    return(NULL);
 		else
 		    *bp = 0;
 		return(xmlMemStrdup(buf));
+	    }
+	    else if ( rc == -1 ) {
+	        return ( NULL );
 	    }
 	}
 	*bp = *ctxt->inrptr++;
@@ -696,8 +764,8 @@ RxmlNanoHTTPReadLine(RxmlNanoHTTPCtxtPtr ctxt)
  * Try to extract useful informations from the server answer.
  * We currently parse and process:
  *  - The HTTP revision/ return code
- *  - The Content-Type
- *  - The Location for redirrect processing.
+ *  - The Content-Type, Mime-Type and charset used
+ *  - The Location for redirect processing.
  *
  * Returns -1 in case of failure, the file descriptor number otherwise
  */
@@ -744,16 +812,56 @@ RxmlNanoHTTPScanAnswer(RxmlNanoHTTPCtxtPtr ctxt, const char *line)
 	if(ctxt->statusMsg) xmlFree(ctxt->statusMsg);
 	ctxt->statusMsg = xmlMemStrdup(cur);
     } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"Content-Type:", 13)) {
+        const char *charset, *last, *mime;
         cur += 13;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
 	if (ctxt->contentType != NULL)
 	    xmlFree(ctxt->contentType);
 	ctxt->contentType = xmlMemStrdup(cur);
+	mime = (const char *) cur;
+	last = mime;
+	while ((*last != 0) && (*last != ' ') && (*last != '\t') &&
+	       (*last != ';') && (*last != ','))
+	    last++;
+	if (ctxt->mimeType != NULL)
+	    xmlFree(ctxt->mimeType);
+	ctxt->mimeType = (char *) xmlStrndup(mime, last - mime);
+	charset = xmlStrstr(BAD_CAST ctxt->contentType, BAD_CAST "charset=");
+	if (charset != NULL) {
+	    charset += 8;
+	    last = charset;
+	    while ((*last != 0) && (*last != ' ') && (*last != '\t') &&
+	           (*last != ';') && (*last != ','))
+		last++;
+	    if (ctxt->encoding != NULL)
+	        xmlFree(ctxt->encoding);
+	    ctxt->encoding = (char *) xmlStrndup(charset, last - charset);
+	}
     } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"ContentType:", 12)) {
+        const char *charset, *last, *mime;
         cur += 12;
 	if (ctxt->contentType != NULL) return;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
 	ctxt->contentType = xmlMemStrdup(cur);
+	mime = (const char *) cur;
+	last = mime;
+	while ((*last != 0) && (*last != ' ') && (*last != '\t') &&
+	       (*last != ';') && (*last != ','))
+	    last++;
+	if (ctxt->mimeType != NULL)
+	    xmlFree(ctxt->mimeType);
+	ctxt->mimeType = (char *) xmlStrndup(mime, last - mime);
+	charset = xmlStrstr(BAD_CAST ctxt->contentType, BAD_CAST "charset=");
+	if (charset != NULL) {
+	    charset += 8;
+	    last = charset;
+	    while ((*last != 0) && (*last != ' ') && (*last != '\t') &&
+	           (*last != ';') && (*last != ','))
+		last++;
+	    if (ctxt->encoding != NULL)
+	        xmlFree(ctxt->encoding);
+	    ctxt->encoding = (char *) xmlStrndup(charset, last - charset);
+	}
     } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"Content-Length:", 15)) {
         cur += 15;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
@@ -763,7 +871,15 @@ RxmlNanoHTTPScanAnswer(RxmlNanoHTTPCtxtPtr ctxt, const char *line)
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
 	if (ctxt->location != NULL)
 	    xmlFree(ctxt->location);
-	ctxt->location = xmlMemStrdup(cur);
+	if (*cur == '/') {
+	    char *tmp_http = xmlStrdup(BAD_CAST "http://");
+	    char *tmp_loc = 
+	        xmlStrcat(tmp_http, (const char *) ctxt->hostname);
+	    ctxt->location = 
+	        (char *) xmlStrcat (tmp_loc, (const char *) cur);
+	} else {
+	    ctxt->location = xmlMemStrdup(cur);
+	}
     } else if (!xmlStrncasecmp(BAD_CAST line, BAD_CAST"WWW-Authenticate:", 17)) {
         cur += 17;
 	while ((*cur == ' ') || (*cur == '\t')) cur++;
@@ -776,6 +892,26 @@ RxmlNanoHTTPScanAnswer(RxmlNanoHTTPCtxtPtr ctxt, const char *line)
 	if (ctxt->authHeader != NULL)
 	    xmlFree(ctxt->authHeader);
 	ctxt->authHeader = xmlMemStrdup(cur);
+#ifdef HAVE_ZLIB_H
+    } else if ( !xmlStrncasecmp( BAD_CAST line, BAD_CAST"Content-Encoding:", 17) ) {
+	cur += 17;
+	while ((*cur == ' ') || (*cur == '\t')) cur++;
+	if ( !xmlStrncasecmp( BAD_CAST cur, BAD_CAST"gzip", 4) ) {
+	    ctxt->usesGzip = 1;
+
+	    ctxt->strm = xmlMalloc(sizeof(z_stream));
+
+	    if (ctxt->strm != NULL) {
+		ctxt->strm->zalloc = Z_NULL;
+		ctxt->strm->zfree = Z_NULL;
+		ctxt->strm->opaque = Z_NULL;
+		ctxt->strm->avail_in = 0;
+		ctxt->strm->next_in = Z_NULL;
+
+		inflateInit2( ctxt->strm, 31 );
+	    }
+	}
+#endif
     }
 }
 
@@ -803,6 +939,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 #ifdef DEBUG_HTTP
 	perror("socket");
 #endif
+	RxmlMessage(0, "socket failed");
 	return(-1);
     }
 
@@ -835,6 +972,7 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 #ifdef DEBUG_HTTP
 	perror("nonblocking");
 #endif
+	RxmlMessage(0, "error setting non-blocking IO");
 	closesocket(s);
 	return(-1);
     }
@@ -891,27 +1029,27 @@ RxmlNanoHTTPConnectAttempt(struct sockaddr *addr)
 	{
 	case 0:
 	    /* Time out */
+	    RxmlMessage(0, "Connect attempt timed out");
 	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
 	    if(used < timeout) continue;
 	    closesocket(s);
 	    return(-1);
 	case -1:
 	    /* Ermm.. ?? */
-#ifdef DEBUG_HTTP
-	    perror("select");
-#endif
+	    RxmlMessage(0, "Connect failed");
 	    closesocket(s);
 	    return(-1);
 	}
 
 	if ( FD_ISSET(s, &wfd) ) {
-	    SOCKLEN_T len;
+	    R_SOCKLEN_T len;
 	    len = sizeof(status);
 	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) < 0){
 		/* Solaris error code */
 		return (-1);
 	    }
 	    if ( status ) {
+		RxmlMessage(0, "Error connecting to remote host");
 		closesocket(s);
 		errno = status;
 		return (-1);
@@ -961,7 +1099,7 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
     h=gethostbyname(host);
     if (h==NULL)
     {
-	RxmlMessage(2, "unable to resolve '%s'.", host);
+	RxmlMessage(2, _("unable to resolve '%s'."), host);
 	return(-1);
     }
 
@@ -988,12 +1126,12 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
 
 	s = RxmlNanoHTTPConnectAttempt(addr);
 	if (s != -1) {
-	    RxmlMessage(1, "connected to '%s' on port %d.", host, port);
+	    RxmlMessage(1, _("connected to '%s' on port %d."), host, port);
 	    return(s);
 	}
     }
 
-    RxmlMessage(2, "unable to connect to '%s' on port %d.", host, port);
+    RxmlMessage(2, _("unable to connect to '%s' on port %d."), host, port);
     return(-1);
 }
 
@@ -1004,6 +1142,9 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
  * @contentType:  if available the Content-Type information will be
  *                returned at that location
  *
+ * @headers: headers to be used in the HTTP request.  These must be name/value
+ *           pairs separated by ':', each on their own line.
+ *
  * This function try to open a connection to the indicated resource
  * via HTTP GET.
  *
@@ -1012,10 +1153,11 @@ RxmlNanoHTTPConnectHost(const char *host, int port)
  */
 
 void*
-RxmlNanoHTTPOpen(const char *URL, char **contentType, int cacheOK)
+RxmlNanoHTTPOpen(const char *URL, char **contentType, const char *headers,
+                 int cacheOK)
 {
     if (contentType != NULL) *contentType = NULL;
-    return RxmlNanoHTTPMethod(URL, NULL, NULL, contentType, NULL, cacheOK);
+    return RxmlNanoHTTPMethod(URL, NULL, NULL, contentType, headers, cacheOK);
 }
 
 /**
@@ -1035,12 +1177,40 @@ RxmlNanoHTTPRead(void *ctx, void *dest, int len)
 {
     RxmlNanoHTTPCtxtPtr ctxt = (RxmlNanoHTTPCtxtPtr) ctx;
 
+#ifdef HAVE_ZLIB_H
+    int bytes_read = 0;
+    int orig_avail_in;
+    int z_ret;
+#endif
+
     if (ctx == NULL) return(-1);
     if (dest == NULL) return(-1);
     if (len <= 0) return(0);
 
+#ifdef HAVE_ZLIB_H
+    if (ctxt->usesGzip == 1) {
+        if (ctxt->strm == NULL) return(0);
+ 
+        ctxt->strm->next_out = dest;
+        ctxt->strm->avail_out = len;
+
+        do {
+            orig_avail_in = ctxt->strm->avail_in = ctxt->inptr - ctxt->inrptr - bytes_read;
+            ctxt->strm->next_in = BAD_CAST (ctxt->inrptr + bytes_read);
+
+            z_ret = inflate(ctxt->strm, Z_NO_FLUSH);
+            bytes_read += orig_avail_in - ctxt->strm->avail_in;
+
+            if (z_ret != Z_OK) break;
+        } while (ctxt->strm->avail_out > 0 && RxmlNanoHTTPRecv(ctxt) > 0);
+
+        ctxt->inrptr += bytes_read;
+        return(len - ctxt->strm->avail_out);
+    }
+#endif
+
     while (ctxt->inptr - ctxt->inrptr < len) {
-        if (RxmlNanoHTTPRecv(ctxt) == 0) break;
+        if (RxmlNanoHTTPRecv(ctxt) <= 0) break;
     }
     if (ctxt->inptr - ctxt->inrptr < len)
         len = ctxt->inptr - ctxt->inrptr;
@@ -1142,11 +1312,13 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
     }
 
     if ((ctxt->protocol == NULL) || (strcmp(ctxt->protocol, "http"))) {
+	RxmlMessage(0, "Not a valid HTTP URI");
         RxmlNanoHTTPFreeCtxt(ctxt);
 	if (redirURL != NULL) xmlFree(redirURL);
         return(NULL);
     }
     if (ctxt->hostname == NULL) {
+	RxmlMessage(0, "Failed to identify host in URI");
         RxmlNanoHTTPFreeCtxt(ctxt);
         return(NULL);
     }
@@ -1173,7 +1345,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
     if (!cacheOK)
 	blen += 20;
     if (headers != NULL)
-	blen += strlen(headers);
+	blen += strlen(headers) + 2;
     if (contentType && *contentType)
 	blen += strlen(*contentType) + 16;
     if (proxy && proxyUser) {
@@ -1181,40 +1353,45 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	blen +=strlen(buf) + 50;
     }
     blen += strlen(method) + strlen(ctxt->path) + 23;
-    bp = xmlMalloc(blen);
+#ifdef HAVE_ZLIB_H
+    blen += 23;
+#endif
+    p = bp = xmlMalloc(blen);
     if (proxy) {
 	if (ctxt->port != 80) {
-	    sprintf(bp, "%s http://%s:%d%s", method, ctxt->hostname,
-		    ctxt->port, ctxt->path);
+	    p += snprintf( p, blen - (p - bp), "%s http://%s:%d%s", 
+			method, ctxt->hostname,
+		 	ctxt->port, ctxt->path );
 	}
 	else
-	    sprintf(bp, "%s http://%s%s", method, ctxt->hostname, ctxt->path);
+	    p += snprintf( p, blen - (p - bp), "%s http://%s%s", method,
+	    		ctxt->hostname, ctxt->path);
     }
     else
-	sprintf(bp, "%s %s", method, ctxt->path);
-    p = bp + strlen(bp);
-    sprintf(p, " HTTP/1.0\r\nHost: %s\r\n", ctxt->hostname);
-    p += strlen(p);
-    if(!cacheOK) {
-	sprintf(p, "Pragma: no-cache\r\n");
-	p += strlen(p);
-    }
-    if(proxy && proxyUser) {
-	sprintf(p, "Proxy-Authorization: Basic %s\r\n", buf);
-	p += strlen(p);
-    }
-    if (contentType != NULL && *contentType) {
-	sprintf(p, "Content-Type: %s\r\n", *contentType);
-	p += strlen(p);
-    }
-    if (headers != NULL) {
-	strcpy(p, headers);
-	p += strlen(p);
-    }
+	p += snprintf(p, blen - (p - bp), "%s %s", method, ctxt->path);
+
+    p += snprintf(p,  blen - (p - bp), " HTTP/1.0\r\nHost: %s\r\n",
+		  ctxt->hostname);
+
+#ifdef HAVE_ZLIB_H
+    p += snprintf(p, blen - (p - bp), "Accept-Encoding: gzip\r\n");
+#endif
+
+    if(!cacheOK)
+	p += snprintf(p, blen - (p - bp), "Pragma: no-cache\r\n");
+    if(proxy && proxyUser)
+	p += snprintf(p, blen - (p - bp),"Proxy-Authorization: Basic %s\r\n", 
+		      buf);
+    if (contentType != NULL && *contentType)
+	p += snprintf(p, blen - (p - bp), "Content-Type: %s\r\n", *contentType);
+    if (headers != NULL)
+	p += snprintf(p, blen - (p - bp), "%s", headers);
     if (input != NULL)
-	sprintf(p, "Content-Length: %d\r\n\r\n%s", ilen, input);
+
+	snprintf(p, blen - (p - bp), "Content-Length: %d\r\n\r\n%s", 
+		 ilen, input);
     else
-	strcpy(p, "\r\n");
+	snprintf(p, blen - (p - bp), "\r\n");
     RxmlMessage(0, "-> %s%s", proxy? "(Proxy) " : "", bp);
     if ((blen -= strlen(bp)+1) < 0)
 	RxmlMessage(0, "ERROR: overflowed buffer by %d bytes\n", -blen);
@@ -1257,7 +1434,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 
     if ((ctxt->location != NULL) && (ctxt->returnValue >= 300) &&
         (ctxt->returnValue < 400)) {
-	RxmlMessage(1, "Redirect to: %s", ctxt->location);
+	RxmlMessage(1, _("redirect to: '%s'"), ctxt->location);
 	while (RxmlNanoHTTPRecv(ctxt)) ;
         if (nbRedirects < XML_NANO_HTTP_MAX_REDIR) {
 	    nbRedirects++;
@@ -1266,7 +1443,7 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
 	    goto retry;
 	}
 	RxmlNanoHTTPFreeCtxt(ctxt);
-	RxmlMessage(2, "Too many redirects, aborting ...");
+	RxmlMessage(2, _("too many redirects, aborting ..."));
 	return(NULL);
 
     }
@@ -1329,5 +1506,4 @@ RxmlNanoHTTPContentType(void *ctx)
     RxmlNanoHTTPCtxtPtr ctxt = (RxmlNanoHTTPCtxtPtr) ctx;
     return(ctxt->contentType);
 }
-
 #endif /* !Unix or BSD_NETWORKING */

@@ -5,9 +5,10 @@
 
 polygon <-
   function(x, y = NULL, density = NULL, angle = 45,
-           border = NULL, col = NA, lty = NULL,
-           xpd = NULL, ..debug.hatch = FALSE, ...)
+           border = NULL, col = NA, lty = par("lty"), ...)
 {
+    ## FIXME: remove this eventually
+    ..debug.hatch <- FALSE
     ##-- FIXME: what if `log' is active, for x or y?
     xy <- xy.coords(x, y)
 
@@ -196,7 +197,7 @@ polygon <-
         ## end of hatch helper functions
 
 
-        if (missing(col) || is.null(col)) col <- par("fg")
+        if (missing(col) || is.null(col) || is.na(col)) col <- par("fg")
         if (is.null(border)) border <- col
         if (is.logical(border)) {
             if (!is.na(border) && border) border <- col
@@ -222,7 +223,7 @@ polygon <-
                 if(is.na(den) || den < 0)
                     .Internal(polygon(xy$x[start:(end - 1)],
                                       xy$y[start:(end - 1)],
-                                      col[i], NA, lty[i], xpd, ...))
+                                      col[i], NA, lty[i], ...))
                 else if (den > 0) {
 
                         ## note: if col[i]==NA, "segments" will fill with par("fg")
@@ -230,7 +231,6 @@ polygon <-
                         polygon.fullhatch(xy$x[start:(end - 1)],
                                           xy$y[start:(end - 1)],
                                           col = col[i], lty = lty[i],
-                                          xpd = xpd,
                                           density = density[i],
                                           angle = angle[i],
                                           ..debug.hatch = ..debug.hatch, ...)
@@ -242,13 +242,13 @@ polygon <-
             }
             start <- end + 1
         }
-        .Internal(polygon(xy$x, xy$y, NA, border, lty, xpd, ...))
+        .Internal(polygon(xy$x, xy$y, NA, border, lty, ...))
     }
     else {
         if (is.logical(border)) {
             if (!is.na(border) && border) border <- par("fg")
             else border <- NA
         }
-        .Internal(polygon(xy$x, xy$y, col, border, lty, xpd, ...))
+        .Internal(polygon(xy$x, xy$y, col, border, lty, ...))
     }
 }

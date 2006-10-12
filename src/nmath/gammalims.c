@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -36,7 +36,7 @@
 
 #include "nmath.h"
 
-void gammalims(double *xmin, double *xmax)
+void attribute_hidden gammalims(double *xmin, double *xmax)
 {
 /* FIXME: Even better: If IEEE, #define these in nmath.h
 	  and don't call gammalims() at all
@@ -63,7 +63,7 @@ void gammalims(double *xmin, double *xmax)
 
     /* unable to find xmin */
 
-    ML_ERROR(ME_NOCONV);
+    ML_ERROR(ME_NOCONV, "gammalims");
     *xmin = *xmax = ML_NAN;
 
 find_xmax:
@@ -83,7 +83,7 @@ find_xmax:
 
     /* unable to find xmax */
 
-    ML_ERROR(ME_NOCONV);
+    ML_ERROR(ME_NOCONV, "gammalims");
     *xmin = *xmax = ML_NAN;
 
 done:

@@ -11,11 +11,6 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
     sed 's/.*=//'`
   cd src/library/Recommended
 
-  ## <FIXME>
-  ## Remove eventually.
-  rm -f *_tgz
-  ## </FIXME>
-
   ## Link all each package to a simplified name so that Make has an
   ## easier time.  Notice that as far as Make is concerned, the symlinks
   ## have the same timestamp as the file they point to.

@@ -16,11 +16,13 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef _DEV_X11_H
 #define _DEV_X11_H
+
+#define SYMBOL_FONTFACE 5
 
 /* These are the currently supported device "models" */
 typedef enum {
@@ -42,10 +44,7 @@ typedef enum {
 /*
   For the moment, we just conditionally activate the remainder of this
   section iff we are in devX11.c which defines R_X11_DEVICE.
-  This allows devUI.h to include this file to get X_COLORTYPE.
-  However, that should probably not be happening if HAVE_X11 is not defined
-  due to the configuration being done --without-x. Why is unix/devices.c 
-  not(?) getting compiled if no X11 support is available? DTL.
+  This is purely historical: it was once included by devUI.h
  */
 #if R_X11_DEVICE
 
@@ -60,7 +59,7 @@ typedef enum {
 
 
 Rboolean newX11DeviceDriver(DevDesc*, char*, double, double, double, double, 
-			    X_COLORTYPE, int, int, int, SEXP, int);
+			    X_COLORTYPE, int, int, int, SEXP, int, int, int);
 
 
 	/********************************************************/
@@ -89,6 +88,9 @@ typedef struct {
      */
     int lty;				/* Line type */
     double lwd;
+    R_GE_lineend lend;
+    R_GE_linejoin ljoin;
+    double lmitre;
     int col;				/* Color */
     /* fg and bg removed -- only use col and new param fill
      */
@@ -117,8 +119,8 @@ typedef struct {
     XRectangle clip;			/* The clipping rectangle */
 
     int usefixed;
-    XFontStruct *fixedfont;
-    XFontStruct *font;
+    R_XFont *fixedfont;
+    R_XFont *font;
     char fontfamily[500];               /* CURRENT fontfamily */
     char symbolfamily[500];
     X_GTYPE type;			/* Window or pixmap? */
@@ -140,7 +142,8 @@ int      Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd
 Rboolean newX11_Open(NewDevDesc *dd, newX11Desc *xd, 
 		     char *dsp, double w, double h, 
 		     double gamma_fac, X_COLORTYPE colormodel, 
-		     int maxcube, int bgcolor, int canvascolor, int res);
+		     int maxcube, int bgcolor, int canvascolor, 
+		     int res, int xpos, int ypos);
 
 #endif /* R_X11_DEVICE */
 

@@ -16,7 +16,8 @@ sqrt(x)
 }
 \details{
   These are generic functions: methods can be defined for them
-  individually or via the \code{\link{Math}} group generic.  For complex
+  individually or via the \code{\link[base:groupGeneric]{Math}}
+  group generic.  For complex
   arguments (and the default method), \code{z},
   \code{abs(z) == \link{Mod}(z)} and \code{sqrt(z) == z^0.5}.
 }

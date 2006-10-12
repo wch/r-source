@@ -68,4 +68,3 @@ for (pp in levels(CO2$Plant)) {
 sapply(fmlist, coef)
 }
 \keyword{datasets}
-\keyword{nonlinear}

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-4   The R Development Core Team.
+ *  Copyright (C) 2000-6   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,8 +14,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> the only interpretation of char is ASCII */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -26,7 +28,7 @@
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>
 
-static void *in_R_HTTPOpen(const char *url, const int cacheOK);
+static void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK);
 static int   in_R_HTTPRead(void *ctx, char *dest, int len);
 static void  in_R_HTTPClose(void *ctx);
 
@@ -43,6 +45,8 @@ static void  in_R_FTPClose(void *ctx);
 
 #ifdef HAVE_FCNTL_H
 # include <fcntl.h>
+/* Solaris and AIX define open as open64 under some circumstances */
+# undef open
 #endif
 
 /* ------------------- internet access functions  --------------------- */
@@ -66,11 +70,11 @@ static Rboolean url_open(Rconnection con)
 
     switch(type) {
     case HTTPsh:
-	ctxt = in_R_HTTPOpen(url, 0);
+	ctxt = in_R_HTTPOpen(url, NULL, 0);
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL `%s'", url); */
+	  /* error("cannot open URL '%s'", url); */
 	    return FALSE;
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
@@ -80,13 +84,13 @@ static Rboolean url_open(Rconnection con)
 	if(ctxt == NULL) {
 	  /* if we call error() we get a connection leak*/
 	  /* so do_url has to raise the error*/
-	  /* error("cannot open URL `%s'", url); */
+	  /* error("cannot open URL '%s'", url); */
 	    return FALSE;
 	}
 	((Rurlconn)(con->private))->ctxt = ctxt;
 	break;
     default:
-	warning("unknown URL scheme");
+	warning(_("unknown URL scheme"));
 	return FALSE;
     }
 
@@ -113,7 +117,7 @@ static void url_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int url_fgetc(Rconnection con)
+static int url_fgetc_internal(Rconnection con)
 {
     UrlScheme type = ((Rurlconn)(con->private))->type;
     void * ctxt = ((Rurlconn)(con->private))->ctxt;
@@ -155,28 +159,29 @@ static Rconnection in_R_newurl(char *description, char *mode)
     Rconnection new;
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of url connection failed");
+    if(!new) error(_("allocation of url connection failed"));
     new->class = (char *) malloc(strlen("file") + 1);
     if(!new->class) {
 	free(new);
-	error("allocation of url connection failed");
+	error(_("allocation of url connection failed"));
     }
     strcpy(new->class, "url");
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);
-	error("allocation of url connection failed");
+	error(_("allocation of url connection failed"));
     }
     init_con(new, description, mode);
     new->canwrite = FALSE;
     new->open = &url_open;
     new->close = &url_close;
-    new->fgetc = &url_fgetc;
+    new->fgetc_internal = &url_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->read = &url_read;
     new->private = (void *) malloc(sizeof(struct urlconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
-	error("allocation of url connection failed");
+	error(_("allocation of url connection failed"));
     }
 
     IDquiet = TRUE;
@@ -197,6 +202,14 @@ static void putdots(int *pold, int new)
     }
     if(R_Consolefile) fflush(R_Consolefile);
 }
+
+static void putdashes(int *pold, int new)
+{
+    int i, old = *pold;
+    *pold = new;
+    for(i = old; i < new; i++)  REprintf("=");
+    if(R_Consolefile) fflush(R_Consolefile);
+}
 #endif
 
 /* note, ALL the possible structures have the first two elements */
@@ -208,60 +221,96 @@ typedef struct {
 
 #ifdef Win32
 #include <graphapp/ga.h>
+
+typedef struct {
+    window wprog;
+    progressbar pb;
+    label l_url;
+    RCNTXT cntxt;
+} winprogressbar;
+
+static winprogressbar pbar = {NULL, NULL, NULL};
+
+static void doneprogressbar(void *data)
+{
+    winprogressbar *pbar = data;
+    hide(pbar->wprog);
+}
 #endif
 
-/* download(url, destfile, quiet, mode, cacheOK) */
+/* download(url, destfile, quiet, mode, headers, cacheOK) */
 
 #define CPBUFSIZE 65536
 #define IBUFSIZE 4096
 static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, scmd, sfile, smode;
-    char *url, *file, *mode;
+    SEXP ans, scmd, sfile, smode, sheaders, agentFun;
+    char *url, *file, *mode, *headers;
     int quiet, status = 0, cacheOK;
-#ifdef Win32
-    window wprog;
-    progressbar pb;
-    label l_url;
-#endif
-
 
     checkArity(op, args);
     scmd = CAR(args); args = CDR(args);
     if(!isString(scmd) || length(scmd) < 1)
-	error("invalid `url' argument");
+	error(_("invalid '%s' argument"), "url");
     if(length(scmd) > 1)
-	warning("only first element of `url' argument used");
+	warning(_("only first element of 'url' argument used"));
     url = CHAR(STRING_ELT(scmd, 0));
     sfile = CAR(args); args = CDR(args);
     if(!isString(sfile) || length(sfile) < 1)
-	error("invalid `destfile' argument");
+	error(_("invalid '%s' argument"), "destfile");
     if(length(sfile) > 1)
-	warning("only first element of `destfile' argument used");
+	warning(_("only first element of 'destfile' argument used"));
     file = CHAR(STRING_ELT(sfile, 0));
     IDquiet = quiet = asLogical(CAR(args)); args = CDR(args);
     if(quiet == NA_LOGICAL)
-	error("invalid `quiet' argument");
+	error(_("invalid '%s' argument"), "quiet");
     smode =  CAR(args); args = CDR(args);
     if(!isString(smode) || length(smode) != 1)
-	error("invalid `mode' argument");
+	error(_("invalid '%s' argument"), "mode");
     mode = CHAR(STRING_ELT(smode, 0));
     cacheOK = asLogical(CAR(args));
     if(cacheOK == NA_LOGICAL)
-	error("invalid `cacheOK' argument");
-
+	error(_("invalid '%s' argument"), "cacheOK");
+#ifdef USE_WININET
+    PROTECT(agentFun = lang2(install("makeUserAgent"), ScalarLogical(0)));
+#else
+    PROTECT(agentFun = lang1(install("makeUserAgent")));
+#endif
+    PROTECT(sheaders = eval(agentFun, R_FindNamespace(mkString("utils"))));
+    UNPROTECT(1);
+    if(TYPEOF(sheaders) == NILSXP)
+        headers = NULL;
+    else 
+        headers = CHAR(STRING_ELT(sheaders, 0));
+#ifdef Win32
+    if (!pbar.wprog) {
+	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
+		      Titlebar | Centered);
+	setbackground(pbar.wprog, dialog_bg());
+	pbar.l_url = newlabel(" ", rect(10, 15, 520, 25), AlignCenter);
+	pbar.pb = newprogressbar(rect(20, 50, 500, 20), 0, 1024, 1024, 1);	    	
+    }
+#endif
     if(strncmp(url, "file://", 7) == 0) {
 	FILE *in, *out;
 	static char buf[CPBUFSIZE];
 	size_t n;
+	int nh = 7;
+#ifdef Win32
+	/* on Windows we have file:///d:/path/to 
+	   whereas on Unix it is file:///path/to */
+	if (strlen(url) > 9 && url[7] == '/' && url[9] == ':') nh = 8;
+#endif
 
 	/* Use binary transfers */
-	in = R_fopen(R_ExpandFileName(url+7), (mode[2] == 'b') ? "rb" : "r");
-	if(!in) error("cannot open URL `%s'", url);
+	in = R_fopen(R_ExpandFileName(url+nh), (mode[2] == 'b') ? "rb" : "r");
+	if(!in) error(_("cannot open URL '%s'"), url);
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error("cannot open destfile `%s'", file);
-	while((n = fread(buf, 1, CPBUFSIZE, in)) > 0)
-	    fwrite(buf, 1, n, out);
+	if(!out) error(_("cannot open destfile '%s'"), file);
+	while((n = fread(buf, 1, CPBUFSIZE, in)) > 0) {
+	    size_t res = fwrite(buf, 1, n, out);
+	    if(res != n) error(_("write failed"));
+	}
 	fclose(out); fclose(in);
 
 #ifdef HAVE_INTERNET
@@ -269,52 +318,56 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	FILE *out;
 	void *ctxt;
-	int len, total, guess, nnew, nbytes = 0;
+	int len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
 	int ndots = 0;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error("cannot open destfile `%s'", file);
+	if(!out) error(_("cannot open destfile '%s'"), file);
 
 	R_Busy(1);
-	if(!quiet) REprintf("trying URL `%s'\n", url);
+	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
 #ifdef Win32
 	R_FlushConsole();
 #endif
-	ctxt = in_R_HTTPOpen(url, cacheOK);
+	ctxt = in_R_HTTPOpen(url, headers, cacheOK);
 	if(ctxt == NULL) status = 1;
 	else {
-	    if(!quiet) REprintf("opened URL\n", url);
+	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
-	    if (guess <= 0) guess = 100 * 1024;
 #ifdef Win32
+	    if (guess <= 0) guess = 100 * 1024;
 	    R_FlushConsole();
-	    wprog = newwindow("Download progress", rect(0, 0, 540, 100),
-			      Titlebar | Centered);
-	    setbackground(wprog, dialog_bg());
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
 		strcat(buf, "... ");
 		strcat(buf, url + (strlen(url) - 60));
 	    } else strcat(buf, url);
-	    l_url = newlabel(buf, rect(10, 15, 520, 25), AlignCenter);
-	    pb = newprogressbar(rect(20, 50, 500, 20), 0, guess, 1024, 1);
-	    show(wprog);
+	    settext(pbar.l_url, buf);
+	    setprogressbarrange(pbar.pb, 0, guess);
+	    show(pbar.wprog);
+	    begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
+			 R_NilValue, R_NilValue, R_NilValue);
+	    pbar.cntxt.cend = &doneprogressbar;
+	    pbar.cntxt.cenddata = &pbar;
 #endif
 	    while ((len = in_R_HTTPRead(ctxt, buf, sizeof(buf))) > 0) {
-		fwrite(buf, 1, len, out);
+		size_t res = fwrite(buf, 1, len, out);
+		if(res != len) error(_("write failed"));
 		nbytes += len;
-		nnew = nbytes/1024;
 #ifdef Win32
 		if(nbytes > guess) {
 		    guess *= 2;
-		    setprogressbarrange(pb, 0, guess);
+		    setprogressbarrange(pbar.pb, 0, guess);
 		}
-		setprogressbar(pb, nbytes);
+		setprogressbar(pbar.pb, nbytes);
 #else
-		if(!quiet) putdots(&ndots, nnew);
+		if(!quiet) {
+		    if(guess <= 0) putdots(&ndots, nbytes/1024);
+		    else putdashes(&ndots, 50*nbytes/guess);
+		}
 #endif
 	    }
 	    in_R_HTTPClose(ctxt);
@@ -330,68 +383,73 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    hide(wprog);
-	    del(l_url);
-	    del(pb);
-	    del(wprog);
+	    endcontext(&(pbar.cntxt));
+	    doneprogressbar(&pbar);	    
 #endif
 	    if (total > 0 && total != nbytes)
-		warning("downloaded length %d != reported length %d",
+		warning(_("downloaded length %d != reported length %d"),
 			nbytes, total);
 	}
 	R_Busy(0);
-	if (status == 1) error("cannot open URL `%s'", url);
+	if (status == 1) error(_("cannot open URL '%s'"), url);
 
     } else if (strncmp(url, "ftp://", 6) == 0) {
 
 	FILE *out;
 	void *ctxt;
-	int len, total, guess, nnew, nbytes = 0;
+	int len, total, guess, nbytes = 0;
 	char buf[IBUFSIZE];
 #ifndef Win32
 	int ndots = 0;
 #endif
 
 	out = R_fopen(R_ExpandFileName(file), mode);
-	if(!out) error("cannot open destfile `%s'", file);
+	if(!out) error(_("cannot open destfile '%s'"), file);
 
 	R_Busy(1);
-	if(!quiet) REprintf("trying URL `%s'\n", url);
+	if(!quiet) REprintf(_("trying URL '%s'\n"), url);
 #ifdef Win32
 	R_FlushConsole();
 #endif
 	ctxt = in_R_FTPOpen(url);
 	if(ctxt == NULL) status = 1;
 	else {
-	    if(!quiet) REprintf("opened URL\n", url);
+	    if(!quiet) REprintf(_("opened URL\n"), url);
 	    guess = total = ((inetconn *)ctxt)->length;
-	    if (guess <= 0) guess = 100 * 1024;
 #ifdef Win32
+	    if (guess <= 0) guess = 100 * 1024;
 	    R_FlushConsole();
-	    wprog = newwindow("Download progress", rect(0, 0, 540, 100),
-			      Titlebar | Centered);
-	    setbackground(wprog, LightGrey);
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
 		strcat(buf, "... ");
 		strcat(buf, url + (strlen(url) - 60));
 	    } else strcat(buf, url);
-	    l_url = newlabel(buf, rect(10, 15, 520, 25), AlignCenter);
-	    pb = newprogressbar(rect(20, 50, 500, 20), 0, guess, 1024, 1);
-	    show(wprog);
+	    settext(pbar.l_url, buf);
+	    setprogressbarrange(pbar.pb, 0, guess);
+	    show(pbar.wprog);
+
+	    /* set up a context which will close progressbar on error. */
+	    begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
+			 R_NilValue, R_NilValue, R_NilValue);
+	    pbar.cntxt.cend = &doneprogressbar;
+	    pbar.cntxt.cenddata = &pbar;
+	    
 #endif
 	    while ((len = in_R_FTPRead(ctxt, buf, sizeof(buf))) > 0) {
-		fwrite(buf, 1, len, out);
+		size_t res = fwrite(buf, 1, len, out);
+		if(res != len) error(_("write failed"));
 		nbytes += len;
-		nnew = nbytes/1024;
 #ifdef Win32
 		if(nbytes > guess) {
 		    guess *= 2;
-		    setprogressbarrange(pb, 0, guess);
+		    setprogressbarrange(pbar.pb, 0, guess);
 		}
-		setprogressbar(pb, nbytes);
+		setprogressbar(pbar.pb, nbytes);
 #else
-		if(!quiet) putdots(&ndots, nnew);
+		if(!quiet) {
+		    if(guess <= 0) putdots(&ndots, nbytes/1024);
+		    else putdashes(&ndots, 50*nbytes/guess);
+		}
 #endif
 	    }
 	    in_R_FTPClose(ctxt);
@@ -407,55 +465,53 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    hide(wprog);
-	    del(l_url);
-	    del(pb);
-	    del(wprog);
+	    endcontext(&(pbar.cntxt));
+	    doneprogressbar(&pbar);	    
 #endif
 	    if (total > 0 && total != nbytes)
-		warning("downloaded length %d != reported length %d",
+		warning(_("downloaded length %d != reported length %d"),
 			nbytes, total);
 	}
 	R_Busy(0);
-	if (status == 1) error("cannot open URL `%s'", url);
+	if (status == 1) error(_("cannot open URL '%s'"), url);
 #endif
 
     } else
-	error("unsupported URL scheme");
+	error(_("unsupported URL scheme"));
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = status;
-    UNPROTECT(1);
+    UNPROTECT(2);
     return ans;
 }
 
 
 #if defined(SUPPORT_LIBXML) && !defined(USE_WININET)
 
-void *in_R_HTTPOpen(const char *url, int cacheOK)
+void *in_R_HTTPOpen(const char *url, const char *headers, const int cacheOK)
 {
     inetconn *con;
     void *ctxt;
-    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    int timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     int len = -1;
     char *type = NULL;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
 
     RxmlNanoHTTPTimeout(timeout);
-    ctxt = RxmlNanoHTTPOpen(url, NULL, cacheOK);
+    ctxt = RxmlNanoHTTPOpen(url, NULL, headers, cacheOK);
     if(ctxt != NULL) {
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
+	    warning(_("cannot open: HTTP status was '%d %s'"), rc,
+		    RxmlNanoHTTPStatusMsg(ctxt));
 	    RxmlNanoHTTPClose(ctxt);
-	    warning("cannot open: HTTP status was `%d %s'", rc,
-		  RxmlNanoHTTPStatusMsg(ctxt));
 	    return NULL;
 	} else {
 	    type = RxmlNanoHTTPContentType(ctxt);
 	    len = RxmlNanoHTTPContentLength(ctxt);
 	    if(!IDquiet){
-		REprintf("Content type `%s'", type ? type : "unknown");
+		REprintf("Content type '%s'", type ? type : "unknown");
 		if(len >= 0) REprintf(" length %d bytes\n", len);
 		else REprintf(" length unknown\n", len);
 #ifdef Win32
@@ -490,7 +546,7 @@ static void *in_R_FTPOpen(const char *url)
 {
     inetconn *con;
     void *ctxt;
-    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    int timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     int len = 0;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
@@ -533,6 +589,7 @@ static void in_R_FTPClose(void *ctx)
 
 #ifdef USE_WININET
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <wininet.h>
 typedef struct wictxt {
@@ -561,7 +618,8 @@ InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
 }
 #endif /* USE_WININET_ASYNC */
 
-static void *in_R_HTTPOpen(const char *url, const int cacheOK)
+static void *in_R_HTTPOpen(const char *url, const char *headers, 
+                           const int cacheOK)
 {
     WIctxt  wictxt;
     DWORD status, d1 = 4, d2 = 0, d3 = 100;
@@ -578,7 +636,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
     wictxt->length = -1;
     wictxt->type = NULL;
     wictxt->hand =
-	InternetOpen("R", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
+	InternetOpen(headers, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
 #ifdef USE_WININET_ASYNC
 		     INTERNET_FLAG_ASYNC
 #else
@@ -592,7 +650,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
     }
 
 #ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
@@ -618,7 +676,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    warning("InternetOpenUrl timed out");
+	    warning(_("InternetOpenUrl timed out"));
 	    return NULL;
 	}
     }
@@ -645,7 +703,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 		p = buf + strlen(buf) - 1;
 		if(*p == '\n' || *p == '\r') *p = '\0'; else break;
 	    }
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	} else {
 	    FormatMessage( 
@@ -659,7 +717,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 		p = buf + strlen(buf) - 1;
 		if(*p == '\n' || *p == '\r') *p = '\0'; else break;
 	    }
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	}
     }
@@ -674,7 +732,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
 	InternetCloseHandle(wictxt->session);
 	InternetCloseHandle(wictxt->hand);
 	free(wictxt);
-	warning("cannot open: HTTP status was `%d %s'", status, buf);
+	warning(_("cannot open: HTTP status was '%d %s'"), status, buf);
 	return NULL;
     }
 
@@ -687,7 +745,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
     wictxt->length = status;
     wictxt->type = strdup(buf);
     if(!IDquiet) {
-	REprintf("Content type `%s' length %d bytes\n", buf, status);
+	REprintf("Content type '%s' length %d bytes\n", buf, status);
 	R_FlushConsole();
     }
 
@@ -709,7 +767,7 @@ static int in_R_HTTPRead(void *ctx, char *dest, int len)
 	    Sleep(100);
 	}
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
-	    warning("Internet read timed out");
+	    warning(_("Internet read timed out"));
 	    nread = 0;
 	}
     }
@@ -749,7 +807,7 @@ static void *in_R_FTPOpen(const char *url)
     }
 
 #ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
@@ -774,7 +832,7 @@ static void *in_R_FTPOpen(const char *url)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    warning("InternetOpenUrl timed out");
+	    warning(_("InternetOpenUrl timed out"));
 	    return NULL;
 	}
     }
@@ -796,7 +854,7 @@ static void *in_R_FTPOpen(const char *url)
 	free(wictxt);
 	if (err1 == ERROR_INTERNET_EXTENDED_ERROR) {
 	    InternetGetLastResponseInfo(&err2, buf, &blen);
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	} else {
 	    FormatMessage( 
@@ -805,7 +863,7 @@ static void *in_R_FTPOpen(const char *url)
 		err1,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		buf, 101, NULL);
-	    warning("InternetOpenUrl failed: `%s'", buf);
+	    warning(_("InternetOpenUrl failed: '%s'"), buf);
 	    return NULL;
 	}
     }
@@ -826,7 +884,8 @@ static void in_R_FTPClose(void *ctx)
 #endif
 
 #ifndef HAVE_INTERNET
-static void *in_R_HTTPOpen(const char *url, const int cacheOK)
+static void *in_R_HTTPOpen(const char *url, const char *headers, 
+                           const int cacheOK)
 {
     return NULL;
 }
@@ -863,7 +922,7 @@ void RxmlMessage(int level, const char *format, ...)
     char buf[MBUFSIZE], *p;
     va_list(ap);
 
-    clevel = asInteger(GetOption(install("internet.info"), R_NilValue));
+    clevel = asInteger(GetOption(install("internet.info"), R_BaseEnv));
     if(clevel == NA_INTEGER) clevel = 2;
     
     if(level < clevel) return;
@@ -878,19 +937,23 @@ void RxmlMessage(int level, const char *format, ...)
 }
 
 #include "sock.h"
+#ifdef Win32
+# define STRICT_R_HEADERS
+#endif
+#include <R_ext/RS.h> /* for Calloc */
 
+void
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
 #ifdef USE_WININET
-void R_init_internet2(DllInfo *info)
+R_init_internet2(DllInfo *info)
 #else
-void R_init_internet(DllInfo *info)
+R_init_internet(DllInfo *info)
 #endif
 {
     R_InternetRoutines *tmp;
-    tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
-    if(!tmp) {
-	error("Cannot allocate memory for InternetRoutines structure");
-	return;
-    }
+    tmp = Calloc(1, R_InternetRoutines);
 
     tmp->download = in_do_download;
     tmp->newurl =  in_R_newurl;

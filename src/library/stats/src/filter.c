@@ -15,10 +15,15 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
-#include <math.h>
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+/* do this first to get the right options for math.h */
+#include <R_ext/Arith.h>
+
 #include <R.h>
 #include "ts.h"
 
@@ -99,7 +104,7 @@ acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
 	nu;
     double sum, *se;
     
-    se = (double *) R_alloc(nn, sizeof(double));
+    se = (double *) R_alloc(ns, sizeof(double));
     for(u = 0; u < ns; u++)
 	for(v = 0; v < ns; v++)
 	    for(lag = 0; lag <= nl; lag++) {

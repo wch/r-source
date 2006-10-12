@@ -6,7 +6,7 @@ citEntry <- function(entry, textVersion, header=NULL, footer=NULL, ...)
 
     if("author" %in% names(z))
         z$author <- as.personList(z$author)
-    
+
     attr(z, "entry") <- entry
     attr(z, "textVersion") <- textVersion
     attr(z, "header") <- header
@@ -37,7 +37,7 @@ readCitationFile <- function(file)
     envir = new.env()
 
     for(expr in pcf){
-        
+
         x <- eval(expr, envir=envir)
         if(class(x)=="citation")
             z[[k <- k+1]] <- x
@@ -49,7 +49,7 @@ readCitationFile <- function(file)
     class(z) <- "citationList"
     z
 }
-        
+
 ###**********************************************************
 
 print.citation <- function(x, bibtex=TRUE, ...){
@@ -66,7 +66,7 @@ print.citation <- function(x, bibtex=TRUE, ...){
 
     if(bibtex){
         cat("A BibTeX entry for LaTeX users is\n\n")
-        print(bibtex(x), prefix="  ")
+        print(toBibtex(x), prefix="  ")
     }
 
     if(!is.null(attr(x, "footer"))){
@@ -107,14 +107,14 @@ as.person <- function(x) UseMethod("as.person")
 as.person.default <- function(x)
 {
     if(class(x)=="person") return(x)
-    
+
     x <- as.character(x)
 
     if(length(grep("<.*>", x))>0)
         email <- sub(".*<([^>]*)>.*", "\\1", x)
     else
         email <- NULL
-    
+
     name <- sub("[[:space:]]*<[^>]*>", "", x)
     name = unlist(strsplit(name, "[[:space:]]"))
 
@@ -138,7 +138,7 @@ personList <- function(...)
 {
     z = list(...)
     if(any(sapply(z, function(x) class(x) != "person")))
-        stop("All arguments must be of class", sQuote("person"))
+        stop("all arguments must be of class \"person\"")
 
     class(z) <- "personList"
     z
@@ -151,22 +151,19 @@ as.personList.person <- function(x) personList(x)
 as.personList.default <- function(x)
 {
     if(class(x)=="personList") return(x)
-    
+
     x <- as.character(x)
-    
+
     ## first split into individual persons
-    x <- unlist(strsplit(x,"[[:space:]]?(,|and)[[:space:]]+"))
+    x <- unlist(strsplit(x,"[[:space:]]?(,|[[:space:]]and)[[:space:]]+"))
     x <- x[nchar(x)>0]
-    
+
     z <- list()
-    for(k in seq(along=x))
-    {
-        z[[k]] <- as.person(x[k])
-    }
+    for(k in seq_along(x)) z[[k]] <- as.person(x[k])
     class(z) <- "personList"
     z
 }
-        
+
 as.character.person <- function(x, ...)
 {
     paste(x$name[nchar(x$name)>0], collapse=" ")
@@ -179,49 +176,40 @@ as.character.personList <- function(x, ...)
 
 ###**********************************************************
 
-bibtex <- function(object, ...) UseMethod("bibtex")
-
-print.bibtex <- function(x, prefix="", ...)
-{
-    writeLines(paste(prefix, unclass(x), sep=""))
-    invisible()
-}
-
-bibtex.person <- function(object, ...)
+toBibtex.person <- function(object, ...)
 {
     if(length(grep(" ", object$name["last"]))>0)
         object$name["last"] <- paste("{", object$name["last"], "}", sep="")
     as.character(object)
 }
 
-bibtex.personList <- function(object, ...)
+toBibtex.personList <- function(object, ...)
 {
-    z <- sapply(object, bibtex)
+    z <- sapply(object, toBibtex)
     paste(z, collapse = " and ")
 }
 
-bibtex.citation <- function(object, ...)
+toBibtex.citation <- function(object, ...)
 {
     z <- paste("@", attr(object, "entry"), "{,", sep="")
 
     if("author" %in% names(object)){
-        object$author <- bibtex(object$author)
+        object$author <- toBibtex(object$author)
     }
-    
+
     for(n in names(object))
         z <- c(z, paste("  ", n, " = {", object[[n]], "},", sep=""))
 
     z <- c(z, "}")
-    class(z) <- "bibtex"
-
+    class(z) <- "Bibtex"
     z
 }
 
-bibtex.citationList <- function(object, ...)
+toBibtex.citationList <- function(object, ...)
 {
-    lapply(object, bibtex)
+    lapply(object, toBibtex)
 }
-              
+
 ###**********************************************************
 
 citation <- function(package="base", lib.loc = NULL)
@@ -233,18 +221,22 @@ citation <- function(package="base", lib.loc = NULL)
     }
     else if(package=="base"){
         ## avoid infinite recursion for broken installation
-        stop("Broken installation, no CITATION file in the base package.")
+        stop("broken installation, no CITATION file in the base package.")
     }
-        
+
     ## else auto-generate citation info
     desc <- packageDescription(pkg=package, lib.loc = lib.loc)
 
     ## base packages without a CITATION file use the base citation
-    if((!is.null(desc$Priority)) && (desc$Priority=="base"))
-        return(citation("base"))
+    if((!is.null(desc$Priority)) && (desc$Priority=="base")) {
+    	cit <- citation("base")
+    	attr(cit, "header")[1] <- paste("The '", package, "' package is part of R.  ",
+    	                             attr(cit, "header")[1], sep="")
+    	return(cit)
+    }
 
     if(length(desc)==1 && is.na(desc))
-       stop("Package ", sQuote(package), " not found\n")
+       stop(gettextf("package '%s' not found", package), domain = NA)
 
     z <- list(title = paste(package, ": ", desc$Title, sep=""),
               author = as.personList(desc$Author),
@@ -253,14 +245,13 @@ citation <- function(package="base", lib.loc = NULL)
               )
 
     if(is.null(desc$Date)){
-        warning("No date field in DESCRIPTION of package ",
-                sQuote(package), "\n")
+        warning(gettextf("no date field in DESCRIPTION file of package '%s'",
+                         package), domain = NA)
     }
     else if(length(z$year)==0){
-        warning("Could not determine year for ",
-                sQuote(package), " from package DESCRIPTION\n")
+        warning(gettextf("could not determine year for '%s' from package DESCRIPTION file", package), domain = NA)
     }
-    
+
     z$url <- desc$URL
 
     class(z) <- "citation"
@@ -269,7 +260,7 @@ citation <- function(package="base", lib.loc = NULL)
 
     attr(z, "header") <-
         paste("To cite package", sQuote(package), "in publications use:")
-    
+
     attr(z, "footer") <-
         paste("ATTENTION: This citation information has been auto-generated",
               "from the package DESCRIPTION file and may need manual editing,",
@@ -279,10 +270,10 @@ citation <- function(package="base", lib.loc = NULL)
     if(length(author)>1)
         author <- paste(paste(author[1:(length(author)-1)], collapse=", "),
                         author[length(author)], sep=" and ")
-    
+
     attr(z, "textVersion") <-
         paste(author, " (", z$year, "). ",
               z$title, ". ", z$note, ". ", z$url, sep="")
-    
+
     z
 }

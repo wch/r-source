@@ -20,7 +20,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   \item{init}{initial values of the variance parameters.}
 
   \item{fixed}{optional numeric vector of the same length as the total
-    number of parameters.  If supplied, only non-\code{NA} entries in
+    number of parameters.  If supplied, only \code{NA} entries in
     \code{fixed} will be varied.  Probably most useful for setting
     variances to zero.}
 
@@ -67,7 +67,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
  trend model with an additional seasonal component. Thus the measurement
  equation is
  \deqn{x_t = \mu_t + \gamma_t + \epsilon_t, \qquad \epsilon_t \sim  N(0, \sigma^2_\epsilon)}{%
-   x[t] = m[t] + s[t] + eps[t], exp[t] ~  N(0, sigma^2_eps)}
+   x[t] = m[t] + s[t] + eps[t], eps[t] ~  N(0, sigma^2_eps)}
  where \eqn{\gamma_t}{s[t]} is a seasonal component with dynamics
  \deqn{
    \gamma_{t+1} = -\gamma_t + \cdots + \gamma_{t-s+2} + \omega_t, \qquad
@@ -91,10 +91,10 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   \item{residuals}{the standardized residuals.}
   \item{fitted}{a multiple time series with one component for the level,
     slope and seasonal components, estimated contemporaneously (that is
-    at time \eqn{t} and not at the end of the series.}
+    at time \eqn{t} and not at the end of the series).}
   \item{call}{the matched call.}
   \item{series}{the name of the series \code{x}.}
-  \item{convergence}{the value returned by \code{\link{optim}}.}
+  \item{code}{the \code{convergence} code returned by \code{\link{optim}}.}
   \item{model, model0}{Lists representing the Kalman Filter used in the
     fitting.  See \code{\link{KalmanLike}}.  \code{model0} is the
     initial state of the filter, \code{model} its final state.}
@@ -108,7 +108,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 
   Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
     State Space Methods.}  Oxford University Press.
-  
+
   Harvey, A. C. (1989)
   \emph{Forecasting, Structural Time Series Models and the Kalman Filter}.
   Cambridge University Press.
@@ -142,5 +142,9 @@ tsdiag(fit)
 par(mfrow = c(4, 1))
 plot(log10(UKgas))
 plot(cbind(fitted(fit), resids=resid(fit)), main = "UK gas consumption")
+
+## keep some parameters fixed; trace optimizer:
+StructTS(log10(UKgas), type = "BSM", fixed = c(0.1,0.001,NA,NA),
+         optim.control = list(trace=TRUE))
 }
 \keyword{ts}

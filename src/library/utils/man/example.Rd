@@ -9,7 +9,7 @@
 \usage{
 example(topic, package = NULL, lib.loc = NULL,
         local = FALSE, echo = TRUE, verbose = getOption("verbose"),
-        setRNG = FALSE,
+        setRNG = FALSE, ask = getOption("example.ask"),
         prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
 }
 \arguments{
@@ -33,10 +33,19 @@ example(topic, package = NULL, lib.loc = NULL,
       = TRUE} sets the same state as \code{R CMD \link{check}} does for
     running a package's examples.  This is currently equivalent to
     \code{setRNG = \{RNGkind("default", "default"); set.seed(1)\}}.}
+  \item{ask}{logical (or \code{"default"}) indicating if
+    \code{\link{par}(ask=TRUE)} should be called before graphical output
+    happens from the example code.  The value \code{"default"} (the
+    factory-fresh default) means to ask if \code{echo == TRUE} and the
+    graphics device appears to be interactive.  This parameter applies
+    both to any currently opened device and to any devices opened by the
+    example code.}
   \item{prompt.echo}{character; gives the prompt to be used if
     \code{echo = TRUE}.}
 }
-\value{(the value of the last evaluated expression).}
+\value{
+  The value of the last evaluated expression.
+}
 \details{
   If \code{lib.loc} is not specified, the packages are searched for
   amongst those already loaded, then in the specified libraries.
@@ -60,7 +69,12 @@ example(topic, package = NULL, lib.loc = NULL,
       pages, but will be run both by the package checking tools,
       and the \code{example()} function.  This was previously
       \code{testonly}, and that form is still accepted.}
-    }
+  }
+
+  If the examples file contains non-ASCII characters the encoding used
+  will matter.  If in a UTF-8 locale \code{example} first tries UTF-8
+  and then Latin-1.  (This can be overridden by setting the encoding in
+  the \code{.Rd} file.)
 }
 \note{
   The examples can be many small files.  On some file systems it is

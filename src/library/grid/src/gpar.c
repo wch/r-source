@@ -15,8 +15,8 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
 #include "grid.h"
@@ -46,7 +46,7 @@ int gpCol(SEXP gp, int i) {
     SEXP col = VECTOR_ELT(gp, GP_COL);
     int result;
     if (isNull(col))
-	result = R_RGBA(255, 255, 255, 255);
+	result = R_TRANWHITE;
     else
 	result = RGBpar(col, i % LENGTH(col));
     return result;
@@ -60,7 +60,7 @@ int gpFill(SEXP gp, int i) {
     SEXP fill = gpFillSXP(gp);
     int result;
     if (isNull(fill))
-	result = R_RGBA(255, 255, 255, 255);
+	result = R_TRANWHITE;
     else
 	result = RGBpar(fill, i % LENGTH(fill));
     return result;
@@ -129,6 +129,42 @@ double gpAlpha(SEXP gp, int i) {
     return REAL(alpha)[i % LENGTH(alpha)];
 }
 
+SEXP gpLineEndSXP(SEXP gp) {
+    return VECTOR_ELT(gp, GP_LINEEND);
+}
+
+R_GE_lineend gpLineEnd(SEXP gp, int i) {
+    SEXP lineend = gpLineEndSXP(gp);
+    return LENDpar(lineend, i % LENGTH(lineend));
+}
+
+SEXP gpLineJoinSXP(SEXP gp) {
+    return VECTOR_ELT(gp, GP_LINEJOIN);
+}
+
+R_GE_linejoin gpLineJoin(SEXP gp, int i) {
+    SEXP linejoin = gpLineJoinSXP(gp);
+    return LJOINpar(linejoin, i % LENGTH(linejoin));
+}
+
+SEXP gpLineMitreSXP(SEXP gp) {
+    return VECTOR_ELT(gp, GP_LINEMITRE);
+}
+
+double gpLineMitre(SEXP gp, int i) {
+    SEXP linemitre = gpLineMitreSXP(gp);
+    return REAL(linemitre)[i % LENGTH(linemitre)];
+}
+
+SEXP gpLexSXP(SEXP gp) {
+    return VECTOR_ELT(gp, GP_LEX);
+}
+
+double gpLex(SEXP gp, int i) {
+    SEXP lex = gpLexSXP(gp);
+    return REAL(lex)[i % LENGTH(lex)];
+}
+
 /*
  * Never access fontface because fontface values are stored in font
  * Historical reasons ...
@@ -137,29 +173,29 @@ double gpAlpha(SEXP gp, int i) {
 /*
  * Combine gpar alpha with alpha level stored in colour 
  *
- * finalAlpha = 1 - (1 - gpAlpha)*(1 - R_ALPHA*(col))
+ * finalAlpha = gpAlpha*(R_ALPHA(col)/255)
  *
  * Based on my reading of how group alpha and individual
  * object alphas are combined in the SVG 1.0 docs
  *
  * Also has nice properties:
  *  (i)   range of finalAlpha is 0 to 1.
- *  (ii)  if either of gpAlpha or R_ALPHA(col) are 1 then finalAlpha = 1
+ *  (ii)  if either of gpAlpha or R_ALPHA(col) are 0 then finalAlpha = 0
  *        (i.e., can never make fully transparent colour less transparent).
- *  (iii) in order to get finalAlpah = 0, both gpAlpha and R_ALPHA(col)
- *        must be 0 (i.e., only way to get fully opaque is if both
+ *  (iii) in order to get finalAlpha = 1, both gpAlpha and R_ALPHA(col)
+ *        must be 1 (i.e., only way to get fully opaque is if both
  *        alpha levels are fully opaque).
  */
 static unsigned int combineAlpha(double alpha, int col) 
 {
-    unsigned int newAlpha = (1 - (1 - alpha)*(1 - R_ALPHA(col)/255.0))*255;
+    unsigned int newAlpha = (alpha*(R_ALPHA(col)/255.0))*255;
     return R_RGBA(R_RED(col), R_GREEN(col), R_BLUE(col), newAlpha);
 }
 
 /* 
  * Generate an R_GE_gcontext from a gpar
  */
-void gcontextFromgpar(SEXP gp, int i, R_GE_gcontext *gc) 
+void gcontextFromgpar(SEXP gp, int i, R_GE_gcontext *gc, GEDevDesc *dd) 
 {
     /* 
      * Combine gpAlpha with col and fill
@@ -167,10 +203,21 @@ void gcontextFromgpar(SEXP gp, int i, R_GE_gcontext *gc)
     gc->col = combineAlpha(gpAlpha(gp, i), gpCol(gp, i));
     gc->fill = combineAlpha(gpAlpha(gp, i), gpFill(gp, i));
     gc->gamma = gpGamma(gp, i);
-    gc->lwd = gpLineWidth(gp, i);
+    /*
+     * Combine gpLex with lwd
+     * Also scale by GSS_SCALE (a "zoom" factor)
+     */
+    gc->lwd = gpLineWidth(gp, i) * gpLex(gp, i) * 
+	REAL(gridStateElement(dd, GSS_SCALE))[0];
     gc->lty = gpLineType(gp, i);
+    gc->lend = gpLineEnd(gp, i);
+    gc->ljoin = gpLineJoin(gp, i);
+    gc->lmitre = gpLineMitre(gp, i);
     gc->cex = gpCex(gp, i);
-    gc->ps = gpFontSize(gp, i);
+    /*
+     * Scale by GSS_SCALE (a "zoom" factor)
+     */
+    gc->ps = gpFontSize(gp, i) * REAL(gridStateElement(dd, GSS_SCALE))[0];
     gc->lineheight = gpLineHeight(gp, i);
     gc->fontface = gpFont(gp, i);
     strcpy(gc->fontfamily, gpFontFamily(gp, i));
@@ -189,7 +236,7 @@ SEXP L_setGPar(SEXP gpars)
     return R_NilValue;
 }
 
-SEXP L_getGPar(SEXP gpars) 
+SEXP L_getGPar(void) 
 {
     /* Get the value of the current gpars on the current device
      * Need to do this in here so that redrawing via R BASE display
@@ -223,10 +270,10 @@ void initGPar(GEDevDesc *dd)
     NewDevDesc *dev = dd->dev;
     SEXP gpar, gparnames, class;
     SEXP gpfill, gpcol, gpgamma, gplty, gplwd, gpcex, gpfs, gplh, gpfont;
-    SEXP gpfontfamily, gpalpha;
+    SEXP gpfontfamily, gpalpha, gplineend, gplinejoin, gplinemitre, gplex;
     SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
-    PROTECT(gpar = allocVector(VECSXP, 11));
-    PROTECT(gparnames = allocVector(STRSXP, 11));
+    PROTECT(gpar = allocVector(VECSXP, 15));
+    PROTECT(gparnames = allocVector(STRSXP, 15));
     SET_STRING_ELT(gparnames, GP_FILL, mkChar("fill"));
     SET_STRING_ELT(gparnames, GP_COL, mkChar("col"));
     SET_STRING_ELT(gparnames, GP_GAMMA, mkChar("gamma"));
@@ -238,17 +285,16 @@ void initGPar(GEDevDesc *dd)
     SET_STRING_ELT(gparnames, GP_FONT, mkChar("font"));
     SET_STRING_ELT(gparnames, GP_FONTFAMILY, mkChar("fontfamily"));
     SET_STRING_ELT(gparnames, GP_ALPHA, mkChar("alpha"));
+    SET_STRING_ELT(gparnames, GP_LINEEND, mkChar("lineend"));
+    SET_STRING_ELT(gparnames, GP_LINEJOIN, mkChar("linejoin"));
+    SET_STRING_ELT(gparnames, GP_LINEMITRE, mkChar("linemitre"));
+    SET_STRING_ELT(gparnames, GP_LEX, mkChar("lex"));
     setAttrib(gpar, R_NamesSymbol, gparnames);
-    /* FIXME:  Need to export col2name via (probably) GraphicsEngine.h
-     * In the meantime I just have to override the device settings
-     */
     PROTECT(gpfill = allocVector(STRSXP, 1));
-    /* SET_STRING_ELT(gpfill, 0, mkChar(col2name(dev->startfill))); */
-    SET_STRING_ELT(gpfill, 0, mkChar("transparent"));
+    SET_STRING_ELT(gpfill, 0, mkChar(col2name(dev->startfill)));
     SET_VECTOR_ELT(gpar, GP_FILL, gpfill);
     PROTECT(gpcol = allocVector(STRSXP, 1));
-    /* SET_STRING_ELT(gpcol, 0, mkChar(col2name(dev->startcol))); */
-    SET_STRING_ELT(gpcol, 0, mkChar("black"));
+    SET_STRING_ELT(gpcol, 0, mkChar(col2name(dev->startcol)));
     SET_VECTOR_ELT(gpar, GP_COL, gpcol);
     PROTECT(gpgamma = allocVector(REALSXP, 1));
     REAL(gpgamma)[0] = dev->startgamma;
@@ -278,11 +324,23 @@ void initGPar(GEDevDesc *dd)
     SET_STRING_ELT(gpfontfamily, 0, mkChar(""));
     SET_VECTOR_ELT(gpar, GP_FONTFAMILY, gpfontfamily);
     PROTECT(gpalpha = allocVector(REALSXP, 1));
-    REAL(gpalpha)[0] = 0;
+    REAL(gpalpha)[0] = 1;
     SET_VECTOR_ELT(gpar, GP_ALPHA, gpalpha);
+    PROTECT(gplineend = allocVector(STRSXP, 1));
+    SET_STRING_ELT(gplineend, 0, mkChar("round"));
+    SET_VECTOR_ELT(gpar, GP_LINEEND, gplineend);
+    PROTECT(gplinejoin = allocVector(STRSXP, 1));
+    SET_STRING_ELT(gplinejoin, 0, mkChar("round"));
+    SET_VECTOR_ELT(gpar, GP_LINEJOIN, gplinejoin);
+    PROTECT(gplinemitre = allocVector(REALSXP, 1));
+    REAL(gplinemitre)[0] = 10;
+    SET_VECTOR_ELT(gpar, GP_LINEMITRE, gplinemitre);
+    PROTECT(gplex = allocVector(REALSXP, 1));
+    REAL(gplex)[0] = 1;
+    SET_VECTOR_ELT(gpar, GP_LEX, gplex);
     PROTECT(class = allocVector(STRSXP, 1));
     SET_STRING_ELT(class, 0, mkChar("gpar"));
     classgets(gpar, class);
     SET_VECTOR_ELT(gsd, GSS_GPAR, gpar);
-    UNPROTECT(14);
+    UNPROTECT(18);
 }

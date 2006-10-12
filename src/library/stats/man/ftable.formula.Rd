@@ -9,7 +9,8 @@
 \arguments{
   \item{formula}{a formula object with both left and right hand sides
     specifying the column and row variables of the flat table.}
-  \item{data}{a data frame, list or environment containing the variables
+  \item{data}{a data frame, list or environment (or similar: see
+    \code{\link{model.frame}}) containing the variables
     to be cross-tabulated, or a contingency table (see below).}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.

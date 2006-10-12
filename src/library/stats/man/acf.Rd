@@ -19,17 +19,17 @@ acf(x, lag.max = NULL,
 
 pacf(x, lag.max, plot, na.action, \dots)
 
-\method{pacf}{default}(x, lag.max = NULL, plot = TRUE, na.action = na.fail, 
-    ...) 
+\method{pacf}{default}(x, lag.max = NULL, plot = TRUE, na.action = na.fail,
+    ...)
 
 ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     plot = TRUE, na.action = na.fail, \dots)
 
-acf.obj[i, j]
+\method{[}{acf}(x, i, j)
 }
 \arguments{
   \item{x, y}{a univariate or multivariate (not \code{ccf}) numeric time
-    series object or a numeric vector or matrix.}
+    series object or a numeric vector or matrix, or an \code{"acf"} object.}
   \item{lag.max}{maximum number of lags at which to calculate the acf.
     Default is \eqn{10\log_{10}(N/m)}{10*log10(N/m)} where \eqn{N} is the
     number of observations and \eqn{m} the number of series.}
@@ -44,10 +44,8 @@ acf.obj[i, j]
     means?}
   \item{\dots}{further arguments to be passed to \code{plot.acf}.}
 
-  \item{acf.obj}{an object of class \code{"acf"} resulting from a call
-    to \code{acf}.}
-  \item{i}{a set of lags to retain.}
-  \item{j}{a set of series to retain.}
+  \item{i}{a set of lags (time differences) to retain.}
+  \item{j}{a set of series (names or numbers) to retain.}
 }
 \value{
   An object of class \code{"acf"}, which is a list with the following
@@ -95,7 +93,8 @@ acf.obj[i, j]
   B.D. Ripley.
 }
 \seealso{
-  \code{\link{plot.acf}}
+  \code{\link{plot.acf}}, \code{\link{ARMAacf}} for the exact
+  autocorrelations of a given ARMA process.
 }
 \examples{
 ## Examples from Venables & Ripley
@@ -106,7 +105,7 @@ pacf(lh)
 acf(ldeaths)
 acf(ldeaths, ci.type = "ma")
 acf(ts.union(mdeaths, fdeaths))
-ccf(mdeaths, fdeaths) # just the cross-correlations.
+ccf(mdeaths, fdeaths, ylab="cross-correlation") # just the cross-correlations.
 
 presidents # contains missing values
 acf(presidents, na.action = na.pass)

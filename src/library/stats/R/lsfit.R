@@ -23,7 +23,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     good <- complete.cases(x, y, wt)
     dimy <- dim(as.matrix(y))
     if( any(!good) ) {
-	warning(paste(sum(!good), "missing values deleted"))
+	warning(gettextf("%d missing values deleted", sum(!good)), domain = NA)
 	x <- as.matrix(x)[good, ]
 	y <- as.matrix(y)[good, ]
 	wt <- wt[good]
@@ -36,16 +36,19 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     nry <- NROW(y)
     ncy <- NCOL(y)
     nwts <- length(wt)
-    if(nry != nrx) stop(paste("X matrix has", nrx, "responses, Y",
-       "has", nry, "responses."))
-    if(nry < ncx) stop(paste(nry, "responses, but only", ncx, "variables"))
+    if(nry != nrx)
+        stop(gettextf("'X' matrix has %d responses, 'Y' has %d responses",
+                      nrx, nry), domain = NA)
+    if(nry < ncx)
+        stop(gettextf("%d responses, but only %d variables", nry, ncx),
+             domain = NA)
 
     ## check weights if necessary
 
     if( !is.null(wt) ) {
 	if(any(wt < 0)) stop("negative weights not allowed")
-	if(nwts != nry) stop(paste("Number of weights =", nwts,
-	   ", should equal", nry, "(number of responses)"))
+	if(nwts != nry)
+            stop(gettextf("number of weights = %d should equal %d (number of responses)", nwts, nry), domain = NA)
 	wtmult <- wt^0.5
 	if( any(wt==0) ) {
 	    xzero <- as.matrix(x)[wt==0, ]
@@ -109,7 +112,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     if( z$rank != ncx ) {
 	xnames <- xnames[z$pivot]
 	dimnames(z$qr) <- list(NULL, xnames)
-	warning("X matrix was collinear")
+	warning("'X' matrix was collinear")
     }
 
     ## return weights if necessary
@@ -132,6 +135,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
 ls.diag <- function(ls.out)
 {
     resids <- as.matrix(ls.out$residuals)
+    d0 <- dim(resids)
     xnames <- colnames(ls.out$qr$qr)
     yname <- colnames(resids)
 
@@ -140,15 +144,14 @@ ls.diag <- function(ls.out)
     good <- complete.cases(resids, ls.out$wt)
     if( any(!good) ) {
 	warning("missing observations deleted")
-	resids <- as.matrix(resids)[good, ]
+	resids <- resids[good, , drop = FALSE]
     }
 
     ## adjust residuals if needed
 
     if( !is.null(ls.out$wt) ) {
 	if( any(ls.out$wt[good] == 0) )
-	    warning(paste("Observations with 0 weight not used in",
-			  "calculating standard deviation"))
+	    warning("observations with 0 weight not used in calculating standard deviation")
 	resids <- resids * ls.out$wt[good]^0.5
     }
 
@@ -157,7 +160,7 @@ ls.diag <- function(ls.out)
     p <- ls.out$qr$rank
     n <- nrow(resids)
     hatdiag <- rep.int(NA, n)
-    stats <- array(NA, dim = dim(resids))
+    stats <- array(NA, dim = d0)
     colnames(stats) <- yname
     stdres <- studres <- dfits <- Cooks <- stats
 
@@ -171,8 +174,8 @@ ls.diag <- function(ls.out)
     stddev <- (colSums(as.matrix(resids^2))/(n - p))^0.5
     stddevmat <- matrix(stddev, nrow=sum(good), ncol=ncol(resids), byrow=TRUE)
     stdres[good, ] <- resids/((1-hatdiag[good])^0.5 * stddevmat)
-    studres[good, ] <- (stdres[good, ]*stddevmat)/(((n-p)*stddevmat^2 -
-						    resids^2/(1-hatdiag[good]))/(n-p-1))^0.5
+    studres[good, ] <- (stdres[good, ]*stddevmat)/
+        (((n-p)*stddevmat^2 - resids^2/(1-hatdiag[good]))/(n-p-1))^0.5
     dfits[good, ] <- (hatdiag[good]/(1-hatdiag[good]))^0.5 * studres[good, ]
     Cooks[good, ] <- ((stdres[good, ]^2 * hatdiag[good])/p)/(1-hatdiag[good])
     if(ncol(resids)==1 && is.null(yname)) {
@@ -217,7 +220,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
     resids <- as.matrix(ls.out$residuals)
     if( !is.null(ls.out$wt) ) {
 	if(any(ls.out$wt == 0))
-	    warning("Observations with 0 weights not used")
+	    warning("observations with 0 weights not used")
 	resids <- resids * ls.out$wt^0.5
     }
     n <- apply(resids, 2, length)-colSums(is.na(resids))

@@ -4,6 +4,10 @@
 \alias{pnorm}
 \alias{qnorm}
 \alias{rnorm}
+% These concepts are for the last example
+\concept{error function}
+\concept{erf}
+\concept{erfc}
 \title{The Normal Distribution}
 \description{
   Density, distribution function, quantile function and random
@@ -53,14 +57,31 @@ rnorm(n, mean=0, sd=1)
   \code{\link{runif}} and \code{\link{.Random.seed}} about random number
   generation, and \code{\link{dlnorm}} for the \emph{Log}normal distribution.
 }
+\source{
+  For \code{pnorm}, based on
+
+  Cody, W. D. (1993)
+  Algorithm 715: SPECFUN -- A portable FORTRAN package of special
+  function routines and test drivers.
+  \emph{ACM Transactions on Mathematical Software} \bold{19}, 22--32.
+
+  For \code{qnorm}, the code is a C translation of
+
+  Wichura, M. J. (1988)
+  Algorithm AS 241: The Percentage Points of the Normal Distribution.
+  \emph{Applied Statistics}, \bold{37}, 477--484.
+
+  For \code{rnorm}, see \link{RNG} for how to select the algorithm and
+  for references to the supplied methods.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 
-  Wichura, M. J. (1988)
-  Algorithm AS 241: The Percentage Points of the Normal Distribution.
-  \emph{Applied Statistics}, \bold{37}, 477--484.
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 1, chapter 13.
+  Wiley, New York.
 }
 \examples{
 dnorm(0) == 1/ sqrt(2*pi)
@@ -69,18 +90,22 @@ dnorm(1) == 1/ sqrt(2*pi*exp(1))
 
 ## Using "log = TRUE" for an extended range :
 par(mfrow=c(2,1))
-plot(function(x)dnorm(x, log=TRUE), -60, 50, main = "log { Normal density }")
+plot(function(x) dnorm(x, log=TRUE), -60, 50,
+     main = "log { Normal density }")
 curve(log(dnorm(x)), add=TRUE, col="red",lwd=2)
-mtext("dnorm(x, log=TRUE)", adj=0); mtext("log(dnorm(x))", col="red", adj=1)
+mtext("dnorm(x, log=TRUE)", adj=0)
+mtext("log(dnorm(x))", col="red", adj=1)
 
-plot(function(x)pnorm(x, log=TRUE), -50, 10, main = "log { Normal Cumulative }")
+plot(function(x) pnorm(x, log=TRUE), -50, 10,
+     main = "log { Normal Cumulative }")
 curve(log(pnorm(x)), add=TRUE, col="red",lwd=2)
-mtext("pnorm(x, log=TRUE)", adj=0); mtext("log(pnorm(x))", col="red", adj=1)
+mtext("pnorm(x, log=TRUE)", adj=0)
+mtext("log(pnorm(x))", col="red", adj=1)
 
 ## if you want the so-called 'error function'
 erf <- function(x) 2 * pnorm(x * sqrt(2)) - 1
 ## (see Abrahamowitz and Stegun 29.2.29)
 ## and the so-called 'complementary error function'
-erfc <- function(x) 2 * pnorm(x * sqrt(2), lower=FALSE)
+erfc <- function(x) 2 * pnorm(x * sqrt(2), lower = FALSE)
 }
 \keyword{distribution}

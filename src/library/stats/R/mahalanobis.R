@@ -1,4 +1,4 @@
-mahalanobis <- function(x, center, cov, inverted=FALSE, tol.inv = 1e-7)
+mahalanobis <- function(x, center, cov, inverted=FALSE, ...)
 {
     x <- if(is.vector(x)) matrix(x, ncol=length(x)) else as.matrix(x)
     ## save speed in customary case:
@@ -12,7 +12,7 @@ mahalanobis <- function(x, center, cov, inverted=FALSE, tol.inv = 1e-7)
     ##	                    else    t(solve(cov,t(x), tol=tol.inv)),
     ##			1, sum)
     if(!inverted)
-	cov <- solve(cov, tol = tol.inv)
+	cov <- solve(cov, ...)
     retval <- rowSums((x%*%cov) * x)
     names(retval) <- rownames(x)
     retval

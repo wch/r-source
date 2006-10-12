@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*
@@ -28,7 +28,8 @@
  *
 */
 
-
+#define ENABLE_NLS 1
+#include "../win-nls.h"
 #include "internal.h"
 #include "rui.h"
 
@@ -42,7 +43,7 @@ static void private_delmetafile(metafile obj)
 
     if (!obj || (obj->kind != MetafileObject)) return;
     hm = (HENHMETAFILE) CloseEnhMetaFile((HDC) obj->handle);
-    if (strlen(gettext(obj))) { /* real file*/
+    if (strlen(GA_gettext(obj))) { /* real file*/
 	DeleteEnhMetaFile(hm);
 	return;
     }
@@ -51,7 +52,7 @@ static void private_delmetafile(metafile obj)
 	CloseClipboard())
 	return;
     else {
-	R_ShowMessage("Unable to save metafile to the clipboard");
+	R_ShowMessage(_("Unable to save metafile to the clipboard"));
 	DeleteEnhMetaFile(hm);
 	return;
     }
@@ -82,14 +83,14 @@ metafile newmetafile(char *name, double width, double height)
      * use the ratio to adjust the 'reference dimension'
      * in case.... ("Importing graph in MsWord" thread)
     */
-    if (cppix<0) {
+    if (cppix < 0) {
        cppix = 25.40 * devicewidth(NULL) / devicewidthmm(NULL);
        ppix  = 100 * devicepixelsx(NULL);
        cppiy = 25.40 * deviceheight(NULL) / deviceheightmm(NULL);
        ppiy = 100 * devicepixelsy(NULL);
     }
     /* This is all very peculiar. We would really like to create 
-       a metafile measured in some snesible units, but it seems 
+       a metafile measured in some sensible units, but it seems 
        we get it in units of 0.01mm *on the current screen* with
        horizontal and vertical resolution set for that screen.
        And of course Windows is famous for getting screen sizes wrong.
@@ -104,12 +105,12 @@ metafile newmetafile(char *name, double width, double height)
     hDC = CreateEnhMetaFile(NULL, strlen(name) ? name : NULL, &wr, 
 			    "GraphApp\0\0");
     if ( !hDC ) {
-	R_ShowMessage("Unable to create metafile");
+	R_ShowMessage(_("Unable to create metafile"));
 	return NULL;
     }
     obj = new_object(MetafileObject, (HANDLE) hDC, get_metafile_base());
     if ( !obj ) {
-	R_ShowMessage("Insufficient memory to create metafile");
+	R_ShowMessage(_("Insufficient memory to create metafile"));
 	DeleteEnhMetaFile(CloseEnhMetaFile(hDC));
 	return NULL;
     }

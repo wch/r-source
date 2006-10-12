@@ -65,7 +65,7 @@ local({
             }
         }
 
-        if (is.null(from) || is.environment(from)) {
+        if (is.environment(from)) {
             if (! missing(variables))
                 vars <- variables
             else vars <- ls(from, all = TRUE)
@@ -78,7 +78,7 @@ local({
         else stop("source must be an environment or a list");
 
         for (i in seq(along = vars)) {
-            if (is.null(from) || is.environment(from))
+            if (is.environment(from))
                 key <- lazyLoadDBinsertVariable(vars[i], from, datafile,
                                                 ascii, compress,  envhook)
             else key <- lazyLoadDBinsertListElement(from, i, datafile, ascii,
@@ -102,21 +102,21 @@ local({
 
     if (length(search()[search()!="Autoloads"]) != 2)
         stop("start R with NO packages loaded to create the data base")
-          
+
     baseFileBase <- file.path(.Library,"base","R","base")
 
     if (file.info(baseFileBase)["size"] < 20000) # crude heuristic
         stop("may already be using lazy loading on base");
 
-    basevars <- ls(NULL,all=TRUE)
+    basevars <- ls(baseenv(), all=TRUE)
     basevars <- basevars[! basevars %in% omit]
 
 # **** need prims too since some prims have several names (is.name, is.symbol)
-#    basevars <- ls(NULL,all=TRUE)
+#    basevars <- ls(baseenv(), all=TRUE)
 #    notPrim <- sapply(basevars, function(n)
-#        ! typeof(get(n, NULL)) %in% c("builtin","special"))
-#    makeLazyLoadDB(NULL, baseFileBase, variables = basevars[notPrim])
+#        ! typeof(get(n, baseenv())) %in% c("builtin","special"))
+#    makeLazyLoadDB(baseenv(), baseFileBase, variables = basevars[notPrim])
 
-    makeLazyLoadDB(NULL, baseFileBase, variables = basevars)
+    makeLazyLoadDB(baseenv(), baseFileBase, variables = basevars)
 #    q(save = "no", runLast = FALSE)
 })

@@ -3,7 +3,7 @@
 # They are usually called from within the C code
 # (specifically, from within unit.c)
 # It should be noted that they only give the width/height
-# of the grob in the grob's drawing context
+# of the grob in the current drawing context
 # (i.e., evaluating the width/height in another context
 #  will not necessarily give the same result)
 
@@ -11,6 +11,30 @@
 # the preDrawDetails and postDrawDetails generics before and
 # after the call to width/height() to allow for complex grobs which
 # construct their own viewports.
+
+#########
+# X locations on edge
+#########
+
+xDetails <- function(x, theta) {
+  UseMethod("xDetails")
+}
+
+xDetails.default <- function(x, theta) {
+  unit(0.5, "npc")
+}
+
+#########
+# Y locations on edge
+#########
+
+yDetails <- function(x, theta) {
+  UseMethod("yDetails")
+}
+
+yDetails.default <- function(x, theta) {
+  unit(0.5, "npc")
+}
 
 #########
 # WIDTHS

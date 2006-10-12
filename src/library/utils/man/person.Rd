@@ -9,20 +9,23 @@
 \alias{as.personList.default}
 \alias{as.character.person}
 \alias{as.character.personList}
-\alias{bibtex.person}
-\alias{bibtex.personList}
+\alias{toBibtex.person}
+\alias{toBibtex.personList}
 \description{
   A class and utility methods for holding information about persons
   like name and email address.
 }
 \usage{
-person(first="", last="", middle="", email="")
+person(first = "", last = "", middle = "", email = "")
 personList(...)
 as.person(x)
 as.personList(x)
 
 \S3method{as.character}{person}(x, ...)
 \S3method{as.character}{personList}(x, ...)
+
+\S3method{toBibtex}{person}(object, ...)
+\S3method{toBibtex}{personList}(object, ...)
 }
 \arguments{
   \item{first}{character string, first name}
@@ -33,11 +36,13 @@ as.personList(x)
     objects}
   \item{x}{a character string or an object of class \code{person} or
     \code{personList}}
+  \item{object}{an object of class \code{person} or
+    \code{personList}}
 }
 \keyword{misc}
 \examples{
 ## create a person object directly
-p1 <- person("Karl", "Pearson", email="pearson@stats.heaven")
+p1 <- person("Karl", "Pearson", email = "pearson@stats.heaven")
 p1
 
 ## convert a string
@@ -49,4 +54,7 @@ p <- personList(p1, p2)
 ps <- as.character(p)
 ps
 as.personList(ps)
+
+## convert to BibTeX author field
+toBibtex(p)
 }

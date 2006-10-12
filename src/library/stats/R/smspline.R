@@ -1,7 +1,7 @@
 smooth.spline <-
-  function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
-	   all.knots = FALSE, nknots = NULL,
-           df.offset = 0, penalty = 1, control.spar = list())
+    function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
+             all.knots = FALSE, nknots = NULL, keep.data = TRUE,
+             df.offset = 0, penalty = 1, control.spar = list())
 {
     sknotl <- function(x, nk = NULL)
     {
@@ -23,8 +23,9 @@ smooth.spline <-
 	}
         n <- length(x)
         if(is.null(nk)) nk <- n.kn(n)
-        else if(!is.numeric(nk)) stop("`nknots' must be numeric <= n")
-        else if(nk > n) stop("can't use more inner knots than unique x values")
+        else if(!is.numeric(nk)) stop("'nknots' must be numeric <= n")
+        else if(nk > n)
+            stop("cannot use more inner knots than unique 'x' values")
 	c(rep(x[1], 3), x[seq(1,n, len= nk)], rep(x[n], 3))
     }
     contr.sp <- list(low = -1.5,## low = 0.      was default till R 1.3.x
@@ -35,7 +36,7 @@ smooth.spline <-
     contr.sp[(names(control.spar))] <- control.spar
     if(!all(sapply(contr.sp[1:4],is.double)) ||
        contr.sp$tol < 0 || contr.sp$eps <= 0 || contr.sp$maxit <= 0)
-        stop("invalid `control.spar'")
+        stop("invalid 'control.spar'")
 
     xy <- xy.coords(x, y)
     y <- xy$y
@@ -44,7 +45,7 @@ smooth.spline <-
     w <-
 	if(is.null(w)) rep(1, n)
 	else {
-	    if(n != length(w)) stop("lengths of x and w must match")
+	    if(n != length(w)) stop("lengths of 'x' and 'w' must match")
 	    if(any(w < 0)) stop("all weights should be non-negative")
 	    if(all(w == 0)) stop("some weights should be positive")
 	    (w * sum(w > 0))/sum(w)
@@ -54,7 +55,7 @@ smooth.spline <-
     x <- signif(x, 6)
     ux <- unique(sort(x))
     ox <- match(x, ux)
-    tmp <- matrix(unlist(tapply(seq(along=y), ox,
+    tmp <- matrix(unlist(tapply(seq_along(y), ox,
 				function(i,y,w)
 				c(sum(w[i]), sum(w[i]*y[i]),sum(w[i]*y[i]^2)),
 				y = y, w = w)),
@@ -63,10 +64,9 @@ smooth.spline <-
     ybar <- tmp[, 2]/ifelse(wbar > 0, wbar, 1)
     yssw <- sum(tmp[, 3] - wbar*ybar^2) # will be added to RSS for GCV
     nx <- length(ux)
-    if(nx <= 3) stop("need at least four unique `x' values")
+    if(nx <= 3) stop("need at least four unique 'x' values")
     if(cv && nx < n)
-        warning(paste("crossvalidation with non-unique", sQuote("x"),
-                      "seems doubtful"))
+        warning("crossvalidation with non-unique 'x' values seems doubtful")
     r.ux <- ux[nx] - ux[1]
     xbar <- (ux - ux[1])/r.ux           # scaled to [0,1]
     if(all.knots) {
@@ -97,7 +97,10 @@ smooth.spline <-
     iparms <- as.integer(c(icrit,ispar, contr.sp$maxit))
     names(iparms) <- c("icrit", "ispar", "iter")
 
-    fit <- .Fortran("qsbart",		# code in ../src/qsbart.f
+    ## This uses DUP = FALSE which is dangerous since it does change
+    ## its argument w.  We don't assume that as.double will
+    ## always duplicate, although it does in R 2.3.1.
+    fit <- .Fortran(R_qsbart,		# code in ../src/qsbart.f
 		    as.double(penalty),
 		    as.double(dofoff),
 		    x = as.double(xbar),
@@ -119,13 +122,15 @@ smooth.spline <-
 		    ld4  = as.integer(4),
 		    ldnk = as.integer(1),
 		    ier = integer(1),
-		    DUP = FALSE, PACKAGE="stats"
+		    DUP = FALSE
 		    )[c("coef","ty","lev","spar","parms","crit","iparms","ier")]
+    ## now we have clobbered wbar, recompute it.
+    wbar <- tmp[, 1]
 
     lev <- fit$lev
     df <- sum(lev)
     if(is.na(df))
-	stop("NA lev[]; probably smoothing parameter `spar' way too large!")
+	stop("NA lev[]; probably smoothing parameter 'spar' way too large!")
     if(fit$ier > 0 ) {
         sml <- fit$spar < 0.5
 	wtxt <- paste("smoothing parameter value too",
@@ -152,6 +157,7 @@ smooth.spline <-
     class(fit.object) <- "smooth.spline.fit"
     ## parms :  c(low = , high = , tol = , eps = )
     object <- list(x = ux, y = fit$ty, w = wbar, yin = ybar,
+                   data = if(keep.data) list(x = x, y = y, w = w),
 		   lev = lev, cv.crit = cv.crit, pen.crit = pen.crit,
                    crit = fit$crit,
                    df = df, spar = fit$spar,
@@ -161,6 +167,36 @@ smooth.spline <-
     class(object) <- "smooth.spline"
     object
 }
+
+fitted.smooth.spline <- function(object, ...) {
+    if(!is.list(dat <- object$data))
+        stop("need result of smooth.spline(*, keep.data=TRUE)")
+    ## note that object$x == unique(sort(object$data$x))
+    object$y[match(dat$x, object$x)]
+}
+
+residuals.smooth.spline <-
+    function (object, type = c("working", "response", "deviance",
+                      "pearson", "partial"), ...)
+{
+    type <- match.arg(type)
+    if(!is.list(dat <- object$data))
+        stop("need result of smooth.spline(*, keep.data=TRUE)")
+    r <- dat$y - object$y[match(dat$x, object$x)]
+    ## this rest is `as' residuals.lm() :
+    res <- switch(type,
+                  working = ,
+                  response = r,
+                  deviance = ,
+                  pearson = if (is.null(dat$w)) r else r * sqrt(dat$w),
+                  partial = r)
+    res <- naresid(object$na.action, res)
+    if (type == "partial")
+        stop('type = "partial" is not yet implemented')
+        ## res <- res + predict(object, type = "terms")
+    res
+}
+
 
 print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 {
@@ -189,7 +225,7 @@ predict.smooth.spline <- function(object, x, deriv = 0, ...)
         else x <- object$x
     }
     fit <- object$fit
-    if(is.null(fit)) stop("not a valid smooth.spline object")
+    if(is.null(fit)) stop("not a valid \"smooth.spline\" object")
     else predict(fit, x, deriv, ...)
 }
 
@@ -205,7 +241,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
     n <- sum(interp) # number of xs in [0,1]
     y <- xs
     if(any(interp))
-	y[interp] <- .Fortran("bvalus",
+	y[interp] <- .Fortran(R_bvalus,
 			      n	  = as.integer(n),
 			      knot= as.double(object$knot),
 			      coef= as.double(object$coef),
@@ -213,7 +249,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 			      x	  = as.double(xs[interp]),
 			      s	  = double(n),
 			      order= as.integer(deriv),
-			      DUP = FALSE, PACKAGE="stats")$s
+			      DUP = FALSE)$s
     if(any(extrap)) {
 	xrange <- c(object$min, object$min + object$range)
 	if(deriv == 0) {
@@ -242,16 +278,16 @@ supsmu <-
 {
     if(span == "cv") span <- 0
     n <- length(y)
-    if(!n || !is.numeric(y)) stop("`y' must be numeric vector")
-    if(length(x) != n) stop("number of observations in x and y must match.")
+    if(!n || !is.numeric(y)) stop("'y' must be numeric vector")
+    if(length(x) != n) stop("number of observations in 'x' and 'y' must match.")
     if(length(wt) != n)
 	stop("number of weights must match number of observations.")
-    if(span < 0 || span > 1) stop("span must be between 0 and 1.")
+    if(span < 0 || span > 1) stop("'span' must be between 0 and 1.")
     if(periodic) {
 	iper <- 2
 	xrange <- range(x)
 	if(xrange[1] < 0 || xrange[2] > 1)
-	    stop("x must be between 0 and 1 for periodic smooth")
+	    stop("'x' must be between 0 and 1 for periodic smooth")
     } else iper <- 1
     okay <- is.finite(x + y + wt)
     ord <- order(x[okay], y[okay])
@@ -260,8 +296,8 @@ supsmu <-
     leno <- length(ord)
     if(diff <- n - leno)
 	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
-    .Fortran("setsmu", PACKAGE = "stats")
-    smo <- .Fortran("supsmu",
+    .Fortran(R_setsmu)
+    smo <- .Fortran(R_supsmu,
 		    as.integer(leno),
 		    as.double(xo),
 		    as.double(y[ord]),
@@ -270,8 +306,7 @@ supsmu <-
 		    as.double(span),
 		    as.double(bass),
 		    smo=double(leno),
-		    double(n*7), double(1),
-		    PACKAGE = "stats")$smo
+		    double(n*7), double(1))$smo
     ## eliminate duplicate xsort values and corresponding smoothed values
     dupx <- duplicated(xo)
     list(x = xo[!dupx], y = smo[!dupx])

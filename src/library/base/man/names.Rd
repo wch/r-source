@@ -3,7 +3,7 @@
 \alias{names.default}
 \alias{names<-}
 \alias{names<-.default}
-\title{The Names Attribute of an Object}
+\title{The Names of an Object}
 \description{
   Functions to get or set the names of an object.
 }
@@ -18,7 +18,8 @@ names(x) <- value
 }
 \value{
   For \code{names}, \code{NULL} or a character vector of the same length
-  as \code{x}.
+  as \code{x}.  (\code{NULL} is given if the object has no names,
+  including for objects of types which cannot have names.)
 
   For \code{names<-}, the updated object.  (Note that the value of
   \code{names(x) <- value} is that of the assignment, \code{value}, not
@@ -27,7 +28,8 @@ names(x) <- value
 \details{
   \code{names} is a generic accessor function, and \code{names<-} is a
   generic replacement function.  The default methods get and set
-  the \code{"names"} attribute of a vector or list.
+  the \code{"names"} attribute of a vector (including a list) or
+  pairlist.
 
   If \code{value} is shorter than \code{x}, it is extended by character
   \code{NA}s to the length of \code{x}.
@@ -35,6 +37,22 @@ names(x) <- value
   It is possible to update just part of the names attribute via the
   general rules: see the examples.  This works because the expression
   there is evaluated as \code{z <- "names<-"(z, "[<-"(names(z), 3, "c2"))}.
+
+  The name \code{""} is special: it is used to indicate that there is no
+  name associated with an element of a (atomic or generic) vector.
+  Subscripting by \code{""} will match nothing (not even elements which
+  have no name).
+
+  A name can be character \code{NA}, but such a name will never be
+  matched and is likely to lead to confusion.
+}
+\note{
+  For vectors, the names are one of the \link{attributes} with
+  restrictions on the possible values.  For pairlists, the names are the
+  tags and converted to and from a character vector.
+
+  For a one-dimensional array the \code{names} attribute really is
+  \code{\link{dimnames}[[1]]}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

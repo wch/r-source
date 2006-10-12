@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,23 +16,21 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-#include "Defn.h" /* remap mainloop */
+/* <UTF8> char here is handled as a whole string */
 
-int Rf_initialize_R(int ac, char **av); /* in system.c */
+int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
+void Rf_mainloop();                     /* in main.c */
 
+extern int R_running_as_main_program;   /* in ../unix/system.c */
 
 int main(int ac, char **av)
 {
+    R_running_as_main_program = 1;
     Rf_initialize_R(ac, av);
-
-    mainloop();
-    /*++++++  in ../main/main.c */
+    Rf_mainloop(); /* does not return */
     return 0;
 }
 

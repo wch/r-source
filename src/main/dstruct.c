@@ -15,8 +15,11 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> char here is either ASCII or handled as a whole */
+
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -28,6 +31,7 @@
 /*           This operation is non-destructive     */
 /*           i.e. first and second are duplicated  */
 
+#ifdef UNUSED
 SEXP Rf_append(SEXP first, SEXP second)
 {
     SEXP e;
@@ -42,23 +46,28 @@ SEXP Rf_append(SEXP first, SEXP second)
     SETCDR(e, second);
     return first;
 }
+#endif
 
 
 /*  mkPRIMSXP - return a builtin function      */
 /*              either "builtin" or "special"  */
 
-SEXP mkPRIMSXP(int offset, int eval)
+SEXP attribute_hidden mkPRIMSXP(int offset, int eval)
 {
     SEXP result = allocSExp(eval ? BUILTINSXP : SPECIALSXP);
     SET_PRIMOFFSET(result, offset);
     return (result);
 }
 
+/* This is called by function() {}, where an invalid
+   body should be impossible. When called from 
+   other places (eg do_asfunction) they 
+   should do this checking in advance */
 
 /*  mkCLOSXP - return a closure with formals f,  */
 /*             body b, and environment rho       */
 
-SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
+SEXP attribute_hidden mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
 {
     SEXP c;
     PROTECT(formals);
@@ -70,7 +79,7 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
     if(isList(formals))
 	SET_FORMALS(c, formals);
     else
-        error("invalid formal arguments for \"function\"");
+        error(_("invalid formal arguments for \"function\""));
 #else
     SET_FORMALS(c, formals);
 #endif
@@ -82,8 +91,8 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
        )
 	SET_BODY(c, body);
     else
-        error("invalid body argument for \"function\"\n"
-	      "Should NEVER happen; please bug.report() [mkCLOSXP]\n");
+        error(_("invalid body argument for \"function\"\n\
+Should NEVER happen; please bug.report() [mkCLOSXP]"));
 
     if(rho == R_NilValue)
 	SET_CLOENV(c, R_GlobalEnv);
@@ -93,21 +102,7 @@ SEXP mkCLOSXP(SEXP formals, SEXP body, SEXP rho)
     return c;
 }
 
-/* mkChar - make a character (CHARSXP) variable */
-
-SEXP mkChar(const char *name)
-{
-    SEXP c;
-
-#if 0
-    if (streql(name, "NA"))
-	return (NA_STRING);
-#endif
-    c = allocString(strlen(name));
-    strcpy(CHAR(c), name);
-    return c;
-}
-
+/* mkChar - make a character (CHARSXP) variable -- see Rinlinedfuns.h */
 
 /*  mkSYMSXP - return a symsxp with the string  */
 /*             name inserted in the name field  */
@@ -115,11 +110,12 @@ SEXP mkChar(const char *name)
 static int isDDName(SEXP name)
 {
     char *buf, *endp;
+    long val;
 
     buf = CHAR(name);
-    if( !strncmp(buf,"..",2) && strlen(buf) > 2 ) {
+    if( !strncmp(buf, "..", 2) && strlen(buf) > 2 ) {
         buf += 2;
-	strtol(buf, &endp, 10);
+	val = strtol(buf, &endp, 10);
         if( *endp != '\0')
 	    return 0;
 	else
@@ -128,7 +124,7 @@ static int isDDName(SEXP name)
     return 0;
 }
 
-SEXP mkSYMSXP(SEXP name, SEXP value)
+SEXP attribute_hidden mkSYMSXP(SEXP name, SEXP value)
 
 {
     SEXP c;
@@ -142,39 +138,4 @@ SEXP mkSYMSXP(SEXP name, SEXP value)
     SET_DDVAL(c, i);
     UNPROTECT(2);
     return c;
-}
-
-
-/*  length - length of objects  */
-
-R_len_t length(SEXP s)
-{
-    int i;
-    switch (TYPEOF(s)) {
-    case NILSXP:
-	return 0;
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case CHARSXP:
-    case VECSXP:
-    case EXPRSXP:
-    case RAWSXP:
-	return LENGTH(s);
-    case LISTSXP:
-    case LANGSXP:
-    case DOTSXP:
-	i = 0;
-	while (s != NULL && s != R_NilValue) {
-	    i++;
-	    s = CDR(s);
-	}
-	return i;
-    case ENVSXP:
-	return envlength(s);
-    default:
-	return 1;
-    }
 }

@@ -6,7 +6,8 @@
  for multiple testing 
 }
 \usage{
-pairwise.t.test(x, g, p.adjust.method=p.adjust.methods, pool.sd=TRUE, \dots)
+pairwise.t.test(x, g, p.adjust.method = p.adjust.methods,
+                pool.sd = TRUE, \dots)
 }
 \arguments{
  \item{x}{ Response vector }

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2000-2001, 2005 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -28,29 +28,18 @@
  *
  */
 
-#include <config.h> /* needed for HAVE_RINT */
+#include <config.h> /* needed for HAVE_RINT and USE_BUILTIN_RINT */
 #include "nmath.h"
 
+/* USE_BUILTIN_RINT could also be defined by a configure test */
 #ifndef HAVE_RINT
 #define USE_BUILTIN_RINT
-#endif
-
-#ifdef WIN32
-/* earlier Windows headers did not include rint */
-#if __MINGW32_MAJOR_VERSION < 2
-static __inline__ double rint (double x)
-{
-    double retval;
-    __asm__ ("frndint;": "=t" (retval) : "0" (x));
-    return retval;
-}
-#endif
 #endif
 
 #ifdef USE_BUILTIN_RINT
 #define R_rint private_rint
 
-static double private_rint(double x)
+double attribute_hidden private_rint(double x)
 {
     double tmp, sgn = 1.0;
     long ltmp;

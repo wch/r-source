@@ -2,7 +2,7 @@
 \title{Add a Rug to a Plot}
 \alias{rug}
 \usage{
-rug(x, ticksize=0.03, side=1, lwd=0.5, col,
+rug(x, ticksize = 0.03, side = 1, lwd = 0.5, col = par("fg"),
     quiet = getOption("warn") < 0, \dots)
 }
 \arguments{
@@ -12,10 +12,10 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
  \item{side}{On which side of the plot box the rug will be
    plotted. Normally 1 (bottom) or 3 (top).}
  \item{lwd}{The line width of the ticks.}
- \item{col}{The colour the ticks are plotted in, default is black.}
+ \item{col}{The colour the ticks are plotted in.}
  \item{quiet}{logical indicating if there should be a warning about
    clipped values.}
- \item{\dots}{further arguments, passed to \code{\link{axis}(...)}, such
+ \item{\dots}{further arguments, passed to \code{\link{axis}}, such
    as \code{line} or \code{pos} for specifying the location of the rug.}
 }
 \description{
@@ -27,9 +27,9 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
   warning if any finite values are omitted, but non-finite values are
   omitted silently.
 
-  Because of the way colours are done the axis itself is coloured the
-  same as the ticks.  You can always replot the box in black if you don't
-  like this feature.
+  Because of the way colours are done the axis itself is redrawn in the
+  same colour, \code{lty} and \code{lwd} as the ticks.  You can
+  replot the box if you don't like this feature.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
@@ -38,10 +38,11 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
 }
 \seealso{\code{\link{jitter}} which you may want for ties in \code{x}.}
 \examples{
+require(stats)# both 'density' and its default method
 with(faithful, {
-    plot(stats::density(eruptions, bw=0.15))
+    plot(density(eruptions, bw = 0.15))
     rug(eruptions)
-    rug(jitter(eruptions, amount = .01), side = 3, col = "light blue")
+    rug(jitter(eruptions, amount = 0.01), side = 3, col = "light blue")
 })
 }
 \keyword{aplot}

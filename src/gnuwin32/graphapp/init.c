@@ -29,6 +29,7 @@
  */
 
 	PROTECTED char * app_name = "GraphApp";
+	PROTECTED int    is_NT = 0;
 	PROTECTED int    app_initialised = 0;
 	PROTECTED HANDLE this_instance = 0;
 	PROTECTED HANDLE prev_instance = 0;
@@ -51,8 +52,17 @@ int initapp(int argc, char **argv)
 {
 	if (! app_initialised)
 	{
+	        OSVERSIONINFO verinfo;
 		app_initialised = 1;
-
+		verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+		GetVersionEx(&verinfo);
+		switch(verinfo.dwPlatformId) {
+		case VER_PLATFORM_WIN32_NT:
+		    is_NT = 1;
+		    break;
+		default:
+		    is_NT = 0;
+		}
 		init_objects();
 		init_events();
 		init_fonts();

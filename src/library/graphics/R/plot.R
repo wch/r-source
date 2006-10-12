@@ -1,100 +1,10 @@
-## NOTE that xyz.coords() in ./xyz.coords.R  should be kept in sync!
-##
-xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
-{
-    if(is.null(y)) {
-	ylab <- xlab
-	if(is.language(x)) {
-	    if (inherits(x, "formula") && length(x) == 3) {
-		ylab <- deparse(x[[2]])
-		xlab <- deparse(x[[3]])
-		y <- eval(x[[2]], environment(x), parent.frame())
-		x <- eval(x[[3]], environment(x), parent.frame())
-	    }
-	    else stop("invalid first argument")
-	}
-	else if(inherits(x, "ts")) {
-	    y <- if(is.matrix(x)) x[,1] else x
-	    x <- stats::time(x)
-	    xlab <- "Time"
-	}
-	else if(is.complex(x)) {
-	    y <- Im(x)
-	    x <- Re(x)
-	    xlab <- paste("Re(", ylab, ")", sep="")
-	    ylab <- paste("Im(", ylab, ")", sep="")
-	}
-	else if(is.matrix(x) || is.data.frame(x)) {
-	    x <- data.matrix(x)
-	    if(ncol(x) == 1) {
-		xlab <- "Index"
-		y <- x[,1]
-		x <- 1:length(y)
-	    }
-	    else {
-		colnames <- dimnames(x)[[2]]
-		if(is.null(colnames)) {
-		    xlab <- paste(ylab,"[,1]",sep="")
-		    ylab <- paste(ylab,"[,2]",sep="")
-		}
-		else {
-		    xlab <- colnames[1]
-		    ylab <- colnames[2]
-		}
-		y <- x[,2]
-		x <- x[,1]
-	    }
-	}
-	else if(is.list(x)) {
-	    xlab <- paste(ylab,"$x",sep="")
-	    ylab <- paste(ylab,"$y",sep="")
-	    y <- x[["y"]]
-	    x <- x[["x"]]
-	}
-	else {
-	    if(is.factor(x)) x <- as.numeric(x)
-	    xlab <- "Index"
-	    y <- x
-	    x <- 1:length(x)
-	}
-    }
-    ## to allow e.g. lines, points, identify to be used with plot.POSIXlt
-    if(inherits(x, "POSIXt")) x <- as.POSIXct(x)
-
-    if(length(x) != length(y)) {
-	if(recycle) {
-	    if((nx <- length(x)) < (ny <- length(y)))
-		x <- rep(x, length.out = ny)
-	    else
-		y <- rep(y, length.out = nx)
-	}
-	else
-	    stop("x and y lengths differ")
-    }
-
-    if(length(log) && log != "") {
-	log <- strsplit(log, NULL)[[1]]
-	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
-	    n <- sum(ii)
-	    warning(paste(n, " x value", if(n>1)"s",
-			  " <= 0 omitted from logarithmic plot", sep=""))
-	    x[ii] <- NA
-	}
-	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
-	    n <- sum(ii)
-	    warning(paste(n, " y value", if(n>1)"s",
-			  " <= 0 omitted from logarithmic plot", sep=""))
-	    y[ii] <- NA
-	}
-    }
-    return(list(x=as.real(x), y=as.real(y), xlab=xlab, ylab=ylab))
-}
+### xy.coords() is now in the imported 'grDevices' package
 
 plot <- function (x, y, ...)
 {
     if (is.null(attr(x, "class")) && is.function(x)) {
 	nms <- names(list(...))
-	## need to pass `y' to plot.function() when positionally matched
+	## need to pass 'y' to plot.function() when positionally matched
 	if(missing(y)) # set to defaults {could use formals(plot.default)}:
 	    y <- { if (!"from" %in% nms) 0 else
 		   if (!"to"   %in% nms) 1 else
@@ -116,15 +26,18 @@ plot.function <- function(x, from = 0, to = 1, xlim = NULL, ...) {
     curve(x, from, to, xlim = xlim, ...)
 }
 
-## NOTE: cex = 1 is correct, cex = par("cex") gives *square* of intended!
-plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
-			 log="", main=NULL, sub=NULL, xlab=NULL, ylab=NULL,
-			 ann=par("ann"), axes=TRUE, frame.plot=axes,
-			 panel.first=NULL, panel.last=NULL,
-			 col=par("col"), bg=NA, pch=par("pch"),
-			 cex = 1, lty=par("lty"), lab=par("lab"),
-			 lwd=par("lwd"), asp=NA, ...)
+plot.default <-
+    function(x, y = NULL, type = "p", xlim = NULL, ylim = NULL,
+             log = "", main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+             ann = par("ann"), axes = TRUE, frame.plot = axes,
+             panel.first = NULL, panel.last = NULL, asp = NA, ...)
 {
+    ## These col, bg, pch, cex can be vectors, so exclude them
+    ## Also, axis and box accept some of these
+    localAxis <- function(..., col, bg, pch, cex, lty, lwd) Axis(...)
+    localBox <- function(..., col, bg, pch, cex, lty, lwd) box(...)
+    localWindow <- function(..., col, bg, pch, cex, lty, lwd) plot.window(...)
+    localTitle <- function(..., col, bg, pch, cex, lty, lwd) title(...)
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
@@ -133,35 +46,41 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
     ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     plot.new()
-    plot.window(xlim, ylim, log, asp, ...)
+    localWindow(xlim, ylim, log, asp, ...)
     panel.first # eval() is wrong here {Ross I.}
-    plot.xy(xy, type, col=col, pch=pch, cex=cex, bg=bg, lty=lty, lwd=lwd, ...)
+    plot.xy(xy, type, ...)
     panel.last
     if (axes) {
-	axis(1, ...)
-	axis(2, ...)
+	localAxis(x, side = 1, ...)
+	localAxis(y, side = 2, ...)
     }
-    if (frame.plot)
-	box(...)
-    if (ann)
-	title(main=main, sub=sub, xlab=xlab, ylab=ylab, ...)
+    if (frame.plot) localBox(...)
+    if (ann) localTitle(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
     invisible()
 }
 
-plot.factor <- function(x, y, legend.text=levels(y), ...)
+plot.factor <- function(x, y, legend.text = NULL, ...)
 {
-    if(missing(y) || is.factor(y)) {## <==> will do barplot(.)
+    if (missing(y) || is.factor(y)) {
         dargs <- list(...)
-        axisnames <- if (!is.null(dargs$axes)) dargs$axes
-            else if (!is.null(dargs$xaxt)) dargs$xaxt != "n"
-            else TRUE
+        axisnames <- if (!is.null(dargs$axes))
+            dargs$axes
+        else if (!is.null(dargs$xaxt))
+            dargs$xaxt != "n"
+        else TRUE
     }
     if (missing(y)) {
-	barplot(table(x), axisnames=axisnames, ...)
-    } else if (is.factor(y)) {
-	barplot(table(y, x), legend.text=legend.text, axisnames=axisnames, ...)
-    } else if (is.numeric(y))
-	boxplot(y ~ x, ...)
+        barplot(table(x), axisnames = axisnames, ...)
+    }
+    else if (is.factor(y)) {
+        if(is.null(legend.text)) spineplot(x, y, ...) else {
+	  args <- c(list(x = x, y = y), list(...))
+	  args$yaxlabels <- legend.text
+	  do.call("spineplot", args)
+	}
+    }
+    else if (is.numeric(y))
+        boxplot(y ~ x, ...)
     else NextMethod("plot")
 }
 
@@ -176,7 +95,7 @@ plot.table <-
     xnam <- deparse(substitute(x))
     rnk <- length(dim(x))
     if(rnk == 0)
-	stop("invalid table `x'")
+	stop("invalid table 'x'")
     if(rnk == 1) {
 	dn <- dimnames(x)
 	nx <- dn[[1]]
@@ -185,7 +104,7 @@ plot.table <-
 	if(is.null(ylab)) ylab <- xnam
 	ow <- options(warn = -1)
 	is.num <- !any(is.na(xx <- as.numeric(nx))); options(ow)
-	x0 <- if(is.num) xx else seq(x)
+	x0 <- if(is.num) xx else seq.int(x)
 	plot(x0, unclass(x), type = type,
 	     ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
 	     lwd = lwd, ..., xaxt = "n")
@@ -285,7 +204,7 @@ function(formula,  data = parent.frame(), ..., subset)
 	varnames <- names(mf)
 	y <- mf[[response]]
 	if (length(varnames) > 2)
-	    stop("cannot handle more than one x coordinate")
+	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
 	if (length(xn) == 0)
 	    do.call("lines",
@@ -328,7 +247,7 @@ function(formula, data = parent.frame(), ..., subset)
 	varnames <- names(mf)
 	y <- mf[[response]]
 	if (length(varnames) > 2)
-	    stop("cannot handle more than one x coordinate")
+	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
 	if (length(xn) == 0)
 	    do.call("points",
@@ -341,10 +260,11 @@ function(formula, data = parent.frame(), ..., subset)
 	stop("must have a response variable")
 }
 
-plot.xy <- function(xy, type, pch = 1, lty = "solid", col = par("fg"),
-		    bg = NA, cex = 1, ...) {
-    .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, ...))
-}
+plot.xy <- function(xy, type, pch = par("pch"), lty = par("lty"),
+                    col = par("col"), bg = NA, cex = 1, lwd = par("lwd"),
+                    ...)
+    .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, lwd, ...))
+
 
 plot.new <- function()
 {
@@ -360,29 +280,33 @@ frame <- plot.new
 plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
     .Internal(plot.window(xlim, ylim, log, asp, ...))
 
-plot.data.frame <- function (x, ...) {
+plot.data.frame <- function (x, ...)
+{
+    plot2 <- function(x, xlab=names(x)[1], ylab=names(x)[2], ...)
+        plot(x[[1]], x[[2]], xlab=xlab, ylab=ylab, ...)
+
     if(!is.data.frame(x))
-	stop("plot.data.frame applied to non data frame")
-    x <- data.matrix(x)
+	stop("'plot.data.frame' applied to non data frame")
     if(ncol(x) == 1) {
-	stripchart(x, ...)
-    }
-    else if(ncol(x) == 2) {
-	plot(x, ...)
-    }
-    else {
-	pairs(x, ...)
+        x1 <- x[[1]]
+        cl <- class(x1)
+        if(cl %in% c("integer", "numeric"))  stripchart(x1, ...)
+        else plot(x1, ...) # factor, ts, complex ...
+    } else if(ncol(x) == 2) {
+        plot2(x, ...)
+    } else {
+	pairs(data.matrix(x), ...)
     }
 }
 
 ## unexported hook for testing
-.newplot.hook <- function()
-{
-    pp <- par(c("mfg","mfcol","oma","mar"))
-    if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
-	outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
-	mtext(paste("help(", ..nameEx, ")"), side = 4,
-              line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-              outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
-    }
-}
+## .newplot.hook <- function()
+## {
+##     pp <- par(c("mfg","mfcol","oma","mar"))
+##     if(all(pp$mfg[1:2] == c(1, pp$mfcol[2]))) {
+## 	outer <- (oma4 <- pp$oma[4]) > 0; mar4 <- pp$mar[4]
+## 	mtext(paste("help(", ..nameEx, ")"), side = 4,
+##               line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
+##               outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
+##     }
+## }

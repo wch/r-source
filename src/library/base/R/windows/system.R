@@ -46,11 +46,13 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
                   show.output.on.console=wait, ...)
     if(!intern && res !=0)
         if(mustWork)
-            if(res == -1) stop("cmd could not be run")
-            else stop(paste("cmd execution failed with error code", res))
+            if(res == -1) stop("'cmd' could not be run")
+            else stop(gettextf("'cmd' execution failed with error code %d",
+                               res), domain = NA)
         else
-            if(res == -1) warning("cmd could not be run")
-            else warning(paste("cmd execution failed with error code", res))
+            if(res == -1) warning("'cmd' could not be run")
+            else warning(gettextf("'cmd' execution failed with error code %d",
+                                  res), domain = NA)
     if(intern) res else invisible(res)
 }
 
@@ -59,6 +61,7 @@ shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
 Sys.timezone <- function()
 {
     z <- as.POSIXlt(Sys.time())
-    attr(z, "tzone")[2 + z$isdst]
+    zz <- attr(z, "tzone")
+    if(length(zz) == 3) zz[2 + z$isdst] else zz[1]
 }
 

@@ -20,12 +20,12 @@ file.info(\dots)
   about the file to which the link points rather than about the link.
 #endif
 #ifdef windows
-  File modes are probably only useful on Windows NT/2000 machines.
+  File modes are probably only useful on Windows NT/2000/XP machines.
 #endif
 }
 \value{
   A data frame with row names the file names and columns
-  \item{size}{integer: File size in bytes.}
+  \item{size}{double: File size in bytes.}
   \item{isdir}{logical: Is the file a directory?}
   \item{mode}{integer of class \code{"octmode"}.  The file permissions,
     printed in octal, for example \code{644}.}
@@ -48,6 +48,11 @@ may not be supplied on a non-POSIX Unix system.
 \note{
   This function will only be operational on systems with the
   \code{stat} system call, but that seems very widely available.
+
+  Some (broken) systems allow files of more than 2Gb to be created but
+  not accessed by the \code{stat} system call.  Such files will show up
+  as non-readable (and very likely not be readable by any of \R's input
+  functions).
 }
 
 \seealso{

@@ -18,7 +18,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *
  *  NOTE
@@ -68,25 +68,31 @@ double dnt(double x, double df, double ncp, int give_log)
 #endif
 
     /* If non-positive df then error */
-    if (df <= 0) ML_ERR_return_NAN;
+    if (df <= 0.0) ML_ERR_return_NAN;
+
+    if(ncp == 0.0) return dt(x, df, give_log);
 
     /* If x is infinite then return 0 */
     if(!R_FINITE(x))
 	return R_D__0;
 
-    /* If infinite df then the density is identical to a  */
-    /* normal distribution with mean = ncp */
-    if(!R_FINITE(df))
+    /* If infinite df then the density is identical to a
+       normal distribution with mean = ncp.  However, the formula
+       loses a lot of accuracy around df=1e9
+    */
+    if(!R_FINITE(df) || df > 1e8)
 	return dnorm(x, ncp, 1., give_log);
 
-    /* Consider two cases: x==0 or not */
     /* Do calculations on log scale to stabilize */
-    if (x != 0) {
+
+    /* Consider two cases: x ~= 0 or not */
+    if (fabs(x) > sqrt(df * DBL_EPSILON)) {
 	u = log(df) - log(fabs(x)) +
 	    log(fabs(pnt(x*sqrt((df+2)/df), df+2, ncp, 1, 0) -
 		     pnt(x, df, ncp, 1, 0)));
+	/* FIXME: the above still suffers from cancellation (but not horribly) */
     }
-    else {
+    else {  /* x ~= 0 : -> same value as for  x = 0 */
 	u = lgammafn((df+1)/2) - lgammafn(df/2)
 	    - .5*(log(M_PI) + log(df) + ncp*ncp);
     }

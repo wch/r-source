@@ -10,14 +10,14 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
    Boundary.knots = range(x))
 }
 \arguments{
-  \item{x}{the predictor variable.}
+  \item{x}{the predictor variable.  Missing values are allowed.}
   \item{df}{degrees of freedom. One can supply \code{df} rather than
     knots; \code{ns()} then chooses \code{df - 1 - intercept} knots at
-    suitably chosen quantiles of \code{x}.}
-  \item{knots}{breakpoints that define the spline. The default is no
+    suitably chosen quantiles of \code{x} (which will ignore missing values).}
+  \item{knots}{breakpoints that define the spline.  The default is no
     knots; together with the natural boundary conditions this results in
     a basis for linear regression on \code{x}.  Typical values are the
-    mean or median for one knot, quantiles for more knots. See also
+    mean or median for one knot, quantiles for more knots.  See also
     \code{Boundary.knots}.}
   \item{intercept}{if \code{TRUE}, an intercept is included in the
     basis; default is \code{FALSE}.}
@@ -48,18 +48,17 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
 %     is used as an argument. Either use \code{safe.predict.gam()}, or else
 %     specify \code{knots} and \code{Boundary.knots}.
 }
+\seealso{
+  \code{\link{bs}}, \code{\link{predict.ns}}, \code{\link{SafePrediction}}
+}
 \references{
   Hastie, T. J. (1992)
   Generalized additive models.
   Chapter 7 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
-\seealso{
-  \code{\link{bs}},
-  \code{\link{poly}},
-  \code{\link{predict.ns}}, \code{\link{SafePrediction}}
-}
 \examples{
+require(stats)
 ns(women$height, df = 5)
 summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))
 

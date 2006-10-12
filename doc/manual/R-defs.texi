@@ -32,9 +32,13 @@ $\t\$%
 @strong{\p\}
 @end macro
 
+@macro cputype {c}
+@samp{\c\}
+@end macro
+
 @c -- edit these here alone -- in order keep consistency
 @macro Rcopyright{year}
-Copyright @copyright{} \year\--2004 R Development Core Team
+Copyright @copyright{} \year\--2006 R Development Core Team
 @end macro
 
 @macro permission{}
@@ -53,10 +57,11 @@ except that this permission notice may be stated in a translation
 approved by the R Development Core Team.
 @end macro
 
-@set ISBN-FAQ ISBN 3-900051-01-1
-@set ISBN-admin ISBN 3-900051-02-X
-@set ISBN-data ISBN 3-900051-03-8
-@set ISBN-exts ISBN 3-900051-04-6
-@set ISBN-intro ISBN 3-900051-05-4
-@set ISBN-lang ISBN 3-900051-06-2
+@set ISBN-FAQ ISBN 3-900051-08-9
+@set ISBN-admin ISBN 3-900051-09-7
+@set ISBN-data ISBN 3-900051-10-0
+@set ISBN-exts ISBN 3-900051-11-9
+@set ISBN-intro ISBN 3-900051-12-7
+@set ISBN-lang ISBN 3-900051-13-5
+@set ISBN-ints ISBN 3-900051-14-3
 

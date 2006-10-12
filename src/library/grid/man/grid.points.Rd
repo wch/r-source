@@ -6,13 +6,13 @@
   These functions create and draw data symbols.
 }
 \usage{
-grid.points(x = runif(10),
-            y = runif(10),
+grid.points(x = stats::runif(10),
+            y = stats::runif(10),
             pch = 1, size = unit(1, "char"),
             default.units = "native", name = NULL,
             gp=gpar(), draw = TRUE, vp = NULL)
-pointsGrob(x = runif(10),
-            y = runif(10),
+pointsGrob(x = stats::runif(10),
+            y = stats::runif(10),
             pch = 1, size = unit(1, "char"),
             default.units = "native", name = NULL,
             gp=gpar(), vp = NULL)

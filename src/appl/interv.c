@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  *
  * The interv() used to be Fortran in ../library/modreg/src/bvalue.f
  * and part of Hastie and Tibshirani's public domain GAMFIT package.
@@ -25,6 +25,7 @@
 
 #include <R_ext/Applic.h>
 #include <R_ext/Boolean.h>
+#include <R_ext/Utils.h>
 
 /* This is called from bvalue() and others in ../library/modreg/src/ : */
 int F77_SUB(interv)(double *xt, int *n, double *x,

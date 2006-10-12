@@ -1,51 +1,21 @@
+/* <UTF8> 
+   Does byte-level handling in primitive_case, but only of ASCII chars
+*/
 
-#include <R.h>
-#include <Rdefines.h>
-#include <Rinternals.h>
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <Defn.h>
+#undef _
 
 #include "RSMethods.h"
+#include "methods.h"
+#include "Rdefines.h"
 
-/* from Defn.h */
-#define type2str		Rf_type2str
-SEXP type2str(SEXPTYPE);
-#define type2symbol		Rf_type2symbol
-SEXP type2symbol(SEXPTYPE);
-#define setVarInFrame		Rf_setVarInFrame
-SEXP setVarInFrame(SEXP, SEXP, SEXP);
-#define streql(s, t)	(!strcmp((s), (t)))
-void R_PreserveObject(SEXP);
-
-SEXP Rf_append(SEXP, SEXP);
-
-/* environment cell access */
-typedef struct R_varloc_st *R_varloc_t;
-R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
-SEXP R_GetVarLocValue(R_varloc_t);
-SEXP R_GetVarLocSymbol(R_varloc_t);
-void R_SetVarLocValue(R_varloc_t, SEXP);
-Rboolean R_GetVarLocMISSING(R_varloc_t);
-
-/* from Defn.h */
-typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP);
-R_stdGen_ptr_t R_get_standardGeneric_ptr(); /* get method */
-R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t, SEXP); /* set method */
-
-
-/* attrib.c */
-SEXP R_data_class(SEXP obj, int singleString);
-
-
-/* from main/subassign.c */
-SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val);
-
-/* from main/objects.c */
-SEXP R_deferred_default_method();
-SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef, 
-		       SEXP mlist);
-SEXP R_primitive_methods(SEXP op);
-SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
-void R_set_quick_method_check(R_stdGen_ptr_t);
-SEXP R_do_slot(SEXP obj, SEXP name); 
+#if !defined(snprintf) && defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
+extern int snprintf (char *s, size_t n, const char *format, ...);
+#endif
 
 /* the following utilities are included here for now, as statics.  But
    they will eventually be C implementations of slot, data.class,
@@ -58,11 +28,12 @@ static SEXP R_loadMethod(SEXP f, SEXP fname, SEXP ev);
 /* objects, mostly symbols, that are initialized once to save a little time */
 static int initialized = 0;
 static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
-  s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
-  s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic,
-  s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
+    s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
+    s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic, s_package,
+    s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
     s_argument, s_allMethods;
 static SEXP R_FALSE, R_TRUE;
+static Rboolean table_dispatch_on = 1;
 
 /* precomputed skeletons for special primitive calls */
 static SEXP R_short_skeletons, R_empty_skeletons;
@@ -81,7 +52,8 @@ static char *check_single_string(SEXP, Rboolean, char *);
 static char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty, char *what);
 static char *class_string(SEXP obj);
 
-static void init_loadMethod() {
+static void init_loadMethod()
+{
     R_target = install("target");
     R_defined = install("defined");
     R_nextMethod = install("nextMethod");
@@ -98,12 +70,11 @@ SEXP R_initMethodDispatch(SEXP envir)
 {
     if(envir && !isNull(envir))
 	Methods_Namespace = envir;
-    R_set_standardGeneric_ptr(R_standardGeneric, Methods_Namespace);
     if(!Methods_Namespace)
 	Methods_Namespace = R_GlobalEnv;
     if(initialized)
 	return(envir);
-    R_set_quick_method_check(R_quick_method_check);
+    
     s_dot_Methods = Rf_install(".Methods");
     s_skeleton = Rf_install("skeleton");
     s_expression = Rf_install("expression");
@@ -115,37 +86,48 @@ SEXP R_initMethodDispatch(SEXP envir)
     s_sys_dot_call = Rf_install("sys.call");
     s_sys_dot_function = Rf_install("sys.function");
     s_generic = Rf_install("generic");
+    s_package = Rf_install("package");
     s_generic_dot_skeleton = Rf_install("generic.skeleton");
     s_subset_gets = Rf_install("[<-");
     s_element_gets = Rf_install("[[<-");
     s_argument = Rf_install("argument");
     s_allMethods = Rf_install("allMethods");
 
-    R_FALSE = PROTECT(NEW_LOGICAL(1));
-    LOGICAL_POINTER(R_FALSE)[0] = FALSE;
+    R_FALSE = ScalarLogical(FALSE);
     R_PreserveObject(R_FALSE);
-    R_TRUE = PROTECT(NEW_LOGICAL(1));
-    LOGICAL_POINTER(R_TRUE)[0] = TRUE;
+    R_TRUE = ScalarLogical(TRUE);
     R_PreserveObject(R_TRUE);
-    UNPROTECT(2);
 
     /* some strings (NOT symbols) */
-    s_missing = PROTECT(NEW_CHARACTER(1));
-    SET_STRING_ELT(s_missing, 0, mkChar("missing"));
+    s_missing = mkString("missing");
     R_PreserveObject(s_missing);
+    /*  Initialize method dispatch, using the static */
+    R_set_standardGeneric_ptr(
+			      (table_dispatch_on ? R_dispatchGeneric : R_standardGeneric)
+			      , Methods_Namespace);
+    R_set_quick_method_check(
+			     (table_dispatch_on ? R_quick_dispatch : R_quick_method_check));
+ 
+    /* Some special lists of primitive skeleton calls.
+       These will be promises under lazy-loading.
+     */
+    PROTECT(R_short_skeletons =
+	    findVar(Rf_install(".ShortPrimitiveSkeletons"),
+		    Methods_Namespace));
+    if(TYPEOF(R_short_skeletons) == PROMSXP)
+	R_short_skeletons = eval(R_short_skeletons, Methods_Namespace);
+    R_PreserveObject(R_short_skeletons);
     UNPROTECT(1);
-
-
-    /* some special lists of primitive skeleton calls */
-    R_PreserveObject(R_short_skeletons =
-		     findVar(Rf_install(".ShortPrimitiveSkeletons"), 
-			     Methods_Namespace));
-    R_PreserveObject(R_empty_skeletons =
-		     findVar(Rf_install(".EmptyPrimitiveSkeletons"), 
-			     Methods_Namespace));
+    PROTECT(R_empty_skeletons =
+	    findVar(Rf_install(".EmptyPrimitiveSkeletons"), 
+		    Methods_Namespace));
+    if(TYPEOF(R_empty_skeletons) == PROMSXP)
+	R_empty_skeletons = eval(R_empty_skeletons, Methods_Namespace);
+    R_PreserveObject(R_empty_skeletons);
+    UNPROTECT(1);
     if(R_short_skeletons == R_UnboundValue || 
        R_empty_skeletons == R_UnboundValue)
-	error("Couldn't find the skeleton calls for methods (package  detached?): expect very bad things to happen");
+	error(_("could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"));
     f_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 0);
     fgets_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 1);
     f_x_skeleton = VECTOR_ELT(R_empty_skeletons, 0);
@@ -154,17 +136,6 @@ SEXP R_initMethodDispatch(SEXP envir)
     initialized = 1;
     return(envir);
 }
-
-
-#ifdef UNUSED
-/* return a symbol containing mode (well, actually, typeof) obj */
-static SEXP R_mode(SEXP obj)
-{
-    return type2symbol(TYPEOF(obj));
-}
-#endif
-
-/* the  SEXP for the data.class string (roughly, the green book class function) */
 
 
 /* simplified version of do_subset2_dflt, with no partial matching */
@@ -208,52 +179,6 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
 
 /*  */
 static int n_ov = 0;
-#ifdef UNUSED
-static SEXP ov_mlists[50], ov_methods[50];
-static int max_ov = 50;
-/* should make this flexible via malloc, realloc */
-static SEXP getOverride(SEXP mlist)
-{
-    int i;
-    for(i=0; i<n_ov; i++)
-	if(ov_mlists[i] == mlist)
-	    return ov_methods[i];
-    return R_NilValue;
-}
-
-static SEXP setOverride(SEXP mlist, SEXP value)
-{
-    int i;
-    for(i=0; i<n_ov; i++) {
-	if(ov_mlists[i] == mlist) { /* set or clear */
-	    if(value)
-		ov_methods[i] = value;
-	    else {
-		ov_mlists[i] = NULL;
-		if(i+1 == n_ov)
-			n_ov--;
-	    }
-	    return value;
-	}
-	else if(!ov_mlists[i]) {
-	    ov_mlists[i] = mlist;
-	    ov_methods[i] = value;
-	    return value;
-	}
-    }
-    if(!value)
-	    return value;
-    if(n_ov >= max_ov) {
-	/* should flex, but for now ... */
-	n_ov = 0;
-	error("More than %d nested methods list searches (system error?)", n_ov);
-    }
-    ov_mlists[n_ov] = mlist;
-    ov_methods[n_ov] = value;
-    n_ov++;
-    return value;
-}
-#endif
 
 SEXP R_clear_method_selection()
 {
@@ -268,7 +193,7 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
     SEXP value, methods;
     methods = R_do_slot(mlist, s_allMethods);
     if(methods == R_NilValue) {
-	error("No \"allMethods\" slot found in object  of class \"%s\" used as methods list for function \"%s\"",
+	error(_("no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"),
 	      class_string(mlist), CHAR_STAR(fname));
 	return(R_NilValue); /* -Wall */
     }
@@ -311,24 +236,51 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
     return(retValue);
 }
 
-/* call some S language functions */
-#ifdef UNUSED
-static SEXP R_S_getAllMethods(SEXP fname, SEXP fdef)
+SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
 {
-    SEXP e, val, call;
-    PROTECT(call = allocVector(LANGSXP, 3));
-    SETCAR(call, s_getAllMethods);
-    e = CDR(call);
-    SETCAR(e, fname);
-    e = CDR(e);
-    SETCAR(e, fdef);
-    /* We don't do checking here:  the calls from do_dispatch check
-     * argument types. */
-    val = eval(call, Methods_Namespace);
-    UNPROTECT(1);
-    return(val);
+    /* Match the list of (evaluated) args to the methods table. */
+    SEXP object, value, retValue = R_NilValue;
+    char *class; int nprotect = 0;
+#define NBUF 200
+    char buf[NBUF]; char *ptr;
+    if(!mtable || TYPEOF(mtable) != ENVSXP)
+	return R_NilValue;
+    buf[0] = '\0'; ptr = buf;
+    /*  doesn't check for nargs() > .SigLength.  Could do so but the search will fail
+     in this case anyway, and the test is not clearly faster  on average */
+    while(!isNull(args)) { 
+	object = CAR(args); args = CDR(args);
+	if(TYPEOF(object) == PROMSXP) {
+	    if(PRVALUE(object) == R_UnboundValue) {
+		SEXP tmp = eval(PRCODE(object), PRENV(object));
+		PROTECT(tmp); nprotect++;
+		SET_PRVALUE(object,  tmp);
+		object = tmp;
+	    }
+	    else
+		object = PRVALUE(object);
+	}
+	class = CHAR(asChar(R_data_class(object, TRUE)));
+	if(ptr - buf + strlen(class) + 2 > NBUF) {
+	  UNPROTECT(nprotect);
+	  return R_NilValue;
+	}
+	/* NB:  this code replicates .SigLabel().  If that changes, e.g. to include
+	 the package, the code here must change too.  Or, better, the two should 
+	use the same C code. */
+	if(ptr > buf) { ptr = strcpy(ptr, "#");  ptr += 2;}
+	ptr = strcpy(ptr, class); ptr += strlen(class);
+	value = findVarInFrame(mtable, install(buf));
+	if(value != R_UnboundValue) {
+	  retValue = value;
+	  break;
+	}
+    }
+    UNPROTECT(nprotect);
+    return(retValue);
 }
-#endif
+
+/* call some S language functions */
 
 static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
 				  SEXP f_env)
@@ -349,76 +301,29 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist,
     }
     val = R_tryEval(e, Methods_Namespace, &check_err);
     if(check_err)
-	error("S language method selection got an error when called from internal dispatch for function \"%s\"",
+	error(_("S language method selection got an error when called from internal dispatch for function '%s'"),
 	      check_symbol_or_string(fname, TRUE,
 				  "Function name for method selection called internally"));
     UNPROTECT(1);
     return val;
 }
 
-#ifdef UNUSED
-static SEXP R_S_syscall(int n, SEXP ev)
-{
-    SEXP e, val, arg;
-    PROTECT(e = allocVector(LANGSXP, 2));
-    PROTECT(arg = NEW_INTEGER(1));
-    INTEGER_DATA(arg)[0] = n;
-    SETCAR(e, s_sys_dot_call);
-    SETCAR(CDR(e), arg);
-    val = eval(e, ev);
-    UNPROTECT(2);
-    return val;
-}
-
-static SEXP R_S_sysfunction(int n, SEXP ev)
-{
-    SEXP e, val, arg;
-    PROTECT(e = allocVector(LANGSXP, 2));
-    PROTECT(val = Rf_findFun(s_sys_dot_function, R_GlobalEnv));
-    PROTECT(arg = NEW_INTEGER(1));
-    INTEGER_DATA(arg)[0] = n;
-    SETCAR(e, val);
-    SETCAR(CDR(e), arg);
-    val = eval(e, ev);
-    UNPROTECT(3);
-    return val;
-}
-#endif
-
-#if 0 /* -Wall warns and this confuses users */
-static SEXP R_get_function_env(SEXP obj, SEXP fname)
-{
-    if(TYPEOF(obj) != CLOSXP)
-	error("retrieved object for \"%s\" was not a function",
-	      CHAR_STAR(fname));
-    return CLOENV(obj);
-}
-
-
-static SEXP R_get_from_f_env(SEXP env, SEXP what, SEXP fname)
-{
-    SEXP obj;
-    obj = findVarInFrame(env, what);
-    if(obj == R_UnboundValue)
-	error("No \"%s\" object in environment of function \"%s\"",
-	      CHAR_STAR(what), CHAR_STAR(fname));
-    return obj;
-}
-#endif
 
 /* quick tests for generic and non-generic functions.  May mistakenly
    identify non-generics as generics:  a class with data part of type
    CLOSXP and with a slot/attribute named "generic" will qualify.
 */
 #define IS_NON_GENERIC(vl) (TYPEOF(vl) == BUILTINSXP ||TYPEOF(vl) == SPECIALSXP || \
-            (TYPEOF(vl) == CLOSXP && GET_ATTR(vl, s_generic) == R_NilValue))
-#define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && GET_ATTR(vl, s_generic) != R_NilValue)
+            (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) == R_NilValue))
+#define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && getAttrib(vl, s_generic) != R_NilValue)
+#define PACKAGE_SLOT(vl) getAttrib(vl, s_package)
 
-static SEXP get_generic(SEXP symbol, SEXP rho)
+static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 {
-    SEXP vl, generic = R_UnboundValue;
+    SEXP vl, generic = R_UnboundValue, gpackage; char * pkg; Rboolean ok;
     if(!isSymbol(symbol))
 	symbol = install(CHAR_STAR(symbol));
+    pkg = CHAR_STAR(package);
     while (rho != R_NilValue) {
 	vl = findVarInFrame(rho, symbol);
 	if (vl != R_UnboundValue) {
@@ -427,7 +332,17 @@ static SEXP get_generic(SEXP symbol, SEXP rho)
 		vl = eval(vl, rho);
 		UNPROTECT(1);
 	    }
+	    ok = FALSE;
 	    if(IS_GENERIC(vl)) {
+	      if(strlen(pkg)) {
+		  gpackage = PACKAGE_SLOT(vl);
+		  check_single_string(gpackage, FALSE, "The \"package\" slot in generic function object");
+		  ok = !strcmp(pkg, CHAR_STAR(gpackage));
+		}
+		else 
+		  ok = TRUE;
+	    }
+	    if(ok) {
 		generic = vl;
 		break;
 	    } else
@@ -438,25 +353,32 @@ static SEXP get_generic(SEXP symbol, SEXP rho)
     /* look in base if either generic is missing */
     if(generic == R_UnboundValue) {
 	vl = SYMVALUE(symbol);
-	if(IS_GENERIC(vl))
+	if(IS_GENERIC(vl)) {
 	    generic = vl;
+	    if(strlen(pkg)) {
+		  gpackage = PACKAGE_SLOT(vl);
+		  check_single_string(gpackage, FALSE, "The \"package\" slot in generic function object");
+		  if(strcmp(pkg, CHAR_STAR(gpackage))) generic = R_UnboundValue;
+		}
+	}
     }
     return generic;
 }
 
-SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env)
+SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package)
 {
     SEXP value;
     if(isSymbol(name)) {}
     else check_single_string(name, TRUE, "The argument \"f\" to getGeneric");
-    value = get_generic(name, env);
+    check_single_string(package, FALSE, "The argument \"package\" to getGeneric"); 
+    value = get_generic(name, env, package);
     if(value == R_UnboundValue) {
-	if(LOGICAL_VALUE(mustFind)) {
+	if(asLogical(mustFind)) {
 	    if(env == R_GlobalEnv)
-		error("No generic function definition found for \"%s\"",
+		error(_("no generic function definition found for '%s'"),
 		  CHAR_STAR(name));
 	    else
-		error("No generic function definition found for \"%s\" in the supplied environmnet",
+		error(_("No generic function definition found for '%s' in the supplied environment"),
 		  CHAR_STAR(name));
 	}
 	value = R_NilValue;
@@ -464,95 +386,11 @@ SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env)
     return value;
 }
 
-#ifdef UNUSED
-static SEXP get_skeleton(SEXP symbol, SEXP generic)
-{
-    SEXP vl = R_UnboundValue;
-    if(generic == R_NilValue)
-	return R_NilValue; /* a primitive ? */
-    /* get the skeleton call stored in the generic function, to use in case
-       a call to this generic occurs in the S language code to merge
-       methods and for the arguments to .Primitive methods */
-    vl = GET_ATTR(generic, s_skeleton);
-    if(vl == R_NilValue)
-	error("Invalid generic function for \"%s\": no skeleton slot defined",
-	      CHAR_STAR(symbol));
-    return vl;
-}
-
-typedef enum {STANDARD, SUBSET, SUBSET_GETS, ELEMENT,
-		     ELEMENT_GETS} primitive_type;
-
-static primitive_type primitive_case(SEXP fname, SEXP op)
-{
-    /* assume fname is or has been made into a symbol */
-    char *string;
-    /* the only nonstandards are currently SPECIAL, not BUILTIN */
-    if(TYPEOF(op) == BUILTINSXP)
-	return STANDARD;
-    string = CHAR(PRINTNAME(fname));
-    switch(string[0]) {
-    case '[':
-	switch(string[1]) {
-	case '\0': return SUBSET;
-	case '[':
-	    switch(string[2]) {
-	    case '<':
-		return (fname == s_element_gets ? ELEMENT_GETS : STANDARD);
-	    case '\0': return ELEMENT;
-	    default: return STANDARD;
-	    }
-	case '<': return (fname == s_subset_gets ? SUBSET_GETS : STANDARD);
-	default: return STANDARD;
-	}
-    default: return STANDARD;
-    }
-}
-
-static SEXP nonstandard_primitive(primitive_type which, SEXP skeleton,
-				  SEXP prim, SEXP ev)
-{
-    SEXP call, frame, val, p1, p2; int nargs, i;
-    frame = R_S_sysfunction(-1, ev);
-    PROTECT(call = R_S_syscall(0, ev));
-    nargs = length(call)-1;
-    switch(which) {
-    case SUBSET: case ELEMENT:
-	switch(nargs) {
-	case 2: val = f_x_i_skeleton; break;
-	case 1: val = f_x_skeleton; break;
-	default: val = skeleton; break;
-	}
-	break;
-    case SUBSET_GETS: case ELEMENT_GETS:
-	switch(nargs) {
-	case 3: val = fgets_x_i_skeleton; break;
-	case 2: val = fgets_x_skeleton; break;
-	default: val = skeleton; break;
-	}
-	break;
-    default:
-	val = skeleton; break;
-    }
-    PROTECT(val = duplicate(val));
-    /* the primitive call must have the correct pattern of missing
-       actual arguments */
-    p1 = CDR(call); p2 = CDR(val);
-    for(i=0; i<nargs; i++) {
-	if(CAR(p1) == R_MissingArg)
-	    SETCAR(p2, R_MissingArg);
-	p1 = CDR(p1); p2 = CDR(p2);
-    }
-    SETCAR(val, prim);
-    UNPROTECT(2);
-    return(val);
-}
-#endif
 
 /* C version of the standardGeneric R function. */
 SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 {
-    SEXP f_env=R_NilValue, mlist=R_NilValue, f, val=R_NilValue, fsym; /* -Wall */
+    SEXP f_env=R_BaseEnv, mlist=R_NilValue, f, val=R_NilValue, fsym; /* -Wall */
     int nprotect = 0; Rboolean prim_case = FALSE;
 
     if(!initialized)
@@ -573,11 +411,11 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	prim_case = FALSE;
 	break;
     case SPECIALSXP: case BUILTINSXP:
-        f_env = R_NilValue;
+        f_env = R_BaseEnv;
 	PROTECT(mlist = R_primitive_methods(fdef)); nprotect++;
 	prim_case = TRUE;
 	break;
-    default: error("Invalid  generic function object for method selection for function \"%s\": expected a function or a primitive, got an object of class \"%s\"",
+    default: error(_("invalid  generic function object for method selection for function '%s': expected a function or a primitive, got an object of class \"%s\""),
 		   CHAR_STAR(fsym), class_string(fdef));
     }
     switch(TYPEOF(mlist)) {
@@ -592,7 +430,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	SEXP value;
 	PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
 	if(isNull(value))
-	    error("No direct or inherited method for function \"%s\" for this call",
+	    error(_("no direct or inherited method for function '%s' for this call"),
 		  CHAR_STAR(fname));
 	mlist = value;
 	/* now look again.  This time the necessary method should
@@ -618,7 +456,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
       val = R_deferred_default_method();
       break;
     default:
-	error("invalid object (non-function) used as method");
+	error(_("invalid object (non-function) used as method"));
 	break;
     }
     UNPROTECT(nprotect);
@@ -635,17 +473,21 @@ static Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 {
     R_varloc_t loc = R_findVarLocInFrame(ev, symbol);
     if (loc == NULL)
-	error("Couldn't find symbol \"%s\" in frame of call",
+	error(_("could not find symbol '%s' in frame of call"),
 	      CHAR_STAR(symbol));
     return R_GetVarLocMISSING(loc);
 }
 
 SEXP R_missingArg(SEXP symbol, SEXP ev) {
     if(!isSymbol(symbol))
-	error("invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\"",
+	error(_("invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\""),
 	     class_string(symbol));
+    if (isNull(ev)) {
+	error(_("use of NULL environment is defunct"));
+	ev = R_BaseEnv;
+    } else	     
     if(!isEnvironment(ev))
-	error("invalid environment in checking for missing argument, \"%s\", in methods dispatch: got an object of class \"%s\"",
+	error(_("invalid environment in checking for missing argument, '%s', in methods dispatch: got an object of class \"%s\""),
 	     CHAR(PRINTNAME(symbol)), class_string(ev));
     if(is_missing_arg(symbol, ev))
 	return R_TRUE;
@@ -671,7 +513,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	return mlist;
     PROTECT(arg_slot = R_do_slot(mlist, s_argument)); nprotect++;
     if(arg_slot == R_NilValue) {
-	error("Object of class \"%s\" used as methods list for function \"%s\" ( no \"argument\" slot)",
+	error(_("object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"),
 	      class_string(mlist), CHAR_STAR(fname));
 	return(R_NilValue); /* -Wall */
     }
@@ -682,10 +524,10 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	   "name" */
 	arg_sym = install(CHAR(asChar(arg_slot)));
     if(arg_sym == R_DotsSymbol || DDVAL(arg_sym) > 0)
-	error("(in selecting a method for function \"%s\") \"...\" and related variables can't be used for methods dispatch",
+	error(_("(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"),
 	      CHAR_STAR(fname));
     if(TYPEOF(ev) != ENVSXP) {
-	error("(in selecting a method for function \"%s\") The environment argument for dispatch must be an R environment; got an object of class \"%s\"",
+	error(_("(in selecting a method for function '%s') the 'environment' argument for dispatch must be an R environment; got an object of class \"%s\""),
 	    CHAR_STAR(fname), class_string(ev));
 	return(R_NilValue); /* -Wall */
     }
@@ -699,7 +541,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	    SEXP arg, class_obj; int check_err;
 	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
 	    if(check_err)
-		error("Unable to find the argument \"%s\" in selecting a method for function \"%s\"",
+		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		      CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
 	    PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
 	    class = CHAR_STAR(class_obj);
@@ -710,21 +552,21 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 	SEXP arg; int check_err;
 	PROTECT(arg = R_tryEval(arg_sym, ev, &check_err)); nprotect++;
 	if(check_err)
-	    error("Unable to find the argument \"%s\" in selecting a method for function \"%s\"",
+	    error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		  CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
 	class = CHAR_STAR(arg);
     }
     method = R_find_method(mlist, class, fname);
     if(isNull(method)) {
       if(!firstTry)
-	error("No matching method for function \"%s\" (argument \"%s\", with class %s)",
+	error(_("no matching method for function '%s' (argument '%s', with class \"%s\")"),
 	      CHAR_STAR(fname), CHAR(PRINTNAME(arg_sym)), class);
       UNPROTECT(nprotect);
       return(R_NilValue);
     }
     if(value == R_MissingArg) {/* the check put in before calling
 			  function  MethodListSelect in R */
-      error("Recursive use of function \"%s\" in method selection, with no default method",
+      error(_("recursive use of function '%s' in method selection, with no default method"),
 		  CHAR_STAR(fname));
       return(R_NilValue);
     }
@@ -755,7 +597,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
     */
     op = findVarInFrame3(ev, R_dot_nextMethod, TRUE);
     if(op == R_UnboundValue)
-	error("Internal error in callNextMethod: \".nextMethod\" was not assigned in the frame of the method call");
+	error(_("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call"));
     /* If "..." is an argument, need to pass it down to next method;
      * match.call() doesn't seem (always?) to include this, so we
      * check below and add it if needed. */
@@ -786,7 +628,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
 	if(this_sym == R_DotsSymbol) {
 	    /* don't copy this; will have been appended */
 	    if(dotsDone)
-		error("In processing callNextMethod, found a \"...\" in the matched call, but no corresponding ... argument ");
+		error(_("in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"));
 	}
 	else if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
 	    SETCAR(args, this_sym);
@@ -798,7 +640,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
 	   leaves the previous function, methods list unchanged */
 	do_set_prim_method(op, "set", R_NilValue, R_NilValue);
 	if(error_flag)
-	    Rf_error("Error in evaluating a primitive next method");
+	    Rf_error(_("error in evaluating a 'primitive' next method"));
     }
     else
 	val = eval(e, ev);
@@ -854,14 +696,15 @@ static char *check_single_string(SEXP obj, Rboolean nonEmpty, char *what) {
     char *string = "<unset>"; /* -Wall */
     if(isString(obj)) {
 	if(length(obj) != 1)
-	    error("%s must be a single string (got a character vector of length %d)",
+	    error(_("'%s' must be a single string (got a character vector of length %d)"),
 		  what, length(obj));
 	string = CHAR(asChar(obj));
 	if(nonEmpty && (! string || !string[0]))
-	    error("%s must be a non-empty string; got an empty string", what);
+	    error(_("'%s' must be a non-empty string; got an empty string"),
+		  what);
     }
     else {
-	error("%s must be a single string (got an object of class \"%s\")",
+	error(_("'%s' must be a single string (got an object of class \"%s\")"),
 	      what, class_string(obj));
     }
     return string;
@@ -896,11 +739,166 @@ SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
     return ans;
 }
 
-SEXP R_identC(SEXP e1, SEXP e2) {
+SEXP R_identC(SEXP e1, SEXP e2)
+{
     if(TYPEOF(e1) == STRSXP  && TYPEOF(e1) == STRSXP &&
        length(e1) == 1 && length(e2) == 1 &&
        streql(CHAR(STRING_ELT(e1, 0)), CHAR(STRING_ELT(e2, 0))))
 	return R_TRUE;
     else
 	return R_FALSE;
+}
+
+static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev) {
+    static SEXP dotFind = NULL, f; SEXP  e, ee;
+    if(dotFind == NULL) {
+         dotFind = install(".InheritForDispatch");
+	 f = findFun(dotFind, R_MethodsNamespace);
+     }
+    PROTECT(e = allocVector(LANGSXP, 4));
+    SETCAR(e, f); ee = CDR(e);
+    SETCAR(ee, class_objs); ee = CDR(ee);
+    SETCAR(ee, fdef); ee = CDR(ee);
+    SETCAR(ee, mtable);
+    ee = eval(e, ev);
+    UNPROTECT(1);
+    return ee;
+}
+
+static SEXP do_mtable(SEXP fdef, SEXP ev) {
+    static SEXP dotFind = NULL, f; SEXP  e, ee;
+    if(dotFind == NULL) {
+         dotFind = install(".getMethodsTable");
+	 f = findFun(dotFind, R_MethodsNamespace);
+	 R_PreserveObject(f);
+     }
+    PROTECT(e = allocVector(LANGSXP, 2));
+    SETCAR(e, f); ee = CDR(e);
+    SETCAR(ee, fdef);
+    ee = eval(e, ev);
+    UNPROTECT(1);
+    return ee;
+}   
+
+SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
+{
+  static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength;
+  int nprotect = 0;
+  SEXP mtable, classes, thisClass, sigargs, siglength, f_env = R_NilValue, 
+      label, method, f, val=R_NilValue;
+  char *buf, *bufptr;
+  int nargs, i, lwidth = 0;
+  Rboolean prim_case = FALSE;
+
+  if(!R_mtable) {
+    R_mtable = install(".MTable");
+    R_allmtable = install(".AllMTable");
+    R_sigargs = install(".SigArgs");
+    R_siglength = install(".SigLength");
+  }
+    switch(TYPEOF(fdef)) {
+    case CLOSXP:
+        f_env = CLOENV(fdef);
+	break;
+    case SPECIALSXP: case BUILTINSXP:
+	PROTECT(fdef = R_primitive_generic(fdef)); nprotect++;
+	if(TYPEOF(fdef) != CLOSXP) {
+	  error(_("Failed to get the generic for the primitive \"%s\""), CHAR_STAR(fname));
+	  return R_NilValue;
+	}
+	f_env = CLOENV(fdef);
+	prim_case = TRUE;
+	break;
+    default:
+      error(_("Expected a generic function or a primitive for dispatch, got an object of class \"%s\""),
+	    class_string(fdef));
+    }
+    PROTECT(mtable = findVarInFrame(f_env, R_allmtable)); nprotect++;
+    if(mtable == R_UnboundValue) {
+      do_mtable(fdef, ev); /* Should initialize the generic */
+      PROTECT(mtable = findVarInFrame(f_env, R_allmtable)); nprotect++;
+    }
+    PROTECT(sigargs = findVarInFrame(f_env, R_sigargs)); nprotect++;
+    PROTECT(siglength = findVarInFrame(f_env, R_siglength)); nprotect++;
+  if(sigargs == R_UnboundValue || siglength == R_UnboundValue || 
+     mtable == R_UnboundValue)
+    error(_("Generic \"%s\" seems not to have been initialized for table dispatch---need to have .SigArgs and .AllMtable assigned in its environment"));
+  nargs = NUMERIC_VALUE(siglength);
+  PROTECT(classes = NEW_LIST(nargs)); nprotect++;
+  for(i=0; i<nargs; i++) {
+    SEXP arg_sym = VECTOR_ELT(sigargs, i);
+    if(is_missing_arg(arg_sym, ev))
+      thisClass = s_missing;
+	else {
+	    /*  get its class */
+	    SEXP arg; int check_err;
+	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
+	    if(check_err)
+		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
+		      CHAR(PRINTNAME(arg_sym)),CHAR_STAR(fname)); 
+	    PROTECT(thisClass = R_data_class(arg, TRUE)); nprotect++;
+	    UNPROTECT(1); /* for arg */
+	}
+    SET_VECTOR_ELT(classes, i, thisClass);
+    lwidth += strlen(STRING_VALUE(thisClass)) + 1;
+  }
+  /* make the label */
+  label = allocString(lwidth);
+  buf = bufptr = CHAR(label);
+  for(i = 0; i<nargs; i++) {
+    if(i > 0)
+      *bufptr++ = '#';
+    thisClass = VECTOR_ELT(classes, i);
+    strcpy(bufptr, STRING_VALUE(thisClass));
+    while(*bufptr)
+      bufptr++;
+  }
+  method = findVarInFrame(mtable, install(buf));
+  if(method == R_UnboundValue) {
+    method = do_inherited_table(classes, fdef, mtable, ev);
+  }
+  /* the rest of this is identical to R_standardGeneric; hence the f=method to remind us  */
+  f = method;
+    if(isObject(f))
+	f = R_loadMethod(f, fname, ev);
+    switch(TYPEOF(f)) {
+    case CLOSXP:
+	{
+	    SEXP R_execMethod(SEXP, SEXP);
+	    PROTECT(f); nprotect++; /* is this needed?? */
+	    val = R_execMethod(f, ev);
+	}
+	break;
+    case SPECIALSXP: case BUILTINSXP:
+	/* primitives  can't be methods; they arise only as the
+	   default method when a primitive is made generic.  In this
+	   case, return a special marker telling the C code to go on
+	   with the internal computations. */
+      val = R_deferred_default_method();
+      break;
+    default:
+	error(_("invalid object (non-function) used as method"));
+	break;
+    }
+    UNPROTECT(nprotect);
+    return val;
+} 
+
+SEXP R_set_method_dispatch(SEXP onOff) {
+  Rboolean value, prev; SEXP x;
+  prev = table_dispatch_on;
+  value = LOGICAL_VALUE(onOff);
+  if(value == NA_LOGICAL) /*  just return previous*/
+    value = prev;
+  table_dispatch_on = value;
+  if(value != prev) {
+    R_set_standardGeneric_ptr(
+			      (table_dispatch_on ? R_dispatchGeneric : R_standardGeneric)
+			      , Methods_Namespace);
+    R_set_quick_method_check(
+			     (table_dispatch_on ? R_quick_dispatch : R_quick_method_check));
+  }
+  x = NEW_LOGICAL(1);
+  LOGICAL_DATA(x)[0] = prev;
+  return x;
 }

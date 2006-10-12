@@ -11,7 +11,7 @@
 \usage{
 x[i]
 x[i] <- value
-x[i, j, drop = TRUE]
+x[i, j, drop]
 x[i, j] <- value
 
 x[[i]]
@@ -24,6 +24,7 @@ x$name <- value
 }
 \arguments{
   \item{x}{data frame.}
+
   \item{i, j}{elements to extract or replace. \code{i, j} are
     \code{numeric} or \code{character} or, for \code{[} only, empty.
     Numeric values are coerced to integer as if by \code{\link{as.integer}}.
@@ -31,7 +32,8 @@ x$name <- value
   }
 
   \item{drop}{logical.  If \code{TRUE} the result is coerced to the
-    lowest possible dimension: however, see the Warning below.}
+    lowest possible dimension.  The default is to drop if only one
+    column is left, but \bold{not} to drop if only one row is left.}
 
   \item{value}{A suitable replacement value: it will be repeated a whole
     number of times if necessary and it may be coerced: see the
@@ -63,22 +65,21 @@ x$name <- value
   right-hand edge of the data frame and numerical indices must be
   contiguous to existing indices.  On the other hand, rows can be added
   at any row after the current last row, and the columns will be
-  in-filled with missing values.
+  in-filled with missing values.  Missing values in the indices are not
+  allowed for replacement.
 
   For \code{[} the replacement value can be a list: each element of the
   list is used to replace (part of) one column, recycling the list as
-  necessary.  If the columns specified by number are created, the names
+  necessary.  If columns specified by number are created, the names
   (if any) of the corresponding list elements are used to name the
   columns.  If the replacement is not selecting rows, list values can
   contain \code{NULL} elements which will cause the corresponding
-  columns to be deleted.
+  columns to be deleted.  (See the Examples.)
 
   Matrixing indexing using \code{[} is not recommended, and barely
   supported.  For extraction, \code{x} is first coerced to a matrix.
   For replacement a logical matrix (only) can be used to select the
-  elements to be replaced in the same ways as for a matrix.
-  Missing values in the matrix are treated as false, unlike S which
-  does not replace them but uses up the corresponding values in \code{value}.
+  elements to be replaced in the same way as for a matrix.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
@@ -102,10 +103,9 @@ x$name <- value
   inserted as a single column.
 }
 \section{Warning}{
-  Although the default for \code{drop} is \code{TRUE}, the default
-  behaviour  when only one \emph{row} is left is equivalent to
+  The default behaviour when only one \emph{row} is left is equivalent to
   specifying \code{drop = FALSE}.  To drop from a data frame to a list,
-  \code{drop = FALSE} has to specified explicitly.
+  \code{drop = TRUE} has to be specified explicitly.
 }
 \value{
   For \code{[} a data frame, list or a single column (the latter two
@@ -144,7 +144,6 @@ sw
 sw["new1"] <- LETTERS[1:5]   # adds a character column
 sw[["new2"]] <- letters[1:5] # ditto
 sw[, "new3"] <- LETTERS[1:5] # ditto
-                             # but this got converted to a factor in 1.7.x
 sw$new4 <- 1:5
 sapply(sw, class)
 sw$new4 <- NULL              # delete the column
@@ -154,7 +153,7 @@ sw
 
 ## matrices in a data frame
 A <- data.frame(x=1:3, y=I(matrix(4:6)), z=I(matrix(letters[1:9],3,3)))
-A[1:3, "y"] # a matrix, was a vector prior to 1.8.0
+A[1:3, "y"] # a matrix
 A[1:3, "z"] # a matrix
 A[, "y"]    # a matrix
 }

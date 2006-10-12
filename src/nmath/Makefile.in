@@ -28,7 +28,7 @@ SOURCES = \
 	dunif.c punif.c qunif.c runif.c \
 	dnorm.c pnorm.c qnorm.c rnorm.c \
 	dlnorm.c plnorm.c qlnorm.c rlnorm.c \
-	df.c pf.c qf.c rf.c \
+	df.c pf.c qf.c rf.c dnf.c \
 	dt.c pt.c qt.c rt.c dnt.c \
 	dchisq.c pchisq.c qchisq.c rchisq.c rnchisq.c \
 	dbinom.c pbinom.c qbinom.c rbinom.c \
@@ -42,10 +42,10 @@ SOURCES = \
 	dweibull.c pweibull.c qweibull.c rweibull.c \
 	dlogis.c plogis.c qlogis.c rlogis.c \
 	dnchisq.c pnchisq.c qnchisq.c \
-	dnbeta.c pnbeta.c \
-	pnf.c pnt.c \
+	dnbeta.c pnbeta.c qnbeta.c \
+	pnf.c pnt.c qnf.c qnt.c \
 	ptukey.c qtukey.c \
-	wilcox.c \
+	toms708.c wilcox.c \
 	signrank.c
 ## </NOTE>
 DEPENDS = $(SOURCES:.c=.d)
@@ -57,18 +57,7 @@ DISTFILES = Makefile.in Makefile.win $(SOURCES) $(HEADERS)
 
 SUBDIRS_WITH_NO_BUILD = standalone
 
-noinst_LIBRARIES = libnmath.a
-libnmath_a_SOURCES = $(SOURCES)
-libnmath_a_OBJECTS = $(OBJECTS)
-
-## <FIXME>
-## We most likely will not want a separate shared library.
-## If we have a final decision, remove libnmath.la target.
-## </FIXME>
-noinst_LTLIBRARIES = libnmath.la
-libnmath_la_SOURCES = $(SOURCES)
-libnmath_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libnmath_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
+@WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
 all: Makefile Makedeps R
 
@@ -81,18 +70,16 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_FALSE@	@$(MAKE) $(noinst_LIBRARIES)
+@WANT_R_SHLIB_FALSE@	@$(MAKE) libnmath.a
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
-libnmath.a: $(libnmath_a_OBJECTS)
+libnmath.a: $(OBJECTS)
 	rm -rf $@
-	$(AR) cr $@ $(libnmath_a_OBJECTS)
+	$(AR) cr $@ $(OBJECTS)
 	$(RANLIB) $@
 
-stamp-lo: $(libnmath_la_OBJECTS)
+stamp-lo: $(OBJECTS)
 	@touch $@
-libnmath.la: stamp-lo
-	$(SHLIB_LINK) -o $@  $(libnmath_la_LDFLAGS) $(libnmath_la_OBJECTS)
 
 mostlyclean: clean
 clean:

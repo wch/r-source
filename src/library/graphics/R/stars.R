@@ -20,9 +20,9 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     if (is.data.frame(x))
 	x <- data.matrix(x)
     else if (!is.matrix(x))
-	stop("x must be a matrix or a data frame")
+	stop("'x' must be a matrix or a data frame")
     if (!is.numeric(x))
-	stop("data in x must be numeric")
+	stop("data in 'x' must be numeric")
 
     n.loc <- nrow(x)
     n.seg <- ncol(x)
@@ -38,7 +38,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
         locations <- expand.grid(ff * 1:ncol, ff * nrow:1)[1:n.loc, ]
         if(!is.null(labels) && (missing(flip.labels) ||
                                 !is.logical(flip.labels)))
-            flip.labels <- ncol * mean(nchar(labels)) > 30
+            flip.labels <- ncol * mean(nchar(labels, type="c")) > 30
     }
     else {
         if (is.numeric(locations) && length(locations) == 2) {
@@ -46,16 +46,16 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
             locations <- cbind(rep.int(locations[1],n.loc),
                                rep.int(locations[2],n.loc))
             if(!missing(labels) && n.loc > 1)
-                warning("labels don't make sense for a single location")
+                warning("labels do not make sense for a single location")
             else labels <- NULL
         }
         else {
             if (is.data.frame(locations))
                 locations <- data.matrix(locations)
             if (!is.matrix(locations) || ncol(locations) != 2)
-                stop("locations must be a 2-column matrix.")
+                stop("'locations' must be a 2-column matrix.")
             if (n.loc != nrow(locations))
-                stop("number of rows of locations and x must be equal.")
+                stop("number of rows of 'locations' and 'x' must be equal.")
         }
         if(missing(flip.labels) || !is.logical(flip.labels))
             flip.labels <- FALSE # have no grid
@@ -66,14 +66,14 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     ## clock-wise in equal increments.
     angles <-
 	if(full)
-	    seq(0, 2*pi, length=n.seg+1)[-(n.seg+1)]
+	    seq.int(0, 2*pi, length=n.seg+1)[-(n.seg+1)]
 	else if (draw.segments)
-	    seq(0, pi, length=n.seg+1)[-(n.seg+1)]
+	    seq.int(0, pi, length=n.seg+1)[-(n.seg+1)]
 	else
-	    seq(0, pi, length=n.seg)
+	    seq.int(0, pi, length=n.seg)
 
     if (length(angles) != n.seg)
-	stop("length(angles) must be the same as ncol(x)")
+	stop("length of 'angles' must equal 'ncol(x)'")
 
     ## Missing values are treated as 0
     if (scale) {
@@ -108,7 +108,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	for (i in 1:n.loc) { ## for each location, draw a segment diagram
 	    px <- py <- numeric()
 	    for (j in 1:n.seg) {
-		k <- seq(from = aangl[j], to = aangl[j+1], by = 1*deg)
+		k <- seq.int(from = aangl[j], to = aangl[j+1], by = 1*deg)
 		px <- c(px, xloc[i], s.x[i,j], x[i,j]*cos(k) + xloc[i], NA)
 		py <- c(py, yloc[i], s.y[i,j], x[i,j]*sin(k) + yloc[i], NA)
 	    }
@@ -145,7 +145,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	if (draw.segments) {
 	    px <- py <- numeric()
 	    for (j in 1:n.seg) {
-		k <- seq(from = aangl[j], to = aangl[j+1], by = 1*deg)
+		k <- seq.int(from = aangl[j], to = aangl[j+1], by = 1*deg)
 		px <- c(px, key.loc[1], key.x[j], len * cos(k) + key.loc[1], NA)
 		py <- c(py, key.loc[2], key.y[j], len * sin(k) + key.loc[2], NA)
 	    }

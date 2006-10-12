@@ -36,10 +36,8 @@ C(object, contr, how.many, \dots)
 \examples{
 ## reset contrasts to defaults
 options(contrasts=c("contr.treatment", "contr.poly"))
-attach(warpbreaks)
-tens <- C(tension, poly, 1)
+tens <- with(warpbreaks, C(tension, poly, 1))
 attributes(tens)
-detach()
 ## tension SHOULD be an ordered factor, but as it is not we can use
 aov(breaks ~ wool + tens + tension, data=warpbreaks)
 

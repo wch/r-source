@@ -6,7 +6,9 @@
   into a shared library using \code{R CMD SHLIB} and be loaded into R
   using \code{dyn.load()}.
 }
-\usage{R CMD COMPILE [options] srcfiles}
+\usage{
+\special{R CMD COMPILE [options] srcfiles}
+}
 \arguments{
   \item{srcfiles}{A list of the names of source files to be compiled.
     Currently, C, C++ and FORTRAN are supported; the corresponding files
@@ -21,8 +23,15 @@
   you need to convert it to FORTRAN.  On many Solaris systems mixing
   Ratfor and FORTRAN code will work.
 }
+\note{
+  Some binary distributions of \R have \code{COMPILE} in a separate
+  bundle, e.g. an \code{R-devel} RPM.
+}
 \seealso{
   \code{\link{SHLIB}},
-  \code{\link{dyn.load}}
+  \code{\link{dyn.load}};
+  the section on \dQuote{Customizing compilation under Unix} in
+  \dQuote{R Administration and Installation}
+  (see the \file{doc/manual} subdirectory of the \R source tree).  
 }
 \keyword{utilities}

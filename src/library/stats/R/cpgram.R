@@ -17,7 +17,7 @@ cpgram <- function(ts, taper=0.1,
 	n <- length(x)-1
 	y <- y[1:n]
 	x <- x[1:n]
-    } else y <- y[seq(along=x)]
+    } else y <- y[seq_along(x)]
     xm <- frequency(ts)/2
     mp <- length(x)-1
     crit <- 1.358/(sqrt(mp)+0.12+0.11/sqrt(mp))

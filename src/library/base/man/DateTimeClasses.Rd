@@ -31,6 +31,9 @@
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
 \alias{str.POSIXt}
+\alias{check_tzones}
+\alias{duplicated.POSIXlt}
+\alias{unique.POSIXlt}
 
 \title{Date-Time Classes}
 \description{
@@ -42,9 +45,9 @@
 
 \method{summary}{POSIXct}(object, digits = 15, \dots)
 
-time + number
-time - number
-time1 lop time2
+\special{time + z}
+\special{time - z}
+\special{time1 lop time2}
 }
 \arguments{
   \item{x, object}{An object to be printed or summarized from one of the
@@ -53,8 +56,11 @@ time1 lop time2
     should be high enough to represent the least important time unit
     exactly.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
-  \item{time, time1, time2}{date-time objects.}
-  \item{number}{a numeric object.}
+  \item{time}{date-time objects}
+  \item{time1, time2}{date-time objects or character vectors.  (Character
+    vectors are converted by \code{\link{as.POSIXct}}.}
+  \item{z}{a numeric vector (in seconds) \emph{or} an object of class
+    \code{"\link{difftime}"}.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
@@ -109,13 +115,14 @@ time1 lop time2
   \code{c(x)}).
 
   Unfortunately, the conversion is complicated by the operation of time
-  zones and leap seconds (22 days have been 86401 seconds long so far:
+  zones and leap seconds (23 days have been 86401 seconds long so far:
   the times of the extra seconds are in the object \code{.leap.seconds}).
   The details of this are entrusted to the OS services where possible.
   This will usually cover the period 1970--2037, and on Unix machines
   back to 1902 (when time zones were in their infancy).  Outside those
   ranges we use our own C code.  This uses the offset from GMT in use
-  in the timezone in 2000, and uses the alternate (daylight-saving)
+  in the timezone in one of 1970 to 1978 (chosen so that the likely DST
+  transition days are Sundays), and uses the alternate (daylight-saving)
   timezone only if \code{isdst} is positive.
 
   It seems that some systems use leap seconds but most do not. This is
@@ -126,6 +133,15 @@ time1 lop time2
 
   Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone.
+}
+\section{Sub-section Accuracy}{
+  Classes \code{"POSIXct"} and  \code{"POSIXlt"} are able to express
+  fractions of a second.
+  (Conversion of fractions between the two forms may not be exact, but
+  will have better than microsecond accuracy.)
+
+  Fractional seconds are printed only if
+  \code{\link{options}("digits.secs")} is set: see \code{\link{strftime}}.
 }
 \seealso{
   \link{Dates} for dates without times.
@@ -150,7 +166,7 @@ time1 lop time2
   Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
   set, yet have internal code that expects it (as does POSIX).  We have
   tried to work around this, but if you get unexpected results try
-  setting \code{"TZ"}.
+  setting \code{"TZ"}.  See \code{\link{as.POSIXlt}} for valid settings.
 }
 \examples{
 (z <- Sys.time())             # the current date, as class "POSIXct"
@@ -158,7 +174,7 @@ time1 lop time2
 Sys.time() - 3600             # an hour ago
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
-format(.leap.seconds)         # all 22 leapseconds in your timezone
+format(.leap.seconds)         # all 23 leapseconds in your timezone
 print(.leap.seconds, tz="PST8PDT")  # and in Seattle's
 }
 \keyword{utilities}

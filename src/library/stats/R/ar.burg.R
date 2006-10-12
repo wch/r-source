@@ -9,7 +9,7 @@ ar.burg.default <-
         stop("Burg's algorithm only implemented for univariate series")
     if (ists <- is.ts(x)) xtsp <- tsp(x)
     x <- na.action(as.ts(x))
-    if(any(is.na(x))) stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in 'x'")
     if (ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.vector(x)
@@ -20,15 +20,15 @@ ar.burg.default <-
     n.used <- length(x)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
     else floor(order.max)
-    if (order.max < 1) stop("order.max must be >= 1")
+    if (order.max < 1) stop("'order.max' must be >= 1")
     xaic <- numeric(order.max + 1)
-    z <- .C("burg",
+    z <- .C(R_burg,
             as.integer(n.used),
             as.double(x),
             as.integer(order.max),
             coefs=double(order.max^2),
             var1=double(1+order.max),
-            var2=double(1+order.max), PACKAGE="stats"
+            var2=double(1+order.max)
             )
     coefs <- matrix(z$coefs, order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1, 1))
@@ -53,7 +53,7 @@ ar.burg.default <-
                 series = series, frequency = xfreq, call = match.call())
     if(order > 0) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
-        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)]))*var.pred/n.used
+        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
     }
     class(res) <- "ar"
     return(res)

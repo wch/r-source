@@ -1,8 +1,7 @@
 include ../MkRules
 
-CFLAGS=-DWin32
+CFLAGS=-DWin32 -I../../include $(OPTFLAGS)
 LINKFLAGS=-s
-
 
 gl.a: getline.o
 

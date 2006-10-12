@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2003 R Development Core Team
+ *  Copyright (C) 1998-2006 R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* NOTE:
@@ -29,14 +29,7 @@
 extern "C" {
 #endif
 
-/*
-#define PARSE_NULL		0
-#define PARSE_OK		1
-#define PARSE_INCOMPLETE	2
-#define PARSE_ERROR		3
-#define PARSE_EOF		4
-*/
-
+/* PARSE_NULL will not be returned by R_ParseVector */
 typedef enum {
     PARSE_NULL,
     PARSE_OK,

@@ -21,7 +21,19 @@ is.character(x)
 \details{
   \code{as.character} and \code{is.character} are generic: you can
   write methods to handle specific classes of objects,
-  see \link{InternalMethods}.
+  see \link{InternalMethods}.  Further, for \code{as.character} the
+  default method calls \code{\link{as.vector}}, so dispatch is first on
+  methods for \code{as.character} and then for methods for \code{as.vector}.
+
+  \code{as.character} represents real and complex numbers to 15 decimal
+  places (technically the compiler's setting of the ISO C constant
+  \code{DBL_DIG}, which will be 15 on machines supporting IEC60559
+  arithmetic according to the C99 standard).  This ensures that all the
+  digits in the result will be reliable (and not the result of
+  representation error), but does mean that coversion to character and
+  back to numeric may change the number.  If you want to convert numbers
+  to character with the maximum possible precision, use
+  \code{\link{format}}.
 }
 \value{
   \code{character} creates a character vector of the specified length.
@@ -29,9 +41,14 @@ is.character(x)
 
   \code{as.character} attempts to coerce its argument to character type;
   like \code{\link{as.vector}} it strips attributes including names.
+  For lists it deparses the elements individually, except that it
+  extracts the first element of length-one character vectors.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of character type or not.
+  whether its argument is of character type or not.  (Methods should
+  always return \code{FALSE} for classes which are not based on a
+  character vector, but can return \code{FALSE} even for those which
+  are.)
 }
 \note{
   \code{as.character} truncates components of language objects to 500
@@ -57,6 +74,14 @@ is.character(x)
 form <- y ~ a + b + c
 as.character(form)  ## length 3
 deparse(form)       ## like the input
+
+a0 <- 11/999          # has a repeating decimal representation
+(a1 <- as.character(a0))
+format(a0, digits=16) # shows one more digit
+a2 <- as.numeric(a1)
+a2 - a0               # normally around -1e-17
+as.character(a2)      # normally different from a1
+print(c(a0, a2), digits = 16)
 }
 \keyword{character}
 \keyword{classes}

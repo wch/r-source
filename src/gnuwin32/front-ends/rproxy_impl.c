@@ -1,6 +1,7 @@
-/*
+/*******************************************************************************
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999--2001 Thomas Baier
+ *  Copyright (C) 1999--2006 Thomas Baier
+ *  Copyright 2006 R Development Core Team
  *
  *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--2000
  *                                  R Development Core Team
@@ -18,59 +19,38 @@
  *
  *  You should have received a copy of the GNU Library General Public
  *  License along with this library; if not, write to the Free
- *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
- *  MA 02111-1307, USA
+ *  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *  MA 02110-1301, USA.
  *
- *  $Id: rproxy_impl.c,v 1.24 2004/06/09 13:35:32 ripley Exp $
- */
+ ******************************************************************************/
 
-#define NONAMELESSUNION
 #include <windows.h>
-#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-/*#include "globalvar.h"
-#undef CharacterMode
-#undef R_Interactive*/
+
 #include <config.h>
+
+# include <Rinternals.h>
 #include <Rversion.h>
-#include <Startup.h>
-#include "bdx.h"
+#include <Rembedded.h>
+#include <R_ext/RStartup.h>
+#include <R_ext/GraphicsDevice.h>
+#include <graphapp.h>
+
+#include "bdx_SEXP.h"
+#include "bdx_util.h"
 #include "SC_proxy.h"
+#include "rproxy.h"
 #include "rproxy_impl.h"
-#include <IOStuff.h>
-#include <Parse.h>
-#include <Graphics.h>
 
-struct _R_Proxy_init_parameters
-{
-  int vsize;
-  int vsize_valid;
-  int nsize;
-  int nsize_valid;
-};
+# include <R_ext/Parse.h>
 
-/* 01-12-07 | baier | no more extern for exported variables (crashes!) */
-/*#define R_GlobalEnv (*__imp_R_GlobalEnv)
-#define R_Visible (*__imp_R_Visible)
-#define R_EvalDepth (*__imp_R_EvalDepth)
-#define R_DimSymbol (*__imp_R_DimSymbol)*/
+#define TRCBUFSIZE 2048
 
-/*
-extern SEXP R_GlobalEnv;
-extern int R_Visible;
-extern int R_EvalDepth;
-extern SEXP R_DimSymbol;
-*/
+struct _R_Proxy_init_parameters g_R_Proxy_init_parameters = { 0 };
 
 /* calls into the R DLL */
-extern char *getDLLVersion();
-extern void R_DefParams(Rstart);
-extern void R_SetParams(Rstart);
-extern void setup_term_ui(void);
 extern char *getRHOME();
-extern void end_Rmainloop(), R_ReplDLLinit();
-extern void askok(char *);
 
 int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     char* pDisplay,
@@ -81,276 +61,53 @@ int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 extern SC_CharacterDevice* __output_device;
 
 /* trace to DebugView */
-int RPROXYTRACE(char const* pFormat,...);
-
-int RPROXYTRACE(char const* pFormat,...)
+int R_Proxy_printf(char const* pFormat,...)
 {
-  static char __tracebuf[2048];
+  static char __tracebuf[TRCBUFSIZE];
 
   va_list lArgs;
-  va_start(lArgs,pFormat);
-  vsprintf(__tracebuf,pFormat,lArgs);
+  va_start(lArgs, pFormat);
+  vsnprintf(__tracebuf,TRCBUFSIZE, pFormat, lArgs);
   OutputDebugString(__tracebuf);
   return 0;
 }
 
-static int s_EvalInProgress = 0;
-
-void R_Proxy_askok (char* pMsg)
+static void R_Proxy_askok (char* pMsg)
 {
   askok(pMsg);
   return;
 }
 
-int R_Proxy_askyesnocancel (char* pMsg)
+static int R_Proxy_askyesnocancel (char* pMsg)
 {
-  return 1;
+  return YES;
 }
 
-int R_Proxy_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
+static int 
+R_Proxy_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
   return 0;
 }
 
-void R_Proxy_WriteConsole(char *buf, int len)
+static void R_Proxy_WriteConsole(char *buf, int len)
 {
-  if (__output_device)
-    {
-      __output_device->vtbl->write_string (__output_device,buf);
-    }
+  if (__output_device) {
+    __output_device->vtbl->write_string (__output_device,buf);
+  }
 }
 
-void R_Proxy_CallBack()
+static void R_Proxy_CallBack()
 {
     /* called during i/o, eval, graphics in ProcessEvents */
 }
 
-void R_Proxy_Busy(int which)
+static void R_Proxy_Busy(int which)
 {
     /* set a busy cursor ... in which = 1, unset if which = 0 */
 }
 
-
-int SEXP2BDX_Data (SEXP pExpression,BDX_Data** pData)
-{
-  BDX_Data* lData = 0;
-
-  /* allocate buffer */
-  lData = (BDX_Data*) malloc (sizeof (BDX_Data));
-  *pData = lData;
-  assert (*pData != NULL);
-
-  /*
-   * we support the following types at the moment
-   *
-   *  integer (scalar, vectors and arrays)
-   *  real (scalars, vectors and arrays)
-   *  logical (scalars, vectors and arrays)
-   *  string (scalars, vectors and arrays)
-   *  null
-   *
-   * we should support soon
-   *
-   *  complex vectors
-   *  generic vectors
-   */
-  switch (TYPEOF (pExpression))
-    {
-    case NILSXP	 :
-      lData->type = BDX_NULL;
-
-      /* dimensions: 1 */
-      lData->dim_count = 1;
-      lData->dimensions =
-	(BDX_Dimension*) malloc (sizeof (BDX_Dimension));
-      lData->dimensions[0] = 0;
-
-      /* data: empty (just a dummy data record) */
-      lData->raw_data =
-	(BDX_RawData*) malloc (sizeof (BDX_RawData));
-
-      /*      UNPROTECT (1); */
-
-      return SC_PROXY_OK;
-
-      break;
-    case LGLSXP	 :
-      lData->type = BDX_BOOL;
-      break;
-    case INTSXP	 :
-      lData->type = BDX_INT;
-      break;
-    case REALSXP	 :
-      lData->type = BDX_DOUBLE;
-      break;
-    case STRSXP	 :
-      lData->type = BDX_STRING;
-      break;
-      /*
-       case VECSXP	 : printf ("type: generic vectors\n");
-       break;
-       case CPLXSXP	 : printf ("type: complex variables\n");
-       break;
-      */
-    default:
-      /*      UNPROTECT (1); */
-      free (lData);
-      *pData = NULL;
-      return SC_PROXY_ERR_UNSUPPORTEDTYPE;
-    }
-
-  /* the type is set now. NULL values have already returned */
-
-  /* is it a scalar, a vector or an array? */
-
-  /* bug: no dimensions stored */
-  if (LENGTH (pExpression) == 0)
-    {
-      free (lData);
-      *pData = NULL;
-      return SC_PROXY_ERR_UNKNOWN;
-    }
-
-  /* scalar: length 1 */
-  if (LENGTH (pExpression) == 1)
-    {
-      lData->type |= BDX_SCALAR;
-      lData->dim_count = 1;
-      lData->dimensions =
-	(BDX_Dimension*) malloc (sizeof (BDX_Dimension));
-      lData->dimensions[0] = 1;
-      lData->raw_data =
-	(BDX_RawData*) malloc (sizeof (BDX_RawData));
-      switch (lData->type & BDX_SMASK)
-	{
-	case BDX_BOOL:
-	  lData->raw_data[0].bool_value = LOGICAL (pExpression)[0];
-	  break;
-	case BDX_INT:
-	  lData->raw_data[0].int_value = INTEGER (pExpression)[0];
-	  break;
-	case BDX_DOUBLE:
-	  lData->raw_data[0].double_value = REAL (pExpression)[0];
-	  break;
-	case BDX_STRING:
-	  lData->raw_data[0].string_value = strdup (CHAR (STRING_ELT(pExpression, 0)));
-	  break;
-	}
-    }
-  else
-    {
-      /* is it a vector or an array? */
-      SEXP lDimension;
-
-      lDimension = getAttrib (pExpression,R_DimSymbol);
-
-      PROTECT (lDimension);
-
-      if (TYPEOF (lDimension) == NILSXP)
-	{
-	  /* vector */
-	  int i;
-
-	  lData->type |= BDX_VECTOR;
-	  lData->dim_count = 1;
-	  lData->dimensions =
-	    (BDX_Dimension*) malloc (sizeof (BDX_Dimension));
-	  lData->dimensions[0] = LENGTH (pExpression);
-	  lData->raw_data =
-	    (BDX_RawData*) malloc (sizeof (BDX_RawData)
-				   * lData->dimensions[0]);
-
-	  /* copy the data */
-	  for (i = 0; i < lData->dimensions[0];i++)
-	    {
-	      switch (lData->type & BDX_SMASK)
-		{
-		case BDX_BOOL:
-		  lData->raw_data[i].bool_value = LOGICAL (pExpression)[i];
-		  break;
-		case BDX_INT:
-		  lData->raw_data[i].int_value = INTEGER (pExpression)[i];
-		  break;
-		case BDX_DOUBLE:
-		  lData->raw_data[i].double_value = REAL (pExpression)[i];
-		  break;
-		case BDX_STRING:
-		  lData->raw_data[i].string_value = strdup (CHAR (STRING_ELT(pExpression, i)));
-		  break;
-		}
-	    }
-
-	  UNPROTECT (1); /* dimension */
-
-	  return SC_PROXY_OK;
-	}
-      else
-	{
-	  /* array with LENGTH(lDimension) dimensions */
-	  if (TYPEOF (lDimension) == INTSXP)
-	    {
-	      int i;
-	      int lTotalSize = 1;
-
-	      lData->type |= BDX_ARRAY;
-	      lData->dim_count = LENGTH (lDimension);
-
-	      lData->dimensions =
-		(BDX_Dimension*) malloc (sizeof (BDX_Dimension)
-					 * lData->dim_count);
-
-	      /* compute the total number of data elements */
-	      for (i = 0;i < lData->dim_count;i++)
-		{
-		  lData->dimensions[i] = INTEGER (lDimension)[i];
-		  lTotalSize *= lData->dimensions[i];
-		}
-
-	      lData->raw_data =
-		(BDX_RawData*) malloc (sizeof (BDX_RawData)
-				       * lTotalSize);
-
-	      /* copy the data */
-	      for (i = 0; i < lTotalSize;i++)
-		{
-		  switch (lData->type & BDX_SMASK)
-		    {
-		    case BDX_BOOL:
-		      lData->raw_data[i].bool_value = LOGICAL (pExpression)[i];
-		      break;
-		    case BDX_INT:
-		      lData->raw_data[i].int_value = INTEGER (pExpression)[i];
-		      break;
-		    case BDX_DOUBLE:
-		      lData->raw_data[i].double_value = REAL (pExpression)[i];
-		      break;
-		    case BDX_STRING:
-		      lData->raw_data[i].string_value = strdup (CHAR (STRING_ELT(pExpression, i)));
-		      break;
-		    }
-		}
-
-	      UNPROTECT (1); /* dimension */
-
-	      return SC_PROXY_OK;
-	    }
-	  else
-	    {
-	      /* unknown error */
-	      free (lData);
-	      *pData = NULL;
-
-	      UNPROTECT (1); /* dimension */
-
-	      return SC_PROXY_ERR_UNKNOWN;
-	    }
-	}
-    }
-
-  return SC_PROXY_OK;
-}
-
 /* 00-02-18 | baier | parse parameter string and fill parameter structure */
+/* 06-06-18 | baier | parse parameter "dm" */
 int R_Proxy_parse_parameters (char const* pParameterString,
 			      struct _R_Proxy_init_parameters* pParameterStruct)
 {
@@ -359,19 +116,65 @@ int R_Proxy_parse_parameters (char const* pParameterString,
    *
    * currently recognized parameter names (case-sensitive):
    *
-   *   NSIZE ... number of cons cells, (unsigned int) parameter
-   *   VSIZE ... size of vector heap, (unsigned int) parameter
+   *   (obsolete) NSIZE ... number of cons cells, (unsigned int) parameter
+   *   (obsolete) VSIZE ... size of vector heap, (unsigned int) parameter
+   *   dm ...... data mode (unsigned long, see below)
    */
   int lDone = 0;
-#if 0
   char const* lParameterStart = pParameterString;
   int lIndexOfSemicolon = 0;
   char* lTmpBuffer = NULL;
   char* lPosOfSemicolon = NULL;
-#endif
 
-  while (!lDone)
-    {
+  RPROXY_TRACE(printf("R_Proxy_parse_parameters(\"%s\")\n",pParameterString));
+
+  while (!lDone) {
+    /*
+     * dm: data mode?
+     * --------------
+     *
+     *   0 ... default data transfer mode
+     *   1 ... read +Inf and -Inf in double representation
+     */
+    if(strncmp (lParameterStart,"dm=",3) == 0) {
+      RPROXY_TRACE(printf("param dm found, parsing\n"));
+      lParameterStart += 3;
+      
+      lPosOfSemicolon = strchr (lParameterStart,';');
+      lIndexOfSemicolon = lPosOfSemicolon - lParameterStart;
+      
+      if (lPosOfSemicolon) {
+	lTmpBuffer = malloc (lIndexOfSemicolon + 1); /* to catch NSIZE=; */
+	strncpy (lTmpBuffer,lParameterStart,lIndexOfSemicolon);
+	*(lTmpBuffer + lIndexOfSemicolon) = 0x0;
+	bdx_set_datamode(atol(lTmpBuffer));
+	if(pParameterStruct) {
+	  pParameterStruct->dm = atol (lTmpBuffer);
+	}
+	free (lTmpBuffer);
+	lParameterStart += lIndexOfSemicolon + 1;
+      } else {
+	bdx_set_datamode(atol(lParameterStart));
+	if(pParameterStruct) {
+	  pParameterStruct->dm = atol(lParameterStart);
+	}
+	lDone = 1;
+      }
+    } else if (strncmp (lParameterStart,"REUSER",6) == 0) {
+      if(pParameterStruct) {
+	pParameterStruct->reuseR = 1;
+      }
+      lParameterStart = lParameterStart + 6;
+      if(*lParameterStart == ';') {
+	lParameterStart++;
+      }
+      RPROXY_TRACE(printf("param REUSER, rest is \"%s\"\n",
+			  lParameterStart));
+    } else {
+      lDone = 1;
+    }
+  }
+
 #if 0
       /* NSIZE? */
       if (strncmp (lParameterStart,"NSIZE=",6) == 0)
@@ -387,14 +190,14 @@ int R_Proxy_parse_parameters (char const* pParameterString,
 	      strncpy (lTmpBuffer,lParameterStart,lIndexOfSemicolon);
 	      *(lTmpBuffer + lIndexOfSemicolon) = 0x0;
 	      pParameterStruct->nsize_valid = 1;
-	      pParameterStruct->nsize = atoi (lTmpBuffer);
+	      pParameterStruct->nsize = atoi(lTmpBuffer);
 	      free (lTmpBuffer);
 	      lParameterStart += lIndexOfSemicolon + 1;
 	    }
 	  else
 	    {
 	      pParameterStruct->nsize_valid = 1;
-	      pParameterStruct->nsize = atoi (lParameterStart);
+	      pParameterStruct->nsize = atoi(lParameterStart);
 	      lDone = 1;
 	    }
 	}
@@ -422,35 +225,30 @@ int R_Proxy_parse_parameters (char const* pParameterString,
 	      lDone = 1;
 	    }
 	}
-      else
 #endif
-	{
-	  lDone = 1;
-	}
-    }
 
   return 0;
 }
 
-#include "../shext.h" /* for ShellGetPersonalDirectory */
-
 /* 00-02-18 | baier | R_Proxy_init() now takes parameter string, parse it */
 /* 03-06-01 | baier | now we add %R_HOME%\bin to %PATH% */
+/* 06-06-18 | baier | parameter parsing enabled in parent function */
 int R_Proxy_init (char const* pParameterString)
 {
   structRstart rp;
   Rstart Rp = &rp;
   char Rversion[25];
-  static char RUser[MAX_PATH], RHome[MAX_PATH];
-  char *p, *q;
+  static char RHome[MAX_PATH];
 
-  sprintf(Rversion, "%s.%s", R_MAJOR, R_MINOR);
-  if(strcmp(getDLLVersion(), Rversion) != 0) {
+  snprintf(Rversion, 25, "%s.%s", R_MAJOR, R_MINOR);
+  if(strncmp(getDLLVersion(), Rversion, 25) != 0) {
     fprintf(stderr, "Error: R.DLL version does not match\n");
     return SC_PROXY_ERR_UNKNOWN;
   }
 
   R_DefParams(Rp);
+
+  /* <FIXME> the documented interface is get_R_HOME() */
 
   /* first, try process-local environment space (CRT) */
   if (getenv("R_HOME")) {
@@ -466,420 +264,130 @@ int R_Proxy_init (char const* pParameterString)
   /* now we add %R_HOME%\bin to %PATH% (for dynamically loaded modules there) */
   {
     char buf[2048];
-    sprintf(buf,"PATH=%s\\bin;%s",RHome,getenv("PATH"));
+    snprintf(buf, 2048, "PATH=%s\\bin;%s",RHome,getenv("PATH"));
     putenv(buf);
   }
 
   Rp->rhome = RHome;
-/*
- * try R_USER then HOME then Windows homes then working directory
- */
-
-    if ((p = getenv("R_USER"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
-	strcpy(RUser, p);
-    } else if ((p = getenv("HOME"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
-	strcpy(RUser, p);
-    } else if (ShellGetPersonalDirectory(RUser)) {
-	/* nothing to do */;
-    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
-	strcpy(RUser, p);
-	if(strlen(RUser) + strlen(q) >= MAX_PATH)
-	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
-	strcat(RUser, q);
-    } else {
-	GetCurrentDirectory(MAX_PATH, RUser);
-    }
-
-  p = RUser + (strlen(RUser) - 1);
-
-  if (*p == '/' || *p == '\\') *p = '\0';
-  Rp->home = RUser;
+  Rp->home = getRUser();
   Rp->CharacterMode = LinkDLL;
   Rp->ReadConsole = R_Proxy_ReadConsole;
   Rp->WriteConsole = R_Proxy_WriteConsole;
   Rp->CallBack = R_Proxy_CallBack;
-  Rp->message = R_Proxy_askok;
-
-  Rp->yesnocancel = R_Proxy_askyesnocancel;
-  Rp->busy = R_Proxy_Busy;
+  Rp->ShowMessage = R_Proxy_askok;
+  Rp->YesNoCancel = R_Proxy_askyesnocancel;
+  Rp->Busy = R_Proxy_Busy;
   Rp->R_Quiet = 1;
-#if 1
-  /* run as "interactive", so server won't be killed after an error */
-  Rp->R_Slave = Rp->R_Verbose = 0;
-  Rp->R_Interactive = 1;
-#else
-  Rp->R_Slave = Rp->R_Interactive = Rp->R_Verbose = 0;
-#endif
-  Rp->RestoreAction = 0; /* no restore */
-  Rp->SaveAction = 2;    /* no save */
-
-/*  Rp->nsize = 300000;
-    Rp->vsize = 6e6;*/
-  R_SetParams(Rp); /* so R_ShowMessage is set */
-  R_SizeFromEnv(Rp);
-  R_set_command_line_arguments(0, NULL);
-
-  /* parse parameters */
-#if 0
-  {
-    struct _R_Proxy_init_parameters lParameterStruct =
-    {
-      0,0,0,0
-    };
-
-    R_Proxy_parse_parameters (pParameterString,&lParameterStruct);
-
-    if (lParameterStruct.nsize_valid)
-      {
-	Rp->nsize = lParameterStruct.nsize;
-      }
-    if (lParameterStruct.vsize_valid)
-      {
-	Rp->vsize = lParameterStruct.vsize;
-      }
-  }
-#endif
+  Rp->RestoreAction = SA_NORESTORE;
+  Rp->SaveAction = SA_NOSAVE; /* had 2, with comment 'no save' which is 3 */
 
   R_SetParams(Rp);
+  R_set_command_line_arguments(0, NULL);
 
-  setup_term_ui();
+  GA_initapp(0, 0);
+  readconsolecfg();
   setup_Rmainloop();
   R_ReplDLLinit();
 
   return SC_PROXY_OK;
 }
 
-/* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
-int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
+int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
 {
-  SEXP rho = R_GlobalEnv;
-  IoBuffer lBuffer;
-  SEXP lSexp;
-  int lRc;
-  ParseStatus lStatus;
-  SEXP lResult;
+    SEXP lSexp;
+    int lRc = SC_PROXY_OK, evalError = 0;
+    ParseStatus lStatus;
+    SEXP lResult;
 
-  /* for SETJMP/LONGJMP */
-  s_EvalInProgress = 0;
+    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus);
+    /* This is an EXPRSXP: we assume just one expression */
 
-  R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pCmd,&lBuffer);
-  R_IoBufferPuts ("\n",&lBuffer);
-
-  /* don't generate code, just a try */
-  R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer,0,&lStatus);
-
-  switch (lStatus)
-    {
-    case PARSE_NULL:
-      /* we forget the IoBuffer "lBuffer", so don't do anything here */
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
+    switch (lStatus) {
     case PARSE_OK:
-      /* now generate code */
-      R_IoBufferReadReset (&lBuffer);
-      lSexp = R_Parse1Buffer (&lBuffer,1,&lStatus);
-      R_Visible = 0;
-      R_EvalDepth = 0;
-      PROTECT(lSexp);
-      {
-	SETJMP (R_Toplevel.cjmpbuf);
-	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-
-	if (!s_EvalInProgress)
-	  {
-	    s_EvalInProgress = 1;
-	    lResult = eval (lSexp,rho);
-	    s_EvalInProgress = 0;
-	  }
-	else
-	  {
-	    return SC_PROXY_ERR_EVALUATE_STOP;
-	  }
-      }
-      lRc = SEXP2BDX_Data (lResult,pData);
-      /* no last value */
-      UNPROTECT(1);
-      break;
-    case PARSE_ERROR:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
+	PROTECT(lSexp);
+	lResult = R_tryEval(VECTOR_ELT(lSexp, 0), R_GlobalEnv, &evalError);
+	UNPROTECT(1);
+	if(evalError) lRc = SC_PROXY_ERR_EVALUATE_STOP;
+	else lRc = SEXP2BDX(lResult, pData);
+	break;
     case PARSE_INCOMPLETE:
-      lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
-      break;
-    case PARSE_EOF:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
+	lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
+	break;
     default:
-      /* never reached */
-      lRc = SC_PROXY_ERR_UNKNOWN;
-      break;
+	lRc = SC_PROXY_ERR_PARSE_INVALID;
+	break;
     }
-
-  return lRc;
+    return lRc;
 }
 
-/* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
 int R_Proxy_evaluate_noreturn (char const* pCmd)
 {
-  SEXP rho = R_GlobalEnv;
-  IoBuffer lBuffer;
-  SEXP lSexp;
-  int lRc;
-  ParseStatus lStatus;
+    SEXP lSexp;
+    int lRc = SC_PROXY_OK, evalError = 0;
+    ParseStatus lStatus;
+    SEXP lResult;
 
-  /* for SETJMP/LONGJMP */
-  s_EvalInProgress = 0;
-
-  R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pCmd,&lBuffer);
-  R_IoBufferPuts ("\n",&lBuffer);
-
-  /* don't generate code, just a try */
-  R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer,0,&lStatus);
-
-  switch (lStatus)
-    {
-    case PARSE_NULL:
-      /* we forget the IoBuffer "lBuffer", so don't do anything here */
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
+    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus);
+    /* It would make sense to allow multiple expressions here */
+  
+    switch (lStatus) {
     case PARSE_OK:
-      /* now generate code */
-      R_IoBufferReadReset (&lBuffer);
-      lSexp = R_Parse1Buffer (&lBuffer,1,&lStatus);
-      R_Visible = 0;
-      R_EvalDepth = 0;
-      PROTECT(lSexp);
-      /* at the moment, discard the result of the eval */
-      {
-	SETJMP (R_Toplevel.cjmpbuf);
-	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-
-	if (!s_EvalInProgress)
-	  {
-	    s_EvalInProgress = 1;
-	    eval (lSexp,rho);
-	    s_EvalInProgress = 0;
-	  }
-	else
-	  {
-	    return SC_PROXY_ERR_EVALUATE_STOP;
-	  }
-      }
-      /* no last value */
-      UNPROTECT(1);
-      lRc = SC_PROXY_OK;
-      break;
-    case PARSE_ERROR:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
+	PROTECT(lSexp);
+	lResult = R_tryEval(VECTOR_ELT(lSexp, 0), R_GlobalEnv, &evalError);
+	UNPROTECT(1);
+	if(evalError) lRc = SC_PROXY_ERR_EVALUATE_STOP;
+	else lRc = SC_PROXY_OK;
+	break;
     case PARSE_INCOMPLETE:
-      lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
-      break;
-    case PARSE_EOF:
-      lRc = SC_PROXY_ERR_PARSE_INVALID;
-      break;
+	lRc = SC_PROXY_ERR_PARSE_INCOMPLETE;
+	break;
     default:
-      /* never reached */
-      lRc = SC_PROXY_ERR_UNKNOWN;
-      break;
+	lRc = SC_PROXY_ERR_PARSE_INVALID;
+	break;
     }
-
-  return lRc;
+    return lRc;
 }
 
-int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData)
+int R_Proxy_get_symbol (char const* pSymbol, BDX_Data** pData)
 {
-  IoBuffer lBuffer;
-  SEXP lSexp;
-  SEXP lVar;
-  ParseStatus lStatus;
+    SEXP lVar = findVar (install((char*) pSymbol), R_GlobalEnv);
 
-  R_IoBufferInit (&lBuffer);
-  R_IoBufferPuts ((char*) pSymbol,&lBuffer);
-  R_IoBufferPuts ("\n",&lBuffer);
-
-  /* don't generate code, just a try */
-  R_IoBufferReadReset (&lBuffer);
-  lSexp = R_Parse1Buffer (&lBuffer,0,&lStatus);
-
-  if (lStatus == PARSE_OK)
-    {
-      /* now generate code */
-      R_IoBufferReadReset (&lBuffer);
-      lSexp = R_Parse1Buffer (&lBuffer,1,&lStatus);
-      R_Visible = 0;
-      R_EvalDepth = 0;
-      PROTECT(lSexp);
-
-      /* check for valid symbol... */
-      if (TYPEOF (lSexp) != SYMSXP)
-	{
-	  printf (">> %s is not a symbol\n",pSymbol);
-	  UNPROTECT (1);
-	  return SC_PROXY_ERR_INVALIDSYMBOL;
-	}
-
-      lVar = findVar (lSexp,R_GlobalEnv);
-
-      if (lVar == R_UnboundValue)
-	{
-	  printf (">> %s is an unbound value\n",pSymbol);
-	  UNPROTECT (1);
-	  return SC_PROXY_ERR_INVALIDSYMBOL;
-	}
-
-      {
-	int lRc = SEXP2BDX_Data (lVar,pData);
-	UNPROTECT (1);
-
-	return lRc;
-      }
-    }
-
-  return SC_PROXY_OK;
+    if (lVar == R_UnboundValue) {
+	RPROXY_TRACE(printf(">> %s is an unbound value\n", pSymbol));
+	return SC_PROXY_ERR_INVALIDSYMBOL;
+    } else if(SEXP2BDX(lVar, pData) == 0)
+	return SC_PROXY_OK;
+    else
+	return SC_PROXY_ERR_UNSUPPORTEDTYPE;
 }
 
-/* 04-02-19 | baier | don't PROTECT strings in a vector */
+/* 04-02-19 | baier | don't PROTECT strings in a vector, new data structs */
 /* 04-03-02 | baier | removed traces */
-int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
+/* 04-10-15 | baier | no more BDX_VECTOR (only BDX_ARRAY) */
+/* 05-05-16 | baier | use BDX2SEXP, clean-up */
+int R_Proxy_set_symbol (char const* pSymbol, BDX_Data const* pData)
 {
   SEXP lSymbol = 0;
   SEXP lData = 0;
-  int lProtectCount = 1;
-  int lRet = SC_PROXY_OK;
 
-  switch (pData->type & BDX_CMASK)
-    {
-      /* scalar? */
-    case BDX_SCALAR:
-      {
-	switch (pData->type & BDX_SMASK)
-	  {
-	  case BDX_BOOL:
-	    lData = PROTECT (allocVector (LGLSXP,1));
-	    LOGICAL(lData)[0] = pData->raw_data[0].bool_value;
-	    break;
-	  case BDX_INT:
-	    lData = PROTECT (allocVector (INTSXP,1));
-	    INTEGER(lData)[0] = pData->raw_data[0].int_value;
-	    break;
-	  case BDX_DOUBLE:
-	    lData = PROTECT (allocVector (REALSXP,1));
-	    REAL(lData)[0] = pData->raw_data[0].double_value;
-	    break;
-	  case BDX_STRING:
-	    {
-	      SEXP lStringSExp =
-		allocString (strlen (pData->raw_data[0].string_value));
-	      PROTECT (lStringSExp); lProtectCount++;
-	      strcpy (CHAR(lStringSExp),pData->raw_data[0].string_value);
-	      lData = PROTECT (allocVector (STRSXP,1));
-	      SET_STRING_ELT(lData, 0, lStringSExp);
-	    }
-	    break;
-	  default:
-	    lRet = SC_PROXY_ERR_UNSUPPORTEDTYPE;
-	  }
-      }
-
-      break;
-      /* vectors or arrays */
-    case BDX_VECTOR:
-    case BDX_ARRAY:
-      {
-	/* allocate a dimensions vector */
-	SEXP lDimensions;
-	unsigned int i;
-	unsigned int lTotalSize = 1;
-
-	PROTECT (lDimensions = allocVector (INTSXP,pData->dim_count));
-	lProtectCount++;
-
-	for (i = 0;i < pData->dim_count;i++)
-	  {
-	    INTEGER (lDimensions)[i] = pData->dimensions[i];
-	    lTotalSize *= pData->dimensions[i];
-	  }
-
-	switch (pData->type & BDX_SMASK)
-	  {
-	  case BDX_BOOL:
-	    lData = PROTECT (allocVector (LGLSXP,lTotalSize));
-	    setAttrib (lData,R_DimSymbol,lDimensions);
-
-	    for (i = 0;i < lTotalSize;i++)
-	      {
-		LOGICAL(lData)[i] = pData->raw_data[i].bool_value;
-	      }
-	    break;
-	  case BDX_INT:
-	    lData = PROTECT (allocVector (INTSXP,lTotalSize));
-	    setAttrib (lData,R_DimSymbol,lDimensions);
-
-	    for (i = 0;i < lTotalSize;i++)
-	      {
-		INTEGER(lData)[i] = pData->raw_data[i].int_value;
-	      }
-	    break;
-	  case BDX_DOUBLE:
-	    lData = PROTECT (allocVector (REALSXP,lTotalSize));
-	    setAttrib (lData,R_DimSymbol,lDimensions);
-
-	    for (i = 0;i < lTotalSize;i++)
-	      {
-		REAL(lData)[i] = pData->raw_data[i].double_value;
-	      }
-	    break;
-	  case BDX_STRING:
-	    {
-	      lData = PROTECT (allocVector (STRSXP,lTotalSize));
-	      setAttrib (lData,R_DimSymbol,lDimensions);
-
-	      for (i = 0;i < lTotalSize;i++)
-		{
-		  SEXP lStringSExp;
-		  lStringSExp =
-		    allocString (strlen (pData->raw_data[i].string_value));
-		  strcpy (CHAR(lStringSExp),pData->raw_data[i].string_value);
-		  SET_STRING_ELT(lData, i, lStringSExp);
-		}
-	    }
-	    break;
-	  default:
-	    lRet = SC_PROXY_ERR_UNSUPPORTEDTYPE;
-	  }
-      }
-      break;
-    default:
-      lRet = SC_PROXY_ERR_UNSUPPORTEDTYPE;
-    }
-
-  if (lRet != SC_PROXY_OK)
-    {
-      return lRet;
-    }
+  if(BDX2SEXP(pData,&lData) != 0) {
+    return SC_PROXY_ERR_UNSUPPORTEDTYPE;
+  }
+  /*  RPROXY_TRACE(printf("ok BDX2SEXP\n")); */
 
   /* install a new symbol or get the existing symbol */
   lSymbol = install ((char*) pSymbol);
 
   /* and set the data to the symbol */
-  setVar(lSymbol,lData,R_GlobalEnv);
-
-  UNPROTECT (lProtectCount);
+  setVar(lSymbol, lData, R_GlobalEnv);
 
   return SC_PROXY_OK;
 }
 
 int R_Proxy_term ()
 {
-  end_Rmainloop();
+  /* end_Rmainloop(); note, this never returns */
+  Rf_endEmbeddedR(0);
 
   return SC_PROXY_OK;
 }

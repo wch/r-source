@@ -14,26 +14,26 @@
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-        bg = "transparent", canvas = "white", gamma = getOption("gamma"),
-        xpos = NA, ypos = NA, buffered = getOption("windowsBuffered"))
+        bg = "transparent", canvas = "white",
+        gamma = getOption("gamma"), xpos = NA, ypos = NA,
+        buffered = getOption("windowsBuffered"),
+        restoreConsole = FALSE)
 
-win.graph(width = 7, height = 7, pointsize = 12)
-x11(width = 7, height = 7, pointsize = 12)
-X11(width = 7, height = 7, pointsize = 12)
-win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
-win.print(width = 7, height = 7, pointsize = 12, printer = "")
+win.graph(width = 7, height = 7, pointsize = 12,
+          restoreConsole = FALSE)
+x11(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
+X11(width = 7, height = 7, pointsize = 12, restoreConsole = FALSE)
+
+win.metafile(filename = "", width = 7, height = 7, pointsize = 12,
+             restoreConsole = TRUE)
+
+win.print(width = 7, height = 7, pointsize = 12, printer = "",
+          restoreConsole = TRUE)
 }
 
 \arguments{
-  \item{filename}{the name of the output file: it will be an enhanced
-    Windows metafile, usually given extension \code{.emf} or
-    \code{.wmf}. Up to 511 characters are allowed.
-    The page number is substituted if an integer format is included
-    in the character string. (The result must be less than 600
-    characters long.)  The default, \code{""}, means the clipboard.
-  }
-  \item{width}{the (nominal) width of the plotting window in inches.}
-  \item{height}{the (nominal) height of the plotting window in inches.}
+  \item{width, height}{the (nominal) width and height of the canvas of
+    the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text. The allowed
     range is \code{[6, 48]}: values outside that range are reset to 12.}
   \item{record}{logical: sets the initial state of the flag for
@@ -45,26 +45,34 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.}
   \item{gamma}{the gamma correction factor.  This value is used
-    to ensure that the colors displayed are linearly related to
-    RGB values. By default this is taken from
-    \code{\link{options}("gamma"}, or is 1 (no correction) if that is
-    unset.  It sets \code{par("gamma")} for the device.}
+    to ensure that the colors perceived are linearly related to
+    RGB values (see \code{\link{hsv}}).  By default this is taken from
+    \code{\link{options}("gamma")}, or is 1 (no correction) if that is
+    unset (the usual case).}
   \item{xpos, ypos}{integer.  Position of the top left of the window, in
     pixels.  Negative values are taken from the opposite edge of the
     monitor.  Missing values meant take the default from the
     \file{\link{Rconsole}} file, which in turn defaults to
-    \code{xpos=-25, ypos=0}: this puts the right edge of the windows 25
+    \code{xpos=-25, ypos=0}: this puts the right edge of the window 25
     pixels from the right edge of the monitor.}
   \item{buffered}{logical.  Should the screen output be double-buffered?}
+  \item{filename}{the name of the output file: it will be an enhanced
+    Windows metafile, usually given extension \code{.emf} or
+    \code{.wmf}. Up to 511 characters are allowed.
+    The page number is substituted if an integer format is included
+    in the character string. (The result must be less than 600
+    characters long.)  The default, \code{""}, means the clipboard.
+  }
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
+  \item{restoreConsole}{logical:  see the Details below.}
 }
 
 \description{
   A graphics device is opened. For \code{windows}, \code{win.graph},
   \code{x11} and \code{X11} this is a graphics window on the current
   Windows display: the multiple names are for compatibility with other
-  systems. \code{win.metafile} prints to a file and \code{win.print} to
+  systems.  \code{win.metafile} prints to a file and \code{win.print} to
   the Windows print system.
 }
 
@@ -125,13 +133,36 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \code{print} method, and a subset method.  As the individual plots are
   of class \code{"recordedplot"} they can be replayed by printing them:
   see \code{\link{recordPlot}}.  The active plot history is stored in
-  variable \code{.SavedPlots} in package \pkg{base}.
+  variable \code{.SavedPlots} in the workspace.
 
-  When a screen device is double-buffered (the default from \R 1.8.0) the
+  When a screen device is double-buffered (the default) the
   screen is updated 100ms after last plotting call or every 500ms during
   continuous plotting.  These times can be altered by setting
   \code{options("windowsTimeout")} to a vector of two integers before
   opening the device.
+
+  The font used for text drawn in a Windows device may be controlled in
+  two ways.  The file \code{RHOME\\etc\\Rdevga} can be used to specify
+  mappings for \code{par(font=)} (in the graphics package).  Alternatively,
+  a device-independent \R graphics font family can be specified (e.g.,
+  via \code{par(family=)} in the graphics package) and this will be
+  mapped via the Windows font database (see \code{\link{windowsFonts}}).
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  1/96inch.  Multiples less than 1 are allowed, down to one pixel width.
+
+  \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
+  the larger of one pixel and 0.01 inch.
+
+  For \code{win.metafile} only one plot is allowed per file, and Windows
+  seems to disallow reusing the file.  So the \emph{only} way to allow
+  multiple plots is to use a parametrized \code{filename} as in the example.
+  
+  The \code{restoreConsole} argument is a temporary fix for a problem
+  in the current implementation of several Windows graphics devices,
+  and is likely to be removed in an upcoming release.  If set to
+  \code{FALSE}, the console will not receive the focus after the new
+  device is opened.  
 }
 
 \value{
@@ -139,10 +170,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \seealso{
+  \code{\link{windowsFonts}},
   \code{\link{savePlot}}, \code{\link{bringToTop}},
   \code{\link{Devices}}, \code{\link{postscript}}
 }
-\examples{\dontrun{## A series of plots written to a sequence of metafiles 
+\examples{\dontrun{## A series of plots written to a sequence of metafiles
 win.metafile("Rplot\%02d.wmf", pointsize = 10)
 }}
 \keyword{device}

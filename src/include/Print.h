@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef PRINT_H_
@@ -43,6 +43,7 @@ typedef struct {
     int gap;
     int quote;
     int right;
+    int max;
     SEXP na_string;
     SEXP na_string_noquote;
 } R_print_par_t;
@@ -55,7 +56,7 @@ void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */
 char *EncodeFactor(int, int, int, SEXP);
-char *EncodeElement(SEXP, int, int);
+char *EncodeElement(SEXP, int, int, char);
 
 /* Printing */
 void MatrixColumnLabel(SEXP, int, int);
@@ -65,7 +66,7 @@ void MatrixRowLabel(SEXP, int, int, int);
 
 /* In Rinternals.h (and MUST be there):
    CustomPrintValue,  PrintValue, PrintValueRec */
-void printArray(SEXP, SEXP, int, SEXP);
+void printArray(SEXP, SEXP, int, int, SEXP);
 void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP, char*, char*);
 void printNamedVector(SEXP, SEXP, int, char*);
 void printVector(SEXP, int, int);

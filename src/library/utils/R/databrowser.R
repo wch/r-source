@@ -172,7 +172,8 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 		      main = "R Workspace", properties = list(),
 		      browser = getOption("browser"))
 {
-    if(kind != "HTML") stop("kind `",kind,"'  not yet implemented")
+    if(kind != "HTML")
+        stop(gettextf("kind '%s' not yet implemented", kind), domain = NA)
 
     Pst <- function(...) paste(..., sep="")
 
@@ -241,7 +242,7 @@ wsbrowser <- function(IDS, IsRoot, IsContainer, ItemsPerContainer,
 	   )
     if(substr(url, 1,1) != "/")
 	url <- paste("/", url, sep = "")
-    url <- paste("file://", url, sep = "")
+    url <- paste("file://", URLencode(url), sep = "")
 
     browseURL(url = url, browser = browser)
     cat(main, "environment is shown in browser",

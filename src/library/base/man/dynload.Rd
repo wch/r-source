@@ -2,8 +2,6 @@
 \alias{dyn.load}
 \alias{dyn.unload}
 \alias{is.loaded}
-\alias{symbol.C}
-\alias{symbol.For}
 \title{Foreign Function Interface}
 \description{
   Load or unload shared libraries, and test whether a C function or
@@ -13,9 +11,7 @@
 dyn.load(x, local = TRUE, now = TRUE)
 dyn.unload(x)
 
-is.loaded(symbol, PACKAGE="")
-symbol.C(name)
-symbol.For(name)
+is.loaded(symbol, PACKAGE = "", type = "")
 }
 \arguments{
   \item{x}{a character string giving the pathname to a shared library or
@@ -47,18 +43,16 @@ symbol.For(name)
     \code{PACKAGE="base"} for symbols linked in to \R.  This is used in the
     same way as in \code{\link{.C}}, \code{\link{.Call}},
     \code{\link{.Fortran}} and \code{\link{.External}} functions}
-  \item{name}{a character string giving either the name of a C function
-    or Fortran subroutine.  Fortran names probably need to be given
-    entirely in lower case (but this may be system-dependent).}
+  \item{type}{The type of symbol to look for: can be any (\code{""}, the
+  default), \code{"Fortran"}, \code{"Call"} or \code{"External"}.}
 }
 \details{
   See
-#ifdef windows
-  file \file{readme.packages},
-#endif
-  \sQuote{See Also} and the \emph{Writing R Extensions} manual for how to
-  create a suitable shared library.  Note that unlike some versions of
-  S-PLUS, \code{dyn.load} does not load an object (\code{.o}) file but a
+  \sQuote{See Also} and the \emph{Writing R Extensions} and
+  \emph{R Installation and Administration} manuals for how to
+  create and install 
+  a suitable shared library.  Note that unlike some versions of
+  S-PLUS, \code{dyn.load} does not load an object (\file{.o}) file but a
   shared library or DLL.
 
   Unfortunately a very few platforms (Compaq Tru64) do not handle the
@@ -69,7 +63,7 @@ symbol.For(name)
   aspects of the mode argument to the dlopen() routine on UNIX
   systems. They are available so that users can exercise greater control
   over the loading process for an individual library.  In general, the
-  defaults values are appropriate and one should override them only if 
+  defaults values are appropriate and you should override them only if
   there is good reason and you understand the implications.
 
 #ifdef unix
@@ -122,7 +116,7 @@ symbol.For(name)
   is set to \code{TRUE} using the \code{\link{options}} function, 
   a warning will be printed.  (If the warning says
   that the control word was changed from some other value than 8001F, 
-  please   report the circumstances to the Windows maintainers:  
+  please report the circumstances to the Windows maintainers:  
   that probably indicates an internal bug.)
 #endif
 }
@@ -137,10 +131,15 @@ symbol.For(name)
 
   The function \code{dyn.unload} unlinks the shared library.
 
-  Functions \code{symbol.C} and \code{symbol.For} map function or
-  subroutine names to the symbol name in the compiled code:
   \code{is.loaded} checks if the symbol name is loaded and hence
-  available for use in \code{.C} or \code{.Fortran}.
+  available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
+  \code{.Exernal}: it requires the name you would give to \code{.C} etc
+  and \strong{not} (as in S) that remapped by deprecated functions
+  \code{\link{symbol.C}} or \code{\link{symbol.For}}.  It will succeed
+  if any one of the four calling functions would succeed in using the
+  entry point unless \code{type} is specified: for Fortran entry points
+  \code{is.loaded(symbol.For("symbol"))} will also succeed \emph{unless}
+  the registration mechanism has been used.
 }
 \note{
   The creation of shared libraries and the runtime linking of them into
@@ -154,6 +153,10 @@ symbol.For(name)
   The original code for loading DLLs in UNIX was provided by Heiner
   Schwarte.  The compatibility code for HP-UX was provided by Luke
   Tierney.
+}
+\section{Warning}{
+  Do not use \code{dyn.unload} on a shared object loaded by
+  \code{\link{library.dynam}}: use \code{\link{library.dynam.unload}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -177,6 +180,9 @@ symbol.For(name)
   \code{\link{.Call}}.
 }
 \examples{
-is.loaded(symbol.For("hcass2")) #-> probably TRUE, as stats is loaded
+is.loaded("hcass2") #-> probably TRUE, as stats is loaded
+is.loaded("supsmu") # Fortran entry point in stats
+is.loaded("supsmu", "stats", "Fortran")
+is.loaded("PDF", type = "External")
 }
 \keyword{interface}

@@ -15,12 +15,14 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* NOTE: This is no longer the code used by rowsum(), which can be
    found as Rrowsum_matrix and Rrowsum_df in src/main/unique.c.  This
    old code is preserved in case it is needed by C/Fortran programs */
+
+/* However, it is still used by Hmisc as an entry point in PACKAGE=base */ 
 
 /*
 **  SCCS @(#)rowsum.c	4.2 06/30/93

@@ -5,9 +5,10 @@ code2LazyLoadDB <-
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop(paste("There is no package called", sQuote(package)))
+        stop(gettextf("there is no package called '%s'", package),
+             domain = NA)
     barepackage <- sub("([^-]+)_.*", "\\1", package)
-    loadenv <-new.env(hash=TRUE)
+    loadenv <- new.env(hash=TRUE)
     codeFile <- file.path(pkgpath, "R", barepackage)
     dbbase <- file.path(pkgpath, "R", barepackage)
     if (packageHasNamespace(package, dirname(pkgpath))) {
@@ -35,10 +36,12 @@ rda2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop(paste("There is no package called", sQuote(package)))
+        stop(gettextf("there is no package called '%s'", package),
+             domain = NA)
     rdafile <- file.path(pkgpath, "R", "all.rda")
     if (! file.exists(rdafile))
-        stop(paste("Package", sQuote(package), "has no .rda file"))
+        stop(gettextf("package '%s' has no .rda file", package),
+             domain = NA)
     dbbase <- file.path(pkgpath, "R", package)
     e <- new.env(hash=TRUE)
     load(rdafile, e)
@@ -57,7 +60,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(is.null(dataDir)) {
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if(length(pkgpath) == 0)
-            stop(paste("There is no package called", sQuote(package)))
+            stop(gettextf("there is no package called '%s'", package),
+                 domain = NA)
         dataDir <- file.path(pkgpath, "data")
     } else {
         pkgpath <- sub("/data$", "", dataDir)
@@ -94,43 +98,53 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
 
 data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
+    options(warn=1)
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
     if(length(pkgpath) == 0)
-        stop(paste("There is no package called", sQuote(package)))
+        stop(gettextf("there is no package called '%s'", package),
+             domain = NA)
     dataDir <- file.path(pkgpath, "data")
-    if(tools:::file_test("-d", dataDir)) {
-        if(file.exists(file.path(dataDir, "Rdata.rds")))
+    if(file_test("-d", dataDir)) {
+        if(file.exists(file.path(dataDir, "Rdata.rds")) &&
+	    file.exists(file.path(dataDir, paste(package, "rdx", sep="."))) &&
+	    file.exists(file.path(dataDir, paste(package, "rdb", sep="."))) ){
             warning("package seems to be using lazy loading for data already")
-        dataEnv <- new.env(hash=TRUE)
-        tmpEnv <- new.env()
-        f0 <- files <- tools:::list_files_with_type(dataDir, "data")
-        files <- unique(basename(tools:::file_path_sans_ext(files)))
-        dlist <- vector("list", length(files))
-        names(dlist) <- files
-        loaded <- character(0)
-        for(f in files) {
-            utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = dataEnv)
-            utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = tmpEnv)
-            tmp <- ls(envir = tmpEnv, all.names = TRUE)
-            rm(list = tmp, envir = tmpEnv)
-            dlist[[f]] <- tmp
-            loaded <- c(loaded, tmp)
         }
-        dup<- duplicated(loaded)
-        if(any(dup))
-            warning("object(s) ", paste(sQuote(loaded[dup]), collapse=", "),
-                    " are created by more than one data call")
+	else {
+            dataEnv <- new.env(hash=TRUE)
+            tmpEnv <- new.env()
+            f0 <- files <- list_files_with_type(dataDir, "data")
+            files <- unique(basename(file_path_sans_ext(files)))
+            dlist <- vector("list", length(files))
+            names(dlist) <- files
+            loaded <- character(0)
+            for(f in files) {
+                utils::data(list = f, package = package, lib.loc = lib.loc,
+                        envir = dataEnv)
+                utils::data(list = f, package = package, lib.loc = lib.loc,
+                        envir = tmpEnv)
+                tmp <- ls(envir = tmpEnv, all.names = TRUE)
+                rm(list = tmp, envir = tmpEnv)
+                dlist[[f]] <- tmp
+                loaded <- c(loaded, tmp)
+            }
+            dup<- duplicated(loaded)
+            if(any(dup))
+                warning(gettextf("object(s) %s are created by more than one data call",
+                                 paste(sQuote(loaded[dup]),
+                                       collapse=", ")),
+                        domain = NA)
 
-        if(length(loaded)) {
-            dbbase <- file.path(dataDir, "Rdata")
-            makeLazyLoadDB(dataEnv, dbbase, compress = compress)
-            .saveRDS(dlist, file.path(dataDir, "Rdata.rds"))
-            print(f0)
-            unlink(f0)
-            if(file.exists(file.path(dataDir, "filelist")))
-                unlink(file.path(dataDir, c("filelist", "Rdata.zip")))
+            if(length(loaded)) {
+                dbbase <- file.path(dataDir, "Rdata")
+                makeLazyLoadDB(dataEnv, dbbase, compress = compress)
+                .saveRDS(dlist, file.path(dataDir, "Rdata.rds"),
+                         compress = compress)
+                print(f0)
+                unlink(f0)
+                if(file.exists(file.path(dataDir, "filelist")))
+                    unlink(file.path(dataDir, c("filelist", "Rdata.zip")))
+            }
         }
     }
 }
@@ -148,7 +162,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
         envs <- NULL
         enames <- character(0)
         find <- function(v, keys, vals)
-            for (i in seq(along=keys))
+            for (i in seq_along(keys))
                 if (identical(v, keys[[i]]))
                     return(vals[i])
         getname <- function(e) find(e, envs, enames)
@@ -211,7 +225,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
     }
     else stop("source must be an environment or a list");
 
-    for (i in seq(along = vars)) {
+    for (i in seq_along(vars)) {
         key <- if (is.null(from) || is.environment(from))
             lazyLoadDBinsertVariable(vars[i], from, datafile,
                                      ascii, compress,  envhook)
@@ -236,10 +250,12 @@ makeLazyLoading <-
     function(package, lib.loc = NULL, compress = TRUE,
              keep.source = getOption("keep.source.pkgs"))
 {
+    options(warn=1)
     findpack <- function(package, lib.loc) {
         pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
         if(length(pkgpath) == 0)
-            stop(paste("There is no package called", sQuote(package)))
+            stop(gettextf("there is no package called '%s'", package),
+                 domain = NA)
         pkgpath
     }
 
@@ -247,11 +263,11 @@ makeLazyLoading <-
     barepackage <- sub("([^-]+)_.*", "\\1", package)
 
     if (package == "base")
-        loaderFile <- file.path(R.home(), "share", "R", "baseloader.R")
+        stop("this cannot be used for package 'base'")
     else if (packageHasNamespace(package, dirname(pkgpath)))
-        loaderFile <- file.path(R.home(), "share", "R", "nspackloader.R")
+        loaderFile <- file.path(R.home("share"), "R", "nspackloader.R")
     else
-        loaderFile <- file.path(R.home(), "share", "R", "packloader.R")
+        loaderFile <- file.path(R.home("share"), "R", "packloader.R")
     codeFile <- file.path(pkgpath, "R", barepackage)
 
     if (!file.exists(codeFile)) {
@@ -260,14 +276,6 @@ makeLazyLoading <-
     }
     if (file.info(codeFile)["size"] == file.info(loaderFile)["size"])
         warning("package seems to be using lazy loading already")
-    else if (package == "base" && is.null(lib.loc)) {# allow for cross-building
-        dbFile <- file.path(pkgpath, "R", "base.rdx")
-        if (! file.exists(dbFile))
-            stop("you need to first build the base DB with 'makebasedb.R'")
-        if (file.info(codeFile)["mtime"] > file.info(dbFile)["mtime"])
-            stop("code file newer than base DB; rebuild with 'makebasedb.R'")
-        file.copy(loaderFile, codeFile, TRUE)
-    }
     else {
         rdaFile <- file.path(pkgpath, "R", "all.rda")
         if (file.exists(rdaFile))

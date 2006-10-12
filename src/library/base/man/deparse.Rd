@@ -1,6 +1,5 @@
 \name{deparse}
 \alias{deparse}
-\alias{.deparseOpts}
 \title{Expression Deparsing}
 \description{
   Turn unevaluated expressions into character strings.
@@ -15,9 +14,9 @@ deparse(expr, width.cutoff = 60,
   \item{width.cutoff}{integer in \eqn{[20, 500]} determining the cutoff
     at which line-breaking is tried.}
   \item{backtick}{logical indicating whether symbolic names should be
-    enclosed in backticks if they don't follow the standard syntax.}
-  \item{control}{character vector of deparsing options.  See the details
-  below.}
+    enclosed in backticks if they do not follow the standard syntax.}
+  \item{control}{character vector of deparsing options.  See
+    \code{\link{.deparseOpts}}.}
 }
 \details{
   This function turns unevaluated expressions (where \dQuote{expression}
@@ -32,39 +31,13 @@ deparse(expr, width.cutoff = 60,
   to the function \code{myplot}.
 
   The default for the \code{backtick} option is not to quote single
-  symbols but only composite expressions. This is a compromise to
+  symbols but only composite expressions.  This is a compromise to
   avoid breaking existing code.
 
-  The \code{control} argument is a vector containing some of the
-  following strings.  Partial string matching is used:
-  \describe{
-      \item{\code{keepInteger}}{Surround integer vectors by \code{as.integer()},
-      	    so they are not converted to floating point when re-parsed.}
-      \item{\code{quoteExpressions}}{Surround expressions with \code{quote()},
-            so they are not evaluated when re-parsed.}
-      \item{\code{showAttributes}}{If the object has attributes (other than
-            a \code{source} attribute), use \code{structure()} to display them as 
-            well as the object value.}
-      \item{\code{useSource}}{If the object has a \code{source} attribute,
-            display that instead of deparsing the object.  Currently
-            only applies to function definitions.}
-      \item{\code{warnIncomplete}}{Some exotic objects such
-            as \link[base:delay]{promises}, \link[base:environment]{environments}, 
-            external pointers, etc. can not be deparsed properly.  This option causes
-            a warning to be issued if any of those were present.}
-      \item{\code{all}}{An abbreviated way to specify all of the options 
-      	    listed above.  May not be used with other options.}
- }
-  
-  For the most readable (but perhaps incomplete) display, use \code{control = NULL}.
-  This displays the object's value, but not its attributes.  The default
-  is to display the attributes as well, but not to use any of the other
-  options to make the result parseable.
-  
-  Using \code{control = "all"} comes closest
-  to making \code{deparse()} an inverse of \code{parse()}.  However, not all 
-  objects are deparseable even with this option.  A warning will be
-  issued if the function recognizes that it is being asked to do the impossible.
+  Using \code{control = "all"} comes closest to making \code{deparse()}
+  an inverse of \code{parse()}.  However, not all objects are
+  deparseable even with this option and a warning will be issued if the
+  function recognizes that it is being asked to do the impossible.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual
@@ -80,6 +53,8 @@ deparse(expr, width.cutoff = 60,
   \code{\link{substitute}},
   \code{\link{parse}},
   \code{\link{expression}}.
+
+  \code{Quotes} for quoting conventions, including backticks.
 }
 \examples{
 require(stats)

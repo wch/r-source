@@ -4,28 +4,31 @@
 \description{
   This function adds one or more straight lines through the current plot.
 }
-\synopsis{
-abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
-       coef = NULL, untf = FALSE, col = par("col"),
-       lty = par("lty"), lwd = NULL, ...)
-}
 \usage{
+abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
+       coef = NULL, untf = FALSE, ...)
+}
+\arguments{
+  \item{a, b}{the intercept and slope, single values.}
+  \item{untf}{logical asking whether to \emph{untransform}.  See Details.}
+  \item{h}{the y-value(s) for horizontal line(s).}
+  \item{v}{the x-value(s) for vertical line(s).}
+  \item{coef}{a vector of length two giving the intercept and slope.}
+  \item{reg}{an object with a \code{\link{coef}} method.  See Details.}
+  \item{\dots}{graphical parameters such as
+    \code{col}, \code{lty} and \code{lwd} (possibly as vectors: see
+    Details) and the line characteristics \code{lend}, \code{ljoin} and
+    \code{lmitre}.}
+}
+\details{
+  Typical usages are
+\preformatted{
 abline(a, b, untf = FALSE, \dots)
 abline(h=, untf = FALSE, \dots)
 abline(v=, untf = FALSE, \dots)
 abline(coef=, untf = FALSE, \dots)
 abline(reg=, untf = FALSE, \dots)
 }
-\arguments{
-  \item{a,b}{the intercept and slope.}
-  \item{untf}{logical asking to \emph{untransform}.  See Details.}
-  \item{h}{the y-value for a horizontal line.}
-  \item{v}{the x-value for a vertical line.}
-  \item{coef}{a vector of length two giving the intercept and slope.}
-  \item{reg}{an object with a \code{coef} component. See Details.}
-  \item{\dots}{graphical parameters.}
-}
-\details{
   The first form specifies the line in intercept/slope form
   (alternatively \code{a} can be specified on its own and is taken to
   contain the slope and intercept in vector form).
@@ -36,23 +39,27 @@ abline(reg=, untf = FALSE, \dots)
   The \code{coef} form specifies the line by a vector containing the
   slope and intercept.
 
-  \code{reg} is a regression object which contains \code{reg$coef}.  If
-  it is of length 1 then the value is taken to be the slope of a line
-  through the origin, otherwise, the first 2 values are taken to be the
-  intercept and slope.
+  \code{reg} is a regression object with a \code{\link{coef}} method.
+  If this returns a vector of length 1 then the value is taken to be the
+  slope of a line through the origin, otherwise, the first 2 values are
+  taken to be the intercept and slope.
 
   If \code{untf} is true, and one or both axes are log-transformed, then
   a curve is drawn corresponding to a line in original coordinates,
   otherwise a line is drawn in the transformed coordinate system. The
   \code{h} and \code{v} parameters always refer to original coordinates.
 
-  The graphical parameters \code{col} and \code{lty} can be specified as
-  arguments to \code{abline}; see \code{par} for details.
+  The graphical parameters \code{col}, \code{lty} and \code{lwd}
+  can be specified; see \code{\link{par}} for details.  For the
+  \code{h=} and \code{v=} usages they can be vectors of length greater
+  than one, recycled as necessary.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
   \code{\link{lines}} and \code{\link{segments}} for connected and

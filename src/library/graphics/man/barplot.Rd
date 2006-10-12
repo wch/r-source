@@ -6,15 +6,18 @@
   Creates a bar plot with vertical or horizontal bars.
 }
 \usage{
+barplot(height, \dots)
+
 \method{barplot}{default}(height, width = 1, space = NULL,
         names.arg = NULL, legend.text = NULL, beside = FALSE,
         horiz = FALSE, density = NULL, angle = 45,
         col = NULL, border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-        xlim = NULL, ylim = NULL, xpd = TRUE,
+        xlim = NULL, ylim = NULL, xpd = TRUE, log = "",
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-        inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, \dots)
+        inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0,
+        add = FALSE, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the
@@ -72,6 +75,8 @@
   \item{xlim}{limits for the x axis.}
   \item{ylim}{limits for the y axis.}
   \item{xpd}{logical. Should bars be allowed to go outside region?}
+  \item{log}{string specifying if axis scales should be logarithmic; see
+    \code{\link{plot.default}}.}
   \item{axes}{logical.  If \code{TRUE}, a vertical (or horizontal, if
     \code{horiz} is true) axis is drawn.}
   \item{axisnames}{logical.  If \code{TRUE}, and if there are
@@ -90,8 +95,13 @@
     that by default the axis is suppressed.}
   \item{offset}{a vector indicating how much the bars should be shifted
     relative to the x axis.}
-  \item{\dots}{further graphical parameters (\code{\link{par}}) are
-    passed to \code{\link{plot.window}()}, \code{\link{title}()} and
+  \item{add}{logical specifying if bars should be added to an already
+    existing plot; defaults to \code{FALSE}.}
+  \item{\dots}{arguments to be passed to/from other methods.  For the
+    default method these can include further arguments (such as
+    \code{axes}, \code{asp} and \code{main}) and graphical
+    parameters (see \code{\link{par}}) which are passed to
+    \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
 }
 \details{
@@ -106,14 +116,12 @@
   If \code{beside} is true, use \code{colMeans(mp)} for the
   midpoints of each \emph{group} of bars, see example.
 }
-\note{
-  Prior to \R 1.6.0, \code{barplot} behaved as if \code{axis.lty = 1},
-  unintentionally.
-}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Murrell, P. (2005) \emph{R Graphics}. Chapman & Hall/CRC Press.
 }
 \seealso{
   \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
@@ -121,7 +129,7 @@
 }
 \examples{
 tN <- table(Ni <- rpois(100, lambda=5))
-r <- barplot(tN, col='gray')
+r <- barplot(tN, col=rainbow(20))
 #- type = "h" plotting *is* 'bar'plot
 lines(r, tN, type='h', col='red', lwd=2)
 
@@ -162,5 +170,9 @@ title(main = list("Death Rates in Virginia", font = 4))
 # border :
 barplot(VADeaths, border = "dark blue") % lwd = 2 << not passed
 %notyet barplot(VADeaths, inside = FALSE, main = "barplot(*, inside=FALSE)")
+
+# log scales (not much sense here):
+barplot(tN, col=heat.colors(12), log = "y")
+barplot(tN, col=gray.colors(20), log = "xy")
 }
 \keyword{hplot}

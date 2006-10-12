@@ -98,6 +98,11 @@ co.intervals(x, number = 6, overlap = 0.5)
   A panel function should not attempt to start a new plot, but just plot
   within a given coordinate system: thus \code{plot} and \code{boxplot}
   are not panel functions.
+
+  The rendering of arguments \code{xlab} and
+  \code{ylab} is not controlled by \code{\link{par}} arguments
+  \code{cex.lab} and \code{font.lab} even though they are plotted by
+  \code{\link{mtext}} rather than \code{\link{title}}.
 }
 \value{
   \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}
@@ -137,13 +142,13 @@ coplot(breaks ~ Index | wool * tension, data = warpbreaks,
        col = "red", bg = "pink", pch = 21, bar.bg = c(fac = "light blue"))
 
 ## Example with empty panels:
-attach(data.frame(state.x77))#> don't need 'data' arg. below
+with(data.frame(state.x77), {
 coplot(Life.Exp ~ Income | Illiteracy * state.region, number = 3,
        panel = function(x, y, ...) panel.smooth(x, y, span = .8, ...))
 ## y ~ factor -- not really sensical, but 'show off':
 coplot(Life.Exp ~ state.region | Income * state.division,
        panel = panel.smooth)
-detach() # data.frame(state.x77)
+})
 }
 \keyword{hplot}
 \keyword{aplot}

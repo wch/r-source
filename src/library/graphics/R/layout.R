@@ -1,8 +1,8 @@
 lcm <- function(x) paste(x, "cm")#-> 3 characters (used in layout!)
 
 layout <-
-    function(mat, widths=rep(1, dim(mat)[2]),
-	     heights=rep(1, dim(mat)[1]), respect=FALSE)
+    function(mat, widths = rep(1, ncol(mat)),
+	     heights = rep(1, nrow(mat)), respect = FALSE)
 {
     storage.mode(mat) <- "integer"
     mat <- as.matrix(mat) # or barf
@@ -15,9 +15,8 @@ layout <-
     ## check that each value in 1..n is mentioned
     for (i in 1:num.figures)
 	if (match(i, mat, nomatch=0) == 0)
-	    stop(paste("Layout matrix must contain at least one reference\n",
-		       "  to each of the values {1..n}; here  n = ",
-		       num.figures,"\n", sep=""))
+	    stop("layout matrix must contain at least one reference\nto each of the values {1..n}; here  n = ",
+                 num.figures,"\n")
 
     dm <- dim(mat)
     num.rows <- dm[1]
@@ -32,7 +31,7 @@ layout <-
 	    v <- c(v, rep.int(1, len-ll))
 	if (is.character(v)) {
 	    wcm <- v[cm.v]
-	    v[cm.v] <- substring(wcm, 1, nchar(wcm)-3)
+	    v[cm.v] <- substring(wcm, 1, nchar(wcm, type="c") - 3)
 	}
 	as.numeric(v)
     }
@@ -66,7 +65,7 @@ layout.show <- function(n=1)
 
     o.par <- par(mar=rep.int(0,4))
     on.exit(par(o.par))
-    for (i in seq(length=n)) {
+    for (i in seq_len(n)) {
 	plot.new()
 	box()
 	text(0.5, 0.5, i)

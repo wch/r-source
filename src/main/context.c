@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2003   The R Development Core Team.
+ *  Copyright (C) 1998-2006   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
  *  Contexts:
@@ -32,14 +32,16 @@
  *  recursively.  The memory is reclaimed naturally on return through
  *  the recursions (the R_GlobalContext pointer needs adjustment).
  *
- *  A context contains the following information:
+ *  A context contains the following information (and more):
  *
  *	nextcontext	the next level context
  *	cjmpbuf		longjump information for non-local return
  *	cstacktop	the current level of the pointer protection stack
  *	callflag	the context "type"
- *	call		the call (name of function) that effected this
- *			context
+ *	call		the call (name of function, or expression to 
+ *			get the function) that effected this
+ *			context if a closure, otherwise often NULL.
+ *	callfun		the function, if this was a closure.
  *	cloenv		for closures, the environment of the closure.
  *	sysparent	the environment the closure was called from
  *	conexit		code for on.exit calls, to be executed in cloenv
@@ -113,30 +115,26 @@
    determines the argument is responsible for making sure
    CTXT_TOPLEVEL's are not crossed unless appropriate. */
 
-void R_run_onexits(RCNTXT *cptr)
+void attribute_hidden R_run_onexits(RCNTXT *cptr)
 {
     RCNTXT *c;
 
     for (c = R_GlobalContext; c != cptr; c = c->nextcontext) {
 	if (c == NULL)
-	    error("bad target context--should NEVER happen;\n"
-		  "please bug.report() [R_run_onexits]");
+	    error(_("bad target context--should NEVER happen;\n\
+please bug.report() [R_run_onexits]"));
 	if (c->cend != NULL) {
 	    void (*cend)(void *) = c->cend;
 	    c->cend = NULL; /* prevent recursion */
-#ifdef NEW_CONDITION_HANDLING
 	    R_HandlerStack = c->handlerstack;
 	    R_RestartStack = c->restartstack;
-#endif
 	    cend(c->cenddata);
 	}
 	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
 	    SEXP s = c->conexit;
 	    c->conexit = R_NilValue; /* prevent recursion */
-#ifdef NEW_CONDITION_HANDLING
 	    R_HandlerStack = c->handlerstack;
 	    R_RestartStack = c->restartstack;
-#endif
 	    PROTECT(s);
 	    eval(s, c->cloenv);
 	    UNPROTECT(1);
@@ -148,20 +146,18 @@ void R_run_onexits(RCNTXT *cptr)
 /* R_restore_globals - restore global variables from a target context
    before a LONGJMP.  The target context itself is not restored here
    since this is done slightly differently in jumpfun below, in
-   errors.c:jump_now, and in main.c:ParseBrwoser.  Eventually these
+   errors.c:jump_now, and in main.c:ParseBrowser.  Eventually these
    three should be unified so there is only one place where a LONGJMP
    occurs. */
 
-void R_restore_globals(RCNTXT *cptr)
+void attribute_hidden R_restore_globals(RCNTXT *cptr)
 {
     R_PPStackTop = cptr->cstacktop;
     R_EvalDepth = cptr->evaldepth;
     vmaxset(cptr->vmax);
     R_interrupts_suspended = cptr->intsusp;
-#ifdef NEW_CONDITION_HANDLING
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
-#endif
 #ifdef BYTECODE
     R_BCNodeStackTop = cptr->nodestack;
 # ifdef BC_INT_STACK
@@ -201,6 +197,7 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 
 /* begincontext - begin an execution context */
 
+/* begincontext and endcontext are used in dataentry.c and modules */
 void begincontext(RCNTXT * cptr, int flags,
 		  SEXP syscall, SEXP env, SEXP sysp,
 		  SEXP promargs, SEXP callfun)
@@ -218,10 +215,8 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->callfun = callfun;
     cptr->vmax = vmaxget();
     cptr->intsusp = R_interrupts_suspended;
-#ifdef NEW_CONDITION_HANDLING
     cptr->handlerstack = R_HandlerStack;
     cptr->restartstack = R_RestartStack;
-#endif
 #ifdef BYTECODE
     cptr->nodestack = R_BCNodeStackTop;
 # ifdef BC_INT_STACK
@@ -236,10 +231,8 @@ void begincontext(RCNTXT * cptr, int flags,
 
 void endcontext(RCNTXT * cptr)
 {
-#ifdef NEW_CONDITION_HANDLING
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
-#endif
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
 	SEXP s = cptr->conexit;
 	int savevis = R_Visible;
@@ -255,7 +248,7 @@ void endcontext(RCNTXT * cptr)
 
 /* findcontext - find the correct context */
 
-void findcontext(int mask, SEXP env, SEXP val)
+void attribute_hidden findcontext(int mask, SEXP env, SEXP val)
 {
     RCNTXT *cptr;
     cptr = R_GlobalContext;
@@ -265,7 +258,7 @@ void findcontext(int mask, SEXP env, SEXP val)
 	     cptr = cptr->nextcontext)
 	    if (cptr->callflag & CTXT_LOOP && cptr->cloenv == env )
 	        jumpfun(cptr, mask, val);
-        error("No loop to break from, jumping to top level");
+        error(_("no loop to break from, jumping to top level"));
     }
     else {				/* return; or browser */
 	for (cptr = R_GlobalContext;
@@ -273,11 +266,11 @@ void findcontext(int mask, SEXP env, SEXP val)
 	     cptr = cptr->nextcontext)
 	    if ((cptr->callflag & mask) && cptr->cloenv == env)
 		jumpfun(cptr, mask, val);
-	error("No function to return from, jumping to top level");
+	error(_("no function to return from, jumping to top level"));
     }
 }
 
-void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
+void attribute_hidden R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 {
     RCNTXT *cptr;
     for (cptr = R_GlobalContext;
@@ -285,7 +278,7 @@ void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 	 cptr = cptr->nextcontext)
 	if (cptr == target)
 	    jumpfun(cptr, mask, val);
-    error("Target context is not on the stack");
+    error(_("target context is not on the stack"));
 }
 
 
@@ -295,7 +288,7 @@ void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
 /* negative n counts back from the current frame */
 /* positive n counts up from the globalEnv */
 
-SEXP R_sysframe(int n, RCNTXT *cptr)
+SEXP attribute_hidden R_sysframe(int n, RCNTXT *cptr)
 {
     if (n == 0)
 	return(R_GlobalEnv);
@@ -306,7 +299,8 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
 	n = -n;
 
     if(n < 0)
-	errorcall(R_GlobalContext->call,"not that many enclosing environments");
+	errorcall(R_GlobalContext->call,
+		  _("not that many frames on the stack"));
 
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
@@ -321,7 +315,8 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
     if(n == 0 && cptr->nextcontext == NULL)
 	return R_GlobalEnv;
     else
-	error("sys.frame: not that many enclosing functions");
+	errorcall(R_GlobalContext->call,
+		  _("not that many frames on the stack"));
     return R_NilValue;	   /* just for -Wall */
 }
 
@@ -332,12 +327,13 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
 /* It would be much simpler if sysparent just returned cptr->sysparent */
 /* but then we wouldn't be compatible with S. */
 
-int R_sysparent(int n, RCNTXT *cptr)
+int attribute_hidden R_sysparent(int n, RCNTXT *cptr)
 {
     int j;
     SEXP s;
     if(n <= 0)
-	errorcall(R_ToplevelContext->call,"only positive arguments are allowed");
+	errorcall(R_ToplevelContext->call,
+		  _("only positive values of 'n' are allowed"));
     while (cptr->nextcontext != NULL && n > 1) {
 	if (cptr->callflag & CTXT_FUNCTION )
 	    n--;
@@ -364,7 +360,7 @@ int R_sysparent(int n, RCNTXT *cptr)
     return n;
 }
 
-int framedepth(RCNTXT *cptr)
+int attribute_hidden framedepth(RCNTXT *cptr)
 {
     int nframe = 0;
     while (cptr->nextcontext != NULL) {
@@ -375,16 +371,17 @@ int framedepth(RCNTXT *cptr)
     return nframe;
 }
 
-SEXP R_syscall(int n, RCNTXT *cptr)
+SEXP attribute_hidden R_syscall(int n, RCNTXT *cptr)
 {
     /* negative n counts back from the current frame */
     /* positive n counts up from the globalEnv */
     if (n > 0)
-	n = framedepth(cptr)-n;
+	n = framedepth(cptr) - n;
     else
 	n = - n;
-    if(n < 0 )
-	errorcall(R_GlobalContext->call, "illegal frame number");
+    if(n < 0)
+	errorcall(R_GlobalContext->call, 
+		  _("not that many frames on the stack"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (n == 0)
@@ -396,18 +393,19 @@ SEXP R_syscall(int n, RCNTXT *cptr)
     }
     if (n == 0 && cptr->nextcontext == NULL)
 	return (duplicate(cptr->call));
-    errorcall(R_GlobalContext->call, "not that many enclosing functions");
+    errorcall(R_GlobalContext->call, _("not that many frames on the stack"));
     return R_NilValue;	/* just for -Wall */
 }
 
-SEXP R_sysfunction(int n, RCNTXT *cptr)
+SEXP attribute_hidden R_sysfunction(int n, RCNTXT *cptr)
 {
     if (n > 0)
 	n = framedepth(cptr) - n;
     else
 	n = - n;
-    if (n < 0 )
-	errorcall(R_GlobalContext->call, "illegal frame number");
+    if (n < 0)
+	errorcall(R_GlobalContext->call, 
+		  _("not that many frames on the stack"));
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
 	    if (n == 0)
@@ -419,7 +417,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
     }
     if (n == 0 && cptr->nextcontext == NULL)
 	return duplicate(cptr->callfun);  /***** do we need to DUP? */
-    errorcall(R_GlobalContext->call, "not that many enclosing functions");
+    errorcall(R_GlobalContext->call, _("not that many frames on the stack"));
     return R_NilValue;	/* just for -Wall */
 }
 
@@ -429,7 +427,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
    then get the context of the call that owns the environment.  As it
    is, it will restart the wrong function if used in a promise.
    L.T. */
-SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
 
@@ -445,7 +443,7 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     if( cptr == R_ToplevelContext )
-	errorcall(call, "no function to restart");
+	errorcall(call, _("no function to restart"));
     return(R_NilValue);
 }
 
@@ -455,7 +453,7 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* We don't want to count the closure that do_sys is contained in so the */
 /* indexing is adjusted to handle this. */
 
-SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i, n, nframe;
     SEXP rval,t;
@@ -477,10 +475,10 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	n = - 1;
 
-    if(n == NA_INTEGER)
-	errorcall(call, "invalid number of environment levels");
     switch (PRIMVAL(op)) {
     case 1: /* parent */
+	if(n == NA_INTEGER)
+	    errorcall(call, _("invalid value for '%s'"), "n");
 	nframe = framedepth(cptr);
 	rval = allocVector(INTSXP,1);
 	i = nframe;
@@ -491,49 +489,55 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	INTEGER(rval)[0] = i;
 	return rval;
     case 2: /* call */
+	if(n == NA_INTEGER)
+	    errorcall(call, _("invalid value for '%s'"), "which");
 	return R_syscall(n, cptr);
     case 3: /* frame */
+	if(n == NA_INTEGER)
+	    errorcall(call, _("invalid value for '%s'"), "which");
 	return R_sysframe(n, cptr);
     case 4: /* sys.nframe */
-	rval=allocVector(INTSXP,1);
-	INTEGER(rval)[0]=framedepth(cptr);
+	rval = allocVector(INTSXP, 1);
+	INTEGER(rval)[0] = framedepth(cptr);
 	return rval;
     case 5: /* sys.calls */
-	nframe=framedepth(cptr);
-	PROTECT(rval=allocList(nframe));
+	nframe = framedepth(cptr);
+	PROTECT(rval = allocList(nframe));
 	t=rval;
-	for(i=1 ; i<=nframe; i++, t=CDR(t))
-	    SETCAR(t, R_syscall(i,cptr));
+	for(i = 1; i <= nframe; i++, t = CDR(t))
+	    SETCAR(t, R_syscall(i, cptr));
 	UNPROTECT(1);
 	return rval;
     case 6: /* sys.frames */
-	nframe=framedepth(cptr);
-	PROTECT(rval=allocList(nframe));
-	t=rval;
-	for(i=1 ; i<=nframe ; i++, t=CDR(t))
-	    SETCAR(t, R_sysframe(i,cptr));
+	nframe = framedepth(cptr);
+	PROTECT(rval = allocList(nframe));
+	t = rval;
+	for(i = 1; i <= nframe; i++, t = CDR(t))
+	    SETCAR(t, R_sysframe(i, cptr));
 	UNPROTECT(1);
 	return rval;
     case 7: /* sys.on.exit */
-	if( R_GlobalContext->nextcontext != NULL )
+	if( R_GlobalContext->nextcontext != NULL)
 	    return R_GlobalContext->nextcontext->conexit;
 	else
 	    return R_NilValue;
     case 8: /* sys.parents */
-	nframe=framedepth(cptr);
-	rval=allocVector(INTSXP,nframe);
-	for(i=0; i<nframe ; i++ )
-	    INTEGER(rval)[i]= R_sysparent(nframe-i,cptr);
+	nframe = framedepth(cptr);
+	rval = allocVector(INTSXP, nframe);
+	for(i = 0; i < nframe; i++)
+	    INTEGER(rval)[i] = R_sysparent(nframe - i, cptr);
 	return rval;
     case 9: /* sys.function */
+	if(n == NA_INTEGER)
+	    errorcall(call, _("invalid value for 'which'"));
 	return(R_sysfunction(n, cptr));
     default:
-	error("internal error in do_sys");
+	error(_("internal error in 'do_sys'"));
 	return R_NilValue;/* just for -Wall */
     }
 }
 
-SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int n;
     SEXP t;
@@ -544,7 +548,7 @@ SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = asInteger(t);
 
     if(n == NA_INTEGER || n < 1 )
-	errorcall(call, "invalid number of environment levels");
+	errorcall(call, _("invalid value for 'n'"));
 
     cptr = R_GlobalContext;
     t = cptr->sysparent;
@@ -581,7 +585,7 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
     saveToplevelContext = R_ToplevelContext;
 
     begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
-		 R_NilValue, R_NilValue, R_GlobalEnv);
+		 R_BaseEnv, R_NilValue, R_NilValue);
     if (SETJMP(thiscontext.cjmpbuf))
 	result = FALSE;
     else {

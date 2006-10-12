@@ -16,27 +16,43 @@
 ###
 ### You should have received a copy of the GNU General Public
 ### License along with this program; if not, write to the Free
-### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-### MA 02111-1307, USA
+### Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+### Boston, MA 02110-1301, USA
+
 
 TukeyHSD <-
     function(x, which, ordered = FALSE, conf.level = 0.95, ...)
     UseMethod("TukeyHSD")
 
 TukeyHSD.aov <-
-    function(x, which = seq(along = tabs), ordered = FALSE,
+    function(x, which = seq_along(tabs), ordered = FALSE,
              conf.level = 0.95, ...)
 {
     mm <- model.tables(x, "means")
+    if(is.null(mm$n))
+        stop("no factors in the fitted model")
     tabs <- mm$tables[-1]
     tabs <- tabs[which]
-    nn <- mm$n[which]
+    ## mm$n need not be complete -- factors only -- so index by names
+    nn <- mm$n[names(tabs)]
+    nn_na <- is.na(nn)
+    if(all(nn_na))
+        stop("'which' specified no factors")
+    if(any(nn_na)) {
+        warning("'which' specified some non-factors which will be dropped")
+        tabs <- tabs[!nn_na]
+        nn <- nn[!nn_na]
+    }
     out <- vector("list", length(tabs))
     names(out) <- names(tabs)
     MSE <- sum(resid(x)^2)/x$df.residual
     for (nm in names(tabs)) {
-        means <- as.vector(tabs[[nm]])
-        nms <- names(tabs[[nm]])
+        tab <- tabs[[nm]]
+        means <- as.vector(tab)
+        nms <- if(length(d <- dim(tab)) > 1) {
+            dn <- dimnames(tab)
+            apply(do.call("expand.grid", dn), 1, paste, collapse=":")
+        } else names(tab)
         n <- nn[[nm]]
         ## expand n to the correct length if necessary
         if (length(n) < length(means)) n <- rep.int(n, length(means))
@@ -51,10 +67,12 @@ TukeyHSD.aov <-
         center <- center[keep]
         width <- qtukey(conf.level, length(means), x$df.residual) *
             sqrt((MSE/2) * outer(1/n, 1/n, "+"))[keep]
-        dnames <- list(NULL, c("diff", "lwr", "upr"))
+        est <- center/(sqrt((MSE/2) * outer(1/n, 1/n, "+"))[keep])
+        pvals <- ptukey(abs(est),length(means),x$df.residual,lower.tail=FALSE)
+        dnames <- list(NULL, c("diff", "lwr", "upr","p adj"))
         if (!is.null(nms)) dnames[[1]] <- outer(nms, nms, paste, sep = "-")[keep]
-        out[[nm]] <- array(c(center, center - width, center + width),
-                           c(length(width), 3), dnames)
+        out[[nm]] <- array(c(center, center - width, center + width,pvals),
+                           c(length(width), 4), dnames)
     }
     class(out) <- c("multicomp", "TukeyHSD")
     attr(out, "orig.call") <- x$call
@@ -63,7 +81,7 @@ TukeyHSD.aov <-
     out
 }
 
-print.TukeyHSD <- function(x, ...)
+print.TukeyHSD <- function(x, digits=getOption("digits"), ...)
 {
     cat("  Tukey multiple comparisons of means\n")
     cat("    ", format(100*attr(x, "conf.level"), 2),
@@ -71,14 +89,19 @@ print.TukeyHSD <- function(x, ...)
     if (attr(x, "ordered"))
         cat("    factor levels have been ordered\n")
     cat("\nFit: ", deparse(attr(x, "orig.call"), 500), "\n\n", sep="")
-    attr(x, "orig.call") <- attr(x, "conf.level") <- attr(x, "ordered") <- NULL
-    print.default(unclass(x), ...)
+    xx <- unclass(x)
+    attr(xx, "orig.call") <- attr(xx, "conf.level") <- attr(xx, "ordered") <- NULL
+    xx[] <- lapply(xx, function(z, digits)
+               {z[, "p adj"] <- round(z[, "p adj"], digits); z},
+                   digits=digits)
+    print.default(xx, digits, ...)
+    x
 }
 
 plot.TukeyHSD <- function (x, ...)
 {
-    for (i in seq(along = x)) {
-        xi <- x[[i]]
+    for (i in seq_along(x)) {
+        xi <- x[[i]][, -4, drop=FALSE] # drop p-values
         yvals <- nrow(xi):1
         plot(c(xi[, "lwr"], xi[, "upr"]), rep.int(yvals, 2), type = "n",
              axes = FALSE, xlab = "", ylab = "", ...)

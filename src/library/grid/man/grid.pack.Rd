@@ -11,18 +11,19 @@
   use this functions to pack objects into the frame.
 }
 \usage{
-grid.pack(gPath, grob, redraw=TRUE, side=NULL,
-          row=NULL, row.before=NULL, row.after=NULL,
-          col=NULL, col.before=NULL, col.after=NULL,
-          width=NULL, height=NULL,
-          force.width=FALSE, force.height=FALSE, border=NULL,
-          dynamic=FALSE)
-packGrob(frame, grob, side=NULL,
-          row=NULL, row.before=NULL, row.after=NULL,
-          col=NULL, col.before=NULL, col.after=NULL,
-          width=NULL, height=NULL,
-          force.width=FALSE, force.height=FALSE, border=NULL,
-          dynamic=FALSE)
+grid.pack(gPath, grob, redraw = TRUE, side = NULL,
+          row = NULL, row.before = NULL, row.after = NULL,
+          col = NULL, col.before = NULL, col.after = NULL,
+          width = NULL, height = NULL,
+          force.width = FALSE, force.height = FALSE, border = NULL,
+          dynamic = FALSE)
+
+packGrob(frame, grob, side = NULL,
+          row = NULL, row.before = NULL, row.after = NULL,
+          col = NULL, col.before = NULL, col.after = NULL,
+          width = NULL, height = NULL,
+          force.width = FALSE, force.height = FALSE, border = NULL,
+          dynamic = FALSE)
 }
 \arguments{
   \item{gPath}{ A gPath object, which specifies a frame on the

@@ -1,4 +1,6 @@
 \name{conditions}
+\alias{conditions}
+\alias{condition}
 \alias{computeRestarts}
 \alias{conditionCall}
 \alias{conditionMessage}
@@ -12,6 +14,7 @@
 \alias{simpleCondition}
 \alias{simpleError}
 \alias{simpleWarning}
+\alias{simpleMessage}
 \alias{tryCatch}
 \alias{withCallingHandlers}
 \alias{withRestarts}
@@ -41,6 +44,7 @@ signalCondition(cond)
 simpleCondition(message, call = NULL)
 simpleError    (message, call = NULL)
 simpleWarning  (message, call = NULL)
+simpleMessage  (message, call = NULL)
 
 \method{as.character}{condition}(x, \dots)
 \method{as.character}{error}(x, \dots)
@@ -96,9 +100,10 @@ restartFormals(r)
    from the abstract subclasses \code{error} and \code{warning}.
    The class \code{simpleError} is the class used by \code{stop}
    and all internal error signals.  Similarly, \code{simpleWarning}
-   is used by \code{warning}.  The constructors by the same names take
-   a string describing the condition as argument and an optional call.
-   The functions \code{conditionMessage} and \code{conditionCall} ae
+   is used by \code{warning}, and \code{simpleMessage} is used by
+   \code{message}.  The constructors by the same names take a string
+   describing the condition as argument and an optional call.  The
+   functions \code{conditionMessage} and \code{conditionCall} are
    generic functions that return the message and call of a condition.
 
    Conditions are signaled by \code{signalCondition}.  In addition,
@@ -197,14 +202,18 @@ restartFormals(r)
 \examples{
 tryCatch(1, finally=print("Hello"))
 e <- simpleError("test error")
-\dontrun{stop(e)}
-\dontrun{tryCatch(stop(e), finally=print("Hello"))}
-\dontrun{tryCatch(stop("fred"), finally=print("Hello"))}
+\dontrun{
+ stop(e)
+ tryCatch(stop(e), finally=print("Hello"))
+ tryCatch(stop("fred"), finally=print("Hello"))
+}
 tryCatch(stop(e), error = function(e) e, finally=print("Hello"))
 tryCatch(stop("fred"),  error = function(e) e, finally=print("Hello"))
 withCallingHandlers({ warning("A"); 1+2 }, warning = function(w) {})
 { try(invokeRestart("tryRestart")); 1}
-\dontrun{{ withRestarts(stop("A"), abort = function() {}); 1}}
+\dontrun{
+ withRestarts(stop("A"), abort = function() {}); 1
+}
 withRestarts(invokeRestart("foo", 1, 2), foo = function(x, y) {x + y})
 }
 \keyword{programming}

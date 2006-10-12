@@ -64,12 +64,14 @@ cov2cor(V)
   each pair of variables is computed using all complete pairs
   of observations on those variables.
   This can result in covariance or correlation matrices which are not
-  positive semidefinite.
+  positive semidefinite. \code{"pairwise.complete.obs"} only works with
+  the \code{"pearson"} method for \code{cov} and \code{var}.
+
 
   The denominator \eqn{n - 1} is used which gives an unbiased estimator
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one
-  observation (whereas S-PLUS has been returning \code{NaN}), and %from \R 1.2.3
+  observation (whereas S-PLUS has been returning \code{NaN}), and 
   fail if \code{x} has length zero.
 
   For \code{cor()}, if \code{method} is \code{"kendall"} or
@@ -80,10 +82,10 @@ cov2cor(V)
   For \code{cov()}, a non-Pearson method is unusual but available for
   the sake of completeness.  Note that \code{"spearman"} basically
   computes \code{cor(R(x), R(y))} (or \code{cov(.,.)}) where
-  \code{R(u) := rank(u, na.last="keep")}. Notice also that the ranking
-  is (currently) done removing only cases that are missing on the
-  variable itself, which may not be what you expect if you let
-  \code{use} be \code{"complete.obs"} or \code{"pairwise.complete.obs"}.
+  \code{R(u) := rank(u, na.last="keep")}. In the case of missing values, the
+  ranks are calculated depending on the value of \code{use}, either
+  based on complete observations, or based on pairwise completeness with
+  reranking for each pair.
 
   Scaling a covariance matrix into a correlation one can be achieved in
   many ways, mathematically most appealing by multiplication with a
@@ -143,12 +145,9 @@ range(eigen(C2, only=TRUE)$val) # 6.46	1930
 C3 <- cov(swM, use = "pairwise")
 range(eigen(C3, only=TRUE)$val) # 6.19	1938
 
-(scM <- symnum(cor(swM, method = "kendall", use = "complete")))
-## Kendall's tau doesn't change much: identical symnum codings!
-identical(scM, symnum(cor(swiss, method = "kendall")))
-
-all.equal(cov2cor(cov(swM, method = "kendall", use = "pairwise")),
-                  cor(swM, method = "kendall", use = "pairwise"))
+symnum(cor(swM, method = "kendall", use = "complete"))
+## Kendall's tau doesn't change much:
+symnum(cor(swiss, method = "kendall"))
 }
 \keyword{univar}
 \keyword{multivariate}

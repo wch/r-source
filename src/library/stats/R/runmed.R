@@ -17,19 +17,20 @@
 ###
 ### A copy of the GNU General Public License is available via WWW at
 ### http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-### writing to the Free Software Foundation, Inc., 59 Temple Place,
-### Suite 330, Boston, MA  02111-1307  USA.
+### writing to the Free Software Foundation, Inc.,
+### 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
 
 runmed <- function(x, k, endrule = c("median","keep","constant"),
                    algorithm = NULL, print.level = 0)
 {
     n <- length(x)
     k <- as.integer(k)
+    if(k < 0) stop("'k' must be positive")
     if(k%%2 == 0)
-        warning("k must be odd!  Changing k to ",
+        warning("'k' must be odd!  Changing 'k' to ",
                 k <- as.integer(1+ 2*(k %/% 2)))
     if (k > n)
-        warning("k is bigger than n!  Changing k to ",
+        warning("'k' is bigger than 'n'!  Changing 'k' to ",
                 k <- as.integer(1+ 2*((n - 1)%/% 2)))
     algorithm <-
         if(missing(algorithm)) { ## use efficient default
@@ -49,7 +50,7 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
             ", iend=",iend,")\n")
     res <- switch(algorithm,
                   Turlach = {
-                      .C("Trunmed",
+                      .C(R_Trunmed,
                          n,
                          k,
                          as.double(x),
@@ -59,18 +60,16 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
                          tmp3 = double (2*k +1),# window []
                          as.integer(iend),
                          as.integer(print.level),
-                         PACKAGE = "stats",
                          DUP = FALSE)$ rmed
                   },
                   Stuetzle = {
-                      .C("Srunmed",
+                      .C(R_Srunmed,
                          as.double(x),
                          smo = double(n),
                          n,
                          k,
                          as.integer(iend),
                          debug = (print.level > 0),
-                         PACKAGE = "stats",
                          DUP = FALSE)$ smo
                   })
     if(endrule == "median")
@@ -110,7 +109,7 @@ smoothEnds <- function(y, k = 3)
 
     k <- as.integer(k)
     if (k < 0 || k%%2 == 0)
-        stop("bandwidth `k' must be >= 1 and odd!")
+        stop("bandwidth 'k' must be >= 1 and odd!")
     k <- k %/% 2
     if (k < 1) return(y)
     ## else: k >= 1: do something

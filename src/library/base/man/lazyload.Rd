@@ -17,12 +17,12 @@ lazyLoad(filebase, envir = parent.frame(), filter)
 \details{
   This is the workhorse function called by the package loader to load
   the code for a package from a database.  The database consists of two
-  binary files, \code{filebase.rdb} (the objects) and \code{filebase.rdx}
-  (an index).
+  binary files, \file{\var{filebase}.rdb} (the objects) and
+  \file{\var{filebase}.rdx} (an index).
 
   The objects are not themselves loaded into \code{envir}: rather
   promises are created that will load the object from the database on
-  first access. (See \code{delay}.)
+  first access. (See \code{\link{delayedAssign}}.)
 }
 \author{Luke Tierney}
 \seealso{

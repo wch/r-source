@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* xbuf */
@@ -58,7 +58,8 @@ struct structConsoleData {
     int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
     bitmap bm;
 
-    int   input, cur_pos, max_pos, prompt_len;	/* editing */
+    int   input, cur_pos, cur_byte, max_pos, max_byte, 
+	prompt_len, prompt_wid; /* editing */
 
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
@@ -90,29 +91,23 @@ typedef struct structConsoleData *ConsoleData;
 #define VLINE(i) ((strlen(LINE(i))>FC) ? &LINE(i)[FC] : "")
 #define RLINE(i) (rect(0, BORDERY + (i)*FH, WIDTH, FH))
 #define RMLINES(i,j) (rect(0, BORDERY + (i)*FH, WIDTH, (j-i+1)*FH))
+#define cur_byte (p->cur_byte)
+#define max_byte (p->max_byte)
 #define cur_pos (p->cur_pos)
-#define max_pos (p->max_pos)
 #define prompt_len (p->prompt_len)
+#define prompt_wid (p->prompt_wid)
+#define CURCOL  (p->c)  /* column of cursor on whole line */
 
 #define WRITELINE(i, j) writeline(p, i, j)
 
 #define REDRAW drawconsole(c, getrect(c))
 
-#define FBEGIN { \
-                 ConsoleData p; \
-                 p = getdata(c); \
-               {
-
-#define FEND(result) } return result;}
-#define FVOIDEND }}
-#define FVOIDRETURN { return; }
-#define FRETURN(result) {return result;}
 
 #define RSHOW(r) {gbitblt(c, p->bm, topleft(r), r);}
 
 ConsoleData newconsoledata(font f, int rows, int cols,
     int bufbytes, int buflines,
-    rgb fg, rgb ufg, rgb bg, int kind);
+    rgb fg, rgb ufg, rgb bg, int kind, int buffered);
 
 void freeConsoleData(ConsoleData p);
 void setfirstvisible(control c, int fv);

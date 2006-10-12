@@ -5,7 +5,9 @@
 \alias{month.name}
 \alias{pi}
 \title{Built-in Constants}
-\description{Constants built into \R.}
+\description{
+  Constants built into \R.
+}
 \usage{
 LETTERS
 letters
@@ -38,10 +40,19 @@ pi
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{data}}.
+  \code{\link{data}}, \code{\link{DateTimeClasses}}.
+
+  \code{\link{Quotes}} for the parsing of character constants,
+  \code{\link{NumericConstants}} for numeric constants.
 }
 \examples{
 # John Machin (1705) computed 100 decimals of pi :
 pi - 4*(4*atan(1/5) - atan(1/239))
+
+## months in English
+month.name
+## months in your current locale
+format(ISOdate(2000, 1:12, 1), "\%B")
+format(ISOdate(2000, 1:12, 1), "\%b")
 }
 \keyword{sysdata}

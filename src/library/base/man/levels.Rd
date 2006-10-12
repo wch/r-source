@@ -13,7 +13,7 @@ levels(x) <- value
   The first form returns the value of the levels of its argument
   and the second sets the attribute.
 
-  The assignment form (\code{"levels<-"}) of \code{levels} is a generic
+  The replacement form (\code{"levels<-"}) of \code{levels} is a generic
   function and new methods can be written for it.
   The most important method is that for \code{\link{factor}}s:
 }
@@ -25,13 +25,18 @@ levels(x) <- value
     least the number of levels of \code{x}, or a named list specifying how to
     rename the levels.}
 }
+\details{
+  For the factor replacement method, a \code{NA} in \code{value}
+  causes that level to be removed from the levels and the elements
+  formerly with that level to be replaced by \code{NA}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{nlevels}}.
+  \code{\link{nlevels}}, \code{\link{relevel}}, \code{\link{reorder}}.
 }
 \examples{
 ## assign individual levels

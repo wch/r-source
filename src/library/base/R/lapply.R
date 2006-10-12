@@ -1,20 +1,20 @@
 lapply <- function (X, FUN, ...)
 {
     FUN <- match.fun(FUN)
-    if (!is.list(X)) X <- as.list(X)
-    rval <-.Internal(lapply(X, FUN))
-    names(rval) <- names(X)
-    return(rval)
+    ## internal code handles all vector types, including expressions
+    ## However, it would be OK to have attributes which is.vector
+    ## disallows.
+    if(!is.vector(X) || is.object(X)) X <- as.list(X)
+    .Internal(lapply(X, FUN))
 }
-if(FALSE) {
-lapply <- function(X, FUN, ...) {
-    FUN <- match.fun(FUN)
-    if (!is.list(X))
-	X <- as.list(X)
-    rval <- vector("list", length(X))
-    for(i in seq(along = X))
-	rval[i] <- list(FUN(X[[i]], ...))
-    names(rval) <- names(X)		  # keep `names' !
-    return(rval)
-}
+
+rapply <-
+    function(object, f, classes = "ANY", deflt = NULL,
+             how = c("unlist", "replace", "list"), ...)
+{
+    if(typeof(object) != "list")
+        stop("'object' must be a list")
+    how <- match.arg(how)
+    res <- .Internal(rapply(object, f, classes, deflt, how))
+    if(how == "unlist") unlist(res, recursive = TRUE) else res
 }

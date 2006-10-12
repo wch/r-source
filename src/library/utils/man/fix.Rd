@@ -13,8 +13,9 @@ fix(x, \dots)
   \item{\dots}{arguments to pass to editor: see \code{\link{edit}}.}
 }
 \details{
-  The name supplied as \code{x} need not exist as an \R object, when a
-  function with no arguments and an empty body is supplied for editing.
+  The name supplied as \code{x} need not exist as an \R object, in 
+  which case a function with no arguments and an empty body is supplied 
+  for editing.
 }
 \seealso{
   \code{\link{edit}},

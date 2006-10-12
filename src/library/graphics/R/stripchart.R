@@ -28,7 +28,8 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
     if(is.null(at))
 	at <- 1:n
     else if(length(at) != n)
-	stop("`at' must have length = no{groups}, i.e. ",n)
+	stop(gettextf("'at' must have length equal to the number %d of groups",
+                      n), domain = NA)
     if(!add) {
 	dlim <- c(NA, NA)
 	for(i in groups)
@@ -46,22 +47,22 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	plot(xlim, ylim, type="n", ann=FALSE, axes=FALSE, log=log)
 	box()
 	if(vertical) {
-	    if(n > 1) axis(1, at=at, lab=names(groups))
-	    axis(2)
+	    if(n > 1) axis(1, at=at, labels=names(groups))
+	    Axis(x, side = 2)
 	}
 	else {
-	    axis(1)
-	    if(n > 1) axis(2, at=at, lab=names(groups))
+	    Axis(x, side = 1)
+	    if(n > 1) axis(2, at=at, labels=names(groups))
 	}
     }
     csize <- cex*
 	if(vertical) xinch(par("cin")[1]) else yinch(par("cin")[2])
-    f <- function(x) seq(length=length(x))
+    f <- function(x) seq.int(length=length(x))
     for(i in 1:n) {
 	x <- groups[[i]]
 	y <- rep.int(at[i], length(x))
 	if(method == 2) ## jitter
-	    y <- y + runif(length(y), -jitter, jitter)
+	    y <- y + stats::runif(length(y), -jitter, jitter)
 	else if(method == 3) { ## stack
 	    xg <- split(x, factor(x))
 	    xo <- lapply(xg, f)

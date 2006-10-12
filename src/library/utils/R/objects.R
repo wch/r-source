@@ -9,7 +9,7 @@ findGeneric <- function(fname, envir)
         if(methods::is(fdeflt, "derivedDefaultMethod"))
             f <- fdeflt
         else
-            warning(sQuote(fname), " is a formal generic function; S3 methods will not likely be found")
+            warning(gettextf("'%s' is a formal generic function; S3 methods will not likely be found", fname), domain = NA)
     }
     isUMEbrace <- function(e) {
         for (ee in as.list(e[-1]))
@@ -56,7 +56,8 @@ methods <- function (generic.function, class)
     knownGenerics <- c(names(.knownS3Generics),
                        tools:::.get_internal_S3_generics())
 
-    an <- lapply(seq(along=(sp <- search())), ls)
+    sp <- search()
+    an <- lapply(seq_along(sp), ls)
     names(an) <- sp
     an <- unlist(an)
     an <- an[!duplicated(an)] # removed masked objects, *keep* names
@@ -67,12 +68,18 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
+        else if(!exists(generic.function, mode = "function",
+                        envir = parent.frame()))
+            stop(gettextf("no function '%s' is visible", generic.function),
+                 domain = NA)
         if(!any(generic.function == knownGenerics)) {
             truegf <- findGeneric(generic.function, parent.frame())
+            if(truegf == "")
+                warning(gettextf("function '%s' appears not to be generic",
+                                 generic.function), domain = NA)
             if(nchar(truegf) && truegf != generic.function) {
-                warning(paste("Generic", sQuote(generic.function),
-                              "dispatches methods for generic",
-                              sQuote(truegf)))
+                warning(gettextf("generic function '%s' dispatches methods for generic '%s'",
+                        generic.function, truegf), domain = NA)
                 generic.function <- truegf
             }
         }
@@ -144,7 +151,7 @@ methods <- function (generic.function, class)
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg = "registered S3method")
     }
-    else stop("must supply generic.function or class")
+    else stop("must supply 'generic.function' or 'class'")
 
     info <- info[sort.list(row.names(info)), ]
     res <- row.names(info)
@@ -159,7 +166,8 @@ print.MethodsFunction <- function(x, ...)
     if(length(x)) {
         print(paste(x, ifelse(visible, "", "*"), sep=""), quote=FALSE, ...)
         if(any(!visible))
-            cat("\n    Non-visible functions are asterisked\n")
+            cat("\n", "   ",
+                "Non-visible functions are asterisked", "\n", sep="")
     } else cat("no methods were found\n")
     invisible(x)
 }
@@ -174,7 +182,7 @@ getS3method <-  function(f, class, optional = FALSE)
         if(nchar(truegf)) f <- truegf
         else {
             if(optional) return(NULL)
-            else stop("no function '", f, "' could be found")
+            else stop(gettextf("no function '%s' could be found", f), domain = NA)
         }
     }
     method <- paste(f, class, sep=".")
@@ -194,7 +202,8 @@ getS3method <-  function(f, class, optional = FALSE)
     S3reg <- ls(S3Table)
     if(length(grep(gsub("([.[$])", "\\\\\\1", method), S3reg)))
         return(get(method, envir = S3Table))
-    if(optional) NULL else stop("S3 method ", method, " not found")
+    if(optional) NULL else stop(gettextf("S3 method '%s' not found", method),
+                                domain = NA)
 }
 
 getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
@@ -254,7 +263,7 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
     if (is.name(subx))
         subx <- deparse(subx)
     if (!is.character(subx) || length(subx) != 1)
-        stop("fixInNamespace requires a name")
+        stop("'fixInNamespace' requires a name")
     if(missing(ns)) {
         nm <- attr(envir, "name")
         if(is.null(nm) || substring(nm, 1, 8) != "package:")
@@ -281,8 +290,9 @@ getAnywhere <- function(x)
         for(i in 2:np) {
             gen <- paste(parts[1:(i-1)], collapse=".")
             cl <- paste(parts[i:np], collapse=".")
+            if (gen == "" || cl == "") next
             if(!is.null(f <- getS3method(gen, cl, TRUE))) {
-                ev <- topenv(environment(f), NULL)
+                ev <- topenv(environment(f), baseenv())
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
                 objs <- c(objs, f)
                 msg <- paste("registered S3 method for", gen)
@@ -307,7 +317,7 @@ getAnywhere <- function(x)
     ln <- length(objs)
     dups <- rep.int(FALSE, ln)
     objs2 <- lapply(objs, function(x) {
-        if(is.function(x)) environment(x) <- NULL
+        if(is.function(x)) environment(x) <- baseenv()
         x
     })
     if(ln > 1)
@@ -348,4 +358,15 @@ print.getAnywhere <- function(x, ...)
     if(!is.numeric(i)) stop("only numeric indices can be used")
     if(length(i) == 1) x$objs[[i]]
     else x$objs[i]
+}
+
+argsAnywhere <- function(x) {
+        name<-as.character(substitute(x))
+        fs<-do.call(getAnywhere, list(name))
+        if (sum(!fs$dups)==0)
+            return(NULL)
+        if (sum(!fs$dups)>1)
+            sapply(fs$objs[!fs$dups],
+                   function(f) if (is.function(f)) args(f))
+        else args(fs$objs[[1]])
 }

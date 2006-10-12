@@ -1,6 +1,7 @@
 \name{faithful}
 \docType{data}
 \alias{faithful}
+\encoding{latin1}
 \title{Old Faithful Geyser Data}
 \description{
   Waiting time between eruptions and the duration of the eruption for
@@ -11,12 +12,12 @@
   \tabular{rlll}{
     [,1]  \tab eruptions  \tab numeric  \tab Eruption time in mins \cr
     [,2]  \tab waiting    \tab numeric  \tab Waiting time to next
-    eruption \cr
+    eruption (in mins)\cr
   }
 }
 \source{W. Härdle.}
 \references{
-  Härdle, W. (1991)
+  \enc{Härdle}{Haerdle}, W. (1991)
   \emph{Smoothing Techniques with Implementation in S}.
   New York: Springer.
 
@@ -34,7 +35,7 @@
   (1990) use a more complete version.
 }
 \seealso{
-  \code{geyser} in package \pkg{MASS} for the Azzalini-Bowman version.
+  \code{geyser} in package \pkg{MASS} for the Azzalini--Bowman version.
 }
 \examples{
 f.tit <-  "faithful data: Eruptions of Old Faithful"

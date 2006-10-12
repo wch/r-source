@@ -1,4 +1,8 @@
 ## tests of boundary cases in read.table()
+
+## force standard handling for character cols
+options(stringsAsFactors=TRUE)
+
 # empty file
 file.create("foo1")
 try(read.table("foo1")) # fails
@@ -97,4 +101,24 @@ cat('%comment\n\n%another\n%\n%\n',
 read.table("test.dat", comment.char = "%")
 unlink("test.dat")
 
+## test on Windows Unicode file
+if(capabilities("iconv")) {
+    print(scan(file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
+                    encoding="UCS-2LE"), 0, quiet=TRUE))
+} else print(1:8)
+
+## tests of allowEscape
+x <- "1 2 3 \\ab\\c"
+writeLines(x, "test.dat")
+readLines("test.dat")
+scan("test.dat", "", allowEscapes=TRUE)
+scan("test.dat", "", allowEscapes=FALSE)
+read.table("test.dat", header=FALSE, allowEscapes=TRUE)
+read.table("test.dat", header=FALSE, allowEscapes=FALSE)
+x <- c("TEST", 1, 2, "\\b", 4, 5, "\\040", "\\x20",
+       "c:\\spencer\\tests",
+       "\\t", "\\n", "\\r")
+writeLines(x, "test.dat")
+read.table("test.dat", allowEscapes=FALSE, header = TRUE)
+unlink("test.dat")
 ## end of tests

@@ -49,6 +49,9 @@ as.Date(x, \ldots)
   \pkg{\link[survival:as.date]{survival}}) and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}).
 
+  See the examples for how to convert a day given as the number of days
+  since an epoch.
+
   The \code{format} and \code{as.character} methods ignore any
   fractional part of the date.
 }
@@ -73,11 +76,14 @@ as.Date(x, \ldots)
   Years before 1CE (aka 1AD) will probably not be handled correctly.
 }
 \references{
-  International Organization for Standardization (1988, 1997, \dots)
+  International Organization for Standardization (2004, 1988, 1997,
+  \dots)
   \emph{ISO 8601. Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}
-  The 1997 version is available on-line at
-  \url{ftp://ftp.qsl.net/pub/g1smd/8601v03.pdf}
+  For links to versions available on-line see (at the time of writing)
+  \url{http://www.qsl.net/g1smd/isopdf.htm}; for information on the
+  current official version, see
+  \url{http://www.iso.org/iso/en/prods-services/popstds/datesandtime.html}.
 }
 \seealso{
   \link{Date} for details of the date class;
@@ -108,6 +114,9 @@ z
 ## read in date/time info in format 'm/d/y'
 dates <- c("02/27/92", "02/27/92", "01/14/92", "02/28/92", "02/01/92")
 as.Date(dates, "\%m/\%d/\%y")
+
+## date given as number of days since 1900-01-01 (a date in 1989)
+as.Date("1900-01-01") + 32768
 }
 \keyword{utilities}
 \keyword{chron}

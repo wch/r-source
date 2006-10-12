@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003 The R Development Core Team
+ *                2003-5 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
 #include "grid.h"
@@ -68,12 +68,12 @@ SEXP viewportLayout(SEXP vp) {
     return VECTOR_ELT(vp, VP_LAYOUT);
 }
 
-int viewportHJust(SEXP vp) {
-    return INTEGER(VECTOR_ELT(vp, VP_VALIDJUST))[0];
+double viewportHJust(SEXP vp) {
+    return REAL(VECTOR_ELT(vp, VP_VALIDJUST))[0];
 }
 
-int viewportVJust(SEXP vp) {
-    return INTEGER(VECTOR_ELT(vp, VP_VALIDJUST))[1];
+double viewportVJust(SEXP vp) {
+    return REAL(VECTOR_ELT(vp, VP_VALIDJUST))[1];
 }
 
 SEXP viewportLayoutPosRow(SEXP vp) {
@@ -184,8 +184,8 @@ void copyViewportContext(LViewportContext vpc1, LViewportContext *vpc2)
     vpc2->yscalemax = vpc1.yscalemax;
 }
 
-void gcontextFromViewport(SEXP vp, R_GE_gcontext *gc) {
-    gcontextFromgpar(viewportgpar(vp), 0, gc);
+void gcontextFromViewport(SEXP vp, R_GE_gcontext *gc, GEDevDesc *dd) {
+    gcontextFromgpar(viewportgpar(vp), 0, gc, dd);
 }
 
 /* The idea is to produce a transformation for this viewport which
@@ -268,7 +268,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	 * 
 	 * WAS gcontextFromViewport(parent, &parentgc);
 	 */
-	gcontextFromgpar(viewportParentGPar(vp), 0, &parentgc);
+	gcontextFromgpar(viewportParentGPar(vp), 0, &parentgc, dd);
 	/* In order for the vp to get its vpl from a layout
 	 * it must have specified a layout.pos and the parent
 	 * must have a layout
@@ -279,7 +279,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	     isNull(viewportLayoutPosCol(vp))) ||
 	    isNull(viewportLayout(parent)))
 	    fillViewportLocationFromViewport(vp, &vpl);
-	else
+	else if (checkPosRowPosCol(vp, parent))
 	    calcViewportLocationFromLayout(viewportLayoutPosRow(vp),
 					   viewportLayoutPosCol(vp),
 					   parent,
@@ -314,7 +314,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 	!R_FINITE(yINCHES) || 
 	!R_FINITE(vpWidthCM) || 
 	!R_FINITE(vpHeightCM))
-	error("Non-finite location and/or size for viewport");
+	error(_("Non-finite location and/or size for viewport"));
     /* Determine justification required
      */
     justification(vpWidthCM, vpHeightCM, vpl.hjust, vpl.vjust,
@@ -347,7 +347,7 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
      */
     if (!isNull(viewportLayout(vp))) {
 	fillViewportContextFromViewport(vp, &vpc);
-	gcontextFromViewport(vp, &gc);
+	gcontextFromViewport(vp, &gc, dd);
 	calcViewportLayout(vp, vpWidthCM, vpHeightCM, vpc, &gc, dd);
     }
     /* Record all of the answers in the viewport

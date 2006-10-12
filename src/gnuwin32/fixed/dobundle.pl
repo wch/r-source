@@ -21,7 +21,7 @@ foreach $pkg (@pkgs) {
     open pkgdesc, "> $srcdir/$bundle/$pkg/DESCRIPTION" 
 	|| die "cannot write $pkg/DESCRIPTION";
     if (open pkgdescin, "< $srcdir/$bundle/$pkg/DESCRIPTION.in") {
-	while(<pkgdescin>) { print pkgdesc $_; }
+	while(<pkgdescin>) { print pkgdesc $_ if $_ =~ /\S/; }
 	close pkgdescin;
     } else {
 	print "no DESCRIPTION.in found for package $pkg";
@@ -29,9 +29,7 @@ foreach $pkg (@pkgs) {
     }
     open bundledesc, "< $srcdir/$bundle/DESCRIPTION" 
 	|| die "no DESCRIPTION found";
-    while(<bundledesc>) {
-	if(!/^Contains:/) {print pkgdesc $_;}
-    }
+    while(<bundledesc>) {print pkgdesc $_;}
     close bundledesc;
     close pkgdesc;
     $cmd = "make PKGDIR=$srcdir/$bundle RLIB=$destdir pkg-$pkg";

@@ -5,19 +5,20 @@
   Read text lines from a connection.
 }
 \usage{
-readLines(con = stdin(), n = -1, ok = TRUE)
+readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
 }
 \arguments{
-  \item{con}{A connection object or a character string.}
+  \item{con}{a connection object or a character string.}
   \item{n}{integer.  The (maximal) number of lines to
     read. Negative values indicate that one should read up to the end of
     the connection.}
-  \item{ok}{logical. Is it OK to reach the end of the connection before
+  \item{ok}{logical.  Is it OK to reach the end of the connection before
     \code{n > 0} lines are read? If not, an error will be generated.}
+  \item{warn}{logical.  Warn if a text file is missing a final EOL.}
 }
 \details{
-  If the \code{con} is a character string, the functions call
-  \code{\link{file}} to obtain an file connection which is opened for
+  If the \code{con} is a character string, the function calls
+  \code{\link{file}} to obtain a file connection which is opened for
   the duration of the function call.
 
   If the connection is open it is read from its current position.

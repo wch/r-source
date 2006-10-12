@@ -11,33 +11,38 @@
 \usage{
 wilcox.test(x, \dots)
 
-\method{wilcox.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+\method{wilcox.test}{default}(x, y = NULL,
+            alternative = c("two.sided", "less", "greater"),
             mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
             conf.int = FALSE, conf.level = 0.95, \dots)
 
 \method{wilcox.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
-  \item{x}{numeric vector of data values.}
+  \item{x}{numeric vector of data values.  Non-finite (e.g. infinite or
+    missing) values will be omitted.}
   \item{y}{an optional numeric vector of data values.}
   \item{alternative}{a character string specifying the alternative
     hypothesis, must be one of \code{"two.sided"} (default),
     \code{"greater"} or \code{"less"}.  You can specify just the initial
     letter.}
-  \item{mu}{a number specifying an optional location parameter.}
+  \item{mu}{a number specifying an optional parameter used to form the
+    null hypothesis.  See Details.}
   \item{paired}{a logical indicating whether you want a paired test.}
-  \item{exact}{a logical indicating whether an exact p-value should be
-    computed.}
+  \item{exact}{a logical indicating whether an exact \eqn{p}-value
+    should be computed.}
   \item{correct}{a logical indicating whether to apply continuity
-    correction in the normal approximation for the p-value.}
+    correction in the normal approximation for the \eqn{p}-value.}
   \item{conf.int}{a logical indicating whether a confidence interval
     should be computed.}
   \item{conf.level}{confidence level of the interval.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
     is a numeric variable giving the data values and \code{rhs} a factor
     with two levels giving the corresponding groups.}
-  \item{data}{an optional data frame containing the variables in the
-    model formula.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
@@ -51,18 +56,21 @@ wilcox.test(x, \dots)
   If only \code{x} is given, or if both \code{x} and \code{y} are given
   and \code{paired} is \code{TRUE}, a Wilcoxon signed rank test of the
   null that the distribution of \code{x} (in the one sample case) or of
-  \code{x-y} (in the paired two sample case) is symmetric about
+  \code{x - y} (in the paired two sample case) is symmetric about
   \code{mu} is performed.
 
   Otherwise, if both \code{x} and \code{y} are given and \code{paired}
   is \code{FALSE}, a Wilcoxon rank sum test (equivalent to the
-  Mann-Whitney test) is carried out.  In this case, the null hypothesis
-  is that the location of the distributions of \code{x} and \code{y}
-  differ by \code{mu}.
+  Mann-Whitney test: see the Note) is carried out.  In this case, the
+  null hypothesis is that the distributions of \code{x} and \code{y}
+  differ by a location shift of \code{mu} and the alternative is that
+  they differ by some other location shift (and the one-sided
+  alternative \code{"greater"} is that \code{x} is shifted to the right
+  of \code{y}).
 
-  By default (if \code{exact} is not specified), an exact p-value is
-  computed if the samples contain less than 50 finite values and there
-  are no ties.  Otherwise, a normal approximation is used.
+  By default (if \code{exact} is not specified), an exact \eqn{p}-value
+  is computed if the samples contain less than 50 finite values and
+  there are no ties.  Otherwise, a normal approximation is used.
 
   Optionally (if argument \code{conf.int} is true), a nonparametric
   confidence interval and an estimator for the pseudomedian (one-sample
@@ -71,11 +79,15 @@ wilcox.test(x, \dots)
   of the distribution of \eqn{(u+v)/2}, where \eqn{u} and \eqn{v} are
   independent, each with distribution \eqn{F}.  If \eqn{F} is symmetric,
   then the pseudomedian and median coincide.  See Hollander & Wolfe
-  (1973), page 34.)  If exact p-values are available, an exact
+  (1973), page 34.)  If exact \eqn{p}-values are available, an exact
   confidence interval is obtained by the algorithm described in Bauer
   (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
   returned confidence interval and point estimate are based on normal
   approximations.
+  
+  With small samples it may not be possible to achieve very high
+  confidence interval coverages. If this happens a warning will be given
+  and an interval with lower coverage will be substituted.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -83,7 +95,7 @@ wilcox.test(x, \dots)
     describing it.}
   \item{parameter}{the parameter(s) for the exact distribution of the
     test statistic.}
-  \item{p.value}{the p-value for the test.}
+  \item{p.value}{the \eqn{p}-value for the test.}
   \item{null.value}{the location parameter \code{mu}.}
   \item{alternative}{a character string describing the alternative
     hypothesis.}
@@ -94,22 +106,51 @@ wilcox.test(x, \dots)
   \item{estimate}{an estimate of the location parameter.
     (Only present if argument \code{conf.int = TRUE}.)}
 }
-\references{
-  Myles Hollander & Douglas A. Wolfe (1973),
-  \emph{Nonparametric statistical inference}.
-  New York: John Wiley & Sons.
-  Pages 27--33 (one-sample), 68--75 (two-sample).
+\note{
+  The literature is not unanimous about the definitions of the Wilcoxon
+  rank sum and Mann-Whitney tests.  The two most common definitions
+  correspond to the sum of the ranks of the first sample with the
+  minimum value subtracted or not: \R subtracts and S-PLUS does not,
+  giving a value which is larger by \eqn{m(m+1)/2} for a first sample
+  of size \eqn{m}.  (It seems Wilcoxon's original paper used the
+  unadjusted sum of the ranks but subsequent tables subtracted the
+  minimum.)
 
+  \R's value can also be computed as the number of all pairs
+  \code{(x[i], y[j])} for which \code{y[j]} is not greater than
+  \code{x[i]}, the most common definition of the Mann-Whitney test.
+}
+\section{Warning}{
+  This function can use large amounts of memory and stack (and even
+  crash \R if the stack limit is exceeded) if \code{exact = TRUE} and
+  one sample is large (several thousands or more). 
+}
+\references{
   David F. Bauer (1972),
   Constructing confidence sets using rank statistics.
   \emph{Journal of the American Statistical Association}
   \bold{67}, 687--690.
+
+  Myles Hollander & Douglas A. Wolfe (1973),
+  \emph{Nonparametric statistical inference}.
+  New York: John Wiley & Sons.
+  Pages 27--33 (one-sample), 68--75 (two-sample).\cr
+  Or second edition (1999).
 }
 \seealso{
+  \code{\link{psignrank}}, \code{\link{pwilcox}}.
+
+  \code{\link[exactRankTests]{wilcox.exact}}
+  in \pkg{exactRankTests} covers much of the same ground, but also
+  produces exact \eqn{p}-values in the presence of ties.
+
+  \code{\link[coin]{wilcox_test}} in package \pkg{coin} for exact and
+  approximate \emph{conditional} \eqn{p}-values for the Wilcoxon tests.
+  
   \code{\link{kruskal.test}} for testing homogeneity in location
   parameters in the case of two or more samples;
-  \code{\link{t.test}} for a parametric alternative under normality
-  assumptions.
+  \code{\link{t.test}} for an alternative under normality
+  assumptions [or large samples]
 }
 \examples{
 ## One-sample test.

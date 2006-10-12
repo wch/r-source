@@ -1,39 +1,24 @@
 \name{ns-lowlev}
 \title{Low Level Name Space Support Functions}
 
-\alias{attachNamespace}
-\alias{loadNamespace}
-\alias{loadedNamespaces}
-\alias{unloadNamespace}
 \alias{loadingNamespaceInfo}
 \alias{saveNamespaceImage}
 
+\description{
+  Low level name space support functions.
+}
 \usage{
-attachNamespace(ns, pos = 2, dataPath = NULL)
-loadNamespace(package, lib.loc = NULL,
-              keep.source = getOption("keep.source.pkgs"),
-              partial = FALSE, declarativeOnly = FALSE)
-loadedNamespaces()
-unloadNamespace(ns)
 loadingNamespaceInfo()
 saveNamespaceImage(package, rdafile, lib.loc = NULL,
                    keep.source = getOption("keep.source.pkgs"),
                    compress = TRUE)
 }
 \arguments{
-  \item{ns}{string or namespace object.}
-  \item{pos}{integer specifying position to attach.}
-  \item{dataPath}{path to directory containing a database of datasets to
-    be lazy-loaded into the attached environment.}
   \item{package}{string naming the package/name space to load.}
+  \item{rdafile}{name of file to save to.}
   \item{lib.loc}{character vector specifying library search path.}
   \item{keep.source}{logical specifying whether to retain source.}
-  \item{partial}{logical; if true, stop just after loading code.}
-  \item{declarativeOnly}{logical; disables \code{.Import}, etc, if true.}
   \item{compress}{option passed to \code{\link{save}}.}
-}
-\description{
-  Low level name space support functions.
 }
 \details{
   The functions \code{loadNamespace} and \code{attachNamespace} are
@@ -63,7 +48,7 @@ saveNamespaceImage(package, rdafile, lib.loc = NULL,
   \code{unloadNamespace} can be used to force
   a name space to be unloaded.  An error is signaled if the name space
   is imported by other loaded name spaces.  If defined, a hook
-  function \code{\code{.onUnload}} is run
+  function \code{\link{.onUnload}} is run
   before removing the name space from the internal registry.
   \code{unloadNamespace} will first \code{\link{detach}} a package of
   the same name if one is on the path, thereby running a

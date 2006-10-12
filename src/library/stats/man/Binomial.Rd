@@ -21,7 +21,7 @@ rbinom(n, size, prob)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{size}{number of trials.}
+  \item{size}{number of trials (zero or more).}
   \item{prob}{probability of success on each trial.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -52,10 +52,23 @@ rbinom(n, size, prob)
   \code{\link{dnbinom}} for the negative binomial, and
   \code{\link{dpois}} for the Poisson distribution.
 }
-\references{
+\source{
+  For \code{dbinom} a saddle-point expansion is used: see
+  
   Catherine Loader (2000). \emph{Fast and Accurate Computation of
-    Binomial Probabilities}; manuscript available from
-  \url{http://cm.bell-labs.com/cm/ms/departments/sia/catherine/dbinom}
+    Binomial Probabilities}; available from
+  \url{http://www.herine.net/stat/software/dbinom.html}.
+
+  \code{pbinom} uses \code{\link{pbeta}}.
+
+  \code{qbinom} uses the Cornish--Fisher Expansion to include a skewness
+  correction to a normal approximation, followed by a search.
+
+  \code{rbinom} is based on
+
+  Kachitvichyanukul, V. and Schmeiser, B. W. (1988)
+  Binomial random variate generation.
+  \emph{Communications of the ACM}, \bold{31}, 216--222.
 }
 \examples{
 # Compute P(45 < X < 55) for X Binomial(100,0.5)

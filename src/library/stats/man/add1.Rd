@@ -28,7 +28,7 @@ drop1(object, scope, \dots)
       k = 2, trace = FALSE, \dots)
 
 \method{drop1}{lm}(object, scope, scale = 0, all.cols = TRUE,
-      test=c("none", "Chisq", "F"),k = 2, \dots)
+      test = c("none", "Chisq", "F"), k = 2, \dots)
 
 \method{drop1}{glm}(object, scope, scale = 0, test = c("none", "Chisq", "F"),
       k = 2, \dots)
@@ -50,9 +50,9 @@ drop1(object, scope, \dots)
   \item{trace}{if \code{TRUE}, print out progress reports.}
   \item{x}{a model matrix containing columns for the fitted model and all
     terms in the upper scope.  Useful if \code{add1} is to be called
-    repeatedly.}
-  \item{all.cols}{(Provided for compatibility with S.) Logical to specify
-    whether all columns of the design matrix should be used. If
+    repeatedly.  \bold{Warning:} no checks are done on its validity.}
+  \item{all.cols}{(Provided for compatibility with S.)  Logical to specify
+    whether all columns of the design matrix should be used.  If
     \code{FALSE} then non-estimable columns are dropped, but the result
     is not usually statistically meaningful.}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -68,6 +68,8 @@ drop1(object, scope, \dots)
   to be added or dropped: all main effects contained in a second-order
   interaction must remain, and so on.
 
+  In a \code{scope} formula \code{.} means \sQuote{what is already there}.
+
   The methods for \code{\link{lm}} and \code{\link{glm}} are more
   efficient in that they do not recompute the model matrix and call the
   \code{fit} methods directly.
@@ -79,6 +81,10 @@ drop1(object, scope, \dots)
   with fixed scale, the constant is chosen to give Mallows' \eqn{C_p}{Cp},
   \eqn{RSS/scale + 2p - n}.  Where \eqn{C_p}{Cp} is used,
   the column is labelled as \code{Cp} rather than \code{AIC}.
+
+  The F tests for the \code{"glm"} methods are based on analysis of
+  deviance tests, so if the dispersion is estimated it is based on the
+  residual deviance, unlike the F tests of \code{\link{anova.glm}}.
 }
 \value{
   An object of class \code{"anova"} summarizing the differences in fit
@@ -106,8 +112,8 @@ drop1(object, scope, \dots)
   The model fitting must apply the models to the same dataset. Most
   methods will attempt to use a subset of the data with no missing
   values for any of the variables if \code{na.action=na.omit}, but
-  this may give biased results.  Only use
-  these functions with data containing missing values with great care.
+  this may give biased results.  Only use these functions with data
+  containing missing values with great care.
 }
 \seealso{
   \code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},

@@ -12,23 +12,26 @@
 \title{Fit Autoregressive Models to Time Series}
 \usage{
 ar(x, aic = TRUE, order.max = NULL,
-   method=c("yule-walker", "burg", "ols", "mle", "yw"), na.action,
-   series, \dots)
+   method=c("yule-walker", "burg", "ols", "mle", "yw"),
+   na.action, series, \dots)
 
 ar.burg(x, \dots)
 \method{ar.burg}{default}(x, aic = TRUE, order.max = NULL,
-        na.action = na.fail, demean = TRUE, series, var.method = 1, \dots)
+        na.action = na.fail, demean = TRUE, series,
+        var.method = 1, \dots)
 \method{ar.burg}{mts}(x, aic = TRUE, order.max = NULL,
-        na.action = na.fail, demean = TRUE, series, var.method = 1, \dots)
+        na.action = na.fail, demean = TRUE, series,
+        var.method = 1, \dots)
 
 ar.yw(x, \dots)
 \method{ar.yw}{default}(x, aic = TRUE, order.max = NULL,
       na.action = na.fail, demean = TRUE, series, \dots)
 \method{ar.yw}{mts}(x, aic = TRUE, order.max = NULL,
-      na.action = na.fail, demean = TRUE, series, \dots)
+      na.action = na.fail, demean = TRUE, series,
+      var.method = 1, \dots)
 
-ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail, demean = TRUE,
-       series, \dots)
+ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
+       demean = TRUE, series, \dots)
 
 \method{predict}{ar}(object, newdata, n.ahead = 1, se.fit = TRUE, \dots)
 }
@@ -128,8 +131,10 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail, demean = TRUE,
     are set to \code{NA}. If \code{x} is a time series, so is \code{resid}.}
   \item{method}{The value of the \code{method} argument.}
   \item{series}{The name(s) of the time series.}
-  \item{asy.var.coef}{(univariate case.) The asymptotic-theory
-    variance matrix of the coefficient estimates.}
+  \item{frequency}{The frequency of the time series.}
+  \item{call}{The matched call.}
+  \item{asy.var.coef}{(univariate case, \code{order > 0}.)
+    The asymptotic-theory variance matrix of the coefficient estimates.}
 
   For \code{predict.ar}, a time series of predictions, or if
   \code{se.fit = TRUE}, a list with components \code{pred}, the
@@ -148,7 +153,8 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail, demean = TRUE,
 }
 
 \seealso{
-  \code{\link{ar.ols}}, \code{\link{arima0}} for ARMA models.
+  \code{\link{ar.ols}}, \code{\link{arima0}} for ARMA models;
+  \code{\link{acf2AR}}, for AR construction from the ACF.
 }
 
 \references{

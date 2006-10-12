@@ -1,5 +1,9 @@
 \name{getDLLRegisteredRoutines}
 \alias{getDLLRegisteredRoutines}
+\alias{getDLLRegisteredRoutines.character}
+\alias{getDLLRegisteredRoutines.DLLInfo}
+\alias{print.NativeRoutineList}
+\alias{print.DLLRegisteredRoutines}
 \title{Reflectance Information for C/Fortran routines in a DLL}
 \description{
   This function allows us to query the set of routines
@@ -12,15 +16,19 @@
   and \code{\link{.External}}.
 }
 \usage{
-getDLLRegisteredRoutines(dll)
+getDLLRegisteredRoutines(dll, addNames = TRUE)
 }
 \arguments{
-  \item{dll}{a \code{DLLInfo} object.  This can be retrieved
-    from the object returned from \code{\link{getLoadedDLLs}}.
-    Essentially, it provides  information about the name and location
-    of the DLL, whether R uses dynamic lookup when resolving symbols in
-    the DLL and also references to the R data structures that allow us
-    to resolve symbols (i.e. \code{DllInfo} and \code{HINSTANCE}).}
+  \item{dll}{a character string or \code{DLLInfo} object (as returned by
+    \code{\link{getLoadedDLLs}}).
+  }
+  \item{addNames}{a logical value. If this is \code{TRUE}, the elements
+    of the returned lists are named using the names of the routines (as
+    seen by R via registration or raw name).  If \code{FALSE},
+    these names are not computed and assigned to the lists.  As a
+    result, the call should be quicker.  The name information is also
+    available in the \code{NativeSymbolInfo} objects in the lists.
+  }
 }
 \details{
   This takes the registration information after it has been registered
@@ -36,17 +44,16 @@ getDLLRegisteredRoutines(dll)
   of class \code{NativeSymbolInfo}.
   An object of this class has the following fields:
   \item{name}{the registered name of the routine (not necessarily the
-    name in the C code)}
+    name in the C code).}
   \item{address}{the memory address of the routine as resolved in the
-    loaded DLL. This may be \code{NULL} if the symbol has not yet been resolved.}
+    loaded DLL. This may be \code{NULL} if the symbol has not yet been
+    resolved.}
   \item{dll}{an object of class \code{DLLInfo} describing the DLL.
-         This is same for all elements returned from \code{getDLLRegisteredRoutines}.}
+    This is same for all elements returned.}
   \item{numParameters}{the number of arguments the native routine is to
-        be called with. In the future, we will provide information about
-        the types of the parameters also.
-       }
-  
-  
+    be called with. In the future, we will provide information about
+    the types of the parameters also.
+  }
 }
 \references{
   "Writing R Extensions Manual" for symbol registration.
@@ -58,10 +65,10 @@ getDLLRegisteredRoutines(dll)
   \code{\link{getLoadedDLLs}}
 }
 \examples{
+dlls <- getLoadedDLLs()
+getDLLRegisteredRoutines(dlls[["base"]])
 
- dlls = getLoadedDLLs()
-
- getDLLRegisteredRoutines(dlls[["base"]])
+getDLLRegisteredRoutines("stats")
 }
 \keyword{interface}
 

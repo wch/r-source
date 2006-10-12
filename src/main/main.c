@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2001   The R Development Core Team
- *  Copyright (C) 2002--2004  The R Foundation
+ *  Copyright (C) 1998-2006   The R Development Core Team
+ *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,9 +16,11 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
  */
+
+/* <UTF8> char here is either ASCII or handled as a whole */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -27,7 +29,7 @@
 #define __MAIN__
 #include "Defn.h"
 #include "Graphics.h"
-#include "Rdevices.h"		/* for InitGraphics */
+#include <Rdevices.h>		/* for InitGraphics */
 #include "IOStuff.h"
 #include "Fileio.h"
 #include "Parse.h"
@@ -41,13 +43,16 @@
 # include <langinfo.h>
 #endif
 
-#ifdef HAVE_AQUA
-extern void InitAquaIO(void);			/* from src/modules/aqua/aquaconsole.c */
-extern void RSetConsoleWidth(void);		/* from src/modules/aqua/aquaconsole.c */
-extern Rboolean CocoaGUI;				/* from src/unix/system.c              */
+#ifdef ENABLE_NLS
+void attribute_hidden nl_Rdummy()
+{
+    /* force this in as packages use it */
+    dgettext("R", "dummy - do not translate");
+}
 #endif
 
-/* The `real' main() program is in ../<SYSTEM>/system.c */
+
+/* The 'real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
 
 /* Global Variables:  For convenience, all interpeter global symbols
@@ -62,14 +67,13 @@ extern Rboolean CocoaGUI;				/* from src/unix/system.c              */
  * in separate platform dependent modules.
  */
 
-void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible);
+void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
+			     Rboolean visible);
 
 static int ParseBrowser(SEXP, SEXP);
 
-static void onpipe(int);
-
+ 
 extern void InitDynload();
-
 
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
@@ -98,7 +102,7 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 		PrintWarnings();
 	    break;
 	case PARSE_ERROR:
-	    error("syntax error: evaluating expression %d", count);
+	    parseError(R_NilValue, count);
 	    break;
 	case PARSE_EOF:
 	    return;
@@ -128,11 +132,11 @@ char *R_PromptString(int browselevel, int type)
 		return BrowsePrompt;
 	    }
 	    return (char*)CHAR(STRING_ELT(GetOption(install("prompt"),
-						    R_NilValue), 0));
+						    R_BaseEnv), 0));
 	}
 	else {
 	    return (char*)CHAR(STRING_ELT(GetOption(install("continue"),
-						    R_NilValue), 0));
+						    R_BaseEnv), 0));
 	}
     }
 }
@@ -168,7 +172,7 @@ typedef struct {
   ParseStatus    status;
   int            prompt_type;
   int            browselevel;
-  unsigned char  buf[1025];
+  unsigned char  buf[CONSOLE_BUFFER_SIZE+1];
   unsigned char *bufp;
 } R_ReplState;
 
@@ -199,7 +203,8 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
     if(!*state->bufp) {
 	    R_Busy(0);
 	    if (R_ReadConsole(R_PromptString(browselevel, state->prompt_type),
-			      state->buf, 1024, 1) == 0) return(-1);
+			      state->buf, CONSOLE_BUFFER_SIZE, 1) == 0)
+		return(-1);
 	    state->bufp = state->buf;
     }
 #ifdef SHELL_ESCAPE
@@ -207,7 +212,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 #ifdef HAVE_SYSTEM
 	    R_system(&(state->buf[1]));
 #else
-	    Rprintf("error: system commands are not supported in this version of R.\n");
+	    REprintf(_("error: system commands are not supported in this version of R.\n"));
 #endif /* HAVE_SYSTEM */
 	    state->buf[0] = '\0';
 	    return(0);
@@ -225,60 +230,60 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 
     case PARSE_NULL:
 
-	    if (browselevel)
-		    return(-1);
-	    R_IoBufferWriteReset(&R_ConsoleIob);
-	    state->prompt_type = 1;
-	    return(1);
+	/* The intention here is to break on CR but not on other 
+	   null statements: see PR#9063 */
+	if (browselevel && !strcmp((char *) state->buf, "\n")) return -1;
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	state->prompt_type = 1;
+	return(1);
 
     case PARSE_OK:
 
- 	    R_IoBufferReadReset(&R_ConsoleIob);
-	    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
-	    if (browselevel) {
-		    browsevalue = ParseBrowser(R_CurrentExpr, rho);
-		    if(browsevalue == 1 )
-			    return(-1);
-		    if(browsevalue == 2 ) {
-			    R_IoBufferWriteReset(&R_ConsoleIob);
-			    return(0);
-		    }
+	R_IoBufferReadReset(&R_ConsoleIob);
+	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
+	if (browselevel) {
+	    browsevalue = ParseBrowser(R_CurrentExpr, rho);
+	    if(browsevalue == 1) return(-1);
+	    if(browsevalue == 2) {
+		R_IoBufferWriteReset(&R_ConsoleIob);
+		return(0);
 	    }
-	    R_Visible = 0;
-	    R_EvalDepth = 0;
-	    PROTECT(R_CurrentExpr);
-	    R_Busy(1);
-	    value = eval(R_CurrentExpr, rho);
-	    SET_SYMVALUE(R_LastvalueSymbol, value);
-	    wasDisplayed = R_Visible;
-	    if (R_Visible)
-		    PrintValueEnv(value, rho);
-	    if (R_CollectWarnings)
-		PrintWarnings();
-	    Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, wasDisplayed);
-	    R_CurrentExpr = value; /* Necessary? Doubt it. */
-	    UNPROTECT(1);
-	    R_IoBufferWriteReset(&R_ConsoleIob);
-	    state->prompt_type = 1;
-	    return(1);
+	}
+	R_Visible = 0;
+	R_EvalDepth = 0;
+	PROTECT(R_CurrentExpr);
+	R_Busy(1);
+	value = eval(R_CurrentExpr, rho);
+	SET_SYMVALUE(R_LastvalueSymbol, value);
+	wasDisplayed = R_Visible;
+	if (R_Visible)
+	    PrintValueEnv(value, rho);
+	if (R_CollectWarnings)
+	    PrintWarnings();
+	Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, wasDisplayed);
+	R_CurrentExpr = value; /* Necessary? Doubt it. */
+	UNPROTECT(1);
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	state->prompt_type = 1;
+	return(1);
 
     case PARSE_ERROR:
 
-	    state->prompt_type = 1;
-	    error("syntax error");
-	    R_IoBufferWriteReset(&R_ConsoleIob);
-	    return(1);
+	state->prompt_type = 1;
+	parseError(R_NilValue, 0);
+	R_IoBufferWriteReset(&R_ConsoleIob);
+	return(1);
 
     case PARSE_INCOMPLETE:
 
-	    R_IoBufferReadReset(&R_ConsoleIob);
-	    state->prompt_type = 2;
-	    return(2);
+	R_IoBufferReadReset(&R_ConsoleIob);
+	state->prompt_type = 2;
+	return(2);
 
     case PARSE_EOF:
 
-	    return(-1);
-	    break;
+	return(-1);
+	break;
     }
 
     return(0);
@@ -291,7 +296,8 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     state.buf[0] = '\0';
-    state.buf[1024] = '\0'; /* stopgap measure if line > 1024 chars */
+    state.buf[CONSOLE_BUFFER_SIZE] = '\0'; 
+    /* stopgap measure if line > CONSOLE_BUFFER_SIZE chars */
     state.bufp = state.buf;
     if(R_Verbose)
 	REprintf(" >R_ReplConsole(): before \"for(;;)\" {main.c}\n");
@@ -303,7 +309,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 }
 
 
-static unsigned char DLLbuf[1024], *DLLbufp;
+static unsigned char DLLbuf[CONSOLE_BUFFER_SIZE+1], *DLLbufp;
 
 void R_ReplDLLinit()
 {
@@ -311,7 +317,7 @@ void R_ReplDLLinit()
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
-    DLLbuf[0] = '\0';
+    DLLbuf[0] = DLLbuf[CONSOLE_BUFFER_SIZE] = '\0';
     DLLbufp = DLLbuf;
 }
 
@@ -324,7 +330,8 @@ int R_ReplDLLdo1()
 
     if(!*DLLbufp) {
 	R_Busy(0);
-	if (R_ReadConsole(R_PromptString(0, prompt_type), DLLbuf, 1024, 1) == 0)
+	if (R_ReadConsole(R_PromptString(0, prompt_type), DLLbuf,
+			  CONSOLE_BUFFER_SIZE, 1) == 0)
 	    return -1;
 	DLLbufp = DLLbuf;
     }
@@ -359,7 +366,7 @@ int R_ReplDLLdo1()
 	prompt_type = 1;
 	break;
     case PARSE_ERROR:
-	error("syntax error");
+	parseError(R_NilValue, 0);
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	prompt_type = 1;
 	break;
@@ -384,11 +391,248 @@ FILE* R_OpenSysInitFile(void);
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 
-static void handleInterrupt(int dummy)
+static RETSIGTYPE handleInterrupt(int dummy)
 {
     R_interrupts_pending = 1;
     signal(SIGINT, handleInterrupt);
 }
+
+
+#ifdef Win32
+static int num_caught = 0;
+
+static void win32_segv(int signum)
+{
+    /* NB: stack overflow is not an access violation on Win32 */
+    {   /* A simple customized print of the traceback */
+	SEXP trace, p, q;
+	int line = 1, i;
+	PROTECT(trace = R_GetTraceback(0));
+	if(trace != R_NilValue) {
+	    REprintf("\nTraceback:\n");
+	    for(p = trace; p != R_NilValue; p = CDR(p), line++) {
+		q = CAR(p); /* a character vector */
+		REprintf("%2d: ", line);
+		for(i = 0; i < LENGTH(q); i++)
+		    REprintf("%s", CHAR(STRING_ELT(q, i)));
+		REprintf("\n");
+	    }
+	    UNPROTECT(1);
+	}
+    }
+    num_caught++;
+    if(num_caught < 10) signal(signum, win32_segv);
+    if(signum == SIGILL)  
+	error("caught access violation - continue with care");
+    else
+	error("caught access violation - continue with care");
+}
+#endif
+
+#if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_SIGEMPTYSET)
+
+/* NB: this really isn't safe, but suffices for experimentation for now.
+   In due course just set a flag and do this after the return.  OTOH,
+   if we do want to bail out with a core dump, need to do that here.
+
+   2005-12-17 BDR */
+
+static unsigned char ConsoleBuf[CONSOLE_BUFFER_SIZE];
+extern void R_CleanTempDir();
+
+static void sigactionSegv(int signum, siginfo_t *ip, void *context)
+{
+    char *s;
+
+    /* First check for stack overflow if we know the stack position.
+       We assume anything within 16Mb beyond the stack end is a stack overflow.
+     */
+    if(signum == SIGSEGV && (ip != (siginfo_t *)0) && 
+       (long) R_CStackStart != -1) {
+	long addr = (long) ip->si_addr;
+	long diff = (R_CStackDir > 0) ? R_CStackStart - addr:
+	    addr - R_CStackStart;
+	long upper = 0x1000000;  /* 16Mb */
+	if((long) R_CStackLimit != -1) upper += R_CStackLimit;
+	if(diff > 0 && diff < upper) {
+	    REprintf(_("Error: segfault from C stack overflow\n"));
+	    jump_to_toplevel();	
+	}    
+    }
+
+    /* need to take off stack checking as stack base has changed */
+    R_CStackLimit = (unsigned long)-1;
+
+    /* Do not translate these messages */
+    REprintf("\n *** caught %s ***\n", 
+	     signum == SIGILL ? "illegal operation" : 
+	     signum == SIGBUS ? "bus error" : "segfault");
+    if(ip != (siginfo_t *)0) {
+	if(signum == SIGILL) {
+	    
+	    switch(ip->si_code) {
+#ifdef ILL_ILLOPC
+	    case ILL_ILLOPC:
+		s = "illegal opcode";
+		break;
+#endif
+#ifdef ILL_ILLOPN
+	    case ILL_ILLOPN:
+		s = "illegal operand";
+		break;
+#endif
+#ifdef ILL_ILLADR
+	    case ILL_ILLADR:
+		s = "illegal addressing mode";
+		break;
+#endif
+#ifdef ILL_ILLTRP
+	    case ILL_ILLTRP:
+		s = "illegal trap";
+		break;
+#endif
+#ifdef ILL_COPROC
+	    case ILL_COPROC:
+		s = "coprocessor error";
+		break;
+#endif
+	    default:
+		s = "unknown";
+		break;
+	    }
+	} else if(signum == SIGBUS)
+	    switch(ip->si_code) {
+#ifdef BUS_ADRALN
+	    case BUS_ADRALN:
+		s = "invalid alignment";
+		break;
+#endif
+#ifdef BUS_ADRERR /* not on MacOS X, apparently */
+	    case BUS_ADRERR:
+		s = "non-existent physical address";
+		break;
+#endif
+#ifdef BUS_OBJERR /* not on MacOS X, apparently */
+	    case BUS_OBJERR:
+		s = "object specific hardware error";
+		break;
+#endif
+	    default:
+		s = "unknown";
+		break;
+	    }
+	else
+	    switch(ip->si_code) {
+#ifdef SEGV_MAPERR
+	    case SEGV_MAPERR:
+		s = "memory not mapped";
+		break;
+#endif
+#ifdef SEGV_ACCERR
+	    case SEGV_ACCERR:
+		s = "invalid permissions";
+		break;
+#endif
+	    default:
+		s = "unknown";
+		break;
+	    }
+	REprintf("address %p, cause '%s'\n", ip->si_addr, s);
+    }
+    {   /* A simple customized print of the traceback */
+	SEXP trace, p, q;
+	int line = 1, i;
+	PROTECT(trace = R_GetTraceback(0));
+	if(trace != R_NilValue) {
+	    REprintf("\nTraceback:\n");
+	    for(p = trace; p != R_NilValue; p = CDR(p), line++) {
+		q = CAR(p); /* a character vector */
+		REprintf("%2d: ", line);
+		for(i = 0; i < LENGTH(q); i++)
+		    REprintf("%s", CHAR(STRING_ELT(q, i)));
+		REprintf("\n");
+	    }
+	    UNPROTECT(1);
+	}
+    }
+    if(R_Interactive) {
+	REprintf("\nPossible actions:\n1: %s\n2: %s\n3: %s\n4: %s\n", 
+		 "abort (with core dump)", 
+		 "normal R exit", 
+		 "exit R without saving workspace",
+		 "exit R saving workspace");
+	while(1) {
+	    if(R_ReadConsole("Selection: ", ConsoleBuf, CONSOLE_BUFFER_SIZE, 
+			     0) > 0) {
+		if(ConsoleBuf[0] == '1') break;
+		if(ConsoleBuf[0] == '2') R_CleanUp(SA_DEFAULT, 0, 1);
+		if(ConsoleBuf[0] == '3') R_CleanUp(SA_NOSAVE, 70, 0);
+		if(ConsoleBuf[0] == '4') R_CleanUp(SA_SAVE, 71, 0);
+	    }
+	}
+    }
+    REprintf("aborting ...\n");
+    R_CleanTempDir();
+    /* now do normal behaviour, e.g. core dump */
+    signal(signum, SIG_DFL);
+    raise(signum);
+}
+
+#ifndef SIGSTKSZ
+# define SIGSTKSZ 8192    /* just a guess */
+#endif
+
+#ifdef HAVE_STACK_T
+static stack_t sigstk;
+#else
+static struct sigaltstack sigstk;
+#endif
+static void *signal_stack;
+
+#define R_USAGE 100000 /* Just a guess */
+static void init_signal_handlers()
+{
+    /* <FIXME> may need to reinstall this if we do recover. */
+    struct sigaction sa;
+    signal_stack = malloc(SIGSTKSZ + R_USAGE);
+    if (signal_stack != NULL) {
+        sigstk.ss_sp = signal_stack;
+        sigstk.ss_size = SIGSTKSZ + R_USAGE;
+        sigstk.ss_flags = 0;
+        if(sigaltstack(&sigstk, NULL) < 0)
+	    warning("failed to set alternate signal stack");
+    } else
+	warning("failed to allocate alternate signal stack");
+    sa.sa_sigaction = sigactionSegv;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
+    sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGILL, &sa, NULL);
+#ifdef SIGBUS
+    sigaction(SIGBUS, &sa, NULL);
+#endif
+
+    signal(SIGINT,  handleInterrupt);
+    signal(SIGUSR1, onsigusr1);
+    signal(SIGUSR2, onsigusr2);
+    signal(SIGPIPE, SIG_IGN);
+}
+
+#else /* not sigaltstack and sigaction and sigemptyset*/
+static void init_signal_handlers()
+{
+    signal(SIGINT,  handleInterrupt);
+    signal(SIGUSR1, onsigusr1);
+    signal(SIGUSR2, onsigusr2);
+#ifndef Win32
+    signal(SIGPIPE, SIG_IGN);
+#else
+    signal(SIGSEGV, win32_segv);
+    signal(SIGILL, win32_segv);
+#endif
+}
+#endif
+
 
 static void R_LoadProfile(FILE *fparg, SEXP env)
 {
@@ -396,14 +640,14 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
     if (fp != NULL) {
 	if (! SETJMP(R_Toplevel.cjmpbuf)) {
 	    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-	    signal(SIGINT, handleInterrupt);
-#endif
 	    R_ReplFile(fp, env, 0, 0);
 	}
 	fclose(fp);
     }
 }
+
+
+int R_SignalHandlers = 1;  /* Exposed in R_interface.h */
 
 /* Use this to allow e.g. Win32 malloc to call warning.
    Don't use R-specific type, e.g. Rboolean */
@@ -415,6 +659,9 @@ void setup_Rmainloop(void)
     volatile SEXP baseEnv;
     SEXP cmd;
     FILE *fp;
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX+20];
+#endif
 
     InitConnections(); /* needed to get any output at all */
 
@@ -428,23 +675,56 @@ void setup_Rmainloop(void)
 	if(p) strcpy(Rlocale, p); else strcpy(Rlocale, "");
 	if((p = getenv("LC_CTYPE"))) setlocale(LC_CTYPE, p);
 	else setlocale(LC_CTYPE, Rlocale);
+	/* LC_CTYPE=C bombs in mingwex */
+	if(strcmp(setlocale(LC_CTYPE, NULL), "C") == 0) 
+	    setlocale(LC_CTYPE, "en");
 	if((p = getenv("LC_COLLATE"))) setlocale(LC_COLLATE, p);
 	else setlocale(LC_COLLATE, Rlocale);
 	if((p = getenv("LC_TIME"))) setlocale(LC_TIME, p);
 	else setlocale(LC_TIME, Rlocale);
+	if((p = getenv("LC_MONETARY"))) setlocale(LC_MONETARY, p);
+	else setlocale(LC_MONETARY, Rlocale);
+	/* Windows does not have LC_MESSAGES */
     }
 #else
     setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
     setlocale(LC_COLLATE, "");/*- alphabetically sorting */
     setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
-    /* setlocale(LC_MESSAGES,""); */
+    setlocale(LC_MONETARY, "");/*- currency units */
+#ifdef ENABLE_NLS
+    setlocale(LC_MESSAGES,""); /* language for messages */
+#endif
+    /* NB: we do not set LC_NUMERIC */
+#ifdef LC_PAPER
+    setlocale(LC_PAPER,"");
+#endif
+#ifdef LC_MEASUREMENT
+    setlocale(LC_MEASUREMENT,"");
 #endif
 #endif
-#if defined(Unix) || defined(Win32)
+#ifdef ENABLE_NLS
+    /* This ought to have been done earlier, but be sure */
+    textdomain(PACKAGE);
+    {
+	char *p = getenv("R_SHARE_DIR");
+	if(p) {
+	    strcpy(localedir, p);
+	    strcat(localedir, "/locale");
+	} else {
+	    strcpy(localedir, R_Home);
+	    strcat(localedir, "/share/locale");
+	}
+    }
+    bindtextdomain(PACKAGE, localedir);
+    strcpy(localedir, R_Home); strcat(localedir, "/library/base/po");
+    bindtextdomain("R-base", localedir);
+#endif
+#endif
+
     InitTempDir(); /* must be before InitEd */
-#endif
     InitMemory();
     InitNames();
+    InitBaseEnv();
     InitGlobalEnv();
     InitDynload();
     InitOptions();
@@ -453,14 +733,21 @@ void setup_Rmainloop(void)
     InitColors();
     InitGraphics();
     R_Is_Running = 1;
-#ifdef HAVE_AQUA 
-    if( (strcmp(R_GUIType, "AQUA") == 0) & !CocoaGUI){ 
-		InitAquaIO(); /* must be after InitTempDir() */
-		RSetConsoleWidth();
-	}
-#endif
 #ifdef HAVE_LANGINFO_CODESET
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
+#endif
+#ifdef SUPPORT_MBCS
+    mbcslocale = MB_CUR_MAX > 1;
+#endif
+#ifdef Win32
+    {
+	char *ctype = setlocale(LC_CTYPE, NULL), *p;
+	p = strrchr(ctype, '.');
+	if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 1252;
+    }
+#endif
+#if defined(Win32) && defined(SUPPORT_UTF8)
+    utf8locale = mbcslocale = TRUE;
 #endif
     /* gc_inhibit_torture = 0; */
 
@@ -474,8 +761,8 @@ void setup_Rmainloop(void)
     R_Toplevel.promargs = R_NilValue;
     R_Toplevel.callfun = R_NilValue;
     R_Toplevel.call = R_NilValue;
-    R_Toplevel.cloenv = R_NilValue;
-    R_Toplevel.sysparent = R_NilValue;
+    R_Toplevel.cloenv = R_BaseEnv;
+    R_Toplevel.sysparent = R_BaseEnv;
     R_Toplevel.conexit = R_NilValue;
     R_Toplevel.vmax = NULL;
 #ifdef BYTECODE
@@ -486,14 +773,14 @@ void setup_Rmainloop(void)
 #endif
     R_Toplevel.cend = NULL;
     R_Toplevel.intsusp = FALSE;
-#ifdef NEW_CONDITION_HANDLING
     R_Toplevel.handlerstack = R_HandlerStack;
     R_Toplevel.restartstack = R_RestartStack;
-#endif
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 
     R_Warnings = R_NilValue;
 
+    /* This is the same as R_BaseEnv, but this marks the environment
+       of functions as the namespace and not the package. */
     baseEnv = R_BaseNamespace;
 
     /* Set up some global variables */
@@ -506,19 +793,13 @@ void setup_Rmainloop(void)
     */
 
     fp = R_OpenLibraryFile("base");
-    if (fp == NULL) {
-	R_Suicide("unable to open the base package\n");
-    }
+    if (fp == NULL)
+	R_Suicide(_("unable to open the base package\n"));
 
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, handleInterrupt);
-    signal(SIGUSR1,onsigusr1);
-    signal(SIGUSR2,onsigusr2);
-#ifdef Unix
-    signal(SIGPIPE, onpipe);
-#endif
+    if (R_SignalHandlers) init_signal_handlers();
     if (!doneit) {
 	doneit = 1;
 	R_ReplFile(fp, baseEnv, 0, 0);
@@ -531,6 +812,15 @@ void setup_Rmainloop(void)
     */
 
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
+    /* These are the same bindings, so only lock them once */
+    R_LockEnvironment(R_BaseNamespace, TRUE);
+#ifdef NOTYET
+    /* methods package needs to trample here */
+    R_LockEnvironment(R_BaseEnv, TRUE);
+#endif
+    /* At least temporarily unlock some bindings uses in graphics */
+    R_unLockBinding(install(".Device"), R_BaseEnv);
+    R_unLockBinding(install(".Devices"), R_BaseEnv);
 
     if (strcmp(R_GUIType, "Tk") == 0) {
 	char buf[256];
@@ -544,8 +834,10 @@ void setup_Rmainloop(void)
      */
     if(!R_Quiet) {
 	PrintGreeting();
+#ifndef SUPPORT_UTF8
 	if(utf8locale)
-	    R_ShowMessage("WARNING: UTF-8 locales are not currently supported\n");
+	    R_ShowMessage(_("WARNING: UTF-8 locales are not supported in this build of R\n"));
+#endif
     }
 
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
@@ -560,20 +852,12 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    signal(SIGINT, handleInterrupt);
-    signal(SIGUSR1,onsigusr1);
-    signal(SIGUSR2,onsigusr2);
-#ifdef Unix
-    signal(SIGPIPE, onpipe);
-#endif
-#endif
     if (!doneit) {
 	doneit = 1;
 	R_InitialData();
     }
     else
-    	R_Suicide("unable to restore saved data in .RData\n");
+    	R_Suicide(_("unable to restore saved data in .RData\n"));
 
     /* Initial Loading is done.
        At this point we try to invoke the .First Function.
@@ -582,9 +866,6 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    signal(SIGINT, handleInterrupt);
-#endif
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First"));
@@ -603,9 +884,6 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    signal(SIGINT, handleInterrupt);
-#endif
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First.sys"));
@@ -619,20 +897,24 @@ void setup_Rmainloop(void)
 	UNPROTECT(1);
     }
     /* gc_inhibit_torture = 0; */
+    if (R_CollectWarnings) {
+	REprintf(_("During startup - "));
+	PrintWarnings();
+    }
 }
+
+extern SA_TYPE SaveAction; /* from src/main/startup.c */
 
 void end_Rmainloop(void)
 {
-    Rprintf("\n");
+    /* refrain from printing trailing '\n' only if quiet flag is on and
+       the save action is known (e.g. implied by --slave) */
+    if (!R_Quiet ||
+	(SaveAction != SA_NOSAVE && SaveAction != SA_SAVE))
+        Rprintf("\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
     R_CleanUp(SA_DEFAULT, 0, 1);
-}
-
-static void onpipe(int dummy)
-{
-    /* do nothing */
-    signal(SIGPIPE, onpipe);
 }
 
 void run_Rmainloop(void)
@@ -642,14 +924,6 @@ void run_Rmainloop(void)
     R_IoBufferInit(&R_ConsoleIob);
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-    signal(SIGINT, handleInterrupt);
-    signal(SIGUSR1,onsigusr1);
-    signal(SIGUSR2,onsigusr2);
-#ifdef Unix
-    signal(SIGPIPE, onpipe);
-#endif
-#endif
     R_ReplConsole(R_GlobalEnv, 0, 0);
     end_Rmainloop(); /* must go here */
 }
@@ -658,10 +932,6 @@ void mainloop(void)
 {
     setup_Rmainloop();
     run_Rmainloop();
-    /* NO! Don't do that! It ends up in a longjmp for which the
-       setjmp is inside run_Rmainloop! -pd
-    end_Rmainloop();
-    */
 }
 
 /*this functionality now appears in 3
@@ -673,32 +943,34 @@ static void printwhere(void)
   int lct = 1;
 
   for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-    if ((cptr->callflag & CTXT_FUNCTION) &&
+    if ((cptr->callflag & (CTXT_FUNCTION | CTXT_BUILTIN)) &&
 	(TYPEOF(cptr->call) == LANGSXP)) {
-	Rprintf("where %d: ",lct++);
+	Rprintf("where %d: ", lct++);
 	PrintValue(cptr->call);
     }
   }
   Rprintf("\n");
 }
 
+
 static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
-    int rval=0;
+    int rval = 0;
     if (isSymbol(CExpr)) {
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"n")) {
+	char *expr = CHAR(PRINTNAME(CExpr));
+	if (!strcmp(expr, "n")) {
 	    SET_DEBUG(rho, 1);
-	    rval=1;
+	    rval = 1;
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"c")) {
-	    rval=1;
+	if (!strcmp(expr, "c")) {
+	    rval = 1;
 	    SET_DEBUG(rho, 0);
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"cont")) {
-	    rval=1;
+	if (!strcmp(expr, "cont")) {
+	    rval = 1;
 	    SET_DEBUG(rho, 0);
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
+	if (!strcmp(expr, "Q")) {
 
 	    /* Run onexit/cend code for everything above the target.
                The browser context is still on the stack, so any error
@@ -710,14 +982,14 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 
 	    /* this is really dynamic state that should be managed as such */
 	    R_BrowseLevel = 0;
-	    SET_DEBUG(rho,0); /*PR#1721*/
+	    SET_DEBUG(rho, 0); /*PR#1721*/
 
 	    jump_to_toplevel();
 	}
-	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
+	if (!strcmp(expr, "where")) {
 	    printwhere();
-	    SET_DEBUG(rho, 1);
-	    rval=2;
+	    /* SET_DEBUG(rho, 1); */
+	    rval = 2;
 	}
     }
     return rval;
@@ -731,13 +1003,12 @@ static void browser_cend(void *data)
     R_BrowseLevel = *psaved - 1;
 }
 
-SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *saveToplevelContext;
     RCNTXT *saveGlobalContext;
     RCNTXT thiscontext, returncontext, *cptr;
-    int savestack;
-    int savebrowselevel;
+    int savestack, savebrowselevel, tmp;
     SEXP topExp;
 
     /* Save the evaluator state information */
@@ -750,11 +1021,14 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     saveGlobalContext = R_GlobalContext;
 
     if (!DEBUG(rho)) {
-	cptr=R_GlobalContext;
+	cptr = R_GlobalContext;
 	while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
 	    cptr = cptr->nextcontext;
 	Rprintf("Called from: ");
+	tmp = asInteger(GetOption(install("deparse.max.lines"), R_BaseEnv));
+	if(tmp != NA_INTEGER && tmp > 0) R_BrowseLines = tmp;
 	PrintValueRec(cptr->call,rho);
+	R_BrowseLines = 0;
     }
 
     R_ReturnedValue = R_NilValue;
@@ -766,25 +1040,20 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* acts as a target for error returns. */
 
     begincontext(&returncontext, CTXT_BROWSER, call, rho,
-		 R_NilValue, R_NilValue, R_NilValue);
+		 R_BaseEnv, R_NilValue, R_NilValue);
     returncontext.cend = browser_cend;
     returncontext.cenddata = &savebrowselevel;
     if (!SETJMP(returncontext.cjmpbuf)) {
 	begincontext(&thiscontext, CTXT_RESTART, R_NilValue, rho,
-		     R_NilValue, R_NilValue, R_NilValue);
+		     R_BaseEnv, R_NilValue, R_NilValue);
 	if (SETJMP(thiscontext.cjmpbuf)) {
 	    SET_RESTART_BIT_ON(thiscontext.callflag);
 	    R_ReturnedValue = R_NilValue;
 	    R_Visible = 0;
 	}
 	R_GlobalContext = &thiscontext;
-#ifdef NEW_CONDITION_HANDLING
 	R_InsertRestartHandlers(&thiscontext, TRUE);
-#endif
 	R_BrowseLevel = savebrowselevel;
-#ifdef REINSTALL_SIGNAL_HANDLERS
-	signal(SIGINT, handleInterrupt);
-#endif
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
 	endcontext(&thiscontext);
     }
@@ -820,22 +1089,22 @@ void R_dot_Last(void)
     UNPROTECT(1);
 }
 
-SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char *tmp;
     int ask=SA_DEFAULT, status, runLast;
 
     if(R_BrowseLevel) {
-	warning("can't quit from browser");
+	warning(_("cannot quit from browser"));
 	return R_NilValue;
     }
     if( !isString(CAR(args)) )
-	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.");
+	errorcall(call, _("one of \"yes\", \"no\", \"ask\" or \"default\" expected."));
     tmp = CHAR(STRING_ELT(CAR(args), 0));
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
 	if(!R_Interactive)
-	    warningcall(call, "save=\"ask\" in non-interactive use: command-line default will be used");
+	    warningcall(call, _("save=\"ask\" in non-interactive use: command-line default will be used"));
     } else if( !strcmp(tmp, "no") )
 	ask = SA_NOSAVE;
     else if( !strcmp(tmp, "yes") )
@@ -843,15 +1112,15 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if( !strcmp(tmp, "default") )
 	ask = SA_DEFAULT;
     else
-	errorcall(call, "unrecognized value of save");
+	errorcall(call, _("unrecognized value of 'save'"));
     status = asInteger(CADR(args));
     if (status == NA_INTEGER) {
-        warningcall(call, "invalid status, 0 assumed");
+        warningcall(call, _("invalid 'status', 0 assumed"));
 	runLast = 0;
     }
     runLast = asLogical(CADDR(args));
     if (runLast == NA_LOGICAL) {
-        warningcall(call, "invalid runLast, FALSE assumed");
+        warningcall(call, _("invalid 'runLast', FALSE assumed"));
 	runLast = 0;
     }
     /* run the .Last function. If it gives an error, will drop back to main
@@ -882,7 +1151,7 @@ Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
     R_ToplevelCallbackEl *el;
     el = (R_ToplevelCallbackEl *) malloc(sizeof(R_ToplevelCallbackEl));
     if(!el)
-	error("cannot allocate space for toplevel callback element.");
+	error(_("cannot allocate space for toplevel callback element"));
 
     el->data = data;
     el->cb = cb;
@@ -960,7 +1229,7 @@ Rf_removeTaskCallbackByIndex(int id)
     Rboolean status = TRUE;
 
     if(id < 0)
-	error("negative index passed to R_removeTaskCallbackByIndex");
+	error(_("negative index passed to R_removeTaskCallbackByIndex"));
 
     if(Rf_ToplevelTaskHandlers) {
 	if(id == 0) {
@@ -994,7 +1263,7 @@ Rf_removeTaskCallbackByIndex(int id)
 
 /**
   R-level entry point to remove an entry from the
-  list of top-level callbacks. `which' should be an
+  list of top-level callbacks. 'which' should be an
   integer and give us the 0-based index of the element
   to be removed from the list.
 
@@ -1073,7 +1342,7 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
     while(h) {
 	again = (h->cb)(expr, value, succeeded, visible, h->data);
 	if(R_CollectWarnings) {
-	    REprintf("warning messages from top-level task callback `%s'\n", 
+	    REprintf(_("warning messages from top-level task callback '%s'\n"), 
 		     h->name);
 	    PrintWarnings();
 	}
@@ -1133,7 +1402,7 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
 	PROTECT(val);
 	if(TYPEOF(val) != LGLSXP) {
               /* It would be nice to identify the function. */
-	    warning("top-level task callback did not return a logical value");
+	    warning(_("top-level task callback did not return a logical value"));
 	}
 	again = asLogical(val);
 	UNPROTECT(1);

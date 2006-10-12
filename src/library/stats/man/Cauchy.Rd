@@ -43,10 +43,20 @@ rcauchy(n, location = 0, scale = 1)
   }{f(x) = 1 / (pi s (1 + ((x-l)/s)^2))}
   for all \eqn{x}.
 }
+\source{
+  \code{dcauchy}, \code{pcauchy} and \code{qcauchy} are all calculated
+  from numerically stable versions of the definitions.
+
+  \code{rcauchy} uses inversion.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 1, chapter 16.
+  Wiley, New York.
 }
 \seealso{
   \code{\link{dt}} for the t distribution which generalizes

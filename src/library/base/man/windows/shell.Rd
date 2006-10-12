@@ -3,16 +3,16 @@
 \title{Invoke a System Command, using a Shell}
 
 \usage{
-shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
-      translate=FALSE, mustWork=FALSE, ...)
+shell(cmd, shell, flag = "/c", intern = FALSE, wait = TRUE,
+      translate = FALSE, mustWork = FALSE, ...)
 }
 
 \arguments{
   \item{cmd}{the system command to be invoked, as a string.}
   \item{shell}{a string giving the name of the shell to be used, or
-    \code{NULL} (no shell). If missing, a suitable shell is chosen:
+    \code{NULL} (no shell).  If missing, a suitable shell is chosen:
     see \sQuote{Details}.}
-  \item{flag}{the switch to run a command under the shell. If the
+  \item{flag}{the switch to run a command under the shell.  If the
     shell is \code{bash} or \code{tcsh} the default is changed to
     \code{"-c"}.}
   \item{intern}{a logical, indicates whether to make the output of the
@@ -38,7 +38,7 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
   command could not be run.
 
   If \code{intern=FALSE}, the return value is an error code, given the
-  invisible attribute (so needs to be printed explicitly). If the
+  invisible attribute (so needs to be printed explicitly).  If the
   command could not be run for any reason, the value is \code{-1} and
   an \R warning is generated. Otherwise if \code{wait=FALSE} the value
   is the error code returned by the command, and if \code{wait=TRUE}

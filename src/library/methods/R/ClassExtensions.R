@@ -4,7 +4,8 @@
                                                coerce = "function", test = "function",
                                                replace = "function",
                                                simple = "logical", by = "character",
-                                               dataPart = "logical"),
+                                               dataPart = "logical",
+                                               distance = "numeric"),
              where = where)
     assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"), where);
 }
@@ -46,10 +47,9 @@
     from@.Data <- value
     from
 }
-    
+
 .ErrorReplace <- function(from, to, value)
-    stop(paste("No replace method was defined for as(x, \"", to,
-               "\") <- value for class \"", class(from), "\"", sep=""))
+    stop(gettextf("no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\"", to, class(from)), domain = NA)
 
 .objectSlotNames <- function(object) {
     ## a quick version that makes no attempt to check the class definition
@@ -63,7 +63,7 @@
 makeExtends <- function(Class, to,
                         coerce = NULL, test = NULL, replace = NULL,
                         by = character(), package,
-                        slots = names(getSlots(classDef1)),
+                        slots = getSlots(classDef1),
                         classDef1 = getClass(Class), classDef2) {
     ## test for datapart class:  must be the data part class, except
     ## that extensions within the basic classes are allowed (numeric, integer)
@@ -71,13 +71,18 @@ makeExtends <- function(Class, to,
         .identC(cl1, cl2) ||
           (extends(cl1, cl2) && !any(is.na(match(c(cl1, cl2), .BasicClasses))))
     }
+    packageEnv <- .requirePackage(package)
     class1Defined <- missing(slots) # only at this time can we construct methods
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
+    distance <- 1
+    ##FIX ME:  when by is supplied, should use the existing extension information
+    ## to compute distance
     dataPartClass <- elNamed(slots, ".Data")
     dataPart <- FALSE
     if(simple && !is.null(dataPartClass)) {
-        if(isClass(dataPartClass) && isClass(to)) {
-            ## note that dataPart, to are looked up in the methods package & parents:
+        if(!(is.null(getClassDef(dataPartClass)) || is.null(getClassDef(to)))) {
+            ## note that dataPart, to are looked up in the methods package & parents,
+            ## because the default in getClassDef is the topenv of the caller (this fun.):
             ## Assertion is that only these classes are allowed as data slots
             dataPart <- dataEquiv(dataPartClass, to)
         }
@@ -85,28 +90,27 @@ makeExtends <- function(Class, to,
     if(is.null(coerce)) {
         coerce <- .simpleExtCoerce
         if(!isVirtualClass(classDef2))
-            body(coerce, envir = environment(coerce)) <-
-                 .simpleCoerceExpr(Class, to, slots, classDef2)
+            body(coerce, envir = packageEnv) <-
+                 .simpleCoerceExpr(Class, to, names(slots), classDef2)
     }
     else if(is(coerce, "function")) {
         ## we allow definitions with and without the `strict' argument
         ## but create a  function that can be called with the argument
         if(length(formals(coerce)) == 1) {
-            coerce <- .ChangeFormals(coerce, .simpleIsCoerce, "`coerce' argument to setIs ")
+            coerce <- .ChangeFormals(coerce, .simpleIsCoerce, "'coerce' argument to setIs ")
             tmp <- .simpleExtCoerce
             body(tmp, envir = environment(coerce)) <- body(coerce)
             coerce <- tmp
         }
         else
-            coerce <- .ChangeFormals(coerce, .simpleExtCoerce, "`coerce' argument to setIs ")
-        
+            coerce <- .ChangeFormals(coerce, .simpleExtCoerce, "'coerce' argument to setIs ")
+
     }
-    else stop("The `coerce' argument to setIs should be a function of one argument, got an object of class \"",
-              class(coerce), "\"")
+    else stop(gettextf("the 'coerce' argument to 'setIs' should be a function of one argument, got an object of class \"%s\"", class(coerce)), domain = NA)
     if(is.null(test))
         test <- .simpleExtTest
     else
-        test <- .ChangeFormals(test, .simpleExtTest, "`test' argument to setIs ")
+        test <- .ChangeFormals(test, .simpleExtTest, "'test' argument to setIs ")
     if(is.null(replace)) {
         if(dataPart) {
             extn <- elNamed(classDef2@contains, dataPartClass)
@@ -126,60 +130,62 @@ makeExtends <- function(Class, to,
         else if(simple) {
             replace <- .simpleExtReplace
             if(isVirtualClass(classDef2)) {  # a simple is to a virtual class => a union
-                body(replace, envir = environment(replace)) <-
+                body(replace, envir = packageEnv) <-
                     substitute({
                         if(!is(value, TO))
-                            stop("The computation: as(object,\"", TO,
-                                 "\") <- value is valid when object has class",
-                                 FROM, "\" only if is(value, \"",TO,"\") is TRUE ( class(value) was \"",
-                                 class(value), "\")")
+                            stop(gexttextf("the computation: as(object,\"%s\") <- value is valid when object has class \"%s\" only if is(value, \"%s\") is TRUE (class(value) was \"%s\")\n",
+                                 TO, FROM, TO, class(value)), domain = NA)
                         value
                     }, list(FROM = Class, TO = to))
             }
             else if(class1Defined && length(slots) == 0) {
-                ## check for Class, to having the same representation
+                ## check for the classes having the same representation
                 ## (including the case of no slots)
-                ext <- getAllSuperClasses(classDef1)
+                ext <- getAllSuperClasses(classDef1, TRUE)
                 toSlots <- classDef2@slots
                 sameSlots <- TRUE
-                for(eclass in ext)
-                    if(!.identC(eclass, to) && isClass(eclass) &&
-                       length(getClassDef(eclass)@slots) > 0) {
+                for(eclass in ext) {
+                    ## does any superclass other than "to" have slots?
+                    if(.identC(eclass, to))
+                        next
+                    edef <- getClassDef(eclass, where = packageEnv)
+                    if(!is.null(edef) && length(edef@slots) > 0) {
                         sameSlots <- FALSE
                         break
                     }
+                }
                 if(sameSlots)
-                    body(replace, envir = environment(replace)) <-
+                    body(replace, envir = packageEnv) <-
                         substitute({class(value) <- FROM; value}, list(FROM = Class))
                 else if(length(toSlots) == 0) # seems replacement not defined in this case?
                     replace <- .ErrorReplace
             }
+            else
+                body(replace, envir = packageEnv) <-
+                    .simpleReplaceExpr(classDef2)
         }
         else
             replace <- .ErrorReplace
         if(identical(replace, .ErrorReplace))
-            warning("There is no automatic definition for as(object, \"", to,
-                    "\") <- value when object has class \"", Class,
-                    "\" and no replace= argument was supplied; replacement will be an error")
+            warning(gettextf("there is no automatic definition for as(object, \"%s\") <- value when object has class \"%s\" and no 'replace' argument was supplied; replacement will be an error", to, Class), domain = NA)
     }
     else if(is(replace, "function")) {
         ## turn function of two or three arguments into correct 3-arg form
         if(length(formals(replace)) == 2) {
-            replace <- .ChangeFormals(replace, .dataPartReplace2args, "`replace' argument to setIs ")
+            replace <- .ChangeFormals(replace, .dataPartReplace2args, "'replace' argument to setIs ")
             tmp  <- .ErrorReplace
             body(tmp, envir = environment(replace)) <- body(replace)
             replace <- tmp
         }
         else
-            replace <- .ChangeFormals(replace, .ErrorReplace, "`replace' argument to setIs ")
+            replace <- .ChangeFormals(replace, .ErrorReplace, "'replace' argument to setIs ")
     }
     else
-        stop("the replace= argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"",
-             class(replace), "\"")
+        stop(gettextf("the 'replace' argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"%s\"", class(replace)), domain = NA)
     new("SClassExtension", subClass = Class, superClass = to, package = package, coerce = coerce,
-               test = test, replace = replace, simple = simple, by = by, dataPart = dataPart)
-    
-    
+               test = test, replace = replace, simple = simple, by = by, dataPart = dataPart, distance = distance)
+
+
 }
 
 .findAll <- function(what, where = topenv(parent.frame())) {
@@ -192,7 +198,7 @@ makeExtends <- function(Class, to,
             if(exists(what, where, inherits = FALSE))
                 value <- c(value, list(where))
             ## two forms of test for the end of the parent env. chain
-            if(isBaseNamespace(where) || is.null(where))
+            if(isBaseNamespace(where) || identical(where, emptyenv()))
                 break
             where <- parent.env(where)
         }
@@ -201,6 +207,13 @@ makeExtends <- function(Class, to,
             if(exists(what, i, inherits = FALSE))
                 value <- c(value, list(i))
         }
+    ## FIXME:  namespaces don't seem to include methods package
+    ## objects in their parent env., but they must be importing
+    ## methods to get to this code
+    if(length(value)== 0 &&
+       isNamespace(where) && exists(what, .methodsNamespace, inherits
+                                    = FALSE))
+      value <- list(.methodsNamespace)
     value
 }
-    
+

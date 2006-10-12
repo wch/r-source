@@ -96,19 +96,26 @@
    the distinction ?)
    ... and added HERSHEY_UNITS_TO_DEVICE_UNITS
    ... and replaced HERSHEY_EM with HERSHEY_LARGE_CAPHEIGHT
-
-   When moving to graphics engine, simplified calculations again
-   and reverted to single HERSHEY_UNITS_TO_USER_UNITS macro.
-   FIXME:  There may be a problem for devices with cra[0] != cra[1].
 */
 
 /* The scaling between distances in Hershey units and distances in user
    coordinates.  Idea is that the font size (i.e. the nominal minimum
    inter-line spacing) corresponds to HERSHEY_LARGE_CAPHEIGHT Hershey units. */
 
-#define HERSHEY_UNITS_TO_USER_UNITS(size) \
-	((size)*(gc->ps * gc->cex)/(HERSHEY_LARGE_ASCENT))
+#define HERSHEY_X_UNITS_TO_USER_UNITS(size) \
+	((size)*((gc->ps * gc->cex / 72.27) / (dd->dev)->ipr[0])/(HERSHEY_LARGE_HEIGHT))
 
+#define HERSHEY_Y_UNITS_TO_USER_UNITS(size) \
+	((size)*((gc->ps * gc->cex / 72.27) / (dd->dev)->ipr[1])/(HERSHEY_LARGE_HEIGHT))
+
+/*
+ * R Graphics Engine line width of 1 is approx 1/96 inches (0.75 points)
+ * We calculate Hershey line width in points and then multiply by 4/3 to
+ * convert to R Graphics Engine line width units 
+ */
+#define HERSHEY_LINE_WIDTH_TO_LWD(width) \
+        ((width)*((4/3)*(gc->ps * gc->cex))/(HERSHEY_LARGE_HEIGHT))
+        
 /************************************************************************/
 
 /* Some miscellaneous information on typesetting mathematics, taken from

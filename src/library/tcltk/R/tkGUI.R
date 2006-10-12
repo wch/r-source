@@ -1,8 +1,8 @@
 tkStartGUI <- function() {
-    tkcmd("source", file.path(.Library, "tcltk", "exec", "console.tcl"))
+    tcl("source", file.path(.Library, "tcltk", "exec", "console.tcl"))
     .C("RTcl_ActivateConsole", PACKAGE = "tcltk")
     Menu <- .Tk.newwin(".menu")
-    Term <- .Tk.newwin(".tk-R.term") 
+    Term <- .Tk.newwin(".tk-R.term")
     Toolbar <- .Tk.newwin(".tk-R.toolbar")
     options(pager=tkpager)
 
@@ -11,20 +11,20 @@ tkStartGUI <- function() {
     packageMenu <- tkmenu(Menu)
     helpMenu <- tkmenu(Menu)
     quitMenu <- tkmenu(fileMenu)
-    
+
     tkadd(Menu,"cascade",label="File",menu=fileMenu)
     tkadd(Menu,"cascade",label="Demos",menu=demoMenu)
     tkadd(Menu,"cascade",label="Packages",menu=packageMenu)
     tkadd(Menu,"cascade",label="Help",menu=helpMenu)
-    
-    tkadd(fileMenu,"command",label="Source R code", 
+
+    tkadd(fileMenu,"command",label="Source R code",
 	  command=function(){f <- as.character(tkgetOpenFile())
                              if (length(f)) source(f)})
     tkadd(fileMenu,"cascade", label="Quit", menu=quitMenu)
-    
+
     tkadd(quitMenu,"command",label="Save workspace", command=quote(q("yes")))
     tkadd(quitMenu,"command",label="Don't save workspace", command=quote(q("no")))
-    
+
     tkadd(demoMenu,"command",label="t test", command=quote(demo(tkttest)))
     tkadd(demoMenu,"command",label="Density", command=quote(demo(tkdensity)))
     tkadd(demoMenu,"command",label="R FAQ", command=quote(demo(tkfaq)))
@@ -44,11 +44,12 @@ tkStartGUI <- function() {
 	}
 	tkpack(box)
 	tkpack(tkbutton(tt,text="Load",command=load))
-    } 
-	
+    }
+
     CRANpackageWidget <- function()
     {
-	l <- CRAN.packages()[,1]
+        CRANurl <- utils::contrib.url(getOption("repos")["CRAN"])
+	l <- utils::available.packages(CRANurl)[,1]
         lvar <- tclVar()
 	tclObj(lvar) <- l
 	box <- tklistbox(tt<-tktoplevel(),
@@ -56,19 +57,19 @@ tkStartGUI <- function() {
 	gogetem <- function() {
             s <- as.integer(tkcurselection(box))
             if (length(s) == 0) return
-            install.packages(l[s+1])
+            utils::install.packages(l[s+1])
             tkdestroy(tt)
 	}
 	tkpack(box)
 	tkpack(tkbutton(tt,text="Go get them!",command=gogetem))
-    } 
+    }
 
-    tkadd(packageMenu,"command",label="Load packages", 
+    tkadd(packageMenu,"command",label="Load packages",
           command=loadpackageWidget)
-    tkadd(packageMenu,"command",label="Install packages from CRAN", 
+    tkadd(packageMenu,"command",label="Install packages from CRAN",
           command=CRANpackageWidget)
 
-    
+
     local({
         label <- tklabel(Toolbar,text="Help topic:")
         txtvar <- tclVar()
@@ -77,14 +78,14 @@ tkStartGUI <- function() {
             s <- as.character(tclObj(txtvar))[1]
             if (length(s) == 0) return
             nm <- as.name(s)
-            eval(substitute(help(nm)))
+            print(eval(substitute(help(nm))))
             tclvalue(txtvar)<-""
         }
         tkpack(label,side="left")
         tkpack(entry,side="left")
         tkbind(entry, "<Return>", showhelp)
-    }) 
-    
+    })
+
     manuals <- matrix(c(
 	"R-FAQ",     "Frequently asked questions",
 	"R-intro",   "An Introduction to R",
@@ -95,15 +96,15 @@ tkStartGUI <- function() {
 	"refman",    "R Reference Manual",
     ), ncol=2, byrow=TRUE)
 
-    helpPDFMenu <- tkmenu(helpMenu)   	
+    helpPDFMenu <- tkmenu(helpMenu)
     tkadd(helpMenu,"cascade", label="Manuals in PDF format", menu=helpPDFMenu)
-    pdfBase <- file.path(R.home(), "doc", "manual")
+    pdfBase <- file.path(R.home("doc"), "manual")
     apply(manuals, 1, function(x) {
 	f <- file.path(pdfBase, paste(x[1], ".pdf", sep="") )
         cmd <- function() system(paste(getOption("pdfviewer"), f, "&"))
 	tkadd(helpPDFMenu, "command", label=x[2], command=cmd,
               state=if (file.exists(f)) "normal" else "disabled")
-    })	
+    })
     #tkadd(helpMenu,"command", label="Help on topic...", command=topicHelp)
     assign(".GUIenv", environment(), envir=.GlobalEnv)
 }

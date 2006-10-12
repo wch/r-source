@@ -38,7 +38,7 @@ hclust <- function(d, method="complete", members=NULL)
     if(is.null(n))
 	stop("invalid dissimilarities")
     if(n < 2)
-        stop("Must have n >= 2 objects to cluster")
+        stop("must have n >= 2 objects to cluster")
     len <- as.integer(n*(n-1)/2)
     if(length(d) != len)
         (if (length(d) < len) stop else warning
@@ -47,7 +47,7 @@ hclust <- function(d, method="complete", members=NULL)
     if(is.null(members))
         members <- rep(1, n)
     else if(length(members) != n)
-        stop("Invalid length of members")
+        stop("invalid length of members")
 
     hcl <- .Fortran("hclust",
 		    n = n,
@@ -95,7 +95,7 @@ plot.hclust <-
 	stop("invalid dendrogram")
     ## merge should be integer but might not be after dump/restore.
     if (any(as.integer(merge) != merge))
-        stop("merge component in dendrogram must be integer")
+        stop("'merge' component in dendrogram must be integer")
     storage.mode(merge) <- "integer"
     n <- nrow(merge)
     height <- as.double(x$height)
@@ -153,11 +153,10 @@ as.hclust <- function(x, ...) UseMethod("as.hclust")
 as.hclust.default <- function(x, ...) {
     if(inherits(x, "hclust")) x
     else
-	stop(paste("argument", sQuote("x"),
-                   "cannot be coerced to class",
-                   dQuote("hclust")),
+	stop(gettext("argument 'x' cannot be coerced to class \"hclust\""),
              if(!is.null(oldClass(x)))
-             "\n Consider providing an as.hclust.",oldClass(x)[1],"() method")
+             gettextf("\n Consider providing an as.hclust.%s() method",
+                      oldClass(x)[1]), domain = NA)
 }
 
 as.hclust.twins <- function(x, ...)
@@ -186,24 +185,62 @@ print.hclust <- function(x, ...)
     cat("\n")
 }
 
-cophenetic <- function(x) {
+cophenetic <-
+function(x)
+    UseMethod("cophenetic")
+cophenetic.default <-
+function(x)
+{
     x <- as.hclust(x)
     nobs <- length(x$order)
-    ilist <- vector("list", length=nobs)
-    names(ilist) <- 1:nobs # FIXME: do better when you can!
-    rmat <- matrix(NA, nr=nobs, nc=nobs)
-    for( i in 1:(nobs-1)) {
+    ilist <- vector("list", length = nobs)
+    out <- matrix(0, nr = nobs, nc = nobs)
+    for(i in 1 : (nobs - 1)) {
         inds <- x$merge[i,]
         ids1 <- if(inds[1] < 0) -inds[1] else ilist[[inds[1]]]
         ids2 <- if(inds[2] < 0) -inds[2] else ilist[[inds[2]]]
         ilist[[i]] <- c(ids1, ids2)
-        for( ival1 in ids1)
-            for( ival2 in ids2 ){
-                if( ival1 > ival2 )
-                    rmat[ival1, ival2] <- x$height[i]
-                else
-                    rmat[ival2, ival1] <- x$height[i]
-            }
+        out[cbind(rep.int(ids1, rep.int(length(ids2), length(ids1))),
+                  rep.int(ids2, length(ids1)))] <- x$height[i]
     }
-    return(as.dist(rmat))
+    rownames(out) <- x$labels
+    as.dist(out + t(out))
+}
+cophenetic.dendrogram <-
+function(x)
+{
+    ## Obtain cophenetic distances from a dendrogram by recursively
+    ## doing the following:
+    ## * if not a leaf, then for all children call ourselves, create
+    ##   a block diagonal matrix from this, and fill the rest with the
+    ##   current height (as everything in different children is joined
+    ##   at the current split) ...
+    ## * if a leaf, height and result are 0.
+    ## Actually, we need to return something of class "dist", so things
+    ## are a bit more complicated, and we might be able to make this
+    ## more efficient by avoiding matrices ...
+    if(is.leaf(x)) {
+        ## If there is no label, we cannot recover the (names of the)
+        ## objects the distances are for, and hence abort.
+        if(is.null(label <- attr(x, "label")))
+            stop("need dendrograms where all leaves have labels")
+        return(as.dist(matrix(0, dimnames = list(label, label))))
+    }
+    children <- vector("list", length(x))
+    for(i in seq_along(x))
+        children[[i]] <- Recall(x[[i]])
+    lens <- sapply(children, attr, "Size")
+    m <- matrix(attr(x, "height"), sum(lens), sum(lens))
+    ## This seems a bit slower:
+    ##    inds <- split(seq(length = sum(lens)),
+    ##                  rep.int(seq(along = lens), lens))
+    ##    for(i in seq(along = inds))
+    ##         m[inds[[i]], inds[[i]]] <- as.matrix(children[[i]])
+    hi <- cumsum(lens)
+    lo <- c(0, hi[-length(hi)]) + 1
+    for(i in seq_along(x))
+        m[lo[i] : hi[i], lo[i] : hi[i]] <- as.matrix(children[[i]])
+    rownames(m) <- colnames(m) <-
+        unlist(sapply(children, attr, "Labels"))
+    as.dist(m)
 }

@@ -13,7 +13,8 @@
   variables to manage the list of user-level callbacks.
 }
 \usage{
-taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
+taskCallbackManager(handlers = list(), registered = FALSE,
+                    verbose = FALSE)
 }
 \arguments{
   \item{handlers}{this can be a list of callbacks in which each element
@@ -71,29 +72,28 @@ taskCallbackManager(handlers = list(), registered = FALSE, verbose = FALSE)
   in the future.
 }
 \seealso{
-  \code{\link{addTaskCallback}}
-  \code{\link{removeTaskCallback}}
-  \code{\link{getTaskCallbackNames}}
+  \code{\link{addTaskCallback}},
+  \code{\link{removeTaskCallback}},
+  \code{\link{getTaskCallbackNames}}\\
   \url{http://developer.r-project.org/TaskHandlers.pdf}  
 }
 \examples{
-   # create the manager
-  h <- taskCallbackManager()
+# create the manager
+h <- taskCallbackManager()
 
-   # add a callback
-  h$add(function(expr, value, ok, visible) {
-                         cat("In handler\n")
-                         return(TRUE)
-                       }, name = "simpleHandler")
+# add a callback
+h$add(function(expr, value, ok, visible) {
+		       cat("In handler\n")
+		       return(TRUE)
+		     }, name = "simpleHandler")
 
-   # look at the internal callbacks.
-  getTaskCallbackNames()
+# look at the internal callbacks.
+getTaskCallbackNames()
 
-   # look at the R-level callbacks
-  names(h$callback())
- 
-   #
-  getTaskCallbackNames()
-  removeTaskCallback("R-taskCallbackManager")
+# look at the R-level callbacks
+names(h$callback())
+
+getTaskCallbackNames()
+removeTaskCallback("R-taskCallbackManager")
 }
 \keyword{environment}

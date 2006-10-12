@@ -11,28 +11,29 @@ download.file <- function(url, destfile, method,
     if(method == "auto") {
         if(capabilities("http/ftp"))
             method <- "internal"
-        else if(length(grep("^file:", url)))
+        else if(length(grep("^file:", url))) {
             method <- "internal"
-        else if(system("wget --help > /dev/null")==0)
+            url <- URLdecode(url)
+        } else if(system("wget --help > /dev/null")==0)
             method <- "wget"
         else if(system("lynx -help > /dev/null")==0)
             method <- "lynx"
         else
-            stop("No download method found")
+            stop("no download method found")
     }
     if(method == "internal")
         status <- .Internal(download(url, destfile, quiet, mode, cacheOK))
     else if(method == "wget") {
         extra <- if(quiet) " --quiet" else ""
         if(!cacheOK) extra <- paste(extra, "--cache=off")
-        status <- system(paste("wget", extra, " '", url,
-                               "' -O", path.expand(destfile), sep=""))
+        status <- system(paste("wget", extra, " ", shQuote(url),
+                               " -O ", path.expand(destfile), sep=""))
     } else if(method == "lynx")
-        status <- system(paste("lynx -dump '", url, "' >",
+        status <- system(paste("lynx -dump ", shQuote(url), " > ",
                                path.expand(destfile), sep=""))
 
     if(status > 0)
-        warning("Download had nonzero exit status")
+        warning("download had nonzero exit status")
 
     invisible(status)
 }

@@ -2,7 +2,7 @@
 \alias{fligner.test}
 \alias{fligner.test.default}
 \alias{fligner.test.formula}
-\title{Fligner-Killeen Test for Homogeneity of Variances}
+\title{Fligner-Killeen Test of Homogeneity of Variances}
 \description{
   Performs a Fligner-Killeen (median) test of the null that the
   variances in each of the groups (samples) are the same.
@@ -22,8 +22,10 @@ fligner.test(x, \dots)
     Ignored if \code{x} is a list.}
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
     gives the data values and \code{rhs} the corresponding groups.}
-  \item{data}{an optional data frame containing the variables in the
-    model formula.}
+  \item{data}{an optional matrix or data frame (or similar: see
+    \code{\link{model.frame}}) containing the variables in the
+    formula \code{formula}.  By default the variables are taken from
+    \code{environment(formula)}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used.}
   \item{na.action}{a function which indicates what should happen when
@@ -58,7 +60,7 @@ fligner.test(x, \dots)
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{method}{the character string
-    \code{"Fligner-Killeen test for homogeneity of variances"}.}
+    \code{"Fligner-Killeen test of homogeneity of variances"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{

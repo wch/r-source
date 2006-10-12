@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,8 +16,16 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> char here is mainly handled as a whole string.
+   Does need readline to support it.
+   Appending \n\0 is OK in UTF-8, not general MBCS.
+   Removal of \r is OK on UTF-8.
+   ? use of isspace OK?
+ */
+
 
 /* See system.txt for a description of functions */
 
@@ -25,30 +33,23 @@
 # include <config.h>
 #endif
 
+#if defined(HAVE_GLIBC2)
+/* for fileno */
+# define _POSIX_SOURCE 1
+#endif
+
+#include <Defn.h>
+
 #ifdef HAVE_STRINGS_H
    /* may be needed to define bzero in FD_ZERO (eg AIX) */
   #include <strings.h>
 #endif
 
-#include "Defn.h"
 #include "Fileio.h"
-#include "Rdevices.h"		/* for KillAllDevices */
+#include <Rdevices.h>		/* for KillAllDevices */
 #include "Runix.h"
 #include "Startup.h"
-
-#ifdef HAVE_LIBREADLINE
-# ifdef HAVE_READLINE_READLINE_H
-#  include <readline/readline.h>
-# endif
-# ifdef HAVE_READLINE_HISTORY_H
-#  include <readline/history.h>
-# endif
-#endif
-
-/* For compatibility with pre-readline4.2 systems: */
-#if !defined (_RL_FUNCTION_TYPEDEF)
-typedef void rl_vcpfunc_t (char *);
-#endif /* _RL_FUNCTION_TYPEDEF */
+#include <R_ext/Riconv.h>
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>		/* for unlink */
@@ -65,9 +66,10 @@ extern Rboolean UsingReadline;
  *  1) FATAL MESSAGES AT STARTUP
  */
 
-void Rstd_Suicide(char *s)
+void attribute_hidden Rstd_Suicide(char *s)
 {
-    REprintf("Fatal error: %s\n", s);
+    REprintf("Fatal error: %s\n", s); 
+    /* Might be called before translation is running */
     R_CleanUp(SA_SUICIDE, 2, 0);
 }
 
@@ -121,7 +123,7 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 	volatile sel_intr_handler_t myintr = intr != NULL ? intr : onintr;
 	if (SIGSETJMP(seljmpbuf, 1)) {
 	    myintr();
-	    error("interrupt handler must not return");
+	    error(_("interrupt handler must not return"));
 	    return 0; /* not reached */
 	}
 	else {
@@ -298,13 +300,17 @@ fd_set *R_checkActivityEx(int usec, int ignore_stdin, void (*intr)(void))
 	else onintr();
     }
 
-    tv.tv_sec = 0;
-    tv.tv_usec = usec;
+    /* Solaris (but not POSIX) requires these times to be normalized.
+       POSIX requires up to 31 days to be supported, and we only
+       use up to 2147 secs here.
+     */
+    tv.tv_sec = usec/1000000;
+    tv.tv_usec = usec % 1000000;
     maxfd = setSelectMask(R_InputHandlers, &readMask);
     if (ignore_stdin)
 	FD_CLR(fileno(stdin), &readMask);
     if (R_SelectEx(maxfd+1, &readMask, NULL, NULL,
-		   (usec >= 0) ? &tv : NULL, intr))
+		   (usec >= 0) ? &tv : NULL, intr) > 0)
 	return(&readMask);
     else
 	return(NULL);
@@ -390,6 +396,37 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 
 
 #ifdef HAVE_LIBREADLINE
+
+# ifdef HAVE_READLINE_READLINE_H
+#  include <readline/readline.h>
+/* For compatibility with pre-readline4.2 systems: */
+#  if !defined (_RL_FUNCTION_TYPEDEF)
+typedef void rl_vcpfunc_t (char *);
+#  endif /* _RL_FUNCTION_TYPEDEF */
+# else
+typedef void rl_vcpfunc_t (char *);
+extern void rl_callback_handler_install(const char *, rl_vcpfunc_t *);
+extern void rl_callback_handler_remove(void);
+extern void rl_callback_read_char(void);
+extern char *tilde_expand (const char *);
+# endif
+
+char attribute_hidden *R_ExpandFileName_readline(char *s, char *buff)
+{
+    char *s2 = tilde_expand(s);
+
+    strncpy(buff, s2, PATH_MAX);
+    if(strlen(s2) >= PATH_MAX) buff[PATH_MAX-1] = '\0';
+    free(s2);
+    return buff;
+}
+
+
+# ifdef HAVE_READLINE_HISTORY_H
+#  include <readline/history.h>
+# endif
+
+
 /* callback for rl_callback_read_char */
 
 
@@ -434,7 +471,7 @@ struct _R_ReadlineData {
 
 };
 
-R_ReadlineData *rl_top = NULL;
+static R_ReadlineData *rl_top = NULL;
 
 #define MAX_READLINE_NESTING 10
 
@@ -449,23 +486,25 @@ static struct {
   Registers the specified routine and prompt with readline
   and keeps a record of it on the top of the R readline stack.
  */
-void
+static void
 pushReadline(char *prompt, rl_vcpfunc_t f)
 {
    if(ReadlineStack.current >= ReadlineStack.max) {
-     warning("An unusual circumstance has arisen in the nesting of readline input. Please report using bug.report()");
+     warning(_("An unusual circumstance has arisen in the nesting of readline input. Please report using bug.report()"));
    } else
      ReadlineStack.fun[++ReadlineStack.current] = f;
 
    rl_callback_handler_install(prompt, f);
+   /* flush stdout in case readline wrote the prompt, but didn't flush
+      stdout to make it visible. (needed for Apple's rl in OS X 10.4-pre) */
+   fflush(stdout);
 }
 
 /*
   Unregister the current readline handler and pop it from R's readline
   stack, followed by re-registering the previous one.
 */
-void
-popReadline()
+static void popReadline()
 {
   if(ReadlineStack.current > -1) {
      rl_callback_handler_remove();
@@ -477,7 +516,7 @@ popReadline()
 
 static void readline_handler(char *line)
 {
-    int l;
+    int l, buflen = rl_top->readline_len;
 
     popReadline();
 
@@ -488,11 +527,16 @@ static void readline_handler(char *line)
 	if (strlen(line) && rl_top->readline_addtohistory)
 	    add_history(line);
 # endif
-	l = (((rl_top->readline_len-2) > strlen(line))?
-	     strlen(line): (rl_top->readline_len-2));
-	strncpy((char *)rl_top->readline_buf, line, l);
-	rl_top->readline_buf[l] = '\n';
-	rl_top->readline_buf[l+1] = '\0';
+	/* We need to append a \n if the completed line would fit in the
+	   buffer but not otherwise.  Byte [buflen] is zeroed in
+	   the caller.
+	*/
+	strncpy((char *)rl_top->readline_buf, line, buflen);
+	l = strlen(line);
+	if(l < buflen - 1) {
+	    rl_top->readline_buf[l] = '\n';
+	    rl_top->readline_buf[l+1] = '\0';
+	}
     }
     else {
 	rl_top->readline_buf[0] = '\n';
@@ -533,12 +577,14 @@ handleInterrupt(void)
 #endif /* HAVE_LIBREADLINE */
 
 /* Fill a text buffer from stdin or with user typed console input. */
+static void *cd = NULL;
 
-int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
-		     int addtohistory)
+int attribute_hidden
+Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
+		 int addtohistory)
 {
     if(!R_Interactive) {
-	int ll;
+	int ll, err = 0;
 	if (!R_Slave)
 	    fputs(prompt, stdout);
 	if (fgets((char *)buf, len, stdin) == NULL)
@@ -549,9 +595,33 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    buf[ll - 2] = '\n';
 	    buf[--ll] = '\0';
 	}
+	/* translate if necessary */
+	if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
+#if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
+	    size_t res, inb = strlen((char *)buf), onb = len;
+	    char obuf[CONSOLE_BUFFER_SIZE+1];
+	    char *ib = (char *)buf, *ob = obuf;
+	    if(!cd) {
+		cd = Riconv_open("", R_StdinEnc);
+		if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);
+	    }
+	    res = Riconv(cd, &ib, &inb, &ob, &onb);
+	    *ob = '\0';
+	    err = res == (size_t)(-1);
+	    /* errors lead to part of the input line being ignored */
+	    if(err) fputs(_("<ERROR: invalid input in encoding> "), stdout);
+	    strncpy((char *)buf, obuf, len);
+#else
+	    if(!cd) {
+		warning(_("re-encoding is not available on this system"));
+		cd = (void *)1;
+	    }
+#endif
+    	}
 /* according to system.txt, should be terminated in \n, so check this
-   at eof */
-	if (feof(stdin) && (ll == 0 || buf[ll - 1] != '\n') && ll < len) {
+   at eof and error */
+	if ((err || feof(stdin)) 
+	    && (ll == 0 || buf[ll - 1] != '\n') && ll < len) {
 	    buf[ll++] = '\n'; buf[ll] = '\0';
 	}
 	if (!R_Slave)
@@ -621,7 +691,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	/* Write a text buffer to the console. */
 	/* All system output is filtered through this routine. */
 
-void Rstd_WriteConsole(char *buf, int len)
+void attribute_hidden Rstd_WriteConsole(char *buf, int len)
 {
     printf("%s", buf);
 }
@@ -629,21 +699,21 @@ void Rstd_WriteConsole(char *buf, int len)
 
 	/* Indicate that input is coming from the console */
 
-void Rstd_ResetConsole()
+void attribute_hidden Rstd_ResetConsole()
 {
 }
 
 
 	/* Stdio support to ensure the console file buffer is flushed */
 
-void Rstd_FlushConsole()
+void attribute_hidden Rstd_FlushConsole()
 {
     /* fflush(stdin);  really work on Solaris on pipes */
 }
 
 	/* Reset stdin if the user types EOF on the console. */
 
-void Rstd_ClearerrConsole()
+void attribute_hidden Rstd_ClearerrConsole()
 {
     clearerr(stdin);
 }
@@ -652,7 +722,7 @@ void Rstd_ClearerrConsole()
  *  3) ACTIONS DURING (LONG) COMPUTATIONS
  */
 
-void Rstd_Busy(int which)
+void attribute_hidden Rstd_Busy(int which)
 {
 }
 
@@ -672,17 +742,28 @@ void Rstd_Busy(int which)
  */
 
 
-void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
+void R_CleanTempDir(void)
 {
-    unsigned char buf[1024];
-    char * tmpdir;
+    char buf[1024];
 
+    if((Sys_TempDir)) {
+	snprintf(buf, 1024, "rm -rf %s", Sys_TempDir);
+	buf[1023] = '\0';
+	R_system(buf);
+    }
+}
+
+
+void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
+{
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
 
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
+	    unsigned char buf[1024];
 	qask:
+
 	    R_ClearerrConsole();
 	    R_FlushConsole();
 	    R_ReadConsole("Save workspace image? [y/n/c]: ",
@@ -713,6 +794,7 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 #ifdef HAVE_LIBREADLINE
 # ifdef HAVE_READLINE_HISTORY_H
 	if(R_Interactive && UsingReadline) {
+	    R_setupHistory(); /* re-read the history size and filename */
 	    stifle_history(R_HistorySize);
 	    write_history(R_HistoryFile);
 	}
@@ -729,10 +811,7 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
     R_RunExitFinalizers();
     CleanEd();
     if(saveact != SA_SUICIDE) KillAllDevices();
-    if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
-	snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
-	R_system((char *)buf);
-    }
+    R_CleanTempDir();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings();	/* from device close and .Last */
     fpu_setup(FALSE);
@@ -744,7 +823,11 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-int Rstd_ShowFiles(int nfile, 		/* number of files */
+#ifdef HAVE_ERRNO_H
+# include <errno.h>
+#endif
+int attribute_hidden
+Rstd_ShowFiles(int nfile, 		/* number of files */
 		   char **file,		/* array of filenames */
 		   char **headers,	/* the `headers' args of file.show.
 					   Printed before each file. */
@@ -773,6 +856,7 @@ int Rstd_ShowFiles(int nfile, 		/* number of files */
 	    for(i = 0; i < nfile; i++) {
 		if (headers[i] && *headers[i])
 		    fprintf(tfp, "%s\n\n", headers[i]);
+		errno = 0; /* some systems require this */
 		if ((fp = R_fopen(R_ExpandFileName(file[i]), "r"))
 		    != NULL) {
 		    while ((c = fgetc(fp)) != EOF)
@@ -783,7 +867,12 @@ int Rstd_ShowFiles(int nfile, 		/* number of files */
 			unlink(R_ExpandFileName(file[i]));
 		}
 		else
-		    fprintf(tfp, "NO FILE %s\n\n", file[i]);
+#ifdef HAVE_STRERROR
+		    fprintf(tfp, _("Cannot open file '%s', reason '%s'\n\n"), 
+			    file[i], strerror(errno));
+#else
+		    fprintf(tfp, _("Cannot open file '%s'\n\n"), file[i]);
+#endif
 	    }
 	    fclose(tfp);
 	}
@@ -805,7 +894,7 @@ int Rstd_ShowFiles(int nfile, 		/* number of files */
 
 
 
-int Rstd_ChooseFile(int new, char *buf, int len)
+int attribute_hidden Rstd_ChooseFile(int new, char *buf, int len)
 {
     int namelen;
     char *bufp;
@@ -818,13 +907,13 @@ int Rstd_ChooseFile(int new, char *buf, int len)
 }
 
 
-void Rstd_ShowMessage(char *s)
+void attribute_hidden Rstd_ShowMessage(char *s)
 {
     REprintf("%s\n", s);
 }
 
 
-void Rstd_read_history(char *s)
+void attribute_hidden Rstd_read_history(char *s)
 {
 #ifdef HAVE_LIBREADLINE
 # ifdef HAVE_READLINE_HISTORY_H
@@ -835,52 +924,68 @@ void Rstd_read_history(char *s)
 #endif /* HAVE_LIBREADLINE */
 }
 
-void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
     char file[PATH_MAX], *p;
 
-    checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, "invalid file argument");
+	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(CHAR(STRING_ELT(sfile, 0)));
     if(strlen(p) > PATH_MAX - 1)
-	errorcall(call, "file argument is too long");
+	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
     if(R_Interactive && UsingReadline) {
 	clear_history();
 	read_history(file);
-    } else errorcall(call, "no history mechanism available");
+    } else errorcall(call, _("no history mechanism available"));
 #else
-    errorcall(call, "no history mechanism available");
+    errorcall(call, _("no history mechanism available"));
 #endif
 }
 
-void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
     char file[PATH_MAX], *p;
 
-    checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, "invalid file argument");
+	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(CHAR(STRING_ELT(sfile, 0)));
     if(strlen(p) > PATH_MAX - 1)
-	errorcall(call, "file argument is too long");
+	errorcall(call, _("'file' argument is too long"));
     strcpy(file, p);
 #if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
     if(R_Interactive && UsingReadline) {
 	write_history(file);
+#ifdef HAVE_HISTORY_TRUNCATE_FILE
+	R_setupHistory(); /* re-read the history size */
 	history_truncate_file(file, R_HistorySize);
-    } else errorcall(call, "no history available to save");
+#endif
+    } else errorcall(call, _("no history available to save"));
 #else
-    errorcall(call, "no history available to save");
+    errorcall(call, _("no history available to save"));
 #endif
 }
 
+void attribute_hidden Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP stamp;
+    int i;
+    
+    checkArity(op, args);
+    stamp = CAR(args);
+    if (!isString(stamp))
+    	errorcall(call, _("invalid timestamp"));
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
+    if(R_Interactive && UsingReadline) 
+	for (i = 0; i < LENGTH(stamp); i++) 
+	    add_history(CHAR(STRING_ELT(stamp, i)));
+# endif      
+}
 
 
 
@@ -901,36 +1006,60 @@ void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define R_MIN(a, b) ((a) < (b) ? (a) : (b))
 
-SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+/* This could in principle overflow times.  It is of type clock_t,
+   typically long int.  So use gettimeofday if you have it, which
+   is also more accurate.
+ */
+SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int Timeout;
     double tm;
+#ifdef HAVE_GETTIMEOFDAY
+    struct timeval tv;
+#else
     struct tms timeinfo;
+#endif
     double timeint, start, elapsed;
 
     checkArity(op, args);
     timeint = asReal(CAR(args));
     if (ISNAN(timeint) || timeint < 0)
-	errorcall(call, "invalid time value");
+	errorcall(call, _("invalid '%s' value"), "time");
     tm = timeint * 1e6;
 
+#ifdef HAVE_GETTIMEOFDAY
+    gettimeofday(&tv, NULL);
+    start = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec;
+#else
     start = times(&timeinfo);
+#endif
     for (;;) {
 	fd_set *what;
-        Timeout = R_wait_usec ? MIN(tm, R_wait_usec) : tm;
+	tm = R_MIN(tm, 2e9); /* avoid integer overflow */
+        Timeout = R_wait_usec ? R_MIN(tm, R_wait_usec) : tm;
 	what = R_checkActivity(Timeout, 1);
 
 	/* Time up? */
+#ifdef HAVE_GETTIMEOFDAY
+	gettimeofday(&tv, NULL);
+	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec - start;
+#else
 	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
+#endif
 	if(elapsed >= timeint) break;
 
 	/* Nope, service pending events */
 	R_runHandlers(R_InputHandlers, what);
 
 	/* Servicing events might take some time, so recheck: */
+#ifdef HAVE_GETTIMEOFDAY
+	gettimeofday(&tv, NULL);
+	elapsed = (double) tv.tv_sec + 1e-6 * (double) tv.tv_usec - start;
+#else
 	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
+#endif
 	if(elapsed >= timeint) break;
 
 	tm = 1e6*(timeint - elapsed); /* old code had "+ 10000;" */
@@ -940,9 +1069,9 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #else /* not _R_HAVE_TIMING_ */
-SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    error("Sys.sleep is not implemented on this system");
+    error(_("Sys.sleep is not implemented on this system"));
     return R_NilValue;		/* -Wall */
 }
 #endif /* not _R_HAVE_TIMING_ */

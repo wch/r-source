@@ -2,7 +2,7 @@
 ##
 ## Rd2txt -- Convert man pages (*.Rd help files) to plain text.
 
-revision='$Revision: 1.7 $'
+revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2txt ${version}
 
@@ -16,7 +16,7 @@ Generate plain text output from the Rd source specified by file.
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit  
+  -v, --version		print Rd2txt version info and exit  
 
 Report bugs to <r-bugs@r-project.org>."  
 

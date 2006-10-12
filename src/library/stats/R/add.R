@@ -13,16 +13,22 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 #     data <- model.frame(update(object, newform)) # remove NAs
 #     object <- update(object, data = data)
     ns <- length(scope)
-    ans <- matrix(nrow = ns + 1, ncol = 2)
-    dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
-    ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    ans <- matrix(nrow = ns + 1, ncol = 2,
+                  dimnames = list(c("<none>", scope), c("df", "AIC")))
+    ans[1,  ] <- extractAIC(object, scale, k = k, ...)
+    n0 <- length(object$residuals)
     for(i in seq(ns)) {
 	tt <- scope[i]
-	if(trace > 1) cat("trying +", tt, "\n")
+	if(trace > 1) {
+            cat("trying +", tt, "\n")
+	    utils::flush.console()
+        }
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+        if(length(nfit$residuals) != n0)
+            stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[,1] - ans[1,1]
     dfs[1] <- NA
@@ -71,8 +77,6 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     dfs <- numeric(ns+1)
     RSS <- numeric(ns+1)
     names(dfs) <- names(RSS) <- c("<none>", scope)
-    dfs[1] <- object$rank
-    RSS[1] <- deviance.lm(object)
     add.rhs <- paste(scope, collapse = "+")
     add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
     new.form <- update.formula(object, add.rhs)
@@ -80,27 +84,44 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     if(is.null(x)) {
 	fc <- object$call
 	fc$formula <- Terms
-	fob <- list(call = fc)
+	## model.frame.lm looks at the terms part for the environment
+	fob <- list(call = fc, terms = Terms)
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+        offset <- model.offset(m)
+        wt <- model.weights(m)
         oldn <- length(y)
         y <- model.response(m, "numeric")
         newn <- length(y)
         if(newn < oldn)
-            warning(paste("using the", newn, "/", oldn ,
-                          "rows from a combined fit"))
+            warning(gettextf("using the %d/%d rows from a combined fit",
+                             newn, oldn), domain = NA)
+    } else {
+        ## need to get offset and weights from somewhere
+        wt <- object$weights
+        offset <- object$offset
     }
     n <- nrow(x)
     Terms <- attr(Terms, "term.labels")
     asgn <- attr(x, "assign")
     ousex <- match(asgn, match(oTerms, Terms), 0) > 0
     if(int) ousex[1] <- TRUE
-    iswt <- !is.null(wt <- object$weights)
+    iswt <- !is.null(wt)
+    X <- x[, ousex, drop = FALSE]
+    z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
+    else lm.fit(X, y, offset=offset)
+    dfs[1] <- z$rank
+    RSS[1] <- deviance.lm(z)
+    ## workaround for PR#7842. terms.formula may have flipped interactions
+    sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
+                     function(x) paste(sort(x), collapse=":"))
     for(tt in scope) {
-	usex <- match(asgn, match(tt, Terms), 0) > 0
+        stt <- paste(sort(strsplit(tt, ":")[[1]]), collapse=":")
+	usex <- match(asgn, match(stt, sTerms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
-	z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
+	z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
+        else lm.fit(X, y, offset=offset)
 	dfs[tt] <- z$rank
 	RSS[tt] <- deviance.lm(z)
     }
@@ -159,29 +180,38 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     ns <- length(scope)
     dfs <- dev <- numeric(ns+1)
     names(dfs) <- names(dev) <- c("<none>", scope)
-    dfs[1] <- object$rank
-    dev[1] <- object$deviance
     add.rhs <- paste(scope, collapse = "+")
     add.rhs <- eval(parse(text = paste("~ . +", add.rhs)))
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
     y <- object$y
-    wt <- object$prior.weights
     if(is.null(x)) {
 	fc <- object$call
 	fc$formula <- Terms
-	fob <- list(call = fc)
+	## model.frame.glm looks at the terms part for the environment
+	fob <- list(call = fc, terms = Terms)
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
+        offset <- model.offset(m)
+        wt <- model.weights(m)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
         oldn <- length(y)
         y <- model.response(m, "numeric")
-        ## binomial case has adjusted y.
-        if(NCOL(y) == 2) y <- y[, 1]/(y[, 1] + y[,2])
+        ## binomial case has adjusted y and weights
+        if(NCOL(y) == 2) {
+            n <- y[, 1] + y[, 2]
+            y <- ifelse(n == 0, 0, y[, 1]/n)
+            if(is.null(wt)) wt <- rep.int(1, length(y))
+            wt <- wt * n
+        }
         newn <- length(y)
         if(newn < oldn)
-            warning(paste("using the", newn, "/", oldn ,
-                          "rows from a combined fit"))
+            warning(gettextf("using the %d/%d rows from a combined fit",
+                             newn, oldn), domain = NA)
+    } else {
+        ## need to get offset and weights from somewhere
+        wt <- object$prior.weights
+        offset <- object$offset
     }
     n <- nrow(x)
     if(is.null(wt)) wt <- rep.int(1, n)
@@ -189,10 +219,19 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     asgn <- attr(x, "assign")
     ousex <- match(asgn, match(oTerms, Terms), 0) > 0
     if(int) ousex[1] <- TRUE
+    X <- x[, ousex, drop = FALSE]
+    z <-  glm.fit(X, y, wt, offset=offset,
+                  family=object$family, control=object$control)
+    dfs[1] <- z$rank
+    dev[1] <- z$deviance
+    ## workaround for PR#7842. terms.formula may have flipped interactions
+    sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
+                     function(x) paste(sort(x), collapse=":"))
     for(tt in scope) {
-	usex <- match(asgn, match(tt, Terms), 0) > 0
+        stt <- paste(sort(strsplit(tt, ":")[[1]]), collapse=":")
+	usex <- match(asgn, match(stt, sTerms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
-	z <-  glm.fit(X, y, wt, offset=object$offset,
+	z <-  glm.fit(X, y, wt, offset=offset,
 		      family=object$family, control=object$control)
 	dfs[tt] <- z$rank
 	dev[tt] <- z$deviance
@@ -223,7 +262,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
-            warning(paste("F test assumes quasi", fam, " family", sep=""))
+            warning(gettextf("F test assumes quasi%s family", fam),
+                    domain = NA)
 	rdf <- object$df.residual
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, rdf)
     }
@@ -236,7 +276,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 }
 
 add1.mlm <- function(object, scope, ...)
-    stop("no add1 method implemented for mlm models")
+    stop("no 'add1' method implemented for \"mlm\" models")
 
 drop1 <- function(object, scope, ...) UseMethod("drop1")
 
@@ -254,16 +294,22 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 #    data <- model.frame(object) # remove NAs
 #    object <- update(object, data = data)
     ns <- length(scope)
-    ans <- matrix(nrow = ns + 1, ncol = 2)
-    dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
-    ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    ans <- matrix(nrow = ns + 1, ncol = 2,
+                  dimnames =  list(c("<none>", scope), c("df", "AIC")))
+    ans[1,  ] <- extractAIC(object, scale, k = k, ...)
+    n0 <- length(object$residuals)
     for(i in seq(ns)) {
 	tt <- scope[i]
-	if(trace > 1) cat("trying -", tt, "\n")
-	nfit <- update(object, as.formula(paste("~ . -", tt)),
+	if(trace > 1) {
+            cat("trying -", tt, "\n")
+	    utils::flush.console()
+        }
+        nfit <- update(object, as.formula(paste("~ . -", tt)),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)
+        if(length(nfit$residuals) != n0)
+            stop("number of rows in use has changed: remove missing values?")
     }
     dfs <- ans[1,1] - ans[,1]
     dfs[1] <- NA
@@ -289,6 +335,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 		     test=c("none", "Chisq", "F"), k = 2, ...)
 {
     x <- model.matrix(object)
+    offset <- model.offset(model.frame(object))
     iswt <- !is.null(wt <- object$weights)
     n <- nrow(x)
     asgn <- attr(x, "assign")
@@ -309,13 +356,14 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     y <- object$residuals + predict(object)
     na.coef <- (1:length(object$coefficients))[!is.na(object$coefficients)]
     for(i in 1:ns) {
-	ii <- seq(along=asgn)[asgn == ndrop[i]]
+	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	if(all.cols) jj <- setdiff(seq(ncol(x)), ii)
 	else jj <- setdiff(na.coef, ii)
-	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt)
-	else lm.fit(x[, jj, drop = FALSE], y)
+	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt, offset=offset)
+	else lm.fit(x[, jj, drop = FALSE], y, offset=offset)
 	dfs[i] <- z$rank
-	RSS[i] <- deviance.lm(z)
+        oldClass(z) <- "lm" # needed as deviance.lm calls residuals.lm
+	RSS[i] <- deviance(z)
     }
     scope <- c("<none>", scope)
     dfs <- c(object$rank, dfs)
@@ -361,7 +409,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 }
 
 drop1.mlm <- function(object, scope, ...)
-    stop("drop1 not implemented for mlm models")
+    stop("no 'drop1' method for \"mlm\" models")
 
 drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		      k = 2, ...)
@@ -390,7 +438,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     wt <- object$prior.weights
     if(is.null(wt)) wt <- rep.int(1, n)
     for(i in 1:ns) {
-	ii <- seq(along=asgn)[asgn == ndrop[i]]
+	ii <- seq_along(asgn)[asgn == ndrop[i]]
 	jj <- setdiff(seq(ncol(x)), ii)
 	z <-  glm.fit(x[, jj, drop = FALSE], y, wt, offset=object$offset,
 		      family=object$family, control=object$control)
@@ -426,7 +474,8 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
-            warning(paste("F test assumes quasi", fam, " family", sep=""))
+            warning(gettextf("F test assumes 'quasi%s' family", fam),
+                    domain = NA)
 	dev <- aod$Deviance
 	rms <- dev[1]/rdf
         dev <- pmax(0, dev - dev[1])
@@ -474,8 +523,17 @@ factor.scope <- function(factor, scope)
 	facs <- factor
 	if(length(drop)) {
 	    nmfac <- colnames(factor)
-	    where <- match(nmdrop, nmfac, 0)
-	    if(any(!where)) stop("lower scope is not included in model")
+            ## workaround as in PR#7842.
+            ## terms.formula may have flipped interactions
+            nmfac0 <- sapply(strsplit(nmfac, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+            nmdrop0 <- sapply(strsplit(nmdrop, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+	    where <- match(nmdrop0, nmfac0, 0)
+	    if(any(!where))
+                stop(gettextf("lower scope has term(s) %s not included in model",
+                              paste(sQuote(nmdrop[where==0]), collapse=", ")),
+                     domain = NA)
 	    facs <- factor[, -where, drop = FALSE]
 	    nmdrop <- nmfac[-where]
 	} else nmdrop <- colnames(factor)
@@ -493,8 +551,17 @@ factor.scope <- function(factor, scope)
 	nmfac <- colnames(factor)
 	nmadd <- colnames(add)
 	if(!is.null(nmfac)) {
-	    where <- match(nmfac, nmadd, 0)
-	    if(any(!where)) stop("upper scope does not include model")
+            ## workaround as in PR#7842.
+            ## terms.formula may have flipped interactions
+            nmfac0 <- sapply(strsplit(nmfac, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+            nmadd0 <- sapply(strsplit(nmadd, ":", fixed=TRUE),
+                             function(x) paste(sort(x), collapse=":"))
+	    where <- match(nmfac0, nmadd0, 0)
+	    if(any(!where))
+                stop(gettextf("upper scope does not include model term(s) %s",
+                              paste(sQuote(nmfac[where==0]), collapse=", ")),
+                     domain = NA)
 	    nmadd <- nmadd[-where]
 	    add <- add[, -where, drop = FALSE]
 	}
@@ -610,7 +677,7 @@ step <- function(object, scope, scale = 0,
     edf <- bAIC[1]
     bAIC <- bAIC[2]
     if(is.na(bAIC))
-        stop("AIC is not defined for this model, so step cannot proceed")
+        stop("AIC is not defined for this model, so 'step' cannot proceed")
     nm <- 1
     Terms <- fit$terms
     if(trace)

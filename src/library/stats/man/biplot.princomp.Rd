@@ -10,6 +10,7 @@ Biplot for Principal Components
 }
 \usage{
 \method{biplot}{prcomp}(x, choices = 1:2, scale = 1, pc.biplot = FALSE, \dots)
+
 \method{biplot}{princomp}(x, choices = 1:2, scale = 1, pc.biplot = FALSE, \dots)
 }
 \arguments{

@@ -6,9 +6,9 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if (!is.null(dim(x)))
         stop("MLE only implemented for univariate series")
     x <- na.action(as.ts(x))
-    if(any(is.na(x))) stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in 'x'")
     if(!is.numeric(x))
-        stop("`x' must be numeric")
+        stop("'x' must be numeric")
     if(ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.vector(x)
@@ -16,7 +16,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     order.max <- if (is.null(order.max)) min(12, floor(10 * log10(n.used)))
     else round(order.max)
 
-    if (order.max < 0) stop ("order.max must be >= 0")
+    if (order.max < 0) stop ("'order.max' must be >= 0")
     if (aic) {
         coefs <- matrix(NA, order.max+1, order.max+1)
         var.pred <- numeric(order.max+1)
@@ -66,7 +66,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                 series = series, frequency = xfreq, call = match.call())
     if(order > 0) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
-        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)])) *
+        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)])) *
             var.pred/n.used
     }
     class(res) <- "ar"

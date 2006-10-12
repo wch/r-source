@@ -7,15 +7,20 @@ prcomp.default <-
     x <- scale(x, center = center, scale = scale.)
     cen <- attr(x, "scaled:center")
     sc <- attr(x, "scaled:scale")
+    if(any(sc == 0))
+        stop("cannot rescale a constant/zero column to unit variance")
     s <- svd(x, nu = 0)
-    if (!is.null(tol)) {
-        rank <- sum(s$d > (s$d[1]*tol))
-        if (rank < ncol(x))
-            s$v <- s$v[, 1:rank, drop = FALSE]
-    }
     s$d <- s$d / sqrt(max(1, nrow(x) - 1))
+    if (!is.null(tol)) {
+        ## we get rank at least one even for a 0 matrix.
+        rank <- sum(s$d > (s$d[1]*tol))
+        if (rank < ncol(x)) {
+            s$v <- s$v[, 1:rank, drop = FALSE]
+            s$d <- s$d[1:rank]
+        }
+    }
     dimnames(s$v) <-
-        list(colnames(x), paste("PC", seq(len = ncol(s$v)), sep = ""))
+        list(colnames(x), paste("PC", seq_len(ncol(s$v)), sep = ""))
     r <- list(sdev = s$d, rotation = s$v,
               center = if(is.null(cen)) FALSE else cen,
               scale = if(is.null(sc)) FALSE else sc)
@@ -36,7 +41,7 @@ prcomp.formula <- function (formula, data = NULL, subset, na.action, ...)
     mf <- eval.parent(mf)
     ## this is not a `standard' model-fitting function,
     ## so no need to consider contrasts or levels
-    if (any(sapply(mf, function(x) is.factor(x) || !is.numeric(x))))
+    if (.check_vars_numeric(mf))
         stop("PCA applies only to numerical variables")
     na.act <- attr(mf, "na.action")
     mt <- attr(mf, "terms")
@@ -96,5 +101,27 @@ predict.prcomp <- function(object, newdata, ...)
         if(!is.null(object$x)) return(object$x)
         else stop("no scores are available: refit with 'retx=TRUE'")
     }
+    if(length(dim(newdata)) != 2)
+        stop("'newdata' must be a matrix or data frame")
+    p <- NCOL(object$rotation)
+    nm <- rownames(object$rotation)
+    if(!is.null(nm)) {
+        if(!all(nm %in% colnames(newdata)))
+            stop("'newdata' does not have named columns matching one or more of the original columns")
+        newdata <- newdata[, nm, drop = FALSE]
+    } else {
+        if(NCOL(newdata) != p)
+            stop("'newdata' does not have the correct number of columns")
+    }
+    ## next line does as.matrix
     scale(newdata, object$center, object$scale) %*% object$rotation
+}
+
+.check_vars_numeric <- function(mf)
+{
+    ## we need to test just the columns which are actually used.
+    mt <- attr(mf, "terms")
+    mterms <- attr(mt, "factors")
+    mterms <- rownames(mterms)[apply(mterms, 1, any)]
+    any(sapply(mterms, function(x) is.factor(mf[,x]) || !is.numeric(mf[,x])))
 }

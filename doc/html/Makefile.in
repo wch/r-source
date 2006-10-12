@@ -15,19 +15,15 @@ INSTFILES = \
 	R.css \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html \
-	faq.html \
-	packages-head.html \
-	resources.html \
-	template.html \
+	packages-head.html packages-head-utf8.html \
 	thanks.html
-## </FIXME>
-DISTFILES = Makefile.in $(INSTFILES) index-default.html R-admin.html
+NON_SVN_INSTFILES = resources.html
+DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 OBJECTS = index.html
 ## <FIXME>
-## build-help really should not create packages.html in *this* directory.
-## Remove 'function.html' eventually ...
-CLEANFILES = packages.html packages-foot.html $(OBJECTS) function.html
+## We really should not create packages.html in *this* directory.
+CLEANFILES = packages.html $(OBJECTS)
 ## </FIXME>
 DISTCLEANFILES = Makefile
 
@@ -36,13 +32,22 @@ all: Makefile R
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile $(OBJECTS)
+R: Makefile $(OBJECTS) svnonly
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rhome=$(top_builddir) install-sources; \
+	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
+
+svnonly:
+	@if test -f "$(srcdir)/resources.html"; then \
+	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	    for f in $(NON_SVN_INSTFILES); do \
+	      $(INSTALL_DATA) $(srcdir)/$${f} . ; \
+	    done \
+	  fi \
+	fi
 
 index.html: FORCE
 	@$(PERL) $(top_srcdir)/tools/linkcheck.pl \
@@ -50,20 +55,23 @@ index.html: FORCE
 	  $(INSTALL_DATA) $(srcdir)/index-default.html $@
 FORCE:
 
-install: install-message installdirs install-sources
+install: svnonly install-message installdirs install-sources
 	@for f in $(OBJECTS); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/html"; \
 	done
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
+	@for f in $(NON_SVN_INSTFILES); do \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/html"; \
+	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
+	@$(MKINSTALLDIRS) "$(rdocdir)/html"
 install-message:
 	@echo "installing $(subdir) ..."
 install-sources:
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)/html"; \
 	done
 install-strip: install
 uninstall:
@@ -71,10 +79,10 @@ uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@for f in $(CLEANFILES) $(INSTFILES) $(OBJECTS); do \
-	  rm -f "$(rhome)/$(subdir)/$${f}"; \
+	@for f in $(CLEANFILES) $(INSTFILES) $(NON_SVN_INSTFILES) $(OBJECTS); do \
+	  rm -f "$(rdocdir)/html/$${f}"; \
 	done
-	@rmdir "$(rhome)/$(subdir)" 2>/dev/null \
+	@rmdir "$(rdocdir)/html" 2>/dev/null \
 	  || echo "  subdir $(subdir) not removed"
 
 mostlyclean:
@@ -90,6 +98,9 @@ distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -f $(NON_SVN_INSTFILES); \
+	fi
 	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
@@ -98,6 +109,9 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for f in $(NON_SVN_INSTFILES); do \
+	  cp -p $${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \
 	  test -d $(distdir)/$${d} \

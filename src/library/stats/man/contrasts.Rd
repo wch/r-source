@@ -15,7 +15,7 @@ contrasts(x, how.many) <- value
   \item{how.many}{How many contrasts should be made. Defaults to one
     less than the number of levels of \code{x}.  This need not be the
     same as the number of columns of \code{ctr}.}
-  \item{value}{either a matrix whose columns give coefficients for
+  \item{value}{either a numeric matrix whose columns give coefficients for
     contrasts in the levels of \code{x}, or the (quoted) name of a
     function which computes such matrices.}
 }

@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2003 R Development Core Team
+# Copyright (C) 1997-2006 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
 #
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-# writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA.
+# writing to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301  USA.
 
 use File::Basename;
 use Cwd;
@@ -27,7 +27,7 @@ use R::Utils;
 fileparse_set_fstype; # Unix, in case one gets anything else.
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "htmllists", "chm", "index");
+		 "dosnames", "chm", "index");
 GetOptions (@knownoptions) || usage();
 
 $OSdir = "windows";
@@ -52,17 +52,6 @@ print STDERR "Current directory (cwd): '$current'\n" if $opt_debug;
 
 my $mainlib = file_path($R_HOME, "library");
 
-# if option --htmllists is set we only rebuild some list files and
-# exit
-
-if($opt_htmllists){
-    build_htmlpkglist($mainlib);
-
-    %anindex = read_anindex($mainlib);
-    %htmlindex = read_htmlindex($mainlib);
-
-    exit 0;
-}
 
 # default is to build all documentation formats
 if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
@@ -70,10 +59,10 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
     $opt_txt = 1;
     $opt_latex = 1;
     $opt_example = 1;
-    $opt_chm = 1;
+    $opt_chm = 1 unless $opt_index;
 }
 
-($pkg, $lib, @mandir) = buildinit();
+($pkg, $version, $lib, @mandir) = buildinit();
 $dest = $ARGV[2];
 if (!$dest) {
     $dest = file_path($lib, $pkg);
@@ -88,7 +77,7 @@ if($opt_chm) {
     }
     open_hhp($pkg);
 }
-build_index($lib, $dest, $chmdir);
+build_index($lib, $dest, $version, $chmdir);
 if($opt_index){
     exit 0;
 }
@@ -124,13 +113,15 @@ print "\n";
 # as from 1.7.0 we can resolve links to base from other libraries
 # by fixing the link in fixup.package.URLs().
 # as from 1.9.0 we fix up utils, graphics, stats as well.
+# by 2.3.0 grDevices, datasets and methods.
 
 %anindex = read_anindex($lib);
 if($opt_html || $opt_chm){
     %htmlindex = read_htmlindex($lib);
     if ($lib ne $mainlib) {
 	%basehtmlindex = read_htmlpkgindex($mainlib, "base");
-	foreach $pkg ("utils", "graphics", "stats") {
+	foreach $pkg ("utils", "graphics", "grDevices", "stats", 
+		      "datasets", "methods") {
 	    my %pkghtmlindex = read_htmlpkgindex($mainlib, $pkg);
 	    foreach $topic (keys %pkghtmlindex) {
 		$basehtmlindex{$topic} = $pkghtmlindex{$topic};
@@ -155,8 +146,11 @@ format STDOUT =
 .
 
 foreach $manfile (@mandir) {
-    if($manfile =~ /\.[Rr]d$/ && !($manfile =~ /^\.#/)) {
+    ## Should only process files starting with [A-Za-z0-9] and with
+    ## suffix .Rd or .rd, according to `Writing R Extensions'.
+    if($manfile =~ /\.[Rr]d$/) {
 	$manfilebase = basename($manfile, (".Rd", ".rd"));
+	if(! ($manfilebase =~ /^[A-Za-z0-9]/) ) {next;}
 	$manage = (-M $manfile);
 	$manfiles{$manfilebase} = $manfile;
 
@@ -167,7 +161,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg);
+		Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -178,7 +172,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg);
+		Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -190,7 +184,7 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile,$manage)) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "chm", "", "$destfile", $pkg);
+		Rdconv($manfile, "chm", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -199,7 +193,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "latex", $targetfile.".tex");
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile");
+		Rdconv($manfile, "latex", "", "$destfile", $version);
 	    }
 	}
 
@@ -208,7 +202,7 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
-		Rdconv($manfile, "example", "", "$destfile");
+		Rdconv($manfile, "example", "", "$destfile", $version);
 		if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
@@ -284,8 +278,9 @@ if($opt_chm){
 }
 
 sub usage {
-    print "Usage:  build-help [--rhome dir] [--html] [--txt] [--latex]\n" .
-      "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
+    print "Usage:  build-help-windows.pl [--rhome dir] [--html] [--txt]\n" .
+      "                   [--latex] [--example] [--chm]\n" .
+      "                   [--dosnames] [--debug] [--index]\n" .
       "                   [pkg] [lib]\n";
 
     exit 0;
@@ -304,10 +299,11 @@ sub open_hhp {
     "Display compile progress=No\n",
     "Full-text search=Yes\n",
     "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
+    "Title=R Help for package $pkg\n",
     "\n\n[FILES]\n00Index.html\n";
 }
 
-sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
+sub foldorder {($b =~ /-package$/) cmp ($a =~ /-package$/) or uc($a) cmp uc($b) or $a cmp $b;}
 
 sub build_chm_toc {
     open(tocfile, ">../chm/$pkg.toc")

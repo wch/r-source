@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2003   The R Development Core Team.
+ *  Copyright (C) 2000-2006   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef R_CONNECTIONS_H_
@@ -37,8 +37,9 @@ struct Rconn {
     void (*destroy)(struct Rconn *); /* when closing connection */
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
+    int (*fgetc_internal)(struct Rconn *);
 /*    int (*ungetc)(int c, struct Rconn *); */
-    long (*seek)(struct Rconn *, int, int, int);
+    double (*seek)(struct Rconn *, double, int, int);
     void (*truncate)(struct Rconn *);
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);
@@ -47,14 +48,33 @@ struct Rconn {
     int nPushBack, posPushBack; /* number of lines, position on top line */
     char **PushBack;
     int save, save2;
-    unsigned char encoding[256];
+    /* unsigned char encoding[256];*/
+    char encname[101];
+    /* will be iconv_t, which is a pointer. NULL if not in use */
+    void *inconv, *outconv;
+    /* The idea here is that no MBCS char will ever not fit */
+    char iconvbuff[25], oconvbuff[50], *next, init_out[25];
+    short navail, inavail;
+    Rboolean EOF_signalled;
     void *private;
 };
 
 typedef struct fileconn {
     FILE *fp;
+#if defined(HAVE_OFF_T) && defined(HAVE_SEEKO)
+    off_t rpos, wpos;
+#else
+#ifdef Win32
+    off64_t rpos, wpos;
+#else
     long rpos, wpos;
+#endif
+#endif
     Rboolean last_was_write;
+#ifdef Win32
+    Rboolean anon_file;
+    char name[PATH_MAX+1];
+#endif
 } *Rfileconn;
 
 typedef struct fifoconn {
@@ -104,12 +124,11 @@ typedef struct bzfileconn {
     void *bfp;
 } *Rbzfileconn;
 
-#ifdef Win32
 typedef struct clpconn {
     char *buff;
-    int pos, len, last;
+    int pos, len, last, sizeKB;
+    Rboolean warned;
 } *Rclpconn;
-#endif
 
 /* zlib wants to use ZLIB_H without leading underscore in 1.2.1 */
 #if defined(_ZLIB_H) || defined(ZLIB_H)
@@ -126,6 +145,10 @@ typedef struct gzconn {
 } *Rgzconn;
 #endif
 
+#define init_con	Rf_init_con
+#define con_close	Rf_con_close
+#define con_pushback	Rf_con_pushback
+
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 int Rconn_getline(Rconnection con, char *buf, int bufsize);
@@ -134,17 +157,20 @@ Rconnection getConnection(int n);
 Rconnection getConnection_no_err(int n);
 Rboolean switch_stdout(int icon, int closeOnExit);
 void con_close(int i);
-void Rconn_setEncoding(Rconnection con, SEXP enc);
 void init_con(Rconnection new, char *description, char *mode);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);
 Rconnection in_R_newsock(char *host, int port, int server, char *mode);
 Rconnection R_newunz(char *description, char *mode);
+int dummy_fgetc(Rconnection con);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);
 int getActiveSink(int n);
+void con_pushback(Rconnection con, Rboolean newLine, char *line);
 
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 		double timeout);
 
+#define set_iconv Rf_set_iconv
+void set_iconv(Rconnection con);
 #endif
 

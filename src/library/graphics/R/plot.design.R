@@ -9,11 +9,11 @@ plot.design <-
 	##	      y : one numeric vector
 
 	if(!is.numeric(y))
-	    stop("`y' must be a numeric vector")
+	    stop("'y' must be a numeric vector")
 	if(!is.data.frame(x)) # or allow factor (see 2 lines below)?? {FIXME}
-	    stop("`x' must be a data frame")
+	    stop("'x' must be a data frame")
 	if(!all(sapply(x, is.factor)) & !is.factor(x)) # incl "ordered"
-	    stop("all columns/components of `x' must be factors")
+	    stop("all columns/components of 'x' must be factors")
 	k <- ncol(x)
         if(any(is.na(y))) {
             FUN <- fun; fun <- function(u) FUN(u [!is.na(u)])
@@ -44,17 +44,17 @@ plot.design <-
                  ...)
     } ## .plot.des()
 
-    ## `fun' dealing
+    ## 'fun' dealing
     fname <- deparse(substitute(fun))
     fun <- match.fun(fun)
     if (!(is.data.frame(x) | inherits(x,"formula")))
-	stop("x must be a dataframe or a formula!")
+	stop("'x' must be a dataframe or a formula")
 
-    ## case `switch' :
+    ## case 'switch' :
     if(is.data.frame(x)) {
 	if(is.null(y)) { ## nothing to do
 	} else if(inherits(y,"formula")) {
-	    x <- model.frame(y , data = x)
+	    x <- stats::model.frame(y , data = x)
 	}
 	else if(is.numeric(y)) {
 	    x <- cbind(y,x[,sapply(x, is.factor)])
@@ -65,7 +65,7 @@ plot.design <-
 	    ynames <- y
 	    y <- data.frame(x[,y])
 	    if(sum(sapply(y, is.numeric)) != ncol(y)) {
-		stop("a variable in y is not numeric")
+		stop("a variable in 'y' is not numeric")
 	    }
 	    x <- x[,sapply(x, is.factor)]
 	    xnames <- names(x)
@@ -74,10 +74,10 @@ plot.design <-
 	}
     }
     else if (is.data.frame(data)) {
-	x <- model.frame(x , data = data)
+	x <- stats::model.frame(x , data = data)
     }
     else {
-	x <- model.frame(x)
+	x <- stats::model.frame(x)
     }
 
     i.fac <- sapply(x, is.factor)

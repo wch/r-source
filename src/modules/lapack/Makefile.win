@@ -4,56 +4,48 @@ include ../../gnuwin32/MkRules
 MODULE=lapack
 all: 
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
+ifneq ($(strip $(USE_ACML)),YES)
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
-	@$(MAKE) --no-print-directory -f Makefile.win ../../../lib/libRlapack.a
+endif
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
 
 CSOURCES = Lapack.c
-FSOURCES = rgeev.f rsyev.f
+OBJS=$(CSOURCES:.c=.o) dllversion.o
+LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f cmplx.f
+LIBOBJECTS = $(LIBSOURCES:.f=.o) Rlapackrc.o
+
+# will be overridden on call from src/gnuwin32/Makefile
+OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
+FOPTFLAGS=-O3
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(FOPTFLAGS)
 dlamc-FFLAGS=-ffloat-store
-OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 
 ../../../modules/$(MODULE).dll: $(MODULE).dll
 	$(MKDIR) -p ../../../modules
 	$(CP) $< $@
 
-lapack-DLLLIBS=-L../../../lib -lRlapack
-DLLLIBS=-L../../gnuwin32 -lR -lRblas -lg2c
+ifeq ($(strip $(USE_ACML_LAPACK)),YES)
+lapack-DLLLIBS=-L../../../bin -lRblas -L"$(ACML_PATH)" -lacml $(FLIBS) -lR
+else
+lapack-DLLLIBS=-L../../../bin -lRlapack -lRblas -lR
+endif
 
 $(MODULE).dll: $(OBJS)
 
-dllversion.o: ../../include/Rversion.h
+../../../bin/Rlapack.dll: $(LIBOBJECTS)
+	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR -lRblas $(FLIBS)
 
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
-	  Rlapack.dll libRlapack.a
+	  Rlapack.dll *.a
 
-
-# Rlapack.* section
-Rlapack.dll: dlamc.o dlapack0.o dlapack1.o dlapack2.o dlapack3.o cmplx.o Rlapackrc.o
-	@$(ECHO) LIBRARY Rlapack > Rlapack.def
-	@$(ECHO) EXPORTS >> Rlapack.def
-	@$(NM) $^ > Defs
-	@$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
-	@$(RM) Defs
-	$(DLL) --shared $(DLLFLAGS) -o $@ Rlapack.def $^ $(DLLLIBS)
-
-libRlapack.a: Rlapack.def
-
-../../../bin/Rlapack.dll: Rlapack.dll
-	@$(MKDIR) -p ../../../bin
-	@$(CP) $< $@
-
-../../../lib/libRlapack.a: libRlapack.a
-	@$(MKDIR) -p ../../../lib
-	@$(CP) $< $@
-
-Rlapackrc.o: ../../include/Rversion.h
 
 # Dependencies
+dllversion.o: ../../include/Rversion.h
+Rlapackrc.o: ../../include/Rversion.h
+
 DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)

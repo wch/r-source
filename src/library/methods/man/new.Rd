@@ -24,7 +24,12 @@ initialize(.Object, ...)
 \details{
   The function \code{new} begins by copying the prototype object from
   the class definition.  Then information is inserted according to the
-  \code{\dots} arguments, if any.
+  \code{\dots} arguments, if any.  As of version 2.4 of R, the type of
+  the prototype object, and therefore of all objects returned by
+  \code{new()}, is \code{"S4"} except for classes that extend
+  one of the basic types, where the prototype has that basic type.  User
+  functions that depend on \code{\link{typeof}(object)} should be
+  careful to handle \code{"S4"} as a possible type.
 
   The interpretation of the \code{\dots} arguments can be specialized to
   particular classes, if an appropriate method has been defined for the
@@ -51,10 +56,7 @@ initialize(.Object, ...)
   implicitly defined, so one can use \code{new} for these classes.
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
-
-  The functions in this package emulate the facility for classes and
+    The functions in this package emulate the facility for classes and
   methods described in \emph{Programming with Data} (John M. Chambers,
   Springer, 1998).  See this book for further details and examples.
 }

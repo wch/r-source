@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -43,7 +43,7 @@
 
 double gammafn(double x)
 {
-    const double gamcs[42] = {
+    const static double gamcs[42] = {
 	+.8571195590989331421920062399942e-2,
 	+.4415381324841006757191315771652e-2,
 	+.5685043681599363378632664588789e-1,
@@ -123,7 +123,7 @@ double gammafn(double x)
     /* If the argument is exactly zero or a negative integer
      * then return NaN. */
     if (x == 0 || (x < 0 && x == (long)x)) {
-	ML_ERROR(ME_RANGE);
+	ML_ERROR(ME_DOMAIN, "gammafn");
 	return ML_NAN;
     }
 
@@ -151,12 +151,12 @@ double gammafn(double x)
 	    /* The answer is less than half precision */
 	    /* because x too near a negative integer. */
 	    if (x < -0.5 && fabs(x - (int)(x - 0.5) / x) < dxrel) {
-		ML_ERROR(ME_PRECISION);
+		ML_ERROR(ME_PRECISION, "gammafn");
 	    }
 
 	    /* The argument is so close to 0 that the result would overflow. */
 	    if (y < xsml) {
-		ML_ERROR(ME_RANGE);
+		ML_ERROR(ME_RANGE, "gammafn");
 		if(x > 0) return ML_POSINF;
 		else return ML_NEGINF;
 	    }
@@ -181,12 +181,12 @@ double gammafn(double x)
 	/* gamma(x) for	 y = |x| > 10. */
 
 	if (x > xmax) {			/* Overflow */
-	    ML_ERROR(ME_RANGE);
+	    ML_ERROR(ME_RANGE, "gammafn");
 	    return ML_POSINF;
 	}
 
 	if (x < xmin) {			/* Underflow */
-	    ML_ERROR(ME_UNDERFLOW);
+	    ML_ERROR(ME_UNDERFLOW, "gammafn");
 	    return ML_UNDERFLOW;
 	}
 
@@ -206,12 +206,12 @@ double gammafn(double x)
 	    /* The answer is less than half precision because */
 	    /* the argument is too near a negative integer. */
 
-	    ML_ERROR(ME_PRECISION);
+	    ML_ERROR(ME_PRECISION, "gammafn");
 	}
 
 	sinpiy = sin(M_PI * y);
 	if (sinpiy == 0) {		/* Negative integer arg - overflow */
-	    ML_ERROR(ME_RANGE);
+	    ML_ERROR(ME_RANGE, "gammafn");
 	    return ML_POSINF;
 	}
 

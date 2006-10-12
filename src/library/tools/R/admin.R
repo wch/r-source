@@ -14,19 +14,34 @@ function(dir, outDir)
     ## results and not the package metadata ...
     ok <- .check_package_description(file.path(dir, "DESCRIPTION"))
     if(any(as.integer(sapply(ok, length))) > 0) {
-        stop(paste("Invalid DESCRIPTION file",
+        stop(paste(gettext("Invalid DESCRIPTION file") ,
                    paste(.capture_output_from_print(ok),
                          collapse = "\n"),
-                   sep = "\n\n"))
+                   sep = "\n\n"),
+             domain = NA,
+             call. = FALSE)
     }
-        
+
     db <- .read_description(file.path(dir, "DESCRIPTION"))
+    ## should not have a Built: field, so ignore it if it is there
+    nm <- names(db)
+    if("Built" %in% nm) {
+        db <- db[-match("Built", nm)]
+        warning(gettextf("*** someone has corrupted the Built field in package '%s' ***",
+                         db["Package"]),
+                domain = NA,
+                call. = FALSE)
+    }
+
     OS <- Sys.getenv("R_OSTYPE")
     OStype <- if(nchar(OS) && OS == "windows")
         "i386-pc-mingw32"
     else
         R.version$platform
-    db["Built"] <-
+    if (length(grep("-apple-darwin",R.version$platform)) > 0 &&
+        nchar(Sys.getenv("R_ARCH")) > 0)
+        OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
+    Built <-
         paste("R ",
               paste(R.version[c("major", "minor")],
                     collapse = "."),
@@ -41,16 +56,56 @@ function(dir, outDir)
               "; ",
               .OStype(),
               sep = "")
-    
-    writeLines(formatDL(names(db), db, style = "list"),
+
+    ## we must not split the Built: field across lines
+    writeLines(c(formatDL(names(db), db, style = "list"),
+                 paste("Built", Built, sep=": ")),
                file.path(outDir, "DESCRIPTION"))
+    db["Built"] <- Built
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-         stop(paste("cannot open directory", sQuote(outMetaDir)))
-    .saveRDS(db, file.path(outMetaDir, "package.rds"))
-    
+         stop(gettextf("cannot open directory '%s'",
+                       outMetaDir),
+              domain = NA)
+    saveInfo <- .split_description(db)
+    .saveRDS(saveInfo, file.path(outMetaDir, "package.rds"))
+
     invisible()
+}
+
+### * .split_description
+
+.split_description <-
+function(db)
+{
+    if(!is.na(Built <- db["Built"])) {
+        Built <- as.list(strsplit(Built, "; ")[[1]])
+        if(length(Built) != 4) {
+            warning(gettextf("*** someone has corrupted the Built field in package '%s' ***",
+                             db["Package"]),
+                    domain = NA,
+                    call. = FALSE)
+            Built <- NULL
+        } else {
+            names(Built) <- c("R", "Platform", "Date", "OStype")
+            Built[["R"]] <- package_version(sub("^R ([0-9.]+)", "\\1",
+                                                Built[["R"]]))
+        }
+    } else Built <- NULL
+    ## might perhaps have multiple entries
+    Depends <- .split_dependencies(db[names(db) %in% "Depends"])
+    if("R" %in% names(Depends)) {
+        Rdeps <- Depends[["R"]]
+        Depends <- Depends[-match("R", names(Depends))]
+    } else Rdeps <- NULL
+    Rdeps <- as.vector(Rdeps)
+    Suggests <- .split_dependencies(db[names(db) %in% "Suggests"])
+    Imports <- .split_dependencies(db[names(db) %in% "Imports"])
+    structure(list(DESCRIPTION = db, Built = Built, Rdepends = Rdeps,
+                   Depends = Depends, Suggests = Suggests,
+                   Imports = Imports),
+              class = "packageDescription2")
 }
 
 ### * .vinstall_package_descriptions_as_RDS
@@ -62,21 +117,41 @@ function(dir, packages)
     ## DESCRIPTION package metadata as R metadata.
     ## Really only useful for base packages under Unix.
     ## See @file{src/library/Makefile.in}.
-    
+
     for(p in unlist(strsplit(packages, "[[:space:]]+"))) {
         meta_dir <- file.path(dir, p, "Meta")
         if(!file_test("-d", meta_dir) && !dir.create(meta_dir))
-            stop(paste("cannot open directory", sQuote(meta_dir)))
+            stop(gettextf("cannot open directory '%s'", meta_dir))
         package_info_dcf_file <- file.path(dir, p, "DESCRIPTION")
         package_info_rds_file <- file.path(meta_dir, "package.rds")
         if(file_test("-nt",
                      package_info_rds_file,
                      package_info_dcf_file))
             next
-        .saveRDS(.read_description(package_info_dcf_file),
+        .saveRDS(.split_description(.read_description(package_info_dcf_file)),
                  package_info_rds_file)
     }
     invisible()
+}
+
+### * .update_package_rds
+
+.update_package_rds <-
+function(lib.loc = NULL)
+{
+    ## rebuild the dumped package descriptions for all packages in lib.loc
+    if (is.null(lib.loc)) lib.loc <- .libPaths()
+    lib.loc <- lib.loc[file.exists(lib.loc)]
+    for (lib in lib.loc) {
+        a <- list.files(lib, all.files = FALSE, full.names = TRUE)
+        for (nam in a) {
+            dfile <- file.path(nam, "DESCRIPTION")
+            if (file.exists(dfile)) {
+                print(nam)
+                .install_package_description(nam, nam)
+            }
+        }
+    }
 }
 
 ### * .install_package_code_files
@@ -85,7 +160,8 @@ function(dir, packages)
 function(dir, outDir)
 {
     if(!file_test("-d", dir))
-        stop(paste("directory", sQuote(dir), "does not exist"))
+        stop(gettextf("directory '%s' does not exist", dir),
+             domain = NA)
     dir <- file_path_as_absolute(dir)
 
     ## Attempt to set the LC_COLLATE locale to 'C' to turn off locale
@@ -106,7 +182,7 @@ function(dir, outDir)
 
     ## We definitely need a valid DESCRIPTION file.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
-    
+
     codeDir <- file.path(dir, "R")
     if(!file_test("-d", codeDir)) return(invisible())
 
@@ -121,46 +197,45 @@ function(dir, outDir)
         ## newlines in DCF entries but do not allow them in file names,
         ## hence we gsub() them out.
         collationField <- collationField[i][1]
-        codeFilesInCspec <-
-            scan(textConnection(gsub("\n", " ", db[collationField])),
-                 what = character(), strip.white = TRUE, quiet = TRUE)
-        ## Duplicated entries in the collaction spec?
+        con <- textConnection(gsub("\n", " ", db[collationField]))
+        on.exit(close(con))
+        codeFilesInCspec <- scan(con, what = character(),
+                                 strip.white = TRUE, quiet = TRUE)
+        ## Duplicated entries in the collation spec?
         badFiles <-
             unique(codeFilesInCspec[duplicated(codeFilesInCspec)])
         if(length(badFiles)) {
-            out <- paste("\nduplicated files in",
-                         sQuote(collationField),
-                         "field:")
+            out <- gettextf("\nduplicated files in '%s' field:",
+                            collationField)
             out <- paste(out,
                          paste(" ", badFiles, collapse = "\n"),
                          sep = "\n")
-            stop(out)
+            stop(out, domain = NA)
         }
         ## See which files are listed in the collation spec but don't
         ## exist.
         badFiles <- codeFilesInCspec %w/o% codeFiles
         if(length(badFiles)) {
-            out <- paste("\nfiles in ", sQuote(collationField),
-                         " field missing from ", sQuote(codeDir),
-                         ":",
-                         sep = "")
+            out <- gettextf("\nfiles in '%s' field missing from '%s':",
+                            collationField,
+                            codeDir)
             out <- paste(out,
                          paste(" ", badFiles, collapse = "\n"),
                          sep = "\n")
-            stop(out)
+            stop(out, domain = NA)
         }
         ## See which files exist but are missing from the collation
         ## spec.  Note that we do not want the collation spec to use
         ## only a subset of the available code files.
         badFiles <- codeFiles %w/o% codeFilesInCspec
         if(length(badFiles)) {
-            out <- paste("\nfiles in", sQuote(codeDir),
-                         "missing from", sQuote(collationField),
-                         "field:")
+            out <- gettextf("\nfiles in '%s' missing from '%s' field:",
+                            codeDir,
+                            collationField)
             out <- paste(out,
                          paste(" ", badFiles, collapse = "\n"),
                          sep = "\n")
-            stop(out)
+            stop(out, domain = NA)
         }
         ## Everything's groovy ...
         codeFiles <- codeFilesInCspec
@@ -169,20 +244,24 @@ function(dir, outDir)
     codeFiles <- file.path(codeDir, codeFiles)
 
     if(!file_test("-d", outDir) && !dir.create(outDir))
-        stop(paste("cannot open directory", sQuote(outDir)))
+        stop(gettextf("cannot open directory '%s'", outDir),
+             domain = NA)
     outCodeDir <- file.path(outDir, "R")
     if(!file_test("-d", outCodeDir) && !dir.create(outCodeDir))
-        stop(paste("cannot open directory", sQuote(outCodeDir)))
+        stop(gettextf("cannot open directory '%s'", outCodeDir),
+             domain = NA)
     outFile <- file.path(outCodeDir, db["Package"])
     ## <NOTE>
     ## It may be safer to do
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
     if(!file.create(outFile))
-        stop(paste("unable to create", outFile))
+        stop(gettextf("unable to create '%s'", outFile),
+             domain = NA)
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
-    if(!all(file.append(outFile, codeFiles)))
+    # use fast version of file.append that ensures LF between files
+    if(!all(.file_append_ensuring_LFs(outFile, codeFiles)))
         stop("unable to write code files")
     ## </NOTE>
 
@@ -197,9 +276,11 @@ function(dir, outDir)
 {
     options(warn = 1)                   # to ensure warnings get seen
     if(!file_test("-d", dir))
-        stop(paste("directory", sQuote(dir), "does not exist"))
+        stop(gettextf("directory '%s' does not exist", dir),
+             domain = NA)
     if(!file_test("-d", outDir))
-        stop(paste("directory", sQuote(outDir), "does not exist"))
+        stop(gettextf("directory '%s' does not exist", outDir),
+             domain = NA)
 
     ## If there is an @file{INDEX} file in the package sources, we
     ## install this, and do not build it.
@@ -207,12 +288,14 @@ function(dir, outDir)
         if(!file.copy(file.path(dir, "INDEX"),
                       file.path(outDir, "INDEX"),
                       overwrite = TRUE))
-            stop(paste("unable to copy INDEX to",
-                       file.path(outDir, "INDEX")))
+            stop(gettextf("unable to copy INDEX to '%s'",
+                          file.path(outDir, "INDEX")),
+                 domain = NA)
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-         stop(paste("cannot open directory", sQuote(outMetaDir)))
+         stop(gettextf("cannot open directory '%s'", outMetaDir),
+              domain = NA)
     .install_package_Rd_indices(dir, outDir)
     .install_package_vignette_index(dir, outDir)
     .install_package_demo_index(dir, outDir)
@@ -226,10 +309,17 @@ function(dir, outDir)
 {
     dir <- file_path_as_absolute(dir)
     docsDir <- file.path(dir, "man")
-    if(!file_test("-d", docsDir)) return(invisible())
+    dataDir <- file.path(outDir, "data")
+    outDir <- file_path_as_absolute(outDir)
 
-    dataDir <- file.path(dir, "data")
-    outDir <- file_path_as_absolute(outDir)    
+    ## allow for a data dir but no man pages
+    if(!file_test("-d", docsDir)) {
+        if(file_test("-d", dataDir))
+            .saveRDS(.build_data_index(dataDir, NULL),
+                     file.path(outDir, "Meta", "data.rds"))
+        return(invisible())
+    }
+
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
@@ -259,7 +349,7 @@ function(dir, outDir)
     .write_contents_as_RDS(contents,
                            file.path(outDir, "Meta", "Rd.rds"))
 
-    .saveRDS(.build_hsearch_index(contents, packageName, outDir),
+    .saveRDS(.build_hsearch_index(contents, packageName),
              file.path(outDir, "Meta", "hsearch.rds"))
 
     .write_contents_as_DCF(contents, packageName,
@@ -274,12 +364,11 @@ function(dir, outDir)
     if(!file_test("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.build_Rd_index(contents)),
                    file.path(outDir, "INDEX"))
-    ## </NOTE>    
+    ## </NOTE>
 
-    if(file_test("-d", dataDir)) {
+    if(file_test("-d", dataDir))
         .saveRDS(.build_data_index(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
-    }
     invisible()
 }
 
@@ -294,7 +383,7 @@ function(dir, outDir)
     if(!file_test("-d", vignetteDir))
         return(invisible())
 
-    outDir <- file_path_as_absolute(outDir)    
+    outDir <- file_path_as_absolute(outDir)
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
@@ -305,7 +394,8 @@ function(dir, outDir)
     ## </FIXME>
     outVignetteDir <- file.path(outDir, "doc")
     if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
-        stop(paste("cannot open directory", sQuote(outVignetteDir)))
+        stop(gettextf("cannot open directory '%s'", outVignetteDir),
+             domain = NA)
 
     ## If there is an HTML index in the @file{inst/doc} subdirectory of
     ## the package source directory (@code{dir}), we do not overwrite it
@@ -316,7 +406,9 @@ function(dir, outDir)
 
     ## Write dummy HTML index if no vignettes are found and exit.
     if(!length(list_files_with_type(vignetteDir, "vignette"))) {
-        if(!hasHtmlIndex)
+        ## we don't want to write an index if the directory is in fact empty
+        files <- list.files(vignetteDir, all.files = TRUE) # includes . and ..
+        if((length(files) > 2) && !hasHtmlIndex)
             .writeVignetteHtmlIndex(packageName, htmlIndex)
         return(invisible())
     }
@@ -365,8 +457,9 @@ function(src_dir, out_dir, packages)
     ## See @file{src/library/Makefile.in}.
 
     for(p in unlist(strsplit(packages, "[[:space:]]+")))
-        tools:::.install_package_indices(file.path(src_dir, p),
+        .install_package_indices(file.path(src_dir, p),
                                          file.path(out_dir, p))
+    unix.packages.html(.Library)
     invisible()
 }
 
@@ -386,7 +479,8 @@ function(dir, outDir)
     outDir <- file_path_as_absolute(outDir)
     outVignetteDir <- file.path(outDir, "doc")
     if(!file_test("-d", outVignetteDir) && !dir.create(outVignetteDir))
-        stop(paste("cannot open directory", sQuote(outVignetteDir)))
+        stop(gettextf("cannot open directory '%s'", outVignetteDir),
+             domain = NA)
     ## For the time being, assume that no PDFs are available in
     ## vignetteDir.
     vignettePDFs <-
@@ -404,7 +498,8 @@ function(dir, outDir)
     cwd <- getwd()
     buildDir <- file.path(cwd, ".vignettes")
     if(!file_test("-d", buildDir) && !dir.create(buildDir))
-        stop(paste("cannot create directory", sQuote(buildDir)))
+        stop(gettextf("cannot create directory '%s'", buildDir),
+             domain = NA)
     on.exit(setwd(cwd))
     setwd(buildDir)
 
@@ -424,8 +519,8 @@ function(dir, outDir)
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
         texfile <- paste(base, ".tex", sep = "")
-        yy <- try(Sweave(srcfile, pdf = TRUE, eps = FALSE, quiet =
-                         TRUE))
+        yy <- try(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
+                                quiet = TRUE))
         if(inherits(yy, "try-error"))
             stop(yy)
         ## In case of an error, do not clean up: should we point to
@@ -434,37 +529,46 @@ function(dir, outDir)
             ## may not have texi2dvi
             res <- system(paste("pdflatex", texfile))
             if(res)
-                stop(paste("unable to run pdflatex on",
-                           sQuote(texfile)))
+                stop(gettextf("unable to run pdflatex on '%s'",
+                              texfile),
+                     domain = NA)
             if(length(grep("\\bibdata",
                            readLines(paste(base, ".aux", sep = ""))))) {
                 res <- system(paste("bibtex", base))
                 if(res)
-                    stop(paste("unable to run bibtex on",
-                               sQuote(base)))
+                    stop(gettextf("unable to run bibtex on '%s'", base),
+                         domain = NA)
                 res <- system(paste("pdflatex", texfile))
                 if(res)
-                    stop(paste("unable to run pdflatex on",
-                               sQuote(texfile)))
+                    stop(gettextf("unable to run pdflatex on '%s'",
+                                  texfile),
+                         domain = NA)
             }
             res <- system(paste("pdflatex", texfile))
             if(res)
-                stop(paste("unable to run pdflatex on",
-                           sQuote(texfile)))
+                stop(gettextf("unable to run pdflatex on '%s'",
+                              texfile),
+                     domain = NA)
         } else
             texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
         pdffile <-
             paste(basename(file_path_sans_ext(srcfile)), ".pdf", sep = "")
         if(!file.exists(pdffile))
-            stop(paste("file", sQuote(pdffile), "was not created"))
+            stop(gettextf("file '%s' was not created",
+                          pdffile),
+                 domain = NA)
         if(!file.copy(pdffile, outVignetteDir, overwrite = TRUE))
-            stop(paste("cannot copy", sQuote(pdffile), "to",
-                       sQuote(outVignetteDir)))
+            stop(gettextf("cannot copy '%s' to '%s'",
+                          pdffile,
+                          outVignetteDir),
+                 domain = NA)
     }
     ## Need to change out of this dir before we delete it, at least on
     ## Windows.
     setwd(cwd)
     unlink(buildDir, recursive = TRUE)
+    ## Now you need to update the HTML index!
+    .install_package_vignette_index(dir, outDir)
     invisible()
 }
 
@@ -481,7 +585,8 @@ function(dir, outDir)
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
-        stop(paste("cannot open directory", sQuote(outMetaDir)))
+        stop(gettextf("cannot open directory '%s'", outMetaDir),
+             domain = NA)
     .saveRDS(nsInfo, nsInfoFilePath)
     invisible()
 }
@@ -495,13 +600,85 @@ function(dir, packages)
     ## NAMESPACE file, install the namespace info as R metadata.
     ## Really only useful for base packages under Unix.
     ## See @file{src/library/Makefile.in}.
-    
+
     for(p in unlist(strsplit(packages, "[[:space:]]+")))
         .install_package_namespace_info(file.path(dir, p),
                                         file.path(dir, p))
     invisible()
 }
 
+### * .convert_examples
+
+.convert_examples <- function(infile, outfile, encoding)
+{
+    ## convert infile from encoding to current, if possible
+    if(capabilities("iconv") && l10n_info()[["MBCS"]]) {
+        text <- iconv(readLines(infile), encoding, "")
+        if(any(is.na(text)))
+            stop("invalid input", domain = NA)
+        writeLines(text, outfile)
+    } else file.copy(infile, outfile, TRUE)
+}
+
+
+### * .install_package_man_sources
+
+.install_package_man_sources <- function(dir, outDir)
+{
+    mandir <- file.path(dir, "man")
+    if(!file_test("-d", mandir)) return()
+    manfiles <- list_files_with_type(mandir, "docs")
+    if(!length(manfiles)) return()
+    manOutDir <- file.path(outDir, "man")
+    if(!file_test("-d", manOutDir)) dir.create(manOutDir)
+    pkgname <- sub("_.*$", "", basename(outDir)) # allow for versioned installs
+    filepath <- file.path(manOutDir, paste(pkgname, ".Rd.gz", sep = ""))
+    con <- gzfile(filepath, "wb")
+    for(file in manfiles) {
+        fn <- sub(".*/man/", "", file)
+        cat(file=con, "% --- Source file: ", fn, " ---\n", sep="")
+        writeLines(readLines(file, warn = FALSE), con) # will ensure final \n
+        ## previous format had (sometimes) blank line before \eof, but
+        ## this is not needed.
+        cat(file=con, "\\eof\n")
+    }
+    close(con)
+}
+
+### * .install_package_demos
+
+.install_package_demos <- function(dir, outDir)
+{
+    ## NB: we no longer install 00Index
+    demodir <- file.path(dir, "demo")
+    if(!file_test("-d", demodir)) return()
+    demofiles <- list_files_with_type(demodir, "demo", full.names = FALSE)
+    if(!length(demofiles)) return()
+    demoOutDir <- file.path(outDir, "demo")
+    if(!file_test("-d", demoOutDir)) dir.create(demoOutDir)
+    file.copy(file.path(demodir, demofiles), demoOutDir)
+}
+
+
+### * .find_cinclude_paths
+
+.find_cinclude_paths <- function(pkgs, lib.loc = NULL, file = NULL)
+{
+    ## given a character string of comma-separated package names,
+    ## find where the packages are installed and generate
+    ## -I"/path/to/package/include" ...
+
+    if(!is.null(file)) {
+        tmp <- read.dcf(file, "LinkingTo")[1,1]
+        if(is.na(tmp)) return(invisible())
+        pkgs <- tmp
+    }
+    pkgs <- strsplit(pkgs[1], ",[:blank]*")[[1]]
+    paths <- .find.package(pkgs, lib.loc, quiet=TRUE)
+    if(length(paths))
+        cat(paste(paste('-I"', paths, '/include"', sep=""), collapse=" "))
+    return(invisible())
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***

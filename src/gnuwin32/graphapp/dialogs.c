@@ -23,14 +23,55 @@
    See the file COPYLIB.TXT for details.
 */
 
-/* Copyright (C) 2004 	The R Foundation
+/* Copyright (C) 2004--2006 	The R Foundation
 
    Additions for R, Chris Jackson
    Find and replace dialog boxes and dialog handlers */
 
+#define ENABLE_NLS 1
+#include "../win-nls.h"
 #include "internal.h"
 #include "ga.h"
-#include "../shext.h"		/* for selectfolder */
+
+#include <shlobj.h>
+
+static int CALLBACK
+InitBrowseCallbackProc( HWND hwnd, UINT uMsg, LPARAM lParam, LPARAM lpData )
+{
+    if (uMsg == BFFM_INITIALIZED)
+	SendMessage(hwnd, BFFM_SETSELECTION, 1, lpData);
+    return(0);
+}
+
+/* browse for a folder under the Desktop, return the path in the argument */
+
+static void selectfolder(char *folder, char *title)
+{
+    char buf[MAX_PATH];
+    LPMALLOC g_pMalloc;
+    HWND hwnd=0;
+    BROWSEINFO bi;
+    LPITEMIDLIST pidlBrowse;
+
+    /* Get the shell's allocator. */
+    if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return;
+
+    bi.hwndOwner = hwnd;
+    bi.pidlRoot = NULL;
+    bi.pszDisplayName = buf;
+    bi.lpszTitle = title;
+    bi.ulFlags = BIF_RETURNONLYFSDIRS;
+    bi.lpfn = (BFFCALLBACK) InitBrowseCallbackProc;
+    bi.lParam = (int) folder;
+
+    /* Browse for a folder and return its PIDL. */
+    pidlBrowse = SHBrowseForFolder(&bi);
+    if (pidlBrowse != NULL) {
+	SHGetPathFromIDList(pidlBrowse, folder);
+        g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
+    }
+}
+
 
 #define BUFSIZE _MAX_PATH
 static char strbuf[BUFSIZE];
@@ -54,6 +95,17 @@ void setuserfilter(char *uf) {
 
 static HWND hModelessDlg = NULL;
 
+int myMessageBox(HWND h, char *text, char *caption, UINT type)
+{
+    if(is_NT && (localeCP != GetACP())) {
+	wchar_t wc[1000], wcaption[100];
+	mbstowcs(wcaption, caption, 100);
+	mbstowcs(wc, text, 1000);
+	return MessageBoxW(h, wc, wcaption, type);
+    } else
+	return MessageBoxA(h, text, caption, type);
+}
+
 /*
  *  Error reporting dialog.
  */
@@ -61,7 +113,7 @@ void apperror(char *errstr)
 {
 	if (! errstr)
 		errstr = "Unspecified error";
-	MessageBox(0, errstr, "Graphics Library Error",
+	myMessageBox(0, errstr, "Graphics Library Error",
 		MB_TASKMODAL | MB_ICONSTOP | MB_OK | TopmostDialogs);
 	exitapp();
 }
@@ -70,7 +122,7 @@ void askok(char *info)
 {
 	if (! info)
 		info = "";
-	MessageBox(0, info, "Information",
+	myMessageBox(0, info, "Information",
 		MB_TASKMODAL | MB_ICONINFORMATION | MB_OK | TopmostDialogs);
 }
 
@@ -80,7 +132,7 @@ int askokcancel(char *question)
 
 	if (! question)
 		question = "";
-	result = MessageBox(0, question, "Question",
+	result = myMessageBox(0, question, G_("Question"),
 		MB_TASKMODAL | MB_ICONQUESTION | MB_OKCANCEL | TopmostDialogs);
 
 	switch (result) {
@@ -97,7 +149,7 @@ int askyesno(char *question)
 
 	if (! question)
 		question = "";
-	result = MessageBox(0, question, "Question",
+	result = myMessageBox(0, question, G_("Question"),
 		MB_TASKMODAL | MB_ICONQUESTION | MB_YESNO | TopmostDialogs);
 
 	switch (result) {
@@ -114,7 +166,7 @@ int askyesnocancel(char *question)
 
 	if (! question)
 		question = "";
-	result = MessageBox(0, question, "Question",
+	result = myMessageBox(0, question, G_("Question"),
 		MB_TASKMODAL | MB_ICONQUESTION | MB_YESNOCANCEL | MB_SETFOREGROUND | TopmostDialogs);
 
 	switch (result) {
@@ -134,10 +186,10 @@ void askchangedir()
 
 /* if cod has never been used, set it to current directory */
     if (!cod[0]) GetCurrentDirectory(MAX_PATH, cod);
-    s = askcdstring(" Change working directory to:", cod);
+    s = askcdstring(G_(" Change working directory to:"), cod);
     if (s && (SetCurrentDirectory(s) == FALSE)) {
 	snprintf(msg, MAX_PATH + 40,
-		 "Unable to set '%s' as working directory", s);
+		 G_("Unable to set '%s' as working directory"), s);
 	askok(msg);
     }
     /* in every case reset cod (to new directory if all went ok
@@ -148,27 +200,38 @@ void askchangedir()
 char *askfilename(char *title, char *default_name)
 {
 	if (*askfilenames(title, default_name, 0, userfilter?userfilter:filter[0], 0,
-				          strbuf, BUFSIZE)) return strbuf;
+				          strbuf, BUFSIZE, NULL)) return strbuf;
+	else return NULL;
+}
+
+char *askfilenamewithdir(char *title, char *default_name, char *dir)
+{
+	if (*askfilenames(title, default_name, 0, userfilter?userfilter:filter[0], 0,
+				          strbuf, BUFSIZE, dir)) return strbuf;
 	else return NULL;
 }
 
 char *askfilenames(char *title, char *default_name, int multi,
-			       char *filters, int filterindex, char *strbuf, int bufsize)
+		   char *filters, int filterindex,
+		   char *strbuf, int bufsize,
+		   char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
-        char cwd[MAX_PATH]="";
-	if (! default_name)
-		default_name = "";
+        char cwd[MAX_PATH] = "";
+
+	if (!default_name) default_name = "";
 	strcpy(strbuf, default_name);
-        GetCurrentDirectory(MAX_PATH,cwd);
-        if (!strcmp(cod,"")) strcpy(cod,cwd);
+        GetCurrentDirectory(MAX_PATH, cwd);
+        if (!strcmp(cod, "")) {
+            if (!dir) strcpy(cod, cwd);
+            else strcpy(cod, dir);
+        }
 
 	ofn.lStructSize     = sizeof(OPENFILENAME);
-	ofn.hwndOwner       = current_window ?
-				current_window->handle : 0;
+	ofn.hwndOwner       = current_window ? current_window->handle : 0;
 	ofn.hInstance       = 0;
-    ofn.lpstrFilter     = filters;
+	ofn.lpstrFilter     = filters;
 	ofn.lpstrCustomFilter = NULL;
 	ofn.nMaxCustFilter  = 0;
 	ofn.nFilterIndex    = filterindex;
@@ -188,16 +251,15 @@ char *askfilenames(char *title, char *default_name, int multi,
 	ofn.lpTemplateName  = NULL;
 
 	if (GetOpenFileName(&ofn) == 0) {
-		GetCurrentDirectory(MAX_PATH,cod);
+		GetCurrentDirectory(MAX_PATH, cod);
 		SetCurrentDirectory(cwd);
 		strbuf[0] = 0;
 		strbuf[1] = 0;
 		return strbuf;
 	} else {
-		GetCurrentDirectory(MAX_PATH,cod);
+		GetCurrentDirectory(MAX_PATH, cod);
 		SetCurrentDirectory(cwd);
-		for (i=0; i<10; i++)
-			if (peekevent()) doevent();
+		for (i = 0; i <  10; i++) if (peekevent()) doevent();
 		return strbuf;
 	}
 }
@@ -220,15 +282,13 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
-        char cwd[MAX_PATH];
+        char *p, cwd[MAX_PATH];
 
-	if (! default_name)
-		default_name = "";
+	if (!default_name) default_name = "";
 	strcpy(strbuf, default_name);
 
 	ofn.lStructSize     = sizeof(OPENFILENAME);
-	ofn.hwndOwner       = current_window ?
-				current_window->handle : 0;
+	ofn.hwndOwner       = current_window ? current_window->handle : 0;
 	ofn.hInstance       = 0;
         ofn.lpstrFilter     = userfilter?userfilter:filter[0];
 	ofn.lpstrCustomFilter = NULL;
@@ -238,10 +298,12 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 	ofn.nMaxFile        = BUFSIZE;
 	ofn.lpstrFileTitle  = NULL;
 	ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-	if(dir && strlen(dir) > 0)
-	    ofn.lpstrInitialDir = dir;
-	else {
-	    if (GetCurrentDirectory(MAX_PATH,cwd))
+	if(dir && strlen(dir) > 0) {
+	    strcpy(cwd, dir);
+	    for(p = cwd; *p; p++) if(*p == '/') *p = '\\';
+	    ofn.lpstrInitialDir = cwd;
+	} else {
+	    if (GetCurrentDirectory(MAX_PATH, cwd))
 		ofn.lpstrInitialDir = cwd;
 	    else
 		ofn.lpstrInitialDir = NULL;
@@ -251,17 +313,16 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
                               OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.nFileOffset     = 0;
 	ofn.nFileExtension  = 0;
-	ofn.lpstrDefExt     = "*";
+	ofn.lpstrDefExt     = NULL /* "*" */;
 	ofn.lCustData       = 0L;
 	ofn.lpfnHook        = NULL;
 	ofn.lpTemplateName  = NULL;
 
 	if (GetSaveFileName(&ofn) == 0)
-		return NULL;
+	    return NULL;
 	else {
-		for (i=0; i<10; i++)
-			if (peekevent()) doevent();
-		return strbuf;
+	    for (i = 0; i < 10; i++) if (peekevent()) doevent();
+	    return strbuf;
 	}
 }
 
@@ -287,13 +348,13 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 /*
  *  Some strings to use:
  */
-	static char * OKAY_STRING	= "OK";
+/*	static char * OKAY_STRING	= "OK";
 	static char * CANCEL_STRING	= "Cancel";
-	static char * BROWSE_STRING	= "Browse";
+	static char * BROWSE_STRING	= "Browse"; */
 
 	static char * QUESTION_TITLE	= "Question";
 	static char * PASSWORD_TITLE	= "Password Entry";
-	static char * FINDDIR_TITLE	= "Change directory";
+	static char * FINDDIR_TITLE	= "Choose directory";
 
 static void add_data(window w)
 {
@@ -315,7 +376,7 @@ static char * get_dialog_string(window w)
 		return NULL;
 	del_string(d->result);
 	if (d->text)	/* question dialog */
-		d->result = new_string(gettext(d->text));
+		d->result = new_string(GA_gettext(d->text));
 
 	return d->result;
 }
@@ -330,53 +391,15 @@ static void hit_button(control c)
 	hide(w);
 }
 
-#ifndef OLD
-
 static void browse_button(control c)
 {
     window w = parentwindow(c);
     dialog_data *d = data(w);
     char strbuf[MAX_PATH];
-    strcpy(strbuf, gettext(d->text));
-    selectfolder(strbuf);
+    strcpy(strbuf, GA_gettext(d->text));
+    selectfolder(strbuf, G_("Choose a folder"));
     if(strlen(strbuf)) settext(d->text, strbuf);
 }
-#else
-static void browse_button(control c)
-{
-    window w = parentwindow(c);
-    dialog_data *d = data(w);
-
-    OPENFILENAME ofn;
-    char strbuf[_MAX_PATH]="anything", *p;
-
-    ofn.lStructSize     = sizeof(OPENFILENAME);
-    ofn.hwndOwner       = 0;
-    ofn.hInstance       = 0;
-    ofn.lpstrFilter     = "All files (*.*)\0*.*\0\0";
-    ofn.lpstrCustomFilter = NULL;
-    ofn.nMaxCustFilter  = 0;
-    ofn.nFilterIndex    = 0;
-    ofn.lpstrFile       = strbuf;
-    ofn.nMaxFile        = _MAX_PATH;
-    ofn.lpstrFileTitle  = NULL;
-    ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
-    ofn.lpstrInitialDir = gettext(d->text);
-    ofn.lpstrTitle      = "Select working directory";
-    ofn.Flags           = OFN_HIDEREADONLY;
-    ofn.nFileOffset     = 0;
-    ofn.nFileExtension  = 0;
-    ofn.lpstrDefExt     = "";
-    ofn.lCustData       = 0L;
-    ofn.lpfnHook        = NULL;
-    ofn.lpTemplateName  = NULL;
-
-    if(GetSaveFileName(&ofn) && strlen(strbuf)) {
-	 p = strrchr(strbuf,'\\'); if(p) *p ='\0';
-	 settext(d->text, strbuf);
-    }
-}
-#endif
 
 static void hit_key(window w, int key)
 {
@@ -453,7 +476,7 @@ static window init_askstr_dialog(char *title, char *question,
 	if (! default_str)
 		default_str = "";
 
-	tw = strwidth(SystemFont, CANCEL_STRING) * 8;
+	tw = strwidth(SystemFont, G_("Cancel")) * 8;
 	h = getheight(SystemFont);
 
 	if (tw < 150) tw = 150;
@@ -466,9 +489,9 @@ static window init_askstr_dialog(char *title, char *question,
 	d->question = newlabel(question, rect(10,h,tw+4,h*2+2),
 			AlignLeft);
 	if (title == FINDDIR_TITLE) {
-	    bw = strwidth(SystemFont, BROWSE_STRING) * 3/2;
+	    bw = strwidth(SystemFont, G_("Browse")) * 3/2;
 	    d->text = newfield(default_str, rect(10,h*4,tw+4-bw,h*3/2));
-	    newbutton(BROWSE_STRING, rect(20+tw-bw, h*4-2, bw, h+10),
+	    newbutton(G_("Browse"), rect(20+tw-bw, h*4-2, bw, h+10),
 		      browse_button);
 	}
 	else if (title == PASSWORD_TITLE)
@@ -477,13 +500,13 @@ static window init_askstr_dialog(char *title, char *question,
 		d->text = newfield(default_str, rect(10,h*4,tw+4,h*3/2));
 
 	middle = (tw+30)/2;
-	bw = strwidth(SystemFont, CANCEL_STRING) * 3/2;
+	bw = strwidth(SystemFont, G_("Cancel")) * 3/2;
 
-	d->yes = newbutton(OKAY_STRING,
+	d->yes = newbutton(G_("OK"),
 			rect(middle-bw-10, h*7, bw, h+10), hit_button);
 	setvalue(d->yes, YES);
 
-	d->cancel = newbutton(CANCEL_STRING,
+	d->cancel = newbutton(G_("Cancel"),
 			rect(middle+10, h*7, bw, h+10), hit_button);
 	setvalue(d->cancel, CANCEL);
 
@@ -558,7 +581,7 @@ char *askUserPass(char *title)
     if (! win) {
 	int tw, bw, h, middle;
 
-	tw = strwidth(SystemFont, CANCEL_STRING) * 8;
+	tw = strwidth(SystemFont, G_("Cancel")) * 8;
 	h = getheight(SystemFont);
 	if (tw < 150) tw = 150;
 	win = newwindow(title, rect(0, 0, tw+30, h*9+12),
@@ -566,20 +589,20 @@ char *askUserPass(char *title)
         setbackground(win, dialog_bg());
 	add_data(win);
 	d = data(win);
-	d->question = newlabel("User", rect(10, h, tw+4, h*2+2), AlignLeft);
-	bw = strwidth(SystemFont, "Password");
+	d->question = newlabel(G_("User"), rect(10, h, tw+4, h*2+2), AlignLeft);
+	bw = strwidth(SystemFont, G_("Password"));
 	d->text = newfield("", rect(20+bw, h, tw-6-bw, h*3/2));
-	newlabel("Password", rect(10, h*4, tw+4, h*2+2), AlignLeft);
+	newlabel(_("Password"), rect(10, h*4, tw+4, h*2+2), AlignLeft);
 	d->pass = newpassword("", rect(20+bw, h*4, tw-6-bw, h*3/2));
 	middle = (tw+30)/2;
-	bw = strwidth(SystemFont, CANCEL_STRING) * 3/2;
+	bw = strwidth(SystemFont, G_("Cancel")) * 3/2;
 
-	d->yes = newbutton(OKAY_STRING,
-			rect(middle-bw-10, h*7, bw, h+10), hit_button);
+	d->yes = newbutton(G_("OK"),
+			   rect(middle-bw-10, h*7, bw, h+10), hit_button);
 	setvalue(d->yes, YES);
 
-	d->cancel = newbutton(CANCEL_STRING,
-			rect(middle+10, h*7, bw, h+10), hit_button);
+	d->cancel = newbutton(G_("Cancel"),
+			      rect(middle+10, h*7, bw, h+10), hit_button);
 	setvalue(d->cancel, CANCEL);
 
 	setkeydown(win, hit_key);
@@ -596,9 +619,9 @@ char *askUserPass(char *title)
 	char *user, *pass;
 	static char buf[1000];
 	if (d->hit < YES) /* cancelled */ return "";
-	if (d->text) user = new_string(gettext(d->text));
+	if (d->text) user = new_string(GA_gettext(d->text));
 	else return "";
-	if (d->pass) pass = new_string(gettext(d->pass));
+	if (d->pass) pass = new_string(GA_gettext(d->pass));
 	else return "";
 	snprintf(buf, 1000, "%s:%s", user, pass);
 	return buf;
@@ -696,21 +719,23 @@ int richeditreplace(HWND hwnd, char *what, char *replacewith, int matchcase, int
     CHARRANGE sel;
     char *buf;
     textbox t = find_by_handle(hwnd);
-    sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
-    start = sel.cpMin;
-    end = sel.cpMax;
-    if (start < end) {
-	buf = (char *) malloc(end - start + 1);
-	sendmessage(hwnd, EM_GETSELTEXT, 0, buf);
-	if (!strcmp(buf, what)) {
-	    checklimittext(t, strlen(replacewith) - strlen(what) + 2);
-	    sendmessage (hwnd, EM_REPLACESEL, 1, replacewith);
+    if (t) {
+	sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
+	start = sel.cpMin;
+	end = sel.cpMax;
+	if (start < end) {
+	    buf = (char *) malloc(end - start + 1);
+	    sendmessage(hwnd, EM_GETSELTEXT, 0, buf);
+	    if (!strcmp(buf, what)) {
+		checklimittext(t, strlen(replacewith) - strlen(what) + 2);
+		sendmessage (hwnd, EM_REPLACESEL, 1, replacewith);
+	    }
+	    free(buf);
 	}
-	free(buf);
+	/* else just find next */
+	if (richeditfind(hwnd, what, matchcase, wholeword, down))
+	    return 1;
     }
-    /* else just find next */
-    if (richeditfind(hwnd, what, matchcase, wholeword, down))
-	return 1;
     return 0;
 }
 
@@ -726,13 +751,13 @@ void handle_findreplace(HWND hwnd, LPFINDREPLACE pfr)
 
     if (pfr->Flags & FR_FINDNEXT) {
 	if (!richeditfind(hwnd, pfr->lpstrFindWhat, matchcase, wholeword, down)) {
-	    snprintf(buf, 100, "\"%s\" not found", pfr->lpstrFindWhat);
+	    snprintf(buf, 100, G_("\"%s\" not found"), pfr->lpstrFindWhat);
 	    askok(buf);
 	}
     }
     else if (pfr->Flags & FR_REPLACE) {
 	if (!richeditreplace(hwnd, pfr->lpstrFindWhat, pfr->lpstrReplaceWith, matchcase, wholeword, down)) {
-	    snprintf(buf, 100, "\"%s\" not found", pfr->lpstrFindWhat);
+	    snprintf(buf, 100, G_("\"%s\" not found"), pfr->lpstrFindWhat);
 	    askok(buf);
 	}
     }

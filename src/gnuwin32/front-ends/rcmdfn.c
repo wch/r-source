@@ -14,16 +14,24 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #define NONAMELESSUNION
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <Rversion.h>
 
-extern char *getRHOME(); /* in ../rhome.c */
+extern char *getRHOME(), *getRUser(); /* in ../rhome.c */
+
+void R_Suicide(char *s) /* for use in ../rhome.o */
+{
+    fprintf(stderr, "FATAL ERROR:%s\n", s);
+    exit(2);
+}
+
 
 static int pwait(HANDLE p)
 {
@@ -36,7 +44,7 @@ static int pwait(HANDLE p)
 
 void rcmdusage (char *RCMD)
 {
-    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s",
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 	    "where 'command' is one of:\n",
 	    "  INSTALL  Install add-on packages.\n",
 	    "  REMOVE   Remove add-on packages.\n",
@@ -47,28 +55,34 @@ void rcmdusage (char *RCMD)
 	    "  Rprof    Post process R profiling files.\n",
 	    "  Rdconv   Convert Rd format to various other formats, including html, Nroff,\n",
 	    "           LaTeX, plain text, and S documentation format.\n",
-	    "  Rd2dvi.sh Convert Rd format to DVI/PDF.\n",
+	    "  Rd2dvi   Convert Rd format to DVI/PDF.\n",
 	    "  Rd2txt   Convert Rd format to text.\n",
-	    "  Sd2Rd    Convert S documentation to Rd format.\n");
+	    "  Sd2Rd    Convert S documentation to Rd format.\n",
+	    "  Stangle  Extract S/R code from Sweave documentation.\n",
+	    "  Sweave   Process Sweave documentation.\n"
+	    );
 
     fprintf(stderr, "\n%s%s%s%s",
 	    "Use\n  ", RCMD, " command --help\n",
 	    "for usage information for each command.\n\n");    
 }
 
-
+#define CMD_LEN 10000
 int rcmdfn (int cmdarg, int argc, char **argv)
 {
     /* tasks:
-       find R_HOME
+       find R_HOME, set as env variable
+       set R_SHARE_DIR as env variable
        set PATH to include R_HOME\bin
-       set PERL5LIB to %R_HOME%/share/perl;%Perl5LIB%
-       set TEXINPUTS to %R_HOME%/share/texmf;%TEXINPUTS%
+       set PERL5LIB to %R_SHARE_DIR%/perl;%Perl5LIB%
+       set TEXINPUTS to %R_SHARE_DIR%/texmf;%TEXINPUTS%
+       set HOME if unset
        launch %R_HOME%\bin\$*
      */
     int i, iused, res, status = 0;
     char *RHome, PERL5LIB[MAX_PATH], TEXINPUTS[MAX_PATH], PATH[10000],
-	RHOME[MAX_PATH], *p, cmd[10000], Rversion[25];
+	RHOME[MAX_PATH], *p, cmd[CMD_LEN], Rversion[25], HOME[MAX_PATH + 10],
+	RSHARE[MAX_PATH];
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
     
@@ -96,7 +110,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(0);
 	}
 	/* R --help */
-	sprintf(cmd, "%s/bin/Rterm.exe --help", getRHOME());
+	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe --help", getRHOME());
 	system(cmd);
 	fprintf(stderr, "%s", "\n\nOr: R CMD command args\n\n");
 	rcmdusage(RCMD);
@@ -105,7 +119,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
     if (cmdarg > 0 && argc > cmdarg && strcmp(argv[cmdarg], "BATCH") == 0) {
 	/* handle Rcmd BATCH internally */
-	char infile[MAX_PATH], outfile[MAX_PATH], cmd[MAX_PATH];
+	char infile[MAX_PATH], outfile[MAX_PATH], *p;
 	DWORD ret;
 	SECURITY_ATTRIBUTES sa;
 	PROCESS_INFORMATION pi;
@@ -114,7 +128,11 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 
 	/* process the command line */
-	sprintf(cmd, "%s/bin/Rterm.exe --restore --save", getRHOME());
+	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe --restore --save", getRHOME());
+	if((p = getenv("R_BATCH_OPTIONS")) && strlen(p)) {
+	    strcat(cmd, " ");
+	    strcat(cmd, p);
+	}
 
 	for(i = cmdarg + 1, iused = cmdarg; i < argc; i++) {
 	    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
@@ -146,6 +164,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		break;
 	    }
 	    if (argv[i][0] == '-') {
+		if (strlen(cmd) + strlen(argv[i]) > 9900) {
+		    fprintf(stderr, "command line too long\n");
+		    return(27);
+		}
 		strcat(cmd, " ");
 		strcat(cmd, argv[i]);
 		iused = i;
@@ -206,8 +228,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	return(pwait(pi.hProcess));
     } else {
 	RHome = getRHOME();
-	if (argc > cmdarg+1 && strcmp(argv[cmdarg+1], "RHOME") == 0) {
-	    fprintf(stdout, "%s", RHome);
+	if (argc > cmdarg+1 && strcmp(argv[cmdarg+1], "RHOME") == 0) {	    fprintf(stdout, "%s", RHome);
 	    return(0);
 	}
 	strcpy(RHOME, "R_HOME=");
@@ -215,7 +236,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
 	putenv(RHOME);
 
-	sprintf(Rversion, "R_VERSION=%s.%s", R_MAJOR, R_MINOR);
+	/* currently used by Rd2dvi and by perl Vars.pm (with default) */
+	strcpy(RSHARE, "R_START_DIR=");
+	strcat(RSHARE, RHome); strcat(RSHARE, "/share");
+	putenv(RSHARE);
+
+	snprintf(Rversion, 25, "R_VERSION=%s.%s", R_MAJOR, R_MINOR);
 	putenv(Rversion);
 
 	putenv("R_CMD=R CMD");
@@ -242,11 +268,22 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	if ( (p = getenv("TEXINPUTS")) ) strcat(TEXINPUTS, p);
 	putenv(TEXINPUTS);
 
+	if( !getenv("HOME") ) {
+	    strcpy(HOME, "HOME=");
+	    strcat(HOME, getRUser());
+	    putenv(HOME);
+	}
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
 	    if (strcmp(p, "Rd2dvi") == 0) {
-		strcat(cmd, "sh "); 
+		strcpy(cmd, "sh "); 
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh");
+	    } else if (strcmp(p, "Sweave") == 0) {
+		strcpy(cmd, "sh "); 
+		strcat(cmd, RHome); strcat(cmd, "/bin/Sweave.sh");
+	    } else if (strcmp(p, "Stangle") == 0) {
+		strcpy(cmd, "sh "); 
+		strcat(cmd, RHome); strcat(cmd, "/bin/Stangle.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
 		    strcpy(cmd, "sh "); 
@@ -260,7 +297,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		strcat(cmd, p);
 	    }
 	} else
-	    sprintf(cmd, "%s/bin/Rterm.exe", getRHOME());
+	    snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe", getRHOME());
 
 	for (i = cmdarg + 1; i < argc; i++){
 	    strcat(cmd, " ");

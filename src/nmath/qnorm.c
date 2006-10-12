@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 1998       Ross Ihaka
+ *  Copyright (C) 2000--2005 The R Development Core Team
  *  based on AS 111 (C) 1977 Royal Statistical Society
  *  and   on AS 241 (C) 1988 Royal Statistical Society
  *
@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  SYNOPSIS
  *
@@ -57,9 +57,7 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
 	return p + mu + sigma;
 #endif
-    if (p == R_DT_0)	return ML_NEGINF;
-    if (p == R_DT_1)	return ML_POSINF;
-    R_Q_P01_check(p);
+    R_Q_P01_boundaries(p, ML_NEGINF, ML_POSINF);
 
     if(sigma  < 0)	ML_ERR_return_NAN;
     if(sigma == 0)	return mu;

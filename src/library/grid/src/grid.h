@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003 The R Development Core Team
+ *                2003-6 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc., 51 Franklin Street
+ *  Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
 #include <Rconfig.h>
@@ -24,11 +24,20 @@
 #include <Rgraphics.h>  
 #include <Rmath.h>
 
+#include <R_ext/Constants.h>
 #include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h>
 
-/* All lattice type names are prefixed with an "L" 
- * All lattice global variable names are prefixe with an "L_" 
+#include <Rinternals.h>
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("grid", String)
+#else
+#define _(String) (String)
+#endif
+
+/* All grid type names are prefixed with an "L" 
+ * All grid global variable names are prefixed with an "L_" 
  */
 
 /* This information is stored with R's graphics engine so that 
@@ -50,6 +59,8 @@
 #define GSS_ENGINEDLON 11
 #define GSS_CURRGROB 12
 #define GSS_ENGINERECORDING 13
+#define GSS_ASK 14
+#define GSS_SCALE 15
 
 /*
  * Structure of a viewport
@@ -112,27 +123,39 @@
 #define GP_FONT 8
 #define GP_FONTFAMILY 9
 #define GP_ALPHA 10
+#define GP_LINEEND 11
+#define GP_LINEJOIN 12
+#define GP_LINEMITRE 13
+#define GP_LEX 14
 /* 
  * Keep fontface at the end because it is never used in C code
  */
-#define GP_FONTFACE 11
+#define GP_FONTFACE 15
+
+/*
+ * Structure of an arrow description
+ */
+#define GRID_ARROWANGLE 0
+#define GRID_ARROWLENGTH 1
+#define GRID_ARROWENDS 2
+#define GRID_ARROWTYPE 3
 
 typedef double LTransform[3][3];
 
 typedef double LLocation[3];
 
 typedef enum {
-    L_adding = 0,
-    L_subtracting = 1,
-    L_summing = 2,
-    L_plain = 3,
-    L_maximising = 4,
-    L_minimising = 5,
-    L_multiplying = 6
+    L_adding = 1,
+    L_subtracting = 2,
+    L_summing = 3,
+    L_plain = 4,
+    L_maximising = 5,
+    L_minimising = 6,
+    L_multiplying = 7
 } LNullArithmeticMode;
 
 /* NOTE: The order of the enums here must match the order of the
- * strings in viewport.R
+ * strings in unit.R
  */
 typedef enum {
     L_NPC = 0,
@@ -159,12 +182,17 @@ typedef enum {
      * This is multiples of the font size.
      */
     L_CHAR = 18,
-    L_GROBWIDTH = 19,
-    L_GROBHEIGHT = 20,
-    L_MYLINES = 21,
-    L_MYCHAR = 22,
-    L_MYSTRINGWIDTH = 23,
-    L_MYSTRINGHEIGHT = 24
+    L_GROBX = 19,
+    L_GROBY = 20,
+    L_GROBWIDTH = 21,
+    L_GROBHEIGHT = 22,
+    /*
+     * No longer used
+     */
+    L_MYLINES = 23,
+    L_MYCHAR = 24,
+    L_MYSTRINGWIDTH = 25,
+    L_MYSTRINGHEIGHT = 26
 } LUnit;
 
 typedef enum {
@@ -197,8 +225,8 @@ typedef struct {
     SEXP y;
     SEXP width;
     SEXP height;
-    LJustification hjust;
-    LJustification vjust;
+    double hjust;
+    double vjust;
 } LViewportLocation;
 
 /* Components of a viewport which provide coordinate information
@@ -245,26 +273,30 @@ SEXP L_getCurrentGrob();
 SEXP L_setCurrentGrob(SEXP value);
 SEXP L_getEngineRecording();
 SEXP L_setEngineRecording(SEXP value);
+SEXP L_getAsk();
+SEXP L_setAsk(SEXP value);
 SEXP L_currentGPar();
-SEXP L_newpagerecording(SEXP ask);
+SEXP L_newpagerecording();
 SEXP L_newpage();
 SEXP L_initGPar();
 SEXP L_initViewportStack();
 SEXP L_initDisplayList();
 SEXP L_convertToNative(SEXP x, SEXP what); 
 SEXP L_moveTo(SEXP x, SEXP y);
-SEXP L_lineTo(SEXP x, SEXP y);
-SEXP L_lines(SEXP x, SEXP y); 
-SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1); 
+SEXP L_lineTo(SEXP x, SEXP y, SEXP arrow);
+SEXP L_lines(SEXP x, SEXP y, SEXP index, SEXP arrow); 
+SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow); 
 SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn, 
 	      SEXP y1, SEXP y2, SEXP ynm1, SEXP yn, 
 	      SEXP angle, SEXP length, SEXP ends, SEXP type);
 SEXP L_polygon(SEXP x, SEXP y, SEXP index);
+SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index);
 SEXP L_circle(SEXP x, SEXP y, SEXP r);
-SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just); 
-SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just, 
+SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
+SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
 	    SEXP rot, SEXP checkOverlap);
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size);
+SEXP L_clip(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
 SEXP L_pretty(SEXP scale);
 SEXP L_locator();
 SEXP L_convert(SEXP x, SEXP whatfrom,
@@ -277,6 +309,8 @@ double locationX(LLocation l);
 double locationY(LLocation l);
 
 void copyTransform(LTransform t1, LTransform t2);
+
+void invTransform(LTransform t, LTransform invt);
 
 void identity(LTransform m);
 
@@ -312,21 +346,25 @@ int pureNullUnit(SEXP unit, int index, GEDevDesc *dd);
 double transformX(SEXP x, int index, LViewportContext vpc, 
 		  R_GE_gcontext *gc,
 		  double widthCM, double heightCM,
+		  int nullLMode, int nullAMode,
 		  GEDevDesc *dd);
 
 double transformY(SEXP y, int index, LViewportContext vpc,
 		  R_GE_gcontext *gc,
 		  double widthCM, double heightCM,
+		  int nullLMode, int nullAMode,
 		  GEDevDesc *dd);
 
 double transformWidth(SEXP width, int index, LViewportContext vpc,
 		      R_GE_gcontext *gc,
 		      double widthCM, double heightCM,
+		      int nullLMode, int nullAMode,
 		      GEDevDesc *dd);
 
 double transformHeight(SEXP height, int index, LViewportContext vpc,
 		       R_GE_gcontext *gc,
 		       double widthCM, double heightCM,
+		       int nullLMode, int nullAMode,
 		       GEDevDesc *dd);
 
 double transformXtoINCHES(SEXP x, int index, LViewportContext vpc,
@@ -376,13 +414,13 @@ double transformWidthHeightFromINCHES(double value, int unit,
 				      GEDevDesc *dd);
 
 /* From just.c */
-double justifyX(double x, double width, int hjust);
+double justifyX(double x, double width, double hjust);
 
-double justifyY(double y, double height, int vjust);
+double justifyY(double y, double height, double vjust);
 
 double convertJust(int vjust);
 
-void justification(double width, double height, int hjust, int vjust,
+void justification(double width, double height, double hjust, double vjust,
 		   double *hadj, double *vadj);
 
 /* From util.c */
@@ -440,7 +478,7 @@ SEXP gpFontSizeSXP(SEXP gp);
 
 SEXP gpLineHeightSXP(SEXP gp);
 
-void gcontextFromgpar(SEXP gp, int i, R_GE_gcontext *gc);
+void gcontextFromgpar(SEXP gp, int i, R_GE_gcontext *gc, GEDevDesc *dd);
 
 void initGPar(GEDevDesc *dd);
 
@@ -452,6 +490,8 @@ SEXP viewportY(SEXP vp);
 SEXP viewportWidth(SEXP vp);
 
 SEXP viewportHeight(SEXP vp);
+
+SEXP viewportgpar(SEXP vp);
 
 char* viewportFontFamily(SEXP vp);
 
@@ -473,9 +513,13 @@ double viewportYScaleMin(SEXP vp);
 
 double viewportYScaleMax(SEXP vp);
 
-int viewportHJust(SEXP v);
+double viewportHJust(SEXP v);
 
-int viewportVJust(SEXP vp);
+double viewportVJust(SEXP vp);
+
+SEXP viewportLayoutPosRow(SEXP vp);
+
+SEXP viewportLayoutPosCol(SEXP vp);
 
 SEXP viewportLayout(SEXP vp);
 
@@ -505,7 +549,7 @@ void fillViewportContextFromViewport(SEXP vp, LViewportContext *vpc);
 
 void copyViewportContext(LViewportContext vpc1, LViewportContext *vpc2);
 
-void gcontextFromViewport(SEXP vp, R_GE_gcontext *gc);
+void gcontextFromViewport(SEXP vp, R_GE_gcontext *gc, GEDevDesc *dd);
 
 void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 			   GEDevDesc *dd);
@@ -513,6 +557,8 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 void initVP(GEDevDesc *dd);
 
 /* From layout.c */
+Rboolean checkPosRowPosCol(SEXP viewport, SEXP parent);
+
 void calcViewportLayout(SEXP viewport,
 			double parentWidthCM,
 			double parentHeightCM,
@@ -549,4 +595,19 @@ void getViewportTransform(SEXP currentvp,
 			  double *vpWidthCM, double *vpHeightCM,
 			  LTransform transform, double *rotationAngle);
 
+SEXP L_circleBounds(SEXP x, SEXP y, SEXP r, SEXP theta);
+SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta);
+SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust,
+		  SEXP theta);
+SEXP L_textBounds(SEXP label, SEXP x, SEXP y, 
+		  SEXP hjust, SEXP vjust, SEXP rot, SEXP theta);
+SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
+		     SEXP index, SEXP theta);
 
+/* From unit.c */
+SEXP validUnits(SEXP units);
+
+/* From gpar.c */
+SEXP L_getGPar(void);
+SEXP L_setGPar(SEXP gpars);
+    

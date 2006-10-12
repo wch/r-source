@@ -24,14 +24,14 @@ function (x = seq(0, 1, len = nrow(z)),
                 x <- seq(0, 1, len = nrow(z))
             }
         }
-        else stop("no `z' matrix specified")
+        else stop("no 'z' matrix specified")
     }
     else if (is.list(x)) {
         y <- x$y
         x <- x$x
     }
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
-        stop("increasing x and y values expected")
+        stop("increasing 'x' and 'y' values expected")
 
     mar.orig <- (par.orig <- par(c("mar","las","mfrow")))$mar
     on.exit(par(par.orig))
@@ -40,7 +40,7 @@ function (x = seq(0, 1, len = nrow(z)),
     layout(matrix(c(2, 1), nc=2), widths=c(1, lcm(w)))
     par(las = las)
 
-    ## Plot the `plot key' (scale):
+    ## Plot the 'plot key' (scale):
     mar <- mar.orig
     mar[4] <- mar[2]
     mar[2] <- 1
@@ -65,7 +65,7 @@ function (x = seq(0, 1, len = nrow(z)),
     plot.window(xlim, ylim, "", xaxs=xaxs, yaxs=yaxs, asp=asp)
 
     if (!is.matrix(z) || nrow(z) <= 1 || ncol(z) <= 1)
-        stop("no proper `z' matrix specified")
+        stop("no proper 'z' matrix specified")
     if (!is.double(z))
         storage.mode(z) <- "double"
     .Internal(filledcontour(as.double(x),
@@ -76,8 +76,8 @@ function (x = seq(0, 1, len = nrow(z)),
     if (missing(plot.axes)) {
         if (axes) {
             title(main="", xlab="", ylab="")
-            axis(1)
-            axis(2)
+            Axis(x, side=1)
+            Axis(y, side=2)
         }
     }
     else plot.axes

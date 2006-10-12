@@ -1,13 +1,10 @@
 ### Demos for  persp()  plots   -- things not in  example(persp)
 ### -------------------------
 
-## make sure a device is open
-if(dev.cur() <= 1) get(getOption("device"))()
-## is FALSE in demo() {using source()}:
-## if(dev.interactive())
-## Use a ``portable'' (;-) hack instead:
-is.dev.interactive <- eval(body(dev.interactive)[[3]])
-op <- par(ask = is.dev.interactive)
+require(datasets)
+require(graphics)
+opar <- par(ask = dev.interactive(orNone = TRUE))
+
 
 ## (1) The Obligatory Mathematical surface.
 ##     Rotated sinc function.
@@ -87,4 +84,4 @@ persp(x, y, 2*z, theta = 110, phi = 40, col = fcol, scale = FALSE,
 
 
 ## reset par():
-par(op)
+par(opar)

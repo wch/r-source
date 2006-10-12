@@ -15,7 +15,7 @@ determinant = function(x, logarithm = TRUE, ...) UseMethod("determinant")
 determinant.matrix = function(x, logarithm = TRUE, ...)
 {
     if ((n <- ncol(x)) != nrow(x))
-        stop("x must be a square matrix")
+        stop("'x' must be a square matrix")
     if (n < 1)
         return(list(modulus = double(0), sign = as.integer(1),
                     logarithm = logarithm))

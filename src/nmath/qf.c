@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2005 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  DESCRIPTION
  *
@@ -33,9 +34,7 @@ double qf(double p, double n1, double n2, int lower_tail, int log_p)
 #endif
     if (n1 <= 0. || n2 <= 0.) ML_ERR_return_NAN;
 
-    R_Q_P01_check(p);
-    if (p == R_DT_0)
-	return 0;
+    R_Q_P01_boundaries(p, 0, ML_POSINF);
 
     /* fudge the extreme DF cases -- qbeta doesn't do this well */
 

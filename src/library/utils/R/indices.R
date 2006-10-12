@@ -1,4 +1,5 @@
-packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
+packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
+			       encoding = "")
 {
     retval <- list()
     if(!is.null(fields)){
@@ -6,10 +7,29 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
         retval[fields] <- NA
     }
 
+    if(system.file(package = pkg, lib.loc = lib.loc) == "") {
+        warning(gettextf("no package '%s' was found", pkg), domain = NA)
+        return(NA)
+    }
+
     file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
 
     if(file != "") {
         desc <- as.list(read.dcf(file=file)[1,])
+        ## read the Encoding field if any
+        enc <- desc[["Encoding"]]
+        if(!is.null(enc) && !is.na(encoding)) {
+            ## Determine encoding and re-encode if necessary and possible.
+            if((encoding != "" || Sys.getlocale("LC_CTYPE") != "C")
+	       && capabilities("iconv")) {
+                ## might have an invalid encoding ...
+                newdesc <- try(lapply(desc, iconv, from=enc, to=encoding))
+                if(!inherits(newdesc, "try-error")) desc <- newdesc
+                else
+                    warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible", call. = FALSE)
+            } else
+                warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible", call. = FALSE)
+        }
         if(!is.null(fields)){
             ok <- names(desc) %in% fields
             retval[names(desc)[ok]] <- desc[ok]
@@ -19,8 +39,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
     }
 
     if((file == "") || (length(retval) == 0)){
-        warning(paste("DESCRIPTION file of package ", sQuote(pkg),
-                      " missing or broken\n"))
+        warning(gettextf("DESCRIPTION file of package '%s' is missing or broken", pkg), domain = NA)
         return(NA)
     }
 

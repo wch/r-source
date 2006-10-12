@@ -3,6 +3,10 @@
 \alias{numeric}
 \alias{as.numeric}
 \alias{is.numeric}
+\alias{is.numeric.factor}
+\description{
+  Creates or tests for objects of type \code{"numeric"}.
+}
 \usage{
 numeric(length = 0)
 as.numeric(x, \dots)
@@ -13,32 +17,34 @@ is.numeric(x)
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
-\description{
+\details{
+  \code{as.numeric} is a generic function, but methods must be
+  written for \code{\link{as.double}}, which it calls.
+
+  \code{is.numeric} is generic: you can write methods to handle
+  specific classes of objects, see \link{InternalMethods}.
+  \cr
+  Note that \code{is.numeric()} returns \code{FALSE} for a factor via its
+  \code{"factor"} method.
+}
+\value{
   \code{numeric} creates a real vector of the specified length.  The
   elements of the vector are all equal to \code{0}.
 
-  \code{as.numeric} attempts to coerce its argument to numeric type
-  (either integer or real).
+  \code{as.numeric} attempts to coerce its argument to a numeric \link{type}
+  (either \code{"integer"} or \code{"double"}).
+  \code{as.numeric} for factors yields the codes underlying the factor
+  levels, not the numeric representation of the labels, see also
+  \code{\link{factor}}.
 
-  \code{is.numeric} returns \code{TRUE} if its argument is of type real
-  or type integer and \code{FALSE} otherwise.
-}
-\details{
-  \code{is.numeric} is  generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
-
-  Note that factors are false for \code{is.numeric} but true for
-  \code{\link{is.integer}}.
+  \code{is.numeric} returns \code{TRUE} if its argument is of
+  \link{mode} \code{"numeric"} (\link{type} \code{"double"} or type
+  \code{"integer"}) and not a factor, and \code{FALSE} otherwise.
 }
 
 \note{
   \emph{\R has no single precision data type.  All real numbers are
-    stored in double precision format}. While \code{as.numeric} is a
-  generic function, user methods must be written for \code{as.double},
-  which it calls
-
-  \code{as.numeric} for factors yields the codes underlying the factor
-    levels, not the numeric representation of the labels.
+    stored in double precision format}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

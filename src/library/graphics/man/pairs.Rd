@@ -7,22 +7,11 @@
 \description{
   A matrix of scatterplots is produced.
 }
-\synopsis{
-pairs(x, \dots)
-pairs.formula(formula, data = NULL, \dots, subset, na.action = stats::na.pass)
-pairs.default(x, labels, panel = points, \dots,
-              main = NULL, oma = NULL,
-              font.main = par("font.main"), cex.main = par("cex.main"),
-              lower.panel = panel, upper.panel = panel,
-              diag.panel = NULL, text.panel = textPanel,
-              label.pos = 0.5 + has.diag/3,
-              cex.labels = NULL, font.labels = 1,
-              row1attop = TRUE, gap = 1)
-}
 \usage{
 pairs(x, \dots)
 
-\method{pairs}{formula}(formula, data = NULL, \dots, subset, na.action = na.pass)
+\method{pairs}{formula}(formula, data = NULL, \dots, subset,
+      na.action = stats::na.pass)
 
 \method{pairs}{default}(x, labels, panel = points, \dots,
       lower.panel = panel, upper.panel = panel,
@@ -32,7 +21,10 @@ pairs(x, \dots)
       row1attop = TRUE, gap = 1)
 }
 \arguments{
-  \item{x}{the coordinates of points given as columns of a matrix.}
+  \item{x}{the coordinates of points given as numeric columns of a 
+    matrix or dataframe.  Logical and factor columns are converted to
+    numeric in the same way that \code{\link{data.matrix}} does.
+  }
   \item{formula}{a formula, such as \code{~ x + y + z}.  Each term will
     give a separate variable in the pairs plot, so terms should be
     numeric vectors.  (A response will be interpreted as another
@@ -49,8 +41,13 @@ pairs(x, \dots)
   \item{labels}{the names of the variables.}
   \item{panel}{\code{function(x,y,\dots)} which is used to plot
     the contents of each panel of the display.}
-  \item{\dots}{graphical parameters can be given as arguments to
-    \code{plot}.}
+  \item{\dots}{
+    arguments to be passed to or from methods.
+    
+    Also, graphical parameters can be given as can arguments to
+    \code{plot} such as \code{main}.  \code{par("oma")} will be set
+    appropriately unless specified.
+  }
   \item{lower.panel, upper.panel}{separate panel functions to be used
     below and above the diagonal respectively.}
   \item{diag.panel}{optional \code{function(x, \dots)} to be
@@ -87,7 +84,7 @@ pairs(x, \dots)
   often be ignored within a panel.  However, for the formula method and
   \code{na.action = na.omit}, all cases which contain a missing values for
   any of the variables are omitted completely (including when the scales
-  are selected).  (The latter was the default behaviour prior to \R 2.0.0.)
+  are selected).
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens

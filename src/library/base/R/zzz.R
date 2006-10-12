@@ -4,7 +4,7 @@
     ## include the S3 group generics here
     baseGenerics <- c("Math", "Ops", "Summary", "Complex",
         "as.character", "as.data.frame", "as.matrix", "as.vector",
-        "labels", "print", "solve", "summary", "t")
+        "labels", "print", "rep", "seq", "seq.int", "solve", "summary", "t")
 
     utilsGenerics <- c("edit", "str")
 

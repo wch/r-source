@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *  DESCRIPTION
  *
@@ -36,10 +36,10 @@ double pnbinom(double x, double n, double p, int lower_tail, int log_p)
 	return x + n + p;
     if(!R_FINITE(n) || !R_FINITE(p))	ML_ERR_return_NAN;
 #endif
-    if (n <= 0 || p <= 0 || p >= 1)	ML_ERR_return_NAN;
+    if (n <= 0 || p <= 0 || p > 1)	ML_ERR_return_NAN;
 
-    x = floor(x + 1e-7);
     if (x < 0) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;
+    x = floor(x + 1e-7);
     return pbeta(p, n, x + 1, lower_tail, log_p);
 }

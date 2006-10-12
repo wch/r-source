@@ -1,9 +1,9 @@
 \name{Random}
-\alias{.Random.seed}
 \alias{RNG}
 \alias{RNGkind}
 \alias{RNGversion}
 \alias{set.seed}
+\alias{.Random.seed}
 \title{Random Number Generation}
 \description{
   \code{.Random.seed} is an integer vector, containing the random number
@@ -136,7 +136,7 @@ set.seed(seed, kind = NULL)
   to reproduce work later, call \code{set.seed} rather than set
   \code{.Random.seed}.
 
-  As from \R 1.8.0, \code{.Random.seed} is only looked for in the user's
+  The object \code{.Random.seed} is only looked for in the user's
   workspace.
 
   All the supplied uniform generators return 32-bit integer values that

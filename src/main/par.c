@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2002 Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997-2006 Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  *
  *
  *
@@ -37,6 +37,9 @@
  *	Query(.)	[ par(what) ]
  */
 
+/* <UTF8> char here is either ASCII or handled as a whole */
+
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -46,27 +49,133 @@
 #include <Graphics.h>		/* "GPar" structure + COMMENTS */
 #include <Rdevices.h>
 
+typedef struct {
+    char *name;
+    int code; /* 0 normal, 1 not inline, 2 read-only
+		 -1 unknown, -2 obselete, -3 graphical args
+	       */
+} ParTab;
 
+static ParTab
+ParTable[] = {
+    { "adj",		 0 },
+    { "ann",		 0 },
+    { "ask",		 1 },
+    { "bg",		 0 },
+    { "bty",		 0 },
+    { "cex",		 0 },
+    { "cex.axis",	 0 },
+    { "cex.lab",	 0 },
+    { "cex.main",	 0 },
+    { "cex.sub",	 0 },
+    { "cin",		 2 },
+    { "col",		 0 },
+    { "col.axis",	 0 },
+    { "col.lab",	 0 },
+    { "col.main",	 0 },
+    { "col.sub",	 0 },
+    { "cra",		 2 },
+    { "crt",		 0 },
+    { "csi",		 2 },
+    { "csy",		 0 },
+    { "cxy",		 2 },
+    { "din",		 2 },
+    { "err",		 0 },
+    { "family",		 0 },
+    { "fg",		 0 },
+    { "fig",		 1 },
+    { "fin",		 1 },
+    { "font",		 0 },
+    { "font.axis",	 0 },
+    { "font.lab",	 0 },
+    { "font.main",	 0 },
+    { "font.sub",	 0 },
+    { "gamma",		 0 },
+    { "lab",		 0 },
+    { "las",		 0 },
+    { "lend",		 0 },
+    { "lheight",	 1 },
+    { "ljoin",		 0 },
+    { "lmitre",		 0 },
+    { "lty",		 0 },
+    { "lwd",		 0 },
+    { "mai",		 1 },
+    { "mar",		 1 },
+    { "mex",		 1 },
+    { "mfcol",		 1 },
+    { "mfg",		 1 },
+    { "mfrow",		 1 },
+    { "mgp",		 0 },
+    { "mkh",		 0 },
+    { "new",		 1 },
+    { "oma",		 1 },
+    { "omd",		 1 },
+    { "omi",		 1 },
+    { "pch",		 0 },
+    { "pin",		 1 },
+    { "plt",		 1 },
+    { "ps",		 1 },
+    { "pty",		 1 },
+    { "smo",		 0 },
+    { "srt",		 0 },
+    { "tck",		 0 },
+    { "tcl",		 0 },
+    { "usr",		 1 },
+    { "xaxp",		 0 },
+    { "xaxs",		 0 },
+    { "xaxt",		 0 },
+    { "xlog",		 1 },
+    { "xpd",		 0 },
+    { "yaxp",		 0 },
+    { "yaxs",		 0 },
+    { "yaxt",		 0 },
+    { "ylog",		 1 },
+    /* Obsolete pars */
+    { "type",		-2},
+    { "tmag",           -2},
+    /* Non-pars that might get passed to Specify2 */
+    { "asp",		-3},
+    { "main",		-3},
+    { "sub",		-3},
+    { "xlab",		-3},
+    { "ylab",		-3},
+    { "xlim",		-3},
+    { "ylim",		-3},
+    { NULL,		-1}
+};
+
+
+static int ParCode(char *what)
+{
+    int i;
+    for (i = 0; ParTable[i].name; i++)
+	if (!strcmp(what, ParTable[i].name)) return ParTable[i].code;
+    return -1;
+}
+
+
+#ifdef UNUSED
 /* par(.)'s call */
 
 static SEXP gcall;
-
 
 void RecordGraphicsCall(SEXP call)
 {
     gcall = call;
 }
+#endif
 
 static void par_error(char *what)
 {
-    error("invalid value specified for graphics parameter \"%s\".",  what);
+    error(_("invalid value specified for graphical parameter \"%s\""),  what);
 }
 
 
 static void lengthCheck(char *what, SEXP v, int n, SEXP call)
 {
     if (length(v) != n)
-	errorcall(call, "parameter \"%s\" has the wrong length", what);
+	errorcall(call, _("graphical parameter \"%s\" has the wrong length"),
+		  what);
 }
 
 
@@ -108,6 +217,12 @@ static void naRealCheck(double x, char *s)
 	par_error(s);
 }
 
+static void logAxpCheck(int x, char *s)
+{
+    if (x == NA_INTEGER || x == 0 || x > 4)
+	par_error(s);
+}
+
 
 static void BoundsCheck(double x, double a, double b, char *s)
 {
@@ -122,6 +237,7 @@ static void BoundsCheck(double x, double a, double b, char *s)
 /* the transformations between coordinate systems */
 
 /* These will be defined differently for Specify() and Specify2() : */
+/* <FIXME>  do not need separate macros for a = b = c and b = a = c */
 #define R_DEV__(_P_) Rf_dpptr(dd)->_P_ = Rf_gpptr(dd)->_P_
 #define R_DEV_2(_P_) Rf_gpptr(dd)->_P_ = Rf_dpptr(dd)->_P_
 /* In Emacs : -- only inside Specify() :
@@ -145,7 +261,8 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
  *	this list is in \details{.} of ../library/base/man/par.Rd
  *	------------------------
  *	"ask",
- *	"fig", "fin",
+ *	"family", "fig", "fin",
+ *      "lend", lheight", "ljoin", "lmitre",
  *	"mai", "mar", "mex",
  *	"mfrow", "mfcol", "mfg",
  *	"new",
@@ -157,6 +274,12 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
     double x;
     int ix = 0;
 
+    /* If we get here, Query has already checked that 'what' is valid */
+
+    if (ParCode(what) == 2) {
+	warning(_("graphical parameter \"%s\" cannot be set"), what);
+	return;
+    }
 #include "par-common.c"
 /*	  ------------
  *--- now, these are *different* from  "Specify2() use" : */
@@ -201,7 +324,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	    R_DEV_2(widths[0]) = 1;
 	    R_DEV_2(cmHeights[0]) = 0;
 	    R_DEV_2(cmWidths[0]) = 0;
-	    R_DEV_2(order[0][0]) = 1;
+	    R_DEV_2(order[0]) = 1;
 	    R_DEV_2(currentFigure) = 1;
 	    R_DEV_2(lastFigure) = 1;
 	    R_DEV__(rspct) = 0;
@@ -214,6 +337,14 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	}
 	else par_error(what);
     }
+    else if (streql(what, "family")) {
+	value = coerceVector(value, STRSXP);
+	lengthCheck(what, value, 1, call);
+	if(strlen(CHAR(STRING_ELT(value, 0))) > 200)
+	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
+	strncpy(Rf_dpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
+	strncpy(Rf_gpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
+    }
     else if (streql(what, "fin")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 2, call);
@@ -225,7 +356,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	R_DEV_2(widths[0]) = 1;
 	R_DEV_2(cmHeights[0]) = 0;
 	R_DEV_2(cmWidths[0]) = 0;
-	R_DEV_2(order[0][0]) = 1;
+	R_DEV_2(order[0]) = 1;
 	R_DEV_2(currentFigure) = 1;
 	R_DEV_2(lastFigure) = 1;
 	R_DEV__(rspct) = 0;
@@ -234,7 +365,12 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	GReset(dd);
     }
     /* -- */
-
+    else if (streql(what, "lheight")) {
+	lengthCheck(what, value, 1, call);
+	x = asReal(value);
+	posRealCheck(x, what);
+	R_DEV__(lheight) = x;
+    }
     else if (streql(what, "mai")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 4, call);
@@ -334,7 +470,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	value = coerceVector(value, INTSXP);
 	np = length(value);
 	if(np != 2 && np != 4)
-	    errorcall(call, "parameter \"mfg\" has the wrong length");
+	    errorcall(call, _("parameter \"mfg\" has the wrong length"));
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
 	row = INTEGER(value)[0];
@@ -342,16 +478,16 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	nrow = Rf_dpptr(dd)->numrows;
 	ncol = Rf_dpptr(dd)->numcols;
 	if(row <= 0 || row > nrow)
-	    errorcall(call, "parameter \"i\" in \"mfg\" is out of range");
+	    errorcall(call, _("parameter \"i\" in \"mfg\" is out of range"));
 	if(col <= 0 || col > ncol)
-	    errorcall(call, "parameter \"j\" in \"mfg\" is out of range");
+	    errorcall(call, _("parameter \"j\" in \"mfg\" is out of range"));
 	if(np == 4) {
 	    posIntCheck(INTEGER(value)[2], what);
 	    posIntCheck(INTEGER(value)[3], what);
 	    if(nrow != INTEGER(value)[2])
-		warningcall(call, "value of nr in \"mfg\" is wrong and will be ignored");
+		warning(_("value of nr in \"mfg\" is wrong and will be ignored"));
 	    if(ncol != INTEGER(value)[3])
-		warningcall(call, "value of nc in \"mfg\" is wrong and will be ignored");
+		warning(_("value of nc in \"mfg\" is wrong and will be ignored"));
 	}
 	R_DEV_2(lastFigure) = nrow*ncol;
 	/*R_DEV__(mfind) = 1;*/
@@ -366,21 +502,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	R_DEV_2(currentFigure);
 	/* R_DEV_2(defaultFigure) = TRUE;
 	   R_DEV_2(layout) = FALSE; */
-	R_DEV_2(new) = 1;
-	/*
-	if (nrow > 2 || ncol > 2) {
-	    R_DEV__(cexbase) = 0.66;
-	    R_DEV__(mex) = 1.0;
-	}
-	else if (nrow == 2 && ncol == 2) {
-	    R_DEV__(cexbase) = 0.83;
-	    R_DEV__(mex) = 1.0;
-	}
-	else {
-	    R_DEV__(cexbase) = 1.0;
-	    R_DEV__(mex) = 1.0;
-	}
-	*/
+	R_DEV_2(new) = TRUE;
 	GReset(dd);
 	/* Force a device clip */
 	if (Rf_dpptr(dd)->canClip)
@@ -389,7 +511,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 
     else if (streql(what, "new")) {
 	lengthCheck(what, value, 1, call);	ix = asLogical(value);
-	if(!Rf_gpptr(dd)->state) warning("calling par(new=) with no plot");
+	if(!Rf_gpptr(dd)->state) warning(_("calling par(new=) with no plot"));
 	else R_DEV__(new) = (ix != 0);
     }
     /* -- */
@@ -538,8 +660,12 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	    par_error(what);
 	R_DEV__(ylog) = (ix != 0);
     }
-
-    else warningcall(call, "parameter \"%s\" can't be set", what);
+    /* We do not need these as Query will already have warned.
+    else if (streql(what, "type")) {
+	warning(_("graphical parameter \"%s\" is obsolete"), what);
+    }
+    else warning(_("unknown graphical parameter \"%s\""), what);
+    */
 
     return;
 } /* Specify */
@@ -555,38 +681,61 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 /* Now defined differently in Specify2() : */
 #define R_DEV__(_P_) Rf_gpptr(dd)->_P_
 
-void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
+void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 {
     double x;
-    int ix = 0;
+    int ix = 0, ptype = ParCode(what);
+
+    if (ptype == 1 || ptype == -3) {
+	/* 1: these are valid, but not settable inline
+	   3: arguments, not pars
+	*/
+	return;
+    }
+    if (ptype == -2) {
+	warningcall(call, _("graphical parameter \"%s\" is obsolete"), what);
+	return;
+    }
+    if (ptype < 0) {
+	warningcall(call, _("\"%s\" is not a graphical parameter"), what);
+	return;
+    }
+    if (ptype == 2) {
+	warningcall(call, _("graphical parameter \"%s\" cannot be set"), what);
+	return;
+    }
 
 #include "par-common.c"
 /*	  ------------
  *  these are *different* from Specify() , i.e., par(<NAM> = .) use : */
     else if (streql(what, "bg")) {
-	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
-	/*	naIntCheck(ix, what); */
-	R_DEV__(bg) = ix;
+	/* bg can be a vector of length > 1, so pick off first value
+	   (as e.g. pch always did) */
+	if (!isVector(value) || LENGTH(value) < 1)
+	    par_error(what);
+	R_DEV__(bg) = RGBpar(value, 0);
     }
     else if (streql(what, "cex")) {
-	lengthCheck(what, value, 1, call);	x = asReal(value);
+	/* cex can be a vector of length > 1, so pick off first value
+	   (as e.g. pch always did) */
+	x = asReal(value);
 	posRealCheck(x, what);
 	R_DEV__(cex) = x;
 	/* not setting cexbase here (but in Specify()) */
     }
-
+    else if (streql(what, "family")) {
+	value = coerceVector(value, STRSXP);
+	lengthCheck(what, value, 1, call);
+	if(strlen(CHAR(STRING_ELT(value, 0))) > 200)
+	    error(_("graphical parameter 'family' has a maximum length of 200 bytes"));
+	strncpy(Rf_gpptr(dd)->family, CHAR(STRING_ELT(value, 0)), 201);
+    }
     else if (streql(what, "fg")) {
 	/* highlevel arg `fg = ' does *not* set `col' (as par(fg=.) does!*/
 	lengthCheck(what, value, 1, call);	ix = RGBpar(value, 0);
 	/*	naIntCheck(ix, what); */
 	R_DEV__(fg) = ix;
     }
-    else if (streql(what, "asp")) {
-	/* this is not a parameter, but let it through as if it were */
-    }
-
-    else warning(
-	"parameter \"%s\" couldn't be set in high-level plot() function", what);
 } /* Specify2 */
 
 
@@ -607,7 +756,7 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "ask")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = Rf_dpptr(dd)->ask;
+	LOGICAL(value)[0] = Rf_dpptr(dd)->ask;
     }
     else if (streql(what, "bg")) {
 	PROTECT(value = allocVector(STRSXP, 1));
@@ -702,6 +851,11 @@ static SEXP Query(char *what, DevDesc *dd)
 	value = allocVector(INTSXP, 1);
 	INTEGER(value)[0] = Rf_dpptr(dd)->err;
     }
+    else if (streql(what, "family")) {
+	PROTECT(value = allocVector(STRSXP, 1));
+	SET_STRING_ELT(value, 0, mkChar(Rf_dpptr(dd)->family));
+	UNPROTECT(1);
+    }
     else if (streql(what, "fg")) {
 	PROTECT(value = allocVector(STRSXP, 1));
 	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->fg)));
@@ -752,6 +906,20 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "las")) {
 	value = allocVector(INTSXP, 1);
 	INTEGER(value)[0] = Rf_dpptr(dd)->las;
+    }
+    else if (streql(what, "lend")) {
+	value = LENDget(Rf_dpptr(dd)->lend);
+    }
+    else if (streql(what, "lheight")) {
+	value = allocVector(REALSXP, 1);
+	REAL(value)[0] = Rf_dpptr(dd)->lheight;
+    }
+    else if (streql(what, "ljoin")) {
+	value = LJOINget(Rf_dpptr(dd)->ljoin);
+    }
+    else if (streql(what, "lmitre")) {
+	value = allocVector(REALSXP, 1);
+	REAL(value)[0] = Rf_dpptr(dd)->lmitre;
     }
     else if (streql(what, "lty")) {
 	value = LTYget(Rf_dpptr(dd)->lty);
@@ -806,7 +974,7 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "new")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = Rf_dpptr(dd)->new;
+	LOGICAL(value)[0] = Rf_dpptr(dd)->new;
     }
     else if (streql(what, "oma")) {
 	value = allocVector(REALSXP, 4);
@@ -883,18 +1051,6 @@ static SEXP Query(char *what, DevDesc *dd)
 	value = allocVector(REALSXP, 1);
 	REAL(value)[0] = Rf_dpptr(dd)->tcl;
     }
-    else if (streql(what, "tmag")) {
-	value = allocVector(REALSXP, 1);
-	REAL(value)[0] = Rf_dpptr(dd)->tmag;
-    }
-    else if (streql(what, "type")) {
-	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = Rf_dpptr(dd)->type;
-	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
-    }
     else if (streql(what, "usr")) {
 	value = allocVector(REALSXP, 4);
 	if (Rf_gpptr(dd)->xlog) {
@@ -938,14 +1094,14 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "xlog")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = Rf_dpptr(dd)->xlog;
+	LOGICAL(value)[0] = Rf_dpptr(dd)->xlog;
     }
     else if (streql(what, "xpd")) {
 	value = allocVector(LGLSXP, 1);
 	if (Rf_dpptr(dd)->xpd == 2)
-	    INTEGER(value)[0] = NA_INTEGER;
+	    LOGICAL(value)[0] = NA_LOGICAL;
 	else
-	    INTEGER(value)[0] = Rf_dpptr(dd)->xpd;
+	    LOGICAL(value)[0] = Rf_dpptr(dd)->xpd;
     }
     else if (streql(what, "yaxp")) {
 	value = allocVector(REALSXP, 3);
@@ -971,14 +1127,20 @@ static SEXP Query(char *what, DevDesc *dd)
     }
     else if (streql(what, "ylog")) {
 	value = allocVector(LGLSXP, 1);
-	INTEGER(value)[0] = Rf_dpptr(dd)->ylog;
+	LOGICAL(value)[0] = Rf_dpptr(dd)->ylog;
     }
-    else
+    else if (ParCode(what) == -2) { 
+	warning(_("graphical parameter \"%s\" is obsolete"), what);
 	value = R_NilValue;
+    }
+    else {
+	warning(_("\"%s\" is not a graphical parameter"), what);
+	value = R_NilValue;
+    }
     return value;
 }
 
-SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP value;
     SEXP originalArgs = args;
@@ -1025,16 +1187,16 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2);
     }
     else {
-	errorcall(call, "invalid parameter passed to \"par\"");
+	error(_("invalid argument passed to par()"));
 	return R_NilValue/* -Wall */;
     }
     /* should really only do this if specifying new pars ?  yes! [MM] */
-    if (new_spec && call != R_NilValue)
+    if (new_spec && GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
     return value;
 }
 
-SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP result;
     GEDevDesc *dd;
@@ -1081,7 +1243,7 @@ SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
  *  )
  */
 
-SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j, nrow, ncol, ncmrow, ncmcol;
     SEXP originalArgs = args;
@@ -1092,33 +1254,39 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     dd = CurrentDevice();
 
     /* num.rows: */
-    nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows = INTEGER(CAR(args))[0];
+    nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows =
+	INTEGER(CAR(args))[0];
     if (nrow > MAX_LAYOUT_ROWS)
-	error("Too many rows in layout");
+	error(_("too many rows in layout, limit %d"), MAX_LAYOUT_ROWS);
     args = CDR(args);
     /* num.cols: */
-    ncol = Rf_dpptr(dd)->numcols = Rf_gpptr(dd)->numcols = INTEGER(CAR(args))[0];
+    ncol = Rf_dpptr(dd)->numcols = Rf_gpptr(dd)->numcols =
+	INTEGER(CAR(args))[0];
     if (ncol > MAX_LAYOUT_COLS)
-	error("Too many columns in layout");
+	error(_("too many columns in layout, limit %d"), MAX_LAYOUT_COLS);
+    if (nrow * ncol > MAX_LAYOUT_CELLS)
+	error(_("too many cells in layout, limit %d"), MAX_LAYOUT_CELLS);
     args = CDR(args);
-    /* mat[i,j] == order[i][j] : */
-    for (i = 0; i < nrow; i++)
-	for (j = 0; j < ncol; j++)
-	    Rf_dpptr(dd)->order[i][j] = Rf_gpptr(dd)->order[i][j] =
-		INTEGER(CAR(args))[i + j*nrow];
+    /* mat[i,j] == order[i+j*nrow] : */
+    for (i = 0; i < nrow * ncol; i++)
+	Rf_dpptr(dd)->order[i] = Rf_gpptr(dd)->order[i] =
+	    INTEGER(CAR(args))[i];
     args = CDR(args);
 
     /* num.figures: */
     Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure =
-	Rf_dpptr(dd)->lastFigure = Rf_gpptr(dd)->lastFigure = INTEGER(CAR(args))[0];
+	Rf_dpptr(dd)->lastFigure = Rf_gpptr(dd)->lastFigure =
+	INTEGER(CAR(args))[0];
     args = CDR(args);
     /* col.widths: */
     for (j = 0; j < ncol; j++)
-	Rf_dpptr(dd)->widths[j] = Rf_gpptr(dd)->widths[j] = REAL(CAR(args))[j];
+	Rf_dpptr(dd)->widths[j] = Rf_gpptr(dd)->widths[j] =
+	    REAL(CAR(args))[j];
     args = CDR(args);
     /* row.heights: */
     for (i = 0; i < nrow; i++)
-	Rf_dpptr(dd)->heights[i] = Rf_gpptr(dd)->heights[i] = REAL(CAR(args))[i];
+	Rf_dpptr(dd)->heights[i] = Rf_gpptr(dd)->heights[i] =
+	    REAL(CAR(args))[i];
     args = CDR(args);
     /* cm.widths: */
     ncmcol = length(CAR(args));
@@ -1144,10 +1312,9 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_dpptr(dd)->rspct = Rf_gpptr(dd)->rspct = INTEGER(CAR(args))[0];
     args = CDR(args);
     /* respect.mat */
-    for (i = 0; i < nrow; i++)
-	for (j = 0; j < ncol; j++)
-	    Rf_dpptr(dd)->respect[i][j] = Rf_gpptr(dd)->respect[i][j]
-		= INTEGER(CAR(args))[i + j * nrow];
+    for (i = 0; i < nrow * ncol; i++)
+	Rf_dpptr(dd)->respect[i] = Rf_gpptr(dd)->respect[i]
+		= INTEGER(CAR(args))[i];
 
     /*------------------------------------------------------*/
 
@@ -1169,7 +1336,7 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GReset(dd);
 
-    if (call != R_NilValue)
+    if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }

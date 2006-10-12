@@ -3,15 +3,18 @@
 \alias{Rprofile}
 \alias{.Rprofile}
 \alias{Rprofile.site}
+\alias{Renviron}
 \alias{Renviron.site}
 \alias{.Renviron}
 \alias{.First}
 \alias{.First.sys}
+\concept{environment variable}
+
 \title{Initialization at Start of an R Session}
 \usage{
 .First <- function() { \dots\dots }
 
-.Rprofile <startup file>
+\special{.Rprofile <startup file>}
 }
 \description{
   In \R, the startup mechanism is as follows.
@@ -24,6 +27,9 @@
   does not in a \dQuote{factory-fresh} installation).
   The user files searched for are \file{.Renviron} in the current or in
   the user's home directory (in that order).
+#ifdef windows
+  (See \sQuote{See also} for how the home directory is found on Windows.
+#endif
   See \bold{Details} for how the files are read.
 
   Then \R searches for the site-wide startup profile unless the command
@@ -78,47 +84,50 @@
   to be set, and \emph{profile files} which contain \R code.
 
   Lines in a site or user environment file should be either comment
-  lines starting with \code{#}, or lines of the form \code{name=value}.
-  The latter sets the environmental variable \code{name} to
-  \code{value}, overriding an existing value.  If \code{value} is of the
-  form \code{${foo-bar}}, the value is that of the environmental
-  variable \code{foo} if that exists and is set to a non-empty value,
-  otherwise \code{bar}.  This construction can be nested, so
-  \code{bar} can be of the same form (as in \code{${foo-${bar-blah}}}).
+  lines starting with \code{#}, or lines of the form
+  \code{name=value}. The latter sets the environmental variable
+  \code{name} to \code{value}, overriding an existing value.  If
+  \code{value} contains an expression of the form \code{${foo-bar}}, the
+  value is that of the environmental variable \code{foo} if that exists
+  and is set to a non-empty value, otherwise \code{bar}.  (If it is of
+  the form \code{${foo}}, the default is \code{""}.)  This construction
+  can be nested, so \code{bar} can be of the same form (as in
+  \code{${foo-${bar-blah}}}).  Note that the braces are essential:
+  \code{$HOME} will not be interpreted.
 
   Leading and trailing white space in \code{value} are stripped.
-%  No other interpretation of \code{value} is performed. In particular,
-%  if it is enclosed in quotes, the quotes form part of the value.
   \code{value} is processed in a similar way to a Unix shell.  In particular
-  quotes are stripped, and backslashes are removed except inside quotes.
+  the outermost level of (single or double) quotes is stripped, and
+  backslashes are removed except inside quotes.
 }
-#ifdef unix
 \note{
+#ifdef unix
   The file \file{\$R\_HOME/etc/Renviron} is always read very early in
   the start-up processing.  It contains environment variables set by \R
   in the configure process.  Values in that file can be overriden in
   site or user environment files: do not change
-  \file{\$R\_HOME/etc/Renviron} itself.
-}
+  \file{\$R\_HOME/etc/Renviron} itself.  Note that this is distinct from
+  \file{\$R\_HOME/etc/Renviron.site}.
 #endif
-\section{Historical notes}{
-  Prior to \R version 1.4.0, the environment files searched were
-  \file{.Renviron} in the current directory, the file pointed to by
-  \env{R\_ENVIRON} if set, and \file{.Renviron} in the user's home
-  directory.
-
-  Prior to \R version 1.2.1, \file{.Rprofile} was sourced after
-  \file{.RData} was loaded, although the documented order was as here.
-
-  The format for site and user environment files was changed in version
-  1.2.0.  Older files are quite likely to work but may generate warnings
-  on startup if they contained unnecessary \code{export} statements.
-
-  Values in environment files were not processed prior to version
-  1.4.0.
+#ifdef windows
+  Unix versions of \R have a file \file{\$R\_HOME/etc/Renviron} which is
+  read very early in the start-up processing.  It contains environment
+  variables set by \R in the configure process, and is not used on \R
+  for Windows.
+#endif
 }
 \seealso{
+#ifdef windows
+  For the definition of the home directory see the rw-FAQ.  It can be
+  found from a running \R by \code{Sys.getenv("R_USER")}.
+
+#endif
   \code{\link{.Last}} for final actions before termination.
+  \code{\link{commandArgs}} for accessing the command line arguments.
+
+  \emph{An Introduction to R} for more command-line options: those
+  affecting memory management are covered in the help file for
+  \link{Memory}.
 
   For profiling code, see \code{\link{Rprof}}.
 }

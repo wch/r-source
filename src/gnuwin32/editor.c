@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2004  The R Development Core Team
+ *  Copyright (C) 1999-2006  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,13 +14,14 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#include "win-nls.h"
 
 #ifdef Win32
 #define USE_MDI 1
@@ -35,9 +36,12 @@ extern UImode  CharacterMode;
 #include "graphapp/stdimg.h"
 #include "console.h"
 #include "consolestructs.h"
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include "rui.h"
 #include "editor.h"
+
+#define gettext GA_gettext
 
 #define MCHECK(a) if (!(a)) {del(c); return NULL;}
 RECT *RgetMDIsize();
@@ -52,23 +56,28 @@ static EditorData neweditordata (int file, char *filename)
     EditorData p;
     p = (EditorData) malloc(sizeof(struct structEditorData));
     p->file = file;
-    p->filename = (char *) malloc(_MAX_PATH*sizeof(char));
+    /* need space for terminator, and to copy it */
+    p->filename = (char *) malloc((MAX_PATH+1)*sizeof(char));
     if (filename)
-	strncpy(p->filename, filename, _MAX_PATH);
+	strncpy(p->filename, filename, MAX_PATH+1);
     p->title = (char *) malloc((EDITORMAXTITLE + 1)*sizeof(char));
     p->title[EDITORMAXTITLE] = p->title[0] = '\0';
     return p;
 }
 
-void deleditordata(EditorData p){
+void deleditordata(EditorData p)
+{
     if (p->stealconsole)
 	fix_editor_up = FALSE;
     free(p->filename);
     free(p->title);
+    free(p->hmenu);
+    free(p->pmenu);
     free(p);
 }
 
-static void editor_set_title(editor c, char *title) {
+static void editor_set_title(editor c, char *title)
+{
     char wtitle[EDITORMAXTITLE+1];
     textbox t = getdata(c);
     EditorData p = getdata(t);
@@ -86,23 +95,25 @@ static void editor_load_file(editor c, char *name)
     textbox t = getdata(c);
     EditorData p = getdata(t);
     FILE *f;
-    char *buffer=NULL, tmp[_MAX_PATH+30];
-    long num=1, bufsize;
+    char *buffer = NULL, tmp[MAX_PATH+50];
+    long num = 1, bufsize;
+
+    /* we checked that file could be read in the caller */
     f = fopen(name, "r");
-    if (f == NULL)
-	return;
+    if (f == NULL) return;
     p->file = 1;
-    strncpy(p->filename, name, _MAX_PATH);
+    strncpy(p->filename, name, MAX_PATH+1);
     bufsize = 0;
     while (num > 0) {
-	buffer = realloc(buffer, bufsize+3000+1);
-	num = fread(buffer+bufsize, 1, 3000-1, f);
+	buffer = realloc(buffer, bufsize + 3000 + 1);
+	num = fread(buffer + bufsize, 1, 3000 - 1, f);
 	if (num >= 0) {
 	    bufsize += num;
 	    buffer[bufsize] = '\0';
 	}
 	else {
-	    snprintf(tmp, _MAX_PATH+30, "Couldn't read from file %s", name);
+	    snprintf(tmp, MAX_PATH+50, G_("Could not read from file '%s'"), 
+		     name);
 	    askok(tmp);
 	}
     }
@@ -117,13 +128,13 @@ static void editor_save_file(editor c, char *name)
 {
     textbox t = getdata(c);
     FILE *f;
-    char buf[_MAX_PATH+30];
+    char buf[MAX_PATH+30];
     if (name == NULL)
 	return;
     else {
 	f = fopen(name, "w");
 	if (f == NULL) {
-	    snprintf(buf, _MAX_PATH+30, "Couldn't save file %s", name);
+	    snprintf(buf, MAX_PATH+30, G_("Could not save file '%s'"), name);
 	    askok(buf);
 	    return;
 	}
@@ -136,13 +147,15 @@ static void editorsaveas(editor c) {
     textbox t = getdata(c);
     EditorData p = getdata(t);
     char *current_name = (p->file ? p->filename : "");
-    char *name = askfilesave("Save script as", current_name);
+    char *name;
+    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
+    name = askfilesave(G_("Save script as"), current_name);
     if (name == NULL)
 	return;
     else {
 	editor_save_file(c, name);
 	p->file = 1;
-	strncpy(p->filename, name, _MAX_PATH);
+	strncpy(p->filename, name, MAX_PATH+1);
 	gsetmodified(t, 0);
 	editor_set_title(c, name);
 	show(c);
@@ -207,7 +220,8 @@ static void editorprint(control m)
 	if ( linep + fh >= rr ) { /* new page */
 	    if (page > 1) nextpage(lpr);
 	    sprintf(msg, "Page %d", page++);
-  	    gdrawstr(lpr, f, Black, pt(cc - gstrwidth(lpr, f, msg) - 1, top), msg);
+  	    gdrawstr(lpr, f, Black, pt(cc - gstrwidth(lpr, f, msg) - 1, top),
+		     msg);
 	    linep = top + 2*fh;
 	}
 	j = 0;
@@ -232,10 +246,12 @@ static void editorconsole(editor c)
     show(RConsole);
 }
 
-/* Remove global pointer to editor when closing an editor. Fill the gap in the array with the last editor in the list */
+/* Remove global pointer to editor when closing an editor. Fill the
+ * gap in the array with the last editor in the list */
 
-static void editorupdateglobals(editor c) {
-    int i=0;
+static void editorupdateglobals(editor c)
+{
+    int i = 0;
     if (neditors > 1) {
 	while (REditors[i] != c) ++i;
 	if (i < neditors - 1)
@@ -246,22 +262,26 @@ static void editorupdateglobals(editor c) {
 
 /* Hooks called when editor window is destroyed */
 
-static void editordel(editor c) {
+static void editordel(editor c)
+{
     editorupdateglobals(c);
 }
 
-static void textboxdel(textbox t) {
+static void textboxdel(textbox t)
+{
     EditorData p = getdata(t);
     deleditordata(p);
 }
 
-int editorchecksave(editor c) {
+int editorchecksave(editor c)
+{
     textbox t = getdata(c);
     EditorData p = getdata(t);
     int save;
     char buf[EDITORMAXTITLE + 100];
     if (ggetmodified(t)) {
-	snprintf(buf, EDITORMAXTITLE + 100, "\"%s\" has been modified.  Do you want to save the changes?",
+	snprintf(buf, EDITORMAXTITLE + 100,
+		 "\"%s\" has been modified.  Do you want to save the changes?",
 		 (p->title ? p->title : "Untitled"));
 	save = askyesnocancel(buf);
 	switch (save) {
@@ -271,7 +291,8 @@ int editorchecksave(editor c) {
 	case NO:
 	    break;
 	case CANCEL:
-	    return 1; /* used in rui.c (closeconsole) to abort closing the whole of Rgui */
+	    return 1; /* used in rui.c (closeconsole) to abort closing
+			 the whole of Rgui */
 	}
     }
     return 0;
@@ -315,11 +336,11 @@ static void editoropen(char *default_name)
 {
     char *name;
     int i; textbox t; EditorData p;
-    setuserfilter("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0");
+    setuserfilter("R files (*.R)\0*.R\0S files (*.q, *.ssc, *.S)\0*.q;*.ssc;*.S\0All files (*.*)\0*.*\0\0");
     name = askfilename("Open script", default_name); /* returns NULL if open dialog cancelled */
     if (name) {
 	/* check if file is already open in an editor. If so, close and open again */
-	for (i=0; i<neditors; ++i) {
+	for (i = 0; i < neditors; ++i) {
 	    t = getdata(REditors[i]);
 	    p = getdata(t);
 	    if (!strcmp (name, p->filename)) {
@@ -335,6 +356,9 @@ void menueditoropen(control m)
 {
     editor c = getdata(m);
     char *default_name = "";
+    /* It really is not clear what is meant here: seems to assume an 
+       editor window but is called from elsewhere, hopefully with NULL 
+       (since 2.1.1 patched). */
     if (c) {
 	textbox t = getdata(c);
 	EditorData p = getdata(t);
@@ -367,7 +391,8 @@ static void editorcopy(control m)
 static void editorpaste(control m)
 {
     textbox t = getdata(m);
-    /* check whether the widget text limit needs to be increased before doing the paste */
+    /* check whether the widget text limit needs to be increased
+     * before doing the paste */
     int pastelen = getpastelength();
     checklimittext(t, pastelen + 1);
     pastetext(t);
@@ -402,8 +427,9 @@ static void editorreplace(control m)
 
 static void editorrunline(textbox t)
 {
-    int length = getlinelength(t);
-    char *line = malloc((length + 2) * sizeof(char)); /* Extra space for null and word length in getcurrentline */
+    int length = getlinelength(t); /* return character num */
+    char *line = malloc(length * sizeof(WCHAR) + 2); /* Extra space for null and word length in getcurrentline */
+    memset(line, 0, length * sizeof(WCHAR) + 2);
     getcurrentline(t, line, length);
     consolecmd(RConsole, line);
     free(line);
@@ -432,7 +458,7 @@ static void editorrun(textbox t)
     if (!busy_running) {
         long start=0, end=0;
     	if (CharacterMode != RGui) {
-    	    R_ShowMessage("No RGui console to paste to");
+    	    R_ShowMessage(G_("No RGui console to paste to"));
     	    return;
     	}
     	busy_running = TRUE;
@@ -495,6 +521,8 @@ static void editormenuact(control m)
 	enable(p->mfind);
 	enable(p->mreplace);
     }
+    helpmenuact(p->hmenu);
+    pkgmenuact(p->pmenu);
 }
 
 static void editorresize(editor c, rect r)
@@ -532,18 +560,18 @@ static void editorhelp()
 {
     char s[4096];
 
-    strcpy(s,"R EDITOR\n");
-    strcat(s,"\n");
-    strcat(s,"A standard text editor for editing and running R code.\n");
-    strcat(s,"\n");
-    strcat(s,"RUNNING COMMANDS\n");
-    strcat(s,"To run a line or section of R code, select the code and either\n");
-    strcat(s,"     Press Ctrl-R\n");
-    strcat(s,"     Select \"Run line or selection\" from the \"Edit\" menu\n");
-    strcat(s,"     Press the \"Run line or selection\" icon on the toolbar\n");
-    strcat(s,"This will copy the selected commands to the console and evaluate them.\n");
-    strcat(s,"If there is no selection, this will just run the current line and advance\n");
-    strcat(s,"the cursor by one line.\n");
+    strcpy(s, G_("R EDITOR\n"));
+    strcat(s, "\n");
+    strcat(s, G_("A standard text editor for editing and running R code.\n"));
+    strcat(s, "\n");
+    strcat(s, G_("RUNNING COMMANDS\n"));
+    strcat(s, G_("To run a line or section of R code, select the code and either\n"));
+    strcat(s, G_("     Press Ctrl-R\n"));
+    strcat(s, G_("     Select \"Run line or selection\" from the \"Edit\" menu\n"));
+    strcat(s, G_("     Press the \"Run line or selection\" icon on the toolbar\n"));
+    strcat(s, G_("This will copy the selected commands to the console and evaluate them.\n"));
+    strcat(s, G_("If there is no selection, this will just run the current line and advance\n"));
+    strcat(s, G_("the cursor by one line.\n"));
 
     askok(s);
 }
@@ -555,16 +583,16 @@ static void menueditorhelp(control m)
 }
 
 static MenuItem EditorPopup[] = {                /* Numbers used below */
-    {"Run line or selection", menueditorrun, 'R', 0}, /* 0 */
+    {GN_("Run line or selection"), menueditorrun, 'R', 0}, /* 0 */
     {"-", 0, 0, 0},
-    {"Undo", editorundo, 'Z', 0},                     /* 2 */
+    {GN_("Undo"), editorundo, 'Z', 0},                     /* 2 */
     {"-", 0, 0, 0},
-    {"Cut", editorcut, 'X', 0},                       /* 4 */
-    {"Copy", editorcopy, 'C', 0},                     /* 5 */
-    {"Paste", editorpaste, 'V', 0},                   /* 6 */
-    {"Delete", editordelete, 0, 0},                   /* 7 */
+    {GN_("Cut"), editorcut, 'X', 0},                       /* 4 */
+    {GN_("Copy"), editorcopy, 'C', 0},                     /* 5 */
+    {GN_("Paste"), editorpaste, 'V', 0},                   /* 6 */
+    {GN_("Delete"), editordelete, 0, 0},                   /* 7 */
     {"-", 0, 0, 0},
-    {"Select all", editorselectall, 'A', 0},          /* 9 */
+    {GN_("Select all"), editorselectall, 'A', 0},          /* 9 */
     LASTMENUITEM
 };
 
@@ -622,24 +650,24 @@ static editor neweditor()
 	MCHECK(tb = newtoolbar(btsize + 4));
 	addto(tb);
 	MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
-	MCHECK(addtooltip(bt, "Open script"));
+	MCHECK(addtooltip(bt, G_("Open script")));
 	setdata(bt, c);
 	r.x += (btsize + 1) ;
 	MCHECK(bt = newtoolbutton(save_image, r, menueditorsave));
-	MCHECK(addtooltip(bt,  "Save script"));
+	MCHECK(addtooltip(bt,  G_("Save script")));
 	setdata(bt, c);
 	r.x += (btsize + 6);
 	MCHECK(bt = newtoolbutton(copy1_image, r, menueditorrun));
-	MCHECK(addtooltip(bt, "Run line or selection"));
+	MCHECK(addtooltip(bt, G_("Run line or selection")));
 	setdata(bt, t);
 	r.x += (btsize + 6);
 	MCHECK(bt = newtoolbutton(console_image, r, editorconsole));
-	MCHECK(addtooltip(bt, "Return focus to Console"));
+	MCHECK(addtooltip(bt, G_("Return focus to Console")));
 	r.x += (btsize + 6);
 	MCHECK(bt = newtoolbutton(print_image, r, editorprint));
-	MCHECK(addtooltip(bt, "Print script"));
+	MCHECK(addtooltip(bt, G_("Print script")));
 	setdata(bt, t);
-	MCHECK(addtooltip(bt, "Print"));
+	MCHECK(addtooltip(bt, G_("Print")));
     }
 #endif
     addto(c);
@@ -657,62 +685,65 @@ static editor neweditor()
     addto(c);
     MCHECK(m = newmenubar(editormenuact));
     setdata(m, t);
-    MCHECK(newmenu("File"));
-    MCHECK(m = newmenuitem("New script", 'N', menueditornew));
+    MCHECK(newmenu(G_("File")));
+    MCHECK(m = newmenuitem(G_("New script"), 'N', menueditornew));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Open script...", 'O', menueditoropen));
+    MCHECK(m = newmenuitem(G_("Open script..."), 'O', menueditoropen));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Save", 'S', menueditorsave));
+    MCHECK(m = newmenuitem(G_("Save"), 'S', menueditorsave));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Save as...", 0, menueditorsaveas));
+    MCHECK(m = newmenuitem(G_("Save as..."), 0, menueditorsaveas));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Print...", 0, editorprint));
+    MCHECK(m = newmenuitem(G_("Print..."), 0, editorprint));
     setdata(m, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Close script", 0, menueditorclose));
+    MCHECK(m = newmenuitem(G_("Close script"), 0, menueditorclose));
     setdata(m, c);
-    MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Exit", 0, closeconsole));
-    setdata(m, c);
-    MCHECK(newmenu("Edit"));
-    MCHECK(m = newmenuitem("Undo", 'Z', editorundo));
+    /* MCHECK(m = newmenuitem("-", 0, NULL));
+    MCHECK(m = newmenuitem(G_("Exit"), 0, closeconsole));
+    setdata(m, c); */
+    MCHECK(newmenu(G_("Edit")));
+    MCHECK(m = newmenuitem(G_("Undo"), 'Z', editorundo));
     setdata(m, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(p->mcut = newmenuitem("Cut", 'X', editorcut));
+    MCHECK(p->mcut = newmenuitem(G_("Cut"), 'X', editorcut));
     setdata(p->mcut, t);
-    MCHECK(p->mcopy = newmenuitem("Copy", 'C', editorcopy));
+    MCHECK(p->mcopy = newmenuitem(G_("Copy"), 'C', editorcopy));
     setdata(p->mcopy, t);
-    MCHECK(m = newmenuitem("Paste", 'V', editorpaste));
+    MCHECK(m = newmenuitem(G_("Paste"), 'V', editorpaste));
     setdata(m, t);
-    MCHECK(p->mdelete = newmenuitem("Delete", 0, editordelete));
+    MCHECK(p->mdelete = newmenuitem(G_("Delete"), 0, editordelete));
     setdata(p->mdelete, t);
-    MCHECK(m = newmenuitem("Select all", 'A', editorselectall));
+    MCHECK(m = newmenuitem(G_("Select all"), 'A', editorselectall));
     setdata(m, t);
-    MCHECK(newmenuitem("Clear console", 'L', menuclear));
+    MCHECK(newmenuitem(G_("Clear console"), 'L', menuclear));
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Run line or selection", 'R', menueditorrun));
+    MCHECK(m = newmenuitem(G_("Run line or selection"), 'R', menueditorrun));
     setdata(m, t);
-    MCHECK(m = newmenuitem("Run all", 0, editorrunall));
+    MCHECK(m = newmenuitem(G_("Run all"), 0, editorrunall));
     setdata(m, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(p->mfind = newmenuitem("Find...", 'F', editorfind));
+    MCHECK(p->mfind = newmenuitem(G_("Find..."), 'F', editorfind));
     setdata(p->mfind, t);
-    MCHECK(p->mreplace = newmenuitem("Replace...", 'H', editorreplace));
+    MCHECK(p->mreplace = newmenuitem(G_("Replace..."), 'H', editorreplace));
     setdata(p->mreplace, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(newmenuitem("GUI preferences...", 0, menuconfig));
+    MCHECK(newmenuitem(G_("GUI preferences..."), 0, menuconfig));
 
     /* Packages menu should go here */
-    RguiPackageMenu();
+    p->pmenu = (PkgMenuItems) malloc(sizeof(struct structPkgMenuItems));
+    RguiPackageMenu(p->pmenu);
+
 #ifdef USE_MDI
     newmdimenu(); /* Create and fill the 'Window' menu */
 #endif
 
-    MCHECK(m = newmenu("Help"));
-    MCHECK(newmenuitem("Editor", 0, menueditorhelp));
+    MCHECK(m = newmenu(G_("Help")));
+    MCHECK(newmenuitem(G_("Editor"), 0, menueditorhelp));
     MCHECK(newmenuitem("-", 0, NULL));
-    RguiCommonHelp(m);
+    p->hmenu = (HelpMenuItems) malloc(sizeof(struct structHelpMenuItems));
+    RguiCommonHelp(m, p->hmenu);
 
     settextfont(t, editorfn);
     setresize(c, editorresize);
@@ -735,10 +766,10 @@ void editorsetfont(font f)
 {
     int i, ismod;
     textbox t;
-    setfont(f);
-    for (i = 0; i<neditors; ++i) {
+    for (i = 0; i < neditors; i++) {
 	t = getdata(REditors[i]);
- 	ismod = ggetmodified(t); /* Don't change the modification flag when changing font  */
+ 	ismod = ggetmodified(t);
+	/* Don't change the modification flag when changing font  */
 	settextfont(t, f);
 	gsetmodified(t, ismod);
 	show(t);
@@ -766,28 +797,31 @@ int Rgui_Edit(char *filename, char *title, int stealconsole)
     EditorData p;
 
     if (neditors == MAXNEDITORS) {
-	R_ShowMessage("Maximum number of editors reached");
+	R_ShowMessage(G_("Maximum number of editors reached"));
 	return 1;
     }
     c = neweditor();
     if (!c) {
-	R_ShowMessage("Unable to create editor window");
+	R_ShowMessage(G_("Unable to create editor window"));
 	return 1;
     }
     if (strlen(filename) > 0) {
 	if (!access(filename, R_OK))
 	    editor_load_file(c, filename);
+	else
+	    R_ShowMessage(G_("Unable to open file for reading"));
 	editor_set_title(c, title);
     }
     else {
-	editor_set_title(c, "Untitled");
+	editor_set_title(c, G_("Untitled"));
     }
     show(c);
+    
+    p = getdata(getdata(c));
+    p->stealconsole = stealconsole;
     if (stealconsole) {
-	p = getdata(getdata(c));
-	p->stealconsole = TRUE;
-	fix_editor_up = TRUE;
-	eventloop(c);
+    	fix_editor_up = TRUE;
+    	eventloop(c);
     }
     return 0;
 }

@@ -18,7 +18,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  *
  *  DESCRIPTION
@@ -43,7 +43,7 @@
  * see also lgammacor() in ./lgammacor.c  which computes almost the same!
  */
 
-double stirlerr(double n)
+double attribute_hidden stirlerr(double n)
 {
 
 #define S0 0.083333333333333333333       /* 1/12 */
@@ -55,7 +55,7 @@ double stirlerr(double n)
 /*
   error for 0, 0.5, 1.0, 1.5, ..., 14.5, 15.0.
 */
-    const double sferr_halves[31] = {
+    const static double sferr_halves[31] = {
 	0.0, /* n=0 - wrong, place holder only */
 	0.1534264097200273452913848,  /* 0.5 */
 	0.0810614667953272582196702,  /* 1.0 */

@@ -1,14 +1,15 @@
 \name{contour}
 \alias{contour}
 \alias{contour.default}
-\alias{contourLines}
 \title{Display Contours}
 \description{
   Create a contour plot, or add contour lines to an existing plot.
 }
 \usage{
 contour(x, \dots)
-\method{contour}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+
+\method{contour}{default}(x = seq(0, 1, len = nrow(z)),
+        y = seq(0, 1, len = ncol(z)),
         z,
         nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,
         xlim = range(x, finite = TRUE),
@@ -19,8 +20,6 @@ contour(x, \dots)
         axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
-contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
-	     z, nlevels = 10, levels = pretty(range(z, na.rm=TRUE), nlevels))
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -38,7 +37,8 @@ contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     lines.}
   \item{labels}{a vector giving the labels for the contour lines.  If
     \code{NULL} then the levels are used as labels.}
-  \item{labcex}{\code{cex} for contour labelling.}
+  \item{labcex}{\code{cex} for contour labelling.  This is an absolute
+    size, not a multiple of \code{par("cex")}.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
   \item{method}{character string specifying where the labels will be
     located. Possible values are \code{"simple"}, \code{"edge"} and
@@ -55,18 +55,12 @@ contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   \item{lty}{line type for the lines drawn.}
   \item{lwd}{line width for the lines drawn.}
   \item{add}{logical. If \code{TRUE}, add to a current plot.}
-  \item{\dots}{additional graphical parameters (see \code{\link{par}}).
-    The plot aspect ratio \code{asp} (see \code{\link{plot.window}}) 
-    and the arguments to \code{\link{title}} may also be supplied.}
+  \item{\dots}{additional arguments to \code{\link{plot.window}} and
+    \code{\link{title}}.}
 }
 \details{
   \code{contour} is a generic function with only a default method in
   base \R.
-
-  \code{contourLines} draws nothing, but returns a set of contour lines.
-  
-  There is currently no documentation about the algorithm.
-  The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
 
   The methods for positioning the labels on contours are \code{"simple"}
   (draw at the edge of the plot, overlaying the contour line),
@@ -78,13 +72,16 @@ contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 
   For information about vector fonts, see the
   help for \code{\link{text}} and \code{\link{Hershey}}.
-}
-\value{
-  \code{contourLines} returns a list of contours.
-  Each contour is a list with elements:
-  \item{level }{The contour level.}
-  \item{x }{The x-coordinates of the contour.}
-  \item{y }{The y-coordinates of the contour.}
+
+  Notice that \code{contour} interprets the \code{z} matrix as a table of
+  \code{f(x[i], y[j])} values, so that the x axis corresponds to row
+  number and the y axis to column number, with column 1 at the bottom,
+  i.e. a 90 degree clockwise rotation of the conventional textual
+  layout.
+
+  Alternatively, use \code{\link[lattice]{contourplot}} from the
+  \pkg{lattice} package where the \code{\link{formula}} notation allows
+  to use vectors \code{x,y,z} of the same length.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -92,17 +89,20 @@ contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{options}("max.countour.segments")} for the maximal
+  complexity of a single contour line.
+
+  \code{\link[grDevices]{contourLines}},
   \code{\link{filled.contour}} for \dQuote{color-filled} contours,
-  \code{\link{image}} and the graphics demo which can be invoked as
-  \code{demo(graphics)}.
+  \code{\link[lattice]{contourplot}} (and \code{\link[lattice]{levelplot}})
+  from package \pkg{lattice}.  Further, \code{\link{image}} and the
+  graphics demo which can be invoked as \code{demo(graphics)}.
 }
 \examples{
 x <- -6:16
 op <- par(mfrow = c(2, 2))
 contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))
 z <- outer(x, sqrt(abs(x)), FUN = "/")
-## Should not be necessary:
-z[!is.finite(z)] <- NA
 image(x, x, z)
 contour(x, x, z, col = "pink", add = TRUE, method = "edge",
 	vfont = c("sans serif", "plain"))
@@ -140,7 +140,7 @@ contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
              vfont = c("sans serif", "plain"))
 templines <- function(clines) {
   lines(clines[[2]], clines[[3]])
-}  
+}
 invisible(lapply(line.list, templines))
 par(opar)
 }

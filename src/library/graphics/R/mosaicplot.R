@@ -16,7 +16,7 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 mosaicplot.default <-
 function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
          ylab = NULL, sort = NULL, off = NULL, dir = NULL,
-         color = FALSE, shade = FALSE, margin = NULL,
+         color = NULL, shade = FALSE, margin = NULL,
          cex.axis = 0.66, las = par("las"),
          type = c("pearson", "deviance", "FT"), ...)
 {
@@ -152,11 +152,11 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         x <- data.matrix(x)
     dimd <- length(dx <- dim(x))
     if(dimd == 0 || any(dx == 0))
-        stop(paste(sQuote("x"), "must not have 0 dimensionality"))
+        stop("'x' must not have 0 dimensionality")
     if(length(list(...)))
-        warning(paste("extra argument(s)",
-                      paste(sQuote(names(list(...))), collapse = ", "),
-                      "disregarded."))
+        warning(gettextf("extra argument(s) %s will be disregarded",
+                         paste(sQuote(names(list(...))), collapse = ", ")),
+                domain = NA)
     ##-- Set up 'Ind' matrix : to contain indices and data
     Ind <- 1:dx[1]
     if(dimd > 1) {
@@ -186,14 +186,14 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         if(is.logical(shade))
             shade <- c(2, 4)
         else if(any(shade <= 0) || length(shade) > 5)
-            stop("invalid shade specification")
+            stop("invalid 'shade' specification")
         extended <- TRUE
         shade <- sort(shade)
         breaks <- c(-Inf, - rev(shade), 0, shade, Inf)
         color <- c(hsv(0,               # red
-                       s = seq(1, to = 0, length = length(shade) + 1)),
+                       s = seq.int(1, to = 0, length = length(shade) + 1)),
                    hsv(4/6,             # blue
-                       s = seq(0, to = 1, length = length(shade) + 1)))
+                       s = seq.int(0, to = 1, length = length(shade) + 1)))
         if(is.null(margin))
             margin <- as.list(1:dimd)
         ## Fit the loglinear model.
@@ -221,15 +221,20 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if(is.null(xlab)) xlab <- nam.dn[1]
     if(is.null(ylab)) ylab <- nam.dn[2]
 
-    if (is.null(off) || length(off) != dimd) { # Initialize spacing.
-        off <- rep.int(10, dimd)
-    }
-    if (is.null(dir) || length(dir) != dimd) {# Initialize directions
+    ## Initialize spacing.
+    if(is.null(off))
+        off <- if(dimd == 2) 2 * (dx - 1) else rep.int(10, dimd)
+    if(length(off) != dimd)
+        off <- rep(off, length.out = dimd)
+    if(any(off > 50))
+        off <- off * 50/max(off)
+    ## Initialize directions.
+    if (is.null(dir) || length(dir) != dimd) {
         dir <- rep(c("v","h"), length.out = dimd)
     }
     if (!is.null(sort)) {
         if(length(sort) != dimd)
-            stop("length(sort) doesn't conform to dim(x)")
+            stop("length of 'sort' does not conform to 'dim(x)'")
         ## Sort columns.
         Ind[,1:dimd] <- Ind[,sort]
         off <- off[sort]
@@ -240,11 +245,14 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     ncolors <- length(tabulate(Ind[,dimd]))
     if(!extended && ((is.null(color) || length(color) != ncolors))) {
         color <-
-            if (is.logical(color) && color[1])
-                heat.colors(ncolors)
-            else if (is.null(color) || (is.logical(color) && !color[1]))
-                rep.int(0, ncolors)
-            else ## recycle
+            if(is.logical(color))
+                if(color[1])
+                    grey.colors(ncolors)
+                else
+                    rep.int(0, ncolors)
+            else if(is.null(color))
+                rep.int("grey", ncolors)
+            else                        # recycle
                 rep(color, length.out = ncolors)
     }
 
@@ -285,7 +293,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         bh <- 0.95 * (0.95 - rtxtHeight) / (2 * len)
         x.l <- 1000 * 1.05
         x.r <- 1000 * (1.05 + 0.7 * rtxtWidth)
-        y.t <- 1000 * rev(seq(from = 0.95, by = - bh, length = 2 * len))
+        y.t <- 1000 * rev(seq.int(from = 0.95, by = - bh, length = 2 * len))
         y.b <- y.t - 1000 * 0.8 * bh
         ltype <- c(rep.int(2, len), rep.int(1, len))
         for(i in 1 : (2 * len)) {

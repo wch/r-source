@@ -11,7 +11,7 @@
 	if(any(names(attrib) == "tsp"))
 	    attrib$class <- unique(c("ts", attrib$class))
 	if(is.numeric(.Data) && any(names(attrib) == "levels"))
-	    .Data <- factor(.Data,levels=seq(along=attrib$levels))
+	    .Data <- factor(.Data, levels = seq_along(attrib$levels))
 	attributes(.Data) <- c(attributes(.Data), attrib)
     }
     return(.Data)

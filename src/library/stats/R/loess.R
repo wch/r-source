@@ -28,15 +28,20 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     names(nmx) <- nmx
     drop.square <- match(nmx, nmx[drop.square], 0) > 0
     parametric <- match(nmx, nmx[parametric], 0) > 0
-    if(!match(degree, 0:2, 0)) stop("degree must be 0, 1 or 2")
-    iterations <- if(family=="gaussian") 1 else control$iterations
+    if(!match(degree, 0:2, 0)) stop("'degree' must be 0, 1 or 2")
+    iterations <- if(family == "gaussian") 1 else control$iterations
     if(!missing(enp.target))
 	if(!missing(span))
-	    warning("both span and enp.target specified: span will be used")
+	    warning("both 'span' and 'enp.target' specified: 'span' will be used")
 	else {				# White book p.321
 	    tau <- switch(degree+1, 1, D+1, (D+1)*(D+2)/2) - sum(drop.square)
 	    span <- 1.2 * tau/enp.target
 	}
+    ## Let's add sanity checks on control
+    if(!is.list(control) || !is.character(control$surface) ||
+       !is.character(control$statistics) || !is.character(control$trace.hat) ||
+       !is.numeric(control$cell) || !is.numeric(iterations))
+        stop("invalid 'control' argument")
     fit <- simpleLoess(y, x, w, span, degree, parametric, drop.square,
 		       normalize, control$statistics, control$surface,
 		       control$cell, iterations, control$trace.hat)
@@ -75,8 +80,8 @@ simpleLoess <-
     D <- NCOL(x)
     if(D > 4) stop("only 1-4 predictors are allowed")
     N <- NROW(x)
-    if(!N || !D)	stop("invalid `x'")
-    if(!length(y))	stop("invalid `y'")
+    if(!N || !D)	stop("invalid 'x'")
+    if(!length(y))	stop("invalid 'y'")
     x <- as.matrix(x)
     max.kd <-  max(N, 200)
     robust <- rep(1, N)
@@ -95,10 +100,10 @@ simpleLoess <-
     x <- x[, order.parametric]
     order.drop.sqr <- (2 - drop.square)[order.parametric]
     if(degree==1 && sum.drop.sqr)
-	stop("Specified the square of a factor predictor to be dropped when degree = 1")
+	stop("specified the square of a factor predictor to be dropped when degree = 1")
     if(D == 1 && sum.drop.sqr)
-	stop("Specified the square of a predictor to be dropped with only one numeric predictor")
-    if(sum.parametric == D) stop("Specified parametric for all predictors")
+	stop("specified the square of a predictor to be dropped with only one numeric predictor")
+    if(sum.parametric == D) stop("specified parametric for all predictors")
 
     if(iterations)
     for(j in 1:iterations) {
@@ -108,7 +113,7 @@ simpleLoess <-
 	    statistics <- if(trace.hat == "exact") "1.approx"
             else "2.approx" # trace.hat == "approximate"
 	surf.stat <- paste(surface, statistics, sep="/")
-	z <- .C("loess_raw", # ../src/loessc.c
+	z <- .C(R_loess_raw, # ../src/loessc.c
 		as.double(y),
 		as.double(x),
 		as.double(weights),
@@ -132,8 +137,7 @@ simpleLoess <-
 		trL = double(1),
 		delta1 = double(1),
 		delta2 = double(1),
-		as.integer(surf.stat == "interpolate/exact"),
-		PACKAGE="stats")
+		as.integer(surf.stat == "interpolate/exact"))
 	if(j==1) {
 	    trace.hat.out <- z$trL
 	    one.delta <- z$delta1
@@ -141,12 +145,11 @@ simpleLoess <-
 	}
 	fitted.residuals <- y - z$fitted.values
 	if(j < iterations)
-	    robust <- .Fortran("lowesw",
+	    robust <- .Fortran(R_lowesw,
 			       as.double(fitted.residuals),
 			       as.integer(N),
 			       robust = double(N),
-			       double(N),
-			       PACKAGE="stats")$robust
+			       double(N))$robust
     }
     if(surface == "interpolate")
     {
@@ -157,16 +160,15 @@ simpleLoess <-
 		       vert=z$vert, vval=z$vval[1:enough])
     }
     if(iterations > 1) {
-	pseudovalues <- .Fortran("lowesp",
+	pseudovalues <- .Fortran(R_lowesp,
 				 as.integer(N),
 				 as.double(y),
 				 as.double(z$fitted.values),
 				 as.double(weights),
 				 as.double(robust),
 				 double(N),
-				 pseudovalues = double(N),
-				 PACKAGE="stats")$pseudovalues
-	zz <- .C("loess_raw",
+				 pseudovalues = double(N))$pseudovalues
+	zz <- .C(R_loess_raw,
 		as.double(pseudovalues),
 		as.double(x),
 		as.double(weights),
@@ -178,7 +180,7 @@ simpleLoess <-
 		as.integer(nonparametric),
 		as.integer(order.drop.sqr),
 		as.integer(sum.drop.sqr),
-		as.integer(span*cell),
+		as.double(span*cell),
 		as.character(surf.stat),
 		temp = double(N),
 		parameter = integer(7),
@@ -190,8 +192,7 @@ simpleLoess <-
 		trL = double(1),
 		delta1 = double(1),
 		delta2 = double(1),
-		as.integer(0),
-		PACKAGE="stats")
+		as.integer(0))
 	pseudo.resid <- pseudovalues - zz$temp
     }
     sum.squares <- if(iterations <= 1) sum(weights * fitted.residuals^2)
@@ -215,8 +216,9 @@ simpleLoess <-
 predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 {
     if(!inherits(object, "loess"))
-	stop("First argument must be a loess object")
-    if(is.null(newdata) & (se == FALSE)) return(fitted(object))
+	stop("first argument must be a \"loess\" object")
+    if(is.null(newdata) && !se)
+	return(fitted(object))
 
     if(is.null(newdata)) newx <- object$x
     else {
@@ -224,7 +226,7 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 				  "variables"))[-1]
 	newx <- if(length(vars) > 1 || NCOL(newdata) > 1) {
 	    if(any(!match(vars, colnames(newdata), FALSE)))
-		stop("newdata does not contain the variables needed")
+		stop("'newdata' does not contain the variables needed")
 	    as.matrix(newdata[, vars, drop=FALSE])
 	} else as.matrix(newdata)
     }
@@ -263,7 +265,7 @@ predLoess <-
     order.drop.sqr <- (2 - drop.square)[order.parametric]
     if(surface == "direct") {
 	if(se) {
-	    z <- .C("loess_dfitse",
+	    z <- .C(R_loess_dfitse,
 		    as.double(y),
 		    as.double(x),
 		    as.double(x.evaluate),
@@ -279,13 +281,12 @@ predLoess <-
 		    as.integer(N),
 		    as.integer(M),
 		    fit = double(M),
-		    L = double(N*M),
-		    PACKAGE="stats")[c("fit", "L")]
+		    L = double(N*M))[c("fit", "L")]
 	    fit <- z$fit
 	    se.fit <- (matrix(z$L^2, M, N)/rep(weights, rep(M,N))) %*% rep(1,N)
 	    se.fit <- drop(s * sqrt(se.fit))
 	} else {
-	    fit <- .C("loess_dfit",
+	    fit <- .C(R_loess_dfit,
 		      as.double(y),
 		      as.double(x),
 		      as.double(x.evaluate),
@@ -298,8 +299,7 @@ predLoess <-
 		      as.integer(D),
 		      as.integer(N),
 		      as.integer(M),
-		      fit = double(M),
-		      PACKAGE="stats")$fit
+		      fit = double(M))$fit
 	}
     }
     else { ## interpolate
@@ -312,18 +312,17 @@ predLoess <-
 	M1 <- sum(inside)
 	fit <- rep(as.numeric(NA), M)
 	if(any(inside))
-	    fit[inside] <- .C("loess_ifit",
+	    fit[inside] <- .C(R_loess_ifit,
 			      as.integer(kd$parameter),
 			      as.integer(kd$a), as.double(kd$xi),
 			      as.double(kd$vert), as.double(kd$vval),
 			      as.integer(M1),
 			      as.double(x.evaluate[inside, ]),
-			      fit = double(M1),
-			      PACKAGE="stats")$fit
+			      fit = double(M1))$fit
 	if(se) {
 	    se.fit <- rep(as.numeric(NA), M)
 	    if(any(inside)) {
-		L <- .C("loess_ise",
+		L <- .C(R_loess_ise,
 			as.double(y),
 			as.double(x),
 			as.double(x.evaluate[inside, ]),
@@ -338,8 +337,7 @@ predLoess <-
 			as.integer(N),
 			as.integer(M1),
 			double(M1),
-			L = double(N*M1),
-			PACKAGE="stats"
+			L = double(N*M1)
 			)$L
 		tmp <- (matrix(L^2, M1, N)/rep(weights, rep(M1,N))) %*% rep(1,N)
 		se.fit[inside] <- drop(s * sqrt(tmp))
@@ -403,18 +401,19 @@ print.summary.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
 }
 
 scatter.smooth <-
-    function(x, y, span = 2/3, degree = 1,
+    function(x, y = NULL, span = 2/3, degree = 1,
 	     family = c("symmetric", "gaussian"),
-	     xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),
-	     ylim = range(y, prediction$y), evaluation = 50, ...)
+	     xlab = NULL, ylab = NULL,
+	     ylim = range(y, prediction$y, na.rm = TRUE),
+             evaluation = 50, ...)
 {
-    if(inherits(x, "formula")) {
-	if(length(x) < 3) stop("need response in formula")
-	thiscall <- match.call()
-	thiscall$x <- x[[3]]
-	thiscall$y <- x[[2]]
-	return(invisible(eval(thiscall, sys.parent())))
-    }
+    xlabel <- if (!missing(x)) deparse(substitute(x))
+    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xy <- xy.coords(x, y, xlabel, ylabel)
+    x <- xy$x
+    y <- xy$y
+    xlab <- if (is.null(xlab)) xy$xlab else xlab
+    ylab <- if (is.null(ylab)) xy$ylab else ylab
     prediction <- loess.smooth(x, y, span, degree, family, evaluation)
     plot(x, y, ylim = ylim, xlab = xlab, ylab = ylab, ...)
     lines(prediction)
@@ -425,12 +424,13 @@ loess.smooth <-
   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
 	   evaluation = 50, ...)
 {
-    notna <- x[!(is.na(x) | is.na(y))]
-    new.x <- seq(min(notna), max(notna), length = evaluation)
+    notna <- !(is.na(x) | is.na(y))
+    new.x <- seq(min(x[notna]), max(x[notna]), length = evaluation)
 
     control <- loess.control(...)
     ##	x <- matrix(x, ncol = 1)
     ##	n <- length(y)
+    x <- x[notna]; y <- y[notna]
     w <- rep(1, length(y))
     family <- match.arg(family)
     iterations <- if(family == "gaussian") 1 else control$iterations
@@ -438,18 +438,17 @@ loess.smooth <-
 		       normalize=FALSE, "none", "interpolate",
 		       control$cell, iterations, control$trace.hat)
     kd <- fit$kd
-    z <- .C("loess_ifit",
+    z <- .C(R_loess_ifit,
 	    as.integer(kd$parameter),
 	    as.integer(kd$a), as.double(kd$xi),
 	    as.double(kd$vert), as.double(kd$vval),
 	    as.integer(evaluation),
 	    as.double(new.x),
-	    fit = double(evaluation),
-	    PACKAGE="stats")$fit
+	    fit = double(evaluation))$fit
     list(x = new.x, y = z)
 }
 
-## panel.smooth is currently defined in ../../base/R/coplot.R :
+## panel.smooth is currently defined in ../../graphics/R/coplot.R :
 ## panel.smooth <-
 ##   function(x, y, span = 2/3, degree = 1, family = c("symmetric", "gaussian"),
 ##	   zero.line = FALSE, evaluation = 50, ...)
@@ -468,8 +467,9 @@ anova.loess <- function(object, ...)
     ## calculate the number of models
     if (!all(sameresp)) {
 	objects <- objects[sameresp]
-	warning(paste("Models with response", deparse(responses[!sameresp]),
-		      "removed because response differs from", "model 1"))
+	warning("models with response ",
+                sQuote(deparse(responses[!sameresp])),
+                "removed because response differs from model 1")
     }
     nmodels <- length(objects)
     if(nmodels <= 1) stop("no models to compare")

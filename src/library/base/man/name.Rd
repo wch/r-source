@@ -1,10 +1,11 @@
 \name{name}
 \alias{name}
+\alias{symbol}
 \alias{is.symbol}
 \alias{as.symbol}
 \alias{as.name}
 \alias{is.name}
-\title{Variable Names or Symbols, respectively}
+\title{Names and Symbols}
 \description{
   \code{as.symbol} coerces its argument to be a \emph{symbol}, or
   equivalently, a \emph{name}.  The argument must be of mode

@@ -1,6 +1,10 @@
 \usepackage{makeidx}
 \pagestyle{headings}
 
+\makeatletter
+\renewcommand\@pnumwidth{2.05em} % over 1000 pages
+\makeatother
+
 \makeindex
 \sloppy{}
 
@@ -54,7 +58,7 @@
   License.  For more information about these matters, see
   \textsf{http://www.gnu.org/copyleft/gpl.html}.
   \par\bigskip\noindent
-  ISBN 3-900051-00-3
+  ISBN 3-900051-07-0
 \end{titlepage}
 
 \pagenumbering{roman}

@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifndef  R_EXT_DYNLOAD_H_
@@ -98,8 +98,16 @@ typedef enum {R_ANY_SYM=0, R_C_SYM, R_CALL_SYM, R_FORTRAN_SYM, R_EXTERNAL_SYM} N
 DL_FUNC R_FindSymbol(char const *, char const *, 
                        R_RegisteredNativeSymbol *symbol);
 
-int moduleCdynload(char *module, int local, int now);
+int R_moduleCdynload(char *module, int local, int now);
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
+
+/* Experimental interface for exporting and importing functions from
+   one package for use from C code in a package.  The registration
+   part probably ought to be integrated with the other registrations.
+   The naming of these routines may be less than ideal. */
+
+void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr);
+DL_FUNC R_GetCCallable(char *package, char *name);
 
 #endif /* R_EXT_DYNLOAD_H_ */

@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -113,6 +113,8 @@ int optread(char *opt[],char sep)
     opt[1] = rmspace(p + 1);
     if (strlen(opt[0]) && strlen(opt[1]))
 	return 2;
+    else if (strlen(opt[0]))
+	return 3;
     else
 	return 1;
 }

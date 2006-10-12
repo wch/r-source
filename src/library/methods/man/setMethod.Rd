@@ -6,13 +6,14 @@
   Create and save a formal method for a given function and list of classes.
 }
 \usage{
-setMethod(f, signature=character(), definition, where= topenv(parent.frame()),
+setMethod(f, signature=character(), definition,
+          where = topenv(parent.frame()),
           valueClass = NULL, sealed = FALSE)
 
 removeMethod(f, signature, where)
 }
 \arguments{
-  \item{f}{ The character-string name of the generic function. }
+  \item{f}{ A generic function or the character-string name of the function. }
   \item{signature}{ A match of formal argument names for \code{f} with
     the character-string names of corresponding classes.  This
     argument can also just be the vector of class names, in which case
@@ -124,9 +125,8 @@ removeMethod(f, signature, where)
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page
-  \url{http://developer.r-project.org/methodsPackage.html} and the
-  pointers from that page.
+  discussion of details and ongoing development, see \code{?\link{Methods}} and the
+  pointers from that documentation..
 }
 \examples{
 \dontshow{  require(stats)
@@ -201,6 +201,8 @@ setMethod("summary", "missing", function() "<No Object>")
 \dontshow{
 
 stopifnot(identical(summary(), "<No Object>"))
+
+removeMethods("summary")
 
 ## for the primitives
 ## inherited methods
@@ -290,6 +292,8 @@ removeMethods("Compare")
 ## repeat the test one more time on the primitives
 
 length(ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1))
+
+removeMethods("length")
 
 ## methods for %*%, which isn't done by the same C code as other ops
 

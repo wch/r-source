@@ -6,7 +6,7 @@
   them in the specified environment.
 }
 \usage{
-sys.source(file, envir = NULL, chdir = FALSE,
+sys.source(file, envir = baseenv(), chdir = FALSE,
            keep.source = getOption("keep.source.pkgs"))
 }
 \arguments{

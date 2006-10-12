@@ -1,16 +1,16 @@
 \name{bxp}
 \alias{bxp}
-\title{Box Plots from Summaries}
+\title{Draw Box Plots from Summaries}
 \description{
   \code{bxp} draws box plots based on the given summaries in \code{z}.
   It is usually called from within \code{\link{boxplot}}, but can be
   invoked directly.
 }
 \usage{
-bxp(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
-    notch.frac = 0.5, log = "", border=par("fg"), col=par("bg"),
-    pars = NULL, frame.plot = axes, horizontal = FALSE,
-    add = FALSE, at = NULL, show.names = NULL, \dots)
+bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
+    outline = TRUE, notch.frac = 0.5, log = "", border = par("fg"),
+    pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE,
+    at = NULL, show.names = NULL, \dots)
 }
 \arguments{
   \item{z}{a list containing data summaries to be used in constructing
@@ -33,9 +33,6 @@ bxp(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     the \code{boxcol}, \code{medcol}, \code{whiskcol}, \code{staplecol},
     and \code{outcol} options (see below).
   }
-  \item{col}{character or numeric; the color within the box; recycled for
-    multiple boxes.  Is only used as default for \code{boxfill} and will
-    be deprecated.}
   \item{log}{character, indicating if any axis should be drawn in
     logarithmic scale, as in \code{\link{plot.default}}.}
   \item{frame.plot}{logical, indicating if a \dQuote{frame}
@@ -49,21 +46,27 @@ bxp(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     \code{1:n} where \code{n} is the number of boxes.}
   \item{show.names}{Set to \code{TRUE} or \code{FALSE} to override the
     defaults on whether an x-axis label is printed for each group.}
-  \item{pars,\dots}{graphical parameters can be passed as arguments to
-    this function, either as a list (\code{pars}) or
-    normally(\code{\dots}), see the following.
+  \item{pars,\dots}{graphical parameters (etc) can be passed as
+    arguments to this function, either as a list (\code{pars}) or
+    normally(\code{\dots}), see the following.  (Those in \code{\dots}
+    take precedence over those in \code{pars}.)
 
-    Currently, \code{ylim} is used \sQuote{along the boxplot}, i.e.,
-    vertically, when \code{horizontal} is false.
-    \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis},
-    and \code{col.axis} are passed to \code{\link{axis}}, and
-    \code{main}, \code{cex.main}, \code{col.main}, \code{sub},
-    \code{cex.sub}, \code{col.sub}, \code{xlab}, \code{ylab},
-    \code{cex.lab}, and \code{col.lab} are passed to
-    \code{\link{title}}.
+    Currently, \code{yaxs} and \code{ylim} are used \sQuote{along the
+      boxplot}, i.e., vertically, when \code{horizontal} is
+    false.  \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis}, and
+    \code{col.axis} are passed to \code{\link{axis}}, and \code{main},
+    \code{cex.main}, \code{col.main}, \code{sub}, \code{cex.sub},
+    \code{col.sub}, \code{xlab}, \code{ylab}, \code{cex.lab}, and
+    \code{col.lab} are passed to \code{\link{title}}.
 
+    In addition, \code{axes} is accepted (see
+    \code{\link{plot.window}}), with default \code{TRUE}.
+    
     The following arguments (or \code{pars} components) allow further
-    customization of the boxplot graphics:
+    customization of the boxplot graphics.  Their defaults are typically
+    determined from the non-prefixed version (e.g., \code{boxlty} from
+    \code{lty}), either from the specified argument or \code{pars}
+    component or the corresponding \code{\link{par}} one.
     \describe{
       \item{boxwex:}{a scale factor to be applied to all boxes.  When there
 	are only a few groups, the appearance of the plot can be improved by
@@ -71,19 +74,22 @@ bxp(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
       \item{staplewex, outwex:}{staple and outlier line width expansion,
 	proportional to box width.}
       \item{boxlty, boxlwd, boxcol, boxfill:}{box outline type, width,
-	color, and fill color.}
+	color, and fill color (which currently defaults to \code{col} and will
+	in future default to \code{par("bg")}).}
       \item{medlty, medlwd, medpch, medcex, medcol, medbg:}{median line type,
 	line width, point character, point size expansion, color, and
 	background color.  The default \code{medpch= NA} suppresses the
-	point, and \code{medlty="blank"} does so for the line.}
-      \item{whisklty, whisklwd, whiskco:l}{whisker line type, width, and
+	point, and \code{medlty="blank"} does so for the line.
+	Note that\code{medlwd} defaults to
+	\eqn{3\times}{3 *} the \dQuote{default} \code{lwd}.}
+      \item{whisklty, whisklwd, whiskcol:}{whisker line type, width, and
 	color.}
       \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line
 	type, width, and color.}
       \item{outlty, outlwd, outpch, outcex, outcol, outbg:}{outlier line
 	type, line width, point character, point size expansion, color, and
 	background color.  The default \code{outlty= "blank"} suppresses the
-	lines and \code{outpch=" "} suppresses points.}
+	lines and \code{outpch=NA} suppresses points.}
     }
   }%.../pars
 }
@@ -115,9 +121,10 @@ par(op)
 op <- par(mfrow= c(1,2))
 
 ## single group -- no label
-boxplot (weight ~ group, data = PlantGrowth, subset= group=="ctrl")
+boxplot (weight ~ group, data = PlantGrowth, subset = group=="ctrl")
 ## with label
-bx <- boxplot(weight~group, data=PlantGrowth, subset=group=="ctrl",plot=FALSE)
+bx <- boxplot(weight ~ group, data = PlantGrowth,
+              subset = group=="ctrl", plot = FALSE)
 bxp(bx,show.names=TRUE)
 par(op)
 
@@ -129,12 +136,13 @@ boxplot(z, whisklty=3, main="boxplot(z, whisklty = 3)")
 op <- par(mfrow=1:2, bg="light gray", fg="midnight blue")
  boxplot(z,   col.axis="skyblue3", main="boxplot(*, col.axis=..,main=..)")
  plot(z[[1]], col.axis="skyblue3", main=   "plot(*, col.axis=..,main=..)")
- mtext("par(bg=\"light gray\", fg=\"midnight blue\")",outer=TRUE, line=-1.2)
+ mtext("par(bg=\"light gray\", fg=\"midnight blue\")",
+       outer = TRUE, line = -1.2)
 par(op)
 
 ## Mimic S-Plus:
 splus <- list(boxwex=0.4, staplewex=1, outwex=1, boxfill="grey40",
-              medlwd=3, medcol="white", whisklty=3, outlty=1, outpch=" ")
+              medlwd=3, medcol="white", whisklty=3, outlty=1, outpch=NA)
 boxplot(z, pars=splus)
 ## Recycled and "sweeping" parameters
 op <- par(mfrow=c(1,2))

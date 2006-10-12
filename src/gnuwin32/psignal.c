@@ -12,6 +12,7 @@
 #include <config.h>
 #endif
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include "psignal.h"
 extern int UserBreak;

@@ -6,15 +6,18 @@
   x- and/or y-scales based on numeric values passed to the function.
 }
 \usage{
-dataViewport(xData = NULL, yData = NULL, xscale = NULL, yscale = NULL,
-             extension = 0.05, ...)
+dataViewport(xData = NULL, yData = NULL, xscale = NULL,
+             yscale = NULL, extension = 0.05, ...)
 }
 \arguments{
   \item{xData}{ A numeric vector of data. }
   \item{yData}{ A numeric vector of data. }
   \item{xscale}{ A numeric vector (length 2). }
   \item{yscale}{ A numeric vector (length 2). }
-  \item{extension}{ A numeric. }
+  \item{extension}{ A numeric.  If length greater than 1, then
+    first value is used to extend the xscale and second value
+    is used to extend the yscale.
+  }
   \item{\dots}{ All other arguments will be passed to a call to
     the \code{viewport()} function. }
 }

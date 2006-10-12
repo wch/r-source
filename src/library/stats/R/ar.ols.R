@@ -7,11 +7,11 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     ists <- is.ts(x)
     x <- na.action(as.ts(x))
     xfreq <- frequency(x)
-    if(any(is.na(x))) stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in 'x'")
     if(ists)  xtsp <- tsp(x)
     x <- as.matrix(x)
     if(!is.numeric(x))
-        stop("`x' must be numeric")
+        stop("'x' must be numeric")
     n.used <- nrow(x)
     nser <- ncol(x)
     if(rescale) {
@@ -21,7 +21,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
     else round(order.max)
 
-    if (order.max < 0) stop ("order.max must be >= 0")
+    if (order.max < 0) stop ("'order.max' must be >= 0")
     if (aic) order.min <- 0
     else order.min <- order.max
     A <- vector("list", order.max - order.min + 1)
@@ -54,9 +54,10 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         rank <- qr(XX)$rank
         if (rank != nrow(XX))
         {
-            warning (paste("Model order", m))
-            warning ("Singularities in the computation of the projection matrix")
-            warning (paste("Results are only valid up to model order", m - 1))
+            warning ("model order: ", m,
+
+                     "singularities in the computation of the projection matrix",
+                     "results are only valid up to model order", m - 1)
             break
         }
         P <- if(ncol(XX) > 0) solve(XX) else XX

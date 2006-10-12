@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -31,6 +31,82 @@
 extern IoBuffer R_ConsoleIob;
 /* extern int errno; No longer used */
 
+SEXP attribute_hidden getParseContext()
+{
+    int i, last = PARSE_CONTEXT_SIZE;
+    char context[PARSE_CONTEXT_SIZE+1];
+
+    SEXP ans = R_NilValue, ans2;
+    int nn, nnn, nread;
+    char c;
+
+    context[last] = '\0';
+    for (i=R_ParseContextLast; last>0 ; i--) {
+	i = i % PARSE_CONTEXT_SIZE;
+	context[--last] = R_ParseContext[i];
+	if (!context[last]) {
+	    last++;
+	    break;
+	}
+    }
+    
+    nn = 16; /* initially allocate space for 16 lines */
+    nnn = nn;
+    PROTECT(ans = allocVector(STRSXP, nn));
+    c = context[last];
+    nread = 0;
+    while(c) {
+        nread++;
+	if(nread >= nn) {
+	    ans2 = allocVector(STRSXP, 2*nn);
+	    for(i = 0; i < nn; i++)
+		SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+	    nn *= 2;
+	    UNPROTECT(1); /* old ans */
+	    PROTECT(ans = ans2);
+	}
+	i = last;
+	while((c = context[++i])) {
+	    if(c == '\n') break;
+	}
+	context[i] = '\0';
+	SET_STRING_ELT(ans, nread-1, mkChar(context + last));
+	last = i+1;
+    }
+    /* get rid of empty line after last newline */
+    if (nread && !length(STRING_ELT(ans, nread-1))) nread--;
+    PROTECT(ans2 = allocVector(STRSXP, nread));
+    for(i = 0; i < nread; i++)
+	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+    UNPROTECT(2);
+    return ans2;
+}    
+
+void attribute_hidden parseError(SEXP call, int linenum)
+{
+    SEXP context = getParseContext();
+    int len = length(context);
+    if (linenum) {
+	switch (len) {
+	case 0: errorcall(call, _("syntax error on line %d"), linenum); break;
+	case 1: errorcall(call, _("syntax error at\n%d: %s"), 
+			    linenum, CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("syntax error at\n%d: %s\n%d: %s"), 
+			    linenum-1, CHAR(STRING_ELT(context, len-2)),
+			    linenum, CHAR(STRING_ELT(context, len-1))); break;
+	}
+    } else {
+	switch (len) {
+	case 0: errorcall(call, _("syntax error"), R_ParseError); break;
+	case 1: errorcall(call, _("syntax error in \"%s\""), 
+			    CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("syntax error in:\n\"%s\n%s\""), 
+			    CHAR(STRING_ELT(context, len-2)),
+			    CHAR(STRING_ELT(context, len-1))); break;
+	}   
+    }
+}
+
 /* "do_parse" - the user interface input/output to files.
 
  The internal R_Parse.. functions are defined in ./gram.y (-> gram.c)
@@ -38,9 +114,9 @@ extern IoBuffer R_ConsoleIob;
  .Internal( parse(file, n, text, prompt) )
  If there is text then that is read and the other arguments are ignored.
 */
-SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP text, prompt, s, source;
+    SEXP text, prompt, s;
     Rconnection con;
     Rboolean wasopen;
     int ifile, num;
@@ -48,96 +124,44 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     R_ParseError = 0;
-    R_ParseCnt = 0;
 
     ifile = asInteger(CAR(args));                       args = CDR(args);
 
     con = getConnection(ifile);
     wasopen = con->isopen;
     num = asInteger(CAR(args));				args = CDR(args);
+    if (num == 0)
+        return(allocVector(EXPRSXP, 0));
     PROTECT(text = coerceVector(CAR(args), STRSXP));	args = CDR(args);
     prompt = CAR(args);					args = CDR(args);
-    source = CAR(args);					args = CDR(args);
-
     if (prompt == R_NilValue)
 	PROTECT(prompt);
     else
 	PROTECT(prompt = coerceVector(prompt, STRSXP));
 
-    if (isLogical(source) && length(source) && LOGICAL(source)[0])
-    	KeepAllSource = TRUE;
-
     if (length(text) > 0) {
 	if (num == NA_INTEGER)
 	    num = -1;
 	s = R_ParseVector(text, num, &status);
-	if (status != PARSE_OK)
-	    errorcall(call, "parse error");
+	if (status != PARSE_OK) parseError(call, 0);
     }
     else if (ifile >= 3) {/* file != "" */
 	if (num == NA_INTEGER)
 	    num = -1;
 	if(!wasopen)
-	    if(!con->open(con)) error("cannot open the connection");
+	    if(!con->open(con)) error(_("cannot open the connection"));
 	s = R_ParseConn(con, num, &status);
 	if(!wasopen) con->close(con);
-	if (status != PARSE_OK)
-	    errorcall(call, "syntax error on line %d", R_ParseError);
+	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else {
 	if (num == NA_INTEGER)
 	    num = 1;
 	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt);
-	if (status != PARSE_OK)
-	    errorcall(call, "parse error");
+	if (status != PARSE_OK) parseError(call, 0);
     }
-
     UNPROTECT(2);
-    KeepAllSource = FALSE;
     return s;
 }
 
-/* return a protected STRSXP containing source lines from the buffer,
-   assumes that end points to the character following the desired source,
-   possibly null, but temporarily writeable */
 
-SEXP collectLines(char *buffer, char *end)
-{
-    int lines = 0;
-    char *p, *p0, save;
-    SEXP source;
-
-    for (p = buffer; p < end ; p++)
-	if (*p == '\n') lines++;
-    if ( *(end - 1) != '\n' ) lines++;
-    PROTECT(source = allocVector(STRSXP, lines));
-    p0 = buffer;
-    lines = 0;
-    for (p = buffer ; p < end ; p++)
-	if ( *p == '\n' ) {
-	    save = *p;
-	    *p = '\0';
-	    SET_STRING_ELT(source, lines++, mkChar(p0));
-	    *p = save;
-	    p0 = p + 1;
-	}
-    if ( *(end - 1) != '\n' ) {
-	save = *end;
-	*end = '\0';
-	SET_STRING_ELT(source, lines++, mkChar(p0));
-	*end = save;
-    }
-    return(source);
-}
-
-SEXP convertSource(SEXP e)
-{
-    SEXP source = getAttrib(e, R_SourceSymbol);
-
-    if (!isNull(source) && isInteger(source) && length(source) ==  2) {
-	source = collectLines(CHAR(SavedSource)+INTEGER(source)[0], CHAR(SavedSource)+INTEGER(source)[1]);
-	setAttrib(e, R_SourceSymbol, source);
-	UNPROTECT(1);
-    }
-    return(e);
-}

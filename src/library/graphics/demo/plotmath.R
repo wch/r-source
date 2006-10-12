@@ -1,7 +1,7 @@
-if(dev.cur() <= 1) get(getOption("device"))()
+require(datasets)
+require(graphics)
+opar <- par(ask = dev.interactive(orNone = TRUE))
 
-opar <- par(ask = interactive() &&
-            (.Device %in% c("X11", "GTK", "gnome", "windows","quartz")))
 
 ## --- "math annotation" in plots :
 
@@ -54,6 +54,7 @@ draw.plotmath.cell(expression(x / y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %+-% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %/% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(x %*% y), i, nr); i <- i + 1
+draw.plotmath.cell(expression(x %.% y), i, nr); i <- i + 1
 draw.plotmath.cell(expression(-x), i, nr); i <- i + 1
 draw.plotmath.cell(expression(+x), i, nr); i <- i + 1
 draw.title.cell("Sub/Superscripts", i, nr); i <- i + 1
@@ -85,6 +86,7 @@ draw.plotmath.cell(expression(plain(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(italic(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(bold(x)), i, nr); i <- i + 1
 draw.plotmath.cell(expression(bolditalic(x)), i, nr); i <- i + 1
+draw.plotmath.cell(expression(underline(x)), i, nr); i <- i + 1
 
 # Need fewer, wider columns for ellipsis ...
 nr <- 20
@@ -125,6 +127,8 @@ draw.plotmath.cell(expression(x %dbldown% y), i, nr); i <- i + 1
 draw.title.cell("Symbolic Names", i, nr); i <- i + 1
 draw.plotmath.cell(expression(Alpha - Omega), i, nr); i <- i + 1
 draw.plotmath.cell(expression(alpha - omega), i, nr); i <- i + 1
+draw.plotmath.cell(expression(phi1 + sigma1), i, nr); i <- i + 1
+draw.plotmath.cell(expression(Upsilon1), i, nr); i <- i + 1
 draw.plotmath.cell(expression(infinity), i, nr); i <- i + 1
 draw.plotmath.cell(expression(32 * degree), i, nr); i <- i + 1
 draw.plotmath.cell(expression(60 * minute), i, nr); i <- i + 1

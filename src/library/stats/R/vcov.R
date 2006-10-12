@@ -12,7 +12,11 @@ vcov.lm <- function(object, ...)
     so$sigma^2 * so$cov.unscaled
 }
 
-vcov.coxph <- vcov.survreg <- function (object, ...) object$var
+vcov.mlm <- function(object, ...)
+{
+    so <- summary(object, corr=FALSE)[[1]]
+    kronecker(estVar(object), so$cov.unscaled, make.dimnames = TRUE)
+}
 
 vcov.gls <- function (object, ...) object$varBeta
 

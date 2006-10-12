@@ -1,7 +1,16 @@
+
 #include "tcltk.h" /* declarations of our `public' interface */
+#ifndef Win32
+#include <R_ext/eventloop.h>
+#endif
+
+#ifndef TCL80
+# define SUPPORT_MBCS 1
+/* Includes Nakama's internationalization patches */
+#endif
+
 extern int (*R_timeout_handler)();
 extern long R_timeout_val;
-extern int (*ptr_gnome_start)();
 
 static Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
 
@@ -82,7 +91,8 @@ static int R_call(ClientData clientData,
 		  CONST84 char *argv[])
 {
     int i;
-    SEXP expr, fun, alist, ans;
+    SEXP expr, alist, ans;
+    void *fun;
 
     alist = R_NilValue;
     for (i = argc - 1 ; i > 1 ; i--){
@@ -91,37 +101,38 @@ static int R_call(ClientData clientData,
 	UNPROTECT(1);
     }
 
-    fun = (SEXP) strtoul(argv[1], NULL, 16);
+    sscanf(argv[1], "%p", &fun);
 
-    expr = LCONS(fun, alist);
+    expr = LCONS( (SEXP)fun, alist);
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
     ans = eval(expr, R_GlobalEnv);
 
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
-	    Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
+	Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
 
     return TCL_OK;
 }
 
 static int R_call_lang(ClientData clientData,
-		  Tcl_Interp *interp,
-		  int argc,
-		  CONST84 char *argv[])
+		       Tcl_Interp *interp,
+		       int argc,
+		       CONST84 char *argv[])
 {
-    SEXP expr, env, ans;
+    void *expr, *env; 
+    SEXP ans;
 
-    expr = (SEXP) strtoul(argv[1], NULL, 16);
-    env  = (SEXP) strtoul(argv[2], NULL, 16);
+    sscanf(argv[1], "%p", &expr);
+    sscanf(argv[2], "%p", &env);
 
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
-    ans = eval(expr, env);
+    ans = eval((SEXP)expr, (SEXP)env);
 
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
-	    Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
+	Tcl_SetObjResult(interp, (Tcl_Obj*) R_ExternalPtrAddr(ans));
 
     return TCL_OK;
 }
@@ -129,15 +140,42 @@ static int R_call_lang(ClientData clientData,
 
 static Tcl_Obj * tk_eval(char *cmd)
 {
+#ifdef SUPPORT_MBCS
+    char *cmd_utf8;
+    Tcl_DString  cmd_utf8_ds;
+
+    Tcl_DStringInit(&cmd_utf8_ds);
+    cmd_utf8 = Tcl_ExternalToUtfDString(NULL, cmd, -1, &cmd_utf8_ds);
+    if (Tcl_Eval(RTcl_interp, cmd_utf8) == TCL_ERROR)
+#else
     if (Tcl_Eval(RTcl_interp, cmd) == TCL_ERROR)
+#endif
     {
 	char p[512];
-	if (strlen(Tcl_GetStringResult(RTcl_interp))>500)
-	    strcpy(p,"tcl error.\n");
+	if (strlen(Tcl_GetStringResult(RTcl_interp)) > 500)
+	    strcpy(p, "tcl error.\n");
 	else
-	    sprintf(p,"[tcl] %s.\n",Tcl_GetStringResult(RTcl_interp));
+#ifdef SUPPORT_MBCS
+	{
+	    char *res;
+	    Tcl_DString  res_ds;
+
+	    Tcl_DStringInit(&res_ds);
+	    res = Tcl_UtfToExternalDString(NULL,
+					   Tcl_GetStringResult(RTcl_interp),
+					   -1, &res_ds);
+	    snprintf(p, sizeof(p), "[tcl] %s.\n", res);
+	    Tcl_DStringFree(&res_ds);
+	}
+#else
+            snprintf(p, sizeof(p), "[tcl] %s.\n",
+		     Tcl_GetStringResult(RTcl_interp));
+#endif
 	error(p);
     }
+#ifdef SUPPORT_MBCS
+    Tcl_DStringFree(&cmd_utf8_ds);
+#endif
     return Tcl_GetObjResult(RTcl_interp);
 }
 
@@ -160,12 +198,12 @@ SEXP dotTcl(SEXP args)
 
 SEXP dotTclObjv(SEXP args)
 {
-    SEXP t, 
-	avec = CADR(args), 
+    SEXP t,
+	avec = CADR(args),
 	nm = getAttrib(avec, R_NamesSymbol);
     int objc, i, result;
     Tcl_Obj **objv;
-    
+
     for (objc = 0, i = 0; i < length(avec); i++){
 	if (!isNull(VECTOR_ELT(avec, i)))
 	    objc++;
@@ -173,7 +211,7 @@ SEXP dotTclObjv(SEXP args)
 	    objc++;
     }
 
-    objv = (Tcl_Obj **) R_alloc(objc, sizeof(Tcl_Obj *)); 
+    objv = (Tcl_Obj **) R_alloc(objc, sizeof(Tcl_Obj *));
 
     for (objc = i = 0; i < length(avec); i++){
 	char *s, *tmp;
@@ -191,14 +229,28 @@ SEXP dotTclObjv(SEXP args)
     for (i = objc; i--; ) Tcl_IncrRefCount(objv[i]);
     result = Tcl_EvalObjv(RTcl_interp, objc, objv, 0);
     for (i = objc; i--; ) Tcl_DecrRefCount(objv[i]);
-    
+
     if (result == TCL_ERROR)
     {
 	char p[512];
-	if (strlen(Tcl_GetStringResult(RTcl_interp))>500)
-	    strcpy(p,"tcl error.\n");
+	if (strlen(Tcl_GetStringResult(RTcl_interp)) > 500)
+	    strcpy(p, "tcl error.\n");
 	else
-	    sprintf(p,"[tcl] %s.\n",Tcl_GetStringResult(RTcl_interp));
+#ifdef SUPPORT_MBCS
+	{
+	    char *res;
+	    Tcl_DString  res_ds;
+	    Tcl_DStringInit(&res_ds);
+	    res = Tcl_UtfToExternalDString(NULL,
+					   Tcl_GetStringResult(RTcl_interp),
+					   -1, &res_ds);
+	    snprintf(p, sizeof(p), "[tcl] %s.\n", res);
+	    Tcl_DStringFree(&res_ds);
+	}
+#else
+	    snprintf(p, sizeof(p), "[tcl] %s.\n",
+		     Tcl_GetStringResult(RTcl_interp));
+#endif
 	error(p);
     }
 
@@ -211,7 +263,7 @@ SEXP RTcl_ObjFromVar(SEXP args)
     Tcl_Obj *tclobj;
 
 #ifndef TCL80
-    tclobj = Tcl_GetVar2Ex(RTcl_interp, 
+    tclobj = Tcl_GetVar2Ex(RTcl_interp,
                            CHAR(STRING_ELT(CADR(args), 0)),
                            NULL,
                            0);
@@ -219,7 +271,7 @@ SEXP RTcl_ObjFromVar(SEXP args)
     Tcl_Obj *tclname;
 
     tclname = Tcl_NewStringObj(CHAR(STRING_ELT(CADR(args), 0)), -1);
-    tclobj = Tcl_ObjGetVar2(RTcl_interp, 
+    tclobj = Tcl_ObjGetVar2(RTcl_interp,
                            tclname,
                            NULL,
                            0);
@@ -233,7 +285,7 @@ SEXP RTcl_AssignObjToVar(SEXP args)
     Tcl_Obj *tclobj;
 
 #ifndef TCL80
-    tclobj = Tcl_SetVar2Ex(RTcl_interp, 
+    tclobj = Tcl_SetVar2Ex(RTcl_interp,
                            CHAR(STRING_ELT(CADR(args), 0)),
                            NULL,
                            (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
@@ -242,7 +294,7 @@ SEXP RTcl_AssignObjToVar(SEXP args)
     Tcl_Obj *tclname;
 
     tclname = Tcl_NewStringObj(CHAR(STRING_ELT(CADR(args), 0)), -1);
-    tclobj = Tcl_ObjSetVar2(RTcl_interp, 
+    tclobj = Tcl_ObjSetVar2(RTcl_interp,
                            tclname,
                            NULL,
                            (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
@@ -257,10 +309,24 @@ SEXP RTcl_AssignObjToVar(SEXP args)
 SEXP RTcl_StringFromObj(SEXP args)
 {
     char *str;
+#ifdef SUPPORT_MBCS
+    SEXP so;
+    char *s;
+    Tcl_DString s_ds;
+
+    Tcl_DStringInit(&s_ds);
+    str = Tcl_GetStringFromObj((Tcl_Obj *) R_ExternalPtrAddr(CADR(args)),
+			       NULL);
+    s = Tcl_UtfToExternalDString(NULL, str, -1, &s_ds);
+    so = mkString(s);
+    Tcl_DStringFree(&s_ds);
+    return(so);
+#else
 
     str = Tcl_GetStringFromObj((Tcl_Obj *) R_ExternalPtrAddr(CADR(args)),
 			       NULL);
     return mkString(str);
+#endif
 }
 
 SEXP RTcl_ObjAsCharVector(SEXP args)
@@ -278,13 +344,30 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
 
     PROTECT(ans = allocVector(STRSXP, count));
     for (i = 0 ; i < count ; i++)
+#ifdef SUPPORT_MBCS
+    {
+	char *s;
+	Tcl_DString s_ds;
+	Tcl_DStringInit(&s_ds);
+	s = Tcl_UtfToExternalDString(NULL,
+				     (Tcl_GetStringFromObj(elem[i], NULL)),
+				     -1, &s_ds);
+	SET_STRING_ELT(ans, i, mkChar(s));
+	Tcl_DStringFree(&s_ds);
+    }
+#else
 	SET_STRING_ELT(ans, i, mkChar(Tcl_GetStringFromObj(elem[i], NULL)));
+#endif
     UNPROTECT(1);
     return ans;
 }
 
 SEXP RTcl_ObjFromCharVector(SEXP args)
 {
+#ifdef SUPPORT_MBCS
+    char *s;
+    Tcl_DString s_ds;
+#endif
     int count;
     Tcl_Obj *tclobj, *elem;
     int i;
@@ -297,11 +380,29 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 
     count = length(val);
     if (count == 1 && LOGICAL(drop)[0])
+#ifdef SUPPORT_MBCS
+    {
+	Tcl_DStringInit(&s_ds);
+	s = Tcl_ExternalToUtfDString(NULL,
+				     CHAR(STRING_ELT(val, 0)), -1, &s_ds);
+	Tcl_SetStringObj(tclobj, s, -1);
+	Tcl_DStringFree(&s_ds);
+    }
+#else
 	Tcl_SetStringObj(tclobj, CHAR(STRING_ELT(val, 0)), -1);
+#endif
     else
 	for ( i = 0 ; i < count ; i++) {
 	    elem = Tcl_NewObj();
+#ifdef SUPPORT_MBCS
+	    Tcl_DStringInit(&s_ds);
+	    s = Tcl_ExternalToUtfDString(NULL, CHAR(STRING_ELT(val, i)),
+					 -1, &s_ds);
+	    Tcl_SetStringObj(elem, s, -1);
+	    Tcl_DStringFree(&s_ds);
+#else
 	    Tcl_SetStringObj(elem, CHAR(STRING_ELT(val, i)), -1);
+#endif
 	    Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
 	}
 
@@ -483,37 +584,31 @@ SEXP RTcl_RemoveArrayElem(SEXP args)
 }
 #endif /* TCL80 */
 
-/* Warning: These two functions return a pointer to internal static
-   data. Copy immediately. */
-
-static char * callback_closure(SEXP closure)
+static void callback_closure(char * buf, int buflen, SEXP closure)
 {
-    static char buf[256], tmp[20];
+    static char tmp[21];
     SEXP formals;
 
     formals = FORMALS(closure);
 
-    sprintf(buf, "R_call 0x%lx", (unsigned long) closure);
+    sprintf(buf, "R_call %p", (void *) closure);
 
     while ( formals != R_NilValue )
     {
 	if (TAG(formals) ==  R_DotsSymbol) break;
-	sprintf(tmp, " %%%s", CHAR(PRINTNAME(TAG(formals))));
+	snprintf(tmp, 20, " %%%s", CHAR(PRINTNAME(TAG(formals))));
+	tmp[20] = '\0';
+	if (strlen(buf) + strlen(tmp) >= buflen)
+	    error("argument list is too long in tcltk internal function 'callback_closure'");
 	strcat(buf, tmp);
 	formals = CDR(formals);
     }
-    return buf;
 }
 
-static char * callback_lang(SEXP call, SEXP env)
+static void callback_lang(char *buf, SEXP call, SEXP env)
 {
-    static char buf[256];
+    sprintf(buf, "R_call_lang %p %p", (void *) call, (void *) env);
 
-    sprintf(buf, "R_call_lang 0x%lx 0x%lx", 
-	    (unsigned long) call,
-	    (unsigned long) env);
-
-    return buf;
 }
 
 /* Setup to invoke callback from Tcl. Notice that something needs to
@@ -522,28 +617,42 @@ static char * callback_lang(SEXP call, SEXP env)
    assigning into the environment of the window with which the
    callback is associated */
 
+#define BUFFLEN 256
 SEXP dotTclcallback(SEXP args)
 {
     SEXP ans, callback = CADR(args), env;
-
-    char *rval = NULL; /* -Wall */
+    char buff[BUFFLEN];
 
     if (isFunction(callback))
-        rval = callback_closure(callback);
+        callback_closure(buff, BUFFLEN, callback);
     else if (isLanguage(callback)) {
         env = CADDR(args);
-        rval = callback_lang(callback, env);
+        callback_lang(buff, callback, env);
     }
     else
     	error("argument is not of correct type");
 
-    ans = mkString(rval);
+#ifdef SUPPORT_MBCS
+    {
+	char *s;
+	Tcl_DString s_ds;
+
+	Tcl_DStringInit(&s_ds);
+	s = Tcl_UtfToExternalDString(NULL, buff, -1, &s_ds);
+	ans = mkString(s);
+	Tcl_DStringFree(&s_ds);
+    }
+#else
+    ans = mkString(buff);
+#endif
     return ans;
 }
 
 
 
 #ifndef Win32
+#define R_INTERFACE_PTRS 1
+#include <Rinterface.h>  /* R_GUIType and more for console */
 /* Add/delete Tcl/Tk event handler */
 
 static void (* OldHandler)(void);
@@ -570,7 +679,8 @@ static void addTcl(void)
     if (Tcl_loaded)
 	error("Tcl already loaded");
     Tcl_loaded = 1;
-    if (ptr_gnome_start != NULL) {
+    if (strcmp(R_GUIType, "GNOME") == 0) {
+	/* This gets polled in the gnomeGUI console's event loop */
         R_timeout_handler = Gtk_TclHandler;
         R_timeout_val = 500;
     } else {
@@ -586,7 +696,7 @@ void delTcl(void)
 {
     if (!Tcl_loaded)
 	error("Tcl is not loaded");
-    if (ptr_gnome_start != NULL) {
+    if (strcmp(R_GUIType, "GNOME") == 0) {
         R_timeout_handler = NULL;
         R_timeout_val = 0;
     } else {
@@ -609,24 +719,24 @@ static void RTcl_eventProc(RTcl_Event *evPtr, int flags)
 {
     fd_set *readMask = R_checkActivity(0 /*usec*/, 1 /*ignore_stdin*/);
 
-    if (readMask==NULL) 
+    if (readMask==NULL)
 	return;
-   
+
     R_runHandlers(R_InputHandlers, readMask);
 }
 static void RTcl_checkProc(ClientData clientData, int flags)
 {
     fd_set *readMask = R_checkActivity(0 /*usec*/, 1 /*ignore_stdin*/);
     RTcl_Event * evPtr;
-    if (readMask==NULL) 
+    if (readMask==NULL)
 	return;
 
-    evPtr = (RTcl_Event*) Tcl_Alloc(sizeof(RTcl_Event)); 
+    evPtr = (RTcl_Event*) Tcl_Alloc(sizeof(RTcl_Event));
     evPtr->proc = (Tcl_EventProc*) RTcl_eventProc;
 
-    Tcl_QueueEvent((Tcl_Event*) evPtr, TCL_QUEUE_HEAD); 
+    Tcl_QueueEvent((Tcl_Event*) evPtr, TCL_QUEUE_HEAD);
 }
- 
+
 #endif
 
 void tcltk_init(void)
@@ -637,7 +747,7 @@ void tcltk_init(void)
      * tcl 8.4 on all platforms, and is known to cause crashes under
      * Windows */
 
-    /* Unfortunately, *presence* of the line appears to cause crashes 
+    /* Unfortunately, *presence* of the line appears to cause crashes
      * with tcl 8.0... */
 
 #ifndef TCL80
@@ -654,15 +764,24 @@ void tcltk_init(void)
     if (code != TCL_OK)
 	error(Tcl_GetStringResult(RTcl_interp));
 
-    code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
-    if (code != TCL_OK)
-	error(Tcl_GetStringResult(RTcl_interp));
+#if !defined(Win32) && !defined(HAVE_AQUA)
+    if(getenv("DISPLAY")) 
+#endif
+    {
+	code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
+	if (code != TCL_OK)
+	    error(Tcl_GetStringResult(RTcl_interp));
 
-    Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
+	Tcl_StaticPackage(RTcl_interp, "Tk", Tk_Init, Tk_SafeInit);
 
-    code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
-    if (code != TCL_OK)
-	error(Tcl_GetStringResult(RTcl_interp));
+	code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
+	if (code != TCL_OK)
+	    error(Tcl_GetStringResult(RTcl_interp));
+    }
+#if !defined(Win32) && !defined(HAVE_AQUA)
+    else
+	warning("no DISPLAY variable so Tk is not available");
+#endif
 
     Tcl_CreateCommand(RTcl_interp,
 		      "R_eval",
@@ -688,7 +807,7 @@ void tcltk_init(void)
     addTcl(); /* notice: this sets R_wait_usec.... */
     timeout.sec = 0;
     timeout.usec = R_wait_usec;
-    Tcl_CreateEventSource(RTcl_setupProc, RTcl_checkProc, 0); 
+    Tcl_CreateEventSource(RTcl_setupProc, RTcl_checkProc, 0);
 #endif
 
 /*** We may want to revive this at some point ***/
@@ -701,23 +820,42 @@ void tcltk_init(void)
 
 }
 
-
+SEXP RTcl_ServiceMode(SEXP args)
+{
+    SEXP ans;
+    int value;
+    
+    if (!isLogical(CADR(args)) || length(CADR(args)) > 1)
+    	error("invalid argument");
+    
+    if (length(CADR(args))) value = Tcl_SetServiceMode(LOGICAL(CADR(args))[0] ? 
+    						TCL_SERVICE_ALL : TCL_SERVICE_NONE);
+    else {
+    	value = Tcl_SetServiceMode(TCL_SERVICE_NONE);
+    	if (value != TCL_SERVICE_NONE) Tcl_SetServiceMode(value); /* Tcl_GetServiceMode was not found */
+    }
+    
+    ans = allocVector(LGLSXP, 1);
+    LOGICAL(ans)[0] = value == TCL_SERVICE_ALL;
+    return ans;
+}
+    
 #ifndef Win32
 #ifndef TCL80
 /* ----- Tcl/Tk console routines ----- */
 
-/* From src/unix/devUI.h */
+/* From former src/unix/devUI.h
 extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
 extern void (*ptr_R_WriteConsole)(char *, int);
 extern void (*ptr_R_ResetConsole)();
 extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();
 extern FILE * R_Consolefile;
-extern FILE * R_Outputfile;
+extern FILE * R_Outputfile; */
 
 /* Fill a text buffer with user typed console input. */
 
-static int 
+static int
 RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
 		  int addtohistory)
 {
@@ -727,20 +865,35 @@ RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
     cmd[0] = Tcl_NewStringObj("Rc_read", -1);
     cmd[1] = Tcl_NewStringObj(prompt, -1);
     cmd[2] = Tcl_NewIntObj(addtohistory);
-    
-    for (i = 0 ; i < 3 ; i++) 
+
+    for (i = 0 ; i < 3 ; i++)
 	Tcl_IncrRefCount(cmd[i]);
 
     code = Tcl_EvalObjv(RTcl_interp, 3, cmd, 0);
     if (code != TCL_OK)
 	return 0;
     else
+#ifdef SUPPORT_MBCS
+    {
+	    char *buf_utf8;
+	    Tcl_DString buf_utf8_ds;
+	    Tcl_DStringInit(&buf_utf8_ds);
+	    buf_utf8 =
+		    Tcl_UtfToExternalDString(NULL,
+		    			     Tcl_GetStringResult(RTcl_interp),
+					     len,
+					     &buf_utf8_ds);
+            strncpy((char *)buf, buf_utf8, len);
+	    Tcl_DStringFree(&buf_utf8_ds);
+    }
+#else /* SUPPORT_MBCS */
 	strncpy((char *)buf, (char *) Tcl_GetStringResult(RTcl_interp), len);
+#endif /* SUPPORT_MBCS */
 
     /* At some point we need to figure out what to do if the result is
      * longer than "len"... For now, just truncate. */
 
-    for (i = 0 ; i < 3 ; i++) 
+    for (i = 0 ; i < 3 ; i++)
 	Tcl_DecrRefCount(cmd[i]);
 
     return 1;
@@ -752,18 +905,32 @@ static void
 RTcl_WriteConsole (char *buf, int len)
 {
     Tcl_Obj *cmd[2];
-    
+#ifdef SUPPORT_MBCS
+    char *buf_utf8;
+    Tcl_DString  buf_utf8_ds;
+
+    Tcl_DStringInit(&buf_utf8_ds);
+    buf_utf8 = Tcl_ExternalToUtfDString(NULL, buf, -1, &buf_utf8_ds);
+#endif /* SUPPORT_MBCS */
+
     /* Construct command */
     cmd[0] = Tcl_NewStringObj("Rc_write", -1);
+#ifdef SUPPORT_MBCS
+    cmd[1] = Tcl_NewStringObj(buf_utf8, -1);
+#else /* SUPPORT_MBCS */
     cmd[1] = Tcl_NewStringObj(buf, len);
+#endif /* SUPPORT_MBCS */
 
     Tcl_IncrRefCount(cmd[0]);
     Tcl_IncrRefCount(cmd[1]);
 
-    Tcl_EvalObjv(RTcl_interp, 2, cmd, 0); 
+    Tcl_EvalObjv(RTcl_interp, 2, cmd, 0);
 
     Tcl_DecrRefCount(cmd[0]);
     Tcl_DecrRefCount(cmd[1]);
+#ifdef SUPPORT_MBCS
+    Tcl_DStringFree(&buf_utf8_ds);
+#endif /* SUPPORT_MBCS */
 }
 
 /* Indicate that input is coming from the console */

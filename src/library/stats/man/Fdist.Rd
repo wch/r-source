@@ -8,21 +8,20 @@
 \description{
   Density, distribution function, quantile function and random
   generation for the F distribution with \code{df1} and \code{df2}
-  degrees of freedom (and optional non-centrality parameter
-  \code{ncp}).
+  degrees of freedom (and optional non-centrality parameter \code{ncp}).
 }
 \usage{
-df(x, df1, df2, log = FALSE)
-pf(q, df1, df2, ncp=0, lower.tail = TRUE, log.p = FALSE)
-qf(p, df1, df2,        lower.tail = TRUE, log.p = FALSE)
-rf(n, df1, df2)
+df(x, df1, df2, ncp = 0, log = FALSE)
+pf(q, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+qf(p, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE)
+rf(n, df1, df2, ncp = 0)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{df1, df2}{degrees of freedom.}
+  \item{df1, df2}{degrees of freedom.  \code{Inf} is allowed.}
   \item{ncp}{non-centrality parameter.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -33,6 +32,8 @@ rf(n, df1, df2)
   \code{pf} gives the distribution function
   \code{qf} gives the quantile function, and
   \code{rf} generates random deviates.
+
+  Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
   The F distribution with \code{df1 =} \eqn{n_1}{n1} and \code{df2 =}
@@ -57,13 +58,29 @@ rf(n, df1, df2)
   The non-central F distribution is again the ratio of mean squares of
   independent normals of unit variance, but those in the numerator are
   allowed to have non-zero means and \code{ncp} is the sum of squares of
-  the means.  See \code{\link{Chisquare}} for further details on
-  non-central distributions.  
+  the means.  See \link{Chisquare} for further details on
+  non-central distributions.
+}
+\source{
+  For \code{df}, and \code{cdf == 0}, computed via a binomial
+  probability, code contributed by Catherine Loader (see \code{\link{dbinom}});
+  for \code{cdf != 0}, computed via a \code{\link{dbeta}},
+  code contributed by Peter Ruckdeschel.
+
+  For \code{pf}, via \code{\link{pbeta}} (or for large \code{df2}, via
+  \code{\link{pchisq}}).
+
+  For \code{qf}, via \code{\link{qchisq}} for large \code{df2}, else via
+  \code{\link{qbeta}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
+  \emph{Continuous Univariate Distributions}, volume 2, chapters 27 and 30.
+  Wiley, New York.
 }
 \seealso{
   \code{\link{dchisq}} for chi-squared and \code{\link{dt}} for Student's

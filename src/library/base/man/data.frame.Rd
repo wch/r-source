@@ -1,6 +1,7 @@
 \name{data.frame}
 \title{Data Frames}
 \alias{data.frame}
+\alias{default.stringsAsFactors}
 \description{
   This function creates data frames, tightly coupled
   collections of variables which share many of the properties of
@@ -8,15 +9,19 @@
   of \R's modeling software.
 }
 \usage{
-data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
+data.frame(\dots, row.names = NULL, check.rows = FALSE,
+           check.names = TRUE,
+           stringsAsFactors = default.stringsAsFactors())
+
+default.stringsAsFactors()
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
-    \code{tag=value}.  Component names are created based on the tag (if
+    \code{tag = value}.  Component names are created based on the tag (if
     present) or the deparsed argument itself.}
-  \item{row.names}{\code{NULL} or an integer or character string specifying
-    a column to be used as row names, or a character vector giving the row
-    names for the data frame.}
+  \item{row.names}{\code{NULL} or a single integer or character string
+    specifying a column to be used as row names, or a character or
+    integer vector giving the row names for the data frame.}
   \item{check.rows}{if \code{TRUE} then the rows are checked for
     consistency of length and names.}
   \item{check.names}{logical.  If \code{TRUE} then the names of the
@@ -24,6 +29,8 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
     syntactically valid variable names and are not duplicated.
     If necessary they are adjusted (by \code{\link{make.names}})
     so that they are.}
+  \item{stringsAsFactors}{logical: should character vectors be converted
+    to factors?}
 }
 \value{
   A data frame, a matrix-like structure whose columns may be of
@@ -59,10 +66,15 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
   not a column (by name or number).
 
   Names are removed from vector inputs not protected by \code{\link{I}}.
+
+  \code{default.stringsAsFactors} is a utility that takes
+  \code{\link{getOption}("stringsAsFactors")} and ensures the result is
+  \code{TRUE} or \code{FALSE}.
 }
 \note{
-  In versions of \R prior to 1.4.0 logical columns were converted to
-  factors (as in S3 but not S4).
+  In versions of \R prior to 2.4.0 \code{row.names} had to be
+  character: to ensure compatibility with earlier versions of \R, supply
+  a character vector as the \code{row.names} argument.
 }
 \references{
   Chambers, J. M. (1992)
@@ -74,7 +86,7 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
   \code{\link{I}},
   \code{\link{plot.data.frame}},
   \code{\link{print.data.frame}},
-  \code{\link{row.names}},
+  \code{\link{row.names}}, \code{\link{names}} (for the column names),
   \code{\link{[.data.frame}} for subsetting methods,
   \code{\link{Math.data.frame}} etc, about
   \emph{Group} methods for \code{data.frame}s;

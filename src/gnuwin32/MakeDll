@@ -1,5 +1,7 @@
 #-*- Makefile -*-
-all:  libR makeMakedeps $(DLLNAME).dll
+all:  makeMakedeps $(DLLNAME).dll
+
+.PHONY : all makeMakedeps
 
 # set this in Makevars.win to supply your own resource file
 RCNAME=${DLLNAME}_res
@@ -7,33 +9,47 @@ RCNAME=${DLLNAME}_res
 RCOBJ=$(RCNAME).o
 
 # Don't use SOURCES as this get passed on for libR.
-CFSOURCES=$(wildcard -f *.c *.f)
+CFSOURCES=$(wildcard -f *.c *.f *.f90 *.f95)
 CSOURCES=$(wildcard -f *.c)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
-OBJSA=$(foreach i,$(CFSOURCES) $(CXXSOURCES),$(basename $i).o)
+FSOURCES=$(wildcard -f *.f)
+FCSOURCES=$(wildcard -f *.f90 *.f95)
+OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES) $(FCSOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
+
+ifneq ($(strip $(FCSOURCES)),)
+# don't assume F95 can be cross-compiled in the same way
+  DLL="$(F95)"
+else
 
 ifneq ($(strip $(CXXSOURCES)),)
   DLL_LDMAIN=g++
 endif
+ifneq ($(strip $(FSOURCES)),)
+  EXTRA_LIBS=$(FLIBS)
+endif
+
+endif
 
 ifdef DEBUG
   DLLFLAGS=
-  DEBUGFLAG=-g -Wall
+  DEBUGFLAG=$(G_FLAG) -Wall
 else
   DLLFLAGS=-s
   DEBUGFLAG=-Wall
 endif
 
-CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include
-CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
-CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
-FFLAGS=-O2 $(DEBUGFLAG) $(PKG_FFLAGS)
-DLLLIBS=-L$(RHOME)/src/gnuwin32 $(PKG_LIBS) $(FLIBS) -lR 
+COPTFLAG=-O2
+CXXOPTFLAG=-O2
+FOPTFLAG=-O2
+
+CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include $(CLINK_CPPFLAGS)
+CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(COPTFLAG) -std=gnu99 $(PKG_CFLAGS)
+CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(CXXOPTFLAG) $(PKG_CXXFLAGS)
+FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) $(PKG_FFLAGS)
+DLLLIBS=-L$(RHOME)/bin $(PKG_LIBS) $(EXTRA_LIBS) -lR
 RESFLAGS=--include-dir $(RHOME)/include
-BLAS_LIBS=-lRblas
-LAPACK_LIBS=-L$(RHOME)/lib -lRlapack
 # for use by Makevars.win
 R_HOME=$(RHOME)
 
@@ -50,21 +66,17 @@ else
 -include Makevars
 endif
 
-libR:
-	@$(MAKE) -s --no-print-directory -C $(RHOME)/src/gnuwin32 libR.a
-	@$(MAKE) -s --no-print-directory -C $(RHOME)/src/gnuwin32 libRblas.a
-
 $(DLLNAME)_res.rc:
 	@PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 
-$(DLLNAME).a: $(OBJS)
-	@$(RM) -f $@
-	$(AR) cr $@ $(OBJS)
-	$(RANLIB) $@
-
-$(DLLNAME).dll : $(DLLNAME).a $(RCOBJ)
+ifeq ($(wildcard $(DLLNAME)-win.def),$(DLLNAME)-win.def)
+$(DLLNAME).dll : $(DLLNAME)-win.def $(OBJS) $(RCOBJ)
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $^ $($*-DLLLIBS) $(DLLLIBS)
+else
+$(DLLNAME).dll : $(OBJS) $(RCOBJ)
+endif
 
 # Dependencies
 CXXSOURCES1=$(wildcard -f *.cc)

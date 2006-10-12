@@ -10,7 +10,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
              && is.finite(conf.level)
              && (conf.level > 0)
              && (conf.level < 1)))
-            stop("conf.level must be a single number between 0 and 1")
+            stop("'conf.level' must be a single number between 0 and 1")
     }
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
@@ -18,14 +18,14 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     y <- y[complete.cases(y)]
     m <- length(x)
     if(m < 1)
-        stop("not enough x observations")
+        stop("not enough 'x' observations")
     n <- length(y)
     if(n < 1)
-        stop("not enough y observations")
+        stop("not enough 'y' observations")
     N <- m + n
 
     r <- rank(c(x, y))
-    STATISTIC <- sum(pmin(r, N - r + 1)[seq(along = x)])
+    STATISTIC <- sum(pmin(r, N - r + 1)[seq_along(x)])
     TIES <- (length(r) != length(unique(r)))
 
     if(is.null(exact))
@@ -33,12 +33,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 
     if(exact && !TIES) {
         pansari <- function(q, m, n) {
-            .C("pansari",
+            .C(R_pansari,
                as.integer(length(q)),
                p = as.double(q),
                as.integer(m),
-               as.integer(n),
-               PACKAGE = "stats")$p
+               as.integer(n))$p
         }
         PVAL <-
             switch(alternative,
@@ -54,19 +53,18 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                    greater = pansari(STATISTIC, m, n))
         if (conf.int) {
             qansari <- function(p, m, n) {
-                .C("qansari",
+                .C(R_qansari,
                    as.integer(length(p)),
                    q = as.double(p),
                    as.integer(m),
-                   as.integer(n),
-                   PACKAGE = "stats")$q
+                   as.integer(n))$q
             }
             alpha <- 1 - conf.level
             x <- sort(x)
             y <- sort(y)
             ab <- function(sig) {
                 rab <- rank(c(x/sig, y))
-                sum(pmin(rab, N - rab + 1)[seq(along = x)])
+                sum(pmin(rab, N - rab + 1)[seq_along(x)])
             }
             ratio <- outer(x,y,"/")
             aratio <- ratio[ratio >= 0]
@@ -79,8 +77,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
               uci <- NULL
               lci <- NULL
               if(length(u[u >= 0]) == 0 || length(l[l > 0]) == 0) {
-                  warning(paste("Samples differ in location: Cannot",
-                                "compute confidence set, returning NA"))
+                  warning("samples differ in location: cannot compute confidence set, returning NA")
                   return(c(NA, NA))
               }
               if (is.null(uci)) {
@@ -105,7 +102,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             }
 
             cint <- if(length(sigma) < 1) {
-                warning("Cannot compute confidence set, returning NA")
+                warning("cannot compute confidence set, returning NA")
                 c(NA, NA)
             }
             else {
@@ -167,9 +164,9 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 
         if(conf.int && !exact) {
             alpha <- 1 - conf.level
-            ab <- function(sig, zq) {
+            ab2 <- function(sig, zq) {
                 r <- rank(c(x / sig, y))
-                s <- sum(pmin(r, N -r + 1)[seq(along = x)])
+                s <- sum(pmin(r, N -r + 1)[seq_along(x)])
                 TIES <- (length(r) != length(unique(r)))
                 normalize(s, r, TIES, length(x), length(y)) - zq
             }
@@ -186,22 +183,19 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     c(min(x[x<=0], na.rm=TRUE)/max(y[y<0], na.rm=TRUE),
                       max(x[x<=0], na.rm=TRUE)/min(y[y<0], na.rm=TRUE))
             if (any(is.infinite(c(srangepos, srangeneg)))) {
-                warning(paste("Cannot compute asymptotic confidence",
-                              "set or estimator"))
+                warning("cannot compute asymptotic confidence set or estimator")
                 conf.int <- FALSE
             } else {
                 ccia <- function(alpha) {
                     ## Check if the statistic exceeds both quantiles
                     ## first.
-                    statu <- ab(srange[1], zq=qnorm(alpha/2))
-                    statl <- ab(srange[2], zq=qnorm(alpha/2, lower=FALSE))
+                    statu <- ab2(srange[1], zq=qnorm(alpha/2))
+                    statl <- ab2(srange[2], zq=qnorm(alpha/2, lower=FALSE))
                     if (statu > 0 || statl < 0) {
-                        warning(paste("Samples differ in location:",
-                                      "Cannot compute confidence set,",
-                                      "returning NA"))
+                        warning("samples differ in location: cannot compute confidence set, returning NA")
                         return(c(NA, NA))
                     }
-                    u <- uniroot(ab, srange, tol=1e-4,
+                    u <- uniroot(ab2, srange, tol=1e-4,
                                  zq=qnorm(alpha/2))$root
                     l <- uniroot(ab, srange, tol=1e-4,
                                  zq=qnorm(alpha/2, lower=FALSE))$root
@@ -219,20 +213,19 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 })
                 attr(cint, "conf.level") <- conf.level
                 ## Check if the statistic exceeds both quantiles first.
-                statu <- ab(srange[1], zq=0)
-                statl <- ab(srange[2], zq=0)
+                statu <- ab2(srange[1], zq=0)
+                statl <- ab2(srange[2], zq=0)
                 if (statu > 0 || statl < 0) {
                     ESTIMATE <- NA
-                    warning("Cannot compute estimate, returning NA")
+                    warning("cannot compute estimate, returning NA")
                 } else
-                    ESTIMATE <- uniroot(ab, srange, tol=1e-4, zq=0)$root
+                    ESTIMATE <- uniroot(ab2, srange, tol=1e-4, zq=0)$root
             }
         }
         if(exact && TIES) {
-            warning("Cannot compute exact p-value with ties")
+            warning("cannot compute exact p-value with ties")
             if(conf.int)
-                warning(paste("Cannot compute exact confidence",
-                              "intervals with ties"))
+                warning("cannot compute exact confidence intervals with ties")
         }
     }
 
@@ -256,9 +249,8 @@ function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
        || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1)
-       || (length(attr(terms(formula[-3]), "term.labels")) != 1))
-        stop("formula missing or incorrect")
+       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

@@ -32,7 +32,7 @@ Rd_parse(file, text = NULL)
   \code{Rd_parse} is a simple top-level Rd parser/analyzer.  It returns
   a list with components
   \describe{
-    \item{\code{meta}}{a list containing the Rd meta data (aliases,
+    \item{\code{meta}}{a list containing the Rd metadata (aliases,
       concepts, keywords, and documentation type);
     }
     \item{\code{data}}{a data frame with the names (\code{tags}) and
@@ -53,9 +53,9 @@ Rd_parse(file, text = NULL)
 }
 \examples{
 ## Build the Rd db for the (installed) base package.
-db <- tools:::Rd_db("base")
+db <- Rd_db("base")
 ## Run Rd_parse on all entries in the Rd db.
-db <- lapply(db, function(txt) tools:::Rd_parse(text = txt))
+db <- lapply(db, function(txt) Rd_parse(text = txt))
 ## Extract the metadata.
 meta <- lapply(db, "[[", "meta")
 

@@ -53,6 +53,7 @@ else{
 getenv("LATEX", "LATEX", "latex");
 getenv("MAKE", "MAKE", "make");
 getenv("R_HOME", "R_HOME");
+getenv("R_SHARE_DIR", "R_SHARE_DIR", "$R_HOME/share");
 
 if($OSTYPE eq "windows"){
     ## DON'T add R_HOME/bin here: it might contain spaces and will not

@@ -15,8 +15,8 @@
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, you can obtain it via the World Wide Web at
 ### 'http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
-### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
-### 02111-3307, USE.
+### Software Foundation,
+### 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
 
 ## By means of this file you can (also) provide default values for the
 ## configuration process.  To set variables, uncomment the VAR=DEFAULT 
@@ -31,9 +31,12 @@
 ## If left blank the system will use 'a4'.
 ## R_PAPERSIZE=a4
 
-## The default behavior of R if it encounters EOF in batch mode.
+## Set the default behavior of R when ending a session
 ## Set this to one of '--save' or '--no-save' depending whether you
 ## want automatic saving of '.RData' or not.
+## Note that this applies to interactive and batch use, 
+## but NOT to the utility R CMD BATCH 
+## (which defaults to --save irrespective of this setting)
 ## R_BATCHSAVE=
 
 ## The command which runs the C compiler.
@@ -45,9 +48,14 @@
 ## Debugging and optimization options for the C compiler.
 ## Use this to specify CFLAGS for the version of the C compiler
 ## specified above.
-## If unspecified, defaults to '-g -O2' for gcc, and '-g' in all other
-## cases.
+## If unspecified, defaults to '-g -O2 -std=gnu99' for gcc, 
+## and '-g' in all other cases except icc (for which see R-admin.html).
 ## CFLAGS=
+
+## Defines for C compilation.
+## Use this to specify defines to be used in the compilation of R,
+## e.g. -DUSE_TYPE_CHECKING_STRICT
+## DEFS=
 
 ## The following additional CFLAGS to be used only in the main
 ## compilation and only in building shared libraries respectively.
@@ -57,24 +65,34 @@
 ## SHLIB_CFLAGS=
 
 ## Header file search directory ('-IDIR') and any other miscellaneous
-## options for the C preprocessor and compiler.
+## options (such as defines) for the C preprocessor and compiler.
 ## If unset defaults to '-I/usr/local/include', with '-I/sw/include'
 ## prepended on systems using Fink with root '/sw'.
 ## CPPFLAGS=
 
 ## The command which runs the FORTRAN 77 compiler.
-## If neither this nor F2C specified, a search is made for g77, f77,
-## xlf, frt, pgf77, fl32, af77, fort77, f90, xlf90, pgf90, epcf90, f95,
-## fort, xlf95, lf95, g95, and fc (in that order); on HPUX fort77 is the
-## POSIX compliant FORTRAN compiler, and comes second in the search
-## list.  If none of these is found, f2c is used if found; otherwise, R
-## cannot be compiled.
+## If this is not specified, a search is made for
+## f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95
+## f90 xlf90 pgf90 pghpf epcf90
+## g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
+## On HPUX fort77 is the POSIX compliant FORTRAN compiler, and replaces
+## f77 in the search list.
+## If CC is gcc, first preference is given to the matching FORTRAN
+## compiler (g77 or gfortran).
+## If none of these is found, R cannot be compiled.
 ## F77=
 
 ## Options for the FORTRAN 77 compiler.
 ## Use this to specify FFLAGS for the version of the compiler specified
-## above.  If unspecified, defaults to '-O2' for g77, and '' otherwise.
+## above.  If unspecified, defaults to '-g -O2' for g77, and '-g' if
+## this is accepted, otherwise ''.
 ## FFLAGS=
+
+## Options for safe compilation under the FORTRAN 77 compiler.
+## Use this to specify FFLAGS for the version of the compiler specified
+## above, using as accurate a result as possible, e.g. no optimization
+## or using -ffloat-store.
+## SAFE_FFLAGS=
 
 ## The following additional FFLAGS to be used only in the main
 ## compilation and only in building shared libraries respectively.
@@ -82,11 +100,6 @@
 ## profiling.
 ## MAIN_FFLAGS=
 ## SHLIB_FFLAGS=
-
-## The command which runs the FORTRAN-to-C converter.
-## If specified, the FORTRAN-to-C converter is used even if a FORTRAN 77
-## compiler would be available.
-## F2C=
 
 ## The command to be used to load the main R binary.
 ## This is usually the FORTRAN 77 or C compiler, but the automatic
@@ -108,7 +121,7 @@
 ## CPICFLAGS=
 
 ## The following variable can be used to provide any PIC flags for the
-## FORTRAN 77 compiler (if you are using one).  If this variable is left
+## FORTRAN 77 compiler.  If this variable is left
 ## unspecified an attempt is made to automatically detect the correct
 ## value by configure.
 ## FPICFLAGS=
@@ -129,13 +142,20 @@
 ## DYLIB_LD=
 ## DYLIB_LDFLAGS=
 
+## The appropriate 'lib' dir, normally 'lib', but 'lib64' on Linux on
+## x86_64, mips64, ppc64, sparc64, s390x but not ia64.
+## LIBnn=
+
 ## Stripping ('-s'), path ('-L'), and any other miscellaneous options
 ## for the linker.
 ## '-L' options set here will be prepended to LD_LIBRARY_PATH (or its
 ## system equivalent) at run time.
 ## If unset defaults to '-L/usr/local/lib', with '-L/sw/lib' prepended
 ## on systems using Fink with root '/sw'.
+## On some Linux 64-bit systems its default is -L/usr/local/lib64.
+## If LIBnn is set it defaults to -L/usr/local/$LIBnn.
 ## LDFLAGS=
+
 
 ## The command which runs the C++ compiler.  It not specified, configure
 ## uses the values of the environment variables 'CXX' or 'CCC' if set,
@@ -164,6 +184,16 @@
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
 
+
+## FORTRAN 95 compiler: optional for use in packages.
+## Analogous to the F77 and CXX settings.
+## FC=
+## FCFLAGS=
+## FCPICFLAGS=
+## SHLIB_FCLD=$(FC)
+## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
+## SHLIB_FCLDFLAGS=$(SHLIB_LDFLAGS)
+
 ## Tcl/Tk settings.
 ## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking
 ## against the Tcl and Tk library.
@@ -175,7 +205,7 @@
 ## Browser default
 ## Default setting for the R_BROWSER env variable
 ## If unset configure searches in turn for (currently)
-## netscape mozilla galeon kfmclient opera gnome-moz-remote open
+## firefox mozilla netscape galeon kfmclient opera gnome-moz-remote open
 ## and uses the full path.
 ## R_BROWSER=
 

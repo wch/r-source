@@ -1,93 +1,3 @@
-compareVersion <- function(a, b)
-{
-    if(is.na(a)) return(-1)
-    if(is.na(b)) return(1)
-    a <- as.integer(strsplit(a, "[\\.-]")[[1]])
-    b <- as.integer(strsplit(b, "[\\.-]")[[1]])
-    for(k in 1:length(a)) {
-        if(k <= length(b)) {
-            if(a[k] > b[k]) return(1) else if(a[k] < b[k]) return(-1)
-        } else {
-            return(1)
-        }
-    }
-    if(length(b) > length(a)) return(-1) else return(0)
-}
-
-package.dependencies <- function(x, check = FALSE,
-                                 depLevel = c("Depends", "Suggests"))
-{
-    depLevel <- match.arg(depLevel)
-
-    if(!is.matrix(x))
-        x <- matrix(x, nrow = 1, dimnames = list(NULL, names(x)))
-
-    deps <- list()
-    for(k in 1:nrow(x)){
-        z <- x[k, depLevel]
-        if(!is.na(z) & z != ""){
-            ## split dependencies, remove leading and trailing whitespace
-            z <- unlist(strsplit(z, ",", fixed=TRUE))
-            z <- sub("^[[:space:]]*(.*)", "\\1", z)
-            z <- sub("(.*)[[:space:]]*$", "\\1", z)
-
-            ## split into package names and version
-            pat <- "^([^\\([:space:]]+)[[:space:]]*\\(([^\\)]+)\\).*"
-            deps[[k]] <-
-                cbind(sub(pat, "\\1", z), sub(pat, "\\2", z), NA)
-
-            noversion <- deps[[k]][,1] == deps[[k]][,2]
-            deps[[k]][noversion,2] <- NA
-
-            ## split version dependency into operator and version number
-            pat <- "[[:space:]]*([[<>=]+)[[:space:]]+(.*)"
-            deps[[k]][!noversion, 2:3] <-
-                c(sub(pat, "\\1", deps[[k]][!noversion, 2]),
-                  sub(pat, "\\2", deps[[k]][!noversion, 2]))
-        }
-        else
-            deps[[k]] <- NA
-    }
-
-    if(check){
-        z <- rep.int(TRUE, nrow(x))
-        for(k in 1:nrow(x)) {
-            ## currently we only check the version of R itself
-            if(!is.na(deps[[k]]) &&
-               any(ok <- deps[[k]][,1] == "R")) {
-                ## NOTE: currently operators must be `<=' or `>='.
-                if(!is.na(deps[[k]][ok, 2])
-                   && deps[[k]][ok, 2] %in% c("<=", ">=")) {
-                    ## careful.  We don't want 1.9.1 < 1.50
-                    op <- deps[[k]][ok,2]
-                    x1 <- rep(0, 6)
-                    y <- c(R.version$major,
-                           strsplit(R.version$minor, ".", fixed=TRUE)[[1]])
-                    x1[seq(along=y)] <- y
-                    y <- strsplit(deps[[k]][ok,3], ".", fixed=TRUE)[[1]]
-                    x1[3+seq(along=y)] <- y
-                    x1 <- format(x1, justify="right")
-                    x2 <- paste(x1[4:6], collapse=".")
-                    x1 <- paste(x1[1:3], collapse=".")
-                    comptext <- paste("'", x1, "' ", op,
-                                      " '", x2, "'", sep = "")
-                    compres <- try(eval(parse(text = comptext)))
-                    if(!inherits(compres, "try-error")) {
-                        z[k] <- compres
-                    }
-                }
-            }
-        }
-        names(z) <- x[,"Package"]
-        return(z)
-    }
-    else{
-        names(deps) <- x[,"Package"]
-        return(deps)
-    }
-}
-
-
 ## A simple S3 class for package versions, and associated methods.
 
 ## We represent "vectors" of package versions as lists of sequences of
@@ -107,11 +17,16 @@ package.dependencies <- function(x, check = FALSE,
 package_version <-
 function(x, strict = TRUE)
 {
+    ## Special-case R version lists.
+    if(is.list(x) && all(c("major", "minor") %in% names(x)))
+        return(Recall(paste(x[c("major", "minor")], collapse = ".")))
     x <- as.character(x)
     y <- rep.int(list(integer()), length(x))
+    valid_package_version_regexp <-
+        sprintf("^%s$", .standard_regexps()$valid_package_version)
     if(length(x) > 0) {
-        ok <- (regexpr("^([[:digit:]]+[.-]){1,}[[:digit:]]+$", x) > -1)
-        if(!all(ok) && strict) stop("invalid version spec")
+        ok <- (regexpr(valid_package_version_regexp, x) > -1)
+        if(!all(ok) && strict) stop("invalid version specification")
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
     }
     class(y) <- "package_version"
@@ -121,6 +36,7 @@ function(x, strict = TRUE)
 is.package_version <-
 function(x)
     inherits(x, "package_version")
+
 as.package_version <-
 function(x)
     if(is.package_version(x)) x else package_version(x)
@@ -129,7 +45,7 @@ function(x)
 function(x, base = NULL)
 {
     if(!is.package_version(x)) stop("wrong class")
-    if(is.null(base)) base <- max(unlist(x), 0) + 1
+    if(is.null(base)) base <- max(unlist(x), 0, na.rm=TRUE) + 1
     lens <- as.numeric(sapply(x, length))
     ## We store the lengths so that we know when to stop when decoding.
     ## Alternatively, we need to be smart about trailing zeroes.  One
@@ -138,23 +54,24 @@ function(x, base = NULL)
     ## decrement by 1 one again.
     x <- as.numeric(sapply(x,
                            function(t)
-                           sum(t / base^seq(0, length = length(t)))))
+                           sum(t / base^seq.int(0, length = length(t)))))
     attr(x, "base") <- base
     attr(x, "lens") <- lens
     x
 }
+
 .decode_package_version <-
 function(x, base = NULL)
 {
     if(is.null(base)) base <- attr(x, "base")
-    if(!is.numeric(base)) stop("wrong arg")
+    if(!is.numeric(base)) stop("wrong argument")
     lens <- attr(x, "lens")
     y <- vector("list", length = length(x))
-    for(i in seq(along = x)) {
+    for(i in seq_along(x)) {
         n <- lens[i]
         encoded <- x[i]
         decoded <- integer(n)
-        for(k in seq(length = n)) {
+        for(k in seq_len(n)) {
             decoded[k] <- encoded %/% 1
             encoded <- base * (encoded %% 1)
         }
@@ -167,22 +84,23 @@ function(x, base = NULL)
 as.character.package_version <-
 function(x)
     as.character(unlist(lapply(x, paste, collapse = ".")))
+
 print.package_version <-
 function(x, ...)
 {
     print(noquote(sQuote(as.character(x))), ...)
     invisible(x)
 }
+
 Ops.package_version <-
 function(e1, e2)
 {
     if(nargs() == 1)
-        stop(paste("unary", .Generic,
-                   "not defined for package_version objects"))
+        stop("unary ", .Generic, " not defined for package_version objects")
     boolean <- switch(.Generic, "<" = , ">" = , "==" = , "!=" = ,
         "<=" = , ">=" = TRUE, FALSE)
     if(!boolean)
-        stop(paste(.Generic, "not defined for package_version objects"))
+        stop(.Generic, " not defined for package_version objects")
     if(!is.package_version(e1)) e1 <- as.package_version(e1)
     if(!is.package_version(e2)) e2 <- as.package_version(e2)
     base <- max(unlist(e1), unlist(e2), 0) + 1
@@ -190,16 +108,16 @@ function(e1, e2)
     e2 <- .encode_package_version(e2, base = base)
     NextMethod(.Generic)
 }
+
 Summary.package_version <-
-function(x, ...)
+function(..., na.rm)
 {
     ok <- switch(.Generic, max = , min = TRUE, FALSE)
     if(!ok)
-        stop(paste(.Generic, "not defined for package_version objects"))
-    x <- list(x, ...)
-    x$na.rm <- NULL
+        stop(.Generic, " not defined for package_version objects")
+    x <- list(...)
     x <- do.call("c", lapply(x, as.package_version))
-    ## </FIXME>
+    ## <FIXME> which.max/min automatically remove NAs
     switch(.Generic,
            max = x[which.max(.encode_package_version(x))],
            min = x[which.min(.encode_package_version(x))])
@@ -248,3 +166,6 @@ function(x, name)
 }
 
 as.data.frame.package_version <- as.data.frame.vector
+
+getRversion <- function()
+    package_version(R.version)

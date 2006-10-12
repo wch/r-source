@@ -10,12 +10,12 @@ subdir = src/scripts
 
 include $(top_builddir)/Makeconf
 
-SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt config mkinstalldirs \
-  pager texi2dvi
+SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt Sweave Stangle \
+  config f77_f2c javareconf mkinstalldirs pager texi2dvi
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rprof.in \
-  SHLIB.in Sd2Rd.in build.in check.in f77.in
+  SHLIB.in Sd2Rd.in build.in check.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
@@ -56,8 +56,6 @@ build: $(srcdir)/build.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 check: $(srcdir)/check.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-f77: $(srcdir)/f77.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 ## The following target helps in automatically generating the above
 ## target rules (provided that echo understands backslash escapes).
 Makerules:
@@ -79,11 +77,12 @@ Makerules:
 ## installed as 'R'.
 R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
+R.fe: R.sh $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
-	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
-	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
+	  dat=`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`; \
+	  v="$${v} ($${dat})"; \
+	  y=`echo $${dat} | cut -d- -f1`; \
 	  d=`echo "$(abs_top_builddir)" | sed 's,/,\\\/,g'`; \
 	  sed "s/\\(R_HOME_DIR=\\).*/\\1\"$${d}\"/; \
 	       s@REPLACE_BY_VERSION@$${v}@; \
@@ -97,8 +96,9 @@ $(top_builddir)/libtool:
 install: installdirs install-cmds
 	@rm -f $(bindir)/R
 	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
-	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > "$(Rexecbindir)/R"; \
-	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > $(bindir)/R)
+	  sed -e "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s+\\(R_SHARE_DIR=\\).*+\\1$(rsharedir)+;" -e  "s+\\(R_INCLUDE_DIR=\\).*+\\1$(rincludedir)+;" -e "s+\\(R_DOC_DIR=\\).*+\\1$(rdocdir)+;"\
+	  < R.fe > "$(Rexecbindir)/R")
+	@cp  "$(Rexecbindir)/R" $(bindir)/R
 	@chmod 755 $(bindir)/R "$(Rexecbindir)/R"
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
@@ -117,8 +117,6 @@ uninstall:
 	@for f in $(SCRIPTS_S) $(SCRIPTS_B) libtool R; do \
 	  rm -f "$(Rexecbindir)/$${f}"; \
 	done
-	@rmdir "$(Rexecbindir)" 2>/dev/null \
-	  || echo "  subdir $(Rexecbindir) not removed"
 	@rm -f $(bindir)/R
 
 mostlyclean: clean

@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /* Support for printer
@@ -24,6 +24,8 @@
  *                          printers can be deleted by 'del(printer)'
  */
 
+#define ENABLE_NLS 1
+#include "../win-nls.h"
 #include "internal.h"
 #include "rui.h"
 
@@ -38,7 +40,6 @@ static void private_delprinter(printer obj)
     EndPage(h);
     EndDoc(h);
     DeleteDC(h);
-    Rwin_fpset();
     return;
 }
 
@@ -87,7 +88,7 @@ static HDC chooseprinter()
     SetCurrentDirectory(cwd);
     if (!dc) {
 	rc = CommDlgExtendedError(); /* 0 means user cancelled */
-	if (rc) R_ShowMessage("Unable to choose printer");
+	if (rc) R_ShowMessage(_("Unable to choose printer"));
     }
     return dc;
 }
@@ -115,7 +116,7 @@ printer newprinter(double width, double height, char *name)
     if ( !hDC ) return NULL;
     obj = new_object(PrinterObject, (HANDLE) hDC, get_printer_base());
     if ( !obj ) {
-	R_ShowMessage("Insufficient memory for new printer");
+	R_ShowMessage(_("Insufficient memory for new printer"));
 	DeleteDC(hDC);
 	return NULL;
     }
@@ -148,13 +149,12 @@ printer newprinter(double width, double height, char *name)
     docinfo.fwType = 0;
 
     if (StartDoc(hDC, &docinfo) <= 0) {
-	R_ShowMessage("Unable to start the print job");
+	R_ShowMessage(_("Unable to start the print job"));
 	del(obj);
 	return NULL;
     }
 
     StartPage(hDC);
-    Rwin_fpset();
     return obj;
 }
 
@@ -164,5 +164,4 @@ void nextpage(printer p)
     if (!p || (p->kind != PrinterObject)) return;
     EndPage((HDC) p->handle);
     StartPage((HDC) p->handle);
-    Rwin_fpset();
 }

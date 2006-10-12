@@ -1,26 +1,26 @@
 help.start <- function(update = TRUE, gui = "irrelevant",
                        browser = getOption("browser"))
 {
-    a <- file.path(R.home(), "doc/html/rwin.html")
+    a <- file.path(R.home("doc"), "html", "index.html")
     if(!file.exists(a))
-        a <- file.path(R.home(), "doc/html/rwin.htm")
+        a <- file.path(R.home("doc"), "html", "index.htm")
     if(!file.exists(a))
-        stop("I can't find the html help")
+        stop("unable to find the HTML help")
     if(update) {
-        cat("updating HTML package listing\n")
+        cat(gettext("updating HTML package listing\n"))
         flush.console()
         try(make.packages.html(.libPaths()))
         cat("updating HTML search index\n")
         flush.console()
         try(make.search.html(.libPaths()))
         if(any(.libPaths() != .Library)) {
-            cat("fixing URLs in non-standard libraries\n")
+            cat(gettext("fixing URLs in non-standard libraries\n"))
             flush.console()
             try(fixup.libraries.URLs(.libPaths()))
         }
     }
     a <- chartr("/", "\\", a)
-    cat("If nothing happens, you should open `", a, "' yourself\n")
+    cat(gettextf("If nothing happens, you should open '%s' yourself\n", a))
     browseURL(a, browser = browser)
     invisible("")
 }

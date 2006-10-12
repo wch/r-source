@@ -43,11 +43,18 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   If \code{inherits} is \code{TRUE}, enclosing environments of the supplied
   environment are searched until the variable \code{x} is encountered.
   The value is then assigned in the environment in which the variable is
-  encountered.  If the symbol is not encountered then assignment takes
-  place in the user's workspace (the global environment).
+  encountered (provided that the binding is not locked: see
+  \code{\link{lockBinding}}: if it is, an error is signaled).  If the
+  symbol is not encountered then assignment takes place in the user's
+  workspace (the global environment).
 
   If \code{inherits} is \code{FALSE}, assignment takes place in the
-  initial frame of \code{envir}.
+  initial frame of \code{envir}, unless an existing binding is locked or
+  there is no existing binding and the environment is locked.
+}
+\note{
+  Prior to \R 2.4.0 the base environment was ignored in the search for a
+  binding by \code{inherits = TRUE}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -62,7 +69,7 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   \code{\link{environment}}.
 }
 \examples{
-for(i in 1:6) { #-- Create objects  'r1', 'r2', ... 'r6' --
+for(i in 1:6) { #-- Create objects  'r.1', 'r.2', ... 'r.6' --
  nam <- paste("r",i, sep=".")
  assign(nam, 1:i)
 }

@@ -7,7 +7,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- NULL
-    m$na.action <- stats::na.pass # force in this default
+    m$na.action <- na.action # force in even if  default
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     pairs(mf, ...)
@@ -20,22 +20,41 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
 #################################################
 
 pairs.default <-
-function (x, labels, panel = points, ..., main = NULL, oma = NULL,
-          font.main = par("font.main"), cex.main = par("cex.main"),
+function (x, labels, panel = points, ...,
           lower.panel = panel, upper.panel = panel,
           diag.panel = NULL, text.panel = textPanel,
           label.pos = 0.5 + has.diag/3,
           cex.labels = NULL, font.labels = 1,
-          row1attop = TRUE, gap=1)
+          row1attop = TRUE, gap = 1)
 {
     textPanel <-
         function(x = 0.5, y = 0.5, txt, cex, font)
             text(x, y, txt, cex = cex, font = font)
 
-    localAxis <- function(side, xpd, bg, ...) axis(side, xpd = NA, ...)
+    localAxis <- function(side, x, y, xpd, bg, col=NULL, main, oma, ...) {
+      ## Explicitly ignore any color argument passed in as
+      ## it was most likely meant for the data points and
+      ## not for the axis.
+        if(side %%2 == 1) Axis(x, side=side, xpd=NA, ...)
+        else Axis(y, side=side, xpd=NA, ...)
+    }
 
-    if (!is.matrix(x)) x <- data.matrix(x)
-    if (!is.numeric(x)) stop("non-numeric argument to pairs")
+    localPlot <- function(..., main, oma, font.main, cex.main) plot(...)
+    localLowerPanel <- function(..., main, oma, font.main, cex.main)
+        lower.panel(...)
+    localUpperPanel <- function(..., main, oma, font.main, cex.main)
+        upper.panel(...)
+
+    dots <- list(...); nmdots <- names(dots)
+    if (!is.matrix(x)) {
+        x <- as.data.frame(x)
+        for(i in seq(along=names(x))) {
+            if(is.factor(x[[i]]) || is.logical(x[[i]]))
+               x[[i]] <- as.numeric(x[[i]])
+            if(!is.numeric(unclass(x[[i]])))
+                stop("non-numeric argument to 'pairs'")
+        }
+    } else if (!is.numeric(x)) stop("non-numeric argument to 'pairs'")
     panel <- match.fun(panel)
     if((has.lower <- !is.null(lower.panel)) && !missing(lower.panel))
         lower.panel <- match.fun(lower.panel)
@@ -50,13 +69,15 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
     }
 
     nc <- ncol(x)
-    if (nc < 2) stop("only one column in the argument to pairs")
+    if (nc < 2) stop("only one column in the argument to 'pairs'")
     has.labs <- TRUE
     if (missing(labels)) {
         labels <- colnames(x)
         if (is.null(labels)) labels <- paste("var", 1:nc)
     }
     else if(is.null(labels)) has.labs <- FALSE
+    oma <- if("oma" %in% nmdots) dots$oma else NULL
+    main <- if("main" %in% nmdots) dots$main else NULL
     if (is.null(oma)) {
         oma <- c(4, 4, 4, 4)
         if (!is.null(main)) oma[3] <- 6
@@ -66,18 +87,18 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
 
     for (i in if(row1attop) 1:nc else nc:1)
         for (j in 1:nc) {
-            plot(x[, j], x[, i], xlab = "", ylab = "",
-                 axes = FALSE, type = "n", ...)
+            localPlot(x[, j], x[, i], xlab = "", ylab = "",
+                      axes = FALSE, type = "n", ...)
             if(i == j || (i < j && has.lower) || (i > j && has.upper) ) {
                 box()
                 if(i == 1  && (!(j %% 2) || !has.upper || !has.lower ))
-                    localAxis(1 + 2*row1attop, ...)
+                    localAxis(1 + 2*row1attop, x[, j], x[, i], ...)
                 if(i == nc && (  j %% 2  || !has.upper || !has.lower ))
-                    localAxis(3 - 2*row1attop, ...)
+                    localAxis(3 - 2*row1attop, x[, j], x[, i], ...)
                 if(j == 1  && (!(i %% 2) || !has.upper || !has.lower ))
-                    localAxis(2, ...)
+                    localAxis(2, x[, j], x[, i], ...)
                 if(j == nc && (  i %% 2  || !has.upper || !has.lower ))
-                    localAxis(4, ...)
+                    localAxis(4, x[, j], x[, i], ...)
                 mfg <- par("mfg")
                 if(i == j) {
                     if (has.diag) diag.panel(as.vector(x[, i]))
@@ -91,15 +112,18 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
                                    cex = cex.labels, font = font.labels)
                     }
                 } else if(i < j)
-                    lower.panel(as.vector(x[, j]), as.vector(x[, i]), ...)
+                    localLowerPanel(as.vector(x[, j]), as.vector(x[, i]), ...)
                 else
-                    upper.panel(as.vector(x[, j]), as.vector(x[, i]), ...)
+                    localUpperPanel(as.vector(x[, j]), as.vector(x[, i]), ...)
                 if (any(par("mfg") != mfg))
-                    stop("The panel function made a new plot")
+                    stop("the 'panel' function made a new plot")
             } else par(new = FALSE)
 
         }
-    if (!is.null(main))
+    if (!is.null(main)) {
+        font.main <- if("font.main" %in% nmdots) dots$font.main else par("font.main")
+        cex.main <- if("cex.main" %in% nmdots) dots$cex.main else par("cex.main")
         mtext(main, 3, 3, TRUE, 0.5, cex = cex.main, font = font.main)
+    }
     invisible(NULL)
 }

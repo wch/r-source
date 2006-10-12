@@ -108,7 +108,7 @@ c        dbiatx(i,m). storage of this value over the value of a b-spline
 c        of order m there is safe since the remaining b-spline derivat-
 c        ive of the same order do not use this value due to the fact
 c        that  a(j,i) = 0  for j < i .
-   30    do 40 i=1,k
+         do 40 i=1,k
             sum = 0.
             jlow = max0(i,m)
             do 35 j=jlow,k

@@ -33,7 +33,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     ##   as detailed above.
 
     if(!is.array(x))
-        stop("x must be an array")
+        stop("'x' must be an array")
     if(length(dim(x)) == 2) {
         x <- if(is.null(dimnames(x)))
             array(x, c(dim(x), 1))
@@ -41,14 +41,14 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             array(x, c(dim(x), 1), c(dimnames(x), list(NULL)))
     }
     if(length(dim(x)) != 3)
-        stop("x must be 2- or 3-dimensional")
+        stop("'x' must be 2- or 3-dimensional")
     if(any(dim(x)[1:2] != 2))
         stop("table for each stratum must be 2 by 2")
     dnx <- dimnames(x)
     if(is.null(dnx))
         dnx <- vector("list", 3)
     for(i in which(sapply(dnx, is.null)))
-        dnx[[i]] <- LETTERS[seq(length = dim(x)[i])]
+        dnx[[i]] <- LETTERS[seq_len(dim(x)[i])]
     if(is.null(names(dnx)))
         i <- 1 : 3
     else
@@ -60,7 +60,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level >= 0) && (conf.level < 1)))
-        stop("conf.level must be a single number between 0 and 1")
+        stop("'conf.level' must be a single number between 0 and 1")
     if(conf.level == 0)
         conf.level <- FALSE
 
@@ -86,7 +86,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     }
 
     drawPie <- function(r, from, to, n = 500, color = NA) {
-        p <- 2 * pi * seq(from, to, length = n) / 360
+        p <- 2 * pi * seq.int(from, to, length = n) / 360
         x <- c(cos(p), 0) * r
         y <- c(sin(p), 0) * r
         polygon(x, y, col = color)
@@ -105,7 +105,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             else if(margin %in% c(1, 2))
                 y <- prop.table(tab, margin)
             else
-                stop("incorrect margin specification")
+                stop("incorrect 'margin' specification")
         }
         else if(std == "ind.max")
             y <- tab / max(tab)
@@ -277,14 +277,14 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
         polygon(c(-1,  1, 1, -1),
                 c(-1, -1, 1,  1))
         lines(c(-1, 1), c(0, 0))
-        for(j in seq(from = -0.8, to = 0.8, by = 0.2))
+        for(j in seq.int(from = -0.8, to = 0.8, by = 0.2))
             lines(c(j, j), c(-0.02, 0.02))
-        for(j in seq(from = -0.9, to = 0.9, by = 0.2))
+        for(j in seq.int(from = -0.9, to = 0.9, by = 0.2))
             lines(c(j, j), c(-0.01, 0.01))
         lines(c(0, 0), c(-1, 1))
-        for(j in seq(from = -0.8, to = 0.8, by = 0.2))
+        for(j in seq.int(from = -0.8, to = 0.8, by = 0.2))
             lines(c(-0.02, 0.02), c(j, j))
-        for(j in seq(from = -0.9, to = 0.9, by = 0.2))
+        for(j in seq.int(from = -0.9, to = 0.9, by = 0.2))
             lines(c(-0.01, 0.01), c(j, j))
 
     }

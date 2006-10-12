@@ -1,6 +1,6 @@
 \name{TkCommands}
 \alias{TkCommands}
-\alias{tkcmd}
+\alias{tcl}
 \alias{tktitle}
 \alias{tktitle<-}
 \alias{tkbell}
@@ -96,12 +96,12 @@
 \alias{tkmessageBox}  
 \alias{tkdialog}        
 \alias{tkpopup}        
-\alias{tkfile.tail}
-\alias{tkfile.dir}
-\alias{tkopen}
-\alias{tkclose}
-\alias{tkputs}        
-\alias{tkread}        
+\alias{tclfile.tail}
+\alias{tclfile.dir}
+\alias{tclopen}
+\alias{tclclose}
+\alias{tclputs}        
+\alias{tclread}        
 
 \title{Tk non-widget commands}
 \description{
@@ -109,7 +109,7 @@
   window manager interface commands and the geometry managers.
 }
 \usage{
-tkcmd(...)
+tcl(...)
 tktitle(x)
 
 tktitle(x) <- value
@@ -234,12 +234,12 @@ tkpopup(...)
 
 
 ## File handling functions
-tkfile.tail(...)
-tkfile.dir(...)
-tkopen(...)
-tkclose(...)
-tkputs(...)
-tkread(...)
+tclfile.tail(...)
+tclfile.dir(...)
+tclopen(...)
+tclclose(...)
+tclputs(...)
+tclread(...)
 }
 \arguments{
   \item{x}{A window object}
@@ -248,11 +248,11 @@ tkread(...)
 }
 \details{
    
-  \code{tkcmd} provides a generic interface to calling any Tk or Tcl
+  \code{tcl} provides a generic interface to calling any Tk or Tcl
   command by simply running \code{.Tcl.args.objv} on the argument list
   and passing the
-  result to \code{.Tcl.objv}. Most of the other commands simply call
-  \code{tkcmd} with a particular
+  result to \code{.Tcl.objv}.  Most of the other commands simply call
+  \code{tcl} with a particular
   first argument and sometimes also a second argument giving the
   subcommand.
 
@@ -260,10 +260,11 @@ tkread(...)
   to Tk's \code{wm title}
   
   There are far too many of these commands to describe them and their
-  arguments in full. Please refer to the Tcl/Tk documentation for details.
-  Except for a few exceptions, the pattern is that  Tcl subcommands like
+  arguments in full.  Please refer to the Tcl/Tk documentation for details.
+  With a few exceptions, the pattern is that Tk subcommands like
   \code{pack configure} are converted to function names like
-  \code{tkpack.configure}. 
+  \code{tkpack.configure}, and Tcl subcommands are like
+  \code{tclfile.dir}.  
 }
 \seealso{\code{\link{TclInterface}}, \code{\link{TkWidgets}},
   \code{\link{TkWidgetcmds}}}
@@ -274,8 +275,8 @@ tkread(...)
 ## into an interactive R session with the tcltk package loaded
 
 tt <- tktoplevel()
-tkpack(l1<-tklabel(tt,text="Heave"),l2<-tklabel(tt,text="Ho"))
-tkpack.configure(l1,side="left")
+tkpack(l1<-tklabel(tt,text="Heave"), l2<-tklabel(tt,text="Ho"))
+tkpack.configure(l1, side="left")
 
 ## Try stretching the window and then
 
@@ -283,4 +284,4 @@ tkdestroy(tt)
 }
 
 }
-\keyword{misc}%-- one or more ...
+\keyword{misc}

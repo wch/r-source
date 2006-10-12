@@ -6,7 +6,7 @@
 \alias{duplicated.array}
 \title{Determine Duplicate Elements}
 \description{
-  Determines which elements of a vector of data frame are duplicates
+  Determines which elements of a vector or data frame are duplicates
   of elements with smaller subscripts, and returns a logical vector
   indicating which elements (rows) are duplicates.
 }
@@ -16,7 +16,7 @@ duplicated(x, incomparables = FALSE, \dots)
 \method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, \dots)
 }
 \arguments{
-  \item{x}{an atomic vector or a data frame or an array.}
+  \item{x}{a vector or a data frame or an array or \code{NULL}.}
   \item{incomparables}{a vector of values that cannot be compared.
     Currently, \code{FALSE} is the only possible value, meaning that all
     values can be compared.}
@@ -25,11 +25,11 @@ duplicated(x, incomparables = FALSE, \dots)
     \code{\link{apply}}.}
 }
 \details{
-  This is a generic function with methods for vectors, data frames and
-  arrays (including matrices).
+  This is a generic function with methods for vectors (including lists),
+  data frames and arrays (including matrices).
 
   The data frame method works by pasting together a character
-  representation of the rows separated by \code{\r}, so may be imperfect
+  representation of the rows separated by \code{\\r}, so may be imperfect
   if the data frame has characters with embedded carriage returns or
   columns which do not reliably map to characters.
 
@@ -38,6 +38,11 @@ duplicated(x, incomparables = FALSE, \dots)
   to those for an earlier element (in row-major order).  This would most
   commonly be used to find duplicated rows (the default) or columns
   (with \code{MARGIN = 2}).
+}
+\section{Warning}{
+  Using this for lists is potentially slow, especially if the elements
+  are not atomic vectors (see \code{\link{vector}}) or differ only
+  in their attributes.  In the worst case it is \eqn{O(n^2)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

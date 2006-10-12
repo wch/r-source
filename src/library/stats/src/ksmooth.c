@@ -14,11 +14,17 @@
  *
  *  A copy of the GNU General Public License is available via WWW at
  *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
- *  writing to the Free Software Foundation, Inc., 59 Temple Place,
- *  Suite 330, Boston, MA  02111-1307  USA.
+ *  writing to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
  */
 
 #include <R.h>			/* for NA_REAL, includes math.h */
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("stats", String)
+#else
+#define _(String) (String)
+#endif
 
 static double dokern(double x, int kern)
 {
@@ -57,5 +63,5 @@ void BDRksmooth(double *x, double *y, int *n,
 
 void F77_SUB(bdrsplerr)(void)
 {
-    error("only 2500 rows are allowed for sm.method=\"spline\"");
+    error(_("only 2500 rows are allowed for sm.method=\"spline\""));
 }

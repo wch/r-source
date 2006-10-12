@@ -5,6 +5,8 @@
  *
  *  Merge in to R:
  *	Copyright (C) 2000, The R Core Development Team
+ *  Changes to case a, b < 2, use logs to avoid underflow
+ *	Copyright (C) 2006, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +20,8 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ *  MA 02110-1301 USA.
  *
  *
  *  DESCRIPTION
@@ -29,19 +32,18 @@
  *
  *               = (a+b-1) dbinom(a-1; a+b-2,x)
  *
- *    We must modify this when a<1 or b<1, to avoid passing negative
- *    arguments to dbinom_raw. Note that the modifications require
- *    division by x and/or 1-x, so cannot be used except where necessary.
+ *    The basic formula for the log density is thus
+ *    (a-1) log x + (b-1) log (1-x) - lbeta(a, b)
+ *    If either a or b <= 2 then 0 < lbeta(a, b) < 710 and so no
+ *    term is large.  We use Loader's code only if both a and b > 2.
  */
 
 #include "nmath.h"
 #include "dpq.h"
 
 double dbeta(double x, double a, double b, int give_log)
-{ 
-    double f, p;
-    volatile double am1, bm1; /* prevent roundoff trouble on some
-                                 platforms */
+{
+    double lval;
 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
@@ -54,35 +56,16 @@ double dbeta(double x, double a, double b, int give_log)
 	if(a > 1) return(R_D__0);
 	if(a < 1) return(ML_POSINF);
 	/* a == 1 : */ return(R_D_val(b));
-    } 
+    }
     if (x == 1) {
 	if(b > 1) return(R_D__0);
 	if(b < 1) return(ML_POSINF);
 	/* b == 1 : */ return(R_D_val(a));
-    } 
-    if (a < 1) { 
-	if (b < 1) {		/* a,b < 1 */
-	    f = a*b/((a+b)*x*(1-x));
-	    p = dbinom_raw(a,a+b, x,1-x, give_log);
-	}
-	else {			/* a < 1 <= b */
-	    f = a/x;
-	    bm1 = b - 1;
-	    p = dbinom_raw(a,a+bm1, x,1-x, give_log);
-	}
     }
-    else { 
-	if (b < 1) {		/* a >= 1 > b */
-	    f = b/(1-x);
-	    am1 = a - 1; 
-	    p = dbinom_raw(am1,am1+b, x,1-x, give_log);
-	}
-	else {			/* a,b >= 1 */
-	    f = a+b-1;
-	    am1 = a - 1;
-	    bm1 = b - 1;
-	    p = dbinom_raw(am1,am1+bm1, x,1-x, give_log);
-	}
-    }
-    return( (give_log) ? p + log(f) : p*f );
+    if (a <= 2 || b <= 2)
+	lval = (a-1)*log(x) + (b-1)*log1p(-x) - lbeta(a, b);
+    else
+	lval = log(a+b-1) + dbinom_raw(a-1, a+b-2, x, 1-x, TRUE);
+
+    return R_D_exp(lval);
 }

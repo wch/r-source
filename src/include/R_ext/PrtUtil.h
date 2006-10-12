@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
 /*
@@ -42,9 +42,6 @@
 #define printRealVector    Rf_printRealVector
 #define printComplexVector Rf_printComplexVector
 
-#define Rprt_adj_right 1
-#define Rprt_adj_left  0
-
 #ifdef  __cplusplus
 extern "C" {
 #endif
@@ -58,8 +55,8 @@ void formatComplex(Rcomplex*, int, int*, int*, int*, int*, int*, int*, int);
 /* Formating of values */
 char *EncodeLogical(int, int);
 char *EncodeInteger(int, int);
-char *EncodeReal(double, int, int, int);
-char *EncodeComplex(Rcomplex, int, int, int, int, int, int);
+char *EncodeReal(double, int, int, int, char);
+char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
 
 /* Printing */
 void VectorIndex(int, int);
@@ -69,7 +66,7 @@ void printIntegerVector(int *x,	   int n, int indx);
 void printRealVector   (double *x, int n, int indx);
 void printComplexVector(Rcomplex *x,int n, int indx);
 
-char *Rsprintf(char*, ...);
+/* char *Rsprintf(char*, ...); */
 #ifdef  __cplusplus
 }
 #endif

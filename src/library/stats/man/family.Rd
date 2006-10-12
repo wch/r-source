@@ -4,7 +4,7 @@
 family(object, \dots)
 
 binomial(link = "logit")
-gaussian(link ="identity")
+gaussian(link = "identity")
 Gamma(link = "inverse")
 inverse.gaussian(link = "1/mu^2")
 poisson(link = "log")
@@ -23,29 +23,40 @@ quasipoisson(link = "log")
 \alias{quasipoisson}
 \alias{print.family}
 \arguments{
-  \item{link}{a specification for the model link function.
+  \item{link}{a specification for the model link function.  This can be
+    a name/expression, a literal character string, a length-one character
+    vector or an object of class
+    \code{"\link[=make.link]{link-glm}"} (provided it is not specified
+    via one of the standard names given next).
+
     The \code{gaussian} family accepts the links \code{"identity"},
     \code{"log"} and \code{"inverse"};
     the \code{binomial} family the links \code{"logit"},
-    \code{"probit"}, \code{"log"} and \code{"cloglog"} (complementary
-    log-log);
+    \code{"probit"}, \code{"cauchit"}, (corresponding to logistic,
+    normal and Cauchy CDFs respectively) \code{"log"} and
+    \code{"cloglog"} (complementary log-log);
     the \code{Gamma} family the links \code{"inverse"}, \code{"identity"}
      and \code{"log"};
     the \code{poisson} family the links \code{"log"}, \code{"identity"}, 
     and \code{"sqrt"} and the \code{inverse.gaussian} family the links
-    \code{"1/mu^2"}, \code{"inverse"}, \code{"inverse"} and \code{"log"}.
+    \code{"1/mu^2"}, \code{"inverse"}, \code{"identity"}
+    and \code{"log"}.
     
-    The \code{quasi} family allows the links \code{"logit"}, \code{"probit"},
+    The \code{quasi} family accepts the links \code{"logit"}, \code{"probit"},
     \code{"cloglog"},  \code{"identity"}, \code{"inverse"},
-    \code{"log"}, \code{"1/mu^2"} and \code{"sqrt"}.
-    The function \code{\link{power}} can also be used to create a
-    power link function for the \code{quasi} family.
+    \code{"log"}, \code{"1/mu^2"} and \code{"sqrt"}, and
+    the function \code{\link{power}} can be used to create a
+    power link function.
   }
-  \item{variance}{for all families, other than \code{quasi}, the
-    variance function is determined by the family.  The \code{quasi}
-    family will accept the specifications \code{"constant"},
-    \code{"mu(1-mu)"}, \code{"mu"}, \code{"mu^2"} and \code{"mu^3"} for
-    the variance function.}
+  \item{variance}{for all families other than \code{quasi}, the variance
+    function is determined by the family.  The \code{quasi} family will
+    accept the literal character string (or unquoted as a name/expression)
+    specifications \code{"constant"}, \code{"mu(1-mu)"}, \code{"mu"},
+    \code{"mu^2"} and \code{"mu^3"}, a length-one character vector
+    taking one of those values, or a list containing components
+    \code{varfun}, \code{validmu}, \code{dev.resids}, \code{initialize}
+    and \code{name}.
+  }
   \item{object}{the function \code{family} accesses the \code{family}
     objects which are stored within objects created by modelling
     functions (e.g., \code{glm}).}
@@ -58,6 +69,9 @@ quasipoisson(link = "log")
   fitting takes place.
 }
 \details{
+  \code{family} is a generic function with methods for classes
+  \code{"glm"} and \code{"lm"} (the latter returning \code{gaussian()}).
+
   The \code{quasibinomial} and \code{quasipoisson} families differ from
   the \code{binomial} and \code{poisson} families only in that the
   dispersion parameter is not fixed at one, so they can \dQuote{model}
@@ -67,6 +81,43 @@ quasipoisson(link = "log")
   variance proportional to mean as in the quasi-binomial model, note
   that \code{glm} does not compute maximum-likelihood estimates in that
   model.  The behaviour of S is closer to the quasi- variants. 
+}
+\note{
+  The \code{link} and \code{variance} arguments have rather awkward
+  semantics for back-compatibility.  The recommended way is to supply
+  them is as quoted character strings, but they can also be supplied
+  unquoted (as names or expressions).  In addition, they can also be
+  supplied as a length-one character vector giving the name of one of
+  the options, or as a list (for \code{link}, of class \code{"link-glm"}).
+
+  This is potentially ambiguous: supplying \code{link=logit} could mean
+  the unquoted name of a link or the value of object \code{logit}.  It
+  is interpreted if possible as the name of an allowed link, then
+  as an object.  (You can force the interpretation to always be the value of
+  an object via \code{logit[1]}.)
+}
+\value{
+  An object of class \code{"family"} (which has a concise print method).
+  This is a list with elements
+  \item{family}{character: the family name.}
+  \item{link}{character: the link name.}
+  \item{linkfun}{function: the link.}
+  \item{linkinv}{function: the inverse of the link function.}
+  \item{variance}{function: the variance as a function of the mean.}
+  \item{dev.resids}{function giving the deviance residuals as a function
+    of \code{(y, mu, wt)}.}
+  \item{aic}{function giving the AIC value if appropriate (but \code{NA}
+    for the quasi- families).  See \code{\link{logLik}} for the assumptions
+      made about the dispersion parameter.}
+  \item{mu.eta}{function: derivative \code{function(eta)}
+    \eqn{d\mu / d\eta}{dmu/deta}.}
+  \item{initialize}{expression.  This needs to set up whatever data
+    objects are needed for the family as well as \code{n} (needed for
+    AIC in the binomial family) and \code{mustart} (see \code{\link{glm}}.}
+  \item{valid.mu}{logical function.  Returns \code{TRUE} if a mean
+    vector \code{mu} is within the domain of \code{variance}.}
+  \item{valid.eta}{logical function.   Returns \code{TRUE} if a linear
+    predictor \code{eta} is within the domain of \code{linkinv}.}
 }
 \references{
   McCullagh P. and Nelder, J. A. (1989)
@@ -88,10 +139,11 @@ quasipoisson(link = "log")
 }
 \author{
   The design was inspired by S functions of the same names described
-  in Hastie \& Pregibon (1992).
+  in Hastie \& Pregibon (1992) (except \code{quasibinomial} and
+  \code{quasipoisson}).
 }
 \seealso{
-  \code{\link{glm}}, \code{\link{power}}.
+  \code{\link{glm}}, \code{\link{power}}, \code{\link{make.link}}.
 }
 \examples{
 nf <- gaussian()# Normal family
@@ -103,6 +155,7 @@ gf
 str(gf)
 gf$linkinv
 gf$variance(-3:4) #- == (.)^2
+
 
 ## quasipoisson. compare with example(glm)
 counts <- c(18,17,15,20,10,20,25,13,12)
@@ -116,6 +169,26 @@ summary(glm.qD93)
 ## for Poisson results use
 anova(glm.qD93, dispersion = 1, test="Chisq")
 summary(glm.qD93, dispersion = 1)
+
+
+## Example of user-specified link, a logit model for p^days
+## See Shaffer, T.  2004. Auk 121(2): 526-540.
+logexp <- function(days = 1)
+{
+    linkfun <- function(mu) qlogis(mu^(1/days))
+    linkinv <- function(eta) plogis(eta)^days
+    mu.eta <- function(eta) days * plogis(eta)^(days-1) *
+      .Call("logit_mu_eta", eta, PACKAGE = "stats")
+    valideta <- function(eta) TRUE
+    link <- paste("logexp(", days, ")", sep="")
+    structure(list(linkfun = linkfun, linkinv = linkinv,
+                   mu.eta = mu.eta, valideta = valideta, name = link),
+              class = "link-glm")
+}
+binomial(logexp(3))
+## in practice this would be used with a vector of 'days', in
+## which case use an offset of 0 in the corresponding formula
+## to get the null deviance right.
 
 
 ## tests of quasi

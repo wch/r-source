@@ -13,6 +13,7 @@ pmax <- function (..., na.rm = FALSE)
             work[,2][nas[,2]] <- work[,1][nas[,2]]
         }
         change <- work[,1] < work[,2]
+        change <- change & !is.na(change)
 	work[,1][change] <- work[,2][change]
 	if (has.na && !na.rm) work[,1][nas[,1] | nas[,2]] <- NA
 	mmm <- work[,1]
@@ -34,6 +35,7 @@ pmin <- function (..., na.rm = FALSE)
             work[,2][nas[,2]] <- work[,1][nas[,2]]
         }
 	change <- work[,1] > work[,2]
+        change <- change & !is.na(change)
 	work[,1][change] <- work[,2][change]
 	if(has.na && !na.rm) work[,1][nas[,1] | nas[,2]] <- NA
 	mmm <- work[,1]

@@ -5,7 +5,7 @@
   Front-end for creating executable programs.
 }
 \usage{
-R CMD LINK [options] linkcmd
+\special{R CMD LINK [options] linkcmd}
 }
 \arguments{
   \item{linkcmd}{a list of commands to link together suitable object
@@ -22,5 +22,9 @@ R CMD LINK [options] linkcmd
   code is used.
 
   Use \code{R CMD LINK --help} for more usage information.
+}
+\note{
+  Some binary distributions of \R have \code{LINK} in a separate
+  bundle, e.g. an \code{R-devel} RPM.
 }
 \keyword{utilities}

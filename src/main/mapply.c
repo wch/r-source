@@ -14,22 +14,21 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  *
  */
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
-#include "R.h"
-#include "Rinternals.h"
+#include <Defn.h>
 
 
-SEXP do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
+SEXP attribute_hidden do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 {
 
     int i, j, m,nc, *lengths, *counters, named, longest=0;
-    SEXP vnames, fcall,  mindex, nindex, tmp1, tmp2, ans;
+    SEXP vnames, fcall = R_NilValue,  mindex, nindex, tmp1, tmp2, ans;
 
     m = length(varyingArgs);
     nc = length(constantArgs);
@@ -56,8 +55,10 @@ SEXP do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 
     if (constantArgs == R_NilValue)
 	PROTECT(fcall=R_NilValue);
-    else
+    else if(isVectorList(constantArgs))
 	PROTECT(fcall=VectorToPairList(constantArgs));
+    else
+	error(_("argument 'MoreArgs' of 'mapply' is not a list"));
 
     for(j = m-1; j >= 0;j--) {
 	SET_VECTOR_ELT(mindex,j, allocVector(INTSXP,1));
@@ -95,7 +96,7 @@ SEXP do_mapply(SEXP f, SEXP varyingArgs, SEXP constantArgs, SEXP rho)
 
     for(j = 0; j < m; j++) {
 	if (counters[j] != lengths[j])
-	    warning("longer argument not a multiple of length of shorter");
+	    warning(_("longer argument not a multiple of length of shorter"));
     }
 
     UNPROTECT(5);

@@ -6,9 +6,6 @@ which contains a number of control-flow constructions for iteration and
 alternation.  It allows users to add additional functionality by
 defining new functions.
 .LP
-On platforms which support the \fBdlopen\fP(3) interface, Fortran and C
-code can be linked and called at run time.
-.LP
 On systems which have the GNU \fBreadline\fP(3) library, R will maintain
 a command history, so that commands can be recalled, edited and
 re-executed.
@@ -29,12 +26,19 @@ Start R and type \fB?\fP\fItopic\fP at the R prompt to obtain on-line
 information for `\fItopic\fP'.
 .LP
 If the processed manuals have been installed they will be available as
-DVI and/or PDF files in the directory `R RHOME`/doc/manual.
+DVI and/or PDF files in the doc/manual subdirectory of the documentation
+directory tree (default `R RHOME`).
 .LP
 If the \fBinfo\fP program and the R manuals are installed on your
-system, typing \fBinfo -f R-intro\fP, \fBinfo -f R-data\fP, 
-\fBinfo -f R-exts\fP,\fBinfo
--f R-FAQ\fP and \fBinfo -f R-lang\fP should give you access to 
-``An Introduction to R'' (the basic manual), the ``R Data Import/Export'' 
-Guide, the ``R Extension Writer's Guide'', the ``R FAQ'' 
-and the ``The R Language Definition''.
+system, typing 
+\fBinfo -f R-intro\fP,
+\fBinfo -f R-data\fP, 
+\fBinfo -f R-exts\fP,
+\fBinfo -f R-FAQ\fP, 
+\fBinfo -f R-lang\fP and
+\fBinfo -f R-ints\fP
+should give you access to
+``An Introduction to R''
+(the basic manual),
+the ``R Data Import/Export'' Guide, the ``R Extension Writer's Guide'',
+the ``R FAQ'', the ``The R Language Definition'', and the ``R Internals''.

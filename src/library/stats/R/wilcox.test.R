@@ -7,23 +7,23 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 {
     alternative <- match.arg(alternative)
     if(!missing(mu) && ((length(mu) > 1) || !is.finite(mu)))
-        stop("mu must be a single number")
+        stop("'mu' must be a single number")
     if(conf.int) {
         if(!((length(conf.level) == 1)
              && is.finite(conf.level)
              && (conf.level > 0)
              && (conf.level < 1)))
-            stop("conf.level must be a single number between 0 and 1")
+            stop("'conf.level' must be a single number between 0 and 1")
     }
 
-    if(!is.numeric(x)) stop("x must be numeric")
+    if(!is.numeric(x)) stop("'x' must be numeric")
     if(!is.null(y)) {
-        if(!is.numeric(y)) stop("y must be numeric")
+        if(!is.numeric(y)) stop("'y' must be numeric")
         DNAME <- paste(deparse(substitute(x)), "and",
                        deparse(substitute(y)))
         if(paired) {
             if(length(x) != length(y))
-                stop("x and y must have the same length")
+                stop("'x' and 'y' must have the same length")
             OK <- complete.cases(x, y)
             x <- x[OK] - y[OK]
             y <- NULL
@@ -35,12 +35,12 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     } else {
         DNAME <- deparse(substitute(x))
         if(paired)
-            stop("y missing for paired test")
+            stop("'y' is missing for paired test")
         x <- x[is.finite(x)]
     }
 
     if(length(x) < 1)
-        stop("not enough (finite) x observations")
+        stop("not enough (finite) 'x' observations")
     CORRECTION <- 0
     if(is.null(y)) {
         METHOD <- "Wilcoxon signed rank test"
@@ -68,7 +68,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                        "greater" = psignrank(STATISTIC - 1, n, lower = FALSE),
                        "less" = psignrank(STATISTIC, n))
             if(conf.int) {
-                ## Exact confidence intervale for the median in the
+                ## Exact confidence interval for the median in the
                 ## one-sample case.  When used with paired values this
                 ## gives a confidence interval for mean(x) - mean(y).
                 x <- x + mu             # we want a conf.int for the median
@@ -83,12 +83,22 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                ql <- n*(n+1)/2 - qu
                                uci <- diffs[qu]
                                lci <- diffs[ql+1]
+                               achieved.alpha<-2*psignrank(trunc(qu)-1,n)
+                               if (achieved.alpha-alpha > (alpha)/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-signif(achieved.alpha,2)
+                               }
                                c(uci, lci)
                            },
                            "greater"= {
                                qu <- qsignrank(alpha, n)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
+                               achieved.alpha<-psignrank(trunc(qu)-1,n)
+                               if (achieved.alpha-alpha > (alpha)/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-signif(achieved.alpha,2)
+                               }
                                c(uci, +Inf)
                            },
                            "less"= {
@@ -96,6 +106,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                if(qu == 0) qu <- 1
                                ql <- n*(n+1)/2 - qu
                                lci <- diffs[ql+1]
+                               achieved.alpha<-psignrank(trunc(qu)-1,n)
+                               if (achieved.alpha-alpha > (alpha)/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-signif(achieved.alpha,2)
+                               }
                                c(-Inf, lci)
                            })
                 attr(cint, "conf.level") <- conf.level
@@ -131,6 +146,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 x <- x + mu
                 alpha <- 1 - conf.level
                 ## These are sample based limits for the median
+                ## [They don't work if alpha is too high]
                 mumin <- min(x)
                 mumax <- max(x)
                 ## wdiff(d, zq) returns the absolute difference between
@@ -159,7 +175,6 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 }
                 ## Here we optimize the function wdiff in d over the set
                 ## c(mumin, mumax).
-                ##
                 ## This returns a value from c(mumin, mumax) for which
                 ## the asymptotic Wilcoxon statistic is equal to the
                 ## quantile zq.  This means that the statistic is not
@@ -168,19 +183,50 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ##
                 ## As in the exact case, interchange quantiles.
                 cint <- switch(alternative, "two.sided" = {
-                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2, lower=FALSE))$root
-                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha/2))$root
-                    c(l, u)
+                  repeat({
+                    mindiff<-wdiff(mumin,zq=qnorm(alpha/2,lower=FALSE))
+                    maxdiff<-wdiff(mumax,zq=qnorm(alpha/2))
+                    if(mindiff<0 || maxdiff>0){
+                      alpha<-alpha*2
+                    } else break
+                    })
+                  if(1-conf.level < alpha*0.75){
+                    conf.level<-1-alpha
+                    warning("Requested conf.level not achievable")
+                  }
+                  l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                               zq=qnorm(alpha/2, lower=FALSE))$root
+                  u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                               zq=qnorm(alpha/2))$root
+                  c(l, u)
                 }, "greater"= {
-                    l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha, lower=FALSE))$root
+                  repeat({
+                    mindiff<-wdiff(mumin,zq=qnorm(alpha,lower=FALSE))
+                    if(mindiff<0){
+                      alpha<-alpha*2
+                    } else break
+                    })
+                  if(1-conf.level < alpha*0.75){
+                    conf.level<-1-alpha
+                    warning("Requested conf.level not achievable")
+                  }
+                  l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                               zq=qnorm(alpha, lower=FALSE))$root
                     c(l, +Inf)
                 }, "less"= {
-                    u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
+                  repeat({
+                    maxdiff<-wdiff(mumax,zq=qnorm(alpha))
+                    if(maxdiff>0){
+                      alpha<-alpha*2
+                    } else break
+                    })
+                  if(1-conf.level < alpha*0.75){
+                    conf.level<-1-alpha
+                    warning("Requested conf.level not achievable")
+                  }
+                  u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
                                   zq=qnorm(alpha))$root
-                    c(-Inf, u)
+                  c(-Inf, u)
                 })
                 attr(cint, "conf.level") <- conf.level
                 ESTIMATE <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
@@ -190,30 +236,28 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             }
 
             if(exact && TIES) {
-                warning("Cannot compute exact p-value with ties")
+                warning("cannot compute exact p-value with ties")
                 if(conf.int)
-                    warning(paste("Cannot compute exact confidence",
-                                  "interval with ties"))
+                    warning("cannot compute exact confidence interval with ties")
             }
             if(exact && ZEROES) {
-                warning("Cannot compute exact p-value with zeroes")
+                warning("cannot compute exact p-value with zeroes")
                 if(conf.int)
-                    warning(paste("Cannot compute exact confidence",
-                                  "interval with zeroes"))
+                    warning("cannot compute exact confidence interval with zeroes")
             }
 
 	}
     }
     else {
         if(length(y) < 1)
-            stop("not enough y observations")
+            stop("not enough 'y' observations")
         METHOD <- "Wilcoxon rank sum test"
         r <- rank(c(x - mu, y))
         n.x <- as.double(length(x))
         n.y <- as.double(length(y))
         if(is.null(exact))
             exact <- (n.x < 50) && (n.y < 50)
-        STATISTIC <- sum(r[seq(along = x)]) - n.x * (n.x + 1) / 2
+        STATISTIC <- sum(r[seq_along(x)]) - n.x * (n.x + 1) / 2
         names(STATISTIC) <- "W"
         TIES <- (length(r) != length(unique(r)))
         if(exact && !TIES) {
@@ -246,12 +290,22 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                ql <- n.x*n.y - qu
                                uci <- diffs[qu]
                                lci <- diffs[ql + 1]
+                               achieved.alpha<-2*pwilcox(trunc(qu)-1,n.x,n.y)
+                               if (achieved.alpha-alpha > alpha/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-achieved.alpha
+                               }
                                c(uci, lci)
                            },
                            "greater"= {
                                qu <- qwilcox(alpha, n.x, n.y)
                                if(qu == 0) qu <- 1
                                uci <- diffs[qu]
+                               achieved.alpha<-2*pwilcox(trunc(qu)-1,n.x,n.y)
+                               if (achieved.alpha-alpha > alpha/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-achieved.alpha
+                               }
                                c(uci, +Inf)
                            },
                            "less"= {
@@ -259,6 +313,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                if(qu == 0 ) qu <- 1
                                ql <- n.x*n.y - qu
                                lci <- diffs[ql + 1]
+                               achieved.alpha<-2*pwilcox(trunc(qu)-1,n.x,n.y)
+                               if (achieved.alpha-alpha > alpha/2){
+                                 warning("Requested conf.level not achievable")
+                                 conf.level<-1-achieved.alpha
+                               }
                                c(-Inf, lci)
                            })
                 attr(cint, "conf.level") <- conf.level
@@ -300,7 +359,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 wdiff <- function(d, zq) {
                     dr <- rank(c(x - d, y))
                     NTIES.CI <- table(dr)
-                    dz <- (sum(dr[seq(along = x)])
+                    dz <- (sum(dr[seq_along(x)])
                            - n.x * (n.x + 1) / 2 - n.x * n.y / 2)
                     if(correct) {
                         CORRECTION.CI <-
@@ -338,18 +397,18 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             }
 
             if(exact && TIES) {
-                warning("Cannot compute exact p-value with ties")
+                warning("cannot compute exact p-value with ties")
                 if(conf.int)
-                    warning(paste("Cannot compute exact confidence",
-                                  "intervals with ties"))
+                    warning("cannot compute exact confidence intervals with ties")
             }
         }
     }
 
+    names(mu) <- if(paired || !is.null(y)) "location shift" else "location"
     RVAL <- list(statistic = STATISTIC,
                  parameter = NULL,
                  p.value = as.numeric(PVAL),
-                 null.value = c(mu = mu),
+                 null.value = mu,
                  alternative = alternative,
                  method = METHOD,
                  data.name = DNAME)
@@ -366,9 +425,8 @@ function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
        || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1)
-       || (length(attr(terms(formula[-3]), "term.labels")) != 1))
-        stop("formula missing or incorrect")
+       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

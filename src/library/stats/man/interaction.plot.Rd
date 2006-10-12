@@ -8,12 +8,15 @@
 \usage{
 interaction.plot(x.factor, trace.factor, response, fun = mean,
                  type = c("l", "p", "b"), legend = TRUE,
-                 trace.label=deparse(substitute(trace.factor)), fixed=FALSE,
-                 xlab = deparse(substitute(x.factor)), ylab = ylabel,
+                 trace.label = deparse(substitute(trace.factor)),
+                 fixed = FALSE,
+                 xlab = deparse(substitute(x.factor)),
+                 ylab = ylabel,
                  ylim = range(cells, na.rm=TRUE),
                  lty = nc:1, col = 1, pch = c(1:9, 0, letters),
                  xpd = NULL, leg.bg = par("bg"), leg.bty = "n",
-                 xtick = FALSE, xaxt = par("xaxt"), axes = TRUE, \dots)
+                 xtick = FALSE, xaxt = par("xaxt"), axes = TRUE,
+                 \dots)
 }
 \arguments{
   \item{x.factor}{a factor whose levels will form the x axis.}
@@ -68,12 +71,12 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 }
 
 \examples{
-attach(ToothGrowth)
+with(ToothGrowth, {
 interaction.plot(dose, supp, len, fixed=TRUE)
 dose <- ordered(dose)
 interaction.plot(dose, supp, len, fixed=TRUE, col = 2:3, leg.bty = "o")
 interaction.plot(dose, supp, len, fixed=TRUE, col = 2:3, type = "p")
-detach()
+})
 
 with(OrchardSprays, {
   interaction.plot(treatment, rowpos, decrease)
@@ -84,7 +87,7 @@ with(OrchardSprays, {
 })
 
 with(esoph, {
-  interaction.plot(agegp, alcgp, ncases/ncontrols)
+  interaction.plot(agegp, alcgp, ncases/ncontrols, main = "'esoph' Data")
   interaction.plot(agegp, tobgp, ncases/ncontrols, trace.label="tobacco",
 		   fixed=TRUE, xaxt = "n")
 })
@@ -97,7 +100,8 @@ with(esophNA, {
   interaction.plot(agegp, alcgp, ncases/ncontrols, col= 2:5, type = "b")
   ## alternative take non-NA's  {"cheating"}
   interaction.plot(agegp, alcgp, ncases/ncontrols, col= 2:5,
-                   fun = function(x) mean(x, na.rm=TRUE))
+                   fun = function(x) mean(x, na.rm=TRUE),
+                   sub = "function(x) mean(x, na.rm=TRUE)")
 })
 rm(esophNA) # to clear up
 }

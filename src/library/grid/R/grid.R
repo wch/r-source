@@ -59,7 +59,7 @@ push.vp.vpTree <- function(vp, recording) {
   # Special case if user has saved the entire vpTree
   # parent will be the ROOT viewport, which we don't want to
   # push (grid ensures it is ALWAYS there)
-  if (!(vp$paren$name %in% "ROOT"))
+  if (!(vp$parent$name %in% "ROOT"))
     push.vp(vp$parent, recording)
   push.vp(vp$children, recording)
 }
@@ -129,13 +129,15 @@ downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
   if (result) {
     # Enforce the gpar settings for the viewport
     pvp <- grid.Call("L_currentViewport")
-    set.gpar(pvp$gpar)
+    # Do not call set.gpar because set.gpar accumulates cex
+    grid.Call.graphics("L_setGPar", pvp$gpar)
     # Record the viewport operation
     if (recording) {
       record(name)
     }
   } else {
-    stop(paste("Viewport", name, "was not found"))
+    stop(gettextf("Viewport '%s' was not found", as.character(name)),
+         domain = NA)
   }
   invisible(result)
 }
@@ -160,20 +162,6 @@ vpDepth <- function() {
   count
 }
 
-pop.vp <- function(last.one, recording) {
-  pvp <- grid.Call("L_currentViewport")
-  # Fail if trying to pop top-level viewport
-  if (is.null(pvp$parent))
-    stop("Illegal to pop top-level viewport")
-  # Assert the gpar settings of the parent (which is about to become "current")
-  pgpar <- pvp$parent$gpar
-  set.gpar(pgpar)
-  # Allow for recalculation of viewport transform if necessary
-  # and do things like updating parent/children slots in
-  # stored pushedvps
-  grid.Call.graphics("L_unsetviewport", last.one)
-}
-
 pop.viewport <- function(n=1, recording=TRUE) {
   .Deprecated("popViewport")
   popViewport(n, recording=recording)
@@ -185,8 +173,7 @@ popViewport <- function(n=1, recording=TRUE) {
   if (n == 0)
     n <- vpDepth()
   if (n > 0) {
-    for (i in 1:n)
-      pop.vp(i==n, recording)
+    grid.Call.graphics("L_unsetviewport", as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "pop"
@@ -196,36 +183,40 @@ popViewport <- function(n=1, recording=TRUE) {
   invisible()
 }
 
-up.vp <- function(last.one, recording) {
-  pvp <- grid.Call("L_currentViewport")
-  # Fail if trying to up top-level viewport
-  if (is.null(pvp$parent))
-    stop("Illegal to navigate up past top-level viewport")
-  # Assert the gpar settings of the parent (which is about to become "current")
-  pgpar <- pvp$parent$gpar
-  class(pgpar) <- "gpar"
-  set.gpar(pgpar)
-  # Allow for recalculation of viewport transform if necessary
-  grid.Call.graphics("L_upviewport", last.one)
-}
-
 # Rather than removing the viewport from the viewport stack (tree),
 # simply navigate up, leaving pushed viewports in place.
 upViewport <- function(n=1, recording=TRUE) {
   if (n < 0)
     stop("Must navigate up at least one viewport")
-  if (n == 0)
+  if (n == 0) {
     n <- vpDepth()
+    upPath <- current.vpPath()
+  }
   if (n > 0) {
-    for (i in 1:n)
-      up.vp(i==n, recording)
+    path <- current.vpPath()
+    upPath <- path[(depth(path) - n + 1):depth(path)]
+    grid.Call.graphics("L_upviewport", as.integer(n))
     # Record on the display list
     if (recording) {
       class(n) <- "up"
       record(n)
     }
   }
-  invisible()
+  invisible(upPath)
+}
+
+# Return the full vpPath to the current viewport
+current.vpPath <- function() {
+  names <- NULL
+  pvp <- grid.Call("L_currentViewport")
+  while (!rootVP(pvp)) {
+    names <- c(names, pvp$name)
+    pvp <- pvp$parent
+  }
+  if (!is.null(names))
+    vpPathFromVector(rev(names))
+  else
+    names
 }
 
 # Function to obtain the current viewport
@@ -284,6 +275,24 @@ current.transform <- function() {
   grid.Call("L_currentViewport")$trans
 }
 
+# Control whether user is prompted before new page
+grid.prompt <- function(ask) {
+  # Do a .Call rather than a grid.Call because
+  # this does not actually produce output on the device
+  # In particular, do not want to start the first page
+  # on a device (else first grid.newpage() will start
+  # page 2)
+  # This is safe because all that is done is a query and/or
+  # set of grid state setting "ask"
+  old.prompt <- .Call(L_getAsk)
+  if (!missing(ask)) {
+    if (!is.logical(ask))
+      stop("Invalid 'ask' value")
+    .Call(L_setAsk, ask)
+  }
+  old.prompt
+}
+
 # Call this function if you want the graphics device erased or moved
 # on to a new page.  High-level plotting functions should call this.
 # NOTE however, that if you write a function which calls grid.newpage,
@@ -294,12 +303,12 @@ grid.newpage <- function(recording=TRUE) {
   # NOTE that we do NOT do grid.Call here because we have to do
   # things slightly differently if grid.newpage is the first grid operation
   # on a new device
-  .Call("L_newpagerecording", graphics::par("ask"), PACKAGE="grid")
-  .Call("L_newpage", PACKAGE="grid")
-  .Call("L_initGPar", PACKAGE="grid")
-  .Call("L_initViewportStack", PACKAGE="grid")
+  .Call(L_newpagerecording)
+  .Call(L_newpage)
+  .Call(L_initGPar)
+  .Call(L_initViewportStack)
   if (recording) {
-    .Call("L_initDisplayList", PACKAGE="grid")
+    .Call(L_initDisplayList)
     for (fun in getHook("grid.newpage"))  {
         if(is.character(fun)) fun <- get(fun)
         try(fun())
@@ -379,6 +388,11 @@ engine.display.list <- function(on=TRUE) {
   grid.Call("L_setEngineDLon", as.logical(on))
 }
 
+# Rerun the grid DL
+grid.refresh <- function() {
+  draw.all()
+}
+
 # Wrapper for .Call and .Call.graphics
 # Used to make sure that grid-specific initialisation occurs just before
 # the first grid graphics output OR the first querying of grid state
@@ -387,40 +401,44 @@ engine.display.list <- function(on=TRUE) {
 # .Call.graphics unless you have a good reason and you know what
 # you are doing -- this will be a bit of overkill, but is for safety
 grid.Call <- function(fnname, ...) {
-  .Call("L_gridDirty", PACKAGE="grid")
+  .Call(L_gridDirty)
   .Call(fnname, ..., PACKAGE="grid")
 }
 
 grid.Call.graphics <- function(fnname, ...) {
   # Only record graphics operations on the graphics engine's display
   # list if the engineDLon flag is set
-  engineDLon <- grid.Call("L_getEngineDLon")
+  engineDLon <- grid.Call(L_getEngineDLon)
   if (engineDLon) {
-    # Avoid recording graphics operations on the engine's display list
-    # when we are already recording!
-    engineRecording <- grid.Call("L_getEngineRecording")
-    if (engineRecording) {
-      .Call("L_gridDirty", PACKAGE="grid")
-      result <- .Call(fnname, ..., PACKAGE="grid")
-    } else {
-      # NOTE: we MUST record the fact that we are already recording
-      # otherwise when we replay the engine display list, we will
-      # not know that at this point we were recording (my brain hurts)
-      # NOTE that it is ok to .Call.graphics("L_gridDirty")
-      # before .Call.graphics("L_setEngineRecording") because we
-      # know that .Call.graphics("L_gridDirty") does not make
-      # a further .Call.graphics() call itself
-      # It is also appropriate that the first grid operation on
-      # the graphics engine display list is a gridDirty call.
-      .Call.graphics("L_gridDirty", PACKAGE="grid")
-      .Call.graphics("L_setEngineRecording", TRUE, PACKAGE="grid")
-      result <- .Call.graphics(fnname, ..., PACKAGE="grid")
-      .Call.graphics("L_setEngineRecording", FALSE, PACKAGE="grid")
-    }
+    # NOTE that we need a .Call.graphics("L_gridDirty") so that
+    # the the first thing on the engine display list is a dirty
+    # operation;  this is necessary in case the display list is
+    # played on another device (e.g., via replayPlot() or dev.copy())
+    .Call.graphics("L_gridDirty", PACKAGE="grid")
+    result <- .Call.graphics(fnname, ..., PACKAGE="grid")
   } else {
-    .Call("L_gridDirty", PACKAGE="grid")
+    .Call(L_gridDirty)
     result <- .Call(fnname, ..., PACKAGE="grid")
   }
   result
 }
 
+# A call to recordGraphics() outside of [pre|post]drawDetails methods
+# will not record the expr on the grid DL.
+# If a user REALLY wants to call recordGraphics(), they should use
+# grid.record() instead
+drawDetails.recordedGrob <- function(x, recording) {
+  eval(x$expr, x$list, getNamespace("grid"))
+}
+
+grid.record <- function(expr, list,
+                        name=NULL, gp=NULL, vp=NULL) {
+  grid.draw(grob(expr=substitute(expr), list=list,
+                 name=name, gp=gp, vp=vp, cl="recordedGrob"))
+}
+
+recordGrob <- function(expr, list,
+                       name=NULL, gp=NULL, vp=NULL) {
+  grob(expr=substitute(expr), list=list,
+       name=name, gp=gp, vp=vp, cl="recordedGrob")
+}

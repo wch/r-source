@@ -16,6 +16,7 @@
 
 <<echo=FALSE, results=hide>>=
 library(grDevices)
+library(stats) # for runif
 library(grid)
 ps.options(pointsize=12)
 options(width=60)
@@ -339,7 +340,7 @@ legend has been accomodated.
 \end{itemize}
 
 <<plot, echo=FALSE, include=FALSE, fig=TRUE, results=hide>>=
-  top.vp <- viewport(w=0.8, h=0.8)
+  top.vp <- viewport(width=0.8, height=0.8)
   pushViewport(top.vp)
   x <- runif(10)
   y1 <- runif(10)
@@ -358,7 +359,7 @@ legend has been accomodated.
   grid.rect(gp=gpar(col="grey"))
   grid.draw(gf)
   popViewport()
-  grid.rect(gp=gpar(lty="dashed"), w=.99, h=.99)
+  grid.rect(gp=gpar(lty="dashed"), width=.99, height=.99)
 
 @
 \begin{center}

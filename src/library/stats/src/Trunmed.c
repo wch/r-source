@@ -133,13 +133,13 @@ inittree(int n, int k, int k2, const double *data, double *window,
     if (big < fabs(window[1]))
 	big = fabs(window[1]);
     /* big := max | X[1..k] | */
-    for(i=k+1; i < n; i++)
+    for(i=k; i < n; i++)
 	if (big < fabs(data[i]))
 	    big = fabs(data[i]);
     /* big == max(|data_i|,  i = 1,..,n) */
     big = 1 + 2. * big;/* such that -big < data[] < +big (strictly !) */
 
-    for(i=k; i>0; i--) {
+    for(i=k; i > 0; i--) {
 	window[i+k2] = window[i];
 	nrlist[i+k2] = nrlist[i]-1;
     }

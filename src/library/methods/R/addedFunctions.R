@@ -30,7 +30,7 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
     ## parent.env sequence of a namespace ends in the base package namespace,
     ## of a non-namespace ends in NULL (equiv. to base environment) [sigh]
     lastEnv <- if(isNamespace(where)) function(where) isBaseNamespace(where) else
-    function(where) is.null(where)
+    function(where) identical(where, baseenv())
     repeat {
         if(exists(name, envir = where, mode = "function", inherits = FALSE)) {
             f <- get(name, envir = where)
@@ -41,7 +41,9 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
         where <- parent.env(where)
     }
     if(!found && mustFind)
-        stop("no ", if(generic) "" else "non-generic ", "function \"", name, "\" found")
+	if(generic) stop(gettextf("no function \"%s\" found", name), domain = NA)
+	else stop(gettextf("no non-generic function \"%s\" found", name),
+		  domain = NA)
     f
 }
 
@@ -64,7 +66,8 @@ elNamed <-
     i <- match(name, names(x))
     if(is.na(i)) {
         if(mustFind)
-            stop(paste("\"", name, "\" is not one of the element names", sep=""))
+            stop(gettextf("\"%s\" is not one of the element names", name),
+                 domain = NA)
         else NULL
     }
     else
@@ -93,7 +96,7 @@ findFunction <-
 {
     allWhere <- .findAll(f, where)
     ok <- rep(FALSE, length(allWhere))
-    for(i in seq(along = ok)) {
+    for(i in seq_along(ok)) {
         wherei <- allWhere[[i]]
         if(exists(f, wherei, inherits = FALSE)) {
             fdef <-get(f, wherei)
@@ -111,7 +114,7 @@ existsFunction <- function(f, generic=TRUE, where = topenv(parent.frame()))
 Quote <- get("quote" , mode = "function")
 
 
-message <-
+.message <-
   ## output all the arguments, pasted together with no intervening spaces.
   function(...) {
       ## the junk below is just til cat honors fill=TRUE on a single string.

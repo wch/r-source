@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2001   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998-2006   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,12 +16,15 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, 
+ *  MA 02110-1301  USA
  */
 
-#if defined Win32 && !defined _SSIZE_T_
-typedef int ssize_t;
-#endif
+/* POSIX says ssize_t is defined in unistd.h, but apparently on 
+   RH9 it is not.  (Dominick Samperi, R-devel, 2006-04-27)
+   So include sys/types.h and remove Win32 special casing.
+*/
+#include <sys/types.h>
 
 typedef unsigned short Sock_port_t;
 
@@ -47,3 +50,12 @@ void in_Rsockread (int *sockp, char **buf, int *maxlen);
 void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);
 int in_Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 		   double timeout);
+
+/* from Rsock.c, for sockconn.c */
+void R_SockTimeout(int delay);
+int R_SockOpen(int port);
+int R_SockListen(int sockp, char *buf, int len);
+int R_SockConnect(int port, char *host);
+int R_SockClose(int sockp);
+int R_SockRead(int sockp, void *buf, int maxlen, int blocking);
+int R_SockWrite(int sockp, const void *buf, int len);

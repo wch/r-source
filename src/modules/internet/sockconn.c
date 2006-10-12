@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C)  2001   The R Development Core Team.
+ *  Copyright (C)  2001-5   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,8 +14,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
+
+/* <UTF8> chars are only handled as a whole */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -23,15 +25,13 @@
 
 #ifdef HAVE_SOCKETS
 
-#include <R_ext/R-ftp-http.h>
-
-
 
 /* ------------------- socket connections  --------------------- */
 
 #include <Defn.h>
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>
+#include "sock.h"
 
 static void listencleanup(void *data)
 {
@@ -43,7 +43,7 @@ static Rboolean sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
     int sock, sock1, mlen;
-    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    int timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     char buf[256];
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
@@ -60,8 +60,8 @@ static Rboolean sock_open(Rconnection con)
 	    RCNTXT cntxt;
 
 	    /* set up a context which will close socket on jump. */
-	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue,
-			 R_NilValue, R_NilValue, R_NilValue);
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv,
+			 R_BaseEnv, R_NilValue, R_NilValue);
 	    cntxt.cend = &listencleanup;
 	    cntxt.cenddata = &sock1;
 	    sock = R_SockListen(sock1, buf, 256);
@@ -91,6 +91,7 @@ static Rboolean sock_open(Rconnection con)
     con->isopen = TRUE;
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_iconv(con); /* OK for output, at least */
     con->save = -1000;
     return TRUE;
 }
@@ -117,7 +118,7 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 	    while (-res == EINTR);
 	    if (! con->blocking && -res == EAGAIN) {
 		con->incomplete = TRUE;
-		return nread > 0 ? nread : res;
+		return nread;
 	    }
 	    else if (con->blocking && res == 0) /* should mean EOF */
 		return nread;
@@ -142,13 +143,13 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 }
 
 
-static int sock_fgetc(Rconnection con)
+static int sock_fgetc_internal(Rconnection con)
 {
     unsigned char c;
     int n;
   
     n = sock_read_helper(con, (char *)&c, 1);
-    return (n == 1) ? con->encoding[c] : R_EOF;
+    return (n == 1) ? c : R_EOF;
 }
 
 static size_t sock_read(void *ptr, size_t size, size_t nitems,
@@ -170,29 +171,30 @@ Rconnection in_R_newsock(char *host, int port, int server, char *mode)
     Rconnection new;
 
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of file connection failed");
+    if(!new) error(_("allocation of socket connection failed"));
     new->class = (char *) malloc(strlen("socket") + 1);
     if(!new->class) {
 	free(new);
-	error("allocation of socket connection failed");
+	error(_("allocation of socket connection failed"));
     }
     strcpy(new->class, "socket");
     new->description = (char *) malloc(strlen(host) + 10);
     if(!new->description) {
 	free(new->class); free(new);
-	error("allocation of socket connection failed");
+	error(_("allocation of socket connection failed"));
     }
     init_con(new, host, mode);
     new->open = &sock_open;
     new->close = &sock_close;
     new->vfprintf = &dummy_vfprintf;
-    new->fgetc = &sock_fgetc;
+    new->fgetc_internal = &sock_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
     new->read = &sock_read;
     new->write = &sock_write;
     new->private = (void *) malloc(sizeof(struct sockconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
-	error("allocation of socket connection failed");
+	error(_("allocation of socket connection failed"));
     }
     ((Rsockconn)new->private)-> port = port;
     ((Rsockconn)new->private)-> server = server;

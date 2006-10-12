@@ -8,12 +8,12 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     readRDS <- function (file) {
         halt <- function (message) .Internal(stop(TRUE, message))
         gzfile <- function (description, open)
-            .Internal(gzfile(description, open, 0:255, 6))
+            .Internal(gzfile(description, open, "", 6))
         close <- function (con) .Internal(close(con, "rw"))
         if (! is.character(file)) halt("bad file name")
         con <- gzfile(file, "rb")
         on.exit(close(con))
-        .Internal(unserializeFromConn(con, NULL))
+        .Internal(unserializeFromConn(con, baseenv()))
     }
     "parent.env<-" <-
         function (env, value) .Internal("parent.env<-"(env, value))
@@ -22,8 +22,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
     environment <- function () .Internal(environment(NULL))
-    mkpromise <- function(expr, env) .Internal(delay(expr, env))
-    mkenv <- function() .Internal(new.env(TRUE, NULL))
+    mkenv <- function() .Internal(new.env(TRUE, baseenv()))
     names <- function(x) .Internal(names(x))
     lazyLoadDBfetch <- function(key, file, compressed, hook)
         .Call("R_lazyLoadDBfetch", key, file, compressed, hook, PACKAGE="base")
@@ -57,17 +56,17 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
         }
     }
     expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
-    wrap<-function(key) {
-        key <- key                      # force evaluation
-        mkpromise(expr, environment())
+    setWrapped <- function(x, value, env) {
+    	key <- value			# force evaluation
+    	.Internal(delayedAssign(x, expr, environment(), env))
     }
     if (! missing(filter)) {
         for (i in along(vars))
             if (filter(vars[i]))
-                set(vars[i], wrap(map$variables[[i]]), envir)
+		setWrapped(vars[i], map$variables[[i]], envir)
     } else {
         for (i in along(vars))
-            set(vars[i], wrap(map$variables[[i]]), envir)
+	    setWrapped(vars[i], map$variables[[i]], envir)
     }
 
     ## reduce memory use **** try some more trimming
