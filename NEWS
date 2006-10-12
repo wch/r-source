@@ -94,6 +94,8 @@ BUG FIXES
     
     o	axis.POSIXct would sometimes give the wrong labels.
     
+    o	Help for a method call would fail. (PR#9291)
+ 
     o	gzfile() returned an object of class "file" not "gzfile". (PR#9271)
 
     o	load()ing from a connection had a logic bug in when it closed
