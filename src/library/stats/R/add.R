@@ -112,7 +112,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
     else lm.fit(X, y, offset=offset)
     dfs[1] <- z$rank
-    RSS[1] <- deviance.lm(z)
+    class(z) <- "lm" # needed as deviance.lm calls generic residuals()
+    RSS[1] <- deviance(z)
     ## workaround for PR#7842. terms.formula may have flipped interactions
     sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
                      function(x) paste(sort(x), collapse=":"))
@@ -122,8 +123,9 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	X <- x[, usex|ousex, drop = FALSE]
 	z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
         else lm.fit(X, y, offset=offset)
+        class(z) <- "lm" # needed as deviance.lm calls generic residuals()
 	dfs[tt] <- z$rank
-	RSS[tt] <- deviance.lm(z)
+	RSS[tt] <- deviance(z)
     }
     if(scale > 0) aic <- RSS/scale - n + k*dfs
     else aic <- n * log(RSS/n) + k*dfs
