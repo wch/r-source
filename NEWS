@@ -93,6 +93,11 @@ BUG FIXES
     o	add1.lm had been broken by other changes for weighted fits.
     
     o	axis.POSIXct would sometimes give the wrong labels.
+    
+    o	gzfile() returned an object of class "file" not "gzfile". (PR#9271)
+
+    o	load()ing from a connection had a logic bug in when it closed
+	a connection. (PR#9271)
 
 
 
