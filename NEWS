@@ -90,6 +90,8 @@ BUG FIXES
 	Changed Date' will be in the local timezone, and not in GMT as
 	previously.
 
+    o	add1.lm had been broken by other changes for weighted fits.
+
 
 
 		CHANGES IN R VERSION 2.4.0
