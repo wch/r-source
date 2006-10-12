@@ -77,6 +77,8 @@ static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
+static int	conPrevChar, conThisChar; /* at the connection level */
+
 #if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
 # include <R_ext/rlocale.h>
@@ -1077,6 +1079,8 @@ static void ParseInit()
     xxcharcount = 0;
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_BaseEnv));
     npush = 0;
+    conPrevChar = 0;
+    conThisChar = 0;    
 }
 
 static void ParseContextInit()
@@ -1246,7 +1250,10 @@ static int con_getc(void)
     int c;
     static int last=-1000;
     
+    conPrevChar = conThisChar;
     c = Rconn_fgetc(con_parse);
+    if (con_parse->canseek) 
+	conThisChar = con_parse->seek(con_parse, 0, 2, 1); /* 0, "current", "read" */
     if (c == EOF && last != '\n') c = '\n';
     return (last = c);
 }
