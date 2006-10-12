@@ -166,7 +166,7 @@ Subversion repository.  If you have a Subversion client (see
 @url{http://subversion.tigris.org/, @code{subversion.tigris.org}}), you
 can check out and update the current r-devel from
 @url{https://svn.r-project.org/R/trunk/} and the current r-patched from
-@samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-patches/}
+@samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-branch/}
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
 
@@ -175,7 +175,10 @@ svn checkout https://svn.r-project.org/R/trunk/ @var{path}
 @end example
 
 @noindent
-to check out r-devel into directory @var{path}.
+to check out @samp{r-devel} into directory @var{path}.  The alpha, beta
+and RC versions of an upcoming @var{x.y.0} release are available from
+@samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-branch/} in
+the four-week period prior to the release.
 
 Note that @samp{https:} is required, and that the SSL certificate for
 the Subversion server of the R project is
