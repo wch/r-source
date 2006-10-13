@@ -77,7 +77,7 @@ static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
-static int	conPrevChar, conThisChar; /* at the connection level */
+static int	conPrevChar, conThisChar, lastExprEnd, thisExprStart;
 
 #if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
@@ -1080,7 +1080,9 @@ static void ParseInit()
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_BaseEnv));
     npush = 0;
     conPrevChar = 0;
-    conThisChar = 0;    
+    conThisChar = 0;
+    lastExprEnd = 0;
+    thisExprStart = 0;
 }
 
 static void ParseContextInit()
@@ -1987,8 +1989,10 @@ static int token()
 
     c = SkipSpace();
     if (c == '#') c = SkipComment();
-    if (c == R_EOF) return END_OF_INPUT;
-
+    if (c == R_EOF) {
+      lastExprEnd = conPrevChar;
+      return END_OF_INPUT;
+    }
     /* Either digits or symbols can start with a "." */
     /* so we need to decide which it is and jump to  */
     /* the correct spot. */
@@ -2153,6 +2157,10 @@ static int token()
 	yytext[1] = '\0';
 	yylval = install(yytext);
 	return c;
+    case ';':
+    case '\n':
+        lastExpressionEnd = conPrevChar;
+        return c;
     default:
 	return c;
     }
