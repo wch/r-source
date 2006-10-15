@@ -78,7 +78,7 @@ static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
 static int	conPrevChar, conThisChar, lastExprEnd, thisExprStart;
-static SEXP     SrcFile;
+static SEXP     SrcFile = NULL;
 
 #if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
@@ -208,7 +208,6 @@ static unsigned char SourceLine[MAXLINESIZE];
 static unsigned char *FunctionStart[MAXNEST], *SourcePtr;
 static int FunctionLevel = 0;
 static int KeepSource;
-static SEXP SrcFile;
 
 /* Soon to be defunct entry points */
 
@@ -545,8 +544,9 @@ static SEXP xxexprlist1(SEXP expr)
     SEXP ans,tmp;
     if (GenerateCode) {
 	PROTECT(tmp = NewList());
-	setAttrib(expr, R_SrcrefSymbol, 
-	   makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
+	if (SrcFile) 
+	    setAttrib(expr, R_SrcrefSymbol, 
+	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
 	thisExprStart = conThisChar;
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT(1);
@@ -561,8 +561,9 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 {
     SEXP ans;
     if (GenerateCode) {
-	setAttrib(expr, R_SrcrefSymbol, 
-	   makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
+    	if (SrcFile) 
+	    setAttrib(expr, R_SrcrefSymbol, 
+	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
 	thisExprStart = conThisChar;    
 	PROTECT(ans = GrowList(exprlist, expr));
     }	
@@ -1362,9 +1363,10 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	    if (c == ';' || c == '\n') break;
 	}
 	
-	SrcFile = srcfile;
+	if (!isNull(srcfile))
+	    SrcFile = srcfile;
 	rval = R_Parse1Buffer(buffer, 1, status);
-	SrcFile = R_NilValue;
+	SrcFile = NULL;
 	
 	switch(*status) {
 	case PARSE_NULL:
