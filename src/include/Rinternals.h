@@ -524,6 +524,8 @@ LibExtern SEXP	R_DotEnvSymbol;     /* ".Environment" */
 LibExtern SEXP	R_RecursiveSymbol;  /* "recursive" */
 LibExtern SEXP	R_UseNamesSymbol;   /* "use.names" */
 LibExtern SEXP	R_RowNamesSymbol;   /* "row.names" */
+LibExtern SEXP  R_SrcfileSymbol;    /* "srcfile" */
+LibExtern SEXP  R_SrcrefSymbol;     /* "srcref" */
 
 /* Missing Values - others from Arith.h */
 #define NA_STRING	R_NaString

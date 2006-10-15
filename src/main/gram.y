@@ -78,6 +78,7 @@ static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
 static int	conPrevChar, conThisChar, lastExprEnd, thisExprStart;
+static SEXP     SrcFile;
 
 #if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
@@ -516,6 +517,19 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
     return ans;
 }
 
+static SEXP makeSrcref(int start, int length, SEXP srcfile)
+{
+    SEXP result;
+    
+    PROTECT(result = allocVector(INTSXP, 2));
+    INTEGER(result)[0] = start;
+    INTEGER(result)[1] = length;
+    setAttrib(result, R_SrcfileSymbol, srcfile);
+    setAttrib(result, R_ClassSymbol,  ScalarString(mkChar("srcref")));
+    UNPROTECT(1);
+    return result;
+}
+
 static SEXP xxexprlist0()
 {
     SEXP ans;
@@ -531,6 +545,9 @@ static SEXP xxexprlist1(SEXP expr)
     SEXP ans,tmp;
     if (GenerateCode) {
 	PROTECT(tmp = NewList());
+	setAttrib(expr, R_SrcrefSymbol, 
+	   makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
+	thisExprStart = conThisChar;
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT(1);
     }
@@ -543,8 +560,12 @@ static SEXP xxexprlist1(SEXP expr)
 static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 {
     SEXP ans;
-    if (GenerateCode)
+    if (GenerateCode) {
+	setAttrib(expr, R_SrcrefSymbol, 
+	   makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
+	thisExprStart = conThisChar;    
 	PROTECT(ans = GrowList(exprlist, expr));
+    }	
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
@@ -2159,7 +2180,7 @@ static int token()
 	return c;
     case ';':
     case '\n':
-        lastExpressionEnd = conPrevChar;
+        lastExprEnd = conPrevChar;
         return c;
     default:
 	return c;

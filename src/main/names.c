@@ -986,6 +986,8 @@ static void SymbolShortcuts()
     R_RecursiveSymbol = install("recursive");
     R_UseNamesSymbol = install("use.names");
     R_RowNamesSymbol = install("row.names");
+    R_SrcfileSymbol = install("srcfile");
+    R_SrcrefSymbol = install("srcref");
 }
 
 extern SEXP framenames; /* from model.c */
