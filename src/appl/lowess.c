@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2002   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1999-2006   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -132,7 +132,7 @@ void clowess(double *x, double *y, int n,
 {
     int i, iter, j, last, m1, m2, nleft, nright, ns;
     Rboolean ok;
-    double alpha, c1, c9, cmad, cut, d1, d2, denom, r;
+    double alpha, c1, c9, cmad, cut, d1, d2, denom, r, sc;
 
     if (n < 2) {
 	ys[0] = y[0]; return;
@@ -223,8 +223,13 @@ void clowess(double *x, double *y, int n,
 		break;
 	}
 	/* residuals */
-	for(i=0; i < n; i++)
+	for(i = 0; i < n; i++)
 	    res[i] = y[i+1] - ys[i+1];
+
+	/* overall scale estimate */
+	sc = 0.;
+	for(i = 0; i < n; i++) sc += fabs(res[i]);
+	sc /= n;
 
 	/* compute robustness weights */
 	/* except last time */
@@ -234,7 +239,7 @@ void clowess(double *x, double *y, int n,
 	/* Note: The following code, biweight_{6 MAD|Ri|} 
 	   is also used in stl(), loess and several other places.
 	   --> should provide API here (MM) */
-	for(i=0 ; i<n ; i++)
+	for(i = 0 ; i < n ; i++)
 	    rw[i] = fabs(res[i]);
 
 	/* Compute   cmad := 6 * median(rw[], n)  ---- */
@@ -253,9 +258,11 @@ void clowess(double *x, double *y, int n,
 #ifdef DEBUG_lowess
 	REprintf("   cmad = %12g\n", cmad);
 #endif
+	if(cmad < 1e-7 * sc) /* effectively zero */
+	    break;
 	c9 = 0.999*cmad;
 	c1 = 0.001*cmad;
-	for(i=0 ; i<n ; i++) {
+	for(i = 0 ; i < n ; i++) {
 	    r = fabs(res[i]);
 	    if (r <= c1)
 		rw[i] = 1.;

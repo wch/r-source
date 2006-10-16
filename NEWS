@@ -34,7 +34,13 @@ BUG FIXES
     o	gzfile() returned an object of class "file" not "gzfile". (PR#9271)
 
     o	load()ing from a connection had a logic bug in when it closed
-	a connection. (PR#9271)
+	the connection. (PR#9271)
+
+    o	The lowess() algorithm is unstable if the MAD of the residuals
+	becomes (effectively) zero: R now terminates the iterations at
+	that point.  (This may result in quite different answers.)
+
+	The 'delta' argument was incorrectly documented.  (PR#9264)
 
 
 
