@@ -1642,7 +1642,7 @@ sub check_pkg {
 	    $log->print(wrap("", "", @msg_writing_Rd));
 	}
 
-	if($R_check_Rd_style) {
+	if($R_check_Rd_style && (-d "R")) {
 
 	    my @msg_doc_style =
 		("The \\usage entries for S3 methods should use",
