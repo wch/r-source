@@ -1988,3 +1988,15 @@ format(matrix(1:16, 4), big.mark = ",")
 
 
 ### end of tests added in 2.4.0 ###
+
+
+## Platform-specific behaviour in lowess reported to R-help
+## 2006-10-12 by Frank Harrell
+x <- c(0,7,8,14,15,120,242)
+y <- c(122,128,130,158,110,110,92)
+lowess(x, y, iter=0)
+lowess(x, y)
+## MAD of iterated residuals was zero, and result depended on the platform.
+
+
+### end of tests added in 2.4.1 ###
