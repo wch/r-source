@@ -158,8 +158,8 @@ function(package, dir, lib.loc = NULL)
         ## In particular, those from methods partially duplicate base
         ## and are documented in base's groupGenerics.Rd.
         code_objs <-
-            code_objs %w/o% c("Arith", "Compare", "Complex", "Math",
-                             "Math2", "Ops", "Summary")
+	    code_objs %w/o% c("Arith", "Compare", "Complex", "Logic",
+			      "Math", "Math2", "Ops", "Summary")
     }
 
     ## <FIXME>
@@ -1442,7 +1442,7 @@ function(package, dir, lib.loc = NULL)
                           dir),
                  domain = NA)
         package_name <- basename(dir)
-        is_base <- package_name == "base"        
+        is_base <- package_name == "base"
 
         code_env <- new.env()
         .source_assignments_in_code_dir(code_dir, code_env)
@@ -3725,7 +3725,7 @@ function(package, dir, lib.loc = NULL)
     imports <- .get_requires_from_package_db(db, "Imports")
     suggests <- .get_requires_from_package_db(db, "Suggests")
     enhances <- .get_requires_from_package_db(db, "Enhances")
-   
+
     ## Need this to handle bundles ...
     contains <- .get_contains_from_package_db(db)
 

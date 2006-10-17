@@ -62,6 +62,8 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
+    o	S4 group generic "Logic" (with '&', '|' and '!') has been created,
+	following the green book standard.  <<NEEDS FIX for "!">>
 
 
 	**************************************************
@@ -91,11 +93,11 @@ BUG FIXES
 	previously.
 
     o	add1.lm() had been broken by other changes for weighted fits.
-    
+
     o	axis.POSIXct() would sometimes give the wrong labels.
-    
+
     o	Help for a method call would fail. (PR#9291)
- 
+
     o	gzfile() returned an object of class "file" not "gzfile". (PR#9271)
 
     o	load()ing from a connection had a logic bug in when it closed
@@ -108,7 +110,7 @@ BUG FIXES
 	The 'delta' argument was incorrectly documented.  (PR#9264)
 
     o	abbreviate() would only work for strings of up to 8191 bytes,
-	but this was mot checked.  Now longer strings are errors.
+	but this was not checked.  Now longer strings are errors.
 
 
 

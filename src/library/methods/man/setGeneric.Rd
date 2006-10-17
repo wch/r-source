@@ -174,7 +174,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
   You usually only need to use either function if the methods are
   being defined only for the group generic.  Defining a method for a
   primitive function, say \code{"+"}, by a call to \code{setMethod}
-  turns on method dispatch for that function.  But in R defining a
+  turns on method dispatch for that function.  But in \R defining a
   method for the corresponding group generic, \code{"Arith"}, does not
   currently turn on method dispatch (for efficiency reasons).  If
   there are no non-group methods for the functions, you have two
@@ -224,43 +224,37 @@ setGeneric("authorNames",
       })
 
 \dontshow{
-
 setMethod("authorNames", "character", function(text)text)
 
-stopifnot(identical(authorNames(c("me", "you")), c("me", "you")))
-
-stopifnot(is(trySilent(authorNames(character())), "try-error")) # empty value
-
-stopifnot(is(trySilent(authorNames(NULL)), "try-error")) # no default method
-
-stopifnot(is(trySilent(setGeneric("[", function(x,...)standardGeneric("["))),
-           "try-error")) # trying setGeneric on a primitive
-
+stopifnot(identical(authorNames(c("me", "you")), c("me", "you")),
+          is(trySilent(authorNames(character())), "try-error"), # empty value
+          is(trySilent(authorNames(NULL)), "try-error"),        # no default method
+          is(trySilent(setGeneric("[", function(x,...)standardGeneric("["))),
+             "try-error"))                       # trying setGeneric on a primitive
 }
 
 ## An example of group generic methods, using the class
 ## "track"; see the documentation of setClass for its definition
 
-#define a method for the Arith group
+## define a method for the Arith group
 
 setMethod("Arith", c("track", "numeric"),
- function(e1, e2){
+ function(e1, e2) {
   e1@y <- callGeneric(e1@y , e2)
   e1
 })
 
 setMethod("Arith", c("numeric", "track"),
- function(e1, e2){
+ function(e1, e2) {
   e2@y <- callGeneric(e1, e2@y)
   e2
 })
 
-# now arithmetic operators  will dispatch methods:
+## now arithmetic operators  will dispatch methods:
 
 t1 <- new("track", x=1:10, y=sort(rnorm(10)))
 
 t1 - 100
-
 1/t1
 
 \dontshow{

@@ -764,7 +764,7 @@ showMethods <-
              showEmpty, printTo = stdout())
 {
     if(missing(showEmpty))
-      showEmpty <- !missing(f)
+	showEmpty <- !missing(f)
     if(identical(printTo, FALSE)) {
         tmp <- tempfile()
         on.exit(unlink(tmp))

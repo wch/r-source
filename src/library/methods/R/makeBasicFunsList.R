@@ -34,7 +34,7 @@
     funs <- .addBasicGeneric(funs, "trunc",
 			     function(x, digits = 0) standardGeneric(""),
 			     "Math2", env)
-    
+
     funs <- .addBasicGeneric(funs, "round",
 			     function(x, digits = 0) standardGeneric(""),
 			     "Math2", env)
@@ -54,6 +54,18 @@
     setGroupGeneric(where = where, "Arith", function(e1, e2)NULL,
 		    group = "Ops", knownMembers = members, package = "base")
 
+    ## The Logic group
+    members <- c("&", "|", "!") ##  have (2,2,1) arguments --> no for() here :
+    funs <- .addBasicGeneric(funs, "&", function(e1, e2) standardGeneric(""),
+                             "Logic", env)
+    funs <- .addBasicGeneric(funs, "|", function(e1, e2) standardGeneric(""),
+                             "Logic", env)
+    funs <- .addBasicGeneric(funs, "!", function(e1) standardGeneric(""),
+                             "Logic", env)
+
+    setGroupGeneric(where = where, "Logic", function(e1, e2)NULL,
+		    group = "Ops", knownMembers = members, package = "base")
+
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")
     for(f in members)
@@ -70,8 +82,9 @@
 
     ## the Ops group generic
 
-    setGroupGeneric(where = where,"Ops", function(e1, e2)NULL,
-		    knownMembers = c("Arith", "Compare"), package = "base")
+    setGroupGeneric(where = where,"Ops", function(e1, e2) NULL,
+		    knownMembers = c("Arith", "Compare", "Logic"),
+                    package = "base")
 
 
     ## The Summary group

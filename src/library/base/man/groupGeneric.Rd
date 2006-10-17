@@ -7,8 +7,8 @@
 \alias{Ops.data.frame}
 \alias{Summary}
 \alias{Summary.data.frame}
-\alias{Arith}
-\alias{Compare}
+%not in S3 \alias{Arith}
+%not in S3 \alias{Compare}
 \alias{Complex}
 \alias{group generic} % used in class.Rd
 \concept{group generic}
@@ -99,7 +99,7 @@ Summary(\dots, na.rm = FALSE)
     \code{-} and \code{!}): when a unary operator is encountered the
     \code{Ops} method is called with one argument and \code{e2} is
     missing.
-    
+
     The classes of both arguments are considered in dispatching. For
     each argument its vector of classes is examined to see if there is a
     matching specific or \code{Ops} method.  If a method is found for
@@ -120,7 +120,7 @@ Summary(\dots, na.rm = FALSE)
     }
     This group dispatches on the first argument supplied.
 
-    \item Group \code{Complex}:
+    \item Group \code{"Complex"}:
     \itemize{
       \item \code{Arg}, \code{Conj}, \code{Im}, \code{Mod}, \code{Re}
       % do_cmathfuns() [complex.c:267]: if(DispatchGroup("Complex",...))
