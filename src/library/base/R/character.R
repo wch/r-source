@@ -38,7 +38,7 @@ abbreviate <-
     dup2 <- rep.int(TRUE, length(names.arg))
     x <- these <- names.arg
     repeat {
-	ans <- .Internal(abbreviate(these,minlength,use.classes))
+	ans <- .Internal(abbreviate(these, minlength, use.classes))
 	x[dup2] <- ans
 	dup2 <- duplicated(x)
 	if(!any(dup2))

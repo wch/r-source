@@ -48,6 +48,9 @@ NEW FEATURES
     o	binom.test() now allows a 'fuzz' for calculated integer values
 	in its x and n arguments.
 
+    o	abbreviate() no longer has an 8191 byte limit on the size of
+	strings it can handle.
+
 
 DEPRECATED & DEFUNCT
 
@@ -64,6 +67,8 @@ BUG FIXES
 
     o	S4 group generic "Logic" (with '&', '|' and '!') has been created,
 	following the green book standard.  <<NEEDS FIX for "!">>
+
+
 
 
 	**************************************************

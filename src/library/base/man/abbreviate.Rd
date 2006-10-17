@@ -10,34 +10,31 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
     object to be coerced to a character vector by \code{\link{as.character}}.}
   \item{minlength}{the minimum length of the abbreviations.}
   \item{use.classes}{logical (currently ignored by \R).}
-  \item{dot}{logical; should a dot (\code{"."}) be appended?}
+  \item{dot}{logical: should a dot (\code{"."}) be appended?}
 }
 \description{
   Abbreviate strings to at least \code{minlength} characters,
   such that they remain \emph{unique} (if they were).
 }
 \details{
-  The algorithm used is similar to that of S.
-  First spaces at the beginning of the word are stripped.
-  Then any other spaces are stripped.
-  Next lower case vowels are removed followed by lower case consonants.
+  The algorithm used is similar to that of S.  For a single string it
+  works as follows.
+  First all spaces at the beginning of the string are stripped.
+  Then (if necessary) any other spaces are stripped.
+  Next, lower case vowels are removed (starting at the right)
+  followed by lower case consonants.
   Finally if the abbreviation is still longer than \code{minlength}
   upper case letters are stripped.
 
-  Letters are always stripped from the end of the word first.
+  Characters are always stripped from the end of the word first.
   If an element of \code{names.arg} contains more than one word (words
   are separated by space) then at least one letter from each word will be
   retained.
-  If a single string is passed it is abbreviated in the same manner as a
-  vector of strings.
 
-  Missing (\code{NA}) values are not abbreviated.
+  Missing (\code{NA}) values are unaltered.
   
   If \code{use.classes} is \code{FALSE} then the only distinction is to
   be between letters and space.  This has NOT been implemented.
-
-  There is a limit on 8191 bytes on the elements of \code{names.arg}
-  (after possible coercion).
 }
 \value{
   A character vector containing abbreviations for the strings in its
@@ -53,7 +50,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
 }
 \section{Warning}{
   This is really only suitable for English, and does not work correctly with
-  non-ASCII characters in UTF-8 locales.  It will warns if used with
+  non-ASCII characters in multibyte locales.  It will warn if used with
   non-ASCII characters.
 }
 \seealso{

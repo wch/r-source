@@ -122,7 +122,7 @@ const static char * const falsenames[] = {
 SEXP asChar(SEXP x)
 {
     int w, d, e, wi, di, ei;
-    char buf[MAXELTSIZE];
+    char buf[MAXELTSIZE];  /* probably 100 would suffice */
 
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
