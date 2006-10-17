@@ -5,7 +5,7 @@
 \alias{vpTree}
 \title{Create a Grid Viewport}
 \description{
-  These functions create viewports, which describe a rectangular regions
+  These functions create viewports, which describe rectangular regions
   on a graphics device and define a number of coordinate systems within
   those regions.
 }
