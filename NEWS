@@ -90,9 +90,9 @@ BUG FIXES
 	Changed Date' will be in the local timezone, and not in GMT as
 	previously.
 
-    o	add1.lm had been broken by other changes for weighted fits.
+    o	add1.lm() had been broken by other changes for weighted fits.
     
-    o	axis.POSIXct would sometimes give the wrong labels.
+    o	axis.POSIXct() would sometimes give the wrong labels.
     
     o	Help for a method call would fail. (PR#9291)
  
@@ -106,6 +106,9 @@ BUG FIXES
 	that point.  (This may result in quite different answers.)
 
 	The 'delta' argument was incorrectly documented.  (PR#9264)
+
+    o	abbreviate() would only work for strings of up to 8191 bytes,
+	but this was mot checked.  Now longer strings are errors.
 
 
 

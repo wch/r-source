@@ -718,6 +718,8 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    warn = warn | !utf8strIsASCII(CHAR(STRING_ELT(x, i)));
+	    if(strlen(CHAR(STRING_ELT(x, i))) >= MAXELTSIZE)
+		errorcall(call, "element %d is too long", i+1);
 	    SET_STRING_ELT(ans, i,
 			   stripchars(STRING_ELT(x, i), minlen));
 	}
