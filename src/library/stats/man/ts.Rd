@@ -53,7 +53,7 @@ is.ts(x)
   attributes) which represent data which has been sampled at equispaced
   points in time.  In the matrix case, each column of the matrix
   \code{data} is assumed to contain a single (univariate) time series.
-  Time series must have an least one observation, and although they need
+  Time series must have at least one observation, and although they need
   not be numeric there is very limited support for non-numeric series.
 
   Class \code{"ts"} has a number of methods.  In particular arithmetic
