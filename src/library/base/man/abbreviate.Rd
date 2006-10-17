@@ -35,6 +35,9 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   
   If \code{use.classes} is \code{FALSE} then the only distinction is to
   be between letters and space.  This has NOT been implemented.
+
+  There is a limit on 8191 bytes on the elements of \code{names.arg}
+  (after possible coercion).
 }
 \value{
   A character vector containing abbreviations for the strings in its
