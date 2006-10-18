@@ -412,7 +412,7 @@ isVirtualClass <-
 
 assignClassDef <-
   ## assign the definition of the class to the specially named object
-  function(Class, def, where = .GlobalEnv) {
+  function(Class, def, where = .GlobalEnv, force = FALSE) {
       if(!is(def,"classRepresentation"))
           stop(gettextf("trying to assign an object of class \"%s\" as the definition of class \"%s\": must supply a \"classRepresentation\" object",
                         class(def), Class), domain = NA)
@@ -420,8 +420,18 @@ assignClassDef <-
       if(!.identC(Class, clName))
           stop(gettextf("assigning as \"%s\" a class representation with internal name \"%s\"",
                         Class, def@className), domain = NA)
+      where <- as.environment(where)
+      mname <- classMetaName(Class)
+      if(exists(mname, envir = where, inherits = FALSE) && bindingIsLocked(mname, where)) {
+          if(force)
+            .assignOverBinding(mname, def, where, FALSE)
+          else
+            stop(gettextf("Class \"%s\" has a locked definition in package \"%s\"",
+                          Class, getPackageName(where)))
+      }
+      else
+          assign(mname, def, where)
       .cacheClass(clName, def)
-      assign(classMetaName(Class), def, where)
   }
 
 
@@ -1666,3 +1676,27 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     }
 }
 
+.removeSubClass <- function(class, subclass, where) {
+    mname <- classMetaName(class)
+    where <- as.environment(where)
+    if(exists(mname, envir = where, inherits = FALSE)) {
+        cdef <- get(mname, envir = where)
+        subclasses <- cdef@subclasses
+        ii <- match(subclass, names(subclasses), 0)
+        ## the subclass may not be there, e.g., if an error occured in
+        ## setClass, or (in 2.4.0) if class is sealed
+        if(ii > 0) {
+            cdef@subclasses <- subclasses[-ii]
+            assign(mname, cdef, envir = where)
+        }
+        sig <- signature(from=subclass, to=class)
+        if(existsMethod("coerce", sig))
+          .removeCachedMethod("coerce", sig)
+        if(existsMethod("coerce<-", sig))
+          .removeCachedMethod("coerce<-", sig)
+        .uncacheClass(class, cdef)
+    }
+    else
+      warning(gettextf("No class \"%s\" found as expected in removing subclass \"%s\"",
+                       class, subclass))
+}
