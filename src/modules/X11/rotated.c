@@ -2285,7 +2285,8 @@ static RotatedTextItem
     /* where abouts does text actually lie in rotated image? */
     /* check angle within 0.5 degrees (0.008 radians) */
     if(fabs((double)angle)<0.008 || fabs((double)angle-M_PI/2)<0.008 ||
-       fabs((double)angle-M_PI)<0.008 || fabs((double)angle-3*M_PI/2)<0.008) {
+       fabs((double)angle-M_PI)<0.008 || fabs((double)angle-3*M_PI/2)<0.008 ||
+       fabs((double)angle-2*M_PI)<0.008) {
 	xl=0;
 	xr=(double)item->cols_out;
 	xinc=0;

@@ -45,6 +45,9 @@ BUG FIXES
     o	abbreviate() would only work for strings of up to 8191 bytes,
 	but this was mot checked.  Now longer strings are errors.
 
+    o	Drawing X11 rotated text was buggy for VERY small (negative)
+	angle of rotation.  Reported by Ben Bolker.
+
 
 
 		CHANGES IN R VERSION 2.4.0

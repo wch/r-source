@@ -1046,7 +1046,7 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
 	    for(j=0;*(wcspc+j)!=L'\0';j++)wcs[j]=*(wcspc+j);
 	    wcs[j]=L'\0';
 	    w_p=wcs;
-	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(wcs),NULL);
+	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
             if (textwidth(s, strlen(s)) < (bw - text_offset)) break;
             *(++wcspc) = L'<';
@@ -1056,7 +1056,7 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
 	    for(j=0;*(wcspc+j)!=L'\0';j++)wcs[j]=*(wcspc+j);
 	    wcs[j]=L'\0';
 	    w_p=wcs;
-	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(wcs),NULL);
+	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
             if (textwidth(s, strlen(s)) < (bw - text_offset)) break;
             *(wcspbuf + i - 2) = L'>';
@@ -1066,7 +1066,7 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
     for(j=0;*(wcspc+j)!=L'\0';j++) wcs[j]=*(wcspc+j);
     wcs[j]=L'\0';
     w_p=wcs;
-    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(wcs),NULL);
+    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 
     drawtext(x_pos + text_offset, y_pos + box_h - text_offset, s, cnt);
 
@@ -2398,6 +2398,7 @@ static int last_wchar_bytes(char *str)
     int cnt;
     char last_mbs[8];
     char *mbs;
+    size_t bytes;
 
     mbs = (str == NULL) ? buf : str;
 
@@ -2411,8 +2412,8 @@ static int last_wchar_bytes(char *str)
     if(wcs[0] == L'\0') return 0;
 
     memset(last_mbs, 0, sizeof(last_mbs));
-    wcrtomb(last_mbs, wcs[cnt-1], &mb_st);
-    return(strlen(last_mbs));
+    bytes=wcrtomb(last_mbs, wcs[cnt-1], &mb_st); /* -Wall */
+    return(bytes);
 #else
     return(1);
 #endif
