@@ -68,6 +68,13 @@ BUG FIXES
     o	S4 group generic "Logic" (with '&', '|' and '!') has been created,
 	following the green book standard.  <<NEEDS FIX for "!">>
 
+    o  Fixes to group generics to ensure that the correct number of
+        active arguments are in the signature of the group and all
+        members. Also a fix to keep the groupMembers slot up to date.
+
+    o  removeClass() now takes care to remove any subclass references
+        to the deleted class.
+
 
 
 
