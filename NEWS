@@ -68,6 +68,8 @@ BUG FIXES
     o	S4 group generic "Logic" (with '&', '|' and '!') has been created,
 	following the green book standard.  <<NEEDS FIX for "!">>
 
+    o   Drawing X11 rotated text was buggy for VERY small (negative) 
+        angle of rotation.  Reported by Ben Bolker.
 
 
 
