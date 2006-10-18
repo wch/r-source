@@ -163,3 +163,25 @@ setClass("C", contains = c("A", "B"), representation(z = "logical"),
          prototype = prototype(x = 1.5, y = "test", z = TRUE))
 (cc <- new("C"))
 ## failed reconcilePropertiesAndPrototype(..) after svn r37018
+
+## "Logic" group -- was missing in R <= 2.4.0
+stopifnot(all(getGroupMembers("Logic") %in% c("&", "|", "!")),
+	  any(getGroupMembers("Ops") == "Logic"))
+setClass("brob", contains="numeric")
+b <- new("brob", 3.14)
+logic.brob.error <- function(nm)
+    stop("logic operator '", nm, "' not applicable to brobs")
+logic2 <- function(e1,e2) logic.brob.error(.Generic)
+setMethod("Logic", signature("brob", "ANY"), logic2)
+setMethod("Logic", signature("ANY", "brob"), logic2)
+## Now ensure that using group members gives error:
+assertError <- function(expr)
+    stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
+assertError(b & b)
+assertError(b | 1)
+assertError(TRUE & b)
+assertError(! b)
+## now redefine for '!' only :
+setMethod("!", signature("brob"),
+          function(e1,e2=NULL) cat("calling '!' on brob.. hmm..\n"))
+!b

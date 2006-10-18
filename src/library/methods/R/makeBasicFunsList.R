@@ -27,8 +27,8 @@
     setGroupGeneric(where=where,"Math", function(x)NULL,
 		    knownMembers = members, package = "base")
 
-    ## The Math2 group.  In spite of the documented behaviror, there
-    ## is an S3 method for trun with a SECOND argument.  Until we get
+    ## The Math2 group.  In spite of the documented behavior, there
+    ## is an S3 method for trunc with a SECOND argument.  Until we get
     ## a better solution, we have to put trunc in the Math2 group.
 
     funs <- .addBasicGeneric(funs, "trunc",
@@ -55,16 +55,13 @@
 		    group = "Ops", knownMembers = members, package = "base")
 
     ## The Logic group
-    members <- c("&", "|", "!") ##  have (2,2,1) arguments --> no for() here :
-    funs <- .addBasicGeneric(funs, "&", function(e1, e2) standardGeneric(""),
-                             "Logic", env)
-    funs <- .addBasicGeneric(funs, "|", function(e1, e2) standardGeneric(""),
-                             "Logic", env)
-    funs <- .addBasicGeneric(funs, "!", function(e1) standardGeneric(""),
-                             "Logic", env)
-
-    setGroupGeneric(where = where, "Logic", function(e1, e2)NULL,
+    members <- c("&", "|", "!")
+    for(f in members)
+	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
+				 "Logic", env)
+    setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
 		    group = "Ops", knownMembers = members, package = "base")
+    ## Note: method definitions for "!" should warn/stop when 'e2' is present
 
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")
