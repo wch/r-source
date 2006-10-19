@@ -578,8 +578,7 @@ static char* translateFontFamily(char* family) {
 /* 0 = plain text, 1 = bold */
 /* 2 = oblique, 3 = bold-oblique */
 
-#define SMALLEST 2
-#define LARGEST 100
+#define SMALLEST 1
 
 static void SetFont(char *family, int face, int size, double rot,
 		    NewDevDesc *dd)
@@ -590,7 +589,6 @@ static void SetFont(char *family, int face, int size, double rot,
     if (face < 1 || face > fontnum)
 	face = 1;
     if (size < SMALLEST) size = SMALLEST;
-    if (size > LARGEST) size = LARGEST;
     if (!xd->usefixed &&
 	(size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle || strcmp(family, xd->fontfamily))) {
@@ -2564,9 +2562,8 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     /* Font will load at first use  */
 
     ps = pointsize;
-    if (ps < 6 || ps > 48)
+    if (ps < 1) 
 	ps = 12;
-    ps = 2 * (ps / 2);
     xd->fontface = -1;
     xd->fontsize = -1;
     xd->basefontsize = ps ;

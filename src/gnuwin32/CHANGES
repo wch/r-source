@@ -15,6 +15,9 @@ commands to R CMD.
 The Simplified Chinese messages were in the wrong format, causing
 R to crash on startup. (PR#9277)
 
+The pointsize of fonts in the windows() graphics device may now be set to
+any positive integer.
+
 
 
 R 2.4.0
