@@ -79,12 +79,11 @@ endif
 #
 # files to make source packages
 	$(MKDIR) -p $(RPREFIX)/share \
-	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32/fixed
+	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32
 	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p $(foreach i,$(GW32_FILES),../$i) $(RPREFIX)/src/gnuwin32
 	$(SED) -e s/@RVER@/$(RVER)/g ../Makefile.packages > $(RPREFIX)/src/gnuwin32/Makefile
-	$(CP) ../fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr ../help ../check $(RPREFIX)/src/gnuwin32
 	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
 	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
