@@ -250,7 +250,11 @@ foreach $pkg (@ARGV){
 	    if (open pkgdescin, "< $pkg/$ppkg/DESCRIPTION.in") {
 		## the Unix version of INSTALL does discard blank lines,
 		## although ?read.dcf does not allow them. 
-		while(<pkgdescin>) { print pkgdesc $_ if $_ =~ /\S/; }
+		while(<pkgdescin>) {
+		    ## this is to cope with possibly missing final NL
+		    chomp;
+		    print pkgdesc "$_\n" if $_ =~ /\S/; 
+		}
 		close pkgdescin;
 	    } else {
 		print "no DESCRIPTION.in found for package $ppkg\n";
