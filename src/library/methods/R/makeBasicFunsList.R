@@ -55,13 +55,12 @@
 		    group = "Ops", knownMembers = members, package = "base")
 
     ## The Logic group
-    members <- c("&", "|", "!")
+    members <- c("&", "|") ## *not*  "!" since that has only one argument
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
 				 "Logic", env)
     setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
 		    group = "Ops", knownMembers = members, package = "base")
-    ## Note: method definitions for "!" should warn/stop when 'e2' is present
 
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")

@@ -165,7 +165,7 @@ setClass("C", contains = c("A", "B"), representation(z = "logical"),
 ## failed reconcilePropertiesAndPrototype(..) after svn r37018
 
 ## "Logic" group -- was missing in R <= 2.4.0
-stopifnot(all(getGroupMembers("Logic") %in% c("&", "|", "!")),
+stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
 	  any(getGroupMembers("Ops") == "Logic"))
 setClass("brob", contains="numeric")
 b <- new("brob", 3.14)
@@ -180,8 +180,3 @@ assertError <- function(expr)
 assertError(b & b)
 assertError(b | 1)
 assertError(TRUE & b)
-assertError(! b)
-## now redefine for '!' only :
-setMethod("!", signature("brob"),
-          function(e1,e2=NULL) cat("calling '!' on brob.. hmm..\n"))
-!b

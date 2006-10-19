@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-10-18 r39665)
+R version 2.5.0 Under development (unstable) (2006-10-18 r39668)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -265,7 +265,7 @@ Slot "y":
 > ## failed reconcilePropertiesAndPrototype(..) after svn r37018
 > 
 > ## "Logic" group -- was missing in R <= 2.4.0
-> stopifnot(all(getGroupMembers("Logic") %in% c("&", "|", "!")),
+> stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
 + 	  any(getGroupMembers("Ops") == "Logic"))
 > setClass("brob", contains="numeric")
 [1] "brob"
@@ -288,11 +288,4 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
  in: .findInheritedMethods(classes, fdef, mtable) 
 > assertError(b | 1)
 > assertError(TRUE & b)
-> assertError(! b)
-> ## now redefine for '!' only :
-> setMethod("!", signature("brob"),
-+           function(e1,e2=NULL) cat("calling '!' on brob.. hmm..\n"))
-[1] "!"
-> !b
-calling '!' on brob.. hmm..
 > 

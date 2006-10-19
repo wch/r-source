@@ -55,7 +55,10 @@ Complex(z)
       \code{"\%\%"}, \code{"\%/\%"}, \code{"/"}}
     \item{\code{Compare}}{\code{"=="}, \code{">"}, \code{"<"},
       \code{"!="}, \code{"<="}, \code{">="}}
-    \item{\code{Logic}}{\code{"&"}, \code{"|"}, \code{"!"}}
+    \item{\code{Logic}}{\code{"&"}, \code{"|"}, but \bold{not}
+      \code{"!"} since that has only one argument.  Note that this is
+      contrary to Chambers(1998), on purpose.
+    }
     \item{\code{Ops}}{\code{"Arith"}, \code{"Compare"}, \code{"Logic"}}
     \item{\code{Math}}{\code{"log"}, \code{"sqrt"}, \code{"log10"},
       \code{"cumprod"}, \code{"abs"}, \code{"acos"}, \code{"acosh"},
