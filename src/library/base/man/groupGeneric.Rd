@@ -7,8 +7,6 @@
 \alias{Ops.data.frame}
 \alias{Summary}
 \alias{Summary.data.frame}
-\alias{Arith}
-\alias{Compare}
 \alias{Complex}
 \alias{group generic} % used in class.Rd
 \concept{group generic}
@@ -120,7 +118,7 @@ Summary(\dots, na.rm = FALSE)
     }
     This group dispatches on the first argument supplied.
 
-    \item Group \code{Complex}:
+    \item Group \code{"Complex"}:
     \itemize{
       \item \code{Arg}, \code{Conj}, \code{Im}, \code{Mod}, \code{Re}
       % do_cmathfuns() [complex.c:267]: if(DispatchGroup("Complex",...))

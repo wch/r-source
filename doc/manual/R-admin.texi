@@ -3105,7 +3105,7 @@ the compiler correctly.
 
 To compile for a 64-bit target on Sparc Solaris (which needs an
 UltraSparc chip and for support to be enabled in the OS) with the Forte
-7 compilers we used @option{--without-blas} and
+7 compilers we used
 
 @example
 CC="cc -xarch=v9"
@@ -3133,7 +3133,7 @@ LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
 @noindent
-replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.0.x.  Note
+replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.x.y.  Note
 that @file{/usr/local/lib/sparcv9} may need to be in the
 @env{LD_LIBRARY_PATH} during configuration.
 
