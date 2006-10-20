@@ -3086,6 +3086,8 @@ marginal inference for regression-scale models, and @strong{nlreg} for
 higher order inference for nonlinear heteroscedastic models.
 @item homals
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
+@item homtest
+Homogeneity tests for regional frequency analysis.
 @item hopach
 Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
 @item hot
