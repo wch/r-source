@@ -48,6 +48,10 @@ BUG FIXES
     o	Drawing X11 rotated text was buggy for VERY small (negative)
 	angle of rotation.  Reported by Ben Bolker.
 
+    o	The X11 data editor would crash in an MBCS locale if R was
+	compiled with FC's CFLAGS that add buffer overflow and
+	stack-smashing detection.
+
 
 
 		CHANGES IN R VERSION 2.4.0
