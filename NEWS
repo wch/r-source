@@ -131,6 +131,7 @@ BUG FIXES
 	compiled with FC's CFLAGS that add buffer overflow and
 	stack-smashing detection.
 
+    o   rect() was not accepting border=NA in some cases
 
 
 		CHANGES IN R VERSION 2.4.0

@@ -5,7 +5,7 @@ rect <-
     if (is.numeric(density) && all(is.na(density) | density < 0))
         density <- NULL
     if (!is.null(density) && !is.null(angle)) {
-        if (is.logical(border)) {
+        if (is.logical(border) && !is.na(border)) {
             if (border) border <- col
             else border <- NA
         }
