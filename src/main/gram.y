@@ -77,7 +77,7 @@ static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
-static int	conPrevChar, conThisChar, lastExprEnd, thisExprStart;
+static int	conPrevChar, conThisChar;
 static SEXP     SrcFile = NULL;
 
 #if defined(SUPPORT_MBCS)
@@ -545,9 +545,8 @@ static SEXP xxexprlist1(SEXP expr)
     if (GenerateCode) {
 	PROTECT(tmp = NewList());
 	if (SrcFile) 
-	    setAttrib(expr, R_SrcrefSymbol, 
-	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
-	thisExprStart = conThisChar;
+	    /* setAttrib(expr, R_SrcrefSymbol, 
+	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile))*/; 
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT(1);
     }
@@ -562,9 +561,8 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
     SEXP ans;
     if (GenerateCode) {
     	if (SrcFile) 
-	    setAttrib(expr, R_SrcrefSymbol, 
-	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile));
-	thisExprStart = conThisChar;    
+	    /* setAttrib(expr, R_SrcrefSymbol, 
+	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile)) */;
 	PROTECT(ans = GrowList(exprlist, expr));
     }	
     else
@@ -1103,8 +1101,6 @@ static void ParseInit()
     npush = 0;
     conPrevChar = 0;
     conThisChar = 0;
-    lastExprEnd = 0;
-    thisExprStart = 0;
 }
 
 static void ParseContextInit()
@@ -2012,10 +2008,8 @@ static int token()
 
     c = SkipSpace();
     if (c == '#') c = SkipComment();
-    if (c == R_EOF) {
-      lastExprEnd = conPrevChar;
-      return END_OF_INPUT;
-    }
+    if (c == R_EOF) return END_OF_INPUT;
+    
     /* Either digits or symbols can start with a "." */
     /* so we need to decide which it is and jump to  */
     /* the correct spot. */
@@ -2180,10 +2174,6 @@ static int token()
 	yytext[1] = '\0';
 	yylval = install(yytext);
 	return c;
-    case ';':
-    case '\n':
-        lastExprEnd = conPrevChar;
-        return c;
     default:
 	return c;
     }
