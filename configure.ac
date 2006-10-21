@@ -884,7 +884,7 @@ case "${host_os}" in
   linux*)
     case  "${CC}" in
       ## Intel compiler
-      *icc)
+      *icc*)
 	## icc declares __GNUC__, so it picks up CFLAGS intended for gcc.
 	if test "$ac_test_CFLAGS" != set; then
           if test $ac_cv_prog_cc_g = yes; then
@@ -1283,12 +1283,12 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     ;;
   linux*)			# GNU Linux/ELF
     case  "${CC}" in
-      ## Intel compiler
-      *icc)
+      ## Intel compiler: note that -c99 may have been appended
+      *icc*)
         cpicflags="-fpic"
         ;;
       ## Portland Group
-      *pgcc)
+      *pgcc*)
         cpicflags="-fpic"
 	;;
     esac

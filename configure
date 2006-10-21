@@ -7181,7 +7181,7 @@ if test "${r_cv_prog_cc_vis}" = yes; then
 fi
 case  "${CC}" in
   ## Intel compiler
-  *icc)
+  *icc*)
     C_VISIBILITY=
     ;;
 esac
@@ -31972,7 +31972,7 @@ fi
   linux*)
     case  "${CC}" in
       ## Intel compiler
-      *icc)
+      *icc*)
 	## icc declares __GNUC__, so it picks up CFLAGS intended for gcc.
 	if test "$ac_test_CFLAGS" != set; then
           if test $ac_cv_prog_cc_g = yes; then
@@ -32747,11 +32747,11 @@ echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
   linux*)			# GNU Linux/ELF
     case  "${CC}" in
       ## Intel compiler
-      *icc)
+      *icc*)
         cpicflags="-fpic"
         ;;
       ## Portland Group
-      *pgcc)
+      *pgcc*)
         cpicflags="-fpic"
 	;;
     esac

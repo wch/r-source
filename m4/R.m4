@@ -3098,8 +3098,8 @@ fi
 ## The flag is documented, and is effective but also hides
 ## unsatisfied references. We cannot test for GCC, as icc passes that test.
 case  "${CC}" in
-  ## Intel compiler
-  *icc)
+  ## Intel compiler: note that -c99 may have been appended
+  *icc*)
     C_VISIBILITY=
     ;;
 esac
