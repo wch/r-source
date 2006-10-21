@@ -77,7 +77,6 @@ static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
 
-static int	conPrevChar, conThisChar;
 static SEXP     SrcFile = NULL;
 
 #if defined(SUPPORT_MBCS)
@@ -544,9 +543,6 @@ static SEXP xxexprlist1(SEXP expr)
     SEXP ans,tmp;
     if (GenerateCode) {
 	PROTECT(tmp = NewList());
-	if (SrcFile) 
-	    /* setAttrib(expr, R_SrcrefSymbol, 
-	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile))*/; 
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT(1);
     }
@@ -559,12 +555,8 @@ static SEXP xxexprlist1(SEXP expr)
 static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
 {
     SEXP ans;
-    if (GenerateCode) {
-    	if (SrcFile) 
-	    /* setAttrib(expr, R_SrcrefSymbol, 
-	   	makeSrcref(thisExprStart, lastExprEnd-thisExprStart,  SrcFile)) */;
+    if (GenerateCode)
 	PROTECT(ans = GrowList(exprlist, expr));
-    }	
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
@@ -1099,8 +1091,6 @@ static void ParseInit()
     xxcharcount = 0;
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_BaseEnv));
     npush = 0;
-    conPrevChar = 0;
-    conThisChar = 0;
 }
 
 static void ParseContextInit()
@@ -1270,10 +1260,7 @@ static int con_getc(void)
     int c;
     static int last=-1000;
     
-    conPrevChar = conThisChar;
     c = Rconn_fgetc(con_parse);
-    if (con_parse->canseek) 
-	conThisChar = con_parse->seek(con_parse, 0, 2, 1); /* 0, "current", "read" */
     if (c == EOF && last != '\n') c = '\n';
     return (last = c);
 }
@@ -1358,9 +1345,11 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	    R_IoBufferPutc(c, buffer);
 	    if (c == ';' || c == '\n') break;
 	}
-	
+
+#if 0	
 	if (!isNull(srcfile))
 	    SrcFile = srcfile;
+#endif
 	rval = R_Parse1Buffer(buffer, 1, status);
 	SrcFile = NULL;
 	
@@ -2009,7 +1998,7 @@ static int token()
     c = SkipSpace();
     if (c == '#') c = SkipComment();
     if (c == R_EOF) return END_OF_INPUT;
-    
+
     /* Either digits or symbols can start with a "." */
     /* so we need to decide which it is and jump to  */
     /* the correct spot. */
