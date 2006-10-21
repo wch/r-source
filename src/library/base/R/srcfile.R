@@ -18,15 +18,30 @@ print.srcfile <- function(srcfile) {
   invisible(srcfile)
 }
 
-open.srcfile <- function(srcfile) {
+open.srcfile <- function(srcfile, line) {
+  
+  oldline <- srcfile$line
+  if (!is.null(oldline) && oldline > line) close(srcfile)
+  
   conn <- srcfile$conn
   if (is.null(conn)) {
     olddir <- setwd(srcfile$wd)
     on.exit(setwd(olddir))   
     timestamp <- file.info(srcfile$filename)[1,"mtime"]
     if (timestamp != srcfile$timestamp) warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
-    srcfile$conn <- file(srcfile$filename, open="rb")
-  } else if (!isOpen(conn)) open(conn, open="rb")
+    srcfile$conn <- conn <- file(srcfile$filename, open="rt")
+    srcfile$line <- 1
+    oldline <- 1
+  } else if (!isOpen(conn)) {
+    open(conn, open="rt")
+    srcfile$line <- 1
+    oldline <- 1
+  }
+  if (oldline < line) {
+    readLines(conn, line-oldline)
+    srcfile$line <- line
+  }
+  invisible(conn)
 }
 
 close.srcfile <- function(srcfile) {
@@ -34,7 +49,7 @@ close.srcfile <- function(srcfile) {
   if (is.null(conn)) return()
   else {
     close(conn)
-    rm("conn", envir=srcfile)
+    rm(list=c("conn", "line"), envir=srcfile)
   }
 }
 
@@ -43,26 +58,28 @@ close.srcfile <- function(srcfile) {
   return( !is.null(conn) && isOpen(conn) )
 }
 
-# a srcref is a start and stop byte in a srcfile
+# a srcref gives start and stop positions of text 
+# lloc entries are first_line, first_column, last_line, last_column
+# all are inclusive
 
-srcref <- function(srcfile, start, len) {
-  stopifnot(inherits(srcfile, "srcfile"), length(start) == 1, length(len) == 1)
-  structure(as.integer(c(start, len)), srcfile=srcfile, class="srcref")
+srcref <- function(srcfile, lloc) {
+  stopifnot(inherits(srcfile, "srcfile"), length(lloc) == 4)
+  structure(as.integer(lloc), srcfile=srcfile, class="srcref")
 }
   
 as.character.srcref <- function(srcref) {
   srcfile <- attr(srcref, "srcfile")
-  if (!.isOpen(srcfile)) {
-    open(srcfile)
-    on.exit(close(srcfile))
-  }
-  conn <- srcfile$conn
-  seek(conn, srcref[1])
-
-  # Read as raw here, because we want to read n bytes, not chars.
-  bytes <- readBin(conn, what="raw", n=srcref[2])  
-  rawToChar(bytes)
+  if (!.isOpen(srcfile)) on.exit(close(srcfile))
+  
+  conn <- open(srcfile, srcref[1])
+  
+  lines <- readLines(conn, n=srcref[3]-srcref[1]+1)  
+  srcfile$line <- srcfile$line + length(lines)
+  
+  lines[length(lines)] <- substring(lines[length(lines)], 1, srcref[4])
+  lines[1] <- substring(lines[1], srcref[2])
+  lines
 }
 
 print.srcref <- function(srcref) 
-  cat(as.character(srcref), "\n")
+  cat(as.character(srcref), sep="\n")

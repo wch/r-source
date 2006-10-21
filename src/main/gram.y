@@ -44,6 +44,17 @@ int yyparse(void);
 
 #define yyconst const
 
+typedef struct yyltype
+{
+  int first_line;
+  int first_column;
+
+  int last_line;
+  int last_column;
+} yyltype;
+
+# define YYLTYPE yyltype
+
 /* Useful defines so editors don't get confused ... */
 
 #define LBRACE	'{'
@@ -76,6 +87,8 @@ static int	EndOfFile = 0;
 static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
+static int	xxlineno, xxcolno, xxlinesave, xxcolsave;
+static int	xxlastlinelen;
 
 static SEXP     SrcFile = NULL;
 
@@ -221,8 +234,8 @@ static SEXP	xxfirstformal1(SEXP, SEXP);
 static SEXP	xxaddformal0(SEXP, SEXP);
 static SEXP	xxaddformal1(SEXP, SEXP, SEXP);
 static SEXP	xxexprlist0();
-static SEXP	xxexprlist1(SEXP);
-static SEXP	xxexprlist2(SEXP, SEXP);
+static SEXP	xxexprlist1(SEXP, YYLTYPE *);
+static SEXP	xxexprlist2(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxsub0(void);
 static SEXP	xxsub1(SEXP);
 static SEXP	xxsymsub0(SEXP);
@@ -371,10 +384,10 @@ forcond :	'(' SYMBOL IN expr ')' 		{ $$ = xxforcond($2,$4); }
 
 
 exprlist:					{ $$ = xxexprlist0(); }
-	|	expr_or_assign				{ $$ = xxexprlist1($1); }
-	|	exprlist ';' expr_or_assign	{ $$ = xxexprlist2($1,$3); }
+	|	expr_or_assign			{ $$ = xxexprlist1($1, &@1); }
+	|	exprlist ';' expr_or_assign	{ $$ = xxexprlist2($1, $3, &@3); }
 	|	exprlist ';'			{ $$ = $1; }
-	|	exprlist '\n' expr_or_assign	{ $$ = xxexprlist2($1,$3); }
+	|	exprlist '\n' expr_or_assign	{ $$ = xxexprlist2($1, $3, &@3); }
 	|	exprlist '\n'			{ $$ = $1;}
 	;
 
@@ -426,7 +439,12 @@ static int xxgetc(void)
     R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
     R_ParseContext[R_ParseContextLast] = c;
     
-    if (c == '\n') R_ParseError += 1;
+    if (c == '\n') {
+    	xxlineno += 1;
+    	xxlastlinelen = xxcolno; 
+    	xxcolno = 0;
+    } else xxcolno++;
+    
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
 	    *SourcePtr++ = c;
@@ -438,7 +456,12 @@ static int xxgetc(void)
 
 static int xxungetc(int c)
 {
-    if (c == '\n') R_ParseError -= 1;
+    if (c == '\n') {
+    	xxlineno -= 1;
+    	xxcolno = xxlastlinelen; /* FIXME:  could we push back more than one line? */
+    	xxlastlinelen = 0;
+    } else xxcolno--;
+    
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
@@ -515,13 +538,15 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP makeSrcref(int start, int length, SEXP srcfile)
+static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 {
     SEXP result;
     
-    PROTECT(result = allocVector(INTSXP, 2));
-    INTEGER(result)[0] = start;
-    INTEGER(result)[1] = length;
+    PROTECT(result = allocVector(INTSXP, 4));
+    INTEGER(result)[0] = lloc->first_line;
+    INTEGER(result)[1] = lloc->first_column;
+    INTEGER(result)[2] = lloc->last_line;
+    INTEGER(result)[3] = lloc->last_column;
     setAttrib(result, R_SrcfileSymbol, srcfile);
     setAttrib(result, R_ClassSymbol,  ScalarString(mkChar("srcref")));
     UNPROTECT(1);
@@ -538,10 +563,12 @@ static SEXP xxexprlist0()
     return ans;
 }
 
-static SEXP xxexprlist1(SEXP expr)
+static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans,tmp;
     if (GenerateCode) {
+        if (SrcFile)
+            setAttrib(expr, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
 	PROTECT(tmp = NewList());
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT(1);
@@ -552,11 +579,14 @@ static SEXP xxexprlist1(SEXP expr)
     return ans;
 }
 
-static SEXP xxexprlist2(SEXP exprlist, SEXP expr)
+static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
-    if (GenerateCode)
+    if (GenerateCode) {
+        if (SrcFile)
+            setAttrib(expr, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
 	PROTECT(ans = GrowList(exprlist, expr));
+    }
     else
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(expr);
@@ -1089,6 +1119,8 @@ static void ParseInit()
     FunctionLevel=0;
     SourcePtr = FunctionSource;
     xxcharcount = 0;
+    xxlineno = 0;
+    xxcolno = 0;
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_BaseEnv));
     npush = 0;
 }
@@ -1245,7 +1277,7 @@ attribute_hidden
 SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
 {
     GenerateCode = 1;
-    R_ParseError = 1;
+    xxlineno = 1;
     fp_parse = fp;
     ptr_getc = file_getc;
     return R_Parse(n, status);
@@ -1270,7 +1302,7 @@ attribute_hidden
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
 {
     GenerateCode = 1;
-    R_ParseError = 1;
+    xxlineno = 1;
     con_parse = con;;
     ptr_getc = con_getc;
     return R_Parse(n, status);
@@ -1284,7 +1316,7 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     R_TextBufferInit(&textb, text);
     txtb = &textb;
     GenerateCode = 1;
-    R_ParseError = 1;
+    xxlineno = 1;
     ptr_getc = text_getc;
     rval = R_Parse(n, status);
     R_TextBufferFree(&textb);
@@ -1297,7 +1329,7 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
 		    ParseStatus *status)
 {
     GenerateCode = 1;
-    R_ParseError = 1;
+    xxlineno = 1;
     ptr_getc = ggetc;
     return R_Parse(n, status);
 }
@@ -1579,6 +1611,7 @@ SEXP mkFalse(void)
 
 static void yyerror(char *s)
 {
+    R_ParseError = xxlineno;
 }
 
 static void CheckFormalArgs(SEXP formlist, SEXP new)
@@ -1994,6 +2027,8 @@ static int token()
 	return c;
     }
     xxcharsave = xxcharcount; /* want to be able to go back one token */
+    xxlinesave = xxlineno;
+    xxcolsave  = xxcolno;
 
     c = SkipSpace();
     if (c == '#') c = SkipComment();
@@ -2171,6 +2206,9 @@ static int token()
 static int yylex(void)
 {
     int tok;
+
+    yylloc.first_line = xxlineno;
+    yylloc.first_column = xxcolno;
 
  again:
 
