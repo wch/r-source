@@ -752,12 +752,6 @@ AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
 AC_CHECK_SIZEOF(long double, 0)
 
-if test "$ac_test_CFLAGS" != set; then
-  if test "$GCC" = yes; then
-    R_PROG_CC_FLAG([-std=gnu99], R_SH_VAR_ADD(CFLAGS, [-std=gnu99]))
-  fi
-fi
-
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
 

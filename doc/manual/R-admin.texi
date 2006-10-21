@@ -1843,10 +1843,11 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
 compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
 @acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant if at all
 possible.  @R{} tries to choose suitable flags for the C compilers it
-knows about, but you may have to set @code{CFLAGS} suitably.  For recent
-versions of @command{gcc} with @code{glibc} this means including
-@option{-std=gnu99} in @code{CFLAGS} (@option{-std=c99} excludes POSIX
-functionality).
+knows about, but you may have to set @code{CC} or @code{CFLAGS} suitably.
+For recent versions of @command{gcc} with @code{glibc} this means including
+@option{-std=gnu99} (@option{-std=c99} excludes POSIX functionality).
+If the compiler is detected as @command{gcc},  @code{-std=gnu99} will be
+appended to @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora Core
@@ -2891,10 +2892,11 @@ libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
 on @cputype{x86_64} with Fedora Core 5 we used
 
 @example
-CFLAGS="-m32 -O2 -g -Wall -pedantic -std=gnu99" 
+CC="gcc -m32"
 CXXFLAGS="-m32 -O2 -g" 
 FFLAGS="-m32 -O2 -g"
-LDFLAGS="-m32 -L/usr/local/lib"
+FCFLAGS="-m32 -O2 -g"
+LDFLAGS="-L/usr/local/lib"
 LIBnn=lib
 @end example
 
@@ -2960,10 +2962,11 @@ F77=ifort
 CXX=icc
 ICC_LIBS=/opt/compilers/intel/cce/9.0/lib
 IFC_LIBS=/opt/compilers/intel/fce/9.0/lib
-LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
+LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib64"
 @end example
 
 @noindent
+@command{configure} will add @samp{-c99} to @code{CC} for C99-compliance.
 @R{} will add @samp{-mp} in @code{R_XTRA_@{C,F,CXX@}FLAGS} to maintain
 correct @acronym{IEC}@tie{}60559 arithmetic.  The flag @option{-wd188}
 suppresses a large number of warnings about the enumeration type
@@ -3089,7 +3092,7 @@ this disables @acronym{IEEE} arithmetic and @command{make check} will
 fail.  The maximal set of optimization options known to work on Sparc is
 
 @example
--xlibmil -xO5 -dalign -xc99
+-xlibmil -xO5 -dalign
 @end example
 
 @noindent
@@ -3105,11 +3108,11 @@ the compiler correctly.
 
 To compile for a 64-bit target on Sparc Solaris (which needs an
 UltraSparc chip and for support to be enabled in the OS) with the Forte
-7 compilers we used @option{--without-blas} and
+7 compilers we used
 
 @example
-CC="cc -xarch=v9"
-CFLAGS="-xO5 -xlibmil -dalign -xc99"
+CC="cc -xarch=v9 -xc99"
+CFLAGS="-xO5 -xlibmil -dalign"
 F77="f95 -xarch=v9"
 FFLAGS="-xO5 -xlibmil -dalign"
 CXX="CC -xarch=v9"
@@ -3133,9 +3136,10 @@ LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
 @noindent
-replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.0.x.  Note
+replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.x.y.  Note
 that @file{/usr/local/lib/sparcv9} may need to be in the
-@env{LD_LIBRARY_PATH} during configuration.
+@env{LD_LIBRARY_PATH} during configuration.  (@command{configure} will
+append @code{-std=gnu99} to @code{CC}.)
 
 Solaris on Sparc CPUs need @samp{PIC} and not @samp{pic} versions of
 @env{CPICFLAGS} and @env{FPICFLAGS} since the @samp{pic} version only
