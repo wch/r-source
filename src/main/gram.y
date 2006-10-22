@@ -36,6 +36,8 @@
 #include "Fileio.h"
 #include "Parse.h"
 
+#define YYERROR_VERBOSE 1
+
 static void yyerror(char *);
 static int yylex();
 int yyparse(void);
@@ -1624,6 +1626,7 @@ SEXP mkFalse(void)
 static void yyerror(char *s)
 {
     R_ParseError = xxlineno;
+    strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE-1);
 }
 
 static void CheckFormalArgs(SEXP formlist, SEXP new)

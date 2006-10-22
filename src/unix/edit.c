@@ -174,7 +174,7 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     fclose(fp);
     if (status != PARSE_OK)
 	errorcall(call,
-		  _("an error occurred on line %d\n use a command like\n x <- edit()\n to recover"), R_ParseError);
+		  _("%s occurred on line %d\n use a command like\n x <- edit()\n to recover"), R_ParseErrorMsg, R_ParseError);
     R_ResetConsole();
     {   /* can't just eval(x) here */
 	int j, n;

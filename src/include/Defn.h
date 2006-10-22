@@ -574,6 +574,8 @@ extern0 char	R_StdinEnc[31]  INI_as("");	/* Encoding assumed for stdin */
 /* Objects Used In Parsing  */
 extern0 SEXP	R_CommentSxp;	    /* Comments accumulate here */
 extern0 int	R_ParseError	INI_as(0); /* Line where parse error occured */
+#define PARSE_ERROR_SIZE 256	    /* Parse error messages saved here */
+extern0 char	R_ParseErrorMsg[PARSE_ERROR_SIZE] INI_as("");
 #define PARSE_CONTEXT_SIZE 256	    /* Recent parse context kept in a circular buffer */
 extern0 char	R_ParseContext[PARSE_CONTEXT_SIZE] INI_as("");
 extern0 int	R_ParseContextLast INI_as(0); /* last character in context buffer */

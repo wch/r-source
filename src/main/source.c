@@ -88,20 +88,21 @@ void attribute_hidden parseError(SEXP call, int linenum)
     int len = length(context);
     if (linenum) {
 	switch (len) {
-	case 0: errorcall(call, _("syntax error on line %d"), linenum); break;
-	case 1: errorcall(call, _("syntax error at\n%d: %s"), 
-			    linenum, CHAR(STRING_ELT(context, 0))); break;
-	default: errorcall(call, _("syntax error at\n%d: %s\n%d: %s"), 
-			    linenum-1, CHAR(STRING_ELT(context, len-2)),
+	case 0: errorcall(call, _("%s on line %d"), 
+			    R_ParseErrorMsg, linenum); break;
+	case 1: errorcall(call, _("%s at\n%d: %s"), 
+			    R_ParseErrorMsg, linenum, CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("%s at\n%d: %s\n%d: %s"), 
+			    R_ParseErrorMsg, linenum-1, CHAR(STRING_ELT(context, len-2)),
 			    linenum, CHAR(STRING_ELT(context, len-1))); break;
 	}
     } else {
 	switch (len) {
-	case 0: errorcall(call, _("syntax error"), R_ParseError); break;
-	case 1: errorcall(call, _("syntax error in \"%s\""), 
-			    CHAR(STRING_ELT(context, 0))); break;
-	default: errorcall(call, _("syntax error in:\n\"%s\n%s\""), 
-			    CHAR(STRING_ELT(context, len-2)),
+	case 0: errorcall(call, _("%s"), R_ParseErrorMsg); break;
+	case 1: errorcall(call, _("%s in \"%s\""), 
+			    R_ParseErrorMsg, CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("%s in:\n\"%s\n%s\""), 
+			    R_ParseErrorMsg, CHAR(STRING_ELT(context, len-2)),
 			    CHAR(STRING_ELT(context, len-1))); break;
 	}   
     }
@@ -124,6 +125,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     R_ParseError = 0;
+    R_ParseErrorMsg[0] = '\0';
 
     ifile = asInteger(CAR(args));                       args = CDR(args);
 
