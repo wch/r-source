@@ -534,6 +534,8 @@ R_PROG_BROWSER
 R_PROG_PDFVIEWER
 
 AC_PROG_CC
+## next is a macro borrowed from autoconf 2.60
+AC_PROG_CC_C99
 
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_CPP
@@ -752,12 +754,6 @@ AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
 AC_CHECK_SIZEOF(long double, 0)
 
-if test "$ac_test_CFLAGS" != set; then
-  if test "$GCC" = yes; then
-    R_PROG_CC_FLAG([-std=gnu99], R_SH_VAR_ADD(CFLAGS, [-std=gnu99]))
-  fi
-fi
-
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG
 
@@ -890,7 +886,7 @@ case "${host_os}" in
   linux*)
     case  "${CC}" in
       ## Intel compiler
-      *icc)
+      *icc*)
 	## icc declares __GNUC__, so it picks up CFLAGS intended for gcc.
 	if test "$ac_test_CFLAGS" != set; then
           if test $ac_cv_prog_cc_g = yes; then
@@ -1289,12 +1285,12 @@ rm -f libconftest${DYLIB_EXT} conftest.c
     ;;
   linux*)			# GNU Linux/ELF
     case  "${CC}" in
-      ## Intel compiler
-      *icc)
+      ## Intel compiler: note that -c99 may have been appended
+      *icc*)
         cpicflags="-fpic"
         ;;
       ## Portland Group
-      *pgcc)
+      *pgcc*)
         cpicflags="-fpic"
 	;;
     esac
