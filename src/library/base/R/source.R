@@ -3,7 +3,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 verbose = getOption("verbose"),
 	 prompt.echo = getOption("prompt"),
 	 max.deparse.length = 150, chdir = FALSE,
-         encoding = getOption("encoding"))
+         encoding = getOption("encoding"),
+         continue.echo = getOption("continue"))
 {
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
@@ -102,20 +103,27 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	        # Deparse.  Must drop "expression(...)"
 		dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
 	    		  collapse = "\n"), 12, 1e+06)
-            	## We really do want chars here as \n\t may be embedded.	    	
+            	## We really do want chars here as \n\t may be embedded.
+            	dep <- paste(prompt.echo, 
+            		     gsub("\n", paste("\n", continue.echo, sep=""), dep),
+            		     sep="")
 		nd <- nchar(dep, "chars") - 1	    
 	    } else {
 	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
+	    	leading <- srcref[1]-lastshown
 	    	lastshown <- srcref[3]	    	
-	    	while (length(dep) && length(grep("^[ \\t]*$", dep[1]))) dep <- dep[-1]
-	    	while (length(dep) && length(grep("^[ \\t]*$", dep[length(dep)]))) dep <- dep[-length(dep)]
-	    	dep <- paste(dep, collapse="\n")
+	    	while (length(dep) && length(grep("^[ \\t]*$", dep[1]))) {
+	    	    dep <- dep[-1]
+	    	    leading <- leading - 1
+	    	}
+	    	dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),
+	    		     dep, sep="", collapse="\n")
 	    	nd <- nchar(dep, "chars")
 	    }
 	    if (nd) {
 		do.trunc <- nd > max.deparse.length
 		dep <- substr(dep, 1, if (do.trunc) max.deparse.length else nd)
-		cat("\n", prompt.echo, dep, if (do.trunc)
+		cat("\n", dep, if (do.trunc)
 		    paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
 		      " ...\" ..."
 		      else " ....", "[TRUNCATED] "), "\n", sep = "")

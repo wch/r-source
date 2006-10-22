@@ -5,7 +5,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
        verbose = getOption("verbose"),
        prompt.echo = getOption("prompt"),
        max.deparse.length = 150, chdir = FALSE,
-       encoding = getOption("encoding"))
+       encoding = getOption("encoding"),
+       continue.echo = getOption("continue"))
 }
 \alias{source}
 \arguments{
@@ -33,6 +34,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{encoding}{character string.  The encoding to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
     possible value is \code{"unknown"}: see the Details.}
+  \item{continue.echo}{character; gives the prompt to use on
+    continuation lines if \code{echo = TRUE}.}
 }
 \description{
   \code{source} causes \R to accept its input from the named file or URL
