@@ -152,7 +152,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	    num = -1;
 	if(!wasopen)
 	    if(!con->open(con)) error(_("cannot open the connection"));
-	s = R_ParseConn(con, num, &status);
+	s = R_ParseConn(con, num, &status, source);
 	if(!wasopen) con->close(con);
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }

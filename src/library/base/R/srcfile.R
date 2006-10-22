@@ -13,7 +13,7 @@ srcfile <- function(filename) {
   return(e)
 }
 
-print.srcfile <- function(srcfile) {
+print.srcfile <- function(srcfile, ...) {
   cat(srcfile$filename, "\n")
   invisible(srcfile)
 }
@@ -58,6 +58,15 @@ close.srcfile <- function(srcfile) {
   return( !is.null(conn) && isOpen(conn) )
 }
 
+getSrcLines <- function(srcfile, first, last) {
+    if (first > last) return(character(0))
+    if (!.isOpen(srcfile)) on.exit(close(srcfile))
+    conn <- open(srcfile, first)
+    lines <- readLines(conn, n=last-first+1)
+    srcfile$line <- first + length(lines)
+    return(lines)
+}
+
 # a srcref gives start and stop positions of text 
 # lloc entries are first_line, first_column, last_line, last_column
 # all are inclusive
@@ -69,17 +78,11 @@ srcref <- function(srcfile, lloc) {
   
 as.character.srcref <- function(srcref) {
   srcfile <- attr(srcref, "srcfile")
-  if (!.isOpen(srcfile)) on.exit(close(srcfile))
-  
-  conn <- open(srcfile, srcref[1])
-  
-  lines <- readLines(conn, n=srcref[3]-srcref[1]+1)  
-  srcfile$line <- srcfile$line + length(lines)
-  
+  lines <- getSrcLines(srcfile, srcref[1], srcref[3])  
   lines[length(lines)] <- substring(lines[length(lines)], 1, srcref[4])
   lines[1] <- substring(lines[1], srcref[2])
   lines
 }
 
-print.srcref <- function(srcref) 
+print.srcref <- function(srcref, ...) 
   cat(as.character(srcref), sep="\n")

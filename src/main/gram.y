@@ -260,7 +260,7 @@ static SEXP	xxbinary(SEXP, SEXP, SEXP);
 static SEXP	xxparen(SEXP, SEXP);
 static SEXP	xxsubscript(SEXP, SEXP, SEXP);
 static SEXP	xxexprlist(SEXP, SEXP);
-static int	xxvalue(SEXP, int);
+static int	xxvalue(SEXP, int, YYLTYPE *);
 
 #define YYSTYPE		SEXP
 
@@ -298,9 +298,9 @@ static int	xxvalue(SEXP, int);
 %%
 
 prog	:	END_OF_INPUT			{ return 0; }
-	|	'\n'				{ return xxvalue(NULL,2); }
-	|	expr_or_assign '\n'			{ return xxvalue($1,3); }
-	|	expr_or_assign ';'			{ return xxvalue($1,4); }
+	|	'\n'				{ return xxvalue(NULL,2,NULL); }
+	|	expr_or_assign '\n'			{ return xxvalue($1,3,&@1); }
+	|	expr_or_assign ';'			{ return xxvalue($1,4,&@1); }
 	|	error	 			{ YYABORT; }
 	;
 
@@ -472,9 +472,31 @@ static int xxungetc(int c)
     return c;
 }
 
-static int xxvalue(SEXP v, int k)
+static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 {
-    if (k > 2) UNPROTECT_PTR(v);
+    SEXP result, val;
+    
+    PROTECT(val = allocVector(INTSXP, 4));
+    INTEGER(val)[0] = lloc->first_line;
+    INTEGER(val)[1] = lloc->first_column;
+    INTEGER(val)[2] = lloc->last_line;
+    INTEGER(val)[3] = lloc->last_column;
+    setAttrib(val, R_SrcfileSymbol, srcfile);
+    setAttrib(val, R_ClassSymbol,  ScalarString(mkChar("srcref")));
+    result = allocList(1);
+    SETCAR(result, val);
+    SET_TAG(result, R_SrcrefSymbol);
+    UNPROTECT(1);
+    return result;
+}
+
+static int xxvalue(SEXP v, int k, YYLTYPE *lloc)
+{
+    if (k > 2) {
+    	if (SrcFile)
+    	    SET_ATTRIB(v, makeSrcref(lloc, SrcFile));
+    	UNPROTECT_PTR(v);
+    }
     R_CurrentExpr = v;
     return k;
 }
@@ -538,25 +560,10 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
     return ans;
 }
 
-static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
-{
-    SEXP result;
-    
-    PROTECT(result = allocVector(INTSXP, 4));
-    INTEGER(result)[0] = lloc->first_line;
-    INTEGER(result)[1] = lloc->first_column;
-    INTEGER(result)[2] = lloc->last_line;
-    INTEGER(result)[3] = lloc->last_column;
-    setAttrib(result, R_SrcfileSymbol, srcfile);
-    setAttrib(result, R_ClassSymbol,  ScalarString(mkChar("srcref")));
-    UNPROTECT(1);
-    return result;
-}
-
 static SEXP xxexprlist0()
 {
     SEXP ans;
-    if (GenerateCode)
+    if (GenerateCode) 
 	PROTECT(ans = NewList());
     else
 	PROTECT(ans = R_NilValue);
@@ -568,7 +575,7 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
     SEXP ans,tmp;
     if (GenerateCode) {
         if (SrcFile)
-            setAttrib(expr, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+            SET_ATTRIB(expr, makeSrcref(lloc, SrcFile));
 	PROTECT(tmp = NewList());
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT(1);
@@ -584,7 +591,7 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
     SEXP ans;
     if (GenerateCode) {
         if (SrcFile)
-            setAttrib(expr, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+            SET_ATTRIB(expr, makeSrcref(lloc, SrcFile));
 	PROTECT(ans = GrowList(exprlist, expr));
     }
     else
@@ -1119,8 +1126,6 @@ static void ParseInit()
     FunctionLevel=0;
     SourcePtr = FunctionSource;
     xxcharcount = 0;
-    xxlineno = 0;
-    xxcolno = 0;
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_BaseEnv));
     npush = 0;
 }
@@ -1231,12 +1236,16 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 }
 #endif
 
-static SEXP R_Parse(int n, ParseStatus *status)
+static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 {
     volatile int savestack;
     int i;
     SEXP t, rval;
 
+    if (!isNull(srcfile)) 
+	SrcFile = srcfile;
+    xxlineno = 1;
+    xxcolno = 1;
     ParseContextInit();
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
@@ -1263,6 +1272,7 @@ static SEXP R_Parse(int n, ParseStatus *status)
     }
 
 finish:
+    SrcFile = NULL;
     t = CDR(t);
     rval = allocVector(EXPRSXP, length(t));
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
@@ -1280,7 +1290,7 @@ SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
     xxlineno = 1;
     fp_parse = fp;
     ptr_getc = file_getc;
-    return R_Parse(n, status);
+    return R_Parse(n, status, R_NilValue);
 }
 
 #include "Rconnections.h"
@@ -1299,13 +1309,13 @@ static int con_getc(void)
 
 /* used in source.c */
 attribute_hidden
-SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
+SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile)
 {
     GenerateCode = 1;
     xxlineno = 1;
     con_parse = con;;
     ptr_getc = con_getc;
-    return R_Parse(n, status);
+    return R_Parse(n, status, srcfile);
 }
 
 /* This one is public, and used in source.c */
@@ -1318,7 +1328,7 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     GenerateCode = 1;
     xxlineno = 1;
     ptr_getc = text_getc;
-    rval = R_Parse(n, status);
+    rval = R_Parse(n, status, R_NilValue);
     R_TextBufferFree(&textb);
     return rval;
 }
@@ -1331,7 +1341,7 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
     GenerateCode = 1;
     xxlineno = 1;
     ptr_getc = ggetc;
-    return R_Parse(n, status);
+    return R_Parse(n, status, R_NilValue);
 }
 #endif
 
@@ -1378,10 +1388,12 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	    if (c == ';' || c == '\n') break;
 	}
 
-#if 0	
 	if (!isNull(srcfile))
 	    SrcFile = srcfile;
-#endif
+	
+	xxlineno = 1;
+	xxcolno = 1;
+	
 	rval = R_Parse1Buffer(buffer, 1, status);
 	SrcFile = NULL;
 	
@@ -2203,6 +2215,12 @@ static int token()
     }
 }
 
+static void setlastloc()
+{
+    yylloc.last_line = xxlineno;
+    yylloc.last_column = xxcolno;
+}
+
 static int yylex(void)
 {
     int tok;
@@ -2246,6 +2264,7 @@ static int yylex(void)
 		while (*contextp == 'i')
 		    ifpop();
 		*contextp-- = 0;
+		setlastloc();
 		return tok;
 	    }
 
@@ -2256,6 +2275,7 @@ static int yylex(void)
 
 	    if (tok == ',') {
 		ifpop();
+		setlastloc();		
 		return tok;
 	    }
 
@@ -2271,16 +2291,21 @@ static int yylex(void)
 	    if(tok == ELSE) {
 		EatLines = 1;
 		ifpop();
+		setlastloc();		
 		return ELSE;
 	    }
 	    else {
 		ifpop();
 		SavedToken = tok;
 		SavedLval = yylval;
+		setlastloc();		
 		return '\n';
 	    }
 	}
-	else return '\n';
+	else {
+	    setlastloc();
+	    return '\n';
+	}
     }
 
     /* Additional context sensitivities */
@@ -2405,5 +2430,6 @@ static int yylex(void)
 	break;
 
     }
+    setlastloc();
     return tok;
 }

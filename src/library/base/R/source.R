@@ -26,6 +26,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     }
     ofile <- file # for use with chdir = TRUE
     from_file <- FALSE
+    srcfile <- NULL
     if(is.character(file)) {
         if(capabilities("iconv")) {
             if(identical(encoding, "unknown")) {
@@ -50,12 +51,13 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         }
         if(file == "") file <- stdin()
         else {
+            if (echo) srcfile <- srcfile(file)
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
             from_file <- TRUE
 	}
     }
-    Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?", NULL)))
+    Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile)))
     if (from_file) { # we are done with the file now
         close(file)
         on.exit()
@@ -88,24 +90,36 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	nos <- "[^\"]*"
 	oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
 		       nos, "$", sep = "")
+        lastshown <- 0
     }
     for (i in 1:Ne) {
 	if (verbose)
 	    cat("\n>>>> eval(expression_nr.", i, ")\n\t	 =================\n")
 	ei <- exprs[i]
 	if (echo) {
-	    # drop "expression("
-	    dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
+	    srcref <- attr(ei[[1]], "srcref")
+	    if (is.null(srcref)) {
+	        # Deparse.  Must drop "expression(...)"
+		dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
 	    		  collapse = "\n"), 12, 1e+06)
-	    # -1: drop ")"
-            ## We really do want chars here as \n\t may be embedded.
-	    nd <- nchar(dep, "chars") - 1
-	    do.trunc <- nd > max.deparse.length
-	    dep <- substr(dep, 1, if (do.trunc) max.deparse.length else nd)
-	    cat("\n", prompt.echo, dep, if (do.trunc)
-		paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
+            	## We really do want chars here as \n\t may be embedded.	    	
+		nd <- nchar(dep, "chars") - 1	    
+	    } else {
+	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
+	    	lastshown <- srcref[3]	    	
+	    	while (length(dep) && length(grep("^[ \\t]*$", dep[1]))) dep <- dep[-1]
+	    	while (length(dep) && length(grep("^[ \\t]*$", dep[length(dep)]))) dep <- dep[-length(dep)]
+	    	dep <- paste(dep, collapse="\n")
+	    	nd <- nchar(dep, "chars")
+	    }
+	    if (nd) {
+		do.trunc <- nd > max.deparse.length
+		dep <- substr(dep, 1, if (do.trunc) max.deparse.length else nd)
+		cat("\n", prompt.echo, dep, if (do.trunc)
+		    paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
 		      " ...\" ..."
 		      else " ....", "[TRUNCATED] "), "\n", sep = "")
+	    }
 	}
 	yy <- eval.with.vis(ei, envir)
 	i.symbol <- mode(ei[[1]]) == "name"

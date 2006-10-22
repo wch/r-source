@@ -44,7 +44,7 @@ SEXP R_Parse1Vector(TextBuffer*, int, ParseStatus *);
 typedef struct Rconn  *Rconnection;
 #define HAVE_RCONNECTION_TYPEDEF
 #endif
-SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status);
+SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile);
 
 	/* Report a parse error */
 	
