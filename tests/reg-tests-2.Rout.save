@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-22 r39479)
+R version 2.5.0 Under development (unstable) (2006-10-15 r39637)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5571,4 +5571,28 @@ Residual standard error: 1.735 on 44 degrees of freedom
 > 
 > 
 > ### end of tests added in 2.4.0 ###
+> 
+> 
+> ## Platform-specific behaviour in lowess reported to R-help
+> ## 2006-10-12 by Frank Harrell
+> x <- c(0,7,8,14,15,120,242)
+> y <- c(122,128,130,158,110,110,92)
+> lowess(x, y, iter=0)
+$x
+[1]   0   7   8  14  15 120 242
+
+$y
+[1] 121.95735 128.00000 131.06649 136.93673 126.76467 109.99903  92.00003
+
+> lowess(x, y)
+$x
+[1]   0   7   8  14  15 120 242
+
+$y
+[1] 122 128 128 158 110 110  92
+
+> ## MAD of iterated residuals was zero, and result depended on the platform.
+> 
+> 
+> ### end of tests added in 2.4.1 ###
 > 

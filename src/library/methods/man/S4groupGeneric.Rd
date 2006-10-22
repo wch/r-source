@@ -4,6 +4,7 @@
 \alias{Ops}
 \alias{Summary}
 \alias{Arith}
+\alias{Logic}
 \alias{Compare}
 \alias{Complex}
 \alias{Math2}
@@ -26,6 +27,7 @@
 Arith(e1, e2)
 Compare(e1, e2)
 Ops(e1, e2)
+Logic(e1, e2)
 Math(x)
 Math2(x, digits)
 Summary(x, \dots, na.rm = FALSE)
@@ -43,7 +45,8 @@ Complex(z)
   formal (S4) methods can be defined for the group generic functions
   (which are \R objects which should never be called directly
   -- a suitable error message will result if they are).  There are also
-  S3 groups \code{Arith}, \code{Ops}, \code{Summary} and \code{Complex},
+  S3 groups \code{Math}, \code{Ops}, \code{Summary} and
+  \code{Complex}, see \code{?\link{S3groupGeneric}},
   with no corresponding \R objects.
 
   The functions belonging to the various groups are as follows:
@@ -52,7 +55,11 @@ Complex(z)
       \code{"\%\%"}, \code{"\%/\%"}, \code{"/"}}
     \item{\code{Compare}}{\code{"=="}, \code{">"}, \code{"<"},
       \code{"!="}, \code{"<="}, \code{">="}}
-    \item{\code{Ops}}{\code{"Arith"}, \code{"Compare"}}
+    \item{\code{Logic}}{\code{"&"}, \code{"|"}, but \bold{not}
+      \code{"!"} since that has only one argument.  Note that this is
+      contrary to Chambers(1998), on purpose.
+    }
+    \item{\code{Ops}}{\code{"Arith"}, \code{"Compare"}, \code{"Logic"}}
     \item{\code{Math}}{\code{"log"}, \code{"sqrt"}, \code{"log10"},
       \code{"cumprod"}, \code{"abs"}, \code{"acos"}, \code{"acosh"},
       \code{"asin"}, \code{"asinh"}, \code{"atan"}, \code{"atanh"},
@@ -66,6 +73,7 @@ Complex(z)
     \item{\code{Complex}}{\code{"Arg"}, \code{"Conj"}, \code{"Im"},
       \code{"Mod"}, \code{"Re"}}
   }
+  Note that \code{"Ops"} merely consists of three sub groups.
   Functions with the group names exist in the \pkg{methods} package but
   should not be called directly.
 

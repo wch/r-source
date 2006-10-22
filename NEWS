@@ -48,6 +48,9 @@ NEW FEATURES
     o	binom.test() now allows a 'fuzz' for calculated integer values
 	in its x and n arguments.
 
+    o	abbreviate() no longer has an 8191 byte limit on the size of
+	strings it can handle.
+
 
 DEPRECATED & DEFUNCT
 
@@ -61,6 +64,17 @@ DEPRECATED & DEFUNCT
 
 
 BUG FIXES
+
+    o	S4 group generic "Logic" (with '&', '|', but not '!') has been
+	created, following the green book (apart from '!').
+
+    o	Fixes to group generics to ensure that the correct number of
+	active arguments are in the signature of the group and all
+	members. Also a fix to keep the groupMembers slot up to date.
+
+    o	removeClass() now takes care to remove any subclass references
+	to the deleted class.
+
 
 
 
@@ -90,6 +104,34 @@ BUG FIXES
 	Changed Date' will be in the local timezone, and not in GMT as
 	previously.
 
+    o	add1.lm() had been broken by other changes for weighted fits.
+
+    o	axis.POSIXct() would sometimes give the wrong labels.
+
+    o	Help for a method call would fail. (PR#9291)
+
+    o	gzfile() returned an object of class "file" not "gzfile". (PR#9271)
+
+    o	load()ing from a connection had a logic bug in when it closed
+	the connection. (PR#9271)
+
+    o	The lowess() algorithm is unstable if the MAD of the residuals
+	becomes (effectively) zero: R now terminates the iterations at
+	that point.  (This may result in quite different answers.)
+
+	The 'delta' argument was incorrectly documented.  (PR#9264)
+
+    o	abbreviate() would only work for strings of up to 8191 bytes,
+	but this was not checked.  Now longer strings are errors.
+
+    o	Drawing X11 rotated text was buggy for VERY small (negative)
+	angle of rotation.  Reported by Ben Bolker.
+
+    o	The X11 data editor would crash in an MBCS locale if R was
+	compiled with FC's CFLAGS that add buffer overflow and
+	stack-smashing detection.
+
+    o   rect() was not accepting border=NA in some cases
 
 
 		CHANGES IN R VERSION 2.4.0

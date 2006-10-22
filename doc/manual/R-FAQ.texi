@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-10-11
+@set FAQ_DATE @value{FAQ_YEAR}-10-19
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -1615,8 +1615,9 @@ Annotation in Plots'', @url{http://www.amstat.org/publications/jcgs/, ,
 
 For a very long time, there was no such thing.
 
-@url{http://www.xlsolutions-corp.com/, XL Solutions} is currently beta
-testing a commercially supported version of R named R+ (read R plus).
+@url{http://www.xlsolutions-corp.com/, XLSolutions Corporation} is
+currently beta testing a commercially supported version of R named R+
+(read R plus).
 
 In addition, @url{http://www.revolution-computing.com/, REvolution
 Computing} has released
@@ -1867,6 +1868,8 @@ Graphical modeling for contingency tables using CoCo.
 @c </COMMENT>
 @item CompetingRiskFrailty
 Competing risk model with frailties for right censored survival data.
+@item CreditMetrics
+Functions for calculating the CreditMetrics risk model.
 @item DAAG
 Various data sets used in examples and exercises in ``Data Analysis and
 Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
@@ -2315,6 +2318,8 @@ soil.
 Sparse logistic regression.
 @item SparseM
 Basic linear algebra for sparse matrices.
+@item SpherWave
+Spherical Wavelets and SW-based spatially adaptive methods.
 @item StatDataML
 Read and write StatDataML.
 @item StoppingRules
@@ -3081,6 +3086,8 @@ marginal inference for regression-scale models, and @strong{nlreg} for
 higher order inference for nonlinear heteroscedastic models.
 @item homals
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
+@item homtest
+Homogeneity tests for regional frequency analysis.
 @item hopach
 Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
 @item hot
@@ -3548,6 +3555,9 @@ Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
 A collection of some tests commonly used for identifying outliers.
 @item oz
 Functions for plotting Australia's coastline and state boundaries.
+@item pARtial
+(Partial) attributable risk estimates, corresponding variance estimates
+and confidence intervals.
 @item paleoTS
 Modeling evolution in paleontological time-series.
 @item pamr
@@ -4437,6 +4447,8 @@ An interface to call XLisp-Stat functions from within R.
 @item Rstem
 Interface to Snowball implementation of Porter's word stemming
 algorithm.
+@item Ryacas
+R interface to yacas.
 @item SASXML
 Example for reading @XML{} files in SAS 8.2 manner.
 @item SJava

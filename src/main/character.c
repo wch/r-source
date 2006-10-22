@@ -84,7 +84,7 @@ static void AllocBuffer(int len, R_StringBuffer *cbuff)
 {
     if(len >= 0) R_AllocStringBuffer(len, cbuff);
 }
-/* de-allocation is alway safe as we statically initialize */
+/* de-allocation is always safe as we statically initialize */
 static void DeallocBuffer(R_StringBuffer *cbuff)
 {
     if(cbuff->bufsize != MAXELTSIZE) R_FreeStringBuffer(cbuff);
@@ -601,15 +601,14 @@ static void mystrcpy(char *dest, const char *src)
 }
 
 
+/* abbreviate(inchar, minlen) */
 static SEXP stripchars(SEXP inchar, int minlen)
 {
-/* abbreviate(inchar, minlen) */
-
-/* This routine used strcpy with overlapping dest and src.
+/* This routine used to use strcpy with overlapping dest and src.
    That is not allowed by ISO C.
  */
     int i, j, nspace = 0, upper;
-    char buff1[MAXELTSIZE];
+    char *buff1 = cbuff.data;
 
     mystrcpy(buff1, CHAR(inchar));
     upper = strlen(buff1)-1;
@@ -712,12 +711,13 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = allocVector(STRSXP, len));
     minlen = asInteger(CADR(args));
-    uclass = asLogical(CAR(CDDR(args)));
+    uclass = asLogical(CADDR(args));
     for (i = 0 ; i < len ; i++) {
 	if (STRING_ELT(x, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
 	    warn = warn | !utf8strIsASCII(CHAR(STRING_ELT(x, i)));
+	    AllocBuffer(strlen(CHAR(STRING_ELT(x, i))) +1, &cbuff);
 	    SET_STRING_ELT(ans, i,
 			   stripchars(STRING_ELT(x, i), minlen));
 	}
@@ -726,6 +726,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_ATTRIB(ans, duplicate(ATTRIB(x)));
     /* This copied the class, if any */
     SET_OBJECT(ans, OBJECT(x));
+    DeallocBuffer(&cbuff);
     UNPROTECT(1);
     return(ans);
 }

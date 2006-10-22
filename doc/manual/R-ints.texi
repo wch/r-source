@@ -1161,7 +1161,7 @@ libraries.
 saving on-screen graphs to those formats. This is technically optional,
 and needs source code not in the tarball.
 
-@item @file{Rchmtl.dll}
+@item @file{Rchtml.dll}
 (Windows only.)  A link to an ActiveX control that displays Compiled
 @HTML{} help.  This is optional, and only compiled if CHTML is specified.
 

@@ -34,8 +34,9 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 \arguments{
   \item{width, height}{the (nominal) width and height of the canvas of
     the plotting window in inches.}
-  \item{pointsize}{the default pointsize of plotted text. The allowed
-    range is \code{[6, 48]}: values outside that range are reset to 12.}
+  \item{pointsize}{the default pointsize of plotted text. Values are 
+    rounded to the nearest integer: values less than or equal to zero
+    are reset to 12.}
   \item{record}{logical: sets the initial state of the flag for
     recording plots.}
   \item{rescale}{controls the action for resizing plots.}

@@ -27,7 +27,7 @@ importIntoEnv(impenv, impnames, expenv, expnames)
 isBaseNamespace(ns)
 namespaceExport(ns, vars)
 namespaceImport(self, \dots)
-namespaceImportFrom(self, ns, vars, generics)
+namespaceImportFrom(self, ns, vars, generics, packages)
 namespaceImportClasses(self, ns, vars)
 namespaceImportMethods(self, ns, vars)
 packageHasNamespace(package, package.lib)
@@ -49,6 +49,7 @@ setNamespaceInfo(ns, which, val)
   \item{generics}{optional character vector.}
   \item{self}{name space environment.}
   \item{package}{string naming the package/name space to load.}
+  \item{packages}{vector of package names parallel to \code{generics}.}
   \item{package.lib}{character vector specifying library.}
   \item{mustExist}{logical.}
   \item{genname}{character.}

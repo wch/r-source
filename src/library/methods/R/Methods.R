@@ -81,6 +81,16 @@ setGeneric <-
     }
     if(doUncache)
       .uncacheGeneric(name, oldDef)
+    groups = fdef@group
+    for(group in groups) { # add as member of group generic(s) if not there
+        gdef <- getGeneric(group)
+        if(is(gdef, "groupGenericFunction") &&
+           is.na(match(fdef@generic, as.character(gdef@groupMembers)))) {
+            gwhere <- .genEnv(group, where)
+            gdef@groupMembers <- c(gdef@groupMembers, list(fdef@generic))
+            assign(group, gdef, gwhere)
+        }
+    }
     assign(name, fdef, where)
     .cacheGeneric(name, fdef)
     if(!.UsingMethodsTables() &&
@@ -279,6 +289,9 @@ cacheMethod <-
       methods
     }
   }
+
+.removeCachedMethod <- function(f, sig, fdef = getGeneric(f))
+    cacheMethod(f, sig, NULL, names(sig), fdef)
 
 
 setMethod <-
@@ -764,7 +777,7 @@ showMethods <-
              showEmpty, printTo = stdout())
 {
     if(missing(showEmpty))
-      showEmpty <- !missing(f)
+	showEmpty <- !missing(f)
     if(identical(printTo, FALSE)) {
         tmp <- tempfile()
         on.exit(unlink(tmp))

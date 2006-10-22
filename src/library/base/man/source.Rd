@@ -49,7 +49,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 
   If \code{\link{options}}("keep.source") is true (the default), the
   source of functions is kept so they can be listed exactly as input.
-  This imposes a limit of 128K chars on the function size and a nesting
+  This imposes a limit of 128K bytes on the function size and a nesting
   limit of 265.  Use \code{option(keep.source = FALSE)} when these
   limits might take effect: if exceeded they generate an error.
 
@@ -61,7 +61,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   trial encoding.
 
   Unlike input from a console, lines in the file or on a connection can
-  contain an unlimited number of characters.
+  contain an unlimited number of characters.  However, there is a limit
+  of 8192 bytes on the size of character strings.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

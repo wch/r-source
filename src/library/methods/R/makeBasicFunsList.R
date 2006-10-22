@@ -27,14 +27,14 @@
     setGroupGeneric(where=where,"Math", function(x)NULL,
 		    knownMembers = members, package = "base")
 
-    ## The Math2 group.  In spite of the documented behaviror, there
-    ## is an S3 method for trun with a SECOND argument.  Until we get
+    ## The Math2 group.  In spite of the documented behavior, there
+    ## is an S3 method for trunc with a SECOND argument.  Until we get
     ## a better solution, we have to put trunc in the Math2 group.
 
     funs <- .addBasicGeneric(funs, "trunc",
 			     function(x, digits = 0) standardGeneric(""),
 			     "Math2", env)
-    
+
     funs <- .addBasicGeneric(funs, "round",
 			     function(x, digits = 0) standardGeneric(""),
 			     "Math2", env)
@@ -54,6 +54,14 @@
     setGroupGeneric(where = where, "Arith", function(e1, e2)NULL,
 		    group = "Ops", knownMembers = members, package = "base")
 
+    ## The Logic group
+    members <- c("&", "|") ## *not*  "!" since that has only one argument
+    for(f in members)
+	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
+				 "Logic", env)
+    setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
+		    group = "Ops", knownMembers = members, package = "base")
+
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")
     for(f in members)
@@ -70,8 +78,9 @@
 
     ## the Ops group generic
 
-    setGroupGeneric(where = where,"Ops", function(e1, e2)NULL,
-		    knownMembers = c("Arith", "Compare"), package = "base")
+    setGroupGeneric(where = where,"Ops", function(e1, e2) NULL,
+		    knownMembers = c("Arith", "Compare", "Logic"),
+                    package = "base")
 
 
     ## The Summary group

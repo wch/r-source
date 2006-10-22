@@ -50,7 +50,8 @@
 # define attribute_hidden
 #endif
 
-#define MAXELTSIZE 8192 /* The largest string size */
+#define MAXELTSIZE 8192 /* Used as a default for string buffer sizes,
+			   and occasionally as a limit. */
 
 #include <R_ext/Complex.h>
 void Rf_CoercionWarning(int);/* warning code */

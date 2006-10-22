@@ -34,10 +34,10 @@ row.names(x) <- value
   Prior to \R 2.4.0, row names were character.  As from \R 2.4.0, they
   are allowed to be integer or character, but for backwards
   compatibility \code{row.names} will always return a character vector.
-  (Use \code{attr(x, "row.names")} if you need the internal value.)
+  (Use \code{attr(x, "row.names")} if you need the actual value.)
 
   Using \code{NULL} for the value resets the row names to
-  \code{seq(len=nrow(x))}.
+  \code{seq_len(nrow(x))}.
 }
 \value{
   \code{row.names} returns a character vector.
@@ -49,9 +49,9 @@ row.names(x) <- value
   it has a method that calls \code{rownames} for an array argument.
 
   Row names of the form \code{1:n} for \code{n > 2} are stored
-  internally in a compact form, which might be seen by calling
-  \code{\link{attributes}} but never via \code{row.names} or
-  \code{attr(x, "row.names")}.
+  internally in a compact form, which might be seen from C code or by
+  deparsing but never via \code{row.names} or
+  \code{\link{attr}(x, "row.names")}.
 }
 \references{
   Chambers, J. M. (1992)

@@ -12,6 +12,9 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 ### Changes by W. Fischer and U. Ligges:
 ## - Deparsing x in for main title. New arguments: sub, las, cex.axis
 ## - made to work by BDR
+### Changes by John W. Emerson (JWE):
+## - Fixed xlab and ylab to reflect changes in variables and/or
+##   orientation (e.g. use of sort and dir options).
 
 mosaicplot.default <-
 function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
@@ -215,11 +218,13 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                      as.numeric(cut(residuals, breaks)))
     }
 
-    ## The next four may all be NULL:
-    label <- dimnames(x)
-    nam.dn <- names(label)
-    if(is.null(xlab)) xlab <- nam.dn[1]
-    if(is.null(ylab)) ylab <- nam.dn[2]
+   ##############################################################
+   ## The next four may all be NULL: ### MOVED by JWE to below.
+   ## label <- dimnames(x)
+   ## nam.dn <- names(label)
+   ## if(is.null(xlab)) xlab <- nam.dn[1]
+   ## if(is.null(ylab)) ylab <- nam.dn[2]
+   ##############################################################
 
     ## Initialize spacing.
     if(is.null(off))
@@ -241,6 +246,24 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         dir <- dir[sort]
         label <- label[sort]
     }
+
+    ## #################################################################
+    ## MOVED and modified by JWE, from above, 10/16/2006 to fix dir= and
+    ## sort= bug with respect to xlab= and ylab= options.
+
+    ## The next four may all be NULL:
+    label <- dimnames(x)
+    nam.dn <- names(label)
+    ## Here, we need to identify the first "h" and first "v" splits, and
+    ## use their names for xlab= and ylab=, if they are NULL.
+
+    if(is.null(xlab) && any(dir == "v"))
+        xlab <- nam.dn[min(which(dir == "v"))]
+    if(is.null(ylab) && any(dir == "h"))
+        ylab <- nam.dn[min(which(dir == "h"))]
+
+    ## END MODIFICATIONS by JWE
+    ## #################################################################
 
     ncolors <- length(tabulate(Ind[,dimd]))
     if(!extended && ((is.null(color) || length(color) != ncolors))) {
@@ -370,3 +393,5 @@ function(formula, data = NULL, ...,
         mosaicplot(table(mf), main = main, ...)
     }
 }
+
+

@@ -79,12 +79,10 @@ topicName <- function(type, topic)
                         stop(gettextf("error in trying to evaluate the expression for argument '%s' (%s)",
                                       arg, deparse(argExpr)),
                              domain = NA)
-                    methods::"elNamed<-"(sigClasses, arg,
-                                         class(argVal))
+                    sigClasses[[arg]] <- class(argVal)
                 }
                 else
-                    methods::"elNamed<-"(sigClasses, arg,
-                                         as.character(argExpr))
+                    sigClasses[[arg]] <- as.character(argExpr)
             }
         }
         method <- methods::selectMethod(f, sigClasses, optional=TRUE,
