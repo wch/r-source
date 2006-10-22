@@ -51,7 +51,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         }
         if(file == "") file <- stdin()
         else {
-            if (echo) srcfile <- srcfile(file)
+            srcfile <- srcfile(file)
 	    file <- file(file, "r", encoding = encoding)
 	    on.exit(close(file))
             from_file <- TRUE

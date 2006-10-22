@@ -82,18 +82,34 @@ SEXP attribute_hidden getParseContext()
     return ans2;
 }    
 
+void attribute_hidden getParseFilename(char* buffer, int buflen)
+{
+    buffer[0] = '\0';
+    if (R_ParseErrorFile && !isNull(R_ParseErrorFile)) {
+	SEXP filename;
+	PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
+	if (!isNull(filename)) 
+	    strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen-1);
+	UNPROTECT(1);
+    }
+}
+
 void attribute_hidden parseError(SEXP call, int linenum)
 {
     SEXP context = getParseContext();
     int len = length(context);
+    char filename[128];
     if (linenum) {
+    	getParseFilename(filename, sizeof(filename)-2);
+    	if (strlen(filename)) strcpy(filename + strlen(filename), ": ");
+    	
 	switch (len) {
-	case 0: errorcall(call, _("%s on line %d"), 
-			    R_ParseErrorMsg, linenum); break;
-	case 1: errorcall(call, _("%s at\n%d: %s"), 
-			    R_ParseErrorMsg, linenum, CHAR(STRING_ELT(context, 0))); break;
-	default: errorcall(call, _("%s at\n%d: %s\n%d: %s"), 
-			    R_ParseErrorMsg, linenum-1, CHAR(STRING_ELT(context, len-2)),
+	case 0: errorcall(call, _("%s%s on line %d"), 
+			    filename, R_ParseErrorMsg, linenum); break;
+	case 1: errorcall(call, _("%s%s at\n%d: %s"), 
+			    filename, R_ParseErrorMsg, linenum, CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("%s%s at\n%d: %s\n%d: %s"), 
+			    filename, R_ParseErrorMsg, linenum-1, CHAR(STRING_ELT(context, len-2)),
 			    linenum, CHAR(STRING_ELT(context, len-1))); break;
 	}
     } else {

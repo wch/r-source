@@ -160,7 +160,8 @@ RETSIGTYPE attribute_hidden onsigusr1(int dummy)
     R_ResetConsole();
     R_FlushConsole();
     R_ClearerrConsole();
-    R_ParseError = 0;
+    R_ParseError = 0;    
+    R_ParseErrorFile = NULL;
     R_ParseErrorMsg[0] = '\0';
 
     /* Bail out if there is a browser/try on the stack--do we really
@@ -195,6 +196,7 @@ RETSIGTYPE attribute_hidden onsigusr2(int dummy)
     R_FlushConsole();
     R_ClearerrConsole();
     R_ParseError = 0;
+    R_ParseErrorFile = NULL;
     R_ParseErrorMsg[0] = '\0';    
     R_CleanUp(SA_SAVE, 0, 0);
 }
@@ -643,6 +645,7 @@ static void jump_to_top_ex(Rboolean traceback,
 	R_FlushConsole();
 	R_ClearerrConsole();
 	R_ParseError = 0;
+	R_ParseErrorFile = NULL;
 	R_ParseErrorMsg[0] = '\0';	
     }
 

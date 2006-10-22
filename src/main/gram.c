@@ -2306,7 +2306,7 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 static int xxvalue(SEXP v, int k, YYLTYPE *lloc)
 {
     if (k > 2) {
-    	if (SrcFile)
+    	if (KeepSource && SrcFile)
     	    SET_ATTRIB(v, makeSrcref(lloc, SrcFile));
     	UNPROTECT_PTR(v);
     }
@@ -2387,7 +2387,7 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans,tmp;
     if (GenerateCode) {
-        if (SrcFile)
+        if (KeepSource && SrcFile)
             SET_ATTRIB(expr, makeSrcref(lloc, SrcFile));
 	PROTECT(tmp = NewList());
 	PROTECT(ans = GrowList(tmp, expr));
@@ -2403,7 +2403,7 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-        if (SrcFile)
+        if (KeepSource && SrcFile)
             SET_ATTRIB(expr, makeSrcref(lloc, SrcFile));
 	PROTECT(ans = GrowList(exprlist, expr));
     }
@@ -3126,7 +3126,7 @@ SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile)
 {
     GenerateCode = 1;
     xxlineno = 1;
-    con_parse = con;;
+    con_parse = con;
     ptr_getc = con_getc;
     return R_Parse(n, status, srcfile);
 }
@@ -3437,6 +3437,7 @@ SEXP mkFalse(void)
 static void yyerror(char *s)
 {
     R_ParseError = xxlineno;
+    R_ParseErrorFile = SrcFile;
     strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE-1);
 }
 
