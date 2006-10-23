@@ -505,12 +505,14 @@ static Rboolean needsparens(PPinfo mainop, SEXP arg, unsigned int left)
 static Rboolean hasAttributes(SEXP s)
 {
     SEXP a = ATTRIB(s);
-    if (length(a) > 1
-    	|| (length(a) == 1
-    		&& (TYPEOF(s) != CLOSXP || TAG(a) != R_SourceSymbol)))
-    	return(TRUE);
-    else
-    	return(FALSE);
+    if (length(a) > 2) return(TRUE);
+    while(!isNull(a)) {
+    	if(TAG(a) != R_SrcrefSymbol
+    	   && (TYPEOF(s) != CLOSXP || TAG(a) != R_SourceSymbol))
+    	    return(TRUE);
+    	a = CDR(a);
+    }
+    return(FALSE);
 }
 
 static void attr1(SEXP s, LocalParseData *d)
@@ -526,7 +528,7 @@ static void attr2(SEXP s, LocalParseData *d)
     if(hasAttributes(s)) {
 	SEXP a = ATTRIB(s);
 	while(!isNull(a)) {
-	    if(TAG(a) != R_SourceSymbol) {
+	    if(TAG(a) != R_SourceSymbol && TAG(a) != R_SrcrefSymbol) {
 		print2buff(", ", d);
 		if(TAG(a) == R_DimSymbol) {
 		    print2buff(".Dim", d);
@@ -634,6 +636,17 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     char tpb[120];
     int i, n;
 
+    if ((d->opts & USESOURCE) && (!isNull(t = getAttrib(s, R_SrcrefSymbol)))) {
+    	PROTECT(t = eval(lang2(install("as.character"), t), R_GlobalEnv));
+    	n = length(t);
+    	for(i = 0 ; i < n ; i++) {
+	    print2buff(CHAR(STRING_ELT(t, i)), d);
+	    if(i < n-1) writeline(d);
+	}
+    	UNPROTECT(1);
+    	return;
+    }
+    
     switch (TYPEOF(s)) {
     case NILSXP:
 	print2buff("NULL", d);
@@ -682,7 +695,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    	writeline(d);
 	    }
 	} else {
-	    d->opts = SIMPLEDEPARSE;
+	    d->opts &= USESOURCE;
 	    print2buff("function (", d);
 	    args2buff(FORMALS(s), 0, 1, d);
 	    print2buff(") ", d);

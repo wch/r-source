@@ -2229,11 +2229,10 @@ static int yylex(void)
 {
     int tok;
 
+ again:
     yylloc.first_line = xxlineno;
     yylloc.first_column = xxcolno;
-
- again:
-
+    
     tok = token();
 
     /* Newlines must be handled in a context */
