@@ -2941,21 +2941,12 @@ SEXP R_PackageEnvName(SEXP rho)
 
 SEXP R_FindPackageEnv(SEXP info)
 {
-    SEXP fun, expr, val;
+    SEXP expr, val;
     PROTECT(info);
-    fun = install("findPackageEnv");
-    if (findVar(fun, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
-	warning(_("using .GlobalEnv instead of '%s'"),
-		CHAR(STRING_ELT(info, 0)));
-	UNPROTECT(1);
-	return R_GlobalEnv;
-    }
-    else {
-	PROTECT(expr = LCONS(fun, LCONS(info, R_NilValue)));
-	val = eval(expr, R_GlobalEnv);
-	UNPROTECT(2);
-	return val;
-    }
+    PROTECT(expr = LCONS(install("findPackageEnv"), LCONS(info, R_NilValue)));
+    val = eval(expr, R_GlobalEnv);
+    UNPROTECT(2);
+    return val;
 }
 
 Rboolean R_IsNamespaceEnv(SEXP rho)
@@ -3008,20 +2999,12 @@ SEXP R_NamespaceEnvSpec(SEXP rho)
 
 SEXP R_FindNamespace(SEXP info)
 {
-    SEXP fun, expr, val;
+    SEXP expr, val;
     PROTECT(info);
-    fun = install("getNamespace");
-    if (findVar(fun, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
-	warning(_("namespaces not available; using .GlobalEnv"));
-	UNPROTECT(1);
-	return R_GlobalEnv;
-    }
-    else {
-	PROTECT(expr = LCONS(fun, LCONS(info, R_NilValue)));
-	val = eval(expr, R_GlobalEnv);
-	UNPROTECT(2);
-	return val;
-    }
+    PROTECT(expr = LCONS(install("getNamespace"), LCONS(info, R_NilValue)));
+    val = eval(expr, R_GlobalEnv);
+    UNPROTECT(2);
+    return val;
 }
 
 static SEXP checkNSname(SEXP call, SEXP name)
