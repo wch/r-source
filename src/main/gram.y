@@ -484,7 +484,7 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     INTEGER(val)[2] = lloc->last_line;
     INTEGER(val)[3] = lloc->last_column;
     setAttrib(val, R_SrcfileSymbol, srcfile);
-    setAttrib(val, R_ClassSymbol,  ScalarString(mkChar("srcref")));
+    setAttrib(val, R_ClassSymbol, mkString("srcref"));
     result = allocList(1);
     SETCAR(result, val);
     SET_TAG(result, R_SrcrefSymbol);
@@ -2040,14 +2040,18 @@ static int token()
 	yylval = SavedLval;
 	SavedLval = R_NilValue;
 	SavedToken = 0;
+	yylloc.first_line = xxlinesave;
+	yylloc.first_column = xxcolsave;	
 	return c;
     }
     xxcharsave = xxcharcount; /* want to be able to go back one token */
-    xxlinesave = xxlineno;
-    xxcolsave  = xxcolno;
 
     c = SkipSpace();
     if (c == '#') c = SkipComment();
+    
+    yylloc.first_line = xxlineno;
+    yylloc.first_column = xxcolno;    
+
     if (c == R_EOF) return END_OF_INPUT;
 
     /* Either digits or symbols can start with a "." */
@@ -2230,8 +2234,6 @@ static int yylex(void)
     int tok;
 
  again:
-    yylloc.first_line = xxlineno;
-    yylloc.first_column = xxcolno;
     
     tok = token();
 
@@ -2300,6 +2302,8 @@ static int yylex(void)
 	    else {
 		ifpop();
 		SavedToken = tok;
+		xxlinesave = yylloc.first_line;
+		xxcolsave  = yylloc.first_column;	
 		SavedLval = yylval;
 		setlastloc();		
 		return '\n';

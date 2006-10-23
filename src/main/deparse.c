@@ -723,7 +723,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    print2buff("expression()", d);
 	else {
 	    print2buff("expression(", d);
-	    d->opts = SIMPLEDEPARSE;
+	    d->opts &= USESOURCE;
 	    vec2buff(s, d);
 	    d->opts = localOpts;
 	    print2buff(")", d);
@@ -759,7 +759,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	printcomment(s, d);
 	if (localOpts & QUOTEEXPRESSIONS) {
 	    print2buff("quote(", d);
-	    d->opts = SIMPLEDEPARSE;
+	    d->opts &= USESOURCE;
 	}
 	if (TYPEOF(CAR(s)) == SYMSXP) {
 	    if ((TYPEOF(SYMVALUE(CAR(s))) == BUILTINSXP) ||
