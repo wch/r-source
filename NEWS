@@ -80,6 +80,13 @@ BUG FIXES
 
 		CHANGES IN R VERSION 2.4.0 patched
 
+INSTALLATION
+
+    o	configure uses code borrowed from autoconf 2.60 to try harder to
+	ensure that a C99-compliant compiler is used.  (It does so by
+	appending to CC.)  This avoids problems with systems such as FC5
+	which override CFLAGS and thereby lose flags such as -std=gnu99.
+
 
 BUG FIXES
 
