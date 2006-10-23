@@ -63,6 +63,14 @@ DEPRECATED & DEFUNCT
     o	The autoloading of ts() is defunct.
 
 
+INSTALLATION
+
+    o	Autoconf 2.60 is used to create 'configure'.  This makes a
+	number of small changes, and in particular incorporates the
+	changes to the detection of a C99-compliant C compiler
+	backported for 2.4.0 patched.
+
+
 BUG FIXES
 
     o	S4 group generic "Logic" (with '&', '|', but not '!') has been
@@ -82,6 +90,11 @@ BUG FIXES
 
 INSTALLATION
 
+    o	The extraction of info from Subversion for an SVN checkout now
+	also works for svn >= 1.4.0.  However, on Windows the 'Last
+	Changed Date' will be in the local timezone, and not in GMT as
+	previously.
+
     o	configure uses code borrowed from autoconf 2.60 to try harder to
 	ensure that a C99-compliant compiler is used.  (It does so by
 	appending to CC.)  This avoids problems with systems such as FC5
@@ -98,11 +111,6 @@ BUG FIXES
 	(PR#9280)
 
     o	merge() now allows zero-row data frames.
-
-    o	The extraction of info from Subversion for an SVN checkout now
-	also works for svn >= 1.4.0.  However, on Windows the 'Last
-	Changed Date' will be in the local timezone, and not in GMT as
-	previously.
 
     o	add1.lm() had been broken by other changes for weighted fits.
 
@@ -131,15 +139,15 @@ BUG FIXES
 	compiled with FC's CFLAGS that add buffer overflow and
 	stack-smashing detection.
 
-    o	rect() was not accepting border=NA in some cases
+    o	rect() was not accepting border=NA in some cases involving
+	cross-hatching.
 
-    o	Fixes to group generics to ensure that the correct number of
+    o	Fixes to S4 group generics to ensure that the correct number of
 	active arguments are in the signature of the group and all
-	members. Also a fix to keep the groupMembers slot up to date.
-
+	members.  Also a fix to keep the 'groupMembers' slot up to date.
+ 
     o	removeClass() now takes care to remove any subclass references
 	to the deleted class.
-
 
 
 		CHANGES IN R VERSION 2.4.0
