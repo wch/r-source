@@ -19,11 +19,11 @@ INSTALLATION
 BUG FIXES
 
     o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
-        handling (PR#9274).
+	handling (PR#9274).
 
     o	R would slow down when the product of the length of a vector and
-    	the length of a character vector used to subset it exceeded 2^31.
-    	(PR#9280)
+	the length of a character vector used to subset it exceeded 2^31.
+	(PR#9280)
 
     o	merge() now allows zero-row data frames.
 
@@ -59,14 +59,16 @@ BUG FIXES
 	compiled with FC's CFLAGS that add buffer overflow and
 	stack-smashing detection.
 
-    o   rect() was not accepting border=NA in some cases
+    o	rect() was not accepting border=NA in some cases
 
-    o  Fixes to group generics to ensure that the correct number of
-        active arguments are in the signature of the group and all
-        members. Also a fix to keep the groupMembers slot up to date.
- 
-    o  removeClass() now takes care to remove any subclass references
-        to the deleted class.
+    o	Fixes to group generics to ensure that the correct number of
+	active arguments are in the signature of the group and all
+	members. Also a fix to keep the groupMembers slot up to date.
+
+    o	removeClass() now takes care to remove any subclass references
+	to the deleted class.
+
+
 
 		CHANGES IN R VERSION 2.4.0
 
