@@ -22,8 +22,8 @@ srcref(srcfile, lloc)
 \method{print}{srcfile}(x, ...)
 \method{open}{srcfile}(con, line, ...)
 \method{close}{srcfile}(con, ...)
-\method{print}{srcref}(x, ...)
-\method{as.character}{srcref}(srcref)
+\method{print}{srcref}(x, useSource = TRUE, ...)
+\method{as.character}{srcref}(srcref, useSource = TRUE)
 .isOpen(srcfile)
 }
 \arguments{
@@ -33,6 +33,7 @@ srcref(srcfile, lloc)
   \item{lloc}{ A vector of four values giving a source location; see Details }
   \item{x, con}{ An object of the appropriate type }
   \item{srcref}{ A \code{srcref} object }
+  \item{useSource}{ Whether to read the \code{srcfile} to obtain the text of a \code{srcref} }
   \item{...}{ Additional arguments to the methods; these will be ignored }
 }
 \details{
@@ -65,7 +66,9 @@ indicating the \code{line:column} ranges of the first and last character.
 By default, several object types (functions, expressions, etc.) are printed by
 \code{\link{print.default}} using the associated \code{srcref}.  To
 see deparsed code instead, call \code{\link{print}} with argument
-\code{useSource = FALSE}.
+\code{useSource = FALSE}.  If the \code{srcref} attribute of an object
+is printed with \code{useSource = FALSE}, the \code{<srcref: ...>}
+record will be printed.
 
 \code{.isOpen} is intended for internal use:  it checks whether the 
 connection associated with a \code{srcfile} object is open.
@@ -84,8 +87,8 @@ src <- srcfile(system.file("DESCRIPTION", package = "base"))
 getSrcLines(src, 1, 4)
 ref <- srcref(src, c(1, 1, 2, 1000))
 ref
+print(ref, useSource = FALSE)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{ debugging }
 \keyword{ utilities }

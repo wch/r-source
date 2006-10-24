@@ -79,10 +79,10 @@ srcref <- function(srcfile, lloc) {
     structure(as.integer(lloc), srcfile=srcfile, class="srcref")
 }
   
-as.character.srcref <- function(srcref) {
+as.character.srcref <- function(srcref, useSource = TRUE) {
     srcfile <- attr(srcref, "srcfile")
-    lines <- try(getSrcLines(srcfile, srcref[1], srcref[3]), TRUE)
-    if (inherits(lines, "try-error")) 
+    if (useSource) lines <- try(getSrcLines(srcfile, srcref[1], srcref[3]), TRUE)
+    if (!useSource || inherits(lines, "try-error")) 
     	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ", srcref[1],":",srcref[2],
     	               " to ",srcref[3],":",srcref[4], ">", sep="")
     else {
@@ -92,5 +92,5 @@ as.character.srcref <- function(srcref) {
     lines
 }
 
-print.srcref <- function(x, ...) 
-    cat(as.character(x), sep="\n")
+print.srcref <- function(x, useSource = TRUE, ...) 
+    cat(as.character(x, useSource = useSource), sep="\n")
