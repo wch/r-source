@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:32+0100\n"
+"POT-Creation-Date: 2006-10-24 15:53+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -83,7 +83,7 @@ msgstr "'names' inválidos em 'R_unlink'"
 #: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:766
 #: src/main/builtin.c:127 src/main/builtin.c:385 src/main/builtin.c:401
 #: src/main/character.c:116 src/main/character.c:119 src/main/character.c:158
-#: src/main/character.c:2432 src/main/character.c:2436
+#: src/main/character.c:2434 src/main/character.c:2438
 #: src/main/connections.c:822 src/main/connections.c:828
 #: src/main/connections.c:831 src/main/connections.c:835
 #: src/main/connections.c:958 src/main/connections.c:964
@@ -128,7 +128,7 @@ msgstr "'names' inválidos em 'R_unlink'"
 #: src/main/print.c:176 src/main/print.c:182 src/main/print.c:204
 #: src/main/print.c:210 src/main/random.c:465 src/main/random.c:469
 #: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2076
-#: src/main/saveload.c:2341 src/main/saveload.c:2390 src/main/seq.c:346
+#: src/main/saveload.c:2341 src/main/saveload.c:2391 src/main/seq.c:346
 #: src/main/seq.c:350 src/main/seq.c:368 src/main/seq.c:375
 #: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
@@ -476,7 +476,7 @@ msgid "second argument must be a list"
 msgstr "segundo argumento deve ser uma lista"
 
 #: src/include/Errormsg.h:42 src/main/eval.c:2715 src/main/subscript.c:228
-#: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:436
+#: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:437
 msgid "subscript out of bounds"
 msgstr "índice fora de limites"
 
@@ -1156,7 +1156,7 @@ msgstr "tamanho de vetor especificado é muito grande"
 #: src/main/envir.c:2729 src/main/envir.c:2763 src/main/envir.c:2783
 #: src/main/envir.c:3107 src/main/envir.c:3111 src/main/eval.c:3498
 #: src/main/objects.c:175 src/main/objects.c:181 src/main/saveload.c:2072
-#: src/main/saveload.c:2338 src/main/saveload.c:2387 src/main/serialize.c:2175
+#: src/main/saveload.c:2338 src/main/saveload.c:2388 src/main/serialize.c:2175
 msgid "use of NULL environment is defunct"
 msgstr "uso do ambiente NULL não é mais permitido "
 
@@ -1292,114 +1292,114 @@ msgstr "padrão split inválido '%s'"
 msgid "the first argument must be a character vector"
 msgstr "primeiro argumento deve ser um vetor de caracteres"
 
-#: src/main/character.c:725
+#: src/main/character.c:727
 msgid "abbreviate used with non-ASCII chars"
 msgstr "abbreaviate usado com caracteres não-ASCII"
 
-#: src/main/character.c:743
+#: src/main/character.c:745
 msgid "non-character names"
 msgstr "nomes de modo não caractere"
 
-#: src/main/character.c:747
+#: src/main/character.c:749
 msgid "invalid value of 'allow_'"
 msgstr "valor de 'allow_' inválido"
 
-#: src/main/character.c:808 src/main/character.c:1586
+#: src/main/character.c:810 src/main/character.c:1588
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "string multibyte inválida %d"
 
-#: src/main/character.c:889 src/main/character.c:1221
-#: src/main/character.c:1510 src/main/pcre.c:110 src/main/pcre.c:487
+#: src/main/character.c:891 src/main/character.c:1223
+#: src/main/character.c:1512 src/main/pcre.c:110 src/main/pcre.c:487
 #: src/main/pcre.c:582
 msgid "regular expression is invalid in this locale"
 msgstr "expressão regular é inválida nesse locale"
 
-#: src/main/character.c:911 src/main/character.c:1063
-#: src/main/character.c:1224 src/main/character.c:1513 src/main/pcre.c:117
+#: src/main/character.c:913 src/main/character.c:1065
+#: src/main/character.c:1226 src/main/character.c:1515 src/main/pcre.c:117
 #: src/main/pcre.c:332 src/main/pcre.c:492 src/main/pcre.c:587
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "expressão regular inválida '%s'"
 
-#: src/main/character.c:921 src/main/character.c:1239
-#: src/main/character.c:1530 src/main/pcre.c:132 src/main/pcre.c:365
+#: src/main/character.c:923 src/main/character.c:1241
+#: src/main/character.c:1532 src/main/pcre.c:132 src/main/pcre.c:365
 #: src/main/pcre.c:507 src/main/pcre.c:610
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "string de entrada %d é inválida nesse locale"
 
-#: src/main/character.c:976 src/main/pcre.c:187
+#: src/main/character.c:978 src/main/pcre.c:187
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "auto-referência %d inválida na expressão regular"
 
-#: src/main/character.c:1058 src/main/pcre.c:319
+#: src/main/character.c:1060 src/main/pcre.c:319
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' é inválido nesse locale"
 
-#: src/main/character.c:1060 src/main/pcre.c:321
+#: src/main/character.c:1062 src/main/pcre.c:321
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' é inválido nesse locale"
 
-#: src/main/character.c:1069
+#: src/main/character.c:1071
 msgid "zero-length pattern"
 msgstr "padrão de comprimento 0"
 
-#: src/main/character.c:1561
+#: src/main/character.c:1563
 msgid "non-character argument to tolower()"
 msgstr "argumento diferente de caractere para tolower()"
 
-#: src/main/character.c:1639
+#: src/main/character.c:1641
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "especificação de intervalo decrescente ('%lc-%lc')"
 
-#: src/main/character.c:1725
+#: src/main/character.c:1727
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "especificação de intervalo decrescente ('%c-%c')"
 
-#: src/main/character.c:1802
+#: src/main/character.c:1804
 msgid "invalid (NA) arguments."
 msgstr "argumentos inválidos (NA)"
 
-#: src/main/character.c:1824
+#: src/main/character.c:1826
 msgid "invalid multibyte string 'old'"
 msgstr "string multibyte inválida 'old'"
 
-#: src/main/character.c:1831
+#: src/main/character.c:1833
 msgid "invalid multibyte string 'new'"
 msgstr "string multibyte inválida 'new'"
 
-#: src/main/character.c:1850 src/main/character.c:1912
+#: src/main/character.c:1852 src/main/character.c:1914
 msgid "'old' is longer than 'new'"
 msgstr "'old' é maior que 'new'"
 
-#: src/main/character.c:1868
+#: src/main/character.c:1870
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "string de entrada multibyte %d inválida"
 
-#: src/main/character.c:2013
+#: src/main/character.c:2015
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "uso de agrep() em um locale UTF-8 pode funcionar somente para strings ASCII"
 
-#: src/main/character.c:2022
+#: src/main/character.c:2024
 msgid "could not allocate memory for approximate matching"
 msgstr "não foi possível alocar memória para comparação aproximada"
 
-#: src/main/character.c:2046
+#: src/main/character.c:2048
 msgid "could not perform case insensitive matching"
 msgstr ""
 "não foi possível fazer comparação desconsiderando maíusculas/minúsculas"
 
-#: src/main/character.c:2098 src/main/character.c:2333
+#: src/main/character.c:2100 src/main/character.c:2335
 msgid "argument must be a character vector of length 1"
 msgstr "argumento deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/character.c:2100 src/main/character.c:2335
+#: src/main/character.c:2102 src/main/character.c:2337
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1407,45 +1407,45 @@ msgstr ""
 "argumento deve ser um vetor de caracteres de comprimento 1\n"
 "todos menos o primeiro argumento serão ignorados"
 
-#: src/main/character.c:2116 src/main/character.c:2148
-#: src/main/character.c:2169
+#: src/main/character.c:2118 src/main/character.c:2150
+#: src/main/character.c:2171
 msgid "argument 'x' must be a raw vector"
 msgstr "argumento 'x' deve ser um vetor do tipo raw"
 
-#: src/main/character.c:2119 src/main/character.c:2385
+#: src/main/character.c:2121 src/main/character.c:2387
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "argumento 'multiple' deve ser TRUE ou FALSE"
 
-#: src/main/character.c:2150
+#: src/main/character.c:2152
 msgid "argument 'shift' must be a small integer"
 msgstr "argumento 'shift' deve ser um inteiro pequeno"
 
-#: src/main/character.c:2187
+#: src/main/character.c:2189
 msgid "argument 'x' must be a integer vector"
 msgstr "argumento 'x' deve ser um vetor inteiro"
 
-#: src/main/character.c:2207
+#: src/main/character.c:2209
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "argumento 'x' deve ser raw, inteiro ou lógico"
 
-#: src/main/character.c:2209
+#: src/main/character.c:2211
 msgid "argument 'type' must be a character string"
 msgstr "argumento 'type' deve ser uma string de caracteres"
 
-#: src/main/character.c:2213
+#: src/main/character.c:2215
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "argumento 'x' deve ter comprimento múltiplo de %d"
 
-#: src/main/character.c:2227 src/main/character.c:2242
+#: src/main/character.c:2229 src/main/character.c:2244
 msgid "argument 'x' must not contain NAs"
 msgstr "argumento 'x' não pode conter NAs"
 
-#: src/main/character.c:2382
+#: src/main/character.c:2384
 msgid "argument 'x' must be an integer vector"
 msgstr "argumento 'x' deve ser um vetor inteiro"
 
-#: src/main/character.c:2427
+#: src/main/character.c:2429
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requer um vetor de caracteres"
 
@@ -5523,7 +5523,7 @@ msgstr "erro ao escrever na conexão"
 msgid "no input is available"
 msgstr "nenhuma entrada disponível"
 
-#: src/main/saveload.c:2365
+#: src/main/saveload.c:2366
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -6163,7 +6163,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "subscrito (%d) em [[ ]] fora de limites"
 
 #: src/main/subassign.c:1769 src/main/subscript.c:111 src/main/subscript.c:188
-#: src/main/subscript.c:588 src/main/subset.c:923
+#: src/main/subscript.c:589 src/main/subset.c:923
 msgid "invalid subscript type"
 msgstr "tipo de subscrito inválido"
 
@@ -6199,19 +6199,19 @@ msgstr "(subscript) subscrito lógico muito longo"
 msgid "only 0's may be mixed with negative subscripts"
 msgstr "somente 0's podem ser usados junto com subscritos negativos"
 
-#: src/main/subscript.c:410
+#: src/main/subscript.c:411
 msgid "character vector element does not have type CHARSXP"
 msgstr "elemento do vetor de caracteres não tem tipo CHARSXP"
 
-#: src/main/subscript.c:487
+#: src/main/subscript.c:488
 msgid "no 'dimnames' attribute for array"
 msgstr "array sem atributo 'dimnames'"
 
-#: src/main/subscript.c:494
+#: src/main/subscript.c:495
 msgid "invalid subscript"
 msgstr "subscrito inválido"
 
-#: src/main/subscript.c:527
+#: src/main/subscript.c:528
 msgid "subscripting on non-vector"
 msgstr "tentativa de usar um subscrito em um objeto diferente de vetor"
 

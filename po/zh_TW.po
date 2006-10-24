@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:32+0100\n"
+"POT-Creation-Date: 2006-10-24 15:53+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -84,7 +84,7 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:766
 #: src/main/builtin.c:127 src/main/builtin.c:385 src/main/builtin.c:401
 #: src/main/character.c:116 src/main/character.c:119 src/main/character.c:158
-#: src/main/character.c:2432 src/main/character.c:2436
+#: src/main/character.c:2434 src/main/character.c:2438
 #: src/main/connections.c:822 src/main/connections.c:828
 #: src/main/connections.c:831 src/main/connections.c:835
 #: src/main/connections.c:958 src/main/connections.c:964
@@ -129,7 +129,7 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/main/print.c:176 src/main/print.c:182 src/main/print.c:204
 #: src/main/print.c:210 src/main/random.c:465 src/main/random.c:469
 #: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2076
-#: src/main/saveload.c:2341 src/main/saveload.c:2390 src/main/seq.c:346
+#: src/main/saveload.c:2341 src/main/saveload.c:2391 src/main/seq.c:346
 #: src/main/seq.c:350 src/main/seq.c:368 src/main/seq.c:375
 #: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
@@ -476,7 +476,7 @@ msgid "second argument must be a list"
 msgstr "第二個引數必須是串列"
 
 #: src/include/Errormsg.h:42 src/main/eval.c:2715 src/main/subscript.c:228
-#: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:436
+#: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:437
 msgid "subscript out of bounds"
 msgstr "下標超出邊界"
 
@@ -1142,7 +1142,7 @@ msgstr "指定的向量大小太大"
 #: src/main/envir.c:2729 src/main/envir.c:2763 src/main/envir.c:2783
 #: src/main/envir.c:3107 src/main/envir.c:3111 src/main/eval.c:3498
 #: src/main/objects.c:175 src/main/objects.c:181 src/main/saveload.c:2072
-#: src/main/saveload.c:2338 src/main/saveload.c:2387 src/main/serialize.c:2175
+#: src/main/saveload.c:2338 src/main/saveload.c:2388 src/main/serialize.c:2175
 msgid "use of NULL environment is defunct"
 msgstr "NULL 環境的使用已經廢止"
 
@@ -1276,156 +1276,156 @@ msgstr "split 的式樣 '%s' 不正確"
 msgid "the first argument must be a character vector"
 msgstr "第一引數必須是字元向量"
 
-#: src/main/character.c:725
+#: src/main/character.c:727
 msgid "abbreviate used with non-ASCII chars"
 msgstr "abbreviate 不適用於非 ASCII 字元"
 
-#: src/main/character.c:743
+#: src/main/character.c:745
 msgid "non-character names"
 msgstr "不能有非字元名稱"
 
-#: src/main/character.c:747
+#: src/main/character.c:749
 msgid "invalid value of 'allow_'"
 msgstr "'allow_' 值不正確"
 
-#: src/main/character.c:808 src/main/character.c:1586
+#: src/main/character.c:810 src/main/character.c:1588
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "多位元組字串 %d 不正確"
 
-#: src/main/character.c:889 src/main/character.c:1221
-#: src/main/character.c:1510 src/main/pcre.c:110 src/main/pcre.c:487
+#: src/main/character.c:891 src/main/character.c:1223
+#: src/main/character.c:1512 src/main/pcre.c:110 src/main/pcre.c:487
 #: src/main/pcre.c:582
 msgid "regular expression is invalid in this locale"
 msgstr "正規表示式不適用於此語言環境"
 
-#: src/main/character.c:911 src/main/character.c:1063
-#: src/main/character.c:1224 src/main/character.c:1513 src/main/pcre.c:117
+#: src/main/character.c:913 src/main/character.c:1065
+#: src/main/character.c:1226 src/main/character.c:1515 src/main/pcre.c:117
 #: src/main/pcre.c:332 src/main/pcre.c:492 src/main/pcre.c:587
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "正規表示式「%s」不正確"
 
-#: src/main/character.c:921 src/main/character.c:1239
-#: src/main/character.c:1530 src/main/pcre.c:132 src/main/pcre.c:365
+#: src/main/character.c:923 src/main/character.c:1241
+#: src/main/character.c:1532 src/main/pcre.c:132 src/main/pcre.c:365
 #: src/main/pcre.c:507 src/main/pcre.c:610
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "輸入的字串 %d 不適用於此語言環境"
 
-#: src/main/character.c:976 src/main/pcre.c:187
+#: src/main/character.c:978 src/main/pcre.c:187
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "正規表示式中向後參考 %d 不正確"
 
-#: src/main/character.c:1058 src/main/pcre.c:319
+#: src/main/character.c:1060 src/main/pcre.c:319
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' 的值在本語言環境下不正確"
 
-#: src/main/character.c:1060 src/main/pcre.c:321
+#: src/main/character.c:1062 src/main/pcre.c:321
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' 的值在本語言環境下不正確"
 
-#: src/main/character.c:1069
+#: src/main/character.c:1071
 msgid "zero-length pattern"
 msgstr "式樣長度為零"
 
-#: src/main/character.c:1561
+#: src/main/character.c:1563
 msgid "non-character argument to tolower()"
 msgstr "非字元引數不能用於 tolower()"
 
-#: src/main/character.c:1639
+#: src/main/character.c:1641
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "正在遞減範圍設定 ('%lc-%lc')"
 
-#: src/main/character.c:1725
+#: src/main/character.c:1727
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "正在遞減範圍設定 ('%c-%c')"
 
-#: src/main/character.c:1802
+#: src/main/character.c:1804
 msgid "invalid (NA) arguments."
 msgstr "(NA) 引數不正確。"
 
-#: src/main/character.c:1824
+#: src/main/character.c:1826
 msgid "invalid multibyte string 'old'"
 msgstr "多位元組字串 'old' 不正確"
 
-#: src/main/character.c:1831
+#: src/main/character.c:1833
 msgid "invalid multibyte string 'new'"
 msgstr "多位元組字串 'new' 不正確"
 
-#: src/main/character.c:1850 src/main/character.c:1912
+#: src/main/character.c:1852 src/main/character.c:1914
 msgid "'old' is longer than 'new'"
 msgstr "'old' 比 'new' 要長"
 
-#: src/main/character.c:1868
+#: src/main/character.c:1870
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "輸入的多位元組字串 %d 不正確"
 
-#: src/main/character.c:2013
+#: src/main/character.c:2015
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr "在 UTF-8 語言環境下 agrep() 只能適用於 ASCII 字串"
 
-#: src/main/character.c:2022
+#: src/main/character.c:2024
 msgid "could not allocate memory for approximate matching"
 msgstr "做近似比較時無法指派足夠記憶體"
 
-#: src/main/character.c:2046
+#: src/main/character.c:2048
 msgid "could not perform case insensitive matching"
 msgstr "無法進行不區分大小寫的比較"
 
-#: src/main/character.c:2098 src/main/character.c:2333
+#: src/main/character.c:2100 src/main/character.c:2335
 msgid "argument must be a character vector of length 1"
 msgstr "引數必須是長度為 1 的字元向量"
 
-#: src/main/character.c:2100 src/main/character.c:2335
+#: src/main/character.c:2102 src/main/character.c:2337
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 msgstr "引數應當是長度為 1 的字元向量，除第一個字元外其它所有的字元都將忽略"
 
-#: src/main/character.c:2116 src/main/character.c:2148
-#: src/main/character.c:2169
+#: src/main/character.c:2118 src/main/character.c:2150
+#: src/main/character.c:2171
 msgid "argument 'x' must be a raw vector"
 msgstr "引數 'x' 必須是常數向量"
 
-#: src/main/character.c:2119 src/main/character.c:2385
+#: src/main/character.c:2121 src/main/character.c:2387
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "引數 'multiple' 的值必須是 TRUE 或 FALSE"
 
-#: src/main/character.c:2150
+#: src/main/character.c:2152
 msgid "argument 'shift' must be a small integer"
 msgstr "引數 'shift' 必須是小數值的整數"
 
-#: src/main/character.c:2187
+#: src/main/character.c:2189
 msgid "argument 'x' must be a integer vector"
 msgstr "引數 'x' 必須是整數向量"
 
-#: src/main/character.c:2207
+#: src/main/character.c:2209
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "引數 'x' 必須是純量值、整數值或邏輯值"
 
-#: src/main/character.c:2209
+#: src/main/character.c:2211
 msgid "argument 'type' must be a character string"
 msgstr "引數「type」必須是字串"
 
-#: src/main/character.c:2213
+#: src/main/character.c:2215
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "引數 'x' 必須是 %d 值的整數倍"
 
-#: src/main/character.c:2227 src/main/character.c:2242
+#: src/main/character.c:2229 src/main/character.c:2244
 msgid "argument 'x' must not contain NAs"
 msgstr "引數 'x' 不能含 NA 值"
 
-#: src/main/character.c:2382
+#: src/main/character.c:2384
 msgid "argument 'x' must be an integer vector"
 msgstr "引數 'x' 必須是整數向量"
 
-#: src/main/character.c:2427
+#: src/main/character.c:2429
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() 需要字元向量"
 
@@ -5442,7 +5442,7 @@ msgstr "連結寫入發生了錯誤"
 msgid "no input is available"
 msgstr "沒有可用的輸入"
 
-#: src/main/saveload.c:2365
+#: src/main/saveload.c:2366
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -6073,7 +6073,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] 下標 (%d) 在界限外"
 
 #: src/main/subassign.c:1769 src/main/subscript.c:111 src/main/subscript.c:188
-#: src/main/subscript.c:588 src/main/subset.c:923
+#: src/main/subscript.c:589 src/main/subset.c:923
 msgid "invalid subscript type"
 msgstr "下標類型不正確"
 
@@ -6109,19 +6109,19 @@ msgstr "(下標) 邏輯下標太長"
 msgid "only 0's may be mixed with negative subscripts"
 msgstr "只有負數下標中才能有 0"
 
-#: src/main/subscript.c:410
+#: src/main/subscript.c:411
 msgid "character vector element does not have type CHARSXP"
 msgstr "字元向量元素沒有 CHARSXP 類型"
 
-#: src/main/subscript.c:487
+#: src/main/subscript.c:488
 msgid "no 'dimnames' attribute for array"
 msgstr "陣列中沒有 'dimnames' 此一屬性"
 
-#: src/main/subscript.c:494
+#: src/main/subscript.c:495
 msgid "invalid subscript"
 msgstr "下標不正確"
 
-#: src/main/subscript.c:527
+#: src/main/subscript.c:528
 msgid "subscripting on non-vector"
 msgstr "非向量不能有下標"
 
