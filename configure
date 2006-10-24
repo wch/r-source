@@ -7180,7 +7180,7 @@ if test "${r_cv_prog_cc_vis}" = yes; then
   fi
 fi
 case  "${CC}" in
-  ## Intel compiler
+  ## Intel compiler: note that -c99 may have been appended
   *icc*)
     C_VISIBILITY=
     ;;
@@ -32746,7 +32746,7 @@ echo "$as_me: WARNING: Use of flat namespace is requested by user." >&2;}
     ;;
   linux*)			# GNU Linux/ELF
     case  "${CC}" in
-      ## Intel compiler
+      ## Intel compiler: note that -c99 may have been appended
       *icc*)
         cpicflags="-fpic"
         ;;
