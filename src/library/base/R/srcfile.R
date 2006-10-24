@@ -81,9 +81,14 @@ srcref <- function(srcfile, lloc) {
   
 as.character.srcref <- function(srcref) {
     srcfile <- attr(srcref, "srcfile")
-    lines <- getSrcLines(srcfile, srcref[1], srcref[3])  
-    lines[length(lines)] <- substring(lines[length(lines)], 1, srcref[4])
-    lines[1] <- substring(lines[1], srcref[2])
+    lines <- try(getSrcLines(srcfile, srcref[1], srcref[3]), TRUE)
+    if (inherits(lines, "try-error")) 
+    	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ", srcref[1],":",srcref[2],
+    	               " to ",srcref[3],":",srcref[4], ">", sep="")
+    else {
+    	lines[length(lines)] <- substring(lines[length(lines)], 1, srcref[4])
+    	lines[1] <- substring(lines[1], srcref[2])
+    }
     lines
 }
 

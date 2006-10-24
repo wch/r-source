@@ -57,7 +57,15 @@ it will be repositioned to that line.
 
 Methods are defined for \code{print} and \code{as.character} for class 
 \code{srcref}.  The \code{as.character} method will read the associated
-source file to obtain the text corresponding to the reference.
+source file to obtain the text corresponding to the reference.  If an
+error occurs (e.g. the file no longer exists), text like
+\code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
+indicating the \code{line:column} ranges of the first and last character.
+
+By default, several object types (functions, expressions, etc.) are printed by
+\code{\link{print.default}} using the associated \code{srcref}.  To
+see deparsed code instead, call \code{\link{print}} with argument
+\code{useSource = FALSE}.
 
 \code{.isOpen} is intended for internal use:  it checks whether the 
 connection associated with a \code{srcfile} object is open.
