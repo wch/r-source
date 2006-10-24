@@ -16,7 +16,7 @@ and references in those files for more.
 
 The Tcl/Tk documentation is in
 #ifdef windows
-\code{R_HOME/Tcl/doc}.
+\file{\link{R_HOME}/Tcl/doc}.
 #endif
 #ifdef unix
 the system man pages.
@@ -27,7 +27,7 @@ For a complete list of functions, use \code{ls("package:tcltk")}.
 #ifdef unix
 Note that Tk will not be initialized if there is no \code{DISPLAY}
 variable set, but Tcl can still be used.  This is most useful to allow
-the loading of a package which depends on \pkg{TclTk} in a session that
+the loading of a package which depends on \pkg{tcltk} in a session that
 does not actually use it (e.g. during installation).
 #endif
 }
