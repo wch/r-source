@@ -149,6 +149,12 @@ BUG FIXES
     o	removeClass() now takes care to remove any subclass references
 	to the deleted class.
 
+    o	mle() (in stats4) might not have worked as intended when the
+	order of parameters in 'start' differed from that in the
+	log-likelihood.  (PR#9313)
+
+
+
 
 		CHANGES IN R VERSION 2.4.0
 
