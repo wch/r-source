@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:39+0100\n"
+"POT-Creation-Date: 2006-10-24 15:49+0100\n"
 "PO-Revision-Date: 2006-09-22 19:00+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -85,7 +85,7 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:766
 #: src/main/builtin.c:127 src/main/builtin.c:385 src/main/builtin.c:401
 #: src/main/character.c:116 src/main/character.c:119 src/main/character.c:158
-#: src/main/character.c:2432 src/main/character.c:2436
+#: src/main/character.c:2433 src/main/character.c:2437
 #: src/main/connections.c:822 src/main/connections.c:828
 #: src/main/connections.c:831 src/main/connections.c:835
 #: src/main/connections.c:958 src/main/connections.c:964
@@ -113,7 +113,7 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/envir.c:1596 src/main/envir.c:1690 src/main/envir.c:1698
 #: src/main/envir.c:1706 src/main/envir.c:1720 src/main/envir.c:1726
 #: src/main/envir.c:1730 src/main/envir.c:2293 src/main/envir.c:2566
-#: src/main/envir.c:3115 src/main/eval.c:279 src/main/eval.c:1622
+#: src/main/envir.c:3098 src/main/eval.c:279 src/main/eval.c:1622
 #: src/main/eval.c:1646 src/main/eval.c:1650 src/main/memory.c:2858
 #: src/main/model.c:1597 src/main/model.c:1605 src/main/optim.c:229
 #: src/main/paste.c:71 src/main/paste.c:163 src/main/paste.c:170
@@ -130,7 +130,7 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/print.c:176 src/main/print.c:182 src/main/print.c:204
 #: src/main/print.c:210 src/main/random.c:465 src/main/random.c:469
 #: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2076
-#: src/main/saveload.c:2341 src/main/saveload.c:2390 src/main/seq.c:346
+#: src/main/saveload.c:2341 src/main/saveload.c:2391 src/main/seq.c:346
 #: src/main/seq.c:350 src/main/seq.c:368 src/main/seq.c:375
 #: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
@@ -474,7 +474,7 @@ msgid "second argument must be a list"
 msgstr "二番目の引数はリストでなければなりません"
 
 #: src/include/Errormsg.h:42 src/main/eval.c:2704 src/main/subscript.c:228
-#: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:436
+#: src/main/subscript.c:333 src/main/subscript.c:336 src/main/subscript.c:437
 msgid "subscript out of bounds"
 msgstr "添え字が許される範囲外です"
 
@@ -1155,9 +1155,9 @@ msgstr "指定されたベクトルのサイズが長すぎます"
 #: src/main/envir.c:1683 src/main/envir.c:2323 src/main/envir.c:2376
 #: src/main/envir.c:2659 src/main/envir.c:2687 src/main/envir.c:2707
 #: src/main/envir.c:2729 src/main/envir.c:2763 src/main/envir.c:2783
-#: src/main/envir.c:3107 src/main/envir.c:3111 src/main/eval.c:3487
+#: src/main/envir.c:3090 src/main/envir.c:3094 src/main/eval.c:3487
 #: src/main/objects.c:175 src/main/objects.c:181 src/main/saveload.c:2072
-#: src/main/saveload.c:2338 src/main/saveload.c:2387 src/main/serialize.c:2175
+#: src/main/saveload.c:2338 src/main/saveload.c:2388 src/main/serialize.c:2175
 msgid "use of NULL environment is defunct"
 msgstr "NULL環境の使用は廃要素です"
 
@@ -1286,7 +1286,7 @@ msgstr "perl=TRUE は UTF-8 ロケールに対してのみ完全実装されて�
 msgid "invalid split pattern '%s'"
 msgstr "分割パターン '%s' が不正です"
 
-#: src/main/character.c:710
+#: src/main/character.c:709
 msgid "the first argument must be a character vector"
 msgstr "最初の引数は文字列ベクトルでなくてはなりません"
 
@@ -1294,109 +1294,109 @@ msgstr "最初の引数は文字列ベクトルでなくてはなりません"
 msgid "abbreviate used with non-ASCII chars"
 msgstr "ASCII 文字でないものが省略名として使われました"
 
-#: src/main/character.c:743
+#: src/main/character.c:744
 msgid "non-character names"
 msgstr "名前が文字列ではありません"
 
-#: src/main/character.c:747
+#: src/main/character.c:748
 msgid "invalid value of 'allow_'"
 msgstr "'allow_' の値が不正です"
 
-#: src/main/character.c:808 src/main/character.c:1586
+#: src/main/character.c:809 src/main/character.c:1587
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "%d は不正なマルチバイト文字です"
 
-#: src/main/character.c:889 src/main/character.c:1221
-#: src/main/character.c:1510 src/main/pcre.c:110 src/main/pcre.c:487
+#: src/main/character.c:890 src/main/character.c:1222
+#: src/main/character.c:1511 src/main/pcre.c:110 src/main/pcre.c:487
 #: src/main/pcre.c:582
 msgid "regular expression is invalid in this locale"
 msgstr "このロケールでは，正規表現は無効です"
 
-#: src/main/character.c:911 src/main/character.c:1063
-#: src/main/character.c:1224 src/main/character.c:1513 src/main/pcre.c:117
+#: src/main/character.c:912 src/main/character.c:1064
+#: src/main/character.c:1225 src/main/character.c:1514 src/main/pcre.c:117
 #: src/main/pcre.c:332 src/main/pcre.c:492 src/main/pcre.c:587
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "'%s' の正規表現が不正です"
 
-#: src/main/character.c:921 src/main/character.c:1239
-#: src/main/character.c:1530 src/main/pcre.c:132 src/main/pcre.c:365
+#: src/main/character.c:922 src/main/character.c:1240
+#: src/main/character.c:1531 src/main/pcre.c:132 src/main/pcre.c:365
 #: src/main/pcre.c:507 src/main/pcre.c:610
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "入力文字列 %d はこのロケールでは不適切です"
 
-#: src/main/character.c:976 src/main/pcre.c:187
+#: src/main/character.c:977 src/main/pcre.c:187
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "正規表現における後方参照 %d が不正です"
 
-#: src/main/character.c:1058 src/main/pcre.c:319
+#: src/main/character.c:1059 src/main/pcre.c:319
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' は現在のロケールでは不正です"
 
-#: src/main/character.c:1060 src/main/pcre.c:321
+#: src/main/character.c:1061 src/main/pcre.c:321
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' は現在のロケールでは不正です"
 
-#: src/main/character.c:1069
+#: src/main/character.c:1070
 msgid "zero-length pattern"
 msgstr "長さゼロのパターン"
 
-#: src/main/character.c:1561
+#: src/main/character.c:1562
 msgid "non-character argument to tolower()"
 msgstr "tolower 関数の引数が文字列ではありません"
 
-#: src/main/character.c:1639
+#: src/main/character.c:1640
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "範囲指定を縮小します ('%lc-%lc') "
 
-#: src/main/character.c:1725
+#: src/main/character.c:1726
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "範囲指定を縮小します ('%c-%c') "
 
-#: src/main/character.c:1802
+#: src/main/character.c:1803
 msgid "invalid (NA) arguments."
 msgstr "引数が不正(NA)です"
 
-#: src/main/character.c:1824
+#: src/main/character.c:1825
 msgid "invalid multibyte string 'old'"
 msgstr "'old' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1831
+#: src/main/character.c:1832
 msgid "invalid multibyte string 'new'"
 msgstr "'new' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1850 src/main/character.c:1912
+#: src/main/character.c:1851 src/main/character.c:1913
 msgid "'old' is longer than 'new'"
 msgstr "'old' が 'new' より長いです"
 
-#: src/main/character.c:1868
+#: src/main/character.c:1869
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "不正なマルチバイト文字列入力 %d です"
 
-#: src/main/character.c:2013
+#: src/main/character.c:2014
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "UTF-8 ロケールにおける agrep 関数の使用は ASCII 文字列以外では保証されません"
 
-#: src/main/character.c:2022
+#: src/main/character.c:2023
 msgid "could not allocate memory for approximate matching"
 msgstr "近似マッチングのためのメモリを割り当てられませんでした"
 
-#: src/main/character.c:2046
+#: src/main/character.c:2047
 msgid "could not perform case insensitive matching"
 msgstr "大小文字を無視したマッチングを行なえませんでした"
 
-#: src/main/character.c:2098 src/main/character.c:2333
+#: src/main/character.c:2099 src/main/character.c:2334
 msgid "argument must be a character vector of length 1"
 msgstr "引数は長さ1の文字ベクトルでなくてはなりません"
 
-#: src/main/character.c:2100 src/main/character.c:2335
+#: src/main/character.c:2101 src/main/character.c:2336
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1404,45 +1404,45 @@ msgstr ""
 "引数は長さ1の文字ベクトルであるべきです\n"
 "最初の要素以外は無視されます"
 
-#: src/main/character.c:2116 src/main/character.c:2148
-#: src/main/character.c:2169
+#: src/main/character.c:2117 src/main/character.c:2149
+#: src/main/character.c:2170
 msgid "argument 'x' must be a raw vector"
 msgstr "引数 'x' は raw ベクトルでなくてはなりません"
 
-#: src/main/character.c:2119 src/main/character.c:2385
+#: src/main/character.c:2120 src/main/character.c:2386
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "引数 'multiple' は TRUE か FALSE でなくてはなりません"
 
-#: src/main/character.c:2150
+#: src/main/character.c:2151
 msgid "argument 'shift' must be a small integer"
 msgstr "引数 'shift' は小さな整数でなくてはなりません"
 
-#: src/main/character.c:2187
+#: src/main/character.c:2188
 msgid "argument 'x' must be a integer vector"
 msgstr "引数 'x' は整数ベクトルでなくてはなりません"
 
-#: src/main/character.c:2207
+#: src/main/character.c:2208
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "引数'x'は，raw, 整数，論理値でなくてはいけません"
 
-#: src/main/character.c:2209
+#: src/main/character.c:2210
 msgid "argument 'type' must be a character string"
 msgstr "引数 'type' は文字列でなくてはなりません"
 
-#: src/main/character.c:2213
+#: src/main/character.c:2214
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "引数 'x' は長さ %d の整数倍でなくてはなりません"
 
-#: src/main/character.c:2227 src/main/character.c:2242
+#: src/main/character.c:2228 src/main/character.c:2243
 msgid "argument 'x' must not contain NAs"
 msgstr "引数 'x' は，NA を含んではいけません"
 
-#: src/main/character.c:2382
+#: src/main/character.c:2383
 msgid "argument 'x' must be an integer vector"
 msgstr "引数 'x' は整数ベクトルでなくてはなりません"
 
-#: src/main/character.c:2427
+#: src/main/character.c:2428
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 関数は文字ベクトルを要求します"
 
@@ -2864,40 +2864,31 @@ msgstr "ロックされたバインディングを切り離せません"
 msgid "cannot unbind an active binding"
 msgstr "現在使用中のバインディングを切り離すことはできません"
 
-#: src/main/envir.c:2948
-#, c-format
-msgid "using .GlobalEnv instead of '%s'"
-msgstr "'%s' の代わりに .GlobalEnv を使います"
-
-#: src/main/envir.c:3015
-msgid "namespaces not available; using .GlobalEnv"
-msgstr "名前空間は使えません。.GlobalEnv を使います"
-
-#: src/main/envir.c:3039
+#: src/main/envir.c:3022
 msgid "bad name space name"
 msgstr "不正な名前空間名です"
 
-#: src/main/envir.c:3051
+#: src/main/envir.c:3034
 msgid "name space already registered"
 msgstr "ネームスペースはすでに登録されています"
 
-#: src/main/envir.c:3063
+#: src/main/envir.c:3046
 msgid "name space not registered"
 msgstr "ネームスペースは登録されていません"
 
-#: src/main/envir.c:3109
+#: src/main/envir.c:3092
 msgid "bad import environment argument"
 msgstr "インポートしようとしている環境引数が不正です"
 
-#: src/main/envir.c:3113
+#: src/main/envir.c:3096
 msgid "bad export environment argument"
 msgstr "エクスポートしようとしている環境引数が不正です"
 
-#: src/main/envir.c:3117
+#: src/main/envir.c:3100
 msgid "length of import and export names must match"
 msgstr "インポートとエクスポート名の長さは一致しなければなりません"
 
-#: src/main/envir.c:3140
+#: src/main/envir.c:3123
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "エクスポートされたシンボル \"%s\" が値を持っていません"
@@ -3447,7 +3438,17 @@ msgstr "\\Uxxxxxxxx シーケンスは多バイト環境でのみ有効です"
 msgid "invalid \\U{xxxxxxxx} sequence"
 msgstr "不正な \\U{xxxxxxxx} 系列です"
 
-#: src/main/gram.y:1929
+#: src/main/gram.y:1804
+#, fuzzy, c-format
+msgid "'\\%%%%' is an unrecognized escape in a character string"
+msgstr "最初の引数は文字列でなくてはなりません"
+
+#: src/main/gram.y:1807
+#, fuzzy, c-format
+msgid "'\\%c' is an unrecognized escape in a character string"
+msgstr "最初の引数は文字列でなくてはなりません"
+
+#: src/main/gram.y:1941
 msgid "functions nested too deeply in source code"
 msgstr "関数はソースコードにおいて過度にネストしています"
 
@@ -5489,7 +5490,7 @@ msgstr "コネクションへの書き込みエラーが発生しました"
 msgid "no input is available"
 msgstr "入力は利用できません"
 
-#: src/main/saveload.c:2365
+#: src/main/saveload.c:2366
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -6120,7 +6121,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] の添え字（%d）が範囲外です"
 
 #: src/main/subassign.c:1779 src/main/subscript.c:111 src/main/subscript.c:188
-#: src/main/subscript.c:588 src/main/subset.c:923
+#: src/main/subscript.c:589 src/main/subset.c:923
 msgid "invalid subscript type"
 msgstr "添え字の型が不正です"
 
@@ -6156,19 +6157,19 @@ msgstr " (subscript) 論理値添え字が長すぎます"
 msgid "only 0's may be mixed with negative subscripts"
 msgstr "負の添字と混在できるのは 0 という添字だけです"
 
-#: src/main/subscript.c:410
+#: src/main/subscript.c:411
 msgid "character vector element does not have type CHARSXP"
 msgstr "文字列ベクトル要素は型 CHARSXP を持ちません"
 
-#: src/main/subscript.c:487
+#: src/main/subscript.c:488
 msgid "no 'dimnames' attribute for array"
 msgstr "配列に 'dimnames' 属性がありません"
 
-#: src/main/subscript.c:494
+#: src/main/subscript.c:495
 msgid "invalid subscript"
 msgstr "添え字が不正です"
 
-#: src/main/subscript.c:527
+#: src/main/subscript.c:528
 msgid "subscripting on non-vector"
 msgstr "ベクトルでないものへの添え字操作"
 
@@ -7201,6 +7202,12 @@ msgstr "X11 モジュールをロードできません"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 が利用できません"
+
+#~ msgid "using .GlobalEnv instead of '%s'"
+#~ msgstr "'%s' の代わりに .GlobalEnv を使います"
+
+#~ msgid "namespaces not available; using .GlobalEnv"
+#~ msgstr "名前空間は使えません。.GlobalEnv を使います"
 
 #~ msgid "too many devices open"
 #~ msgstr "開いたデバイスが多すぎます"
