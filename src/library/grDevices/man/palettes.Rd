@@ -9,11 +9,12 @@
   Create a vector of \code{n} \dQuote{contiguous} colors.
 }
 \usage{
-rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n, gamma = 1)
-heat.colors(n)
-terrain.colors(n)
-topo.colors(n)
-cm.colors(n)
+rainbow(n, s = 1, v = 1, start = 0, end = max(1,n - 1)/n,
+        gamma = 1, alpha = 1)
+heat.colors(n, alpha = 1)
+terrain.colors(n, alpha = 1)
+topo.colors(n, alpha = 1)
+cm.colors(n, alpha = 1)
 }
 \arguments{
   \item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the
@@ -25,6 +26,8 @@ cm.colors(n)
   \item{end}{the (corrected) hue in [0,1] at which the rainbow ends.}
   \item{gamma}{the gamma correction, see argument \code{gamma} in
     \code{\link{hsv}}.}
+  \item{alpha}{the alpha transparency, a number in [0,1], see argument
+    \code{alpha} in \code{\link{hsv}}.}
 }
 \details{
   Conceptually, all of these functions actually use (parts of) a line
