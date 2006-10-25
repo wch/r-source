@@ -21,6 +21,12 @@ INSTALLATION
 	which override CFLAGS and thereby lose flags such as -std=gnu99.
 
 
+NEW FEATURES
+
+    o	rainbow(), heat.colors(), terrain.colors(), topo.colors() and
+	cm.colors() all gain an 'alpha' argument to be passed to hsv().
+
+
 BUG FIXES
 
     o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
