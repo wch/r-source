@@ -1475,6 +1475,7 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	    warning(_("all z values are equal"));
 	else
 	    warning(_("all z values are NA"));
+        UNPROTECT(4);
 	return R_NilValue;
     }
 
