@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-10-23
+@set FAQ_DATE @value{FAQ_YEAR}-10-24
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2355,6 +2355,8 @@ Statistics'' by J. Verzani, 2005, Chapman & Hall/CRC.
 @item VDCutil
 Utilities supporting VDC, an open source digital library system for
 quantitative data.
+@item VGAM
+Vector Generalized Linear and Additive Models.
 @item VLMC
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -2366,6 +2368,8 @@ Map of weed intensity.
 Software for evaluating counterfactuals.
 @item XML
 Tools for reading @XML{} documents and DTDs.
+@item ZIGP
+Zero Inflated Generalized Poisson (ZIGP) regression models.
 @item Zelig
 Everyone's statistical software: an easy-to-use program that can
 estimate, and help interpret the results of, an enormous range of
