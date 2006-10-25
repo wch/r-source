@@ -101,3 +101,8 @@ plot(x, x^0.9, type="l", log="xy")
 
 plot(as.Date("2001/1/1") + 12*(1:9), 1:9)
 ## used bad 'xlab/ylab' in some versions of R 2.2.0(unstable)
+
+## dotchart() did not restore all par()s till R 2.4.0
+Opar <- par(no.readonly=TRUE) ; dotchart(1:4, cex= 0.7)
+Npar <- par(no.readonly=TRUE)
+stopifnot(identical(Opar, Npar))

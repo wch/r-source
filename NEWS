@@ -145,13 +145,15 @@ BUG FIXES
     o	Fixes to S4 group generics to ensure that the correct number of
 	active arguments are in the signature of the group and all
 	members.  Also a fix to keep the 'groupMembers' slot up to date.
- 
+
     o	removeClass() now takes care to remove any subclass references
 	to the deleted class.
 
     o	mle() (in stats4) might not have worked as intended when the
 	order of parameters in 'start' differed from that in the
 	log-likelihood.  (PR#9313)
+
+    o	dotchart() now properly restores par() settings behind itself.
 
 
 
