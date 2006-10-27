@@ -154,5 +154,5 @@ myR:
 	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
 	  bin/Rterm.exe --vanilla --slave)
-	perl JRins.pl $(RPREFIX) $(IMAGEDIR)
+	perl JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet)
 	"$(ISDIR)/iscc" R.iss > myR.log
