@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-10-24
+@set FAQ_DATE @value{FAQ_YEAR}-10-27
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2399,6 +2399,8 @@ Multivariate data analysis and graphical display.
 Tcl/Tk Graphical User Interface for @strong{ade4}.
 @item adehabitat
 A collection of tools for the analysis of habitat selection by animals.
+@item adimpro
+Adaptive smoothing of digital images.
 @item adlift
 Adaptive Wavelet transforms for signal denoising.
 @item agce
@@ -2543,6 +2545,9 @@ update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 finding the number of clusters in a data set.
 @item cfa
 Analysis of configuration frequencies.
+@item cgh
+Analysis of microarray comparative genome hybridisation data using the
+Smith-Waterman algorithm.
 @item chplot
 Augmented convex hull plots: informative and nice plots for grouped
 bivariate data.
@@ -2566,6 +2571,8 @@ Choose univariate class intervals for mapping or other graphics
 purposes.
 @item classPP
 Projection Pursuit for supervised classification.
+@item classifly
+Explore classification models in high dimensions.
 @item clim.pact
 Climate analysis and downscaling for monthly and daily data.
 @item climatol
@@ -3775,6 +3782,8 @@ geometry library.
 Interface to the CDK libraries, a Java framework for cheminformatics.
 @item rcom
 R COM Client Interface and internal COM Server.
+@item rcompletion
+TAB completion for R using Readline.
 @item rda
 Shrunken Centroids Regularized Discriminant Analysis.
 @item ref
