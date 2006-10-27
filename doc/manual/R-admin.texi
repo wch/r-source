@@ -1008,7 +1008,7 @@ please rename it to indicate that it is customized.
 The defaults for the startup parameters may also be customized.  For example
 
 @example
-make rinstaller MDISDI=1
+make myR IMAGEDIR=rootdir MDISDI=1
 @end example
 
 @noindent
