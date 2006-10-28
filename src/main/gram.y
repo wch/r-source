@@ -1289,7 +1289,6 @@ attribute_hidden
 SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
 {
     GenerateCode = 1;
-    xxlineno = 1;
     fp_parse = fp;
     ptr_getc = file_getc;
     return R_Parse(n, status, R_NilValue);
@@ -1314,7 +1313,6 @@ attribute_hidden
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile)
 {
     GenerateCode = 1;
-    xxlineno = 1;
     con_parse = con;
     ptr_getc = con_getc;
     return R_Parse(n, status, srcfile);
@@ -1328,7 +1326,6 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     R_TextBufferInit(&textb, text);
     txtb = &textb;
     GenerateCode = 1;
-    xxlineno = 1;
     ptr_getc = text_getc;
     rval = R_Parse(n, status, R_NilValue);
     R_TextBufferFree(&textb);
@@ -1341,7 +1338,6 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
 		    ParseStatus *status)
 {
     GenerateCode = 1;
-    xxlineno = 1;
     ptr_getc = ggetc;
     return R_Parse(n, status, R_NilValue);
 }
