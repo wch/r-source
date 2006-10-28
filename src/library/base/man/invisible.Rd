@@ -19,6 +19,7 @@
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{withVisible}},
   \code{\link{return}},
   \code{\link{function}}.
 }

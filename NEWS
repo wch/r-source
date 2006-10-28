@@ -50,6 +50,9 @@ NEW FEATURES
 
     o	abbreviate() no longer has an 8191 byte limit on the size of
 	strings it can handle.
+	
+    o	New function withVisible() allows R level access to the visibility 
+    	flag.
 
 
 DEPRECATED & DEFUNCT
