@@ -785,8 +785,8 @@ static void showDialog(Gui gui)
     setlistitem(highlightcol, rgbtonum(gui->hlt));
 
     bApply = newbutton(G_("Apply"), rect(50, 410, 70, 25), apply);
-    bSave = newbutton(G_("Save"), rect(130, 410, 70, 25), save);
-    bLoad = newbutton(G_("Load"), rect(210, 410, 70, 25), load);
+    bSave = newbutton(G_("Save..."), rect(130, 410, 70, 25), save);
+    bLoad = newbutton(G_("Load..."), rect(210, 410, 70, 25), load);
     bOK = newbutton(G_("OK"), rect(350, 410, 70, 25), ok);
     bCancel = newbutton(G_("Cancel"), rect(430, 410, 70, 25), cancel);
     show(wconfig);

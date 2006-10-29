@@ -54,6 +54,7 @@ console RConsole = NULL;
 #ifdef USE_MDI
 int   RguiMDI = RW_MDI | RW_TOOLBAR | RW_STATUSBAR;
 int   MDIset = 0;
+int   R_LoadRconsole = 1;
 window RFrame;
 rect MDIsize;
 #endif
@@ -664,25 +665,25 @@ void readconsolecfg()
     
     struct structGUI gui;
 
-    gui.crows = 32;
-    gui.ccols = 90;
+    gui.crows = 25;
+    gui.ccols = 80;
     gui.cx = gui.cy = 0;
     gui.grx = Rwin_graphicsx;
     gui.gry = Rwin_graphicsy;
     gui.bg = White;
-    gui.fg = Black;
+    gui.fg = DarkBlue;
     gui.user = gaRed;
     gui.hlt = DarkRed;
     gui.prows = 25;
     gui.pcols = 80;
     gui.pagerMultiple = 0;
-    gui.cbb = 64*1024;
-    gui.cbl = 8*1024;
+    gui.cbb = 65000;
+    gui.cbl = 8000;
     gui.setWidthOnResize = 1;
-    strcpy(gui.font, "FixedFont");
+    strcpy(gui.font, "Courier New");
     strcpy(gui.style, "normal");
-    gui.tt_font = 0;
-    gui.pointsize = 12;
+    gui.tt_font = 1;
+    gui.pointsize = 10;
     strcpy(gui.language, "");
     gui.buffered = 1;
     
@@ -693,13 +694,15 @@ void readconsolecfg()
     
     gui.MDIsize = rect(0, 0, 0, 0);
 #endif
-    sprintf(optf, "%s/Rconsole", getenv("R_USER"));
-    if (!loadRconsole(&gui, optf)) {
-	sprintf(optf, "%s/etc/Rconsole", getenv("R_HOME"));
+    if (R_LoadRconsole) {
+	sprintf(optf, "%s/Rconsole", getenv("R_USER"));
 	if (!loadRconsole(&gui, optf)) {
-	    app_cleanup();
-	    RConsole = NULL;
-	    exit(10);
+	    sprintf(optf, "%s/etc/Rconsole", getenv("R_HOME"));
+	    if (!loadRconsole(&gui, optf)) {
+		app_cleanup();
+		RConsole = NULL;
+		exit(10);
+	    }
 	}
     }
     if (gui.tt_font) { 
