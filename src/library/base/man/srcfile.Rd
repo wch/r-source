@@ -1,11 +1,14 @@
 \name{srcfile}
 \alias{srcfile}
+\alias{srcfilecopy}
 \alias{getSrcLines}
 \alias{srcref}
 \alias{srcfile-class}
+\alias{srcfilecopy-class}
 \alias{srcref-class}
 \alias{print.srcfile}
 \alias{open.srcfile}
+\alias{open.srcfilecopy}
 \alias{close.srcfile}
 \alias{print.srcref}
 \alias{as.character.srcref}
@@ -17,6 +20,7 @@ These functions are for working with source files.
 }
 \usage{
 srcfile(filename)
+srcfilecopy(filename, lines)
 getSrcLines(srcfile, first, last)
 srcref(srcfile, lloc)
 \method{print}{srcfile}(x, ...)
@@ -28,6 +32,7 @@ srcref(srcfile, lloc)
 }
 \arguments{
   \item{filename}{ The name of a file }
+  \item{lines}{ A character vector of source lines }
   \item{srcfile}{ A \code{srcfile} object }
   \item{first, last, line}{ Line numbers }
   \item{lloc}{ A vector of four values giving a source location; see Details }
@@ -44,6 +49,10 @@ The \code{srcfile} function produces an object of class
 file, along with its timestamp, for use in source level debugging (not
 yet implemented).
 
+The \code{srcfilecopy} function produces an object of the descendant
+class \code{srcfilecopy}, which saves the source lines in a character
+vector.
+
 The \code{getSrcLines} function reads the specified lines from
 \code{srcfile}.
 
@@ -52,9 +61,9 @@ which describes a range of characters in a \code{srcfile}.  The \code{lloc}
 value gives the following values:  \code{c(first_line, first_column, last_line, last_column)}.
 
 Methods are defined for \code{print}, \code{open}, and \code{close}
-for class \code{srcfile}. The \code{open} method opens its internal
-\code{file} connection at a particular line; if it was already open,
-it will be repositioned to that line.
+for classes \code{srcfile} and \code{srcfilecopy}. The \code{open}
+method opens its internal \code{file} connection at a particular line;
+if it was already open, it will be repositioned to that line.
 
 Methods are defined for \code{print} and \code{as.character} for class 
 \code{srcref}.  The \code{as.character} method will read the associated
@@ -75,6 +84,8 @@ connection associated with a \code{srcfile} object is open.
 }
 \value{
 \code{srcfile} returns a \code{srcfile} object.
+
+\code{srcfilecopy} returns a \code{srcfilecopy} object.
 
 \code{getSrcLines} returns a character vector of source code lines.
 

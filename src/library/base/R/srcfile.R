@@ -56,6 +56,44 @@ close.srcfile <- function(con, ...) {
     }
 }
 
+# srcfilecopy saves a copy of lines from a file
+
+srcfilecopy <- function(filename, lines) {
+    stopifnot(is.character(filename), length(filename) == 1, is.character(lines))  
+
+    e <- new.env(parent=emptyenv())
+
+    e$filename <- filename
+    e$lines <- lines
+    
+    class(e) <- c("srcfilecopy", "srcfile")
+    return(e)
+}
+
+open.srcfilecopy <- function(con, line, ...) {
+
+    srcfile <- con
+
+    oldline <- srcfile$line
+    if (!is.null(oldline) && oldline > line) close(srcfile)
+
+    conn <- srcfile$conn
+    if (is.null(conn)) {
+	srcfile$conn <- conn <- textConnection(srcfile$lines, open="r")
+	srcfile$line <- 1
+	oldline <- 1
+    } else if (!isOpen(conn)) {
+	open(conn, open="r")
+	srcfile$line <- 1
+	oldline <- 1
+    }
+    if (oldline < line) {
+	readLines(conn, line-oldline)
+	srcfile$line <- line
+    }
+    invisible(conn)
+}
+
 .isOpen <- function(srcfile) {
     conn <- srcfile$conn
     return( !is.null(conn) && isOpen(conn) )
