@@ -8119,7 +8119,7 @@ this is defined.
 @node Internationalization, Allowing interrupts, Utility functions, The R API
 @section Internationalization
 
-@R{} has its own C-level interface to the the encoding conversion
+@R{} has its own C-level interface to the encoding conversion
 capabilities provided by @code{iconv}, for the following reasons
 
 @itemize @bullet

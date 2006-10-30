@@ -56,7 +56,7 @@
 
   The precise way character ranges are interpreted depends on the values
   of \code{perl} and \code{ignore.case}.  For basic and extended regular
-  expressions the the collation order is taken from the OS's
+  expressions the collation order is taken from the OS's
   implementation of the setting of the locale category
   \code{LC_COLLATE}, so \code{[W-Z]} may include \code{x} and if it
   does may or may not include \code{w}.  (In most English locales the

@@ -91,7 +91,7 @@ prcomp(x, \dots)
   (centered and possibly scaled) data matrix, not by using
   \code{eigen} on the covariance matrix.  This
   is generally the preferred method for numerical accuracy.  The
-  \code{print} method for the these objects prints the results in a nice
+  \code{print} method for these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.
 
   Note that \code{scale = TRUE} cannot be used if there are zero or
