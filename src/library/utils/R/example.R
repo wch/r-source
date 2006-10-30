@@ -56,11 +56,16 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(length(grep("^### Encoding: ", zz)) > 0 &&
        !identical(Sys.getlocale("LC_CTYPE"), "C"))
 	encoding <- substring(zz, 15)
-    zcon <- file(zfile, open="rt", encoding=encoding)
-    on.exit(close(zcon), add = TRUE)
-    ## skip over header
-    while(!length(grep("^### \\*\\*", zz))) zz <- readLines(zcon, n=1)
-    
+    skips <- 0    
+    if (echo) {
+	## skip over header
+	zcon <- file(zfile, open="rt", encoding=encoding)	
+	while(length(zz) && !length(grep("^### \\*\\*", zz))) {
+	    skips <- skips + 1
+	    zz <- readLines(zcon, n=1)
+	}
+	close(zcon)
+    }
     if(ask == "default")
         ask <- echo && grDevices::dev.interactive(orNone = TRUE)
     if(ask) {
@@ -73,6 +78,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
         op <- options(par.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
-    source(zcon, local, echo = echo, prompt.echo = prompt.echo,
-	   verbose = verbose, max.deparse.length = 250)
+    source(zfile, local, echo = echo, prompt.echo = prompt.echo,
+	   verbose = verbose, max.deparse.length = 250,
+	   encoding = encoding, skip.echo = skips)
 }

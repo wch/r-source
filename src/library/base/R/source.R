@@ -4,7 +4,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	 prompt.echo = getOption("prompt"),
 	 max.deparse.length = 150, chdir = FALSE,
          encoding = getOption("encoding"),
-         continue.echo = getOption("continue"))
+         continue.echo = getOption("continue"),
+         skip.echo = 0)
 {
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
@@ -91,7 +92,6 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	nos <- "[^\"]*"
 	oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
 		       nos, "$", sep = "")
-        lastshown <- 0
     }
     for (i in 1:Ne) {
 	if (verbose)
@@ -109,6 +109,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             		     sep="")
 		nd <- nchar(dep, "chars") - 1	    
 	    } else {
+	    	if (i == 1) lastshown <- min(skip.echo, srcref[3]-1)
 	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
 	    	leading <- srcref[1]-lastshown
 	    	lastshown <- srcref[3]	    	
