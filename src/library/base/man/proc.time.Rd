@@ -12,7 +12,7 @@ proc.time()
   A numeric vector of length 5, containing the user, system, and total
   elapsed times for the currently running \R process, and the cumulative
   sum of user and system times of any child processes spawned by it.
-
+  
   The resolution of the times will be system-specific;
 #ifdef unix
   and times are rounded to the nearest 1ms.  On modern systems they will

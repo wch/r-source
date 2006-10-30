@@ -638,3 +638,22 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     strcpy(res, tm);
     return res;
 }
+
+
+static const char  const *procTimeNames[] = {"user", "system", "total", "user.children", "system.children"};
+
+SEXP attribute_hidden R_setProcTimeNames(SEXP ans)
+{
+    SEXP names;
+    int i;
+
+    PROTECT(ans);
+    PROTECT(names = allocVector(STRSXP, 5));
+    for( i = 0; i < 5; i++ )
+        SET_STRING_ELT(names, i, mkChar(procTimeNames[i]));
+
+    setAttrib(ans, R_NamesSymbol, names);
+
+    UNPROTECT(2);
+    return(ans);
+}

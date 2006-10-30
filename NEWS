@@ -54,6 +54,9 @@ NEW FEATURES
     o	New function withVisible() allows R level access to the visibility 
     	flag.
 
+    o	system.time() and proc.time() have names on the returned
+	vector to help identify the five elements.	      
+
 
 DEPRECATED & DEFUNCT
 
