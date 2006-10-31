@@ -187,6 +187,7 @@ int R_system(char *command)
 #ifdef __APPLE_CC__
     /* Luke recommends this to fix PR#1140 */
     sigset_t ss;
+    sigemptyset(&ss);
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
 #ifdef HAVE_AQUA

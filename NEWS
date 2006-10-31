@@ -81,6 +81,9 @@ BUG FIXES
 
     o	dotchart() now properly restores par() settings behind itself.
 
+    o	system() on Mac OS X was blocking arbitrary signals during the
+	call although only SIGPROF was meant to be blocked.
+
 
 
 
