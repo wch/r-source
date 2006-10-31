@@ -20,7 +20,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   specific classes of objects, see \link{InternalMethods}.
 
   If \code{x} has length zero the result is \code{NULL}.
-  
+
   If \code{recursive = FALSE}, the function will not recurse beyond the
   first level items in \code{x}.
 
@@ -40,7 +40,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 
   Where possible the list elements are coerced to a common mode during
   the unlisting, and so the result often ends up as a character
-  vector.  Vectors will be corced to the highest type of the components
+  vector.  Vectors will be coerced to the highest type of the components
   in the hierarchy NULL < raw < logical < integer < real < complex < character
   < list < expression: pairlists are treated as lists.
 
@@ -54,7 +54,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 \value{
   \code{NULL} or an expression or a vector of an appropriate mode to
   hold the list components.
-  
+
   The output type is determined from the highest type
   of the components in the hierarchy raw < logical < integer < real <
   complex < character < list < expression, after coercion of pairlists
