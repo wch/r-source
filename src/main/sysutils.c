@@ -170,6 +170,7 @@ FILE *R_popen(char *command, char *type)
 #ifdef __APPLE_CC__
     /* Luke recommends this to fix PR#1140 */
     sigset_t ss;
+    sigemptyset(&ss);
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
     fp = popen(command, type);
