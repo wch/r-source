@@ -108,7 +108,12 @@ help pages
 @end example
 
 @noindent
-before reading on.
+before reading on.  
+
+A computing environment including a number of tools is assumed; the
+``R Installation and Administration'' manual describes what is needed.
+Under a Unix-alike most of the tools are likely to be present by
+default, but Microsoft Windows and MacOSX will require careful setup.
 
 Once a source package is created, it must be installed by
 the command @code{R CMD INSTALL}.
