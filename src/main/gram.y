@@ -252,7 +252,7 @@ static int	xxvalue(SEXP, int);
 %}
 
 %token		END_OF_INPUT ERROR
-%token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION
+%token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION 
 %token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR
@@ -1464,28 +1464,31 @@ static int KeywordLookup(char *s)
 		PROTECT(yylval = R_NilValue);
 		break;
 	    case NUM_CONST:
-		switch(i) {
-		case 1:
-		    PROTECT(yylval = mkNA());
-		    break;
-		case 2:
-		    PROTECT(yylval = mkTrue());
-		    break;
-		case 3:
-		    PROTECT(yylval = mkFalse());
-		    break;
-		case 4:
-		    PROTECT(yylval = R_GlobalEnv);
-		    break;
-		case 5:
-		    PROTECT(yylval = allocVector(REALSXP, 1));
-		    REAL(yylval)[0] = R_PosInf;
-		    break;
-		case 6:
-		    PROTECT(yylval = allocVector(REALSXP, 1));
-		    REAL(yylval)[0] = R_NaN;
-		    break;
-		}
+		if(GenerateCode) {
+		    switch(i) {
+		    case 1:
+			PROTECT(yylval = mkNA());
+			break;
+		    case 2:
+			PROTECT(yylval = mkTrue());
+			break;
+		    case 3:
+			PROTECT(yylval = mkFalse());
+			break;
+		    case 4:
+			PROTECT(yylval = R_GlobalEnv);
+			break;
+		    case 5:
+			PROTECT(yylval = allocVector(REALSXP, 1));
+			REAL(yylval)[0] = R_PosInf;
+			break;
+		    case 6:
+			PROTECT(yylval = allocVector(REALSXP, 1));
+			REAL(yylval)[0] = R_NaN;
+			break;
+		    }
+		} else
+		    PROTECT(yylval = R_NilValue);
 		break;
 	    case FUNCTION:
 	    case WHILE:
@@ -1512,7 +1515,8 @@ static int KeywordLookup(char *s)
 
 static SEXP mkFloat(char *s)
 {
-    SEXP t = allocVector(REALSXP, 1);
+    SEXP t = R_NilValue;
+    double f;
     if(strlen(s) > 2 && (s[1] == 'x' || s[1] == 'X')) {
 	double ret = 0; char *p = s + 2;
 	for(; p; p++) {
@@ -1521,16 +1525,27 @@ static SEXP mkFloat(char *s)
 	    else if('A' <= *p && *p <= 'F') ret = 16*ret + (*p -'A' + 10);
 	    else break;
 	}	
-	REAL(t)[0] = ret;
-    } else REAL(t)[0] = atof(s);
+	f = ret;
+    } else f = atof(s);
+    if(GenerateCode) {
+        t = allocVector(REALSXP, 1);
+        REAL(t)[0] = f;
+    }
     return t;
 }
 
 static SEXP mkComplex(char *s)
 {
-    SEXP t = allocVector(CPLXSXP, 1);
-    COMPLEX(t)[0].r = 0;
-    COMPLEX(t)[0].i = atof(s);
+    SEXP t = R_NilValue;
+    double f;
+    f = atof(s); /* make certain the value is legitimate. */
+
+    if(GenerateCode) {
+       t = allocVector(CPLXSXP, 1);
+       COMPLEX(t)[0].r = 0;
+       COMPLEX(t)[0].i = f;
+    }
+
     return t;
 }
 
@@ -1610,12 +1625,17 @@ static int NumericValue(int c)
     int seenexp = 0;
     int last = c;
     int nd = 0;
+    int asNumeric = 0;
+
     DECLARE_YYTEXT_BUFP(yyp);
     YYTEXT_PUSH(c, yyp);
     /* We don't care about other than ASCII digits */
     while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E' 
-	   || c == 'x' || c == 'X') 
+	   || c == 'x' || c == 'X' || c == 'L') 
     {
+	if (c == 'L') /* must be at the end.  Won't allow 1Le3 (at present). */
+	    break;
+
 	if (c == 'x' || c == 'X') {
 	    if (last != '0') break;
 	    YYTEXT_PUSH(c, yyp);
@@ -1631,7 +1651,7 @@ static int NumericValue(int c)
 	    if (seenexp)
 		break;
 	    seenexp = 1;
-	    seendot = 1;
+	    seendot = seendot == 1 ? seendot : 2;
 	    YYTEXT_PUSH(c, yyp);
 	    c = xxgetc();
 	    if (!isdigit(c) && c != '+' && c != '-') return ERROR;
@@ -1650,13 +1670,42 @@ static int NumericValue(int c)
 	last = c;
     }
     YYTEXT_PUSH('\0', yyp);
-    if(c == 'i') {
-	yylval = mkComplex(yytext);
-    }
-    else {
-	xxungetc(c);
-	yylval = mkFloat(yytext);
-    }
+    if(1 || GenerateCode) {
+        /* Make certain that things are okay. */
+        if(c == 'L') {
+            double a = atof(yytext);
+            int b = (int) atof(yytext); 
+            /* We are asked to create an integer via the L, so we check that the 
+               double and int values are the same. If not, this is a problem and we
+               will not lose information and so use the numeric value.
+             */
+            if(a != (double) b) {
+                if(GenerateCode)
+                    if(seendot == 1 && seenexp == 0)
+                        warning(_("integer literal %sL contains decimal; using numeric value"), yytext);
+                    else 
+                        warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
+                asNumeric = 1;  
+                seenexp = 1;
+            }
+        }
+
+	if(c == 'i') {
+	    yylval = GenerateCode ? mkComplex(yytext) : R_NilValue;
+	} else if(c == 'L' && asNumeric == 0) {
+	    if(GenerateCode && seendot == 1 && seenexp == 0) 
+		warning(_("integer literal %sL contains unnecessary decimal point"), yytext);
+	    yylval = GenerateCode ? ScalarInteger((int) atof(yytext)) : R_NilValue;
+	}
+	else {
+            if(c != 'L')
+                xxungetc(c);
+	    yylval = GenerateCode ? mkFloat(yytext) : R_NilValue;
+	}
+    } else
+	yylval = R_NilValue;
+
+
     PROTECT(yylval);
     return NUM_CONST;
 }

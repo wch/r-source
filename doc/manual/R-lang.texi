@@ -960,6 +960,34 @@ Any number typed directly at the prompt is a constant and is evaluated.
 @end example
 
 @noindent
+Perhaps unexpectedly, the number returned from the expression @code{1}
+is a numeric.  In most cases, the difference between an integer and a
+numeric value will be unimportant as R will do the right thing when
+using the numbers.  There are, however, times when we would like to
+explicitly create an integer value for a constant.  We can do this by
+calling the function @code{as.integer} or using various other
+techniques. But perhaps the simplest approach is to qualify our 
+constant with the suffix character `L'.
+For example, to create the integer value 1, we might use
+
+@example
+> 1L
+[1]
+@end example
+
+We can use the `L' suffix to qualify any number with the intent of
+making it an explicit integer.  So `0x10L' creates the integer value
+16 from the hexadecimal representation.  The constant @code{1e3L} gives 1000
+as an integer rather than a numeric value and is equivalent to @code{1000L}.
+(Note that the `L' is treated as qualifying the term @code{1e3} and not the
+@code{3}.)  If we qualify a value with `L' that is not an integer value,
+e.g. @code{1e-3L}, we get a warning and the numeric value is created.
+A warning is also created if there is an unnecessary decimal point
+in the number, e.g. @code{1.L}.
+
+We get a syntax error when using `L' with complex numbers,
+e.g. @code{12iL} gives an error.
+
 Constants are fairly boring and to do more we need symbols.
 
 @node Symbol lookup, Function calls, Constants, Simple evaluation
