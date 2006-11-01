@@ -2,6 +2,7 @@
 \alias{getClipboardFormats}
 \alias{readClipboard}
 \alias{writeClipboard}
+\alias{clipboard}
 \title{Read/Write to/from the Windows Clipboard}
 \description{
   Transfer text between a character vector and the Windows clipboard.
@@ -18,8 +19,10 @@ writeClipboard(str, format = 1)
 }
 \value{
   For \code{getClipboardFormats}, an integer vector of available formats.
+
   For \code{readClipboard}, a character vector by default, a raw vector if \code{raw} is 
   \code{TRUE}, or \code{NULL}, if the format is unavailable.
+
   For \code{writeClipboard} an invisible logical indicating success or failure.
 }
 \details{

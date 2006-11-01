@@ -2,6 +2,7 @@
 \alias{connections}
 \alias{connection}
 \alias{file}
+\alias{clipboard}
 \alias{pipe}
 \alias{fifo}
 \alias{gzfile}
@@ -254,12 +255,13 @@ isIncomplete(con)
   in modes \code{"r"} and \code{"w"} only.
 #endif
 #ifdef unix
-  in mode \code{"r"} only.  It reads the X11 primary selection, which
-  can also be specified as \code{"X11_primary"} and the secondary
+  in mode \code{"r"} only.  It reads the X11 primary selection (see
+  \url{http://standards.freedesktop.org/clipboards-spec/clipboards-latest.txt}),
+  which can also be specified as \code{"X11_primary"} and the secondary
   selection as \code{"X11_secondary"}.
 #endif
   
-  When the clipboard is opened for reading, the contents are immediately
+  When a clipboard is opened for reading, the contents are immediately
   copied to internal storage in the connection.
 
 #ifdef windows
