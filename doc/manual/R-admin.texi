@@ -2525,8 +2525,8 @@ On most platforms using @command{gcc}, having @samp{-O3} in
 @code{CFLAGS} and @code{FFLAGS} produces worthwhile performance gains.
 On systems using the GNU linker (especially those using @R{} as a shared
 library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
-is worthwhile, and on upcoming systems@footnote{e.g. Fedora Core 6}
-@samp{'-Wl,-O1,-Bdirect,--hash-style=both'} is recommended at
+is worthwhile, and on recent systems@footnote{e.g. Fedora Core 6}
+@samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
 @url{http://lwn.net/Articles/192624/}
 
 @node Making manuals,  , Compilation flags, Configuration variables
