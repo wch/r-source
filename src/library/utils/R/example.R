@@ -2,7 +2,7 @@ example <-
 function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
          ask = getOption("example.ask"),
-	 prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
+	 prompt.prefix = abbreviate(topic, 6))
 {
     topic <- substitute(topic)
     if(!is.character(topic))
@@ -78,7 +78,9 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
         op <- options(par.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
-    source(zfile, local, echo = echo, prompt.echo = prompt.echo,
-	   verbose = verbose, max.deparse.length = 250,
-	   encoding = encoding, skip.echo = skips)
+    source(zfile, local, echo = echo, 
+           prompt.echo = paste(prompt.prefix, getOption("prompt"), sep=""),
+           continue.echo = paste(prompt.prefix, getOption("continue"), sep=""),
+           verbose = verbose, max.deparse.length = Inf, encoding = encoding, 
+    	   skip.echo = skips)
 }

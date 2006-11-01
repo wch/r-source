@@ -51,6 +51,10 @@ NEW FEATURES
     o	abbreviate() no longer has an 8191 byte limit on the size of
 	strings it can handle.
 
+    o	Added links to source files to the parsing routines, so that
+	source() can now echo the original source and comments(rather
+	than deparsing).  This affects example() and Sweave() as well.
+	
 
 DEPRECATED & DEFUNCT
 
