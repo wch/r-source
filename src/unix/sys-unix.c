@@ -245,8 +245,7 @@ SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = allocVector(REALSXP, 5);
     R_getProcTime(REAL(ans));
-    ans = R_setProcTimeNames(ans);
-    return ans;
+    return R_setProcTimeNames(ans);
 }
 #else /* not _R_HAVE_TIMING_ */
 void R_setStartTime(void) {}

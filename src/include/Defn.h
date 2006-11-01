@@ -950,6 +950,7 @@ SEXP R_set_class(SEXP, SEXP, SEXP);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
+SEXP R_setProcTimeNames(SEXP ans);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
 SEXPTYPE str2type(char*);

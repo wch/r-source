@@ -3643,12 +3643,13 @@ static int NumericValue(int c)
                will not lose information and so use the numeric value.
              */
             if(a != (double) b) {
-                if(GenerateCode)
+                if(GenerateCode) {
                     if(seendot == 1 && seenexp == 0)
                         warning(_("integer literal %sL contains decimal; using numeric value"), yytext);
                     else 
                         warning(_("non-integer value %s qualified with L; using numeric value"), yytext);
-                asNumeric = 1;  
+		}
+                asNumeric = 1;
                 seenexp = 1;
             }
         }
