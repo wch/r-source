@@ -699,6 +699,9 @@
    be built. */
 /* #undef HAVE_X11 */
 
+/* Define if you have the X11/Xmu headers and libraries. */
+/* #undef HAVE_X11_Xmu */
+
 /* Define to 1 if you have the `__argz_count' function. */
 /* #undef HAVE___ARGZ_COUNT */
 
@@ -797,16 +800,16 @@
    */
 #define SHLIB_EXT ".dll"
 
-/* The size of a `int', as computed by sizeof. */
+/* The size of `int', as computed by sizeof. */
 #define SIZEOF_INT 4
 
-/* The size of a `long', as computed by sizeof. */
+/* The size of `long', as computed by sizeof. */
 #define SIZEOF_LONG 4
 
-/* The size of a `long double', as computed by sizeof. */
+/* The size of `long double', as computed by sizeof. */
 #define SIZEOF_LONG_DOUBLE 12
 
-/* The size of a `long long', as computed by sizeof. */
+/* The size of `long long', as computed by sizeof. */
 #define SIZEOF_LONG_LONG 8
 
 /* Define as the maximum value of type 'size_t', if the system doesn't define
@@ -815,7 +818,7 @@
 
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
-   automatically deduced at run-time.
+   automatically deduced at runtime.
 	STACK_DIRECTION > 0 => grows toward higher addresses
 	STACK_DIRECTION < 0 => grows toward lower addresses
 	STACK_DIRECTION = 0 => direction of growth unknown */
@@ -888,7 +891,7 @@
 /* #undef inline */
 #endif
 
-/* Define to `long' if <sys/types.h> does not define. */
+/* Define to `long int' if <sys/types.h> does not define. */
 /* #undef off_t */
 
 /* Define to `int' if <sys/types.h> does not define. */
@@ -901,7 +904,7 @@
 /* Define to empty if the C compiler doesn't support this keyword. */
 /* #undef signed */
 
-/* Define to `unsigned' if <sys/types.h> does not define. */
+/* Define to `unsigned int' if <sys/types.h> does not define. */
 /* #undef size_t */
 
 /* Define to unsigned long or unsigned long long if <stdint.h> and
