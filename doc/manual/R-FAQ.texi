@@ -2938,6 +2938,8 @@ Introduction with R'' by S. Wood (2006).
 @item gamlss
 Functions to fit Generalized Additive Models for Location Scale and
 Shape.
+@item gamlss.dist
+Extra distributions for GAMLSS modeling.
 @item gamlss.nl
 A GAMLSS add on package for fitting non linear parametric models.
 @item gamlss.tr
@@ -3383,6 +3385,8 @@ Estimation/multiple imputation programs for mixed categorical and
 continuous data.
 @item mixreg
 Functions to fit mixtures of regressions.
+@item mixtools
+Tools for mixture models.
 @item mlCopulaSelection
 Copula selection and fitting using maximum likelihood.
 @item mlbench
@@ -4147,6 +4151,8 @@ A series of widgets and functions to supplement @strong{tcltk}.
 @item tdist
 Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
+@item tdm
+A tool for Therapeutic Drug Monitoring.
 @item tdthap
 Transmission/disequilibrium tests for extended marker haplotypes.
 @item tensor
