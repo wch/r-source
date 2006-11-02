@@ -50,7 +50,7 @@ file and (for future sessions) from the GUI preferences.
 
 The installer can set defaults for MDI/SDI display, help style, and
 use of the --internet2 startup option.  Custom builds of R can change
-these defaults.
+these defaults.  The standard build now defaults to CHM help.
 
 If CHM help is selected, but is not present (e.g. a package was cross-
 compiled on Unix), the help system defaults to text help.
