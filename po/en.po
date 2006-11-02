@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-10-24 15:49+0100\n"
+"POT-Creation-Date: 2006-11-02 10:49+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -120,14 +120,14 @@ msgstr ""
 #: src/main/platform.c:917 src/main/platform.c:996 src/main/platform.c:1036
 #: src/main/platform.c:1076 src/main/platform.c:1078 src/main/platform.c:1145
 #: src/main/platform.c:1249 src/main/platform.c:1492 src/main/platform.c:1530
-#: src/main/plot3d.c:2459 src/main/plot3d.c:2463 src/main/plot3d.c:2468
-#: src/main/plot3d.c:2472 src/main/plot3d.c:2476 src/main/plot3d.c:2480
+#: src/main/plot3d.c:2460 src/main/plot3d.c:2464 src/main/plot3d.c:2469
+#: src/main/plot3d.c:2473 src/main/plot3d.c:2477 src/main/plot3d.c:2481
 #: src/main/print.c:176 src/main/print.c:182 src/main/print.c:204
 #: src/main/print.c:210 src/main/random.c:465 src/main/random.c:469
 #: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2076
 #: src/main/saveload.c:2341 src/main/saveload.c:2391 src/main/seq.c:346
 #: src/main/seq.c:350 src/main/seq.c:368 src/main/seq.c:375
-#: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
+#: src/main/sysutils.c:398 src/main/sysutils.c:400 src/main/sysutils.c:402
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
 #: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
 #: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
@@ -199,7 +199,7 @@ msgstr ""
 #: src/main/plot.c:603 src/main/plot.c:608 src/main/plot.c:2158
 #: src/main/plot.c:2165 src/main/plot.c:3220 src/main/plot.c:3222
 #: src/main/plot.c:3224 src/main/plot.c:3373 src/main/plot3d.c:1415
-#: src/main/plot3d.c:2537 src/main/plot3d.c:2541 src/main/plot3d.c:2543
+#: src/main/plot3d.c:2538 src/main/plot3d.c:2542 src/main/plot3d.c:2544
 #: src/main/scan.c:952 src/main/scan.c:956 src/main/scan.c:958
 #: src/main/scan.c:969 src/main/scan.c:1005 src/main/scan.c:1008
 #: src/main/scan.c:1093 src/main/scan.c:1097 src/main/scan.c:1107
@@ -209,9 +209,9 @@ msgstr ""
 #: src/main/scan.c:1807 src/main/scan.c:1808 src/main/scan.c:1809
 #: src/main/scan.c:1810 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/sysutils.c:147 src/main/util.c:751 src/main/util.c:756
-#: src/main/util.c:764 src/main/util.c:767 src/modules/X11/devX11.c:2466
-#: src/modules/X11/devX11.c:2493 src/modules/X11/devX11.c:2498
-#: src/modules/X11/devX11.c:2503 src/unix/sys-std.c:1029
+#: src/main/util.c:764 src/main/util.c:767 src/modules/X11/devX11.c:2469
+#: src/modules/X11/devX11.c:2496 src/modules/X11/devX11.c:2501
+#: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1029
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
@@ -495,70 +495,70 @@ msgstr ""
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:171
+#: src/main/CommandLineArgs.c:178
 msgid "WARNING: no value given for --encoding given\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:189
+#: src/main/CommandLineArgs.c:201
 #, c-format
 msgid "WARNING: option '%s' no longer supported\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:200
+#: src/main/CommandLineArgs.c:212
 #, c-format
 msgid "WARNING: no value given for '%s'\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:208
+#: src/main/CommandLineArgs.c:220
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:224
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:229
+#: src/main/CommandLineArgs.c:241
 msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:234
+#: src/main/CommandLineArgs.c:246
 msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:236
+#: src/main/CommandLineArgs.c:248
 msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:239
+#: src/main/CommandLineArgs.c:251
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:262
 msgid "WARNING: no 'vsize' given\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:256
+#: src/main/CommandLineArgs.c:268
 #, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:258
+#: src/main/CommandLineArgs.c:270
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:273
+#: src/main/CommandLineArgs.c:285
 msgid "WARNING: no 'nsize' given\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:279
+#: src/main/CommandLineArgs.c:291
 #, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr ""
 
-#: src/main/CommandLineArgs.c:281
+#: src/main/CommandLineArgs.c:293
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 msgstr ""
@@ -758,38 +758,38 @@ msgid ""
 "\tis not a multiple of shorter object length"
 msgstr ""
 
-#: src/main/arithmetic.c:523
+#: src/main/arithmetic.c:527
 msgid "invalid argument to unary operator"
 msgstr ""
 
-#: src/main/arithmetic.c:547 src/main/arithmetic.c:566
+#: src/main/arithmetic.c:551 src/main/arithmetic.c:570
 msgid "invalid unary operator"
 msgstr ""
 
-#: src/main/arithmetic.c:613
+#: src/main/arithmetic.c:617
 msgid "NAs produced by integer overflow"
 msgstr ""
 
-#: src/main/arithmetic.c:969
+#: src/main/arithmetic.c:1046
 msgid "unimplemented real function of 1 argument"
 msgstr ""
 
-#: src/main/arithmetic.c:1205 src/main/arithmetic.c:1515
-#: src/main/arithmetic.c:1703 src/main/arithmetic.c:1832
+#: src/main/arithmetic.c:1282 src/main/arithmetic.c:1592
+#: src/main/arithmetic.c:1780 src/main/arithmetic.c:1909
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr ""
 
-#: src/main/arithmetic.c:1227
+#: src/main/arithmetic.c:1304
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
 msgstr ""
 
-#: src/main/arithmetic.c:1242 src/main/arithmetic.c:1261
+#: src/main/arithmetic.c:1319 src/main/arithmetic.c:1338
 msgid "invalid second argument of length 0"
 msgstr ""
 
-#: src/main/arithmetic.c:1267
+#: src/main/arithmetic.c:1344
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1170,8 +1170,8 @@ msgid "'parent' is not an environment"
 msgstr ""
 
 #: src/main/builtin.c:377 src/main/builtin.c:407 src/main/platform.c:238
-#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2551
-#: src/main/plot3d.c:2555
+#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2552
+#: src/main/plot3d.c:2556
 #, c-format
 msgid "invalid '%s' specification"
 msgstr ""
@@ -1753,7 +1753,7 @@ msgstr ""
 #: src/main/connections.c:847 src/main/connections.c:988
 #: src/main/connections.c:1173 src/main/connections.c:1351
 #: src/main/connections.c:2147 src/main/connections.c:2198
-#: src/main/connections.c:2245 src/main/connections.c:3679
+#: src/main/connections.c:2245 src/main/connections.c:3680
 msgid "unable to open connection"
 msgstr ""
 
@@ -1808,11 +1808,11 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr ""
 
-#: src/main/connections.c:1407 src/modules/X11/devX11.c:2587
+#: src/main/connections.c:1407 src/modules/X11/devX11.c:2596
 msgid "memory allocation to copy clipboard failed"
 msgstr ""
 
-#: src/main/connections.c:1412 src/modules/X11/devX11.c:2575
+#: src/main/connections.c:1412 src/modules/X11/devX11.c:2584
 msgid "clipboard cannot be opened or contains no text"
 msgstr ""
 
@@ -1890,7 +1890,7 @@ msgstr ""
 #: src/main/connections.c:2294 src/main/connections.c:2343
 #: src/main/connections.c:2365 src/main/connections.c:2384
 #: src/main/connections.c:2396 src/main/connections.c:2500
-#: src/main/connections.c:2592 src/main/connections.c:3985
+#: src/main/connections.c:2592 src/main/connections.c:3986
 msgid "'con' is not a connection"
 msgstr ""
 
@@ -1918,7 +1918,7 @@ msgstr ""
 msgid "cannot close messages sink connection"
 msgstr ""
 
-#: src/main/connections.c:2367 src/main/connections.c:3700
+#: src/main/connections.c:2367 src/main/connections.c:3701
 #: src/main/serialize.c:1616 src/main/serialize.c:1624
 msgid "connection is not open"
 msgstr ""
@@ -1957,7 +1957,7 @@ msgid "too few lines read in readLines"
 msgstr ""
 
 #: src/main/connections.c:2597 src/main/connections.c:2927
-#: src/main/connections.c:3229 src/main/connections.c:3701
+#: src/main/connections.c:3229 src/main/connections.c:3702
 #: src/main/scan.c:1786 src/main/serialize.c:1626
 msgid "cannot write to this connection"
 msgstr ""
@@ -2055,77 +2055,77 @@ msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3666 src/modules/internet/internet.c:480
+#: src/main/connections.c:3667 src/modules/internet/internet.c:480
 msgid "unsupported URL scheme"
 msgstr ""
 
-#: src/main/connections.c:3753
+#: src/main/connections.c:3754
 msgid "file stream does not have gzip magic number"
 msgstr ""
 
-#: src/main/connections.c:3764
+#: src/main/connections.c:3765
 msgid "file stream does not have valid gzip header"
 msgstr ""
 
-#: src/main/connections.c:3830
+#: src/main/connections.c:3831
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr ""
 
-#: src/main/connections.c:3930
+#: src/main/connections.c:3931
 #, c-format
 msgid "crc error %x %x\n"
 msgstr ""
 
-#: src/main/connections.c:3955
+#: src/main/connections.c:3956
 msgid "write error on 'gzcon' connection"
 msgstr ""
 
-#: src/main/connections.c:3989
+#: src/main/connections.c:3990
 msgid "'level' must be one of 0 ... 9"
 msgstr ""
 
-#: src/main/connections.c:3992
+#: src/main/connections.c:3993
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/connections.c:3995
+#: src/main/connections.c:3996
 msgid "this is already a gzcon connection"
 msgstr ""
 
-#: src/main/connections.c:4001
+#: src/main/connections.c:4002
 msgid "can only use read- or write- binary connections"
 msgstr ""
 
-#: src/main/connections.c:4004
+#: src/main/connections.c:4005
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 
-#: src/main/connections.c:4007 src/main/connections.c:4011
-#: src/main/connections.c:4018 src/main/connections.c:4032
+#: src/main/connections.c:4008 src/main/connections.c:4012
+#: src/main/connections.c:4019 src/main/connections.c:4033
 msgid "allocation of 'gzcon' connection failed"
 msgstr ""
 
-#: src/main/connections.c:4078 src/main/connections.c:4101
+#: src/main/connections.c:4079 src/main/connections.c:4102
 msgid "R_decompress1 requires a raw vector"
 msgstr ""
 
-#: src/main/connections.c:4085
+#: src/main/connections.c:4086
 msgid "internal error in R_compress1"
 msgstr ""
 
-#: src/main/connections.c:4106
+#: src/main/connections.c:4107
 msgid "internal error in R_decompress1"
 msgstr ""
 
-#: src/main/connections.c:4123
+#: src/main/connections.c:4124
 msgid "not a list of sockets"
 msgstr ""
 
-#: src/main/connections.c:4128
+#: src/main/connections.c:4129
 msgid "bad write indicators"
 msgstr ""
 
-#: src/main/connections.c:4139
+#: src/main/connections.c:4140
 msgid "not a socket connection"
 msgstr ""
 
@@ -2557,12 +2557,12 @@ msgid "no graphics system to unregister"
 msgstr ""
 
 #: src/main/engine.c:489 src/main/engine.c:494 src/main/engine.c:502
-#: src/main/engine.c:509 src/main/engine.c:523 src/modules/X11/devX11.c:978
+#: src/main/engine.c:509 src/main/engine.c:523 src/modules/X11/devX11.c:981
 msgid "invalid line end"
 msgstr ""
 
 #: src/main/engine.c:554 src/main/engine.c:559 src/main/engine.c:567
-#: src/main/engine.c:574 src/main/engine.c:588 src/modules/X11/devX11.c:996
+#: src/main/engine.c:574 src/main/engine.c:588 src/modules/X11/devX11.c:999
 msgid "invalid line join"
 msgstr ""
 
@@ -3356,49 +3356,71 @@ msgstr ""
 msgid "incorrect tag type"
 msgstr ""
 
-#: src/main/gram.y:1566
+#: src/main/gram.y:1581
 msgid "Repeated formal argument"
 msgstr ""
 
-#: src/main/gram.y:1577
+#: src/main/gram.y:1592
 msgid "input buffer overflow"
 msgstr ""
 
-#: src/main/gram.y:1709
+#: src/main/gram.y:1685
+#, c-format
+msgid "integer literal %sL contains decimal; using numeric value"
+msgstr ""
+
+#: src/main/gram.y:1687
+#, c-format
+msgid "non-integer value %s qualified with L; using numeric value"
+msgstr ""
+
+#: src/main/gram.y:1698
+#, c-format
+msgid "integer literal %sL contains unnecessary decimal point"
+msgstr ""
+
+#: src/main/gram.y:1769
 msgid "\\uxxxx sequences not supported"
 msgstr ""
 
-#: src/main/gram.y:1724 src/main/gram.y:1729
+#: src/main/gram.y:1787 src/main/gram.y:1793
 msgid "invalid \\u{xxxx} sequence"
 msgstr ""
 
-#: src/main/gram.y:1731
+#: src/main/gram.y:1795
 msgid "invalid \\uxxxx sequence"
 msgstr ""
 
-#: src/main/gram.y:1739
+#: src/main/gram.y:1803
 msgid "\\Uxxxxxxxx sequences are not supported on Windows"
 msgstr ""
 
-#: src/main/gram.y:1742
+#: src/main/gram.y:1806
 msgid "\\Uxxxxxxxx sequences are only valid in multibyte locales"
 msgstr ""
 
-#: src/main/gram.y:1758 src/main/gram.y:1762
+#: src/main/gram.y:1825 src/main/gram.y:1831
 msgid "invalid \\U{xxxxxxxx} sequence"
 msgstr ""
 
-#: src/main/gram.y:1804
+#: src/main/gram.y:1875
 #, c-format
 msgid "'\\%%%%' is an unrecognized escape in a character string"
 msgstr ""
 
-#: src/main/gram.y:1807
+#: src/main/gram.y:1881
 #, c-format
 msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr ""
 
-#: src/main/gram.y:1941
+#: src/main/gram.y:1912
+#, c-format
+msgid "unrecognized escape removed from \"%s\""
+msgid_plural "unrecognized escapes removed from \"%s\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/main/gram.y:2027
 msgid "functions nested too deeply in source code"
 msgstr ""
 
@@ -4593,7 +4615,7 @@ msgstr ""
 msgid "invalid plotting symbol"
 msgstr ""
 
-#: src/main/plot.c:335 src/modules/X11/devX11.c:1429
+#: src/main/plot.c:335 src/modules/X11/devX11.c:1432
 msgid "invalid font specification"
 msgstr ""
 
@@ -4899,15 +4921,15 @@ msgstr ""
 msgid "all z values are NA"
 msgstr ""
 
-#: src/main/plot3d.c:1439 src/main/plot3d.c:1691
+#: src/main/plot3d.c:1439 src/main/plot3d.c:1692
 msgid "insufficient 'x' or 'y' values"
 msgstr ""
 
-#: src/main/plot3d.c:1442 src/main/plot3d.c:1694
+#: src/main/plot3d.c:1442 src/main/plot3d.c:1695
 msgid "dimension mismatch"
 msgstr ""
 
-#: src/main/plot3d.c:1445 src/main/plot3d.c:1697
+#: src/main/plot3d.c:1445 src/main/plot3d.c:1698
 msgid "no contour values"
 msgstr ""
 
@@ -4931,51 +4953,51 @@ msgstr ""
 msgid "invalid NA contour values"
 msgstr ""
 
-#: src/main/plot3d.c:1762
+#: src/main/plot3d.c:1763
 msgid "invalid x / y values or limits"
 msgstr ""
 
-#: src/main/plot3d.c:1764
+#: src/main/plot3d.c:1765
 msgid "invalid contour levels: must be strictly increasing"
 msgstr ""
 
-#: src/main/plot3d.c:2005
+#: src/main/plot3d.c:2006
 msgid "coordinates outsize specified range"
 msgstr ""
 
-#: src/main/plot3d.c:2423 src/main/plot3d.c:2436
+#: src/main/plot3d.c:2424 src/main/plot3d.c:2437
 msgid "Axis orientation not calculated"
 msgstr ""
 
-#: src/main/plot3d.c:2454
+#: src/main/plot3d.c:2455
 msgid "too few parameters"
 msgstr ""
 
-#: src/main/plot3d.c:2486
+#: src/main/plot3d.c:2487
 msgid "invalid 'x' limits"
 msgstr ""
 
-#: src/main/plot3d.c:2488
+#: src/main/plot3d.c:2489
 msgid "invalid 'y' limits"
 msgstr ""
 
-#: src/main/plot3d.c:2490
+#: src/main/plot3d.c:2491
 msgid "invalid 'z' limits"
 msgstr ""
 
-#: src/main/plot3d.c:2511
+#: src/main/plot3d.c:2512
 msgid "'xlab' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/plot3d.c:2513
+#: src/main/plot3d.c:2514
 msgid "'ylab' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/plot3d.c:2515
+#: src/main/plot3d.c:2516
 msgid "'zlab' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/plot3d.c:2535
+#: src/main/plot3d.c:2536
 msgid "invalid viewing parameters"
 msgstr ""
 
@@ -6108,48 +6130,48 @@ msgstr ""
 msgid "no 'tempdir'"
 msgstr ""
 
-#: src/main/sysutils.c:224 src/main/sysutils.c:280
+#: src/main/sysutils.c:226 src/main/sysutils.c:282
 msgid "wrong type for argument"
 msgstr ""
 
-#: src/main/sysutils.c:290
+#: src/main/sysutils.c:292
 msgid "'putenv' is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:323
+#: src/main/sysutils.c:325
 msgid "failed to find symbols in iconv.dll"
 msgstr ""
 
-#: src/main/sysutils.c:327
+#: src/main/sysutils.c:329
 msgid "iconv.dll is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:394
+#: src/main/sysutils.c:396
 msgid "'x' must be a character vector"
 msgstr ""
 
-#: src/main/sysutils.c:407
+#: src/main/sysutils.c:409
 msgid "unsupported conversion"
 msgstr ""
 
-#: src/main/sysutils.c:456 src/main/sysutils.c:491 src/main/sysutils.c:498
-#: src/main/sysutils.c:504
+#: src/main/sysutils.c:458 src/main/sysutils.c:493 src/main/sysutils.c:500
+#: src/main/sysutils.c:506
 msgid "'iconv' is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:586
+#: src/main/sysutils.c:588
 msgid "cannot mkdir R_TempDir"
 msgstr ""
 
-#: src/main/sysutils.c:602
+#: src/main/sysutils.c:604
 msgid "cannot allocate R_TempDir"
 msgstr ""
 
-#: src/main/sysutils.c:621
+#: src/main/sysutils.c:623
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr ""
 
-#: src/main/sysutils.c:636
+#: src/main/sysutils.c:638
 msgid "cannot find unused tempfile name"
 msgstr ""
 
@@ -6672,133 +6694,133 @@ msgstr ""
 msgid "argument 'logarithm' must be logical"
 msgstr ""
 
-#: src/modules/X11/devX11.c:298
+#: src/modules/X11/devX11.c:301
 msgid "cannot set grayscale: reverting to monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:381
+#: src/modules/X11/devX11.c:384
 msgid ""
 "X11 driver unable to obtain color cube\n"
 "  reverting to monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:426
+#: src/modules/X11/devX11.c:429
 msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 msgstr ""
 
-#: src/modules/X11/devX11.c:827
+#: src/modules/X11/devX11.c:830
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
 msgstr ""
 
-#: src/modules/X11/devX11.c:891
+#: src/modules/X11/devX11.c:894
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr ""
 
-#: src/modules/X11/devX11.c:950
+#: src/modules/X11/devX11.c:953
 #, c-format
 msgid "X11 font at size %d could not be loaded"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1067
+#: src/modules/X11/devX11.c:1070
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1084
+#: src/modules/X11/devX11.c:1087
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1143
+#: src/modules/X11/devX11.c:1146
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1144
+#: src/modules/X11/devX11.c:1147
 msgid "X cannot set locale modifiers"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1149
+#: src/modules/X11/devX11.c:1152
 msgid "no png support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1155
+#: src/modules/X11/devX11.c:1158
 msgid "filename too long in png() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1159 src/modules/X11/devX11.c:1668
+#: src/modules/X11/devX11.c:1162 src/modules/X11/devX11.c:1671
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1170
+#: src/modules/X11/devX11.c:1173
 msgid "no jpeg support in this version of R"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1178
+#: src/modules/X11/devX11.c:1181
 msgid "filename too long in jpeg() call"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1182 src/modules/X11/devX11.c:1675
+#: src/modules/X11/devX11.c:1185 src/modules/X11/devX11.c:1678
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1203
+#: src/modules/X11/devX11.c:1206
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1229
+#: src/modules/X11/devX11.c:1232
 msgid "jpeg() does not support transparency: using white bg"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1342
+#: src/modules/X11/devX11.c:1345
 msgid "unable to create X11 window"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1390
+#: src/modules/X11/devX11.c:1393
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1395
+#: src/modules/X11/devX11.c:1398
 msgid "unable to create pixmap"
 msgstr ""
 
-#: src/modules/X11/devX11.c:1468
+#: src/modules/X11/devX11.c:1471
 msgid "font family not found in X11 font database"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2400
+#: src/modules/X11/devX11.c:2403
 msgid "invalid string argument"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2435
+#: src/modules/X11/devX11.c:2438
 #, c-format
 msgid "unable to start device %s"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2462
+#: src/modules/X11/devX11.c:2465
 msgid "invalid 'width' or 'height'"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2469
+#: src/modules/X11/devX11.c:2472
 msgid "invalid colortype passed to X11 driver"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2483
+#: src/modules/X11/devX11.c:2486
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2551
+#: src/modules/X11/devX11.c:2554
 msgid "unable to contact X11 display"
 msgstr ""
 
-#: src/modules/X11/devX11.c:2602
+#: src/modules/X11/devX11.c:2611
 msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 

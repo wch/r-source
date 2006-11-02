@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-10-24 15:49+0100\n"
+"POT-Creation-Date: 2006-11-02 10:49+0000\n"
 "PO-Revision-Date: 2006-09-22 19:00+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -125,14 +125,14 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/platform.c:917 src/main/platform.c:996 src/main/platform.c:1036
 #: src/main/platform.c:1076 src/main/platform.c:1078 src/main/platform.c:1145
 #: src/main/platform.c:1249 src/main/platform.c:1492 src/main/platform.c:1530
-#: src/main/plot3d.c:2459 src/main/plot3d.c:2463 src/main/plot3d.c:2468
-#: src/main/plot3d.c:2472 src/main/plot3d.c:2476 src/main/plot3d.c:2480
+#: src/main/plot3d.c:2460 src/main/plot3d.c:2464 src/main/plot3d.c:2469
+#: src/main/plot3d.c:2473 src/main/plot3d.c:2477 src/main/plot3d.c:2481
 #: src/main/print.c:176 src/main/print.c:182 src/main/print.c:204
 #: src/main/print.c:210 src/main/random.c:465 src/main/random.c:469
 #: src/main/random.c:471 src/main/random.c:473 src/main/saveload.c:2076
 #: src/main/saveload.c:2341 src/main/saveload.c:2391 src/main/seq.c:346
 #: src/main/seq.c:350 src/main/seq.c:368 src/main/seq.c:375
-#: src/main/sysutils.c:396 src/main/sysutils.c:398 src/main/sysutils.c:400
+#: src/main/sysutils.c:398 src/main/sysutils.c:400 src/main/sysutils.c:402
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
 #: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
 #: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
@@ -204,7 +204,7 @@ msgstr "'loadRconsole' はRgui でしか使用することができない"
 #: src/main/plot.c:603 src/main/plot.c:608 src/main/plot.c:2158
 #: src/main/plot.c:2165 src/main/plot.c:3220 src/main/plot.c:3222
 #: src/main/plot.c:3224 src/main/plot.c:3373 src/main/plot3d.c:1415
-#: src/main/plot3d.c:2537 src/main/plot3d.c:2541 src/main/plot3d.c:2543
+#: src/main/plot3d.c:2538 src/main/plot3d.c:2542 src/main/plot3d.c:2544
 #: src/main/scan.c:952 src/main/scan.c:956 src/main/scan.c:958
 #: src/main/scan.c:969 src/main/scan.c:1005 src/main/scan.c:1008
 #: src/main/scan.c:1093 src/main/scan.c:1097 src/main/scan.c:1107
@@ -214,9 +214,9 @@ msgstr "'loadRconsole' はRgui でしか使用することができない"
 #: src/main/scan.c:1807 src/main/scan.c:1808 src/main/scan.c:1809
 #: src/main/scan.c:1810 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/sysutils.c:147 src/main/util.c:751 src/main/util.c:756
-#: src/main/util.c:764 src/main/util.c:767 src/modules/X11/devX11.c:2466
-#: src/modules/X11/devX11.c:2493 src/modules/X11/devX11.c:2498
-#: src/modules/X11/devX11.c:2503 src/unix/sys-std.c:1029
+#: src/main/util.c:764 src/main/util.c:767 src/modules/X11/devX11.c:2469
+#: src/modules/X11/devX11.c:2496 src/modules/X11/devX11.c:2501
+#: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1029
 #, c-format
 msgid "invalid '%s' value"
 msgstr "'%s' の値が不正です"
@@ -500,70 +500,70 @@ msgstr "リストとベクトルのみに適用できます"
 msgid "no R-to-C converter found corresponding to identifier"
 msgstr "識別子に対応する R-to-C コンバータがありません"
 
-#: src/main/CommandLineArgs.c:171
+#: src/main/CommandLineArgs.c:178
 msgid "WARNING: no value given for --encoding given\n"
 msgstr "警告: --encoding の値が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:189
+#: src/main/CommandLineArgs.c:201
 #, c-format
 msgid "WARNING: option '%s' no longer supported\n"
 msgstr "警告: '%s' オプションはもやはサポートされていません\n"
 
-#: src/main/CommandLineArgs.c:200
+#: src/main/CommandLineArgs.c:212
 #, c-format
 msgid "WARNING: no value given for '%s'\n"
 msgstr "警告: ''%s' の値が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:208
+#: src/main/CommandLineArgs.c:220
 #, c-format
 msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "警告: '%s' 値が不正なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:212
+#: src/main/CommandLineArgs.c:224
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
 msgstr "警告: %s=%lu'%c': 大きすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:229
+#: src/main/CommandLineArgs.c:241
 msgid "WARNING: no value given for '--max-ppsize'\n"
 msgstr "警告: '--max-ppsize' の値が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:234
+#: src/main/CommandLineArgs.c:246
 msgid "WARNING: '-max-ppsize' value is negative: ignored\n"
 msgstr "警告: '-max-ppsize' 値が負なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:236
+#: src/main/CommandLineArgs.c:248
 msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "警告: '-max-ppsize' 値が小さすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:239
+#: src/main/CommandLineArgs.c:251
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr "警告: '-max-ppsize' 値が大きすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:250
+#: src/main/CommandLineArgs.c:262
 msgid "WARNING: no 'vsize' given\n"
 msgstr "警告: 'vsize' が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:256
+#: src/main/CommandLineArgs.c:268
 #, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr "警告: '--vsize' 値が不正なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:258
+#: src/main/CommandLineArgs.c:270
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
 msgstr "警告: --vsize=%ld'%c': 大きすぎるので無視されました\n"
 
-#: src/main/CommandLineArgs.c:273
+#: src/main/CommandLineArgs.c:285
 msgid "WARNING: no 'nsize' given\n"
 msgstr "警告: 'nsize' が与えられていません\n"
 
-#: src/main/CommandLineArgs.c:279
+#: src/main/CommandLineArgs.c:291
 #, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr "警告: '--nsize' 値が不正なので無視されました\n"
 
-#: src/main/CommandLineArgs.c:281
+#: src/main/CommandLineArgs.c:293
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 msgstr "警告: --nsize=%lu'%c': 大きすぎるので無視されました\n"
@@ -772,38 +772,38 @@ msgstr ""
 "長いオブジェクトの長さが\n"
 "\t 短いオブジェクトの長さの倍数になっていません"
 
-#: src/main/arithmetic.c:523
+#: src/main/arithmetic.c:527
 msgid "invalid argument to unary operator"
 msgstr "単項演算子に対する引数が不正です"
 
-#: src/main/arithmetic.c:547 src/main/arithmetic.c:566
+#: src/main/arithmetic.c:551 src/main/arithmetic.c:570
 msgid "invalid unary operator"
 msgstr "不正な単項演算子です"
 
-#: src/main/arithmetic.c:613
+#: src/main/arithmetic.c:617
 msgid "NAs produced by integer overflow"
 msgstr "整数の桁あふれにより NA が生成されました"
 
-#: src/main/arithmetic.c:969
+#: src/main/arithmetic.c:1046
 msgid "unimplemented real function of 1 argument"
 msgstr "1個の引数を持つ未実装の数値関数"
 
-#: src/main/arithmetic.c:1205 src/main/arithmetic.c:1515
-#: src/main/arithmetic.c:1703 src/main/arithmetic.c:1832
+#: src/main/arithmetic.c:1282 src/main/arithmetic.c:1592
+#: src/main/arithmetic.c:1780 src/main/arithmetic.c:1909
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d 個の数値引数を持つ未実装の数値関数"
 
-#: src/main/arithmetic.c:1227
+#: src/main/arithmetic.c:1304
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1"
 msgstr "'atan' 関数に %d 個の引数が渡されましたが，1つでなくてはなりません"
 
-#: src/main/arithmetic.c:1242 src/main/arithmetic.c:1261
+#: src/main/arithmetic.c:1319 src/main/arithmetic.c:1338
 msgid "invalid second argument of length 0"
 msgstr "二番目の長さ 0 の引数が不正です"
 
-#: src/main/arithmetic.c:1267
+#: src/main/arithmetic.c:1344
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1196,8 +1196,8 @@ msgid "'parent' is not an environment"
 msgstr "'parent' は環境ではありません"
 
 #: src/main/builtin.c:377 src/main/builtin.c:407 src/main/platform.c:238
-#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2551
-#: src/main/plot3d.c:2555
+#: src/main/platform.c:287 src/main/platform.c:290 src/main/plot3d.c:2552
+#: src/main/plot3d.c:2556
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "'%s' の指定が不正です"
@@ -1785,7 +1785,7 @@ msgstr "'description' 引数の最初の要素だけが使われました"
 #: src/main/connections.c:847 src/main/connections.c:988
 #: src/main/connections.c:1173 src/main/connections.c:1351
 #: src/main/connections.c:2147 src/main/connections.c:2198
-#: src/main/connections.c:2245 src/main/connections.c:3679
+#: src/main/connections.c:2245 src/main/connections.c:3680
 msgid "unable to open connection"
 msgstr "コネクションを開くことができません"
 
@@ -1840,11 +1840,11 @@ msgstr "ファイル '%s' は bzip2 で圧縮されていないようです"
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile 接続の割り当てに失敗しました"
 
-#: src/main/connections.c:1407 src/modules/X11/devX11.c:2587
+#: src/main/connections.c:1407 src/modules/X11/devX11.c:2596
 msgid "memory allocation to copy clipboard failed"
 msgstr "クリップボードのコピーでメモリ確保に失敗しました"
 
-#: src/main/connections.c:1412 src/modules/X11/devX11.c:2575
+#: src/main/connections.c:1412 src/modules/X11/devX11.c:2584
 msgid "clipboard cannot be opened or contains no text"
 msgstr "クリップボードを開くことができないか，中身がありません"
 
@@ -1923,7 +1923,7 @@ msgstr "このシステムではソケットは使えません"
 #: src/main/connections.c:2294 src/main/connections.c:2343
 #: src/main/connections.c:2365 src/main/connections.c:2384
 #: src/main/connections.c:2396 src/main/connections.c:2500
-#: src/main/connections.c:2592 src/main/connections.c:3985
+#: src/main/connections.c:2592 src/main/connections.c:3986
 msgid "'con' is not a connection"
 msgstr "'con' はコネクションではありません"
 
@@ -1951,7 +1951,7 @@ msgstr "出力 sink コネクションを閉じることができません"
 msgid "cannot close messages sink connection"
 msgstr "メッセージ sink コネクションを閉じることができません"
 
-#: src/main/connections.c:2367 src/main/connections.c:3700
+#: src/main/connections.c:2367 src/main/connections.c:3701
 #: src/main/serialize.c:1616 src/main/serialize.c:1624
 msgid "connection is not open"
 msgstr "コネクションは開かれていません"
@@ -1990,7 +1990,7 @@ msgid "too few lines read in readLines"
 msgstr "readLines で読み込む行が少なすぎます"
 
 #: src/main/connections.c:2597 src/main/connections.c:2927
-#: src/main/connections.c:3229 src/main/connections.c:3701
+#: src/main/connections.c:3229 src/main/connections.c:3702
 #: src/main/scan.c:1786 src/main/serialize.c:1626
 msgid "cannot write to this connection"
 msgstr "このコネクションには書き出せません"
@@ -2090,78 +2090,78 @@ msgstr ""
 "file()は、open = \"w+\" と open = \"w+b\" をサポートするだけである：前者を使"
 "うこと"
 
-#: src/main/connections.c:3666 src/modules/internet/internet.c:480
+#: src/main/connections.c:3667 src/modules/internet/internet.c:480
 msgid "unsupported URL scheme"
 msgstr "サポートされていないURLスキームです"
 
-#: src/main/connections.c:3753
+#: src/main/connections.c:3754
 msgid "file stream does not have gzip magic number"
 msgstr "ファイルストリームは gzip マジックナンバーを持っていません"
 
-#: src/main/connections.c:3764
+#: src/main/connections.c:3765
 msgid "file stream does not have valid gzip header"
 msgstr "ファイルストリームは適正な gzip ヘッダを持っていません"
 
-#: src/main/connections.c:3830
+#: src/main/connections.c:3831
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "'gzcon' コネクションのフラッシュ時に書き込みエラーが生じました"
 
-#: src/main/connections.c:3930
+#: src/main/connections.c:3931
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc エラー %x %x\n"
 
-#: src/main/connections.c:3955
+#: src/main/connections.c:3956
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' コネクションに書き込みエラーが生じました"
 
-#: src/main/connections.c:3989
+#: src/main/connections.c:3990
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' は0〜9のいずれかでなくてはなりません"
 
-#: src/main/connections.c:3992
+#: src/main/connections.c:3993
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' は TRUEまたは FALSEでなければなりません"
 
-#: src/main/connections.c:3995
+#: src/main/connections.c:3996
 msgid "this is already a gzcon connection"
 msgstr "これはすでに gzcon コネクションです"
 
-#: src/main/connections.c:4001
+#: src/main/connections.c:4002
 msgid "can only use read- or write- binary connections"
 msgstr "読み込み，または書き出しのためのバイナリコネクションのみが使えます"
 
-#: src/main/connections.c:4004
+#: src/main/connections.c:4005
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 "テキストモード 'file' コネクションの使用はは正しく機能しないかもしれません"
 
-#: src/main/connections.c:4007 src/main/connections.c:4011
-#: src/main/connections.c:4018 src/main/connections.c:4032
+#: src/main/connections.c:4008 src/main/connections.c:4012
+#: src/main/connections.c:4019 src/main/connections.c:4033
 msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' コネクションで割り当てに失敗しました"
 
-#: src/main/connections.c:4078 src/main/connections.c:4101
+#: src/main/connections.c:4079 src/main/connections.c:4102
 msgid "R_decompress1 requires a raw vector"
 msgstr "R_decompress1 は raw ベクトルを必要とします"
 
-#: src/main/connections.c:4085
+#: src/main/connections.c:4086
 msgid "internal error in R_compress1"
 msgstr "R_compress1 で内部エラーが起きました"
 
-#: src/main/connections.c:4106
+#: src/main/connections.c:4107
 msgid "internal error in R_decompress1"
 msgstr "R_decompress1 で内部エラーが起きました"
 
-#: src/main/connections.c:4123
+#: src/main/connections.c:4124
 msgid "not a list of sockets"
 msgstr "ソケットのリストではありません"
 
-#: src/main/connections.c:4128
+#: src/main/connections.c:4129
 msgid "bad write indicators"
 msgstr "不適切な書き込み指示子です"
 
-#: src/main/connections.c:4139
+#: src/main/connections.c:4140
 msgid "not a socket connection"
 msgstr "ソケットコネクションではありません"
 
@@ -2602,12 +2602,12 @@ msgid "no graphics system to unregister"
 msgstr "登録解除できるグラフィックスシステムがありません"
 
 #: src/main/engine.c:489 src/main/engine.c:494 src/main/engine.c:502
-#: src/main/engine.c:509 src/main/engine.c:523 src/modules/X11/devX11.c:978
+#: src/main/engine.c:509 src/main/engine.c:523 src/modules/X11/devX11.c:981
 msgid "invalid line end"
 msgstr "行末が不正です"
 
 #: src/main/engine.c:554 src/main/engine.c:559 src/main/engine.c:567
-#: src/main/engine.c:574 src/main/engine.c:588 src/modules/X11/devX11.c:996
+#: src/main/engine.c:574 src/main/engine.c:588 src/modules/X11/devX11.c:999
 msgid "invalid line join"
 msgstr "行をまとめられません"
 
@@ -3406,49 +3406,70 @@ msgstr "関数が長すぎるのでソースを保持できません"
 msgid "incorrect tag type"
 msgstr "tag の型が正しくありません"
 
-#: src/main/gram.y:1566
+#: src/main/gram.y:1581
 msgid "Repeated formal argument"
 msgstr "同じ名前の仮引数が複数個あります"
 
-#: src/main/gram.y:1577
+#: src/main/gram.y:1592
 msgid "input buffer overflow"
 msgstr "入力バッファが溢れました"
 
-#: src/main/gram.y:1709
+#: src/main/gram.y:1685
+#, c-format
+msgid "integer literal %sL contains decimal; using numeric value"
+msgstr ""
+
+#: src/main/gram.y:1687
+#, c-format
+msgid "non-integer value %s qualified with L; using numeric value"
+msgstr ""
+
+#: src/main/gram.y:1698
+#, c-format
+msgid "integer literal %sL contains unnecessary decimal point"
+msgstr ""
+
+#: src/main/gram.y:1769
 msgid "\\uxxxx sequences not supported"
 msgstr "\\Uxxxx シーケンスはサポートされません"
 
-#: src/main/gram.y:1724 src/main/gram.y:1729
+#: src/main/gram.y:1787 src/main/gram.y:1793
 msgid "invalid \\u{xxxx} sequence"
 msgstr "不正な \\u{xxxx} 系列です"
 
-#: src/main/gram.y:1731
+#: src/main/gram.y:1795
 msgid "invalid \\uxxxx sequence"
 msgstr "不正な \\uxxxx 系列です"
 
-#: src/main/gram.y:1739
+#: src/main/gram.y:1803
 msgid "\\Uxxxxxxxx sequences are not supported on Windows"
 msgstr "\\Uxxxxxxxx シーケンスは Windows ではサポートされません"
 
-#: src/main/gram.y:1742
+#: src/main/gram.y:1806
 msgid "\\Uxxxxxxxx sequences are only valid in multibyte locales"
 msgstr "\\Uxxxxxxxx シーケンスは多バイト環境でのみ有効です"
 
-#: src/main/gram.y:1758 src/main/gram.y:1762
+#: src/main/gram.y:1825 src/main/gram.y:1831
 msgid "invalid \\U{xxxxxxxx} sequence"
 msgstr "不正な \\U{xxxxxxxx} 系列です"
 
-#: src/main/gram.y:1804
+#: src/main/gram.y:1875
 #, fuzzy, c-format
 msgid "'\\%%%%' is an unrecognized escape in a character string"
 msgstr "最初の引数は文字列でなくてはなりません"
 
-#: src/main/gram.y:1807
+#: src/main/gram.y:1881
 #, fuzzy, c-format
 msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr "最初の引数は文字列でなくてはなりません"
 
-#: src/main/gram.y:1941
+#: src/main/gram.y:1912
+#, fuzzy, c-format
+msgid "unrecognized escape removed from \"%s\""
+msgid_plural "unrecognized escapes removed from \"%s\""
+msgstr[0] "'save' の値が認識できません"
+
+#: src/main/gram.y:2027
 msgid "functions nested too deeply in source code"
 msgstr "関数はソースコードにおいて過度にネストしています"
 
@@ -4669,7 +4690,7 @@ msgstr "論理的なプロットシンボルとしては NA だけが許され�
 msgid "invalid plotting symbol"
 msgstr "プロット記号が不正です"
 
-#: src/main/plot.c:335 src/modules/X11/devX11.c:1429
+#: src/main/plot.c:335 src/modules/X11/devX11.c:1432
 msgid "invalid font specification"
 msgstr "フォントの指定が不正です"
 
@@ -4975,15 +4996,15 @@ msgstr "z 変数の値が全部同じ値です"
 msgid "all z values are NA"
 msgstr "z 変数の値が全部 NA です"
 
-#: src/main/plot3d.c:1439 src/main/plot3d.c:1691
+#: src/main/plot3d.c:1439 src/main/plot3d.c:1692
 msgid "insufficient 'x' or 'y' values"
 msgstr "'x' または 'y' の値が不足しています"
 
-#: src/main/plot3d.c:1442 src/main/plot3d.c:1694
+#: src/main/plot3d.c:1442 src/main/plot3d.c:1695
 msgid "dimension mismatch"
 msgstr "次元が一致しません"
 
-#: src/main/plot3d.c:1445 src/main/plot3d.c:1697
+#: src/main/plot3d.c:1445 src/main/plot3d.c:1698
 msgid "no contour values"
 msgstr "等高線値がありません"
 
@@ -5007,51 +5028,51 @@ msgstr "増加する 'y' 値が期待されています"
 msgid "invalid NA contour values"
 msgstr "不正な NA 等高線（contour）値です"
 
-#: src/main/plot3d.c:1762
+#: src/main/plot3d.c:1763
 msgid "invalid x / y values or limits"
 msgstr "x または y の値または限界値が不正です"
 
-#: src/main/plot3d.c:1764
+#: src/main/plot3d.c:1765
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "等高線レベルが不正です：狭義単調増加でなくてはなりません"
 
-#: src/main/plot3d.c:2005
+#: src/main/plot3d.c:2006
 msgid "coordinates outsize specified range"
 msgstr "指定範囲外の座標です"
 
-#: src/main/plot3d.c:2423 src/main/plot3d.c:2436
+#: src/main/plot3d.c:2424 src/main/plot3d.c:2437
 msgid "Axis orientation not calculated"
 msgstr "軸方向は計算されませんでした"
 
-#: src/main/plot3d.c:2454
+#: src/main/plot3d.c:2455
 msgid "too few parameters"
 msgstr "パラメータが少なすぎます"
 
-#: src/main/plot3d.c:2486
+#: src/main/plot3d.c:2487
 msgid "invalid 'x' limits"
 msgstr "'x' の限界値が不正です"
 
-#: src/main/plot3d.c:2488
+#: src/main/plot3d.c:2489
 msgid "invalid 'y' limits"
 msgstr "'y' の限界値が不正です"
 
-#: src/main/plot3d.c:2490
+#: src/main/plot3d.c:2491
 msgid "invalid 'z' limits"
 msgstr "'zlim' の限界値が不正です"
 
-#: src/main/plot3d.c:2511
+#: src/main/plot3d.c:2512
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab' は長さ1の文字列ベクトルでなくてはなりません"
 
-#: src/main/plot3d.c:2513
+#: src/main/plot3d.c:2514
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab' は長さ1の文字列ベクトルでなくてはなりません"
 
-#: src/main/plot3d.c:2515
+#: src/main/plot3d.c:2516
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab' は長さ1の文字列ベクトルでなくてはなりません"
 
-#: src/main/plot3d.c:2535
+#: src/main/plot3d.c:2536
 msgid "invalid viewing parameters"
 msgstr "不正な viewing パラメータです"
 
@@ -6218,48 +6239,48 @@ msgstr "'pattern' がありません"
 msgid "no 'tempdir'"
 msgstr "'tempdir' がありません"
 
-#: src/main/sysutils.c:224 src/main/sysutils.c:280
+#: src/main/sysutils.c:226 src/main/sysutils.c:282
 msgid "wrong type for argument"
 msgstr "引数の型が不正です"
 
-#: src/main/sysutils.c:290
+#: src/main/sysutils.c:292
 msgid "'putenv' is not available on this system"
 msgstr "'putenv' はこのシステムでは使えません"
 
-#: src/main/sysutils.c:323
+#: src/main/sysutils.c:325
 msgid "failed to find symbols in iconv.dll"
 msgstr "iconv.dll でシンボルが見つかりませんでした"
 
-#: src/main/sysutils.c:327
+#: src/main/sysutils.c:329
 msgid "iconv.dll is not available on this system"
 msgstr "icomv.dll はこのシステムでは使えません"
 
-#: src/main/sysutils.c:394
+#: src/main/sysutils.c:396
 msgid "'x' must be a character vector"
 msgstr "'x' は文字列ベクトルでなくてはなりません"
 
-#: src/main/sysutils.c:407
+#: src/main/sysutils.c:409
 msgid "unsupported conversion"
 msgstr "サポートされていない変換です"
 
-#: src/main/sysutils.c:456 src/main/sysutils.c:491 src/main/sysutils.c:498
-#: src/main/sysutils.c:504
+#: src/main/sysutils.c:458 src/main/sysutils.c:493 src/main/sysutils.c:500
+#: src/main/sysutils.c:506
 msgid "'iconv' is not available on this system"
 msgstr "このシステムでは 'iconv' が使えません"
 
-#: src/main/sysutils.c:586
+#: src/main/sysutils.c:588
 msgid "cannot mkdir R_TempDir"
 msgstr "ディレクトリ R_TempDir を作成できません"
 
-#: src/main/sysutils.c:602
+#: src/main/sysutils.c:604
 msgid "cannot allocate R_TempDir"
 msgstr "R_TempDir を割り当てることができません"
 
-#: src/main/sysutils.c:621
+#: src/main/sysutils.c:623
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam において 'tempdir' が不正です"
 
-#: src/main/sysutils.c:636
+#: src/main/sysutils.c:638
 msgid "cannot find unused tempfile name"
 msgstr "未使用の一時ファイル名を探すことができません"
 
@@ -6791,11 +6812,11 @@ msgstr "システムは数値的に特異です：条件数の逆数 = %g"
 msgid "argument 'logarithm' must be logical"
 msgstr "引数 'logarithm' は論理型でなくてはなりません"
 
-#: src/modules/X11/devX11.c:298
+#: src/modules/X11/devX11.c:301
 msgid "cannot set grayscale: reverting to monochrome"
 msgstr "グレースケールを設定できません（モノクロに戻します）"
 
-#: src/modules/X11/devX11.c:381
+#: src/modules/X11/devX11.c:384
 msgid ""
 "X11 driver unable to obtain color cube\n"
 "  reverting to monochrome"
@@ -6803,7 +6824,7 @@ msgstr ""
 "X11 はカラーキューブを取得できませんでした。\n"
 "モノクロに戻ります"
 
-#: src/modules/X11/devX11.c:426
+#: src/modules/X11/devX11.c:429
 msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
@@ -6811,7 +6832,7 @@ msgstr ""
 "エラー：X11 は追加のグラフィックスカラーを用意できません。\n"
 "X11 を colortype=\"pseudo.cube\" か \"grey\" で使うことを考えてみて下さい"
 
-#: src/modules/X11/devX11.c:827
+#: src/modules/X11/devX11.c:830
 msgid ""
 "could not find any X11 fonts\n"
 "Check that the Font Path is correct."
@@ -6819,112 +6840,112 @@ msgstr ""
 "いかなる X11 フォントも見つけられませんでした\n"
 " フォントパスが正しいかどうかチェックしましょう"
 
-#: src/modules/X11/devX11.c:891
+#: src/modules/X11/devX11.c:894
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr "X11 はフォントサイズ %d を使いました（%d が要求されたのですが）"
 
-#: src/modules/X11/devX11.c:950
+#: src/modules/X11/devX11.c:953
 #, c-format
 msgid "X11 font at size %d could not be loaded"
 msgstr "サイズ %d のX11 フォントが読み込めません"
 
-#: src/modules/X11/devX11.c:1067
+#: src/modules/X11/devX11.c:1070
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "X11 プロトコルエラー：%s"
 
-#: src/modules/X11/devX11.c:1084
+#: src/modules/X11/devX11.c:1087
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11 の致命的I/Oエラーです, 作業を保存してRを終了して下さい"
 
-#: src/modules/X11/devX11.c:1143
+#: src/modules/X11/devX11.c:1146
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 "Xlib がサポートしないロケールです。いくつかの X 機能は C ロケールで動作します"
 
-#: src/modules/X11/devX11.c:1144
+#: src/modules/X11/devX11.c:1147
 msgid "X cannot set locale modifiers"
 msgstr "X はロケール変更を設定することができません"
 
-#: src/modules/X11/devX11.c:1149
+#: src/modules/X11/devX11.c:1152
 msgid "no png support in this version of R"
 msgstr "この R のバージョンには png のサポートはありません"
 
-#: src/modules/X11/devX11.c:1155
+#: src/modules/X11/devX11.c:1158
 msgid "filename too long in png() call"
 msgstr "png 関数の呼び出しでファイル名が長すぎます"
 
-#: src/modules/X11/devX11.c:1159 src/modules/X11/devX11.c:1668
+#: src/modules/X11/devX11.c:1162 src/modules/X11/devX11.c:1671
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "PNGファイル '%s' を開けませんでした"
 
-#: src/modules/X11/devX11.c:1170
+#: src/modules/X11/devX11.c:1173
 msgid "no jpeg support in this version of R"
 msgstr "この R のバージョンには jpeg のサポートはありません"
 
-#: src/modules/X11/devX11.c:1178
+#: src/modules/X11/devX11.c:1181
 msgid "filename too long in jpeg() call"
 msgstr "jpeg 関数の呼び出しでファイル名が長すぎます"
 
-#: src/modules/X11/devX11.c:1182 src/modules/X11/devX11.c:1675
+#: src/modules/X11/devX11.c:1185 src/modules/X11/devX11.c:1678
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "JPEGファイル '%s' を開けませんでした"
 
-#: src/modules/X11/devX11.c:1203
+#: src/modules/X11/devX11.c:1206
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "X11 ディスプレイ '%s' へのコネクションを開くことができません"
 
-#: src/modules/X11/devX11.c:1229
+#: src/modules/X11/devX11.c:1232
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg 関数は透明な背景はサポートしていません（bg に白を使います）"
 
-#: src/modules/X11/devX11.c:1342
+#: src/modules/X11/devX11.c:1345
 msgid "unable to create X11 window"
 msgstr "X11 ウィンドウを作ることができません"
 
-#: src/modules/X11/devX11.c:1390
+#: src/modules/X11/devX11.c:1393
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d' はピクセルにはありそうも無い値です"
 
-#: src/modules/X11/devX11.c:1395
+#: src/modules/X11/devX11.c:1398
 msgid "unable to create pixmap"
 msgstr "pixmap を作れません"
 
-#: src/modules/X11/devX11.c:1468
+#: src/modules/X11/devX11.c:1471
 msgid "font family not found in X11 font database"
 msgstr "フォントファミリーが X11 フォントデータベースにありません"
 
-#: src/modules/X11/devX11.c:2400
+#: src/modules/X11/devX11.c:2403
 msgid "invalid string argument"
 msgstr "文字列引数が不正です"
 
-#: src/modules/X11/devX11.c:2435
+#: src/modules/X11/devX11.c:2438
 #, c-format
 msgid "unable to start device %s"
 msgstr "デバイス '%s' を開始できません"
 
-#: src/modules/X11/devX11.c:2462
+#: src/modules/X11/devX11.c:2465
 msgid "invalid 'width' or 'height'"
 msgstr "'width' または 'height' が不正です"
 
-#: src/modules/X11/devX11.c:2469
+#: src/modules/X11/devX11.c:2472
 msgid "invalid colortype passed to X11 driver"
 msgstr "不正な色タイプが X11 ドライバーに引き渡されました"
 
-#: src/modules/X11/devX11.c:2483
+#: src/modules/X11/devX11.c:2486
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "未知のX11カラーモデルです（モノクロを使用します）"
 
-#: src/modules/X11/devX11.c:2551
+#: src/modules/X11/devX11.c:2554
 msgid "unable to contact X11 display"
 msgstr "X11ディスプレイに接続できません"
 
-#: src/modules/X11/devX11.c:2602
+#: src/modules/X11/devX11.c:2611
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "X11Routines ストラクチャにメモリを割り当てることができません"
 

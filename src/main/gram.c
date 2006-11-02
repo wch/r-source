@@ -3681,8 +3681,12 @@ static int NumericValue(int c)
 static int StringValue(int c)
 {
     int quote = c;
+    int have_warned = 0;
+    char currtext[MAXELTSIZE], *ct = currtext;
     DECLARE_YYTEXT_BUFP(yyp);
+
     while ((c = xxgetc()) != R_EOF && c != quote) {
+	*ct++ = c;
 	if (c == '\n') {
 	    xxungetc(c);
 	    /* Fix by Mark Bravington to allow multiline strings
@@ -3692,27 +3696,33 @@ static int StringValue(int c)
 	    c = '\\';
 	}
 	if (c == '\\') {
-	    c = xxgetc();
+	    c = xxgetc(); *ct++ = c;
 	    if ('0' <= c && c <= '8') {
 		int octal = c - '0';
 		if ('0' <= (c = xxgetc()) && c <= '8') {
+		    *ct++ = c;
 		    octal = 8 * octal + c - '0';
 		    if ('0' <= (c = xxgetc()) && c <= '8') {
+			*ct++ =c;
 			octal = 8 * octal + c - '0';
+		    } else {
+			xxungetc(c);
+			ct--;
 		    }
-		    else xxungetc(c);
+		} else {
+		    xxungetc(c);
+		    ct--;
 		}
-		else xxungetc(c);
 		c = octal;
 	    }
 	    else if(c == 'x') {
 		int val = 0; int i, ext;
 		for(i = 0; i < 2; i++) {
-		    c = xxgetc();
+		    c = xxgetc(); *ct++ = c;
 		    if(c >= '0' && c <= '9') ext = c - '0';
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
-		    else {xxungetc(c); break;}
+		    else {xxungetc(c); ct--; break;}
 		    val = 16*val + ext;
 		}
 		c = val;
@@ -3723,19 +3733,23 @@ static int StringValue(int c)
 #else
 		wint_t val = 0; int i, ext; size_t res;
 		char buff[16]; Rboolean delim = FALSE;
-		if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
+		if((c = xxgetc()) == '{') {
+		    delim = TRUE; 
+		    *ct++ = c;
+		} else xxungetc(c);
 		for(i = 0; i < 4; i++) {
-		    c = xxgetc();
+		    c = xxgetc(); *ct++ = c;
 		    if(c >= '0' && c <= '9') ext = c - '0';
 		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
-		    else {xxungetc(c); break;}
+		    else {xxungetc(c); ct--; break;}
 		    val = 16*val + ext;
 		}
-		if(delim)
+		if(delim) {
 		    if((c = xxgetc()) != '}')
 			error(_("invalid \\u{xxxx} sequence"));
-		
+		    else *ct++ = c;
+		}
 		res = ucstomb(buff, val, NULL);
 		if((int)res <= 0) {
 		    if(delim)
@@ -3757,18 +3771,23 @@ static int StringValue(int c)
 		else {
 		    wint_t val = 0; int i, ext; size_t res;
 		    char buff[16]; Rboolean delim = FALSE;
-		    if((c = xxgetc()) == '{') delim = TRUE; else xxungetc(c);
+		    if((c = xxgetc()) == '{') {
+			delim = TRUE;
+			*ct++ = c;
+		    } else xxungetc(c);
 		    for(i = 0; i < 8; i++) {
-			c = xxgetc();
+			c = xxgetc(); *ct++ = c;
 			if(c >= '0' && c <= '9') ext = c - '0';
 			else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
 			else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
-			else {xxungetc(c); break;}
+			else {xxungetc(c); ct--; break;}
 			val = 16*val + ext;
 		    }
-		    if(delim)
+		    if(delim) {
 			if((c = xxgetc()) != '}')
 			    error(_("invalid \\U{xxxxxxxx} sequence"));
+			else *ct++ = c;
+		    }
 		    res = ucstomb(buff, val, NULL);
 		    if((int)res <= 0) {
 			if(delim)
@@ -3814,11 +3833,16 @@ static int StringValue(int c)
 		case '\n':
 		    break;
 		case '%':
-		    warning(_("'\\%%%%' is an unrecognized escape in a character string"));
+		    if(GenerateCode) {
+			have_warned++;
+			warning(_("'\\%%%%' is an unrecognized escape in a character string"));
+		    }
 		    break;
 		default:
-		    warning(_("'\\%c' is an unrecognized escape in a character string"), c);
-
+		    if(GenerateCode) {
+			have_warned++;
+			warning(_("'\\%c' is an unrecognized escape in a character string"), c);
+		    }
 		    break;
 		}
 	    }
@@ -3829,11 +3853,12 @@ static int StringValue(int c)
            wchar_t wc = L'\0';
            clen = utf8locale ? utf8clen(c): mbcs_get_next(c, &wc);
            for(i = 0; i < clen - 1; i++){
-               YYTEXT_PUSH(c,yyp);
+               YYTEXT_PUSH(c, yyp);
                c = xxgetc();
                if (c == R_EOF) break;
+	       *ct++ = c;
                if (c == '\n') {
-                   xxungetc(c);
+                   xxungetc(c); ct--;
                    c = '\\';
                }
            }
@@ -3844,6 +3869,17 @@ static int StringValue(int c)
     }
     YYTEXT_PUSH('\0', yyp);
     PROTECT(yylval = mkString(yytext));
+    if(have_warned) {
+	*ct = '\0';
+#ifdef ENABLE_NLS
+	warning(ngettext("unrecognized escape removed from \"%s\"",
+			 "unrecognized escapes removed from \"%s\"",
+			 have_warned),
+		currtext);
+#else
+	warning("unrecognized escape(s) removed from \"%s\"", currtext);
+#endif
+    }
     return STR_CONST;
 }
 
