@@ -1872,6 +1872,7 @@ static int StringValue(int c)
 		case '%':
 		    if(GenerateCode) {
 			have_warned++;
+			*ct++ = '%';
 			warning(_("'\\%%%%' is an unrecognized escape in a character string"));
 		    }
 		    break;
