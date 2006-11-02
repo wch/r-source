@@ -43623,6 +43623,7 @@ cat >>confdefs.h <<\_ACEOF
 #define HAVE_X11_Xmu 1
 _ACEOF
 
+  X_LIBS="${X_LIBS} -lXmu"
   fi
 fi
 

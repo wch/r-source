@@ -1538,6 +1538,7 @@ AC_DEFUN([R_X11_Xmu],
   if test "${ac_cv_header_X11_Xmu_Atoms_h}" = yes ; then
     AC_DEFINE(HAVE_X11_Xmu, 1,
               [Define if you have the X11/Xmu headers and libraries.])
+  X_LIBS="${X_LIBS} -lXmu"
   fi
 fi])# R_X11_XMu
 
