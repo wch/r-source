@@ -60,6 +60,9 @@ NEW FEATURES
     o	Introduced the suffix L for integer literals to create
 	integer rather than numeric values, e.g. 100L, 0x10L, 1e2L.
 
+    o	file() can read the X11 clipboard selection as "X11_clipboard" on
+	suitable X11-using systens.
+
 
 DEPRECATED & DEFUNCT
 

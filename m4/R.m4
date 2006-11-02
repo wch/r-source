@@ -1526,6 +1526,22 @@ fi
   AC_MSG_RESULT([using X11 ... ${use_X11}])
 ])# R_X11
 
+## R_X11_Xmu
+## ---------
+## test for -lXmu and for X11/Xmu/Xatom.h header (for XA_CLIPBOARD).
+AC_DEFUN([R_X11_Xmu],
+[if test "${use_X11}" = yes; then
+  r_save_CFLAGS="${CFLAGS}"
+  CFLAGS="${CFLAGS} ${X_CFLAGS}"
+  AC_CHECK_HEADER(X11/Xmu/Atoms.h)
+  CFLAGS="${r_save_CFLAGS}"
+  if test "${ac_cv_header_X11_Xmu_Atoms_h}" = yes ; then
+    AC_DEFINE(HAVE_X11_Xmu, 1,
+              [Define if you have the X11/Xmu headers and libraries.])
+  fi
+fi])# R_X11_XMu
+
+
 # R_CHECK_FRAMEWORK(function, framework,
 #                   [action-if-found], [action-if-not-found],
 #                   [other-libs])

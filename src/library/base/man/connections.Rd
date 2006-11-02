@@ -258,7 +258,9 @@ isIncomplete(con)
   in mode \code{"r"} only.  It reads the X11 primary selection (see
   \url{http://standards.freedesktop.org/clipboards-spec/clipboards-latest.txt}),
   which can also be specified as \code{"X11_primary"} and the secondary
-  selection as \code{"X11_secondary"}.
+  selection as \code{"X11_secondary"}.  On most systems the clipboard
+  selection (that used by \sQuote{Copy} from an \sQuote{Edit} menu} can
+  be specified as \code{"X11_clipboard"}.
 #endif
   
   When a clipboard is opened for reading, the contents are immediately

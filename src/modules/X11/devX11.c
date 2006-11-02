@@ -45,6 +45,9 @@
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
 #include <X11/Intrinsic.h>	/*->	Xlib.h	Xutil.h Xresource.h .. */
+#ifdef HAVE_X11_Xmu
+# include <X11/Xmu/Atoms.h>
+#endif
 
 
 #include "Graphics.h"
@@ -2553,6 +2556,12 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 	}
     }
     if(strcmp(type, "X11_secondary") == 0) sel = XA_SECONDARY;
+    if(strcmp(type, "X11_clipboard") == 0)
+#ifdef HAVE_X11_Xmu
+      sel = XA_CLIPBOARD(display);
+#else
+      error("X11 clipboard selection is not supported on this system");
+#endif
 
     pty = XInternAtom(display, "RCLIP_READ", False);
 

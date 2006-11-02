@@ -701,6 +701,9 @@
    be built. */
 #undef HAVE_X11
 
+/* Define if you have the X11/Xmu headers and libraries. */
+#undef HAVE_X11_Xmu
+
 /* Define to 1 if you have the `__argz_count' function. */
 #undef HAVE___ARGZ_COUNT
 
