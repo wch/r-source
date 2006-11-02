@@ -136,7 +136,7 @@
     ## also Called from cacheMethod (from as(),
   ## as<-())
   fenv <- environment(fdef)
-  if(!exists(".AllMTable", envir = fenv, inherits = TRUE))
+  if(!exists(".AllMTable", envir = fenv, inherits = FALSE))
     .setupMethodsTables(fdef)
   sig <- .matchSigLength(sig, fdef, fenv, TRUE)
   label <- .sigLabel(sig)

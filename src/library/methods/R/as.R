@@ -25,6 +25,7 @@ as <-
                                  fdef = coerceFun, mlist = coerceMethods)
         if(is.null(asMethod)) {
             canCache <- TRUE
+            inherited <- FALSE
             if(is(object, Class)) {
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
@@ -47,13 +48,17 @@ as <-
             }
             ## if none of these applies, look for an inherited method
             ## but only on the from argument
-            if(is.null(asMethod))
+            if(is.null(asMethod)) {
                 asMethod <- selectMethod("coerce", sig, TRUE,
                                          c(from = TRUE, to = FALSE),
-                                         fdef = coerceFun, mlist = coerceMethods)
+                                         fdef = coerceFun, mlist =
+                                         coerceMethods)
+                inherited <- TRUE
+            }
             ## cache in the coerce function's environment
             if(canCache && !is.null(asMethod)) {
-                cacheMethod("coerce", sig, asMethod, fdef = coerceFun)
+                cacheMethod("coerce", sig, asMethod, fdef = coerceFun,
+                            inherited = inherited)
             }
         }
     }
@@ -129,32 +134,36 @@ as <-
     coerceMethods <- getMethodsForDispatch("coerce<-", coerceFun)
     asMethod <- .quickCoerceSelect(thisClass, Class, coerceFun, coerceMethods)
     if(is.null(asMethod)) {
-    sig <-  c(from=thisClass, to = Class)
-    canCache <- TRUE
-    asMethod <- selectMethod("coerce<-", sig, TRUE, FALSE, #optional, no inheritance
-                             fdef = coerceFun, mlist = coerceMethods)
-    if(is.null(asMethod)) {
-        if(is(object, Class)) {
-            asMethod <- possibleExtends(thisClass, Class)
-            if(identical(asMethod, TRUE)) {# trivial, probably identical classes
-                class(value) <- class(object)
-                return(value)
-            }
-            else {
-                test <- asMethod@test
-                asMethod <- asMethod@replace
-                canCache <- (!is(test, "function")) || identical(body(test), TRUE)
-                if(canCache) { ##the replace code is a bare function
-                  asMethod <- .asCoerceMethod(asMethod, sig, TRUE)
+        sig <-  c(from=thisClass, to = Class)
+        canCache <- TRUE
+        inherited <- FALSE
+        asMethod <- selectMethod("coerce<-", sig, TRUE, FALSE, #optional, no inheritance
+                                 fdef = coerceFun, mlist = coerceMethods)
+        if(is.null(asMethod)) {
+            if(is(object, Class)) {
+                asMethod <- possibleExtends(thisClass, Class)
+                if(identical(asMethod, TRUE)) {# trivial, probably identical classes
+                    class(value) <- class(object)
+                    return(value)
                 }
-           }
-         }
-        else
-            asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
-    }
+                else {
+                    test <- asMethod@test
+                    asMethod <- asMethod@replace
+                    canCache <- (!is(test, "function")) || identical(body(test), TRUE)
+                    if(canCache) { ##the replace code is a bare function
+                        asMethod <- .asCoerceMethod(asMethod, sig, TRUE)
+                    }
+                }
+            }
+            else { # search for inherited method
+              asMethod <- selectMethod("coerce<-", sig, TRUE, c(from = TRUE, to = FALSE))
+              inherited <- TRUE
+            }
+        }
         ## cache for next call
         if(canCache && !is.null(asMethod))
-                 cacheMethod("coerce<-", sig, asMethod, fdef = coerceFun)
+                 cacheMethod("coerce<-", sig, asMethod, fdef = coerceFun,
+                             inherited = inherited)
      }
     if(is.null(asMethod))
         stop(gettextf("no method or default for as() replacement of \"%s\" with Class=\"%s\"", thisClass, Class), domain = NA)
