@@ -275,10 +275,18 @@ getMethodsForDispatch <- function(f, fdef)
 cacheMethod <-
   ## cache the given definition in the method metadata for f
   ## Support function:  DON'T USE DIRECTLY (does no checking)
-  function(f, sig, def, args = names(sig), fdef) {
+  function(f, sig, def, args = names(sig), fdef, inherited = FALSE) {
     ev <- environment(fdef)
-    if(.UsingMethodsTables())
-      .cacheMethodInTable(fdef, sig, def, .getMethodsTable(fdef, ev))
+    if(.UsingMethodsTables()) {
+        .cacheMethodInTable(fdef, sig, def,
+                            .getMethodsTable(fdef, ev, inherited = inherited))
+        ## if this is not an inherited method, update the inherited table as well
+        ## TODO:  in this case, should uncache inherited methods, though the callin
+        ##  function will normally have done this.
+        if(!inherited)
+          .cacheMethodInTable(fdef, sig, def,
+                              .getMethodsTable(fdef, ev, inherited = TRUE))
+    }
     else {
       methods <- get(".Methods", envir = ev)
       methods <- insertMethod(methods, sig, args, def, TRUE)

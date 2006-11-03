@@ -96,7 +96,7 @@ callNextMethod <- function(...) {
                 method <- addNextMethod(method, f, envir=methodEnv)
                 ## cache the method with the nextMethod included,
                 ## so later calls will load this information.
-                cacheMethod(f, method@target, method, fdef = getGeneric(f))
+                cacheMethod(f, method@target, method, fdef = getGeneric(f), inherited = TRUE)
             }
             nextMethod <- method@nextMethod
             assign(".nextMethod", nextMethod, envir = callEnv)
