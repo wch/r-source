@@ -103,14 +103,11 @@ str.default <-
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
 
-    if(is.function(object)) {
-	cat(if(is.null(ao <- args(object))) deparse(object)
-	else { dp <- deparse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
-    } else if (is.null(object))
+    if (is.null(object))
 	cat(" NULL\n")
     else if(S4) {
 	a <- sapply(methods::.slotNames(object), methods::slot,
-                    object=object, simplify = FALSE)
+		    object=object, simplify = FALSE)
 	cat("Formal class", " '", paste(cl, collapse = "', '"),
 	    "' [package \"", attr(cl,"package"), "\"] with ",
 	    length(a)," slots\n", sep="")
@@ -120,7 +117,10 @@ str.default <-
 	    nchar.max = nchar.max, give.attr = give.attr, width=width)
 	return(invisible())
     }
-    else if(is.list(object)) {
+    else if(is.function(object)) {
+	cat(if(is.null(ao <- args(object))) deparse(object)
+	else { dp <- deparse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
+    } else if(is.list(object)) {
 	i.pl <- is.pairlist(object)
 	is.d.f <- is.data.frame(object)
 	##?if(is.d.f) std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
