@@ -103,6 +103,7 @@ if test ${acx_java_works} = yes; then
     case "${host_os}" in
       darwin*)
         JAVA_LIBS="-framework JavaVM"
+        JAVA_LIBS0="-framework JavaVM"
         JAVA_LD_LIBRARY_PATH=
         ;;
       *)
