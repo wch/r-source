@@ -620,8 +620,8 @@ Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
 builds under Solaris for different chips (in particular, 32- and 64-bit
 builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
-CPUs (@cputype{ppc}, @cputype{ppc64} and @cputype{i386}) under MacOS
-10.4.
+CPUs (@cputype{ppc}, @cputype{ppc64}, @cputype{i386} and
+@cputype{x86_64}) under MacOS 10.4.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
@@ -1519,9 +1519,12 @@ for one or more of the following types of package distributions:
 
 @item 
 @code{"mac.binary"}: located at
-@file{bin/macosx/powerpc/contrib/@var{x.y}} or
-@file{bin/macosx/i686/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
-and containing @file{.tgz} files.
+@file{bin/macosx/universal/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
+and containing @file{.tgz} files. If the repository contains only
+packages for a specific architecture, the package distribution type
+can be set to @code{"mac.binary.xxx"} where @var{xxx} specifies the
+architecture, replacing @code{universal} by @var{xxx} in the path
+above.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -1970,12 +1973,16 @@ sub-architecture-specific version).  A typical setting for Sun Java is
 
 Note that this unfortunately depends on the exact version of the JRE/JDK
 installed, and so will need updating if the Java installation is
-updated.  This can be done either by editing that file or setting
-@env{R_JAVA_LD_LIBRARY_PATH} (e.g. in @file{~/.Renviron}), or using
-@file{/etc/ld.so.conf} to specify the Java runtime library paths to the
-system.
+updated.  This can be done by running @code{R CMD javareconf}. The
+script re-runs Java detection in a manner similar to that of the
+@code{configure} script and updates settings in both @file{Makeconf}
+and @file{R_HOME/etc/ldpaths}. See @code{R CMD javareconf --help} for
+details.
 
-Other settings are recorded in @file{etc/Makeconf} (or a
+Another alternative of overriding those setting is to  set
+@env{R_JAVA_LD_LIBRARY_PATH} (e.g. in @file{~/.Renviron}), or use
+@file{/etc/ld.so.conf} to specify the Java runtime library paths to
+the system. Other settings are recorded in @file{etc/Makeconf} (or a
 sub-architecture-specific version), e.g.
 
 @example
@@ -1989,7 +1996,8 @@ JAVA_LIBS = -L$(JAVA_HOME)/lib/amd64/server -L$(JAVA_HOME)/lib/amd64
 @end example
 
 @noindent
-where @samp{JAVA_LIBS} contains flags necessary to link JNI programs.
+where @samp{JAVA_LIBS} contains flags necessary to link JNI
+programs. Some of the above variables can be queried using @code{R CMD config}.
 
 
 @node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under Unix
@@ -3014,7 +3022,8 @@ You can build @R{} as a Unix application on Mac OS X using the Apple
 Developer Tools and @command{g77} or @command{gfortran}.  You will also
 need to install an X sub-system or configure with
 @option{--without-x}. The X window manager is part of the standard Mac
-OS X distribution since Mac OS X version 10.3 (Panther).
+OS X distribution since Mac OS X version 10.3 (Panther), but it is
+typically not pre-installed.
 
 For more information on how to find these tools please read the
 @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
