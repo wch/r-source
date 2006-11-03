@@ -193,6 +193,8 @@ BUG FIXES
     o	str() works properly for method definitions and other S4-classed
 	function objects.
 
+    o	JAVA_LIBS are now correctly set on MacOS X
+
 
 
 
