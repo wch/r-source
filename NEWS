@@ -65,6 +65,12 @@ NEW FEATURES
 
     o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
 
+    o	Detection of Java development environment was added such that
+	packages don't need to provide their own Java detection.
+
+	R CMD javareconf was updated to look for the corresponding
+	Java tools as well.
+
 
 DEPRECATED & DEFUNCT
 
