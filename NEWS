@@ -198,6 +198,10 @@ BUG FIXES
 
     o	JAVA_LIBS are now correctly set on MacOS X
 
+    o   Fix null-termination issue suspected of causing crash with Fedora
+        Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
+	Dunlap).
+
 
 
 
