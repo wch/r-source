@@ -71,6 +71,8 @@ NEW FEATURES
 	R CMD javareconf was updated to look for the corresponding
 	Java tools as well.
 
+    o	Added support for Obj-C in R and packages (if available).
+
 
 DEPRECATED & DEFUNCT
 

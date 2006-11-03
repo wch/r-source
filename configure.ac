@@ -543,6 +543,8 @@ AC_PROG_CXX
 AC_PROG_CXXCPP
 R_GCC4_VISIBILITY
 
+AC_PROG_OBJC
+
 ## This has to be R_DEFS as autoconf overrrides DEFS
 R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
@@ -2256,6 +2258,7 @@ r_c_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 r_cxx_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 r_f77_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 r_f95_compiler="${FC} ${FCFLAGS}"
+r_objc_compiler="${OBJC} ${OBJCFLAGS}"
 r_interfaces=
 for item in X11 aqua tcltk; do
   if eval "test \${use_${item}} = yes"; then
@@ -2328,6 +2331,9 @@ fi
 if test "${want_linux_lfs}" = yes; then
   R_SH_VAR_ADD(r_options, [Linux LFS], [, ])
 fi
+if test -n "${JAVA}"; then
+  R_SH_VAR_ADD(r_options, [Java], [, ])
+fi
 
 AC_MSG_RESULT(
 [
@@ -2341,6 +2347,7 @@ R is now configured for ${host}
 
   C++ compiler:              ${r_cxx_compiler}
   Fortran 90/95 compiler:    ${r_f95_compiler}
+  Obj-C compiler:	     ${r_objc_compiler}
 
   Interfaces supported:      ${r_interfaces}
   External libraries:        ${r_external_libs}
