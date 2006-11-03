@@ -50,12 +50,12 @@ NEW FEATURES
 
     o	abbreviate() no longer has an 8191 byte limit on the size of
 	strings it can handle.
-	
-    o	New function withVisible() allows R level access to the visibility 
+
+    o	New function withVisible() allows R level access to the visibility
     	flag.
 
     o	system.time() and proc.time() have names on the returned
-	vector to help identify the five elements.	      
+	vector to help identify the five elements.
 
     o	Introduced the suffix L for integer literals to create
 	integer rather than numeric values, e.g. 100L, 0x10L, 1e2L.
@@ -176,9 +176,12 @@ BUG FIXES
     o	system() on Mac OS X was blocking arbitrary signals during the
 	call although only SIGPROF was meant to be blocked.
 
-    o  methods cached via callNextMethod() and (sometimes) as() were
-        being cached as directly specified although in fact they were
-        inherited.  Caused problems in later search for inherited methods.
+    o	methods cached via callNextMethod() and (sometimes) as() were
+	being cached as directly specified although in fact they were
+	inherited.  Caused problems in later search for inherited methods.
+
+    o	str() works properly for method definitions and other S4-classed
+	function objects.
 
 
 
