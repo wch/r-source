@@ -63,6 +63,8 @@ NEW FEATURES
     o	file() can read the X11 clipboard selection as "X11_clipboard" on
 	suitable X11-using systens.
 
+    o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
+
 
 DEPRECATED & DEFUNCT
 
