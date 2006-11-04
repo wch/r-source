@@ -47,11 +47,15 @@ is.matrix(x)
   is \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}
   attribute of length 2) and \code{FALSE} otherwise.
 
-  \code{as.matrix} is a generic function. The method for data frames
-  will convert any non-numeric/complex column into a character
-  vector using \code{\link{format}} and so return a character matrix,
-  except that all-logical data frames will be coerced to a logical
-  matrix.  When coercing a vector, it produces a one-column matrix, and
+  \code{as.matrix} is a generic function.  The method for data frames
+  will return a character matrix if there is any
+  non-(numeric/logical/complex) column, applying \code{\link{format}} to
+  these numeric alikes.  In the other case, the usual coercion hierarchy
+  (logical < integer < double < complex) will be used, e.g., all-logical
+  data frames will be coerced to a logical matrix, mixed logical-integer
+  will give integer, etc.
+
+  When coercing a vector, it produces a one-column matrix, and
   promotes the names (if any) of the vector to the rownames of the matrix.
 }
 \references{
