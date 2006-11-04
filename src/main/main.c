@@ -822,6 +822,23 @@ void setup_Rmainloop(void)
     R_unLockBinding(install(".Device"), R_BaseEnv);
     R_unLockBinding(install(".Devices"), R_BaseEnv);
 
+    /* require(methods) if it is in the default packages */
+    doneit = 0;
+    SETJMP(R_Toplevel.cjmpbuf);
+    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+    if (!doneit) {
+	doneit = 1;
+	PROTECT(cmd = install(".OptRequireMethods"));
+	R_CurrentExpr = findVar(cmd, R_GlobalEnv);
+	if (R_CurrentExpr != R_UnboundValue &&
+	    TYPEOF(R_CurrentExpr) == CLOSXP) {
+	        PROTECT(R_CurrentExpr = lang1(cmd));
+	        R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+	        UNPROTECT(1);
+	}
+	UNPROTECT(1);
+    }
+
     if (strcmp(R_GUIType, "Tk") == 0) {
 	char buf[256];
 

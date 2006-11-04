@@ -202,6 +202,10 @@ BUG FIXES
         Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
 	Dunlap).
 
+    o  Namespaces restored via a saved session silently failed to cache
+        their methods becaue the methods package was not yet
+        attached. Fixed by attaching methods before restoring data.
+
 
 
 
