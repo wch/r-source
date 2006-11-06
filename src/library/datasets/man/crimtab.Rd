@@ -42,8 +42,8 @@
   In the MacDonell table, the middle finger lengths were given in mm
   and the heights in feet/inches intervals, they are both converted into
   cm here.  The midpoints of intervals were used, e.g., where MacDonell
-  has \eqn{4' 7\"9/16 -- 8\"9/16}, we have 142.24 which is 2.54*56 =
-  2.54*(\eqn{4' 8\"}).
+  has \eqn{4' 7''9/16 -- 8''9/16}, we have 142.24 which is 2.54*56 =
+  2.54*(\eqn{4' 8''}).
 
   MacDonell credited the source of data (page 178) as follows:
   \emph{The data on which the memoir is based were obtained, through the
