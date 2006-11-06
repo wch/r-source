@@ -259,7 +259,7 @@ isIncomplete(con)
   \url{http://standards.freedesktop.org/clipboards-spec/clipboards-latest.txt}),
   which can also be specified as \code{"X11_primary"} and the secondary
   selection as \code{"X11_secondary"}.  On most systems the clipboard
-  selection (that used by \sQuote{Copy} from an \sQuote{Edit} menu} can
+  selection (that used by \sQuote{Copy} from an \sQuote{Edit} menu) can
   be specified as \code{"X11_clipboard"}.
 #endif
   
