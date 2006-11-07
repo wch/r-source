@@ -375,5 +375,6 @@ getGroup("==", recursive = TRUE)
 
 getGroupMembers("Arith")
 getGroupMembers("Math")
+getGroupMembers("Ops") # -> its sub groups
 }
 \keyword{internal}

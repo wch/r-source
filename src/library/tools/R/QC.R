@@ -158,8 +158,8 @@ function(package, dir, lib.loc = NULL)
         ## In particular, those from methods partially duplicate base
         ## and are documented in base's groupGenerics.Rd.
         code_objs <-
-            code_objs %w/o% c("Arith", "Compare", "Complex", "Math",
-                             "Math2", "Ops", "Summary")
+	    code_objs %w/o% c("Arith", "Compare", "Complex", "Logic",
+			      "Math", "Math2", "Ops", "Summary")
     }
 
     ## <FIXME>

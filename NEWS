@@ -72,14 +72,17 @@ BUG FIXES
 	active arguments are in the signature of the group and all
 	members.  Also a fix to keep the 'groupMembers' slot up to date.
 
+    o	S4 group generic "Logic" (with '&', '|', but not '!') has been
+	created, following the green book (apart from '!').
+
     o	removeClass() now takes care to remove any subclass references
 	to the deleted class.
 
     o	mle() (in stats4) might not have worked as intended when the
 	order of parameters in 'start' differed from that in the
-	log-likelihood.  (PR#9313)
+	log-likelihood.	 (PR#9313)
 
-    o	dotchart() now properly restores par() settings after itself.
+    o	dotchart() now properly restores par() settings behind itself.
 
     o	system() on Mac OS X was blocking arbitrary signals during the
 	call although only SIGPROF was meant to be blocked.
@@ -91,14 +94,18 @@ BUG FIXES
     o	str() works properly for method definitions and other S4-classed
 	function objects.
 
-    o	JAVA_LIBS are now set correctly on MacOS X.
+    o	JAVA_LIBS are now correctly set on MacOS X
 
-    o   Fix null-termination issue suspected of causing crash with Fedora
-        Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
+    o	Fix null-termination issue suspected of causing crash with Fedora
+	Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
 	Dunlap).
 
+    o	Namespaces restored via a saved session silently failed to cache
+	their methods because the methods package was not yet
+	attached.  Fixed by attaching methods before restoring data.
+
     o	rbind()ing a list to a data frame generated invalid row names,
-	which were an error in 2.4.0. (PR#9346)
+	which were an error in 2.4.0. (PR9346)
 
     o	gc() no longer reports nonsense values for the number of used
 	Vcells if the true value exceeds 2^31 (and hence over 16Gb of
