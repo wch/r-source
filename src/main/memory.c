@@ -1472,8 +1472,9 @@ SEXP attribute_hidden do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     /*- now return the [used , gc trigger size] for cells and heap */
     PROTECT(value = allocVector(INTSXP, 14));
     INTEGER(value)[0] = onsize - R_Collected;
-    INTEGER(value)[1] = R_VSize - VHEAP_FREE();
-    /* carefully here: we can't report large sizes in R's integer */
+    /* careful here: we can't report large sizes in R's integer */
+    INTEGER(value)[1] = (R_VSize - VHEAP_FREE() < INT_MAX) ? 
+	R_VSize - VHEAP_FREE() : NA_INTEGER;  /* Overflows at 2Gb free */
     INTEGER(value)[4] = (R_NSize < INT_MAX) ? R_NSize : NA_INTEGER;
     INTEGER(value)[5] = (R_VSize < INT_MAX) ? R_VSize : NA_INTEGER;
     /* next four are in 0.1Mb, rounded up */
