@@ -76,7 +76,8 @@ NEW FEATURES
     o	The following additional flags are accessible from R CMD config:
 	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
 
-    o	boxplot(*, notch = TRUE) now warns when notches are outside hinges.
+    o	boxplot(*, notch = TRUE) now warns when notches are outside hinges;
+	related to PR#7690.
 
 
 DEPRECATED & DEFUNCT
@@ -99,10 +100,6 @@ INSTALLATION
 
 
 BUG FIXES
-
-    o	S4 group generic "Logic" (with '&', '|', but not '!') has been
-	created, following the green book (apart from '!').
-	<< It's planned to backport this to 2.4.0patched >>
 
 
 
@@ -179,6 +176,9 @@ BUG FIXES
 	active arguments are in the signature of the group and all
 	members.  Also a fix to keep the 'groupMembers' slot up to date.
 
+    o	S4 group generic "Logic" (with '&', '|', but not '!') has been
+	created, following the green book (apart from '!').
+
     o	removeClass() now takes care to remove any subclass references
 	to the deleted class.
 
@@ -205,7 +205,7 @@ BUG FIXES
 	Dunlap).
 
     o	Namespaces restored via a saved session silently failed to cache
-	their methods becaue the methods package was not yet
+	their methods because the methods package was not yet
 	attached.  Fixed by attaching methods before restoring data.
 
     o	rbind()ing a list to a data frame generated invalid row names,
