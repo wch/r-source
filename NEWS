@@ -107,6 +107,8 @@ BUG FIXES
     o	boxplot.stats(x) now returns the correct minimum instead of an
 	error for x <- c(1,Inf,Inf,Inf), and hence boxplot(x) "works".
 
+    o	promptClass() now uses \linkS4class{<ClassName>} instead of
+	of \link{<ClassName>-class}.
 
 
 		CHANGES IN R VERSION 2.4.0
