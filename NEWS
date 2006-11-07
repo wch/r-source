@@ -97,6 +97,8 @@ BUG FIXES
         Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
 	Dunlap).
 
+    o	rbind()ing a list to a data frame generated invalid row names,
+	which were an error in 2.4.0. (PR9346)
 
 
 

@@ -4511,3 +4511,8 @@ fit1 <- mle(g, start = list(x = 0, y = 7))
 fit2 <- mle(g, start = list(y = 7, x = 0))
 stopifnot(all.equal(coef(fit1), coef(fit2)))
 ## Found different solutions in 2.4.0, as names were not remapped in fit2
+
+
+## PR#9446
+rbind( data.frame(x=1), list(x=2) )
+## was error in 2.4.0 as list gave double row names.
