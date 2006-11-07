@@ -166,7 +166,7 @@ BUG FIXES
 	but this was not checked.  Now longer strings are errors.
 
     o	Drawing X11 rotated text was buggy for VERY small (negative)
-	angle of rotation.  Reported by Ben Bolker.
+	angle of rotation.  Reported by Ben Bolker. (PR#9301)
 
     o	The X11 data editor would crash in an MBCS locale if R was
 	compiled with FC's CFLAGS that add buffer overflow and
