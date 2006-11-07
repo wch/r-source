@@ -209,7 +209,7 @@ BUG FIXES
 	attached.  Fixed by attaching methods before restoring data.
 
     o	rbind()ing a list to a data frame generated invalid row names,
-	which were an error in 2.4.0. (PR9346)
+	which were an error in 2.4.0. (PR#9346)
 
     o	boxplot.stats(x) now returns the correct minimum instead of an
 	error for x <- c(1,Inf,Inf,Inf), and hence boxplot(x) "works".
