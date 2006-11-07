@@ -4528,3 +4528,7 @@ stopifnot(all.equal(coef(fit1), coef(fit2)))
 ## PR#9446
 rbind( data.frame(x=1), list(x=2) )
 ## was error in 2.4.0 as list gave double row names.
+
+## extreme case
+bs <- boxplot.stats(c(1,Inf,Inf,Inf))
+## gave an error in 2.4.0
