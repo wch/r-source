@@ -239,11 +239,11 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 
     ok <- TRUE
     for(i in 1:n)
-	ok <- ok && bplt(at[i], wid=width[i],
-			 stats= z$stats[,i],
-			 out  = z$out[z$group==i],
-			 conf = z$conf[,i],
-			 notch= notch, xlog = xlog, i = i)
+	ok <- ok & bplt(at[i], wid=width[i],
+			stats= z$stats[,i],
+			out  = z$out[z$group==i],
+			conf = z$conf[,i],
+			notch= notch, xlog = xlog, i = i)
     if(!ok)
 	warning("some notches went outside hinges ('box'): maybe set notch=FALSE")
 
