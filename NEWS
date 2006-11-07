@@ -52,7 +52,7 @@ NEW FEATURES
 	strings it can handle.
 
     o	New function withVisible() allows R level access to the visibility
-    	flag.
+	flag.
 
     o	system.time() and proc.time() have names on the returned
 	vector to help identify the five elements.
@@ -184,7 +184,7 @@ BUG FIXES
 
     o	mle() (in stats4) might not have worked as intended when the
 	order of parameters in 'start' differed from that in the
-	log-likelihood.  (PR#9313)
+	log-likelihood.	 (PR#9313)
 
     o	dotchart() now properly restores par() settings after itself.
 
@@ -200,8 +200,8 @@ BUG FIXES
 
     o	JAVA_LIBS are now set correctly on MacOS X.
 
-    o   Fix null-termination issue suspected of causing crash with Fedora
-        Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
+    o	Fix null-termination issue suspected of causing crash with Fedora
+	Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
 	Dunlap).
 
     o	Namespaces restored via a saved session silently failed to cache
