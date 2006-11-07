@@ -76,6 +76,8 @@ NEW FEATURES
     o	The following additional flags are accessible from R CMD config:
 	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
 
+    o	boxplot(*, notch = TRUE) now warns when notches are outside hinges.
+
 
 DEPRECATED & DEFUNCT
 
