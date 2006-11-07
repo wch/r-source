@@ -8,9 +8,9 @@ gcinfo(verbose)
 \alias{gcinfo}
 \arguments{
   \item{verbose}{logical; if \code{TRUE}, the garbage collection prints
-    statistics about cons cells and the vector heap.}
+    statistics about cons cells and the space allocated for vectors.}
   \item{reset}{logical; if \code{TRUE} the values for maximum space used
-    are reset to the current values}
+    are reset to the current values.}
 }
 \description{
   A call of \code{gc} causes a garbage collection to take place.
@@ -20,12 +20,16 @@ gcinfo(verbose)
 }
 \details{
   A call of \code{gc} causes a garbage collection to take place.
-  This takes place automatically without user intervention, and the
+  This will also take place automatically without user intervention, and the
   primary purpose of calling \code{gc} is for the report on memory usage.
 
   However, it can be useful to call \code{gc} after a large object
   has been removed, as this may prompt \R to return memory to the
   operating system.
+
+  \R allocates space for vectors in multiples of 8 bytes: hence the
+  report of \code{"Vcells"}, a relict of an earlier allocator (that used
+  a vector heap).
 }
 
 \value{
@@ -46,7 +50,8 @@ gcinfo(verbose)
 }
 \seealso{\code{\link{Memory}} on \R's memory management,
   and \code{\link{gctorture}} if you are an \R hacker.
-  \code{\link{reg.finalizer}} for actions to happen upon garbage
+ 
+  \code{\link{reg.finalizer}} for actions to happen at garbage
   collection.
 }
 \examples{
