@@ -79,6 +79,10 @@ NEW FEATURES
     o	boxplot(*, notch = TRUE) now warns when notches are outside hinges;
 	related to PR#7690.
 
+    o	The statistics reported when gcinfo(TRUE) are now of the amounts
+	used (in Mb) and not of the amounts free (which are not really
+	relevant when there are no hard limits, only gc trigger points).
+
 
 DEPRECATED & DEFUNCT
 
@@ -100,6 +104,10 @@ INSTALLATION
 
 
 BUG FIXES
+
+
+    o	gc() can now report quantities of Vcells in excess of 16Gb on
+	64-bit systems (rather than reporting NA).
 
 
 

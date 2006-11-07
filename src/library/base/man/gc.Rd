@@ -30,6 +30,18 @@ gcinfo(verbose)
   \R allocates space for vectors in multiples of 8 bytes: hence the
   report of \code{"Vcells"}, a relict of an earlier allocator (that used
   a vector heap).
+
+  When \code{gcinfo(TRUE)} is in force, messages are sent to the message
+  connection at each garbage collection of the form
+  \preformatted{
+    Garbage collection 12 = 10+0+2 (level 0) ...
+    6.4 Mbytes of cons cells used (58%)
+    2.0 Mbytes of vectors used (32%)
+  }
+  Here the last two lines give the current memory usage rounded up to
+  the next 0.1Mb and as a percentage of the current trigger value.
+  The first line gives a breakdown of the number of garbage collections
+  at various levels (for an explanation see the \sQuote{R Internals} manual).
 }
 
 \value{
@@ -48,8 +60,11 @@ gcinfo(verbose)
   
   \code{gcinfo} returns the previous value of the flag.
 }
-\seealso{\code{\link{Memory}} on \R's memory management,
-  and \code{\link{gctorture}} if you are an \R hacker.
+\seealso{
+  The \sQuote{R Internals} manual.
+
+  \code{\link{Memory}} on \R's memory management,
+  and \code{\link{gctorture}} if you are an \R developer.
  
   \code{\link{reg.finalizer}} for actions to happen at garbage
   collection.

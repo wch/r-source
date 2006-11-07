@@ -25,7 +25,7 @@ memory.limit(size = NA)
   Command-line flag \code{--max-mem-size} sets the maximum value of
   obtainable memory (including a very small amount of housekeeping
   overhead).  This cannot exceed 3Gb on Windows, and most versions of
-  Windows are limited to 2Gb.
+  Windows are limited to 2Gb.  The minimum is currently 32Mb.
 
   Memory limits can only be increased.
 }
