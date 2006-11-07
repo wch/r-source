@@ -2144,7 +2144,7 @@ static void R_gc_internal(R_size_t size_needed)
     } END_SUSPEND_INTERRUPTS;
 
     if (gc_reporting) {
-	REprintf("\n%d cons cells free (%d%%)\n",
+	REprintf("\n%lu cons cells free (%d%%)\n",
 		 R_Collected, (100 * R_Collected / R_NSize));
 	vcells = VHEAP_FREE();
 	vfrac = (100.0 * vcells) / R_VSize;

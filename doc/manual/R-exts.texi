@@ -742,6 +742,7 @@ if test -z "$@{R_HOME@}"; then
 fi
 CC=`"$@{R_HOME@}/bin/R" CMD config CC`
 CFLAGS=`"$@{R_HOME@}/bin/R" CMD config CFLAGS`
+CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 @end group
 @end example
 
@@ -915,7 +916,18 @@ this by running @command{autoconf} in the top-level package directory
 @quotation
 @c @cartouche
 @smallexample
-AC_INIT([RODBC], 1.1.5) dnl package name, version
+AC_INIT([RODBC], 1.1.8) dnl package name, version
+
+dnl A user-specifiable option
+odbc_mgr=""
+AC_ARG_WITH([odbc-manager],
+            AC_HELP_STRING([--with-odbc-manager=MGR],
+                           [specify the ODBC manager, e.g. odbc or iodbc]),
+            [odbc_mgr=$withval])
+
+if test "$odbc_mgr" = "odbc" ; then
+  AC_PATH_PROGS(ODBC_CONFIG, odbc_config)
+fi
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
@@ -923,11 +935,12 @@ AC_ARG_WITH([odbc-include],
             AC_HELP_STRING([--with-odbc-include=INCLUDE_PATH],
                            [the location of ODBC header files]),
             [odbc_include_path=$withval])
+RODBC_CPPFLAGS="-I."
 if test [ -n "$odbc_include_path" ] ; then
-   AC_SUBST([CPPFLAGS],["-I$@{odbc_include_path@} $@{CPPFLAGS@}"])
+   RODBC_CPPFLAGS="-I. -I$@{odbc_include_path@}"
 else
   if test [ -n "$@{ODBC_INCLUDE@}" ] ; then
-     AC_SUBST([CPPFLAGS],["-I$@{ODBC_INCLUDE@} $@{CPPFLAGS@}"])
+     RODBC_CPPFLAGS="-I. -I$@{ODBC_INCLUDE@}"
   fi
 fi
 
@@ -937,18 +950,17 @@ AC_ARG_WITH([odbc-lib],
                            [the location of ODBC libraries]),
             [odbc_lib_path=$withval])
 if test [ -n "$odbc_lib_path" ] ; then
-   AC_SUBST([LIBS],[" -L$@{odbc_lib_path@} $@{LIBS@}"])
-else
+   LIBS="-L$odbc_lib_path $@{LIBS@}"
+else 
   if test [ -n "$@{ODBC_LIBS@}" ] ; then
-     AC_SUBST([LIBS],["-L$@{ODBC_LIBS@} $@{LIBS@}"])
+     LIBS="-L$@{ODBC_LIBS@} $@{LIBS@}"
+  else
+    if test -n "$@{ODBC_CONFIG@}"; then
+      odbc_lib_path=`odbc_config --libs | sed s/-lodbc//`
+      LIBS="$@{odbc_lib_path@} $@{LIBS@}"
+    fi
   fi
 fi
-
-dnl Another user-specifiable option
-AC_ARG_WITH([odbc-manager],
-  AC_HELP_STRING([--with-odbc-manager=MGR],
-                 [specify the ODBC manager, e.g. odbc or iodbc]),
-            [odbc_mgr=$withval])
 
 dnl Now find the compiler and compiler flags to use
 : $@{R_HOME=`R RHOME`@}
@@ -958,6 +970,12 @@ if test -z "$@{R_HOME@}"; then
 fi
 CC=`"$@{R_HOME@}/bin/R" CMD config CC`
 CFLAGS=`"$@{R_HOME@}/bin/R" CMD config CFLAGS`
+CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
+
+if test -n "$@{ODBC_CONFIG@}"; then
+  RODBC_CPPFLAGS=`odbc_config --cflags`
+fi
+CPPFLAGS="$@{CPPFLAGS@} $@{RODBC_CPPFLAGS@}"
 
 dnl Check the headers can be found
 AC_CHECK_HEADERS(sql.h sqlext.h)
@@ -971,15 +989,22 @@ if test [ -n "$@{odbc_mgr@}" ] ; then
   AC_SEARCH_LIBS(SQLTables, $@{odbc_mgr@}, ,
       AC_MSG_ERROR("ODBC driver manager $@{odbc_mgr@} not found"))
 else
-  AC_SEARCH_LIBS(SQLTables, odbc iodbc, ,
+  AC_SEARCH_LIBS(SQLTables, odbc odbc32 iodbc, ,
       AC_MSG_ERROR("no ODBC driver manager found"))
 fi
 
-dnl substitute CPPFLAGS and LIBS
-AC_SUBST(CPPFLAGS)
+dnl for 64-bit ODBC need SQL[U]LEN, and it is unclear where they are defined.
+AC_CHECK_TYPES([SQLLEN, SQLULEN], , , [# include <sql.h>])
+dnl for unixODBC header
+AC_CHECK_SIZEOF(long, 4)
+
+dnl substitute RODBC_CPPFLAGS and LIBS
+AC_SUBST(RODBC_CPPFLAGS)
 AC_SUBST(LIBS)
-dnl and do subsitution in the src/Makevars.in
-AC_OUTPUT(src/Makevars)
+AC_CONFIG_HEADERS([src/config.h])
+dnl and do subsitution in the src/Makevars.in and src/config.h
+AC_CONFIG_FILES([src/Makevars])
+AC_OUTPUT
 @end smallexample
 @c @end cartouche
 @end quotation
@@ -989,7 +1014,7 @@ where @file{src/Makevars.in} would be simply
 
 @quotation
 @example
-PKG_CPPFLAGS = @@CPPFLAGS@@
+PKG_CPPFLAGS = @@RODBC_CPPFLAGS@@
 PKG_LIBS = @@LIBS@@
 @end example
 @end quotation
