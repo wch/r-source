@@ -26,6 +26,9 @@ NEW FEATURES
     o	rainbow(), heat.colors(), terrain.colors(), topo.colors() and
 	cm.colors() all gain an 'alpha' argument to be passed to hsv().
 
+    o	dput() will give an incorrect representation of the row names
+	of a data frame with integer row names.  This is now corrected
+	when the object is recreated.
 
 BUG FIXES
 

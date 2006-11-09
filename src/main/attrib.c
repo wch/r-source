@@ -39,6 +39,15 @@ static SEXP commentgets(SEXP, SEXP);
 static SEXP row_names_gets(SEXP vec , SEXP val)
 {
     SEXP ans;
+
+    if(isReal(val) && length(val) == 2 && ISNAN(REAL(val)[0]) ) {
+	/* This should not happen, but if a careless user dput()s a
+	   data frame and sources the result, it will */
+	PROTECT(val = coerceVector(val, INTSXP));
+	ans =  installAttrib(vec, R_RowNamesSymbol, val);
+	UNPROTECT(1);
+	return ans;	
+    }
     if(isInteger(val)) {
 	Rboolean OK_compact = TRUE;
 	int i, n = LENGTH(val);
