@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-09
+@set FAQ_DATE @value{FAQ_YEAR}-11-10
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -4118,6 +4118,9 @@ A stepwise approach to identifying recombination breakpoints in a
 sequence alignment.
 @item stinepack
 Stineman interpolation package.
+@item stochmod
+Learning and inference algorithms for a variety of probabilistic
+models.
 @item strucchange
 Various tests on structural change in linear regression models.
 @item subselect
