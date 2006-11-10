@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:40\n"
+"POT-Creation-Date: 2006-11-10 16:02\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -900,9 +900,6 @@ msgstr "'by'는 column(s)를 지정하지 않으면 되지 않습니다"
 msgid "'by' must specify valid column(s)"
 msgstr "'by'는 유효한 colums(s)를 지정하지 않으면 되지 않습니다"
 
-msgid "no rows to match"
-msgstr "match 해야 할 행이 없습니다"
-
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' 그리고 'by.y'는 다른 열수를 지정하고 있습니다"
 
@@ -1407,6 +1404,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "no rows to match"
+#~ msgstr "match 해야 할 행이 없습니다"
 
 #~ msgid "'form' must be a two-sided formula"
 #~ msgstr "'form'는  two-sided를 가지는 모델식이 아니면 되지 않습니다"
