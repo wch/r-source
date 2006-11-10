@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:33\n"
+"POT-Creation-Date: 2006-11-10 16:00\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -899,9 +899,6 @@ msgstr "'by' muss Spalte(n) spezifizieren"
 msgid "'by' must specify valid column(s)"
 msgstr "'by' muss gültige Spalte(n) spezifizieren"
 
-msgid "no rows to match"
-msgstr "keine Zeilen zu suchen"
-
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' und 'by.y' geben unterschiedliche Zahlen von Spalten an"
 
@@ -1443,6 +1440,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "no rows to match"
+#~ msgstr "keine Zeilen zu suchen"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"

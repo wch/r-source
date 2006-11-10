@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:33\n"
+"POT-Creation-Date: 2006-11-10 16:00\n"
 "PO-Revision-Date: 2006-09-25 03:59-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -889,9 +889,6 @@ msgstr ""
 msgid "'by' must specify valid column(s)"
 msgstr "'by' должен определять правильные колонк(и)"
 
-msgid "no rows to match"
-msgstr "нет соответствующих строк"
-
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' и 'by.y' определяют разные номера колонок"
 
@@ -1439,6 +1436,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "no rows to match"
+#~ msgstr "нет соответствующих строк"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"

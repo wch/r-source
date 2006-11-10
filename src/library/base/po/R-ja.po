@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:33\n"
+"POT-Creation-Date: 2006-11-10 16:00\n"
 "PO-Revision-Date: 2006-09-22 19:14+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -897,9 +897,6 @@ msgstr "'by' は列を数値、名前ラベルもしくは論理値で特定し�
 msgid "'by' must specify valid column(s)"
 msgstr "'by' は有効な列を指定しなければなりません"
 
-msgid "no rows to match"
-msgstr "マッチすべき行がありません"
-
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' そして 'by.y' は異なった列数を指定しています"
 
@@ -1443,6 +1440,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
+
+#~ msgid "no rows to match"
+#~ msgstr "マッチすべき行がありません"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"

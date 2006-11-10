@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:33\n"
+"POT-Creation-Date: 2006-11-10 16:00\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -876,9 +876,6 @@ msgstr "'by'一定得用数字，名字或逻辑值来指定列"
 msgid "'by' must specify valid column(s)"
 msgstr "'by'所指定的那些列有错"
 
-msgid "no rows to match"
-msgstr "找不到匹配的行"
-
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'和'by.y'设定了不同数目的列"
 
@@ -1409,6 +1406,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "no rows to match"
+#~ msgstr "找不到匹配的行"
 
 #~ msgid "rows are empty: giving up"
 #~ msgstr "所有行都是空白的：停止工作"

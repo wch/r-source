@@ -1044,7 +1044,7 @@ used for their side effects, e.g., printing and plotting functions.
 
 @cindex function
 @cindex function arguments
-Function calls can have @emph{tagged} (or @emph{named} arguments), as in
+Function calls can have @emph{tagged} (or @emph{named}) arguments, as in
 @code{plot(x, y, pch = 3)} arguments without tags are known as
 @emph{positional} since the function must distinguish their meaning from
 their sequential positions among the arguments of the call, e.g., that
