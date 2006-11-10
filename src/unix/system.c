@@ -79,8 +79,8 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		Rboolean del, char *pager)
 { return ptr_R_ShowFiles(nfile, file, headers, wtitle, del, pager); }
-int R_ChooseFile(int new, char *buf, int len)
-{ return ptr_R_ChooseFile(new, buf, len); }
+int R_ChooseFile(int _new, char *buf, int len)
+{ return ptr_R_ChooseFile(_new, buf, len); }
 
 
 void R_setStartTime(void); /* in sys-unix.c */
