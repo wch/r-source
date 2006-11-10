@@ -47,7 +47,8 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
 }
 \seealso{
   \code{\link{choose}} for fast computation of the \emph{number} of
-  combinations.
+  combinations. \code{\link{expand.grid}} for creating a data frame from
+  all combinations of factors or vectors.
 }
 \examples{
 combn(letters[1:4], 2)
