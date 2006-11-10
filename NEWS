@@ -232,8 +232,11 @@ BUG FIXES
 	Vcells if the true value exceeds 2^31 (and hence over 16Gb of
 	heap is in use): it now reports NA. (PR#9345)
 
-    o	rapply now detects more user errors in supplying arguments. (PR#9349)
+    o	rapply() now detects more user errors in supplying arguments. (PR#9349)
 
+    o	boxplot() was ignoring argument 'boxfill'. (PR#9352)
+
+    o	plot.lm(which = 6, id.n = 0) did not work. (PR#9333)
 
 
 

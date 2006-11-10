@@ -282,7 +282,7 @@ msgid "drop argument will be ignored"
 msgstr "l'argomento drop verrà ignorato"
 
 msgid "undefined columns selected"
-msgstr "selezionate colonne on definite"
+msgstr "selezionate colonne non definite"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
 msgstr ""

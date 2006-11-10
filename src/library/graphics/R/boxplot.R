@@ -48,9 +48,10 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
 	      names = names)
     if(plot) {
+        if(is.null(pars$boxfill) && is.null(args$boxfill)) pars$boxfill <- col
         do.call("bxp",
-                c(list(z, width, varwidth = varwidth, notch = notch, log = log,
-                       border = border, boxfill = col, pars = pars,
+                c(list(z, notch = notch, width = width, varwidth = varwidth,
+                       log = log, border = border, pars = pars,
                        outline = outline, horizontal = horizontal, add = add,
                        at = at), args[namedargs]))
 	invisible(z)
