@@ -238,6 +238,9 @@ BUG FIXES
 
     o	plot.lm(which = 6, id.n = 0) did not work. (PR#9333)
 
+    o	.deparseOpts("delayPromises") was not matching the C code,
+	returning 64 rather than 32.
+
 
 
 		CHANGES IN R VERSION 2.4.0
