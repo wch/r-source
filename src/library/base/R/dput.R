@@ -1,4 +1,6 @@
-dput <- function(x, file = "", control = "showAttributes")
+dput <-
+    function(x, file = "",
+             control = c("keepNA", "keepInteger", "showAttributes"))
 {
     if(is.character(file))
         if(nchar(file) > 0) {

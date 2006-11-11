@@ -822,9 +822,11 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define USESOURCE 		8
 #define WARNINCOMPLETE 		16
 #define DELAYPROMISES 		32
+#define KEEPNA			64
+#define S_COMPAT       		128
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
-#define FORSOURCING		31
+#define FORSOURCING		95
 
 /* Coercion functions */
 int Rf_LogicalFromString(SEXP, int*);

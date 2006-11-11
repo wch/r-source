@@ -202,7 +202,7 @@ print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")
-	dput(cl)
+	dput(cl, control=NULL)
     }
     ip <- x$iparms
     cv <- cl$cv

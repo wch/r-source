@@ -135,7 +135,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
 {
     if(!is.null(cl <- x$call)) {
         cat("Call:\n   ")
-        dput(cl)
+        dput(cl, control=NULL)
     }
     asgn <- x$assign[x$qr$pivot[1:x$rank]]
     effects <- x$effects

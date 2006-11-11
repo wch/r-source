@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-10-15 r39637)
+R version 2.5.0 Under development (unstable) (2006-11-11 r39849)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -4346,8 +4346,8 @@ Levels: "a" "a \" test" "b" NA
 [2,] Integer,2 5        
 > write.table(x)
 "V1" "V2"
-"1" 1 c(3, 4)
-"2" c(1, 2) 5
+"1" 1 3:4
+"2" 1:2 5
 > 
 > x1 <- data.frame(a=1:2, b=I(matrix(LETTERS[1:4], 2, 2)), c = c("(i)", "(ii)"))
 > x1
@@ -5595,4 +5595,30 @@ $y
 > 
 > 
 > ### end of tests added in 2.4.1 ###
+> 
+> 
+> ## tests of deparsing
+> x <-list(a = NA, b = as.integer(NA), c=0+NA, d=0i+NA,
++          e = 1, f = 1:1, g = 1:3, h = c(NA, 1:3),
++          i = as.character(NA), j = c("foo", NA, "bar")
++          )
+> dput(x, control=NULL)
+list(a = NA, b = NA, c = NA, d =  NA, e = 1, f = 1, g = 1:3, 
+    h = c(NA, 1, 2, 3), i = NA, j = c("foo", NA, "bar"))
+> dput(x)
+structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
+    d = as.complex( NA), e = 1, f = 1L, g = 1:3, h = c(NA, 1L, 
+    2L, 3L), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
+"b", "c", "d", "e", "f", "g", "h", "i", "j"))
+> dput(x, control="all")
+structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
+    d = as.complex( NA), e = 1, f = 1L, g = 1:3, h = c(NA, 1L, 
+    2L, 3L), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
+"b", "c", "d", "e", "f", "g", "h", "i", "j"))
+> dput(x, control=c("all", "S_compatible"))
+structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
+    d = as.complex( NA), e = 1, f = as.integer(1), g = 1:3, h = as.integer(c(NA, 
+    1, 2, 3)), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
+"b", "c", "d", "e", "f", "g", "h", "i", "j"))
+> ## changes in 2.5.0
 > 
