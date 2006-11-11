@@ -101,7 +101,7 @@ hist(x, \dots)
   The default for \code{breaks} is \code{"Sturges"}: see
   \code{\link{nclass.Sturges}}.  Other names for which algorithms
   are supplied are \code{"Scott"} and \code{"FD"} /
-  \code{"Friedman-Diaconis"} (with corresponding functions
+  \code{"Freedman-Diaconis"} (with corresponding functions
   \code{\link{nclass.scott}} and \code{\link{nclass.FD}}).
   Case is ignored and partial matching is used.
   Alternatively, a function can be supplied which
