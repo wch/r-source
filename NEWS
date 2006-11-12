@@ -258,6 +258,10 @@ BUG FIXES
     o	.deparseOpts("delayPromises") was not matching the C code,
 	returning 64 rather than 32.
 
+    o	bxp() could use partial matching on 'pars' when finding
+	defaults for some of its parameters, e.g. a setting of 'cex.axis'
+	in 'pars' or inline was used to set a default for 'outcex'.
+
 
 
 		CHANGES IN R VERSION 2.4.0
