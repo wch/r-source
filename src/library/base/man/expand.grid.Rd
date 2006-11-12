@@ -30,6 +30,10 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE)
   \emph{Statistical Models in S.}
   Wadsworth \& Brooks/Cole.
 }
+\seealso{
+  \code{\link[utils]{combn}} (package \code{utils}) for the generation
+  of all combinations of n elements, taken m at a time.
+}
 \examples{
 expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
             sex = c("Male","Female"))

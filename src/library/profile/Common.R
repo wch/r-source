@@ -55,3 +55,14 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
                     ' in options("defaultPackages") was not found', call.=FALSE)
     }
 }
+
+.OptRequireMethods <- function()
+{
+      if("methods" %in% getOption("defaultPackages")) {
+        res <- require("methods", quietly = TRUE, warn.conflicts = FALSE,
+                       character.only = TRUE, save = FALSE)
+        if(!res)
+            warning("package \"methods\"",
+                    ' in options("defaultPackages") was not found', call.=FALSE)
+    }
+}

@@ -16,7 +16,7 @@ void Rstd_Busy(int which);
 void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast);
 int  Rstd_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		    Rboolean del, char *pager);
-int  Rstd_ChooseFile(int new, char *buf, int len);
+int  Rstd_ChooseFile(int _new, char *buf, int len);
 void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
 void Rstd_addhistory(SEXP call, SEXP op, SEXP args, SEXP env);

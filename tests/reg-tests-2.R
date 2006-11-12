@@ -2000,3 +2000,15 @@ lowess(x, y)
 
 
 ### end of tests added in 2.4.1 ###
+
+
+## tests of deparsing
+x <-list(a = NA, b = as.integer(NA), c=0+NA, d=0i+NA,
+         e = 1, f = 1:1, g = 1:3, h = c(NA, 1:3),
+         i = as.character(NA), j = c("foo", NA, "bar")
+         )
+dput(x, control=NULL)
+dput(x)
+dput(x, control="all")
+dput(x, control=c("all", "S_compatible"))
+## changes in 2.5.0

@@ -120,7 +120,7 @@ static void doprof()
 	    if((len = strlen(buf)) < 1000) {
 	    	sprintf(buf+len, ":%ld:%ld:%ld:%ld:", smallv, bigv,
                      nodes, get_duplicate_counter());
-            }      
+            }
 	    reset_duplicate_counter();
     }
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
@@ -239,7 +239,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval, int m
     R_Mem_Profiling=mem_profiling;
     if (mem_profiling)
 	reset_duplicate_counter();
-    
+
 #ifdef Win32
     /* need to duplicate to make a real handle */
     DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread,
@@ -407,7 +407,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    val = eval(PRCODE(e), PRENV(e));
 	    SET_PRSEEN(e, 0);
 	    SET_PRVALUE(e, val);
-	    /* allow GC to reclaim; 
+	    /* allow GC to reclaim;
 	       also useful for fancy games with delayedAssign() */
 	    SET_PRENV(e, R_NilValue);
 	}
@@ -445,7 +445,7 @@ SEXP eval(SEXP e, SEXP rho)
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
 		endcontext(&cntxt);
 	    } else {
-		tmp = PRIMFUN(op) (e, op, tmp, rho);		
+		tmp = PRIMFUN(op) (e, op, tmp, rho);
 	    }
 	    UNPROTECT(1);
 	    check_stack_balance(op, save);
@@ -760,7 +760,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 		SEXP deflt;
 		SET_PRENV(val, newrho);
 		/* find the symbol in the method, copy its expression
-		 * to the promise */ 
+		 * to the promise */
 		for(deflt = CAR(op); deflt != R_NilValue; deflt = CDR(deflt)) {
 		    if(TAG(deflt) == symbol)
 		        break;
@@ -875,7 +875,7 @@ static Rboolean asLogicalNoNA(SEXP s, SEXP call)
 {
     Rboolean cond = asLogical(s);
     if (length(s) > 1)
-	warningcall(call, 
+	warningcall(call,
 		    _("the condition has length > 1 and only the first element will be used"));
     if (cond == NA_LOGICAL) {
 	char *msg = length(s) ? (isLogical(s) ?
@@ -1383,7 +1383,7 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    R_Visible = 0;
 	    return applydefine(call, op, args, rho);
 	}
-	else errorcall(call, 
+	else errorcall(call,
 		       _("invalid (do_set) left-hand side to assignment"));
     case 2:						/* <<- */
 	if (isSymbol(CAR(args))) {
@@ -1651,7 +1651,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     /* isLanguage include NILSXP, and that does not need to be
-       evaluated 
+       evaluated
     if (isLanguage(expr) || isSymbol(expr) || isByteCode(expr)) { */
     if (TYPEOF(expr) == LANGSXP || TYPEOF(expr) == SYMSXP || isByteCode(expr)) {
 	PROTECT(expr);
@@ -1973,13 +1973,12 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	return 0;
     /* try for formal method */
     if(R_has_methods(op)) {
-      SEXP value;
-      value = R_possible_dispatch(call, op, args, rho);
-      if(value) {
-	*ans = value;
-	return 1;
-      }
-      /*else to on to look for S3 methods */
+	SEXP value = R_possible_dispatch(call, op, args, rho);
+	if(value) {
+	    *ans = value;
+	    return 1;
+	}
+	/* else go on to look for S3 methods */
     }
 
     /* check whether we are processing the default method */
@@ -2286,7 +2285,7 @@ SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_c_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
-/* now in Defn.h 
+/* now in Defn.h
 SEXP R_subset3_dflt(SEXP, SEXP);
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 */
@@ -2517,7 +2516,7 @@ static SEXP forcePromise(SEXP e)
   if (PRVALUE(e) == R_UnboundValue) {
     SEXP val;
     if(PRSEEN(e))
-      errorcall(R_GlobalContext->call, 
+      errorcall(R_GlobalContext->call,
 		_("recursive default argument reference"));
     SET_PRSEEN(e, 1);
     val = eval(PRCODE(e), PRENV(e));
@@ -3486,7 +3485,7 @@ SEXP attribute_hidden do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isNull(env)) {
 	error(_("use of NULL environment is defunct"));
 	env = R_BaseEnv;
-    } else  
+    } else
     if (!isEnvironment(env))
 	errorcall(call, _("invalid environment"));
 

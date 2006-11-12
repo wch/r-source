@@ -358,7 +358,7 @@ print.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")
-	dput(cl)
+	dput(cl, control=NULL)
     }
     cat("\nNumber of Observations:", x$n, "\n")
     cat("Equivalent Number of Parameters:", format(round(x$enp, 2)), "\n")
@@ -378,7 +378,7 @@ print.summary.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
 {
     if(!is.null(cl <- x$call)) {
 	cat("Call:\n")
-	dput(cl)
+	dput(cl, control=NULL)
     }
     cat("\nNumber of Observations:", x$n, "\n")
     cat("Equivalent Number of Parameters:", format(round(x$enp, 2)), "\n")

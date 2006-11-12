@@ -272,9 +272,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	## axis(4, at=p*cook.levels, labels=paste(c(rev(cook.levels), cook.levels)),
 	##	mgp=c(.25,.25,0), las=2, tck=0, cex.axis=cex.id)
 	mtext(caption[6], 3, 0.25)
-	if (id.n > 0)
+	if (id.n > 0) {
 	    show.r <- order(-cook)[iid]
-	text.id(g[show.r], cook[show.r], show.r)
+            text.id(g[show.r], cook[show.r], show.r)
+        }
     }
 
     if (!one.fig && par("oma")[3] >= 1)

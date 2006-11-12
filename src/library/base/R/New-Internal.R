@@ -72,31 +72,27 @@ rbind <- function(..., deparse.level = 1)
 # convert deparsing options to bitmapped integer
 
 .deparseOpts <- function(control) {
-    opts <- pmatch(as.character(control), c("keepInteger", "quoteExpressions",
-      "showAttributes", "useSource", "warnIncomplete", "all", "delayPromises"))
+    opts <- pmatch(as.character(control),
+                   c("all",
+                     "keepInteger", "quoteExpressions", "showAttributes",
+                     "useSource", "warnIncomplete", "delayPromises",
+                     "keepNA", "S_compatible"))
     if (any(is.na(opts)))
         stop(sprintf(ngettext(as.integer(sum(is.na(opts))),
                               "deparse option %s is not recognized",
                               "deparse options %s are not recognized"),
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
-    if (any(opts == 6)) {
-	if (length(opts) != 1)
-	    stop("'all' can not be used with other deparse options",
-	       	call. = FALSE)
-	else
-	    return(31)
-    } else return(sum(2^(opts-1)))
+    if (any(opts == 1))
+        opts <- unique(c(opts[opts != 1],2,3,4,5,6,8))
+    return(sum(2^(opts-2)))
 }
 
 deparse <-
     function(expr, width.cutoff = 60,
 	     backtick = mode(expr) %in% c("call", "expression", "("),
 	     control = "showAttributes")
-{
-    opts <- .deparseOpts(control)
-    .Internal(deparse(expr, width.cutoff, backtick, opts))
-}
+    .Internal(deparse(expr, width.cutoff, backtick, .deparseOpts(control)))
 
 do.call <- function(what, args, quote = FALSE, envir = parent.frame())
 {
@@ -116,16 +112,15 @@ format.info <- function(x, digits=NULL, nsmall=0)
 
 gc <- function(verbose = getOption("verbose"),	reset=FALSE)
 {
-    res <- .Internal(gc(verbose,reset))/
-	c(1, 1, 10, 10, 1, 1, rep(10,4), rep(1,2), rep(10,2))
+    res <- .Internal(gc(verbose, reset))
     res <- matrix(res, 2, 7,
 		  dimnames = list(c("Ncells","Vcells"),
 		  c("used", "(Mb)", "gc trigger", "(Mb)",
 		    "limit (Mb)", "max used", "(Mb)")))
     if(all(is.na(res[, 5]))) res[, -5] else res
 }
-gcinfo <- function(verbose).Internal(gcinfo(verbose))
-gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
+gcinfo <- function(verbose) .Internal(gcinfo(verbose))
+gctorture <- function(on=TRUE) invisible(.Internal(gctorture(on)))
 
 is.unsorted <- function(x, na.rm = FALSE) {
     if(is.null(x)) return(FALSE)

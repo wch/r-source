@@ -2,8 +2,8 @@
 \alias{seemsS4Object}
 \title{Heuristic test for an object from an S4 class}
 \description{
-  Returns \code{TRUE} if \code{object} seems to have been generated from
-  a formally defined (\dQuote{S4}) class.
+  Returns \code{TRUE} if \code{object} has been generated from
+  a formally defined (\dQuote{S4}) class.  DEPRECATED:  use isS4(object) instead.
 }
 \usage{
 seemsS4Object(object)
@@ -13,9 +13,13 @@ seemsS4Object(object)
 }
 \details{
   The \code{\link{class}} of the object is examined for the \code{"package"}
-  attribute included when objects are generated from an S4 class.
+  attribute included when objects are generated from an S4 class.  The
+  test in this function has  been superseded by an internal bit set
+  when S4 objects are generated.
 
-  This test can be fooled in at least two ways:
+  The \code{seemsS4Object} function is deprecated and will be removed.
+
+  The  test can be fooled in at least two ways:
   \enumerate{
     \item It will give \code{TRUE} incorrectly if someone puts a
     \code{"package"} string attribute on the class of an S3 object.

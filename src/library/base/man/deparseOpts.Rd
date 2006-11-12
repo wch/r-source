@@ -19,8 +19,9 @@
   following strings.  Partial string matching is used.
   \describe{
     \item{\code{keepInteger}}{
-      Surround integer vectors by \code{as.integer()}, so they are not
-      converted to floating point when re-parsed.
+      Either surround integer vectors by \code{as.integer()} or use
+      suffix \code{L}, so they are not converted to type double when
+      parsed.
     }
     \item{\code{quoteExpressions}}{
       Surround expressions with \code{quote()}, so they are not
@@ -42,15 +43,21 @@
       external pointers, etc. can not be deparsed properly.  This option
       causes a warning to be issued if any of those may give problems.
     }
+    \item{\code{keepNA}}{
+      Integer, real and character \code{NA}s are surrounded by coercion
+      where necessary to ensure that they are parsed to the same type.
+    }
     \item{\code{all}}{
       An abbreviated way to specify all of the options
-      listed above.  May not be used with other options.  This is the
-      default for \code{dump}.
+      listed above.  This is the default for \code{dump}.
     }
     \item{\code{delayPromises}}{
-      Deparse promises in the form <promise: expression> rather than evaluating 
-      them.  The value and the environment of the promise will not be shown
-      and the deparsed code cannot be sourced.
+      Deparse promises in the form <promise: expression> rather than
+      evaluating them.  The value and the environment of the promise
+      will not be shown and the deparsed code cannot be sourced.
+    }
+    \item{\code{S_compatible}}{
+      Make deparsing as far as possible compatible with S and \R < 2.5.0.
     }
   }
   For the most readable (but perhaps incomplete) display, use

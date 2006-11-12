@@ -170,6 +170,7 @@ FILE *R_popen(char *command, char *type)
 #ifdef __APPLE_CC__
     /* Luke recommends this to fix PR#1140 */
     sigset_t ss;
+    sigemptyset(&ss);
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
     fp = popen(command, type);
@@ -187,6 +188,7 @@ int R_system(char *command)
 #ifdef __APPLE_CC__
     /* Luke recommends this to fix PR#1140 */
     sigset_t ss;
+    sigemptyset(&ss);
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
 #ifdef HAVE_AQUA
@@ -637,4 +639,23 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     res = (char *) malloc((strlen(tm)+1) * sizeof(char));
     strcpy(res, tm);
     return res;
+}
+
+
+static const char  const *procTimeNames[] = {"user", "system", "total", "user.children", "system.children"};
+
+SEXP attribute_hidden R_setProcTimeNames(SEXP ans)
+{
+    SEXP names;
+    int i;
+
+    PROTECT(ans);
+    PROTECT(names = allocVector(STRSXP, 5));
+    for( i = 0; i < 5; i++ )
+        SET_STRING_ELT(names, i, mkChar(procTimeNames[i]));
+
+    setAttrib(ans, R_NamesSymbol, names);
+
+    UNPROTECT(2);
+    return(ans);
 }

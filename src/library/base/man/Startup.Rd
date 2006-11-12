@@ -8,6 +8,7 @@
 \alias{.Renviron}
 \alias{.First}
 \alias{.First.sys}
+\alias{.OptRequireMethods}
 \concept{environment variable}
 
 \title{Initialization at Start of an R Session}
@@ -56,7 +57,11 @@
   it is executed as \code{.First()}.
   Finally, function \code{.First.sys()} in the \pkg{base} package is run.
   This calls \code{\link{require}} to attach the default packages
-  specified by \code{\link{options}("defaultPackages")}.
+  specified by \code{\link{options}("defaultPackages")}.  If the
+  \code{methods} package is included, this will have been attached
+  earlier, by function \code{.OptRequireMethods()}, so that
+ namespace  initializations such as those from the user workspace will
+ proceed correctly.
 
   A function \code{.First} (and \code{\link{.Last}}) can be defined in
   appropriate \file{.Rprofile} or \file{Rprofile.site} files or have
@@ -77,6 +82,10 @@
   The command-line flag \option{--vanilla} implies
   \option{--no-site-file}, \option{--no-init-file},
   \option{--no-restore} and \option{--no-environ}.
+#ifdef windows
+  In Windows, it also implies \option{--no-Rconsole}, which
+  prevents loading the \code{\link{Rconsole}} file.
+#endif
 }
 \details{
   Note that there are two sorts of files used in startup:

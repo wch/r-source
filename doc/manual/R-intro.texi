@@ -6882,9 +6882,13 @@ directory where @R{} was started, but can be set by the environment
 variable @env{R_HISTFILE}) should be restored at startup or not.  The
 default is to restore.
 
+@item --no-Rconsole
+(Windows only) Prevent loading the @file{Rconsole} file at startup.
+
 @item --vanilla
 Combine @option{--no-save}, @option{--no-environ}
 @option{--no-site-file}, @option{--no-init-file} and @option{--no-restore}.
+In Windows, this also includes @option{--no-Rconsole}.
 
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This is useful

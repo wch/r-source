@@ -33,6 +33,7 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
     if (any(is.na(oo)))
         stop("some named arguments in 'start' are not arguments to the supplied log-likelihood")
     start <- start[order(oo)]
+    nm <- names(start) ## reordered names needed
     f <- function(p){
         l <- as.list(p)
 	names(l) <- nm

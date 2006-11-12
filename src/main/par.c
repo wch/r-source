@@ -56,8 +56,8 @@ typedef struct {
 	       */
 } ParTab;
 
-static ParTab
-ParTable[] = {
+static const ParTab
+ParTable  [] = {
     { "adj",		 0 },
     { "ann",		 0 },
     { "ask",		 1 },

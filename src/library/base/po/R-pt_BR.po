@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-26 14:40\n"
+"POT-Creation-Date: 2006-11-10 16:02\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -908,9 +908,6 @@ msgstr "'by' deve especificar coluna(s)"
 msgid "'by' must specify valid column(s)"
 msgstr "'by' deve especificar coluna(s) válida(s)"
 
-msgid "no rows to match"
-msgstr "nenhuma linha para parear"
-
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' e 'by.y' especificam números de colunas diferentes"
 
@@ -1401,6 +1398,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "no rows to match"
+#~ msgstr "nenhuma linha para parear"
 
 #~ msgid "'form' must be a two-sided formula"
 #~ msgstr "'form' deve ser uma fórmula com dois lados"

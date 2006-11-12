@@ -29,6 +29,7 @@ extern void cmdlineoptions(int, char **);
 extern int setupui(void);
 extern void Rf_mainloop(void);
 __declspec(dllimport) extern UImode CharacterMode;
+extern void GA_exitapp(void);
 
 extern char *getDLLVersion();
 
@@ -48,7 +49,11 @@ int AppMain (int argc, char **argv)
 	exit(1);
     }
     cmdlineoptions(argc, argv);
-    setupui();
+    if (!setupui()) {
+        MessageBox(0, "Error setting up console.  Try --vanilla option.",
+                      "Terminating", MB_TASKMODAL | MB_ICONSTOP | MB_OK);
+        GA_exitapp();
+    }
     Rf_mainloop();
     /* NOTREACHED */
     return 0;

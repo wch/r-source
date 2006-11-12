@@ -48,9 +48,10 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     z <- list(stats = stats, n = ng, conf = conf, out = out, group = group,
 	      names = names)
     if(plot) {
+        if(is.null(pars$boxfill) && is.null(args$boxfill)) pars$boxfill <- col
         do.call("bxp",
-                c(list(z, width, varwidth = varwidth, notch = notch, log = log,
-                       border = border, boxfill = col, pars = pars,
+                c(list(z, notch = notch, width = width, varwidth = varwidth,
+                       log = log, border = border, pars = pars,
                        outline = outline, horizontal = horizontal, add = add,
                        at = at), args[namedargs]))
 	invisible(z)
@@ -86,7 +87,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     bplt <- function(x, wid, stats, out, conf, notch, xlog, i)
     {
 	## Draw single box plot
-
+        ok <- TRUE
 	if(!any(is.na(stats))) {
 	    ## stats = +/- Inf:	polygon & segments should handle
 
@@ -96,6 +97,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 		else function(x,w) x + w
 	    wid <- wid/2
 	    if (notch) {
+                ## check for overlap of notches and hinges
+                ok <- stats[2] <= conf[1] && conf[2] <= stats[4]
+
 		xx <- xP(x, wid * c(-1, 1, 1, notch.frac, 1,
 				    1, -1,-1,-notch.frac,-1))
 		yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2],
@@ -143,6 +147,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 			domain = NA)
 	    }
 	}
+        return(ok)
     } ## bplt
 
     if(!is.list(z) || 0 == (n <- length(z$n)))
@@ -184,32 +189,37 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
     pcycle <- function(p, def1, def2=NULL)# or rather NA {to be rep()ed}?
 	rep(if(length(p)) p else if(length(def1)) def1 else def2,
 	    length.out = n)
-    boxlty    <- pcycle(pars$boxlty,	pars$lty, par("lty"))
-    boxlwd    <- pcycle(pars$boxlwd,	pars$lwd, par("lwd"))
+    ## we have to be careful to avoid partial matching here
+    nmpars <- names(pars)
+    p <- function(sym)
+        if(match(sym, nmpars, 0) > 0) pars[[sym]] else NULL
+
+    boxlty    <- pcycle(pars$boxlty,	p("lty"), par("lty"))
+    boxlwd    <- pcycle(pars$boxlwd,	p("lwd"), par("lwd"))
     boxcol    <- pcycle(pars$boxcol,	border)
     boxfill   <- pcycle(pars$boxfill,	par("bg"))
     boxwex    <- pcycle(pars$boxwex,	0.8 * {
 	if(n <= 1) 1 else
 	stats::quantile(diff(sort(if(xlog) log(at) else at)), 0.10) })
-    medlty    <- pcycle(pars$medlty,	pars$lty, par("lty"))
-    medlwd    <- pcycle(pars$medlwd,	3*pars$lwd, 3*par("lwd"))
+    medlty    <- pcycle(pars$medlty,	p("lty"), par("lty"))
+    medlwd    <- pcycle(pars$medlwd,	3*p("lwd"), 3*par("lwd"))
     medpch    <- pcycle(pars$medpch,	as.integer(NA))# NA when that works
-    medcex    <- pcycle(pars$medcex,	pars$cex, par("cex"))
+    medcex    <- pcycle(pars$medcex,	p("cex"), par("cex"))
     medcol    <- pcycle(pars$medcol,	border)
-    medbg     <- pcycle(pars$medbg,	pars$bg,  par("bg"))
-    whisklty  <- pcycle(pars$whisklty,	pars$lty, "dashed")
-    whisklwd  <- pcycle(pars$whisklwd,	pars$lwd, par("lwd"))
+    medbg     <- pcycle(pars$medbg,	p("bg"),  par("bg"))
+    whisklty  <- pcycle(pars$whisklty,	p("lty"), "dashed")
+    whisklwd  <- pcycle(pars$whisklwd,	p("lwd"), par("lwd"))
     whiskcol  <- pcycle(pars$whiskcol,	border)
-    staplelty <- pcycle(pars$staplelty, pars$lty, par("lty"))
-    staplelwd <- pcycle(pars$staplelwd, pars$lwd, par("lwd"))
+    staplelty <- pcycle(pars$staplelty, p("lty"), par("lty"))
+    staplelwd <- pcycle(pars$staplelwd, p("lwd"), par("lwd"))
     staplecol <- pcycle(pars$staplecol, border)
     staplewex <- pcycle(pars$staplewex,	0.5)
     outlty    <- pcycle(pars$outlty,	"blank")
-    outlwd    <- pcycle(pars$outlwd,	pars$lwd, par("lwd"))
-    outpch    <- pcycle(pars$outpch,	pars$pch, par("pch"))
-    outcex    <- pcycle(pars$outcex,	pars$cex, par("cex"))
+    outlwd    <- pcycle(pars$outlwd,	p("lwd"), par("lwd"))
+    outpch    <- pcycle(pars$outpch,	p("pch"), par("pch"))
+    outcex    <- pcycle(pars$outcex,	p("cex"), par("cex"))
     outcol    <- pcycle(pars$outcol,	border)
-    outbg     <- pcycle(pars$outbg,	pars$bg,  par("bg"))
+    outbg     <- pcycle(pars$outbg,	p("bg"),  par("bg"))
     outwex    <- pcycle(pars$outwex,	0.5)
 
     width <-
@@ -233,12 +243,15 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	xysegments <- segments
     }
 
+    ok <- TRUE
     for(i in 1:n)
-	bplt(at[i], wid=width[i],
-	     stats= z$stats[,i],
-	     out  = z$out[z$group==i],
-	     conf = z$conf[,i],
-	     notch= notch, xlog = xlog, i = i)
+	ok <- ok & bplt(at[i], wid=width[i],
+			stats= z$stats[,i],
+			out  = z$out[z$group==i],
+			conf = z$conf[,i],
+			notch= notch, xlog = xlog, i = i)
+    if(!ok)
+	warning("some notches went outside hinges ('box'): maybe set notch=FALSE")
 
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }

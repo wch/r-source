@@ -91,7 +91,7 @@ princomp(x, \dots)
   Note that the default calculation uses divisor \code{N} for the
   covariance matrix.
 
-  The \code{\link{print}} method for the these objects prints the
+  The \code{\link{print}} method for these objects prints the
   results in a nice format and the \code{\link{plot}} method produces
   a scree plot (\code{\link{screeplot}}).  There is also a
   \code{\link{biplot}} method.

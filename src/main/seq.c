@@ -366,13 +366,16 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nt = LENGTH(times);
 	if(nt != 1 && nt != lx * each)
 	    errorcall(call, _("invalid '%s' argument"), "times");
-	if(nt == 1) 
-	    sum = lx * INTEGER(times)[0];
-	else {
+	if(nt == 1) {
+	    it = INTEGER(times)[0];
+	    if (it == NA_INTEGER || it < 0)
+		errorcall(call, _("invalid '%s' argument"), "times");
+	    sum = lx * it;
+	} else {
 	    for(i = 0; i < nt; i++) {
 		it = INTEGER(times)[i];
 		if (it == NA_INTEGER || it < 0)
-		    errorcall(call, _("invalid '%s' argument"), "times2");
+		    errorcall(call, _("invalid '%s' argument"), "times");
 		sum += it;
 	    }
 	}

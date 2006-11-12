@@ -23,8 +23,8 @@ export("?", CRAN.packages, Rprof,Rprofmem, RSiteSearch, URLdecode,
        setRepositories, stack, str, strOptions, summaryRprof, tail,
        tail.matrix, timestamp, topicName, toBibtex, toLatex, tracemem,
        untracemem, retracemem, unstack, update.packageStatus,
-       update.packages, upgrade, url.show, vi, vignette, write.socket,
-       wsbrowser, xedit, xemacs)
+       update.packages, upgrade, url.show, vi, vignette, withVisible,
+       write.socket, wsbrowser, xedit, xemacs)
 
 export(read.table, read.csv, read.csv2, read.delim, read.delim2,
        write.table, write.csv, write.csv2, count.fields, type.convert)

@@ -69,9 +69,17 @@ Variables:
   FLIBS         linker flags needed to link Fortran code
   FPICFLAGS     special flags for compiling Fortran code to be turned
                 into a shared library 
+  JAR           Java archive tool command
+  JAVA          Java interpreter command
+  JAVAC         Java compiler command
+  JAVAH         Java header and stub generator command
+  JAVA_HOME     path to the root of Java distribution
+  JAVA_LIBS     flags needed for linking against Java libraries
   LAPACK_LIBS   flags needed for linking against external LAPACK libraries
   LDFLAGS       linker flags, e.g. -L<dir> if you have libraries in a
                 nonstandard directory <dir> 
+  OBJC          Objective C compiler command
+  OBJCFLAGS     Objective C compiler flags
   MAKE          Make command
   SAFE_FFLAGS   Safe (as conformant as possible) Fortran 77 compiler flags
   SHLIB_CFLAGS  additional CFLAGS used when building shared libraries
@@ -155,6 +163,8 @@ done
 ok_c_vars="CC CFLAGS CPICFLAGS CPP CPPFLAGS"
 ok_cxx_vars="CXX CXXCPP CXXFLAGS CXXPICFLAGS"
 ok_dylib_vars="DYLIB_LD DYLIB_LDFLAGS"
+ok_objc_vars="OBJC OBJCFLAGS"
+ok_java_vars="JAVA JAVAC JAVAH JAR JAVA_HOME JAVA_LIBS"
 ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
@@ -165,6 +175,7 @@ ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE"
 
 var_ok=no
 for v in ${ok_c_vars} ${ok_cxx_vars} ${ok_dylib_vars} ${ok_f77_vars} \
+         ${ok_objc_vars} ${ok_java_vars} \
          ${ok_ld_vars} ${ok_shlib_vars} ${ok_tcltk_vars} \
 	 ${ok_other_vars}; do
   if test "${var}" = "${v}"; then

@@ -66,7 +66,30 @@ fi
 JAVA_PATH=${JAVA_PATH}:/usr/java/bin:/usr/jdk/bin:/usr/lib/java/bin:/usr/lib/jdk/bin:/usr/local/java/bin:/usr/local/jdk/bin:/usr/local/lib/java/bin:/usr/local/lib/jdk/bin
 AC_PATH_PROGS(JAVA,java,,${JAVA_PATH})
 ## FIXME: we may want to check for jikes, kaffe and others...
+## (however, most of them have compatibility wrappers by now)
 AC_PATH_PROGS(JAVAC,javac,,${JAVA_PATH})
+AC_PATH_PROGS(JAVAH,javah,,${JAVA_PATH})
+AC_PATH_PROGS(JAR,jar,,${JAVA_PATH})
+
+## we don't require a compiler, but it would be useful
+AC_MSG_CHECKING([whether Java compiler works])
+acx_javac_works=no
+if test -n "${JAVAC}"; then
+  rm -f A.java A.class
+  echo "public class A { }" > A.java
+  if "${JAVAC}" A.java 2>&AS_MESSAGE_LOG_FD; then
+    if test -e A.class; then
+      acx_javac_works=yes
+    fi
+  fi
+  rm -rf A.java A.class
+fi
+if test "${acx_javac_works}" = yes; then
+  AC_MSG_RESULT([yes])
+else
+  JAVAC=
+  AC_MSG_RESULT([no])
+fi
 
 ## this is where our test-class lives (in tools directory)
 getsp_cp=${ac_aux_dir}
@@ -103,6 +126,7 @@ if test ${acx_java_works} = yes; then
     case "${host_os}" in
       darwin*)
         JAVA_LIBS="-framework JavaVM"
+        JAVA_LIBS0="-framework JavaVM"
         JAVA_LD_LIBRARY_PATH=
         ;;
       *)
@@ -121,19 +145,21 @@ if test ${acx_java_works} = yes; then
     esac
   
     ## note that we actually don't test JAVA_LIBS - we hope that the detection
-    ## was correct. We should also test the functionality for javac.
+    ## was correct.
 
     have_java=yes
   fi
 else
   AC_MSG_RESULT([no])
   JAVA=
-  JAVAC=
   JAVA_HOME=
 fi
 
 AC_SUBST(JAVA_HOME)
 AC_SUBST(JAVA)
+AC_SUBST(JAVAC)
+AC_SUBST(JAVAH)
+AC_SUBST(JAR)
 AC_SUBST(JAVA_LD_LIBRARY_PATH)
 AC_SUBST(JAVA_LIBS0)
 ])

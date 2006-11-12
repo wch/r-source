@@ -1,16 +1,20 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.8.0 alpha (2003-09-11)
+R version 2.5.0 Under development (unstable) (2006-10-29 r39742)
+Copyright (C) 2006 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
 
+  Natural language support but running in an English locale
+
 R is a collaborative project with many contributors.
-Type 'contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ###---- ALL tests here should return  TRUE !
@@ -36,6 +40,26 @@ Type 'q()' to quit R.
 > ## seq():
 > typeof(1:4) == "integer" #-- fails for 0.2, 0.3,.., 0.9
 [1] TRUE
+> 
+> ## Check parsing with L suffix for integer literals.
+> typeof(1L) == "integer"
+[1] TRUE
+> typeof(1000L) == "integer"
+[1] TRUE
+> typeof(1e3L) == "integer"
+[1] TRUE
+> typeof(1e-3L) == "double" # gives warning
+[1] TRUE
+Warning message:
+non-integer value 1e-3 qualified with L; using numeric value 
+> 1.L # gives warning
+[1] 1
+Warning message:
+integer literal 1.L contains unnecessary decimal point 
+> try(parse(text = "12iL")) # gives syntax error
+Error in parse(file, n, text, prompt, srcfile) : 
+	syntax error, unexpected SYMBOL, expecting '\n' or ';' in "12iL"
+> 
 > 
 > all((0:6) == pi + ((-pi):pi))
 [1] TRUE

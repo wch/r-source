@@ -825,9 +825,11 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define USESOURCE 		8
 #define WARNINCOMPLETE 		16
 #define DELAYPROMISES 		32
+#define KEEPNA			64
+#define S_COMPAT       		128
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
-#define FORSOURCING		31
+#define FORSOURCING		95
 
 /* Coercion functions */
 int Rf_LogicalFromString(SEXP, int*);
@@ -953,6 +955,7 @@ SEXP R_set_class(SEXP, SEXP, SEXP);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
+SEXP R_setProcTimeNames(SEXP ans);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
 SEXPTYPE str2type(char*);

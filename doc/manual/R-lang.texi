@@ -960,6 +960,34 @@ Any number typed directly at the prompt is a constant and is evaluated.
 @end example
 
 @noindent
+Perhaps unexpectedly, the number returned from the expression @code{1}
+is a numeric.  In most cases, the difference between an integer and a
+numeric value will be unimportant as R will do the right thing when
+using the numbers.  There are, however, times when we would like to
+explicitly create an integer value for a constant.  We can do this by
+calling the function @code{as.integer} or using various other
+techniques. But perhaps the simplest approach is to qualify our 
+constant with the suffix character `L'.
+For example, to create the integer value 1, we might use
+
+@example
+> 1L
+[1]
+@end example
+
+We can use the `L' suffix to qualify any number with the intent of
+making it an explicit integer.  So `0x10L' creates the integer value
+16 from the hexadecimal representation.  The constant @code{1e3L} gives 1000
+as an integer rather than a numeric value and is equivalent to @code{1000L}.
+(Note that the `L' is treated as qualifying the term @code{1e3} and not the
+@code{3}.)  If we qualify a value with `L' that is not an integer value,
+e.g. @code{1e-3L}, we get a warning and the numeric value is created.
+A warning is also created if there is an unnecessary decimal point
+in the number, e.g. @code{1.L}.
+
+We get a syntax error when using `L' with complex numbers,
+e.g. @code{12iL} gives an error.
+
 Constants are fairly boring and to do more we need symbols.
 
 @node Symbol lookup, Function calls, Constants, Simple evaluation
@@ -1044,7 +1072,7 @@ used for their side effects, e.g., printing and plotting functions.
 
 @cindex function
 @cindex function arguments
-Function calls can have @emph{tagged} (or @emph{named} arguments), as in
+Function calls can have @emph{tagged} (or @emph{named}) arguments, as in
 @code{plot(x, y, pch = 3)} arguments without tags are known as
 @emph{positional} since the function must distinguish their meaning from
 their sequential positions among the arguments of the call, e.g., that
@@ -4213,7 +4241,7 @@ parser itself.
 @comment  node-name,  next,  previous,  up
 @subsection Constants
 
-There are four types of constants, logical, numeric, complex and string.
+There are five types of constants: integer, logical, numeric, complex and string.
 
 In addition, there are four special constants, @code{NULL}, @code{NA},
 @code{Inf}, and @code{NaN}.
@@ -4245,10 +4273,28 @@ accepted and treated as @samp{2} and @samp{3}, respectively.
 Numeric constants can also be hexadecimal, starting with @samp{0x} or
 @samp{0x} followed by zero or more digits, @samp{a-f} or @samp{A-F}.
 
-Notice that there is no separate class of integer constants.
+There is now a separate class of integer constants.  They are created
+by using the qualifier @code{L} at the end of the number.  For
+example, @code{123L} gives an integer value rather than a numeric
+value.  The suffix @code{L} can be used to qualify any non-complex
+number with the intent of creating an integer.  So it can be used with
+numbers given by hexadecimal or scientific notation. However, if the
+value is not a valid integer, a warning is emitted and the numeric
+value created.  The following shows examples of valid integer
+constants, values which will generate a warning and give numeric
+constants and syntax errors.
 
-Note also that a preceding sign is treated as a unary operator, not as
-part of the constant.
+@example
+@r{Valid integer constants:}  1L, 0x10L, 1000000L, 1e6L
+@r{Valid numeric constants:}  1.1L, 1e-3L 
+@r{Syntax error:}  12iL
+@end example
+
+A warning is emitted for values that contain an unnecessary
+decimal point, e.g. @code{1.L}.
+
+Note also that a preceding sign (@code{+} or @code{-}) is treated as a
+unary operator, not as part of the constant.
 
 Complex constants have the form of a decimal numeric constant followed
 by @samp{i}.  Notice that only purely imaginary numbers are actual

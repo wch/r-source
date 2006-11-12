@@ -72,7 +72,7 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   to zero.
 
   Argument \code{inches} controls the sizes of the symbols.  If
-  \code{TRUE} (the default), the the symbols are scaled so that the
+  \code{TRUE} (the default), the symbols are scaled so that the
   largest dimension of any symbol is one inch.  If a positive number is
   given the symbols are scaled to make largest dimension this size in
   inches (so \code{TRUE} and \code{1} are equivalent).  If \code{inches}

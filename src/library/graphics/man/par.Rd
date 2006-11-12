@@ -72,7 +72,9 @@
 \concept{yaxs}
 \concept{yaxt}
 \concept{ylog}
-
+\concept{color}
+\concept{colour}
+  
 \title{Set or Query Graphical Parameters}
 
 %% The 'real documentation' is the code	in ../../../main/par.c

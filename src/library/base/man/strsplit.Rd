@@ -52,7 +52,7 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
     character} (almost always a Unicode point).
   
 
-  A missing value of \code{split} does not split the the corresponding
+  A missing value of \code{split} does not split the corresponding
   element(s) of \code{x} at all.
 
   The algorithm applied to each input string is

@@ -2,6 +2,7 @@
 \alias{connections}
 \alias{connection}
 \alias{file}
+\alias{clipboard}
 \alias{pipe}
 \alias{fifo}
 \alias{gzfile}
@@ -254,17 +255,20 @@ isIncomplete(con)
   in modes \code{"r"} and \code{"w"} only.
 #endif
 #ifdef unix
-  in mode \code{"r"} only.  It reads the X11 primary selection, which
-  can also be specified as \code{"X11_primary"} and the secondary
-  selection as \code{"X11_secondary"}.
+  in mode \code{"r"} only.  This reads the X11 primary selection (see
+  \url{http://standards.freedesktop.org/clipboards-spec/clipboards-latest.txt}),
+  which can also be specified as \code{"X11_primary"} and the secondary
+  selection as \code{"X11_secondary"}.  On most systems the clipboard
+  selection (that used by \sQuote{Copy} from an \sQuote{Edit} menu) can
+  be specified as \code{"X11_clipboard"}.
 #endif
   
-  When the clipboard is opened for reading, the contents are immediately
+  When a clipboard is opened for reading, the contents are immediately
   copied to internal storage in the connection.
 
 #ifdef windows
   When writing to the clipboard, the output is copied to the clipboard
-  only when the connection is closed or flushed. There is a 32Kb limit
+  only when the connection is closed or flushed.  There is a 32Kb limit
   on the text to be written to the clipboard. This can be raised by
   using e.g. \code{file("clipboard-128")} on NT-based versions of
   Windows, to give 128Kb.
@@ -274,10 +278,10 @@ isIncomplete(con)
   as one might expect.
 #endif
 #ifdef unix
-  Unix users wishing to \emph{write} to the primary selection may be
+  Unix users wishing to \emph{write} to one of the selections may be
   able to do so via \code{xclip}
   (\url{http://people.debian.org/~kims/xclip/}), for example by
-  \code{pipe("xclip -i", "w")}.
+  \code{pipe("xclip -i", "w")} for the primary selection.
 
   MacOS X users can use \code{pipe("pbpaste")} and
   \code{pipe("pbcopy", "w")} to read from and write to that system's
@@ -295,7 +299,7 @@ isIncomplete(con)
   known as \code{"*"}.
 
   On platforms where \code{vsnprintf} does not return the needed length
-  of output (e.g., Windows) there is a 100,000 character output limit on
+  of output there is a 100,000 character output limit on
   the length of line for \code{fifo}, \code{gzfile} and \code{bzfile}
   connections: longer lines will be truncated with a warning.
 }

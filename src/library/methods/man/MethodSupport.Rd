@@ -11,7 +11,7 @@
 \usage{
 getMethodsForDispatch(f, fdef)
 
-cacheMethod(f, sig, def, args, fdef)
+cacheMethod(f, sig, def, args, fdef, inherited = FALSE)
 
 resetGeneric(f, fdef, mlist, where, deflt)
 }
@@ -29,7 +29,8 @@ resetGeneric(f, fdef, mlist, where, deflt)
     \item{\code{cacheMethod}:}{
       Store the definition for this function and signature in the method
       metadata for the function.  Used to store extensions of coerce
-      methods found through inheritance.
+      methods found through inheritance, and to cache methods with
+      \code{\link{callNextMethod}} information.
 
       No persistent effect, since the method metadata is session-scope
       only.

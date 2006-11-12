@@ -11,7 +11,7 @@
 
 USER-VISIBLE CHANGES
 
-    o   str.default() typically prints fewer entries of logical vectors.
+    o	str.default() typically prints fewer entries of logical vectors.
 
 
 NEW FEATURES
@@ -40,10 +40,10 @@ NEW FEATURES
 	".".)  Thanks to Bill Dunlap for the suggestion.
 
     o	New functions formatUL() and formatOL() in package utils for
-        formatting unordered (itemize) and ordered (enumerate) lists.
+	formatting unordered (itemize) and ordered (enumerate) lists.
 
     o	Manipulation of integers as roman numerals via as.roman() in
-        package utils.
+	package utils.
 
     o	binom.test() now allows a 'fuzz' for calculated integer values
 	in its x and n arguments.
@@ -55,6 +55,49 @@ NEW FEATURES
 	source() can now echo the original source and comments(rather
 	than deparsing).  This affects example() and Sweave() as well.
 	
+    o	New function withVisible() allows R level access to the visibility
+	flag.
+
+    o	system.time() and proc.time() have names on the returned
+	vector to help identify the five elements.
+
+    o	Introduced the suffix L for integer literals to create
+	integer rather than numeric values, e.g. 100L, 0x10L, 1e2L.
+
+    o	file() can read the X11 clipboard selection as "X11_clipboard" on
+	suitable X11-using systens.
+
+    o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
+
+    o	Added support for Obj-C in R and packages (if available).
+
+    o	The following additional flags are accessible from R CMD config:
+	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
+
+    o	boxplot(*, notch = TRUE) now warns when notches are outside hinges;
+	related to PR#7690.
+
+    o	The statistics reported when gcinfo(TRUE) are now of the amounts
+	used (in Mb) and not of the amounts free (which are not really
+	relevant when there are no hard limits, only gc trigger points).
+
+    o	.deparseOpts() has two new options: "keepNA" to ensure that
+	different types (logical, integer, double, character and
+	complex) of NAs are distinguished, and "S_compatible" to
+	suppress the use of R-specific features such as 123L.
+
+	The 'keepInteger' option now uses the suffix 'L' rather than
+	as.integer() where possible (unless all entries are NA or
+	"S_compatible" is also set).
+
+	Other deparse options can now be added to "all" (which has not
+	for some time actually switched on all options).
+
+	Integer sequences m:n are now deparsed in that form.
+
+    o	dput() now includes "keepInteger" and "keepNA" in its default
+	'control' argument.
+
 
 DEPRECATED & DEFUNCT
 
@@ -67,17 +110,24 @@ DEPRECATED & DEFUNCT
     o	The autoloading of ts() is defunct.
 
 
+INSTALLATION
+
+    o	Autoconf 2.60 is used to create 'configure'.  This makes a
+	number of small changes, and in particular incorporates the
+	changes to the detection of a C99-compliant C compiler
+	backported for 2.4.0 patched.
+
+    o	Detection of Java development environment was added such that
+	packages don't need to provide their own Java detection.
+
+	R CMD javareconf was updated to look for the corresponding
+	Java tools as well.
+
+
 BUG FIXES
 
-    o	S4 group generic "Logic" (with '&', '|', but not '!') has been
-	created, following the green book (apart from '!').
-
-    o	Fixes to group generics to ensure that the correct number of
-	active arguments are in the signature of the group and all
-	members. Also a fix to keep the groupMembers slot up to date.
-
-    o	removeClass() now takes care to remove any subclass references
-	to the deleted class.
+    o	gc() can now report quantities of Vcells in excess of 16Gb on
+	64-bit systems (rather than reporting NA).
 
 
 
@@ -91,22 +141,38 @@ BUG FIXES
 
 		CHANGES IN R VERSION 2.4.0 patched
 
-
-BUG FIXES
-
-    o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
-        handling (PR#9274).
-
-    o	R would slow down when the product of the length of a vector and
-    	the length of a character vector used to subset it exceeded 2^31.
-    	(PR#9280)
-
-    o	merge() now allows zero-row data frames.
+INSTALLATION
 
     o	The extraction of info from Subversion for an SVN checkout now
 	also works for svn >= 1.4.0.  However, on Windows the 'Last
 	Changed Date' will be in the local timezone, and not in GMT as
 	previously.
+
+    o	configure uses code borrowed from autoconf 2.60 to try harder to
+	ensure that a C99-compliant compiler is used.  (It does so by
+	appending to CC.)  This avoids problems with systems such as FC5
+	which override CFLAGS and thereby lose flags such as -std=gnu99.
+
+
+NEW FEATURES
+
+    o	rainbow(), heat.colors(), terrain.colors(), topo.colors() and
+	cm.colors() all gain an 'alpha' argument to be passed to hsv().
+
+    o	dput() will give an incorrect representation of the row names
+	of a data frame with integer row names.  This is now corrected
+	when the object is recreated.
+
+BUG FIXES
+
+    o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
+	handling (PR#9274).
+
+    o	R would slow down when the product of the length of a vector and
+	the length of a character vector used to subset it exceeded 2^31.
+	(PR#9280)
+
+    o	merge() now allows zero-row data frames.
 
     o	add1.lm() had been broken by other changes for weighted fits.
 
@@ -129,13 +195,77 @@ BUG FIXES
 	but this was not checked.  Now longer strings are errors.
 
     o	Drawing X11 rotated text was buggy for VERY small (negative)
-	angle of rotation.  Reported by Ben Bolker.
+	angle of rotation.  Reported by Ben Bolker. (PR#9301)
 
     o	The X11 data editor would crash in an MBCS locale if R was
 	compiled with FC's CFLAGS that add buffer overflow and
 	stack-smashing detection.
 
-    o   rect() was not accepting border=NA in some cases
+    o	rect() was not accepting border=NA in some cases involving
+	cross-hatching.
+
+    o	Fixes to S4 group generics to ensure that the correct number of
+	active arguments are in the signature of the group and all
+	members.  Also a fix to keep the 'groupMembers' slot up to date.
+
+    o	S4 group generic "Logic" (with '&', '|', but not '!') has been
+	created, following the green book (apart from '!').
+
+    o	removeClass() now takes care to remove any subclass references
+	to the deleted class.
+
+    o	mle() (in stats4) might not have worked as intended when the
+	order of parameters in 'start' differed from that in the
+	log-likelihood.	 (PR#9313)
+
+    o	dotchart() now properly restores par() settings after itself.
+
+    o	system() on Mac OS X was blocking arbitrary signals during the
+	call although only SIGPROF was meant to be blocked.
+
+    o	methods cached via callNextMethod() and (sometimes) as() were
+	being cached as directly specified although in fact they were
+	inherited.  Caused problems in later search for inherited methods.
+
+    o	str() works properly for method definitions and other S4-classed
+	function objects.
+
+    o	JAVA_LIBS are now set correctly on MacOS X.
+
+    o	Fix null-termination issue suspected of causing crash with Fedora
+	Extra RPMS (PR#9339, Justin Harrington, analysis and fix from Bill
+	Dunlap).
+
+    o	Namespaces restored via a saved session silently failed to cache
+	their methods because the methods package was not yet
+	attached.  Fixed by attaching methods before restoring data.
+
+    o	rbind()ing a list to a data frame generated invalid row names,
+	which were an error in 2.4.0. (PR#9346)
+
+    o	boxplot.stats(x) now returns the correct minimum instead of an
+	error for x <- c(1,Inf,Inf,Inf), and hence boxplot(x) "works".
+
+    o	promptClass() now uses \linkS4class{<ClassName>} instead of
+	of \link{<ClassName>-class}.
+
+    o	gc() no longer reports nonsense values for the number of used
+	Vcells if the true value exceeds 2^31 (and hence over 16Gb of
+	heap is in use): it now reports NA. (PR#9345)
+
+    o	rapply() now detects more user errors in supplying arguments. (PR#9349)
+
+    o	boxplot() was ignoring argument 'boxfill'. (PR#9352)
+
+    o	plot.lm(which = 6, id.n = 0) did not work. (PR#9333)
+
+    o	.deparseOpts("delayPromises") was not matching the C code,
+	returning 64 rather than 32.
+
+    o	bxp() could use partial matching on 'pars' when finding
+	defaults for some of its parameters, e.g. a setting of 'cex.axis'
+	in 'pars' or inline was used to set a default for 'outcex'.
+
 
 
 		CHANGES IN R VERSION 2.4.0

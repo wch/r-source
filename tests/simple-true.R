@@ -16,6 +16,15 @@ x <- rnorm(127); sx <- sum(x);	abs((sum(rev(x)) -sx)) < 1e-12 * abs(sx)
 ## seq():
 typeof(1:4) == "integer" #-- fails for 0.2, 0.3,.., 0.9
 
+## Check parsing with L suffix for integer literals.
+typeof(1L) == "integer"
+typeof(1000L) == "integer"
+typeof(1e3L) == "integer"
+typeof(1e-3L) == "double" # gives warning
+1.L # gives warning
+try(parse(text = "12iL")) # gives syntax error
+
+
 all((0:6) == pi + ((-pi):pi))
 all((0:7) == (pi+seq(-pi,pi, len=8))*7/(2*pi))
 

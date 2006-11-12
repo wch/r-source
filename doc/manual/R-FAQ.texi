@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-10-19
+@set FAQ_DATE @value{FAQ_YEAR}-11-10
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -500,24 +500,23 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2006-09-13:
+@c Linux binaries as of 2006-10-31:
 @c
 @c debian
-@c   stable  i386   2.3.1  Christian T. Steigies <cts@debian.org>
+@c   stable  i386   2.4.0  Christian T. Steigies <cts@debian.org>
 @c   oldstable
 @c           i386   2.1.1  Christian T. Steigies <cts@debian.org>
-@c mandrake
-@c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
 @c   el3     i386   2.3.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c   el4     i386   2.3.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.3.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c   fc3     i386   2.3.1  Martyn Plummer <martyn.plummer@r-project.org>
-@c           x86_64 2.3.1  Brian Ripley
-@c   fc4     i386   2.3.1  Martyn Plummer <martyn.plummer@r-project.org>
-@c           x86_64 2.3.1  Martyn Plummer <martyn.plummer@r-project.org>
-@c   fc5     i386   2.3.1  Martyn Plummer <martyn.plummer@r-project.org>
-@c           x86_64 2.3.1  Martyn Plummer <martyn.plummer@r-project.org>
+@c   el4     i386   2.4.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c           x86_64 2.4.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c   fc3     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c           x86_64 2.4.0  Brian Ripley
+@c   fc4     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c           x86_64 2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c   fc5     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c           x86_64 2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c   fc6     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -531,10 +530,11 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c           x86_64 2.2.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   10.0    i586   2.3.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           x86_64 2.3.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c   10.1    i586   2.3.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           x86_64 2.3.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c   10.1    i586   2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           x86_64 2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c ubuntu
-@c   dapper  i386   2.3.1  Dirk Eddelbuettel <edd@debian.org>
+@c   dapper  i386   2.4.0  Christian T. Steigies <cts@debian.org>
+@c           amd64  2.4.0  Christian T. Steigies <cts@debian.org>
 @c vinelinux
 @c   3.2     i386   2.3.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
@@ -542,11 +542,10 @@ The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {Debian et al.} {x86_64} {9.0/9.1/9.2/9.3/10.0} {James Henstridge}
+@multitable {Debian et al.} {x86_64} {9.0/9.1/9.2/9.3/10.0/10.1} {James Henstridge}
 @headitem @tab CPU @tab Versions @tab Provider
 @item Debian et al. @tab i386 @tab stable/oldstable @tab Christian Steigies
-@item Mandrake @tab i386 @tab 10.0 @tab Michele Alzetta
-@item Red Hat  @tab i386 @tab FC3/FC4/FC5 @tab Martyn Plummer
+@item Red Hat  @tab i386 @tab FC3/FC4/FC5/FC6 @tab Martyn Plummer
 @item          @tab x86_64 @tab FC3 @tab Brian Ripley
 @item          @tab x86_64 @tab FC4/FC5 @tab Martyn Plummer
 @item          @tab i386   @tab Enterprise Linux @tab Matthew P. Cox
@@ -554,7 +553,8 @@ packages.
 @item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
 @item          @tab i586   @tab 9.0/9.1/9.2/9.3/10.0/10.1 @tab Detlef Steuer
 @item          @tab x86_64 @tab 9.2/9.3/10.0/10.1 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab dapper @tab Dirk Eddelbuettel
+@item Ubuntu   @tab i386   @tab dapper @tab Christian Steigies
+@item          @tab amd64  @tab dapper @tab Christian Steigies
 @item VineLinux @tab i386 @tab 3.2 @tab Susunu Tanimura
 @end multitable
 @end quotation
@@ -1976,6 +1976,8 @@ large sparse graphical Gaussian models.
 @item Geneland
 MCMC inference from individual genetic data based on a spatial
 statistical model.
+@item GeoXP
+Interactive exploratory spatial data analysis.
 @item GroupSeq
 Computations related to group-seqential boundaries.
 @item HH
@@ -2031,6 +2033,9 @@ Java Gui for R.
 Java Graphics Device.
 @item JointGLM
 Joint modeling of mean and dispersion through two interlinked GLM's.
+@emph{Defunct} in favor of @strong{JointModeling}.
+@item JointModeling
+Joint modeling of mean and dispersion.
 @item KMsurv
 Data sets and functions for ``Survival Analysis, Techniques for Censored
 and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
@@ -2190,6 +2195,8 @@ data using natural cubic splines.
 Reversible Jump MCMC for the analysis of CGH arrays.
 @item RLMM
 A genotype calling algorithm for Affymetrix SNP arrays.
+@item RLadyBug
+Analysis of infectious diseases using stochastic epidemic models.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RNetCDF
@@ -2234,6 +2241,8 @@ balloon-borne instrument).
 Implementation of random variables by means of S4 classes and methods.
 @item RandomFields
 Creating random fields using various methods.
+@item RaschSampler
+Sampling binary matrices with fixed margins.
 @item Rcmdr
 A platform-independent basic-statistics @acronym{GUI} (graphical user
 interface) for R, based on the @strong{tcltk} package.
@@ -2353,17 +2362,25 @@ Statistics'' by J. Verzani, 2005, Chapman & Hall/CRC.
 @item VDCutil
 Utilities supporting VDC, an open source digital library system for
 quantitative data.
+@item VGAM
+Vector Generalized Linear and Additive Models.
 @item VLMC
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
 @item VaR
 Methods for calculation of Value at Risk (VaR).
+@item WWGbook
+Functions and datasets for the book ``Linear Mixed Models: A Practical
+Guide Using Statistical Software'' by B. West, K. Welch, and A. Galecki,
+2006, Chapman & Hall/CRC.
 @item WeedMap
 Map of weed intensity.
 @item WhatIf
 Software for evaluating counterfactuals.
 @item XML
 Tools for reading @XML{} documents and DTDs.
+@item ZIGP
+Zero Inflated Generalized Poisson (ZIGP) regression models.
 @item Zelig
 Everyone's statistical software: an easy-to-use program that can
 estimate, and help interpret the results of, an enormous range of
@@ -2393,6 +2410,8 @@ Multivariate data analysis and graphical display.
 Tcl/Tk Graphical User Interface for @strong{ade4}.
 @item adehabitat
 A collection of tools for the analysis of habitat selection by animals.
+@item adimpro
+Adaptive smoothing of digital images.
 @item adlift
 Adaptive Wavelet transforms for signal denoising.
 @item agce
@@ -2537,6 +2556,9 @@ update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 finding the number of clusters in a data set.
 @item cfa
 Analysis of configuration frequencies.
+@item cgh
+Analysis of microarray comparative genome hybridisation data using the
+Smith-Waterman algorithm.
 @item chplot
 Augmented convex hull plots: informative and nice plots for grouped
 bivariate data.
@@ -2560,6 +2582,8 @@ Choose univariate class intervals for mapping or other graphics
 purposes.
 @item classPP
 Projection Pursuit for supervised classification.
+@item classifly
+Explore classification models in high dimensions.
 @item clim.pact
 Climate analysis and downscaling for monthly and daily data.
 @item climatol
@@ -2570,6 +2594,8 @@ Walter&Lieth diagrams.
 Calculates Contour Lines.
 @item clue
 CLUster Ensembles.
+@item clustTool
+GUI for clustering data with spatial information.
 @item cluster
 Functions for cluster analysis.  @emph{Recommended}.
 @item clusterRepro
@@ -2855,6 +2881,8 @@ main feature is that any covariance function implemented in R can be
 used for spatial prediction.
 @item filehash
 Simple file-based hash table.
+@item filehashSQLite
+Simple key-value database using SQLite as the backend.
 @item financial
 Solving financial problems in R.
 @item fingerprint
@@ -2922,6 +2950,8 @@ Introduction with R'' by S. Wood (2006).
 @item gamlss
 Functions to fit Generalized Additive Models for Location Scale and
 Shape.
+@item gamlss.dist
+Extra distributions for GAMLSS modeling.
 @item gamlss.nl
 A GAMLSS add on package for fitting non linear parametric models.
 @item gamlss.tr
@@ -3367,6 +3397,8 @@ Estimation/multiple imputation programs for mixed categorical and
 continuous data.
 @item mixreg
 Functions to fit mixtures of regressions.
+@item mixtools
+Tools for mixture models.
 @item mlCopulaSelection
 Copula selection and fitting using maximum likelihood.
 @item mlbench
@@ -3769,6 +3801,8 @@ geometry library.
 Interface to the CDK libraries, a Java framework for cheminformatics.
 @item rcom
 R COM Client Interface and internal COM Server.
+@item rcompletion
+TAB completion for R using Readline.
 @item rda
 Shrunken Centroids Regularized Discriminant Analysis.
 @item ref
@@ -3805,6 +3839,8 @@ Provides bindings to Frank Warmerdam's Geospatial Data Abstraction
 Library (GDAL).
 @item rgenoud
 R version of GENetic Optimization Using Derivatives.
+@item rggm
+Robustified methods for Gaussian Graphical Models.
 @item rggobi
 Interface between R and GGobi.
 @item rgl
@@ -3890,6 +3926,8 @@ Markov-chain Monte Carlo diagnostic plots, accompanying the
 @strong{scape} package.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
+@item sciplot
+Scientific graphing functions for factorial designs.
 @item scope
 Data manipulation using arbitrary row and column criteria.
 @item scuba
@@ -4080,6 +4118,9 @@ A stepwise approach to identifying recombination breakpoints in a
 sequence alignment.
 @item stinepack
 Stineman interpolation package.
+@item stochmod
+Learning and inference algorithms for a variety of probabilistic
+models.
 @item strucchange
 Various tests on structural change in linear regression models.
 @item subselect
@@ -4127,6 +4168,8 @@ A series of widgets and functions to supplement @strong{tcltk}.
 @item tdist
 Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
+@item tdm
+A tool for Therapeutic Drug Monitoring.
 @item tdthap
 Transmission/disequilibrium tests for extended marker haplotypes.
 @item tensor
@@ -4138,6 +4181,8 @@ Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
 @item time
 Time tracking for developers.
+@item titan
+Titration analysis for mass spectrometry data.
 @item titecrm
 TIme-To-Event Continual Reassessment Method and calibration tools.
 @item tkrplot
