@@ -134,6 +134,10 @@ BUG FIXES
 	in 'pars' or inline was used to set a default for 'outcex'.
 
 
+    o	Some bugs in caching superclass/subclass relations and in
+        removing  those relations on detach and on removeClass() have
+        been fixed.
+
 
 		CHANGES IN R VERSION 2.4.0
 
