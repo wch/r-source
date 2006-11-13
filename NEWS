@@ -273,6 +273,10 @@ BUG FIXES
     o	hist(*, include.lowest=., plot=FALSE) does not warn anymore.
 	(PR#9356)
 
+    o	Some bugs in caching superclass/subclass relations and in
+        removing  those relations on detach and on removeClass() have
+        been fixed.
+
 
 
 		CHANGES IN R VERSION 2.4.0

@@ -65,10 +65,16 @@ setClass("classNotNumeric", representation(x="numeric", y="numeric"))
 setClass("classWithNumeric", representation(y="numeric"), contains = "numeric")
 
 obj1 <- new("classNotNumeric", x=1, y=2)
+
 obj2 <- new("classWithNumeric", 1, y=2)
 
 seemsS4Object(obj1); seemsS4Object(obj2)  # TRUE, TRUE
 S4NotVector(obj1); S4NotVector(obj2)  # TRUE, FALSE
+
+\dontshow{
+removeClass("classNotNumeric")
+removeClass("classWithNumeric")
+}
 
 }
 \keyword{programming}
