@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-10
+@set FAQ_DATE @value{FAQ_YEAR}-11-13
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -1835,6 +1835,8 @@ Bayesian methods for tree based models.
 Bayesian software validation using posterior quantiles.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item BiasedUrn
+Biased urn model distributions.
 @item Biodem
 A number of functions for biodemographycal analysis.
 @item Bolstad
@@ -2341,6 +2343,9 @@ Johnson distributions, normal scores and generalized hypergeometric
 distributions).
 @item SwissAir
 Air quality data of Switzerland for one year in 30 min resolution.
+@item TRAMPR
+Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
+Matching Package for R.
 @item TSP
 Traveling Salesperson Problem (TSP).
 @item TWIX
@@ -2479,6 +2484,9 @@ Bayesian mixture models of univariate Gaussian distributions using JAGS.
 @c @item baymvb
 @c Bayesian analysis of multivariate binary data.
 @c </COMMENT>
+@item bcp
+Bayesian Change Point based on the Barry and Hartigan product partition
+model.
 @item betareg
 Beta regression for modeling rates and proportions.
 @item bicreduc
@@ -2598,6 +2606,8 @@ CLUster Ensembles.
 GUI for clustering data with spatial information.
 @item cluster
 Functions for cluster analysis.  @emph{Recommended}.
+@item clusterGeneration
+Random cluster generation (with specified degree of separation).
 @item clusterRepro
 Reproducibility of gene expression clusters.
 @item clustvarsel
@@ -3298,6 +3308,8 @@ Letter-value box plots.
 @item mAr
 Estimation of multivariate AR models through a computationally efficient
 stepwise least-squares algorithm.
+@item mFilter
+Miscellenous time series filters.
 @item maanova
 Analysis of N-dye Micro Array experiments using mixed model effect.
 Contains anlysis of variance, permutation and bootstrap, cluster and
