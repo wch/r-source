@@ -277,6 +277,9 @@ BUG FIXES
         removing  those relations on detach and on removeClass() have
         been fixed.
 
+    o	readBin() could return one too many strings if 'n' was an
+	over-estimate. (PR#9361)
+
 
 
 		CHANGES IN R VERSION 2.4.0

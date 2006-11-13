@@ -4042,7 +4042,7 @@ quote(b)
 > seek(zz, 0, "start")
 [1] 18
 > readBin(zz, "character", 100)  # is confused by embedded nul.
-[1] "A test string" ""
+[1] "A test string"
 Warning message:
 incomplete string at end of file has been discarded
 > seek(zz, 0, "start")
