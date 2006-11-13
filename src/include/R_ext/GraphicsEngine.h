@@ -310,7 +310,7 @@ void GECircle(double x, double y, double radius,
 	      R_GE_gcontext *gc, GEDevDesc *dd);
 void GERect(double x0, double y0, double x1, double y1,
 	    R_GE_gcontext *gc, GEDevDesc *dd);
-void GEText(double x, double y, const char * conststr,
+void GEText(double x, double y, const char * const str,
 	    double xc, double yc, double rot,
 	    R_GE_gcontext *gc, GEDevDesc *dd);
 void GEMode(int mode, GEDevDesc* dd);
