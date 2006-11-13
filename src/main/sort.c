@@ -481,13 +481,13 @@ static void Psort0(SEXP x, int lo, int hi, int *ind, int k)
 	Psort(x, lo, hi, ind[0]-1);
     else {
     /* Look for index nearest the centre of the range */
-	int i, this = 0, mid = (lo+hi)/2, z;
+	int i, This = 0, mid = (lo+hi)/2, z;
 	for(i = 0; i < k; i++)
-	    if(ind[i]-1 <= mid) this = i;
-	z = ind[this]-1;
+	    if(ind[i]-1 <= mid) This = i;
+	z = ind[This]-1;
 	Psort(x, lo, hi, z);
-	Psort0(x, lo, z-1, ind, this);
-	Psort0(x, z+1, hi, ind+this+1, k-this-1);
+	Psort0(x, lo, z-1, ind, This);
+	Psort0(x, z+1, hi, ind + This + 1, k - This -1);
     }
 }
 
@@ -630,7 +630,7 @@ static int listgreater(int i, int j, SEXP key, Rboolean nalast,
 
 /* Needs indx set to 1...n initially */
 static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
-			Rboolean decreasing, int greater_sub())
+			Rboolean decreasing, int greater_sub(int, int, SEXP, Rboolean, Rboolean))
 {
     int i, j, h, t;
     int itmp;

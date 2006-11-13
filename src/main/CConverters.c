@@ -74,7 +74,7 @@ R_toCConverter
     R_toCConverter *tmp = StoCConverters;
     R_toCConverter *el;
     /* Create and populate the new entry. */
-    el = malloc(sizeof(R_toCConverter));
+    el = (R_toCConverter *) malloc(sizeof(R_toCConverter));
     el->matcher = matcher;
     el->converter = converter;
     el->userData = userData;

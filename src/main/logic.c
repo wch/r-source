@@ -53,7 +53,7 @@ SEXP attribute_hidden do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 {
 /* logical binary : "&" or "|" */ 
-    SEXP x, y, dims, tsp, class, xnames, ynames;
+    SEXP x, y, dims, tsp, klass, xnames, ynames;
     int mismatch, nx, ny, xarray, yarray, xts, yts;
     mismatch = 0;
     x = CAR(args);
@@ -63,7 +63,7 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	errorcall(call, 
 		  _("operations are possible only for numeric or logical types"));
     tsp = R_NilValue;		/* -Wall */
-    class = R_NilValue;		/* -Wall */
+    klass = R_NilValue;		/* -Wall */
     xarray = isArray(x);
     yarray = isArray(y);
     xts = isTs(x);
@@ -99,19 +99,19 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	    if (!tsConform(x, y))
 		errorcall(call, _("non-conformable time series"));
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
-	    PROTECT(class = getAttrib(x, R_ClassSymbol));
+	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else if (xts) {
 	    if (length(x) < length(y))
 		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
-	    PROTECT(class = getAttrib(x, R_ClassSymbol));
+	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else /*(yts)*/ {
 	    if (length(y) < length(x))
 		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
-	    PROTECT(class = getAttrib(y, R_ClassSymbol));
+	    PROTECT(klass = getAttrib(y, R_ClassSymbol));
 	}
     }
     if(mismatch)
@@ -146,7 +146,7 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 
     if (xts || yts) {
 	setAttrib(x, R_TspSymbol, tsp);
-	setAttrib(x, R_ClassSymbol, class);
+	setAttrib(x, R_ClassSymbol, klass);
 	UNPROTECT(2);
     }
     UNPROTECT(4);

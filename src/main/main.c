@@ -28,6 +28,7 @@
 
 #define __MAIN__
 #include "Defn.h"
+#include "Rinterface.h"
 #include "Graphics.h"
 #include <Rdevices.h>		/* for InitGraphics */
 #include "IOStuff.h"
@@ -292,7 +293,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
     int status;
-    R_ReplState state = {0, 1, 0, "", NULL};
+    R_ReplState state = { PARSE_NULL, 1, 0, "", NULL};
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     state.buf[0] = '\0';
@@ -1016,7 +1017,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
    is maintained across LONGJMP's */
 static void browser_cend(void *data)
 {
-    int *psaved = data;
+    int *psaved = (int *) data;
     R_BrowseLevel = *psaved - 1;
 }
 
@@ -1109,7 +1110,8 @@ void R_dot_Last(void)
 SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char *tmp;
-    int ask=SA_DEFAULT, status, runLast;
+    SA_TYPE ask=SA_DEFAULT;
+    int status, runLast;
 
     if(R_BrowseLevel) {
 	warning(_("cannot quit from browser"));

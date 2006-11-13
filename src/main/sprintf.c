@@ -35,7 +35,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	outputString[MAXLINE+1];
     size_t n, cur, chunk;
 
-    SEXP format, ans, this, a[100], tmp;
+    SEXP format, ans, _this, a[100], tmp;
     int ns, maxlen, lens[100], nthis, has_star, star_arg = 0, nstar;
 
     /* grab the format string */
@@ -143,14 +143,14 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (strchr(starc+1, '*'))
 			    errorcall(call, _("at most one asterisk `*' is supported in each conversion specification"));
 
-			this = a[nstar];
-			if(TYPEOF(this) == REALSXP)
-			    this = coerceVector(this, INTSXP);
-			if(TYPEOF(this) != INTSXP || LENGTH(this)<1 ||
-			   INTEGER(this)[ns % LENGTH(this)] == NA_INTEGER)
+			_this = a[nstar];
+			if(TYPEOF(_this) == REALSXP)
+			    _this = coerceVector(_this, INTSXP);
+			if(TYPEOF(_this) != INTSXP || LENGTH(_this)<1 ||
+			   INTEGER(_this)[ns % LENGTH(_this)] == NA_INTEGER)
 			    errorcall(call, _("argument for `*' conversion specification must be a number"));
 			has_star = 1;
-			star_arg = INTEGER(this)[ns % LENGTH(this)];
+			star_arg = INTEGER(_this)[ns % LENGTH(_this)];
 		    }
 
 		    if (fmt[strlen(fmt) - 1] == '%') {
@@ -164,7 +164,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    if (cnt >= nargs) errorcall(call, _("too few arguments"));
 			    nthis = cnt++;
 			}
-			this = a[nthis];
+			_this = a[nthis];
 			if (has_star) {
 			    char *p, *q = fmt2;
 			    for (p = fmt; *p; p++)
@@ -181,41 +181,41 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			case 'i':
 			case 'x':
 			case 'X':
-			    if(TYPEOF(this) == REALSXP) {
-				double r = REAL(this)[0];
+			    if(TYPEOF(_this) == REALSXP) {
+				double r = REAL(_this)[0];
 				if((double)((int) r) == r)
-				    this = coerceVector(this, INTSXP);
+				    _this = coerceVector(_this, INTSXP);
 			    }
 			    break;
 			case 'e':
 			case 'f':
 			case 'g':
-			    if(TYPEOF(this) != REALSXP) {
-				PROTECT(tmp = lang2(install("as.double"), this));
-				this = eval(tmp, env);
+			    if(TYPEOF(_this) != REALSXP) {
+				PROTECT(tmp = lang2(install("as.double"), _this));
+				_this = eval(tmp, env);
 				UNPROTECT(1);
 			    }
 			    break;
 			case 's':
-			    if(TYPEOF(this) != STRSXP) {
+			    if(TYPEOF(_this) != STRSXP) {
 				PROTECT(tmp = 
-					lang2(install("as.character"), this));
-				this = eval(tmp, env);
+					lang2(install("as.character"), _this));
+				_this = eval(tmp, env);
 				UNPROTECT(1);
 			    }
 			    break;
 			default:
 			    break;
 			}
-			PROTECT(this);
-			thislen = length(this);
+			PROTECT(_this);
+			thislen = length(_this);
 			if(thislen == 0)
 			    error(_("coercion has changed vector length to 0"));
 			
-			switch(TYPEOF(this)) {
+			switch(TYPEOF(_this)) {
 			case LGLSXP:
 			    {
-				int x = LOGICAL(this)[ns % thislen];
+				int x = LOGICAL(_this)[ns % thislen];
 				if (strcspn(fmtp, "di") >= strlen(fmtp))
 				    error("%s", 
 					  _("use format %d or %i for logical objects"));
@@ -229,7 +229,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    }
 			case INTSXP:
 			    {
-				int x = INTEGER(this)[ns % thislen];
+				int x = INTEGER(_this)[ns % thislen];
 				if (strcspn(fmtp, "dixX") >= strlen(fmtp))
 				    error("%s",
 					  _("use format %d, %i, %x or %X for integer objects"));
@@ -243,7 +243,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    }
 			case REALSXP:
 			    {
-				double x = REAL(this)[ns % thislen];
+				double x = REAL(_this)[ns % thislen];
 				if (strcspn(fmtp, "feEgG") >= strlen(fmtp))
 				    error("%s", 
 					  _("use format %f, %e or %g for numeric objects"));
@@ -281,11 +281,11 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    /* NA_STRING will be printed as `NA' */
 			    if (strcspn(fmtp, "s") >= strlen(fmtp))
 				error("%s", _("use format %s for character objects"));
-			    if(strlen(CHAR(STRING_ELT(this, ns % thislen)))
+			    if(strlen(CHAR(STRING_ELT(_this, ns % thislen)))
 			       > MAXLINE)
 				warning(_("Likely truncation of character string"));
 			    snprintf(bit, MAXLINE, fmtp, 
-				     CHAR(STRING_ELT(this, ns % thislen)));
+				     CHAR(STRING_ELT(_this, ns % thislen)));
 			    bit[MAXLINE] = '\0';
 			    break;
 			    

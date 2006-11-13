@@ -32,6 +32,8 @@
 
 #include <R_ext/RConverters.h>
 
+#include <Rinterface.h>
+
 /* Table of  .Internal(.) and .Primitive(.)  R functions
  * =====     =========	      ==========
  *
@@ -918,7 +920,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 {"write.table",	do_writetable,	0,    111,     11,	{PP_FUNCALL, PREC_FN,	0}},
 
-{NULL,		NULL,		0,	0,	0,	{0,	PREC_FN,	0}},
+{NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };
 
 

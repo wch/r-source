@@ -46,11 +46,11 @@ static int NextWriteBufferListItem(IoBuffer *iob)
 	iob->write_buf = iob->write_buf->next;
     }
     else {
-	BufferListItem *new;
-	if (!(new = (BufferListItem*)malloc(sizeof(BufferListItem))))
+	BufferListItem *_new;
+	if (!(_new = (BufferListItem*)malloc(sizeof(BufferListItem))))
 	    return 0;
-	new->next = NULL;
-	iob->write_buf->next = new;
+	_new->next = NULL;
+	iob->write_buf->next = _new;
 	iob->write_buf = iob->write_buf->next;
     }
     iob->write_ptr = iob->write_buf->buf;

@@ -195,7 +195,7 @@ apse_bool_t apse_set_pattern(apse_t*		ap,
 
     ap->bytes_in_state = ap->bitvectors_in_state * sizeof(apse_vec_t);
 
-    ap->case_mask = calloc((apse_size_t)APSE_CHAR_MAX, ap->bytes_in_state);
+    ap->case_mask = (apse_vec_t *) calloc((apse_size_t)APSE_CHAR_MAX, ap->bytes_in_state);
     if (!ap->case_mask)
 	goto out;
 
@@ -458,11 +458,11 @@ apse_bool_t apse_set_edit_distance(apse_t *ap, apse_size_t edit_distance) {
 
     ap->state = ap->prev_state = 0;
 
-    ap->state = calloc(edit_distance + 1, ap->bytes_in_state);
+    ap->state = (apse_vec_t *) calloc(edit_distance + 1, ap->bytes_in_state);
     if (!ap->state)
 	goto out;
 
-    ap->prev_state = calloc(edit_distance + 1, ap->bytes_in_state);
+    ap->prev_state = (apse_vec_t *) calloc(edit_distance + 1, ap->bytes_in_state);
     if (!ap->prev_state)
 	goto out;
 
@@ -570,8 +570,8 @@ apse_bool_t apse_set_caseignore_slice(apse_t*		ap,
 
     if (!ap->fold_mask) {
 
-	ap->fold_mask = calloc((apse_size_t)APSE_CHAR_MAX,
-			       ap->bytes_in_state);
+	ap->fold_mask = (apse_vec_t *) calloc((apse_size_t)APSE_CHAR_MAX,
+					      ap->bytes_in_state);
 	if (!ap->fold_mask)
 	    goto out;
 
@@ -653,7 +653,7 @@ apse_t *apse_create(unsigned char*	pattern,
 	printf("(pattern = \"%s\", pattern_size = %ld)\n",
 	       pattern, pattern_size));
 
-    ap = calloc((size_t)1, sizeof(*ap));
+    ap = (apse_t *) calloc((size_t)1, sizeof(*ap));
     if (!ap)
 	return 0;
 

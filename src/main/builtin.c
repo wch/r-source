@@ -338,7 +338,7 @@ typedef struct cat_info {
 
 static void cat_cleanup(void *data)
 {
-    cat_info *pci = data;
+    cat_info *pci = (cat_info *) data;
     Rconnection con = pci->con;
     Rboolean wasopen = pci->wasopen;
     int changedcon = pci->changedcon;

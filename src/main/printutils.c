@@ -586,7 +586,11 @@ void REprintf(char *format, ...)
 }
 
 #if defined(HAVE_VASPRINTF) && !HAVE_DECL_VASPRINTF
-int vasprintf(char **strp, const char *fmt, va_list ap);
+int vasprintf(char **strp, const char *fmt, va_list ap)
+#ifdef __cplusplus
+	throw ()
+#endif
+;
 #endif
 
 #if !HAVE_VA_COPY && HAVE___VA_COPY

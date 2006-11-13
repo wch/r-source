@@ -25,6 +25,7 @@
 #endif
 
 #include <Defn.h>
+#include <Rinterface.h>
 #include <Fileio.h>
 #include <R_ext/Applic.h>		/* machar */
 
@@ -967,11 +968,11 @@ SEXP attribute_hidden do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int new, len;
+    int _new, len;
     char buf[CHOOSEBUFSIZE];
     checkArity(op, args);
-    new = asLogical(CAR(args));
-    if ((len = R_ChooseFile(new, buf, CHOOSEBUFSIZE)) == 0)
+    _new = asLogical(CAR(args));
+    if ((len = R_ChooseFile(_new, buf, CHOOSEBUFSIZE)) == 0)
 	error(_("file choice cancelled"));
     if (len >= CHOOSEBUFSIZE - 1)
 	errorcall(call, _("file name too long"));

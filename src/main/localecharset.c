@@ -53,6 +53,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#include <R_ext/rlocale.h> /* To get the correct linkage for locale2charset */
+
 /* name_value struct */
 typedef struct {
     char *name;
@@ -682,7 +684,7 @@ char *locale2charset(const char *locale)
     if(0 == strcmp(enc, "utf8")) return "UTF-8";
 
     value = name_value_search(la_loc, guess, guess_count);
-    return value == NULL ? "ASCII" : value;
+    return value == NULL ? (char *) "ASCII" : value;
 }
 
 /*****************************************************

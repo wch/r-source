@@ -29,6 +29,7 @@
 #include <stdlib.h> /* for putenv */
 #include <Defn.h>
 #include <R_ext/Riconv.h>
+#include <Rinterface.h>
 
 /*
   See ../unix/system.txt for a description of some of these functions.
@@ -642,7 +643,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 }
 
 
-static const char  const *procTimeNames[] = {"user", "system", "total", "user.children", "system.children"};
+static const char  * const procTimeNames[] = {"user", "system", "total", "user.children", "system.children"};
 
 SEXP attribute_hidden R_setProcTimeNames(SEXP ans)
 {

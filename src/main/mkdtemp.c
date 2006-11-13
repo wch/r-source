@@ -188,11 +188,14 @@ gen_tempname (char *tmpl)
    The directory is created, mode 700, and its name is returned.
    (This function comes from OpenBSD.) */
 char *
-mkdtemp (char *template)
+mkdtemp (char *Template)
+#ifdef __cplusplus
+	throw()
+#endif
 {
-  if (gen_tempname (template))
+  if (gen_tempname (Template))
     return NULL;
   else
-    return template;
+    return Template;
 }
 
