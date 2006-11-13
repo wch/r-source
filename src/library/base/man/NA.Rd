@@ -1,5 +1,9 @@
 \name{NA}
 \alias{NA}
+\alias{NA_integer_}
+\alias{NA_real_}
+\alias{NA_complex_}
+\alias{NA_character_}
 \alias{is.na}
 \alias{is.na.data.frame}
 \alias{is.na<-}
@@ -8,7 +12,10 @@
 \description{
   \code{NA} is a logical constant of length 1 which contains a missing
   value indicator.  \code{NA} can be freely coerced to any other vector
-  type except raw.
+  type except raw.  As from \R 2.5.0 there are constants
+  \code{NA_integer_}, \code{NA_real_}, \code{NA_complex_} and
+  \code{NA_character_} of the other atomic vector types which support
+  missing values.
 
   The generic function \code{is.na} indicates which elements are missing.
 
@@ -34,7 +41,9 @@ is.na(x) <- value
 
   \code{is.na(x)} works elementwise when \code{x} is a
   \code{\link{list}}.  It is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
+  specific classes of objects, see \link{InternalMethods}.  A complex
+  value is regarded as \code{NA} if either its real or imaginary part is
+  \code{NA} or \code{NaN}.
 
   Function \code{is.na<-} may provide a safer way to set missingness.
   It behaves differently for factors, for example.

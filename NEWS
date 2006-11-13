@@ -94,6 +94,11 @@ NEW FEATURES
     o	dput() now includes "keepInteger" and "keepNA" in its default
 	'control' argument.
 
+    o	There are new constants NA_integer_, NA_real_, NA_complex_ and
+	NA_character_ to denote NAs of those types, and they will be
+	used in deparsing in place of as.integer(NA) etc unless
+	.deparseOpts() includes "S_compatible".
+
 
 DEPRECATED & DEFUNCT
 
@@ -104,6 +109,9 @@ DEPRECATED & DEFUNCT
 	an error.
 
     o	The autoloading of ts() is defunct.
+
+    o	The undocumented reserved word GLOBAL.ENV has been removed.
+	(It was yet another way to get the value of the symbol .GlobalEnv.)
 
 
 INSTALLATION

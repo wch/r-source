@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-11 r39849)
+R version 2.5.0 Under development (unstable) (2006-11-13 r39855)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5605,20 +5605,34 @@ $y
 > dput(x, control=NULL)
 list(a = NA, b = NA, c = NA, d =  NA, e = 1, f = 1, g = 1:3, 
     h = c(NA, 1, 2, 3), i = NA, j = c("foo", NA, "bar"))
+> dput(x, control="keepInteger")
+list(a = NA, b = NA_integer_, c = NA, d =  NA, e = 1, f = 1L, 
+    g = 1:3, h = c(NA, 1L, 2L, 3L), i = NA, j = c("foo", NA, 
+    "bar"))
+> dput(x, control="keepNA")
+list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_, 
+    e = 1, f = 1, g = 1:3, h = c(NA, 1, 2, 3), i = NA_character_, 
+    j = c("foo", NA, "bar"))
 > dput(x)
-structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
-    d = as.complex( NA), e = 1, f = 1L, g = 1:3, h = c(NA, 1L, 
-    2L, 3L), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
-"b", "c", "d", "e", "f", "g", "h", "i", "j"))
+structure(list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_, 
+    e = 1, f = 1L, g = 1:3, h = c(NA, 1L, 2L, 3L), i = NA_character_, 
+    j = c("foo", NA, "bar")), .Names = c("a", "b", "c", "d", 
+"e", "f", "g", "h", "i", "j"))
 > dput(x, control="all")
-structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
-    d = as.complex( NA), e = 1, f = 1L, g = 1:3, h = c(NA, 1L, 
-    2L, 3L), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
-"b", "c", "d", "e", "f", "g", "h", "i", "j"))
+structure(list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_, 
+    e = 1, f = 1L, g = 1:3, h = c(NA, 1L, 2L, 3L), i = NA_character_, 
+    j = c("foo", NA, "bar")), .Names = c("a", "b", "c", "d", 
+"e", "f", "g", "h", "i", "j"))
 > dput(x, control=c("all", "S_compatible"))
 structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
     d = as.complex( NA), e = 1, f = as.integer(1), g = 1:3, h = as.integer(c(NA, 
     1, 2, 3)), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
 "b", "c", "d", "e", "f", "g", "h", "i", "j"))
+> tmp <- tempfile()
+> dput(x, tmp, control="all")
+> stopifnot(identical(dget(tmp), x))
+> dput(x, tmp, control=c("all", "S_compatible"))
+> stopifnot(identical(dget(tmp), x))
+> unlink(tmp)
 > ## changes in 2.5.0
 > 

@@ -1436,9 +1436,12 @@ static keywords[] = {
     { "NA",	    NUM_CONST  },
     { "TRUE",	    NUM_CONST  },
     { "FALSE",	    NUM_CONST  },
-    { "GLOBAL.ENV", NUM_CONST  },
     { "Inf",	    NUM_CONST  },
     { "NaN",	    NUM_CONST  },
+    { "NA_integer_", NUM_CONST  },
+    { "NA_real_",    NUM_CONST  },
+    { "NA_character_", NUM_CONST  },
+    { "NA_complex_", NUM_CONST  },
     { "function",   FUNCTION   },
     { "while",	    WHILE      },
     { "repeat",	    REPEAT     },
@@ -1476,15 +1479,28 @@ static int KeywordLookup(char *s)
 			PROTECT(yylval = mkFalse());
 			break;
 		    case 4:
-			PROTECT(yylval = R_GlobalEnv);
-			break;
-		    case 5:
 			PROTECT(yylval = allocVector(REALSXP, 1));
 			REAL(yylval)[0] = R_PosInf;
 			break;
-		    case 6:
+		    case 5:
 			PROTECT(yylval = allocVector(REALSXP, 1));
 			REAL(yylval)[0] = R_NaN;
+			break;
+		    case 6:
+			PROTECT(yylval = allocVector(INTSXP, 1));
+			INTEGER(yylval)[0] = NA_INTEGER;
+			break;
+		    case 7:
+			PROTECT(yylval = allocVector(REALSXP, 1));
+			REAL(yylval)[0] = NA_REAL;
+			break;
+		    case 8:
+			PROTECT(yylval = allocVector(STRSXP, 1));
+			SET_STRING_ELT(yylval, 0, NA_STRING);
+			break;
+		    case 9:
+			PROTECT(yylval = allocVector(CPLXSXP, 1));
+			COMPLEX(yylval)[0].r = COMPLEX(yylval)[0].i = NA_REAL;
 			break;
 		    }
 		} else

@@ -1138,7 +1138,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 {
     int tlen, i, quote;
     char *strp;
-    Rboolean surround = FALSE, allNA = TRUE, addL = TRUE;
+    Rboolean surround = FALSE, allNA, addL = TRUE;
 
     tlen = length(vector);
     if( isString(vector) )
@@ -1158,9 +1158,6 @@ static void vector2buff(SEXP vector, LocalParseData *d)
     }
     else if(TYPEOF(vector) == INTSXP) {
 	/* We treat integer separately, as S_compatible is relevant.
-	   as.integer() is needed if all entries are NA and
-	   KEEPINTEGER | KEEPNA.  It is also needed when
-	   KEEPINTEGER & S_COMPAT.
 
 	   Also, it is neat to deparse m:n in that form,
 	   so we do so as from 2.5.0.
@@ -1181,43 +1178,42 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		strp = EncodeElement(vector, tlen - 1, '"', '.');
 		print2buff(strp, d);
 	} else {
+	    addL = d->opts & KEEPINTEGER & !(d->opts & S_COMPAT);
+	    allNA = (d->opts & KEEPNA) || addL;
 	    for(i = 0; i < tlen; i++)
 		if(tmp[i] != NA_INTEGER) {
 		    allNA = FALSE;
 		    break;
 		}
-	    addL = d->opts & KEEPINTEGER & !(d->opts & S_COMPAT);
-	    if((d->opts & KEEPINTEGER && (d->opts & S_COMPAT)) ||
-	       ((d->opts & KEEPNA) && allNA)) {
+	    if((d->opts & KEEPINTEGER && (d->opts & S_COMPAT))) {
 		surround = TRUE;
 		print2buff("as.integer(", d);
 	    }
-	    if(tlen == 1) {
-		strp = EncodeElement(vector, 0, '"', '.');
-		print2buff(strp, d);
-		if(addL && tmp[0] != NA_INTEGER) print2buff("L", d);
-	    } else {
-		print2buff("c(", d);
-		for (i = 0; i < tlen; i++) {
+	    allNA = allNA && !(d->opts & S_COMPAT);
+	    if(tlen > 1) print2buff("c(", d);
+	    for (i = 0; i < tlen; i++) {
+		if(allNA && tmp[i] == NA_INTEGER) {
+		    print2buff("NA_integer_", d);
+		} else {
 		    strp = EncodeElement(vector, i, quote, '.');
 		    print2buff(strp, d);
-		    if(addL && tmp[i] != NA_INTEGER)
-			print2buff("L", d);
-		    if (i < (tlen - 1)) print2buff(", ", d);
-		    if (d->len > d->cutoff) writeline(d);
+		    if(addL && tmp[i] != NA_INTEGER) print2buff("L", d);
 		}
-		print2buff(")", d);
+		if (i < (tlen - 1)) print2buff(", ", d);
+		if (tlen > 1 && d->len > d->cutoff) writeline(d);
 	    }
+	    if(tlen > 1)print2buff(")", d);
 	    if(surround) print2buff(")", d);
 	}
     } else {
+	allNA = d->opts & KEEPNA;
 	if((d->opts & KEEPNA) && TYPEOF(vector) == REALSXP) {
 	    for(i = 0; i < tlen; i++)
 		if(!ISNA(REAL(vector)[i])) {
 		    allNA = FALSE;
 		    break;
 		}
-	    if(allNA) {
+	    if(allNA && (d->opts & S_COMPAT)) {
 		surround = TRUE;
 		print2buff("as.double(", d);
 	    }
@@ -1229,7 +1225,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		    break;
 		}
 	    }
-	    if(allNA) {
+	    if(allNA && (d->opts & S_COMPAT)) {
 		surround = TRUE;
 		print2buff("as.complex(", d);
 	    }
@@ -1239,24 +1235,31 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		    allNA = FALSE;
 		    break;
 		}
-	    if(allNA) {
+	    if(allNA && (d->opts & S_COMPAT)) {
 		surround = TRUE;
 		print2buff("as.character(", d);
 	    }
 	}
-	if(tlen == 1) {
-	    strp = EncodeElement(vector, 0, '"', '.');
+	if(tlen > 1) print2buff("c(", d);
+	allNA = allNA && !(d->opts & S_COMPAT);
+	for (i = 0; i < tlen; i++) {
+	    if(allNA && TYPEOF(vector) == REALSXP && 
+	       ISNA(REAL(vector)[i])) {
+		strp = "NA_real_";
+	    } else if (allNA && TYPEOF(vector) == CPLXSXP &&
+		       (ISNA(COMPLEX(vector)[i].r) 
+			|| ISNA(COMPLEX(vector)[i].i)) ) {
+		strp = "NA_complex_";
+	    } else if (allNA && TYPEOF(vector) == STRSXP && 
+		       STRING_ELT(vector, i) == NA_STRING) {
+		strp = "NA_character_";
+	    } else
+	       strp = EncodeElement(vector, i, quote, '.');
 	    print2buff(strp, d);
-	} else {
-	    print2buff("c(", d);
-	    for (i = 0; i < tlen; i++) {
-		strp = EncodeElement(vector, i, quote, '.');
-		print2buff(strp, d);
-		if (i < (tlen - 1)) print2buff(", ", d);
-		if (d->len > d->cutoff) writeline(d);
-	    }
-	    print2buff(")", d);
+	    if (i < (tlen - 1)) print2buff(", ", d);
+	    if (tlen > 1 && d->len > d->cutoff) writeline(d);
 	}
+	if(tlen > 1) print2buff(")", d);
 	if(surround) print2buff(")", d);
     }
 }
