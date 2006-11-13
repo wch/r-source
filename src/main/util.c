@@ -40,7 +40,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef __cplusplus
 #include "Clinkage.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
