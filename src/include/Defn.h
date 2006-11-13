@@ -254,6 +254,7 @@ typedef SEXP (*CCODE)();
 
 /* Information for Deparsing Expressions */
 typedef enum {
+    PP_INVALID  =  0,
     PP_ASSIGN   =  1,
     PP_ASSIGN2  =  2,
     PP_BINARY   =  3,
@@ -904,7 +905,7 @@ SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
 SEXP matchArgs(SEXP, SEXP);
 SEXP matchPar(char*, SEXP*);
-void memtrace_report(SEXP, SEXP);
+void memtrace_report(void *, void *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 /* SEXP mkComplex(char *s); */
 /* SEXP mkEnv(SEXP, SEXP, SEXP); */
