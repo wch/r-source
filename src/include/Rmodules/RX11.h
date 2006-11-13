@@ -42,7 +42,12 @@ typedef struct {
     R_X11clp readclp;
 } R_X11Routines;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 R_X11Routines *R_setX11Routines(R_X11Routines *routines);
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* R_X11_MODULE_H */
