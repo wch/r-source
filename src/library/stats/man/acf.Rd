@@ -30,9 +30,11 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 \arguments{
   \item{x, y}{a univariate or multivariate (not \code{ccf}) numeric time
     series object or a numeric vector or matrix, or an \code{"acf"} object.}
-  \item{lag.max}{maximum number of lags at which to calculate the acf.
+  \item{lag.max}{maximum lag at which to calculate the acf.
     Default is \eqn{10\log_{10}(N/m)}{10*log10(N/m)} where \eqn{N} is the
-    number of observations and \eqn{m} the number of series.}
+    number of observations and \eqn{m} the number of series.  Will
+    be automatically limited to one less than the number of observations
+    in the series.}
   \item{type}{character string giving the type of acf to be computed.
     Allowed values are
     \code{"correlation"} (the default), \code{"covariance"} or
@@ -65,7 +67,8 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
 }
 \details{
   For \code{type} = \code{"correlation"} and \code{"covariance"}, the
-  estimates are based on the sample covariance.
+  estimates are based on the sample covariance. (The lag 0 autocorrelation
+  is fixed at 1 by convention.)
 
   By default, no missing values are allowed.  If the \code{na.action}
   function passes through missing values (as \code{na.pass} does), the

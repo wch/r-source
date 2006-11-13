@@ -21,7 +21,7 @@ acf <-
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
-    if (lag.max < 1) stop("'lag.max' must be at least 1")
+    if (lag.max < 0) stop("'lag.max' must be at least 0")
     if(demean) x <- sweep(x, 2, colMeans(x, na.rm = TRUE))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1

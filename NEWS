@@ -132,6 +132,9 @@ BUG FIXES
     o	bxp() could use partial matching on 'pars' when finding
 	defaults for some of its parameters, e.g. a setting of 'cex.axis'
 	in 'pars' or inline was used to set a default for 'outcex'.
+	
+    o	acf() now allows lag.max = 0 except when type="partial", and
+	forces the lag 0 autocorrelation to 1. (PR#9360)
 
     o	Some bugs in caching superclass/subclass relations and in
 	removing  those relations on detach and on removeClass() have
