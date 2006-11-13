@@ -83,10 +83,19 @@ typedef struct _DllInfo DllInfo;
   Currently ignore the graphics routines, accessible via .External.graphics()
   and .Call.graphics().
  */
+#ifdef __cplusplus 
+extern "C" {
+#endif
 int R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
 		       const R_CallMethodDef * const callRoutines, 
 		       const R_FortranMethodDef * const fortranRoutines,
                        const R_ExternalMethodDef * const externalRoutines);
+
+Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
+#ifdef __cplusplus 
+}
+#endif
+
 
 DllInfo *R_getDllInfo(const char *name);
 
@@ -100,7 +109,7 @@ DL_FUNC R_FindSymbol(char const *, char const *,
 
 int R_moduleCdynload(char *module, int local, int now);
 
-Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
+
 
 /* Experimental interface for exporting and importing functions from
    one package for use from C code in a package.  The registration
