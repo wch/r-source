@@ -52,7 +52,12 @@ double Rf_d1mach(int i)
     }
 }
 
+#ifdef __cplusplus
+extern "C" 
+#endif
 double F77_NAME(d1mach)(int *i)
 {
     return Rf_d1mach(*i);
 }
+
+

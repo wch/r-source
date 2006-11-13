@@ -38,6 +38,10 @@
 #include "nmath.h"
 #include "dpq.h"
 
+#ifndef MATHLIB_STANDALONE
+#include <R_ext/Utils.h>
+#endif
+
 static double ***w; /* to store  cwilcox(i,j,k) -> w[i][j][k] */
 static int allocated_m, allocated_n;
 
