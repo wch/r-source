@@ -56,8 +56,9 @@ hist.default <-
     equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     if (!use.br && any(h <= 0))
 	stop("'breaks' are not strictly increasing")
+    freq1 <- freq # we want to do missing(freq) later
     if (is.null(freq)) {
-	freq <- if(!missing(probability)) !as.logical(probability) else equidist
+	freq1 <- if(!missing(probability)) !as.logical(probability) else equidist
     } else if(!missing(probability) && any(probability == freq))
 	stop("'probability' is an alias for '!freq', however they differ.")
 
@@ -102,7 +103,7 @@ hist.default <-
 			xname = xname, equidist = equidist),
 		   class="histogram")
     if (plot) {
-	plot(r, freq = freq, col = col, border = border,
+	plot(r, freq = freq1, col = col, border = border,
 	     angle = angle, density = density,
 	     main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
 	     axes = axes, labels = labels, ...)
