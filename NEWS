@@ -270,6 +270,9 @@ BUG FIXES
 	defaults for some of its parameters, e.g. a setting of 'cex.axis'
 	in 'pars' or inline was used to set a default for 'outcex'.
 
+    o	hist(*, include.lowest=., plot=FALSE) does not warn anymore.
+	(PR#9356)
+
 
 
 		CHANGES IN R VERSION 2.4.0

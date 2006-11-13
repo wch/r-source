@@ -58,7 +58,9 @@ hist(x, \dots)
   \item{axes}{logical.  If \code{TRUE} (default), axes are draw if the
     plot is drawn.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
-    plotted, otherwise a list of breaks and counts is returned.}
+    plotted, otherwise a list of breaks and counts is returned.  In the
+    latter case, a warning is used if (typically graphical) arguments
+    are specified that only apply to the \code{plot = TRUE} case.}
   \item{labels}{logical or character.  Additionally draw labels on top
     of bars, if not \code{FALSE}; see \code{\link{plot.histogram}}.}
   \item{nclass}{numeric (integer).  For S(-PLUS) compatibility only,

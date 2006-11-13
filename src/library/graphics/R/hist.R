@@ -111,7 +111,7 @@ hist.default <-
     else { ## plot is FALSE
         ## make an effort to warn about "non sensical" arguments:
         nf <- names(formals()) ## all formals but those:
-        nf <- nf[is.na(match(nf, c("x", "breaks", "freq", "nclass", "plot", "probability")))]
+        nf <- nf[is.na(match(nf, c("x", "breaks", "nclass", "plot", "include.lowest")))]
         missE <- lapply(nf, function(n)
                         substitute(missing(.), list(. = as.name(n))))
         not.miss <- ! sapply(missE, eval, envir = environment())
