@@ -133,10 +133,14 @@ BUG FIXES
 	defaults for some of its parameters, e.g. a setting of 'cex.axis'
 	in 'pars' or inline was used to set a default for 'outcex'.
 
-
     o	Some bugs in caching superclass/subclass relations and in
-        removing  those relations on detach and on removeClass() have
-        been fixed.
+	removing  those relations on detach and on removeClass() have
+	been fixed.
+
+    o	readBin() could return one too many strings if 'n' was an
+	over-estimate. (PR#9361)
+
+
 
 
 		CHANGES IN R VERSION 2.4.0
