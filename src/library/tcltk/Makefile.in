@@ -84,7 +84,7 @@ all: Makefile DESCRIPTION
 	@if test @use_tcltk@ = yes; then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
 	  echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null ; \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null ; \
 	fi
 
 
