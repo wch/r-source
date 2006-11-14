@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005   The R Development Core Team
+ *  Copyright (C) 2005-6   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,7 +63,8 @@ void Ri18n_iswctype(void)
 
 #else /* SUPPORT_MBCS */
 
-/* #include <R_ext/rlocale.h> unsafe */
+#define IN_RLOCALE_C 1 /* used in rlocale.h */ 
+#include <R_ext/rlocale.h>
 #include "rlocale_data.h"
 
 #include <wctype.h>
@@ -131,7 +132,7 @@ static cjk_locale_name_t cjk_locale_name[] = {
 int Ri18n_wcwidth(wchar_t c)
 {
     char lc_str[128];
-    int i;
+    unsigned int i;
 
     static char *lc_cache = "";
     static int lc = 0;

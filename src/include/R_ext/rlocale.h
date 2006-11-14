@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005   The R Development Core Team
+ *  Copyright (C) 2005-6   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,6 +76,9 @@ extern int Ri18n_wcswidth (const wchar_t *, size_t);
  */
 extern wctype_t Ri18n_wctype(const char *);
 extern int      Ri18n_iswctype(wint_t, wctype_t);
+
+#ifndef IN_RLOCALE_C
+/* We want to avoid these redefinitions in rlocale.c itself */
 #undef iswupper
 #undef iswlower
 #undef iswalpha
@@ -105,6 +108,7 @@ extern int      Ri18n_iswctype(wint_t, wctype_t);
 #define iswalnum(__x)     Ri18n_iswctype(__x, Ri18n_wctype("alnum"))
 #define wctype(__x)       Ri18n_wctype(__x)
 #define iswctype(__x,__y) Ri18n_iswctype(__x,__y)
+#endif
 
 #endif /* SUPPORT_MBCS */
 #ifdef  __cplusplus
