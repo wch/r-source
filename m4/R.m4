@@ -1519,17 +1519,28 @@ fi])# R_TYPE_KEYSYM
 
 ## R_X11
 ## -----
+## Updated for R 2.5.0.  We need -lXt, and nowadays that is unbundled.
 AC_DEFUN([R_X11],
 [AC_PATH_XTRA			# standard X11 search macro
 if test -z "${no_x}"; then
-  ## We force the use of -lX11 (perhaps this is not necessary?).
-  X_LIBS="${X_LIBS} -lX11 -lXt"
-  use_X11="yes"
+  ## now we look for Xt and its header: it seems Intrinsic.h is key.
+  r_save_CFLAGS="${CFLAGS}"
+  CFLAGS="${CFLAGS} ${X_CFLAGS}"
+  AC_CHECK_HEADER(X11/Intrinsic.h)
+  CFLAGS="${r_save_CFLAGS}"
+  if test "${ac_cv_header_X11_Intrinsic_h}" = yes ; then
+    AC_CHECK_LIB(Xt, XtToolkitInitialize, [have_Xt=yes], [have_Xt=no], -lX11)
+    if test "${have_Xt}" = yes; then
+      use_X11="yes"
+    fi
+  fi
+fi
+if test "x${use_X11}" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1,
             [Define if you have the X11 headers and libraries, and want
              the X11 GUI to be built.])
+  X_LIBS="${X_LIBS} -lX11 -lXt"
 else
-  use_X11="no"
   if test "x${with_x}" != "xno"; then
     AC_MSG_ERROR(
       [--with-x=yes (default) and X11 headers/libs are not available])
