@@ -30863,6 +30863,7 @@ EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
 cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
@@ -30929,6 +30930,8 @@ EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
 cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "confdefs.h"
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
@@ -31013,7 +31016,9 @@ EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&5 2>&5
 cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
+#include <stdio.h>
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
 #else
@@ -31167,6 +31172,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
 #include <math.h>
+#include <stdlib.h>
 #if defined(__GLIBC__)
 int main () {
   double x, y;
@@ -32149,6 +32155,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
 #include <math.h>
+#include <stdlib.h>
 #include <ieeefp.h>
 int main () {
   double x = 0;
@@ -37982,6 +37989,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 
 int main () {
 #include <fpu_control.h>
+#include <stdlib.h>
 #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
   exit(_FPU_DEFAULT != _FPU_IEEE);
 #endif
@@ -38118,6 +38126,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_FINITE
@@ -38190,6 +38199,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_DECL_ISFINITE
@@ -38261,6 +38271,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 /* we require isnan as from R 2.0.0 */
@@ -38332,6 +38343,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_LOG1P
@@ -46324,6 +46336,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
+#include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
 int main() {
@@ -46401,6 +46414,7 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>

@@ -479,6 +479,7 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
                 [r_cv_c_no_math_inlines],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #if defined(__GLIBC__)
 int main () {
   double x, y;
@@ -511,6 +512,7 @@ AC_DEFUN([R_C_OPTIEEE],
                 [r_cv_c_optieee],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include <ieeefp.h>
 int main () {
   double x = 0;
@@ -954,6 +956,7 @@ ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 ## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
@@ -1017,6 +1020,8 @@ ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 ## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "confdefs.h"
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
@@ -1098,7 +1103,9 @@ ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 ## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
+#include <stdio.h>
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
 #else
@@ -1200,6 +1207,7 @@ AC_DEFUN([R_FUNC___SETFPUCW],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 int main () {
 #include <fpu_control.h>
+#include <stdlib.h>
 #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
   exit(_FPU_DEFAULT != _FPU_IEEE);
 #endif
@@ -1246,6 +1254,7 @@ AC_DEFUN([R_FUNC_FINITE],
 [AC_CACHE_CHECK([for working finite], [r_cv_func_finite_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_FINITE
@@ -1270,6 +1279,7 @@ AC_DEFUN([R_FUNC_ISFINITE],
 [AC_CACHE_CHECK([for working isfinite], [r_cv_func_isfinite_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_DECL_ISFINITE
@@ -1294,6 +1304,7 @@ AC_DEFUN([R_FUNC_LOG],
 [AC_CACHE_CHECK([for working log], [r_cv_func_log_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 /* we require isnan as from R 2.0.0 */
@@ -1323,6 +1334,7 @@ AC_DEFUN([R_FUNC_LOG1P],
 [AC_CACHE_CHECK([for working log1p], [r_cv_func_log1p_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_LOG1P
@@ -2605,6 +2617,7 @@ AC_DEFUN([_R_HEADER_ZLIB],
 [AC_CACHE_CHECK([if zlib version >= 1.2.1],
                 [r_cv_header_zlib_h],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
 int main() {
@@ -2626,6 +2639,7 @@ AC_DEFUN([_R_ZLIB_MMAP],
 [AC_CACHE_CHECK([mmap support for zlib],
                 [r_cv_zlib_mmap],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
