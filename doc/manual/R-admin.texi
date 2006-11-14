@@ -1853,12 +1853,13 @@ If the compiler is detected as @command{gcc},  @code{-std=gnu99} will be
 appended to @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (On Fedora Core
-Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
-RPMs, for example.  Older Linuxen used @samp{XFree86-}.  Some Debian
-derivatives apparently also require @samp{libxt-dev}.)  If you really do
-not want these you will need to explicitly configure @R{} without X11,
-using @option{--with-x=no}.
+installed, including its headers and client libraries.  (On both Fedora
+Core and SuSE Linux this means the @samp{xorg-x11-devel} and
+@samp{xorg-x11-libs} RPMs, for example, and in recent versions, also
+@samp{libXt} and @samp{libXt-devel}.  Some Debian derivatives apparently
+require @samp{libxt-dev}.)  If you really do not want these you will
+need to explicitly configure @R{} without X11, using
+@option{--with-x=no}.
 
 The command-line editing depends on the @code{readline} library
 available from any @acronym{GNU} mirror: you will need a fairly recent
@@ -1921,6 +1922,11 @@ versions in the @R{} sources will be compiled in.  As the latter suffice
 and are tested with @R{} you should not need to change this.  In
 particular, the version of @code{zlib} 1.2.3 in the @R{} sources has
 enhancements to work with large file systems on 32-bit platforms.
+
+Use of the X11 clipboard selection require the @code{Xmu} headers and
+libraries.  These are normally part of an X11 installation, but some
+distributions have split this into smaller parts, so for example Fedora
+Core >= 5 requires the @code{libXmu} and @code{libXmu-devel} RPMs.
 
 @menu
 * Tcl/Tk::                      
