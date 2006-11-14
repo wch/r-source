@@ -1591,8 +1591,8 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 .classTable <- new.env(TRUE, baseenv())
 
 .cacheClass <- function(name, def, doSubclasses = FALSE) {
-    if(doSubclasses)
-      .recacheSubclasses(def@className, def)
+    if(!identical(doSubclasses, FALSE))
+      .recacheSubclasses(def@className, def, doSubclasses)
     if(exists(name, envir = .classTable, inherits = FALSE)) {
         newpkg <- def@package
         prev <- get(name, envir = .classTable)
@@ -1664,7 +1664,9 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ### insert superclass information into all the subclasses of this
 ### class.  Used to incorporate inheritance information from
 ### ClassUnions
-.recacheSubclasses <- function(class, def) {
+.recacheSubclasses <- function(class, def, subclasses) {
+    if(identical(subclasses, TRUE))
+      subclasses <- class
     subs <- def@subclasses
     subNames <- names(subs)
     for(i in seq(along = subs)) {
@@ -1674,9 +1676,14 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
           warning(
            gettextf("Undefined subclass, \"%s\", of class \"%s\"; definition not updated",
                     what, def@className))
+        else if(match(what, subclasses, 0) > 0)
+          next # would like warning, but seems to occur often
+          #warning(
+             #gettextf("Apparent loop in subclasses: \"%s\" found twice; ignored this time", what))
         else if(is.na(match(what, names(subDef@contains)))) {
+            subclasses <- c(subclasses, what)
             subDef@contains[[class]] <- subs[[i]]
-            .cacheClass(what, subDef, TRUE)
+            .cacheClass(what, subDef, subclasses)
         }
     }
 }
