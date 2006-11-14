@@ -4,8 +4,8 @@
 \alias{.Defunct}
 
 \description{
-  When an object is removed from \R it should be replaced by a call to
-  \code{.Defunct}.
+  When a function is removed from \R it should be replaced by a function
+  which calls \code{.Defunct}.
 }
 \usage{
 .Defunct(new, package = NULL, msg)
