@@ -5551,8 +5551,9 @@ static void PDF_SetLineColor(int color, NewDevDesc *dd)
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
     if(color != pd->current.col) {
+	/* we don't draw at all if alpha= 0 */
 	unsigned int alpha = R_ALPHA(color);
-	if (0 < alpha && alpha < 255 && alphaVersion(pd)) {
+	if (0 < alpha && alphaVersion(pd)) {
 	    /*
 	     * Apply graphics state parameter dictionary
 	     * to set alpha
@@ -5571,8 +5572,9 @@ static void PDF_SetFill(int color, NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     if(color != pd->current.fill) {
+	/* we don't draw at all if alpha= 0 */
 	unsigned int alpha = R_ALPHA(color);
-	if (0 < alpha && alpha < 255 && alphaVersion(pd)) {
+	if (0 < alpha && alphaVersion(pd)) {
 	    /*
 	     * Apply graphics state parameter dictionary
 	     * to set alpha
