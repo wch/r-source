@@ -29778,6 +29778,7 @@ if test -n "${XMKMF}"; then
   cc=`echo ${cc} | sed "s/ .*//"`
   ## Paul Gilbert reported on R-devel 2006-04-13 a system with cc=""
   if test -n "${cc}" ; then
+    CC=`echo ${CC} | sed "s/ .*//"`
     if test "`which ${cc}`" = "`which ${CC}`"; then
       shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
       cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
@@ -29786,6 +29787,7 @@ if test -n "${XMKMF}"; then
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
   if test -n "${cxx}" ; then
+    CXX=`echo ${CXX} | sed "s/ .*//"`
     if test "`which ${cxx}`" = "`which ${CXX}`"; then
       cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
     fi
@@ -43746,7 +43748,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:43748:" \
+echo "$as_me:43751:" \
      "checking for Fortran compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
