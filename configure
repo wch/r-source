@@ -32959,6 +32959,7 @@ if test -n "${XMKMF}"; then
   cc=`echo ${cc} | sed "s/ .*//"`
   ## Paul Gilbert reported on R-devel 2006-04-13 a system with cc=""
   if test -n "${cc}" ; then
+    CC=`echo ${CC} | sed "s/ .*//"`
     if test "`which ${cc}`" = "`which ${CC}`"; then
       shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
       cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
@@ -32967,6 +32968,7 @@ if test -n "${XMKMF}"; then
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
   if test -n "${cxx}" ; then
+    CXX=`echo ${CXX} | sed "s/ .*//"`
     if test "`which ${cxx}`" = "`which ${CXX}`"; then
       cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
     fi
