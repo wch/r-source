@@ -1850,12 +1850,13 @@ If the compiler is detected as @command{gcc},  @code{-std=gnu99} will be
 appended to @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (On Fedora Core
-Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
-RPMs, for example.  Older Linuxen used @samp{XFree86-}.  Some Debian
-derivatives apparently also require @samp{libxt-dev}.)  If you really do
-not want these you will need to explicitly configure @R{} without X11,
-using @option{--with-x=no}.
+installed, including its headers and client libraries.  (On Fedora
+Core 3 and SuSE 9.x Linux this meant the @samp{xorg-x11-devel} and
+@samp{xorg-x11-libs} RPMs.  In Fedora Core 5 and 6 it means (at least)
+@samp{libX11}, @samp{libX11-devel}, @samp{libXt} and
+@samp{libXt-devel}.  On Debian we recommend the meata-package
+@samp{xorg-dev}.)  If you really do not want these you will need to
+explicitly configure @R{} without X11, using @option{--with-x=no}.
 
 The command-line editing depends on the @code{readline} library
 available from any @acronym{GNU} mirror: you will need a fairly recent
@@ -3014,7 +3015,8 @@ You can build @R{} as a Unix application on Mac OS X using the Apple
 Developer Tools and @command{g77} or @command{gfortran}.  You will also
 need to install an X sub-system or configure with
 @option{--without-x}. The X window manager is part of the standard Mac
-OS X distribution since Mac OS X version 10.3 (Panther).
+OS X distribution since Mac OS X version 10.3 (Panther), but it is
+typically not pre-installed.
 
 For more information on how to find these tools please read the
 @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
