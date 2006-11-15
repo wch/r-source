@@ -129,7 +129,7 @@ INSTALLATION
 
 C-LEVEL FACILITIES
 
-    o	Functions str2type, type2chr and type2str are now available in
+    o	Functions str2type, type2char and type2str are now available in
 	Rinternals.h.
 
 
@@ -282,11 +282,15 @@ BUG FIXES
 	(PR#9356)
 
     o	Some bugs in caching superclass/subclass relations and in
-	removing  those relations on detach and on removeClass() have
+	removing those relations on detach and on removeClass() have
 	been fixed.
 
     o	readBin() could return one too many strings if 'n' was an
 	over-estimate. (PR#9361)
+
+    o	A request for an opaque colour in the pdf() driver after a
+	translucent one did not set the transparency back to opaque in
+	2.4.0.
 
 
 
