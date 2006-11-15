@@ -1530,7 +1530,7 @@ if test -z "${no_x}"; then
   CFLAGS="${r_save_CFLAGS}"
   if test "${ac_cv_header_X11_Intrinsic_h}" = yes ; then
     AC_CHECK_LIB(Xt, XtToolkitInitialize, [have_Xt=yes], [have_Xt=no],
-                 [$(X_LIBS) -lX11])
+                 [${X_LIBS} -lX11])
     if test "${have_Xt}" = yes; then
       use_X11="yes"
     fi
