@@ -6051,6 +6051,10 @@ function to call plus zero to three arguments).  Function @code{elt} and
 pairlist, and @code{nthcdr} returns a pointer to the @var{n}th position
 in the pairlist (whose @code{CAR} is the @var{n}th item).
 
+Functions @code{str2type} and @code{type2str} map @R{}
+length-one character strings to and from @code{SEXPTYPE} numbers, and
+@code{type2char} maps numbers to C character strings.
+
 
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying

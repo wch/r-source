@@ -217,7 +217,6 @@
  R_Log10
  R_NHeap
  R_NSize
- R_NewHashedEnv
  R_Newhashpjw
  R_OutputCon
  R_PPStack

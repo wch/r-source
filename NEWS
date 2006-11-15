@@ -127,6 +127,11 @@ INSTALLATION
 	R CMD javareconf was updated to look for the corresponding
 	Java tools as well.
 
+C-LEVEL FACILITIES
+
+    o	Functions str2type, type2chr and type2str are now available in
+	Rinternals.h.
+
 
 BUG FIXES
 

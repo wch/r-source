@@ -763,7 +763,6 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 # define RemoveClass		Rf_RemoveClass
 # define sortVector		Rf_sortVector
 # define ssort			Rf_ssort
-# define str2type		Rf_str2type
 # define StringFromComplex	Rf_StringFromComplex
 # define StringFromInteger	Rf_StringFromInteger
 # define StringFromLogical	Rf_StringFromLogical
@@ -772,8 +771,6 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 # define substituteList		Rf_substituteList
 # define tsConform		Rf_tsConform
 # define tspgets		Rf_tspgets
-# define type2char		Rf_type2char
-# define type2str		Rf_type2str
 # define type2symbol		Rf_type2symbol
 # define unbindVar		Rf_unbindVar
 # define usemethod		Rf_usemethod
@@ -956,7 +953,6 @@ void R_Suicide(char*);
 SEXP R_setProcTimeNames(SEXP ans);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
-SEXPTYPE str2type(char*);
 int StrToInternal(char*);
 SEXP substituteList(SEXP, SEXP);
 SEXP R_syscall(int,RCNTXT*);
@@ -965,8 +961,6 @@ SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
-char * type2char(SEXPTYPE);
-SEXP type2str(SEXPTYPE);
 SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
 #ifdef ALLOW_OLD_SAVE
