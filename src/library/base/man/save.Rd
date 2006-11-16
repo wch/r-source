@@ -90,7 +90,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   are delimited by LF on all platforms.
 
   Although the default version has not changed since \R 1.4.0, this
-  does not mean that saved files are necessarily backwards conpatible.
+  does not mean that saved files are necessarily backwards compatible.
   You will be able to load a saved image into an earlier version of \R
   unless use is made of later additions (for example, raw vectors or
   external pointers).
