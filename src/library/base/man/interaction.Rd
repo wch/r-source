@@ -20,11 +20,12 @@ interaction(\dots, drop = FALSE, sep = ".")
 \value{
   A factor which represents the interaction of the given factors.
   The levels are labelled as the levels of the individual factors joined
-  by \code{sep}, i.e. \code{.} by default.
+  by \code{sep}, by \code{.} by default.
 
-  As from \R 2.4.0 the levels are ordered so the level of the first
-  factor varies fastest, then the second and so on.  This is the reverse
-  of lexicographic ordering.
+  The levels are ordered so the level of the first factor varies
+  fastest, then the second and so on.  This is the reverse of
+  lexicographic ordering, and differs from \code{\link{:}}.  (It is done
+  this way for compatibility with S.)
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
@@ -32,8 +33,9 @@ interaction(\dots, drop = FALSE, sep = ".")
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{factor}}; \code{\link{:}} where \code{f:g} is the same as
-  \code{interaction(f,g, sep=":")} when \code{f} and  \code{g} are factors.
+  \code{\link{factor}};
+  \code{\link{:}} where \code{f:g} is the similar to
+  \code{interaction(f, g, sep=":")} when \code{f} and  \code{g} are factors.
 }
 \examples{
 a <- gl(2, 4, 8)

@@ -15,9 +15,8 @@ from:to
 }
 \details{
   The binary operator \code{:} has two meanings: for factors \code{a:b} is
-  equivalent to \code{\link{interaction}(a, b)} (except for labelling by
-  \code{la:lb} not \code{la.lb}).
-
+  equivalent to \code{\link{interaction}(a, b)} (but the levels are
+  ordered and labelled differently).
 
   For numeric arguments \code{from:to} is equivalent to \code{seq(from, to)},
   and generates a sequence from \code{from} to \code{to} in steps of \code{1}
@@ -30,12 +29,14 @@ from:to
   and representable in the integer type, otherwise of type
   \code{\link{numeric}}.
 
-  For factors, a factor.
+  For factors, an unordered factor with levels labelled as \code{la:lb}
+  and ordered lexicographically (that is, \code{lb} varies fastest).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole.
+  Wadsworth \& Brooks/Cole.\cr
+  (for numeric arguments: S does not have \code{:} for factors.)
 }
 \seealso{
   \code{\link{seq}}.
