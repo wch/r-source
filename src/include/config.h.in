@@ -604,6 +604,9 @@
    to be built. */
 #undef HAVE_TCLTK
 
+/* Define to 1 if you have the `time' function. */
+#undef HAVE_TIME
+
 /* Define to 1 if you have the `times' function. */
 #undef HAVE_TIMES
 

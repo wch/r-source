@@ -602,6 +602,9 @@
    to be built. */
 #define HAVE_TCLTK 1
 
+/* Define to 1 if you have the `time' function. */
+#define HAVE_TIME 1
+
 /* Define to 1 if you have the `times' function. */
 #define HAVE_TIMES 1
 
