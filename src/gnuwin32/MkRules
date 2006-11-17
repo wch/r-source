@@ -195,7 +195,7 @@ RESCOMP=$(BINPREF)windres
 
 %.dll:
 	@$(ECHO) EXPORTS > $*.def
-	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $*.def
+	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> $*.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 

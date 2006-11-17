@@ -13,6 +13,8 @@ returns to the comand prompt.
 
 More of the messages from the script editor are translatable.
 
+There is support for x86_64 cross-compilers as well as for ix86.
+
 
 
 R 2.4.0 patched
@@ -33,7 +35,7 @@ Building customized installers failed because the startup options
 weren't being handled properly.
 
 If Rconsole settings were such that R could not start properly, it
-crashed. It now suggests starting with the --vanilla option, which now
+crashed.  It now suggests starting with the --vanilla option, which now
 does not load Rconsole.  Additionally, an option --no-Rconsole has
 been added for completeness and debugging.
 
