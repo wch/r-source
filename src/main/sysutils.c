@@ -643,7 +643,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 }
 
 
-static const char  * const procTimeNames[] = {"user", "system", "total", "user.children", "system.children"};
+static const char  * const procTimeNames[] = {"user", "system", "elapsed", "user.children", "system.children"};
 
 SEXP attribute_hidden R_setProcTimeNames(SEXP ans)
 {
