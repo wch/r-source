@@ -1812,7 +1812,7 @@ try(prod(raw()))
 
 r <- hist(rnorm(100), plot = FALSE, breaks = 12,
           ## arguments which don't make sense for plot=FALSE - give a warning:
-          right = FALSE, col = "blue")
+          xlab = "N(0,1)", col = "blue")
 ## gave no warning in 2.3.0 and earlier
 
 

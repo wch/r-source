@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-13 r39883)
+R version 2.5.0 Under development (unstable) (2006-11-16 r39921)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5179,9 +5179,9 @@ Error in prod(..., na.rm = na.rm) : invalid 'type' (raw) of argument
 > 
 > r <- hist(rnorm(100), plot = FALSE, breaks = 12,
 +           ## arguments which don't make sense for plot=FALSE - give a warning:
-+           right = FALSE, col = "blue")
++           xlab = "N(0,1)", col = "blue")
 Warning message:
-arguments 'right', 'col' are not made use of in: hist.default(rnorm(100), plot = FALSE, breaks = 12, right = FALSE,  
+arguments 'col', 'xlab' are not made use of in: hist.default(rnorm(100), plot = FALSE, breaks = 12, xlab = "N(0,1)",  
 > ## gave no warning in 2.3.0 and earlier
 > 
 > 
