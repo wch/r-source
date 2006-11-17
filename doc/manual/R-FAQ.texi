@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-13
+@set FAQ_DATE @value{FAQ_YEAR}-11-16
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2276,6 +2276,9 @@ statistical computing can be carried out.
 @c (@pxref{What documentation exists for R?}).
 @item Rpad
 Utility functions for the Rpad workbook-style interface.
+@item Rserve
+A socket server (TCP/IP or local sockets) which allows binary requests
+to be sent to R.
 @c REMOVED 2001-12-08
 @c @item Rstreams
 @c Binary file stream support functions.
@@ -4210,6 +4213,8 @@ Stem analysis functions for volume increment and carbon uptake
 assessment from tree-rings.
 @item trimcluster
 Cluster analysis with trimming.
+@item trip
+Spatial analysis of animal track data.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
 @item truncgof
