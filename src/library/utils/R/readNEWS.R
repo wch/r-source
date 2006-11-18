@@ -117,7 +117,9 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	versions
     }
 
+    tfile <- file
     if(is.character(file)) {
+        tfile <- normalizePath(file)
         file <- file(file, "r")
         on.exit(close(file))
     }
@@ -130,7 +132,13 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
     ## We could read in parts ...
     ll <- readLines(file)
     nl <- length(ll)
-    if(trace) cat("successfully read", nl, "lines from", file,"\n")
+    if(trace) {
+        if(is.character(tfile))
+            cat("successfully read ", nl, " lines from ",
+                sQuote(tfile), "\n", sep="")
+        else
+            cat("successfully read ", nl, " lines\n", sep="")
+    }
 
     s.pre <- "^\t*\\*[\t ]+ " ##  REGEXP prefix used to identify series begin
     s.post <- " SERIES NEWS"
