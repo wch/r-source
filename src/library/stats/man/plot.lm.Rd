@@ -78,14 +78,14 @@
 
   The Residual-Leverage plot shows contours of equal Cook's distance,
   for values of \code{cook.levels} (by default 0.5 and 1) and omits
-  cases with leverage one.
-  If the leverages are constant, as typically in a balanced \code{\link{aov}}
-  situation, the plot uses factor level combinations instead of the
-  leverages for the x-axis.
+  cases with leverage one.  If the leverages are constant (as is
+  typically the case in a balanced \code{\link{aov}} situation) the plot
+  uses factor level combinations instead of the leverages for the
+  x-axis.  (The factor levels are ordered by mean fitted value.)
 
   In the Cook's distance vs leverage/(1-leverage) plot, contours of
   standardized residuals that are equal in magnitude are lines through
-  the origin.  The contour lines are labeled with the magnitudes.
+  the origin.  The contour lines are labelled with the magnitudes.
 }
 \references{
   Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)

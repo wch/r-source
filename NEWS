@@ -172,6 +172,7 @@ NEW FEATURES
 	of a data frame with integer row names.  This is now corrected
 	when the object is recreated.
 
+
 BUG FIXES
 
     o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
@@ -291,6 +292,10 @@ BUG FIXES
     o	A request for an opaque colour in the pdf() driver after a
 	translucent one did not set the transparency back to opaque in
 	2.4.0.
+
+    o	plot.lm(which=5) in the case of constant leverage re-ordered
+	the factor levels but not the residuals, so the labelling by
+	factor level was often incorrect.
 
 
 
