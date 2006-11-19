@@ -28,10 +28,15 @@ Using Visual C++
 ================
 
 You may if you prefer use Visual C++ to make the DLLs (unless they use
-Fortran source!). First build the import library Rdll.lib by
+Fortran source!). The notes here were tested with VC++6.
+
+First build the import library Rdll.lib by
 
 	make R.exp
 	lib /def:R.exp /out:Rdll.lib
+
+(Another, less reliable, way to make R.exp is to use pexports.exe from
+mingw-utils.)
 
 Then you can compile the objects and build the DLL by
 
@@ -129,10 +134,11 @@ http://www.stats.uwo.ca/faculty/murdoch/software/compilingDLLs/
 Cross-building packages on Linux
 ================================
 
-It is straightforward to build a package on a ix86-linux system,
-although it seems not possible (and we have tried, including using
-WINE) to cross-build .chm files.  You will need an installation of R
-for Windows, either copied from a Windows system or cross-compiled.
+It is straightforward to build a package on a ix86 (or even x86_64)
+Linux system, although it seems not possible (and we have tried,
+including using WINE) to cross-build .chm files.  You will need an
+installation of R for Windows, either copied from a Windows system or
+cross-compiled.
 
 First you need to set up the cross-compilers and tools (see the `R
 Installation and Administration' manual) and have them in your path.
@@ -145,7 +151,7 @@ Then packages can be made as natively, for example by
 
 	cd .../src/gnuwin32
 	make PKGDIR=/mysources RLIB=/R/win/library pkg-mypkg
-	make PKGDIR=/mysources RLIB=/R/win/library pkgcheck-mypkg
+	make PKGDIR=/mysources RLIB=/R/win/library lazyload-mypkg
 	cd /R/win/library
 	zip -r9X /dest/mypkg.zip mypkg
 
