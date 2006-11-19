@@ -799,7 +799,7 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
              }
             else if(identical(cldef@package, pkg)) {
               .uncacheClass(cl, cldef)
-              .removeSuperClassBackRefs(cl, cldef, searchWhere)
+              .removeSuperclassBackRefs(cl, cldef, searchWhere)
           }
         }
     }
