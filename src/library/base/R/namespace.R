@@ -361,7 +361,8 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         ## load any dynamic libraries
         ## We provide a way out for cross-building where we can't dynload
-        if(!nchar(Sys.getenv("R_CROSS_BUILD"))) {
+        if(!nchar(Sys.getenv("R_CROSS_BUILD")) ||
+           identical(package, "methods")) {
             dlls <- list()
             dynLibs <- nsInfo$dynlibs
             for (i in seq_along(dynLibs)) {
