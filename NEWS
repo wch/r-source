@@ -132,7 +132,12 @@ C-LEVEL FACILITIES
     o	Functions str2type, type2char and type2str are now available in
 	Rinternals.h.
 
+UTILITIES
 
+    o	Additional Sweave internal functions are exported to help
+	writing new drivers, RweaveLatexRuncode is now created using a
+	helper function (all from a patch submitted by Seth Falcon).
+	
 BUG FIXES
 
     o	gc() can now report quantities of Vcells in excess of 16Gb on
