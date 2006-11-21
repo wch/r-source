@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
-"PO-Revision-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2006-11-21 08:27\n"
+"PO-Revision-Date: 2006-11-21 08:27\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -249,6 +249,12 @@ msgstr "test ‘%s’ is not available"
 
 msgid "'fix' requires a name"
 msgstr "‘fix’ requires a name"
+
+msgid "too many list items (at most up to number 26)"
+msgstr "too many list items (at most up to number 26)"
+
+msgid "too many list items (at most up to number 3899)"
+msgstr "too many list items (at most up to number 3899)"
 
 msgid "'form' must be a two-sided formula"
 msgstr "‘form’ must be a two-sided formula"
@@ -680,6 +686,12 @@ msgstr "empty beginning of file"
 
 msgid "first five rows are empty: giving up"
 msgstr "first five rows are empty: giving up"
+
+msgid "cannot coerce 'x' to roman"
+msgstr "cannot coerce ‘x’ to roman"
+
+msgid "Invalid roman numeral(s): %s"
+msgstr "Invalid roman numeral(s): %s"
 
 msgid "invalid 'socket' argument"
 msgstr "invalid ‘socket’ argument"

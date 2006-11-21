@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-10 16:02\n"
+"POT-Creation-Date: 2006-11-21 08:26\n"
 "PO-Revision-Date: 2006-04-18 08:33+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -57,9 +57,6 @@ msgstr "'nu' doit être 0, nrow(x) ou ncol(x)"
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv' doit être 0, nrow(x) ou ncol(x)"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "'all' ne peut être utilisé avec d'autres options de 'deparse'"
 
 msgid "second argument must be a list"
 msgstr "le second argument doit être une liste"
@@ -1352,6 +1349,15 @@ msgstr "Elimination de"
 msgid "Registering evaluate as low-level callback"
 msgstr "Enregistrement de l'évaluation comme rappel de bas niveau"
 
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
+msgstr ""
+
 msgid "'width' must be positive"
 msgstr "'width' doit être postif"
 
@@ -1420,6 +1426,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "'all' can not be used with other deparse options"
+#~ msgstr "'all' ne peut être utilisé avec d'autres options de 'deparse'"
 
 #~ msgid "no rows to match"
 #~ msgstr "aucune ligne correspondante"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-10 16:02\n"
+"POT-Creation-Date: 2006-11-21 08:26\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,9 +51,6 @@ msgid "'nu' must be 0, nrow(x) or ncol(x)"
 msgstr ""
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
-msgstr ""
-
-msgid "'all' can not be used with other deparse options"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -1263,6 +1260,15 @@ msgid "Removing"
 msgstr ""
 
 msgid "Registering evaluate as low-level callback"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
 msgstr ""
 
 msgid "'width' must be positive"

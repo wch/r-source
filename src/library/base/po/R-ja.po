@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-10 16:02\n"
+"POT-Creation-Date: 2006-11-21 08:26\n"
 "PO-Revision-Date: 2006-09-22 19:14+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -53,9 +53,6 @@ msgstr "'nu' は 0 , nrow(x) または ncol(x) でなければなりません"
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv' は 0 , nrow(x) または ncol(x) でなければなりません"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "'all' は他の deparse オプションと一緒には使えません"
 
 msgid "second argument must be a list"
 msgstr "第二引数はリストでなければなりません"
@@ -1330,6 +1327,15 @@ msgstr "以下を取除きます："
 msgid "Registering evaluate as low-level callback"
 msgstr "登録(Registering)は低レベルのコールバックとして評価されます"
 
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
+msgstr ""
+
 msgid "'width' must be positive"
 msgstr "'width' は正でなければなりません"
 
@@ -1389,6 +1395,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
+
+#~ msgid "'all' can not be used with other deparse options"
+#~ msgstr "'all' は他の deparse オプションと一緒には使えません"
 
 #~ msgid "no rows to match"
 #~ msgstr "マッチすべき行がありません"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:21\n"
+"POT-Creation-Date: 2006-11-21 08:27\n"
 "PO-Revision-Date: 2006-04-18 08:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -527,6 +527,12 @@ msgstr ""
 "assignation comme \"%s\" d'une représentation de classe avec un nom interne "
 "\"%s\""
 
+#, fuzzy
+msgid "Class \"%s\" has a locked definition in package \"%s\""
+msgstr ""
+"la classe \"%s\" n'a pas de définition visible depuis le package ou "
+"l'environnement '%s'"
+
 msgid "'externalptr' objects cannot be initialized from new()"
 msgstr "les objets 'externalptr' ne peuvent être intialisés avec new()"
 
@@ -657,8 +663,27 @@ msgstr "Le package '%s' n'est pas chargé"
 msgid "unable to find an environment containing class \"%s\""
 msgstr "impossible de trouver un environnement contenant la classe \"%s\""
 
-msgid "Undefined member, \"%s\", of union \"%s\" (not added during attach)"
+msgid "Undefined subclass, \"%s\", of class \"%s\"; definition not updated"
 msgstr ""
+
+msgid ""
+"Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new "
+"inheritance information; consider setClassUnion()"
+msgstr ""
+
+msgid ""
+"No definition of inheritance from \"%s\" to \"%s\", though the relation was "
+"implied by the setIs() from \"%s\""
+msgstr ""
+
+msgid ""
+"Couldn't find superclass \"%s\" to clean up when removing subclass "
+"references to class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "No class \"%s\" found as expected in removing subclass \"%s\""
+msgstr "la classe \"%s\" étend une classe non définie, \"%s\""
 
 #, fuzzy
 msgid ""

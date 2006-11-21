@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:22\n"
+"POT-Creation-Date: 2006-11-21 08:27\n"
 "PO-Revision-Date: 2006-04-18 09:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -74,6 +74,10 @@ msgstr "'which' ne spécifie aucun facteur"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which' spécifie des variables non facteurs qui seront éliminées"
+
+#, fuzzy
+msgid "'lag.max' must be at least 0"
+msgstr "'lag.max' doit valoir au moins 1"
 
 msgid "'lag.max' must be at least 1"
 msgstr "'lag.max' doit valoir au moins 1"
