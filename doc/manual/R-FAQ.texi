@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-16
+@set FAQ_DATE @value{FAQ_YEAR}-11-20
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2803,6 +2803,8 @@ Package for drawing ellipses and ellipse-like confidence regions.
 @item elliptic
 A suite of elliptic and related functions including Weierstrass and
 Jacobi forms.
+@item elrm
+Exact Logistic Regression via MCMC.
 @item emme2
 Functions to read from and write to an EMME/2 databank.
 @item emplik
@@ -3571,6 +3573,8 @@ Functions to perform the regression depth method (RDM) to binary
 regression to approximate the amount of overlap, i.e., the minimal
 number of observations that need to be removed such that the reduced
 data set has no longer overlap.
+@item np
+Nonparametric kernel smoothing methods for mixed datatypes.
 @item npmc
 Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
@@ -4502,10 +4506,12 @@ allowing one to call arbitrary Perl subroutines, classes and methods.
 @item RSPython
 Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality.
-@item Rlibstree
-Suffix Trees in R via the libstree C library.
 @item RXLisp
 An interface to call XLisp-Stat functions from within R.
+@item Rcompression
+In-memory decompression for @acronym{GNU} zip and bzip2 formats.
+@item Rlibstree
+Suffix Trees in R via the libstree C library.
 @item Rstem
 Interface to Snowball implementation of Porter's word stemming
 algorithm.
