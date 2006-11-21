@@ -302,6 +302,8 @@ BUG FIXES
 	the factor levels but not the residuals, so the labelling by
 	factor level was often incorrect.
 
+    o	packBits() was not accepting a logical argument. (PR#9374)
+
 
 
 		CHANGES IN R VERSION 2.4.0
