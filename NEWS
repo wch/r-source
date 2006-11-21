@@ -54,8 +54,9 @@ NEW FEATURES
     o	New function withVisible() allows R level access to the visibility
 	flag.
 
-    o	system.time() and proc.time() have names on the returned
-	vector to help identify the five elements.
+    o	system.time() and proc.time() now return an object of class
+	"proc_time" with a print() method that returns a POSIX-like
+	format with names.
 
     o	Introduced the suffix L for integer literals to create
 	integer rather than numeric values, e.g. 100L, 0x10L, 1e2L.

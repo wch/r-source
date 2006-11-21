@@ -950,7 +950,7 @@ SEXP R_set_class(SEXP, SEXP, SEXP);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
-SEXP R_setProcTimeNames(SEXP ans);
+void R_getProcTime(double *data);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
 int StrToInternal(char*);
@@ -1013,7 +1013,6 @@ SEXP R_subset3_dflt(SEXP, SEXP);
 
 /* main/subassign.c */
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
-
 
 #ifdef SUPPORT_MBCS /* implies we have this header */
 #include <wchar.h>

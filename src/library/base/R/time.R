@@ -11,11 +11,19 @@ system.time <- function(expr, gcFirst = TRUE)
     eval(expr, envir = loc.frame)
     new.time <- proc.time()
     on.exit()
-    ## this cannot happen
-    ## if(length(new.time) == 3)	new.time <- c(new.time, 0, 0)
-    ## if(length(time) == 3)	time	 <- c(	  time, 0, 0)
-    new.time - time
+    structure(new.time - time, class="proc_time")
 }
 unix.time <- system.time
 
 date <- function() .Internal(date())
+
+print.proc_time <- function(x, ...)
+{
+    y <- x
+    if(!is.na(y[4])) y[1] <- y[1] + y[4]
+    if(!is.na(y[5])) y[2] <- y[2] + y[5]
+    y <- y[1:3]
+    names(y) <- c(gettext("user"), gettext("system"), gettext("elapsed"))
+    print(y, ...)
+    invisible(x)
+}

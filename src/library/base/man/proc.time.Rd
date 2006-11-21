@@ -1,19 +1,31 @@
 \name{proc.time}
 \alias{proc.time}
+\alias{print.proc_time}
 \title{Running Time of R}
 \description{
-  \code{proc.time} determines how much time (in seconds) the currently
-  running \R process already consumed.
+  \code{proc.time} determines how much real and CPU time (in seconds)
+  the currently running \R process has already taken.
 }
 \usage{
 proc.time()
 }
+\details{
+  \code{proc.time} returns five elements for backwards compatibility,
+  but as from \R 2.5.0 its \code{print} method prints a named vector of
+  length 3.  The first two entries are the total user and system CPU
+  times of the current \R process and any child processes on which it
+  has waited, and the third entry is the \sQuote{real} elapsed time
+  since the process was started.
+}
 \value{
-  A numeric vector of length 5, containing the user, system, and total
-  elapsed times for the currently running \R process, and the cumulative
-  sum of user and system times of any child processes spawned by it.
-  
-  The resolution of the times will be system-specific;
+  An object of class \code{"proc_time"} which is a numeric vector of
+  length 5, containing the user, system, and total elapsed times for the
+  currently running \R process, and the cumulative sum of user and
+  system times of any child processes spawned by it on which it has
+  waited.  (The \code{print} method combines the child time with those
+  of the main process.)
+ 
+  The resolution of the times will be system-specific
 #ifdef unix
   and times are rounded to the nearest 1ms.  On modern systems they will
   be that accurate, but on older systems they might be accurate to

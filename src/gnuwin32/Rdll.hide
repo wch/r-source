@@ -288,7 +288,6 @@
  R_restore_globals
  R_run_onexits
  R_serializeb
- R_setProcTimeNames
  R_signgam
  R_subset3_dflt
  R_syscall

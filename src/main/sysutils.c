@@ -642,7 +642,22 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     return res;
 }
 
+SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
+#ifdef _R_HAVE_TIMING_
+{
+    SEXP ans = allocVector(REALSXP, 5);
+    R_getProcTime(REAL(ans));
+    setAttrib(ans, R_ClassSymbol, mkString("proc_time"));
+    return ans;
+}
+#else
+{
+    error(_("proc.time() is not implemented on this system"));
+    return R_NilValue;		/* -Wall */
+}
+#endif
 
+#ifdef UNUSED
 static const char  * const procTimeNames[] = {"user", "system", "elapsed", "user.children", "system.children"};
 
 SEXP attribute_hidden R_setProcTimeNames(SEXP ans)
@@ -660,3 +675,4 @@ SEXP attribute_hidden R_setProcTimeNames(SEXP ans)
     UNPROTECT(2);
     return(ans);
 }
+#endif
