@@ -656,23 +656,3 @@ SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;		/* -Wall */
 }
 #endif
-
-#ifdef UNUSED
-static const char  * const procTimeNames[] = {"user", "system", "elapsed", "user.children", "system.children"};
-
-SEXP attribute_hidden R_setProcTimeNames(SEXP ans)
-{
-    SEXP names;
-    int i;
-
-    PROTECT(ans);
-    PROTECT(names = allocVector(STRSXP, 5));
-    for( i = 0; i < 5; i++ )
-        SET_STRING_ELT(names, i, mkChar(procTimeNames[i]));
-
-    setAttrib(ans, R_NamesSymbol, names);
-
-    UNPROTECT(2);
-    return(ans);
-}
-#endif

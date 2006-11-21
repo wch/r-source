@@ -22,7 +22,7 @@ proc.time()
   length 5, containing the user, system, and total elapsed times for the
   currently running \R process, and the cumulative sum of user and
   system times of any child processes spawned by it on which it has
-  waited.  (The \code{print} method combines the child time with those
+  waited.  (The \code{print} method combines the child times with those
   of the main process.)
  
   The resolution of the times will be system-specific
