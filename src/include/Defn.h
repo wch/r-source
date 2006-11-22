@@ -77,13 +77,6 @@ Rcomplex Rf_ComplexFromReal(double, int*);
 
 #include "Errormsg.h"
 
-/* SunOS 4 is famous for broken header files. */
-#ifdef SunOS4
-# ifndef NULL
-#  define	NULL		0
-# endif
-#endif /* SunOS4 */
-
 #if defined(Win32) || defined(HAVE_AQUA)
 extern void R_ProcessEvents(void);
 #endif

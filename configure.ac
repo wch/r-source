@@ -695,13 +695,6 @@ AC_CHECK_HEADERS(errno.h inttypes.h stdarg.h stdint.h string.h)
 ## AC_CHECK_HEADERS(libintl.h)
 ## </NOTE>
 
-case "${host_os}" in
-  sunos4*)
-    AC_DEFINE(SunOS4, 1,
-              [Define if your system is SunOS4, which is famous for
-               broken header files.])
-  ;;
-esac
 R_HEADER_SETJMP
 R_HEADER_GLIBC2
 
@@ -2130,6 +2123,19 @@ AC_SUBST(XTRA_INTL_CPPFLAGS)
 
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
+
+### * bug fixes
+# PR#9375 claims that sh on OSF1 is not POSIX-compliant and that is 
+# not a bug in the OS: we add a workaround for such benighted OSes
+case "${host_os}" in
+  osf*)
+    OSF_SH_BUG='"${1+@}"'
+  ;;
+  *)
+    OSF_SH_BUG='"${@}"'
+  ;;
+esac
+AC_SUBST(OSF_SH_BUG)
 
 ### * Win32 overrides
 case "${host_os}" in

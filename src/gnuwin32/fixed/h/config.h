@@ -839,10 +839,6 @@
 /* Define this to enable support for UTF-8 locales. */
 /* #undef SUPPORT_UTF8 */
 
-/* Define if your system is SunOS4, which is famous for broken header files.
-   */
-/* #undef SunOS4 */
-
 /* Define to enable provoking compile errors on write barrier violation. */
 /* #undef TESTING_WRITE_BARRIER */
 
