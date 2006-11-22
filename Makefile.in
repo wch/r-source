@@ -81,9 +81,6 @@ install: installdirs svnonly
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)"; \
 	done
-	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)"; \
-	done
 	@for f in $(NON_SVN_INSTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(rhome)"; \
 	done

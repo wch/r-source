@@ -67,7 +67,7 @@ uninstall:
 	@if test -d "$(rhome)/$(subdir)" \
 	  && test "`cd \"$(rhome)\"; $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
-	  (cd "$(rhome)/$(subdir)" && rm -f $(INSTFILES); \
+	  (cd "$(rhome)/$(subdir)" && rm -f $(INSTFILES)); \
 	  (cd "$(rhome)/$(subdir)$(R_ARCH)" && rm -f $(OBJECTS)); \
 	  if test -n "$(R_ARCH)"; then \
 	    rmdir "$(rhome)/$(subdir)$(R_ARCH)" 2> /dev/null ; \
