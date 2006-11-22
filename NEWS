@@ -155,6 +155,10 @@ BUG FIXES
 	the factor levels but not the residuals, so the labelling by
 	factor level was often incorrect.
 
+    o	packBits() was not accepting a logical argument. (PR#9374)
+
+    o	make install was omitting doc/FAQ and doc/RESOURCES.
+
 
 
 		CHANGES IN R VERSION 2.4.0
