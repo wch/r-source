@@ -31,6 +31,13 @@ NEW FEATURES
 	when the object is recreated.
 
 
+C-LEVEL FACILITIES
+
+    o	Using STRICT_R_HEADERS applies to more reported clashes with
+	Windows headers, including Calloc and Realloc.  These and
+	Free need to be prefixed by R_ when STRICT_R_HEADERS is defined.
+
+
 BUG FIXES
 
     o	Fixed warning() to use .dfltWarn intead of .dfltStop for default
