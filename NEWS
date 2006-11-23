@@ -105,6 +105,9 @@ NEW FEATURES
 
     o	uniroot() now works if the zero occurs at one of the ends of
 	the interval (suggestion of Tamas Papp).
+	
+    o	rgb() now accepts the red, green and blue components in a
+    	single matrix or dataframe.
 
 
 DEPRECATED & DEFUNCT

@@ -30,6 +30,12 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   \item{maxColorValue}{number giving the maximum of the color values
     range, see above.}
 }
+\details{
+  The colors may be specified by passing a matrix or dataframe as argument
+  \code{red}, and leaving \code{blue} and \code{green} missing.
+  In this case the first three columns of \code{red} are taken to be
+  the \code{red}, \code{green} and \code{blue} values.
+}
 \seealso{
   \code{\link{col2rgb}} the \dQuote{inverse} for translating \R colors
   to RGB vectors;
@@ -43,5 +49,8 @@ reds <- rgb((0:15)/15, g=0,b=0, names=paste("red",0:15,sep="."))
 reds
 
 rgb(0, 0:12, 0, max = 255)# integer input
+
+ramp <- colorRamp(c("red", "white"))
+rgb( ramp(seq(0, 1, length = 5)), max = 255)
 }
 \keyword{color}
