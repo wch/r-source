@@ -1648,15 +1648,7 @@ sub Rwrap
 	    $remainder = $2;
 	}
 	elsif ($t =~ s/([^\n]*?)(\s|\Z(?!\n))//xm) {
-	    ## Prefer overflow to wrap at point, cf Text::Wrap.
-	    ## elsif ($t =~ s/^([^\n]{$ll})//) {
-	    ##     $r .= $nl . $lead . $1;
-	    ##     $remainder = "\n";
-	    ## }
-	    ## <FIXME>
-	    ## If we always overflow, why don't we simply always wrap at
-	    ## the next white space?
-	    ## </FIXME>
+	    ## Prefer overflow to wrap at fill column, cf Text::Wrap.
 	    $r .= $nl . $lead . $1;
 	    $remainder = $2;
 	} else {
