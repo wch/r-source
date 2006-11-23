@@ -377,7 +377,7 @@ static size_t null_write(const void *ptr, size_t size, size_t nitems,
     return 0;			/* -Wall */
 }
 
-void init_con(Rconnection new, char *description, char *mode)
+void init_con(Rconnection new, char *description, const char * const mode)
 {
     strcpy(new->description, description);
     strncpy(new->mode, mode, 4); new->mode[4] = '\0';

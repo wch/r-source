@@ -157,7 +157,7 @@ Rconnection getConnection(int n);
 Rconnection getConnection_no_err(int n);
 Rboolean switch_stdout(int icon, int closeOnExit);
 void con_close(int i);
-void init_con(Rconnection new, char *description, char *mode);
+void init_con(Rconnection new, char *description, const char * const mode);
 Rconnection R_newurl(char *description, const char * const mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);
 Rconnection in_R_newsock(char *host, int port, int server, char *mode);

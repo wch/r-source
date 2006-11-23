@@ -154,7 +154,7 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
 }
 
 
-static Rconnection in_R_newurl(char *description, char *mode)
+static Rconnection in_R_newurl(char *description, const char * const mode)
 {
     Rconnection new;
 
@@ -938,7 +938,7 @@ void RxmlMessage(int level, const char *format, ...)
 
 #include "sock.h"
 #define STRICT_R_HEADERS
-#include <R_ext/RS.h> /* for Calloc */
+#include <R_ext/RS.h> /* for R_Calloc */
 
 void
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
