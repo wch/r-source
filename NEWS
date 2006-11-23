@@ -100,6 +100,8 @@ NEW FEATURES
 	used in deparsing in place of as.integer(NA) etc unless
 	.deparseOpts() includes "S_compatible".
 
+    o	options(device = ) now accepts a function object as well as
+        the name of a function.
 
 DEPRECATED & DEFUNCT
 

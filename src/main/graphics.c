@@ -4544,6 +4544,8 @@ DevDesc* CurrentDevice(void)
 	SEXP defdev = GetOption(install("device"), R_BaseEnv);
 	if (isString(defdev) && length(defdev) > 0)
 	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
+	else if(TYPEOF(defdev) == CLOSXP) 
+	    PROTECT(defdev = lang1(defdev));
 	else
 	    error(_("no active or default device"));
 	eval(defdev, R_GlobalEnv);
