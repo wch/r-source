@@ -144,13 +144,14 @@ function(package, dir, lib.loc = NULL)
         ## In the long run we need dynamic documentation.
         if(.isMethodsDispatchOn()) {
             code_objs <-
-                code_objs[sapply(code_objs, function(f) {
-                    fdef <- get(f, envir = code_env)
-                    if(methods::is(fdef, "genericFunction"))
-                        fdef@package == pkgname
-                    else
-                        TRUE
-                }) == TRUE]
+                .filter(code_objs,
+                        function(f) {
+                            fdef <- get(f, envir = code_env)
+                            if(methods::is(fdef, "genericFunction"))
+                                fdef@package == pkgname
+                            else
+                                TRUE
+                        })
         }
         ## </FIXME>
 
@@ -426,11 +427,11 @@ function(package, dir, lib.loc = NULL,
     names(function_args_in_code) <- functions_in_code
     if(has_namespace) {
         functions_in_ns <-
-            objects_in_ns[sapply(objects_in_ns,
-                                 function(f) {
-                                     f <- get(f, envir = ns_env)
-                                     is.function(f) && (length(formals(f)) > 0)
-                                 }) == TRUE]
+            .filter(objects_in_ns,
+                    function(f) {
+                        f <- get(f, envir = ns_env)
+                        is.function(f) && (length(formals(f)) > 0)
+                    })
         function_args_in_ns <-
             lapply(functions_in_ns,
                    function(f) formals(get(f, envir = ns_env)))
@@ -1889,10 +1890,8 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the function objects in the given package.
     functions_in_code <-
-        objects_in_code[sapply(objects_in_code,
-                               function(f)
-                               is.function(get(f, envir = code_env)))
-                        == TRUE]
+        .filter(objects_in_code,
+                function(f) is.function(get(f, envir = code_env)))
 
     S3_group_generics <- .get_S3_group_generics()
 
@@ -2123,13 +2122,15 @@ function(package, dir, lib.loc = NULL)
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
     bad_replace_funs <- if(length(replace_funs)) {
-        replace_funs[sapply(replace_funs, function(f) {
-            ## Always get the functions from code_env ...
-            ## Should maybe get S3 methods from the registry ...
-            f <- get(f, envir = code_env)
-            if(!is.function(f)) return(TRUE)
-            .check_last_formal_arg(f)
-        }) == FALSE]} else character(0)
+        .filter(replace_funs,
+                function(f) {
+                    ## Always get the functions from code_env ...
+                    ## Should maybe get S3 methods from the registry ...
+                    f <- get(f, envir = code_env)
+                    if(!is.function(f)) return(FALSE)
+                    ! .check_last_formal_arg(f)
+                })
+    } else character(0)
 
     if(.isMethodsDispatchOn()) {
         S4_generics <- methods::getGenerics(code_env)
@@ -2140,17 +2141,15 @@ function(package, dir, lib.loc = NULL)
             sapply(S4_generics,
                    function(f) {
                        meths <- methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
-                       ind <- which(sapply(methods::slot(meths,
-                                                         "methods"),
-                                           .check_last_formal_arg)
-                                    == FALSE)
-                       if(!length(ind))
+                       ind <- !as.logical(sapply(methods::slot(meths,
+                                                               "methods"),
+                                                 .check_last_formal_arg))
+                       if(!any(ind))
                            character()
                        else {
-                           sigs <-
-                               sapply(methods::slot(meths,
-                                                    "classes")[ind],
-                                      paste, collapse = ",")
+                           sigs <- sapply(methods::slot(meths,
+                                                        "classes")[ind],
+                                          paste, collapse = ",")
                            paste("\\S4method{", f, "}{", sigs, "}",
                                  sep = "")
                        }
