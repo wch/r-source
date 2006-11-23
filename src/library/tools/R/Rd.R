@@ -714,6 +714,7 @@ function(txt)
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- sub("^[[:space:]]+", "", txt)
     txt <- sub("[[:space:]]+$", "", txt)
+    txt <- gsub("\\\\_", "_", txt)
     txt
 }
 
