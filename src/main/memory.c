@@ -1720,7 +1720,7 @@ static SEXP allocSExpNonCons(SEXPTYPE t)
     return s;
 }
 
-/* cons is defined directly do avoid the need to protect its arguments
+/* cons is defined directly to avoid the need to protect its arguments
    unless a GC will actually occur. */
 SEXP cons(SEXP car, SEXP cdr)
 {
