@@ -218,7 +218,7 @@ static double R_VF_VStrHeight (const unsigned char *s,
 
 /* this is the version of the falabel() method that is specific
    to the case when the current Plotter font is a Hershey font */
-static void R_VF_VText (double x, double y, char *s, 
+static void R_VF_VText (double x, double y, const char * const s, 
 			double x_justify, double y_justify, double rotation,
 			R_GE_gcontext *gc,
 			GEDevDesc *dd)
