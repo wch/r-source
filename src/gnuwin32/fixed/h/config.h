@@ -312,13 +312,13 @@
 #define HAVE_INTTYPES_H_WITH_UINTMAX 1
 
 /* Define to 1 if you have the `isblank' function. */
-/* #undef HAVE_ISBLANK */
+#define HAVE_ISBLANK 1
 
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
 
 /* Define to 1 if you have the `iswblank' function. */
-/* #undef HAVE_ISWBLANK */
+#define HAVE_ISWBLANK 1
 
 /* Define to 1 if you have the `iswctype' function. */
 #define HAVE_ISWCTYPE 1

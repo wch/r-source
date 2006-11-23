@@ -15,6 +15,8 @@ More of the messages from the script editor are translatable.
 
 There is support for x86_64 cross-compilers as well as for ix86.
 
+mingw-runtime >= 3.11 is needed to build R.
+
 
 
 R 2.4.0 patched

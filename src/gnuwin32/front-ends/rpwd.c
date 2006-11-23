@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000  R Development Core Team
+ *  Copyright (C) 2000-6  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#if __MINGW32_MAJOR_VERSION == 3 && __MINGW32_MINOR_VERSION < 10
-#error mingw-runtime version 3.10 or later is required
+#if __MINGW32_MAJOR_VERSION == 3 && __MINGW32_MINOR_VERSION < 11
+#error mingw-runtime version 3.11 or later is required
 #endif
 
 int main (int argc, char **argv)

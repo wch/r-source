@@ -37,7 +37,7 @@
 #endif
 
 #ifdef HAVE_GLIBC2
-# define _GNU_SOURCE /* iswblank is a GNU extension */
+# define _GNU_SOURCE /* iswblank is a GNU extension, also in C99 */
 #endif
 
 #include <string.h>
@@ -268,7 +268,8 @@ char *locale2charset(const char *locale);
     return isw ## ISWNAME (wc); \
 }
 /* Solaris 8 is missing iswblank.  Its man page is missing iswcntrl,
-   but the function is there.  Windows also does not have iswblank. */
+   but the function is there.  MinGW used not to have iswblank until
+   mingw-runtime-3.11. */
 #ifndef HAVE_ISWBLANK
 #define iswblank(wc) iswctype(wc, wctype("blank"))
 #endif

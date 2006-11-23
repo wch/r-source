@@ -3794,7 +3794,7 @@ You need a recent version of the MinGW port of @command{gcc} from
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
-There may be an installer in the `Proposed' section, which can be used
+There may be an installer in the `Current' section, which can be used
 if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
 using this, select the @samp{Candidate} package and add the @code{g++}
 and @code{g77} compilers to the @samp{MinGW base tools}: components will
@@ -3803,8 +3803,8 @@ be downloaded from Sourceforge and unpacked.)
 An alternative is to download the components individually, currently
 
 @example
-mingw-runtime-3.10.tar.gz
-w32api-3.7.tar.gz
+mingw-runtime-3.11.tar.gz
+w32api-3.8.tar.gz
 binutils-2.16.91-20060119-1.tar.gz
 gcc-core-3.4.5-20060117-1.tar.gz
 gcc-g++-3.4.5-20060117-1.tar.gz
@@ -3813,7 +3813,7 @@ gcc-g77-3.4.5-20060117-1.tar.gz
 
 @noindent
 and unpack these into the same directory (using @command{tar zxf
-tarball_name}).  Note that @code{mingw-runtime-3.10.tar.gz} or later is
+tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later is
 required to build @R{}, @code{gcc-g77-3.4.4} or later to build some
 contributed packages, and @code{gcc-3.4.5} is needed to get a correct
 build of @R{} itself.
