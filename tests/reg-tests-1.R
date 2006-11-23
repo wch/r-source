@@ -4535,6 +4535,13 @@ bs <- boxplot.stats(c(1,Inf,Inf,Inf))
 ## gave an error in 2.4.0
 
 
+## t.test with one group of size one
+x <- c(23,25,29,27,30,30)
+t.test(x=x[1], y=x[-1], var.equal=TRUE)
+t.test(y=x[1], x=x[-1], var.equal=TRUE)
+## failed in 2.4.0
+
+
 ## uniroot did not allow zero at the end of an interval
 f <- function(x) x-1
 uniroot(f, c(0,2))

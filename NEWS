@@ -325,6 +325,9 @@ BUG FIXES
 
     o	make install was omitting doc/FAQ and doc/RESOURCES.
 
+    o	A two-sample t.test(x, y, var.equal=TRUE) did not allow one of the
+	groups to be of size one.
+
 
 
 		CHANGES IN R VERSION 2.4.0
