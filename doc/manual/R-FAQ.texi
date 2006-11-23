@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-20
+@set FAQ_DATE @value{FAQ_YEAR}-11-23
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2817,6 +2817,8 @@ distributions, hierarchical clustering by e-distances.
 @item ensembleBMA
 Probabilistic forecasting using Bayesian Model Averaging of ensembles
 using a mixture of normal distributions.
+@item epicalc
+Epidemiological calculator.
 @item epitools
 Basic tools for applied epidemiology.
 @item epsi
@@ -3872,6 +3874,8 @@ fft, histogram equalization, and reading @acronym{JPEG} files.
 @item riv
 Robust Instrumental Variables estimators based on high breakpoint point
 S-estimators of multivariate location and scatter matrices.
+@item rjacobi
+Jacobi polynomials and Gauss-Jacobi quadrature related operations.
 @item rlecuyer
 R interface to RNG with multiple streams.
 @item rmeta
