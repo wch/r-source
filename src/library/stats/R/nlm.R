@@ -32,9 +32,11 @@ optimise <- optimize
 uniroot <- function(f, interval, lower = min(interval), upper = max(interval),
 		    tol = .Machine$double.eps^0.25, maxiter = 1000, ...)
 {
+    if(!missing(interval) && length(interval) != 2)
+        stop("'interval' must be a vector of length 2")
     if(!is.numeric(lower) || !is.numeric(upper) || lower >= upper)
-		   stop("lower < upper  is not fulfilled")
-    if(f(lower, ...) * f(upper, ...) >= 0)
+        stop("lower < upper  is not fulfilled")
+    if(f(lower, ...) * f(upper, ...) > 0)
 	stop("f() values at end points not of opposite sign")
     val <- .Internal(zeroin(function(arg) f(arg, ...), lower, upper, tol,
 			    as.integer(maxiter)))

@@ -103,6 +103,10 @@ NEW FEATURES
     o	options(device = ) now accepts a function object as well as
         the name of a function.
 
+    o	uniroot() now works if the zero occurs at one of the ends of
+	the interval (suggestion of Tamas Papp).
+
+
 DEPRECATED & DEFUNCT
 
     o	symbol.C() and symbol.For() are defunct, and have been

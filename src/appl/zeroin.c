@@ -97,6 +97,18 @@ double R_zeroin(			/* An estimate of the root */
     c = a;   fc = fa;
     maxit = *Maxit + 1; tol = * Tol;
 
+    /* First test if we have found a root at an endpoint */
+    if(fa == 0.0) {
+	*Tol = 0.0;
+	*Maxit = 0;
+	return a;
+    }
+    if(fb ==  0.0) {
+	*Tol = 0.0;
+	*Maxit = 0;
+	return b;
+    }
+
     while(maxit--)		/* Main iteration loop	*/
     {
 	double prev_step = b-a;		/* Distance from the last but one

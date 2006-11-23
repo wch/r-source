@@ -4529,6 +4529,15 @@ stopifnot(all.equal(coef(fit1), coef(fit2)))
 rbind( data.frame(x=1), list(x=2) )
 ## was error in 2.4.0 as list gave double row names.
 
+
 ## extreme case
 bs <- boxplot.stats(c(1,Inf,Inf,Inf))
 ## gave an error in 2.4.0
+
+
+## uniroot did not allow zero at the end of an interval
+f <- function(x) x-1
+uniroot(f, c(0,2))
+uniroot(f, c(0,1))
+uniroot(f, c(1,2))
+## last two failed in 2.4.x
