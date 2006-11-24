@@ -382,12 +382,13 @@ stopifnot(Eq(coef(g1), coef(g2)),
 	  Eq(deviance(g1), deviance(g2)),
 	  Eq(resid(g1), resid(g2)))
 ## from logLik.glm.Rd
-"anorexia" <-
-structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1,
-1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3
-), .Label = c("CBT", "Cont", "FT"), class = "factor"), Prewt = c(80.7,
+anorexia <-
+structure(list(Treat = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,
+2L, 2L, 2L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L,
+3L), .Label = c("CBT", "Cont", "FT"), class = "factor"), Prewt = c(80.7,
 89.4, 91.8, 74, 78.1, 88.3, 87.3, 75.1, 80.6, 78.4, 77.6, 88.7,
 81.3, 78.1, 70.5, 77.3, 85.2, 86, 84.1, 79.7, 85.5, 84.4, 79.6,
 77.5, 72.3, 89, 80.5, 84.9, 81.5, 82.6, 79.9, 88.7, 94.9, 76.3,
@@ -402,14 +403,7 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 82.6, 100.4, 85.2, 83.6, 84.6, 96.2, 86.7, 95.2, 94.3, 91.5,
 91.9, 100.3, 76.7, 76.8, 101.6, 94.9, 75.2, 77.8, 95.5, 90.7,
 92.5, 93.8, 91.7, 98)), .Names = c("Treat", "Prewt", "Postwt"
-), class = "data.frame", row.names = c("1", "2", "3", "4", "5",
-"6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
-"17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27",
-"28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38",
-"39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
-"50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60",
-"61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71",
-"72"))
+), class = "data.frame", row.names = 1:72)
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
 	    family = gaussian, data = anorexia)
 summary(anorex.1)
@@ -1696,19 +1690,19 @@ stopifnot(identical(x, unlist(as.list(x))))
 ## test of long Error expression in aov(): PR#1315 and later,
 ## and also a cross-check of deparse(, cutoff = 500)
 AA <- structure(list(Y2 = c(10, 9, 0, 0, 5, 6, 0, 0, 8, 9, 0, 0, 4,
-4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = structure(c(1, 1, 1,
-1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3
-), .Label = c("1", "2", "3"), class = "factor"), AAAAAAAA = structure(c(1,
-1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2,
-2, 2), .Label = c("E1", "E2"), class = "factor"), B2 = structure(c(1,
-1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1,
-2, 2), .Label = c("Red", "Unred"), class = "factor"), C2 = structure(c(1,
-2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
-1, 2), .Label = c("Agent", "Patient"), class = "factor")), .Names = c("Y2",
-"P2", "AAAAAAAA", "B2", "C2"), class = "data.frame", row.names = c("1",
-"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
-"14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"
-))
+4, 0, 0, 12, 11, 2, 0, 6, 7, 0, 0), P2 = structure(c(1L, 1L,
+1L, 1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 3L,
+3L, 3L, 3L, 3L, 3L, 3L), .Label = c("1", "2", "3"), class = "factor"),
+    AAAAAAAA = structure(c(1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L,
+    1L, 1L, 1L, 2L, 2L, 2L, 2L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 2L
+    ), .Label = c("E1", "E2"), class = "factor"), B2 = structure(c(1L,
+    1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L,
+    1L, 1L, 2L, 2L, 1L, 1L, 2L, 2L), .Label = c("Red", "Unred"
+    ), class = "factor"), C2 = structure(c(1L, 2L, 1L, 2L, 1L,
+    2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L, 1L, 2L,
+    1L, 2L, 1L, 2L), .Label = c("Agent", "Patient"), class = "factor")),
+    .Names = c("Y2", "P2", "AAAAAAAA", "B2", "C2"),
+    class = "data.frame", row.names = 1:24)
 AK2anova.out <-
     aov(Y2 ~ AAAAAAAA * B2 * C2 +
 	Error(P2 + P2:AAAAAAAA + P2:B2 + P2:C2 + P2:AAAAAAAA:B2 +
@@ -2439,24 +2433,8 @@ Quine <- structure(list(Eth = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     27, 0, 30, 10, 14, 27, 41, 69, 25, 10, 11, 20, 33, 5, 7,
     0, 1, 5, 5, 5, 5, 7, 11, 15, 5, 14, 6, 6, 7, 28, 0, 5, 14,
     2, 2, 3, 8, 10, 12, 1, 1, 9, 22, 3, 3, 5, 15, 18, 22, 37)),
-          .Names = c("Eth", "Sex", "Age", "Slow or fast", "Days"),
-          class = "data.frame",
-          row.names = c("1",
-"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
-"14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
-"25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35",
-"36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46",
-"47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57",
-"58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68",
-"69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79",
-"80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90",
-"91", "92", "93", "94", "95", "96", "97", "98", "99", "100",
-"101", "102", "103", "104", "105", "106", "107", "108", "109",
-"110", "111", "112", "113", "114", "115", "116", "117", "118",
-"119", "120", "121", "122", "123", "124", "125", "126", "127",
-"128", "129", "130", "131", "132", "133", "134", "135", "136",
-"137", "138", "139", "140", "141", "142", "143", "144", "145",
-"146"))
+    .Names = c("Eth", "Sex", "Age", "Slow or fast", "Days"),
+    class = "data.frame", row.names = 1:46)
 step(aov(log(Days+2.5) ~ .^4, data=Quine))
 DF <- data.frame(y=rnorm(21), `x 1`=-10:10., check.names = FALSE)
 lm(y ~ ., data = DF)
@@ -3192,9 +3170,9 @@ hist(log(-5:100), plot = FALSE)
 
 
 ## merge problem with names/not in rbind.data.frame
-x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), .Dim = c(2, 3),
+x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), .Dim = 2:3,
                .Dimnames = list(c("1", "2"), c("P", "V", "2")))
-y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), .Dim = c(2, 3),
+y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), .Dim = 2:3,
                .Dimnames = list(c("1", "2"), c("P", "V", "1")))
 merge(x, y, all.y = TRUE)
 ## failed for a while in pre-2.0.0
@@ -3791,7 +3769,7 @@ z
 ## summary.matrix failed on some classed objects
 surv <- structure(c(2.06, 2.13, 0.09, 0.27, 1, 0.36, 3.04, 0.67, 0.35,
                     0.24, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0),
-                  .Dim = c(10, 2),
+                  .Dim = c(10L, 2L),
                   .Dimnames = list(NULL, c("time", "status")),
                   type = "right", class = "Surv")
 summary(surv)
@@ -3891,7 +3869,7 @@ occupationalStatus <-
                            11, 35, 40, 25, 90, 21, 15, 11, 20, 88, 183,
                            46, 554, 158, 126, 6, 8, 23, 64, 28, 230, 143,
                            91, 2, 3, 21, 32, 12, 177, 71, 106)
-                         ), .Dim = as.integer(c(8, 8)), .Dimnames =
+                         ), .Dim = c(8L, 8L), .Dimnames =
               structure(list(origin = c("1", "2", "3", "4", "5", "6", "7", "8"),
                              destination = c("1", "2", "3", "4", "5", "6", "7",
                              "8")), .Names = c("origin", "destination")),
@@ -4375,9 +4353,9 @@ stopifnot(identical(names(x), names(xx)))
 
 
 ## subsetting arrays preserved attributes, although it did not for matrices
-x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,2,2))
+x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2L,2L,2L))
 stopifnot(is.null(attr(x[,,], "comm")))
-x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2,4))
+x <- structure(1:8, names=letters[1:8], comm="a comment", dim = c(2L,4L))
 stopifnot(is.null(attr(x[,], "comm")))
 x <- structure(1:8, names=letters[1:8], comm="a comment")
 stopifnot(!is.null(attr(x[], "comm")))  # this does preserve
