@@ -43,6 +43,7 @@ character tables for PCRE. The tables are built according to the default C
 locale. Now that pcre_maketables is a function visible to the outside world, we
 make use of its code from here in order to be consistent. */
 
+#include <config.h> /* to avoid trivial warnings from LFS */
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
