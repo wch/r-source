@@ -108,6 +108,9 @@ NEW FEATURES
 	
     o	rgb() now accepts the red, green and blue components in a
     	single matrix or dataframe.
+	
+    o	New utility function RShowDoc() in package 'utils' to find and
+	display manuals and other documentation files.
 
 
 DEPRECATED & DEFUNCT
