@@ -1,6 +1,9 @@
-## it is not clear why this remaps special names: it has for a very long time
-## nor why it treats 'tsp' and 'levels' specially.
-## as factors will normally have "class" after "levels", ordered factors
+## This remaps special names are they are used by deparsing, but why are they?
+##
+## It is not clear why it treats 'tsp' and 'levels' specially.
+## It does ensure that factors which were deparsed as a double vector
+## are converted to integers.
+## As factors will normally have "class" after "levels", ordered factors
 ## do work correctly.
 structure <- function (.Data, ...)
 {
