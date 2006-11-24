@@ -169,6 +169,12 @@ BUG FIXES
     o	A two-sample t.test(x, y, var.equal=TRUE) did not allow one of the
 	groups to be of size one.
 
+    o	The "ts" method for print() failed on some corrupted objects
+	of class "ts", e.g. those without a "tsp" attribute.
+
+    o	structure() reordered the "class" value given if there was a
+	"tsp" value specified.
+
 
 
 		CHANGES IN R VERSION 2.4.0

@@ -340,6 +340,11 @@ print.ts <- function(x, calendar, ...)
 	calendar <- any(fr.x == c(4,12))
     ## sanity check
     Tsp <- tsp(x)
+    if(is.null(Tsp)) {
+        warning("series is corrupt, with no 'tsp' attribute")
+        print(unclass(x))
+        return(invisible(x))
+    }
     nn <- 1 + round((Tsp[2] - Tsp[1]) * Tsp[3])
     if(NROW(x) != nn) {
         warning(gettextf("series is corrupt: length %d with 'tsp' implying %d",

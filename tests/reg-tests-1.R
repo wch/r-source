@@ -4501,7 +4501,7 @@ L3 <- LETTERS[1:3]
 d <- data.frame(cbind(x=1, y=1), fac=sample(L3, 1, repl=TRUE))
 e <- d[-1,]
 merge(d, e, by.x = "x", by.y = "x", all.x = TRUE)
-##
+## not allowed <= 2.4.0
 
 
 ## PR#9313
@@ -4528,3 +4528,11 @@ x <- c(23,25,29,27,30,30)
 t.test(x=x[1], y=x[-1], var.equal=TRUE)
 t.test(y=x[1], x=x[-1], var.equal=TRUE)
 ## failed in 2.4.0
+
+
+## corrupted "ts" objects
+structure(1:3, class="ts")
+## failed in print method < 2.4.1
+
+
+### end of tests added in 2.4.1 ###
