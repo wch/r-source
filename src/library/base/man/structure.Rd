@@ -15,19 +15,16 @@ structure(.Data, \dots)
   \link{attributes} set.
 }
 \details{
-  Adding a \code{\link{tsp}} attribute will ensure that the object
-  returned inherits from class \code{"ts"}, and adding a
-  \code{\link{levels}} attribute ensures that the returned object is a
-  factor.
+  Adding a  class \code{"factor"} will ensure that numeric codes are
+  given integer storage mode.
 
   For historical reasons (these names are used when deparsing),
-  attributes \code{".Dim"}, \code{".Dimnames"},
-  \code{".Names"}, \code{".Tsp"} and \code{".Label"} are renammed to
-  \code{"dim"}, \code{"dimnames"}, \code{"names"}, \code{"tsp"} and
-  \code{"levels"}.
+  attributes \code{".Dim"}, \code{".Dimnames"}, \code{".Names"},
+  \code{".Tsp"} and \code{".Label"} are renamed to \code{"dim"},
+  \code{"dimnames"}, \code{"names"}, \code{"tsp"} and \code{"levels"}.
 
   It is possible to give the same tag more than once, in which case the
-  last value assigned wins.  As other ways of assigning attributes,
+  last value assigned wins.  As with other ways of assigning attributes,
   using \code{tag=NULL} removes attribute \code{tag} from \code{.Data} if
   it is present.
 }
