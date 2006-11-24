@@ -27,7 +27,7 @@ hasTsp(x)
     Assignments are checked for consistency.    
 
     Assigning \code{NULL} which removes the \code{tsp} attribute
-    \emph{and} any \code{"ts"} class of \code{x}.
+    \emph{and} any \code{"ts"} (or \code{"mts"}) class of \code{x}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
