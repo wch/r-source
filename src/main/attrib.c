@@ -424,6 +424,18 @@ SEXP classgets(SEXP vec, SEXP klass)
 
 	    /* HOWEVER, it is the way that the object bit gets set/unset */
 
+	    int i;
+	    Rboolean isfactor = FALSE;
+	    for(i = 0; i < length(klass); i++)
+		if(streql(CHAR(STRING_ELT(klass, i)), "factor")) {
+		    isfactor = TRUE;
+		    break;
+		}
+	    if(isfactor && TYPEOF(vec) != INTSXP) {
+		/* we cannot coerce vec here, so just fail */
+		error(_("adding class \"factor\" to an invalid object"));
+	    }
+
 	    installAttrib(vec, R_ClassSymbol, klass);
 	    SET_OBJECT(vec, 1);
 	}

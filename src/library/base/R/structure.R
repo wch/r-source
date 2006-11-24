@@ -1,7 +1,5 @@
-## it is not clear why this remaps special names: it has for a very long time
-## nor why it treats 'tsp' and 'levels' specially.
-## as factors will normally have "class" after "levels", ordered factors
-## do work correctly.
+## This remaps special names as they are used by deparsing, but why are they?
+##
 structure <- function (.Data, ...)
 {
     attrib <- list(...)
@@ -11,12 +9,9 @@ structure <- function (.Data, ...)
 	m <- match(names(attrib), specials)
 	ok <- (!is.na(m) & m > 0)
 	names(attrib)[ok] <- replace[m[ok]]
-        nm <- names(attrib)
-	if("tsp" %in% nm &&
-           !("ts" %in% c(attributes(.Data), attrib$class)))
-	    attrib$class <- c(attrib$class, "ts")
-	if(is.numeric(.Data) && "levels" %in% nm)
-	    .Data <- factor(.Data, levels = seq_along(attrib$levels))
+        ## prior to 2.5.0 factors would deparse to double codes
+	if("factor" %in% attrib$class && typeof(.Data) == "double")
+	   storage.mode(.Data) <- "integer"
 	attributes(.Data) <- c(attributes(.Data), attrib)
     }
     return(.Data)

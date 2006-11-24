@@ -161,6 +161,14 @@ BUG FIXES
     o	gc() can now report quantities of Vcells in excess of 16Gb on
 	64-bit systems (rather than reporting NA).
 
+    o	Assigning class "factor" to an object now ensures it has
+	integer (and not say double) codes.
+
+    o	structure() no longer takes adding a "levels" attribute to be a
+	request for a factor nor adding a "tsp" attribute to be a
+	request for a "ts" object, but it does ensure that objects
+	with added class "factor" have integer codes.
+
 
 
 
