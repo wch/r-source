@@ -233,14 +233,27 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
+/* also used in rui.c */
 void internal_shellexec(char * file)
 {
     char *home;
+    unsigned int ret;
 
     home = getenv("R_HOME");
     if (home == NULL)
 	error(_("R_HOME not set"));
-    ShellExecute(NULL, "open", file, NULL, home, SW_SHOW);
+    ret = (unsigned int) ShellExecute(NULL, "open", file, NULL, home, SW_SHOW);
+    if(ret <= 32) { /* an error condition */
+	if(ret == ERROR_FILE_NOT_FOUND  || ret == ERROR_PATH_NOT_FOUND
+	   || ret == SE_ERR_FNF || ret == SE_ERR_PNF)
+	    error(_("'%s' not found"), file);
+	if(ret == SE_ERR_ASSOCINCOMPLETE || ret == SE_ERR_NOASSOC)
+	    error(_("file association for '%s' not available or invalid"), 
+		  file);
+	if(ret == SE_ERR_ACCESSDENIED || ret == SE_ERR_SHARE)
+	    error(_("access to '%s' denied"), file);
+	error(_("problem in displaying '%s'"), file);
+    }
 }
 
 SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)

@@ -45,13 +45,17 @@ browseURL(url, browser = getOption("browser"))
   mechanism is only used if \code{DISPLAY} points to the local host.
   This may not allow displaying more than one URL at a time from a
   remote host.
+
+  It is the caller's responsibility to encode \code{url} if necessary
+  (see \code{\link{URLencode}}).  This can be tricky for file URLs,
+  where the format accepted can depend on the browser and OS.
 }
 #endif
 #ifdef windows
 \examples{
 \dontrun{browseURL("http://www.r-project.org")
-browseURL("file://c|/R/R-2.3.0/doc/html/index.html",
-          browser="C:/Program Files/Netscape/Netscape/netscp.exe")
+browseURL("file://c|/R/R-2.4.0/doc/html/index.html",
+          browser="C:/Program Files/Mozilla Firefox/firefox.exe")
 }}
 #endif
 #ifdef unix
