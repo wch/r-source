@@ -10,7 +10,7 @@
 example(topic, package = NULL, lib.loc = NULL,
         local = FALSE, echo = TRUE, verbose = getOption("verbose"),
         setRNG = FALSE, ask = getOption("example.ask"),
-        prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""))
+        prompt.prefix = abbreviate(topic, 6))
 }
 \arguments{
   \item{topic}{name or literal character string: the online
@@ -40,7 +40,7 @@ example(topic, package = NULL, lib.loc = NULL,
     graphics device appears to be interactive.  This parameter applies
     both to any currently opened device and to any devices opened by the
     example code.}
-  \item{prompt.echo}{character; gives the prompt to be used if
+  \item{prompt.prefix}{character; prefixes the prompt to be used if
     \code{echo = TRUE}.}
 }
 \value{

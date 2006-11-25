@@ -46,6 +46,7 @@ typedef struct {
     int max;
     SEXP na_string;
     SEXP na_string_noquote;
+    int useSource;
 } R_print_par_t;
 extern R_print_par_t R_print;
 

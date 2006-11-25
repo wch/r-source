@@ -586,7 +586,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"select.list",	do_selectlist,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"aqua.custom.print", do_aqua_custom_print, 0, 11, 2,   {PP_FUNCALL, PREC_FN,   0}},
 #endif
-{"parse",	do_parse,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"parse",	do_parse,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"save",	do_save,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"saveToConn",	do_saveToConn,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"load",	do_load,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -603,7 +603,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"interactive",	do_interactive,	0,	0,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"readline",	do_readln,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"menu",	do_menu,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"print.default",do_printdefault,0,	111,	8,	{PP_FUNCALL, PREC_FN,	0}},
+{"print.default",do_printdefault,0,	111,	9,	{PP_FUNCALL, PREC_FN,	0}},
 {"prmatrix", 	do_prmatrix, 	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"invisible",	do_invisible,	0,	101,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"gc",		do_gc,		0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -988,6 +988,8 @@ static void SymbolShortcuts()
     R_RecursiveSymbol = install("recursive");
     R_UseNamesSymbol = install("use.names");
     R_RowNamesSymbol = install("row.names");
+    R_SrcfileSymbol = install("srcfile");
+    R_SrcrefSymbol = install("srcref");
 }
 
 extern SEXP framenames; /* from model.c */

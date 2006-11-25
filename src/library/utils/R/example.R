@@ -2,7 +2,7 @@ example <-
 function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
          ask = getOption("example.ask"),
-	 prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
+	 prompt.prefix = abbreviate(topic, 6))
 {
     topic <- substitute(topic)
     if(!is.character(topic))
@@ -56,6 +56,16 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(length(grep("^### Encoding: ", zz)) > 0 &&
        !identical(Sys.getlocale("LC_CTYPE"), "C"))
 	encoding <- substring(zz, 15)
+    skips <- 0    
+    if (echo) {
+	## skip over header
+	zcon <- file(zfile, open="rt", encoding=encoding)	
+	while(length(zz) && !length(grep("^### \\*\\*", zz))) {
+	    skips <- skips + 1
+	    zz <- readLines(zcon, n=1)
+	}
+	close(zcon)
+    }
     if(ask == "default")
         ask <- echo && grDevices::dev.interactive(orNone = TRUE)
     if(ask) {
@@ -63,12 +73,14 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
             ## NB, this is somewhat dangerous as the device may have
             ## changed during the example.
 	    opar <- graphics::par(ask = TRUE)
-            on.exit(graphics::par(opar))
+            on.exit(graphics::par(opar), add = TRUE)
         }
         op <- options(par.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
-    source(zfile, local, echo = echo, prompt.echo = prompt.echo,
-	   verbose = verbose, max.deparse.length = 250,
-	   encoding = encoding)
+    source(zfile, local, echo = echo, 
+           prompt.echo = paste(prompt.prefix, getOption("prompt"), sep=""),
+           continue.echo = paste(prompt.prefix, getOption("continue"), sep=""),
+           verbose = verbose, max.deparse.length = Inf, encoding = encoding, 
+    	   skip.echo = skips)
 }

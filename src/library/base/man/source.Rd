@@ -5,7 +5,9 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
        verbose = getOption("verbose"),
        prompt.echo = getOption("prompt"),
        max.deparse.length = 150, chdir = FALSE,
-       encoding = getOption("encoding"))
+       encoding = getOption("encoding"),
+       continue.echo = getOption("continue"),
+       skip.echo = 0)
 }
 \alias{source}
 \arguments{
@@ -33,6 +35,10 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{encoding}{character string.  The encoding to be assumed when
     \code{file} is a character string: see \code{\link{file}}.  A
     possible value is \code{"unknown"}: see the Details.}
+  \item{continue.echo}{character; gives the prompt to use on
+    continuation lines if \code{echo = TRUE}.}
+  \item{skip.echo}{integer; how many comment lines at the start of the
+    file to skip if \code{echo = TRUE}.}
 }
 \description{
   \code{source} causes \R to accept its input from the named file or URL
@@ -63,6 +69,12 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   Unlike input from a console, lines in the file or on a connection can
   contain an unlimited number of characters.  However, there is a limit
   of 8192 bytes on the size of character strings.
+  
+  When \code{skip.echo > 0}, that many comment lines at the start of
+  the file will not be echoed.  This does not affect the execution of
+  the code at all.  If there are executable lines within the first
+  \code{skip.echo} lines, echoing will start with the first of them.
+  
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

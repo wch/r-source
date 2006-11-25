@@ -82,26 +82,43 @@ SEXP attribute_hidden getParseContext()
     return ans2;
 }    
 
+void attribute_hidden getParseFilename(char* buffer, int buflen)
+{
+    buffer[0] = '\0';
+    if (R_ParseErrorFile && !isNull(R_ParseErrorFile)) {
+	SEXP filename;
+	PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
+	if (!isNull(filename)) 
+	    strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen-1);
+	UNPROTECT(1);
+    }
+}
+
 void attribute_hidden parseError(SEXP call, int linenum)
 {
     SEXP context = getParseContext();
     int len = length(context);
+    char filename[128];
     if (linenum) {
+    	getParseFilename(filename, sizeof(filename)-2);
+    	if (strlen(filename)) strcpy(filename + strlen(filename), ": ");
+    	
 	switch (len) {
-	case 0: errorcall(call, _("syntax error on line %d"), linenum); break;
-	case 1: errorcall(call, _("syntax error at\n%d: %s"), 
-			    linenum, CHAR(STRING_ELT(context, 0))); break;
-	default: errorcall(call, _("syntax error at\n%d: %s\n%d: %s"), 
-			    linenum-1, CHAR(STRING_ELT(context, len-2)),
+	case 0: errorcall(call, _("%s%s on line %d"), 
+			    filename, R_ParseErrorMsg, linenum); break;
+	case 1: errorcall(call, _("%s%s at\n%d: %s"), 
+			    filename, R_ParseErrorMsg, linenum, CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("%s%s at\n%d: %s\n%d: %s"), 
+			    filename, R_ParseErrorMsg, linenum-1, CHAR(STRING_ELT(context, len-2)),
 			    linenum, CHAR(STRING_ELT(context, len-1))); break;
 	}
     } else {
 	switch (len) {
-	case 0: errorcall(call, _("syntax error"), R_ParseError); break;
-	case 1: errorcall(call, _("syntax error in \"%s\""), 
-			    CHAR(STRING_ELT(context, 0))); break;
-	default: errorcall(call, _("syntax error in:\n\"%s\n%s\""), 
-			    CHAR(STRING_ELT(context, len-2)),
+	case 0: errorcall(call, _("%s"), R_ParseErrorMsg); break;
+	case 1: errorcall(call, _("%s in \"%s\""), 
+			    R_ParseErrorMsg, CHAR(STRING_ELT(context, 0))); break;
+	default: errorcall(call, _("%s in:\n\"%s\n%s\""), 
+			    R_ParseErrorMsg, CHAR(STRING_ELT(context, len-2)),
 			    CHAR(STRING_ELT(context, len-1))); break;
 	}   
     }
@@ -111,12 +128,12 @@ void attribute_hidden parseError(SEXP call, int linenum)
 
  The internal R_Parse.. functions are defined in ./gram.y (-> gram.c)
 
- .Internal( parse(file, n, text, prompt) )
+ .Internal( parse(file, n, text, prompt, srcfile) )
  If there is text then that is read and the other arguments are ignored.
 */
 SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP text, prompt, s;
+    SEXP text, prompt, s, source;
     Rconnection con;
     Rboolean wasopen;
     int ifile, num;
@@ -124,6 +141,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     R_ParseError = 0;
+    R_ParseErrorMsg[0] = '\0';
 
     ifile = asInteger(CAR(args));                       args = CDR(args);
 
@@ -134,6 +152,8 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
         return(allocVector(EXPRSXP, 0));
     PROTECT(text = coerceVector(CAR(args), STRSXP));	args = CDR(args);
     prompt = CAR(args);					args = CDR(args);
+    source = CAR(args);					args = CDR(args);
+
     if (prompt == R_NilValue)
 	PROTECT(prompt);
     else
@@ -150,14 +170,14 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	    num = -1;
 	if(!wasopen)
 	    if(!con->open(con)) error(_("cannot open the connection"));
-	s = R_ParseConn(con, num, &status);
+	s = R_ParseConn(con, num, &status, source);
 	if(!wasopen) con->close(con);
 	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else {
 	if (num == NA_INTEGER)
 	    num = 1;
-	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt);
+	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt, source);
 	if (status != PARSE_OK) parseError(call, 0);
     }
     UNPROTECT(2);

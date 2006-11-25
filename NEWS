@@ -112,6 +112,13 @@ NEW FEATURES
     o	New utility function RShowDoc() in package 'utils' to find and
 	display manuals and other documentation files.
 
+    o	Added links to source files to the parsing routines, so that
+	source() can now echo the original source and comments (rather
+	than deparsing).  This affects example() and Sweave() as well.
+
+    o	Set the parser to give verbose error messages in case of 
+    	syntax errors.
+    
 
 DEPRECATED & DEFUNCT
 

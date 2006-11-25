@@ -95,6 +95,7 @@ void PrintDefaults(SEXP rho)
     if (R_print.max == NA_INTEGER) R_print.max = 99999;
     R_print.gap = 1;
     R_print.width = GetOptionWidth(rho);
+    R_print.useSource = USESOURCE;
 }
 
 SEXP attribute_hidden do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -212,13 +213,19 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     args = CDR(args);
 
+    R_print.useSource = asLogical(CAR(args));
+    if(R_print.useSource == NA_LOGICAL)
+    	errorcall(call, _("invalid '%s' argument"), "useSource");
+    if(R_print.useSource) R_print.useSource = USESOURCE;
+    
     tryS4 = asLogical(CAR(args));
     if(tryS4 == NA_LOGICAL)
 	errorcall(call, _("invalid 'tryS4' internal argument"));
 
     if(tryS4 && IS_S4_OBJECT(x) && isMethodsDispatchOn())
       callShow = TRUE;
-
+    args = CDR(args);
+    
     if(callShow) {
 	SEXP call;
 	PROTECT(call = lang2(install("show"), x));
@@ -540,7 +547,7 @@ static void PrintExpression(SEXP s)
     SEXP u;
     int i, n;
 
-    u = deparse1(s, 0, SIMPLEDEPARSE);
+    u = deparse1(s, 0, R_print.useSource);
     n = LENGTH(u);
     for (i = 0; i < n ; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i)));
@@ -599,8 +606,8 @@ void attribute_hidden PrintValueRec(SEXP s,SEXP env)
     case CLOSXP:
     case LANGSXP:
 	t = getAttrib(s, R_SourceSymbol);
-	if (isNull(t))
-	    t = deparse1(s, 0, SIMPLEDEPARSE);
+	if (isNull(t) || !R_print.useSource)
+	    t = deparse1(s, 0, R_print.useSource);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING_ELT(t, i)));
 #ifdef BYTECODE
@@ -735,7 +742,7 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		if (TAG(a) == R_NamesSymbol)
 		    goto nextattr;
 	    }
-	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol)
+	    if(TAG(a) == R_CommentSymbol || TAG(a) == R_SourceSymbol || TAG(a) == R_SrcrefSymbol)
 		goto nextattr;
 	    if(useSlots)
 		sprintf(ptag, "Slot \"%s\":",
