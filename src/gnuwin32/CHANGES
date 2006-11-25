@@ -11,6 +11,9 @@ There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and
 returns to the comand prompt.
 
+shell.exec() now gives an error and a reason when it fails (rather than
+continuing silently as before).
+
 More of the messages from the script editor are translatable.
 
 There is support for x86_64 cross-compilers as well as for ix86.

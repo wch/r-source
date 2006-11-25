@@ -7,8 +7,10 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     }
 
     html_viewer <- function(path) {
+        ## we don't use browseURL under Windows as shell.exec does
+        ## not want an encoded URL.
         if(.Platform$OS.type == "windows") shell.exec(chartr("/", "\\", path))
-        else browseURL(paste("file://", path, sep=""))
+        else browseURL(paste("file://", URLencode(path), sep=""))
     }
 
     type <- match.arg(type)
