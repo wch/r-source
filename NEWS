@@ -52,7 +52,7 @@ NEW FEATURES
 	strings it can handle.
 
     o	Added links to source files to the parsing routines, so that
-	source() can now echo the original source and comments(rather
+	source() can now echo the original source and comments (rather
 	than deparsing).  This affects example() and Sweave() as well.
 	
     o	New function withVisible() allows R level access to the visibility
