@@ -16,6 +16,7 @@ mode <- function(x) {
 "mode<-" <- function(x, value)
 {
     if (storage.mode(x)==value) return(x)
+    if(is.factor(x)) stop("invalid to change the storage mode of a factor")
     mde <- paste("as.",value,sep="")
     atr <- attributes(x)
     x <- eval(call(mde,x), parent.frame())
