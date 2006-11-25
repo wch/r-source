@@ -972,8 +972,8 @@ SEXP FetchMethod(char *generic, char *classname, SEXP env)
 /* cbind(deparse.level, ...) and rbind(deparse.level, ...) : */
 SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a, t, obj, class, classlist, classname, method, classmethod, rho;
-    char *generic;
+    SEXP a, t, obj, klass, classlist, classname, method, classmethod, rho;
+    const char *generic;
     int mode, deparse_level;
     struct BindData data;
     char buf[512];
@@ -1007,8 +1007,8 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(args = promiseArgs(args, env));
 
-    generic = (PRIMVAL(op) == 1) ? "cbind" : "rbind";
-    class = R_NilValue;
+    generic = ((PRIMVAL(op) == 1) ? "cbind" : "rbind");
+    klass = R_NilValue;
     method = R_NilValue;
     for (a = args; a != R_NilValue; a = CDR(a)) {
 	PROTECT(obj = eval(CAR(a), env));
@@ -1023,10 +1023,10 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		classmethod = R_LookupMethod(install(buf), env, env, 
 					     R_BaseNamespace);
 		if (classmethod != R_UnboundValue) {
-		    if (class == R_NilValue) {
+		    if (klass == R_NilValue) {
 			/* There is no previous class */
 			/* We use this method. */
-			class = classname;
+			klass = classname;
 			method = classmethod;
 		    }
 		    else {
@@ -1034,7 +1034,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* previous class.  If the two are not */
 			/* compatible we drop through to the */
 			/* default method. */
-			if (strcmp(CHAR(class), CHAR(classname))) {
+			if (strcmp(CHAR(klass), CHAR(classname))) {
 			    method = R_NilValue;
 			    break;
 			}

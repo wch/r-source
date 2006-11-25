@@ -22,7 +22,9 @@
 /* <UTF8> char here is handled as a whole string */
 
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
-void Rf_mainloop();                     /* in main.c */
+
+#include <Rinterface.h>
+
 
 extern int R_running_as_main_program;   /* in ../unix/system.c */
 

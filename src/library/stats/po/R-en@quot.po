@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:22\n"
-"PO-Revision-Date: 2006-09-21 15:22\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
+"PO-Revision-Date: 2006-11-25 12:18\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -86,6 +86,9 @@ msgstr "‘which’ specified no factors"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "‘which’ specified some non-factors which will be dropped"
+
+msgid "'lag.max' must be at least 0"
+msgstr "‘lag.max’ must be at least 0"
 
 msgid "'lag.max' must be at least 1"
 msgstr "‘lag.max’ must be at least 1"
@@ -1465,6 +1468,9 @@ msgstr "invalid ‘contrasts.arg’ argument"
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "variable ‘%s’ is absent, its contrast will be ignored"
 
+msgid "using type=\"numeric\" with a factor response will be ignored"
+msgstr "using type=“numeric” with a factor response will be ignored"
+
 msgid "invalid response type"
 msgstr "invalid response type"
 
@@ -1482,6 +1488,9 @@ msgstr "invalid argument ‘omit’"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "‘print.level’ must be in {0,1,2}"
+
+msgid "'interval' must be a vector of length 2"
+msgstr "‘interval’ must be a vector of length 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper  is not fulfilled"
@@ -1980,6 +1989,9 @@ msgstr "non-time series not of the correct length"
 
 msgid "time series contains internal NAs"
 msgstr "time series contains internal NAs"
+
+msgid "series is corrupt, with no 'tsp' attribute"
+msgstr "series is corrupt, with no ‘tsp’ attribute"
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr "series is corrupt: length %d with ‘tsp’ implying %d"

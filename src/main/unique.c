@@ -202,51 +202,51 @@ static int vhash(SEXP x, int indx, HashData *d)
 {
     int i;
     unsigned int key;
-    SEXP this = VECTOR_ELT(x, indx);
+    SEXP _this = VECTOR_ELT(x, indx);
     
-    key = OBJECT(this) + 2*TYPEOF(this) + 100*length(this);
+    key = OBJECT(_this) + 2*TYPEOF(_this) + 100*length(_this);
     /* maybe we should also look at attributes, but that slows us down */
-    switch (TYPEOF(this)) {
+    switch (TYPEOF(_this)) {
     case LGLSXP:
 	/* This is not too clever: pack into 32-bits and then scatter? */
-	for(i = 0; i < LENGTH(this); i++) {
-	    key ^= lhash(this, i, d);
+	for(i = 0; i < LENGTH(_this); i++) {
+	    key ^= lhash(_this, i, d);
 	    key *= 97;
 	}
 	break;
     case INTSXP:
-	for(i = 0; i < LENGTH(this); i++) {
-	    key ^= ihash(this, i, d);
+	for(i = 0; i < LENGTH(_this); i++) {
+	    key ^= ihash(_this, i, d);
 	    key *= 97;
 	}
 	break;
     case REALSXP:
-	for(i = 0; i < LENGTH(this); i++) {
-	    key ^= rhash(this, i, d);
+	for(i = 0; i < LENGTH(_this); i++) {
+	    key ^= rhash(_this, i, d);
 	    key *= 97;
 	}
 	break;
     case CPLXSXP:
-	for(i = 0; i < LENGTH(this); i++) {
-	    key ^= chash(this, i, d);
+	for(i = 0; i < LENGTH(_this); i++) {
+	    key ^= chash(_this, i, d);
 	    key *= 97;
 	}
 	break;
     case STRSXP:
-	for(i = 0; i < LENGTH(this); i++) {
-	    key ^= shash(this, i, d);
+	for(i = 0; i < LENGTH(_this); i++) {
+	    key ^= shash(_this, i, d);
 	    key *= 97;
 	}
 	break;
     case RAWSXP:
-	for(i = 0; i < LENGTH(this); i++) {
-	    key ^= scatter(rawhash(this, i, d), d);
+	for(i = 0; i < LENGTH(_this); i++) {
+	    key ^= scatter(rawhash(_this, i, d), d);
 	    key *= 97;
 	}
 	break;
     case VECSXP:
-	for(i = 0; i < LENGTH(this); i++) {
-	    key ^= vhash(this, i, d);
+	for(i = 0; i < LENGTH(_this); i++) {
+	    key ^= vhash(_this, i, d);
 	    key *= 97;
 	}
 	break;
@@ -1108,7 +1108,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(n > 1) {
 	/* +2 for terminator and rounding error */
-	buf = alloca(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2);
+	buf = (char *) alloca(maxlen + strlen(csep) + (int) (log((double)n)/log(10.0)) + 2);
 	if(n < 10000) {
 	    cnts = (int *) alloca(n * sizeof(int));
 	} else {

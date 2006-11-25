@@ -36,11 +36,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	y <- NULL
     }
     nx <- length(x)
-    if(nx < 2) stop("not enough 'x' observations")
     mx <- mean(x)
     vx <- var(x)
     estimate <- mx
     if(is.null(y)) {
+        if(nx < 2) stop("not enough 'x' observations")
 	df <- nx-1
 	stderr <- sqrt(vx/nx)
         if(stderr < 10 *.Machine$double.eps * abs(mx))
@@ -50,7 +50,11 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	names(estimate) <- ifelse(paired,"mean of the differences","mean of x")
     } else {
 	ny <- length(y)
-	if(ny < 2) stop("not enough 'y' observations")
+        if(nx < 1 || (!var.equal && nx < 2))
+            stop("not enough 'x' observations")
+	if(ny < 1 || (!var.equal && ny < 2))
+            stop("not enough 'y' observations")
+        if(var.equal && nx+ny < 3) stop("not enough observations")
 	my <- mean(y)
 	vy <- var(y)
 	method <- paste(if(!var.equal)"Welch", "Two Sample t-test")
@@ -58,7 +62,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	names(estimate) <- c("mean of x","mean of y")
 	if(var.equal) {
 	    df <- nx+ny-2
-	    v <- ((nx-1)*vx + (ny-1)*vy)/df
+            v <- 0
+            if(nx > 1) v <- v + (nx-1)*vx
+            if(ny > 1) v <- v + (ny-1)*vy
+	    v <- v/df
 	    stderr <- sqrt(v*(1/nx+1/ny))
 	} else {
 	    stderrx <- sqrt(vx/nx)

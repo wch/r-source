@@ -69,7 +69,7 @@ all: Makefile DESCRIPTION
 #	had all.rda in earlier versions 
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

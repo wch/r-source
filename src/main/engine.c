@@ -1583,7 +1583,7 @@ static int VFontFaceCode(int familycode, int fontface) {
  */
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
-void GEText(double x, double y, char *str,
+void GEText(double x, double y, const char * const str,
 	    double xc, double yc, double rot,
 	    R_GE_gcontext *gc,
 	    GEDevDesc *dd)
@@ -1600,7 +1600,8 @@ void GEText(double x, double y, char *str,
     } else {
     char *sbuf = NULL;
     if(str && *str) {
-        char *s, *sb;
+        const char *s;
+	char *sb;
 	int i, n;
 	double xoff, yoff, hadj;
 	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */

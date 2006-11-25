@@ -69,6 +69,7 @@
 #include "Rconnections.h"
 #include <S.h>
 
+
 /* Global print parameter struct: */
 attribute_hidden R_print_par_t R_print;
 
@@ -86,7 +87,7 @@ void PrintDefaults(SEXP rho)
     R_print.na_width = strlen(CHAR(R_print.na_string));
     R_print.na_width_noquote = strlen(CHAR(R_print.na_string_noquote));
     R_print.quote = 1;
-    R_print.right = 0;
+    R_print.right = Rprt_adj_left;
     R_print.digits = GetOptionDigits(rho);
     R_print.scipen = asInteger(GetOption(install("scipen"), rho));
     if (R_print.scipen == NA_INTEGER) R_print.scipen = 0;
@@ -132,7 +133,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     collab = CAR(a); a = CDR(a);
 
     quote = asInteger(CAR(a)); a = CDR(a);
-    R_print.right = asInteger(CAR(a)); a = CDR(a);
+    R_print.right = (Rprt_adj) asInteger(CAR(a)); a = CDR(a);
     naprint = CAR(a);
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
@@ -200,7 +201,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     args = CDR(args);
 
-    R_print.right = asLogical(CAR(args));
+    R_print.right = (Rprt_adj) asLogical(CAR(args)); /* Should this be asInteger()? */
     if(R_print.right == NA_LOGICAL)
 	errorcall(call, _("invalid '%s' argument"), "right");
     args = CDR(args);
@@ -343,7 +344,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	}
 	else {
 	    names = GetArrayDimnames(s);
-	    printArray(t, dims, 0, 0, names);
+	    printArray(t, dims, 0, Rprt_adj_left, names);
 	}
 	UNPROTECT(2);
     }
@@ -401,15 +402,15 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	else { /* ns = length(s) == 0 */
 	    /* Formal classes are represented as empty lists */
 	    char *className = NULL;
-	    SEXP class;
+	    SEXP klass;
 	    if(isObject(s) && isMethodsDispatchOn()) {
-		class = getAttrib(s, R_ClassSymbol);
-		if(length(class) == 1) {
+		klass = getAttrib(s, R_ClassSymbol);
+		if(length(klass) == 1) {
 		    /* internal version of isClass() */
 		    char str[201];
-		    snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(class, 0)));
+		    snprintf(str, 200, ".__C__%s", CHAR(STRING_ELT(klass, 0)));
 		    if(findVar(install(str), env) != R_UnboundValue)
-			className = CHAR(STRING_ELT(class, 0));
+			className = CHAR(STRING_ELT(klass, 0));
 		}
 	    }
 	    if(className) {
@@ -488,7 +489,7 @@ static void printList(SEXP s, SEXP env)
 	}
 	else {
 	    dimnames = getAttrib(s, R_DimNamesSymbol);
-	    printArray(t, dims, 0, 0, dimnames);
+	    printArray(t, dims, 0, Rprt_adj_left, dimnames);
 	}
 	UNPROTECT(2);
     }
@@ -769,10 +770,12 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		*/
 		SEXP s, t, na_string = R_print.na_string,
 		    na_string_noquote = R_print.na_string_noquote;
-		int quote = R_print.quote, right = R_print.right,
+		int quote = R_print.quote, 
 		    digits = R_print.digits, gap = R_print.gap,
 		    na_width = R_print.na_width,
 		    na_width_noquote = R_print.na_width_noquote;
+		Rprt_adj right = R_print.right;
+
 		PROTECT(t = s = allocList(3));
 		SET_TYPEOF(s, LANGSXP);
 		SETCAR(t, install("print")); t = CDR(t);
@@ -921,7 +924,7 @@ int F77_NAME(realp0) (char *label, int *nchar, float *data, int *ndata)
 	Rprintf("\n");
     }
     if(nd > 0) {
-	ddata = malloc(nd*sizeof(double));
+	ddata = (double *) malloc(nd*sizeof(double));
 	if(!ddata) error(_("memory allocation error in realpr"));
 	for (k = 0; k < nd; k++) ddata[k] = (double) data[k];
 	printRealVector(ddata, nd, 1);

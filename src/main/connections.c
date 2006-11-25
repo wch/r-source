@@ -377,7 +377,7 @@ static size_t null_write(const void *ptr, size_t size, size_t nitems,
     return 0;			/* -Wall */
 }
 
-void init_con(Rconnection new, char *description, char *mode)
+void init_con(Rconnection new, char *description, const char * const mode)
 {
     strcpy(new->description, description);
     strncpy(new->mode, mode, 4); new->mode[4] = '\0';
@@ -2740,7 +2740,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!strcmp(what, "character")) {
 	SEXP onechar;
 	PROTECT(ans = allocVector(STRSXP, n));
-	for(i = 0, m = i+1; i < n; i++) {
+	for(i = 0, m = 0; i < n; i++) {
 	    onechar = isRaw ? rawOneString(bytes, nbytes, &np) 
 		: readOneString(con);
 	    if(onechar != R_NilValue) {

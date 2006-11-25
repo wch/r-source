@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-10 16:02\n"
+"POT-Creation-Date: 2006-11-25 12:17\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -52,9 +52,6 @@ msgstr "'nu'는 0, nrow(x) 또는 ncol(x)가 아니면 안됩니다"
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv'는 0, nrow(x) 또는 nod(x)가 아니면 안됩니다"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
 
 msgid "second argument must be a list"
 msgstr "제 2 인수는 리스트가 아니면 안됩니다"
@@ -917,6 +914,9 @@ msgstr ""
 msgid "Expected a single logical value for the S4 object state"
 msgstr ""
 
+msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'는 'namespace:%s' 로부터  export된 오브젝트가 아닙니다"
 
@@ -1329,6 +1329,15 @@ msgstr "이하를 제거합니다"
 msgid "Registering evaluate as low-level callback"
 msgstr "Registering는 low-level의 callback으로 평가됩니다"
 
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
+msgstr ""
+
 msgid "'width' must be positive"
 msgstr "'width'는 positive이 아니면 되지 않습니다"
 
@@ -1404,6 +1413,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "'all' can not be used with other deparse options"
+#~ msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
 
 #~ msgid "no rows to match"
 #~ msgstr "match 해야 할 행이 없습니다"

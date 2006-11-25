@@ -550,7 +550,7 @@ static void makelt(struct tm *tm, SEXP ans, int i, int valid, double frac_secs)
 
 SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP stz, x, ans, ansnames, class, tzone;
+    SEXP stz, x, ans, ansnames, klass, tzone;
     int i, n, isgmt = 0, valid, settz = 0;
     char *tz = NULL, oldtz[20] = "";
 
@@ -590,10 +590,10 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(ptm, ans, i, valid, d - floor(d));
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
-    PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("POSIXt"));
-    SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
-    classgets(ans, class);
+    PROTECT(klass = allocVector(STRSXP, 2));
+    SET_STRING_ELT(klass, 0, mkChar("POSIXt"));
+    SET_STRING_ELT(klass, 1, mkChar("POSIXlt"));
+    classgets(ans, klass);
     if (isgmt) {
 	PROTECT(tzone = allocVector(STRSXP, 1));
 	SET_STRING_ELT(tzone, 0, mkChar(tz));
@@ -819,7 +819,7 @@ static void glibc_fix(struct tm *tm, int *invalid)
 
 SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans, ansnames, class, stz;
+    SEXP x, sformat, ans, ansnames, klass, stz;
     int i, n, m, N, invalid, isgmt = 0;
     struct tm tm, tm2;
     char *tz = NULL;
@@ -876,17 +876,17 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(&tm, ans, i, !invalid, psecs - floor(psecs));
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
-    PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("POSIXt"));
-    SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
-    classgets(ans, class);
+    PROTECT(klass = allocVector(STRSXP, 2));
+    SET_STRING_ELT(klass, 0, mkChar("POSIXt"));
+    SET_STRING_ELT(klass, 1, mkChar("POSIXlt"));
+    classgets(ans, klass);
     UNPROTECT(3);
     return ans;
 }
 
 SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, ans, ansnames, class;
+    SEXP x, ans, ansnames, klass;
     int n, i, valid;
     int day;
     int y, tmp, mon;
@@ -934,10 +934,10 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(&tm, ans, i, valid, 0.0);
     }
     setAttrib(ans, R_NamesSymbol, ansnames);
-    PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("POSIXt"));
-    SET_STRING_ELT(class, 1, mkChar("POSIXlt"));
-    classgets(ans, class);
+    PROTECT(klass = allocVector(STRSXP, 2));
+    SET_STRING_ELT(klass, 0, mkChar("POSIXt"));
+    SET_STRING_ELT(klass, 1, mkChar("POSIXlt"));
+    classgets(ans, klass);
     setAttrib(ans, install("tzone"), mkString("UTC"));
     UNPROTECT(4);
 
@@ -946,7 +946,7 @@ SEXP attribute_hidden do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, ans, class;
+    SEXP x, ans, klass;
     int i, n = 0, nlen[9];
     struct tm tm;
 
@@ -986,9 +986,9 @@ SEXP attribute_hidden do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(class = allocVector(STRSXP, 1));
-    SET_STRING_ELT(class, 0, mkChar("Date"));
-    classgets(ans, class);
+    PROTECT(klass = allocVector(STRSXP, 1));
+    SET_STRING_ELT(klass, 0, mkChar("Date"));
+    classgets(ans, klass);
     UNPROTECT(3);
     return ans;
 }

@@ -57,6 +57,9 @@ static double Q[] = {
 };
 
 double atanh(double x)
+#ifdef __cplusplus
+	throw ()
+#endif
 {
     double s, z;
 

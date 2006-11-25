@@ -58,8 +58,9 @@ NEW FEATURES
     o	New function withVisible() allows R level access to the visibility
 	flag.
 
-    o	system.time() and proc.time() have names on the returned
-	vector to help identify the five elements.
+    o	system.time() and proc.time() now return an object of class
+	"proc_time" with a print() method that returns a POSIX-like
+	format with names.
 
     o	Introduced the suffix L for integer literals to create
 	integer rather than numeric values, e.g. 100L, 0x10L, 1e2L.
@@ -98,6 +99,23 @@ NEW FEATURES
     o	dput() now includes "keepInteger" and "keepNA" in its default
 	'control' argument.
 
+    o	There are new constants NA_integer_, NA_real_, NA_complex_ and
+	NA_character_ to denote NAs of those types, and they will be
+	used in deparsing in place of as.integer(NA) etc unless
+	.deparseOpts() includes "S_compatible".
+
+    o	options(device = ) now accepts a function object as well as
+        the name of a function.
+
+    o	uniroot() now works if the zero occurs at one of the ends of
+	the interval (suggestion of Tamas Papp).
+	
+    o	rgb() now accepts the red, green and blue components in a
+    	single matrix or dataframe.
+	
+    o	New utility function RShowDoc() in package 'utils' to find and
+	display manuals and other documentation files.
+
 
 DEPRECATED & DEFUNCT
 
@@ -108,6 +126,9 @@ DEPRECATED & DEFUNCT
 	an error.
 
     o	The autoloading of ts() is defunct.
+
+    o	The undocumented reserved word GLOBAL.ENV has been removed.
+	(It was yet another way to get the value of the symbol .GlobalEnv.)
 
 
 INSTALLATION
@@ -123,11 +144,34 @@ INSTALLATION
 	R CMD javareconf was updated to look for the corresponding
 	Java tools as well.
 
+    o	Added workaround for reported non-POSIX sh on OSF1.  (PR#9375)
 
+
+C-LEVEL FACILITIES
+
+    o	Functions str2type, type2char and type2str are now available in
+	Rinternals.h.
+
+
+UTILITIES
+
+    o	Additional Sweave internal functions are exported to help
+	writing new drivers, RweaveLatexRuncode is now created using a
+	helper function (all from a patch submitted by Seth Falcon).
+
+	
 BUG FIXES
 
     o	gc() can now report quantities of Vcells in excess of 16Gb on
 	64-bit systems (rather than reporting NA).
+
+    o	Assigning class "factor" to an object now ensures it has
+	integer (and not say double) codes.
+
+    o	structure() no longer takes adding a "levels" attribute to be a
+	request for a factor nor adding a "tsp" attribute to be a
+	request for a "ts" object, but it does ensure that objects
+	with added class "factor" have integer codes.
 
 
 
@@ -162,6 +206,14 @@ NEW FEATURES
     o	dput() will give an incorrect representation of the row names
 	of a data frame with integer row names.  This is now corrected
 	when the object is recreated.
+
+
+C-LEVEL FACILITIES
+
+    o	Using STRICT_R_HEADERS applies to more reported clashes with
+	Windows headers, including Calloc and Realloc.  These and
+	Free need to be prefixed by R_ when STRICT_R_HEADERS is defined.
+
 
 BUG FIXES
 
@@ -265,6 +317,40 @@ BUG FIXES
     o	bxp() could use partial matching on 'pars' when finding
 	defaults for some of its parameters, e.g. a setting of 'cex.axis'
 	in 'pars' or inline was used to set a default for 'outcex'.
+
+    o	acf() now allows lag.max = 0 except when type="partial", and
+	forces the lag 0 autocorrelation to 1. (PR#9360)
+
+    o	hist(*, include.lowest=., right=., plot=FALSE) does not warn
+	anymore, (PR#9356) and more.
+
+    o	Some bugs in caching superclass/subclass relations and in
+	removing those relations on detach and on removeClass() have
+	been fixed.
+
+    o	readBin() could return one too many strings if 'n' was an
+	over-estimate. (PR#9361)
+
+    o	A request for an opaque colour in the pdf() driver after a
+	translucent one did not set the transparency back to opaque in
+	2.4.0.
+
+    o	plot.lm(which=5) in the case of constant leverage re-ordered
+	the factor levels but not the residuals, so the labelling by
+	factor level was often incorrect.
+
+    o	packBits() was not accepting a logical argument. (PR#9374)
+
+    o	make install was omitting doc/FAQ and doc/RESOURCES.
+
+    o	A two-sample t.test(x, y, var.equal=TRUE) did not allow one of the
+	groups to be of size one.
+
+    o	The "ts" method for print() failed on some corrupted objects
+	of class "ts", e.g. those without a "tsp" attribute.
+
+    o	structure() reordered the "class" value given if there was a
+	"tsp" value specified.
 
 
 

@@ -240,21 +240,8 @@ double R_getClockIncrement(void)
 {
     return 1.0 / clk_tck;
 }
-
-SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP ans = allocVector(REALSXP, 5);
-    R_getProcTime(REAL(ans));
-    return R_setProcTimeNames(ans);
-}
 #else /* not _R_HAVE_TIMING_ */
 void R_setStartTime(void) {}
-
-SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    error(_("proc.time() is not implemented on this system"));
-    return R_NilValue;		/* -Wall */
-}
 #endif /* not _R_HAVE_TIMING_ */
 
 

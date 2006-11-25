@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-10 16:02\n"
+"POT-Creation-Date: 2006-11-25 12:17\n"
 "PO-Revision-Date: 2006-09-25 03:59-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -61,9 +61,6 @@ msgstr "'nu' должен быть 0, nrow(x) или ncol(x)"
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv' должен быть 0, nrow(x) или ncol(x)"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "'all' нельзя использовать с другими опциями разбора"
 
 msgid "second argument must be a list"
 msgstr "второй аргумент должен быть списком"
@@ -908,6 +905,9 @@ msgstr ""
 msgid "Expected a single logical value for the S4 object state"
 msgstr "Для состояния \"объект S4\" ожидается простое логическое значение "
 
+msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
@@ -1311,6 +1311,15 @@ msgstr "Удаление"
 msgid "Registering evaluate as low-level callback"
 msgstr "Регистрация подсчитывает низкоуровневый обратный вызов"
 
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
+msgstr ""
+
 msgid "'width' must be positive"
 msgstr "'width' должна быть положительной"
 
@@ -1385,6 +1394,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "'all' can not be used with other deparse options"
+#~ msgstr "'all' нельзя использовать с другими опциями разбора"
 
 #~ msgid "no rows to match"
 #~ msgstr "нет соответствующих строк"

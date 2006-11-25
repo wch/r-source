@@ -116,7 +116,7 @@ setIs <-
         obj <- extensionObject
     ## revise the superclass/subclass info in the stored class definition
     .validExtends(class1, class2, classDef,  classDef2, obj@simple)
-    where2 <- findClass(classDef2)
+    where2 <- findClass(classDef2, where)
     if(length(where2) > 0) {
         where2 <- where2[[1]]
         elNamed(classDef2@subclasses, class1) <- obj
@@ -130,8 +130,11 @@ setIs <-
     where1 <- findClass(class1, where)[[1]]
     ## the direct contains information
     elNamed(classDef@contains, class2) <- obj
-    if(doComplete)
+    if(doComplete) {
       classDef@contains <- completeExtends(classDef, class2, obj, where = where)
+      if(!is(classDef, "ClassUnionRepresentation")) #unions are handled in assignClassDef
+        .checkSubclasses(class1, classDef, class2, classDef2, where1)
+    }
     assignClassDef(class1, classDef, where1, TRUE)
     invisible(classDef)
  }
@@ -140,7 +143,7 @@ setIs <-
     .msg <- function(class1, class2) gettextf("class \"%s\" cannot extend class \"%s\"", class1, class2)
     if((is.null(classDef1) || is.null(classDef2)) &&
        !(isVirtualClass(class1) && isVirtualClass(class2)))
-        stop(.msg(class2, class2), ": ",
+        stop(.msg(class1, class2), ": ",
              gettext("Both classes must be defined"),
              domain = NA)
     if(slotTests) {
@@ -150,7 +153,7 @@ setIs <-
             slots1 <- classDef1@slots
             n1 <- names(slots1)
             if(any(is.na(match(n2, n1))))
-                stop(.msg(class2, class2), ": ",
+                stop(.msg(class1, class2), ": ",
                      gettextf("class \"%s\" is missing slots from class \"%s\" (%s), and no coerce method was supplied",
                               class1, class2,
                               paste(n2[is.na(match(n2, n1))], collapse = ", ")),

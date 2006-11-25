@@ -103,7 +103,7 @@ SEXP attribute_hidden do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 }
 
-Rconnection attribute_hidden R_newurl(char *description, char *mode)
+Rconnection attribute_hidden R_newurl(char *description, const char * const mode)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)

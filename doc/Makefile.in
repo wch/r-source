@@ -39,7 +39,7 @@ R.1:
 	  --name="a language for data analysis and graphics" \
 	  $(top_builddir)/bin/R
 
-install: install-message installdirs install-sources install-man
+install: install-message installdirs install-sources install-sources2 install-man
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
@@ -55,9 +55,13 @@ install-sources:
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)"; \
 	done
+install-sources2:
+	@for f in $(NON_SVN_INSTFILES); do \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)"; \
+	done
+	$(INSTALL_DATA) $(top_srcdir)/NEWS "$(rdocdir)"
 install-strip: install
 
-## top-level Makefile installed NEWS in docdir
 uninstall:
 	@echo "uninstalling $(subdir) ..."
 	@if test -d "$(rdocdir)" \

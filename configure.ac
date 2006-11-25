@@ -695,13 +695,6 @@ AC_CHECK_HEADERS(errno.h inttypes.h stdarg.h stdint.h string.h)
 ## AC_CHECK_HEADERS(libintl.h)
 ## </NOTE>
 
-case "${host_os}" in
-  sunos4*)
-    AC_DEFINE(SunOS4, 1,
-              [Define if your system is SunOS4, which is famous for
-               broken header files.])
-  ;;
-esac
 R_HEADER_SETJMP
 R_HEADER_GLIBC2
 
@@ -1073,7 +1066,8 @@ if test -n "${XMKMF}"; then
   cc=`echo ${cc} | sed "s/ .*//"`
   ## Paul Gilbert reported on R-devel 2006-04-13 a system with cc=""
   if test -n "${cc}" ; then
-    if test "`which ${cc}`" = "`which ${CC}`"; then
+    r_cc_cmd=`echo ${CC} | sed "s/ .*//"`
+    if test "`which ${cc}`" = "`which ${r_cc_cmd}`"; then
       shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
       cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
     fi
@@ -1081,7 +1075,8 @@ if test -n "${XMKMF}"; then
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
   if test -n "${cxx}" ; then
-    if test "`which ${cxx}`" = "`which ${CXX}`"; then
+    r_cxx_cmd=`echo ${CXX} | sed "s/ .*//"`
+    if test "`which ${cxx}`" = "`which ${r_cxx_cmd}`"; then
       cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
     fi
   fi
@@ -1577,6 +1572,7 @@ R_CHECK_FUNCS([getrlimit getrusage], [#include <sys/resource.h>])
 R_CHECK_FUNCS([mkfifo stat], [#include <sys/stat.h>])
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
+R_CHECK_FUNCS([time], [#include <time.h>])
 R_CHECK_FUNCS([access chdir ftruncate getcwd getuid symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
@@ -2127,6 +2123,19 @@ AC_SUBST(XTRA_INTL_CPPFLAGS)
 
 AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 AM_CONDITIONAL(BUILD_LIBINTL, [test "x${USE_INCLUDED_LIBINTL}" = xyes])
+
+### * bug fixes
+# PR#9375 claims that sh on OSF1 is not POSIX-compliant and that is 
+# not a bug in the OS: we add a workaround for such benighted OSes
+case "${host_os}" in
+  osf*)
+    OSF_SH_BUG='"${1+@}"'
+  ;;
+  *)
+    OSF_SH_BUG='"${@}"'
+  ;;
+esac
+AC_SUBST(OSF_SH_BUG)
 
 ### * Win32 overrides
 case "${host_os}" in

@@ -313,8 +313,7 @@ static SEXP R_NewHashTable(int size, int growth_rate)
   size/growth settings.  The only non-static hash table function.
 */
 
-SEXP attribute_hidden
-R_NewHashedEnv(SEXP enclos)
+SEXP R_NewHashedEnv(SEXP enclos)
 {
     SEXP s;
 

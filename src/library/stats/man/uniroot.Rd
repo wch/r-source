@@ -40,7 +40,9 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
   A list with four components: \code{root} and \code{f.root} give the
   location of the root and the value of the function evaluated at that
   point. \code{iter} and \code{estim.prec} give the number of iterations
-  used and an approximate estimated precision for \code{root}.
+  used and an approximate estimated precision for \code{root}.  (If the
+  root occurs at one of the endpoints, the estimated precision is
+  \code{NA}.)
 }
 \source{
   Based on \file{zeroin.c} in \url{http://www.netlib.org/c/brent.shar}.

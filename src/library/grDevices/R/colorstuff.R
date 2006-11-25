@@ -16,6 +16,18 @@ rgb <- function(red, green, blue, alpha, names = NULL, maxColorValue = 1)
     alphaspec <- !missing(alpha)
     if(!alphaspec)
 	alpha <- maxColorValue
+	
+    ## Only red
+    if(missing(green) && missing(blue)) {
+	if(is.matrix(red) || is.data.frame(red)) {
+	    red <- data.matrix(red)
+	    if(ncol(red) < 3) stop("at least 3 columns needed")
+	    green <- red[,2]
+	    blue <- red[,3]
+	    red <- red[,1]
+	}
+    }
+
     ## in the first case, (r,g,b) are (coerced to) integer, otherwise
     ## double :
     if(maxColorValue == 255)

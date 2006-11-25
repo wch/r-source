@@ -6051,6 +6051,10 @@ function to call plus zero to three arguments).  Function @code{elt} and
 pairlist, and @code{nthcdr} returns a pointer to the @var{n}th position
 in the pairlist (whose @code{CAR} is the @var{n}th item).
 
+Functions @code{str2type} and @code{type2str} map @R{}
+length-one character strings to and from @code{SEXPTYPE} numbers, and
+@code{type2char} maps numbers to C character strings.
+
 
 @node Named objects and copying,  , Some convenience functions, Handling R objects in C
 @subsection Named objects and copying
@@ -7116,6 +7120,28 @@ be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
 @emph{all} the function names used from @file{Rinternals.h} and
 @file{R_ext/Error.h}.
 
+We can classify the entry points as
+
+@itemize
+@item @emph{API}
+Entry points which are documented in this manual and declared in an
+installed header file.  These can be used in distributed packages and
+will only be changed after deprecation.
+
+@item @emph{public}
+Entry points declared in an installed header file that are exported
+on all @R{} platforms but are not documented and subject to change
+without notice.
+
+@item @emph{private}
+Entry points that are use when building @R{} and exported on all @R{}
+platforms but are not declared in the installed header files.
+
+@item @emph{hidden}
+Entry points that are where possible (Windows and some modern Unix
+compilers/loaders when using @R{} as a shared library) not exported.
+@end itemize
+
 @node Memory allocation, Error handling, The R API, The R API
 @section Memory allocation
 @cindex Memory allocation from C
@@ -7227,6 +7253,10 @@ conveniently from an @code{on.exit} action in the calling @R{} function
 Do not assume that memory allocated by @code{Calloc}/@code{Realloc}
 comes from the same pool as used by @code{malloc}: in particular do not
 use @code{free} or @code{strdup} with it.
+
+These entry points need to be prefixed by @code{R_} if
+@code{STRICT_R_HEADERS} has been defined.
+
 
 @node Error handling, Random numbers, Memory allocation, The R API
 @section Error handling

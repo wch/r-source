@@ -479,6 +479,7 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
                 [r_cv_c_no_math_inlines],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #if defined(__GLIBC__)
 int main () {
   double x, y;
@@ -511,6 +512,7 @@ AC_DEFUN([R_C_OPTIEEE],
                 [r_cv_c_optieee],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include <ieeefp.h>
 int main () {
   double x = 0;
@@ -954,6 +956,7 @@ ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 ## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
@@ -1017,6 +1020,8 @@ ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 ## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "confdefs.h"
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
@@ -1098,7 +1103,9 @@ ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
 ## Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
+#include <stdio.h>
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)   x ## _
 #else
@@ -1200,6 +1207,7 @@ AC_DEFUN([R_FUNC___SETFPUCW],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 int main () {
 #include <fpu_control.h>
+#include <stdlib.h>
 #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
   exit(_FPU_DEFAULT != _FPU_IEEE);
 #endif
@@ -1246,6 +1254,7 @@ AC_DEFUN([R_FUNC_FINITE],
 [AC_CACHE_CHECK([for working finite], [r_cv_func_finite_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_FINITE
@@ -1270,6 +1279,7 @@ AC_DEFUN([R_FUNC_ISFINITE],
 [AC_CACHE_CHECK([for working isfinite], [r_cv_func_isfinite_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_DECL_ISFINITE
@@ -1294,6 +1304,7 @@ AC_DEFUN([R_FUNC_LOG],
 [AC_CACHE_CHECK([for working log], [r_cv_func_log_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 /* we require isnan as from R 2.0.0 */
@@ -1323,6 +1334,7 @@ AC_DEFUN([R_FUNC_LOG1P],
 [AC_CACHE_CHECK([for working log1p], [r_cv_func_log1p_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <math.h>
+#include <stdlib.h>
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_LOG1P
@@ -1507,17 +1519,29 @@ fi])# R_TYPE_KEYSYM
 
 ## R_X11
 ## -----
+## Updated for R 2.5.0.  We need -lXt, and nowadays that is unbundled.
 AC_DEFUN([R_X11],
 [AC_PATH_XTRA			# standard X11 search macro
 if test -z "${no_x}"; then
-  ## We force the use of -lX11 (perhaps this is not necessary?).
-  X_LIBS="${X_LIBS} -lX11 -lXt"
-  use_X11="yes"
+  ## now we look for Xt and its header: it seems Intrinsic.h is key.
+  r_save_CFLAGS="${CFLAGS}"
+  CFLAGS="${CFLAGS} ${X_CFLAGS}"
+  AC_CHECK_HEADER(X11/Intrinsic.h)
+  CFLAGS="${r_save_CFLAGS}"
+  if test "${ac_cv_header_X11_Intrinsic_h}" = yes ; then
+    AC_CHECK_LIB(Xt, XtToolkitInitialize, [have_Xt=yes], [have_Xt=no],
+                 [${X_LIBS} -lX11])
+    if test "${have_Xt}" = yes; then
+      use_X11="yes"
+    fi
+  fi
+fi
+if test "x${use_X11}" = "xyes"; then
   AC_DEFINE(HAVE_X11, 1,
             [Define if you have the X11 headers and libraries, and want
              the X11 GUI to be built.])
+  X_LIBS="${X_LIBS} -lX11 -lXt"
 else
-  use_X11="no"
   if test "x${with_x}" != "xno"; then
     AC_MSG_ERROR(
       [--with-x=yes (default) and X11 headers/libs are not available])
@@ -1536,9 +1560,12 @@ AC_DEFUN([R_X11_Xmu],
   AC_CHECK_HEADER(X11/Xmu/Atoms.h)
   CFLAGS="${r_save_CFLAGS}"
   if test "${ac_cv_header_X11_Xmu_Atoms_h}" = yes ; then
-    AC_DEFINE(HAVE_X11_Xmu, 1,
-              [Define if you have the X11/Xmu headers and libraries.])
-  X_LIBS="${X_LIBS} -lXmu"
+    AC_CHECK_LIB(Xmu, XmuInternAtom, [use_Xmu=yes], [use_Xmu=no], ${X_LIBS})
+    if test "${use_Xmu}" = yes; then
+      AC_DEFINE(HAVE_X11_Xmu, 1,
+                [Define if you have the X11/Xmu headers and libraries.])
+      X_LIBS="${X_LIBS} -lXmu"
+    fi
   fi
 fi])# R_X11_XMu
 
@@ -2602,6 +2629,7 @@ AC_DEFUN([_R_HEADER_ZLIB],
 [AC_CACHE_CHECK([if zlib version >= 1.2.1],
                 [r_cv_header_zlib_h],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
 int main() {
@@ -2623,6 +2651,7 @@ AC_DEFUN([_R_ZLIB_MMAP],
 [AC_CACHE_CHECK([mmap support for zlib],
                 [r_cv_zlib_mmap],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>

@@ -77,13 +77,6 @@ Rcomplex Rf_ComplexFromReal(double, int*);
 
 #include "Errormsg.h"
 
-/* SunOS 4 is famous for broken header files. */
-#ifdef SunOS4
-# ifndef NULL
-#  define	NULL		0
-# endif
-#endif /* SunOS4 */
-
 #if defined(Win32) || defined(HAVE_AQUA)
 extern void R_ProcessEvents(void);
 #endif
@@ -254,6 +247,7 @@ typedef SEXP (*CCODE)();
 
 /* Information for Deparsing Expressions */
 typedef enum {
+    PP_INVALID  =  0,
     PP_ASSIGN   =  1,
     PP_ASSIGN2  =  2,
     PP_BINARY   =  3,
@@ -765,7 +759,6 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 # define RemoveClass		Rf_RemoveClass
 # define sortVector		Rf_sortVector
 # define ssort			Rf_ssort
-# define str2type		Rf_str2type
 # define StringFromComplex	Rf_StringFromComplex
 # define StringFromInteger	Rf_StringFromInteger
 # define StringFromLogical	Rf_StringFromLogical
@@ -774,8 +767,6 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 # define substituteList		Rf_substituteList
 # define tsConform		Rf_tsConform
 # define tspgets		Rf_tspgets
-# define type2char		Rf_type2char
-# define type2str		Rf_type2str
 # define type2symbol		Rf_type2symbol
 # define unbindVar		Rf_unbindVar
 # define usemethod		Rf_usemethod
@@ -907,7 +898,7 @@ SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
 SEXP matchArgs(SEXP, SEXP);
 SEXP matchPar(char*, SEXP*);
-void memtrace_report(SEXP, SEXP);
+void memtrace_report(void *, void *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 /* SEXP mkComplex(char *s); */
 /* SEXP mkEnv(SEXP, SEXP, SEXP); */
@@ -955,10 +946,9 @@ SEXP R_set_class(SEXP, SEXP, SEXP);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
-SEXP R_setProcTimeNames(SEXP ans);
+void R_getProcTime(double *data);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
-SEXPTYPE str2type(char*);
 int StrToInternal(char*);
 SEXP substituteList(SEXP, SEXP);
 SEXP R_syscall(int,RCNTXT*);
@@ -967,8 +957,6 @@ SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
-char * type2char(SEXPTYPE);
-SEXP type2str(SEXPTYPE);
 SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
 #ifdef ALLOW_OLD_SAVE
@@ -1021,7 +1009,6 @@ SEXP R_subset3_dflt(SEXP, SEXP);
 
 /* main/subassign.c */
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
-
 
 #ifdef SUPPORT_MBCS /* implies we have this header */
 #include <wchar.h>

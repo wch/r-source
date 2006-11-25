@@ -74,5 +74,19 @@ capwords(c("using AIC", "for MODEL selection"), strict=TRUE)
 ## ->  [1] "Using Aic"  "For Model Selection"
 ##                ^^^        ^^^^^
 ##               'bad'       'good'
+
+## -- Very simple insecure crypto --
+rot <- function(ch, k = 13) {
+   p0 <- function(...) paste(c(...), collapse="")
+   A <- c(letters, LETTERS, " '")
+   I <- seq_len(k); chartr(p0(A), p0(c(A[-I], A[I])), ch)
+}
+
+pw <- "my secret pass phrase"
+(crypw <- rot(pw, 13)) #-> you can send this off
+
+## now ``decrypt'' :
+rot(crypw, 54 - 13)# -> the original:
+stopifnot(identical(pw, rot(crypw, 54 - 13)))
 }
 \keyword{character}

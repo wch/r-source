@@ -312,13 +312,13 @@
 #define HAVE_INTTYPES_H_WITH_UINTMAX 1
 
 /* Define to 1 if you have the `isblank' function. */
-/* #undef HAVE_ISBLANK */
+#define HAVE_ISBLANK 1
 
 /* Define to 1 if you have the `isnan' function. */
 #define HAVE_ISNAN 1
 
 /* Define to 1 if you have the `iswblank' function. */
-/* #undef HAVE_ISWBLANK */
+#define HAVE_ISWBLANK 1
 
 /* Define to 1 if you have the `iswctype' function. */
 #define HAVE_ISWCTYPE 1
@@ -602,6 +602,9 @@
    to be built. */
 #define HAVE_TCLTK 1
 
+/* Define to 1 if you have the `time' function. */
+#define HAVE_TIME 1
+
 /* Define to 1 if you have the `times' function. */
 #define HAVE_TIMES 1
 
@@ -835,10 +838,6 @@
 
 /* Define this to enable support for UTF-8 locales. */
 /* #undef SUPPORT_UTF8 */
-
-/* Define if your system is SunOS4, which is famous for broken header files.
-   */
-/* #undef SunOS4 */
 
 /* Define to enable provoking compile errors on write barrier violation. */
 /* #undef TESTING_WRITE_BARRIER */

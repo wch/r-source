@@ -56,8 +56,9 @@ hist.default <-
     equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     if (!use.br && any(h <= 0))
 	stop("'breaks' are not strictly increasing")
+    freq1 <- freq # we want to do missing(freq) later
     if (is.null(freq)) {
-	freq <- if(!missing(probability)) !as.logical(probability) else equidist
+	freq1 <- if(!missing(probability)) !as.logical(probability) else equidist
     } else if(!missing(probability) && any(probability == freq))
 	stop("'probability' is an alias for '!freq', however they differ.")
 
@@ -80,7 +81,7 @@ hist.default <-
     storage.mode(x) <- "double"
     storage.mode(fuzzybreaks) <- "double"
     ## With the fuzz adjustment above, the "right" and "include"
-    ## arguments are really irrelevant
+    ## arguments are often irrelevant (not with integer data!)
     counts <- .C("bincount",
 		 x,
 		 as.integer(n),
@@ -102,7 +103,7 @@ hist.default <-
 			xname = xname, equidist = equidist),
 		   class="histogram")
     if (plot) {
-	plot(r, freq = freq, col = col, border = border,
+	plot(r, freq = freq1, col = col, border = border,
 	     angle = angle, density = density,
 	     main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
 	     axes = axes, labels = labels, ...)
@@ -111,7 +112,8 @@ hist.default <-
     else { ## plot is FALSE
         ## make an effort to warn about "non sensical" arguments:
         nf <- names(formals()) ## all formals but those:
-        nf <- nf[is.na(match(nf, c("x", "breaks", "freq", "nclass", "plot", "probability")))]
+	nf <- nf[is.na(match(nf, c("x", "breaks", "nclass", "plot",
+				   "include.lowest", "right")))]
         missE <- lapply(nf, function(n)
                         substitute(missing(.), list(. = as.name(n))))
         not.miss <- ! sapply(missE, eval, envir = environment())

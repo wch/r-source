@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2006-04-18 09:04+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -15,6 +15,14 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#, fuzzy
+msgid "no documentation for '%s' found in package '%s'"
+msgstr "pas de documentation pour la fonction '%s' et pour la signature '%s'"
+
+#, fuzzy
+msgid "document not found"
+msgstr "objet '%s' introuvable"
 
 msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 msgstr "'format' doit être \"normal\" ou \"short\". \"normal\" est utilisé"
@@ -242,6 +250,12 @@ msgstr "la dépendance '%s' n'est pas disponible"
 
 msgid "'fix' requires a name"
 msgstr "'fix' necessite un nom"
+
+msgid "too many list items (at most up to number 26)"
+msgstr ""
+
+msgid "too many list items (at most up to number 3899)"
+msgstr ""
 
 msgid "'form' must be a two-sided formula"
 msgstr "'form' doit être une formule ayant des membres à gauche et à droite"
@@ -694,6 +708,12 @@ msgstr "début de fichier vide"
 msgid "first five rows are empty: giving up"
 msgstr "les cinq premières lignes sont vides : abandon"
 
+msgid "cannot coerce 'x' to roman"
+msgstr ""
+
+msgid "Invalid roman numeral(s): %s"
+msgstr ""
+
 msgid "invalid 'socket' argument"
 msgstr "argument 'socket' incorrect"
 
@@ -807,10 +827,12 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr "Sinon, soyez patient..."
 
-msgid "url must be a non-empty character string"
+#, fuzzy
+msgid "'url' must be a non-empty character string"
 msgstr "url doit être une chaîne de caractères non vide"
 
-msgid "browser must be a non-empty character string"
+#, fuzzy
+msgid "'browser' must be a non-empty character string"
 msgstr "browser doit être une chaîne de caractères non vide"
 
 msgid "cannot create HTML package index"
@@ -906,4 +928,3 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
-

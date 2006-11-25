@@ -79,7 +79,7 @@ Summary(\dots, na.rm = FALSE)
       \item \code{cumsum}, \code{cumprod}, \code{cummax}, \code{cummin}
       % do_cum()   [cum.c:140]:    if (DispatchGroup("Math", ...))
     }
-    This group dispatches on \code{x}.
+    Members of this group dispatch on \code{x}.
 
     \item Group \code{"Ops"}:
     \itemize{
@@ -100,10 +100,11 @@ Summary(\dots, na.rm = FALSE)
     \code{Ops} method is called with one argument and \code{e2} is
     missing.
 
-    The classes of both arguments are considered in dispatching. For
-    each argument its vector of classes is examined to see if there is a
-    matching specific or \code{Ops} method.  If a method is found for
-    just one argument or the same method is found for both, it is used.
+    The classes of both arguments are considered in dispatching any
+    member of this group.  For each argument its vector of classes is
+    examined to see if there is a matching specific (preferred) or
+    \code{Ops} method.  If a method is found for just one argument or
+    the same method is found for both, it is used.
     If different methods are found, there is a warning about
     \sQuote{incompatible methods}: in that case or if no method is found
     for either argument the internal method is used.
@@ -118,14 +119,14 @@ Summary(\dots, na.rm = FALSE)
       % do_summary() [summary.c:322]: if(DispatchGroup("Summary",...))
       \item \code{range}
     }
-    This group dispatches on the first argument supplied.
+    Members of this group dispatch on the first argument supplied.
 
     \item Group \code{"Complex"}:
     \itemize{
       \item \code{Arg}, \code{Conj}, \code{Im}, \code{Mod}, \code{Re}
       % do_cmathfuns() [complex.c:267]: if(DispatchGroup("Complex",...))
     }
-    This group dispatches on \code{z}.
+    Members of this group dispatch on \code{z}.
   }
 
   Note that a method will used for either one of these groups or one of

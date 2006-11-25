@@ -35,8 +35,11 @@
 
 #include <R_ext/Rdynload.h>
 
-static DL_FUNC User_unif_fun, User_unif_init, User_unif_nseed, 
-    User_unif_seedloc;
+static DL_FUNC User_unif_fun, User_unif_nseed, 
+	User_unif_seedloc;
+typedef void (*UnifInitFun)(Int32);
+
+UnifInitFun User_unif_init;
 
 DL_FUNC  User_norm_fun; /* also in ../nmath/snorm.c */
 
@@ -64,13 +67,13 @@ static
 RNGTAB RNG_Table[] =
 {
 /* kind Nkind	  name	           n_seed      i_seed */
-    { 0, 0, "Wichmann-Hill", 	        3,	dummy},
-    { 1, 0, "Marsaglia-MultiCarry",	2,	dummy},
-    { 2, 0, "Super-Duper",		2,	dummy},
-    { 3, 0, "Mersenne-Twister",	    1+624,	dummy},
-    { 4, 0, "Knuth-TAOCP",          1+100,	dummy},
-    { 5, 0, "User-supplied",            0,	dummy},
-    { 6, 0, "Knuth-TAOCP-2002",     1+100,	dummy},
+    { WICHMANN_HILL,        BUGGY_KINDERMAN_RAMAGE, "Wichmann-Hill", 	     3,	dummy},
+    { MARSAGLIA_MULTICARRY, BUGGY_KINDERMAN_RAMAGE, "Marsaglia-MultiCarry",  2,	dummy},
+    { SUPER_DUPER,          BUGGY_KINDERMAN_RAMAGE, "Super-Duper",	     2,	dummy},
+    { MERSENNE_TWISTER,     BUGGY_KINDERMAN_RAMAGE, "Mersenne-Twister",  1+624,	dummy},
+    { KNUTH_TAOCP,          BUGGY_KINDERMAN_RAMAGE, "Knuth-TAOCP",       1+100,	dummy},
+    { USER_UNIF,            BUGGY_KINDERMAN_RAMAGE, "User-supplied",         0,	dummy},
+    { KNUTH_TAOCP2,         BUGGY_KINDERMAN_RAMAGE, "Knuth-TAOCP-2002",  1+100,	dummy},
 };
 
 
@@ -237,7 +240,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
     case USER_UNIF:
 	User_unif_fun = R_FindSymbol("user_unif_rand", "", NULL);
 	if (!User_unif_fun) error(_("'user_unif_rand' not in load table"));
-	User_unif_init = R_FindSymbol("user_unif_init", "", NULL);
+	User_unif_init = (UnifInitFun) R_FindSymbol("user_unif_init", "", NULL);
 	if (User_unif_init) (void) User_unif_init(seed);
 	User_unif_nseed = R_FindSymbol("user_unif_nseed", "", NULL);
 	User_unif_seedloc = R_FindSymbol("user_unif_seedloc", "",  NULL);
@@ -291,8 +294,9 @@ void GetRNGstate()
 	tmp = INTEGER(seeds)[0];
 	if (tmp == NA_INTEGER)
 	    error(_(".Random.seed[1] is not a valid integer"));
-	newRNG = tmp % 100;
-	newN01 = tmp / 100;
+        /* How using two integers, with names in the options to identify the types. */
+	newRNG = (RNGtype) (tmp % 100); 
+	newN01 = (N01type) (tmp / 100);
 	/*if (RNG_kind > USER_UNIF || RNG_kind < 0) {
 	    warning(".Random.seed was invalid: re-initializing");
 	    RNG_kind = RNG_DEFAULT;
@@ -413,10 +417,10 @@ SEXP attribute_hidden do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
     rng = CAR(args);
     norm = CADR(args);
     if(!isNull(rng)) { /* set a new RNG kind */
-	RNGkind(asInteger(rng));
+	RNGkind((RNGtype) asInteger(rng));
     }
     if(!isNull(norm)) { /* set a new normal kind */
-	Norm_kind(asInteger(norm));
+	Norm_kind((N01type) asInteger(norm));
     }
     UNPROTECT(1);
     return ans;
@@ -435,7 +439,7 @@ SEXP attribute_hidden do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("supplied seed is not a valid integer"));
     skind = CADR(args);
     if (!isNull(skind)) {
-	kind = asInteger(skind);
+	kind = (RNGtype) asInteger(skind);
 	RNGkind(kind);
     } else
 	kind = RNG_kind;
@@ -602,9 +606,11 @@ static double MT_genrand()
 /*long ran_x[KK]; */                   /* the generator state */
 
 /* void ran_array(long aa[],int n) */
-void ran_array(aa,n)    /* put n new random numbers in aa */
-  long *aa;   /* destination */
-  int n;      /* array length (must be at least KK) */
+void ran_array(long *aa, int n)    /* put n new random numbers in aa */
+/*
+  aa;   destination 
+  n;    array length (must be at least KK) 
+*/
 {
   register int i,j;
   for (j=0;j<KK;j++) aa[j]=ran_x[j];
@@ -618,8 +624,8 @@ void ran_array(aa,n)    /* put n new random numbers in aa */
 #define evenize(x) ((x)&(MM-2))   /* make x even */
 
 /* void ran_start(long seed) */
-void ran_start(seed)    /* do this before using ran_array */
-  long seed;            /* selector for different streams */
+void ran_start(long seed)    /* do this before using ran_array */
+   /* seed; selector for different streams */
 {
   register int t,j;
   long x[KK+KK-1];              /* the preparation buffer */
@@ -661,8 +667,8 @@ static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 static long ran_arr_cycle()
 {
   ran_array(ran_arr_buf,QUALITY);
-  ran_arr_buf[100]=-1;
-  ran_arr_ptr=ran_arr_buf+1;
+  ran_arr_buf[100] = -1;
+  ran_arr_ptr = ran_arr_buf+1;
   return ran_arr_buf[0];
 }
 

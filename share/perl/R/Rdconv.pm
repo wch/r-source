@@ -1628,27 +1628,36 @@ sub Rwrap
     my $nl = "";
     my $remainder = "";
 
-    if ($ll <= 0) {
-	##	warn "warning. indent:\n".
-	##	    &nounder(expand($ip))."\nis wider than the page\n";
-	$ll = 5;
+    $ll = 0 if($ll <= 0);
+    ## Allow for wrapping after the expansion of $ip.
+    if($t =~ s/^([^\n]{0,$ll})(\s|\Z(?!\n))//xm) {
+	$r .= $nl . $lead . $1;
+	$remainder = $2;
     }
+    else {
+	$r .= $nl . $lead;
+    }
+
+    $lead = $xp;
+    $ll = $nll;
+    $nl = "\n";
+    
     while ($t !~ /^\s*$/) {
 	if ($t =~ s/^([^\n]{0,$ll})(\s|\Z(?!\n))//xm) {
 	    $r .= $nl . $lead . $1;
 	    $remainder = $2;
-	} elsif ($t =~ s/^([^\n]{$ll})//) {
+	}
+	elsif ($t =~ s/([^\n]*?)(\s|\Z(?!\n))//xm) {
+	    ## Prefer overflow to wrap at fill column, cf Text::Wrap.
 	    $r .= $nl . $lead . $1;
-	    $remainder = "\n";
+	    $remainder = $2;
 	} else {
 	    print "$t\n";
 	    die "This shouldn't happen";
 	}
 
-	$lead = $xp;
-	$ll = $nll;
-	$nl = "\n";
     }
+
     $r .= $remainder;
 
     $r .= $lead . $t if $t ne "";

@@ -271,11 +271,13 @@ getOption(x)
   These will be set when package \pkg{grDevices} (or its name space)
   is loaded if not already set.
   \describe{
-    \item{\code{device}:}{a character string giving the default device
-      for that session.  This defaults to the normal screen device
-      (e.g., \code{x11}, \code{windows} or \code{quartz}) for an
-      interactive session, and \code{postscript} in batch use or if a
-      screen is not available.}
+    \item{\code{device}:}{a character string giving
+      the name of a function, or the function object itself,
+      which when called creates a new graphics device of the default
+      type for that session.  The value of this option defaults to the
+      normal screen device (e.g., \code{x11}, \code{windows} or
+      \code{quartz}) for an interactive session, and \code{postscript}
+      in batch use or if a screen is not available.}
 
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell.  Default \code{TRUE}.

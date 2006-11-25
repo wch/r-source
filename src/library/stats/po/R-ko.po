@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:22\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -66,6 +66,10 @@ msgstr "'which'는 어떠한 인자도 지정하지 않았습니다"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which'는 제거되어야 할 non-factos를 지정했습니다"
+
+#, fuzzy
+msgid "'lag.max' must be at least 0"
+msgstr "'lag.max'는 적어도 1 입니다"
 
 msgid "'lag.max' must be at least 1"
 msgstr "'lag.max'는 적어도 1 입니다"
@@ -1503,6 +1507,9 @@ msgstr "무효인 대비 인수('contrasts.arg')입니다"
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "변수'%s'는 존재하지 않습니다, 대비는 무시됩니다"
 
+msgid "using type=\"numeric\" with a factor response will be ignored"
+msgstr ""
+
 msgid "invalid response type"
 msgstr "무효인 응답 유형입니다"
 
@@ -1520,6 +1527,10 @@ msgstr "무효인 인수 'omit'입니다"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level'는 (0,1,2)에 있지 않습니다"
+
+#, fuzzy
+msgid "'interval' must be a vector of length 2"
+msgstr "'margins'는 길이 2의 수치 벡터가 아니면 되지 않습니다"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper가 되어 있지 않습니다"
@@ -2042,6 +2053,9 @@ msgstr "올바른 길이가 나오지 않는 비시계열입니다"
 
 msgid "time series contains internal NAs"
 msgstr "시계열은 내부에 NA값을 포함하고 있습니다"
+
+msgid "series is corrupt, with no 'tsp' attribute"
+msgstr ""
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr ""

@@ -795,12 +795,12 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
         cldef <- getClassDef(cl, searchWhere)
         if(is(cldef, "classRepresentation")) {
             if(attach) {
-              .cacheClass(cl, cldef)
-              if(is(cldef, "ClassUnionRepresentation"))
-                .scanUnionClass(cl, cldef) # incorporate subclass info
+              .cacheClass(cl, cldef, is(cldef, "ClassUnionRepresentation"))
              }
-            else if(identical(cldef@package, pkg))
+            else if(identical(cldef@package, pkg)) {
               .uncacheClass(cl, cldef)
+              .removeSuperclassBackRefs(cl, cldef, searchWhere)
+          }
         }
     }
   }

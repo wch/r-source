@@ -136,17 +136,17 @@ SEXP attribute_hidden getAttrib0(SEXP vec, SEXP name)
     for (s = ATTRIB(vec); s != R_NilValue; s = CDR(s))
 	if (TAG(s) == name) {
 	    if (name == R_DimNamesSymbol && TYPEOF(CAR(s)) == LISTSXP) {
-		SEXP new, old;
+		SEXP _new, old;
 		int i;
-		new = allocVector(VECSXP, length(CAR(s)));
+		_new = allocVector(VECSXP, length(CAR(s)));
 		old = CAR(s);
 		i = 0;
 		while (old != R_NilValue) {
-		    SET_VECTOR_ELT(new, i++, CAR(old));
+		    SET_VECTOR_ELT(_new, i++, CAR(old));
 		    old = CDR(old);
 		}
-		SET_NAMED(new, 2);
-		return new;
+		SET_NAMED(_new, 2);
+		return _new;
 	    }
 	    SET_NAMED(CAR(s), 2);
 	    return CAR(s);
@@ -409,10 +409,10 @@ SEXP attribute_hidden do_comment(SEXP call, SEXP op, SEXP args, SEXP env)
     return getAttrib(CAR(args), R_CommentSymbol);
 }
 
-SEXP classgets(SEXP vec, SEXP class)
+SEXP classgets(SEXP vec, SEXP klass)
 {
-    if (isNull(class) || isString(class)) {
-	if (length(class) <= 0) {
+    if (isNull(klass) || isString(klass)) {
+	if (length(klass) <= 0) {
 	    SET_ATTRIB(vec, stripAttrib(R_ClassSymbol, ATTRIB(vec)));
 	    SET_OBJECT(vec, 0);
 	}
@@ -424,7 +424,19 @@ SEXP classgets(SEXP vec, SEXP class)
 
 	    /* HOWEVER, it is the way that the object bit gets set/unset */
 
-	    installAttrib(vec, R_ClassSymbol, class);
+	    int i;
+	    Rboolean isfactor = FALSE;
+	    for(i = 0; i < length(klass); i++)
+		if(streql(CHAR(STRING_ELT(klass, i)), "factor")) {
+		    isfactor = TRUE;
+		    break;
+		}
+	    if(isfactor && TYPEOF(vec) != INTSXP) {
+		/* we cannot coerce vec here, so just fail */
+		error(_("adding class \"factor\" to an invalid object"));
+	    }
+
+	    installAttrib(vec, R_ClassSymbol, klass);
 	    SET_OBJECT(vec, 1);
 	}
 	return R_NilValue;
@@ -482,46 +494,46 @@ static SEXP lang2str(SEXP obj, SEXPTYPE t)
  */
 SEXP R_data_class(SEXP obj, Rboolean singleString)
 {
-    SEXP class, value; int n;
-    class = getAttrib(obj, R_ClassSymbol);
-    n = length(class);
+    SEXP klass, value; int n;
+    klass = getAttrib(obj, R_ClassSymbol);
+    n = length(klass);
     if(n == 1 || (n > 0 && !singleString))
-	return(class);
+	return(klass);
     if(n == 0) {
 	SEXP dim; int nd;
 	dim = getAttrib(obj, R_DimSymbol);
 	nd = length(dim);
 	if(nd > 0) {
 	    if(nd == 2)
-		class = mkChar("matrix");
+		klass = mkChar("matrix");
 	    else
-		class = mkChar("array");
+		klass = mkChar("array");
 	}
 	else {
 	  SEXPTYPE t = TYPEOF(obj);
 	  switch(t) {
 	  case CLOSXP: case SPECIALSXP: case BUILTINSXP:
-	    class = mkChar("function");
+	    klass = mkChar("function");
 	    break;
 	  case REALSXP:
-	    class = mkChar("numeric");
+	    klass = mkChar("numeric");
 	    break;
 	  case SYMSXP:
-	    class = mkChar("name");
+	    klass = mkChar("name");
 	    break;
 	  case LANGSXP:
-	    class = lang2str(obj, t);
+	    klass = lang2str(obj, t);
 	    break;
 	  default:
-	    class = type2str(t);
+	    klass = type2str(t);
 	  }
 	}
     }
     else
-	class = asChar(class);
-    PROTECT(class);
+	klass = asChar(klass);
+    PROTECT(klass);
     PROTECT(value = allocVector(STRSXP, 1));
-    SET_STRING_ELT(value, 0, class);
+    SET_STRING_ELT(value, 0, klass);
     UNPROTECT(2);
     return value;
 }
@@ -529,13 +541,13 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 /* Version for S3-dispatch */
 SEXP R_data_class2 (SEXP obj)
 {
-    SEXP class, class0 = R_NilValue, value, dim;
+    SEXP klass, class0 = R_NilValue, value, dim;
     SEXPTYPE t;
     int n;
 
-    class = getAttrib(obj, R_ClassSymbol);
-    n = length(class);
-    if(n > 0) return(class);
+    klass = getAttrib(obj, R_ClassSymbol);
+    n = length(klass);
+    if(n > 0) return(klass);
     dim = getAttrib(obj, R_DimSymbol);
     n = length(dim);
     if(n > 0) {
@@ -547,7 +559,7 @@ SEXP R_data_class2 (SEXP obj)
     PROTECT(class0);
     switch(t = TYPEOF(obj)) {
     case CLOSXP: case SPECIALSXP: case BUILTINSXP:
-	class = mkChar("function");
+	klass = mkChar("function");
 	break;
     case INTSXP:
     case REALSXP:
@@ -567,22 +579,22 @@ SEXP R_data_class2 (SEXP obj)
 	return value;
 	break;
     case SYMSXP:
-	class = mkChar("name");
+	klass = mkChar("name");
 	break;
     case LANGSXP:
-	class = lang2str(obj, t);
+	klass = lang2str(obj, t);
 	break;
     default:
-	class = type2str(t);
+	klass = type2str(t);
     }
-    PROTECT(class);
+    PROTECT(klass);
     if(isNull(class0)) {
 	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, class);
+	SET_STRING_ELT(value, 0, klass);
     } else {
 	PROTECT(value = allocVector(STRSXP, 2));
 	SET_STRING_ELT(value, 0, class0);
-	SET_STRING_ELT(value, 1, class);
+	SET_STRING_ELT(value, 1, klass);
     }
     UNPROTECT(3);
     return value;
@@ -771,15 +783,15 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	PROTECT(val = newval);
     }
     for (i = 0; i < k; i++) {
-	SEXP this = VECTOR_ELT(val, i);
-	if (this != R_NilValue) {
-	    if (!isVector(this))
+	SEXP _this = VECTOR_ELT(val, i);
+	if (_this != R_NilValue) {
+	    if (!isVector(_this))
 		error(_("invalid type (%s) for 'dimnames' (must be a vector)"),
-		      type2char(TYPEOF(this)));
-	    if (INTEGER(dims)[i] != LENGTH(this) && LENGTH(this) != 0)
+		      type2char(TYPEOF(_this)));
+	    if (INTEGER(dims)[i] != LENGTH(_this) && LENGTH(_this) != 0)
 		error(_("length of 'dimnames' [%d] not equal to array extent"),
 		      i+1);
-	    SET_VECTOR_ELT(val, i, dimnamesgets1(this));
+	    SET_VECTOR_ELT(val, i, dimnamesgets1(_this));
 	}
     }
     installAttrib(vec, R_DimNamesSymbol, val);
@@ -1306,7 +1318,7 @@ static Rboolean can_test_S4Object = FALSE; /* turning this to TRUE will throw
    error or warning on all packages that have not been reinstalled for current R 2.3 */
 SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  nlist, object, ans, class;
+    SEXP  nlist, object, ans, klass;
 
     if(!isMethodsDispatchOn())
 	error(_("formal classes cannot be used without the methods package"));
@@ -1318,19 +1330,19 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     if(isString(nlist)) nlist = install(CHAR(STRING_ELT(nlist, 0)));
     PROTECT(object = eval(CAR(args), env));
     if(can_test_S4Object && !IS_S4_OBJECT(object)) {
-      class = getAttrib(object, R_ClassSymbol);
-      if(length(class) == 0)
+      klass = getAttrib(object, R_ClassSymbol);
+      if(length(klass) == 0)
 	    error(_("trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots"),
 		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
       else {
-	if(isString(class) &&
-	   install(CHAR(STRING_ELT(class, 0))) == install("classRepresentation")) {
+	if(isString(klass) &&
+	   install(CHAR(STRING_ELT(klass, 0))) == install("classRepresentation")) {
 	  warning("Class representations out of date--package(s) need to be reinstalled");
 	  can_test_S4Object = FALSE; /* turn tests off to avoid repeated warnings */
 	}
 	else
 	  error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
-	      CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)));
+	      CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(klass, 0)));
       }
     }
     ans = R_do_slot(object, nlist);

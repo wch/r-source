@@ -77,7 +77,7 @@ $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 	@echo "dumping R code in package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@echo "saveNamespaceImage(\"$(pkg)\", \"$@\")" | \
-	  R_DEFAULT_PACKAGES="graphics,stats,methods" \
+	  R_DEFAULT_PACKAGES="graphics,stats,methods" LC_ALL=C \
 	  $(top_builddir)/bin/R --vanilla --slave
 	@$(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg)

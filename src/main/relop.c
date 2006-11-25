@@ -49,7 +49,7 @@ SEXP attribute_hidden do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 {
-    SEXP class=R_NilValue, dims, tsp=R_NilValue, xnames, ynames;
+    SEXP klass = R_NilValue, dims, tsp=R_NilValue, xnames, ynames;
     int nx, ny, xarray, yarray, xts, yts;
     Rboolean mismatch = FALSE, iS;
     PROTECT_INDEX xpi, ypi;
@@ -65,7 +65,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
 	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP &&
 	LENGTH(x) > 0 && LENGTH(y) > 0) {
-	SEXP ans = real_relop(PRIMVAL(op), x, y);
+	SEXP ans = real_relop((RELOP_TYPE) PRIMVAL(op), x, y);
 	if (nx > 0 && ny > 0)
 	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
 	if (mismatch)
@@ -145,19 +145,19 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	    if (!tsConform(x, y))
 		errorcall(call, _("non-conformable time series"));
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
-	    PROTECT(class = getAttrib(x, R_ClassSymbol));
+	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else if (xts) {
 	    if (length(x) < length(y))
 		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
-	    PROTECT(class = getAttrib(x, R_ClassSymbol));
+	    PROTECT(klass = getAttrib(x, R_ClassSymbol));
 	}
 	else /*(yts)*/ {
 	    if (length(y) < length(x))
 		ErrorMessage(call, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
-	    PROTECT(class = getAttrib(y, R_ClassSymbol));
+	    PROTECT(klass = getAttrib(y, R_ClassSymbol));
 	}
     }
     if (mismatch)
@@ -166,32 +166,32 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     if (isString(x) || isString(y)) {
 	REPROTECT(x = coerceVector(x, STRSXP), xpi);
 	REPROTECT(y = coerceVector(y, STRSXP), ypi);
-	x = string_relop(PRIMVAL(op), x, y);
+	x = string_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     }
     else if (isComplex(x) || isComplex(y)) {
 	REPROTECT(x = coerceVector(x, CPLXSXP), xpi);
 	REPROTECT(y = coerceVector(y, CPLXSXP), ypi);
-	x = complex_relop(PRIMVAL(op), x, y, call);
+	x = complex_relop((RELOP_TYPE) PRIMVAL(op), x, y, call);
     }
     else if (isReal(x) || isReal(y)) {
 	REPROTECT(x = coerceVector(x, REALSXP), xpi);
 	REPROTECT(y = coerceVector(y, REALSXP), ypi);
-	x = real_relop(PRIMVAL(op), x, y);
+	x = real_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     }
     else if (isInteger(x) || isInteger(y)) {
 	REPROTECT(x = coerceVector(x, INTSXP), xpi);
 	REPROTECT(y = coerceVector(y, INTSXP), ypi);
-	x = integer_relop(PRIMVAL(op), x, y);
+	x = integer_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     }
     else if (isLogical(x) || isLogical(y)) {
 	REPROTECT(x = coerceVector(x, LGLSXP), xpi);
 	REPROTECT(y = coerceVector(y, LGLSXP), ypi);
-	x = integer_relop(PRIMVAL(op), x, y);
+	x = integer_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     }
     else if (TYPEOF(x) == RAWSXP || TYPEOF(y) == RAWSXP) {
 	REPROTECT(x = coerceVector(x, RAWSXP), xpi);
 	REPROTECT(y = coerceVector(y, RAWSXP), ypi);
-	x = raw_relop(PRIMVAL(op), x, y);
+	x = raw_relop((RELOP_TYPE) PRIMVAL(op), x, y);
     } else errorcall(call, _("comparison of these types is not implemented"));
 
 
@@ -211,7 +211,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     }
     if (xts || yts) {
 	setAttrib(x, R_TspSymbol, tsp);
-	setAttrib(x, R_ClassSymbol, class);
+	setAttrib(x, R_ClassSymbol, klass);
 	UNPROTECT(2);
     }
 

@@ -463,7 +463,10 @@ model.response <- function (data, type = "any")
     if (attr(attr(data, "terms"), "response")) {
 	if (is.list(data) | is.data.frame(data)) {
 	    v <- data[[1]]
-	    if (type == "numeric" | type == "double") storage.mode(v) <- "double"
+	    if (type == "numeric" && is.factor(v)) {
+		warning('using type="numeric" with a factor response will be ignored')
+	    } else if (type == "numeric" | type == "double")
+		storage.mode(v) <- "double"
 	    else if (type != "any") stop("invalid response type")
 	    if (is.matrix(v) && ncol(v) == 1) dim(v) <- NULL
 	    rows <- attr(data, "row.names")

@@ -70,7 +70,9 @@ extern int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 		      void (*intr)(void));
 
 #ifdef __SYSTEM__
+#ifndef __cplusplus   /* Would get duplicate conflicting symbols*/
 InputHandler *R_InputHandlers;
+#endif
 #else
 extern InputHandler *R_InputHandlers;
 #endif

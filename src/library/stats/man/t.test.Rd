@@ -17,8 +17,8 @@ t.test(x, \dots)
 \method{t.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
-  \item{x}{a numeric vector of data values.}
-  \item{y}{an optional numeric vector data values.}
+  \item{x}{a (non-empty) numeric vector of data values.}
+  \item{y}{an optional (non-empty) numeric vector of data values.}
   \item{alternative}{a character string specifying the alternative
     hypothesis, must be one of \code{"two.sided"} (default),
     \code{"greater"} or \code{"less"}.  You can specify just the initial

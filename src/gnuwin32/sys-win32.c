@@ -160,13 +160,6 @@ double R_getClockIncrement(void)
 {
   return 1.0 / 100.0;
 }
-
-SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP ans = allocVector(REALSXP, 5);
-    R_getProcTime(REAL(ans));
-    return R_setProcTimeNames(ans);
-}
 #endif /* _R_HAVE_TIMING_ */
 
 /*

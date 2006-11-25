@@ -217,7 +217,6 @@
  R_Log10
  R_NHeap
  R_NSize
- R_NewHashedEnv
  R_Newhashpjw
  R_OutputCon
  R_PPStack
@@ -289,7 +288,6 @@
  R_restore_globals
  R_run_onexits
  R_serializeb
- R_setProcTimeNames
  R_signgam
  R_subset3_dflt
  R_syscall

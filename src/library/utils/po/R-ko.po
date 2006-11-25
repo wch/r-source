@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -11,6 +11,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+msgid "no documentation for '%s' found in package '%s'"
+msgstr "함수 '%s' 그리고 기호 '%s' 때문에 documentation이 없습니다"
+
+#, fuzzy
+msgid "document not found"
+msgstr ""
+"검색되지 않는 object '%s' 입니다\n"
+"검색되지 않는 objects '%s' 입니다"
 
 msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 msgstr ""
@@ -241,6 +251,12 @@ msgstr ""
 
 msgid "'fix' requires a name"
 msgstr "'fix'는 이름을 요구합니다"
+
+msgid "too many list items (at most up to number 26)"
+msgstr ""
+
+msgid "too many list items (at most up to number 3899)"
+msgstr ""
 
 msgid "'form' must be a two-sided formula"
 msgstr ""
@@ -690,6 +706,12 @@ msgstr ""
 msgid "first five rows are empty: giving up"
 msgstr ""
 
+msgid "cannot coerce 'x' to roman"
+msgstr ""
+
+msgid "Invalid roman numeral(s): %s"
+msgstr ""
+
 msgid "invalid 'socket' argument"
 msgstr "무효의 'socket' 인수입니다"
 
@@ -805,10 +827,12 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr "그렇지 않으면, 수동적으로 해주십시오 ..."
 
-msgid "url must be a non-empty character string"
+#, fuzzy
+msgid "'url' must be a non-empty character string"
 msgstr "url는 non-empty이어야만 합니다"
 
-msgid "browser must be a non-empty character string"
+#, fuzzy
+msgid "'browser' must be a non-empty character string"
 msgstr "브라우저는 non-empty 문자열이어야만 합니다"
 
 msgid "cannot create HTML package index"

@@ -81,7 +81,7 @@ all: Makefile DESCRIPTION
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@(cat $(srcdir)/R/makeLazyLoad.R; \
 	  echo "makeLazyLoading(\"$(pkg)\")") | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
 	@echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null
 

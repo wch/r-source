@@ -11,7 +11,14 @@ There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and
 returns to the comand prompt.
 
+shell.exec() now gives an error and a reason when it fails (rather than
+continuing silently as before).
+
 More of the messages from the script editor are translatable.
+
+There is support for x86_64 cross-compilers as well as for ix86.
+
+mingw-runtime >= 3.11 is needed to build R.
 
 
 
@@ -33,7 +40,7 @@ Building customized installers failed because the startup options
 weren't being handled properly.
 
 If Rconsole settings were such that R could not start properly, it
-crashed. It now suggests starting with the --vanilla option, which now
+crashed.  It now suggests starting with the --vanilla option, which now
 does not load Rconsole.  Additionally, an option --no-Rconsole has
 been added for completeness and debugging.
 

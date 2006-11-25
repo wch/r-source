@@ -154,7 +154,7 @@ static size_t url_read(void *ptr, size_t size, size_t nitems,
 }
 
 
-static Rconnection in_R_newurl(char *description, char *mode)
+static Rconnection in_R_newurl(char *description, const char * const mode)
 {
     Rconnection new;
 
@@ -937,10 +937,8 @@ void RxmlMessage(int level, const char *format, ...)
 }
 
 #include "sock.h"
-#ifdef Win32
-# define STRICT_R_HEADERS
-#endif
-#include <R_ext/RS.h> /* for Calloc */
+#define STRICT_R_HEADERS
+#include <R_ext/RS.h> /* for R_Calloc */
 
 void
 #ifdef HAVE_VISIBILITY_ATTRIBUTE
@@ -953,7 +951,7 @@ R_init_internet(DllInfo *info)
 #endif
 {
     R_InternetRoutines *tmp;
-    tmp = Calloc(1, R_InternetRoutines);
+    tmp = R_Calloc(1, R_InternetRoutines);
 
     tmp->download = in_do_download;
     tmp->newurl =  in_R_newurl;

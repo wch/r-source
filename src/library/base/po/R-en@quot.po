@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-10 16:02\n"
-"PO-Revision-Date: 2006-11-10 16:02\n"
+"POT-Creation-Date: 2006-11-25 12:17\n"
+"PO-Revision-Date: 2006-11-25 12:17\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -74,9 +74,6 @@ msgstr "‘nu’ must be 0, nrow(x) or ncol(x)"
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "‘nv’ must be 0, nrow(x) or ncol(x)"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "‘all’ can not be used with other deparse options"
 
 msgid "second argument must be a list"
 msgstr "second argument must be a list"
@@ -916,6 +913,9 @@ msgstr ""
 msgid "Expected a single logical value for the S4 object state"
 msgstr "Expected a single logical value for the S4 object state"
 
+msgid "invalid to change the storage mode of a factor"
+msgstr "invalid to change the storage mode of a factor"
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "‘%s’ is not an exported object from ‘namespace:%s’"
 
@@ -1316,6 +1316,15 @@ msgstr "Removing"
 
 msgid "Registering evaluate as low-level callback"
 msgstr "Registering evaluate as low-level callback"
+
+msgid "user"
+msgstr "user"
+
+msgid "system"
+msgstr "system"
+
+msgid "elapsed"
+msgstr "elapsed"
 
 msgid "'width' must be positive"
 msgstr "‘width’ must be positive"

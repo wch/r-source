@@ -78,6 +78,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 # depending on the cross-compiler.
 BINPREF=i586-mingw32-
 # Set this to where the mingw32 include files are. It must be accurate.
+# It should contain fcntl.h and windows.h
 HEADER=/users/ripley/R/cross-tools5/i586-mingw32/include
 endif
 # path (possibly full path) to same version of R on the host system
@@ -195,7 +196,7 @@ RESCOMP=$(BINPREF)windres
 
 %.dll:
 	@$(ECHO) EXPORTS > $*.def
-	@$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $*.def
+	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> $*.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) $*.def
 

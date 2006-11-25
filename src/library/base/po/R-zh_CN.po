@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-10 16:02\n"
+"POT-Creation-Date: 2006-11-25 12:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -57,9 +57,6 @@ msgstr "'nu'的值必需是0，nrow(x) 或ncol(x)"
 
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv'的值必需是0，nrow(x)或ncol(x)"
-
-msgid "'all' can not be used with other deparse options"
-msgstr "'all'不能和deparse的其他选项同时共存"
 
 msgid "second argument must be a list"
 msgstr "第二个变元必需为串列"
@@ -893,6 +890,9 @@ msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时
 msgid "Expected a single logical value for the S4 object state"
 msgstr "需要的是一个单独的S4目标对象逻辑值"
 
+msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
 
@@ -1292,6 +1292,15 @@ msgstr "删除"
 msgid "Registering evaluate as low-level callback"
 msgstr "把评估登记为低阶回叫"
 
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
+msgstr ""
+
 msgid "'width' must be positive"
 msgstr "'width'必需为正数"
 
@@ -1355,6 +1364,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "'all' can not be used with other deparse options"
+#~ msgstr "'all'不能和deparse的其他选项同时共存"
 
 #~ msgid "no rows to match"
 #~ msgstr "找不到匹配的行"

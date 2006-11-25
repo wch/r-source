@@ -14,7 +14,7 @@ Croatia,Croatia,Zagreb,http://june.irb.hr/r/,"Rudjer Boskovic Institute",mislav.
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>"
 "France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <jthioulouse@biomserv.univ-lyon1.fr>"
-"France (Paris)",France,Paris,http://mirror.internet.tp/cran/,"Boese Internet, Paris","Pelle Boese <pelle@boese.biz>"
+"France (Paris)",France,Paris,http://cran.miroir-francais.fr/,"Miroir-Francais, Paris","Kurt LeClerc <kurt@miroir-francais.fr>"
 "Germany (Frankfurt)",Germany,Frankfurt,http://cran.xedio.de/,xedio.mediastudios,"Carsten Zedler <c.zedler@xedio.de>"
 "Germany (Hamburg)",Germany,Hamburg,http://pangora.org/cran/,"Pangora GmbH, Hamburg",mirror@pangora.org
 "Germany (Hannover)",Germany,Hannover,http://cran.mirroring.de/,"Maske & Glembotzky Opensource Mirroring GbR, Hannover",admin@mirroring.de
@@ -44,6 +44,7 @@ Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",ne
 "South Africa (Grahamstown)","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
 "Spain (Alicante)",Spain,Alicante,http://cran.noha.es/,"NumismaticProject, Alicante","Mundo Numismatico Monedas del Mundo <monedasdelmundo@gmail.com>"
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>"
+Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Göran Broström <gb@stat.umu.se>"
 "Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org
 "Switzerland (Bern 1)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>"
 "Switzerland (Bern 2)",Switzerland,Bern,http://cran.prokmu.com/,"Prokmu Hosting, Bern",info@prokmu.com

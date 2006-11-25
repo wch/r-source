@@ -650,7 +650,7 @@ script or a @file{src/Makefile} file.  In such cases you can install for
 extra builds by
 
 @example
-R --arch=@var{name} CMD INSTALL --libs-only @var{pkg(s)}
+R --arch=@var{name} CMD INSTALL --libs-only @samp{pkg(s)}
 @end example
 
 
@@ -693,7 +693,7 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 * Building the manuals::        
 * Building the Inno Setup installer::  
 * Building the MSI installer::  
-* Cross-building on ix86 Linux::  
+* Cross-building on Linux::     
 @end menu
 
 @node Getting the tools, Getting the source files, Building from source, Building from source
@@ -1016,7 +1016,7 @@ will create an installer that defaults to installing @R{} to run in SDI
 mode.  See @file{src/gnuwin32/installer/Makefile} for the names and
 values that can be set.
 
-@node Building the MSI installer, Cross-building on ix86 Linux, Building the Inno Setup installer, Building from source
+@node Building the MSI installer, Cross-building on Linux, Building the Inno Setup installer, Building from source
 @subsection Building the MSI installer
 
 It is also possible to build an installer for use with Microsoft
@@ -1047,18 +1047,22 @@ but those who need it will know what to do with it.
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
 for suggesting WiX and building a prototype installer.
 
-@node Cross-building on ix86 Linux,  , Building the MSI installer, Building from source
-@subsection Cross-building on ix86 Linux
+@node Cross-building on Linux,  , Building the MSI installer, Building from source
+@subsection Cross-building on Linux
 
-It is possible to cross-build @R{} or packages on @cputype{ix86} Linux,
-and the @cputype{ix86} cross-compilers have also been used successfully
-on @cputype{x86_64} Linux.
+It is possible to cross-build @R{} or packages on (at least)
+@cputype{ix86} and @cputype{x86_64}Linux, and the @cputype{ix86}
+cross-compilers have also been used successfully on @cputype{x86_64}
+Linux..
 
-You will need i386-mingw32 cross-compilers installed and in your path.
+You will need suitable cross-compilers installed and in your path.
 There is currently a complete set of tools at
 @url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2,
 @code{www.stats.ox.ac.uk/@/pub/@/Rtools/@/mingw-cross5.tar.bz2}} (Just
 unpack this somewhere and put its @file{bin} directory in your path.)
+It is also straightforward to build a set of cross-compilers via the
+scripts available at
+@url{http://sourceforge.net/forum/forum.php?forum_id=632611}.
 
 You will need Perl, @command{zip} and @command{unzip} installed and
 @command{makeinfo} version 4.7 or later (part of GNU @code{texinfo}).
@@ -1083,10 +1087,25 @@ uncomment and set @code{R_EXE} in @file{MkRules} to point to it.
 
 Then run @code{make} (and parallel make works reliably, unlike on Windows).
 
-Packages can be made in the same way as natively: see @ref{Add-on packages}.
+Packages can be made in the same way as natively: see @ref{Customizing
+package compilation under Windows}, via the @file{Makefiles} but not
+via @samp{R CMD INSTALL}.  So care is needed where packages have
+dependencies: Linux versions of the dependencies must be installed in
+a library in the search path.  So for example to cross-build the
+@pkg{MCMCpack} package we used
 
-(It is possible to cross-build the installers using WINE, which we
-leave as an exercise for the reader.)
+@example
+# MCMCpack depends on coda, so point to the library containing it
+export R_LIBS=/R/library
+make PKGDIR=/mysources pkg-MCMCpack
+make PKGDIR=/mysources lazyload-MCMCpack
+cd ../../library
+zip -r9X /dest/MCMCpack_0.7-4.zip MCMCpack
+@end example
+
+@noindent
+Even so, packages which depend on others that need to run compiled
+code to load may not work (@pkg{methods} is a special exception).
 
 To distribute a cross-build (or just to transfer it to a Windows machine
 for testing) use
@@ -1098,7 +1117,9 @@ zip -r9X R-@value{VERSIONno}.zip R-@value{VERSIONno}  # or something similar
 @end example
 
 We have not found a reliable way to convert base to lazy-loading when
-cross-building, so it is left in the old format.
+cross-building, so it is left in the old format.  Note too that
+@file{.chm} help files (the default for a vanilla binary installation)
+will not be made when cross-building.
 
 Also based on this facility is
 @url{http://cran.r-project.org/doc/contrib/Makefile-rcb,
@@ -1853,12 +1874,13 @@ If the compiler is detected as @command{gcc},  @code{-std=gnu99} will be
 appended to @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (On Fedora Core
-Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
-RPMs, for example.  Older Linuxen used @samp{XFree86-}.  Some Debian
-derivatives apparently also require @samp{libxt-dev}.)  If you really do
-not want these you will need to explicitly configure @R{} without X11,
-using @option{--with-x=no}.
+installed, including its headers and client libraries.  (On Fedora
+Core 3 and SuSE 9.x Linux this meant the @samp{xorg-x11-devel} and
+@samp{xorg-x11-libs} RPMs.  For Fedora Core 5 and 6 it means (at least)
+@samp{libX11}, @samp{libX11-devel}, @samp{libXt} and
+@samp{libXt-devel}.  On Debian we recommend the meta-package
+@samp{xorg-dev}.)  If you really do not want these you will need to
+explicitly configure @R{} without X11, using @option{--with-x=no}.
 
 The command-line editing depends on the @code{readline} library
 available from any @acronym{GNU} mirror: you will need a fairly recent
@@ -1921,6 +1943,12 @@ versions in the @R{} sources will be compiled in.  As the latter suffice
 and are tested with @R{} you should not need to change this.  In
 particular, the version of @code{zlib} 1.2.3 in the @R{} sources has
 enhancements to work with large file systems on 32-bit platforms.
+
+Use of the X11 clipboard selection requires the @code{Xmu} headers and
+libraries.  These are normally part of an X11 installation (e.g. the
+Debian meta-package @samp{xorg-dev}), but some distributions have
+split this into smaller parts, so for example Fedora Core 5/6 require
+the @samp{libXmu} and @samp{libXmu-devel} RPMs.
 
 @menu
 * Tcl/Tk::                      
@@ -3766,7 +3794,7 @@ You need a recent version of the MinGW port of @command{gcc} from
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
-There may be an installer in the `Proposed' section, which can be used
+There may be an installer in the `Current' section, which can be used
 if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
 using this, select the @samp{Candidate} package and add the @code{g++}
 and @code{g77} compilers to the @samp{MinGW base tools}: components will
@@ -3775,8 +3803,8 @@ be downloaded from Sourceforge and unpacked.)
 An alternative is to download the components individually, currently
 
 @example
-mingw-runtime-3.10.tar.gz
-w32api-3.7.tar.gz
+mingw-runtime-3.11.tar.gz
+w32api-3.8.tar.gz
 binutils-2.16.91-20060119-1.tar.gz
 gcc-core-3.4.5-20060117-1.tar.gz
 gcc-g++-3.4.5-20060117-1.tar.gz
@@ -3785,7 +3813,7 @@ gcc-g77-3.4.5-20060117-1.tar.gz
 
 @noindent
 and unpack these into the same directory (using @command{tar zxf
-tarball_name}).  Note that @code{mingw-runtime-3.10.tar.gz} or later is
+tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later is
 required to build @R{}, @code{gcc-g77-3.4.4} or later to build some
 contributed packages, and @code{gcc-3.4.5} is needed to get a correct
 build of @R{} itself.

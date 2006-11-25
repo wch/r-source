@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-10
+@set FAQ_DATE @value{FAQ_YEAR}-11-23
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -1835,6 +1835,8 @@ Bayesian methods for tree based models.
 Bayesian software validation using posterior quantiles.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item BiasedUrn
+Biased urn model distributions.
 @item Biodem
 A number of functions for biodemographycal analysis.
 @item Bolstad
@@ -2274,6 +2276,9 @@ statistical computing can be carried out.
 @c (@pxref{What documentation exists for R?}).
 @item Rpad
 Utility functions for the Rpad workbook-style interface.
+@item Rserve
+A socket server (TCP/IP or local sockets) which allows binary requests
+to be sent to R.
 @c REMOVED 2001-12-08
 @c @item Rstreams
 @c Binary file stream support functions.
@@ -2341,6 +2346,9 @@ Johnson distributions, normal scores and generalized hypergeometric
 distributions).
 @item SwissAir
 Air quality data of Switzerland for one year in 30 min resolution.
+@item TRAMPR
+Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
+Matching Package for R.
 @item TSP
 Traveling Salesperson Problem (TSP).
 @item TWIX
@@ -2479,6 +2487,9 @@ Bayesian mixture models of univariate Gaussian distributions using JAGS.
 @c @item baymvb
 @c Bayesian analysis of multivariate binary data.
 @c </COMMENT>
+@item bcp
+Bayesian Change Point based on the Barry and Hartigan product partition
+model.
 @item betareg
 Beta regression for modeling rates and proportions.
 @item bicreduc
@@ -2598,6 +2609,8 @@ CLUster Ensembles.
 GUI for clustering data with spatial information.
 @item cluster
 Functions for cluster analysis.  @emph{Recommended}.
+@item clusterGeneration
+Random cluster generation (with specified degree of separation).
 @item clusterRepro
 Reproducibility of gene expression clusters.
 @item clustvarsel
@@ -2790,6 +2803,8 @@ Package for drawing ellipses and ellipse-like confidence regions.
 @item elliptic
 A suite of elliptic and related functions including Weierstrass and
 Jacobi forms.
+@item elrm
+Exact Logistic Regression via MCMC.
 @item emme2
 Functions to read from and write to an EMME/2 databank.
 @item emplik
@@ -2802,6 +2817,8 @@ distributions, hierarchical clustering by e-distances.
 @item ensembleBMA
 Probabilistic forecasting using Bayesian Model Averaging of ensembles
 using a mixture of normal distributions.
+@item epicalc
+Epidemiological calculator.
 @item epitools
 Basic tools for applied epidemiology.
 @item epsi
@@ -3298,6 +3315,8 @@ Letter-value box plots.
 @item mAr
 Estimation of multivariate AR models through a computationally efficient
 stepwise least-squares algorithm.
+@item mFilter
+Miscellenous time series filters.
 @item maanova
 Analysis of N-dye Micro Array experiments using mixed model effect.
 Contains anlysis of variance, permutation and bootstrap, cluster and
@@ -3556,6 +3575,8 @@ Functions to perform the regression depth method (RDM) to binary
 regression to approximate the amount of overlap, i.e., the minimal
 number of observations that need to be removed such that the reduced
 data set has no longer overlap.
+@item np
+Nonparametric kernel smoothing methods for mixed datatypes.
 @item npmc
 Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
@@ -3853,6 +3874,8 @@ fft, histogram equalization, and reading @acronym{JPEG} files.
 @item riv
 Robust Instrumental Variables estimators based on high breakpoint point
 S-estimators of multivariate location and scatter matrices.
+@item rjacobi
+Jacobi polynomials and Gauss-Jacobi quadrature related operations.
 @item rlecuyer
 R interface to RNG with multiple streams.
 @item rmeta
@@ -4198,6 +4221,8 @@ Stem analysis functions for volume increment and carbon uptake
 assessment from tree-rings.
 @item trimcluster
 Cluster analysis with trimming.
+@item trip
+Spatial analysis of animal track data.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
 @item truncgof
@@ -4485,10 +4510,12 @@ allowing one to call arbitrary Perl subroutines, classes and methods.
 @item RSPython
 Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality.
-@item Rlibstree
-Suffix Trees in R via the libstree C library.
 @item RXLisp
 An interface to call XLisp-Stat functions from within R.
+@item Rcompression
+In-memory decompression for @acronym{GNU} zip and bzip2 formats.
+@item Rlibstree
+Suffix Trees in R via the libstree C library.
 @item Rstem
 Interface to Snowball implementation of Porter's word stemming
 algorithm.

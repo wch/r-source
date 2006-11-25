@@ -1182,7 +1182,7 @@ static SEXP ExpandDots(SEXP object, SEXP value)
 
 SEXP attribute_hidden do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP new, old, lhs, rhs;
+    SEXP _new, old, lhs, rhs;
 
     checkArity(op, args);
 
@@ -1208,12 +1208,12 @@ SEXP attribute_hidden do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* and we don't want to modify it. */
 
     old = CAR(args);
-    new = SETCADR(args, duplicate(CADR(args)));
+    _new = SETCADR(args, duplicate(CADR(args)));
 
     /* Check of new and old formulae. */
     if (TYPEOF(old) != LANGSXP ||
-       (TYPEOF(new) != LANGSXP && CAR(old) != tildeSymbol) ||
-       CAR(new) != tildeSymbol)
+       (TYPEOF(_new) != LANGSXP && CAR(old) != tildeSymbol) ||
+       CAR(_new) != tildeSymbol)
 	errorcall(call, _("formula expected"));
 
     if (length(old) == 3) {
@@ -1222,36 +1222,36 @@ SEXP attribute_hidden do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* We now check that new formula has a valid lhs.
 	   If it doesn't, we add one and set it to the rhs of the old
 	   formula. */
-	if (length(new) == 2)
-	    SETCDR(new, CONS(lhs, CDR(new)));
+	if (length(_new) == 2)
+	    SETCDR(_new, CONS(lhs, CDR(_new)));
 	/* Now we check the left and right sides of the new formula
 	   and substitute the correct value for any "." templates.
 	   We must parenthesize the rhs or we might upset arity and
 	   precedence. */
 	PROTECT(rhs);
-	SETCADR(new, ExpandDots(CADR(new), lhs));
-	SETCADDR(new, ExpandDots(CADDR(new), rhs));
+	SETCADR(_new, ExpandDots(CADR(_new), lhs));
+	SETCADDR(_new, ExpandDots(CADDR(_new), rhs));
 	UNPROTECT(1);
     }
     else {
 	/* The old formula had no lhs, so we only expand the rhs of the
 	   new formula. */
 	rhs = CADR(old);
-	if (length(new) == 3)
-	    SETCADDR(new, ExpandDots(CADDR(new), rhs));
+	if (length(_new) == 3)
+	    SETCADDR(_new, ExpandDots(CADDR(_new), rhs));
 	else
-	    SETCADR(new, ExpandDots(CADR(new), rhs));
+	    SETCADR(_new, ExpandDots(CADR(_new), rhs));
     }
 
     /* It might be overkill to zero the */
     /* the attribute list of the returned */
     /* value, but it can't hurt. */
 
-    SET_ATTRIB(new, R_NilValue);
-    SET_OBJECT(new, 0);
-    setAttrib(new, R_DotEnvSymbol, getAttrib(old, R_DotEnvSymbol)); 
+    SET_ATTRIB(_new, R_NilValue);
+    SET_OBJECT(_new, 0);
+    setAttrib(_new, R_DotEnvSymbol, getAttrib(old, R_DotEnvSymbol)); 
     
-    return new;
+    return _new;
 }
 
 
@@ -1448,11 +1448,11 @@ SEXP attribute_hidden do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isObject(call))
         return duplicate(call);
     else {
-        SEXP class;
+        SEXP klass;
         PROTECT(call = duplicate(call));
-        PROTECT(class = allocVector(STRSXP, 1));
-        SET_STRING_ELT(class, 0, mkChar("formula"));
-        setAttrib(call, R_ClassSymbol, class);
+        PROTECT(klass = allocVector(STRSXP, 1));
+        SET_STRING_ELT(klass, 0, mkChar("formula"));
+        setAttrib(call, R_ClassSymbol, klass);
         setAttrib(call, R_DotEnvSymbol, rho);
         UNPROTECT(2);
         return call;

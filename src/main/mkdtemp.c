@@ -139,8 +139,10 @@ gen_tempname (char *tmpl)
     gettimeofday (&tv, NULL);
     random_time_bits = ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
   }
-# else
+# elif HAVE_TIME
   random_time_bits = time (NULL);
+# else
+# error RANDOM_BITS or gettimeofday or time is required
 # endif
 #endif
   value += random_time_bits ^ getpid ();
@@ -188,11 +190,14 @@ gen_tempname (char *tmpl)
    The directory is created, mode 700, and its name is returned.
    (This function comes from OpenBSD.) */
 char *
-mkdtemp (char *template)
+mkdtemp (char *Template)
+#ifdef __cplusplus
+	throw()
+#endif
 {
-  if (gen_tempname (template))
+  if (gen_tempname (Template))
     return NULL;
   else
-    return template;
+    return Template;
 }
 

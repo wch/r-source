@@ -791,7 +791,7 @@ static void AdjustHeapSize(R_size_t size_needed)
     if (vect_occup > 1.0 && VNeeded < R_MaxVSize)
 	R_VSize = VNeeded;
     if (vect_occup > R_VGrowFrac) {
-	R_size_t change = R_VGrowIncrMin + R_VGrowIncrFrac * R_NSize;
+	R_size_t change = R_VGrowIncrMin + R_VGrowIncrFrac * R_VSize;
 	if (R_MaxVSize - R_VSize >= change)
 	    R_VSize += change;
     }
@@ -1720,7 +1720,7 @@ static SEXP allocSExpNonCons(SEXPTYPE t)
     return s;
 }
 
-/* cons is defined directly do avoid the need to protect its arguments
+/* cons is defined directly to avoid the need to protect its arguments
    unless a GC will actually occur. */
 SEXP cons(SEXP car, SEXP cdr)
 {

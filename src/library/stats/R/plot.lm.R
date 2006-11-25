@@ -157,10 +157,10 @@ function (x, which = c(1:3,5), ## was which = 1:4,
         do.plot <- TRUE
         if(isConst.hat) { ## leverages are all the same
             caption[5] <- "Constant Leverage:\n Residuals vs Factor Levels"
-            ## plot against  factor-level combinations instead
+            ## plot against factor-level combinations instead
             aterms <- attributes(terms(x))
             ## classes w/o response
-            dcl <- aterms$dataClasses[ - aterms$response ]
+            dcl <- aterms$dataClasses[ -aterms$response ]
             facvars <- names(dcl)[dcl %in% c("factor", "ordered")]
             mf <- model.frame(x)[facvars]# better than x$model
             if(ncol(mf) > 0) {
@@ -168,12 +168,16 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 ## using a "robust" method {not requiring dummy.coef}:
                 effM <- mf
                 for(j in seq_len(ncol(mf)))
-                    effM[,j] <- sapply(split(yh, mf[,j]), mean)[mf[,j]]
-                dm <- data.matrix(mf)[do.call(order, effM), , drop = FALSE]
+                    effM[, j] <- sapply(split(yh, mf[, j]), mean)[mf[, j]]
+                ord <- do.call(order, effM)
+                dm <- data.matrix(mf)[ord, , drop = FALSE]
                 ## #{levels} for each of the factors:
                 nf <- length(nlev <- unlist(unname(lapply(x$xlevels, length))))
                 ff <- if(nf == 1) 1 else rev(cumprod(c(1, nlev[nf:2])))
-                xx <- facval <- (dm-1) %*% ff
+                facval <- ((dm-1) %*% ff)
+                ## now reorder to the same order as the residuals
+                facval[ord] <- facval
+                xx <- facval # for use in do.plot section.
 
                 plot(facval, rs, xlim = c(-1/2, sum((nlev-1) * ff) + 1/2),
                      ylim = ylim, xaxt = "n",
@@ -187,7 +191,8 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 abline(h = 0, lty = 3, col = "gray")
             }
 	    else { # no factors
-		message("hat values (leverages) are all = ",format(mean(r.hat)),
+		message("hat values (leverages) are all = ",
+                        format(mean(r.hat)),
 			"\n and there are no factor predictors; no plot no. 5")
                 frame()
                 do.plot <- FALSE
@@ -225,7 +230,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                      mgp = c(.25,.25,0), las = 2, tck = 0,
                      cex.axis = cex.id, col.axis = 2)
             }
-        }# if(const h_ii) .. else ..
+        } # if(const h_ii) .. else ..
 	if (do.plot) {
 	    mtext(caption[5], 3, 0.25)
 	    if (id.n > 0) {

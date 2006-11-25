@@ -92,17 +92,16 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             almost.1 <- 1 + 64 * .Machine$double.eps
 	    PVAL <- (1 + sum(tmp <= almost.1 * STATISTIC)) / (B + 1)
         } else if(hybrid) {
-            warning("'hybrid' is ignored for a 2 x 2 table")
             PVAL <- .C("fexact",
                        nr,
                        nc,
                        x,
                        nr,
                        ## Cochran condition for asym.chisq. decision:
-                       as.double(5),#  expect
-                       as.double(80),# percnt
-                       as.double(1),#  emin
-                       double(1),#  prt
+                       as.double(5), #  expect
+                       as.double(80),#  percnt
+                       as.double(1), #  emin
+                       double(1),    #  prt
                        p = double(1),
                        as.integer(workspace),
                        mult = as.integer(mult),
@@ -125,6 +124,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
     }
 
     if((nr == 2) && (nc == 2)) {## conf.int and more only in  2 x 2 case
+        if(hybrid) warning("'hybrid' is ignored for a 2 x 2 table")
         m <- sum(x[, 1])
         n <- sum(x[, 2])
         k <- sum(x[1, ])

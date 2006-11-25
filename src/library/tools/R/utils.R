@@ -241,6 +241,16 @@ function(file1, file2)
     .Internal(codeFiles.append(file1, file2))
 }
 
+### ** .filter
+
+.filter <-
+function(x, f, ...)
+{
+    ## Higher-order function for filtering elements for which predicate
+    ## function f (with additional arguments in ...) is true.
+    x[as.logical(sapply(x, f, ...))]
+}
+
 ### ** .find_owner_env
 
 .find_owner_env <-
@@ -267,29 +277,34 @@ function(db)
 ### ** .get_internal_S3_generics
 
 .get_internal_S3_generics <-
-function()
+function(primitive = TRUE)
 {
-    ## Get the list of R internal S3 generics (via DispatchOrEval(),
-    ## cf. zMethods.Rd).
-    c("[", "[[", "$", "[<-", "[[<-", "$<-", "length", "dimnames<-",
-      "dimnames", "dim<-", "dim", "c", "unlist", "as.character",
-      "as.vector", "is.array", "is.atomic", "is.call", "is.character",
-      "is.complex", "is.double", "is.environment", "is.function",
-      "is.integer", "is.language", "is.logical", "is.list", "is.matrix",
-      "is.na", "is.nan", "is.null", "is.numeric", "is.object",
-      "is.pairlist", "is.recursive", "is.single", "is.symbol",
-      "rep", "seq.int",
-      ## and also the members of the group generics from groupGeneric.Rd
-      "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round", "signif",
-      "exp", "log", "cos", "sin", "tan", "acos", "asin", "atan",
-      "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
-      "lgamma", "gamma", "gammaCody", "digamma", "trigamma",
-      "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax", "cummin",
-      "+", "-", "*", "/", "^", "%%", "%/%", "&", "|", "!", "==", "!=",
-      "<", "<=", ">=", ">",
-      "all", "any", "sum", "prod", "max", "min", "range",
-      "Arg", "Conj", "Im", "Mod", "Re"
-      )
+    out <-
+        ## Get the names of R internal S3 generics (via DispatchOrEval(),
+        ## cf. zMethods.Rd).
+        c("[", "[[", "$", "[<-", "[[<-", "$<-", "length", "dimnames<-",
+          "dimnames", "dim<-", "dim", "c", "unlist", "as.character",
+          "as.vector", "is.array", "is.atomic", "is.call",
+          "is.character", "is.complex", "is.double", "is.environment",
+          "is.function", "is.integer", "is.language", "is.logical",
+          "is.list", "is.matrix", "is.na", "is.nan", "is.null",
+          "is.numeric", "is.object", "is.pairlist", "is.recursive",
+          "is.single", "is.symbol", "rep", "seq.int",
+          ## and also the members of the group generics from
+          ## groupGeneric.Rd
+          "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round",
+          "signif", "exp", "log", "cos", "sin", "tan", "acos", "asin",
+          "atan", "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
+          "lgamma", "gamma", "gammaCody", "digamma", "trigamma",
+          "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax",
+          "cummin",
+          "+", "-", "*", "/", "^", "%%", "%/%", "&", "|", "!", "==",
+          "!=", "<", "<=", ">=", ">",
+          "all", "any", "sum", "prod", "max", "min", "range",
+          "Arg", "Conj", "Im", "Mod", "Re")
+    if(!primitive)
+        out <- out[!sapply(out, .is_primitive, baseenv())]
+    out
 }
 
 ### ** .get_namespace_package_depends
@@ -338,6 +353,59 @@ function(db, category = c("Depends", "Imports", "Suggests", "Enhances"))
     else
         requires <- character()
     requires
+}
+
+### ** .get_S3_generics_as_seen_from_package
+
+.get_S3_generics_as_seen_from_package <-
+function(dir, installed = TRUE, primitive = FALSE)
+{
+    ## Get the S3 generics "as seen from a package" rooted at
+    ## @code{dir}.  Tricky ...
+    if(basename(dir) == "base")
+        env_list <- list()
+    else {
+        ## Always look for generics in the whole of the former base.
+        ## (Not right, but we do not perform run time analyses when
+        ## working off package sources.)  Maybe change this eventually,
+        ## but we still cannot rely on packages to fully declare their
+        ## dependencies on base packages.
+        env_list <-
+            list(baseenv(),
+                 as.environment("package:graphics"),
+                 as.environment("package:stats"),
+                 as.environment("package:utils"))
+        if(installed) {
+            ## Also use the loaded namespaces and attached packages
+            ## listed in the DESCRIPTION Depends and Imports fields.
+            ## Not sure if this is the best approach: we could also try
+            ## to determine which namespaces/packages were made
+            ## available by loading the package (which should work at
+            ## least when run from R CMD check), or we could simply
+            ## attach every package listed as a dependency ... or
+            ## perhaps do both.
+            db <- .read_description(file.path(dir, "DESCRIPTION"))
+            depends <- .get_requires_from_package_db(db, "Depends")
+            imports <- .get_requires_from_package_db(db, "Imports")
+            reqs <- intersect(c(depends, imports), loadedNamespaces())
+            if(length(reqs))
+                env_list <- c(env_list, lapply(reqs, getNamespace))
+            reqs <- intersect(depends %w/o% loadedNamespaces(),
+                              .packages())
+            if(length(reqs))
+                env_list <- c(env_list, lapply(reqs, .package_env))
+            env_list <- unique(env_list)
+        }
+    }
+    unique(c(.get_internal_S3_generics(primitive),
+             unlist(lapply(env_list,
+                           function(env) {
+                               nms <- objects(envir = env,
+                                              all.names = TRUE)
+                               if(".no_S3_generics" %in% nms)
+                                   character()
+                               else .filter(nms, .is_S3_generic, env)
+                           }))))
 }
 
 ### ** .get_S3_group_generics
@@ -520,6 +588,25 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
            docs = c("Rd", "rd", "Rd.gz", "rd.gz"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
                               paste, sep = "")))
+}
+
+### ** .make_S3_group_generic_env
+
+.make_S3_group_generic_env <-
+function(parent = parent.frame())
+{
+    ## Create an environment with pseudo-definitions for the S3 group
+    ## methods.
+    env <- new.env(parent = parent)
+    assign("Math", function(x, ...) UseMethod("Math"), 
+           envir = env)
+    assign("Ops", function(e1, e2) UseMethod("Ops"),
+           envir = env)
+    assign("Summary", function(..., na.rm = FALSE) UseMethod("Summary"),
+           envir = env)
+    assign("Complex", function(z) UseMethod("Complex"),
+           envir = env)
+    env
 }
 
 ### ** .make_S3_methods_stop_list

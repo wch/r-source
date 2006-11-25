@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 08:59\n"
+"POT-Creation-Date: 2006-11-21 08:26\n"
 "PO-Revision-Date: 2005-05-25 15:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -67,6 +67,9 @@ msgstr "'at'는 'z$n'와 동일 길이를 가지지 않으면 안됩니다"
 
 msgid "invalid boxplot widths"
 msgstr "boxplot의 폭이 무효입니다"
+
+msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
+msgstr ""
 
 msgid "'formula' should specify exactly two variables"
 msgstr ""

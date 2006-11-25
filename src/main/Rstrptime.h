@@ -128,7 +128,7 @@ static const unsigned short int __mon_yday[2][13] =
 
 
 /* Status of lookup: do we use the locale data or the raw data?  */
-enum locale_status { not, loc, raw };
+enum locale_status { Not, loc, raw };
 
 # define __isleap(year)	\
   ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
