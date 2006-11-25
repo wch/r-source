@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26+0000\n"
+"POT-Creation-Date: 2006-11-25 12:17+0000\n"
 "PO-Revision-Date: 2006-09-25 03:23-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -79,12 +79,12 @@ msgstr "не могу попасть в рабочую папку"
 msgid "invalid 'names' in 'R_unlink'"
 msgstr "неправильные 'names' в R_unlink"
 
-#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
-#: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
-#: src/gnuwin32/extra.c:363 src/gnuwin32/extra.c:400 src/gnuwin32/extra.c:411
-#: src/gnuwin32/extra.c:435 src/gnuwin32/extra.c:443 src/gnuwin32/extra.c:473
-#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:522 src/gnuwin32/extra.c:674
-#: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:766
+#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:266
+#: src/gnuwin32/extra.c:297 src/gnuwin32/extra.c:324 src/gnuwin32/extra.c:327
+#: src/gnuwin32/extra.c:376 src/gnuwin32/extra.c:413 src/gnuwin32/extra.c:424
+#: src/gnuwin32/extra.c:448 src/gnuwin32/extra.c:456 src/gnuwin32/extra.c:486
+#: src/gnuwin32/extra.c:502 src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:687
+#: src/gnuwin32/extra.c:771 src/gnuwin32/extra.c:774 src/gnuwin32/extra.c:779
 #: src/main/builtin.c:127 src/main/builtin.c:385 src/main/builtin.c:401
 #: src/main/character.c:116 src/main/character.c:119 src/main/character.c:158
 #: src/main/character.c:2434 src/main/character.c:2438
@@ -144,60 +144,80 @@ msgstr "неправильные 'names' в R_unlink"
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
 
-#: src/gnuwin32/extra.c:242 src/gnuwin32/extra.c:265
+#: src/gnuwin32/extra.c:244 src/gnuwin32/extra.c:278
 msgid "R_HOME not set"
 msgstr "R_HOME не установлен"
 
-#: src/gnuwin32/extra.c:296
+#: src/gnuwin32/extra.c:249
+#, fuzzy, c-format
+msgid "'%s' not found"
+msgstr " не найден"
+
+#: src/gnuwin32/extra.c:251
+#, fuzzy, c-format
+msgid "file association for '%s' not available or invalid"
+msgstr "время изменения файла в этой системе недоступно"
+
+#: src/gnuwin32/extra.c:254
+#, c-format
+msgid "access to '%s' denied"
+msgstr ""
+
+#: src/gnuwin32/extra.c:255
+#, c-format
+msgid "problem in displaying '%s'"
+msgstr ""
+
+#: src/gnuwin32/extra.c:309
 msgid "unknown type"
 msgstr "неизвестный тип"
 
-#: src/gnuwin32/extra.c:335 src/gnuwin32/extra.c:359 src/gnuwin32/extra.c:397
-#: src/gnuwin32/extra.c:432
+#: src/gnuwin32/extra.c:348 src/gnuwin32/extra.c:372 src/gnuwin32/extra.c:410
+#: src/gnuwin32/extra.c:445
 msgid "Menu functions can only be used in the GUI"
 msgstr "Функции меню могут быть использованы только в GUI"
 
-#: src/gnuwin32/extra.c:367
+#: src/gnuwin32/extra.c:380
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "не могу возвратить пункту для %s (%s)"
 
-#: src/gnuwin32/extra.c:405
+#: src/gnuwin32/extra.c:418
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "не могу добавить меню (%s)"
 
-#: src/gnuwin32/extra.c:417
+#: src/gnuwin32/extra.c:430
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "не могу добавить пункт меню (%s)"
 
-#: src/gnuwin32/extra.c:440
+#: src/gnuwin32/extra.c:453
 msgid "menu does not exist"
 msgstr "меню не существует"
 
-#: src/gnuwin32/extra.c:447
+#: src/gnuwin32/extra.c:460
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "не могу удалить пункт меню (%s)"
 
-#: src/gnuwin32/extra.c:478
+#: src/gnuwin32/extra.c:491
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' можно использовать только в Rgui и в Rterm"
 
-#: src/gnuwin32/extra.c:493
+#: src/gnuwin32/extra.c:506
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 
-#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:982
+#: src/gnuwin32/extra.c:518 src/unix/sys-std.c:982
 msgid "invalid timestamp"
 msgstr "неправильная временная метка"
 
-#: src/gnuwin32/extra.c:527
+#: src/gnuwin32/extra.c:540
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 
-#: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
+#: src/gnuwin32/extra.c:608 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:730
 #: src/main/errors.c:758 src/main/errors.c:857 src/main/errors.c:882
 #: src/main/errors.c:887 src/main/optimize.c:95 src/main/optimize.c:102
@@ -223,71 +243,71 @@ msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
 
-#: src/gnuwin32/extra.c:650 src/gnuwin32/extra.c:660
+#: src/gnuwin32/extra.c:663 src/gnuwin32/extra.c:673
 msgid "incorrect argument"
 msgstr "неправильный аргумент"
 
-#: src/gnuwin32/extra.c:653
+#: src/gnuwin32/extra.c:666
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "не будьте идиотом: у Вашей машины лимит адресов 4Gb!"
 
-#: src/gnuwin32/extra.c:656
+#: src/gnuwin32/extra.c:669
 msgid "cannot decrease memory limit"
 msgstr "не могу уменьшить предел памяти"
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 msgid "Select one or more"
 msgstr "Выберите 1 или более "
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 msgid "Select one"
 msgstr "Выберите 1 "
 
-#: src/gnuwin32/extra.c:924
+#: src/gnuwin32/extra.c:937
 msgid "argument must be a character vector or a raw vector"
 msgstr "аргумент должен быть текстовым вектором или простым вектором"
 
-#: src/gnuwin32/extra.c:946 src/main/connections.c:1451
+#: src/gnuwin32/extra.c:959 src/main/connections.c:1451
 msgid "Unable to open the clipboard"
 msgstr "Не могу открыть буфер обмена"
 
-#: src/gnuwin32/extra.c:951 src/main/connections.c:1455
+#: src/gnuwin32/extra.c:964 src/main/connections.c:1455
 msgid "Unable to write to the clipboard"
 msgstr "Не могу записать в буфер обмена"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
+#: src/gnuwin32/extra.c:1064 src/gnuwin32/extra.c:1084
 msgid "'path' must be a character vector"
 msgstr "'path' должен быть текстовым вектором"
 
-#: src/gnuwin32/extra.c:1099 src/gnuwin32/extra.c:1177
+#: src/gnuwin32/extra.c:1112 src/gnuwin32/extra.c:1190
 msgid "'default' must be a character string"
 msgstr "'default' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1101 src/gnuwin32/extra.c:1179
+#: src/gnuwin32/extra.c:1114 src/gnuwin32/extra.c:1192
 msgid "'default' is overlong"
 msgstr "'default' слишком длинный"
 
-#: src/gnuwin32/extra.c:1110 src/gnuwin32/extra.c:1183
+#: src/gnuwin32/extra.c:1123 src/gnuwin32/extra.c:1196
 msgid "'caption' must be a character string"
 msgstr "'caption' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1112
+#: src/gnuwin32/extra.c:1125
 msgid "'multi' must be a logical value"
 msgstr "'multi' должен быть логическим значением"
 
-#: src/gnuwin32/extra.c:1114
+#: src/gnuwin32/extra.c:1127
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' должен быть целым числом"
 
-#: src/gnuwin32/extra.c:1272
+#: src/gnuwin32/extra.c:1285
 msgid "'title' must be a character string"
 msgstr "'title' должен быть текстовой строкой"
 
-#: src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1317
 msgid "'which' must be length 1"
 msgstr "'which' должен быть единичной длины"
 
-#: src/gnuwin32/extra.c:1334 src/main/connections.c:2504
+#: src/gnuwin32/extra.c:1347 src/main/connections.c:2504
 #: src/main/connections.c:2507 src/main/connections.c:2510
 #: src/main/connections.c:2721 src/main/connections.c:2724
 #: src/main/connections.c:2728 src/main/connections.c:2731
@@ -303,24 +323,24 @@ msgstr "'which' должен быть единичной длины"
 msgid "invalid value for '%s'"
 msgstr "неправильное значение '%s'"
 
-#: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
-#: src/gnuwin32/extra.c:1378
+#: src/gnuwin32/extra.c:1349 src/gnuwin32/extra.c:1351
+#: src/gnuwin32/extra.c:1391
 msgid "invalid device"
 msgstr "неправильное устройство"
 
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1352
 msgid "requires SDI mode"
 msgstr "требует SDI-вида"
 
-#: src/gnuwin32/extra.c:1372
+#: src/gnuwin32/extra.c:1385
 msgid "invalid graphical device number"
 msgstr "неправильный номер графического устройства"
 
-#: src/gnuwin32/extra.c:1382
+#: src/gnuwin32/extra.c:1395
 msgid "bad device"
 msgstr "плохое устройство"
 
-#: src/gnuwin32/extra.c:1490 src/gnuwin32/extra.c:1498
+#: src/gnuwin32/extra.c:1503 src/gnuwin32/extra.c:1511
 msgid "invalid input in Rmbstowcs"
 msgstr "неправильный ввод в Rmbstowcs"
 
@@ -986,104 +1006,108 @@ msgstr "не могу присвоить 'tsp' нулевому вектору"
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "попытка установить неправильный атрибут 'comment' "
 
-#: src/main/attrib.c:432
+#: src/main/attrib.c:436
+msgid "adding class \"factor\" to an invalid object"
+msgstr ""
+
+#: src/main/attrib.c:444
 msgid "attempt to set invalid 'class' attribute"
 msgstr "попытка установить неправильный атрибут 'class'"
 
-#: src/main/attrib.c:634
+#: src/main/attrib.c:646
 msgid "incompatible 'names' argument"
 msgstr "несовместимый аргумент 'names'"
 
-#: src/main/attrib.c:686
+#: src/main/attrib.c:698
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "неправильный (%s) тип установки атрибута 'names'"
 
-#: src/main/attrib.c:753
+#: src/main/attrib.c:765
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' применены для не-многомерной матрицы"
 
-#: src/main/attrib.c:757
+#: src/main/attrib.c:769
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' должны быть списком"
 
-#: src/main/attrib.c:760
+#: src/main/attrib.c:772
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "длина 'dimnames' [%d] должна соответствовать 'dims' [%d]"
 
-#: src/main/attrib.c:777
+#: src/main/attrib.c:789
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "неправильный (%s) тип 'dimnames' (должен быть вектор)"
 
-#: src/main/attrib.c:780
+#: src/main/attrib.c:792
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "длина 'dimnames' [%d] не равна протяженности многомерной матрицы"
 
-#: src/main/attrib.c:840
+#: src/main/attrib.c:852
 msgid "dim<- : invalid first argument"
 msgstr "dim<- : неправильный первый аргумент"
 
-#: src/main/attrib.c:843
+#: src/main/attrib.c:855
 msgid "dim<- : invalid second argument"
 msgstr "dim<- : неправильный второй аргумент"
 
-#: src/main/attrib.c:851
+#: src/main/attrib.c:863
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim: нулевой размерный вектор неправилен"
 
-#: src/main/attrib.c:856
+#: src/main/attrib.c:868
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 "dim<- : измерения [произведение %d] не соответствуют длине объекта [%d]"
 
-#: src/main/attrib.c:938
+#: src/main/attrib.c:950
 msgid "attributes must be in a list"
 msgstr "атрибуты должны быть списком"
 
-#: src/main/attrib.c:962
+#: src/main/attrib.c:974
 msgid "attributes must be named"
 msgstr "атрибуты должны быть именованы"
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:978
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "все атрибуты должны иметь имена [%d не имеет]"
 
-#: src/main/attrib.c:1009
+#: src/main/attrib.c:1021
 msgid "attribute 'name' must be of mode character"
 msgstr "атрибут 'имя' должен быть текстом"
 
-#: src/main/attrib.c:1011
+#: src/main/attrib.c:1023
 msgid "exactly one attribute 'name' must be given"
 msgstr "должен быть задан в точности один атрибут 'имя'"
 
-#: src/main/attrib.c:1079
+#: src/main/attrib.c:1091
 msgid "'name' must be non-null character"
 msgstr "'имя' должен быть непустым текстом"
 
-#: src/main/attrib.c:1187 src/main/attrib.c:1226 src/main/attrib.c:1317
+#: src/main/attrib.c:1199 src/main/attrib.c:1238 src/main/attrib.c:1329
 msgid "invalid type or length for slot name"
 msgstr "неправильный тип или длина для имени слота"
 
-#: src/main/attrib.c:1201
+#: src/main/attrib.c:1213
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "не могу получить слот (\"%s\") из объекта типа \"%s\""
 
-#: src/main/attrib.c:1209
+#: src/main/attrib.c:1221
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "нет слота имени \"%s\" для этого объекта класса \"%s\""
 
-#: src/main/attrib.c:1312
+#: src/main/attrib.c:1324
 msgid "formal classes cannot be used without the methods package"
 msgstr "формальные классы не могут использоваться без пакета 'methods'"
 
-#: src/main/attrib.c:1323
+#: src/main/attrib.c:1335
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1091,7 +1115,7 @@ msgid ""
 msgstr ""
 "попытка получить слот \"%s\" из объекта базового класса (\"%s\") без слотов"
 
-#: src/main/attrib.c:1332
+#: src/main/attrib.c:1344
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1100,7 +1124,7 @@ msgstr ""
 "попытка получить слот \"%s\" из объекта (класс \"%s\"), который не является "
 "объектом S4"
 
-#: src/main/attrib.c:1351
+#: src/main/attrib.c:1363
 msgid "invalid slot type"
 msgstr "неправильный тип слота"
 
@@ -3603,11 +3627,11 @@ msgstr "неправильный тип линии: нули не разрешены"
 msgid "invalid line type"
 msgstr "неправильный тип линии"
 
-#: src/main/graphics.c:4548
+#: src/main/graphics.c:4550
 msgid "no active or default device"
 msgstr "нет активного или умалчиваемого устройства"
 
-#: src/main/graphics.c:4565 src/main/graphics.c:4708
+#: src/main/graphics.c:4567 src/main/graphics.c:4710
 msgid "too many open devices"
 msgstr "слишком много открытых устройств"
 

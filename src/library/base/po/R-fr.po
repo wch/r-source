@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26\n"
+"POT-Creation-Date: 2006-11-25 12:17\n"
 "PO-Revision-Date: 2006-04-18 08:33+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -938,6 +938,9 @@ msgstr ""
 "charger l'espace de noms de methods"
 
 msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
+msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"

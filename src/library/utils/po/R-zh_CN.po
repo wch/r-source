@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:27\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -15,6 +15,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+msgid "no documentation for '%s' found in package '%s'"
+msgstr "函数'%s'和簽署'%s'没有帮助文件"
+
+#, fuzzy
+msgid "document not found"
+msgstr "找不到'%s'这个目标对象"
 
 msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""
@@ -780,10 +788,12 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr "否则的话请耐心等待…"
 
-msgid "url must be a non-empty character string"
+#, fuzzy
+msgid "'url' must be a non-empty character string"
 msgstr "url必需的非空字符串"
 
-msgid "browser must be a non-empty character string"
+#, fuzzy
+msgid "'browser' must be a non-empty character string"
 msgstr "浏览器名必需为非空字符串"
 
 msgid "cannot create HTML package index"

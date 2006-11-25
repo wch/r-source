@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:27\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2006-04-18 09:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1536,6 +1536,9 @@ msgstr "argument 'contrasts.arg' incorrect"
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "la variable %s est absente, son contraste sera ignoré"
 
+msgid "using type=\"numeric\" with a factor response will be ignored"
+msgstr ""
+
 msgid "invalid response type"
 msgstr "type de réponse incorrecte"
 
@@ -1553,6 +1556,10 @@ msgstr "argument 'omit' incorrect"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' doit appartenir à {0,1,2}"
+
+#, fuzzy
+msgid "'interval' must be a vector of length 2"
+msgstr "'margins' doit être un vecteur numérique de longueur 2"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper n'est pas vérifié"
@@ -2078,6 +2085,9 @@ msgstr "la série n'a pas une longueur correcte"
 
 msgid "time series contains internal NAs"
 msgstr "la série temporelle contient des NA internes"
+
+msgid "series is corrupt, with no 'tsp' attribute"
+msgstr ""
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr ""

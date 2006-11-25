@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:20\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -25,6 +25,10 @@ msgstr "적절한 'z'행렬이 지정되어 있지 않습니다"
 
 msgid "'bias' must be positive"
 msgstr "'bias'는 poitive 값이 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "at least 3 columns needed"
+msgstr "적어도 두개의 열이 필요합니다"
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb행렬은 수치가 아니면 되지 않습니다"

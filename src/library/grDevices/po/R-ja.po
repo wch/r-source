@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:20\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2006-09-22 10:55+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -26,6 +26,10 @@ msgstr "適切な 'z' 行列が指定されていません"
 
 msgid "'bias' must be positive"
 msgstr "'bias' は正の値でなければなりません"
+
+#, fuzzy
+msgid "at least 3 columns needed"
+msgstr "少なくとも二つの列が必要です"
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb 行列は数値でなければなりません"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26+0000\n"
+"POT-Creation-Date: 2006-11-25 12:17+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -82,12 +82,12 @@ msgstr "impossibile ottenere la directory di lavoro"
 msgid "invalid 'names' in 'R_unlink'"
 msgstr "'names' non valido in R_unlink"
 
-#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
-#: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
-#: src/gnuwin32/extra.c:363 src/gnuwin32/extra.c:400 src/gnuwin32/extra.c:411
-#: src/gnuwin32/extra.c:435 src/gnuwin32/extra.c:443 src/gnuwin32/extra.c:473
-#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:522 src/gnuwin32/extra.c:674
-#: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:766
+#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:266
+#: src/gnuwin32/extra.c:297 src/gnuwin32/extra.c:324 src/gnuwin32/extra.c:327
+#: src/gnuwin32/extra.c:376 src/gnuwin32/extra.c:413 src/gnuwin32/extra.c:424
+#: src/gnuwin32/extra.c:448 src/gnuwin32/extra.c:456 src/gnuwin32/extra.c:486
+#: src/gnuwin32/extra.c:502 src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:687
+#: src/gnuwin32/extra.c:771 src/gnuwin32/extra.c:774 src/gnuwin32/extra.c:779
 #: src/main/builtin.c:127 src/main/builtin.c:385 src/main/builtin.c:401
 #: src/main/character.c:116 src/main/character.c:119 src/main/character.c:158
 #: src/main/character.c:2434 src/main/character.c:2438
@@ -147,61 +147,81 @@ msgstr "'names' non valido in R_unlink"
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
 
-#: src/gnuwin32/extra.c:242 src/gnuwin32/extra.c:265
+#: src/gnuwin32/extra.c:244 src/gnuwin32/extra.c:278
 msgid "R_HOME not set"
 msgstr "R_HOME non impostata"
 
-#: src/gnuwin32/extra.c:296
+#: src/gnuwin32/extra.c:249
+#, fuzzy, c-format
+msgid "'%s' not found"
+msgstr " non trovato"
+
+#: src/gnuwin32/extra.c:251
+#, fuzzy, c-format
+msgid "file association for '%s' not available or invalid"
+msgstr "orario di modifica del file non disponibile su uqesta sistema"
+
+#: src/gnuwin32/extra.c:254
+#, c-format
+msgid "access to '%s' denied"
+msgstr ""
+
+#: src/gnuwin32/extra.c:255
+#, c-format
+msgid "problem in displaying '%s'"
+msgstr ""
+
+#: src/gnuwin32/extra.c:309
 msgid "unknown type"
 msgstr "type sconosciuto"
 
-#: src/gnuwin32/extra.c:335 src/gnuwin32/extra.c:359 src/gnuwin32/extra.c:397
-#: src/gnuwin32/extra.c:432
+#: src/gnuwin32/extra.c:348 src/gnuwin32/extra.c:372 src/gnuwin32/extra.c:410
+#: src/gnuwin32/extra.c:445
 msgid "Menu functions can only be used in the GUI"
 msgstr "Le funzioni Menu possono essere utilizzate solo nella GUI"
 
-#: src/gnuwin32/extra.c:367
+#: src/gnuwin32/extra.c:380
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "impossibile ottenere voci menu per %s (%s)"
 
-#: src/gnuwin32/extra.c:405
+#: src/gnuwin32/extra.c:418
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "impossibile aggiungere menu (%s)"
 
-#: src/gnuwin32/extra.c:417
+#: src/gnuwin32/extra.c:430
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "impossibile aggiungere voce menu (%s)"
 
-#: src/gnuwin32/extra.c:440
+#: src/gnuwin32/extra.c:453
 msgid "menu does not exist"
 msgstr "il menu non esiste"
 
-#: src/gnuwin32/extra.c:447
+#: src/gnuwin32/extra.c:460
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "impossibile eliminare la voce menu (%s)"
 
-#: src/gnuwin32/extra.c:478
+#: src/gnuwin32/extra.c:491
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' può essere utilizzata solo in Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:493
+#: src/gnuwin32/extra.c:506
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' può essere utilizzata solo in Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:982
+#: src/gnuwin32/extra.c:518 src/unix/sys-std.c:982
 #, fuzzy
 msgid "invalid timestamp"
 msgstr "'tag' non valido"
 
-#: src/gnuwin32/extra.c:527
+#: src/gnuwin32/extra.c:540
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "'loadRconsole' può essere utilizzata solo in Rgui"
 
-#: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
+#: src/gnuwin32/extra.c:608 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:730
 #: src/main/errors.c:758 src/main/errors.c:857 src/main/errors.c:882
 #: src/main/errors.c:887 src/main/optimize.c:95 src/main/optimize.c:102
@@ -227,74 +247,74 @@ msgstr "'loadRconsole' può essere utilizzata solo in Rgui"
 msgid "invalid '%s' value"
 msgstr "valore '%s' non valido"
 
-#: src/gnuwin32/extra.c:650 src/gnuwin32/extra.c:660
+#: src/gnuwin32/extra.c:663 src/gnuwin32/extra.c:673
 msgid "incorrect argument"
 msgstr "argomento non corretto"
 
-#: src/gnuwin32/extra.c:653
+#: src/gnuwin32/extra.c:666
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "esagerato: la tua macchina ha un limite massimo di indirizzi di 4Gb"
 
-#: src/gnuwin32/extra.c:656
+#: src/gnuwin32/extra.c:669
 msgid "cannot decrease memory limit"
 msgstr "impossibile diminuire il limite di memoria"
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 #, fuzzy
 msgid "Select one or more"
 msgstr "Selezione: "
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 #, fuzzy
 msgid "Select one"
 msgstr "Selezione: "
 
-#: src/gnuwin32/extra.c:924
+#: src/gnuwin32/extra.c:937
 #, fuzzy
 msgid "argument must be a character vector or a raw vector"
 msgstr "l'argomento deve essere un vettore character di lunghezza 1"
 
-#: src/gnuwin32/extra.c:946 src/main/connections.c:1451
+#: src/gnuwin32/extra.c:959 src/main/connections.c:1451
 msgid "Unable to open the clipboard"
 msgstr "Non è possibile aprire gli appunti"
 
-#: src/gnuwin32/extra.c:951 src/main/connections.c:1455
+#: src/gnuwin32/extra.c:964 src/main/connections.c:1455
 msgid "Unable to write to the clipboard"
 msgstr "Impossibile scrivere negli appunti"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
+#: src/gnuwin32/extra.c:1064 src/gnuwin32/extra.c:1084
 msgid "'path' must be a character vector"
 msgstr "'path' deve essere un vettore di tipo character"
 
-#: src/gnuwin32/extra.c:1099 src/gnuwin32/extra.c:1177
+#: src/gnuwin32/extra.c:1112 src/gnuwin32/extra.c:1190
 msgid "'default' must be a character string"
 msgstr "'default' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1101 src/gnuwin32/extra.c:1179
+#: src/gnuwin32/extra.c:1114 src/gnuwin32/extra.c:1192
 msgid "'default' is overlong"
 msgstr "'default' è troppo lungo"
 
-#: src/gnuwin32/extra.c:1110 src/gnuwin32/extra.c:1183
+#: src/gnuwin32/extra.c:1123 src/gnuwin32/extra.c:1196
 msgid "'caption' must be a character string"
 msgstr "'caption' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1112
+#: src/gnuwin32/extra.c:1125
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve essere un valore logico/booleano"
 
-#: src/gnuwin32/extra.c:1114
+#: src/gnuwin32/extra.c:1127
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve essere un valore intero"
 
-#: src/gnuwin32/extra.c:1272
+#: src/gnuwin32/extra.c:1285
 msgid "'title' must be a character string"
 msgstr "'title' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1317
 msgid "'which' must be length 1"
 msgstr "'which' deve essere di lunghezza 1"
 
-#: src/gnuwin32/extra.c:1334 src/main/connections.c:2504
+#: src/gnuwin32/extra.c:1347 src/main/connections.c:2504
 #: src/main/connections.c:2507 src/main/connections.c:2510
 #: src/main/connections.c:2721 src/main/connections.c:2724
 #: src/main/connections.c:2728 src/main/connections.c:2731
@@ -310,24 +330,24 @@ msgstr "'which' deve essere di lunghezza 1"
 msgid "invalid value for '%s'"
 msgstr "valore non valido per 'n'"
 
-#: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
-#: src/gnuwin32/extra.c:1378
+#: src/gnuwin32/extra.c:1349 src/gnuwin32/extra.c:1351
+#: src/gnuwin32/extra.c:1391
 msgid "invalid device"
 msgstr "dispositivo non valido"
 
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1352
 msgid "requires SDI mode"
 msgstr "richiede modalità SDI"
 
-#: src/gnuwin32/extra.c:1372
+#: src/gnuwin32/extra.c:1385
 msgid "invalid graphical device number"
 msgstr "numero di dispositivo non valido"
 
-#: src/gnuwin32/extra.c:1382
+#: src/gnuwin32/extra.c:1395
 msgid "bad device"
 msgstr "dispositivo errato"
 
-#: src/gnuwin32/extra.c:1490 src/gnuwin32/extra.c:1498
+#: src/gnuwin32/extra.c:1503 src/gnuwin32/extra.c:1511
 msgid "invalid input in Rmbstowcs"
 msgstr "input non valido per Rmbstowcs"
 
@@ -1005,106 +1025,110 @@ msgstr "non è possibile attribuire 'tsp' a vettori di lunghezza nulla"
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "tentativo di impostare un attributo 'comment' non ammissibile"
 
-#: src/main/attrib.c:432
+#: src/main/attrib.c:436
+msgid "adding class \"factor\" to an invalid object"
+msgstr ""
+
+#: src/main/attrib.c:444
 msgid "attempt to set invalid 'class' attribute"
 msgstr "tentativo di assegnazione di un attributo 'class' non ammissibile"
 
-#: src/main/attrib.c:634
+#: src/main/attrib.c:646
 msgid "incompatible 'names' argument"
 msgstr "argomento 'names' incompatibile"
 
-#: src/main/attrib.c:686
+#: src/main/attrib.c:698
 #, fuzzy, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "tipo non valido per assegnare l'attributo 'names'"
 
-#: src/main/attrib.c:753
+#: src/main/attrib.c:765
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' usata su oggetti non array"
 
-#: src/main/attrib.c:757
+#: src/main/attrib.c:769
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' deve essere di tipo list"
 
-#: src/main/attrib.c:760
+#: src/main/attrib.c:772
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "la lunghezza di 'dimnames' [%d] non coincide con quella di 'dims' [%d]"
 
-#: src/main/attrib.c:777
+#: src/main/attrib.c:789
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "tipo non valido per 'dimnames' (deve essere di tipo vector)"
 
-#: src/main/attrib.c:780
+#: src/main/attrib.c:792
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 "la lunghezza di 'dimnames' [%d] non coincide con l'estensione dell'array"
 
-#: src/main/attrib.c:840
+#: src/main/attrib.c:852
 msgid "dim<- : invalid first argument"
 msgstr "dim<- : primo argomento non valido"
 
-#: src/main/attrib.c:843
+#: src/main/attrib.c:855
 msgid "dim<- : invalid second argument"
 msgstr "dim<- : secondo argomento non valido"
 
-#: src/main/attrib.c:851
+#: src/main/attrib.c:863
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim: vettori di dimensione di lunghezza 0 non ammissibili"
 
-#: src/main/attrib.c:856
+#: src/main/attrib.c:868
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 "dim<- : dims [prodotto %d] non conformi alla lunghezza dell'oggetto [%d]"
 
-#: src/main/attrib.c:938
+#: src/main/attrib.c:950
 msgid "attributes must be in a list"
 msgstr "gli attributi devono essere un oggetto di tipo list"
 
-#: src/main/attrib.c:962
+#: src/main/attrib.c:974
 msgid "attributes must be named"
 msgstr "gli attributi devono avere un nome"
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:978
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "tutti gli attributi devono avere dei nomi [%d non ce l'ha]"
 
-#: src/main/attrib.c:1009
+#: src/main/attrib.c:1021
 msgid "attribute 'name' must be of mode character"
 msgstr "l'attributo 'name' deve essere in modalità character"
 
-#: src/main/attrib.c:1011
+#: src/main/attrib.c:1023
 msgid "exactly one attribute 'name' must be given"
 msgstr "deve essere specificato solo un attributo 'name'"
 
-#: src/main/attrib.c:1079
+#: src/main/attrib.c:1091
 msgid "'name' must be non-null character"
 msgstr "'name' deve essere un character non nullo"
 
-#: src/main/attrib.c:1187 src/main/attrib.c:1226 src/main/attrib.c:1317
+#: src/main/attrib.c:1199 src/main/attrib.c:1238 src/main/attrib.c:1329
 msgid "invalid type or length for slot name"
 msgstr "typo o lunghezza non ammissibile per il nome dello slot"
 
-#: src/main/attrib.c:1201
+#: src/main/attrib.c:1213
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "non è possibile ottenere lo slot (\"%s\") da un oggetto di tipo \"%s\""
 
-#: src/main/attrib.c:1209
+#: src/main/attrib.c:1221
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "nessuno slot di nome \"%s\" per questo oggetto di classe \"%s\""
 
-#: src/main/attrib.c:1312
+#: src/main/attrib.c:1324
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 "classi formali non possono essere utilizzati senza il pacchetto methods"
 
-#: src/main/attrib.c:1323
+#: src/main/attrib.c:1335
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1113,7 +1137,7 @@ msgstr ""
 "tentativo di ottenre lo slot \"%s\" da un oggetto di classe base (\"%s\") "
 "senza slots"
 
-#: src/main/attrib.c:1332
+#: src/main/attrib.c:1344
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1122,7 +1146,7 @@ msgstr ""
 "tentativo di ottere lo slot \"%s\" da un oggetto per il quale la classe (\"%s"
 "\") non è definita "
 
-#: src/main/attrib.c:1351
+#: src/main/attrib.c:1363
 msgid "invalid slot type"
 msgstr "tipo di slot non valido"
 
@@ -3640,11 +3664,11 @@ msgstr "vettori di lunghezza negativa non ammessi"
 msgid "invalid line type"
 msgstr "line type non valido"
 
-#: src/main/graphics.c:4548
+#: src/main/graphics.c:4550
 msgid "no active or default device"
 msgstr "nessun dispositivo attivo o di default"
 
-#: src/main/graphics.c:4565 src/main/graphics.c:4708
+#: src/main/graphics.c:4567 src/main/graphics.c:4710
 msgid "too many open devices"
 msgstr "troppi dispositivi aperti"
 

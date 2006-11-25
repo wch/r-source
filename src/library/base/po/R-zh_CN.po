@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26\n"
+"POT-Creation-Date: 2006-11-25 12:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -889,6 +889,9 @@ msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时
 
 msgid "Expected a single logical value for the S4 object state"
 msgstr "需要的是一个单独的S4目标对象逻辑值"
+
+msgid "invalid to change the storage mode of a factor"
+msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："

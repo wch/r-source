@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26+0000\n"
+"POT-Creation-Date: 2006-11-25 12:17+0000\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -76,12 +76,12 @@ msgstr "找不到工作目錄"
 msgid "invalid 'names' in 'R_unlink'"
 msgstr "R_unlink 的 'names' 無效"
 
-#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
-#: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
-#: src/gnuwin32/extra.c:363 src/gnuwin32/extra.c:400 src/gnuwin32/extra.c:411
-#: src/gnuwin32/extra.c:435 src/gnuwin32/extra.c:443 src/gnuwin32/extra.c:473
-#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:522 src/gnuwin32/extra.c:674
-#: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:766
+#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:266
+#: src/gnuwin32/extra.c:297 src/gnuwin32/extra.c:324 src/gnuwin32/extra.c:327
+#: src/gnuwin32/extra.c:376 src/gnuwin32/extra.c:413 src/gnuwin32/extra.c:424
+#: src/gnuwin32/extra.c:448 src/gnuwin32/extra.c:456 src/gnuwin32/extra.c:486
+#: src/gnuwin32/extra.c:502 src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:687
+#: src/gnuwin32/extra.c:771 src/gnuwin32/extra.c:774 src/gnuwin32/extra.c:779
 #: src/main/builtin.c:127 src/main/builtin.c:385 src/main/builtin.c:401
 #: src/main/character.c:116 src/main/character.c:119 src/main/character.c:158
 #: src/main/character.c:2434 src/main/character.c:2438
@@ -141,60 +141,80 @@ msgstr "R_unlink 的 'names' 無效"
 msgid "invalid '%s' argument"
 msgstr "'%s' 引數不正確"
 
-#: src/gnuwin32/extra.c:242 src/gnuwin32/extra.c:265
+#: src/gnuwin32/extra.c:244 src/gnuwin32/extra.c:278
 msgid "R_HOME not set"
 msgstr "沒有設定 R_HOME"
 
-#: src/gnuwin32/extra.c:296
+#: src/gnuwin32/extra.c:249
+#, fuzzy, c-format
+msgid "'%s' not found"
+msgstr "沒找到"
+
+#: src/gnuwin32/extra.c:251
+#, fuzzy, c-format
+msgid "file association for '%s' not available or invalid"
+msgstr "本系統沒有檢查檔案修改時間此一功能"
+
+#: src/gnuwin32/extra.c:254
+#, c-format
+msgid "access to '%s' denied"
+msgstr ""
+
+#: src/gnuwin32/extra.c:255
+#, c-format
+msgid "problem in displaying '%s'"
+msgstr ""
+
+#: src/gnuwin32/extra.c:309
 msgid "unknown type"
 msgstr "不明的類型"
 
-#: src/gnuwin32/extra.c:335 src/gnuwin32/extra.c:359 src/gnuwin32/extra.c:397
-#: src/gnuwin32/extra.c:432
+#: src/gnuwin32/extra.c:348 src/gnuwin32/extra.c:372 src/gnuwin32/extra.c:410
+#: src/gnuwin32/extra.c:445
 msgid "Menu functions can only be used in the GUI"
 msgstr "選單功能只能在 GUI 中使用"
 
-#: src/gnuwin32/extra.c:367
+#: src/gnuwin32/extra.c:380
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "無法檢索項目 %s (%s)"
 
-#: src/gnuwin32/extra.c:405
+#: src/gnuwin32/extra.c:418
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "無法增加選單 (%s)"
 
-#: src/gnuwin32/extra.c:417
+#: src/gnuwin32/extra.c:430
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "無法加入選單項 (%s)"
 
-#: src/gnuwin32/extra.c:440
+#: src/gnuwin32/extra.c:453
 msgid "menu does not exist"
 msgstr "選單不存在"
 
-#: src/gnuwin32/extra.c:447
+#: src/gnuwin32/extra.c:460
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "無法刪除選單項 (%s)"
 
-#: src/gnuwin32/extra.c:478
+#: src/gnuwin32/extra.c:491
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' 只能在 Rgui 和 Rterm 中使用"
 
-#: src/gnuwin32/extra.c:493
+#: src/gnuwin32/extra.c:506
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' 只能在 Rgui 和 Rterm 中使用"
 
-#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:982
+#: src/gnuwin32/extra.c:518 src/unix/sys-std.c:982
 msgid "invalid timestamp"
 msgstr "時間截記不正確"
 
-#: src/gnuwin32/extra.c:527
+#: src/gnuwin32/extra.c:540
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "'loadRconsole' 只能在 Rgui 中使用"
 
-#: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
+#: src/gnuwin32/extra.c:608 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:730
 #: src/main/errors.c:758 src/main/errors.c:857 src/main/errors.c:882
 #: src/main/errors.c:887 src/main/optimize.c:95 src/main/optimize.c:102
@@ -220,73 +240,73 @@ msgstr "'loadRconsole' 只能在 Rgui 中使用"
 msgid "invalid '%s' value"
 msgstr "'%s' 值不正確"
 
-#: src/gnuwin32/extra.c:650 src/gnuwin32/extra.c:660
+#: src/gnuwin32/extra.c:663 src/gnuwin32/extra.c:673
 msgid "incorrect argument"
 msgstr "引數不正確"
 
-#: src/gnuwin32/extra.c:653
+#: src/gnuwin32/extra.c:666
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "別傻了!: 您的機器有 4Gb 的位址上限"
 
-#: src/gnuwin32/extra.c:656
+#: src/gnuwin32/extra.c:669
 msgid "cannot decrease memory limit"
 msgstr "無法減少記憶體限制"
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 #, fuzzy
 msgid "Select one or more"
 msgstr "選擇: "
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 #, fuzzy
 msgid "Select one"
 msgstr "選擇: "
 
-#: src/gnuwin32/extra.c:924
+#: src/gnuwin32/extra.c:937
 msgid "argument must be a character vector or a raw vector"
 msgstr "引數必須是字元向量或純量向量"
 
-#: src/gnuwin32/extra.c:946 src/main/connections.c:1451
+#: src/gnuwin32/extra.c:959 src/main/connections.c:1451
 msgid "Unable to open the clipboard"
 msgstr "無法開啟剪貼簿"
 
-#: src/gnuwin32/extra.c:951 src/main/connections.c:1455
+#: src/gnuwin32/extra.c:964 src/main/connections.c:1455
 msgid "Unable to write to the clipboard"
 msgstr "無法寫入剪貼簿"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
+#: src/gnuwin32/extra.c:1064 src/gnuwin32/extra.c:1084
 msgid "'path' must be a character vector"
 msgstr "'path' 必須是字元向量"
 
-#: src/gnuwin32/extra.c:1099 src/gnuwin32/extra.c:1177
+#: src/gnuwin32/extra.c:1112 src/gnuwin32/extra.c:1190
 msgid "'default' must be a character string"
 msgstr "'default' 必須為字串"
 
-#: src/gnuwin32/extra.c:1101 src/gnuwin32/extra.c:1179
+#: src/gnuwin32/extra.c:1114 src/gnuwin32/extra.c:1192
 msgid "'default' is overlong"
 msgstr "'default' 太長"
 
-#: src/gnuwin32/extra.c:1110 src/gnuwin32/extra.c:1183
+#: src/gnuwin32/extra.c:1123 src/gnuwin32/extra.c:1196
 msgid "'caption' must be a character string"
 msgstr "'caption' 必須為字串"
 
-#: src/gnuwin32/extra.c:1112
+#: src/gnuwin32/extra.c:1125
 msgid "'multi' must be a logical value"
 msgstr "'multi' 必須為邏輯值"
 
-#: src/gnuwin32/extra.c:1114
+#: src/gnuwin32/extra.c:1127
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' 必須為整數"
 
-#: src/gnuwin32/extra.c:1272
+#: src/gnuwin32/extra.c:1285
 msgid "'title' must be a character string"
 msgstr "'title' 必須為字串"
 
-#: src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1317
 msgid "'which' must be length 1"
 msgstr "'which' 的長度必須為 1"
 
-#: src/gnuwin32/extra.c:1334 src/main/connections.c:2504
+#: src/gnuwin32/extra.c:1347 src/main/connections.c:2504
 #: src/main/connections.c:2507 src/main/connections.c:2510
 #: src/main/connections.c:2721 src/main/connections.c:2724
 #: src/main/connections.c:2728 src/main/connections.c:2731
@@ -302,24 +322,24 @@ msgstr "'which' 的長度必須為 1"
 msgid "invalid value for '%s'"
 msgstr "'n' 的值不正確"
 
-#: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
-#: src/gnuwin32/extra.c:1378
+#: src/gnuwin32/extra.c:1349 src/gnuwin32/extra.c:1351
+#: src/gnuwin32/extra.c:1391
 msgid "invalid device"
 msgstr "裝置無效"
 
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1352
 msgid "requires SDI mode"
 msgstr "需要用 SDI 模式"
 
-#: src/gnuwin32/extra.c:1372
+#: src/gnuwin32/extra.c:1385
 msgid "invalid graphical device number"
 msgstr "繪圖裝置號碼無效"
 
-#: src/gnuwin32/extra.c:1382
+#: src/gnuwin32/extra.c:1395
 msgid "bad device"
 msgstr "裝置不當"
 
-#: src/gnuwin32/extra.c:1490 src/gnuwin32/extra.c:1498
+#: src/gnuwin32/extra.c:1503 src/gnuwin32/extra.c:1511
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs 中的輸入無效"
 
@@ -978,117 +998,121 @@ msgstr "零長度向量不能設成 'tsp'"
 msgid "attempt to set invalid 'comment' attribute"
 msgstr "試圖設定無效的 'comment' 屬性"
 
-#: src/main/attrib.c:432
+#: src/main/attrib.c:436
+msgid "adding class \"factor\" to an invalid object"
+msgstr ""
+
+#: src/main/attrib.c:444
 msgid "attempt to set invalid 'class' attribute"
 msgstr "試圖設定無效的 'class' 屬性"
 
-#: src/main/attrib.c:634
+#: src/main/attrib.c:646
 msgid "incompatible 'names' argument"
 msgstr "不相容的 'names' 引數"
 
-#: src/main/attrib.c:686
+#: src/main/attrib.c:698
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "以無效的類型 (%s) 設定 'names' 屬性"
 
-#: src/main/attrib.c:753
+#: src/main/attrib.c:765
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' 被應用於非陣列"
 
-#: src/main/attrib.c:757
+#: src/main/attrib.c:769
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' 必須是串列"
 
-#: src/main/attrib.c:760
+#: src/main/attrib.c:772
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames' 的長度 [%d] 必須同 'dims' 的長度 [%d] 相等"
 
-#: src/main/attrib.c:777
+#: src/main/attrib.c:789
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "設 'dimnames' 時的類型 (%s) 不正確 (必須為向量)"
 
-#: src/main/attrib.c:780
+#: src/main/attrib.c:792
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames' 的長度 [%d] 必須與陣列範圍相等"
 
-#: src/main/attrib.c:840
+#: src/main/attrib.c:852
 msgid "dim<- : invalid first argument"
 msgstr "dim<-: 第一引數無效"
 
-#: src/main/attrib.c:843
+#: src/main/attrib.c:855
 msgid "dim<- : invalid second argument"
 msgstr "dim<-: 第二引數無效"
 
-#: src/main/attrib.c:851
+#: src/main/attrib.c:863
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim: 零維長度的向量無效"
 
-#: src/main/attrib.c:856
+#: src/main/attrib.c:868
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<- : dims [product %d] 與目的物件 [%d] 的長度不符"
 
-#: src/main/attrib.c:938
+#: src/main/attrib.c:950
 msgid "attributes must be in a list"
 msgstr "屬性必須在串列中設定"
 
-#: src/main/attrib.c:962
+#: src/main/attrib.c:974
 msgid "attributes must be named"
 msgstr "屬性必須命名"
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:978
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "所有的屬性都必須有名稱 [%d 沒有]"
 
-#: src/main/attrib.c:1009
+#: src/main/attrib.c:1021
 msgid "attribute 'name' must be of mode character"
 msgstr "'name' 屬性必須是字元"
 
-#: src/main/attrib.c:1011
+#: src/main/attrib.c:1023
 msgid "exactly one attribute 'name' must be given"
 msgstr "只能給出一個 'name' 屬性"
 
-#: src/main/attrib.c:1079
+#: src/main/attrib.c:1091
 msgid "'name' must be non-null character"
 msgstr "'name' 必須為非空字元"
 
-#: src/main/attrib.c:1187 src/main/attrib.c:1226 src/main/attrib.c:1317
+#: src/main/attrib.c:1199 src/main/attrib.c:1238 src/main/attrib.c:1329
 msgid "invalid type or length for slot name"
 msgstr "名稱插槽的類型或長度不正確"
 
-#: src/main/attrib.c:1201
+#: src/main/attrib.c:1213
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "類型 \"%2$s\" 的目的物件中沒有 \"%1$s\" 這樣一個插槽"
 
-#: src/main/attrib.c:1209
+#: src/main/attrib.c:1221
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\" 插槽名不存在於 \"%2$s\" 類型目的物件中"
 
-#: src/main/attrib.c:1312
+#: src/main/attrib.c:1324
 msgid "formal classes cannot be used without the methods package"
 msgstr "一定要有方法套件才能使用正式類別"
 
-#: src/main/attrib.c:1323
+#: src/main/attrib.c:1335
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "無法從沒有插槽的基本類別 (\"%2$s\") 的目的物件中取得 \"%1$s\" 插槽"
 
-#: src/main/attrib.c:1332
+#: src/main/attrib.c:1344
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr "嘗試從一個不是 S4 物件的物件 (類別 \"%2$s\") 中獲取插槽 \"%1$s\" "
 
-#: src/main/attrib.c:1351
+#: src/main/attrib.c:1363
 msgid "invalid slot type"
 msgstr "插槽的類型不正確"
 
@@ -3576,11 +3600,11 @@ msgstr "不允許負長度的向量"
 msgid "invalid line type"
 msgstr "無效的列類型"
 
-#: src/main/graphics.c:4548
+#: src/main/graphics.c:4550
 msgid "no active or default device"
 msgstr "沒有在使用中的或預設的裝置"
 
-#: src/main/graphics.c:4565 src/main/graphics.c:4708
+#: src/main/graphics.c:4567 src/main/graphics.c:4710
 msgid "too many open devices"
 msgstr "太多已經開啟的裝置"
 

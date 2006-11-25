@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26+0000\n"
+"POT-Creation-Date: 2006-11-25 12:17+0000\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -74,12 +74,12 @@ msgstr ""
 msgid "invalid 'names' in 'R_unlink'"
 msgstr ""
 
-#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:253
-#: src/gnuwin32/extra.c:284 src/gnuwin32/extra.c:311 src/gnuwin32/extra.c:314
-#: src/gnuwin32/extra.c:363 src/gnuwin32/extra.c:400 src/gnuwin32/extra.c:411
-#: src/gnuwin32/extra.c:435 src/gnuwin32/extra.c:443 src/gnuwin32/extra.c:473
-#: src/gnuwin32/extra.c:489 src/gnuwin32/extra.c:522 src/gnuwin32/extra.c:674
-#: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:766
+#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:266
+#: src/gnuwin32/extra.c:297 src/gnuwin32/extra.c:324 src/gnuwin32/extra.c:327
+#: src/gnuwin32/extra.c:376 src/gnuwin32/extra.c:413 src/gnuwin32/extra.c:424
+#: src/gnuwin32/extra.c:448 src/gnuwin32/extra.c:456 src/gnuwin32/extra.c:486
+#: src/gnuwin32/extra.c:502 src/gnuwin32/extra.c:535 src/gnuwin32/extra.c:687
+#: src/gnuwin32/extra.c:771 src/gnuwin32/extra.c:774 src/gnuwin32/extra.c:779
 #: src/main/builtin.c:127 src/main/builtin.c:385 src/main/builtin.c:401
 #: src/main/character.c:116 src/main/character.c:119 src/main/character.c:158
 #: src/main/character.c:2434 src/main/character.c:2438
@@ -139,60 +139,80 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr ""
 
-#: src/gnuwin32/extra.c:242 src/gnuwin32/extra.c:265
+#: src/gnuwin32/extra.c:244 src/gnuwin32/extra.c:278
 msgid "R_HOME not set"
 msgstr ""
 
-#: src/gnuwin32/extra.c:296
+#: src/gnuwin32/extra.c:249
+#, c-format
+msgid "'%s' not found"
+msgstr ""
+
+#: src/gnuwin32/extra.c:251
+#, c-format
+msgid "file association for '%s' not available or invalid"
+msgstr ""
+
+#: src/gnuwin32/extra.c:254
+#, c-format
+msgid "access to '%s' denied"
+msgstr ""
+
+#: src/gnuwin32/extra.c:255
+#, c-format
+msgid "problem in displaying '%s'"
+msgstr ""
+
+#: src/gnuwin32/extra.c:309
 msgid "unknown type"
 msgstr ""
 
-#: src/gnuwin32/extra.c:335 src/gnuwin32/extra.c:359 src/gnuwin32/extra.c:397
-#: src/gnuwin32/extra.c:432
+#: src/gnuwin32/extra.c:348 src/gnuwin32/extra.c:372 src/gnuwin32/extra.c:410
+#: src/gnuwin32/extra.c:445
 msgid "Menu functions can only be used in the GUI"
 msgstr ""
 
-#: src/gnuwin32/extra.c:367
+#: src/gnuwin32/extra.c:380
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr ""
 
-#: src/gnuwin32/extra.c:405
+#: src/gnuwin32/extra.c:418
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr ""
 
-#: src/gnuwin32/extra.c:417
+#: src/gnuwin32/extra.c:430
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr ""
 
-#: src/gnuwin32/extra.c:440
+#: src/gnuwin32/extra.c:453
 msgid "menu does not exist"
 msgstr ""
 
-#: src/gnuwin32/extra.c:447
+#: src/gnuwin32/extra.c:460
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr ""
 
-#: src/gnuwin32/extra.c:478
+#: src/gnuwin32/extra.c:491
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr ""
 
-#: src/gnuwin32/extra.c:493
+#: src/gnuwin32/extra.c:506
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr ""
 
-#: src/gnuwin32/extra.c:505 src/unix/sys-std.c:982
+#: src/gnuwin32/extra.c:518 src/unix/sys-std.c:982
 msgid "invalid timestamp"
 msgstr ""
 
-#: src/gnuwin32/extra.c:527
+#: src/gnuwin32/extra.c:540
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr ""
 
-#: src/gnuwin32/extra.c:595 src/main/datetime.c:560 src/main/datetime.c:626
+#: src/gnuwin32/extra.c:608 src/main/datetime.c:560 src/main/datetime.c:626
 #: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:730
 #: src/main/errors.c:758 src/main/errors.c:857 src/main/errors.c:882
 #: src/main/errors.c:887 src/main/optimize.c:95 src/main/optimize.c:102
@@ -218,71 +238,71 @@ msgstr ""
 msgid "invalid '%s' value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:650 src/gnuwin32/extra.c:660
+#: src/gnuwin32/extra.c:663 src/gnuwin32/extra.c:673
 msgid "incorrect argument"
 msgstr ""
 
-#: src/gnuwin32/extra.c:653
+#: src/gnuwin32/extra.c:666
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr ""
 
-#: src/gnuwin32/extra.c:656
+#: src/gnuwin32/extra.c:669
 msgid "cannot decrease memory limit"
 msgstr ""
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 msgid "Select one or more"
 msgstr ""
 
-#: src/gnuwin32/extra.c:788
+#: src/gnuwin32/extra.c:801
 msgid "Select one"
 msgstr ""
 
-#: src/gnuwin32/extra.c:924
+#: src/gnuwin32/extra.c:937
 msgid "argument must be a character vector or a raw vector"
 msgstr ""
 
-#: src/gnuwin32/extra.c:946 src/main/connections.c:1451
+#: src/gnuwin32/extra.c:959 src/main/connections.c:1451
 msgid "Unable to open the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:951 src/main/connections.c:1455
+#: src/gnuwin32/extra.c:964 src/main/connections.c:1455
 msgid "Unable to write to the clipboard"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
+#: src/gnuwin32/extra.c:1064 src/gnuwin32/extra.c:1084
 msgid "'path' must be a character vector"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1099 src/gnuwin32/extra.c:1177
+#: src/gnuwin32/extra.c:1112 src/gnuwin32/extra.c:1190
 msgid "'default' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1101 src/gnuwin32/extra.c:1179
+#: src/gnuwin32/extra.c:1114 src/gnuwin32/extra.c:1192
 msgid "'default' is overlong"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1110 src/gnuwin32/extra.c:1183
+#: src/gnuwin32/extra.c:1123 src/gnuwin32/extra.c:1196
 msgid "'caption' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1112
+#: src/gnuwin32/extra.c:1125
 msgid "'multi' must be a logical value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1114
+#: src/gnuwin32/extra.c:1127
 msgid "'filterindex' must be an integer value"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1272
+#: src/gnuwin32/extra.c:1285
 msgid "'title' must be a character string"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1304
+#: src/gnuwin32/extra.c:1317
 msgid "'which' must be length 1"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1334 src/main/connections.c:2504
+#: src/gnuwin32/extra.c:1347 src/main/connections.c:2504
 #: src/main/connections.c:2507 src/main/connections.c:2510
 #: src/main/connections.c:2721 src/main/connections.c:2724
 #: src/main/connections.c:2728 src/main/connections.c:2731
@@ -298,24 +318,24 @@ msgstr ""
 msgid "invalid value for '%s'"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1336 src/gnuwin32/extra.c:1338
-#: src/gnuwin32/extra.c:1378
+#: src/gnuwin32/extra.c:1349 src/gnuwin32/extra.c:1351
+#: src/gnuwin32/extra.c:1391
 msgid "invalid device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1339
+#: src/gnuwin32/extra.c:1352
 msgid "requires SDI mode"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1372
+#: src/gnuwin32/extra.c:1385
 msgid "invalid graphical device number"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1382
+#: src/gnuwin32/extra.c:1395
 msgid "bad device"
 msgstr ""
 
-#: src/gnuwin32/extra.c:1490 src/gnuwin32/extra.c:1498
+#: src/gnuwin32/extra.c:1503 src/gnuwin32/extra.c:1511
 msgid "invalid input in Rmbstowcs"
 msgstr ""
 
@@ -969,117 +989,121 @@ msgstr ""
 msgid "attempt to set invalid 'comment' attribute"
 msgstr ""
 
-#: src/main/attrib.c:432
+#: src/main/attrib.c:436
+msgid "adding class \"factor\" to an invalid object"
+msgstr ""
+
+#: src/main/attrib.c:444
 msgid "attempt to set invalid 'class' attribute"
 msgstr ""
 
-#: src/main/attrib.c:634
+#: src/main/attrib.c:646
 msgid "incompatible 'names' argument"
 msgstr ""
 
-#: src/main/attrib.c:686
+#: src/main/attrib.c:698
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr ""
 
-#: src/main/attrib.c:753
+#: src/main/attrib.c:765
 msgid "'dimnames' applied to non-array"
 msgstr ""
 
-#: src/main/attrib.c:757
+#: src/main/attrib.c:769
 msgid "'dimnames' must be a list"
 msgstr ""
 
-#: src/main/attrib.c:760
+#: src/main/attrib.c:772
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 
-#: src/main/attrib.c:777
+#: src/main/attrib.c:789
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr ""
 
-#: src/main/attrib.c:780
+#: src/main/attrib.c:792
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 
-#: src/main/attrib.c:840
+#: src/main/attrib.c:852
 msgid "dim<- : invalid first argument"
 msgstr ""
 
-#: src/main/attrib.c:843
+#: src/main/attrib.c:855
 msgid "dim<- : invalid second argument"
 msgstr ""
 
-#: src/main/attrib.c:851
+#: src/main/attrib.c:863
 msgid "dim: length-0 dimension vector is invalid"
 msgstr ""
 
-#: src/main/attrib.c:856
+#: src/main/attrib.c:868
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 
-#: src/main/attrib.c:938
+#: src/main/attrib.c:950
 msgid "attributes must be in a list"
 msgstr ""
 
-#: src/main/attrib.c:962
+#: src/main/attrib.c:974
 msgid "attributes must be named"
 msgstr ""
 
-#: src/main/attrib.c:966
+#: src/main/attrib.c:978
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 
-#: src/main/attrib.c:1009
+#: src/main/attrib.c:1021
 msgid "attribute 'name' must be of mode character"
 msgstr ""
 
-#: src/main/attrib.c:1011
+#: src/main/attrib.c:1023
 msgid "exactly one attribute 'name' must be given"
 msgstr ""
 
-#: src/main/attrib.c:1079
+#: src/main/attrib.c:1091
 msgid "'name' must be non-null character"
 msgstr ""
 
-#: src/main/attrib.c:1187 src/main/attrib.c:1226 src/main/attrib.c:1317
+#: src/main/attrib.c:1199 src/main/attrib.c:1238 src/main/attrib.c:1329
 msgid "invalid type or length for slot name"
 msgstr ""
 
-#: src/main/attrib.c:1201
+#: src/main/attrib.c:1213
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1209
+#: src/main/attrib.c:1221
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1312
+#: src/main/attrib.c:1324
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 
-#: src/main/attrib.c:1323
+#: src/main/attrib.c:1335
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
-#: src/main/attrib.c:1332
+#: src/main/attrib.c:1344
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
 
-#: src/main/attrib.c:1351
+#: src/main/attrib.c:1363
 msgid "invalid slot type"
 msgstr ""
 
@@ -3550,11 +3574,11 @@ msgstr ""
 msgid "invalid line type"
 msgstr ""
 
-#: src/main/graphics.c:4548
+#: src/main/graphics.c:4550
 msgid "no active or default device"
 msgstr ""
 
-#: src/main/graphics.c:4565 src/main/graphics.c:4708
+#: src/main/graphics.c:4567 src/main/graphics.c:4710
 msgid "too many open devices"
 msgstr ""
 

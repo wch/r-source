@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26\n"
+"POT-Creation-Date: 2006-11-25 12:17\n"
 "PO-Revision-Date: 2006-09-22 19:14+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -912,6 +912,9 @@ msgstr ""
 
 msgid "Expected a single logical value for the S4 object state"
 msgstr "この S4 オブジェクト状態に対しては単一の論理値が期待されています"
+
+msgid "invalid to change the storage mode of a factor"
+msgstr ""
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""

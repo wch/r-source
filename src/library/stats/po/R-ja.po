@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:27\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
 "PO-Revision-Date: 2006-09-22 10:46+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1463,6 +1463,9 @@ msgstr "無効な 'contrasts.arg' 引数です"
 msgid "variable '%s' is absent, its contrast will be ignored"
 msgstr "変数 '%s' は存在しません。その対比は無視されます"
 
+msgid "using type=\"numeric\" with a factor response will be ignored"
+msgstr ""
+
 msgid "invalid response type"
 msgstr "無効な応答タイプです"
 
@@ -1480,6 +1483,10 @@ msgstr "無効な引数 'omit' です"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' は {0,1,2} 中でなければなりません"
+
+#, fuzzy
+msgid "'interval' must be a vector of length 2"
+msgstr "'margins' は長さ 2 の数値ベクトルでなければなりません"
 
 msgid "lower < upper  is not fulfilled"
 msgstr "lower < upper になっていません"
@@ -1982,6 +1989,10 @@ msgstr "正しい長さでない非時系列です"
 
 msgid "time series contains internal NAs"
 msgstr "時系列は内部に NA 値を含んでいます"
+
+#, fuzzy
+msgid "series is corrupt, with no 'tsp' attribute"
+msgstr "系列は壊れています：'tsp' を持つ %d は %d を意味します"
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr "系列は壊れています：'tsp' を持つ %d は %d を意味します"
