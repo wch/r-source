@@ -2567,6 +2567,13 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 
     clpwin = XCreateSimpleWindow(display, DefaultRootWindow(display),
 				 0, 0, 1, 1, 0, 0, 0);
+    /* <FIXME> this is not optimal in a UTF-8 locale. 
+       What we should do is see if UTF-8 extensions are available
+       (via X_HAVE_UTF8_STRING) then ask with target TARGETS and see if
+       UTF8_STRING is available.  See
+       http://www.pps.jussieu.fr/~jch/software/UTF8_STRING/UTF8_STRING.text
+    */
+
     /* send a selection request */
     ret = XConvertSelection(display, sel, XA_STRING, pty, clpwin, CurrentTime);
 
