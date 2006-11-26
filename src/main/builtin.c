@@ -300,6 +300,24 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     return( env );
 }
 
+SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    char *ans="";
+    SEXP env = CAR(args);
+
+    checkArity(op, args);
+    if (TYPEOF(env) == ENVSXP) {
+	if (env == R_GlobalEnv) ans = "R_GlobalEnv";
+	else if (env == R_BaseEnv) ans = "base";
+	else if (env == R_EmptyEnv) ans = "R_EmptyEnv";
+	else if (R_IsPackageEnv(env))
+	    ans = CHAR(STRING_ELT(R_PackageEnvName(env), 0));
+	else if (R_IsNamespaceEnv(env))
+	    ans = CHAR(STRING_ELT(R_NamespaceEnvSpec(env), 0));
+    }
+    return mkString(ans);
+}
+
 static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
 {
     Rprintf("\n");

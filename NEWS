@@ -118,6 +118,10 @@ NEW FEATURES
 
     o	Set the parser to give verbose error messages in case of 
     	syntax errors.
+
+    o	New function environmentName() to give the print name of
+	environments such as "namespace:base".
+	This is now used by str().
  
 
 DEPRECATED & DEFUNCT
@@ -169,7 +173,7 @@ UTILITIES
 	
 BUG FIXES
 
-    o	gc() can now report quantities of Vcells in excess of 16Gb on
+    o	gc() can now report quantities of 'Vcells' in excess of 16Gb on
 	64-bit systems (rather than reporting NA).
 
     o	Assigning class "factor" to an object now requires it has
@@ -177,6 +181,15 @@ BUG FIXES
 
     o	structure() ensures that objects with added class "factor" have
 	integer codes.
+
+    o	The "formula" and "outer" attributes of datasets 'ChickWeight',
+	'CO2', 'DNase', 'Indometh', 'Loblolly', 'Orange' and 'Theoph'
+	now have an empty environment and not the environment used to
+	dump the datasets in the package.
+
+    o	Dataset Seatbelts now correctly has class c("mts", "ts").
+
+    o	str() now labels classes on data frames more coherently.
 
 
 
