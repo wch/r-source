@@ -18,7 +18,8 @@ structure(.Data, \dots)
   Adding a \code{\link{tsp}} attribute will ensure that the object
   returned inherits from class \code{"ts"}, and adding a
   \code{\link{levels}} attribute ensures that the returned object is a
-  factor.
+  factor.  These conversions are deprecated: they give a warning and
+  will be removed in \R 2.5.0.
 
   For historical reasons (these names are used when deparsing),
   attributes \code{".Dim"}, \code{".Dimnames"},

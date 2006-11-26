@@ -38,6 +38,13 @@ C-LEVEL FACILITIES
 	Free need to be prefixed by R_ when STRICT_R_HEADERS is defined.
 
 
+DEPRECATED & DEFUNCT
+
+    o	The previously undocumented behaviour of structure() in adding
+	a class when specifying with "tsp" or "levels" attributes is
+	now deprecated (with a warning).
+
+
 BUG FIXES
 
     o	Fixed warning() to use .dfltWarn intead of .dfltStop for default

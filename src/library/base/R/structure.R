@@ -5,6 +5,7 @@
 ## are converted to integers.
 ## As factors will normally have "class" after "levels", ordered factors
 ## do work correctly.
+## behaviour will be changed in R 2.5.0
 structure <- function (.Data, ...)
 {
     attrib <- list(...)
@@ -16,10 +17,15 @@ structure <- function (.Data, ...)
 	names(attrib)[ok] <- replace[m[ok]]
         nm <- names(attrib)
 	if("tsp" %in% nm &&
-           !("ts" %in% c(attributes(.Data), attrib$class)))
+           !("ts" %in% c(attributes(.Data), attrib$class))) {
 	    attrib$class <- c(attrib$class, "ts")
-	if(is.numeric(.Data) && "levels" %in% nm)
+	    warning('adding class "ts": this is deprecated')
+	}
+	if(is.numeric(.Data) && "levels" %in% nm) {
+	    if(! "factor" %in% c(attributes(.Data), attrib$class))
+	    warning("conversion to factor is deprecated")
 	    .Data <- factor(.Data, levels = seq_along(attrib$levels))
+	}
 	attributes(.Data) <- c(attributes(.Data), attrib)
     }
     return(.Data)
