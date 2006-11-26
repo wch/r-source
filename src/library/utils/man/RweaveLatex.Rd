@@ -10,8 +10,8 @@
 RweaveLatex()
 
 RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
-                 debug = FALSE, echo = TRUE, keep.source = TRUE, 
-                 eval  =  TRUE, split = FALSE, stylepath = TRUE,
+                 debug = FALSE, echo = TRUE, eval = TRUE,
+                 keep.source = TRUE, split = FALSE, stylepath = TRUE,
                  pdf = TRUE, eps = TRUE)
 }
 \arguments{
@@ -35,8 +35,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     already present in the Sweave source file.
   }
   \item{echo}{set default for option \code{echo}, see details below.}
-  \item{keep.source}{set default for option \code{keep.source}, see details below.}
   \item{eval}{set default for option \code{eval}, see details below.}
+  \item{keep.source}{set default for option \code{keep.source}, see
+    details below.}
   \item{split}{set default for option \code{split}, see details below.}
   \item{pdf}{set default for option \code{pdf}, see details below.}
   \item{eps}{set default for option \code{eps}, see details below.}
