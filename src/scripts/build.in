@@ -628,7 +628,8 @@ sub fix_CRLF_in_source_files {
     my ($pkgname, $log) = @_;
 
     if(-d "$pkgname/src") {
-	my @src_files = &list_files_with_exts("$pkgname/src", "(c|h|f|cc|cpp)");
+	my @src_files = &list_files_with_type("$pkgname/src",
+					      "src_no_CRLF");
 	foreach my $file (@src_files) {
 	    my $has_CRLF = 0;
 	    open(FILE, "< $file")
