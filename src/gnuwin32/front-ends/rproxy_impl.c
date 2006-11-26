@@ -299,7 +299,7 @@ int R_Proxy_evaluate (char const* pCmd, BDX_Data** pData)
     ParseStatus lStatus;
     SEXP lResult;
 
-    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus);
+    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus, R_NilValue);
     /* This is an EXPRSXP: we assume just one expression */
 
     switch (lStatus) {
@@ -327,7 +327,7 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
     ParseStatus lStatus;
     SEXP lResult;
 
-    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus);
+    lSexp = R_ParseVector(mkString(pCmd), 1, &lStatus, R_NilValue);
     /* It would make sense to allow multiple expressions here */
   
     switch (lStatus) {

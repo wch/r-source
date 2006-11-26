@@ -1319,7 +1319,7 @@ SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile)
 }
 
 /* This one is public, and used in source.c */
-SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
+SEXP R_ParseVector(SEXP text, int n, ParseStatus *status, SEXP srcfilecopy)
 {
     SEXP rval;
     TextBuffer textb;
@@ -1327,7 +1327,7 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     txtb = &textb;
     GenerateCode = 1;
     ptr_getc = text_getc;
-    rval = R_Parse(n, status, R_NilValue);
+    rval = R_Parse(n, status, srcfilecopy);
     R_TextBufferFree(&textb);
     return rval;
 }

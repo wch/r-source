@@ -10,8 +10,8 @@
 RweaveLatex()
 
 RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
-                 debug = FALSE, echo = TRUE, eval  =  TRUE,
-                 split = FALSE, stylepath = TRUE,
+                 debug = FALSE, echo = TRUE, keep.source = TRUE, 
+                 eval  =  TRUE, split = FALSE, stylepath = TRUE,
                  pdf = TRUE, eps = TRUE)
 }
 \arguments{
@@ -35,6 +35,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     already present in the Sweave source file.
   }
   \item{echo}{set default for option \code{echo}, see details below.}
+  \item{keep.source}{set default for option \code{keep.source}, see details below.}
   \item{eval}{set default for option \code{eval}, see details below.}
   \item{split}{set default for option \code{split}, see details below.}
   \item{pdf}{set default for option \code{pdf}, see details below.}
@@ -46,6 +47,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \describe{
     \item{echo:}{logical (\code{TRUE}). Include S code in the
       output file?}
+    \item{keep.source:}{logical (\code{TRUE}).  When echoing, if \code{keep.source == TRUE}
+      the original source is copied to the file.  Otherwise, deparsed source is echoed.}
     \item{eval:}{logical (\code{TRUE}). If \code{FALSE}, the code chunk is not
       evaluated, and hence no text or graphical output produced.}
     \item{results:}{character string (\code{verbatim}).

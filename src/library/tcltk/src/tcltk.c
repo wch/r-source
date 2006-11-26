@@ -50,7 +50,7 @@ static int R_eval(ClientData clientData,
     for (i = 1 ; i < argc ; i++)
 	SET_STRING_ELT(text, i-1, mkChar(argv[i]));
 
-    expr = PROTECT(R_ParseVector(text, -1, &status));
+    expr = PROTECT(R_ParseVector(text, -1, &status, R_NilValue));
     if (status != PARSE_OK) {
 	UNPROTECT(2);
 	Tcl_SetResult(interp, "parse error in R expression", TCL_STATIC);
