@@ -10,7 +10,7 @@
 \alias{parent.env}
 \alias{parent.env<-}
 \alias{.BaseNamespaceEnv}
-\alias{environmentNamw}
+\alias{environmentName}
 \title{Environment Access}
 \description{
   Get, set, test for and create environments.
