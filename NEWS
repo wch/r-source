@@ -118,7 +118,7 @@ NEW FEATURES
 
     o	Set the parser to give verbose error messages in case of 
     	syntax errors.
-    
+ 
 
 DEPRECATED & DEFUNCT
 
@@ -131,7 +131,11 @@ DEPRECATED & DEFUNCT
     o	The autoloading of ts() is defunct.
 
     o	The undocumented reserved word GLOBAL.ENV has been removed.
-	(It was yet another way to get the value of the symbol .GlobalEnv.)
+	(It was yet another way to get the value of the symbol
+	.GlobalEnv.)
+
+    o	The deprecated behaviour of structure() in adding a class when
+	specifying with "tsp" or "levels" attributes is now defunct.
 
 
 INSTALLATION
@@ -168,13 +172,11 @@ BUG FIXES
     o	gc() can now report quantities of Vcells in excess of 16Gb on
 	64-bit systems (rather than reporting NA).
 
-    o	Assigning class "factor" to an object now ensures it has
+    o	Assigning class "factor" to an object now requires it has
 	integer (and not say double) codes.
 
-    o	structure() no longer takes adding a "levels" attribute to be a
-	request for a factor nor adding a "tsp" attribute to be a
-	request for a "ts" object, but it does ensure that objects
-	with added class "factor" have integer codes.
+    o	structure() ensures that objects with added class "factor" have
+	integer codes.
 
 
 
@@ -216,6 +218,13 @@ C-LEVEL FACILITIES
     o	Using STRICT_R_HEADERS applies to more reported clashes with
 	Windows headers, including Calloc and Realloc.  These and
 	Free need to be prefixed by R_ when STRICT_R_HEADERS is defined.
+
+
+DEPRECATED & DEFUNCT
+
+    o	The previously undocumented behaviour of structure() in adding
+	a class when specifying with "tsp" or "levels" attributes is
+	now deprecated (with a warning).
 
 
 BUG FIXES
