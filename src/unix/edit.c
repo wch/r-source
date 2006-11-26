@@ -87,7 +87,7 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int   i, rc;
     ParseStatus status;
-    SEXP  x, fn, envir, ti, ed, t;
+    SEXP  x, fn, envir, ti, ed, src, srcfile, Rfn;
     char *filename, *editcmd, *vmaxsave, *cmd;
     FILE *fp;
 #ifdef Win32
@@ -113,17 +113,23 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else filename = DefaultFileName;
 
+    srcfile = R_NilValue;
     if (x != R_NilValue) {
 
 	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
 	    errorcall(call, _("unable to open file"));
 	if (LENGTH(STRING_ELT(fn, 0)) == 0) EdFileUsed++;
-	if (TYPEOF(x) != CLOSXP || isNull(t = getAttrib(x, R_SourceSymbol)))
-	    t = deparse1(x, 0, FORSOURCING); /* deparse for sourcing, not for display */
-	for (i = 0; i < LENGTH(t); i++)
-	    fprintf(fp, "%s\n", CHAR(STRING_ELT(t, i)));
+	if (TYPEOF(x) != CLOSXP || isNull(src = getAttrib(x, R_SourceSymbol)))
+	    src = deparse1(x, 0, FORSOURCING); /* deparse for sourcing, not for display */
+	for (i = 0; i < LENGTH(src); i++)
+	    fprintf(fp, "%s\n", CHAR(STRING_ELT(src, i)));
 	fclose(fp);
+	PROTECT(Rfn = findFun(install("srcfilecopy"), R_BaseEnv));
+	PROTECT(srcfile = lang3(Rfn, ScalarString(mkChar("<tmp>")), src));
+	PROTECT(srcfile = eval(srcfile, R_BaseEnv));
+	UNPROTECT(3);                    
     }
+    PROTECT(srcfile);
     ti = CAR(args); args = CDR(args);
     ed = CAR(args);
     if (!isString(ed)) errorcall(call, _("argument 'editor' type not valid"));
@@ -166,12 +172,22 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("problem with running editor %s"), cmd);
 #endif
 
+    if (!isNull(srcfile)) {
+    	PROTECT(Rfn = findFun(install("readLines"), R_BaseEnv));
+    	PROTECT(src = lang2(Rfn, ScalarString(mkChar(R_ExpandFileName(filename)))));
+    	PROTECT(src = eval(src, R_BaseEnv));
+    	defineVar(install("lines"), src, srcfile); 
+    	UNPROTECT(3);
+    }
     /* <FIXME> setup a context to close the file, and parse and eval
        line by line */
     if((fp = R_fopen(R_ExpandFileName(filename), "r")) == NULL)
 	errorcall(call, _("unable to open file to read"));
-    x = PROTECT(R_ParseFile(fp, -1, &status));
+
+    x = PROTECT(R_ParseFile(fp, -1, &status, srcfile));
     fclose(fp);
+
+    
     if (status != PARSE_OK)
 	errorcall(call,
 		  _("%s occurred on line %d\n use a command like\n x <- edit()\n to recover"), R_ParseErrorMsg, R_ParseError);
@@ -187,7 +203,7 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (TYPEOF(x) == CLOSXP && envir != R_NilValue)
 	SET_CLOENV(x, envir);
-    UNPROTECT(2);
+    UNPROTECT(3);
     vmaxset(vmaxsave);
     return (x);
 }
