@@ -192,7 +192,7 @@ fi
 if test -n "${warn_pdf}"; then
   AC_MSG_WARN([${warn_pdf}])
 fi
-AC_PATH_PROGS(MAKEINFO_CMD, [${MAKEINFO} makeinfo])
+R_PROG_MAKEINFO
 ## This test admittedly looks a bit strange ... see R_PROG_PERL.
 if test "${PERL}" = "${FALSE}"; then
   AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
@@ -209,23 +209,16 @@ AC_SUBST(R_RD4PDF)
 ## R_PROG_MAKEINFO
 ## ---------------
 AC_DEFUN([R_PROG_MAKEINFO],
-## This used to be part of R_PROG_TEXMF, where it really belongs.
-## Unfortunately, AC_PROG_LIBTOOL unconditionally overwrites MAKEINFO
-## by makeinfo or missing.  To allow users to pass a MAKEINFO setting to
-## configure, we thus have to run R_PROG_TEXMF before AC_PROG_LIBTOOL,
-## save the result to something not overwritten (hence MAKEINFO_CMD),
-## and finally set MAKEINFO according to our needs.
-[AC_REQUIRE([R_PROG_TEXMF])
-AC_REQUIRE([AC_PROG_LIBTOOL])
-if test -n "${MAKEINFO_CMD}"; then
+[AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
+if test -n "${MAKEINFO}"; then
   _R_PROG_MAKEINFO_VERSION
 fi
 if test "${r_cv_prog_makeinfo_v4}" != yes; then
-  warn_info="you cannot build info or html versions of the R manuals"
+  warn_info="you cannot build info or HTML versions of the R manuals"
   AC_MSG_WARN([${warn_info}])
   MAKEINFO=false
 else
-  MAKEINFO="${MAKEINFO_CMD}"
+  MAKEINFO="${MAKEINFO}"
 fi
 ])# R_PROG_MAKEINFO
 
@@ -239,10 +232,11 @@ fi
 AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
 [AC_CACHE_CHECK([whether makeinfo version is at least 4.7],
                 [r_cv_prog_makeinfo_v4],
-[makeinfo_version=`${MAKEINFO_CMD} --version | \
+[makeinfo_version=`${MAKEINFO} --version | \
   grep "^makeinfo" | sed 's/[[^)]]*) \(.*\)/\1/'`
 makeinfo_version_maj=`echo ${makeinfo_version} | cut -f1 -d.`
-makeinfo_version_min=`echo ${makeinfo_version} | cut -f2 -d.`
+makeinfo_version_min=`echo ${makeinfo_version} | \
+  cut -f2 -d. | tr -dc '0123456789.' `
 if test -z "${makeinfo_version_maj}" \
      || test -z "${makeinfo_version_min}"; then
   r_cv_prog_makeinfo_v4=no

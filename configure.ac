@@ -501,7 +501,6 @@ R_MISSING_PROG(ACLOCAL, aclocal)
 R_MISSING_PROG(AUTOCONF, autoconf)
 R_MISSING_PROG(AUTOMAKE, automake)
 R_MISSING_PROG(AUTOHEADER, autoheader)
-R_MISSING_PROG(MAKEINFO, makeinfo)
 AC_PROG_AWK
 AC_PROG_EGREP
 AC_PROG_LN_S
@@ -549,16 +548,12 @@ AC_PROG_OBJC
 R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
 
-
 ## Libtool.
 ## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
 ## Fortran 77 compiler and sets F77 accordingly.)
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
-## Makeinfo
-R_PROG_MAKEINFO
-
 
 ### * Checks for libraries.
 
