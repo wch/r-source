@@ -440,7 +440,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                 }
                 if(object$debug)
                   cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
-                if(options$echo){
+                if(options$echo && length(dce)){
                     if(!openSinput){
                         if(!openSchunk){
                             cat("\\begin{Schunk}\n",
@@ -451,9 +451,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                             file=chunkout, append=TRUE)
                         openSinput <- TRUE
                     }
-                    if (length(dce)) 
-                    	cat("\n", paste(getOption("prompt"), dce[1:leading], sep="", collapse="\n"),
-                    	    file=chunkout, append=TRUE, sep="")
+		    cat("\n", paste(getOption("prompt"), dce[1:leading], sep="", collapse="\n"),
+		    	file=chunkout, append=TRUE, sep="")
                     if (length(dce) > leading)
                     	cat("\n", paste(getOption("continue"), dce[-(1:leading)], sep="", collapse="\n"),
                     	    file=chunkout, append=TRUE, sep="")
