@@ -13,7 +13,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?")
     file or a URL to read the expressions from.
     If \code{file} is \code{""} and \code{text} is missing or \code{NULL}
     then input is taken from the console.}
-  \item{n}{integer (or coerced to integer).  the maximum number of
+  \item{n}{integer (or coerced to integer).  The maximum number of
     expressions to parse.  If \code{n} is \code{NULL} or negative or
     \code{NA} the input is parsed in its entirety.}
   \item{text}{character vector.  The text to parse.  Elements are treated
@@ -32,7 +32,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?")
   \code{\link{deparse}}.
 }
 \details{
-  If \code{text} has length greater zero (after coercion) it is used in
+  If \code{text} has length greater than zero (after coercion) it is used in
   preference to \code{file}.
   
   All versions of \R accept input from a connection with end of line
