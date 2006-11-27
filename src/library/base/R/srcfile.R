@@ -59,12 +59,12 @@ close.srcfile <- function(con, ...) {
 # srcfilecopy saves a copy of lines from a file
 
 srcfilecopy <- function(filename, lines) {
-    stopifnot(is.character(filename), length(filename) == 1, is.character(lines))  
+    stopifnot(is.character(filename), length(filename) == 1)  
 
     e <- new.env(parent=emptyenv())
 
     e$filename <- filename
-    e$lines <- lines
+    e$lines <- as.character(lines)
     
     class(e) <- c("srcfilecopy", "srcfile")
     return(e)
