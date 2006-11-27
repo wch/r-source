@@ -6263,7 +6263,7 @@ static void PDF_Circle(double x, double y, double r,
 	}
     }
     if (code) {
-	if (semiTransparent(gc->col) || semiTransparent(gc->fill) || r > 0) {
+	if (semiTransparent(gc->col) || semiTransparent(gc->fill) || r > 10) {
 	    /*
 	     * Due to possible bug in Acrobat Reader for rendering
 	     * semi-transparent text, only ever draw Bezier curves
