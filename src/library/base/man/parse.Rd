@@ -13,7 +13,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)
     file or a URL to read the expressions from.
     If \code{file} is \code{""} and \code{text} is missing or \code{NULL}
     then input is taken from the console.}
-  \item{n}{integer (or coerced to integer).  the maximum number of
+  \item{n}{integer (or coerced to integer).  The maximum number of
     expressions to parse.  If \code{n} is \code{NULL} or negative or
     \code{NA} the input is parsed in its entirety.}
   \item{text}{character vector.  The text to parse.  Elements are treated
@@ -21,7 +21,8 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)
     to character (without method dispatch) if possible.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
-  \item{srcfile}{a \code{\link{srcfile}} object associated with the \code{text}.}
+  \item{srcfile}{a \code{\link{srcfile}} object.  Ignored if \code{file}
+    is a character string.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -33,7 +34,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)
   \code{\link{deparse}}.
 }
 \details{
-  If \code{text} has length greater zero (after coercion) it is used in
+  If \code{text} has length greater than zero (after coercion) it is used in
   preference to \code{file}.
   
   All versions of \R accept input from a connection with end of line
@@ -50,9 +51,6 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)
 #ifdef windows
   (The EOF character is Ctrl-Z for the Windows front-ends.)
 #endif
-
-  If a \code{file} is specified, it overrides the \code{srcfile} 
-  specification.
 }
 \value{
   An object of type \code{"\link{expression}"}, with up to \code{n}
