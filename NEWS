@@ -81,7 +81,9 @@ NEW FEATURES
     o	.deparseOpts() has two new options: "keepNA" to ensure that
 	different types (logical, integer, double, character and
 	complex) of NAs are distinguished, and "S_compatible" to
-	suppress the use of R-specific features such as 123L.
+	suppress the use of R-specific features such as 123L and to
+	deparse integer values of a double vector with a trailing
+	decimal point.
 
 	The 'keepInteger' option now uses the suffix 'L' rather than
 	as.integer() where possible (unless all entries are NA or

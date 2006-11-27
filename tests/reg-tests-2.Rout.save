@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-24 r39980)
+R version 2.5.0 Under development (unstable) (2006-11-27 r40030)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5624,9 +5624,10 @@ structure(list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
 "e", "f", "g", "h", "i", "j"))
 > dput(x, control=c("all", "S_compatible"))
 structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
-    d = as.complex( NA), e = 1, f = as.integer(1), g = 1:3, h = as.integer(c(NA, 
-    1, 2, 3)), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
-"b", "c", "d", "e", "f", "g", "h", "i", "j"))
+    d = as.complex( NA), e = 1., f = as.integer(1), g = 1:3, 
+    h = as.integer(c(NA, 1, 2, 3)), i = as.character(NA), j = c("foo", 
+    NA, "bar")), .Names = c("a", "b", "c", "d", "e", "f", "g", 
+"h", "i", "j"))
 > tmp <- tempfile()
 > dput(x, tmp, control="all")
 > stopifnot(identical(dget(tmp), x))

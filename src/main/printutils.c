@@ -174,6 +174,37 @@ char *EncodeReal(double x, int w, int d, int e, char cdec)
     return buff;
 }
 
+char *EncodeReal2(double x, int w, int d, int e)
+{
+    static char buff[NB];
+    char fmt[20];
+
+    /* IEEE allows signed zeros (yuck!) */
+    if (x == 0.0) x = 0.0;
+    if (!R_FINITE(x)) {
+	if(ISNA(x)) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
+	else if(ISNAN(x)) snprintf(buff, NB, "%*s", w, "NaN");
+	else if(x > 0) snprintf(buff, NB, "%*s", w, "Inf");
+	else snprintf(buff, NB, "%*s", w, "-Inf");
+    }
+    else if (e) {
+	if(d) {
+	    sprintf(fmt,"%%#%d.%de", w, d);
+	    snprintf(buff, NB, fmt, x);
+	}
+	else {
+	    sprintf(fmt,"%%%d.%de", w, d);
+	    snprintf(buff, NB, fmt, x);
+	}
+    }
+    else { /* e = 0 */
+	sprintf(fmt,"%%#%d.%df", w, d);
+	snprintf(buff, NB, fmt, x);
+    }
+    buff[NB-1] = '\0';
+    return buff;
+}
+
 void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
 
 char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
