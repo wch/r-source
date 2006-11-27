@@ -242,7 +242,8 @@ AC_DEFUN([_R_PROG_MAKEINFO_VERSION],
 [makeinfo_version=`${MAKEINFO_CMD} --version | \
   grep "^makeinfo" | sed 's/[[^)]]*) \(.*\)/\1/'`
 makeinfo_version_maj=`echo ${makeinfo_version} | cut -f1 -d.`
-makeinfo_version_min=`echo ${makeinfo_version} | cut -f2 -d.`
+makeinfo_version_min=`echo ${makeinfo_version} | \
+  cut -f2 -d. | tr -dc '0123456789.' `
 if test -z "${makeinfo_version_maj}" \
      || test -z "${makeinfo_version_min}"; then
   r_cv_prog_makeinfo_v4=no
