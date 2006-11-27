@@ -45,6 +45,9 @@ function (x, labels, panel = points, ...,
     localUpperPanel <- function(..., main, oma, font.main, cex.main)
         upper.panel(...)
 
+    localDiagPanel <- function(..., main, oma, font.main, cex.main)
+        diag.panel(...)
+
     dots <- list(...); nmdots <- names(dots)
     if (!is.matrix(x)) {
         x <- as.data.frame(x)
@@ -101,7 +104,7 @@ function (x, labels, panel = points, ...,
                     localAxis(4, x[, j], x[, i], ...)
                 mfg <- par("mfg")
                 if(i == j) {
-                    if (has.diag) diag.panel(as.vector(x[, i]))
+                    if (has.diag) localDiagPanel(as.vector(x[, i]), ...)
                     if (has.labs) {
                         par(usr = c(0, 1, 0, 1))
                         if(is.null(cex.labels)) {

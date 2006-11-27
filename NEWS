@@ -377,6 +377,9 @@ BUG FIXES
     o	structure() reordered the "class" value given if there was a
 	"tsp" value specified.
 
+    o	pairs() now does pass appropriate parts of '...' to the
+	'diag.panel' argument. (PR#9384)
+
 
 
 		CHANGES IN R VERSION 2.4.0
