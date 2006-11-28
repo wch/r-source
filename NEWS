@@ -107,10 +107,10 @@ NEW FEATURES
 
     o	uniroot() now works if the zero occurs at one of the ends of
 	the interval (suggestion of Tamas Papp).
-	
+
     o	rgb() now accepts the red, green and blue components in a
     	single matrix or dataframe.
-	
+
     o	New utility function RShowDoc() in package 'utils' to find and
 	display manuals and other documentation files.
 
@@ -118,13 +118,13 @@ NEW FEATURES
 	source() can now echo the original source and comments (rather
 	than deparsing).  This affects example() and Sweave() as well.
 
-    o	Set the parser to give verbose error messages in case of 
+    o	Set the parser to give verbose error messages in case of
     	syntax errors.
 
     o	New function environmentName() to give the print name of
 	environments such as "namespace:base".
 	This is now used by str().
- 
+
 
 DEPRECATED & DEFUNCT
 
@@ -172,7 +172,10 @@ UTILITIES
 	writing new drivers, RweaveLatexRuncode is now created using a
 	helper function (all from a patch submitted by Seth Falcon).
 
-	
+    o	R CMD build now takes the package name from the DESCRIPTION
+	file and not from the directory.  (PR#9266)
+
+
 BUG FIXES
 
     o	gc() can now report quantities of 'Vcells' in excess of 16Gb on
@@ -237,9 +240,9 @@ C-LEVEL FACILITIES
 
 DEPRECATED & DEFUNCT
 
-    o	The previously undocumented behaviour of structure() in adding
-	a class when specifying with "tsp" or "levels" attributes is
-	now deprecated (with a warning).
+    o	The previously undocumented behaviour of structure() in adding a
+	class when specifying "tsp" or "levels" attributes is now
+	deprecated (with a warning).
 
 
 BUG FIXES
