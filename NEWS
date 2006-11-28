@@ -185,6 +185,10 @@ BUG FIXES
     o	pairs() now does pass appropriate parts of '...' to the
 	'diag.panel' argument. (PR#9384)
 
+    o	plot.lm() was using an incorrect estimate of dispersion for
+	some GLMs (including family=binomial and family=poisson).
+	(PR#9316)
+
 
 
 		CHANGES IN R VERSION 2.4.0
