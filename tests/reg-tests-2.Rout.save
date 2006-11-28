@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-16 r39921)
+R version 2.5.0 Under development (unstable) (2006-11-28 r40035)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5592,6 +5592,16 @@ $y
 [1] 122 128 128 158 110 110  92
 
 > ## MAD of iterated residuals was zero, and result depended on the platform.
+> 
+> 
+> ## PR#9263: problems with R_Visible
+> a <- list(b=5)
+> a[[(t<-'b')]]
+[1] 5
+> x <- matrix(5:-6, 3)
+> x[2, invisible(3)]
+[1] -2
+> ## both invisible in 2.4.0
 > 
 > 
 > ### end of tests added in 2.4.1 ###
