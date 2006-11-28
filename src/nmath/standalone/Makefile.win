@@ -35,10 +35,10 @@ test-CFLAGS=-I../../include
 ## see README for alternatives
 test.exe: test.o
 	$(CC) -o $@ $< -L. Rmath.dll
-	$@
+	./$@
 test-static.exe: test.o
 	$(CC) -o $@ $< -L. libRmath.a
-	$@
+	./$@
 
 clean:
 	$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps stamp-src
