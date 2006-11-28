@@ -389,6 +389,10 @@ BUG FIXES
 	some GLMs (including family=binomial and family=poisson).
 	(PR#9316)
 
+    o	Subsetting operators were setting R_Visible too early, so
+	assignments in arguments could make the result invisible.
+	(PR#9263)
+
 
 
 		CHANGES IN R VERSION 2.4.0
