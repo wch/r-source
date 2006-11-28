@@ -649,7 +649,7 @@ SEXP attribute_hidden do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     R_getProcTime(REAL(ans));
     SET_STRING_ELT(nm, 0, mkChar("user.self"));
     SET_STRING_ELT(nm, 1, mkChar("sys.self"));
-    SET_STRING_ELT(nm, 2, mkChar("elpapsed"));
+    SET_STRING_ELT(nm, 2, mkChar("elapsed"));
     SET_STRING_ELT(nm, 3, mkChar("user.child"));
     SET_STRING_ELT(nm, 4, mkChar("sys.child"));
     setAttrib(ans, R_NamesSymbol, nm);
