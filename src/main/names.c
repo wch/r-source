@@ -1095,6 +1095,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 	args = evalList(args, env, op);
     PROTECT(args);
+    /* This resetting of R_Visible=0  was to fix PR#7397 */
     flag = PRIMPRINT(INTERNAL(fun));
     R_Visible = 1 - flag;
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);

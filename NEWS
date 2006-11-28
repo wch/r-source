@@ -196,6 +196,11 @@ BUG FIXES
 
     o	str() now labels classes on data frames more coherently.
 
+    o	Several 'special' primitives could return invisibly if the
+	evaluation of an argument led to the visibility flag being
+	turned off.  These include as.character(), call(), dim(),
+	dimnames(), rep(), seq() and seq_along().
+
 
 
 
