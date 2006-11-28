@@ -12,8 +12,8 @@ Inno Setup >= 5.1.7 is now required to build the installer.
 Reverted 2.4.0 change that required case-sensitive specification of
 commands to R CMD.
 
-The Simplified Chinese messages were in the wrong format, causing
-R to crash on startup. (PR#9277)
+The Simplified Chinese menu messages were in the wrong format, causing
+RGui to crash on startup. (PR#9277)
 
 The pointsize of fonts in the windows() graphics device may now be set to
 any positive integer.
@@ -28,6 +28,9 @@ been added for completeness and debugging.
 
 shell.exec() now gives an error and a reason when it fails (rather than
 continuing silently as before).
+
+R CMD SHLIB again uses PKG_LIBS in files Makevars[.win] (it did not in
+R 2.4.0).
 
 
 
