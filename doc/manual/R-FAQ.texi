@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-23
+@set FAQ_DATE @value{FAQ_YEAR}-11-28
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2734,6 +2734,9 @@ Functions for modelling dispersion in GLMs.
 @item distr
 An object orientated implementation of distributions and some additional
 functionality.
+@item distrDoc
+Documentation for packages @strong{distr}, @strong{distrEx},
+@strong{distrSim}, and @strong{distrTEst}.
 @item distrEx
 Extensions of package @strong{distr}.
 @item distrSim
@@ -4175,6 +4178,8 @@ Functions for survival analysis, including penalised likelihood.
 Survival analysis for recurrent event data.
 @item svcR
 A support vector machine technique for clustering.
+@item svcm
+2d and 3d Space-Varying Coefficient Models.
 @item svmpath
 Computes the entire regularization path for the two-class svm classifier
 with essentialy the same cost as a single SVM fit.
