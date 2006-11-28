@@ -803,6 +803,9 @@
    */
 #define SHLIB_EXT ".dll"
 
+/* The size of `double', as computed by sizeof. */
+#define SIZEOF_DOUBLE 8
+
 /* The size of `int', as computed by sizeof. */
 #define SIZEOF_INT 4
 

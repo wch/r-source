@@ -740,6 +740,7 @@ if test "${cross_compiling}" = yes; then
 fi
 AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
+AC_CHECK_SIZEOF(double, 8)
 AC_CHECK_SIZEOF(long double, 0)
 
 R_PROG_CC_MAKEFRAG

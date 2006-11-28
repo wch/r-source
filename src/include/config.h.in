@@ -805,6 +805,9 @@
    */
 #undef SHLIB_EXT
 
+/* The size of `double', as computed by sizeof. */
+#undef SIZEOF_DOUBLE
+
 /* The size of `int', as computed by sizeof. */
 #undef SIZEOF_INT
 
