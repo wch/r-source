@@ -66,7 +66,7 @@ NEW FEATURES
 
     o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
 
-    o	Added support for Obj-C in R and packages (if available).
+    o	Added support for Objective C in R and packages (if available).
 
     o	The following additional flags are accessible from R CMD config:
 	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS

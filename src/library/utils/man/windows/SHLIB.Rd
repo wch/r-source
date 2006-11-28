@@ -35,9 +35,9 @@
   details of some of its quirks.
 
   Items in \code{files} with extensions \code{.c}, \code{.cpp},
-  \code{.cc}, \code{.C}, \code{.f}, \code{.f90} and \code{f95} are
-  regarded as source files, and those with extension \code{.o} as object
-  files.  All other items are passed to the linker.
+  \code{.cc}, \code{.C}, \code{.f}, \code{.f90}, \code{.f95} and \code{.m},
+  are regarded as source files, and those with extension \code{.o} as
+  object files.  All other items are passed to the linker.
 }
 \seealso{
   \code{\link{dyn.load}}, \code{\link{library.dynam}}.
@@ -46,6 +46,6 @@
   Extensions} manuals.
 }
 \examples{\dontrun{
-rcmd SHLIB -o my.dll a.f b.f -- -L/AMD/acml3.1.0/gnu32/lib -lacml
+rcmd SHLIB -o my.dll a.f b.f -L/AMD/acml3.5.0/gnu32/lib -lacml
 }}
 \keyword{utilities}

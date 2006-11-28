@@ -3812,6 +3812,7 @@ gcc-g77-3.4.5-20060117-1.tar.gz
 @end example
 
 @noindent
+(and @code{gcc-objc-3.4.5-20060117-1.tar.gz} if you want Objective C support)
 and unpack these into the same directory (using @command{tar zxf
 tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later is
 required to build @R{}, @code{gcc-g77-3.4.4} or later to build some
