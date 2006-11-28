@@ -17,6 +17,11 @@ There is support for x86_64 cross-compilers as well as for ix86.
 
 mingw-runtime >= 3.11 is needed to build R.
 
+The printf function used for printing has been altered to implement a
+round-to-even rule.  This means that output is more likely to be
+identical to that on Unix-alikes.
+
+
 
 
 R 2.4.0 patched
