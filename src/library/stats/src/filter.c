@@ -119,11 +119,14 @@ acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
     if(*correlation) {
 	for(u = 0; u < ns; u++)
 	    se[u] = sqrt(acf[0 + d1*u + d2*u]);
-	for(u = 0; u < ns; u++)
-	    for(v = 0; v < ns; v++) {
-	    	acf[d1*u + d2*v] = 1.0;
-		for(lag = 1; lag <= nl; lag++)
-		    acf[lag + d1*u + d2*v] /= se[u]*se[v];
-	    }
+	if(nn == 1) {
+	    for(u = 0; u < ns; u++)
+	    	acf[0 + d1*u + d2*u] = 1.0;
+	} else {
+	    for(u = 0; u < ns; u++)
+		for(v = 0; v < ns; v++)
+		    for(lag = 0; lag <= nl; lag++)
+			acf[lag + d1*u + d2*v] /= se[u]*se[v];
+	}
     }
 }
