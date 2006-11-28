@@ -35,7 +35,7 @@
   details of some of its quirks.
 
   Items in \code{files} with extensions \code{.c}, \code{.cpp},
-  \code{.cc}, \code{.C}, \code{.f}, \code{.f90} and \code{f95} are
+  \code{.cc}, \code{.C}, \code{.f}, \code{.f90} and \code{.f95} are
   regarded as source files, and those with extension \code{.o} as object
   files.  All other items are passed to the linker.
 }
@@ -46,6 +46,6 @@
   Extensions} manuals.
 }
 \examples{\dontrun{
-rcmd SHLIB -o my.dll a.f b.f -- -L/AMD/acml3.1.0/gnu32/lib -lacml
+rcmd SHLIB -o my.dll a.f b.f -L/AMD/acml3.5.0/gnu32/lib -lacml
 }}
 \keyword{utilities}
