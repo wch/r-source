@@ -11,7 +11,7 @@ RweaveLatex()
 
 RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
                  debug = FALSE, echo = TRUE, eval = TRUE,
-                 keep.source = TRUE, split = FALSE, stylepath = TRUE,
+                 keep.source = FALSE, split = FALSE, stylepath = TRUE,
                  pdf = TRUE, eps = TRUE)
 }
 \arguments{
@@ -48,7 +48,7 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \describe{
     \item{echo:}{logical (\code{TRUE}). Include S code in the
       output file?}
-    \item{keep.source:}{logical (\code{TRUE}).  When echoing, if \code{keep.source == TRUE}
+    \item{keep.source:}{logical (\code{FALSE}).  When echoing, if \code{keep.source == TRUE}
       the original source is copied to the file.  Otherwise, deparsed source is echoed.}
     \item{eval:}{logical (\code{TRUE}). If \code{FALSE}, the code chunk is not
       evaluated, and hence no text or graphical output produced.}

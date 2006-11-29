@@ -466,7 +466,7 @@ function(src_dir, out_dir, packages)
 ### * .install_package_vignettes
 
 .install_package_vignettes <-
-function(dir, outDir, keep.source = TRUE)
+function(dir, outDir, keep.source = FALSE)
 {
     dir <- file_path_as_absolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")

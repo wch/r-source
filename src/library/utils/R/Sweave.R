@@ -324,7 +324,7 @@ RweaveLatex <- function()
 RweaveLatexSetup <-
     function(file, syntax,
              output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
-             eval=TRUE, keep.source=TRUE, split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
+             eval=TRUE, keep.source=FALSE, split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
 {
     if(is.null(output)){
         prefix.string <- basename(sub(syntax$extension, "", file))
