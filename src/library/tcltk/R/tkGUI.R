@@ -93,7 +93,7 @@ tkStartGUI <- function() {
 	"R-data",    "R Data Import/Export",
 	"R-exts",    "Writing R extensions",
 	"R-lang",    "R Language Reference",
-	"refman",    "R Reference Manual",
+	"refman",    "R Reference Manual"
     ), ncol=2, byrow=TRUE)
 
     helpPDFMenu <- tkmenu(helpMenu)
