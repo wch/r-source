@@ -6898,7 +6898,7 @@ SEXP menu_ttest3()
     if(done == 1) @{
         PROTECT(cmdSexp = allocVector(STRSXP, 1));
         SET_STRING_ELT(cmdSexp, 0, mkChar(cmd));
-        cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status));
+        cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
         if (status != PARSE_OK) @{
             UNPROTECT(2);
             error("invalid call %s", cmd);
@@ -6916,7 +6916,7 @@ SEXP menu_ttest3()
 Note that a single line of text may give rise to more than one @R{}
 expression.
 
-
+@findex R_ParseVector
 @code{R_ParseVector} is essentially the code used to implement
 @code{parse(text=)} at @R{} level.  The first argument is a character
 vector (corresponding to @code{text}) and the second the maximal number
@@ -6926,6 +6926,10 @@ is a pointer to a variable of an enumeration type, and it is normal (as
 error.  Other values which might be returned are @code{PARSE_INCOMPLETE}
 (an incomplete expression was found) and @code{PARSE_ERROR} (a syntax
 error), in both cases the value returned being @code{R_NilValue}.
+The fourth argument is a @code{srcfile} object or the @R{} @code{NULL}
+object (as in the example above). In the former case @code{srcref}
+attributes would be attached to each expression, to allow it to be
+echoed with its original formatting.
 
 @node External pointers and weak references, Vector accessor functions, Parsing R code from C, System and foreign language interfaces
 @section External pointers and weak references
