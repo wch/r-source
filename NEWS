@@ -193,8 +193,15 @@ BUG FIXES
 	assignments in arguments could make the result invisible.
 	(PR#9263)
 
+    o   The tk-GUI was displaying a warning due to an extra comma in
+        the list of manuals (PR#9396)
+    
     o	packageDescription() now gives an explicit error on a corrupt
 	DESCRIPTION file.
+
+    o   There was a scoping issue with tcltk callbacks given as
+        unevaluated expressions. This has only been partially fixed, a
+        complete fix probably requires redesign.
 
 
 

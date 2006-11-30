@@ -12,6 +12,8 @@
     .External("dotTclcallback", ..., PACKAGE = "tcltk")
 
 .Tcl.args <- function(...) {
+    ## Eek! (See .Tcl.args.objv for explanation)
+    pframe <- parent.frame(3)
     ## Convert argument tags to option names (i.e. stick "-" in front)
     name2opt <- function(x)
         if ( x != "")
@@ -48,8 +50,7 @@
 	if (inherits(x,"tclVar")) return(ls(unclass(x)$env))
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
-	    e <- parent.frame()
-	    ref <- local({value<-x; envir<-e; environment()})
+	    ref <- local({value<-x; envir<-pframe; environment()})
             callback <- makeCallback(get("value",envir=ref),
 		                     get("envir",envir=ref))
 	    callback <- paste("{", callback, "}")
@@ -90,6 +91,15 @@
 }
 
 .Tcl.args.objv <- function(...) {
+
+    ## Eek! This is broken by design...
+    ## The issue is that if a callback is given in the form of an expression,
+    ## then we need to ensure that it is evaluated in the proper environment
+    ## The typical case is that tkbind() calls tcl() calls  .Tcl.args.objv()
+    ## so we grab 3 levels back. This will break direct calls to tcl(), though.
+
+    pframe <- parent.frame(3)
+
     isCallback <- function(x)
 	is.function(x) || is.call(x) || is.expression(x)
 
@@ -120,8 +130,7 @@
 	if (inherits(x,"tclVar")) return(as.tclObj(ls(unclass(x)$env)))
         if (isCallback(x)){
 	    # Jump through some hoops to protect from GC...
-	    e <- parent.frame()
-	    ref <- local({value<-x; envir<-e; environment()})
+	    ref <- local({value<-x; envir<-pframe; environment()})
             callback <- makeCallback(get("value",envir=ref),
 		                     get("envir",envir=ref))
             assign(callback, ref, envir=current.win$env)
