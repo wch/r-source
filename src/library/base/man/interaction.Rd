@@ -34,7 +34,7 @@ interaction(\dots, drop = FALSE, sep = ".")
 }
 \seealso{
   \code{\link{factor}};
-  \code{\link{:}} where \code{f:g} is the similar to
+  \code{\link{:}} where \code{f:g} is similar to
   \code{interaction(f, g, sep=":")} when \code{f} and  \code{g} are factors.
 }
 \examples{
