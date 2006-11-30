@@ -961,7 +961,7 @@ SEXP attribute_hidden do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     immediateWarning = 0; /* reset to internal calls */
 
     /* need to set R_Visible since it may have been changed by a callback */
-    R_Visible = 0;
+    /* R_Visible = 0; covered by .Internal code */
     return CAR(args);
 }
 

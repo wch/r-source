@@ -406,7 +406,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     UNPROTECT(2);
-    R_Visible = 0;
+    /* R_Visible = 0; covered by .Internal code */
     return outnames;
 }
 
