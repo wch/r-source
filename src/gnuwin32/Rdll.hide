@@ -250,6 +250,7 @@
  R_ToplevelExec
  R_VSize
  R_Verbose
+ R_Visible
  R_WarnLength
  R_Warnings
  R_XDRDecodeDouble

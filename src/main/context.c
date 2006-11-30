@@ -171,7 +171,7 @@ void attribute_hidden R_restore_globals(RCNTXT *cptr)
 
 static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 {
-    int savevis = R_Visible;
+    Rboolean savevis = R_Visible;
 
     /* run onexit/cend code for all contexts down to but not including
        the jump target */

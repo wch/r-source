@@ -1080,7 +1080,8 @@ SEXP install(char const *name)
 SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, fun;
-    int save = R_PPStackTop, flag;
+    int save = R_PPStackTop;
+    Rboolean flag;
     checkArity(op, args);
     s = CAR(args);
     if (!isPairList(s))
@@ -1095,11 +1096,11 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 	args = evalList(args, env, op);
     PROTECT(args);
-    /* This resetting of R_Visible=0  was to fix PR#7397 */
+    /* This resetting of R_Visible=FALSE  was to fix PR#7397 */
     flag = PRIMPRINT(INTERNAL(fun));
-    R_Visible = 1 - flag;
+    R_Visible = !flag;
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
-    if (flag) R_Visible = 0;
+    if (flag) R_Visible = FALSE;
     UNPROTECT(1);
     check_stack_balance(INTERNAL(fun), save);
     return (args);
