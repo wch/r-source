@@ -40,9 +40,9 @@ C-LEVEL FACILITIES
 
 DEPRECATED & DEFUNCT
 
-    o	The previously undocumented behaviour of structure() in adding
-	a class when specifying with "tsp" or "levels" attributes is
-	now deprecated (with a warning).
+    o	The previously undocumented behaviour of structure() in adding a
+	class when specifying "tsp" or "levels" attributes is now
+	deprecated (with a warning).
 
 
 BUG FIXES
