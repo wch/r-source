@@ -68,9 +68,6 @@ NEW FEATURES
 
     o	Added support for Objective C in R and packages (if available).
 
-    o	The following additional flags are accessible from R CMD config:
-	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
-
     o	boxplot(*, notch = TRUE) now warns when notches are outside hinges;
 	related to PR#7690.
 
@@ -125,6 +122,8 @@ NEW FEATURES
 	environments such as "namespace:base".
 	This is now used by str().
 
+    o	cut.default() has a new argument ordered_result.
+
 
 DEPRECATED & DEFUNCT
 
@@ -171,6 +170,9 @@ UTILITIES
     o	Additional Sweave internal functions are exported to help
 	writing new drivers, RweaveLatexRuncode is now created using a
 	helper function (all from a patch submitted by Seth Falcon).
+
+    o	The following additional flags are accessible from R CMD config:
+	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
 
     o	R CMD build now takes the package name from the DESCRIPTION
 	file and not from the directory.  (PR#9266)
