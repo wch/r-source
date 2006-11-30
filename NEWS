@@ -398,6 +398,9 @@ BUG FIXES
 	assignments in arguments could make the result invisible.
 	(PR#9263)
 
+    o	packageDescription() now gives an explicit error on a corrupt
+	DESCRIPTION file.
+
 
 
 		CHANGES IN R VERSION 2.4.0
