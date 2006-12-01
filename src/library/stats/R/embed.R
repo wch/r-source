@@ -33,7 +33,9 @@ embed <- function (x, dimension = 1)
         if ((dimension < 1) | (dimension > n))
             stop ("wrong embedding dimension")
         m <- n - dimension + 1
-        return(matrix(x[1:m + rep(dimension:1, rep(m, dimension)) - 1], m))
+        data <- x[1:m + rep.int(dimension:1, rep.int(m, dimension)) - 1]
+        dim(data) <- c(m,m)
+        return(data)
     } else
         stop ("'x' is not a vector or matrix")
 }
