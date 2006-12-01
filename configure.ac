@@ -543,6 +543,12 @@ AC_PROG_CXXCPP
 R_GCC4_VISIBILITY
 
 AC_PROG_OBJC
+## unfortunately autoconf sets OBJC to gcc even if there is no working compiler
+if test "${OBJC}" = gcc; then
+  AC_LANG_PUSH([Objective C])
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[id foo;])],,[OBJC=''])
+  AC_LANG_POP([Objective C])
+fi
 R_PROG_OBJCXX
 
 ## This has to be R_DEFS as autoconf overrrides DEFS
