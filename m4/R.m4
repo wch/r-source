@@ -1190,6 +1190,170 @@ else
 fi
 ])# R_PROG_F77_FLAG
 
+## R_PROG_OBJC_RUNTIME
+## -------------------
+## Check for ObjC runtime and style.
+## Effects:
+##  * ac_cv_objc_runtime
+##    either "none" or flags necessary to link ObjC runtime
+##    in the latter case they are also appended to OBJC_LIBS
+##  * ac_cv_objc_runtime_style
+##    one of: unknown, gnu, next
+##  * conditionals OBJC_GNU_RUNTIME and OBJC_NEXT_RUNTIME
+AC_DEFUN([R_PROG_OBJC_RUNTIME],
+[
+  AC_REQUIRE([AC_PROG_OBJC])
+  ac_cv_objc_runtime=none
+  ac_has_objc_headers=no
+
+  if test -n "${OBJC}"; then
+
+  AC_LANG_PUSH([Objective C])
+
+  #AC_MSG_CHECKING([for ObjC headers])
+  # Check for common headers
+  AC_CHECK_HEADERS_ONCE([objc/objc.h objc/objc-api.h objc/Object.h], [ ac_has_objc_headers=yes ], [
+    AC_MSG_FAILURE([Objective C runtime headers were not found])
+  ])
+
+  # FIXME: we don't check whether the runtime needs -lpthread which is possible
+  #        (empirically Linux GNU and Apple runtime don't)
+  AC_CACHE_CHECK([for ObjC runtime library], [ac_cv_objc_runtime], [
+    save_OBJCFLAGS="$OBJCFLAGS"
+    save_LIBS="$LIBS"
+    ac_cv_objc_runtime=none
+    for libobjc in objc objc-gnu objc-lf objc-lf2; do
+      LIBS="${save_LIBS} -l${libobjc}"
+      #OBJCFLAGS="$OBJCFLAGS $PTHREAD_CFLAGS -fgnu-runtime"
+      AC_LINK_IFELSE([
+	AC_LANG_PROGRAM([
+#include <objc/Object.h>
+			], [
+  @<:@Object class@:>@;
+			])
+		      ], [
+		        ac_cv_objc_runtime="-l${libobjc}"
+			OBJC_LIBS="${ac_cv_objc_runtime} ${OBJC_LIBS}"
+			break
+		      ])
+    done
+    LIBS="$save_LIBS"
+    OBJCFLAGS="$save_OBJCFLAGS"
+  ])
+
+  if test "${ac_cv_objc_runtime}" != none; then
+  AC_CACHE_CHECK([for ObjC runtime style], [ac_cv_objc_runtime_style], [
+    save_OBJCFLAGS="$OBJCFLAGS"
+    save_LIBS="$LIBS"
+    ac_cv_objc_runtime_style=unknown
+    LIBS="${OBJC_LIBS} $LIBS"
+    for objc_lookup_class in objc_lookup_class objc_lookUpClass; do
+      AC_LINK_IFELSE([
+        AC_LANG_PROGRAM([
+#include <objc/objc.h>
+#include <objc/objc-api.h>
+			], [
+  id class = ${objc_lookup_class} ("Object");
+			])
+		      ], [
+		        if test ${objc_lookup_class} = objc_lookup_class; then
+			  ac_cv_objc_runtime_style=gnu
+			else
+			  ac_cv_objc_runtime_style=next
+			fi
+			break
+		      ])
+    done
+    LIBS="$save_LIBS"
+    OBJCFLAGS="$save_OBJCFLAGS"
+  ])
+  fi
+
+  if test "${ac_cv_objc_runtime_style}" = gnu; then
+    AC_DEFINE([OBJC_GNU_RUNTIME], 1, [Define if using GNU-style Objective C runtime.])
+  fi
+  if test "${ac_cv_objc_runtime_style}" = next; then
+    AC_DEFINE([OBJC_NEXT_RUNTIME], 1, [Define if using NeXT/Apple-style Objective C runtime.])
+  fi
+
+  AC_LANG_POP([Objective C])
+  fi # -n ${OBJC}
+]
+)
+
+## R_PROG_OBJCXX_WORKS(compiler, [action on success], [action on failure])
+## -------------------
+## 
+## Check whether $1 compiles ObjC++ code successfully.
+## The default action on success is to set OBJCXX to $1
+AC_DEFUN([R_PROG_OBJCXX_WORKS],
+[AC_MSG_CHECKING([whether $1 can compile ObjC++])
+## we don't use AC_LANG_xx because ObjC++ is not defined as a language (yet)
+## (the test program is from the gcc test suite)
+cat << \EOF > conftest.mm
+#include <objc/Object.h>
+#include <iostream>
+
+@interface Greeter : Object
+- (void) greet: (const char *)msg;
+@end
+
+@implementation Greeter
+- (void) greet: (const char *)msg { std::cout << msg; }
+@end
+
+int
+main ()
+{
+  std::cout << "Hello from C++\n";
+  Greeter *obj = @<:@Greeter new@:>@;
+  @<:@obj greet: "Hello from Objective-C\n"@:>@;
+}
+EOF
+echo "running: $1 -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS}" >&AS_MESSAGE_LOG_FD
+if $1 -c conftest.mm ${CPPFLAGS} ${OBJCXXFLAGS} >&AS_MESSAGE_LOG_FD 2>&1; then
+   AC_MSG_RESULT([yes])
+   rm -f conftest.mm conftest.o
+   m4_default([$2], OBJCXX=$1)
+else
+   AC_MSG_RESULT([no])
+   rm -f conftest.mm
+   [$3]
+fi
+]) # R_PROG_OBJCXX_WORKS
+
+## R_PROG_OBJCXX
+## -------------
+## Check for ObjC++ compiler and set+subst OBJCXX correspondingly.
+##
+## We could add Objective-C++ language definition, but we still hope
+## that autoconf will do that at some point, so we'll confine ourselves
+## to finding a working compiler.
+AC_DEFUN([R_PROG_OBJCXX],
+[AC_BEFORE([AC_PROG_CXX], [$0])
+AC_BEFORE([AC_PROG_OBJC], [$0])
+if test -n "${OBJCXX}"; then
+  AC_MSG_RESULT([defining OBJCXX to be ${OBJCXX}])
+  R_PROG_OBJCXX_WORKS(${OBJCXX},,OBJCXX='')
+fi
+# try the sequence $OBJCXX, $CXX, $OBJC
+if test -z "${OBJCXX}"; then
+  R_PROG_OBJCXX_WORKS(${CXX},,
+    if test -z "${OBJC}"; then
+      R_PROG_OBJCXX_WORKS(${OBJC})
+    fi
+  )
+fi
+AC_MSG_CHECKING([for Objective C++ compiler])
+if test -z "${OBJCXX}"; then
+  AC_MSG_RESULT([no working compiler found])
+else
+  AC_MSG_RESULT([${OBJCXX}])
+fi
+AC_SUBST(OBJCXX)
+])# R_PROG_OBJCXX
+
+
 ### * Library functions
 
 ## R_FUNC___SETFPUCW
@@ -1608,6 +1772,118 @@ if test "${use_aqua}" = yes; then
              and want the Aqua GUI to be built.])
 fi
 ])# R_AQUA
+
+## R_OBJC_FOUNDATION_TEST
+## ---------------------
+## Checks whether ObjC code using Foundation classes can be compiled and sets
+## ac_objc_foundation_works accordingly (yes/no)
+AC_DEFUN([R_OBJC_FOUNDATION_TEST],
+[
+  AC_REQUIRE([AC_PROG_OBJC])
+  if test -n "$1"; then AC_MSG_CHECKING([$1]); fi
+  ac_objc_foundation_works=no
+  AC_LINK_IFELSE([AC_LANG_PROGRAM([
+#import <Foundation/Foundation.h>
+], [[
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  NSString *s = @"hello, world";
+  
+  [pool release];
+]])], [ ac_objc_foundation_works=yes ])
+  if test "${ac_objc_foundation_works}" = yes; then
+    if test -n "$1"; then AC_MSG_RESULT(yes); fi
+    [$2]
+  else
+    if test -n "$1"; then AC_MSG_RESULT(no); fi
+    [$3]
+  fi
+])
+
+## R_OBJC_FOUNDATION
+## -----------------
+## Checks whether a Foundation framework implementation is available.
+## * ac_objc_foundation: yes|no
+## * FOUNDATION_CPPFLAGS, FOUNDATION_LIBS (subst)
+##
+## Currently supports (in order of precedence):
+## - native (or custom FOUNDATION_LIBS/CPPFLAGS)
+## - Apple Foundation (via -framework Foundation)
+## - libFoundation
+## - GNUstep
+AC_DEFUN([R_OBJC_FOUNDATION],
+[
+  AC_REQUIRE([AC_PROG_OBJC])
+  ac_objc_foundation=no
+  if test -n "${OBJC}"; then
+
+  AC_LANG_PUSH([Objective C])
+  rof_save_LIBS="${LIBS}"
+  rof_save_CPPFLAGS="${CPPFLAGS}"
+  LIBS="${LIBS} ${FOUNDATION_LIBS}"
+  CPPFLAGS="${CPPFLAGS} ${FOUNDATION_CPPFLAGS}"
+  R_OBJC_FOUNDATION_TEST([whether default Foundation framework works])
+  if test "${ac_objc_foundation_works}" != yes; then
+    LIBS="${rof_save_LIBS} -framework Foundation"
+    CPPFLAGS="${rof_save_CPPFLAGS}"
+    R_OBJC_FOUNDATION_TEST([whether -framework Foundation works],
+      [FOUNDATION_LIBS='-framework Foundation'])
+  fi
+  if test "${ac_objc_foundation_works}" != yes; then
+    LIBS="${rof_save_LIBS} -lFoundation ${OBJC_LIBS}"
+    R_OBJC_FOUNDATION_TEST([whether libFoundation works],
+      [FOUNDATION_LIBS='-lFoundation'])
+  fi
+  if test "${ac_objc_foundation_works}" != yes; then
+    LIBS="${rof_save_LIBS}"
+    ac_working_gnustep=no
+    AC_MSG_CHECKING([for GNUstep])
+    if test -z "${GNUSTEP_SYSTEM_ROOT}"; then
+      for dir in /usr/lib/GNUstep /usr/local/lib/GNUstep; do
+	if test -e "${dir}/System/Makefiles"; then GNUSTEP_SYSTEM_ROOT="${dir}/System"; break; fi
+      done
+    fi
+    if test -z "${GNUSTEP_SYSTEM_ROOT}"; then
+      AC_MSG_RESULT([no])
+    else
+      AC_MSG_RESULT([in ${GNUSTEP_SYSTEM_ROOT}])
+      # this is a hack - we extract the relevant flags from GNUstep's makefiles.
+      # in order to do that, we must setup the entire GNUstep environment which we do
+      # in a separate script as to not pollute configure's environment
+      cat << EOF > gnusteptest.sh
+#!/bin/sh
+. ${GNUSTEP_SYSTEM_ROOT}/Library/Makefiles/GNUstep.sh
+${MAKE} -s -f gnustepmake -f \${GNUSTEP_MAKEFILES}/common.make -f \${GNUSTEP_MAKEFILES}/rules.make \${1}
+EOF
+	   cat << \EOF > gnustepmake
+printcppflags: FORCE
+	@echo $(ALL_CPPFLAGS) $(ADDITIONAL_OBJCFLAGS) $(AUXILIARY_OBJCFLAGS) $(GNUSTEP_HEADERS_FLAGS)
+printlibs: FORCE
+	@echo $(ALL_LIB_DIRS) $(FND_LIBS) $(ADDITIONAL_OBJC_LIBS) $(AUXILIARY_OBJC_LIBS) $(OBJC_LIBS) $(SYSTEM_LIBS) $(TARGET_SYSTEM_LIBS)
+FORCE:
+EOF
+	GNUSTEP_CPPFLAGS=`sh gnusteptest.sh printcppflags`  
+	GNUSTEP_LIBS=`sh gnusteptest.sh printlibs`
+	#echo "  GNUstep CPPFLAGS: ${GNUSTEP_CPPFLAGS}"
+	#echo "  GNUstep LIBS: ${GNUSTEP_LIBS}"
+	LIBS="${rof_save_LIBS} ${GNUSTEP_LIBS}"
+	CPPFLAGS="${rof_save_CPPFLAGS} ${GNUSTEP_CPPFLAGS}"
+	rm -f gnusteptest.sh gnustepmake
+	R_OBJC_FOUNDATION_TEST([whether GNUstep works],[
+	  FOUNDATION_CPPFLAGS="${GNUSTEP_CPPFLAGS}"
+	  FOUNDATION_LIBS="${GNUSTEP_LIBS}"])
+    fi # -n GNUSTEP_SYSTEM_ROOT
+  fi
+  LIBS="${rof_save_LIBS}"
+  CPPFLAGS="${rof_save_CPPFLAGS}"
+  AC_SUBST(FOUNDATION_CPPFLAGS)
+  AC_SUBST(FOUNDATION_LIBS)
+  AC_LANG_POP([Objective C])
+  ac_objc_foundation=${ac_objc_foundation_works}
+
+  fi # -n ${OBJC}
+  AC_MSG_CHECKING([for working Foundation implementation])
+  AC_MSG_RESULT(${ac_objc_foundation})
+])
 
 ## R_IEEE_754
 ## ----------

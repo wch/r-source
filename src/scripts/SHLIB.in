@@ -65,6 +65,10 @@ while test -n "${1}"; do
       ;;
     *.mm|*.M)
       with_objcxx=true
+      # ObjC++ implies ObjC because we need ObjC runtime
+      with_objc=true
+      # ObjC++ implies C++ because we use C++ linker
+      with_cxx=true
       if test -z "${shlib}"; then
 	shlib="`echo ${1} | sed 's/\.[^\.][^\.]*$/@SHLIB_EXT@/'`"
       fi
@@ -123,15 +127,18 @@ else
     makeargs="SHLIB_LDFLAGS='\$(SHLIB_CXXLDFLAGS)' ${makeargs}"
     makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
   fi
-  if ${with_objcxx}; then
-    makeargs="SHLIB_LDFLAGS='\$(SHLIB_CXXLDFLAGS)' ${makeargs}"
-    makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
-  fi
   if ${with_f77}; then
+    if ${with_objc}; then
+      shlib_libadd="\$(OBJC_LIBS) ${shlib_libadd}"
+    fi
     if test -z "${shlib_libadd}"; then
       makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
     else
       makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS) ${shlib_libadd}'"
+    fi
+  else
+    if ${with_objc}; then
+      makeargs="${makeargs} SHLIB_LIBADD='\$(OBJC_LIBS)'"
     fi
   fi
 fi
