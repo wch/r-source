@@ -1202,7 +1202,6 @@ fi
 ##  * conditionals OBJC_GNU_RUNTIME and OBJC_NEXT_RUNTIME
 AC_DEFUN([R_PROG_OBJC_RUNTIME],
 [
-  AC_REQUIRE([AC_PROG_OBJC])
   ac_has_objc_headers=no
 
   if test -z "${OBJC}"; then
@@ -1211,11 +1210,12 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
 
   AC_LANG_PUSH([Objective C])
 
+  # Don't check for headers, becasue that will require Obj-C preprocessor unconditionally (autoconf bug?)
   #AC_MSG_CHECKING([for ObjC headers])
   # Check for common headers
-  AC_CHECK_HEADERS_ONCE([objc/objc.h objc/objc-api.h objc/Object.h], [ ac_has_objc_headers=yes ], [
-    AC_MSG_FAILURE([Objective C runtime headers were not found])
-  ])
+  #AC_CHECK_HEADERS_ONCE([objc/objc.h objc/objc-api.h objc/Object.h], [ ac_has_objc_headers=yes ], [
+  #  AC_MSG_FAILURE([Objective C runtime headers were not found])
+  #])
 
   # FIXME: we don't check whether the runtime needs -lpthread which is possible
   #        (empirically Linux GNU and Apple runtime don't)
@@ -1780,7 +1780,6 @@ fi
 ## ac_objc_foundation_works accordingly (yes/no)
 AC_DEFUN([R_OBJC_FOUNDATION_TEST],
 [
-  AC_REQUIRE([AC_PROG_OBJC])
   if test -n "$1"; then AC_MSG_CHECKING([$1]); fi
   ac_objc_foundation_works=no
   AC_LINK_IFELSE([AC_LANG_PROGRAM([
@@ -1813,7 +1812,6 @@ AC_DEFUN([R_OBJC_FOUNDATION_TEST],
 ## - GNUstep
 AC_DEFUN([R_OBJC_FOUNDATION],
 [
-  AC_REQUIRE([AC_PROG_OBJC])
   ac_objc_foundation=no
   if test -n "${OBJC}"; then
 
