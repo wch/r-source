@@ -302,7 +302,7 @@
         .makeTraceClass(.traceClassName(cl), cl, FALSE)
         clList <- c(clList, .traceClassName(cl))
     }
-    assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir);
+    assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir)
     setMethod("initialize", "traceable",
               function(.Object, def, tracer, exit, at, print, doEdit) {
                   oldClass <- class(def)

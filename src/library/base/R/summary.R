@@ -88,7 +88,7 @@ summary.data.frame <-
             ## produce a suitable colname: undoing padding
             wid <- sapply(tmp[1,], nchar, type="w")
             blanks <- paste(character(max(wid)), collapse = " ")
-            pad0 <- floor((wid-nchar(cn, type="w"))/2);
+            pad0 <- floor((wid-nchar(cn, type="w"))/2)
             pad1 <- wid - nchar(cn, type="w") - pad0
             cn <- paste(substring(blanks, 1, pad0), cn,
                         substring(blanks, 1, pad1), sep = "")

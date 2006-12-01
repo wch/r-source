@@ -63,7 +63,7 @@ function (x,
     }
 
     ## Call to filtering loop
-    len <- length(x) - start.time + 1;
+    len <- length(x) - start.time + 1
     hw <- function(alpha, beta, gamma)
         .C("HoltWinters",
            as.double(x),

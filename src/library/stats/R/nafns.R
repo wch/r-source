@@ -6,7 +6,7 @@ na.fail <- function(object, ...) UseMethod("na.fail")
 na.fail.default <- function(object, ...)
 {
     ok <- complete.cases(object)
-    if(all(ok)) object else stop("missing values in object");
+    if(all(ok)) object else stop("missing values in object")
 }
 
 na.omit <- function(object, ...) UseMethod("na.omit")

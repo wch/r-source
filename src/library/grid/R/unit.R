@@ -363,11 +363,11 @@ print.unit <- function(x, ...) {
     index <- (1:this.length)[index]
   if (top && index > this.length)
     stop("Index out of bounds (unit subsetting)")
-  cl <- class(x);
+  cl <- class(x)
   units <- attr(x, "unit")
   valid.units <- attr(x, "valid.unit")
   data <- attr(x, "data")
-  class(x) <- NULL;
+  class(x) <- NULL
   # The line below may seem slightly odd, but it should only be
   # used to recycle values when this method is called to
   # subset an argument in a unit.arithmetic object

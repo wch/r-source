@@ -529,7 +529,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                                         width=options$width, height=options$height,
                                         paper="special", horizontal=FALSE)
 
-                  err <- try({SweaveHooks(options, run=TRUE);
+                  err <- try({SweaveHooks(options, run=TRUE)
                               eval(chunkexps, envir=.GlobalEnv)})
                   grDevices::dev.off()
                   if(inherits(err, "try-error")) stop(err)
@@ -540,7 +540,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                                  version=options$pdf.version,
                                  encoding=options$pdf.encoding)
 
-                  err <- try({SweaveHooks(options, run=TRUE);
+                  err <- try({SweaveHooks(options, run=TRUE)
                               eval(chunkexps, envir=.GlobalEnv)})
                   grDevices::dev.off()
                   if(inherits(err, "try-error")) stop(err)

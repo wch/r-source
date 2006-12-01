@@ -310,7 +310,7 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
         c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
 
     if(missing(name))
-        name <- paste0(package, "-package");
+	name <- paste0(package, "-package")
 
     if(is.null(filename))
         filename <- paste0(name, ".Rd")

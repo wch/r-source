@@ -51,7 +51,7 @@
              where = envir); clList <- c(clList, "nonstandardGroupGenericFunction")
     setClass("ObjectsWithPackage", representation("character", package = "character"),
              where = envir); clList <- c(clList, "ObjectsWithPackage")
-    assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir);
+    assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir)
     TRUE
 }
 
