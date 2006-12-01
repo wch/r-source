@@ -198,10 +198,13 @@ BUG FIXES
 
     o	str() now labels classes on data frames more coherently.
 
-    o	Several 'special' primitives could return invisibly if the
-	evaluation of an argument led to the visibility flag being
-	turned off.  These include as.character(), call(), dim(),
-	dimnames(), rep(), seq() and seq_along().
+    o	Several 'special' primitives and .Internals could return
+	invisibly if the evaluation of an argument led to the
+	visibility flag being turned off.  These included
+	as.character(), as.vector(), call(), dim(), dimnames(),
+	lapply(), rep(), seq() and seq_along().  Others (e.g. dput()
+	and print.default() could return visibly when this was not
+	intended.)
 
 
 
@@ -409,6 +412,9 @@ BUG FIXES
     o   There was a scoping issue with tcltk callbacks given as
         unevaluated expressions. This has only been partially fixed, a
         complete fix probably requires redesign.
+
+    o	trace() had its return value documented incorrectly and was
+	sometimes visible when it should not have been.
 
 
 

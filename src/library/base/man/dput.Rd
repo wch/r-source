@@ -1,7 +1,7 @@
 \name{dput}
 \alias{dput}
 \alias{dget}
-\title{Write an Internal Object to a File}
+\title{Write an Object to a File or Recreate it}
 \description{
   Writes an ASCII text representation of an \R object to a file
   or connection, or uses one to recreate the object.
@@ -9,6 +9,7 @@
 \usage{
 dput(x, file = "",
      control = c("keepNA", "keepInteger", "showAttributes"))
+
 dget(file)
 }
 \arguments{
@@ -35,8 +36,13 @@ dget(file)
   expected, which may indicate a full or corrupt file system.
     
   To display saved source rather than deparsing the internal representation 
-  include \code{"useSource"} in \code{control}.  \R currently saves source only for
-  function definitions.
+  include \code{"useSource"} in \code{control}.  \R currently saves
+  source only for function definitions.
+}
+\value{
+  For \code{dput}, the first argument invisibly.
+
+  FOr \code{dget}, the object created.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual

@@ -2644,7 +2644,7 @@ void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)
 /****************************************************************
  * do_recordGraphics
  *
- * A ".Primitive" R function
+ * A ".Internal" R function
  *
  ****************************************************************
  */

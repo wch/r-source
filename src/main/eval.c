@@ -374,7 +374,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    break;
 #endif
     case SYMSXP:
-	R_Visible = TRUE;
+	/* R_Visible = TRUE; we have just set this */
 	if (e == R_DotsSymbol)
 	    error(_("'...' used in an incorrect context"));
 	if( DDVAL(e) )
@@ -426,18 +426,28 @@ SEXP eval(SEXP e, SEXP rho)
 	    PrintValue(e);
 	}
 	if (TYPEOF(op) == SPECIALSXP) {
-	    int save = R_PPStackTop;
+	    int save = R_PPStackTop, flag = PRIMPRINT(op);
 	    PROTECT(CDR(e));
-	    R_Visible = ! PRIMPRINT(op);
+	    R_Visible = flag != 1;
 	    tmp = PRIMFUN(op) (e, op, CDR(e), rho);
+#ifdef CHECK_VISIBILITY
+	    if(flag < 2 && R_Visible == flag) {
+		char *nm = PRIMNAME(op);
+		if(strcmp(nm, "for")
+		   && strcmp(nm, "repeat") && strcmp(nm, "while") 
+		   && strcmp(nm, "[[<-") && strcmp(nm, "on.exit"))
+		    printf("vis: special %s\n", nm);
+	    }
+#endif
+	    if (flag < 2) R_Visible = flag != 1;
 	    UNPROTECT(1);
 	    check_stack_balance(op, save);
 	}
 	else if (TYPEOF(op) == BUILTINSXP) {
-	    int save = R_PPStackTop;
+	    int save = R_PPStackTop, flag = PRIMPRINT(op);
 	    RCNTXT cntxt;
 	    PROTECT(tmp = evalList(CDR(e), rho, op));
-	    R_Visible = ! PRIMPRINT(op);
+	    if (flag < 2) R_Visible = flag != 1;
 	    /* We used to insert a context only if profiling,
 	       but helps for tracebacks on .C etc. */
 	    if (R_Profiling || (PPINFO(op).kind == PP_FOREIGN)) {
@@ -448,6 +458,13 @@ SEXP eval(SEXP e, SEXP rho)
 	    } else {
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
 	    }
+#ifdef CHECK_VISIBILITY
+	    if(flag < 2 && R_Visible == flag) {
+		char *nm = PRIMNAME(op);
+		printf("vis: builtin %s\n", nm);
+	    }
+#endif
+	    if (flag < 2) R_Visible = flag != 1;
 	    UNPROTECT(1);
 	    check_stack_balance(op, save);
 	}
@@ -1008,7 +1025,6 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
  for_break:
     endcontext(&cntxt);
     UNPROTECT(5);
-    R_Visible = FALSE;
     SET_DEBUG(rho, dbg);
     return ans;
 }
@@ -1040,7 +1056,6 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     endcontext(&cntxt);
     UNPROTECT(1);
-    R_Visible = FALSE;
     SET_DEBUG(rho, dbg);
     return t;
 }
@@ -1072,7 +1087,6 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     endcontext(&cntxt);
     UNPROTECT(1);
-    R_Visible = FALSE;
     SET_DEBUG(rho, dbg);
     return t;
 }

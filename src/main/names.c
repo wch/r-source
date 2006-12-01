@@ -62,8 +62,10 @@
  *
  * eval:	= XYZ (three digits)  [New Apr 9/96, before only had "YZ"].
  *		  --- where e.g. '1' means '001'
- *		X=1 says that we should switch R_Visible off
- *		    (the least common situation).
+ *		X=1 says that we should force R_Visible off
+ *		X=0 says that we should force R_Visible on
+ *		X=2 says that we should switch R_Visible on but let the C
+ *                  code update this.
  *		Y=1 says that this is an internal function which must
  *		    be accessed with a	.Internal(.) call, any other value is
  *		    accessible directly and printed in R as ".Primitive(..)".
@@ -86,10 +88,10 @@ attribute_hidden FUNTAB R_FunTab[] =
 \
 /* printname	c-entry		offset	eval	arity	pp-kind	     precedence	rightassoc
  * ---------	-------		------	----	-----	-------      ----------	----------*/
-{"if",		do_if,		0,	0,	-1,	{PP_IF,	     PREC_FN,	  1}},
-{"while",	do_while,	0,	0,	-1,	{PP_WHILE,   PREC_FN,	  0}},
-{"for",		do_for,		0,	0,	-1,	{PP_FOR,     PREC_FN,	  0}},
-{"repeat",	do_repeat,	0,	0,	-1,	{PP_REPEAT,  PREC_FN,	  0}},
+{"if",		do_if,		0,	200,	-1,	{PP_IF,	     PREC_FN,	  1}},
+{"while",	do_while,	0,	100,	-1,	{PP_WHILE,   PREC_FN,	  0}},
+{"for",		do_for,		0,	100,	-1,	{PP_FOR,     PREC_FN,	  0}},
+{"repeat",	do_repeat,	0,	100,	-1,	{PP_REPEAT,  PREC_FN,	  0}},
 {"break",	do_break, CTXT_BREAK,	0,	-1,	{PP_BREAK,   PREC_FN,	  0}},
 {"next",	do_break, CTXT_NEXT,	0,	-1,	{PP_NEXT,    PREC_FN,	  0}},
 {"return",	do_return,	0,	0,	-1,	{PP_RETURN,  PREC_FN,	  0}},
@@ -114,7 +116,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"<-",		do_set,		1,	100,	-1,	{PP_ASSIGN,  PREC_LEFT,	  1}},
 {"=",		do_set,		3,	100,	-1,	{PP_ASSIGN,  PREC_EQ,	  1}},
 {"<<-",		do_set,		2,	100,	-1,	{PP_ASSIGN2, PREC_LEFT,	  1}},
-{"{",		do_begin,	0,	0,	-1,	{PP_CURLY,   PREC_FN,	  0}},
+{"{",		do_begin,	0,	200,	-1,	{PP_CURLY,   PREC_FN,	  0}},
 {"(",		do_paren,	0,	1,	1,	{PP_PAREN,   PREC_FN,	  0}},
 {".subset",	do_subset_dflt,	1,	1,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 {".subset2",	do_subset2_dflt,2,	1,	2,	{PP_FUNCALL, PREC_FN,	  0}},
@@ -126,15 +128,15 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"[<-",		do_subassign,	0,	0,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
 {"[[<-",	do_subassign2,	1,	100,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
 {"$<-",		do_subassign3,	1,	0,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
-{"switch",	do_switch,	0,	10,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
+{"switch",	do_switch,	0,	210,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"browser",	do_browser,	0,	100,	0,	{PP_FUNCALL, PREC_FN,	  0}},
 {"debug",	do_debug,	0,	101,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"undebug",	do_debug,	1,	101,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {".primTrace",	do_trace,	0,	101,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {".primUntrace",do_trace,	1,	101,	1,	{PP_FUNCALL, PREC_FN,	  0}},
-{".Internal",	do_internal,	0,	0,	1,	{PP_FUNCALL, PREC_FN,	  0}},
+{".Internal",	do_internal,	0,	200,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"on.exit",	do_onexit,	0,	100,	1,	{PP_FUNCALL, PREC_FN,	  0}},
-{"Recall",	do_recall,	0,	10,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
+{"Recall",	do_recall,	0,	210,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"delay",	do_delay,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"delayedAssign",do_delayed,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	  0}},
 /*{".Alias",	do_alias,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	  0}},*/
@@ -456,7 +458,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"format.info",	do_formatinfo,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"cat",		do_cat,		0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"call",	do_call,	0,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"do.call",	do_docall,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"do.call",	do_docall,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.call",	do_ascall,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"type.convert",do_typecvt,	1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.environment",do_as_environment,0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -545,9 +547,9 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"commandArgs", do_commandArgs, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"int.unzip",	do_int_unzip,	0,	11,    -1,	{PP_FUNCALL, PREC_FN,	0}},
 #ifdef Win32
-{"system",	do_system,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"system",	do_system,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
 #else
-{"system",	do_system,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"system",	do_system,	0,	211,	2,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 #ifdef Win32
 {"unlink",	do_unlink,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -624,13 +626,13 @@ attribute_hidden FUNTAB R_FunTab[] =
 {".Call",       do_dotcall,     0,      1,      -1,     {PP_FOREIGN, PREC_FN,	0}},
 {".External.graphics", do_Externalgr, 0, 1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
 {".Call.graphics", do_dotcallgr, 0,	1,	-1,	{PP_FOREIGN, PREC_FN,	0}},
-{"recordGraphics", do_recordGraphics, 0, 11,     3,      {PP_FOREIGN, PREC_FN,	0}},
+{"recordGraphics", do_recordGraphics, 0, 211,     3,      {PP_FOREIGN, PREC_FN,	0}},
 {"dyn.load",	do_dynload,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"dyn.unload",	do_dynunload,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"ls",		do_ls,		1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"typeof",	do_typeof,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"eval",	do_eval,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"eval.with.vis",do_eval,	1,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"eval",	do_eval,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"eval.with.vis",do_eval,	1,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"expression",	do_expression,	1,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sys.parent",	do_sys,		1,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sys.call",	do_sys,		2,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -671,7 +673,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"environmentName",do_envirName,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"env2list",	do_env2list,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"reg.finalizer",do_regFinaliz,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"options",	do_options,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"options",	do_options,	0,	211,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sink",	do_sink,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"sink.number",	do_sinknumber,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"lib.fixup",	do_libfixup,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -789,7 +791,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"arrows",	do_arrows,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"layout",	do_layout,	0,	111,	10,	{PP_FUNCALL, PREC_FN,	0}},
 {"locator",	do_locator,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"identify",	do_identify,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
+{"identify",	do_identify,	0,	211,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"strheight",	do_strheight,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"strwidth",	do_strwidth,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"contour",	do_contour,	0,	11,	12,	{PP_FUNCALL, PREC_FN,	0}},
@@ -814,8 +816,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"NextMethod",	do_nextmethod,	0,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"standardGeneric",do_standardGeneric,0, 1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"NextMethod",	do_nextmethod,	0,	210,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"standardGeneric",do_standardGeneric,0, 201,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Modelling Functionality */
 
@@ -864,7 +866,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"readLines", 	do_readLines,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeLines", 	do_writelines,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"readBin", 	do_readbin,	0,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},
-{"writeBin", 	do_writebin,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
+{"writeBin", 	do_writebin,	0,      211,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"readChar", 	do_readchar,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeChar", 	do_writechar,	0,      111,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"open", 	do_open,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
@@ -1081,7 +1083,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, fun;
     int save = R_PPStackTop;
-    Rboolean flag;
+    int flag;
     checkArity(op, args);
     s = CAR(args);
     if (!isPairList(s))
@@ -1096,11 +1098,22 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 	args = evalList(args, env, op);
     PROTECT(args);
-    /* This resetting of R_Visible=FALSE  was to fix PR#7397 */
     flag = PRIMPRINT(INTERNAL(fun));
-    R_Visible = !flag;
+    R_Visible = flag != 1;
     args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
-    if (flag) R_Visible = FALSE;
+    /* This resetting of R_Visible=FALSE  was to fix PR#7397,
+       now fixed in GEText */
+    if (flag < 2) R_Visible = flag != 1;
+#ifdef CHECK_VISIBILITY
+    if(flag < 2 && flag == R_Visible) {
+	char *nm = CHAR(PRINTNAME(fun));
+	if(strcmp(nm, "eval") && strcmp(nm, "options") && strcmp(nm, "Recall") 
+	   && strcmp(nm, "do.call") && strcmp(nm, "switch") 
+	   && strcmp(nm, "recordGraphics") && strcmp(nm, "writeBin")
+	   && strcmp(nm, "NextMethod") && strcmp(nm, "eval.with.vis"))
+	    printf("vis: internal %s\n", nm);
+    }
+#endif
     UNPROTECT(1);
     check_stack_balance(INTERNAL(fun), save);
     return (args);

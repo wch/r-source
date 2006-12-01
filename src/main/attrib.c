@@ -809,10 +809,10 @@ SEXP attribute_hidden do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     if (DispatchOrEval(call, op, "dimnames", args, env, &ans, 0, 0)) {
-	R_Visible = 1;
+	R_Visible = TRUE;
 	return(ans);
     }
-    R_Visible = 1;
+    R_Visible = TRUE;
     PROTECT(args = ans);
     checkArity(op, args);
     ans = getAttrib(CAR(args), R_DimNamesSymbol);
@@ -824,10 +824,10 @@ SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, 0)) {
-	R_Visible = 1;
+	R_Visible = TRUE;
 	return(ans);
     }
-    R_Visible = 1;
+    R_Visible = TRUE;
     PROTECT(args = ans);
     checkArity(op, args);
     ans = getAttrib(CAR(args), R_DimSymbol);

@@ -66,12 +66,12 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* R Internal Structures::
-* .Internal vs .Primitive::
-* R coding standards::
-* Testing R code::
-* Function and variable index::
-* Concept index::
+* R Internal Structures::       
+* .Internal vs .Primitive::     
+* R coding standards::          
+* Testing R code::              
+* Function and variable index::  
+* Concept index::               
 @end menu
 @node R Internal Structures, .Internal vs .Primitive, Top, Top
 @chapter R Internal Structures
@@ -84,15 +84,16 @@ It is a work-in-progress, first begun for @R{} 2.4.0, and should be
 checked against the current version of the source code.
 
 @menu
-* SEXPs::
-* Environments and variable lookup::
-* Attributes::
-* Contexts::
-* Argument evaluation::
-* The write barrier::
-* Serialization Formats::
-* Internal use of global and base environments::
-* Modules::
+* SEXPs::                       
+* Environments and variable lookup::  
+* Attributes::                  
+* Contexts::                    
+* Argument evaluation::         
+* Autoprinting::                
+* The write barrier::           
+* Serialization Formats::       
+* Internal use of global and base environments::  
+* Modules::                     
 @end menu
 
 @node SEXPs, Environments and variable lookup, R Internal Structures, R Internal Structures
@@ -125,10 +126,10 @@ The first five bits of the @code{sxpinfo} header specify one of up to 32
 @code{SEXPTYPE}s.
 
 @menu
-* SEXPTYPEs::
-* Rest of header::
-* The 'data'::
-* Allocation classes::
+* SEXPTYPEs::                   
+* Rest of header::              
+* The 'data'::                  
+* Allocation classes::          
 @end menu
 
 @node SEXPTYPEs, Rest of header, SEXPs, SEXPs
@@ -551,8 +552,8 @@ from the cache.  The cache is used whenever searching for variables from
 the global environment (possibly as part of a recursive search).
 
 @menu
-* Search paths::
-* Name spaces::
+* Search paths::                
+* Name spaces::                 
 @end menu
 
 @node Search paths, Name spaces, Environments and variable lookup, Environments and variable lookup
@@ -811,7 +812,7 @@ errors, e.g.@: free buffers) and within the error handling code (to
 raise the C stack limit and reset some variables).
 
 
-@node Argument evaluation, The write barrier, Contexts, R Internal Structures
+@node Argument evaluation, Autoprinting, Contexts, R Internal Structures
 @section Argument evaluation
 
 @cindex argument evaluation
@@ -874,8 +875,8 @@ evaluate the remaining arguments.  If no method is found, the remaining
 arguments are evaluated before return to the internal generic.
 
 @menu
-* Missingness::
-* Dot-dot-dot arguments::
+* Missingness::                 
+* Dot-dot-dot arguments::       
 @end menu
 
 @node Missingness, Dot-dot-dot arguments, Argument evaluation, Argument evaluation
@@ -942,8 +943,62 @@ in the value of the @code{...} symbol in the evaluation frame.
 
 Values of arguments matched to a @code{...} argument can be missing.
 
+@node Autoprinting, The write barrier, Argument evaluation, R Internal Structures
+@section Autoprinting
 
-@node The write barrier, Serialization Formats, Argument evaluation, R Internal Structures
+@cindex autoprinting
+@findex R_Visible
+
+Whether the returned value of a top-level @R{} expression is printed is
+controlled by the global boolean variable @code{R_Visible}.  This is set
+(to true or false) on entry to all primitive and internal functions
+based on the @code{eval} column of the table in @file{names.c}: the
+appropriate setting can be extracted by the macro @code{PRIMPRINT}.
+@findex PRIMPRINT
+
+@findex invisible
+The @R{} primitive function @code{invisible} makes use of this
+mechanism: it just sets @code{R_Visibility = FALSE} before entry and
+returns its argument.
+
+For most functions the intention will be that the setting of
+@code{R_Visible} when they are entered is the setting used when they
+return, but there need to be exceptions.  The @R{} functions
+@code{identify}, @code{options}, @code{system} and @code{writeBin}
+determine whether the result should be visible from the arguments or
+user action.  Other functions themselves dispatch functions which may
+change the visibility flag: examples are @code{.Internal},
+@code{do.call}, @code{eval}, @code{eval.with.vis}, @code{if},
+@code{NextMethod}, @code{on.exit}, @code{Recall}, @code{recordGraphics},
+@code{standardGeneric} and @code{switch}.
+
+`Special' primitive and internal functions evaluate their arguments
+internally, after @code{R_Visible} has been set, and evaluation of the
+arguments (e.g.@: an assignment as in PR#9263)) can change the value of
+the flag.  Known instances of such functions reset the flag after the
+internal evaluation of arguments: examples include @code{[}, @code{[[},
+@code{$}, @code{as.character}, @code{as.vector}, @code{c}, @code{call},
+@code{cbind}, @code{dim}, @code{dimnames}, @code{dump}, @code{lapply},
+@code{rep}, @code{seq}, @code{seq_along} and @code{unlist}, as well as
+the language constructs (which are primitives) @code{for}, @code{while}
+and @code{repeat}.
+
+The @code{R_Visible} flag can also get altered during the evaluation of
+a function, with comments in the code about @code{warning},
+@code{writeChar} and graphics functions calling @code{GText} (PR#9397).
+(Since the C-level function @code{eval} can set @code{R_Visible}, this
+could apply to any function calling @code{eval}.)  From @R{} 2.1.0 up to
+internal functions that were marked to set @code{R_Visible = FALSE}
+enforced this when the function returned. As from @R 2.5.0 both internal
+and primitive functions force the documented setting of @code{R_Visible}
+unless the C code is allowed to change it (indicated@footnote{current
+examples are left brace, @code{if}, @code{switch}, @code{.Internal},
+@code{Recall}, @code{do.call}, @code{system}, @code{identify},
+@code{recordGraphics}, @code{eval} and @code{writeBin}} by
+@code{PRIMPRINT} having value 2).
+
+
+@node The write barrier, Serialization Formats, Autoprinting, R Internal Structures
 @section The write barrier and the garbage collector
 
 @cindex write barrier
@@ -1071,8 +1126,8 @@ This section notes known use by the system of these environments: the
 intention is to minimize or eliminate them.
 
 @menu
-* Base environment::
-* Global environment::
+* Base environment::            
+* Global environment::          
 @end menu
 
 @node Base environment, Global environment, Internal use of global and base environments, Internal use of global and base environments

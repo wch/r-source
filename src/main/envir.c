@@ -1399,7 +1399,6 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	name = install(CHAR(STRING_ELT(CAR(args), 0)));
     PROTECT(val = CADR(args));
-    /* R_Visible = 0; covered by .Internal code */
     aenv = CAR(CDDR(args));
     if (TYPEOF(aenv) == NILSXP)
     	error(_("use of NULL environment is defunct"));
@@ -1414,6 +1413,7 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	defineVar(name, val, aenv);
     UNPROTECT(1);
+    R_Visible = FALSE; /* is this still needed? */
     return val;
 }
 
@@ -2060,7 +2060,7 @@ SEXP attribute_hidden do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
 	MARK_AS_LOCAL_FRAME(s); /* was _GLOBAL_ prior to 2.4.0 */
     }
 #endif
-    /* R_Visible = 0; covered by .Internal code */
+    R_Visible = FALSE; /* is this still needed? */
     UNPROTECT(1);
     return FRAME(s);
 }
