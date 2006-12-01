@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 09:01\n"
+"POT-Creation-Date: 2006-12-01 10:45\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -69,6 +69,10 @@ msgstr "'which'没有指定因子"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which'内的非因子略过不用"
+
+#, fuzzy
+msgid "'lag.max' must be at least 0"
+msgstr "'lag.max'至少必需为1"
 
 msgid "'lag.max' must be at least 1"
 msgstr "'lag.max'至少必需为1"
@@ -735,30 +739,26 @@ msgid "link not recognised"
 msgstr "没有这样的鏈結"
 
 msgid "link \"%s\" not available for poisson family; available links are %s"
-msgstr ""
-"Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+msgstr "Poisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "Poisson分布族不能用负数"
 
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr ""
-"quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+msgstr "quasipoisson分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "quasiPoisson分布族不能用负数"
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr ""
-"gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+msgstr "gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr "找不到有效的初始值: 请设定"
 
 msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr ""
-"binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+msgstr "binomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y值必需满足0 <= y <= 1"
@@ -778,23 +778,20 @@ msgstr "或是有两个列的矩阵，第一列是成功的计数，第二列是
 
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr ""
-"quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+msgstr "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "quasibinomial分布族中的y必需由0和1组成的向量"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr ""
-"gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
+msgstr "gamma分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是%s"
 
 msgid "non-positive values not allowed for the gamma family"
 msgstr "gamma分布族不允许有负值"
 
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr ""
-"inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結%s"
+msgstr "inverse.gaussian分布族里没有\"%s\"这一鏈結函数；可以用的鏈結%s"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "inverse.gaussian分布族只允许正值"
@@ -1955,6 +1952,10 @@ msgstr "非时间序列的长度不对"
 msgid "time series contains internal NAs"
 msgstr "时间序列含内部NA"
 
+#, fuzzy
+msgid "series is corrupt, with no 'tsp' attribute"
+msgstr "系列不对：长度为%d的'tsp'意味着%d"
+
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr "系列不对：长度为%d的'tsp'意味着%d"
 
@@ -2164,4 +2165,3 @@ msgstr[1] ""
 #~ msgstr ""
 #~ "quasibinomial分布族里没有\"%s\"这一鏈結函数；可以用的鏈結是\"logit\", \", "
 #~ "\"\"probit\"和\"cloglog\""
-

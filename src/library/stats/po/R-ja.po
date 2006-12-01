@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-16 09:01\n"
+"POT-Creation-Date: 2006-12-01 10:45\n"
 "PO-Revision-Date: 2006-09-22 10:46+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -66,6 +66,10 @@ msgstr "'which' はいかなる因子も指定しませんでした"
 
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which' は取り除かれるべきある非因子を指定しました"
+
+#, fuzzy
+msgid "'lag.max' must be at least 0"
+msgstr "'lag.max' は少なくとも 1 です"
 
 msgid "'lag.max' must be at least 1"
 msgstr "'lag.max' は少なくとも 1 です"
@@ -739,26 +743,32 @@ msgid "link not recognised"
 msgstr "というリンクはポアッソンファミリに対しては利用できません。"
 
 msgid "link \"%s\" not available for poisson family; available links are %s"
-msgstr "リンク '%s' はポアソンファミリには利用できません。利用できるリンクは %s です"
+msgstr ""
+"リンク '%s' はポアソンファミリには利用できません。利用できるリンクは %s です"
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "ポアソンファミリには負の値は許されません"
 
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
-msgstr "リンク\"%s\"は疑似ポアソンファミリには利用できません。利用できるリンクは %s です"
+msgstr ""
+"リンク\"%s\"は疑似ポアソンファミリには利用できません。利用できるリンクは %s "
+"です"
 
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "疑似ポアッソンファミリには負の値は許されません"
 
 msgid "link \"%s\" not available for gaussian family; available links are %s"
-msgstr "リンク\"%s\"は正規ファミリに利用できるリンクではありません。利用できるリンクは %s です"
+msgstr ""
+"リンク\"%s\"は正規ファミリに利用できるリンクではありません。利用できるリンク"
+"は %s です"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr "有効な初期値を見つけることができません: 何か指定してください"
 
 msgid "link \"%s\" not available for binomial family; available links are %s"
-msgstr "リンク '%s' はポアソンファミリには利用できません。利用できるリンクは %s です"
+msgstr ""
+"リンク '%s' はポアソンファミリには利用できません。利用できるリンクは %s です"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y の値は [0,1] 中でなければなりません"
@@ -779,20 +789,26 @@ msgstr "もしくは、第一列が成功数、第二列が失敗数である 2 
 
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
-msgstr "リンク\"%s\"は疑似ポアソンファミリには利用できません。利用できるリンクは %s です"
+msgstr ""
+"リンク\"%s\"は疑似ポアソンファミリには利用できません。利用できるリンクは %s "
+"です"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "疑似二項ファミリに対しては、y は 0 と 1 のベクトルでなければなりません"
 
 msgid "link \"%s\" not available for gamma family; available links are %s"
-msgstr "リンク\"%s\"はガンマファミリに利用できるリンクではありません。利用できるリンクは %s です"
+msgstr ""
+"リンク\"%s\"はガンマファミリに利用できるリンクではありません。利用できるリン"
+"クは %s です"
 
 msgid "non-positive values not allowed for the gamma family"
 msgstr "正でない値はガンマファミリには許されません"
 
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
-msgstr "リンク\"%s\"は正規ファミリに利用できるリンクではありません。利用できるリンクは %s です"
+msgstr ""
+"リンク\"%s\"は正規ファミリに利用できるリンクではありません。利用できるリンク"
+"は %s です"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr "逆正規ファミリでは正の値しか許されません"
@@ -1600,7 +1616,9 @@ msgstr "因子予測値もありません：5 番目のプロットはありま�
 
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
-msgstr "'n', 'delta', 'sd', 'power' 及び 'sig.level' の内、丁度一つが NULL でなければなりません"
+msgstr ""
+"'n', 'delta', 'sd', 'power' 及び 'sig.level' の内、丁度一つが NULL でなければ"
+"なりません"
 
 msgid "'sig.level' must be numeric in [0, 1]"
 msgstr "'sig.level' は [0,1] 中の数字でなければなりません"
@@ -1609,12 +1627,16 @@ msgid "internal error"
 msgstr "内部エラーです"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
-msgstr "'n', 'p1', 'p2', 'power', 及び 'sig.level' の内、丁度一つが NULL でなければなりません"
+msgstr ""
+"'n', 'p1', 'p2', 'power', 及び 'sig.level' の内、丁度一つが NULL でなければな"
+"りません"
 
 msgid ""
 "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig."
 "level' must be NULL"
-msgstr "'groups', 'n', 'between.var', 'within.var', 'power' 及び 'sig.level' の内、丁度一つが NULL でなければなりません"
+msgstr ""
+"'groups', 'n', 'between.var', 'within.var', 'power' 及び 'sig.level' の内、丁"
+"度一つが NULL でなければなりません"
 
 msgid "number of groups must be at least 2"
 msgstr "グループの数は少なくとも 2 です"
@@ -1901,7 +1923,8 @@ msgid "unknown string value for s.window"
 msgstr "s.window に対する未知の文字列です"
 
 msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
-msgstr "'cutpoints' は 0 < cuts < 1 中で重複があってはいけませんが、以下の値です："
+msgstr ""
+"'cutpoints' は 0 < cuts < 1 中で重複があってはいけませんが、以下の値です："
 
 msgid "'cutpoints' must be unique, but are ="
 msgstr "'cutpoints' は重複があってはいけませんが、以下の値です"
@@ -1963,6 +1986,10 @@ msgstr "正しい長さでない非時系列です"
 msgid "time series contains internal NAs"
 msgstr "時系列は内部に NA 値を含んでいます"
 
+#, fuzzy
+msgid "series is corrupt, with no 'tsp' attribute"
+msgstr "系列は壊れています：'tsp' を持つ %d は %d を意味します"
+
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr "系列は壊れています：'tsp' を持つ %d は %d を意味します"
 
@@ -2011,7 +2038,9 @@ msgstr "置き換えるべき値が多すぎます"
 msgid ""
 "number of values supplied is not a sub-multiple of the number of values to "
 "be replaced"
-msgstr "与えられた値の数は、置き換えられるべき値の数を整数で割ったものになっていません"
+msgstr ""
+"与えられた値の数は、置き換えられるべき値の数を整数で割ったものになっていませ"
+"ん"
 
 msgid "only replacement of elements is allowed"
 msgstr "置き換えるべき値が多すぎます"
@@ -2113,7 +2142,8 @@ msgid "too few distinct input values to fit the Weibull growth model"
 msgstr "Weibull 成長モデルの当てはめには、異なる入力値が少なすぎます"
 
 msgid "all 'x' values must be non-negative to fit the Weibull growth model"
-msgstr "Weibull 成長モデルの当てはめでは、全ての 'x' 値は非負でなければなりません"
+msgstr ""
+"Weibull 成長モデルの当てはめでは、全ての 'x' 値は非負でなければなりません"
 
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"

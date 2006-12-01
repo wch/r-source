@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-18 09:04\n"
+"POT-Creation-Date: 2006-12-01 10:45\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -409,6 +409,10 @@ msgstr ""
 msgid "assigning as \"%s\" a class representation with internal name \"%s\""
 msgstr "无法将内部名字为\"%2$s\"的类别表現指定成\"%1$s\""
 
+#, fuzzy
+msgid "Class \"%s\" has a locked definition in package \"%s\""
+msgstr "类别\"%s\"在程輯包或环境'%s'里没有看得见的定义"
+
 msgid "'externalptr' objects cannot be initialized from new()"
 msgstr "'externalptr'目标对象无法从new()里来进行初始化"
 
@@ -514,15 +518,34 @@ msgstr "没有载入程辑包\"%s\""
 msgid "unable to find an environment containing class \"%s\""
 msgstr "找不到包含类别\"%s\"的环境"
 
-msgid "Undefined member, \"%s\", of union \"%s\" (not added during attach)"
-msgstr "成员没有被定义，集\"%2$s\"的\"%s\"，(配属时没有被加上)"
+msgid "Undefined subclass, \"%s\", of class \"%s\"; definition not updated"
+msgstr ""
+
+msgid ""
+"Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new "
+"inheritance information; consider setClassUnion()"
+msgstr ""
+
+msgid ""
+"No definition of inheritance from \"%s\" to \"%s\", though the relation was "
+"implied by the setIs() from \"%s\""
+msgstr ""
+
+msgid ""
+"Couldn't find superclass \"%s\" to clean up when removing subclass "
+"references to class \"%s\""
+msgstr ""
+
+#, fuzzy
+msgid "No class \"%s\" found as expected in removing subclass \"%s\""
+msgstr "类别\"%s\"不能擴充不存在的类别\"%s\""
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
 "currently traced; the function used will have tracing removed"
 msgstr ""
-"在为'%2$s'制造同屬函数时用的%1$s这一个函数现在已经被追踪；因此删除了对所用函数的"
-"追踪"
+"在为'%2$s'制造同屬函数时用的%1$s这一个函数现在已经被追踪；因此删除了对所用函"
+"数的追踪"
 
 msgid ""
 "the 'genericFunction' argument must be NULL or a generic function object; "
@@ -565,8 +588,8 @@ msgid ""
 "'genericFunction object' or a primitive function, got an object of class \"%s"
 "\""
 msgstr ""
-"'getAllMethods'里为'%s'用的'fdef'不对；需要的是'genericFunction object'或基"
-"元函数，现在得到的却是类别为\"%s\"的目标对象"
+"'getAllMethods'里为'%s'用的'fdef'不对；需要的是'genericFunction object'或基元"
+"函数，现在得到的却是类别为\"%s\"的目标对象"
 
 msgid "formal arguments in method and function do not appear in the same order"
 msgstr "方法里的正式变元和函数两都的顺序不同"
@@ -596,7 +619,8 @@ msgstr ""
 msgid ""
 "Argument f must be a string, generic function, or primitive: got an ordinary "
 "function"
-msgstr "f变元要么是字符，要么是同属函数，要么是原始函数：现在得到的却是普通函数"
+msgstr ""
+"f变元要么是字符，要么是同属函数，要么是原始函数：现在得到的却是普通函数"
 
 msgid "methods cannot be defined for the primitive function \"%s\""
 msgstr "无法为基元函数'%s'定义方法"
@@ -1121,6 +1145,9 @@ msgid_plural ""
 msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
 msgstr[1] "函数'%s'的方法标记中没有类别定义：%s"
 
+#~ msgid "Undefined member, \"%s\", of union \"%s\" (not added during attach)"
+#~ msgstr "成员没有被定义，集\"%2$s\"的\"%s\"，(配属时没有被加上)"
+
 #~ msgid "no generic function '%s' found"
 #~ msgstr "不存在'%s'这一同屬函数"
 
@@ -1132,4 +1159,3 @@ msgstr[1] "函数'%s'的方法标记中没有类别定义：%s"
 
 #~ msgid "trying to use new() on a virtual class"
 #~ msgstr "不能在虛擬类别上用new()这一函数"
-

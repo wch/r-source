@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-22 12:35\n"
+"POT-Creation-Date: 2006-12-01 10:45\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -326,6 +326,10 @@ msgstr "'agrep'设定得不对"
 
 msgid "no package '%s' was found"
 msgstr "找不到'%s'这样一个程序包"
+
+#, fuzzy
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr "程序包'%d'里要么没有DESCRIPTION这个文件，要么出了错"
 
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
