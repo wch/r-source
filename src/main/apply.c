@@ -76,7 +76,6 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     UNPROTECT(3); /* X, XX, ans */
-    /* R_Visible = TRUE; */
     return ans;
 }
 

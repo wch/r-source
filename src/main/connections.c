@@ -3306,7 +3306,6 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     vmaxset(vmax);
     if(!wasopen) con->close(con);
-    /* R_Visible = FALSE; seems this can get reset */
     return R_NilValue;
 }
 

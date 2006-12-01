@@ -374,7 +374,6 @@ SEXP eval(SEXP e, SEXP rho)
 	    break;
 #endif
     case SYMSXP:
-	/* R_Visible = TRUE; we have just set this */
 	if (e == R_DotsSymbol)
 	    error(_("'...' used in an incorrect context"));
 	if( DDVAL(e) )

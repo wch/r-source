@@ -321,7 +321,6 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 		warningcall(call, _("wrote too few characters"));
 	}
     if (!wasopen) con->close(con);
-    /* R_Visible = FALSE; */
     return (CAR(args));
 }
 
@@ -407,7 +406,6 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     UNPROTECT(2);
-    /* R_Visible = FALSE; */
     return outnames;
 }
 

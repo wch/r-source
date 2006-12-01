@@ -987,15 +987,15 @@ The @code{R_Visible} flag can also get altered during the evaluation of
 a function, with comments in the code about @code{warning},
 @code{writeChar} and graphics functions calling @code{GText} (PR#9397).
 (Since the C-level function @code{eval} can set @code{R_Visible}, this
-could apply to any function calling @code{eval}.)  From @R{} 2.1.0 up to
+could apply to any function calling @code{eval}.)  From @R{} 2.1.0
 internal functions that were marked to set @code{R_Visible = FALSE}
-enforced this when the function returned. As from @R 2.5.0 both internal
-and primitive functions force the documented setting of @code{R_Visible}
-unless the C code is allowed to change it (indicated@footnote{current
-examples are left brace, @code{if}, @code{switch}, @code{.Internal},
-@code{Recall}, @code{do.call}, @code{system}, @code{identify},
-@code{recordGraphics}, @code{eval} and @code{writeBin}} by
-@code{PRIMPRINT} having value 2).
+enforced this when the function returned. As from @R{} 2.5.0 both
+internal and primitive functions force the documented setting of
+@code{R_Visible} unless the C code is allowed to change it
+(indicated@footnote{current examples are left brace, @code{.Internal},
+@code{if}, @code{switch}, @code{.Internal}, @code{Recall},
+@code{do.call}, @code{system}, @code{identify}, @code{recordGraphics},
+@code{eval} and @code{writeBin}} by @code{PRIMPRINT} having value 2).
 
 
 @node The write barrier, Serialization Formats, Autoprinting, R Internal Structures

@@ -1413,7 +1413,6 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	defineVar(name, val, aenv);
     UNPROTECT(1);
-    /* R_Visible = FALSE;  is this still needed? */
     return val;
 }
 
@@ -2060,7 +2059,6 @@ SEXP attribute_hidden do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
 	MARK_AS_LOCAL_FRAME(s); /* was _GLOBAL_ prior to 2.4.0 */
     }
 #endif
-    /* R_Visible = FALSE; is this still needed? */
     UNPROTECT(1);
     return FRAME(s);
 }
