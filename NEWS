@@ -203,6 +203,9 @@ BUG FIXES
         unevaluated expressions. This has only been partially fixed, a
         complete fix probably requires redesign.
 
+    o	trace() had its return value documented incorrectly and was
+	sometimes visible when it should not have been.
+
 
 
 		CHANGES IN R VERSION 2.4.0

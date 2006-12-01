@@ -76,7 +76,7 @@
     browser()
   }
     if(nargs() == 1)
-        return(.primTrace(what)) # for back compatibility
+        return(invisble(.primTrace(what))) # for back compatibility
     if(is.null(whereF)) {
         allWhere <- findFunction(what, where = where)
         if(length(allWhere)==0)

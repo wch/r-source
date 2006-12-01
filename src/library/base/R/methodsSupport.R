@@ -8,7 +8,7 @@ trace <- function(what, tracer, exit, at, print, signature, where = topenv(paren
             stop("Tracing functions requires the methods package, but unable to load methods namespace")
     }
     else if(nargs() == 1)
-        return(.primTrace(what))
+        return(invisible(.primTrace(what)))
     tState <- tracingState(FALSE)
     ## now call the version in the methods package, to ensure we get
     ## the correct name space (e.g., correct version of class())
