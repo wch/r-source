@@ -32203,10 +32203,11 @@ done
 
 
 
-  ac_cv_objc_runtime=none
   ac_has_objc_headers=no
 
-  if test -n "${OBJC}"; then
+  if test -z "${OBJC}"; then
+    ac_cv_objc_runtime=none
+  else
 
   ac_ext=m
 ac_cpp='$OBJCPP $CPPFLAGS'

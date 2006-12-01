@@ -1203,10 +1203,11 @@ fi
 AC_DEFUN([R_PROG_OBJC_RUNTIME],
 [
   AC_REQUIRE([AC_PROG_OBJC])
-  ac_cv_objc_runtime=none
   ac_has_objc_headers=no
 
-  if test -n "${OBJC}"; then
+  if test -z "${OBJC}"; then
+    ac_cv_objc_runtime=none
+  else
 
   AC_LANG_PUSH([Objective C])
 
