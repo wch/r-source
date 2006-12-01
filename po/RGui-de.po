@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-12-01 10:47+0000\n"
-"PO-Revision-Date: 2006-09-21 11:47+0200\n"
+"PO-Revision-Date: 2006-12-01 14:17+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -619,14 +619,12 @@ msgid "Apply"
 msgstr "Anwenden"
 
 #: preferences.c:788
-#, fuzzy
 msgid "Save..."
-msgstr "Speichern unter..."
+msgstr "Speichern..."
 
 #: preferences.c:789
-#, fuzzy
 msgid "Load..."
-msgstr "Laden"
+msgstr "Laden..."
 
 #: rui.c:125
 msgid "Select file to source"
@@ -1190,9 +1188,3 @@ msgstr "Warte auf Bestätigung des Seitenwechsels..."
 #: ../library/grDevices/src/devWindows.c:3041
 msgid "Click or hit ENTER for next page"
 msgstr "Klick oder Return für die nächste Seite"
-
-#~ msgid "Stop all computations"
-#~ msgstr "Stoppe alle Berechnungen"
-
-#~ msgid "Select working directory"
-#~ msgstr "Wähle Arbeitsverzeichnis"

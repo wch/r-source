@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.2.1\n"
+"Project-Id-Version: R-2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-12-01 10:44+0000\n"
-"PO-Revision-Date: 2006-09-21 10:41+0200\n"
+"PO-Revision-Date: 2006-12-91 12:17+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,24 +144,24 @@ msgid "R_HOME not set"
 msgstr "R_HOME ist nicht gesetzt"
 
 #: src/gnuwin32/extra.c:249
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' not found"
-msgstr " nicht gefunden"
+msgstr "'%s' nicht gefunden"
 
 #: src/gnuwin32/extra.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "file association for '%s' not available or invalid"
-msgstr "Dateiänderungszeit ist auf diesem System nicht verfügbar"
+msgstr "Dateiverknüpfung für '%s' nicht verfügbar oder ungültig"
 
 #: src/gnuwin32/extra.c:254
 #, c-format
 msgid "access to '%s' denied"
-msgstr ""
+msgstr "Zugriff auf '%s' verweigert"
 
 #: src/gnuwin32/extra.c:255
 #, c-format
 msgid "problem in displaying '%s'"
-msgstr ""
+msgstr "Problem bei der Anzeige von '%s'"
 
 #: src/gnuwin32/extra.c:309
 msgid "unknown type"
@@ -539,9 +539,9 @@ msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "Warnung: '%s' Wert ist ungültig: wird ignoriert\n"
 
 #: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: %s: too large and ignored\n"
-msgstr "Warnung: %s=%lu'%c': zu groß und wird ignoriert\n"
+msgstr "Warnung: %s: zu groß und wird ignoriert\n"
 
 #: src/main/CommandLineArgs.c:240
 msgid "WARNING: no value given for '--max-ppsize'\n"
@@ -733,19 +733,16 @@ msgid "first argument is not a matrix"
 msgstr "erstes Argument ist keine Matrix"
 
 #: src/main/apply.c:195
-#, fuzzy
 msgid "invalid 'f' argument"
-msgstr "ungültiges '%s' Argument"
+msgstr "ungültiges 'f' Argument"
 
 #: src/main/apply.c:197
-#, fuzzy
 msgid "invalid 'classes' argument"
-msgstr "ungültiges '%s' Argument"
+msgstr "ungültiges 'classes' Argument"
 
 #: src/main/apply.c:200
-#, fuzzy
 msgid "invalid 'how' argument"
-msgstr "ungültiges '%s' Argument"
+msgstr "ungültiges 'how' Argument"
 
 #: src/main/arithmetic.c:195
 msgid "probable complete loss of accuracy in modulus"
@@ -5760,9 +5757,8 @@ msgstr ""
 "mindestens R %d.%d.%d"
 
 #: src/main/serialize.c:1585
-#, fuzzy
 msgid "read failed"
-msgstr "XDR Lesefehler"
+msgstr "Lesen fehlgeschlagen"
 
 #: src/main/serialize.c:1641 src/main/serialize.c:1654
 msgid "error reading from connection"
@@ -7222,105 +7218,3 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
-
-#~ msgid "WARNING: no 'vsize' given\n"
-#~ msgstr "Warnung: kein Wert für 'vsize' angegeben\n"
-
-#~ msgid "WARNING: '--vsize' value is invalid: ignored\n"
-#~ msgstr "Warnung: ungültiger Wert für '--vsize': wird ignoriert\n"
-
-#~ msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
-#~ msgstr "Warnung: --vsize=%ld'%c' ist zu groß und wird ignoriert\n"
-
-#~ msgid "WARNING: no 'nsize' given\n"
-#~ msgstr "Warnung: kein Wert für 'nsize' angegeben\n"
-
-#~ msgid "WARNING: '--nsize' value is invalid: ignored\n"
-#~ msgstr "Warnung: ungültiger Wert für '--nsize': wird ignoriert\n"
-
-#~ msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
-#~ msgstr "Warnung: --nsize=%lu'%c' ist zu groß und wird ignoriert\n"
-
-#~ msgid "supplied length is invalid"
-#~ msgstr "angegebene Länge ist ungültig"
-
-#~ msgid "the first argument must be a string"
-#~ msgstr "Das erste Argument muss eine Zeichenkette sein"
-
-#~ msgid "unprotect(): stack imbalance"
-#~ msgstr "unprotect(): unbalancierter Stack"
-
-#~ msgid "first argument ('table') not of type VECSXP,  from R_HashResize"
-#~ msgstr "erstes Argument ('table') nicht vom Typ VECSXP, from R_HashResize"
-
-#~ msgid "first argument ('table') not of type VECSXP, R_HashSizeCheck"
-#~ msgstr ""
-#~ "erstes Argument ('table') nicht vom Typ VECSXP, from R_HashResizeCheck"
-
-#~ msgid "first argument ('table') not of type ENVSXP, from R_HashVector2Hash"
-#~ msgstr ""
-#~ "erstes Argument ('table') nicht vom Typ ENVSXP, from R_HashVector2Hash"
-
-#~ msgid "cannot get binding from base environment"
-#~ msgstr "kann keine Bindung aus der Basisumgebung bekommen"
-
-#~ msgid "cannot get binding from base namespace"
-#~ msgstr "kann keine Bindung aus dem Basisnamensraum bekommen"
-
-#~ msgid "locking the base environment is not supported yet"
-#~ msgstr "die Basisumgebung zu schließen wird noch nicht unterstützt"
-
-#~ msgid "invalid variable type for '%s'"
-#~ msgstr "ungültiger Variablentyp für '%s'"
-
-#~ msgid "invalid variable type"
-#~ msgstr "ungültiger Variablentyp"
-
-#, fuzzy
-#~ msgid "invalid value of '%s'"
-#~ msgstr "ungültiger Wert für 'n'"
-
-#~ msgid "invalid value of 'which'"
-#~ msgstr "ungültiger Wert von 'which'"
-
-#~ msgid "invalid first argument to remove()"
-#~ msgstr "ungültiges erstes Argument für remove()"
-
-#~ msgid "wrong length for 'ifnotfound' argument"
-#~ msgstr "falsche Länge für 'ifnotfound' Argument"
-
-#~ msgid "attach: invalid object name"
-#~ msgstr "attach: ungültiger Objektname"
-
-#~ msgid "invalid value for 'ok'"
-#~ msgstr "ungültiger Wert für 'ok'"
-
-#~ msgid "invalid value of 'what'"
-#~ msgstr "ungültiger Wert von 'what'"
-
-#~ msgid "invalid value of 'signed'"
-#~ msgstr "ungültiger Wert von 'signed'"
-
-#~ msgid "invalid value of 'swap'"
-#~ msgstr "ungültiger Wert von 'swap'"
-
-#~ msgid "invalid value of 'sep'"
-#~ msgstr "ungültiger Wert von 'sep'"
-
-#~ msgid "invalid value for 'closeOnExit'"
-#~ msgstr "ungültiger Wert für 'closeOnExit'"
-
-#~ msgid "invalid value for 'type'"
-#~ msgstr "ungültiger Wert für 'type'"
-
-#~ msgid "invalid value for 'split'"
-#~ msgstr "ungültiger Wert für 'split'"
-
-#~ msgid "\\uxxxx sequences are only valid in multibyte locales"
-#~ msgstr "\\uxxxx Sequenzen sind nur für Multibyte-Locales gültig"
-
-#~ msgid ""
-#~ "graphical parameter \"%s\" can not be set in high-level plot() function"
-#~ msgstr ""
-#~ "Grafikparameter \"%s\" kann in high-level plot() Funktion nicht gesetzt "
-#~ "werden"
