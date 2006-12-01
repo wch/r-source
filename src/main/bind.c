@@ -682,7 +682,7 @@ SEXP attribute_hidden do_c(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Attempt method dispatch. */
 
     if (DispatchOrEval(call, op, "c", args, env, &ans, 1, 0)) {
-	R_Visible = TRUE;
+	/* R_Visible = TRUE; */
 	return(ans);
     }
     return do_c_dflt(call, op, ans, env);
@@ -696,7 +696,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     struct NameData nameData;
 
 /*    data.deparse_level = 1;  Initialize this early. */
-    R_Visible = TRUE;
+    /* R_Visible = TRUE; */
 
     /* Method dispatch has failed; run the default code. */
     /* By default we do not recurse, but this can be over-ridden */
@@ -816,10 +816,10 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Attempt method dispatch. */
 
     if (DispatchOrEval(call, op, "unlist", args, env, &ans, 1, 0)) {
-	R_Visible = TRUE;
+	/* R_Visible = TRUE; */
 	return(ans);
     }
-    R_Visible = TRUE;
+    /* R_Visible = TRUE; */
 
     /* Method dispatch has failed; run the default code. */
     /* By default we recurse, but this can be over-ridden */
@@ -1103,7 +1103,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	a = rbind(call, args, mode, rho, deparse_level);
     UNPROTECT(1);
-    R_Visible = TRUE; /* assignment in arguments would set this to false */
+    /* R_Visible = TRUE; assignment in arguments would set this to false */
     return a;
 }
 

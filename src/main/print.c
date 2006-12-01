@@ -236,7 +236,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     PrintDefaults(rho); /* reset, as na.print etc may have been set */
-    R_Visible = FALSE;
+    /* R_Visible = FALSE; */
     return x;
 }/* do_printdefault */
 

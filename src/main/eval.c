@@ -3163,14 +3163,19 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP fun = R_BCNodeStackTop[-3];
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP args = R_BCNodeStackTop[-2];
+	int flag;
 	switch (ftype) {
 	case BUILTINSXP:
-	  R_Visible = ! PRIMPRINT(fun);
+	  flag = PRIMPRINT(fun);
+	  R_Visible = flag != 1;
 	  value = PRIMFUN(fun) (call, fun, args, rho);
+          if (flag < 2) R_Visible = flag != 1;
 	  break;
 	case SPECIALSXP:
-	  R_Visible = ! PRIMPRINT(fun);
+	  flag = PRIMPRINT(fun);
+	  R_Visible = flag != 1;
 	  value = PRIMFUN(fun) (call, fun, CDR(call), rho);
+          if (flag < 2) R_Visible = flag != 1;
 	  break;
 	case CLOSXP:
 	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
@@ -3186,10 +3191,13 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP fun = R_BCNodeStackTop[-3];
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP args = R_BCNodeStackTop[-2];
+	int flag;
 	if (TYPEOF(fun) != BUILTINSXP)
 	  error(_("not a BUILTIN function"));
-	R_Visible = ! PRIMPRINT(fun);
+	flag = PRIMPRINT(fun);
+	R_Visible = flag != 1;
 	value = PRIMFUN(fun) (call, fun, args, rho);
+	if (flag < 2) R_Visible = flag != 1;
 	R_BCNodeStackTop -= 2;
 	R_BCNodeStackTop[-1] = value;
 	NEXT();
@@ -3199,6 +3207,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP symbol = CAR(call);
 	SEXP fun = SYMVALUE(symbol);
+	int flag;
 	if (TYPEOF(value) == PROMSXP) {
 	    value = forcePromise(value);
 	    SET_NAMED(value, 2);
@@ -3209,8 +3218,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	}
 	if (TYPEOF(fun) != SPECIALSXP)
 	  error(_("not a SPECIAL function"));
-	R_Visible = ! PRIMPRINT(fun);
+	flag = PRIMPRINT(fun);
+	R_Visible = flag != 1;
 	value = PRIMFUN(fun) (call, fun, CDR(call), rho);
+	if (flag < 2) R_Visible = flag != 1;
 	BCNPUSH(value);
 	NEXT();
       }

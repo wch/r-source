@@ -533,7 +533,7 @@ SEXP attribute_hidden do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* retains any missing argument indicators. */
 
     if(DispatchOrEval(call, op, "[", args, rho, &ans, 0, 0)) {
-	R_Visible = TRUE;
+	/* R_Visible = TRUE; */
 	return(ans);
     }
 
@@ -547,7 +547,7 @@ SEXP attribute_hidden do_subset_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, ax, px, x, subs;
     int drop, i, nsubs, type;
 
-    R_Visible = TRUE;
+    /* R_Visible = TRUE; */
     /* By default we drop extents of length 1 */
 
     PROTECT(args);
@@ -714,7 +714,7 @@ SEXP attribute_hidden do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* evaluation retains any missing argument indicators. */
 
     if(DispatchOrEval(call, op, "[[", args, rho, &ans, 0, 0)) {
-	R_Visible = TRUE;
+	/* R_Visible = TRUE; */
 	return(ans);
     }
 
@@ -730,7 +730,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, ndims, nsubs, offset = 0;
     int drop = 1;
 
-    R_Visible = TRUE;
+    /* R_Visible = TRUE; */
 
     PROTECT(args);
     ExtractDropArg(args, &drop);
@@ -947,7 +947,7 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(DispatchOrEval(call, op, "$", args, env, &ans, 0, 0)) {
 	UNPROTECT(2);
-	R_Visible = TRUE;
+	/* R_Visible = TRUE; */
 	return(ans);
     }
 
@@ -961,7 +961,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input)
     SEXP y, nlist;
     int slen;
 
-    R_Visible = TRUE;
+    /* R_Visible = TRUE; */
 
     PROTECT(x);
     PROTECT(input);
