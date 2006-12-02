@@ -815,8 +815,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"UseMethod",	do_usemethod,	0,	 0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"NextMethod",	do_nextmethod,	0,	210,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"UseMethod",	do_usemethod,	0,     200,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"NextMethod",	do_nextmethod,	0,     210,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"standardGeneric",do_standardGeneric,0, 201,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Modelling Functionality */

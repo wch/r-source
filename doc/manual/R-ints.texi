@@ -973,27 +973,30 @@ is left brace, which is implemented as a primitive.} are
 @code{eval.with.vis}@footnote{a @code{.Internal}-only function used in
 @code{source}, @code{withVisible} and a few other places.}, @code{if},
 @code{NextMethod}, @code{Recall}, @code{recordGraphics},
-@code{standardGeneric} and @code{switch}.
+@code{standardGeneric}, @code{switch} and @code{UseMethod}.
 
 `Special' primitive and internal functions evaluate their arguments
-internally, after @code{R_Visible} has been set, and evaluation of the
-arguments (e.g.@: an assignment as in PR#9263)) can change the value of
-the flag.  Prior to @R{} 2.5.0, known instances of such functions reset
-the flag after the internal evaluation of arguments: examples include
-@code{[}, @code{[[}, @code{$}, @code{c}, @code{cbind}, @code{dump} and
-@code{unlist}, as well as the language constructs (which are primitives)
-@code{for}, @code{while} and @code{repeat}.
+internally @emph{after} @code{R_Visible} has been set, and evaluation of
+the arguments (e.g.@: an assignment as in PR#9263)) can change the value
+of the flag.  Prior to @R{} 2.5.0, known instances of such functions
+reset the flag after the internal evaluation of arguments: examples
+include @code{[}, @code{[[}, @code{$}, @code{c}, @code{cbind},
+@code{dump}, @code{rbind} and @code{unlist}, as well as the language
+constructs (which are primitives) @code{for}, @code{while} and
+@code{repeat}.
 
 The @code{R_Visible} flag can also get altered during the evaluation of
 a function, with comments in the code about @code{warning},
-@code{writeChar} and graphics functions calling @code{GText} (PR#9397).
-(Since the C-level function @code{eval} can set @code{R_Visible}, this
-could apply to any function calling @code{eval}.)  From @R{} 2.1.0
-internal functions that were marked to set @code{R_Visible = FALSE}
-enforced this when the function returned.  As from @R{} 2.5.0 both
-internal and primitive functions force the documented setting of
-@code{R_Visible} on return, unless the C code is allowed to change it
-(the exceptions above are indicated by @code{PRIMPRINT} having value 2).
+@code{writeChar} and graphics functions calling @code{GText} (PR#7397).
+(Since the C-level function @code{eval} sets @code{R_Visible}, this
+could apply to any function calling it.  Since it is called when
+evaluating promises, even object lookup can change @code{R_Visible}.)
+From @R{} 2.1.0 internal functions that were marked to set
+@code{R_Visible = FALSE} enforced this when the function returned.  As
+from @R{} 2.5.0 both internal and primitive functions force the
+documented setting of @code{R_Visible} on return, unless the C code is
+allowed to change it (the exceptions above are indicated by
+@code{PRIMPRINT} having value 2).
 
 
 @node The write barrier, Serialization Formats, Autoprinting, R Internal Structures
