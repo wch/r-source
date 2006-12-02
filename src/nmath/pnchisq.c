@@ -12,7 +12,7 @@
 
  *  Other parts
  *  Copyright (C) 2000-2006  The R Development Core Team
- *  Copyright (C) 2003-2004  The R Foundation
+ *  Copyright (C) 2003-2006  The R Foundation
  */
 
 #include "nmath.h"
@@ -59,8 +59,8 @@ pnchisq_raw(double x, double f, double theta,
     static const double _dbl_min_exp = M_LN2 * DBL_MIN_EXP;
     /*= -708.3964 for IEEE double precision */
 
-    if (x <= 0.)	return 0.;
-    if(!R_FINITE(x))	return 1.;
+    if (x <= 0.)	return lower_tail ? 0. : 1.;
+    if(!R_FINITE(x))	return lower_tail ? 1. : 0.;
 
     /* This is principally for use from qnchisq */
 #ifndef MATHLIB_STANDALONE
@@ -124,7 +124,7 @@ pnchisq_raw(double x, double f, double theta,
     if(tSml) {
 	if (x > f + theta +  5* sqrt( 2*(f + 2*theta))) {
 	    /* x > E[X] + 5* sigma(X) */
-	    return 1.; /* better than 0 --- but definitely "FIXME" */
+	    return lower_tail ? 1. : 0.; /* FIXME: We could be more accurate than 0. */
 	} /* else */
 	l_x = log(x);
 	ans = term = t = 0.;

@@ -415,6 +415,9 @@ BUG FIXES
 
     o	trace() had its return value documented incorrectly and was
 	sometimes visible when it should not have been.
+	
+    o	pchisq() would sometimes use the wrong tail when calculating
+	non-central probabilities with lower.tail = FALSE. (PR#9406)
 
 
 
