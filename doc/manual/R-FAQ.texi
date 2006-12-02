@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-30
+@set FAQ_DATE @value{FAQ_YEAR}-12-02
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -3154,6 +3154,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item hybridHclust
 Hybrid hierarchical clustering via mutual clusters.
+@item ibdreg
+Regression methods for IBD linkage with covariates.
 @item ifa
 Independent Factor Analysis.
 @item ifs
@@ -4035,6 +4037,8 @@ Functions for exploratory (statistical) microarray analysis.
 (Standardized) Major Axis estimation and Testing Routines.
 @item smoothSurv
 Survival regression with smoothed error distribution.
+@item smoothtail
+Smooth estimation of generalized Pareto distribution shape parameter.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
