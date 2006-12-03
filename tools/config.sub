@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation,
 #   Inc.
 
-timestamp='2006-08-14'
+timestamp='2006-11-07'
 
 # This file is (in principle) common to ALL GNU software.
 # The presence of a machine in this file suggests that SOME GNU software
@@ -276,6 +276,7 @@ case $basic_machine in
 	| pdp10 | pdp11 | pj | pjl \
 	| powerpc | powerpc64 | powerpc64le | powerpcle | ppcbe \
 	| pyramid \
+	| score \
 	| sh | sh[1234] | sh[24]a | sh[23]e | sh[34]eb | sheb | shbe | shle | sh[1234]le | sh3ele \
 	| sh64 | sh64le \
 	| sparc | sparc64 | sparc64b | sparc64v | sparc86x | sparclet | sparclite \
@@ -924,6 +925,9 @@ case $basic_machine in
 		basic_machine=sh-hitachi
 		os=-hms
 		;;
+	sh5el)
+		basic_machine=sh5le-unknown
+		;;
 	sh64)
 		basic_machine=sh64-unknown
 		;;
@@ -1370,6 +1374,9 @@ else
 # system, and we'll never get to this point.
 
 case $basic_machine in
+        score-*)
+		os=-elf
+		;;
         spu-*)
 		os=-elf
 		;;
