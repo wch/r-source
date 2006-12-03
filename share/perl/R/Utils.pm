@@ -240,6 +240,9 @@ sub make_file_exts {
 	 "sources", "([cfmCM]|cc|cpp|f90|f95|mm)",
 	 "headers", "h",
 	 "src_no_CRLF", "([cfh]|cc|cpp)");
+    ## (Note that older Sun compilers objected to CRLF line endings: it
+    ## seems that newer Fortran 90/95 or ObjC/C++ compilers do not have
+    ## non-CRLF restrictions.)
     my $exts = $file_exts{$type};
     die "Error: unknown type '$type'" unless defined($exts);
     $exts;
