@@ -583,6 +583,13 @@ static void z_atan(double complex *r, double complex *z)
 
 static void z_acosh(double complex *r, double complex *z)
 {
+#ifdef Win32
+    /* workaround for PR#9403 */
+    if(__imag__ *z == 0.0) {
+	__real__ *r = acosh(__real__ *z);
+	__imag__ *r = 0.0;
+    } else
+#endif
     *r = cacosh(*z);
 }
 
