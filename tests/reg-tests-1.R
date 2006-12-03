@@ -4527,7 +4527,7 @@ uniroot(f, c(1,2))
 
 
 ## PR#9360 and PR#9394
-acf(1, lag.max=0, plot=FALSE)	
+acf(1, lag.max=0, plot=FALSE)
 ## gave an error in 2.4.0
-stopifnot( all.equal(ccf(1:3,-(1:3))$acf[2,1,1], -1) ) 
+stopifnot( all.equal(ccf(1:3,-(1:3))$acf[2,1,1], -1) )
 ## gave positive lag 0 cross-correlation after patching PR#9360
