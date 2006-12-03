@@ -7,7 +7,7 @@
   multivariate linear models. 
 }
 \usage{
-\method{anova}{mlm}(object, ...,
+\method{anova}{mlm}(object, \dots,
       test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy", "Spherical"),
       Sigma = diag(nrow = p),
       T = Thin.row(proj(M) - proj(X)), M = diag(nrow = p), X = ~0,
@@ -17,7 +17,7 @@
   \item{object}{an object of class \code{"mlm"}.}
   \item{\dots}{further objects of class \code{"mlm"}.}
   \item{test}{choice of test statistic (see below).}
-  \item{Sigma}{(only relevant if  \code{test=="Spherical"}).  Covariance
+  \item{Sigma}{(only relevant if  \code{test == "Spherical"}).  Covariance
     matrix assumed proportional to \code{Sigma}.}
   \item{T}{transformation matrix.  By default computed from \code{M} and
     \code{X}.} 
@@ -32,7 +32,8 @@
 
   For the multivariate test, Wilks' statistic is most popular in the
   literature, but the default Pillai--Bartlett statistic is
-  recommended by Hand and Taylor (1987).
+  recommended by Hand and Taylor (1987).  See
+  \code{\link{summary.manova}} for futher details.
 
   For the \code{"Spherical"} test, proportionality is usually with the
   identity matrix but a different matrix can be specified using \code{Sigma}).
@@ -62,9 +63,11 @@
 \value{
    An object of class \code{"anova"} inheriting from class \code{"data.frame"}
 }
-\note{The Huynh--Feldt epsilon differs from that calculated by SAS (as of
+\note{
+  The Huynh--Feldt epsilon differs from that calculated by SAS (as of
   v. 8.2) except when the DF is equal to the number of observations
-  minus one.  This is believed to be a bug in SAS, not in \R.}
+  minus one.  This is believed to be a bug in SAS, not in \R.
+}
 
 \references{
   Hand, D. J. and Taylor, C. C.  (1987)
@@ -73,7 +76,9 @@
 }
 
 %% Probably use example from Baron/Li
-\seealso{\code{\link{summary.manova}}}
+\seealso{
+  \code{\link{summary.manova}}
+}
 \examples{
 example(SSD) # Brings in the mlmfit and reacttime objects
 
