@@ -10,8 +10,8 @@ rm    (\dots, list = character(0), pos = -1,
 \alias{rm}
 \alias{remove}
 \arguments{
-  \item{\dots}{the objects to be removed, supplied individually and/or as a
-    character vector}
+  \item{\dots}{the objects to be removed, as names (unquoted) or
+    character strings (quoted).}
   \item{list}{a character vector naming objects to be removed.}
   \item{pos}{where to do the removal.  By default, uses the
     current environment.  See the details for other possibilities.}
@@ -46,6 +46,11 @@ rm    (\dots, list = character(0), pos = -1,
   It is not allowed to remove variables from the base environment and
   base namespace, nor from any environment which is locked (see
   \code{\link{lockEnvironment}}).
+
+  Earlier versions of \R incorrectly claimed that supplying a character
+  vector in \code{\dots} removed the objects named in the character
+  vector, but it removed the character vector.  Use the \code{list}
+  argument to specify objects \emph{via} a character vector.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

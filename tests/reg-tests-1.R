@@ -4503,6 +4503,18 @@ structure(1:3, class="ts")
 ## failed in print method < 2.4.1
 
 
+## PR#9399
+x1 <- "x2"
+x2 <- pi
+rm(x1) # removes x1, not x2
+stopifnot(!exists("x1", .GlobalEnv), exists("x2", .GlobalEnv))
+rm("x2")
+# incorrectly documented <= 2.4.0
+a <- b <- c <- 1
+z <- try(rm(c("a", "b")))
+stopifnot(inherits(z, "try-error"))
+## removed 'a', 'b' and 'c' in 2.4.0
+
 ### end of tests added in 2.4.1 ###
 
 
