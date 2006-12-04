@@ -11,9 +11,10 @@
 }
 \arguments{
   \item{srcfiles}{A list of the names of source files to be compiled.
-    Currently, C, C++ and FORTRAN are supported; the corresponding files
-    should have the extensions \file{.c}, \file{.cc} (or \file{.cpp} or
-    \file{.C}), and \file{.f}, respectively.}
+    Currently, C, C++, Objective C, Objective C++ and FORTRAN are
+    supported; the corresponding files should have the extensions
+    \file{.c}, \file{.cc} (or \file{.cpp} or \file{.C}), \file{.m},
+    \file{.mm} (or \file{.M}) and \file{.f}, respectively.}
   \item{options}{A list of compile-relevant settings, such as special
     values for \code{CFLAGS} or \code{FFLAGS}, or for obtaining
     information about usage and version of the utility.}
@@ -22,6 +23,9 @@
   Note that Ratfor is not supported.  If you have Ratfor source code,
   you need to convert it to FORTRAN.  On many Solaris systems mixing
   Ratfor and FORTRAN code will work.
+
+  Objective C and Objective C++ support is optional and will work only
+  if the corresponding compilers were available at R configure time.
 }
 \note{
   Some binary distributions of \R have \code{COMPILE} in a separate
