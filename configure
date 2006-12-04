@@ -30831,7 +30831,7 @@ r_save_flibs=""
 for arg in ${FLIBS}; do
   case "${arg}" in
     ## this is not for a Fortran main program
-    -lcrt*.o | -lfrtbegin | -lgfortranbegin)
+    -lcrt*.o | -lfrtbegin | -lgfortranbegin | -lmx | -lSystem)
       ;;
     -[a-zA-Z]/*\" | -[a-zA-Z]*\\) # ifc
       ;;

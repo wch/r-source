@@ -754,7 +754,9 @@ LIBS="${r_save_LIBS}"
 ## better also against '-lcrtbegin.o'), which (unlike '-lcrt0.o') are
 ## not stripped by AC_F77_LIBRARY_LDFLAGS.  This in particular causes
 ## R_PROG_F77_CC_COMPAT to fail.  Hence, we make sure all -lcrt*.o are
-## removed.
+## removed. In Addition, -lmx and -lSystem are implicit and their
+## manual inclusion leads to ordering problems (remove when autoconf
+## is fixed - supposedly the CVS version is, but 2.6.0 is not).
 ##
 ## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
 ## when using gcc for linking.  The '-l:' construction is similar to
@@ -819,7 +821,7 @@ r_save_flibs=""
 for arg in ${FLIBS}; do
   case "${arg}" in
     ## this is not for a Fortran main program
-    -lcrt*.o | -lfrtbegin | -lgfortranbegin)
+    -lcrt*.o | -lfrtbegin | -lgfortranbegin | -lmx | -lSystem)
       ;;
     -[[a-zA-Z]]/*\" | -[[a-zA-Z]]*\\) # ifc
       ;;
