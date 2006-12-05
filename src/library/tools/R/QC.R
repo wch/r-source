@@ -1512,6 +1512,16 @@ function(package, dir, lib.loc = NULL)
         methods
     })
     all_methods_in_package <- unlist(methods_in_package)
+    ## There are situations where S3 methods might be documented as
+    ## functions (i.e., with their full name), if they do something
+    ## useful also for arguments not inheriting from the class they
+    ## provide a method for.  Let's allow for this in the case the
+    ## package has a namespace and the method is exported (even though
+    ## we strongly prefer using FOO(as.BAR(x)) to FOO.BAR(x) for such
+    ## cases).
+    if(has_namespace)
+        all_methods_in_package <-
+            all_methods_in_package %w/o% functions_in_code
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))
@@ -3103,7 +3113,9 @@ function(package, dir, lib.loc = NULL)
         lapply(unlist(.get_standard_package_names()[c("base",
                                                       "recommended")],
                       use.names = FALSE),
-               Rd_aliases, lib.loc = .Library)
+               Rd_aliases, lib.loc = NULL)
+    ## (Don't use lib.loc = .Library, as recommended packages may have
+    ## been installed to a different place.)
 
     ## Add the aliases from the package itself, and build a db with all
     ## \link xrefs in the package Rd objects.
