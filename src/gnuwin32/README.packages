@@ -33,7 +33,10 @@ Fortran source!). The notes here were tested with VC++6.
 First build the import library Rdll.lib by
 
 	make R.exp
+
 	lib /def:R.exp /out:Rdll.lib
+or, depending on your version of VC++
+	link /lib /def:R.exp /machine:x86 /out:Rdll.lib
 
 (Another, less reliable, way to make R.exp is to use pexports.exe from
 mingw-utils.)
@@ -58,7 +61,7 @@ Extra care is needed when referencing variables (rather than
 functions) exported from R.dll.  These must be declared
 __declspec(dllimport) (as in R's own header files).
 
-VC++ lacks some standard functions such as isnan and isfinite.  To use
+VC++6 lacks some standard functions such as isnan and isfinite.  To use
 R's macros you will need
 
 #undef ISNAN
