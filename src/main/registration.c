@@ -54,7 +54,7 @@
 
 
 /*  These get the declarations of some routines refernced here but
-    not explicitly declared.    This is necessary when we link with 
+    not explicitly declared.    This is necessary when we link with
     a C++ compiler because the linkage changes as the declarations
     are (currently) within extern "C" blocks.
 */
@@ -226,6 +226,8 @@ static R_CallMethodDef callMethods [] = {
      * using Patefield's algorithm.
      */
     CALLDEF(R_r2dtable, 3),
+
+    CALLDEF(R_shortRowNames, 1),
 
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),

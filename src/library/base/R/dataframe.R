@@ -62,9 +62,13 @@ t.data.frame <- function(x) {
     NextMethod("t")
 }
 
-dim.data.frame <- function(x) c(length(attr(x,"row.names")), length(x))
+dim.data.frame <- function(x)
+    c(abs(.Call("R_shortRowNames", x, PACKAGE = "base")), length(x))
 
-dimnames.data.frame <- function(x) list(row.names(x), names(x))
+dimnames.data.frame <- function(x, row.names.maybe.NULL = FALSE)
+    list(if(row.names.maybe.NULL &&
+	    .Call("R_shortRowNames", x, PACKAGE = "base") >= 0) NULL else row.names(x),
+	 names(x))
 
 "dimnames<-.data.frame" <- function(x, value)
 {

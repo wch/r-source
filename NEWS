@@ -126,6 +126,10 @@ NEW FEATURES
 
     o	interaction() has a new argument lex.order.
 
+    o	.Call("R_shortRowNames") utility for data frames with trivial row
+	names; consequently, dim.data.frame() has become very fast for
+	large such data frames.
+
 
 DEPRECATED & DEFUNCT
 

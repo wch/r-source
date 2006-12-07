@@ -46,7 +46,7 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
 	PROTECT(val = coerceVector(val, INTSXP));
 	ans =  installAttrib(vec, R_RowNamesSymbol, val);
 	UNPROTECT(1);
-	return ans;	
+	return ans;
     }
     if(isInteger(val)) {
 	Rboolean OK_compact = TRUE;
@@ -68,7 +68,7 @@ static SEXP row_names_gets(SEXP vec , SEXP val)
 	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
 	    UNPROTECT(1);
 	    return ans;
-	} 
+	}
     } else if(!isString(val))
 	error(_("row names must be 'character' or 'integer', not '%s'"),
 	      type2char(TYPEOF(val)));
@@ -163,7 +163,8 @@ SEXP getAttrib(SEXP vec, SEXP name)
 
     if (isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
 
-    if (name == R_RowNamesSymbol) { 
+    /* special test for c(NA, n) rownames of data frames: */
+    if (name == R_RowNamesSymbol) {
 	SEXP s = getAttrib0(vec, R_RowNamesSymbol);
 	if(isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER) {
 	    int i, n = INTEGER(s)[1];
@@ -177,6 +178,20 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	return getAttrib0(vec, name);
 }
 
+SEXP R_shortRowNames(SEXP vec)
+{
+    /* return  n { = nrow(.)} if the data frame 'vec' has c(NA, n) rownames;
+     *	      - nrow(.) otherwise;  note that data frames with nrow(.) == 0
+     *		have no row.names.
+  ==> is also used in dim.data.frame() */
+    SEXP s = getAttrib0(vec, R_RowNamesSymbol),
+	r = allocVector(INTSXP, 1);
+
+    INTEGER(r)[0] = (isInteger(s) && LENGTH(s) == 2 &&
+		     INTEGER(s)[0] == NA_INTEGER)
+	? INTEGER(s)[1] : (isNull(s) ? 0 : -LENGTH(s));
+    return r;
+}
 
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 {
@@ -900,7 +915,7 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     while (attrs != R_NilValue) {
 	/* treat R_RowNamesSymbol specially */
 	if (TAG(attrs) == R_RowNamesSymbol)
-	    SET_VECTOR_ELT(value, nvalues, 
+	    SET_VECTOR_ELT(value, nvalues,
 			   getAttrib(CAR(args), R_RowNamesSymbol));
 	else
 	    SET_VECTOR_ELT(value, nvalues, CAR(attrs));
