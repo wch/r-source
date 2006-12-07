@@ -6026,7 +6026,7 @@ which will do any coercion needed, and return @code{NA_LOGICAL} if the
 value passed was @code{NA} or coercion failed.  There are also
 @code{asInteger}, @code{asReal} and @code{asComplex}.  The function
 @code{asChar} returns a @code{CHARSXP}.  All of these functions ignore
-any elements of an imput vector after the first.
+any elements of an input vector after the first.
 
 To return a length-one real vector we can use
 
