@@ -124,6 +124,8 @@ NEW FEATURES
 
     o	cut.default() has a new argument ordered_result.
 
+    o	interaction() has a new argument lex.order.
+
 
 DEPRECATED & DEFUNCT
 
@@ -405,7 +407,7 @@ BUG FIXES
 
     o   The tk-GUI was displaying a warning due to an extra comma in
         the list of manuals (PR#9396)
-    
+
     o	packageDescription() now gives an explicit error on a corrupt
 	DESCRIPTION file.
 
@@ -415,10 +417,10 @@ BUG FIXES
 
     o	trace() had its return value documented incorrectly and was
 	sometimes visible when it should not have been.
-	
+
     o	pchisq() would sometimes use the wrong tail when calculating
 	non-central probabilities with lower.tail = FALSE. (PR#9406)
-	
+
     o	rm() could remove the wrong objects when passed an expression.
 	(PR#9399)  Now only names are allowed in the '...' argument,
 	and the incorrect documentation of what happened with
