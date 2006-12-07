@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-12-04
+@set FAQ_DATE @value{FAQ_YEAR}-12-06
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2435,6 +2435,8 @@ Methods and data to accompany the textbook ``Applied Linear Regression''
 by S. Weisberg, 2005, Wiley.
 @item amap
 Another Multidimensional Analysis Package.
+@item analogue
+Analogue methods for palaeoecology.
 @c <COMMENT>
 @c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
 @c @item anm
@@ -3033,6 +3035,8 @@ Basic functions for the generalised (Tukey) lambda distribution.
 @item gllm
 Routines for log-linear models of incomplete contingency tables,
 including some latent class models via EM and Fisher scoring approaches.
+@item glmc
+Fitting Generalized Linear Models subject to Constraints.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
