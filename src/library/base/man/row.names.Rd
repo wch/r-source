@@ -60,7 +60,7 @@ row.names(x) <- value
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{data.frame}}, \code{\link{rownames}}.
+  \code{\link{data.frame}}, \code{\link{rownames}}, \code{\link{names}}.
 }
 \keyword{classes}
 \keyword{methods}
