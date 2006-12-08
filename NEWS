@@ -13,6 +13,11 @@ USER-VISIBLE CHANGES
 
     o	str.default() typically prints fewer entries of logical vectors.
 
+    o	abs(<integer>) now returns integer [experimental, as of 2006-12-08]
+
+    o	as.matrix(<data frame with trivial rownames>) now has NULL
+	rownames.
+
 
 NEW FEATURES
 
