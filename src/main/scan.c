@@ -429,7 +429,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		    R_AllocStringBuffer(nbuf, buffer);
 		}
 		if (c == '\\') {
-		    /* If this is an embedded quote, unquote it, but 
+		    /* If this is an embedded quote, unquote it, but
 		       otherwise keep backslashes */
 		    c = scanchar(TRUE, d);
 		    if (c == R_EOF) break;
@@ -974,7 +974,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else {
 	    char *dc = CHAR(STRING_ELT(dec, 0));
 	    if(strlen(dc) != 1)
-		errorcall(call, 
+		errorcall(call,
 			  _("invalid decimal separator: must be one byte"));
 	    data.decchar = dc[0];
 	}
@@ -1001,7 +1001,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     p = CHAR(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
-    if (strlen(p) > 1) 
+    if (strlen(p) > 1)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
     else if (strlen(p) == 1) data.comchar = (unsigned char)*p;
     if(escapes == NA_LOGICAL)
@@ -1027,7 +1027,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = R_NilValue;		/* -Wall */
     data.save = 0;
 
-    /* set up a context which will close the connection if there is 
+    /* set up a context which will close the connection if there is
        an error or user interrupt */
     begincontext(&cntxt, CTXT_CCODE, call, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
@@ -1193,7 +1193,7 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 		while ((c = scanchar(inquote, &data)) != quote) {
 		    if (c == R_EOF || c == '\n') {
 			if(!data.wasopen) data.con->close(data.con);
-			errorcall(call, 
+			errorcall(call,
 				  _("string terminated by newline or EOF"));
 		    }
 		}
@@ -1300,7 +1300,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec;
     SEXP rval = R_NilValue; /* -Wall */
-    int i, j, len, numeric, asIs, res;
+    int i, j, len, numeric, asIs;
     Rboolean done = FALSE;
     char *endp, *tmp = NULL;
     LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
@@ -1338,7 +1338,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     numeric = 1;
 
-    /* save the dim/dimname attributes */
+    /* save the dim/dimnames attributes */
 
     PROTECT(dims = getAttrib(cvec, R_DimSymbol));
     if (isArray(cvec))
@@ -1622,7 +1622,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
     p = CHAR(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
-    if (strlen(p) > 1) 
+    if (strlen(p) > 1)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
     else if (strlen(p) == 1) data.comchar = (int)*p;
     if (isString(sep) || isNull(sep)) {
@@ -1686,7 +1686,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 	    } else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
 	    /* A line is empty only if it contains nothing before
-	       EOL, EOF or a comment char. 
+	       EOL, EOF or a comment char.
 	       A line containing just white space is not empty if sep=","
 	    */
 	    if(empty && !skip)
@@ -1814,7 +1814,7 @@ static void wt_cleanup(void *data)
 {
     wt_info *ld = data;
     if(!ld->wasopen) ld->con->close(ld->con);
-    R_FreeStringBuffer(ld->buf);    
+    R_FreeStringBuffer(ld->buf);
     R_print.digits = ld->savedigits;
 }
 
