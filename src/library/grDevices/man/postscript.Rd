@@ -195,7 +195,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   using the \code{encoding} argument the glyphs can be matched to
   encoding in use.  This suffices for European and Cyrillic languages,
   but not for CJK languages.  For the latter, composite CID fonts are
-  used.  These fonts are be useful for other languages: for example they
+  used.  These fonts are useful for other languages: for example they
   may contain Greek glyphs. (The rest of this section applies only when CID
   fonts are not used.)
 
