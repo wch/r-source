@@ -3,12 +3,13 @@
 \alias{VADeaths}
 \title{Death Rates in Virginia (1940)}
 \description{
-  Death rates per 100 in Virginia in 1940.
+  Death rates per 1000 in Virginia in 1940.
 }
 \usage{VADeaths}
 \format{A matrix with 5 rows and 5 columns.}
 \details{
-  The death rates are cross-classified by age group (rows) and
+  The death rates are measured per 1000 population per year.  They
+  are cross-classified by age group (rows) and
   population group (columns).  The age groups are: 50--54, 55--59,
   60--64, 65--69, 70--74 and the population groups are Rural/Male,
   Rural/Female, Urban/Male and Urban/Female.
