@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-12-06
+@set FAQ_DATE @value{FAQ_YEAR}-12-10
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2424,6 +2424,8 @@ Adaptive smoothing of digital images.
 Adaptive Wavelet transforms for signal denoising.
 @item agce
 Analysis of growth curve experiments.
+@item agricolae
+Statistical procedures for agricultural research.
 @item agsemisc
 Miscellaneous plotting and utility functions.
 @item akima
@@ -3320,6 +3322,9 @@ Local polynomial (ridge) regression.
 Latent Semantic Analysis.
 @item lspls
 LS-PLS (least squares --- partial least squares) models.
+@item lss
+Accelerated failure time model to right censored data based on
+least-squares principle.
 @item ltm
 Analysis of multivariate Bernoulli data using latent trait models
 (including the Rasch model) under the Item Response Theory approach.
