@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-12-01 10:44+0000\n"
-"PO-Revision-Date: 2006-04-18 08:23+0100\n"
+"POT-Creation-Date: 2006-12-11 10:41+0000\n"
+"PO-Revision-Date: 2006-12-05 22:11+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -146,24 +146,24 @@ msgid "R_HOME not set"
 msgstr "R_HOME non déclaré"
 
 #: src/gnuwin32/extra.c:249
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' not found"
-msgstr " introuvable"
+msgstr "'%s'  introuvable"
 
 #: src/gnuwin32/extra.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "file association for '%s' not available or invalid"
-msgstr "date de modification des fichiers indisponible sur ce système"
+msgstr "association de fichier pour '%s' indisponilbe ou incorrecte"
 
 #: src/gnuwin32/extra.c:254
 #, c-format
 msgid "access to '%s' denied"
-msgstr ""
+msgstr "l'accès à '%s' est interdit"
 
 #: src/gnuwin32/extra.c:255
 #, c-format
 msgid "problem in displaying '%s'"
-msgstr ""
+msgstr "problème lors de l'affichage de '%s'"
 
 #: src/gnuwin32/extra.c:309
 msgid "unknown type"
@@ -411,9 +411,8 @@ msgid "encoding '%s' is not recognised"
 msgstr "l'encodage '%s' n'est pas reconnu"
 
 #: src/gnuwin32/system.c:292
-#, fuzzy
 msgid "<ERROR: invalid input in encoding>\n"
-msgstr "<ERREUR : entrée incorrecte dans l'encodage>"
+msgstr "<ERREUR : entrée incorrecte dans l'encodage>\n"
 
 #: src/gnuwin32/system.c:494
 #, c-format
@@ -510,14 +509,13 @@ msgid "object is not subsettable"
 msgstr "objet non indiçable"
 
 #: src/include/Errormsg.h:44
-#, fuzzy
 msgid "invalid argument 'mode'"
-msgstr "argument incorrect"
+msgstr "argument 'mode' incorrect"
 
 #: src/include/Errormsg.h:45
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'type' (%s) of argument"
-msgstr "'mode' de l'argument incorrect"
+msgstr "'type' (%s) de l'argument incorrect"
 
 #: src/include/Errormsg.h:46
 msgid "applies only to lists and vectors"
@@ -548,9 +546,9 @@ msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "AVIS : valeur '%s' incorrecte : ignorée\n"
 
 #: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: %s: too large and ignored\n"
-msgstr "AVIS : %s=%lu'%c' : trop grand et ignoré\n"
+msgstr "AVIS : %s : trop grand et ignoré\n"
 
 #: src/main/CommandLineArgs.c:240
 msgid "WARNING: no value given for '--max-ppsize'\n"
@@ -724,12 +722,11 @@ msgstr "utilisation de dyn.load impossible dans cette version de R"
 #: src/main/Rdynload.c:1362
 #, c-format
 msgid "function '%s' not provided by package '%s'"
-msgstr ""
+msgstr "la fonction '%s' n'existe pas dans le package '%s'"
 
 #: src/main/Rdynload.c:1364
-#, fuzzy
 msgid "table entry must be an external pointer"
-msgstr "impossible de déclasser un pointeur externe"
+msgstr "l'entrée de la table doit être un pointeur externe"
 
 #: src/main/Rstrptime.h:1107
 msgid "input string is too long"
@@ -747,7 +744,7 @@ msgstr "chaîne de caractères de formattage trop longue"
 msgid "invalid multibyte format string"
 msgstr "chaîne de caractères multioctets incorrecte"
 
-#: src/main/apply.c:42 src/main/complex.c:909
+#: src/main/apply.c:42 src/main/complex.c:916
 msgid "invalid length"
 msgstr "taille incorrecte"
 
@@ -756,19 +753,16 @@ msgid "first argument is not a matrix"
 msgstr "le premier argument n'est pas une matrice"
 
 #: src/main/apply.c:195
-#, fuzzy
 msgid "invalid 'f' argument"
-msgstr "argument '%s' incorrect"
+msgstr "argument 'f' incorrect"
 
 #: src/main/apply.c:197
-#, fuzzy
 msgid "invalid 'classes' argument"
-msgstr "argument '%s' incorrect"
+msgstr "argument 'classes' incorrect"
 
 #: src/main/apply.c:200
-#, fuzzy
 msgid "invalid 'how' argument"
-msgstr "argument '%s' incorrect"
+msgstr "argument 'how' incorrect"
 
 #: src/main/arithmetic.c:195
 msgid "probable complete loss of accuracy in modulus"
@@ -953,9 +947,11 @@ msgid "'x' must be numeric"
 msgstr "'x' doit être numérique"
 
 #: src/main/attrib.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "row names must be 'character' or 'integer', not '%s'"
-msgstr "'hostname' doit être un vecteur de caractères de longueur 1"
+msgstr ""
+"les noms de lignes doivent être un vecteur de caractères ou d'entiers, pas '%"
+"s'"
 
 #: src/main/attrib.c:124
 #, c-format
@@ -1123,9 +1119,9 @@ msgstr "L'événement UpdatePS exige une valeur numérique unique"
 
 #: src/main/bind.c:268 src/main/bind.c:303 src/main/bind.c:351
 #: src/main/bind.c:419 src/main/bind.c:449
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is unimplemented in '%s'"
-msgstr "type %d est indisponible dans '%s'"
+msgstr "type '%s' est indisponible dans '%s'"
 
 #: src/main/bind.c:638
 msgid "repeated formal argument 'recursive'"
@@ -1314,7 +1310,6 @@ msgid "invalid split pattern '%s'"
 msgstr "motif de découpage '%s' incorrect"
 
 #: src/main/character.c:710
-#, fuzzy
 msgid "the first argument must be a character vector"
 msgstr "le premier argument doit être un vecteur de caractères"
 
@@ -1670,19 +1665,19 @@ msgstr "opération complexe non implémentée"
 msgid "non-numeric argument to function"
 msgstr "argument non numérique pour une fonction"
 
-#: src/main/complex.c:826 src/main/complex.c:898
+#: src/main/complex.c:833 src/main/complex.c:905
 msgid "unimplemented complex function"
 msgstr "fonction complexe non implémentée"
 
-#: src/main/complex.c:963
+#: src/main/complex.c:970
 msgid "polynomial degree too high (49 max)"
 msgstr "degré du polynôme trop élevé (49 max)"
 
-#: src/main/complex.c:976
+#: src/main/complex.c:983
 msgid "invalid polynomial coefficient"
 msgstr "coefficient de polynôme incorrect"
 
-#: src/main/complex.c:981
+#: src/main/complex.c:988
 msgid "root finding code failed"
 msgstr "le code de recherche de zéro a échoué"
 
@@ -1953,14 +1948,12 @@ msgid "unsupported mode"
 msgstr "mode indisponible"
 
 #: src/main/connections.c:2086
-#, fuzzy
 msgid "'con' is not a textConnection"
-msgstr "'con' n'est pas une connexion"
+msgstr "'con' n'est pas une connexion texte"
 
 #: src/main/connections.c:2089
-#, fuzzy
 msgid "'con' is not an output textConnection"
-msgstr "'con' n'est pas une connexion"
+msgstr "'con' n'est pas une connexion en sortie"
 
 #: src/main/connections.c:2159
 msgid "sockets are not available on this system"
@@ -2096,9 +2089,8 @@ msgid "invalid UTF-8 input in readChar()"
 msgstr "entrée UTF-8 incorrecte dans readChar()"
 
 #: src/main/connections.c:3246
-#, fuzzy
 msgid "'object' is too short"
-msgstr "objet non indiçable"
+msgstr "'object' est trop court"
 
 #: src/main/connections.c:3274
 msgid ""
@@ -2286,9 +2278,8 @@ msgid "the standard deviation is zero"
 msgstr "l'écart type est nulle"
 
 #: src/main/cum.c:49
-#, fuzzy
 msgid "Integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
-msgstr "Dépassement d'entier dans sum(.) ; utiliser sum(as.numeric(.))"
+msgstr "Dépassement d'entier dans 'cumsum' ; utiliser 'cumsum(as.numeric(.))'"
 
 #: src/main/cum.c:181
 msgid "min/max not defined for complex numbers"
@@ -2464,9 +2455,8 @@ msgid "re-encoding is not supported on this system"
 msgstr "réencodage indisponible sur ce système"
 
 #: src/main/dotcode.c:429
-#, fuzzy
 msgid "lists must be duplicated in .C"
-msgstr "les variables de caractères doivent être dupliquées en .C / .Fortran"
+msgstr "les listes doivent être dupliquées en .C"
 
 #: src/main/dotcode.c:439 src/main/dotcode.c:451
 #, c-format
@@ -2734,9 +2724,9 @@ msgid "invalid graphics state"
 msgstr "état des graphiques incorrect"
 
 #: src/main/envir.c:112 src/main/envir.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "cannot change value of locked binding for '%s'"
-msgstr "impossible de changer la valeur d'un lien verrouillé"
+msgstr "impossible de changer la valeur d'un lien verrouillé pour '%s'"
 
 #: src/main/envir.c:222 src/main/envir.c:1250
 msgid "cannot add bindings to a locked environment"
@@ -2751,18 +2741,19 @@ msgid "cannot unbind in the base namespace"
 msgstr "impossible de délier dans l'environnement de base"
 
 #: src/main/envir.c:708
-#, fuzzy
 msgid "unbind in the base environment is unimplemented"
-msgstr "impossible de délier dans l'environnement de base"
+msgstr ""
+"impossible de délier dans l'environnement de base (pas implémenté "
+"actuellement)"
 
 #: src/main/envir.c:710 src/main/envir.c:1446
 msgid "cannot remove bindings from a locked environment"
 msgstr "impossible d'éliminer les liens d'un environnement verrouillé"
 
 #: src/main/envir.c:953
-#, fuzzy, c-format
+#, c-format
 msgid "argument to '%s' is not an environment"
-msgstr "l'argument à %s n'est pas un environnment"
+msgstr "l'argument à '%s' n'est pas un environnment"
 
 #: src/main/envir.c:1113
 #, c-format
@@ -2793,18 +2784,17 @@ msgid "cannot assign variables to this database"
 msgstr "impossible d'affecter des variables à cette base de données"
 
 #: src/main/envir.c:1376
-#, fuzzy, c-format
+#, c-format
 msgid "cannot add binding of '%s' to the base environment"
-msgstr "impossible d'ajouter des liens à un environnement verrouillé"
+msgstr "impossible d'ajouter des liens de '%s' à l'environnement de base"
 
 #: src/main/envir.c:1440
 msgid "cannot remove variables from base namespace"
 msgstr "impossible d'effacer des variables de l'espace de noms de base"
 
 #: src/main/envir.c:1442
-#, fuzzy
 msgid "cannot remove variables from the base environment"
-msgstr "impossible d'éliminer des variables de l'environnement vide"
+msgstr "impossible d'éliminer des variables de l'environnement de base"
 
 #: src/main/envir.c:1444
 msgid "cannot remove variables from the empty environment"
@@ -2839,29 +2829,27 @@ msgid "second argument must be an environment"
 msgstr "le second argument doit être un environnement"
 
 #: src/main/envir.c:1693 src/main/envir.c:1701
-#, fuzzy, c-format
+#, c-format
 msgid "wrong length for '%s' argument"
-msgstr "mauvaise longueur pour l'argument 'mode'"
+msgstr "mauvaise longueur pour l'argument '%s'"
 
 #: src/main/envir.c:1809
-#, fuzzy
 msgid "invalid use of 'missing'"
-msgstr "utilisation incorrecte de missing"
+msgstr "utilisation incorrecte de 'missing'"
 
 #: src/main/envir.c:1834
-#, fuzzy
 msgid "'missing' can only be used for arguments"
-msgstr "missing peut seulement être utilisé pour des arguments"
+msgstr "'missing' peut seulement être utilisé pour des arguments"
 
 #: src/main/envir.c:1929
-#, fuzzy
 msgid "all elements of a list must be named"
-msgstr "attach : tous les éléments doivent être nommés"
+msgstr "tous les éléments de la liste doivent être nommés"
 
 #: src/main/envir.c:1952
-#, fuzzy
 msgid "'attach' only works for lists, data frames and environments"
-msgstr "attach fonctionne seulement pour des listes ou des tableaux de données"
+msgstr ""
+"'attach' fonctionne seulement pour des listes, des tableaux de données ou "
+"des environnements"
 
 #: src/main/envir.c:2035
 msgid "detaching \"package:base\" is not allowed"
@@ -2893,9 +2881,8 @@ msgid "using 'as.environment(NULL)' is defunct"
 msgstr "l'utilisation de 'as.environment(NULL)' n'est plus autorisée"
 
 #: src/main/envir.c:2610
-#, fuzzy
 msgid "invalid object for 'as.environment'"
-msgstr "objet incorrect pour as.environment"
+msgstr "objet incorrect pour 'as.environment'"
 
 #: src/main/envir.c:2634 src/main/envir.c:2661 src/main/envir.c:2689
 #: src/main/envir.c:2709 src/main/envir.c:2731 src/main/envir.c:2765
@@ -3248,7 +3235,7 @@ msgstr "membre gauche de l'assignation incorrect"
 #: src/main/eval.c:1478
 #, c-format
 msgid "element %d is empty"
-msgstr ""
+msgstr "l'élément %d est vide"
 
 #: src/main/eval.c:1608
 msgid "invalid formal argument list for \"function\""
@@ -3635,9 +3622,8 @@ msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "type de ligne incorrect : doit être de longueur 2, 4, 6 ou 8"
 
 #: src/main/graphics.c:4413
-#, fuzzy
 msgid "invalid line type: zeroes are not allowed"
-msgstr "longueur de vecteurs négative non permise"
+msgstr "type de ligne incorrect : les zéros ne sont pas autorisés"
 
 #: src/main/graphics.c:4422 src/main/graphics.c:4430 src/main/graphics.c:4437
 msgid "invalid line type"
@@ -3825,9 +3811,9 @@ msgid "argument %d matches multiple formal arguments"
 msgstr "l'argument %d correspond à plusieurs arguments formels"
 
 #: src/main/match.c:386
-#, fuzzy, c-format
+#, c-format
 msgid "unused argument(s) %s"
-msgstr "argument(s) inutilisé(s) (%s ...)"
+msgstr "argument(s) inutilisé(s) %s"
 
 #: src/main/memory.c:936
 msgid "can only weakly reference/finalize reference objects"
@@ -3897,7 +3883,7 @@ msgstr "protect() : débordement vers le haut de protection de pile"
 #: src/main/memory.c:2275
 #, c-format
 msgid "unprotect(): only %d protected items"
-msgstr ""
+msgstr "unprotect() : seulement %d éléments protégés"
 
 #: src/main/memory.c:2289
 msgid "unprotect_ptr: pointer not found"
@@ -3923,9 +3909,8 @@ msgid "bad value"
 msgstr "mauvaise valeur"
 
 #: src/main/memory.c:2775
-#, fuzzy
 msgid "memory profiling is not available on this system"
-msgstr "'le profilage de R n'est pas disponible sur ce système"
+msgstr "le profilage de la mémoire n'est pas disponible sur ce système"
 
 #: src/main/memory.c:2845
 #, c-format
@@ -3999,9 +3984,9 @@ msgid "overlong names in '%s'"
 msgstr "noms trop longs dans '%s'"
 
 #: src/main/model.c:1368
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type (%s) for variable '%s'"
-msgstr "type incorrect pour les étiquettes des axes"
+msgstr "type (%s) incorrect pour la variable '%s'"
 
 #: src/main/model.c:1373
 #, c-format
@@ -4048,11 +4033,14 @@ msgstr "les noms des termes seront tronqués"
 #: src/main/model.c:1859
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
+"des variables complexes ne sont pas encore acceptées dans les matrices de "
+"modèle"
 
 #: src/main/model.c:1884
-#, fuzzy, c-format
+#, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
-msgstr "valeurs négatives interdites dans un indice de matrice"
+msgstr ""
+"les variables de type '%s' ne sont pas autorisées dans des matrices de modèle"
 
 #: src/main/names.c:935
 msgid "string argument required"
@@ -4277,15 +4265,14 @@ msgstr ""
 "classe nul"
 
 #: src/main/objects.c:1303
-#, fuzzy, c-format
+#, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr ""
-"essai de génération d'un objet dans C à partir d'une classe virtuelle (\"%s"
-"\")"
+"essai de génération d'un objet à partir d'une classe virtuelle (\"%s\")"
 
 #: src/main/objects.c:1353
 msgid "'R_get_primname' called on a non-primitive"
-msgstr ""
+msgstr "'R_get_primname' appelé sur une fonction qui n'est pas primitive"
 
 #: src/main/optim.c:75 src/main/optim.c:102 src/main/optim.c:186
 msgid "non-finite value supplied by optim"
@@ -4846,14 +4833,13 @@ msgid "zero length 'padj' specified"
 msgstr "'padj' de longueur nulle spécifié"
 
 #: src/main/plot.c:1165
-#, fuzzy
 msgid "'labels' is supplied and not 'at'"
-msgstr "'label' est fournit, mais pas 'at'"
+msgstr "'labels' est fourni, mais pas 'at'"
 
 #: src/main/plot.c:1169
-#, fuzzy, c-format
+#, c-format
 msgid "'at' and 'labels' lengths differ, %d != %d"
-msgstr "les longueurs de 'at' et de 'label' diffèrent, %d != %d"
+msgstr "les longueurs de 'at' et de 'labels' diffèrent, %d != %d"
 
 #: src/main/plot.c:1187
 msgid "no locations are finite"
@@ -5221,7 +5207,8 @@ msgstr "trop peu d'étiquettes de colonnes"
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"
 msgstr[0] ""
-msgstr[1] ""
+" [getOption(\"max.print\") est atteint -- dernière ligne omises ]]\n"
+msgstr[1] " [getOption(\"max.print\") est atteint -- %d lignes omises ]]\n"
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
@@ -5732,9 +5719,8 @@ msgid "NA/NaN argument"
 msgstr "argument NA / NaN"
 
 #: src/main/seq.c:148 src/main/seq.c:240 src/main/seq.c:243
-#, fuzzy
 msgid "invalid number of copies in rep.int()"
-msgstr "nombre de copies incorrect dans rep()"
+msgstr "nombre de copies incorrect dans rep.int()"
 
 #: src/main/seq.c:231
 msgid "rep() incorrect type for second argument"
@@ -5745,43 +5731,36 @@ msgid "attempt to replicate non-vector"
 msgstr "tentative de dupliquer autre chose qu'un vecteur"
 
 #: src/main/seq.c:468
-#, fuzzy
 msgid "'length.out' must be a non-negative number"
-msgstr "'gap' doit être un entier positif ou nul"
+msgstr "'length.out' doit être un entier positif ou nul"
 
 #: src/main/seq.c:482 src/main/seq.c:521 src/main/seq.c:535
-#, fuzzy
 msgid "'from' must be finite"
-msgstr "'a' et 'b' doivent être finis"
+msgstr "'from' doit être fini"
 
 #: src/main/seq.c:484 src/main/seq.c:523 src/main/seq.c:553
-#, fuzzy
 msgid "'to' must be finite"
-msgstr "'a' et 'b' doivent être finis"
+msgstr "'to' doit être fini"
 
 #: src/main/seq.c:496
 msgid "invalid '(to - from)/by' in 'seq'"
-msgstr ""
+msgstr "'(to - from)/by' incorrect dans 'seq'"
 
 #: src/main/seq.c:504
-#, fuzzy
 msgid "'by' argument is much too small"
-msgstr "argument 'file' trop long"
+msgstr "argument 'by' bien trop petit"
 
 #: src/main/seq.c:507
-#, fuzzy
 msgid "wrong sign in 'by' argument"
-msgstr "mauvaise longueur pour l'argument 'mode'"
+msgstr "signe incorrect pour l'argument 'by'"
 
 #: src/main/seq.c:537 src/main/seq.c:555
-#, fuzzy
 msgid "'by' must be finite"
-msgstr "'a' et 'b' doivent être finis"
+msgstr "'by' doit être fini"
 
 #: src/main/seq.c:598
-#, fuzzy
 msgid "argument must be non-negative"
-msgstr "l'argument doit être un environnement"
+msgstr "l'argument ne peut être négatif"
 
 #: src/main/serialize.c:222 src/main/serialize.c:252 src/main/serialize.c:275
 msgid "unknown or inappropriate output format"
@@ -5883,9 +5862,8 @@ msgstr ""
 "d.%d.%d ; besoin d'un R %d.%d.%d ou plus récent"
 
 #: src/main/serialize.c:1585
-#, fuzzy
 msgid "read failed"
-msgstr "échec de lecture XDR"
+msgstr "échec de lecture"
 
 #: src/main/serialize.c:1641 src/main/serialize.c:1654
 msgid "error reading from connection"
@@ -6695,7 +6673,7 @@ msgstr "Délai de lecture dépassé sur internet"
 #: src/modules/internet/nanoftp.c:312 src/modules/internet/nanoftp.c:346
 #: src/modules/internet/nanoftp.c:356
 msgid "RxmlNanoFTPScanURL: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoFTPScanURL : URL trop longue (incorrecte ?)"
 
 #: src/modules/internet/nanoftp.c:389
 msgid "removing FTP proxy info"
@@ -6708,7 +6686,7 @@ msgstr "utilisation du proxy FTP '%s'"
 
 #: src/modules/internet/nanoftp.c:402 src/modules/internet/nanoftp.c:431
 msgid "RxmlNanoFTPScanProxy: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoFTPScanProxy : URL trop longue (incorrecte ?)"
 
 #: src/modules/internet/nanoftp.c:830
 msgid "cannot resolve host"
@@ -6743,7 +6721,7 @@ msgstr "écoute impossible sur le port %d"
 #: src/modules/internet/nanohttp.c:363 src/modules/internet/nanohttp.c:391
 #: src/modules/internet/nanohttp.c:400
 msgid "RxmlNanoHTTPScanURL: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoHTTPScanURL : URL trop longue (incorrecte ?)"
 
 #: src/modules/internet/nanohttp.c:434
 msgid "removing HTTP proxy info"
@@ -6756,7 +6734,7 @@ msgstr "utilisation du proxy HTTP '%s'"
 
 #: src/modules/internet/nanohttp.c:447 src/modules/internet/nanohttp.c:483
 msgid "RxmlNanoHTTPScanProxy: overlong (invalid?) URL"
-msgstr ""
+msgstr "RxmlNanoHTTPScanProxy : URL trop longue (incorrecte ?)"
 
 #: src/modules/internet/nanohttp.c:1102
 #, c-format

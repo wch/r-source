@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: RGui 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-12-01 10:47+0000\n"
-"PO-Revision-Date: 2006-04-18 08:27+0100\n"
+"PO-Revision-Date: 2006-12-05 21:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: console.c:879 console.c:919
+#: console.c:879
+#: console.c:919
 msgid "Not enough memory"
 msgstr "Pas assez de mémoire"
 
-#: console.c:975 console.c:979
+#: console.c:975
+#: console.c:979
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Mémoire insuffisante : le texte n'est pas copié dans le presse-papier"
 
-#: console.c:1018 graphapp/clipboard.c:54 graphapp/clipboard.c:80
+#: console.c:1018
+#: graphapp/clipboard.c:54
+#: graphapp/clipboard.c:80
 msgid "Unable to open the clipboard"
 msgstr "Impossible d'ouvrir le presse-papier"
 
@@ -32,7 +36,9 @@ msgstr "Impossible d'ouvrir le presse-papier"
 msgid "Insufficient memory. Please close the console"
 msgstr "Mémoire insuffisante. Veuillez refermer la console, s'il-vous-plait"
 
-#: console.c:1674 console.c:1727 preferences.c:274
+#: console.c:1674
+#: console.c:1727
+#: preferences.c:274
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -75,13 +81,11 @@ msgstr "  Déplacement du curseur : \n"
 
 #: console.c:1934
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr ""
-"     Flèche gauche ou Ctrl+B : se déplacer d'un caractère vers la gauche ;\n"
+msgstr "     Flèche gauche ou Ctrl+B : se déplacer d'un caractère vers la gauche ;\n"
 
 #: console.c:1935
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
-msgstr ""
-"     Flèche droite ou Ctrl+F : se déplacer d'un caractère vers la droite ;\n"
+msgstr "     Flèche droite ou Ctrl+F : se déplacer d'un caractère vers la droite ;\n"
 
 #: console.c:1936
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
@@ -108,11 +112,8 @@ msgid "     Backspace: delete preceding character;\n"
 msgstr "     Suppr. arrière: effacer le caractère précédent ;\n"
 
 #: console.c:1942
-msgid ""
-"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr ""
-"     Ctrl+Suppr ou Ctrl+K : effacer le texte du caractère sous le curseur "
-"jusqu'à la fin.\n"
+msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "     Ctrl+Suppr ou Ctrl+K : effacer le texte du caractère sous le curseur jusqu'à la fin.\n"
 
 #: console.c:1943
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -123,26 +124,16 @@ msgid "  Copy and paste.\n"
 msgstr "  Copier et coller.\n"
 
 #: console.c:1945
-msgid ""
-"     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr ""
-"     Utilisez la souris (bouton gauche enfoncé) pour marquer (sélectionner) "
-"du texte.\n"
+msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr "     Utilisez la souris (bouton gauche enfoncé) pour marquer (sélectionner) du texte.\n"
 
 #: console.c:1946
-msgid ""
-"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr ""
-"     Utilisez Shift+Suppr (ou Ctrl+C) pour copier le texte marqué dans le "
-"presse-papier et\n"
+msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr "     Utilisez Shift+Suppr (ou Ctrl+C) pour copier le texte marqué dans le presse-papier et\n"
 
 #: console.c:1947
-msgid ""
-"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
-"(if any)  \n"
-msgstr ""
-"     Shift+Ins (ou Ctrl+V ou Ctrl+Y) pour coller le contenu du presse-"
-"papier\n"
+msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
+msgstr "     Shift+Ins (ou Ctrl+V ou Ctrl+Y) pour coller le contenu du presse-papier\n"
 
 #: console.c:1948
 msgid "     to the console, Ctrl+X first copy then paste\n"
@@ -170,8 +161,7 @@ msgid ""
 "Note: Console is updated only when some input is required.\n"
 msgstr ""
 "\n"
-"Note: la console est mise-à-jour quand elle est prête à recevoir une "
-"commande.\n"
+"Note: la console est mise-à-jour quand elle est prête à recevoir une commande.\n"
 
 #: console.c:1954
 msgid ""
@@ -195,8 +185,7 @@ msgstr "Les raccourcis Windows standard sont utilisables pour activer\n"
 
 #: console.c:1957
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr ""
-"les périphériques graphiques (Ctrl+Tab ou Ctrl+F6 en MDI, Alt+Tab en SDI)"
+msgstr "les périphériques graphiques (Ctrl+Tab ou Ctrl+F6 en MDI, Alt+Tab en SDI)"
 
 #: dataentry.c:220
 msgid "invalid argument"
@@ -214,11 +203,13 @@ msgstr "périphérique incorrect"
 msgid "dataentry: internal memory problem"
 msgstr "dataentry : problème interne de mémoire"
 
-#: dataentry.c:623 dataentry.c:1117
+#: dataentry.c:623
+#: dataentry.c:1117
 msgid "dataentry: internal memory error"
 msgstr "dataentry : erreur interne de mémoire"
 
-#: dataentry.c:742 dataentry.c:755
+#: dataentry.c:742
+#: dataentry.c:755
 msgid "internal type error in dataentry"
 msgstr "erreur de type interne dans dataentry"
 
@@ -283,8 +274,7 @@ msgstr ""
 "\tPgHaut ou Ctrl+B : déplace vers le haut d'un écran\n"
 "\tDébut : déplace vers la cellule (1,1)\n"
 "\tFin : montre la dernière ligne de la dernière colonne.\n"
-"   Souris : clic gauche dans une cellule, utilisez les barres de "
-"défilement.\n"
+"   Souris : clic gauche dans une cellule, utilisez les barres de défilement.\n"
 "\n"
 "Edition.\n"
 "  Entrez votre donnée dans la cellule active\n"
@@ -297,7 +287,10 @@ msgstr ""
 "  Clic droit pour un menu copier, coller, dimensionnement auto\n"
 "\n"
 
-#: dataentry.c:1559 dataentry.c:1653 editor.c:730 rui.c:1061
+#: dataentry.c:1559
+#: dataentry.c:1653
+#: editor.c:730
+#: rui.c:1061
 msgid "Help"
 msgstr "Aide"
 
@@ -313,12 +306,17 @@ msgstr "Coller dans la cellule active"
 msgid "Autosize column"
 msgstr "Dimensionnement auto"
 
-#: dataentry.c:1565 pager.c:295 rui.c:782
+#: dataentry.c:1565
+#: pager.c:295
+#: rui.c:782
 #: ../library/grDevices/src/devWindows.c:1593
 msgid "Stay on top"
 msgstr "Rester au dessus"
 
-#: dataentry.c:1567 dataentry.c:1645 pager.c:297 pager.c:460
+#: dataentry.c:1567
+#: dataentry.c:1645
+#: pager.c:297
+#: pager.c:460
 msgid "Close"
 msgstr "Fermer"
 
@@ -326,12 +324,18 @@ msgstr "Fermer"
 msgid "Data Editor"
 msgstr "Editeur de données"
 
-#: dataentry.c:1643 editor.c:676 pager.c:452 rui.c:1010
+#: dataentry.c:1643
+#: editor.c:676
+#: pager.c:452
+#: rui.c:1010
 #: ../library/grDevices/src/devWindows.c:1538
 msgid "File"
 msgstr "Fichier"
 
-#: dataentry.c:1647 editor.c:694 pager.c:462 rui.c:1031
+#: dataentry.c:1647
+#: editor.c:694
+#: pager.c:462
+#: rui.c:1031
 msgid "Edit"
 msgstr "Edition"
 
@@ -355,7 +359,9 @@ msgstr "Largeur de cellules..."
 msgid "Data editor"
 msgstr "Editeur de données"
 
-#: editor.c:449 pager.c:172 pager.c:192
+#: editor.c:449
+#: pager.c:172
+#: pager.c:192
 msgid "No RGui console to paste to"
 msgstr "Pas de console RGui où coller"
 
@@ -381,60 +387,75 @@ msgstr "     Appuyez Ctrl-R\n"
 
 #: editor.c:558
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr ""
-"     Sélectionnez \"Exécuter la ligne ou sélection\" du menu \"Edition\"\n"
+msgstr "     Sélectionnez \"Exécuter la ligne ou sélection\" du menu \"Edition\"\n"
 
 #: editor.c:559
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr ""
-"     Enfoncez le bouton \"Exécuter la ligne ou sélection\" de la barre "
-"d'outils\n"
+msgstr "     Enfoncez le bouton \"Exécuter la ligne ou sélection\" de la barre d'outils\n"
 
 #: editor.c:560
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
+msgid "This will copy the selected commands to the console and evaluate them.\n"
 msgstr "Cela copie le code sélectionné et l'évalue dans la console\n"
 
 #: editor.c:561
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
-msgstr ""
-"S'il n'y a aucune sélection, la ligne courante est exécutée et le curseur\n"
+msgid "If there is no selection, this will just run the current line and advance\n"
+msgstr "S'il n'y a aucune sélection, la ligne courante est exécutée et le curseur\n"
 
 #: editor.c:562
 msgid "the cursor by one line.\n"
 msgstr "avance d'une ligne.\n"
 
-#: editor.c:574 editor.c:649 editor.c:710
+#: editor.c:574
+#: editor.c:649
+#: editor.c:710
 msgid "Run line or selection"
 msgstr "Exécuter la ligne ou sélection"
 
-#: editor.c:576 editor.c:695
+#: editor.c:576
+#: editor.c:695
 msgid "Undo"
 msgstr "Annuler"
 
-#: editor.c:578 editor.c:698
+#: editor.c:578
+#: editor.c:698
 msgid "Cut"
 msgstr "Couper"
 
-#: editor.c:579 editor.c:700 pager.c:290 pager.c:463 rui.c:772 rui.c:975
+#: editor.c:579
+#: editor.c:700
+#: pager.c:290
+#: pager.c:463
+#: rui.c:772
+#: rui.c:975
 #: rui.c:1032
 msgid "Copy"
 msgstr "Copier"
 
-#: editor.c:580 editor.c:702 rui.c:773 rui.c:979 rui.c:1033
+#: editor.c:580
+#: editor.c:702
+#: rui.c:773
+#: rui.c:979
+#: rui.c:1033
 msgid "Paste"
 msgstr "Coller"
 
-#: editor.c:581 editor.c:704
+#: editor.c:581
+#: editor.c:704
 msgid "Delete"
 msgstr "Effacer"
 
-#: editor.c:583 editor.c:706 pager.c:293 pager.c:469 rui.c:779 rui.c:1037
+#: editor.c:583
+#: editor.c:706
+#: pager.c:293
+#: pager.c:469
+#: rui.c:779
+#: rui.c:1037
 msgid "Select all"
 msgstr "Sélectionner tout"
 
-#: editor.c:641 pager.c:416 rui.c:963
+#: editor.c:641
+#: pager.c:416
+#: rui.c:963
 msgid "Open script"
 msgstr "Ouvrir un script"
 
@@ -442,7 +463,9 @@ msgstr "Ouvrir un script"
 msgid "Save script"
 msgstr "Sauver le script"
 
-#: editor.c:653 pager.c:436 ../library/grDevices/src/devWindows.c:1506
+#: editor.c:653
+#: pager.c:436
+#: ../library/grDevices/src/devWindows.c:1506
 msgid "Return focus to Console"
 msgstr "Activer la console"
 
@@ -450,16 +473,22 @@ msgstr "Activer la console"
 msgid "Print script"
 msgstr "Imprimer le script"
 
-#: editor.c:658 pager.c:431 rui.c:991
+#: editor.c:658
+#: pager.c:431
+#: rui.c:991
 #: ../library/grDevices/src/devWindows.c:1500
 msgid "Print"
 msgstr "Imprimer"
 
-#: editor.c:677 pager.c:453 rui.c:1012
+#: editor.c:677
+#: pager.c:453
+#: rui.c:1012
 msgid "New script"
 msgstr "Nouveau script"
 
-#: editor.c:679 pager.c:454 rui.c:1013
+#: editor.c:679
+#: pager.c:454
+#: rui.c:1013
 msgid "Open script..."
 msgstr "Ouvrir un script..."
 
@@ -471,7 +500,9 @@ msgstr "Sauver"
 msgid "Save as..."
 msgstr "Sauver sous..."
 
-#: editor.c:686 pager.c:455 rui.c:1026
+#: editor.c:686
+#: pager.c:455
+#: rui.c:1026
 #: ../library/grDevices/src/devWindows.c:1596
 msgid "Print..."
 msgstr "Imprimer..."
@@ -480,7 +511,8 @@ msgstr "Imprimer..."
 msgid "Close script"
 msgstr "Fermer le script"
 
-#: editor.c:708 rui.c:1038
+#: editor.c:708
+#: rui.c:1038
 msgid "Clear console"
 msgstr "Effacer la console"
 
@@ -496,7 +528,8 @@ msgstr "Rechercher..."
 msgid "Replace..."
 msgstr "Remplacer..."
 
-#: editor.c:720 rui.c:1042
+#: editor.c:720
+#: rui.c:1042
 msgid "GUI preferences..."
 msgstr "Préférences..."
 
@@ -516,12 +549,20 @@ msgstr "Impossible de créer la fenêtre d'édition"
 msgid "Untitled"
 msgstr "Sans titre"
 
-#: extra.c:817 preferences.c:790 graphapp/dialogs.c:505 graphapp/dialogs.c:600
+#: extra.c:817
+#: preferences.c:790
+#: graphapp/dialogs.c:505
+#: graphapp/dialogs.c:600
 msgid "OK"
 msgstr "OK"
 
-#: extra.c:818 preferences.c:791 graphapp/dialogs.c:479 graphapp/dialogs.c:503
-#: graphapp/dialogs.c:509 graphapp/dialogs.c:584 graphapp/dialogs.c:598
+#: extra.c:818
+#: preferences.c:791
+#: graphapp/dialogs.c:479
+#: graphapp/dialogs.c:503
+#: graphapp/dialogs.c:509
+#: graphapp/dialogs.c:584
+#: graphapp/dialogs.c:598
 #: graphapp/dialogs.c:604
 msgid "Cancel"
 msgstr "Annuler"
@@ -532,22 +573,30 @@ msgstr "Erreur à l'ouverture du fichier"
 
 #: pager.c:85
 msgid "Insufficient memory to display file in internal pager"
-msgstr ""
-"Mémoire insuffisante pour afficher le fichier dans un afficheur interne"
+msgstr "Mémoire insuffisante pour afficher le fichier dans un afficheur interne"
 
-#: pager.c:164 pager.c:176 pager.c:196 rui.c:226 rui.c:253
+#: pager.c:164
+#: pager.c:176
+#: pager.c:196
+#: rui.c:226
+#: rui.c:253
 msgid "No selection"
 msgstr "Pas de sélection"
 
-#: pager.c:291 pager.c:421 pager.c:465
+#: pager.c:291
+#: pager.c:421
+#: pager.c:465
 msgid "Paste to console"
 msgstr "Coller dans la console"
 
-#: pager.c:292 pager.c:426 pager.c:467
+#: pager.c:292
+#: pager.c:426
+#: pager.c:467
 msgid "Paste commands to console"
 msgstr "Coller les commandes dans la console"
 
-#: pager.c:457 rui.c:1027
+#: pager.c:457
+#: rui.c:1027
 msgid "Save to File..."
 msgstr "Sauver dans le fichier..."
 
@@ -585,9 +634,7 @@ msgstr ""
 
 #: preferences.c:316
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr ""
-"Les modifications dans la taille de l'afficheur ne seront pas appliquées aux "
-"afficheurs existants"
+msgstr "Les modifications dans la taille de l'afficheur ne seront pas appliquées aux afficheurs existants"
 
 #: preferences.c:322
 msgid ""
@@ -619,14 +666,12 @@ msgid "Apply"
 msgstr "Appliquer"
 
 #: preferences.c:788
-#, fuzzy
 msgid "Save..."
 msgstr "Sauver sous..."
 
 #: preferences.c:789
-#, fuzzy
 msgid "Load..."
-msgstr "Charger"
+msgstr "Charger..."
 
 #: rui.c:125
 msgid "Select file to source"
@@ -648,7 +693,8 @@ msgstr "Charger l'historique des commandes depuis"
 msgid "Save history in"
 msgstr "Sauver l'historique des commandes dans"
 
-#: rui.c:235 rui.c:244
+#: rui.c:235
+#: rui.c:244
 msgid "No text available"
 msgstr "Pas de texte disponible"
 
@@ -675,8 +721,7 @@ msgstr "Chercher dans l'aide"
 
 #: rui.c:507
 msgid "Search for words in help list archives and documentation"
-msgstr ""
-"Chercher des mots dans la documentation et les archives des listes d'aide"
+msgstr "Chercher des mots dans la documentation et les archives des listes d'aide"
 
 #: rui.c:522
 msgid "Apropos"
@@ -686,11 +731,13 @@ msgstr "A propos"
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "Glissez-déposez seulement des fichiers .R, .RData ou .rda"
 
-#: rui.c:774 rui.c:1034
+#: rui.c:774
+#: rui.c:1034
 msgid "Paste commands only"
 msgstr "Coller les commandes seulement"
 
-#: rui.c:775 rui.c:983
+#: rui.c:775
+#: rui.c:983
 msgid "Copy and paste"
 msgstr "Copier et coller"
 
@@ -698,7 +745,8 @@ msgstr "Copier et coller"
 msgid "Clear window"
 msgstr "Effacer la fenêtre"
 
-#: rui.c:781 rui.c:1050
+#: rui.c:781
+#: rui.c:1050
 msgid "Buffered output"
 msgstr "Sorties groupées"
 
@@ -738,7 +786,8 @@ msgstr "FAQ sur R"
 msgid "FAQ on R for &Windows"
 msgstr "FAQ sur R pour &Windows"
 
-#: rui.c:869 rui.c:872
+#: rui.c:869
+#: rui.c:872
 msgid "Manuals (in PDF)"
 msgstr "Manuels (en PDF)"
 
@@ -875,15 +924,19 @@ msgstr "le menu parent n'existe pas"
 msgid "failed to allocate menu"
 msgstr "erreur lors de la création du menu"
 
-#: rui.c:1279 rui.c:1400
+#: rui.c:1279
+#: rui.c:1400
 msgid "menu + item is limited to 1000 bytes"
 msgstr "menu + entrée est limité à 1000 bytes"
 
-#: rui.c:1287 rui.c:1369
+#: rui.c:1287
+#: rui.c:1369
 msgid "menu does not exist"
 msgstr "le menu n'existe pas"
 
-#: rui.c:1305 rui.c:1328 rui.c:1333
+#: rui.c:1305
+#: rui.c:1328
+#: rui.c:1333
 msgid "failed to allocate char storage"
 msgstr "l'allocation d'un espace de stockage de caratères a échoué"
 
@@ -903,11 +956,14 @@ msgstr "le menu ou l'entrée de menu n'existe pas"
 msgid "Save workspace image?"
 msgstr "Sauver une image de la session ?"
 
-#: graphapp/clipboard.c:70 graphapp/clipboard.c:74
+#: graphapp/clipboard.c:70
+#: graphapp/clipboard.c:74
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr "Mémoire insuffisante : cellule non copiée vers le presse-papier"
 
-#: graphapp/dialogs.c:135 graphapp/dialogs.c:152 graphapp/dialogs.c:169
+#: graphapp/dialogs.c:135
+#: graphapp/dialogs.c:152
+#: graphapp/dialogs.c:169
 msgid "Question"
 msgstr "Question"
 
@@ -924,7 +980,8 @@ msgstr "Impossible de spécifier '%s' comme répertoire courant"
 msgid "Choose a folder"
 msgstr "Choisissez un répertoire"
 
-#: graphapp/dialogs.c:492 graphapp/dialogs.c:494
+#: graphapp/dialogs.c:492
+#: graphapp/dialogs.c:494
 msgid "Browse"
 msgstr "Explorer"
 
@@ -936,7 +993,8 @@ msgstr "Utilisateur"
 msgid "Password"
 msgstr "Mot de passe"
 
-#: graphapp/dialogs.c:754 graphapp/dialogs.c:760
+#: graphapp/dialogs.c:754
+#: graphapp/dialogs.c:760
 #, c-format
 msgid "\"%s\" not found"
 msgstr "\"%s\" introuvable"
@@ -1195,6 +1253,6 @@ msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
 #, fuzzy
 #~ msgid "Stop all computations"
 #~ msgstr "Arrêter le calcul"
-
 #~ msgid "Select working directory"
 #~ msgstr "Sélectionnez le répertoire courant"
+

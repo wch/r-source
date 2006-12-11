@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-12-01 10:44+0000\n"
-"PO-Revision-Date: 2006-09-25 03:23-0800\n"
+"POT-Creation-Date: 2006-12-11 10:41+0000\n"
+"PO-Revision-Date: 2006-12-10 00:33-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -149,24 +149,24 @@ msgid "R_HOME not set"
 msgstr "R_HOME не установлен"
 
 #: src/gnuwin32/extra.c:249
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' not found"
-msgstr " не найден"
+msgstr "'%s' не найден"
 
 #: src/gnuwin32/extra.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "file association for '%s' not available or invalid"
-msgstr "время изменения файла в этой системе недоступно"
+msgstr "файловая связь '%s' не существует или неверна"
 
 #: src/gnuwin32/extra.c:254
 #, c-format
 msgid "access to '%s' denied"
-msgstr ""
+msgstr "в доступе к '%s' отказано"
 
 #: src/gnuwin32/extra.c:255
 #, c-format
 msgid "problem in displaying '%s'"
-msgstr ""
+msgstr "проблема при отображении '%s'"
 
 #: src/gnuwin32/extra.c:309
 msgid "unknown type"
@@ -544,9 +544,9 @@ msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "ВНИМАНИЕ: '%s' значение неправильное: пропущено\n"
 
 #: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: %s: too large and ignored\n"
-msgstr "ВНИМАНИЕ: %s=%lu'%c': слишком велико и пропущено\n"
+msgstr "ВНИМАНИЕ: %s: слишком велико и пропущено\n"
 
 #: src/main/CommandLineArgs.c:240
 msgid "WARNING: no value given for '--max-ppsize'\n"
@@ -729,7 +729,7 @@ msgstr "форматированная строка слишком длинна"
 msgid "invalid multibyte format string"
 msgstr "неправильная многобайтная строка"
 
-#: src/main/apply.c:42 src/main/complex.c:909
+#: src/main/apply.c:42 src/main/complex.c:916
 msgid "invalid length"
 msgstr "неправильная длина"
 
@@ -738,19 +738,16 @@ msgid "first argument is not a matrix"
 msgstr "первый аргумент не является матрицей"
 
 #: src/main/apply.c:195
-#, fuzzy
 msgid "invalid 'f' argument"
-msgstr "неправильный аргумент '%s'"
+msgstr "неправильный аргумент 'f'"
 
 #: src/main/apply.c:197
-#, fuzzy
 msgid "invalid 'classes' argument"
-msgstr "неправильный аргумент '%s'"
+msgstr "неправильный аргумент 'classes'"
 
 #: src/main/apply.c:200
-#, fuzzy
 msgid "invalid 'how' argument"
-msgstr "неправильный аргумент '%s'"
+msgstr "неправильный аргумент 'how'"
 
 #: src/main/arithmetic.c:195
 msgid "probable complete loss of accuracy in modulus"
@@ -1639,19 +1636,19 @@ msgstr "не разработанная комплексная операция"
 msgid "non-numeric argument to function"
 msgstr "нечисловой аргумент аргумент для функции"
 
-#: src/main/complex.c:826 src/main/complex.c:898
+#: src/main/complex.c:833 src/main/complex.c:905
 msgid "unimplemented complex function"
 msgstr "не разработанная комплексная функция"
 
-#: src/main/complex.c:963
+#: src/main/complex.c:970
 msgid "polynomial degree too high (49 max)"
 msgstr "степень многочлена слишком высока ( <= 49 )"
 
-#: src/main/complex.c:976
+#: src/main/complex.c:983
 msgid "invalid polynomial coefficient"
 msgstr "неправильный коэффициент многочлена"
 
-#: src/main/complex.c:981
+#: src/main/complex.c:988
 msgid "root finding code failed"
 msgstr "ошибка кода нахождения корня"
 
@@ -5759,9 +5756,8 @@ msgstr ""
 "нужен R %d.%d.%d или более новый"
 
 #: src/main/serialize.c:1585
-#, fuzzy
 msgid "read failed"
-msgstr "чтение 'XDR' не удалось"
+msgstr "чтение не удалось"
 
 #: src/main/serialize.c:1641 src/main/serialize.c:1654
 msgid "error reading from connection"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2006-12-01 10:45\n"
-"PO-Revision-Date: 2006-04-18 09:04+0100\n"
+"PO-Revision-Date: 2006-12-05 21:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,8 +54,7 @@ msgid "Try running R in a single-byte locale."
 msgstr "Essayez de lancer R dans un environnement linguistique uni-octet"
 
 msgid "more than one syntax specification found, using the first one"
-msgstr ""
-"plusieurs spécifications de syntaxe possibles ; la première est utilisée"
+msgstr "plusieurs spécifications de syntaxe possibles ; la première est utilisée"
 
 msgid "object '%s' does not have class \"SweaveSyntax\""
 msgstr "l'objet '%s' n'est pas de la classe \"SweaveSyntax\""
@@ -110,31 +109,25 @@ msgid "no date field in DESCRIPTION file of package '%s'"
 msgstr "pas de champ date dans le fichier DESCRIPTION du package '%s'"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
-msgstr ""
-"impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
+msgstr "impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
 
 msgid "m < 0"
-msgstr ""
+msgstr "m < 0"
 
 msgid "n < m"
-msgstr ""
+msgstr "n < m"
 
-#, fuzzy
 msgid "'FUN' must be a function or NULL"
-msgstr "'package' doit être une chaîne de caratcères ou NULL"
+msgstr "'FUN' doit être une fonction ou NULL"
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package' doit être une chaîne de caratcères ou NULL"
 
 msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr ""
-"les jeux de données ont été transférés du package 'base' au package "
-"'datasets'"
+msgstr "les jeux de données ont été transférés du package 'base' au package 'datasets'"
 
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr ""
-"les jeux de données ont été transférés du package 'stats' au package "
-"'datasets'"
+msgstr "les jeux de données ont été transférés du package 'stats' au package 'datasets'"
 
 msgid "data index for package '%s' is invalid and will be ignored"
 msgstr "l'index de données pour le package '%s' est incorrect et sera ignoré"
@@ -188,9 +181,7 @@ msgid "Enter an environment number, or 0 to exit"
 msgstr "Entrer un numéro d'environnement, ou 0 pour sortir"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
-msgstr ""
-"appel de recover non-interactif ; frames enregistrés, utiliser debugger() "
-"pour les visualiser"
+msgstr "appel de recover non-interactif ; frames enregistrés, utiliser debugger() pour les visualiser"
 
 msgid "No suitable frames for recover()"
 msgstr "Aucun frame ne convient pour recover()"
@@ -221,8 +212,7 @@ msgid "added factor levels in '%s'"
 msgstr "niveaux de facteur ajoutés dans '%s'"
 
 msgid "edited row names contain duplicates and will be ignored"
-msgstr ""
-"les noms de lignes modifiés contiennent des doublons et ils seront ignorés"
+msgstr "les noms de lignes modifiés contiennent des doublons et ils seront ignorés"
 
 msgid "invalid input matrix"
 msgstr "matrice d'entrée incorrecte"
@@ -240,19 +230,13 @@ msgid "'fix' requires a name"
 msgstr "'fix' necessite un nom"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
-msgstr ""
-"Aucune documentation pour '%s' n'a été trouvée dans les packages et les "
-"bibliothèques :"
+msgstr "Aucune documentation pour '%s' n'a été trouvée dans les packages et les bibliothèques :"
 
 msgid "you could try 'help.search(\"%s\")'"
 msgstr "vous pourriez essayer 'help.search(\"%s\")'"
 
-msgid ""
-"Help for topic '%s' is not in any loaded package but can be found in the "
-"following packages:"
-msgstr ""
-"L'aide sur le thème '%s' n'est dans aucun des packages chargés mais peut "
-"être trouvée dans les packages suivants :"
+msgid "Help for topic '%s' is not in any loaded package but can be found in the following packages:"
+msgstr "L'aide sur le thème '%s' n'est dans aucun des packages chargés mais peut être trouvée dans les packages suivants :"
 
 msgid "Package"
 msgstr "Package"
@@ -264,7 +248,7 @@ msgid "Help on topic '%s' was found in the following packages:"
 msgstr "L'aide sur le thème '%s' a été trouvée dans les packages suivants :"
 
 msgid "Choose one"
-msgstr ""
+msgstr "Choisissez un item"
 
 msgid "Using the first match ..."
 msgstr "Utilisation de la première correspondance ..."
@@ -325,16 +309,13 @@ msgid "could not find package '%s'"
 msgstr "impossible de trouver le packages '%s'"
 
 msgid "no hsearch.rds meta data for package"
-msgstr ""
+msgstr "pas de métadonnées hsearch.rds pour le package"
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr ""
-"suppression de toutes les entrées ayant des données de type caractère multi-"
-"octets incorrectes"
+msgstr "suppression de toutes les entrées ayant des données de type caractère multi-octets incorrectes"
 
-msgid ""
-"no information in the data base for package '%s': need 'rebuild = TRUE'?"
-msgstr ""
+msgid "no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgstr "pas d'information dans la base de données pour le package '%s' : faut-il 'rebuild = TRUE' ?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "spécification 'agrep' incorrecte"
@@ -342,14 +323,11 @@ msgstr "spécification 'agrep' incorrecte"
 msgid "no package '%s' was found"
 msgstr "le package '%s' est introuvable"
 
-#, fuzzy
 msgid "DESCRIPTION file of package '%s' is corrupt"
-msgstr "le fichier DESCRIPTION du package '%s' est manquant ou incorrect"
+msgstr "le fichier DESCRIPTION du package '%s' est incorrect"
 
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
-msgstr ""
-"le fichier 'DESCRIPTION' a un champ 'Encoding' et le réencodage est "
-"impossible"
+msgstr "le fichier 'DESCRIPTION' a un champ 'Encoding' et le réencodage est impossible"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "le fichier DESCRIPTION du package '%s' est manquant ou incorrect"
@@ -361,8 +339,7 @@ msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Entrer un des items du menu, ou 0 pour sortir"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
-msgstr ""
-"'%s' est une fonction générique formelle ; probablement pas de méthode S3"
+msgstr "'%s' est une fonction générique formelle ; probablement pas de méthode S3"
 
 msgid "no function '%s' is visible"
 msgstr "aucune fonction '%s' n'est visible"
@@ -394,54 +371,50 @@ msgstr "seuls les indices numériques peuvent être utilisés"
 msgid "cannot create directory '%s'"
 msgstr "impossible de créer le répertoire '%s'"
 
-#, fuzzy
 msgid "'code_files' should be a character vector"
-msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
+msgstr "'code_files' devrait être un vecteur de type caractère"
 
 msgid "'list' should be a character vector naming R objects"
 msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
 
 msgid "'namespace' should be a single logical"
-msgstr ""
+msgstr "'namespace' doit être une valeur logique unique"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr ""
-"impossible the transformer les caractères spécifiques de la localisation via "
-"LC_TYPE"
+msgstr "impossible the transformer les caractères spécifiques de la localisation via LC_TYPE"
 
 msgid "no R objects specified or available"
 msgstr "aucun objet R spécifié ou disponible"
 
 msgid "Creating directories ..."
-msgstr ""
+msgstr "Création des répertoires..."
 
 msgid "directory '%s' already exists"
 msgstr "le répertoire '%s' existe déjà"
 
 msgid "Creating DESCRIPTION ..."
-msgstr ""
+msgstr "Création de DESCRIPTION..."
 
 msgid "Creating NAMESPACE ..."
-msgstr ""
+msgstr "Création de NAMESPACE..."
 
 msgid "Creating Read-and-delete-me ..."
-msgstr ""
+msgstr "Création de 'Read-and-delete-me'..."
 
 msgid "Saving functions and data ..."
-msgstr ""
+msgstr "Sauvegarde des fonctions et des données..."
 
 msgid "Copying code files ..."
-msgstr ""
+msgstr "Recopiage des fichiers de code..."
 
-#, fuzzy
 msgid "Making help files ..."
-msgstr "Utilisation de la première correspondance ..."
+msgstr "Création des fichiers d'aide ..."
 
 msgid "Done."
-msgstr ""
+msgstr "Terminé."
 
 msgid "Further steps are described in '%s'."
-msgstr ""
+msgstr "Les étapes suivantes sont décrites dans '%s'."
 
 msgid "unable to access index for repository %s"
 msgstr "impossible d'accéder à l'index de l'entrepôt %s"
@@ -504,12 +477,10 @@ msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
 
 msgid "cannot install MacOS X binary packages on this plaform"
-msgstr ""
-"impossible d'installer les packages MacOS X binaire sur cette architecture"
+msgstr "impossible d'installer les packages MacOS X binaire sur cette architecture"
 
 msgid "cannot install Windows binary packages on this plaform"
-msgstr ""
-"impossible d'installer les packages Windows binaire sur cette architecture"
+msgstr "impossible d'installer les packages Windows binaire sur cette architecture"
 
 msgid ""
 "This version of R is not set up to install source packages\n"
@@ -565,19 +536,14 @@ msgstr "titre du package"
 msgid "A concise (1-5 lines) description of the package"
 msgstr "Description concise (1-5 lignes) du package"
 
-msgid ""
-"An overview of how to use the package, including the most important functions"
-msgstr ""
-"Une vue d'ensemble montrant comment utiliser le package, y compris ses "
-"fonctions les plus importantes"
+msgid "An overview of how to use the package, including the most important functions"
+msgstr "Une vue d'ensemble montrant comment utiliser le package, y compris ses fonctions les plus importantes"
 
 msgid "The author and/or maintainer of the package"
 msgstr "L'auteur et/ou la personne responsable du package"
 
 msgid "Literature or other references for background information"
-msgstr ""
-"Références bibliographiques ou autre références pour de l'information "
-"générale"
+msgstr "Références bibliographiques ou autre références pour de l'information générale"
 
 msgid "Optional links to other man pages, e.g."
 msgstr "Liens valides vers d'autres pages de manuel, par exemple"
@@ -585,33 +551,20 @@ msgstr "Liens valides vers d'autres pages de manuel, par exemple"
 msgid "simple examples of the most important functions"
 msgstr "exemples simples des fonctions les plus importantes"
 
-msgid ""
-"Optionally other standard keywords, one per line, from file KEYWORDS in the "
-"R documentation directory"
-msgstr ""
+msgid "Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory"
+msgstr "Eventuellement d'autres mots clés, un par ligne, issus du fichier KEYWORDS du répertoire documentation de R"
 
-msgid ""
-"no documentation of type '%s' and topic '%s' (or error in processing help)"
-msgstr ""
-"pas de documentation de type '%s' et de thème '%s' (ou erreur de traitement "
-"de l'aide)"
+msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"
+msgstr "pas de documentation de type '%s' et de thème '%s' (ou erreur de traitement de l'aide)"
 
-msgid ""
-"the object of class \"%s\" in the function call '%s' could not be used as a "
-"documentation topic"
-msgstr ""
-"l'objet de la classe \"%s\" dans l'appel de fonction '%s' n'a pas pu être "
-"utilisé comme thème de documentation"
+msgid "the object of class \"%s\" in the function call '%s' could not be used as a documentation topic"
+msgstr "l'objet de la classe \"%s\" dans l'appel de fonction '%s' n'a pas pu être utilisé comme thème de documentation"
 
 msgid "no methods for '%s' and no documentation for it as a function"
-msgstr ""
-"aucune méthode pour '%s' et aucune documentation à son sujet en tant que "
-"fonction"
+msgstr "aucune méthode pour '%s' et aucune documentation à son sujet en tant que fonction"
 
 msgid "error in trying to evaluate the expression for argument '%s' (%s)"
-msgstr ""
-"erreur lors de la tentative d'évaluation d'expression pour l'argument '%s' (%"
-"s)"
+msgstr "erreur lors de la tentative d'évaluation d'expression pour l'argument '%s' (%s)"
 
 msgid "no method defined for function '%s' and signature '%s'"
 msgstr "aucune méthode définie pour la fonction '%s' et pour la signature '%s'"
@@ -620,47 +573,46 @@ msgid "no documentation for function '%s' and signature '%s'"
 msgstr "pas de documentation pour la fonction '%s' et pour la signature '%s'"
 
 msgid "No DIF data on clipboard"
-msgstr ""
+msgstr "Pas de données DIF dans le presse-papier"
 
 msgid "row and column counts not found"
-msgstr ""
+msgstr "nombres de lignes et de colonnes non trouvés"
 
 msgid "Unrecognized special data value"
-msgstr ""
+msgstr "Valeur spéciale de données non reconnue"
 
 msgid "Unrecognized value indicator"
-msgstr ""
+msgstr "Indicateur de données non reconnu"
 
 msgid "no lines available in input"
-msgstr ""
+msgstr "pas de lignes disponibles dans l'entrée"
 
 msgid "header and 'col.names' are of different lengths"
-msgstr ""
+msgstr "l'entête et 'col.names' sont de longueurs différentes"
 
 msgid "more columns than column names"
-msgstr ""
+msgstr "plus de colonnes que de noms de colonnes"
 
 msgid "more column names than columns"
-msgstr ""
+msgstr "plus de noms de colonnes que de colonnes disponibles"
 
 msgid "rows are empty: giving up"
-msgstr ""
+msgstr "les lignes sont vides : abandon"
 
 msgid "not all columns named in 'colClasses' exist"
-msgstr ""
+msgstr "certains des noms de colonnes dans 'colClasses' sont introuvables"
 
 msgid "invalid numeric 'as.is' expression"
-msgstr ""
+msgstr "expression numérique 'as.is' incorrecte"
 
 msgid "not all columns named in 'as.is' exist"
-msgstr ""
+msgstr "certaines des colonnes nommées dans 'as.is' sont introuvables"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr ""
+msgstr "'as.is' de longueur incorrecte %d != cols = %d"
 
-#, fuzzy
 msgid "invalid 'row.names' specification"
-msgstr "spécification 'agrep' incorrecte"
+msgstr "spécification de 'row.names' incorrecte"
 
 msgid "missing lengths for some fields"
 msgstr "longueur manquante pour certains champs"
@@ -671,19 +623,17 @@ msgstr "format incorrect"
 msgid "last record incomplete, %d lines discarded"
 msgstr "dernier enregistrement incomplet, %d lignes ignorées"
 
-#, fuzzy
 msgid "'file' must be a character string or connection"
-msgstr "'package' doit être une chaîne de caratcères ou NULL"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
 
 msgid "transfer failure"
 msgstr "erreur de transfert"
 
 msgid "HTTPUserAgent"
-msgstr ""
+msgstr "HTTPUserAgent"
 
-#, fuzzy
 msgid "option must be a length one character vector or NULL"
-msgstr "'package' doit être une chaîne de caratcères ou NULL"
+msgstr "'option' doit être une chaîne de caractères ou NULL"
 
 msgid "invalid 'socket' argument"
 msgstr "argument 'socket' incorrect"
@@ -704,7 +654,7 @@ msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame() appelé avec un non data.frame -- forçage du type"
 
 msgid "invalid options('str') -- using defaults instead"
-msgstr ""
+msgstr "options('str') incorrecte -- utilisation de la valeur par défaut"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object' n'a pas d'attribut levels() correct"
@@ -712,19 +662,17 @@ msgstr "'object' n'a pas d'attribut levels() correct"
 msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le' est NA"
 
-#, fuzzy
 msgid "profile does not contain memory information"
-msgstr "impossible de restaurer l'information de type"
+msgstr "'profile' ne contient pas d'information sur la mémoire"
 
 msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
 
-#, fuzzy
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
 msgstr ""
-"la vignette '%d' a été trouvée plusieurs fois,\n"
+"la vignette '%s' a été trouvée plusieurs fois,\n"
 "utilisation de celle trouvée dans '%s'"
 
 msgid "vignette '%s' *not* found"
@@ -757,23 +705,14 @@ msgstr "options(\"browser\") non fixée"
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
 
-msgid ""
-"Changing the default browser (as specified by the 'browser' option) to the "
-"given browser so that it gets used for all future help requests."
-msgstr ""
-"Changement du navigateur par défaut (spécifié dans l'option 'brower') pour "
-"ce navigateur de façon qu'il soit utilisé dans toutes les requêtes d'aide "
-"futures"
+msgid "Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests."
+msgstr "Changement du navigateur par défaut (spécifié dans l'option 'brower') pour ce navigateur de façon qu'il soit utilisé dans toutes les requêtes d'aide futures"
 
 msgid "Making links in per-session dir ..."
 msgstr "Création des liens dans le répertoire de session..."
 
-msgid ""
-"If '%s' is already running, it is *not* restarted, and you must switch to "
-"its window."
-msgstr ""
-"Si '%s' est déjà lancé, il ne sera pas relancé, et vous devez passer à sa "
-"fenêtre."
+msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
+msgstr "Si '%s' est déjà lancé, il ne sera pas relancé, et vous devez passer à sa fenêtre."
 
 msgid "Otherwise, be patient ..."
 msgstr "Sinon, soyez patient..."
@@ -791,10 +730,10 @@ msgid "cannot create HTML search index"
 msgstr "impossible de créer l'index HTML de recherche"
 
 msgid "'memory.size()' is Windows-specific"
-msgstr ""
+msgstr "'memory.size()' est spécifique à Windows"
 
 msgid "'memory.limit()' is Windows-specific"
-msgstr ""
+msgstr "'memory.limit()' est spécifique à Windows"
 
 msgid "unable to find the HTML help"
 msgstr "aide HTML introuvable"
@@ -812,17 +751,13 @@ msgid "unable to create temporary directory '%s'"
 msgstr "impossible de créer le répertoire temporaire '%s'"
 
 msgid "package '%s' successfully unpacked and MD5 sums checked"
-msgstr ""
-"le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
-"succés"
+msgstr "le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec succés"
 
 msgid "malformed bundle DESCRIPTION file, no Contains field"
 msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"
 
 msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr ""
-"le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
-"succès"
+msgstr "le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec succès"
 
 msgid "failed to create '%s'"
 msgstr "la création de '%s' a échoué"
@@ -875,8 +810,8 @@ msgstr[1] "installation des dépendances "
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
-msgstr[1] ""
-"les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+msgstr[1] "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "Eventuellement d'autres mots clefs de doc/KEYWORDS, un par line"
+
