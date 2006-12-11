@@ -64,7 +64,7 @@ t.data.frame <- function(x) {
 dim.data.frame <- function(x)
     c(abs(.Call("R_shortRowNames", x, PACKAGE = "base")), length(x))
 
-dimnames.data.frame <- function(x, maybeNULL = FALSE)
+dimnames.data.frame <- function(x, maybeNULL = FALSE, ...)
     list(if(maybeNULL && .Call("R_shortRowNames", x, PACKAGE = "base") >= 0)
          NULL else row.names(x),
 	 names(x))

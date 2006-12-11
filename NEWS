@@ -15,8 +15,14 @@ USER-VISIBLE CHANGES
 
     o	abs(<integer>) now returns integer [experimental, as of 2006-12-08]
 
+    o	The dimnames() generic function has a new argument '...', see also
+	below.
+
     o	as.matrix(<data frame with trivial rownames>) now has NULL
-	rownames.
+	rownames.  Consequently, e.g., t(.) for such data frames has NULL
+	column names.  This change leads to memory reductions in several
+	places, but can break code which assumes character
+	dimnames for such data frame derived matrices.
 
 
 NEW FEATURES
@@ -135,12 +141,13 @@ NEW FEATURES
 	names; consequently, dim.data.frame() has become very fast for
 	large such data frames.
 
-    o	dimnames.data.frame() has a new argument 'maybeNULL = FALSE'
-	which allows dimnames(<dframe>, maybeNULL = TRUE) to return
+    o	dimnames.data.frame() has a new argument 'maybeNULL = FALSE' which
+	allows dimnames(<dframe>, maybeNULL = TRUE) to return
 	list(NULL, <whatever>), with dramatical memory saving for large
 	data frames with trivial row names.
+	Consequently, it and the dimnames() generic now also have a '...' argument.
 	We plan to add "maybeNULL = TRUE" in quite a few places in order to
-	increase memory efficiency (with loss of strict backward compatibility)
+	increase memory efficiency (with loss of strict backward compatibility).
 
 
 DEPRECATED & DEFUNCT
