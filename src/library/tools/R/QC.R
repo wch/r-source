@@ -3182,7 +3182,7 @@ function(package, dir, lib.loc = NULL)
         lapply(unlist(.get_standard_package_names()[c("base",
                                                       "recommended")],
                       use.names = FALSE),
-               Rd_aliases, lib.loc = .Library)
+               Rd_aliases, lib.loc = NULL)
 
     ## Add the aliases from the package itself, and build a db with all
     ## \link xrefs in the package Rd objects.
