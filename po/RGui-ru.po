@@ -3,14 +3,13 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the R package.
 # Alexey Shipunov <iit512@yandex.ru> 2005
-# This is a CRLF file as I cannot safely convert it-BDR
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2006-12-01 16:37+0000\n"
-"PO-Revision-Date: 2006-09-25 02:50-0800\n"
+"PO-Revision-Date: 2006-12-04 06:14-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -630,14 +629,12 @@ msgid "Apply"
 msgstr "Применить"
 
 #: preferences.c:788
-#, fuzzy
 msgid "Save..."
-msgstr "Сохранить как..."
+msgstr "Сохранить..."
 
 #: preferences.c:789
-#, fuzzy
 msgid "Load..."
-msgstr "Загрузить"
+msgstr "Загрузить..."
 
 #: rui.c:125
 msgid "Select file to source"

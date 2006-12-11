@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-07-18 13:23\n"
-"PO-Revision-Date: 2005-12-07 00:21+0100\n"
+"POT-Creation-Date: 2006-09-22 12:35\n"
+"PO-Revision-Date: 2006-12-05 20:48+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,9 +28,9 @@ msgstr "impossible d'imposer la taille d'un tableau Tcl"
 msgid "Tcl package '%s' not found"
 msgstr "le package Tcl '%s' est introuvable"
 
-#, fuzzy
 msgid "Tcl/Tk support is not available on this system"
-msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
+msgstr "Tcl/Tk n'est pas supporté sur ce système"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
+

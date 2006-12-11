@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
-"PO-Revision-Date: 2006-04-18 09:04+0100\n"
+"POT-Creation-Date: 2006-12-11 10:50\n"
+"PO-Revision-Date: 2006-12-05 21:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -122,14 +122,13 @@ msgstr ""
 "impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
 
 msgid "m < 0"
-msgstr ""
+msgstr "m < 0"
 
 msgid "n < m"
-msgstr ""
+msgstr "n < m"
 
-#, fuzzy
 msgid "'FUN' must be a function or NULL"
-msgstr "'package' doit être une chaîne de caratcères ou NULL"
+msgstr "'FUN' doit être une fonction ou NULL"
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package' doit être une chaîne de caratcères ou NULL"
@@ -258,7 +257,7 @@ msgid "too many list items (at most up to number 3899)"
 msgstr ""
 
 msgid "'form' must be a two-sided formula"
-msgstr "'form' doit être une formule ayant des membres à gauche et à droite"
+msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -285,7 +284,7 @@ msgid "Help on topic '%s' was found in the following packages:"
 msgstr "L'aide sur le thème '%s' a été trouvée dans les packages suivants :"
 
 msgid "Choose one"
-msgstr ""
+msgstr "Choisissez un item"
 
 msgid "Using the first match ..."
 msgstr "Utilisation de la première correspondance ..."
@@ -346,7 +345,7 @@ msgid "could not find package '%s'"
 msgstr "impossible de trouver le packages '%s'"
 
 msgid "no hsearch.rds meta data for package"
-msgstr ""
+msgstr "pas de métadonnées hsearch.rds pour le package"
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr ""
@@ -356,12 +355,17 @@ msgstr ""
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
 msgstr ""
+"pas d'information dans la base de données pour le package '%s' : faut-il "
+"'rebuild = TRUE' ?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "spécification 'agrep' incorrecte"
 
 msgid "no package '%s' was found"
 msgstr "le package '%s' est introuvable"
+
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr "le fichier DESCRIPTION du package '%s' est incorrect"
 
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
 msgstr ""
@@ -411,15 +415,14 @@ msgstr "seuls les indices numériques peuvent être utilisés"
 msgid "cannot create directory '%s'"
 msgstr "impossible de créer le répertoire '%s'"
 
-#, fuzzy
 msgid "'code_files' should be a character vector"
-msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
+msgstr "'code_files' devrait être un vecteur de type caractère"
 
 msgid "'list' should be a character vector naming R objects"
 msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
 
 msgid "'namespace' should be a single logical"
-msgstr ""
+msgstr "'namespace' doit être une valeur logique unique"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr ""
@@ -430,35 +433,34 @@ msgid "no R objects specified or available"
 msgstr "aucun objet R spécifié ou disponible"
 
 msgid "Creating directories ..."
-msgstr ""
+msgstr "Création des répertoires..."
 
 msgid "directory '%s' already exists"
 msgstr "le répertoire '%s' existe déjà"
 
 msgid "Creating DESCRIPTION ..."
-msgstr ""
+msgstr "Création de DESCRIPTION..."
 
 msgid "Creating NAMESPACE ..."
-msgstr ""
+msgstr "Création de NAMESPACE..."
 
 msgid "Creating Read-and-delete-me ..."
-msgstr ""
+msgstr "Création de 'Read-and-delete-me'..."
 
 msgid "Saving functions and data ..."
-msgstr ""
+msgstr "Sauvegarde des fonctions et des données..."
 
 msgid "Copying code files ..."
-msgstr ""
+msgstr "Recopiage des fichiers de code..."
 
-#, fuzzy
 msgid "Making help files ..."
-msgstr "Utilisation de la première correspondance ..."
+msgstr "Création des fichiers d'aide ..."
 
 msgid "Done."
-msgstr ""
+msgstr "Terminé."
 
 msgid "Further steps are described in '%s'."
-msgstr ""
+msgstr "Les étapes suivantes sont décrites dans '%s'."
 
 msgid "unable to access index for repository %s"
 msgstr "impossible d'accéder à l'index de l'entrepôt %s"
@@ -606,6 +608,8 @@ msgid ""
 "Optionally other standard keywords, one per line, from file KEYWORDS in the "
 "R documentation directory"
 msgstr ""
+"Eventuellement d'autres mots clés, un par ligne, issus du fichier KEYWORDS "
+"du répertoire documentation de R"
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
@@ -637,44 +641,43 @@ msgid "no documentation for function '%s' and signature '%s'"
 msgstr "pas de documentation pour la fonction '%s' et pour la signature '%s'"
 
 msgid "No DIF data on clipboard"
-msgstr ""
+msgstr "Pas de données DIF dans le presse-papier"
 
 msgid "row and column counts not found"
-msgstr ""
+msgstr "nombres de lignes et de colonnes non trouvés"
 
 msgid "Unrecognized special data value"
-msgstr ""
+msgstr "Valeur spéciale de données non reconnue"
 
 msgid "Unrecognized value indicator"
-msgstr ""
+msgstr "Indicateur de données non reconnu"
 
 msgid "no lines available in input"
-msgstr "aucune ligne disponible depuis l'entrée"
+msgstr "pas de lignes disponibles dans l'entrée"
 
 msgid "header and 'col.names' are of different lengths"
-msgstr "l'entête et 'col.names' n'ont pas la même longueur"
+msgstr "l'entête et 'col.names' sont de longueurs différentes"
 
 msgid "more columns than column names"
 msgstr "plus de colonnes que de noms de colonnes"
 
 msgid "more column names than columns"
-msgstr "plus de noms de colonnes que de colonnes"
+msgstr "plus de noms de colonnes que de colonnes disponibles"
 
-#, fuzzy
 msgid "rows are empty: giving up"
-msgstr "les cinq premières lignes sont vides : abandon"
+msgstr "les lignes sont vides : abandon"
 
 msgid "not all columns named in 'colClasses' exist"
-msgstr "certaines des colonnes nommées dans 'colClasses' n'existent pas"
+msgstr "certains des noms de colonnes dans 'colClasses' sont introuvables"
 
 msgid "invalid numeric 'as.is' expression"
-msgstr "expression 'as.is' numérique incorrecte"
+msgstr "expression numérique 'as.is' incorrecte"
 
 msgid "not all columns named in 'as.is' exist"
-msgstr "certaines des colonnes nommées dans 'as.is' n'existent pas"
+msgstr "certaines des colonnes nommées dans 'as.is' sont introuvables"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is' n'a pas la bonne longueur %d != cols = %d"
+msgstr "'as.is' de longueur incorrecte %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "spécification de 'row.names' incorrecte"
@@ -688,25 +691,24 @@ msgstr "format incorrect"
 msgid "last record incomplete, %d lines discarded"
 msgstr "dernier enregistrement incomplet, %d lignes ignorées"
 
-#, fuzzy
 msgid "'file' must be a character string or connection"
-msgstr "'package' doit être une chaîne de caratcères ou NULL"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
 
 msgid "transfer failure"
 msgstr "erreur de transfert"
 
 msgid "HTTPUserAgent"
+msgstr "HTTPUserAgent"
+
+msgid "option must be a length one character vector or NULL"
+msgstr "'option' doit être une chaîne de caractères ou NULL"
+
+msgid "empty beginning of file"
 msgstr ""
 
 #, fuzzy
-msgid "option must be a length one character vector or NULL"
-msgstr "'package' doit être une chaîne de caratcères ou NULL"
-
-msgid "empty beginning of file"
-msgstr "début de fichier vide"
-
 msgid "first five rows are empty: giving up"
-msgstr "les cinq premières lignes sont vides : abandon"
+msgstr "les lignes sont vides : abandon"
 
 msgid "cannot coerce 'x' to roman"
 msgstr ""
@@ -733,7 +735,7 @@ msgid "str.data.frame() called with non-data.frame -- coercing to one."
 msgstr "str.data.frame() appelé avec un non data.frame -- forçage du type"
 
 msgid "invalid options('str') -- using defaults instead"
-msgstr ""
+msgstr "options('str') incorrecte -- utilisation de la valeur par défaut"
 
 msgid "'object' does not have valid levels()"
 msgstr "'object' n'a pas d'attribut levels() correct"
@@ -741,9 +743,8 @@ msgstr "'object' n'a pas d'attribut levels() correct"
 msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le' est NA"
 
-#, fuzzy
 msgid "profile does not contain memory information"
-msgstr "impossible de restaurer l'information de type"
+msgstr "'profile' ne contient pas d'information sur la mémoire"
 
 msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
@@ -774,22 +775,24 @@ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
 msgstr ""
 
 msgid "invalid numbers in 'quote'"
-msgstr "nombres incorrects dans 'quote'"
+msgstr ""
 
+#, fuzzy
 msgid "invalid 'quote' specification"
-msgstr "spécification de 'quote' incorrecte"
+msgstr "spécification de 'row.names' incorrecte"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "col.names = NA n'a pas de sens lorsque row.names = FALSE"
+msgstr ""
 
+#, fuzzy
 msgid "invalid 'col.names' specification"
-msgstr "spécification de 'col.names' incorrecte"
+msgstr "spécification de 'row.names' incorrecte"
 
 msgid "appending column names to file"
-msgstr "ajout des noms de colonnes dans le fichier"
+msgstr ""
 
 msgid "attempt to change '%s' ignored"
-msgstr "tentative de modification de '%s' ignorée"
+msgstr ""
 
 msgid "'subject' missing"
 msgstr "'subject' manquant"
@@ -842,10 +845,10 @@ msgid "cannot create HTML search index"
 msgstr "impossible de créer l'index HTML de recherche"
 
 msgid "'memory.size()' is Windows-specific"
-msgstr ""
+msgstr "'memory.size()' est spécifique à Windows"
 
 msgid "'memory.limit()' is Windows-specific"
-msgstr ""
+msgstr "'memory.limit()' est spécifique à Windows"
 
 msgid "unable to find the HTML help"
 msgstr "aide HTML introuvable"
@@ -928,3 +931,6 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+#~ msgstr "Eventuellement d'autres mots clefs de doc/KEYWORDS, un par line"

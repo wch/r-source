@@ -1,245 +1,251 @@
-# Chinese translations for R package
-# Copyright (C) 2005 The R Foundation
-# This file is distributed under the same license as the PACKAGE package.
-# И≥┬Ф√░ <feic@avaya.com>, 2006.
-# 
+# Russian translations for R
+# Русский перевод для R
+#
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# Alexey Shipunov <iit512@yandex.ru> 2006
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2006-12-11 10:50\n"
-"PO-Revision-Date: 2005-12-16 00:00+GMT\n"
-"Last-Translator: И≥┬Ф√░ <FeiChen@FairIsaac.com>\n"
-"Language-Team: Chinese\n"
+"PO-Revision-Date: 2006-12-10 02:40-0800\n"
+"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Russian\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #, fuzzy
 msgid "no documentation for '%s' found in package '%s'"
-msgstr "Е┤╫Ф∙╟'%s'Е▓▄Г╟╫Г╫╡'%s'Ф╡║Ф°┴Е╦╝Е┼╘Ф√┤Д╩╤"
+msgstr "для функции '%s' и подписи '%s' нет документации"
 
 #, fuzzy
 msgid "document not found"
-msgstr "Ф┴╬Д╦█Е┬╟'%s'Х©≥Д╦╙Г⌡╝Ф═┤Е╞╧Х╠║"
+msgstr "объект '%s' не найден"
 
 msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr "'format'Г └Е─╪Е©┘И°─Ф≤╞\"normal\"Ф┬√Ф≤╞\"short\"Ц─┌Г▌╟Г■╗\"normal\""
+msgstr "'format' должен быть \"normal\" или \"short\". Использую \"normal\""
 
 msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr "'sortby'Г └Е─╪Д╦█Е╞╧Ц─┌Г■╗sortby=\"score\""
+msgstr "Указан неправильный 'sortby'. Использую sortby=\"score\""
 
 msgid ""
 "wrong restriction specified.\n"
 "Using '%s'"
 msgstr ""
-"И≥░Е┬╤Х╝╬Е╝ Е╬≈Д╦█Е╞╧Ц─┌\n"
-"Г■╗'%s'"
+"Указано неправильное ограничение.\n"
+"Использую '%s'"
 
 msgid "A search query has been submitted to"
-msgstr "Ф╙╒Г╢╒Ф÷╔Х╘╒Г√▒Е∙▐Е╥╡Х╒╚Ф▐░Е┤╨Д╨▌"
+msgstr "Поисковый запрос должен быть послан в"
 
 msgid "The results page should open in your browser shortly"
-msgstr "Х╝║Г╝≈Г╩⌠Ф·°Е╨■Е╬┬Е©╚Е╟╠Е°╗Г─▐Х╕╫Е≥╗И┤▄Ф┴⌠Е╪─"
+msgstr "Страница с результатами должна скоро открыться в броузере"
 
 msgid "reference to unknown chunk '%s'"
-msgstr "Ф╡║Ф°┴Х©≥Ф═╥Д╦─Д╦╙'%s'Г └Е╟█Г┘╖Е▐┐Е²≈"
+msgstr "ссылка на неизвестный кусок '%s'"
 
 msgid "no Sweave file with name '%s' found"
-msgstr "Ф╡║Ф°┴Е░█Е╜≈Д╦╨'%s'Г └SweaveФ√┤Д╩╤"
+msgstr "Sweave-файл с именем '%s' не найден"
 
 msgid "%d Sweave files for basename '%s' found:"
-msgstr "Ф┴╬Е┬╟Д╨├%dД╦╙Д╦█Е░╚Х╥╞Е╬└Ф√┤Д╩╤Е╜≈Г╛╕Д╦╡Д╦╨'%s'Г └SweaveФ√┤Д╩╤:"
+msgstr "%d Sweave-файлов с базовым именем '%s' найдено:"
 
 msgid "Found invalid multi-byte character data."
-msgstr "Е╓ Е╜≈Г╞─Е╜≈Г╛╕Ф∙╟Ф█╝Д╦╜Ф°┴И■≥Ц─┌"
+msgstr "Найдены неправильные многобайтные текстовые данные."
 
 msgid "Cannot re-encode because 'iconv' is not available."
-msgstr "Е⌡═Д╦╨Ф╡║Ф°┴'iconv'Х©≥Д╦╙Г╗▀Е╨▐Ф┴─Д╩╔Ф≈═ФЁ∙Х©⌡Х║▄И┤█Ф√╟Г╪√Г═│Ц─┌"
+msgstr "Не могу перекодировать, потому что 'iconv' недоступен."
 
 msgid "Try running R in a single-byte locale."
-msgstr "Х╞╥Х╞∙Х╞∙Е°╗Е█∙Е╜≈Х┼┌Е═╢Ф┴─Х©░Х║▄RЦ─┌"
+msgstr "Попробуйте запустить R на однобайтной локали."
 
 msgid "more than one syntax specification found, using the first one"
-msgstr "Е°╗Е╓ Е╔≈Х╙·ФЁ∙Х╕▐Е┴┤И┤▄И─┴Г■╗Г╛╛Д╦─Д╦╙Е╔≈"
+msgstr "найдено более одного указания на синтаксис, использую первое"
 
 msgid "object '%s' does not have class \"SweaveSyntax\""
-msgstr "Г⌡╝Ф═┤Е╞╧Х╠║'%s'Д╦█Ф≤╞\"SweaveХ╙·ФЁ∙\"Х©≥Д╦─Г╠╩Е┬╚"
+msgstr "у объекта '%s' нет класса \"SweaveSyntax\""
 
 msgid "recursive Sweave input '%s' in stack"
-msgstr "Е═├Г√┼И┤▄Д╦█Х┐╫Ф°┴Е⌡·Ф╜╦SweaveХ╬⌠Е┘╔'%s'"
+msgstr "рекурсивный Sweave-ввод '%s' в стек"
 
 msgid "target syntax not of class \"SweaveSyntax\""
-msgstr "Г⌡╝Ф═┤Х╙·ФЁ∙Д╦█Ф≤╞\"SweaveSyntax\"Х©≥Д╦─Г╠╩Е┬╚"
+msgstr "целевой синтаксис не имеет класса \"SweaveSyntax\""
 
 msgid "target syntax contains no translation table"
-msgstr "Г⌡╝Ф═┤Х╙·ФЁ∙Е├┘Ф╡║Ф°┴Г©╩Х╞▒Х║╗"
+msgstr "целевой синтаксис не содержит таблицы перевода"
 
 msgid ""
 "parse error or empty option in\n"
 "%s"
 msgstr ""
-"Х╖ёФ·░Е┤╨И■≥Ф┬√Ф≤╞\n"
-"%sИ┤▄Ф°┴Г╘╨Г≥╫Г └И─┴И║╧"
+"ошибка разбора или пустая опция в\n"
+"%s"
 
 msgid "path to '%s' contains spaces,"
-msgstr "Ф▄┤Е░▒'%s'Г └Х╥╞Е╬└И┤▄Д╦█Х┐╫Ф°┴Г╘╨Ф═╪,"
+msgstr "путь у '%s' содержит пробелов,"
 
 msgid "this may cause problems when running LaTeX"
-msgstr "Х©≥Е▐╞Х┐╫Д╪ Е╞╧Х©░Х║▄LaTeXИ┤▄Д╨╖Г■÷И≈╝И╒≤"
+msgstr "это может привести к проблемам с LaTeX"
 
 msgid "You can now run LaTeX on '%s'"
-msgstr "Г▌╟Е°╗Д╫═Е▐╞Д╩╔Е°╗'%s'Д╦┼Х©░Х║▄LaTeX"
+msgstr "Теперь можно запустить LaTeX на '%s'"
 
 msgid "invalid value for '%s' : %s"
-msgstr "'%s'Г └Е─╪Д╦█Е╞╧: %s"
+msgstr "неправильное значение '%s': %s"
 
 msgid "elements of 'what' after the first will be ignored"
-msgstr "Е▐╙Г■╗'what'Е─╪И┤▄Г └Г╛╛Д╦─Д╦╙Е┘┐Г╢═"
+msgstr "элементы 'what' после первого будут пропущены"
 
 msgid "%d occurrences in %s"
-msgstr "%2$sИ┤▄Е┤╨Г▌╟Д╨├%1$dД╦╙Е┘╥И╚■Е─╪"
+msgstr "%d вхождений в %s"
 
 msgid "bad argument"
-msgstr "Е▐≤Е┘┐Д╦█Е╞╧"
+msgstr "неправильный аргумент"
 
 msgid "all arguments must be of class \"person\""
-msgstr "Ф┴─Ф°┴Г └Е▐≤Е┘┐И┐╫Е©┘И°─Ф≤╞\"person\"Г╠╩Е┬╚"
+msgstr "все аргументы должны быть класса \"person\""
 
 msgid "broken installation, no CITATION file in the base package."
-msgstr "Е╝┴Хё┘Е┤╨И■≥О╪▄Е÷╨Ф°╛Г╗▀Е╨▐Е▄┘И┤▄Ф╡║Ф°┴CITATIONХ©≥Д╦─Ф√┤Д╩╤Ц─┌"
+msgstr "нерабочая установка, в пакете base нет файла CITATION."
 
 msgid "package '%s' not found"
-msgstr "Ф╡║Ф°┴'%s'Х©≥Д╦─Д╦╙Г╗▀Е╨▐Е▄┘"
+msgstr "пакет '%s' не найден"
 
 msgid "no date field in DESCRIPTION file of package '%s'"
-msgstr "Г╗▀Е╨▐Е▄┘'%s'И┤▄Г └DESCRIPTIONФ√┤Д╩╤Д╦╜Ф╡║Ф°┴Ф≈╔Ф°÷Х©≥Д╦─Е÷÷"
+msgstr "в файле DESCRIPTION пакета '%s' нет поля date"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
-msgstr "Ф╡║Ф°┴Д╩▌Г╗▀Е╨▐Е▄┘Г └DESCRIPTIONФ√┤Д╩╤Д╦╜Д╦╨'%s'Г║╝Е╝ Е╧╢Д╩╫"
+msgstr "не могу определить год для '%s' из файла DESCRIPTION пакета"
 
 msgid "m < 0"
-msgstr ""
+msgstr "m < 0"
 
 msgid "n < m"
-msgstr ""
+msgstr "n < m"
 
 msgid "'FUN' must be a function or NULL"
-msgstr "'FUN'Г └Е─╪Е©┘И°─Ф≤╞Е┤╫Ф∙╟Ф┬√NULL"
+msgstr "'FUN' должен быть функцией или NULL"
 
 msgid "'package' must be a character string or NULL"
-msgstr "'package'Г └Е─╪Е©┘И°─Ф≤╞Е╜≈Г╛╕Д╦╡Ф┬√NULL"
+msgstr "'package' должен быть текстовой строкой или NULL"
 
 msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "Ф∙╦Ф⌠ Ф╘÷Д╩▌Г╗▀Е╨▐Е▄┘'base'Г╖╩Е┬╟Д╨├Г╗▀Е╨▐Е▄┘'datasets'"
+msgstr "файлы данных перемещены из пакета 'base' в пакет 'datasets'"
 
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "Ф∙╦Ф⌠ Ф╘÷Д╩▌Г╗▀Е╨▐Е▄┘'stats'Г╖╩Е┬╟Д╨├Г╗▀Е╨▐Е▄┘'datasets'"
+msgstr "файлы данных перемещены из пакета 'stats' в пакет 'datasets'"
 
 msgid "data index for package '%s' is invalid and will be ignored"
-msgstr "Г╗▀Е╨▐Е▄┘'%s'Г └Ф∙╟Ф█╝Г╢╒Е╪∙Д╦█Е╞╧О╪▄Г∙╔Х©┤Д╦█Г■╗"
+msgstr "индекс данных пакета '%s' неправильный и будет пропущен"
 
 msgid "file 'filelist' is missing for directory '%s'"
-msgstr "Г⌡╝Е╫∙'%s'И┤▄Ф╡║Ф°┴'filelist'Х©≥Д╦─Ф√┤Д╩╤"
+msgstr "файл 'filelist' в папке '%s' пропущен"
 
 msgid "data set '%s' not found"
-msgstr "Ф╡║Ф°┴'%s'Х©≥Д╦╙Ф∙╟Ф█╝Ф°╨"
+msgstr "данные '%s' не найдены"
 
 msgid "kind '%s' not yet implemented"
-msgstr "'%s'Х©≥Д╦─Г╠╩Х©≤Ф╡║Ф°┴Х╒╚Е╝·Г▌╟"
+msgstr "'%s' еще не разработан"
 
 msgid "wrong number of table row entries"
-msgstr "Х║╗Д╦╜Г └Х║▄Ф∙╟Д╦█Е╞╧"
+msgstr "неправильное количество записей строк таблицы"
 
 msgid "wrong argument to 'dataentry'"
-msgstr "'dataentry'Г └Е▐≤Е┘┐Д╦█Е╞╧"
+msgstr "неправильный аргумент для 'dataentry'"
 
 msgid "could not restore type information"
-msgstr "Ф≈═ФЁ∙Ф│╒Е╬╘Г╖█Г╠╩Г └Д©║Ф│╞"
+msgstr "не могу восстановить информацию о типе"
 
 msgid "modes argument ignored"
-msgstr "Е÷╨Ф°╛Ф╗║Е╪▐Е▐≤Е┘┐Г∙╔Х©┤Д╦█Г■╗"
+msgstr "аргумент 'modes' пропущен"
 
 msgid "'names' argument ignored"
-msgstr "'names'Е▐≤Е┘┐Г∙╔Х©┤Д╦█Г■╗"
+msgstr "аргумент 'names' пропущен"
 
 msgid "'modes' argument ignored"
-msgstr "'modes'Е▐≤Е┘┐Г∙╔Х©┤Д╦█Г■╗"
+msgstr "аргумент 'modes' пропущен"
 
 msgid "could not restore variables properly"
-msgstr "Ф≈═ФЁ∙Ф╜ёГ║╝Ф│╒Е╓█Е▐≤И┤▐"
+msgstr "не могу полностью восстановить переменные"
 
 msgid "did not assign() anything"
-msgstr "assign()Ф╡║Ф°┴Г■╗Е┬╟"
+msgstr "не могу ничего assign()"
 
 msgid "Browsing in the environment with call:"
-msgstr "Е°╗Х╙©Г■╗Г▌╞Е╒┐И┤▄Ф╣▐Х╖┬:"
+msgstr "Просмотр окружения с вызовом:"
 
 msgid "'dump' is not an object of class 'dump.frames'"
-msgstr "'dump'Е©┘И°─Ф≤╞Г╠╩Е┬╚Д╦╨'dump.Ф║├s'Г └Г⌡╝Ф═┤Е╞╧Х╠║"
+msgstr "'dump' не является объектом класса 'dump.frames'"
 
 msgid "Message:"
-msgstr "Х╗┼Ф│╞:"
+msgstr "Сообщение:"
 
 msgid "Available environments had calls:"
-msgstr "Е▐╞Г■╗Г └Г▌╞Е╒┐Д╦╜Ф°┴Х©≥Ф═╥Г └Х╙©Г■╗Х╫╫Е┘╔:"
+msgstr "Доступные окружения имеют вызовы:"
 
 msgid "Enter an environment number, or 0 to exit"
-msgstr "Х╞╥Х╬⌠Е┘╔Д╦─Д╦╙Г▌╞Е╒┐Е▐╥О╪▄Х╕│И──Е┤╨Г └Х╞²Х╬⌠Е┘╔0"
+msgstr "Введите номер окружения или 0 для выхода"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
-msgstr "И²·Д╨╓Д╨▓Е╪▐Е°╟Х╙©Г■╗Д╨├recover; Е┌╬Е█╟Е┤╨Д╨├Ф┴─Ф°┴Г └Ф║├О╪▄Е▐╞Д╩╔Г■╗debugger()Ф²╔Х©⌡Х║▄Фё─Ф÷╔"
+msgstr ""
+"восстановление вызвано неинтерактивно; рамки сброшены, используйте debugger"
+"(), чтобы их просмотреть"
 
 msgid "No suitable frames for recover()"
-msgstr "Ф┴╬Д╦█Е┬╟Е▐╞Г■╗Д╨▌recover()Г └Ф║├"
+msgstr "Нет подходящих рамок для recover()"
 
 msgid "No demo found for topic '%s'"
-msgstr "Ф╡║Ф°┴Д╦▌И║▄Г⌡╝'%s'Ф°┴Е┘ЁГ └Ф╪■Г╓╨"
+msgstr "Для топика '%s' не найден демо"
 
 msgid ""
 "Demo for topic '%s' found more than once,\n"
 "using the one found in '%s'"
 msgstr ""
-"Ф°┴Е╓ Д╦╙Д╦▌И║▄Г⌡╝'%s'Ф°┴Е┘ЁГ └Ф╪■Г╓╨О╪▄\n"
-"Г▌╟Е°╗Г■╗Е°╗'%s'Ф┴╬Е┬╟Г └И┌ёД╦─Д╦╙"
+"Для топика '%s' найдено более одного демо,\n"
+"использую тот, который найден в '%s'"
 
 msgid "invalid 'data' argument"
-msgstr "'data'Е▐≤Е┘┐Д╦█Е╞╧"
+msgstr "неправильный аргумент 'data'"
 
 msgid "invalid 'modes' argument"
-msgstr "'modes'Е▐≤Е┘┐Д╦█Е╞╧"
+msgstr "неправильный аргумент 'modes'"
 
 msgid "can only handle vector and factor elements"
-msgstr "Е▐╙Х┐╫Е╞╧Е░▒И┤▐Е▓▄Е⌡═Е╜░Е┘┐Г╢═И─┌Г■╗"
+msgstr "могу работать только с элементами векторов и факторов"
 
 msgid "invalid factor levels in '%s'"
-msgstr "'%s'Е⌡═Е╜░Ф╟╢Е┤├Д╦█Е╞╧"
+msgstr "неправильные уровни фактора в '%s'"
 
 msgid "added factor levels in '%s'"
-msgstr "Е°╗'%s'И┤▄Е┼═Д╦┼Д╨├Е⌡═Е╜░Ф╟╢Е┤├"
+msgstr "в '%s' добавлены уровни фактора"
 
 msgid "edited row names contain duplicates and will be ignored"
-msgstr "Ф■╧Х©┤Г └Х║▄Е░█Д╦╜Е░╚Ф°┴И┤█Е╓█Г └Е░█Е╜≈О╪▄Е⌡═Ф╜╓Г∙╔Х©┤Д╦█Г■╗"
+msgstr "отредактированные имена строк имеют дубли и будут пропущены"
 
 msgid "invalid input matrix"
-msgstr "Х╬⌠Е┘╔Г÷╘И≤╣Д╦█Е╞╧"
+msgstr "неправильная вводная матрица"
 
 msgid "no help file found for '%s'"
-msgstr "Ф┴╬Д╦█Е┬╟Д╦▌'%s'Ф°┴Е┘ЁГ └Е╦╝Е┼╘Ф√┤Д╩╤"
+msgstr "в '%s' не найдено файла помощи"
 
 msgid "more than one help file found: using package '%s'"
-msgstr "Ф┴╬Е┬╟Д╨├Е╓ Д╦╙Е╦╝Е┼╘Ф√┤Д╩╤О╪ Г■╗Г╗▀Е╨▐Е▄┘'%s'"
+msgstr "найдено более одного файла помощи: использую пакет '%s'"
 
 msgid "'%s' has a help file but no examples file"
-msgstr "'%s'Е░╚Е╦╝Е┼╘Ф√┤Д╩╤Д╫├Ф╡║Ф°┴Г╓╨Х▄┐Ф√┤Д╩╤"
+msgstr "у '%s' есть файл помощи, но нет файла примеров"
 
 #, fuzzy
 msgid "test '%s' is not available"
-msgstr "Ф╡║Ф°┴'%s'Х©≥Г╖█Г⌡╦Д╬²Е┘ЁГЁ╩"
+msgstr "зависимость '%s' недоступна"
 
 msgid "'fix' requires a name"
-msgstr "'fix'И°─Х╕│Е░█Е╜≈Е─╪"
+msgstr "для 'fix' нужно имя"
 
 msgid "too many list items (at most up to number 26)"
 msgstr ""
@@ -251,428 +257,435 @@ msgid "'form' must be a two-sided formula"
 msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
-msgstr "Е°╗Ф▄┤Е╝ Г └Г╗▀Е╨▐Е▄┘Е▓▄Е⌡╬Д╧╕И╕├И┤▄Ф╡║Ф°┴Д╦▌'%s'Ф°┴Е┘ЁГ └Х╞╢Ф≤▌Д╧╕:"
+msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
 
 msgid "you could try 'help.search(\"%s\")'"
-msgstr "Д╫═Е▐╞Д╩╔Г■╗Г■╗'help.search(\"%s\")'"
+msgstr "можете попробовать 'help.search(\"%s\")'"
 
 msgid ""
 "Help for topic '%s' is not in any loaded package but can be found in the "
 "following packages:"
 msgstr ""
-"Е°╗Х╫╫Е┘╔Г └Г╗▀Е╨▐Е▄┘И┤▄Ф╡║Ф°┴Д╦▌'%s'И╒≤Г⌡╝Ф°┴Е┘ЁГ └Е╦╝Е┼╘Ф√┤Д╩╤О╪▄Д╫├Е°╗Д╩╔Д╦▀Г └Г╗▀Е╨▐Е▄┘И┤▄Ф┴╬Е╬≈Е┬╟:"
+"Справки по '%s' нет в загруженных пакетах, но она может быть найдена в "
+"следующих пакетах:"
 
 msgid "Package"
-msgstr "Г╗▀Е╨▐Е▄┘"
+msgstr "Пакет"
 
 msgid "Library"
-msgstr "Е⌡╬Д╧╕И╕├"
+msgstr "Библиотека"
 
 msgid "Help on topic '%s' was found in the following packages:"
-msgstr "Е°╗Д╩╔Д╦▀Г └Г╗▀Е╨▐Е▄┘И┤▄Ф┴╬Е┬╟Д╨├Д╦▌'%s'И╒≤Г⌡╝Ф°┴Е┘ЁГ └Е╦╝Е┼╘Ф√┤Д╩╤:"
+msgstr "Справка по '%s' найдена в следующих пакетах:"
 
 msgid "Choose one"
-msgstr "И─┴Д╦─Д╦╙"
+msgstr "Выберите один"
 
 msgid "Using the first match ..."
-msgstr "Г■╗Г╛╛Д╦─Д╦╙Г⌡╦И┘█Б─╕"
+msgstr "Использую первое совпадение..."
 
 msgid ""
 "No HTML help for '%s' is available:\n"
 "corresponding file is missing"
 msgstr ""
-"Ф╡║Ф°┴Д╦▌'%s'Ф°┴Е┘ЁГ └HTMLЕ╦╝Е┼╘Ф√┤Д╩╤:\n"
-"Ф°┴Е┘ЁГ └Ф√┤Д╩╤Д╦█Е╜≤Е°╗"
+"Для '%s' HTML-справка недоступна:\n"
+"отсутствует соответствующий файл"
 
 msgid "Compiled HTML is not installed"
-msgstr "Ф╡║Ф°┴Е╝┴Хё┘Г╥╗Х╜╞Х©┤Г └HTML"
+msgstr "Скомпилированные HTML не инсталлированы"
 
 msgid "CHM file could not be displayed"
-msgstr "Ф≈═ФЁ∙Ф≤╬Г╓╨CHMФ√┤Д╩╤"
+msgstr "CHM-файл нельзя отобразить"
 
 msgid ""
 "No CHM help for '%s' in package '%s' is available:\n"
 "the CHM file for the package is missing"
 msgstr ""
-"Г╗▀Е╨▐Е▄┘'%2$s'И┤▄Ф╡║Ф°┴Д╦▌'%1$s'Ф°┴Е┘ЁГ └CHMЕ╦╝Е┼╘Ф√┤Д╩╤:\n"
-"CHMФ√┤Д╩╤Д╦█Е╜≤Е°╗"
+"CHM-помощь по '%s' из пакета '%s' недоступна:\n"
+"CHM-файл пакета не найден"
 
 msgid "R Help on '%s'"
-msgstr "Д╦▌'%s'Ф°┴Е┘ЁГ └R Help"
+msgstr "Помощь R по '%s'"
 
 msgid ""
 "No text help for '%s' is available:\n"
 "corresponding file is missing"
 msgstr ""
-"Ф╡║Ф°┴Д╦▌'%s'Ф°┴Е┘ЁГ └Е╦╝Е┼╘Ф√┤Д╩╤:\n"
-"Е╦╝Е┼╘Ф√┤Д╩╤Д╦█Е╜≤Е°╗"
+"Недоступна текстовая помощь по '%s':\n"
+"нет соответствующего файла"
 
 msgid "problems running R CMD Rdconv"
-msgstr "Х╟┐Г■╗R CMD RdconvФ≈╤Е┤╨Д╨├И■≥"
+msgstr "проблемы с запуском R CMD Rdconv"
 
 msgid ""
 "No offline help for '%s' is available:\n"
 "corresponding file is missing"
 msgstr ""
-"Ф╡║Ф°┴Д╦▌'%s'Ф°┴Е┘ЁГ └Х└╠Ф°╨Е╦╝Е┼╘Ф√┤Д╩╤:\n"
-"Е╦╝Е┼╘Ф√┤Д╩╤Д╦█Е╜≤Е°╗"
+"Нет оффлайн-помощи по '%s':\n"
+"соответствующий файл недоступен"
 
 msgid "argument '%s' must be a single character string"
-msgstr "Е▐≤Е┘┐'%s'Е©┘И°─Ф≤╞Е█∙Е╜≈Г╛╕Д╦╡"
+msgstr "аргумент '%s' должен быть одной текстовой строкой"
 
 msgid "incorrect field specification"
-msgstr "Е÷÷Х╝╬Е╝ Е╬≈Д╦█Е╞╧"
+msgstr "неправильное указание поля"
 
 msgid "do not know what to search"
-msgstr "Д╦█Г÷╔И│⌠Х╕│Ф░°Ф÷╔Д╩─Д╧┬"
+msgstr "непонятно, что искать"
 
 msgid "argument 'help.db' is deprecated"
-msgstr "Е▐≤Е┘┐'help.db'Е╥╡Г╩▐Д╦█Е├█Г■╗Д╨├"
+msgstr "аргумент 'help.db' не рекомендуется"
 
 msgid "could not find package '%s'"
-msgstr "Ф┴╬Д╦█Е┬╟Г╗▀Е╨▐Е▄┘'%s'"
+msgstr "не могу найти пакет '%s'"
 
 msgid "no hsearch.rds meta data for package"
-msgstr "Г╗▀Е╨▐Е▄┘И┤▄Ф╡║Ф°┴hsearch.rdsФ═╥Г └И ░Е√╩Ф∙╟Ф█╝"
+msgstr "нет метаданных hsearch.rds к пакету"
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr "Е┬═И≥╓Ф┴─Ф°┴Е╓ Е╜≈Г╞─Е╜≈Г╛╕Ф∙╟Ф█╝Е┤╨И■≥Г └Е┬├И▄└"
+msgstr "удаляю все вхождения с неправильными многобайтными данными"
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
-msgstr "Ф∙╟Ф█╝Е╨⌠И┤▄Ф╡║Ф°┴Е┘ЁД╨▌Г╗▀Е╨▐Е▄┘'%s'Г └Д©║Ф│╞О╪ Ф≤╞Д╦█Ф≤╞И°─Х╕│Х╝╬Е╝ 'rebuild = TRUE'О╪÷"
+msgstr "в базе данных нет информации о пакете '%s': надо 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
-msgstr "'agrep'Х╝╬Е╝ Е╬≈Д╦█Е╞╧"
+msgstr "неправильное указание 'agrep'"
 
 msgid "no package '%s' was found"
-msgstr "Ф┴╬Д╦█Е┬╟'%s'Х©≥Ф═╥Д╦─Д╦╙Г╗▀Е╨▐Е▄┘"
+msgstr "не найден пакет '%s'"
 
-#, fuzzy
 msgid "DESCRIPTION file of package '%s' is corrupt"
-msgstr "Г╗▀Е╨▐Е▄┘'%d'И┤▄Х╕│Д╧┬Ф╡║Ф°┴DESCRIPTIONХ©≥Д╦╙Ф√┤Д╩╤О╪▄Х╕│Д╧┬Е┤╨Д╨├И■≥"
+msgstr "файл DESCRIPTION пакета '%s' поврежден"
 
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
-msgstr "'DESCRIPTION'Ф√┤Д╩╤Ф°┴'Encoding'Х©≥Д╦╙Е÷÷Д╫├И┤█Ф√╟Г╥╗Г╒╪Ф≤╞Д╦█Е▐╞Х┐╫Г └"
+msgstr "у файла 'DESCRIPTION' есть поле 'Encoding', а перекодировка невозможна"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr "Г╗▀Е╨▐Е▄┘'%d'И┤▄Х╕│Д╧┬Ф╡║Ф°┴DESCRIPTIONХ©≥Д╦╙Ф√┤Д╩╤О╪▄Х╕│Д╧┬Е┤╨Д╨├И■≥"
+msgstr "файл DESCRIPTION пакета '%s' пропущен или поврежден"
 
 msgid "menu() cannot be used non-interactively"
-msgstr "menu()Д╦█Х┐╫Е°╗И²·Д╨▓Д╨╓Е╫╒Е╪▐Д╦▀Д╫©Г■╗"
+msgstr "menu() нельзя использовать неинтерактивно"
 
 msgid "Enter an item from the menu, or 0 to exit"
-msgstr "Д╩▌Х▐°Е√╝Д╦╜И─┴Д╦─И║╧О╪▄Ф┬√И─┴0И──Е┤╨"
+msgstr "Введите пункт из меню или 0 для выхода"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
-msgstr "'%s'Ф≤╞Ф╜ёЕ╪▐Е░▄Е╠·Е┤╫Ф∙╟; Е╬┬Ф°┴Е▐╞Х┐╫Ф┴╬Д╦█Е┬╟S3Ф√╧ФЁ∙"
+msgstr ""
+"'%s' -- это формальная общая функция; не похоже, что найдутся методы S3"
 
 msgid "no function '%s' is visible"
-msgstr "Г°▀Д╦█Е┬╟'%s'Х©≥Ф═╥Д╦─Д╦╙Е┤╫Ф∙╟"
+msgstr "не видна функция '%s'"
 
 msgid "function '%s' appears not to be generic"
-msgstr "Е┤╫Ф∙╟'%s'Е╔╫Х╠║Д╦█Ф≤╞Е░▄Е╠·Г └"
+msgstr "функция '%s', похоже, не общая"
 
 msgid "generic function '%s' dispatches methods for generic '%s'"
-msgstr "Е░▄Е╠·Е┤╫Ф∙╟'%s'Г╩≥Е░▄Е╠·'%s'Е┬├Г≥╪Д╨├Ф√╧ФЁ∙"
+msgstr "общая функция '%s' отправляет методы для общей '%s'"
 
 msgid "must supply 'generic.function' or 'class'"
-msgstr "Е©┘И°─Ф▐░Д╬⌡'generic.function'Ф┬√'class'Д╦╓Д╦╙Д╦╜Г └Д╦─Д╦╙"
+msgstr "надо указать 'generic.function' или 'class'"
 
 msgid "no function '%s' could be found"
-msgstr "Ф┴╬Д╦█Е┬╟'%s'Х©≥Ф═╥Д╦─Д╦╙Е┤╫Ф∙╟"
+msgstr "не найдена функция '%s'"
 
 msgid "S3 method '%s' not found"
-msgstr "Ф┴╬Д╦█Е┬╟S3Ф√╧ФЁ∙'%s'"
+msgstr "метод S3 '%s' не найден"
 
 msgid "environment specified is not a package"
-msgstr "Ф▄┤Е╝ Г └Г▌╞Е╒┐Д╦█Ф≤╞Г╗▀Е╨▐Е▄┘"
+msgstr "указанное окружение не является пакетом"
 
 msgid "'fixInNamespace' requires a name"
-msgstr "'fixInNamespace'И°─Х╕│Е░█Е╜≈Е─╪"
+msgstr "'fixInNamespace' требует имя"
 
 msgid "only numeric indices can be used"
-msgstr "Е▐╙Х┐╫Г■╗Ф∙╟Е─╪Г └Ф▄┤Ф═┤"
+msgstr "можно использовать только числовые индексы"
 
 msgid "cannot create directory '%s'"
-msgstr "Ф≈═ФЁ∙Д╨╖Г■÷'%s'Г⌡╝Е╫∙"
+msgstr "не могу создать папку '%s'"
 
 msgid "'code_files' should be a character vector"
-msgstr "'code_files'Е©┘И°─Ф≤╞Е╜≈Г╛╕Е░▒И┤▐"
+msgstr "'code_files' должны быть текстовым вектором"
 
 msgid "'list' should be a character vector naming R objects"
-msgstr "'list'Е©┘И°─Ф≤╞Д╦╨RГ⌡╝Ф═┤Е╞╧Х╠║Е▐√Е░█Г └Е╜≈Г╛╕Е░▒И┤▐"
+msgstr "'список' должен быть текстовым вектором, именующим R-объекты"
 
 msgid "'namespace' should be a single logical"
-msgstr "'namespace'Е©┘И°─Ф≤╞Е█∙Г▀╛И─╩Х╬▒Е─╪"
+msgstr "'namepace' должно быть простым логическим значением"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr "Ф≈═ФЁ∙И─ Х©┤LC_CTYPEЕ┘ЁИ≈╜Д╦▌Е°╟Г┌╧Ф°┴Е┘ЁГ └Е╜≈Г╛╕"
+msgstr "не могу выключить специфичные для локали символы через LC_CTYPE"
 
 msgid "no R objects specified or available"
-msgstr "Ф╡║Ф°┴Ф▄┤Г┌╧Е╝ Г └RГ⌡╝Ф═┤Е╞╧Х╠║"
+msgstr "R-объекты не указаны или недоступны"
 
 msgid "Creating directories ..."
-msgstr "Е╩╨Г╚▀Г⌡╝Е╫∙Б─╕"
+msgstr "Создаю папки..."
 
 msgid "directory '%s' already exists"
-msgstr "Е╥╡Г╩▐Ф°┴Д╨├'%s'Х©≥Ф═╥Д╦─Д╦╙Г⌡╝Е╫∙"
+msgstr "папка '%s' уже есть"
 
 msgid "Creating DESCRIPTION ..."
-msgstr "Е╩╨Г╚▀DESCRIPTIONБ─╕"
+msgstr "Создаю DESCRIPTION..."
 
 msgid "Creating NAMESPACE ..."
-msgstr "Е╩╨Г╚▀NAMESPACEБ─╕"
+msgstr "Создаю NAMESPACE..."
 
 msgid "Creating Read-and-delete-me ..."
-msgstr "Е╩╨Г╚▀Read-and-delete-meБ─╕"
+msgstr "Создаю Read-and-delete-me..."
 
 msgid "Saving functions and data ..."
-msgstr "Д©²Е╜≤Е┤╫Ф∙╟Е▓▄Ф∙╟Ф█╝Б─╕"
+msgstr "Сохраняю функции и данные..."
 
 msgid "Copying code files ..."
-msgstr "Ф▀╥Х╢²Г╗▀Е╨▐Ф√┤Д╩╤Б─╕"
+msgstr "Копирую файлы с кодом..."
 
 msgid "Making help files ..."
-msgstr "Е┬╤И─═Е╦╝Е┼╘Ф√┤Д╩╤Б─╕"
+msgstr "Делаю файлы помощи..."
 
 msgid "Done."
-msgstr "Е│ Е╝▄Д╨├Ц─┌"
+msgstr "Готово."
 
 msgid "Further steps are described in '%s'."
-msgstr "'%s'И┤▄Ф°┴Х╞╕Г╩├Е├┘Е╝╧"
+msgstr "Дальнейшее указано в '%s'."
 
 msgid "unable to access index for repository %s"
-msgstr "Ф≈═ФЁ∙Е°╗Х╡╞Х≈▐Х≥∙%sД╦╜Х╞╩Е├≥Г╢╒Е╪∙"
+msgstr "недоступен индекс для хранилища %s"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
-msgstr "'lib.loc=%s'И┤▄Ф╡║Ф°┴Е╥╡Г╩▐Е╝┴Хё┘Е╔╫Д╨├Г └Г╗▀Е╨▐Е▄┘"
+msgstr "нет установленных пакетов для (неправильного?) 'lib.loc=%s'"
 
 msgid "bundle '%s' is incompletely installed"
-msgstr "Е▄┘Х╒╠'%s'Ф╡║Ф°┴Е╝▄Е┘╗Х╒╚Хё┘Е╔╫"
+msgstr "связка пакетов '%s' установлена не полностью"
 
 msgid "bundle '%s' has extra contents %s"
-msgstr "Е▄┘Х╒╠'%s'И┤▄Ф°┴Е╓ Д╫≥Г └Е├┘Е╝╧%s"
+msgstr "связка пакетов '%s' имеет дополнительное содержание %s"
 
 msgid "'priority' must be character or NULL"
-msgstr "'priority'Г └Е─╪Х╕│Д╧┬Ф≤╞Е╜≈Г╛╕Х╕│Д╧┬Д╦╨NULL"
+msgstr "'priority' должен быть текстом или NULL"
 
 msgid "argument 'lib' is missing: using %s"
-msgstr "Ф╡║Ф°┴'lib'Х©≥Д╦╙Е▐≤Е┘┐О╪ Ф■╧Г■╗%s"
+msgstr "аргумент 'lib' пропущен: использую %s"
 
 msgid "'destdir' is not a directory"
-msgstr "'destdir'Д╦█Ф≤╞Г⌡╝Е╫∙"
+msgstr "'destdir' не является папкой"
 
 msgid "no package '%s' at the repositories"
-msgstr "Х╡╞Х≈▐Х≥∙И┤▄Ф╡║Ф°┴'%s'Х©≥Ф═╥Г └Г╗▀Е╨▐Е▄┘"
+msgstr "в хранилище нет пакета '%s'"
 
 msgid "download of package '%s' failed"
-msgstr "Д╦▀Х╫╫Г╗▀Е╨▐Е▄┘'%s'Ф≈╤Е┤╨Д╨├И≈╝И╒≤"
+msgstr "скачивание пакета '%s' не удалось"
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
-msgstr "--- Е°╗Ф╜╓И─ёГ╥ И ▌Ф╝╣Ф≈╤Х╞╥И─┴Г■╗CRANГ └И▐║Е╜░ ---"
+msgstr ""
+"--- Пожалуйста, выберите зеркало CRAN для использования в этой сессии ---"
 
 msgid "trying to use CRAN without setting a mirror"
-msgstr "Х╞∙Х╞∙Е°╗Д╦█Х╝╬Е╝ И∙°Е╜░Г └Ф┐┘Е├╣Д╦▀Г■╗CRAN"
+msgstr "пробую использовать CRAN без установки зеркала"
 
 msgid "cannot choose a CRAN mirror non-interactively"
-msgstr "Ф≈═ФЁ∙Е°╗И²·Д╨▓Д╨╓Г └Ф┐┘Е├╣Д╦▀И─┴Г■╗CRANИ∙°Е╜░"
+msgstr "не могу выбрать зеркало CRAN неинтерактивно"
 
 msgid "cannot set repositories non-interactively"
-msgstr "Ф≈═ФЁ∙Е°╗И²·Д╨▓Д╨╓Ф┐┘Е├╣Д╦▀Х╝╬Е╝ Х╡╞Х≈▐Х≥∙"
+msgstr "не могу установить хранилища неинтерактивно"
 
 msgid "--- Please select repositories for use in this session ---"
-msgstr "--- Х╞╥И─┴Г■╗Д╦─Д╦╙Х╡╞Х≈▐Х≥∙ ---"
+msgstr "--- Пожалуйста, выберите хранилища для использования в этой сессии ---"
 
 msgid "Enter one or more numbers separated by spaces"
-msgstr "Х╞╥Х╬⌠Е┘╔Д╦─Д╦╙Ф┬√Е╓ Д╦╙Г■╠Г╘╨Ф═╪Е┬├Е╪─Г └Ф∙╟Е╜≈"
+msgstr "Введите одну или более цифр, разделенных пробелами"
 
 msgid "'%s' must be supplied"
-msgstr "Е©┘И°─Ф▐░Д╬⌡'%s'"
+msgstr "надо указать '%s'"
 
 msgid "every package depends on at least one other"
-msgstr "Ф╞▐Д╦╙Г╗▀Е╨▐Е▄┘Х┤ЁЕ╟▒Д╬²Х╣√Е┘╤Д╩√Е▐╕Е╓√Д╦─Д╦╙Г╗▀Е╨▐Е╜≈"
+msgstr "каждый пакет зависит по меньшей мере от одного другого"
 
 msgid "packages %s are mutually dependent"
-msgstr "Г╗▀Е╨▐Е▄┘%sГ⌡╦Д╨▓Д╬²Х╣√"
+msgstr "пакеты %s обоюдозависимы"
 
 msgid "no packages were specified"
-msgstr "Ф╡║Ф°┴Х╝╬Е╝ Г╗▀Е╨▐Е▄┘"
+msgstr "не указаны пакеты"
 
 msgid "cannot install MacOS X binary packages on Windows"
-msgstr "Ф≈═ФЁ∙Е°╗WindowsД╦▀Е╝┴Хё┘MacOS XД╨▄Е┘┐Г╗▀Е╨▐Е▄┘"
+msgstr "не могу установить бинарные пакеты MacOS X под Windows"
 
 msgid "cannot install MacOS X binary packages on this plaform"
-msgstr "Ф≈═ФЁ∙Е°╗Ф╜╓Е╧ЁЕ▐╟Д╦▀Е╝┴Хё┘MacOS XД╨▄Е┘┐Г╗▀Е╨▐Е▄┘"
+msgstr "не могу установить бинарные пакеты MacOS X на этой платформе"
 
 msgid "cannot install Windows binary packages on this plaform"
-msgstr "Ф≈═ФЁ∙Е°╗Ф╜╓Е╧ЁЕ▐╟Д╦▀Е╝┴Хё┘WindowsД╨▄Е┘┐Г╗▀Е╨▐Е▄┘"
+msgstr "не могу установить бинарные пакеты Windows на этой платформе"
 
 msgid ""
 "This version of R is not set up to install source packages\n"
 "If it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
-"Ф°╛banГ┴┬Ф°╛Г └RД╦█Х┐╫Е╝┴Хё┘Г╗▀Е╨▐Е▄┘Г └Е▌÷Е╖▀Г╗▀Е╨▐\n"
-"Е╕┌Ф·°Е╝┐Ф≤╞Д╩▌RPMД╦┼Е╝┴Хё┘Ф²╔Г └Х╞²Д╫═Е▐╞Х┐╫И°─Х╕│R-develГ └RPMФ√┤Д╩╤"
+"Эта версия R не подготовлена для инсталляции пакетов из исходников\n"
+"Если она была поставлена из RPM, Вам, возможно, потребуется R-devel RPM"
 
 msgid "installation of package '%s' had non-zero exit status"
-msgstr "Е╝┴Хё┘Г╗▀Е╨▐Е▄┘'%s'Ф≈╤И──Е┤╨Г▀─Ф┘▀Г └Е─╪Д╦█Д╦╨0"
+msgstr "установка пакета '%s' имеет ненулевой статус выхода"
 
 msgid "Unable to create temporary directory '%s'"
-msgstr "Ф≈═ФЁ∙Е╩╨Г╚▀Д╦╢Ф≈╤Г⌡╝Е╫∙'%s'"
+msgstr "Не могу создать временную папку '%s'"
 
 msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
 "skipping dependencies"
 msgstr ""
-"Д╦█Г÷╔И│⌠'lib'Е┘┐Г╢═И┤▄Е╕┌Д╫∙Е╝┴Хё┘Д╬²Х╣√Г╗▀Е╨▐\n"
-"Е⌡═Ф╜╓Г∙╔Х©┤Д╦█Хё┘"
+"Не знаю, в какой элемент 'lib' устанавливать зависимости\n"
+"пропускаю зависимости"
 
 msgid ""
 "The downloaded packages are in\n"
 "\t%s"
 msgstr ""
-"Д╦▀Х╫╫Г └Г╗▀Е╨▐Е▄┘Е°╗\n"
-"\t%sИ┤▄"
+"Скачанные пакеты находятся в\n"
+"\t%s"
 
 msgid "no object named '%s' to show"
-msgstr "Ф┴╬Д╦█Е┬╟Е░█Е╜≈Д╦╨'%s'Г └Г⌡╝Ф═┤Е╞╧Х╠║"
+msgstr "нет объекта с именем '%s' для показа"
 
 msgid "cannot determine a usable name"
-msgstr "Ф≈═ФЁ∙Ф▄┤Е╝ Д╦─Д╦╙Е▐╞Д╩╔Г■╗Г └Е░█Е╜≈"
+msgstr "не могу определить имя, которое можно использовать"
 
 msgid "Created file named '%s'."
-msgstr "Е╩╨Г╚▀Д╦─Е░█Е╜≈Е▐╚'%s'Г └Ф√┤Д╩╤Ц─┌"
+msgstr "Создан файл по имени '%s'."
 
 msgid "Edit the file and move it to the appropriate directory."
-msgstr "Д©╝Ф■╧Ф√┤Д╩╤Е├█Ф┼┼Е╝┐Ф■╬Е┬╟Е░┬И─┌Г └Г⌡╝Е╫∙Д╦╜Е▌╩Ц─┌"
+msgstr "Редактируется файл и перемещается в положенную папку."
 
 msgid "Maintainer:"
-msgstr "Г╩╢Д©╝Д╨╨:"
+msgstr "Поддержка:"
 
 msgid "Index:"
-msgstr "Г╢╒Е╪∙:"
+msgstr "Индекс:"
 
 msgid "Further information is available in the following vignettes:"
-msgstr "Д╩╔Д╦▀Г └Е╟▐Ф√┤Е⌠│И┤▄Ф°┴Е┘╤Д╩√Д©║Ф│╞:"
+msgstr "Остальная информация доступна в следующих миниатюрах:"
 
 msgid "package title"
-msgstr "Г╗▀Е╨▐Е▄┘Ф═┤И╒≤"
+msgstr "заголовок пакета"
 
 msgid "A concise (1-5 lines) description of the package"
-msgstr "Г╗▀Е╨▐Е▄┘Г └И²·Е╦╦Г╝─Ф≤▌(1-5Х║▄) Г └Ф▐▐Х©╟"
+msgstr "Краткое содержание (1-5 строк) описания пакета"
 
 msgid ""
 "An overview of how to use the package, including the most important functions"
-msgstr "Е╕┌Д╫∙Г■╗Г╗▀Е╨▐Е▄┘Г └Ф╕┌Е├╣О╪▄Е▄┘Ф▀╛Ф°─И┤█Х╕│Г └Е┤╫Ф∙╟"
+msgstr "Обзор того, как использовать пакет, включая наиболее важные функции"
 
 msgid "The author and/or maintainer of the package"
-msgstr "Г╗▀Е╨▐Е▄┘Г └Д╫°Х─┘Ф┬√Г╩╢Д©╝Д╨╨"
+msgstr "Автор и/или поддерживающий пакет"
 
 msgid "Literature or other references for background information"
-msgstr "Х┐▄Ф≥╞Ф√┤И─┴Ф┬√Е┘╤Д╩√Е▐┌Х─┐Ф²░Ф√≥"
+msgstr "Литература или другие ссылки на дополнительную информацию"
 
 msgid "Optional links to other man pages, e.g."
-msgstr "Е▐╞Д╩╩Ф└▐И─┴Ф▀╘Е┬╟Е┘╤Д╩√Е╦╝Е┼╘Ф√┤Д╩╤Г └Х│■Г╩⌠О╪▄Е╕┌"
+msgstr "Необязательные ссылки на другие страницы руководства, например"
 
 msgid "simple examples of the most important functions"
-msgstr "Г╩≥Ф°─И┤█Х╕│Г └Е┤╫Ф∙╟Г └Д╦─Д╨⌡Г╝─Е█∙Д╬▀Е╜░"
+msgstr "простые примеры для наиболее важных функций"
 
 msgid ""
 "Optionally other standard keywords, one per line, from file KEYWORDS in the "
 "R documentation directory"
-msgstr "Д╧÷Е▐╞Д╩╔Г■╗Е┘╤Д╩√Ф═┤Е┤├Х╞█Ф╠┤О╪▄Д╦─Х║▄Д╦─Д╦╙О╪▄Е°╗RФ√┤Д╩╤Г⌡╝Е╫∙Д╦╜Г └KEYWORDSФ√┤Д╩╤И┤▄Е┬≈Е┤╨"
+msgstr ""
+"Необязательно: другие стандартные ключевые слова, по одному на строку, из "
+"файла KEYWORDS в папке с документацией по R"
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
-msgstr "Ф╡║Ф°┴Г╖█Г╠╩Д╦╨'%s'Е▓▄И║▄Г⌡╝Д╦╨'%s'Г └Ф√┤Д╩╤(Ф┬√Ф≤╞Е°╗Е╓└Г░├Е╦╝Е┼╘Ф√┤Д╩╤Ф≈╤Е▐▒Г■÷Д╨├И■≥Х╞╞)"
+msgstr ""
+"нет документации на тип '%s' и разделу '%s' (или ошибка в обработке помощи)"
 
 msgid ""
 "the object of class \"%s\" in the function call '%s' could not be used as a "
 "documentation topic"
-msgstr "Е┤╫Ф∙╟Х╙©Г■╗'%2$s'И┤▄Г╠╩Е┬╚Д╦╨\"%1$s\"Г └Г⌡╝Ф═┤Е╞╧Х╠║Д╦█Х┐╫Г■╗Д╫°Е╦╝Е┼╘Ф√┤Д╩╤И║▄Г⌡╝"
+msgstr ""
+"объект класса \"%s\" в вызове функции '%s' нельзя использовать как раздел "
+"документации"
 
 msgid "no methods for '%s' and no documentation for it as a function"
-msgstr "'%s'Ф╡║Ф°┴Ф√╧ФЁ∙О╪▄Д╧÷Ф╡║Ф°┴Е╟├Д╧▀Г■╗Д╫°Е┤╫Ф∙╟Г └Е╦╝Е┼╘Ф√┤Д╩╤"
+msgstr "для '%s' нет методов и нет документации как по функции"
 
 msgid "error in trying to evaluate the expression for argument '%s' (%s)"
-msgstr "Д╦╨Е▐≤Е┘┐'%s'Х╘∙Д╪╟Х║╗Г╓╨Е╪▐Ф≈╤Е▐▒Г■÷Д╨├И■≥Х╞╞(%s)"
+msgstr "ошибка при попытке выполнить выражение для аргумента '%s' (%s)"
 
 msgid "no method defined for function '%s' and signature '%s'"
-msgstr "Е┤╫Ф∙╟'%s'Е▓▄Г╟╫Г╫╡'%s'Ф╡║Ф°┴Х╝╬Е╝ Ф√╧ФЁ∙"
+msgstr "для функции '%s' и подписи '%s' не определено метода"
 
 msgid "no documentation for function '%s' and signature '%s'"
-msgstr "Е┤╫Ф∙╟'%s'Е▓▄Г╟╫Г╫╡'%s'Ф╡║Ф°┴Е╦╝Е┼╘Ф√┤Д╩╤"
+msgstr "для функции '%s' и подписи '%s' нет документации"
 
 msgid "No DIF data on clipboard"
-msgstr "Е┴╙Х╢╢Ф²©И┤▄Ф╡║Ф°┴DIFФ∙╟Ф█╝"
+msgstr "В буфере обмена нет DIF-данных"
 
 msgid "row and column counts not found"
-msgstr "Ф┴╬Д╦█Е┬╟Х║▄Е▓▄Е┬≈Г └Ф∙╟Г⌡╝"
+msgstr "подсчет строк и колонок не найден"
 
 msgid "Unrecognized special data value"
-msgstr "Ф╡║Ф°┴Х©≥Ф═╥Г └Г┴╧Ф╝┼Ф∙╟Ф█╝Е─╪"
+msgstr "Нераспознанное специальное значение данных"
 
 msgid "Unrecognized value indicator"
-msgstr "Ф╡║Ф°┴Х©≥Ф═╥Г └Ф∙╟Е─╪Ф▄┤Г╓╨Е≥╗"
+msgstr "Нераспознанное значение индикатора"
 
 msgid "no lines available in input"
-msgstr "Х╬⌠Е┘╔Д╦╜Ф╡║Ф°┴Е╓ Е┤╨Г └Х║▄"
+msgstr "во вводе нет строк"
 
 msgid "header and 'col.names' are of different lengths"
-msgstr "Х║╗Е╓╢Е░█Г╖╟Е▓▄'col.names'Г └И∙©Е╨╕Д╦█Д╦─Ф═╥"
+msgstr "заголовок и 'col.names' разной длины"
 
 msgid "more columns than column names"
-msgstr "Е┬≈Г └Ф∙╟Г⌡╝Ф╞■Е┬≈Г └Е░█Е╜≈Х╕│Е╓ "
+msgstr "больше колонок, чем имен для них"
 
 msgid "more column names than columns"
-msgstr "Х║▄Е░█Ф╞■Х║▄Г └Ф∙╟Г⌡╝Х╕│Е╓ "
+msgstr "больше имен для колонок, чем самих колонок"
 
 msgid "rows are empty: giving up"
-msgstr "Г╘╨Г≥╫Г └Х║▄О╪ Е│°Ф╜╒Х©░Х║▄"
+msgstr "строки пусты: завязываю с этим"
 
 msgid "not all columns named in 'colClasses' exist"
-msgstr "Ф°┴Д╨⌡'colClasses'Ф┴─Х╝╬Е╝ Г └Е┬≈Е╧╤Д╦█Е╜≤Е°╗"
+msgstr "не все колонки, названные в 'colClasses', существуют"
 
 msgid "invalid numeric 'as.is' expression"
-msgstr "Ф∙╟Г⌡╝'as.is' Х║╗Г▌╟Д╦█Е╞╧"
+msgstr "неправильное числовое выражение 'as.is'"
 
 msgid "not all columns named in 'as.is' exist"
-msgstr "Ф°┴Ф╜╓'as.is' Ф┴─Х╝╬Е╝ Г └Е┬≈Е╧╤Д╦█Е╜≤Е°╗"
+msgstr "не все колонки из 'as.is' существуют"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr "'as.is' Г └И∙©Е╨╕Д╦█Е╞╧%d  != cols = %d "
+msgstr "у 'as.is' -- неправильная длина %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
-msgstr "'row.names'Х╝╬Е╝ Е╬≈Д╦█Е╞╧"
+msgstr "неправильное указание 'row.names'"
 
 msgid "missing lengths for some fields"
-msgstr "Ф÷░Д╨⌡Е÷÷Г╪╨Е╟▒И∙©Е╨╕Е─╪"
+msgstr "в некоторых полях пропущены длины"
 
 msgid "invalid format"
-msgstr "Ф═╪Е╪▐Д╦█Е╞╧"
+msgstr "неправильный формат"
 
 msgid "last record incomplete, %d lines discarded"
-msgstr "Ф°─Е░▌Д╦─Д╦╙Х╝╟Е╫∙Д╦█Е╝▄Е┘╗О╪▄%dХ║▄Г∙╔Д╦█Д╦█Г■╗"
+msgstr "последняя запись неполная, %d строк не обработано"
 
 msgid "'file' must be a character string or connection"
-msgstr "'file'Г └Е─╪Е©┘И°─Ф≤╞Е╜≈Г╛╕Д╦╡Ф┬√Х│■Г╩⌠"
+msgstr "'file' должен быть текстовой строкой строка или соединением"
 
 msgid "transfer failure"
-msgstr "Х╫╛Г╖╩Ф≈╤Е┤╨Д╨├И■≥"
+msgstr "передача не удалась"
 
 msgid "HTTPUserAgent"
-msgstr ""
+msgstr "HTTPUserAgent"
 
 msgid "option must be a length one character vector or NULL"
-msgstr "И─┴И║╧Г └Е─╪Е©┘И°─Ф≤╞Е╜≈Г╛╕Д╦╡Ф┬√NULL"
+msgstr "'option' должна быть длиной с один текстовый вектор или NULL"
 
 msgid "empty beginning of file"
 msgstr ""
 
 #, fuzzy
 msgid "first five rows are empty: giving up"
-msgstr "Г╘╨Г≥╫Г └Х║▄О╪ Е│°Ф╜╒Х©░Х║▄"
+msgstr "строки пусты: завязываю с этим"
 
 msgid "cannot coerce 'x' to roman"
 msgstr ""
@@ -681,59 +694,59 @@ msgid "Invalid roman numeral(s): %s"
 msgstr ""
 
 msgid "invalid 'socket' argument"
-msgstr "'Е╔≈Д╩▀И²╒'Е▐≤Е┘┐Д╦█Е╞╧"
+msgstr "неправильный аргумент 'socket'"
 
 msgid "'port' must be integer of length 1"
-msgstr "'port'Е©┘И°─Ф≤╞И∙©Е╨╕Д╦╨1Г └Ф∙╢Ф∙╟"
+msgstr "'port' должен быть целым длиной 1"
 
 msgid "'host' must be character of length 1"
-msgstr "'host'Е©┘И°─Ф≤╞И∙©Е╨╕Д╦╨1Г └Е╜≈Г╛╕"
+msgstr "'host' должен быть текстом длины 1"
 
 msgid "can only receive calls on local machine"
-msgstr "Е▐╙Х┐╫Е°╗Е╠─И┐╗Г■╣Х└▒Д╦┼Ф▌╔Ф■╤Х╙©Г■╗"
+msgstr "могу принимать вызовы только на локальной машине"
 
 msgid "socket not established"
-msgstr "Е╔≈Д╩▀И²╒Х©≤Ф╡║Ф°┴Е╩╨Г╚▀"
+msgstr "сокет не создан"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
-msgstr "str.data.frame()Х╒╚Х╙©Г■╗Ф≈╤Д╫©Г■╗Д╨├И²·Ф∙╟Ф█╝Г └Ф║├--Е╟├Д╧▀Е╪╥Е┬╤Ф■╧Е▐≤Ц─┌"
+msgstr "str.data.frame() вызвана с не-data.frame -- соединяю в одно."
 
 msgid "invalid options('str') -- using defaults instead"
-msgstr "options('str')Д╦█Е╞╧О╪▄Д╫©Г■╗И╩≤Х╝╓Е─╪"
+msgstr "неправильная options('str') -- использую вместо нее умолчания"
 
 msgid "'object' does not have valid levels()"
-msgstr "'object'Г └levels()Г └Е─╪Д╦█Е╞╧"
+msgstr "'object' не имеет правильных levels()"
 
 msgid "'str.default': 'le' is NA"
-msgstr "'str.default': 'le'Г └Е─╪Ф≤╞NA"
+msgstr "'str.default': 'le' -- это NA"
 
 msgid "profile does not contain memory information"
-msgstr "Г╗▀Е╨▐Х╣└Ф√≥Д╦█Е▄┘Е░╚Е├┘Е╜≤Д©║Ф│╞"
+msgstr "профиль не содержит информации о памяти"
 
 msgid "no events were recorded"
-msgstr "Ф╡║Ф°┴Х╝╟Е╫∙Д╦▀Д╩╩Д╫∙Д╨▀Д╩╤"
+msgstr "события не записаны"
 
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
 msgstr ""
-"Ф°┴Е╓ Д╦╙'%d'Е╟▐Ф√┤Е⌠│О╪▄\n"
-"Д╫©Г■╗'%s'И┤▄Г └И┌ёД╦─Д╦╙"
+"миниатюра '%s' найдена больше одного раза,\n"
+"использую ту, которая найдена в '%s'"
 
 msgid "vignette '%s' *not* found"
-msgstr "Ф╡║Ф°┴Ф┴╬Е┬╟Е╟▐Ф√┤Е⌠│'%s'"
+msgstr "миниатюра '%s' *не* найдена"
 
 msgid "vignette '%s' has no PDF"
-msgstr "Е╟▐Ф√┤Е⌠│'%s'Ф╡║Ф°┴PDFФ√┤Д╩╤"
+msgstr "у миниатюры '%s' нет PDF"
 
 msgid "select.list() cannot be used non-interactively"
-msgstr "select.list()Д╦█Х┐╫Е°╗И²·Д╨▓Д╨╓Е╫╒Е╪▐Д╦▀Д╫©Г■╗"
+msgstr "select.list() нельзя использовать неинтерактивно"
 
 msgid "Enter zero or more numbers separated by space"
-msgstr "Х╬⌠Е┘╔0Д╦╙Ф┬√Е╓ Д╦╙Г■╠Г╘╨Ф═╪Е┬├Е╪─Г └Ф∙╟Е╜≈"
+msgstr "Введите ни одного или больше чисел, разделенных пробелом"
 
 msgid "Invalid input, please try again"
-msgstr "Х╬⌠Е┘╔Д╦█Е╞╧О╪▄Х╞╥Е├█Х╞∙Д╦─Х╞∙"
+msgstr "Неправильный ввод, пожалуйста, попробуйте опять"
 
 msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
 msgstr ""
@@ -743,14 +756,14 @@ msgstr ""
 
 #, fuzzy
 msgid "invalid 'quote' specification"
-msgstr "'row.names'Х╝╬Е╝ Е╬≈Д╦█Е╞╧"
+msgstr "неправильное указание 'row.names'"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
 msgstr ""
 
 #, fuzzy
 msgid "invalid 'col.names' specification"
-msgstr "'row.names'Х╝╬Е╝ Е╬≈Д╦█Е╞╧"
+msgstr "неправильное указание 'row.names'"
 
 msgid "appending column names to file"
 msgstr ""
@@ -759,135 +772,137 @@ msgid "attempt to change '%s' ignored"
 msgstr ""
 
 msgid "'subject' missing"
-msgstr "Г╪╨Е╟▒'subject'Е─╪"
+msgstr "пропущен 'subject'"
 
 msgid "no download method found"
-msgstr "Ф╡║Ф°┴Д╦▀Х╫╫Ф√╧ФЁ∙"
+msgstr "не найдено метода скачивания"
 
 msgid "download had nonzero exit status"
-msgstr "Д╦▀Х╫╫И──Е┤╨Г┼╤Ф─│Д╦█Ф≤╞И⌡╤"
+msgstr "у скачивания ненулевой статус выхода"
 
 msgid "options(\"browser\") not set"
-msgstr "options(\"browser\")Ф╡║Ф°┴Х╝╬Е╔╫"
+msgstr "options(\"browser\") не установлены"
 
 msgid "invalid browser name, check options(\"browser\")."
-msgstr "Ф╣▐Х╖┬Е≥╗Г └Е░█Е╜≈Д╦█Е╞╧О╪▄Х╞╥Фё─Ф÷╔options(\"browser\")Г └Х╝╬Г╫╝Ц─┌"
+msgstr "неправильное имя броузера, проверьте options(\"browser\")."
 
 msgid ""
 "Changing the default browser (as specified by the 'browser' option) to the "
 "given browser so that it gets used for all future help requests."
 msgstr ""
-"Е╟├И╩≤Х╝╓Ф╣▐Х╖┬Е≥╗(Г■╠'browser'И─┴И║╧Х╝╬Е╝ )Ф■╧Ф┬░Г⌡╝Е┴█Ф▄┤Е╝ Г └Ф╣▐Х╖┬Е≥╗О╪▄Х©≥Ф═╥Ф°╙Ф²╔Ф┴─Ф°┴Г └Е╦╝Е┼╘Х╕│Ф╠┌"
-"И┐╫Д╪ Г■╠Х©≥Д╦╙Ф╣▐Х╖┬Е≥╗Ф²╔Ф▌╖Е┬╤Ц─┌"
+"Изменяю броузер по умолчанию (который указан в опции 'browser') на заданный "
+"броузер, что отразится на всех следующих запросах помощи."
 
 msgid "Making links in per-session dir ..."
-msgstr "Е°╗Ф╞▐Ф°┐Ф°÷Ф√┤Д╩╤Г⌡╝Е╫∙И┤▄Е╩╨Г╚▀Х│■Г╩⌠Б─╕"
+msgstr "Делаю ссылки в папке сессии..."
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
 "its window."
 msgstr ""
-"Е╕┌Ф·°'%s'Е╥╡Г╩▐Е°╗Х©░Х║▄Г └Х╞²О╪▄Е╝┐Д╦█Д╪ Х╒╚И┤█Ф√╟Е░╞Е┼╗О╪▄Е⌡═Ф╜╓Д╫═Е©┘И°─Д╨╨Е╥╔Е°╟Х╫╛Ф█╒Е┬╟Е╝┐Г └Г╙≈Е▐ёЦ─┌"
+"Если '%s' уже запущен, он *not* перезагрузился, и Вы должны перейти в его "
+"окно."
 
 msgid "Otherwise, be patient ..."
-msgstr "Е░╕Е┬≥Г └Х╞²Х╞╥Х─░Е©┐Г╜┴Е╬┘Б─╕"
+msgstr "Если нет, ждите..."
 
 #, fuzzy
 msgid "'url' must be a non-empty character string"
-msgstr "urlЕ©┘И°─Г └И²·Г╘╨Е╜≈Г╛╕Д╦╡"
+msgstr "'url' должен быть непустой текстовой строкой"
 
 #, fuzzy
 msgid "'browser' must be a non-empty character string"
-msgstr "Ф╣▐Х╖┬Е≥╗Е░█Е©┘И°─Д╦╨И²·Г╘╨Е╜≈Г╛╕Д╦╡"
+msgstr "броузер должен быть непустой текстовой строкой"
 
 msgid "cannot create HTML package index"
-msgstr "Ф≈═ФЁ∙Е╩╨Г╚▀HTMLГ╗▀Е╨▐Е▄┘Г╢╒Е╪∙"
+msgstr "не могу создать HTML-индекс пакетов"
 
 msgid "cannot create HTML search index"
-msgstr "Ф≈═ФЁ∙Е╩╨Г╚▀HTMLФ░°Г╢╒Г╢╒Е╪∙"
+msgstr "не могу создать HTML-индекс для поиска"
 
 msgid "'memory.size()' is Windows-specific"
-msgstr "'memory.size()'Е▐╙Е°╗WindowsД╦┼Ф°┴Г■╗"
+msgstr "'memory.size()' -- Windows-специфичный"
 
 msgid "'memory.limit()' is Windows-specific"
-msgstr "'memory.limit()'Е▐╙Е°╗WindowsД╦┼Ф°┴Г■╗"
+msgstr "'memory.limit()' -- Windows-специфичный"
 
 msgid "unable to find the HTML help"
-msgstr "Ф┴╬Д╦█Е┬╟HTMLЕ╦╝Е┼╘Ф√┤Д╩╤"
+msgstr "не могу найти HTML-помощь"
 
 msgid "updating HTML package listing"
-msgstr "Ф⌡╢Ф√╟HTMLГ╗▀Е╨▐Е▄┘Е┬≈Х║╗"
+msgstr "обновляю HTML-список пакетов"
 
 msgid "fixing URLs in non-standard libraries"
-msgstr "Д©╝Г░├И²·Ф═┤Е┤├Г └Е⌡╬Д╧╕И╕├И┤▄Г └URL"
+msgstr "исправляю URL'ы в нестандартных библиотеках"
 
 msgid "If nothing happens, you should open '%s' yourself"
-msgstr "Е╕┌Ф·°Д╩─Д╧┬И┐╫Д╦█Е▐▒Г■÷Г └Х╞²О╪▄Д╫═Е╨■Х╞╔Х┤╙Е╥╠Ф┴⌠Е╪─'%s'"
+msgstr "Если ничего не произойдет, надо самому открыть '%s'"
 
 msgid "unable to create temporary directory '%s'"
-msgstr "Ф≈═ФЁ∙Е╩╨Г╚▀Д╦╢Ф≈╤Г⌡╝Е╫∙'%s'"
+msgstr "не могу создать временную папку '%s'"
 
 msgid "package '%s' successfully unpacked and MD5 sums checked"
-msgstr "Г╗▀Е╨▐Е▄┘'%s'Ф┴⌠Е╪─Ф┬░Е┼÷О╪▄MD5Е▓▄Фё─Ф÷╔Д╧÷И─ Х©┤"
+msgstr "пакет '%s' успешно распакован, MD5-суммы проверены"
 
 msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr "Е▄┘Х╒╠DESCRIPTIONФ√┤Д╩╤Ф═╪Е╪▐Д╦█Е╞╧О╪▄Ф╡║Ф°┴ContainsХ©≥Д╦─Е÷÷"
+msgstr "у связки пакетов -- неправильный файл DESCRIPTION, без поля 'Contains'"
 
 msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr "Ф┬░Е┼÷Е°╟Ф┴⌠Е╪─Д╨├Е▄┘Х╒╠'%s'О╪▄MD5Е▓▄Фё─Ф÷╔Д╧÷И─ Х©┤"
+msgstr "связка пакетов '%s' успешно распакована, MD5-суммы проверены"
 
 msgid "failed to create '%s'"
-msgstr "Ф≈═ФЁ∙Е╩╨Г╚▀'%s'"
+msgstr "не удалось создать '%s'"
 
 msgid "unable to move temporary installation '%s' to '%s'"
-msgstr "Ф≈═ФЁ∙Е╟├Д╦╢Ф≈╤Е╝┴Хё┘'%s'Ф░╛Е┬╟'%s'"
+msgstr "не могу перенести временную установку из '%s' в '%s'"
 
 msgid "cannot remove prior installation of package '%s'"
-msgstr "Ф≈═ФЁ∙Е╟├Ф▀├И≥╓Е▌÷Ф²╔Е╝┴Хё┘Г └Г╗▀Е╨▐Е▄┘ '%s'"
+msgstr "не могу удалить прежнюю установку пакета '%s'"
 
 msgid "zipfile '%s' not found"
-msgstr "Ф┴╬Д╦█Е┬╟'%s'Х©≥Д╦─zipФ√┤Д╩╤"
+msgstr "zip-файл '%s' не найден"
 
 msgid "updating HTML package descriptions"
-msgstr "Ф⌡╢Ф√╟HTMLГ╗▀Е╨▐Е▄┘Г └Ф▐▐Х©╟Е├┘Е╝╧"
+msgstr "обновляю HTML-описания пакетов"
 
 msgid "cannot update HTML package index"
-msgstr "Ф≈═ФЁ∙Ф⌡╢Ф√╟HTMLГ╗▀Е╨▐Е▄┘Г╢╒Е╪∙"
+msgstr "не могу обновить HTML-индекс пакетов"
 
 msgid "cannot update HTML search index"
-msgstr "Ф≈═ФЁ∙Ф⌡╢Ф√╟HTMLФ░°Г╢╒Г╢╒Е╪∙"
+msgstr "не могу обновить HTML-индекс поиска"
 
 msgid "cannot update '%s'"
-msgstr "Ф≈═ФЁ∙Ф⌡╢Ф√╟'%s'"
+msgstr "не могу обновить '%s'"
 
 msgid "this function is intended to work with the Aqua GUI"
-msgstr "Ф╜╓Е┤╫Ф∙╟Е▐╙Х┐╫Е°╗Aqua GUIД╦▀Ф°┴Г■╗"
+msgstr "эта функция предназначена для работы с Aqua GUI"
 
 msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar'И──Е┤╨Г═│Д╦╨%d"
+msgstr "'tar' вернул ненулевой код выхода %d"
 
 msgid "cannot remove prior installation of package"
-msgstr "Ф≈═ФЁ∙Ф▀├И≥╓Е▌÷Ф²╔Е╝┴Хё┘Г └Г╗▀Е╨▐Е▄┘"
+msgstr "не могу удалить прежнюю установку пакета"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
-msgstr[0] "Ф┴╬Д╦█Е┬╟'%s'Х©≥Д╦╙Г⌡╝Ф═┤Е╞╧Х╠║"
-msgstr[1] "Ф┴╬Д╦█Е┬╟'%s'Х©≥Д╦╙Г⌡╝Ф═┤Е╞╧Х╠║"
+msgstr[0] "объект '%s' не найден"
+msgstr[1] "объекты '%s' не найдены"
+msgstr[2] "объекты '%s' не найдены"
 
 msgid "dependency '%s' is not available"
 msgid_plural "dependencies '%s' are not available"
-msgstr[0] "Ф╡║Ф°┴'%s'Х©≥Г╖█Г⌡╦Д╬²Е┘ЁГЁ╩"
-msgstr[1] "Ф╡║Ф°┴'%s'Х©≥Г╖█Г⌡╦Д╬²Е┘ЁГЁ╩"
+msgstr[0] "зависимость '%s' недоступна"
+msgstr[1] "зависимости '%s' недоступны"
+msgstr[2] "зависимости '%s' недоступны"
 
 msgid "also installing the dependency "
 msgid_plural "also installing the dependencies "
-msgstr[0] "Х©≤Е╝┴Хё┘Г⌡╦Д╬²Е┘ЁГЁ╩"
-msgstr[1] "Х©≤Е╝┴Хё┘Г⌡╦Д╬²Е┘ЁГЁ╩"
+msgstr[0] "устанавливаю также зависимость"
+msgstr[1] "устанавливаю также зависимости"
+msgstr[2] "устанавливаю также зависимости"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
-msgstr[0] "Ф╜ёЕ°╗Д╫©Г■╗'%s'Х©≥Д╦╙Г╗▀Е╨▐Е▄┘О╪▄Е⌡═Ф╜╓Д╦█Д╪ Х╒╚И┤█Ф√╟Е╝┴Хё┘"
-msgstr[1] "Ф╜ёЕ°╗Д╫©Г■╗'%s'Х©≥Д╦╙Г╗▀Е╨▐Е▄┘О╪▄Е⌡═Ф╜╓Д╦█Д╪ Х╒╚И┤█Ф√╟Е╝┴Хё┘"
-
-#~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
-#~ msgstr "Е▐╞Д╩╔Д╩▌Е┘╤Д╩√Ф√┤Д╩╤/KEYWORDSД╦╜Д╩╩И─┴Е┘╤Д╩√Е┘ЁИ■╝Е╜≈О╪▄Ф╞▐Х║▄Д╦─Д╦╙"
+msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
+msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
+msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"

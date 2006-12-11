@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2006-11-25 12:18\n"
-"PO-Revision-Date: 2006-04-18 09:00+0100\n"
+"PO-Revision-Date: 2006-12-05 20:46+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,9 +75,8 @@ msgstr "'which' ne spécifie aucun facteur"
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which' spécifie des variables non facteurs qui seront éliminées"
 
-#, fuzzy
 msgid "'lag.max' must be at least 0"
-msgstr "'lag.max' doit valoir au moins 1"
+msgstr "'lag.max' doit valoir au moins 0"
 
 msgid "'lag.max' must be at least 1"
 msgstr "'lag.max' doit valoir au moins 1"
@@ -133,9 +132,8 @@ msgstr "la formule supérieure n'inclus pas le ou les termes %s du modèle"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC n'est pas défini pour ce modèle, donc 'step' ne peut poursuivre"
 
-#, fuzzy
 msgid "'A' must be an array or table"
-msgstr "'x' doit être une matrice ou un tableau de données"
+msgstr "'A' doit être une matrice (array) ou un tableau de données (table)"
 
 msgid ""
 "length of FUN, %d,\n"
@@ -762,47 +760,42 @@ msgstr "pas de valeurs initiales fournies"
 msgid "unable to optimize from these starting value(s)"
 msgstr "optimisation impossible à partir de ces valeurs initiales"
 
-#, fuzzy
 msgid "invalid argument 'lambda'"
-msgstr "argument 'omit' incorrect"
+msgstr "argument 'lambda' incorrect"
 
 msgid "link not recognised"
 msgstr "lien non reconnu"
 
-#, fuzzy
 msgid "link \"%s\" not available for poisson family; available links are %s"
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille Poisson ; les liens "
-"possibles sont \"identity\", \"log\" et \"sqrt\""
+"le lien \"%s\" n'est pas disponible pour la famille 'poisson' ; les liens "
+"possibles sont %s"
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "les valeurs négatives sont interdites pour la famille poisson"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are %s"
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille quasipoisson ; les liens "
-"possibles sont \"identity\", \"log\" et \"sqrt\""
+"le lien \"%s\" n'est pas disponible pour la famille 'quasipoisson' ; les "
+"liens possibles sont %s"
 
 msgid "negative values not allowed for the quasiPoisson family"
 msgstr "les valeurs négatives sont interdites pour la famille quasipoisson"
 
-#, fuzzy
 msgid "link \"%s\" not available for gaussian family; available links are %s"
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille gaussian ; les liens "
-"possibles sont \"inverse\", \"log\" et \"identity\""
+"le lien \"%s\" n'est pas disponible pour la famille 'gaussian' ; les liens "
+"possibles sont %s"
 
 msgid "cannot find valid starting values: please specify some"
 msgstr ""
 "impossible de trouver des valeurs initiales correctes : prière d'en fournir"
 
-#, fuzzy
 msgid "link \"%s\" not available for binomial family; available links are %s"
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille Poisson ; les liens "
-"possibles sont \"identity\", \"log\" et \"sqrt\""
+"le lien \"%s\" n'est pas disponible pour la famille 'binomial' ; les liens "
+"possibles sont %s"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "les valeurs de y doivent être 0 <= y <= 1"
@@ -822,33 +815,30 @@ msgstr ""
 "ou une matrice à 2 colonnes où la col 1 est le nombre de succès et la col 2 "
 "le nombre d'échecs"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for quasibinomial family; available links are %s"
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille quasipoisson ; les liens "
-"possibles sont \"identity\", \"log\" et \"sqrt\""
+"le lien \"%s\" n'est pas disponible pour la famille 'quasibinomial' ; les "
+"liens possibles sont %s"
 
 msgid "for the quasibinomial family, y must be a vector of 0 and 1's"
 msgstr "pour la famille quasibinomial, 'y' doit être un vecteur de 0 et de 1"
 
-#, fuzzy
 msgid "link \"%s\" not available for gamma family; available links are %s"
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille gamma ; les liens "
-"possibles sont \"inverse\", \"\"log\" et \"identity\""
+"le lien \"%s\" n'est pas disponible pour la famille 'gamma' ; les liens "
+"possibles sont %s"
 
 msgid "non-positive values not allowed for the gamma family"
 msgstr ""
 "les valeurs inférieurs ou égales à zéro ne sont pas autorisées pour la "
 "famille gamma"
 
-#, fuzzy
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
 msgstr ""
-"le lien \"%s\" n'est pas possible pour la famille gaussian ; les liens "
-"possibles sont \"inverse\", \"log\" et \"identity\""
+"le lien \"%s\" n'est pas disponible pour la famille 'inverse.gaussian' ; les "
+"liens possibles sont %s"
 
 msgid "positive values only allowed for the inverse.gaussian family"
 msgstr ""
@@ -979,9 +969,8 @@ msgstr "'family' non reconnu"
 msgid "invalid 'method':"
 msgstr "'method' incorrect"
 
-#, fuzzy
 msgid "'weights' must be a numeric vector"
-msgstr "'y' doit être un vecteur numérique"
+msgstr "'weights' doit être un vecteur numérique"
 
 msgid "negative weights not allowed"
 msgstr "poids négatifs non autorisés"
@@ -1175,9 +1164,8 @@ msgstr "'x' est plus court que le noyau 'k'"
 msgid "'kernapply' is not available for object 'x'"
 msgstr "'kernapply' n'est pas disponible pour l'objet 'x'"
 
-#, fuzzy
 msgid "'x' is not a kernel"
-msgstr "'k' n'est pas un noyau"
+msgstr "'x' n'est pas un noyau"
 
 msgid "empty cluster: try a better set of initial centers"
 msgstr "classe vide : essayez un jeu de centres meilleur"
@@ -1285,18 +1273,22 @@ msgstr ""
 
 msgid "Predictions on current data refer to _future_ responses"
 msgstr ""
+"Les prédictions sur les données actuelles se réfères à des réponses _futures_"
 
 msgid ""
 "Assuming prediction variance inversely proportional to weights used for "
 "fitting"
 msgstr ""
+"L'hypothèse d'une variance des prédictions inversément proportionnelle aux "
+"poids est utilisée lors de l'ajustement"
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
 msgstr ""
+"Hypothèse d'une variance constante des prédictions, bien que le modèle "
+"ajusté soit pondéré"
 
-#, fuzzy
 msgid "'weights' as formula should be one-sided"
-msgstr "'weights' ne peuvent être négatifs"
+msgstr "'weights' comme formule ne peut avoir qu'un seul membre"
 
 msgid "'object' has no 'effects' component"
 msgstr "'object' n'a pas de composante 'effects'"
@@ -1323,9 +1315,8 @@ msgid "both 'span' and 'enp.target' specified: 'span' will be used"
 msgstr ""
 "'span' et 'enp.target' ont tous deux été spécifiés : 'span' sera utilisé"
 
-#, fuzzy
 msgid "invalid 'control' argument"
-msgstr "argument 'contrasts.arg' incorrect"
+msgstr "argument 'control' incorrect"
 
 msgid "only 1-4 predictors are allowed"
 msgstr "pas plus de 4 prédicteurs autorisés"
@@ -1518,17 +1509,15 @@ msgstr "la variable '%s' n'est pas un facteur"
 msgid "factor '%s' has new level(s) %s"
 msgstr "le facteur '%s' a un(des) nouveau(x) niveau(x) %s"
 
-#, fuzzy
 msgid "'offset' must be numeric"
-msgstr "'x' doit être numérique"
+msgstr "'offset' doit être numérique"
 
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr ""
 "le tableau du modèle et la formule ne correspondent pas dans model.matrix()"
 
-#, fuzzy
 msgid "variable '%s' converted to a factor"
-msgstr "la variable '%s' n'est pas un facteur"
+msgstr "la variable '%s' est convertie en facteur"
 
 msgid "invalid 'contrasts.arg' argument"
 msgstr "argument 'contrasts.arg' incorrect"
@@ -1612,29 +1601,26 @@ msgid "singular gradient matrix at initial parameter estimates"
 msgstr ""
 "matrice de gradient singulière pour les estimations initiales des paramètres"
 
-#, fuzzy
 msgid "'data' must be a list or an environment"
-msgstr "'newdata' doit être une matrice ou un tableau de données"
+msgstr "'data' doit être une liste ou un environnement"
 
-#, fuzzy
 msgid "No starting values specified"
-msgstr "pas de valeurs initiales fournies"
+msgstr "Pas de valeurs initiales fournies"
 
-#, fuzzy
 msgid "No starting values specified for some parameters."
-msgstr "pas de valeurs initiales fournies"
+msgstr "Pas de valeurs initiales fournies pour certains paramètres."
 
 msgid "Intializing"
-msgstr ""
+msgstr "Initialisation"
 
 msgid "to '1.'."
-msgstr ""
+msgstr "à '1'."
 
 msgid "Consider specifying 'start' or using a selfStart model"
-msgstr ""
+msgstr "Spécifiez 'start' ou utilisez un model de type 'SelfStart'"
 
 msgid "parameters without starting value in 'data':"
-msgstr ""
+msgstr "des paramètres n'ont pas de valeurs initiales dans 'data' :"
 
 msgid "Upper or lower bounds ignored unless algorithm = \"port\""
 msgstr ""
@@ -1695,10 +1681,10 @@ msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' doit appartenir à {1,..,%d}"
 
 msgid "hat values (leverages) are all ="
-msgstr ""
+msgstr "les 'hat values' (leverages) sont toutes ="
 
 msgid "and there are no factor predictors; no plot no. 5"
-msgstr ""
+msgstr "et il n'y a aucune variable dépendante facteur ; aucun graphe no. 5"
 
 msgid ""
 "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
@@ -1742,7 +1728,7 @@ msgid "wrong number of columns in 'x'"
 msgstr "le nombre de colonnes de 'x' est incorrect"
 
 msgid "cannot rescale a constant/zero column to unit variance"
-msgstr ""
+msgstr "impossible de standardiser une constante/une colonne nulle"
 
 msgid "PCA applies only to numerical variables"
 msgstr "l'ACP ne s'applique qu'à des valeurs numériques"
@@ -1775,7 +1761,7 @@ msgstr ""
 "nombre de variables"
 
 msgid "cannot use cor=TRUE with a constant variable"
-msgstr ""
+msgstr "impossible d'utiliser cor=TRUE avec une variable constante"
 
 msgid "covariance matrix is not non-negative definite"
 msgstr "la matrice de covariance contient des valeurs négatives définies"
@@ -1829,21 +1815,17 @@ msgstr ""
 msgid "'probs' outside [0,1]"
 msgstr "'probs' en dehors de [0,1]"
 
-#, fuzzy
 msgid "invalid argument 'n'"
-msgstr "argument 'omit' incorrect"
+msgstr "argument 'n' incorrect"
 
-#, fuzzy
 msgid "invalid argument 'r'"
-msgstr "argument 'omit' incorrect"
+msgstr "argument 'r' incorrect"
 
-#, fuzzy
 msgid "invalid argument 'c'"
-msgstr "argument 'omit' incorrect"
+msgstr "argument 'c' incorrect"
 
-#, fuzzy
 msgid "arguments 'r' and 'c' must have the same sums"
-msgstr "les arguments doivent avoir la même longueur"
+msgstr "les arguments 'r' et 'c' doivent avoir la même somme"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel' n'est utilisable que pour des facteurs"
@@ -2087,10 +2069,12 @@ msgid "time series contains internal NAs"
 msgstr "la série temporelle contient des NA internes"
 
 msgid "series is corrupt, with no 'tsp' attribute"
-msgstr ""
+msgstr "la série est incorrecte, pas d'attribut 'tsp'"
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr ""
+"la série est incorrecte : longeur %d mais avec un 'tps' qui implique %d "
+"observations"
 
 msgid "cannot plot more than 10 series as \"multiple\""
 msgstr "impossible de tracer plus de 10 séries comme \"multiple\""
@@ -2144,9 +2128,8 @@ msgstr ""
 "le nombre de valeurs fournies n'est pas un multiple du nombre de valeurs à "
 "remplacer"
 
-#, fuzzy
 msgid "only replacement of elements is allowed"
-msgstr "trop de valeurs de remplacement fournies"
+msgstr "seul le remplacement d'éléments est autorisé"
 
 msgid "'model' must be list"
 msgstr "'model' doit être une liste"
@@ -2273,8 +2256,8 @@ msgstr[1] "il y a %d termes d'erreur : un seul est autorisé"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d observation effacée parce que manquante"
+msgstr[1] "%d observations effacées parce que manquantes"
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
