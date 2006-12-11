@@ -144,24 +144,24 @@ msgid "R_HOME not set"
 msgstr "没有设定R_HOME"
 
 #: src/gnuwin32/extra.c:249
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' not found"
-msgstr "没找到"
+msgstr "'%s'没找到"
 
 #: src/gnuwin32/extra.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "file association for '%s' not available or invalid"
-msgstr "本系统没有检查文件修改时间这一功能"
+msgstr "无法同'%s'这样的文件关联"
 
 #: src/gnuwin32/extra.c:254
 #, c-format
 msgid "access to '%s' denied"
-msgstr ""
+msgstr "不能存取'%s'"
 
 #: src/gnuwin32/extra.c:255
 #, c-format
 msgid "problem in displaying '%s'"
-msgstr ""
+msgstr "在显示'%s'时出了问题"
 
 #: src/gnuwin32/extra.c:309
 msgid "unknown type"
@@ -537,9 +537,9 @@ msgid "WARNING: '%s' value is invalid: ignored\n"
 msgstr "警告: '%s'的值不对: 略过不用\n"
 
 #: src/main/CommandLineArgs.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: %s: too large and ignored\n"
-msgstr "警告: %s=%lu'%c': 太大，略过不用\n"
+msgstr "警告: %s: 太大，略过不用\n"
 
 #: src/main/CommandLineArgs.c:240
 msgid "WARNING: no value given for '--max-ppsize'\n"
@@ -729,19 +729,16 @@ msgid "first argument is not a matrix"
 msgstr "第一个变元不是矩阵"
 
 #: src/main/apply.c:195
-#, fuzzy
 msgid "invalid 'f' argument"
-msgstr "'%s'变元不对"
+msgstr "'f'变元不对"
 
 #: src/main/apply.c:197
-#, fuzzy
 msgid "invalid 'classes' argument"
-msgstr "'%s'变元不对"
+msgstr "'classes'变元不对"
 
 #: src/main/apply.c:200
-#, fuzzy
 msgid "invalid 'how' argument"
-msgstr "'%s'变元不对"
+msgstr "'how'变元不对"
 
 #: src/main/arithmetic.c:196
 msgid "probable complete loss of accuracy in modulus"
@@ -1087,9 +1084,9 @@ msgstr "UpdatePS事件需要单数值"
 
 #: src/main/bind.c:268 src/main/bind.c:303 src/main/bind.c:351
 #: src/main/bind.c:419 src/main/bind.c:449
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is unimplemented in '%s'"
-msgstr "'%s'这一种类目前还没有实现"
+msgstr "'%2$s'里目前还没有实现'%1$s'这一种类"
 
 #: src/main/bind.c:638
 msgid "repeated formal argument 'recursive'"
@@ -5075,8 +5072,8 @@ msgstr "列標記不够"
 #, c-format
 msgid " [ reached getOption(\"max.print\") -- omitted last row ]]\n"
 msgid_plural " [ reached getOption(\"max.print\") -- omitted %d rows ]]\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "[到达getOption(\"max.print\") -- 略过最后一行]]\n"
+msgstr[1] "[到达getOption(\"max.print\") -- 略过最后一行]]\n"
 
 #: src/main/qsort.c:50
 msgid "argument is not a numeric vector"
@@ -5700,9 +5697,8 @@ msgstr ""
 "$d.%7$d或更新"
 
 #: src/main/serialize.c:1585
-#, fuzzy
 msgid "read failed"
-msgstr "XDR读取失败"
+msgstr "读取失败"
 
 #: src/main/serialize.c:1641 src/main/serialize.c:1654
 msgid "error reading from connection"
@@ -6285,9 +6281,9 @@ msgid "object is not a matrix"
 msgstr "目标对象不是矩阵"
 
 #: src/main/util.c:232 src/main/util.c:244 src/main/util.c:258
-#, fuzzy, c-format
+#, c-format
 msgid "type %d is unimplemented in '%s'"
-msgstr "'%2$s'里的%种类还没有被实现"
+msgstr "'%2$s'里的%1$d种类还没有被实现"
 
 #: src/main/util.c:268
 #, c-format
@@ -7128,8 +7124,23 @@ msgstr "无法载入X11模块"
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
 
+#~ msgid "using .GlobalEnv instead of '%s'"
+#~ msgstr "用.GlobalEnv而不用'%s'"
+
+#~ msgid "namespaces not available; using .GlobalEnv"
+#~ msgstr "名字空间没用; 用.GlobalEnv"
+
+#~ msgid "too many devices open"
+#~ msgstr "太多已经打开了的设备"
+
 #~ msgid "ReadItem: unknown type %i"
 #~ msgstr "ReadItem不对：没有这一种类%i"
+
+#~ msgid "syntax error"
+#~ msgstr "语法错误"
+
+#~ msgid "syntax error in \"%s\""
+#~ msgstr "\"%s\"里有语法错误"
 
 #~ msgid "WARNING: no 'vsize' given\n"
 #~ msgstr "警告: 没有设定'vsize'的值\n"
@@ -7148,21 +7159,6 @@ msgstr "没有X11平台这一功能"
 
 #~ msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
 #~ msgstr "警告: --nsize=%lu'%c': 太大，略过不用\n"
-
-#~ msgid "syntax error"
-#~ msgstr "语法错误"
-
-#~ msgid "syntax error in \"%s\""
-#~ msgstr "\"%s\"里有语法错误"
-
-#~ msgid "using .GlobalEnv instead of '%s'"
-#~ msgstr "用.GlobalEnv而不用'%s'"
-
-#~ msgid "namespaces not available; using .GlobalEnv"
-#~ msgstr "名字空间没用; 用.GlobalEnv"
-
-#~ msgid "too many devices open"
-#~ msgstr "太多已经打开了的设备"
 
 #~ msgid "supplied length is invalid"
 #~ msgstr "长度不对"

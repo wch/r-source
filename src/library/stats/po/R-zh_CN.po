@@ -70,9 +70,8 @@ msgstr "'which'没有指定因子"
 msgid "'which' specified some non-factors which will be dropped"
 msgstr "'which'内的非因子略过不用"
 
-#, fuzzy
 msgid "'lag.max' must be at least 0"
-msgstr "'lag.max'至少必需为1"
+msgstr "'lag.max'至少必需为0"
 
 msgid "'lag.max' must be at least 1"
 msgstr "'lag.max'至少必需为1"
@@ -1956,9 +1955,8 @@ msgstr "非时间序列的长度不对"
 msgid "time series contains internal NAs"
 msgstr "时间序列含内部NA"
 
-#, fuzzy
 msgid "series is corrupt, with no 'tsp' attribute"
-msgstr "系列不对：长度为%d的'tsp'意味着%d"
+msgstr "系列不对：缺少'tsp'这一属性"
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
 msgstr "系列不对：长度为%d的'tsp'意味着%d"
@@ -2119,7 +2117,7 @@ msgstr[1] ""
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
-msgstr[0] ""
+msgstr[0] "因为不存在%d个观察量被删除了"
 msgstr[1] ""
 
 msgid "parameter %s does not occur in the model formula"

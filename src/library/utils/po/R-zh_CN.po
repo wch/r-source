@@ -348,9 +348,8 @@ msgstr "'agrep'设定得不对"
 msgid "no package '%s' was found"
 msgstr "找不到'%s'这样一个程序包"
 
-#, fuzzy
 msgid "DESCRIPTION file of package '%s' is corrupt"
-msgstr "程序包'%d'里要么没有DESCRIPTION这个文件，要么出了错"
+msgstr "程序包'%s'里DESCRIPTION这个文件出了错"
 
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'文件有'Encoding'这个域但重新編碼是不可能的"
