@@ -597,14 +597,12 @@ msgid "Apply"
 msgstr "应用"
 
 #: preferences.c:788
-#, fuzzy
 msgid "Save..."
 msgstr "保存为..."
 
 #: preferences.c:789
-#, fuzzy
 msgid "Load..."
-msgstr "载入"
+msgstr "载入..."
 
 #: rui.c:125
 msgid "Select file to source"

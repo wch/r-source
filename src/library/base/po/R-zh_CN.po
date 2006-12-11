@@ -1255,7 +1255,7 @@ msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE'对URL来说没有任何意义"
 
 msgid "cannot 'chdir' as current directory is unknown"
-msgstr ""
+msgstr "'chdir'没有作用，因为不知道目前的目录在哪里"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE'对联结来说没有任何意义"
@@ -1273,11 +1273,10 @@ msgid "TRUE"
 msgstr "TRUE"
 
 msgid "adding class \"ts\": this is deprecated"
-msgstr ""
+msgstr "加入\"ts\"类别这一功能不再有用"
 
-#, fuzzy
 msgid "conversion to factor is deprecated"
-msgstr "在R版本2号之前的保存功能不再有用"
+msgstr "因子转换功能不再有用"
 
 msgid "incorrect value for 'x'"
 msgstr "'x'的值不对"
