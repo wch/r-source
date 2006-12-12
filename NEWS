@@ -162,9 +162,12 @@ BUG FIXES
     o	readBin() could return one too many strings if 'n' was an
 	over-estimate. (PR#9361)
 
-    o	A request for an opaque colour in the pdf() driver after a
+    o	A request for an opaque colour in the pdf() device after a
 	translucent one did not set the transparency back to opaque in
 	2.4.0.
+
+	Semi-transparent background colours were not being plotted on
+	the pdf() device.
 
     o	plot.lm(which=5) in the case of constant leverage re-ordered
 	the factor levels but not the residuals, so the labelling by

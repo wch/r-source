@@ -6147,6 +6147,8 @@ static void PDF_endpage(PDFDesc *pd)
 	    here - pd->startstream);
 }
 
+#define R_VIS(col) (R_ALPHA(col) > 0)
+
 static void PDF_NewPage(R_GE_gcontext *gc,
 			NewDevDesc *dd)
 {
@@ -6193,7 +6195,7 @@ static void PDF_NewPage(R_GE_gcontext *gc,
      */
     fprintf(pd->pdffp, "q\n");
     PDF_Invalidate(dd);
-    if(R_OPAQUE(gc->fill)) {
+    if(R_VIS(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
 	fprintf(pd->pdffp, "0 0 %.2f %.2f re f\n",
 		72.0 * pd->width, 72.0 * pd->height);
@@ -6216,8 +6218,6 @@ static void PDF_Close(NewDevDesc *dd)
 
 static void PDF_Activate(NewDevDesc *dd) {}
 static void PDF_Deactivate(NewDevDesc *dd) {}
-
-#define R_VIS(col) (R_ALPHA(col) > 0)
 
 static void PDF_Rect(double x0, double y0, double x1, double y1,
 		     R_GE_gcontext *gc,
@@ -6464,6 +6464,8 @@ static void PDFSimpleText(double x, double y, char *str,
     double a, b, rot1;
     char *str1 = str;
 
+    if(!R_VIS(gc->col)) return;
+
     if(face < 1 || face > 5) {
 	warning(_("attempt to use invalid font %d replaced by font 1"), face);
 	face = 1;
@@ -6509,6 +6511,8 @@ static void PDF_Text(double x, double y, char *str,
     double a, b, rot1;
     char *str1 = str;
     char *buff;
+
+    if(!R_VIS(gc->col)) return;
 
     if(face < 1 || face > 5) {
 	warning(_("attempt to use invalid font %d replaced by font 1"), face);
