@@ -2182,6 +2182,7 @@ typedef struct {
     Rboolean printit;	/* print page at close? */
     char command[PATH_MAX];
     char title[1024];
+    char colormodel[30];
 
     FILE *psfp;		/* output file */
 
@@ -2835,33 +2836,55 @@ static void PS_Text(double x, double y, char *str,
 
 /* PostScript Support (formerly in PostScript.c) */
 
-static void PostScriptSetCol(FILE *fp, double r, double g, double b)
+static void PostScriptSetCol(FILE *fp, double r, double g, double b, char *mm)
 {
-    if(r == 0) fprintf(fp, "0");
-    else if (r == 1) fprintf(fp, "1");
-    else fprintf(fp, "%.4f", r);
-    if(g == 0) fprintf(fp, " 0");
-    else if (g == 1) fprintf(fp, " 1");
-    else fprintf(fp, " %.4f", g);
-    if(b == 0) fprintf(fp, " 0");
-    else if (b == 1) fprintf(fp, " 1");
-    else fprintf(fp, " %.4f", b);
-    fprintf(fp," rgb\n");
+    if(r == g && g == b && !(streql(mm, "cmyk") || streql(mm, "rgb-nogray"))) { /* grey */
+	if(r == 0) fprintf(fp, "0");
+	else if (r == 1) fprintf(fp, "1");
+	else fprintf(fp, "%.4f", r);
+	fprintf(fp," setgray");	
+    } else {
+	if(strcmp(mm, "gray") == 0)
+	    error(_("only gray colors are allowed in this color model"));
+	if(strcmp(mm, "cmyk") == 0) {
+	    double c = 1.0-r, m=1.0-g, y=1.0-b, k=c;
+	    k = fmin2(k, m);
+	    k = fmin2(k, y);
+	    if(k == 1.0) c = m = y = 0.0;
+	    else {c /= (1.-k); m /= (1.-k); y /= (1.-k);}
+	    if(c == 0) fprintf(fp, "0");
+	    else if (c == 1) fprintf(fp, "1");
+	    else fprintf(fp, "%.4f", c);
+	    if(m == 0) fprintf(fp, " 0");
+	    else if (m == 1) fprintf(fp, " 1");
+	    else fprintf(fp, " %.4f", m);
+	    if(y == 0) fprintf(fp, " 0");
+	    else if (y == 1) fprintf(fp, " 1");
+	    else fprintf(fp, " %.4f", y);
+	    if(k == 0) fprintf(fp, " 0");
+	    else if (k == 1) fprintf(fp, " 1");
+	    else fprintf(fp, " %.4f", k);
+	    fprintf(fp," setcmykcolor\n");
+	} else {
+	    if(r == 0) fprintf(fp, "0");
+	    else if (r == 1) fprintf(fp, "1");
+	    else fprintf(fp, "%.4f", r);
+	    if(g == 0) fprintf(fp, " 0");
+	    else if (g == 1) fprintf(fp, " 1");
+	    else fprintf(fp, " %.4f", g);
+	    if(b == 0) fprintf(fp, " 0");
+	    else if (b == 1) fprintf(fp, " 1");
+	    else fprintf(fp, " %.4f", b);
+	    fprintf(fp," rgb");
+	}
+    }
 }
 
-static void PostScriptSetFill(FILE *fp, double r, double g, double b)
+static void PostScriptSetFill(FILE *fp, double r, double g, double b, char *m)
 {
     fprintf(fp,"/bg { ");
-    if(r == 0) fprintf(fp, "0");
-    else if (r == 1) fprintf(fp, "1");
-    else fprintf(fp, "%.4f", r);
-    if(g == 0) fprintf(fp, " 0");
-    else if (g == 1) fprintf(fp, " 1");
-    else fprintf(fp, " %.4f", g);
-    if(b == 0) fprintf(fp, " 0");
-    else if (b == 1) fprintf(fp, " 1");
-    else fprintf(fp, " %.4f", b);
-    fprintf(fp," } def\n");
+    PostScriptSetCol(fp, r, g, b, m);
+    fprintf(fp, " } def\n");
 }
 
 
@@ -2883,7 +2906,7 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 	       Rboolean horizontal, double ps,
 	       Rboolean onefile, Rboolean pagecentre,
 	       Rboolean printit, char *cmd, char *title,
-	       SEXP fonts)
+	       SEXP fonts, char *colormodel)
 {
     /* If we need to bail out with some sort of "error"
        then we must free(dd) */
@@ -2916,6 +2939,7 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     strcpy(pd->filename, file);
     strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
+    strncpy(pd->colormodel, colormodel, 30);
 
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
@@ -3286,7 +3310,8 @@ static void SetColor(int color, NewDevDesc *dd)
 	PostScriptSetCol(pd->psfp,
 			 R_RED(color)/255.0,
 			 R_GREEN(color)/255.0,
-			 R_BLUE(color)/255.0);
+			 R_BLUE(color)/255.0, pd->colormodel);
+	fprintf(pd->psfp, "\n");
 	pd->current.col = color;
     }
 }
@@ -3298,7 +3323,7 @@ static void SetFill(int color, NewDevDesc *dd)
 	PostScriptSetFill(pd->psfp,
 			  R_RED(color)/255.0,
 			  R_GREEN(color)/255.0,
-			  R_BLUE(color)/255.0);
+			  R_BLUE(color)/255.0, pd->colormodel);
 	pd->current.fill = color;
     }
 }
@@ -6855,7 +6880,7 @@ SEXP PostScript(SEXP args)
     GEDevDesc *dd;
     char *vmax;
     char *file, *paper, *family=NULL, *bg, *fg, *cmd;
-    char *afms[5], *encoding, *title, call[] = "postscript";
+    char *afms[5], *encoding, *title, call[] = "postscript", *colormodel;
     int i, horizontal, onefile, pagecentre, printit;
     double height, width, ps;
     SEXP fam, fonts;
@@ -6890,7 +6915,8 @@ SEXP PostScript(SEXP args)
     printit = asLogical(CAR(args));   args = CDR(args);
     cmd = CHAR(asChar(CAR(args)));    args = CDR(args);
     title = CHAR(asChar(CAR(args)));  args = CDR(args);
-    fonts = CAR(args);
+    fonts = CAR(args);		      args = CDR(args);
+    colormodel = CHAR(asChar(CAR(args)));
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);
 
@@ -6906,7 +6932,8 @@ SEXP PostScript(SEXP args)
 	dev->savedSnapshot = R_NilValue;
 	if(!PSDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
-			   pagecentre, printit, cmd, title, fonts)) {
+			   pagecentre, printit, cmd, title, fonts,
+			   colormodel)) {
 	    /* free(dev); No, dev freed inside PSDeviceDrive */
 	    error(_("unable to start device PostScript"));
 	}

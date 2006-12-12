@@ -149,6 +149,11 @@ NEW FEATURES
 	We plan to add "maybeNULL = TRUE" in quite a few places in order to
 	increase memory efficiency (with loss of strict backward compatibility).
 
+    o	postscript() now by default writes grey colors (including black
+	and white) via 'setgray', which gives more widely acceptable
+	output.  There are options to write pure RGB, CMYK or gray via
+	the new argument 'colormodel'.
+
 
 DEPRECATED & DEFUNCT
 
