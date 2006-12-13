@@ -5,12 +5,14 @@
 # More complicated units are of the form 'unit(1, "string", "a string")'
 # or 'unit(1, "grob", a.grob)'
 unit <- function(x, units, data=NULL) {
-  if (!is.numeric(x))
-    stop("'x' must be numeric")
-  units <- as.character(units)
-  if (length(x) == 0 || length(units) == 0)
-    stop("'x' and 'units' must have length > 0")
-  valid.unit(x, units, recycle.data(data, FALSE, length(x), units))
+    # Used to throw error if !is.numeric(x), but this way
+    # user can specify unit(NA, "npc") rather than
+    # having to specify unit(as.numeric(NA), "npc")
+    x <- as.numeric(x)
+    units <- as.character(units)
+    if (length(x) == 0 || length(units) == 0)
+        stop("'x' and 'units' must have length > 0")
+    valid.unit(x, units, recycle.data(data, FALSE, length(x), units))
 }
 
 valid.unit <- function(x, units, data) {
