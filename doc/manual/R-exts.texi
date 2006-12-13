@@ -113,7 +113,7 @@ before reading on.
 A computing environment including a number of tools is assumed; the
 ``R Installation and Administration'' manual describes what is needed.
 Under a Unix-alike most of the tools are likely to be present by
-default, but Microsoft Windows and MacOSX will require careful setup.
+default, but Microsoft Windows and MacOS X will require careful setup.
 
 Once a source package is created, it must be installed by
 the command @code{R CMD INSTALL}.
@@ -1049,7 +1049,7 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 
 @R{} currently does not distinguish between FORTRAN 77 and Fortran 90/95
 code, and assumes all FORTRAN comes in source files with extension
-@file{.f}.  Commercial Unix systems tyically use a F95 compiler, but
+@file{.f}.  Commercial Unix systems typically use a F95 compiler, but
 only since the release of @code{gcc 4.0.0} in April 2005 have Linux and
 other non-commercial OSes had much support for F95.  The compiler used
 for @R{} on Windows is a F77 compiler.
