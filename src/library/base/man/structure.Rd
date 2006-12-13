@@ -28,7 +28,7 @@ structure(.Data, \dots)
   \code{"levels"}.
 
   It is possible to give the same tag more than once, in which case the
-  last value assigned wins.  As other ways of assigning attributes,
+  last value assigned wins.  As with other ways of assigning attributes,
   using \code{tag=NULL} removes attribute \code{tag} from \code{.Data} if
   it is present.
 }

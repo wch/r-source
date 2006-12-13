@@ -22,6 +22,9 @@ on.exit(expr, add = FALSE)
     set expressions; otherwise (the default) \code{expr} will overwrite
     any previously set expressions.}
 }
+\value{
+  Invisible \code{NULL}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

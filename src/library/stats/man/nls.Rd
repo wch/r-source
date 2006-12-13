@@ -99,7 +99,7 @@ nls(formula, data, start, control, algorithm,
 }
 \value{
   A list of
-  \item{m}{an \code{nlsModel} object incorporating the model}
+  \item{m}{an \code{nlsModel} object incorporating the model.}
   \item{data}{the expression that was passed to \code{nls} as the data
     argument.  The actual data values are present in the environment of
     the \code{m} component.}

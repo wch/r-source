@@ -41,11 +41,14 @@ is.nan(x)
   infinite if either the real and imaginary part is.
 
   \code{is.nan} tests if a numeric value is \code{NaN}.  Do not test
-  equality to \code{NaN}, or even use \code{\link{identical}},
-  since systems typically have many different NaN values.
-  In most ports of \R one of these is used for the numeric missing
-  value \code{NA}.  It is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
+  equality to \code{NaN}, or even use \code{\link{identical}}, since
+  systems typically have many different NaN values.  One of these is used
+  for the numeric missing value \code{NA}, and \code{is.nan} is false
+  for that value.  It is generic: you can write methods to handle
+  specific classes of objects, see \link{InternalMethods}.  The default
+  method handles real and complex vectors: a complex number is regarded
+  as \code{NaN} if either the real or imaginary part is \code{NaN} but
+  not \code{NA}.
 }
 \note{
   In \R, basically all mathematical functions (including basic

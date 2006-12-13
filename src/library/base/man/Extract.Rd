@@ -80,7 +80,7 @@ x$name
   of the right hand side of the assignment.  In this case no partial
   matching of indices is done, and the left-hand-side is coerced as
   needed to accept the values.  Attributes are preserved (although
-  \code{names}, \code{dim} and \code{dinmanes} will be adjusted
+  \code{names}, \code{dim} and \code{dimnames} will be adjusted
   suitably).
 }
 \section{Atomic vectors}{
@@ -108,7 +108,7 @@ x$name
   An empty index (a comma separated blank) indicates that all entries in
   that dimension are selected.
   The argument \code{drop} applies to this form of indexing.
-  
+
   A third form of indexing is via a numeric matrix with the one column
   for each dimension: each row of the index matrix then selects a single
   element of the array, and the result is a vector.  Negative indices are
