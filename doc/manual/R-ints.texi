@@ -1362,7 +1362,6 @@ inside other functions), such as
 nargs        missing
 interactive  is.@emph{xxx}
 .Primitive   .Internal
-symbol.C     symbol.For
 globalenv    baseenv     emptyenv     pos.to.env
 unclass
 seq_along    seq_len
@@ -1370,7 +1369,7 @@ seq_along    seq_len
 @end example
 
 @noindent
-(where @emph{xxx} stands for almost 30 different notions, such as
+(where @emph{xxx} stands for 27 different notions, such as
 @code{function}, @code{vector}, @code{numeric}, and so forth, but not
 @code{is.loaded}).
 
@@ -1379,8 +1378,7 @@ The programming and session management utilities
 
 @example
 @group
-debug    undebug    trace  untrace
-browser  proc.time  gc.time
+debug    undebug browser  proc.time  gc.time
 @end group
 @end example
 
