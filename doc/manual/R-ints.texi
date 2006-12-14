@@ -1294,7 +1294,7 @@ These are the following 1-, 2-, and @math{N}-argument functions:
 
 @example
 @group
-               [    [[    $    @
+               [    [[    $    @@
 <-   <<-  =    [<-  [[<-  $<-
 
 +    -    *    /     ^    %%   %*%  %/%
@@ -1326,13 +1326,11 @@ acosh   asinh    atanh
 @end group
 
 @group
-cumsum  cumprod
-cummax  cummin
+cumsum  cumprod cummax  cummin
 @end group
 
 @group
-Im      Re
-Arg     Conj     Mod
+Im      Re     Arg     Conj     Mod
 @end group
 @end example
 
@@ -1385,7 +1383,7 @@ debug    undebug browser  proc.time  gc.time
 @end enumerate
 
 @item
-The following basic assignment and extractor functions
+The following basic replacement and extractor functions
 
 @example
 @group
@@ -1394,11 +1392,21 @@ class       class<-
 oldClass    oldCLass<-
 attr        attr<-
 attributes  attributes<-
+names       names<-
 dim         dim<-
 dimnames    dimnames<-
             environment<-
+            levels<-
 @end group
 @end example
+
+@findex NAMED
+@noindent
+Note that optimizing @code{NAMED = 1} is only effective within a
+primitive (as the closure wrapper of a @code{.Internal} will set
+@code{NAMED = 2} on the argument) and hence replacement functions should
+where possible be primitive to avoid copying (at least in their default
+methods).
 
 @item
 The following few @math{N}-argument functions are ``primitive'' for
@@ -1422,6 +1430,37 @@ rep        seq.int
 do work in the standard way.
 
 @end enumerate
+
+@menu
+* Special primitives::          
+* Special internals::           
+@end menu
+
+@node Special primitives, Special internals, .Internal vs .Primitive, .Internal vs .Primitive
+@section Special primitives
+
+A small number of primitives are @emph{specials} rather than
+@emph{builtins}, that is they are entered with unevaluated arguments.
+This is clearly necessary for the language constructs and the assignment
+operators.  @code{&&} are @code{||} special as they conditionally
+evaluate their second argument.
+
+@code{rep} and @code{seq.int} are special as they evaluate some of their
+arguments conditional on which are non-missing.
+
+Also special are @code{~}, @code{.Internal}, @code{c}, @code{call},
+@code{seq_along}, @code{expression}, @code{missing}, @code{UseMethod} as
+well as subsetting, subassignment and @code{@@} operators.
+
+
+@node Special internals,  , Special primitives, .Internal vs .Primitive
+@section Special internals
+
+There are also special @code{.Internal} functions: @code{switch},
+@code{Recall}, @code{cbind}, @code{rbind}, @code{unlist},
+@code{parent.frame}, @code{lapply}, @code{eapply}, @code{NextMethod} and
+the family of @code{sys.*} functions.
+
 
 @node R coding standards, Testing R code, .Internal vs .Primitive, Top
 @chapter R coding standards

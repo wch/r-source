@@ -270,6 +270,7 @@ SEXP do_lapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_layout(SEXP, SEXP, SEXP, SEXP);
 SEXP do_length(SEXP, SEXP, SEXP, SEXP);
 SEXP do_lengthgets(SEXP, SEXP, SEXP, SEXP);
+SEXP do_levelsgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_libfixup(SEXP, SEXP, SEXP, SEXP);
 SEXP do_listfiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_load(SEXP, SEXP, SEXP, SEXP);

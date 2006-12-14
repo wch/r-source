@@ -630,7 +630,11 @@ SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
 /* names(object) <- name */
 SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    SEXP ans;
     checkArity(op, args);
+    if (DispatchOrEval(call, op, "names<-", args, env, &ans, 0, 1))
+	return(ans);
+    PROTECT(args = ans);
     if (NAMED(CAR(args)) == 2)
         SETCAR(args, duplicate(CAR(args)));
     if (CADR(args) != R_NilValue) {
@@ -642,6 +646,7 @@ SEXP attribute_hidden do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
         UNPROTECT(1);
     }
     setAttrib(CAR(args), R_NamesSymbol, CADR(args));
+    UNPROTECT(1);
     return CAR(args);
 }
 
@@ -718,21 +723,26 @@ SEXP namesgets(SEXP vec, SEXP val)
 
 SEXP attribute_hidden do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s;
+    SEXP ans;
     checkArity(op, args);
-    s = CAR(args);
-    if (isVector(s) || isList(s) || isLanguage(s))
-	return getAttrib(s, R_NamesSymbol);
-    return R_NilValue;
+    if (DispatchOrEval(call, op, "names", args, env, &ans, 0, 1))
+	return(ans);
+    PROTECT(args = ans);
+    ans = CAR(args);
+    if (isVector(ans) || isList(ans) || isLanguage(ans))
+	ans = getAttrib(ans, R_NamesSymbol);
+    else ans =  R_NilValue;
+    UNPROTECT(1);
+    return ans;
 }
 
 SEXP attribute_hidden do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, "dimnames<-", args, env, &ans, 0, 0))
+    checkArity(op, args);
+    if (DispatchOrEval(call, op, "dimnames<-", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
-    checkArity(op, args);
     if (NAMED(CAR(args)) > 1) SETCAR(args, duplicate(CAR(args)));
     setAttrib(CAR(args), R_DimNamesSymbol, CADR(args));
     UNPROTECT(1);
@@ -823,10 +833,10 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 SEXP attribute_hidden do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, "dimnames", args, env, &ans, 0, 0))
+    checkArity(op, args);
+    if (DispatchOrEval(call, op, "dimnames", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
-    checkArity(op, args);
     ans = getAttrib(CAR(args), R_DimNamesSymbol);
     UNPROTECT(1);
     return ans;
@@ -835,10 +845,10 @@ SEXP attribute_hidden do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, 0))
+    checkArity(op, args);
+    if (DispatchOrEval(call, op, "dim", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
-    checkArity(op, args);
     ans = getAttrib(CAR(args), R_DimSymbol);
     UNPROTECT(1);
     return ans;
@@ -847,10 +857,10 @@ SEXP attribute_hidden do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, "dim<-", args, env, &ans, 0, 0))
+    checkArity(op, args);
+    if (DispatchOrEval(call, op, "dim<-", args, env, &ans, 0, 1))
 	return(ans);
     PROTECT(args = ans);
-    checkArity(op, args);
     if (NAMED(CAR(args)) > 1) SETCAR(args, duplicate(CAR(args)));
     setAttrib(CAR(args), R_DimSymbol, CADR(args));
     setAttrib(CAR(args), R_NamesSymbol, R_NilValue);
@@ -930,6 +940,19 @@ SEXP attribute_hidden do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_NAMED(value, NAMED(CAR(args)));
     UNPROTECT(3);
     return value;
+}
+
+SEXP attribute_hidden do_levelsgets(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans;
+    checkArity(op, args);
+    if (DispatchOrEval(call, op, "levels<-", args, env, &ans, 0, 1))
+	return(ans);
+    PROTECT(args = ans);
+    if (NAMED(CAR(args)) > 1) SETCAR(args, duplicate(CAR(args)));
+    setAttrib(CAR(args), R_LevelsSymbol, CADR(args));
+    UNPROTECT(1);
+    return CAR(args);
 }
 
 /* attributes(object) <- attrs */
@@ -1095,21 +1118,18 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     /*  attr(obj, "<name>")  <-  value  */
     SEXP obj, name, value;
 
-    obj = eval(CAR(args), env);
+    obj = CAR(args);
     if (NAMED(obj) == 2)
 	PROTECT(obj = duplicate(obj));
     else
 	PROTECT(obj);
 
-    PROTECT(name = eval(CADR(args), env));
+    name = CADR(args);
     if (!isValidString(name))
 	errorcall(call, _("'name' must be non-null character"));
-
-    /* no eval(.), RHS is already evaluated: */
-    /* now it's a promise so we should eval it -RG- */
-    PROTECT(value = eval(CADDR(args), env));
+    value = CADDR(args);
     setAttrib(obj, name, value);
-    UNPROTECT(3);
+    UNPROTECT(1);
     return obj;
 }
 

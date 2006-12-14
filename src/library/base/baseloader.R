@@ -22,7 +22,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
     environment <- function () .Internal(environment(NULL))
     mkenv <- function() .Internal(new.env(TRUE, baseenv()))
-    names <- function(x) .Internal(names(x))
+    # names <- function(x) .Internal(names(x))
     lazyLoadDBfetch <- function(key, file, compressed, hook)
         .Call("R_lazyLoadDBfetch", key, file, compressed, hook, PACKAGE="base")
 
@@ -58,7 +58,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
     setWrapped <- function(x, value, env) {
     	key <- value
     	.Internal(delayedAssign(x, expr, environment(), env))
-    }	
+    }
     if (! missing(filter)) {
         for (i in along(vars))
             if (filter(vars[i]))

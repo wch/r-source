@@ -45,10 +45,10 @@ NEW FEATURES
     o	A few more cases of subassignment work, e.g. <raw>[] <- <list>
 	and <vector>[] <- <expression>, with suitable coercion of the LHS.
 
-    o	There is a (currently experimental) warning if \ is used
-	unnecessarily in a string when being parsed, e.g. "\." where
-	probably "\\." was intended.  ("\." is valid, but the same as
-	".".)  Thanks to Bill Dunlap for the suggestion.
+    o	There is a warning if \ is used unnecessarily in a string when
+	being parsed, e.g. "\." where probably "\\." was intended.
+	("\." is valid, but the same as ".".)  Thanks to Bill Dunlap
+	for the suggestion.
 
     o	New functions formatUL() and formatOL() in package utils for
 	formatting unordered (itemize) and ordered (enumerate) lists.
@@ -154,6 +154,9 @@ NEW FEATURES
 	output.  There are options to write pure RGB, CMYK or gray via
 	the new argument 'colormodel'.
 
+    o	levels<-(), names() and names<-() now dispatch internally for
+	efficiency and so no longer have S3 default methods.
+
 
 DEPRECATED & DEFUNCT
 
@@ -180,7 +183,7 @@ INSTALLATION
 	changes to the detection of a C99-compliant C compiler
 	backported for 2.4.0 patched.
 
-    o	Detection of Java development environment was added such that
+    o	Detection of a Java development environment was added such that
 	packages don't need to provide their own Java detection.
 
 	R CMD javareconf was updated to look for the corresponding
@@ -206,6 +209,9 @@ UTILITIES
 
     o	R CMD build now takes the package name from the DESCRIPTION
 	file and not from the directory.  (PR#9266)
+
+    o	checkS3methods (and hence R CMD check now checks agreement
+	with primitive internal generics).
 
 
 BUG FIXES
@@ -233,8 +239,11 @@ BUG FIXES
 	visibility flag being turned off.  These included
 	as.character(), as.vector(), call(), dim(), dimnames(),
 	lapply(), rep(), seq() and seq_along().  Others (e.g. dput()
-	and print.default() could return visibly when this was not
-	intended.)
+	and print.default()) could return visibly when this was not
+	intended.
+
+    o	Several primitives such as dim() were not checking the number
+	of arguments supplied before method dispatch.
 
 
 
