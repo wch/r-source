@@ -6,7 +6,7 @@
 \description{
   These functions access an object's attributes.
   The first form below returns the object's attribute list.
-  The assignment forms uses the list on the right-hand
+  The replacement forms uses the list on the right-hand
   side of the assignment as the object's attributes (if appropriate).
 }
 \usage{
