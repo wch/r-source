@@ -34,7 +34,8 @@ cor.test(x, \dots)
     coefficient is to be  used for the test.  One of \code{"pearson"},
     \code{"kendall"}, or \code{"spearman"}, can be abbreviated.}
   \item{exact}{a logical indicating whether an exact p-value should be
-    computed.  Only used for Kendall's \eqn{\tau}{tau}.
+    computed.  Used for Kendall's \eqn{\tau}{tau} and
+    Spearman's \eqn{\rho}{rho}.
     See the Details for the meaning of \code{NULL} (the default).}
   \item{conf.level}{confidence level for the returned confidence
     interval.  Currently only used for the Pearson product moment

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:17\n"
+"POT-Creation-Date: 2006-12-11 10:49\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1109,6 +1109,10 @@ msgstr "'x'必需为向量"
 msgid "invalid 'rle' structure"
 msgstr "'rle'结构有错"
 
+#, fuzzy
+msgid "... must contain names or character strings"
+msgstr "'file'要么是NULL要么是是链结要么是字符串"
+
 msgid "incorrect length for 'group'"
 msgstr "‘ group’的长度不对"
 
@@ -1221,13 +1225,19 @@ msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE'对URL来说没有任何意义"
 
 msgid "cannot 'chdir' as current directory is unknown"
-msgstr ""
+msgstr "'chdir'没有作用，因为不知道目前的目录在哪里"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr "'chdir = TRUE'对联结来说没有任何意义"
 
 msgid "'%s' is not an existing file"
 msgstr "'%s'不是已经存在的文件"
+
+msgid "Timestamp of '"
+msgstr ""
+
+msgid "' has changed"
+msgstr ""
 
 msgid "is not"
 msgstr "不是"
@@ -1368,9 +1378,6 @@ msgstr[1] "警告信息：\n"
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr "'all'不能和deparse的其他选项同时共存"
 
-#~ msgid "no rows to match"
-#~ msgstr "找不到匹配的行"
-
 #~ msgid "'form' must be a two-sided formula"
 #~ msgstr "'form'必需是双边公式"
 
@@ -1407,6 +1414,12 @@ msgstr[1] "警告信息：\n"
 #~ msgid "invalid 'row.names' specification"
 #~ msgstr "'row.names'的设定不对"
 
+#~ msgid "adding class \"ts\": this is deprecated"
+#~ msgstr "加入\"ts\"类别这一功能不再有用"
+
+#~ msgid "conversion to factor is deprecated"
+#~ msgstr "因子转换功能不再有用"
+
 #~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
 #~ msgstr "'quote'的值必需是'TRUE', 'FALSE'或数字这三种之一"
 
@@ -1427,6 +1440,9 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "attempt to change '%s' ignored"
 #~ msgstr "改变'%s'没有起作用"
+
+#~ msgid "no rows to match"
+#~ msgstr "找不到匹配的行"
 
 #~ msgid "rows are empty: giving up"
 #~ msgstr "所有行都是空白的：停止工作"

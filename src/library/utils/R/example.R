@@ -59,7 +59,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     skips <- 0    
     if (echo) {
 	## skip over header
-	zcon <- file(zfile, open="rt", encoding=encoding)	
+	zcon <- file(zfile, open="rt")	
 	while(length(zz) && !length(grep("^### \\*\\*", zz))) {
 	    skips <- skips + 1
 	    zz <- readLines(zcon, n=1)

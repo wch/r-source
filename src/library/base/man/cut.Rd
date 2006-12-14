@@ -4,7 +4,8 @@
 cut(x, \dots)
 
 \method{cut}{default}(x, breaks, labels = NULL,
-    include.lowest = FALSE, right = TRUE, dig.lab = 3, \dots)
+    include.lowest = FALSE, right = TRUE, dig.lab = 3,
+    ordered_result = FALSE, \dots)
 }
 \alias{cut}
 \alias{cut.default}
@@ -23,6 +24,7 @@ cut(x, \dots)
     the right (and open on the left) or vice versa.}
   \item{dig.lab}{integer which is used when labels are not given. It
     determines the number of digits used in formatting the break numbers.}
+  \item{ordered_result}{logical: should the result be an ordered factor?}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
@@ -98,6 +100,6 @@ table(cut(y, breaks =  1*(-3:3), right = FALSE))
 ## sometimes the default dig.lab is not enough to be avoid confusion:
 aaa <- c(1,2,3,4,5,2,3,4,5,6,7)
 cut(aaa, 3)
-cut(aaa, 3, dig.lab=4)
+cut(aaa, 3, dig.lab=4, ordered = TRUE)
 }
 \keyword{category}

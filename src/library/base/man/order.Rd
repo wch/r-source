@@ -78,7 +78,7 @@ rbind(x,y,z)[,ii] # shows the reordering (ties via 2nd & 3rd arg)
 rbind(x,y,z)[, order(x, -y, z)]
 ## For character vectors we can make use of rank:
 cy <- as.character(y)
-rbind(x,y,z)[, order(x, -rank(y), z)]
+rbind(x,y,z)[, order(x, -rank(cy), z)]
 
 ## Sorting data frames:
 dd <- transform(data.frame(x,y,z),

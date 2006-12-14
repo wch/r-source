@@ -466,7 +466,7 @@ function(src_dir, out_dir, packages)
 ### * .install_package_vignettes
 
 .install_package_vignettes <-
-function(dir, outDir)
+function(dir, outDir, keep.source = FALSE)
 {
     dir <- file_path_as_absolute(dir)
     vignetteDir <- file.path(dir, "inst", "doc")
@@ -520,7 +520,7 @@ function(dir, outDir)
         base <- basename(file_path_sans_ext(srcfile))
         texfile <- paste(base, ".tex", sep = "")
         yy <- try(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
-                                quiet = TRUE))
+                                quiet = TRUE, keep.source = keep.source))
         if(inherits(yy, "try-error"))
             stop(yy)
         ## In case of an error, do not clean up: should we point to

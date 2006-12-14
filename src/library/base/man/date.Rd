@@ -20,7 +20,9 @@
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{Sys.time}}
+  \code{\link{Sys.time}}; \code{\link{Date}} and
+  \code{\link{DateTimeClasses}} for objects
+  representing date and time.
 }
 \examples{
 (d <- date())

@@ -139,7 +139,7 @@ optim(par, fn, gr = NULL,
       method. Convergence occurs when the reduction in the objective is
       within this factor of the machine tolerance. Default is \code{1e7},
       that is a tolerance of about \code{1e-8}.}
-    \item{\code{pgtol}}{helps controls the convergence of the \code{"L-BFGS-B"}
+    \item{\code{pgtol}}{helps control the convergence of the \code{"L-BFGS-B"}
       method. It is a tolerance on the projected gradient in the current
       search direction. This defaults to zero, when the check is
       suppressed.}

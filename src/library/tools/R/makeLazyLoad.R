@@ -223,7 +223,7 @@ makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
         if (length(vars) != length(from) || any(nchar(vars) == 0))
             stop("source list must have names for all elements")
     }
-    else stop("source must be an environment or a list");
+    else stop("source must be an environment or a list")
 
     for (i in seq_along(vars)) {
         key <- if (is.null(from) || is.environment(from))

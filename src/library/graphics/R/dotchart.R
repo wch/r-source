@@ -5,9 +5,9 @@ function(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
 	 xlim = range(x[is.finite(x)]),
 	 main = NULL, xlab = NULL, ylab = NULL, ...)
 {
-    ## opar <- par(no.readonly=TRUE) ## slightly more efficient:
-    opar <- par("cex", "yaxs", "mai", ## needed too:
-		"mar", "usr", "xaxp", "yaxp")
+    ## old-style "graphics" `design-bug: ("mar"), ("mai"), ("mar", "mai")
+    ##			     all fail, just the following, ("mai", "mar") is ok:
+    opar <- par("mai", "mar", "cex", "yaxs")
     on.exit(par(opar))
     par(cex = cex, yaxs = "i")
 

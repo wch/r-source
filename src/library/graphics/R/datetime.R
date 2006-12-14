@@ -84,7 +84,7 @@ plot.POSIXlt <- function(x, y, xlab = "", ...)
     dots <- list(...)
     Call <- match.call()
     Call[[1]] <- as.name("plot.default")
-    Call$x <- as.POSIXct(x);
+    Call$x <- as.POSIXct(x)
     Call$xaxt <- "n"
     Call$xlab <- xlab
     eval.parent(Call)
@@ -187,7 +187,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
         if(missing(format)) format <- "%b %d"
     } else if(d < 1.1*365) { # months
         zz <- as.POSIXlt(z)
-        zz$mday <- 1;
+        zz$mday <- 1
         zz$mon <- pretty(zz$mon)
         m <- length(zz$mon)
         m <- rep.int(zz$year[1], m)

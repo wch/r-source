@@ -30,10 +30,12 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     }
     n <- length(r)
     if (any(show[2:6])) {
-	s <- if (inherits(x, "rlm")) x$s else sqrt(deviance(x)/df.residual(x))
+	s <- if (inherits(x, "rlm")) x$s
+        else if(inherits(x, "glm")) sqrt(summary(x)$dispersion)
+        else sqrt(deviance(x)/df.residual(x))
 	hii <- lm.influence(x, do.coef = FALSE)$hat
 	if (any(show[4:6])) {
-	    cook <- if (isGlm)cooks.distance(x)
+	    cook <- if (isGlm) cooks.distance(x)
             else cooks.distance(x, sd = s, res = r)
 	}
     }
@@ -211,11 +213,12 @@ function (x, which = c(1:3,5), ## was which = 1:4,
             if (one.fig)
                 title(sub = sub.caption, ...)
             if(length(cook.levels)) {
+                dispersion <- if(isGlm) summary(x)$dispersion else 1
                 p <- length(coef(x))
                 usr <- par("usr")
                 hh <- seq(min(r.hat[1], r.hat[2]/100), usr[2], length = 101)
                 for(crit in cook.levels) {
-                    cl.h <- sqrt(crit*p*(1-hh)/hh)
+                    cl.h <- sqrt(crit*p*(1-hh)/hh * dispersion)
                     lines(hh, cl.h, lty = 2, col = 2)
                     lines(hh,-cl.h, lty = 2, col = 2)
                 }

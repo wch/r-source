@@ -23,7 +23,8 @@ tracingState(on = NULL)
 }
 \arguments{
   \item{what}{The name (quoted or not) of a function to be traced or
-    untraced.  More than one name can be given in the quoted form, and
+    untraced.  For \code{untrace} or for \code{trace} with more than one
+    argument, more than one name can be given in the quoted form, and
     the same action will be applied to each one.}
   \item{tracer}{Either a function or an unevaluated expression.  The
     function will be called or the expression will be evaluated either
@@ -177,7 +178,8 @@ tracingState(on = NULL)
   list.
 }
 \value{
-  The traced function(s) name(s).  The relevant consequence is the
+  In the simple version (just the first argument), invisible \code{NULL}.
+  Otherwise, the traced function(s) name(s).  The relevant consequence is the
   assignment that takes place.
 }
 \references{

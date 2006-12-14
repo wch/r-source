@@ -16,7 +16,7 @@ and references in those files for more.
 
 The Tcl/Tk documentation is in
 #ifdef windows
-\file{\link{R_HOME}/Tcl/doc}.
+directory \code{\link{R_HOME}/Tcl/doc} in Windows help format.
 #endif
 #ifdef unix
 the system man pages.

@@ -406,7 +406,6 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     UNPROTECT(2);
-    R_Visible = 0;
     return outnames;
 }
 
@@ -1147,6 +1146,8 @@ static void print2buff(char *strng, LocalParseData *d)
     d->len += tlen;
 }
 
+char *EncodeReal2(double x, int w, int d, int e);
+
 static void vector2buff(SEXP vector, LocalParseData *d)
 {
     int tlen, i, quote;
@@ -1266,8 +1267,12 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	    } else if (allNA && TYPEOF(vector) == STRSXP && 
 		       STRING_ELT(vector, i) == NA_STRING) {
 		strp = "NA_character_";
+	    } else if (TYPEOF(vector) == REALSXP && (d->opts & S_COMPAT)) {
+		int w, d, e;
+		formatReal(&REAL(vector)[i], 1, &w, &d, &e, 0);
+		strp = EncodeReal2(REAL(vector)[i], w, d, e);
 	    } else
-	       strp = EncodeElement(vector, i, quote, '.');
+		strp = EncodeElement(vector, i, quote, '.');
 	    print2buff(strp, d);
 	    if (i < (tlen - 1)) print2buff(", ", d);
 	    if (tlen > 1 && d->len > d->cutoff) writeline(d);

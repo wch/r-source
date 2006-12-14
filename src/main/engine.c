@@ -1598,166 +1598,169 @@ void GEText(double x, double y, const char * const str,
 	R_GE_VText(x, y, str, xc, yc, rot, gc, dd);
 
     } else {
-    char *sbuf = NULL;
-    if(str && *str) {
-        const char *s;
-	char *sb;
-	int i, n;
-	double xoff, yoff, hadj;
-	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
-	double xleft, ybottom;
-	/* We work in GE_INCHES */
-	x = fromDeviceX(x, GE_INCHES, dd);
-	y = fromDeviceY(y, GE_INCHES, dd);
-	/* Count the lines of text */
-	n = 1;
-        for(s = str; *s ; s++)
-            if (*s == '\n')
-		n += 1;
-	/* Allocate a temporary buffer */
-	sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
-	sb = sbuf;
-	i = 0;
-	sin_rot = DEG2RAD * rot;
-	cos_rot = cos(sin_rot);
-	sin_rot = sin(sin_rot);
-        for(s = str; ; s++) {
-            if (*s == '\n' || *s == '\0') {
-		*sb = '\0';
-		if (n > 1) {
-		    /* first determine location of THIS line */
-		    if (!R_FINITE(xc))
-			xc = 0.5;
-		    if (!R_FINITE(yc))
-			yc = 0.5;
-		    yoff = (1 - yc)*(n - 1) - i;
-		    /* cra is based on the font pointsize at the
-		     * time the device was created.
-		     * Adjust for potentially different current pointsize.
-		     * This is a crude calculation that might be better
-		     * performed using a device call that responds with
-		     * the current font pointsize in device coordinates.
-		     */
-		    yoff = fromDeviceHeight(yoff * gc->lineheight *
-					    gc->cex * dd->dev->cra[1] *
-					    gc->ps/dd->dev->startps,
-					    GE_INCHES, dd);
-		    xoff = - yoff*sin_rot;
-		    yoff = yoff*cos_rot;
-		    xoff = x + xoff;
-		    yoff = y + yoff;
-		} else {
-		    xoff = x;
-		    yoff = y;
-		}
-		/* now determine bottom-left for THIS line */
-		if(xc != 0.0 || yc != 0) {
-		    double width, height;
-		    width = fromDeviceWidth(GEStrWidth(sbuf, gc, dd),
-					    GE_INCHES, dd);
-		    if (!R_FINITE(xc))
-			xc = 0.5;
-		    if (!R_FINITE(yc)) {
-			/* "exact" vertical centering */
-			/* If font metric info is available AND */
-			/* there is only one line, use GMetricInfo & yc=0.5 */
-			/* Otherwise use GEStrHeight and fiddle yc */
-			double h, d, w;
-			GEMetricInfo(0, gc, &h, &d, &w, dd);
-			if (n > 1 || (h == 0 && d == 0 && w == 0)) {
-			    height = fromDeviceHeight(GEStrHeight(sbuf, gc,
-								  dd),
-						      GE_INCHES, dd);
-			    yc = dd->dev->yCharOffset;
-			} else {
-			    double maxHeight = 0.0;
-			    double maxDepth = 0.0;
-			    char *ss = sbuf;
-			    int charNum = 0;
-#ifdef SUPPORT_MBCS
-			    /* Symbol fonts are not encoded in MBCS ever */
-			    if(gc->fontface != 5 && mbcslocale && !utf8strIsASCII(ss)) {
-				int n = strlen(ss), used;
-				wchar_t wc;
-				mbstate_t mb_st;
-				mbs_init(&mb_st);
-				while ((used = mbrtowc(&wc, ss, n, &mb_st)) > 0) {
-				    GEMetricInfo((int)wc, gc, &h, &d, &w, dd);
-				    h = fromDeviceHeight(h, GE_INCHES, dd);
-				    d = fromDeviceHeight(d, GE_INCHES, dd);
-				    /* Set maxHeight and maxDepth from height
-				       and depth of first char.
-				       Must NOT set to 0 in case there is
-				       only 1 char and it has negative
-				       height or depth
-				    */
-				    if (charNum++ == 0) {
-					maxHeight = h;
-					maxDepth = d;
-				    } else {
-					if (h > maxHeight) maxHeight = h;
-					if (d > maxDepth) maxDepth = d;
-				    }
-				    ss += used; n -=used;
-				}
-			    } else
-#endif
-				for (ss = sbuf; *ss; ss++) {
-				    GEMetricInfo((unsigned char) *ss, gc,
-						 &h, &d, &w, dd);
-				    h = fromDeviceHeight(h, GE_INCHES, dd);
-				    d = fromDeviceHeight(d, GE_INCHES, dd);
-				    /* Set maxHeight and maxDepth from height
-				       and depth of first char.
-				       Must NOT set to 0 in case there is
-				       only 1 char and it has negative
-				       height or depth
-				    */
-				    if (charNum++ == 0) {
-					maxHeight = h;
-					maxDepth = d;
-				    } else {
-					if (h > maxHeight) maxHeight = h;
-					if (d > maxDepth) maxDepth = d;
-				    }
-				}
-
-			    height = maxHeight - maxDepth;
+	/* PR#7397: this seems to reset R_Visible */
+	Rboolean savevis=R_Visible;
+	char *sbuf = NULL;
+	if(str && *str) {
+	    const char *s;
+	    char *sb;
+	    int i, n;
+	    double xoff, yoff, hadj;
+	    double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
+	    double xleft, ybottom;
+	    /* We work in GE_INCHES */
+	    x = fromDeviceX(x, GE_INCHES, dd);
+	    y = fromDeviceY(y, GE_INCHES, dd);
+	    /* Count the lines of text */
+	    n = 1;
+	    for(s = str; *s ; s++)
+		if (*s == '\n')
+		    n += 1;
+	    /* Allocate a temporary buffer */
+	    sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
+	    sb = sbuf;
+	    i = 0;
+	    sin_rot = DEG2RAD * rot;
+	    cos_rot = cos(sin_rot);
+	    sin_rot = sin(sin_rot);
+	    for(s = str; ; s++) {
+		if (*s == '\n' || *s == '\0') {
+		    *sb = '\0';
+		    if (n > 1) {
+			/* first determine location of THIS line */
+			if (!R_FINITE(xc))
+			    xc = 0.5;
+			if (!R_FINITE(yc))
 			    yc = 0.5;
-			}
+			yoff = (1 - yc)*(n - 1) - i;
+			/* cra is based on the font pointsize at the
+			 * time the device was created.
+			 * Adjust for potentially different current pointsize.
+			 * This is a crude calculation that might be better
+			 * performed using a device call that responds with
+			 * the current font pointsize in device coordinates.
+			 */
+			yoff = fromDeviceHeight(yoff * gc->lineheight *
+						gc->cex * dd->dev->cra[1] *
+						gc->ps/dd->dev->startps,
+						GE_INCHES, dd);
+			xoff = - yoff*sin_rot;
+			yoff = yoff*cos_rot;
+			xoff = x + xoff;
+			yoff = y + yoff;
 		    } else {
-			height = fromDeviceHeight(GEStrHeight(sbuf, gc, dd),
-						  GE_INCHES, dd);
+			xoff = x;
+			yoff = y;
 		    }
-		    if (dd->dev->canHAdj == 2) hadj = xc;
-		    else if (dd->dev->canHAdj == 1) {
-			hadj = 0.5 * floor(2*xc + 0.5);
-			/* limit to 0, 0.5, 1 */
-			hadj = (hadj > 1.0) ? 1.0 :((hadj < 0.0) ? 0.0 : hadj);
-		    } else hadj = 0.0;
-		    xleft = xoff - (xc-hadj)*width*cos_rot + yc*height*sin_rot;
-		    ybottom= yoff - (xc-hadj)*width*sin_rot -
-			yc*height*cos_rot;
-		} else { /* xc = yc = 0.0 */
-		    xleft = xoff;
-		    ybottom = yoff;
-		    hadj = 0.0;
+		    /* now determine bottom-left for THIS line */
+		    if(xc != 0.0 || yc != 0) {
+			double width, height;
+			width = fromDeviceWidth(GEStrWidth(sbuf, gc, dd),
+						GE_INCHES, dd);
+			if (!R_FINITE(xc))
+			    xc = 0.5;
+			if (!R_FINITE(yc)) {
+			    /* "exact" vertical centering */
+			    /* If font metric info is available AND */
+			    /* there is only one line, use GMetricInfo & yc=0.5 */
+			    /* Otherwise use GEStrHeight and fiddle yc */
+			    double h, d, w;
+			    GEMetricInfo(0, gc, &h, &d, &w, dd);
+			    if (n > 1 || (h == 0 && d == 0 && w == 0)) {
+				height = fromDeviceHeight(GEStrHeight(sbuf, gc,
+								      dd),
+							  GE_INCHES, dd);
+				yc = dd->dev->yCharOffset;
+			    } else {
+				double maxHeight = 0.0;
+				double maxDepth = 0.0;
+				char *ss = sbuf;
+				int charNum = 0;
+#ifdef SUPPORT_MBCS
+				/* Symbol fonts are not encoded in MBCS ever */
+				if(gc->fontface != 5 && mbcslocale && !utf8strIsASCII(ss)) {
+				    int n = strlen(ss), used;
+				    wchar_t wc;
+				    mbstate_t mb_st;
+				    mbs_init(&mb_st);
+				    while ((used = mbrtowc(&wc, ss, n, &mb_st)) > 0) {
+					GEMetricInfo((int)wc, gc, &h, &d, &w, dd);
+					h = fromDeviceHeight(h, GE_INCHES, dd);
+					d = fromDeviceHeight(d, GE_INCHES, dd);
+					/* Set maxHeight and maxDepth from height
+					   and depth of first char.
+					   Must NOT set to 0 in case there is
+					   only 1 char and it has negative
+					   height or depth
+					*/
+					if (charNum++ == 0) {
+					    maxHeight = h;
+					    maxDepth = d;
+					} else {
+					    if (h > maxHeight) maxHeight = h;
+					    if (d > maxDepth) maxDepth = d;
+					}
+					ss += used; n -=used;
+				    }
+				} else
+#endif
+				    for (ss = sbuf; *ss; ss++) {
+					GEMetricInfo((unsigned char) *ss, gc,
+						     &h, &d, &w, dd);
+					h = fromDeviceHeight(h, GE_INCHES, dd);
+					d = fromDeviceHeight(d, GE_INCHES, dd);
+					/* Set maxHeight and maxDepth from height
+					   and depth of first char.
+					   Must NOT set to 0 in case there is
+					   only 1 char and it has negative
+					   height or depth
+					*/
+					if (charNum++ == 0) {
+					    maxHeight = h;
+					    maxDepth = d;
+					} else {
+					    if (h > maxHeight) maxHeight = h;
+					    if (d > maxDepth) maxDepth = d;
+					}
+				    }
+
+				height = maxHeight - maxDepth;
+				yc = 0.5;
+			    }
+			} else {
+			    height = fromDeviceHeight(GEStrHeight(sbuf, gc, dd),
+						      GE_INCHES, dd);
+			}
+			if (dd->dev->canHAdj == 2) hadj = xc;
+			else if (dd->dev->canHAdj == 1) {
+			    hadj = 0.5 * floor(2*xc + 0.5);
+			    /* limit to 0, 0.5, 1 */
+			    hadj = (hadj > 1.0) ? 1.0 :((hadj < 0.0) ? 0.0 : hadj);
+			} else hadj = 0.0;
+			xleft = xoff - (xc-hadj)*width*cos_rot + yc*height*sin_rot;
+			ybottom= yoff - (xc-hadj)*width*sin_rot -
+			    yc*height*cos_rot;
+		    } else { /* xc = yc = 0.0 */
+			xleft = xoff;
+			ybottom = yoff;
+			hadj = 0.0;
+		    }
+		    /* Convert GE_INCHES back to device.
+		     */
+		    xleft = toDeviceX(xleft, GE_INCHES, dd);
+		    ybottom = toDeviceY(ybottom, GE_INCHES, dd);
+		    if(dd->dev->canClip) {
+			clipText(xleft, ybottom, sbuf, rot, hadj, gc, 1, dd);
+		    } else
+			clipText(xleft, ybottom, sbuf, rot, hadj, gc, 0, dd);
+		    sb = sbuf;
+		    i += 1;
 		}
-		/* Convert GE_INCHES back to device.
-		 */
-		xleft = toDeviceX(xleft, GE_INCHES, dd);
-		ybottom = toDeviceY(ybottom, GE_INCHES, dd);
-		if(dd->dev->canClip) {
-		    clipText(xleft, ybottom, sbuf, rot, hadj, gc, 1, dd);
-		} else
-		    clipText(xleft, ybottom, sbuf, rot, hadj, gc, 0, dd);
-		sb = sbuf;
-		i += 1;
+		else *sb++ = *s;
+		if (!*s) break;
 	    }
-	    else *sb++ = *s;
-	    if (!*s) break;
 	}
-    }
+	R_Visible = savevis;
     }
 }
 
@@ -2641,7 +2644,7 @@ void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)
 /****************************************************************
  * do_recordGraphics
  *
- * A ".Primitive" R function
+ * A ".Internal" R function
  *
  ****************************************************************
  */

@@ -15,7 +15,11 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
     file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
 
     if(file != "") {
-        desc <- as.list(read.dcf(file=file)[1,])
+        dcf <- read.dcf(file=file)
+        if(NROW(dcf) < 1)
+            stop(gettextf("DESCRIPTION file of package '%s' is corrupt", pkg),
+                 domain = NA)
+        desc <- as.list(dcf[1,])
         ## read the Encoding field if any
         enc <- desc[["Encoding"]]
         if(!is.null(enc) && !is.na(encoding)) {

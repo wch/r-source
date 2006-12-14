@@ -556,7 +556,7 @@ do_install_source () {
       cd ..
     else
       cd src;
-      srcs=`ls *.[cfmCM] *.mm *.cc *.cpp *.f90 *.f95 2>/dev/null`
+      srcs=`ls *.[cfmCM] *.cc *.cpp *.f90 *.f95 *.mm 2>/dev/null`
       archs=`(cd ${R_HOME}/bin/exec; ls)`
       R_ARCH_keep=${R_ARCH}
       if test -n "${srcs}"; then

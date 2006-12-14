@@ -101,6 +101,7 @@ foreach my $pkg (@ARGV) {
     my $is_bundle = 0;
     $pkg =~ s/\/$//;
     my $pkgname = basename($pkg);
+    my $intname;
     chdir($startdir);
 
     my $log = new R::Logfile();
@@ -120,6 +121,7 @@ foreach my $pkg (@ARGV) {
     if($description->{"Contains"}) {
 	$log->message("looks like '${pkg}' is a package bundle");
 	$is_bundle = 1;
+	$intname = $description->{"Bundle"};
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
 	foreach my $ppkg (@bundlepkgs) {
 	    $log->message("cleaning '$ppkg' in bundle '$pkg'");
@@ -148,6 +150,7 @@ foreach my $pkg (@ARGV) {
 	$is_bundle = 0;
 	chdir($startdir);
 	$log->message("preparing '$pkg':");
+	$intname = $description->{"Package"};
 	prepare_pkg("$pkg", $is_bundle, $description, $log);
     }
 
@@ -215,7 +218,7 @@ foreach my $pkg (@ARGV) {
     find(\&find_exclude_files, "$pkgname");
     close(EXCLUDE);
 
-    my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
+    my $filename = "${intname}_" . $description->{"Version"} . ".tar";
     my $filepath = &file_path($startdir, $filename);
     ## under Windows, need separate Cygwin and Windows versions of path.
     my $origfilepath = $filepath;
@@ -237,6 +240,7 @@ foreach my $pkg (@ARGV) {
     R_system(join(" ",
 		  ("$tar xf",
 		   &shell_quote_file_path($filepath))));
+
     ## Remove exclude files.
     open(EXCLUDE, "< $exclude");
     while(<EXCLUDE>) {
@@ -245,6 +249,12 @@ foreach my $pkg (@ARGV) {
     close(EXCLUDE);
     unlink($exclude);
     unlink($origfilepath);
+    ## Now correct the package name (PR#9266)
+    if($pkgname ne $intname) {
+	rename $pkgname, $intname 
+	    or die "Error: cannot rename directory to '$intname'\n";
+	$pkgname = $intname;
+    }
     ## Fix up man, R and demo directories (in each package for a bundle)
     sub find_invalid_files {
 	my ($dpath) = @_;
@@ -628,7 +638,8 @@ sub fix_CRLF_in_source_files {
     my ($pkgname, $log) = @_;
 
     if(-d "$pkgname/src") {
-	my @src_files = &list_files_with_exts("$pkgname/src", "(c|h|f|cc|cpp)");
+	my @src_files = &list_files_with_type("$pkgname/src",
+					      "src_no_CRLF");
 	foreach my $file (@src_files) {
 	    my $has_CRLF = 0;
 	    open(FILE, "< $file")

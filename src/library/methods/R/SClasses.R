@@ -133,8 +133,8 @@ makeClassRepresentation <-
         slots <- pp$properties
         prototype <- pp$prototype
     }
-    contains <- list();
-    if(nchar(package)>0)
+    contains <- list()
+    if(nchar(package) > 0)
         packageSlot(name) <- package
     for(what in superClasses) {
         if(is(what, "classRepresentation"))

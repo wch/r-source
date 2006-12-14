@@ -23,9 +23,9 @@
   variety of diagnostic checks.
 
   \code{R CMD build}
-  builds \R source or binary packages from their sources.  It will
-  create index files in the sources if necessary, so it is often helpful
-  to run \code{build} before \code{check}.
+  builds \R source or binary packages from their sources.  The name(s)
+  of the packages are taken from the \file{DESCRIPTION} files and not
+  from the directory names (as from \R 2.5.0).
 
   Use
   \code{R CMD foo --help}

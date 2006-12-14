@@ -104,7 +104,7 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
         if(np >= 1) {
             for (i in (1:np)- 1) if(all( abs(secs - round(secs, i)) < 1e-6 )) {
                 np <- i
-                break;
+                break
             }
         }
         format <- if(all(times[!is.na(times)] == 0)) "%Y-%m-%d"

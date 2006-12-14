@@ -39,7 +39,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                 encoding <- NA
                 owarn <- options("warn"); options(warn = 2)
                 for(e in enc) {
-                    if(is.na(e)) next;
+                    if(is.na(e)) next
                     zz <- file(file, encoding = e)
                     res <- try(readLines(zz), silent = TRUE)
                     close(zz)
@@ -104,15 +104,15 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 		dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
 	    		  collapse = "\n"), 12, 1e+06)
             	## We really do want chars here as \n\t may be embedded.
-            	dep <- paste(prompt.echo, 
+            	dep <- paste(prompt.echo,
             		     gsub("\n", paste("\n", continue.echo, sep=""), dep),
             		     sep="")
-		nd <- nchar(dep, "chars") - 1	    
+		nd <- nchar(dep, "chars") - 1
 	    } else {
 	    	if (i == 1) lastshown <- min(skip.echo, srcref[3]-1)
 	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
 	    	leading <- srcref[1]-lastshown
-	    	lastshown <- srcref[3]	    	
+	    	lastshown <- srcref[3]
 	    	while (length(dep) && length(grep("^[ \\t]*$", dep[1]))) {
 	    	    dep <- dep[-1]
 	    	    leading <- leading - 1

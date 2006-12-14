@@ -1379,7 +1379,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    break;
 	default:
 	    s = R_NilValue; /* keep compiler happy */
-	    error(_("ReadItem: unknown type %i"), type);
+	    error(_("ReadItem: unknown type %i, perhaps written by later version of R"), type);
 	}
 	SETLEVELS(s, levs);
 	SET_OBJECT(s, objf);

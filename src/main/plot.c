@@ -3159,6 +3159,7 @@ static void drawLabel(double xi, double yi, int pos, double offset, char *l,
     }
 }
 
+/* This manages R_Visibile */
 SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x, y, l, ind, pos, Offset, draw, saveans;
@@ -3226,7 +3227,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, _("different argument lengths"));
 	n = LENGTH(x);
 	if (n <= 0) {
-	    R_Visible = 0;
+	    R_Visible = FALSE;
 	    return NULL;
 	}
 
@@ -3340,6 +3341,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    recordGraphicOperation(op, saveans, dd);
 	UNPROTECT(7);
 
+	R_Visible = TRUE;
 	return ans;
     }
 }

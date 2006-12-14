@@ -3,7 +3,7 @@
 \title{Build Shared Library for Dynamic Loading}
 \description{
   Compile the given source files and then link all specified object
-  files into a shared library which can be loaded into R using
+  files into a shared library which can be loaded into \R using
   \code{dyn.load} or \code{library.dynam}.
 }
 \usage{
@@ -30,9 +30,10 @@
   details of some of its quirks.
 
   Items in \code{files} with extensions \code{.c}, \code{.cpp},
-  \code{.cc}, \code{.C}, \code{.f}, \code{.f90} and \code{f95} are
-  regarded as source files, and those with extension \code{.o} as object
-  files.  All other items are passed to the linker. 
+  \code{.cc}, \code{.C}, \code{.f}, \code{.f90}, \code{f95}, \code{.m},
+  \code{.M} and \code{.mm} are regarded as source files, and those with
+  extension \code{.o} as object files.  All other items are passed to
+  the linker.
 }
 \note{
   Some binary distributions of \R have \code{SHLIB} in a separate
@@ -47,9 +48,10 @@
   \dQuote{R Administration and Installation}
   (see the \file{doc/manual} subdirectory of the \R source tree).  
 
-  The \sQuote{Writing R Extensions} manual.
+  The \sQuote{R Installation and Administration} and \sQuote{Writing R 
+  Extensions} manuals.
 }
 \examples{\dontrun{
-R CMD SHLIB -o mylib.so a.f b.f -L/opt/acml3.1.0/gnu64/lib -lacml
+R CMD SHLIB -o mylib.so a.f b.f -L/opt/acml3.5.0/gnu64/lib -lacml
 }}
 \keyword{utilities}

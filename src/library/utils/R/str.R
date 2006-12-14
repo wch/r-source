@@ -12,7 +12,7 @@ str.data.frame <- function(object, ...)
     ## Show further classes // Assume that they do NOT have an own Method --
     ## not quite perfect ! (.Class = 'remaining classes', starting with current)
     cl <- oldClass(object); cl <- cl[cl != "data.frame"]  #- not THIS class
-    if(0 < length(cl)) cat("Classes", cl, " and ")
+    if(0 < length(cl)) cat("Classes", paste(sQuote(cl), collapse=", "), "and ")
 
     cat("'data.frame':	", nrow(object), " obs. of  ",
 	(p <- length(object)), " variable", if(p != 1)"s", if(p > 0)":",
@@ -274,8 +274,11 @@ str.default <-
 		" '", paste(cl, collapse = "', '"), "' ", sep="")
 	    le <- v.len <- 0
 	    str1 <- paste("<", typeof(object), ">", sep="")
-	    if(typeof(object) == "environment")
-		str1 <- paste("length", length(object), str1)
+	    if(typeof(object) == "environment") {
+                nm <- environmentName(object)
+                str1 <- if(nchar(nm)[1]) paste("<", nm , ">", sep="")
+		else paste("length", length(object), str1)
+            }
 	    has.class <- TRUE # fake for later
 	    std.attr <- "class"
 	    ## ideally we would figure out if as.character has a

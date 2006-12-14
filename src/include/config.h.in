@@ -746,6 +746,12 @@
 /* Define to disable Valgrind instrumentation */
 #undef NVALGRIND
 
+/* Define if using GNU-style Objective C runtime. */
+#undef OBJC_GNU_RUNTIME
+
+/* Define if using NeXT/Apple-style Objective C runtime. */
+#undef OBJC_NEXT_RUNTIME
+
 /* Name of package */
 #undef PACKAGE
 
@@ -804,6 +810,9 @@
 /* Define this to be the extension used for shared libraries on your system.
    */
 #undef SHLIB_EXT
+
+/* The size of `double', as computed by sizeof. */
+#undef SIZEOF_DOUBLE
 
 /* The size of `int', as computed by sizeof. */
 #undef SIZEOF_INT

@@ -501,7 +501,6 @@ R_MISSING_PROG(ACLOCAL, aclocal)
 R_MISSING_PROG(AUTOCONF, autoconf)
 R_MISSING_PROG(AUTOMAKE, automake)
 R_MISSING_PROG(AUTOHEADER, autoheader)
-R_MISSING_PROG(MAKEINFO, makeinfo)
 AC_PROG_AWK
 AC_PROG_EGREP
 AC_PROG_LN_S
@@ -544,11 +543,17 @@ AC_PROG_CXXCPP
 R_GCC4_VISIBILITY
 
 AC_PROG_OBJC
+## unfortunately autoconf sets OBJC to gcc even if there is no working compiler
+if test "${OBJC}" = gcc; then
+  AC_LANG_PUSH([Objective C])
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[id foo;])],,[OBJC=''])
+  AC_LANG_POP([Objective C])
+fi
+R_PROG_OBJCXX
 
 ## This has to be R_DEFS as autoconf overrrides DEFS
 R_DEFS=${DEFS}
 AC_SUBST(R_DEFS)
-
 
 ## Libtool.
 ## (Run this after R_PROG_F77, as AC_PROG_LIBTOOL checks for a
@@ -556,9 +561,6 @@ AC_SUBST(R_DEFS)
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
-## Makeinfo
-R_PROG_MAKEINFO
-
 
 ### * Checks for libraries.
 
@@ -745,6 +747,7 @@ if test "${cross_compiling}" = yes; then
 fi
 AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
+AC_CHECK_SIZEOF(double, 8)
 AC_CHECK_SIZEOF(long double, 0)
 
 R_PROG_CC_MAKEFRAG
@@ -764,6 +767,11 @@ AM_CONDITIONAL(COMPILE_FORTRAN_DOUBLE_COMPLEX,
 ### *** C++ compiler.
 
 R_PROG_CXX_MAKEFRAG
+
+### *** ObjC compiler
+
+R_PROG_OBJC_RUNTIME
+R_OBJC_FOUNDATION
 
 ### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
 
@@ -999,6 +1007,9 @@ AC_SUBST(R_XTRA_CPPFLAGS)
 AC_SUBST(R_XTRA_CXXFLAGS)
 AC_SUBST(R_XTRA_FFLAGS)
 AC_SUBST(R_XTRA_LIBS)
+AC_SUBST(OBJC_LIBS)
+AC_SUBST(OBJCFLAGS)
+AC_SUBST(OBJCXXFLAGS)
 
 ### ** DLL stuff.
 

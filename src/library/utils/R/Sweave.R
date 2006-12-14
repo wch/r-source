@@ -324,7 +324,7 @@ RweaveLatex <- function()
 RweaveLatexSetup <-
     function(file, syntax,
              output=NULL, quiet=FALSE, debug=FALSE, echo=TRUE,
-             eval=TRUE, split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
+             eval=TRUE, keep.source=FALSE, split=FALSE, stylepath=TRUE, pdf=TRUE, eps=TRUE)
 {
     if(is.null(output)){
         prefix.string <- basename(sub(syntax$extension, "", file))
@@ -353,8 +353,8 @@ RweaveLatexSetup <-
                     engine="R", print=FALSE, eval=eval,
                     fig=FALSE, pdf=pdf, eps=eps,
                     width=6, height=6, term=TRUE,
-                    echo=echo, results="verbatim", split=split,
-                    strip.white="true", include=TRUE,
+                    echo=echo, keep.source=keep.source, results="verbatim", 
+                    split=split, strip.white="true", include=TRUE,
                     pdf.version="1.1", pdf.encoding="default")
 
     ## to be on the safe side: see if defaults pass the check
@@ -379,6 +379,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           if(!object$quiet){
               cat(formatC(options$chunknr, width=2), ":")
               if(options$echo) cat(" echo")
+              if(options$keep.source) cat(" keep.source")
               if(options$eval){
                   if(options$print) cat(" print")
                   if(options$term) cat(" term")
@@ -406,6 +407,9 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           else
             chunkout <- object$output
 
+	  saveopts <- options(keep.source=options$keep.source)
+	  on.exit(options(saveopts))
+	  
           SweaveHooks(options, run=TRUE)
 
           chunkexps <- try(parse(text=chunk), silent=TRUE)
@@ -416,13 +420,27 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           if(length(chunkexps)==0)
             return(object)
 
+	  lastshown <- 0
           for(nce in 1:length(chunkexps))
             {
                 ce <- chunkexps[[nce]]
-                dce <- deparse(ce, width.cutoff=0.75*getOption("width"))
+                srcref <- attr(ce, "srcref")
+                if (!is.null(srcref)) {
+                    srcfile <- attr(srcref, "srcfile")
+                    dce <- getSrcLines(srcfile, lastshown+1, srcref[3])
+	    	    leading <- srcref[1]-lastshown
+	    	    lastshown <- srcref[3]	    	
+	    	    while (length(dce) && length(grep("^[ \\t]*$", dce[1]))) {
+	    		dce <- dce[-1]
+	    		leading <- leading - 1
+	    	    }
+	    	} else {
+                    dce <- deparse(ce, width.cutoff=0.75*getOption("width"))
+                    leading <- 1
+                }
                 if(object$debug)
                   cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
-                if(options$echo){
+                if(options$echo && length(dce)){
                     if(!openSinput){
                         if(!openSchunk){
                             cat("\\begin{Schunk}\n",
@@ -433,10 +451,11 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                             file=chunkout, append=TRUE)
                         openSinput <- TRUE
                     }
-                    cat("\n", getOption("prompt"),
-                        paste(dce,
-                              collapse=paste("\n", getOption("continue"), sep="")),
-                        file=chunkout, append=TRUE, sep="")
+		    cat("\n", paste(getOption("prompt"), dce[1:leading], sep="", collapse="\n"),
+		    	file=chunkout, append=TRUE, sep="")
+                    if (length(dce) > leading)
+                    	cat("\n", paste(getOption("continue"), dce[-(1:leading)], sep="", collapse="\n"),
+                    	    file=chunkout, append=TRUE, sep="")
                 }
 
                                         # tmpcon <- textConnection("output", "w")
@@ -510,7 +529,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                                         width=options$width, height=options$height,
                                         paper="special", horizontal=FALSE)
 
-                  err <- try({SweaveHooks(options, run=TRUE);
+                  err <- try({SweaveHooks(options, run=TRUE)
                               eval(chunkexps, envir=.GlobalEnv)})
                   grDevices::dev.off()
                   if(inherits(err, "try-error")) stop(err)
@@ -521,7 +540,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                                  version=options$pdf.version,
                                  encoding=options$pdf.encoding)
 
-                  err <- try({SweaveHooks(options, run=TRUE);
+                  err <- try({SweaveHooks(options, run=TRUE)
                               eval(chunkexps, envir=.GlobalEnv)})
                   grDevices::dev.off()
                   if(inherits(err, "try-error")) stop(err)

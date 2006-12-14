@@ -1,6 +1,6 @@
 # Copyright (C) 1997-1999  Adrian Trapletti
 #
-# Rewritten to use R indexing (C) 1999 R Core Development Team
+# Rewritten to use R indexing (C) 1999, 2006 R Core Development Team
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -33,7 +33,9 @@ embed <- function (x, dimension = 1)
         if ((dimension < 1) | (dimension > n))
             stop ("wrong embedding dimension")
         m <- n - dimension + 1
-        return(matrix(x[1:m + rep(dimension:1, rep(m, dimension)) - 1], m))
+        data <- x[1:m + rep.int(dimension:1, rep.int(m, dimension)) - 1]
+        dim(data) <- c(m, dimension)
+        return(data)
     } else
         stop ("'x' is not a vector or matrix")
 }

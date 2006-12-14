@@ -259,12 +259,12 @@ install-R-framework:
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
 	    $(Rexecbindir2)/R)
 	@(if [ -n "${R_ARCH}" ]; then \
-	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 ]; then \
+	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 -a "${R_ARCH}" != /x86_64 ]; then \
 	    echo "\
-	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, ppc or ppc64 as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
+	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, x86_64, ppc or ppc64 as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
 	  else \
 	    for f in `ls "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/${R_ARCH}/"*.h|xargs basename`; do \
-	      echo "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include <i386/$$f>~#else~#ifdef __ppc__~#include <ppc/$$f>~#else~#ifdef __ppc64__~#include <ppc64/$$f>~#else~#error Cannot determine the correct architecture. To force a certain configuration, include architecture-specific include path *before* general R headers path.~#endif~#endif~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/$$f"; \
+	      echo "/* This is an automatically generated universal stub for architecture-dependent headers. */~#ifdef __i386__~#include <i386/$$f>~#else~#ifdef __ppc__~#include <ppc/$$f>~#else~#ifdef __ppc64__~#include <ppc64/$$f>~#else~#ifdef __x86_64__~#include <x86_64/$$f>~#else~#error Cannot determine the correct architecture. To force a certain configuration, include architecture-specific include path *before* general R headers path.~#endif~#endif~#endif~#endif" |sed -e 'y/~/\n/' > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Headers/$$f"; \
 	    done; \
 	  fi; \
 	fi )

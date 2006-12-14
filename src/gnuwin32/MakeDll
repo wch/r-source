@@ -9,12 +9,12 @@ RCNAME=${DLLNAME}_res
 RCOBJ=$(RCNAME).o
 
 # Don't use SOURCES as this get passed on for libR.
-CFSOURCES=$(wildcard -f *.c *.f *.f90 *.f95)
 CSOURCES=$(wildcard -f *.c)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
 FSOURCES=$(wildcard -f *.f)
 FCSOURCES=$(wildcard -f *.f90 *.f95)
-OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES) $(FCSOURCES),$(basename $i).o)
+MSOURCES=$(wildcard -f *.m)
+OBJSA=$(foreach i,$(CSOURCES) $(FSOURCES) $(CXXSOURCES) $(FCSOURCES) $(MSOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
 
@@ -27,7 +27,10 @@ ifneq ($(strip $(CXXSOURCES)),)
   DLL_LDMAIN=g++
 endif
 ifneq ($(strip $(FSOURCES)),)
-  EXTRA_LIBS=$(FLIBS)
+  EXTRA_LIBS+=$(FLIBS)
+endif
+ifneq ($(strip $(MSOURCES)),)
+  EXTRA_LIBS+=-lobjc
 endif
 
 endif
@@ -48,7 +51,7 @@ CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/include $(CLINK_CPPFLAGS)
 CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(COPTFLAG) -std=gnu99 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) $(CXXOPTFLAG) $(PKG_CXXFLAGS)
 FFLAGS=$(FOPTFLAG) $(DEBUGFLAG) $(PKG_FFLAGS)
-DLLLIBS=-L$(RHOME)/bin $(PKG_LIBS) $(EXTRA_LIBS) -lR
+DLLLIBS=-L$(RHOME)/bin $(PKG_LIBS) $(PKG_LIBS2) $(EXTRA_LIBS) -lR
 RESFLAGS=--include-dir $(RHOME)/include
 # for use by Makevars.win
 R_HOME=$(RHOME)
@@ -82,7 +85,7 @@ endif
 CXXSOURCES1=$(wildcard -f *.cc)
 CXXSOURCES2=$(wildcard -f *.cpp)
 CXXSOURCES3=$(wildcard -f *.C)
-DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES1:.cc=.d) $(CXXSOURCES2:.cpp=.d) $(CXXSOURCES3:.C=.d)
+DEPS=$(CSOURCES:.c=.d) $(CXXSOURCES1:.cc=.d) $(CXXSOURCES2:.cpp=.d) $(CXXSOURCES3:.C=.d) $(MSOURCES:.m=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps

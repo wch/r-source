@@ -112,8 +112,6 @@ extern void R_ProcessEvents(void);
 typedef unsigned long R_ulong_t;
 typedef long R_long_t;
 
-/* NB: will need a 64-bit type, ULONG64 or size_t, for Win64 */
-#if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX
 # ifdef HAVE_INTTYPES_H
 #  include <inttypes.h>
 # endif
@@ -125,6 +123,9 @@ typedef long R_long_t;
 # ifdef HAVE_LIMITS_H
 #  include <limits.h>
 # endif
+
+/* NB: will need a 64-bit type, ULONG64 or size_t, for Win64 */
+#if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX
   typedef size_t R_size_t;
 /* final precaution in case we don't have the right headers */
 # ifdef SIZE_MAX
@@ -537,7 +538,7 @@ extern0 SEXP*	R_SymbolTable;	    /* The symbol table */
 LibExtern RCNTXT R_Toplevel;	    /* Storage for the toplevel environment */
 LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel environment */
 LibExtern RCNTXT* R_GlobalContext;    /* The global environment */
-LibExtern int	R_Visible;	    /* Value visibility flag */
+extern0 Rboolean R_Visible;	    /* Value visibility flag */
 LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern0 int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 extern0 int	R_BrowseLines	INI_as(0);	/* lines/per call in browser */

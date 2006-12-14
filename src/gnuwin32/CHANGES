@@ -11,27 +11,31 @@ There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and
 returns to the comand prompt.
 
-shell.exec() now gives an error and a reason when it fails (rather than
-continuing silently as before).
-
 More of the messages from the script editor are translatable.
 
 There is support for x86_64 cross-compilers as well as for ix86.
 
 mingw-runtime >= 3.11 is needed to build R.
 
+The printf function used for printing has been altered to implement a
+round-to-even rule.  This means that output is more likely to be
+identical to that on Unix-alikes.
 
 
-R 2.4.0 patched
-===============
+
+
+R 2.4.1
+=======
 
 Inno Setup >= 5.1.7 is now required to build the installer.
 
 Reverted 2.4.0 change that required case-sensitive specification of
 commands to R CMD.
 
-The Simplified Chinese messages were in the wrong format, causing
-R to crash on startup. (PR#9277)
+The Simplified Chinese menu messages were in the wrong format, causing
+RGui to crash on startup. (PR#9277)
+
+Menu messages are now available in a Spanish translation.
 
 The pointsize of fonts in the windows() graphics device may now be set to
 any positive integer.
@@ -43,6 +47,12 @@ If Rconsole settings were such that R could not start properly, it
 crashed.  It now suggests starting with the --vanilla option, which now
 does not load Rconsole.  Additionally, an option --no-Rconsole has
 been added for completeness and debugging.
+
+shell.exec() now gives an error and a reason when it fails (rather than
+continuing silently as before).
+
+R CMD SHLIB again uses PKG_LIBS in files Makevars[.win] (it did not in
+R 2.4.0).
 
 
 

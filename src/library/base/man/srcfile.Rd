@@ -32,7 +32,8 @@ srcref(srcfile, lloc)
 }
 \arguments{
   \item{filename}{ The name of a file }
-  \item{lines}{ A character vector of source lines }
+  \item{lines}{ A character vector of source lines.  Other \R objects will be coerced
+    to character. }
   \item{srcfile}{ A \code{srcfile} object }
   \item{first, last, line}{ Line numbers }
   \item{lloc}{ A vector of four values giving a source location; see Details }

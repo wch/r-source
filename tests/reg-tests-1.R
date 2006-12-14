@@ -4503,6 +4503,18 @@ structure(1:3, class="ts")
 ## failed in print method < 2.4.1
 
 
+## PR#9399
+x1 <- "x2"
+x2 <- pi
+rm(x1) # removes x1, not x2
+stopifnot(!exists("x1", .GlobalEnv), exists("x2", .GlobalEnv))
+rm("x2")
+# incorrectly documented <= 2.4.0
+a <- b <- c <- 1
+z <- try(rm(c("a", "b")))
+stopifnot(inherits(z, "try-error"))
+## removed 'a', 'b' and 'c' in 2.4.0
+
 ### end of tests added in 2.4.1 ###
 
 
@@ -4524,3 +4536,10 @@ uniroot(f, c(0,2))
 uniroot(f, c(0,1))
 uniroot(f, c(1,2))
 ## last two failed in 2.4.x
+
+
+## PR#9360 and PR#9394
+acf(1, lag.max=0, plot=FALSE)
+## gave an error in 2.4.0
+stopifnot( all.equal(ccf(1:3,-(1:3))$acf[2,1,1], -1) )
+## gave positive lag 0 cross-correlation after patching PR#9360

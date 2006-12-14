@@ -15,7 +15,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            title = "R Graphics Output", fonts = NULL,
            encoding, bg, fg,
            width, height, horizontal, pointsize,
-           paper, pagecentre, print.it, command)
+           paper, pagecentre, print.it, command, colormodel)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
@@ -82,6 +82,10 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{command}{the command to be used for \dQuote{printing}.  Defaults to
     option \code{"printcmd"}; this can also be selected as
     \code{"default"}.}
+  \item{colormodel}{a character string describing the color model:
+    currently allowed values as \code{"rgb"} (the default and the only
+    model prior to \R 2.5.0), \code{"rgb-nogray"}, \code{"gray"}
+    and \code{"cmyk"}.}
 }
 \details{
   \code{postscript} opens the file \code{file} and the PostScript
@@ -195,7 +199,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   using the \code{encoding} argument the glyphs can be matched to
   encoding in use.  This suffices for European and Cyrillic languages,
   but not for CJK languages.  For the latter, composite CID fonts are
-  used.  These fonts are be useful for other languages: for example they
+  used.  These fonts are useful for other languages: for example they
   may contain Greek glyphs. (The rest of this section applies only when CID
   fonts are not used.)
 
@@ -258,6 +262,15 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   Adobe symbol font in other families.  This is achieved by
   special-casing the postscript code generated from the supplied
   \file{CM\_symbol\_10.afm}.
+}
+\section{Color models}{
+  The default color model is RGB, with pure gray colors expressed as
+  greyscales.  Color model \code{"rgb-nogray"} uses only  RGB, model
+  \code{"cmyk"} only CMYK, and model \code{"gray"} only greyscales (and
+  selecting any other colour is an error).  Nothing in \R specifies the
+  interpretation of the RGB or CMYK color spaces, and the simplest
+  possible conversion to CMYK is used
+  (\url{http://en.wikipedia.org/wiki/CMYK_color_model#Mapping_RGB_to_CMYK}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

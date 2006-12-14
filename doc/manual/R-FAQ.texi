@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-11-23
+@set FAQ_DATE @value{FAQ_YEAR}-12-10
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2424,6 +2424,8 @@ Adaptive smoothing of digital images.
 Adaptive Wavelet transforms for signal denoising.
 @item agce
 Analysis of growth curve experiments.
+@item agricolae
+Statistical procedures for agricultural research.
 @item agsemisc
 Miscellaneous plotting and utility functions.
 @item akima
@@ -2435,6 +2437,8 @@ Methods and data to accompany the textbook ``Applied Linear Regression''
 by S. Weisberg, 2005, Wiley.
 @item amap
 Another Multidimensional Analysis Package.
+@item analogue
+Analogue methods for palaeoecology.
 @c <COMMENT>
 @c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
 @c @item anm
@@ -2659,6 +2663,8 @@ Utility functions for the statistical analysis of corpus frequency
 data.
 @item corpcor
 Efficient estimation of covariance and (partial) correlation.
+@item corrgram
+Plot a correlogram.
 @item covRobust
 Robust covariance estimation via nearest neighbor cleaning.
 @item coxrobust
@@ -2734,6 +2740,9 @@ Functions for modelling dispersion in GLMs.
 @item distr
 An object orientated implementation of distributions and some additional
 functionality.
+@item distrDoc
+Documentation for packages @strong{distr}, @strong{distrEx},
+@strong{distrSim}, and @strong{distrTEst}.
 @item distrEx
 Extensions of package @strong{distr}.
 @item distrSim
@@ -3028,6 +3037,8 @@ Basic functions for the generalised (Tukey) lambda distribution.
 @item gllm
 Routines for log-linear models of incomplete contingency tables,
 including some latent class models via EM and Fisher scoring approaches.
+@item glmc
+Fitting Generalized Linear Models subject to Constraints.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
@@ -3114,6 +3125,8 @@ Highest Density Regions and Conditional Density Estimation.
 @item hett
 Functions for the fitting and summarizing of heteroscedastic
 t-regression.
+@item hexView
+Viewing binary files.
 @item hier.part
 Hierarchical Partitioning: variance partition of a multivariate data
 set.
@@ -3149,6 +3162,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item hybridHclust
 Hybrid hierarchical clustering via mutual clusters.
+@item ibdreg
+Regression methods for IBD linkage with covariates.
 @item ifa
 Independent Factor Analysis.
 @item ifs
@@ -3307,6 +3322,9 @@ Local polynomial (ridge) regression.
 Latent Semantic Analysis.
 @item lspls
 LS-PLS (least squares --- partial least squares) models.
+@item lss
+Accelerated failure time model to right censored data based on
+least-squares principle.
 @item ltm
 Analysis of multivariate Bernoulli data using latent trait models
 (including the Rasch model) under the Item Response Theory approach.
@@ -4008,6 +4026,9 @@ shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
 @item sigma2tools
 Test of hypothesis about sigma2.
+@item signal
+A set of generally Matlab/Octave-compatible signal processing
+functions.
 @item simecol
 SIMulation of ECOLogical (and other) dynamic systems.
 @item simex
@@ -4027,6 +4048,8 @@ Functions for exploratory (statistical) microarray analysis.
 (Standardized) Major Axis estimation and Testing Routines.
 @item smoothSurv
 Survival regression with smoothed error distribution.
+@item smoothtail
+Smooth estimation of generalized Pareto distribution shape parameter.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
@@ -4175,6 +4198,8 @@ Functions for survival analysis, including penalised likelihood.
 Survival analysis for recurrent event data.
 @item svcR
 A support vector machine technique for clustering.
+@item svcm
+2d and 3d Space-Varying Coefficient Models.
 @item svmpath
 Computes the entire regularization path for the two-class svm classifier
 with essentialy the same cost as a single SVM fit.

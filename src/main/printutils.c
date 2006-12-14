@@ -80,6 +80,7 @@ extern int R_OutputCon; /* from connections.c */
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
 
+/* Only if ierr < 0 or not is currently used */
 R_size_t R_Decode2Long(char *p, int *ierr)
 {
     R_size_t v = strtol(p, &p, 10);
@@ -89,7 +90,7 @@ R_size_t R_Decode2Long(char *p, int *ierr)
     if(R_Verbose)
 	REprintf("R_Decode2Long(): v=%ld\n", v);
     if(p[0] == 'G') {
-	if((Giga * (double)v) > R_SIZE_T_MAX) { *ierr = 1; return(v); }
+	if((Giga * (double)v) > R_SIZE_T_MAX) { *ierr = 4; return(v); }
 	return (Giga*v);
     }
     else if(p[0] == 'M') {
@@ -171,6 +172,37 @@ char *EncodeReal(double x, int w, int d, int e, char cdec)
     if(cdec != '.')
       for(p = buff; *p; p++) if(*p == '.') *p = cdec;
 
+    return buff;
+}
+
+char *EncodeReal2(double x, int w, int d, int e)
+{
+    static char buff[NB];
+    char fmt[20];
+
+    /* IEEE allows signed zeros (yuck!) */
+    if (x == 0.0) x = 0.0;
+    if (!R_FINITE(x)) {
+	if(ISNA(x)) snprintf(buff, NB, "%*s", w, CHAR(R_print.na_string));
+	else if(ISNAN(x)) snprintf(buff, NB, "%*s", w, "NaN");
+	else if(x > 0) snprintf(buff, NB, "%*s", w, "Inf");
+	else snprintf(buff, NB, "%*s", w, "-Inf");
+    }
+    else if (e) {
+	if(d) {
+	    sprintf(fmt,"%%#%d.%de", w, d);
+	    snprintf(buff, NB, fmt, x);
+	}
+	else {
+	    sprintf(fmt,"%%%d.%de", w, d);
+	    snprintf(buff, NB, fmt, x);
+	}
+    }
+    else { /* e = 0 */
+	sprintf(fmt,"%%#%d.%df", w, d);
+	snprintf(buff, NB, fmt, x);
+    }
+    buff[NB-1] = '\0';
     return buff;
 }
 

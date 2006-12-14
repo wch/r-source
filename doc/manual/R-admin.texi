@@ -240,19 +240,19 @@ CPUs,
 @c Actually, see http://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
 @c has x86_64 <=> amd, ix86 <=> i386.
-@samp{powerpc-apple-darwin} and @samp{sparc-@/sun-@/solaris}, as well as
-probably (it is tested less frequently on these platforms)
-@samp{i386-@/*-@/freebsd}, @samp{i386-@/*-@/netbsd},
+@samp{powerpc-@/apple-@/darwin}, @samp{i386-@/apple-@/darwin} and
+@samp{sparc-@/sun-@/solaris}, as well as probably (it is tested less
+frequently on these platforms) @samp{i386-@/*-@/freebsd},
+@samp{x86_64-@/*-@/freebsd}, @samp{i386-@/*-@/netbsd},
 @samp{i386-@/*-@/openbsd}, @samp{i386-@/sun-@/solaris},
-@samp{mips-@/sgi-@/irix}, @samp{alpha-@/dec-@/osf*},
-@samp{rs6000-@/ibm-@/aix}, and @samp{hppa-@/hp-@/hpux}.
+@samp{mips-@/sgi-@/irix} and @samp{alpha-@/dec-@/osf*}.
 
 @cindex Linux
 @cindex Mac OS X
 In addition, binary distributions are available for some common Linux
-distributions and for Mac OS X (on PowerPC).  See the @acronym{FAQ} for
-current details.  These are installed in platform-specific ways, so for
-the rest of this chapter we consider only building from the sources.
+distributions and for Mac OS X.  See the @acronym{FAQ} for current
+details.  These are installed in platform-specific ways, so for the rest
+of this chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
@@ -634,14 +634,14 @@ If you have two or more such builds you can install them over each other
 (and one build can be done without @samp{r_arch}).  The space savings
 can be considerable: on @cputype{x86_64} Linux a basic install (without
 debugging symbols) took 63Mb, and adding a 32-bit build added 6Mb.  If
-you have installed multiple build you can select which build to run by
+you have installed multiple builds you can select which build to run by
 
 @example
 R --arch=@var{name}
 @end example
 
 @noindent
-and running @samp{R} will run the last build that was installed.
+and just running @samp{R} will run the last build that was installed.
 
 @code{R CMD INSTALL} will detect if more that one build is installed and
 try to install packages with the appropriate library objects for each.
@@ -1051,7 +1051,7 @@ for suggesting WiX and building a prototype installer.
 @subsection Cross-building on Linux
 
 It is possible to cross-build @R{} or packages on (at least)
-@cputype{ix86} and @cputype{x86_64}Linux, and the @cputype{ix86}
+@cputype{ix86} and @cputype{x86_64} Linux, and the @cputype{ix86}
 cross-compilers have also been used successfully on @cputype{x86_64}
 Linux..
 
@@ -1134,12 +1134,12 @@ Makefile itself, or
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for MacOS X for a base distribution and a large number of
-add-on packages from @acronym{CRAN} to run on Mac OS X version 10.3.0 or
+add-on packages from @acronym{CRAN} to run on Mac OS X version 10.4.4 or
 higher.
 
-The simplest way is to use @file{R.dmg}.  Just double-click on the
-icon and the disk image file will be mounted. Read the
-@file{ReadMe.txt} inside the disk image and follow the instructions.
+The simplest way is to use @file{R-@value{VERSIONno}.dmg}.  Just
+double-click on the icon and the disk image file will be mounted. Read
+the @file{ReadMe.txt} inside the disk image and follow the instructions.
 
 See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
@@ -1213,6 +1213,11 @@ Some Unix-alike systems are set up to remove files and directories
 periodically from @file{/tmp}, for example by a @command{cron} job
 running @command{tmpwatch}.  Set @env{TMPDIR} to another directory
 before running long-running jobs on such a system.
+
+Note that @env{TMPDIR} will be used to execute @command{configure}
+scripts when installing packages, so if @code{/tmp} has been mounted as
+@samp{noexec}, @env{TMPDIR} needs to be set to a directory from which
+execution is allowed.
 
 @node Add-on packages, Internationalization, Running R, Top
 @chapter Add-on packages
@@ -3812,6 +3817,7 @@ gcc-g77-3.4.5-20060117-1.tar.gz
 @end example
 
 @noindent
+(and @code{gcc-objc-3.4.5-20060117-1.tar.gz} if you want Objective C support)
 and unpack these into the same directory (using @command{tar zxf
 tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later is
 required to build @R{}, @code{gcc-g77-3.4.4} or later to build some

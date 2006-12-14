@@ -221,9 +221,8 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 				 *av);
 		    else
 			sprintf(msg,
-				_("WARNING: %s=%lu'%c': too large and ignored\n"),
-				*av, (unsigned long) value,
-				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
+				_("WARNING: %s: too large and ignored\n"),
+				*av);
 		    R_ShowMessage(msg);
 
 		} else {
@@ -251,53 +250,6 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    R_ShowMessage(_("WARNING: '-max-ppsize' value is too large: ignored\n"));
 		else Rp->ppsize = lval;
 	    }
-#if 0
-	    else if(strncmp(*av, "--vsize", 7) == 0) {
-		if(strlen(*av) < 9) {
-		    ac--; av++; p = *av;
-		}
-		else
-		    p = &(*av)[8];
-		if (p == NULL) {
-		    R_ShowMessage(_("WARNING: no 'vsize' given\n"));
-		    break;
-		}
-		value = R_Decode2Long(p, &ierr);
-		if(ierr) {
-		    if(ierr < 0) /* R_common_badargs(); */
-			sprintf(msg, _("WARNING: '--vsize' value is invalid: ignored\n"));
-		    else
-			sprintf(msg, _("WARNING: --vsize=%ld'%c': too large and ignored\n"),
-				value,
-				(ierr == 1) ? 'M': ((ierr == 2) ? 'K' : 'k'));
-		    R_ShowMessage(msg);
-
-		} else
-		    Rp->vsize = value;
-	    }
-	    else if(strncmp(*av, "--nsize", 7) == 0) {
-		if(strlen(*av) < 9) {
-		    ac--; av++; p = *av;
-		}
-		else
-		    p = &(*av)[8];
-		if (p == NULL) {
-		    R_ShowMessage(_("WARNING: no 'nsize' given\n"));
-		    break;
-		}
-		value = R_Decode2Long(p, &ierr);
-		if(ierr) {
-		    if(ierr < 0) /* R_common_badargs(); */
-			sprintf(msg, _("WARNING: '--nsize' value is invalid: ignored\n"));
-		    else
-			sprintf(msg, _("WARNING: --nsize=%lu'%c': too large and ignored\n"),
-			    value,
-			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
-		    R_ShowMessage(msg);
-		} else
-		    Rp->nsize = value;
-	    }
-#endif
 	    else { /* unknown -option */
 		argv[newac++] = *av;
 	    }

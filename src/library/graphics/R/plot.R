@@ -153,7 +153,7 @@ function(formula, data = parent.frame(), ..., subset,
 		funname <- paste("plot.",j,sep = "")
 		if( exists(funname) ) {
 		    found <- TRUE
-		    break;
+		    break
 		}
 	    }
 	    if( !found )

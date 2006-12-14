@@ -406,7 +406,7 @@ remove.packages <- function(pkgs, lib, version) {
     is_bundle <- pkgs %in% have[, "Bundle"]
     pkgs0 <- pkgs; pkgs <- pkgs[!is_bundle]
     if(hv) {
-        names(version) <- pkgs0;
+        names(version) <- pkgs0
         if(length(pkgs)) pkgs <- manglePackageName(pkgs, version[!is_bundle])
     }
     for(p in pkgs0[is_bundle]) {

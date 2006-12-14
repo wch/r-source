@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-22 r39471)
+R version 2.5.0 Under development (unstable) (2006-11-28 r40045)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -141,7 +141,7 @@ Achieved convergence tolerance: 2.74e-06
   0      56.0706: 0.123450 0.543210
   1      6.39646:  1.34546 0.700840
   2  0.000606391: 0.00517053 0.999153
-  3  0.000606391: 0.00517053 0.999153
+  3  0.000606391: 0.00517052 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -426,7 +426,7 @@ Nonlinear regression model
  residual sum-of-squares: 2.44
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 3.52e-06 
+Achieved convergence tolerance: 2.97e-06 
 Waiting for profiling to be done...
          2.5%   97.5%
 a     0.35005 0.66045
@@ -483,7 +483,7 @@ $a
 8   2.26362    5.01493    0.97638
 9   2.70180    7.51383    1.12707
 10  3.08992   12.25766    1.26434
-11  3.40458   22.42470    1.38476
+11  3.40458   22.42471    1.38476
 
 $b
        tau par.vals.a par.vals.b
@@ -494,7 +494,7 @@ $b
 5  2.43255    4.61672    1.12347
 6  3.18042    7.90950    1.44117
 7  3.89865   23.13399    1.79455
-8  4.52605  166.09126    2.20381
+8  4.52605  166.09149    2.20381
 
 attr(,"original.fit")
 Nonlinear regression model
@@ -613,5 +613,5 @@ Achieved convergence tolerance: 7.45e-07
 > ## finally worked in 2.4.0
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.73 0.03 4.94 NA NA 
+Time elapsed:  7.25 0.05 7.34 NA NA 
 > 

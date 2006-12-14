@@ -339,8 +339,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
     R_len_t len;
 
-    if (length(args) != 1)
-	error(_("incorrect number of args to 'length'"));
+    checkArity(op, args);
 
     if( isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
 					      rho, &ans, 0, 1))

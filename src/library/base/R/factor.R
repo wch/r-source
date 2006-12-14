@@ -1,4 +1,4 @@
-factor <- function (x=character(), levels = sort(unique.default(x),
+factor <- function (x = character(), levels = sort(unique.default(x),
                     na.last = TRUE), labels=levels, exclude = NA,
                     ordered = is.ordered(x))
 {
@@ -28,13 +28,14 @@ category <- function(...) .Defunct()
 levels <- function(x) attr(x, "levels")
 nlevels <- function(x) length(levels(x))
 
-"levels<-" <- function(x, value) UseMethod("levels<-")
+## now a primitive
+## "levels<-" <- function(x, value) UseMethod("levels<-")
 
-"levels<-.default" <- function(x, value)
-{
-    attr(x, "levels") <- value
-    x
-}
+## "levels<-.default" <- function(x, value)
+## {
+##     attr(x, "levels") <- value
+##     x
+## }
 
 "levels<-.factor" <- function(x, value)
 {

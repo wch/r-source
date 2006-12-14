@@ -342,7 +342,7 @@ SEXP eval(SEXP e, SEXP rho)
     __asm__ ( "fninit" );
 #endif
 
-    R_Visible = 1;
+    R_Visible = TRUE;
     switch (TYPEOF(e)) {
     case NILSXP:
     case LISTSXP:
@@ -374,7 +374,6 @@ SEXP eval(SEXP e, SEXP rho)
 	    break;
 #endif
     case SYMSXP:
-	R_Visible = 1;
 	if (e == R_DotsSymbol)
 	    error(_("'...' used in an incorrect context"));
 	if( DDVAL(e) )
@@ -426,18 +425,28 @@ SEXP eval(SEXP e, SEXP rho)
 	    PrintValue(e);
 	}
 	if (TYPEOF(op) == SPECIALSXP) {
-	    int save = R_PPStackTop;
+	    int save = R_PPStackTop, flag = PRIMPRINT(op);
 	    PROTECT(CDR(e));
-	    R_Visible = 1 - PRIMPRINT(op);
+	    R_Visible = flag != 1;
 	    tmp = PRIMFUN(op) (e, op, CDR(e), rho);
+#ifdef CHECK_VISIBILITY
+	    if(flag < 2 && R_Visible == flag) {
+		char *nm = PRIMNAME(op);
+		if(strcmp(nm, "for")
+		   && strcmp(nm, "repeat") && strcmp(nm, "while") 
+		   && strcmp(nm, "[[<-") && strcmp(nm, "on.exit"))
+		    printf("vis: special %s\n", nm);
+	    }
+#endif
+	    if (flag < 2) R_Visible = flag != 1;
 	    UNPROTECT(1);
 	    check_stack_balance(op, save);
 	}
 	else if (TYPEOF(op) == BUILTINSXP) {
-	    int save = R_PPStackTop;
+	    int save = R_PPStackTop, flag = PRIMPRINT(op);
 	    RCNTXT cntxt;
 	    PROTECT(tmp = evalList(CDR(e), rho, op));
-	    R_Visible = 1 - PRIMPRINT(op);
+	    if (flag < 2) R_Visible = flag != 1;
 	    /* We used to insert a context only if profiling,
 	       but helps for tracebacks on .C etc. */
 	    if (R_Profiling || (PPINFO(op).kind == PP_FOREIGN)) {
@@ -448,6 +457,13 @@ SEXP eval(SEXP e, SEXP rho)
 	    } else {
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
 	    }
+#ifdef CHECK_VISIBILITY
+	    if(flag < 2 && R_Visible == flag) {
+		char *nm = PRIMNAME(op);
+		printf("vis: builtin %s\n", nm);
+	    }
+#endif
+	    if (flag < 2) R_Visible = flag != 1;
 	    UNPROTECT(1);
 	    check_stack_balance(op, save);
 	}
@@ -897,7 +913,7 @@ SEXP attribute_hidden do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return (eval(CAR(CDR(args)), rho));
     else if (length(args) > 2)
 	return (eval(CAR(CDR(CDR(args))), rho));
-    R_Visible = 0;
+    R_Visible = FALSE; /* case of no 'else' so return invisible NULL */
     return R_NilValue;
 }
 
@@ -1008,7 +1024,6 @@ SEXP attribute_hidden do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
  for_break:
     endcontext(&cntxt);
     UNPROTECT(5);
-    R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return ans;
 }
@@ -1040,7 +1055,6 @@ SEXP attribute_hidden do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     endcontext(&cntxt);
     UNPROTECT(1);
-    R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return t;
 }
@@ -1072,7 +1086,6 @@ SEXP attribute_hidden do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     endcontext(&cntxt);
     UNPROTECT(1);
-    R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return t;
 }
@@ -1366,7 +1379,6 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 		s = t;
 	    }
 	    PROTECT(s);
-	    R_Visible = 0;
 	    defineVar(CAR(args), s, rho);
 	    UNPROTECT(1);
 	    SET_NAMED(s, 1);
@@ -1375,13 +1387,13 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    case 0: SET_NAMED(s, 1); break;
 	    case 1: SET_NAMED(s, 2); break;
 	    }
-	    R_Visible = 0;
 	    defineVar(CAR(args), s, rho);
 #endif
+	    R_Visible = FALSE;
 	    return (s);
 	}
 	else if (isLanguage(CAR(args))) {
-	    R_Visible = 0;
+	    R_Visible = FALSE;
 	    return applydefine(call, op, args, rho);
 	}
 	else errorcall(call,
@@ -1392,10 +1404,10 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (NAMED(s))
 		s = duplicate(s);
 	    PROTECT(s);
-	    R_Visible = 0;
 	    setVar(CAR(args), s, ENCLOS(rho));
 	    UNPROTECT(1);
 	    SET_NAMED(s, 1);
+	    R_Visible = FALSE;
 	    return s;
 	}
 	else if (isLanguage(CAR(args)))
@@ -2568,7 +2580,7 @@ typedef int BCODE;
 #define DO_GETVAR(dd) do { \
   SEXP symbol = VECTOR_ELT(constants, GETOP()); \
   value = (dd) ? ddfindVar(symbol, rho) : findVar(symbol, rho); \
-  R_Visible = 1; \
+  R_Visible = TRUE; \
   if (value == R_UnboundValue) \
     error(_("Object \"%s\" not found"), CHAR(PRINTNAME(symbol))); \
   else if (value == R_MissingArg) { \
@@ -2953,7 +2965,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	NEXT();
       }
     OP(SETLOOPVAL, 0): value = BCNPOP(); R_BCNodeStackTop[-1] = value; NEXT();
-    OP(INVISIBLE,0): R_Visible = 0; NEXT();
+    OP(INVISIBLE,0): R_Visible = FALSE; NEXT();
     OP(LDCONST, 1): DO_LDCONST(value); BCNPUSH(value); NEXT();
     OP(LDNULL, 0):  BCNPUSH(R_NilValue); NEXT();
     OP(LDTRUE, 0):  BCNPUSH(R_TrueValue); NEXT();
@@ -3149,14 +3161,19 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP fun = R_BCNodeStackTop[-3];
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP args = R_BCNodeStackTop[-2];
+	int flag;
 	switch (ftype) {
 	case BUILTINSXP:
-	  R_Visible = 1 - PRIMPRINT(fun);
+	  flag = PRIMPRINT(fun);
+	  R_Visible = flag != 1;
 	  value = PRIMFUN(fun) (call, fun, args, rho);
+          if (flag < 2) R_Visible = flag != 1;
 	  break;
 	case SPECIALSXP:
-	  R_Visible = 1 - PRIMPRINT(fun);
+	  flag = PRIMPRINT(fun);
+	  R_Visible = flag != 1;
 	  value = PRIMFUN(fun) (call, fun, CDR(call), rho);
+          if (flag < 2) R_Visible = flag != 1;
 	  break;
 	case CLOSXP:
 	  value = applyClosure(call, fun, args, rho, R_BaseEnv);
@@ -3172,10 +3189,13 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP fun = R_BCNodeStackTop[-3];
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP args = R_BCNodeStackTop[-2];
+	int flag;
 	if (TYPEOF(fun) != BUILTINSXP)
 	  error(_("not a BUILTIN function"));
-	R_Visible = 1 - PRIMPRINT(fun);
+	flag = PRIMPRINT(fun);
+	R_Visible = flag != 1;
 	value = PRIMFUN(fun) (call, fun, args, rho);
+	if (flag < 2) R_Visible = flag != 1;
 	R_BCNodeStackTop -= 2;
 	R_BCNodeStackTop[-1] = value;
 	NEXT();
@@ -3185,6 +3205,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP call = VECTOR_ELT(constants, GETOP());
 	SEXP symbol = CAR(call);
 	SEXP fun = SYMVALUE(symbol);
+	int flag;
 	if (TYPEOF(value) == PROMSXP) {
 	    value = forcePromise(value);
 	    SET_NAMED(value, 2);
@@ -3195,8 +3216,10 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	}
 	if (TYPEOF(fun) != SPECIALSXP)
 	  error(_("not a SPECIAL function"));
-	R_Visible = 1 - PRIMPRINT(fun);
+	flag = PRIMPRINT(fun);
+	R_Visible = flag != 1;
 	value = PRIMFUN(fun) (call, fun, CDR(call), rho);
+	if (flag < 2) R_Visible = flag != 1;
 	BCNPUSH(value);
 	NEXT();
       }

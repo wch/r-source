@@ -1310,7 +1310,7 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
 
-    if (DispatchOrEval(call, op, "as.character", args, rho, &ans, 1, 0))
+    if (DispatchOrEval(call, op, "as.character", args, rho, &ans, 0, 1))
 	return(ans);
 
     /* Method dispatch has failed, we now just */
@@ -1318,7 +1318,6 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(args = ans);
     checkArity(op, args);
-
     ans = ascommon(call, CAR(args), STRSXP);
     CLEAR_ATTRIB(ans);
     UNPROTECT(1);
@@ -1331,7 +1330,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
     int type;
 
-    if (DispatchOrEval(call, op, "as.vector", args, rho, &ans, 1, 0))
+    if (DispatchOrEval(call, op, "as.vector", args, rho, &ans, 0, 1))
 	return(ans);
 
     /* Method dispatch has failed, we now just */
@@ -1339,7 +1338,6 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(args = ans);
     checkArity(op, args);
-
     if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
 	errorcall_return(call, R_MSG_mode);
 
@@ -1766,10 +1764,10 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, dims, names, x;
     int i, n;
 
+    checkArity(op, args);
     if (DispatchOrEval(call, op, "is.na", args, rho, &ans, 1, 1))
 	return(ans);
     PROTECT(args = ans);
-    checkArity(op, args);
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
 	errorcall_return(call, "is.na " R_MSG_list_vec);
@@ -1876,12 +1874,11 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, dims, names, x;
     int i, n;
 
+    checkArity(op, args);
     if (DispatchOrEval(call, op, "is.nan", args, rho, &ans, 1, 1))
 	return(ans);
 
     PROTECT(args = ans);
-    checkArity(op, args);
-
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
 	errorcall_return(call, "is.nan " R_MSG_list_vec);

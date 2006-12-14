@@ -47,7 +47,7 @@ SEXP R_GD_nullDevice();
 Rboolean 
 PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,
 	       char*, char*, char*, double, double, Rboolean, double, 
-	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
+	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP, char*);
 
 Rboolean
 PDFDeviceDriver(NewDevDesc*, char *, char *, char *, char**, char *, 

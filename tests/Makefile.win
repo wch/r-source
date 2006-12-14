@@ -28,7 +28,8 @@ test-src-strict-1 = \
 test-src-strict-auto =
 test-src-sloppy-1 = \
 	complex.R \
-	print-tests.R
+	print-tests.R \
+	datasets.R
 test-src-sloppy-auto =
 
 test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)

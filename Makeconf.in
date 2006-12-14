@@ -98,7 +98,7 @@ ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
 ALL_FFLAGS_LO = $(R_XTRA_CFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 .SUFFIXES:
-.SUFFIXES: .c .f .d .o
+.SUFFIXES: .c .f .m .d .o
 
 @r_cc_rules_frag@
 .f.o:

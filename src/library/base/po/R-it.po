@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:17\n"
+"POT-Creation-Date: 2006-12-11 10:49\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1152,6 +1152,10 @@ msgstr "'x' deve essere un vettore"
 msgid "invalid 'rle' structure"
 msgstr "'struttura 'rle' non valida"
 
+#, fuzzy
+msgid "... must contain names or character strings"
+msgstr "'file' deve essere NULL, una connessione o una stringa di caratteri"
+
 msgid "incorrect length for 'group'"
 msgstr "lunghezza per 'group' non corretta"
 
@@ -1271,6 +1275,12 @@ msgstr ""
 
 msgid "'%s' is not an existing file"
 msgstr "'%s' non è un file esistente"
+
+msgid "Timestamp of '"
+msgstr ""
+
+msgid "' has changed"
+msgstr ""
 
 #, fuzzy
 msgid "is not"

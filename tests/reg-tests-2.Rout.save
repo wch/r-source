@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-24 r39980)
+R version 2.5.0 Under development (unstable) (2006-12-07 r40137)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -4705,11 +4705,11 @@ out-of-range values treated as 0 in coercion to raw
 3  3
 4  4
 > m1[m1 == 0] <- 2;   m1
-   a
-1 NA
-2  2
-3  3
-4  4
+      a
+[1,] NA
+[2,]  2
+[3,]  3
+[4,]  4
 > df2[df2 == 0] <- 2; df2  # not allowed in 2.{0,1}.z
    a
 1 NA
@@ -4717,11 +4717,11 @@ out-of-range values treated as 0 in coercion to raw
 3  2
 4  4
 > m2[m2 == 0] <- 2;   m2
-   a
-1 NA
-2  2
-3  2
-4  4
+      a
+[1,] NA
+[2,]  2
+[3,]  2
+[4,]  4
 > df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
 [1] NA  2
 > df3 <- data.frame(a=1:2, b=2:3)
@@ -5593,6 +5593,16 @@ $y
 > ## MAD of iterated residuals was zero, and result depended on the platform.
 > 
 > 
+> ## PR#9263: problems with R_Visible
+> a <- list(b=5)
+> a[[(t<-'b')]]
+[1] 5
+> x <- matrix(5:-6, 3)
+> x[2, invisible(3)]
+[1] -2
+> ## both invisible in 2.4.0
+> 
+> 
 > ### end of tests added in 2.4.1 ###
 > 
 > 
@@ -5624,9 +5634,10 @@ structure(list(a = NA, b = NA_integer_, c = NA_real_, d = NA_complex_,
 "e", "f", "g", "h", "i", "j"))
 > dput(x, control=c("all", "S_compatible"))
 structure(list(a = NA, b = as.integer(NA), c = as.double(NA), 
-    d = as.complex( NA), e = 1, f = as.integer(1), g = 1:3, h = as.integer(c(NA, 
-    1, 2, 3)), i = as.character(NA), j = c("foo", NA, "bar")), .Names = c("a", 
-"b", "c", "d", "e", "f", "g", "h", "i", "j"))
+    d = as.complex( NA), e = 1., f = as.integer(1), g = 1:3, 
+    h = as.integer(c(NA, 1, 2, 3)), i = as.character(NA), j = c("foo", 
+    NA, "bar")), .Names = c("a", "b", "c", "d", "e", "f", "g", 
+"h", "i", "j"))
 > tmp <- tempfile()
 > dput(x, tmp, control="all")
 > stopifnot(identical(dget(tmp), x))

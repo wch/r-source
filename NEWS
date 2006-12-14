@@ -13,6 +13,17 @@ USER-VISIBLE CHANGES
 
     o	str.default() typically prints fewer entries of logical vectors.
 
+    o	abs(<integer>) now returns integer [experimental, as of 2006-12-08]
+
+    o	The dimnames() generic function has a new argument '...', see also
+	below.
+
+    o	as.matrix(<data frame with trivial rownames>) now has NULL
+	rownames.  Consequently, e.g., t(.) for such data frames has NULL
+	column names.  This change leads to memory reductions in several
+	places, but can break code which assumes character
+	dimnames for such data frame derived matrices.
+
 
 NEW FEATURES
 
@@ -34,10 +45,10 @@ NEW FEATURES
     o	A few more cases of subassignment work, e.g. <raw>[] <- <list>
 	and <vector>[] <- <expression>, with suitable coercion of the LHS.
 
-    o	There is a (currently experimental) warning if \ is used
-	unnecessarily in a string when being parsed, e.g. "\." where
-	probably "\\." was intended.  ("\." is valid, but the same as
-	".".)  Thanks to Bill Dunlap for the suggestion.
+    o	There is a warning if \ is used unnecessarily in a string when
+	being parsed, e.g. "\." where probably "\\." was intended.
+	("\." is valid, but the same as ".".)  Thanks to Bill Dunlap
+	for the suggestion.
 
     o	New functions formatUL() and formatOL() in package utils for
 	formatting unordered (itemize) and ordered (enumerate) lists.
@@ -51,10 +62,6 @@ NEW FEATURES
     o	abbreviate() no longer has an 8191 byte limit on the size of
 	strings it can handle.
 
-    o	Added links to source files to the parsing routines, so that
-	source() can now echo the original source and comments (rather
-	than deparsing).  This affects example() and Sweave() as well.
-	
     o	New function withVisible() allows R level access to the visibility
 	flag.
 
@@ -70,10 +77,7 @@ NEW FEATURES
 
     o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
 
-    o	Added support for Obj-C in R and packages (if available).
-
-    o	The following additional flags are accessible from R CMD config:
-	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
+    o	Added support for Objective C in R and packages (if available).
 
     o	boxplot(*, notch = TRUE) now warns when notches are outside hinges;
 	related to PR#7690.
@@ -85,7 +89,9 @@ NEW FEATURES
     o	.deparseOpts() has two new options: "keepNA" to ensure that
 	different types (logical, integer, double, character and
 	complex) of NAs are distinguished, and "S_compatible" to
-	suppress the use of R-specific features such as 123L.
+	suppress the use of R-specific features such as 123L and to
+	deparse integer values of a double vector with a trailing
+	decimal point.
 
 	The 'keepInteger' option now uses the suffix 'L' rather than
 	as.integer() where possible (unless all entries are NA or
@@ -109,12 +115,47 @@ NEW FEATURES
 
     o	uniroot() now works if the zero occurs at one of the ends of
 	the interval (suggestion of Tamas Papp).
-	
+
     o	rgb() now accepts the red, green and blue components in a
     	single matrix or dataframe.
-	
+
     o	New utility function RShowDoc() in package 'utils' to find and
 	display manuals and other documentation files.
+
+    o	Added links to source files to the parsing routines, so that
+	source() can now echo the original source and comments (rather
+	than deparsing).  This affects example() and Sweave() as well.
+
+    o	Set the parser to give verbose error messages in case of
+    	syntax errors.
+
+    o	New function environmentName() to give the print name of
+	environments such as "namespace:base".
+	This is now used by str().
+
+    o	cut.default() has a new argument ordered_result.
+
+    o	interaction() has a new argument lex.order.
+
+    o	.Call("R_shortRowNames") utility for data frames with trivial row
+	names; consequently, dim.data.frame() has become very fast for
+	large such data frames.
+
+    o	dimnames.data.frame() has a new argument 'maybeNULL = FALSE' which
+	allows dimnames(<dframe>, maybeNULL = TRUE) to return
+	list(NULL, <whatever>), with dramatical memory saving for large
+	data frames with trivial row names.
+	Consequently, it and the dimnames() generic now also have a '...' argument.
+	We plan to add "maybeNULL = TRUE" in quite a few places in order to
+	increase memory efficiency (with loss of strict backward compatibility).
+
+    o	postscript() now by default writes grey colors (including black
+	and white) via 'setgray', which gives more widely acceptable
+	output.  There are options to write pure RGB, CMYK or gray via
+	the new argument 'colormodel'.
+
+    o	levels<-(), names() and names<-() now dispatch internally for
+	efficiency and so no longer have S3 default methods.
 
 
 DEPRECATED & DEFUNCT
@@ -128,7 +169,11 @@ DEPRECATED & DEFUNCT
     o	The autoloading of ts() is defunct.
 
     o	The undocumented reserved word GLOBAL.ENV has been removed.
-	(It was yet another way to get the value of the symbol .GlobalEnv.)
+	(It was yet another way to get the value of the symbol
+	.GlobalEnv.)
+
+    o	The deprecated behaviour of structure() in adding a class when
+	specifying with "tsp" or "levels" attributes is now defunct.
 
 
 INSTALLATION
@@ -138,7 +183,7 @@ INSTALLATION
 	changes to the detection of a C99-compliant C compiler
 	backported for 2.4.0 patched.
 
-    o	Detection of Java development environment was added such that
+    o	Detection of a Java development environment was added such that
 	packages don't need to provide their own Java detection.
 
 	R CMD javareconf was updated to look for the corresponding
@@ -159,19 +204,46 @@ UTILITIES
 	writing new drivers, RweaveLatexRuncode is now created using a
 	helper function (all from a patch submitted by Seth Falcon).
 
-	
+    o	The following additional flags are accessible from R CMD config:
+	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
+
+    o	R CMD build now takes the package name from the DESCRIPTION
+	file and not from the directory.  (PR#9266)
+
+    o	checkS3methods (and hence R CMD check now checks agreement
+	with primitive internal generics).
+
+
 BUG FIXES
 
-    o	gc() can now report quantities of Vcells in excess of 16Gb on
+    o	gc() can now report quantities of 'Vcells' in excess of 16Gb on
 	64-bit systems (rather than reporting NA).
 
-    o	Assigning class "factor" to an object now ensures it has
+    o	Assigning class "factor" to an object now requires it has
 	integer (and not say double) codes.
 
-    o	structure() no longer takes adding a "levels" attribute to be a
-	request for a factor nor adding a "tsp" attribute to be a
-	request for a "ts" object, but it does ensure that objects
-	with added class "factor" have integer codes.
+    o	structure() ensures that objects with added class "factor" have
+	integer codes.
+
+    o	The "formula" and "outer" attributes of datasets 'ChickWeight',
+	'CO2', 'DNase', 'Indometh', 'Loblolly', 'Orange' and 'Theoph'
+	now have an empty environment and not the environment used to
+	dump the datasets in the package.
+
+    o	Dataset Seatbelts now correctly has class c("mts", "ts").
+
+    o	str() now labels classes on data frames more coherently.
+
+    o	Several 'special' primitives and .Internals could return
+	invisibly if the evaluation of an argument led to the
+	visibility flag being turned off.  These included
+	as.character(), as.vector(), call(), dim(), dimnames(),
+	lapply(), rep(), seq() and seq_along().  Others (e.g. dput()
+	and print.default()) could return visibly when this was not
+	intended.
+
+    o	Several primitives such as dim() were not checking the number
+	of arguments supplied before method dispatch.
 
 
 
@@ -183,7 +255,8 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.4.0 patched
+		CHANGES IN R VERSION 2.4.1
+
 
 INSTALLATION
 
@@ -213,6 +286,13 @@ C-LEVEL FACILITIES
     o	Using STRICT_R_HEADERS applies to more reported clashes with
 	Windows headers, including Calloc and Realloc.  These and
 	Free need to be prefixed by R_ when STRICT_R_HEADERS is defined.
+
+
+DEPRECATED & DEFUNCT
+
+    o	The previously undocumented behaviour of structure() in adding a
+	class when specifying "tsp" or "levels" attributes is now
+	deprecated (with a warning).
 
 
 BUG FIXES
@@ -331,9 +411,12 @@ BUG FIXES
     o	readBin() could return one too many strings if 'n' was an
 	over-estimate. (PR#9361)
 
-    o	A request for an opaque colour in the pdf() driver after a
+    o	A request for an opaque colour in the pdf() device after a
 	translucent one did not set the transparency back to opaque in
 	2.4.0.
+
+	Semi-transparent background colours were not being plotted on
+	the pdf() device.
 
     o	plot.lm(which=5) in the case of constant leverage re-ordered
 	the factor levels but not the residuals, so the labelling by
@@ -351,6 +434,38 @@ BUG FIXES
 
     o	structure() reordered the "class" value given if there was a
 	"tsp" value specified.
+
+    o	pairs() now does pass appropriate parts of '...' to the
+	'diag.panel' argument. (PR#9384)
+
+    o	plot.lm() was using an incorrect estimate of dispersion for
+	some GLMs (including family=binomial and family=poisson).
+	(PR#9316)
+
+    o	Subsetting operators were setting R_Visible too early, so
+	assignments in arguments could make the result invisible.
+	(PR#9263)
+
+    o   The tk-GUI was displaying a warning due to an extra comma in
+        the list of manuals (PR#9396)
+
+    o	packageDescription() now gives an explicit error on a corrupt
+	DESCRIPTION file.
+
+    o   There was a scoping issue with tcltk callbacks given as
+        unevaluated expressions. This has only been partially fixed, a
+        complete fix probably requires redesign.
+
+    o	trace() had its return value documented incorrectly and was
+	sometimes visible when it should not have been.
+
+    o	pchisq() would sometimes use the wrong tail when calculating
+	non-central probabilities with lower.tail = FALSE. (PR#9406)
+
+    o	rm() could remove the wrong objects when passed an expression.
+	(PR#9399)  Now only names are allowed in the '...' argument,
+	and the incorrect documentation of what happened with
+	character objects is corrected.
 
 
 

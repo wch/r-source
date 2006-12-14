@@ -58,10 +58,18 @@ while(@ARGV > 0) {
 	$first = $item if $first eq "";
     } elsif ($item =~ /\.c$/) {
 	push @csrcs, $item;
-	push @cfsrcs, $item;
 	$first = $item if $first eq "";
-    } elsif ($item =~ /\.(f|o|f90|f95)$/) {
-	push @cfsrcs, $item;
+    } elsif ($item =~ /\.f/) {
+	push @fsrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.(f90|f95)$/) {
+	push @fcsrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.m$/) {
+	push @msrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.o/) {
+	push @libs, $item;
 	$first = $item if $first eq "";
     } else {
 	push @libs, $item;
@@ -72,9 +80,11 @@ if($dllname eq "") {
     $dllname  =~ s/\..*$//;
 }
 
-my $srcs=join(" ", @cfsrcs);
 my $csrcs=join(" ", @csrcs);
+my $fsrcs=join(" ", @fsrcs);
 my $cxx=join(" ", @cxxsrcs);
+my $fcsrcs=join(" ", @fcsrcs);
+my $msrcs=join(" ", @msrcs);
 my $pkg_libs=join(" ", @libs);
 my $makefiles = "-f $R_HOME/src/gnuwin32/MakeDll";
 ## Rcmd.exe ensures HOME is set
@@ -84,7 +94,7 @@ if (-r "$HOME/.R/Makevars.win32") {
     $makefiles="$makefiles -f \"$HOME/.R/Makevars\"";
 }
 
-system("make $makefiles RHOME=$R_HOME $debug DLLNAME=$dllname CSOURCES='$csrcs' CFSOURCES='$srcs' CXXSOURCES='$cxx' RCOBJ= PKG_LIBS='$pkg_libs'");
+system("make $makefiles RHOME=$R_HOME $debug DLLNAME=$dllname CSOURCES='$csrcs' FSOURCES='$fsrcs' CXXSOURCES='$cxx' FCSOURCES='$fcsrcs' MSOURCES='$msrcs' OBJ= PKG_LIBS2='$pkg_libs'");
 
 
 sub usage {

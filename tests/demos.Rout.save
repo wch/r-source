@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-06 r39147)
+R version 2.5.0 Under development (unstable) (2006-11-25 r39992)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -54,33 +54,33 @@ Type 'q()' to quit R.
 > bi <- ls.base[base.is.f]
 
 > cat("\nNumber of base objects:\t\t", length(ls.base), 
-    "\nNumber of functions in base:\t", sum(base.is.f), "\n\t starting with 'is.' :\t  ", 
-    length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
++     "\nNumber of functions in base:\t", sum(base.is.f), "\n\t starting with 'is.' :\t  ", 
++     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 1101 
-Number of functions in base:	 1076 
+Number of base objects:		 1102 
+Number of functions in base:	 1077 
 	 starting with 'is.' :	   46 
 
 > is.method <- function(fname) {
-    isFun <- function(name) (exists(name, mode = "function") && 
-        is.na(match(name, c("is", "as"))))
-    np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
-    if (np <= 1) 
-        FALSE
-    else (isFun(pas .... [TRUNCATED] 
++     isFun <- function(name) (exists(name, mode = "function") && 
++         is.na(match(name, c("is", "as"))))
++     np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
++     if (np <= 1) 
++         FALSE
++     e .... [TRUNCATED] 
 
 > is.ALL <- function(obj, func.names = ls(pos = length(search())), 
-    not.using = c("is.single", "is.loaded", "is.empty.model", 
-        "is.R", "is.element"), true.only = FALSE, debug = FALSE) {
-    is.fn <- func.names[substring(func.names, 1, 3) == .... [TRUNCATED] 
++     not.using = c("is.single", "is.loaded", "is.empty.model", 
++         "is.R", "is.element"), true.only = FALSE, debug = FALSE) {
++     is.fn <- func.names[substring(func.names,  .... [TRUNCATED] 
 
 > print.isList <- function(x, ..., verbose = getOption("verbose")) {
-    if (is.list(x)) {
-        if (verbose) 
-            cat("print.isList(): list case (length=", length(x), 
-                ")\n")
-        nm <- format(names(x))
-        rr <- lappl .... [TRUNCATED] 
++     if (is.list(x)) {
++         if (verbose) 
++             cat("print.isList(): list case (length=", length(x), 
++                 ")\n")
++         nm <- format(names(x))
++       .... [TRUNCATED] 
 
 > is.ALL(NULL)
 is.array           : . 
@@ -288,7 +288,7 @@ is.unsorted        : NA
 is.vector          : | 
 
 > is.ALL(substitute(expression(a + 3), list(a = 1)), 
-    true.only = TRUE)
++     true.only = TRUE)
 [1] "is.call"      "is.language"  "is.recursive"
 
 > is.ALL(y ~ x)
@@ -418,7 +418,7 @@ is.unsorted        : .
 is.vector          : | 
 
 > is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
-    true.only = TRUE)
++     true.only = TRUE)
 [1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
 
 > x <- 1:20
@@ -502,7 +502,7 @@ is.unsorted        : .
 is.vector          : | 
 
 > is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
-    true.only = TRUE)
++     true.only = TRUE)
 [1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
 
 
@@ -510,18 +510,17 @@ is.vector          : |
 	---- ~~~~~~~~~
 
 > area <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
-    ...), limit = 10, eps = 1e-05) {
-    h <- b - a
-    d <- (a + b)/2
-    fd <- f(d, ...)
-    a1 <- ((fa + fb) * h)/2
-    a2 <- ((fa + 4 * fd + fb) * h)/6
-    if (abs(a1 - a2) < eps) 
-        .... [TRUNCATED] 
++     ...), limit = 10, eps = 1e-05) {
++     h <- b - a
++     d <- (a + b)/2
++     fd <- f(d, ...)
++     a1 <- ((fa + fb) * h)/2
++     a2 <- ((fa + 4 * fd + fb) * h)/6
++     if (abs(a1 - a2) .... [TRUNCATED] 
 
 > fbeta <- function(x, alpha, beta) {
-    x^(alpha - 1) * (1 - x)^(beta - 1)
-}
++     x^(alpha - 1) * (1 - x)^(beta - 1)
++ }
 
 > b0 <- area(fbeta, 0, 1, alpha = 3.5, beta = 1.5)
 
@@ -531,9 +530,9 @@ is.vector          : |
 [1]  1.227170e-01  1.227185e-01 -1.443996e-06
 
 > fbeta.tmp <- function(x, alpha, beta) {
-    val <<- c(val, x)
-    x^(alpha - 1) * (1 - x)^(beta - 1)
-}
++     val <<- c(val, x)
++     x^(alpha - 1) * (1 - x)^(beta - 1)
++ }
 
 > val <- NULL
 
@@ -542,23 +541,23 @@ is.vector          : |
 > plot(val, fbeta(val, 3.5, 1.5), pch = 0)
 
 > area <- function(f, a, b, ..., limit = 10, eps = 1e-05) {
-    area2 <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
-        ...), limit = limit, eps = eps) {
-        h <- b - a
-        d <- (a + b)/2
-        fd <- f(d, ...)
-        a1 <- ((fa +  .... [TRUNCATED] 
++     area2 <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
++         ...), limit = limit, eps = eps) {
++         h <- b - a
++         d <- (a + b)/2
++         fd <- f(d, ...)
++         .... [TRUNCATED] 
 
 
 	demo(scoping)
 	---- ~~~~~~~
 
 > open.account <- function(total) {
-    list(deposit = function(amount) {
-        if (amount <= 0) stop("Deposits must be positive!\n")
-        total <<- total + amount
-        cat(amount, "deposited. Your balance is", total, "\n\n")
-    }, withdraw =  .... [TRUNCATED] 
++     list(deposit = function(amount) {
++         if (amount <= 0) stop("Deposits must be positive!\n")
++         total <<- total + amount
++         cat(amount, "deposited. Your balance is", total, "\n\n")
++     }, .... [TRUNCATED] 
 
 > ross <- open.account(100)
 
@@ -619,32 +618,32 @@ In addition: Warning messages:
 > points(x, bg = "limegreen", pch = 21)
 
 > title(main = "Simple Use of Color In a Plot", xlab = "Just a Whisper of a Label", 
-    col.main = "blue", col.lab = gray(0.8), cex.main = 1.2, cex.lab = 1, 
-    font.main = 4, font.lab = 3)
++     col.main = "blue", col.lab = gray(0.8), cex.main = 1.2, cex.lab = 1, 
++     font.main = 4, font.lab = 3)
 
 > par(bg = "gray")
 
 > pie(rep(1, 24), col = rainbow(24), radius = 0.9)
 
 > title(main = "A Sample Color Wheel", cex.main = 1.4, 
-    font.main = 3)
++     font.main = 3)
 
 > title(xlab = "(Use this as a test of monitor linearity)", 
-    cex.lab = 0.8, font.lab = 3)
++     cex.lab = 0.8, font.lab = 3)
 
 > pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
 
 > names(pie.sales) <- c("Blueberry", "Cherry", "Apple", 
-    "Boston Cream", "Other", "Vanilla Cream")
++     "Boston Cream", "Other", "Vanilla Cream")
 
 > pie(pie.sales, col = c("purple", "violetred1", "green3", 
-    "cornsilk", "cyan", "white"))
++     "cornsilk", "cyan", "white"))
 
 > title(main = "January Pie Sales", cex.main = 1.8, 
-    font.main = 1)
++     font.main = 1)
 
 > title(xlab = "(Don't try this at home kids)", cex.lab = 0.8, 
-    font.lab = 3)
++     font.lab = 3)
 
 > par(bg = "cornsilk")
 
@@ -657,7 +656,7 @@ In addition: Warning messages:
 > boxplot(split(x, g), col = "lavender", notch = TRUE)
 
 > title(main = "Notched Boxplots", xlab = "Group", font.main = 4, 
-    font.lab = 1)
++     font.lab = 1)
 
 > par(bg = "white")
 
@@ -678,7 +677,7 @@ In addition: Warning messages:
 > title("Distance Between Brownian Motions")
 
 > x <- c(0, 0.4, 0.86, 0.85, 0.69, 0.48, 0.54, 1.09, 
-    1.11, 1.73, 2.05, 2.02)
++     1.11, 1.73, 2.05, 2.02)
 
 > par(bg = "lightgray")
 
@@ -687,7 +686,7 @@ In addition: Warning messages:
 > usr <- par("usr")
 
 > rect(usr[1], usr[3], usr[2], usr[4], col = "cornsilk", 
-    border = "black")
++     border = "black")
 
 > lines(x, col = "blue")
 
@@ -700,7 +699,7 @@ In addition: Warning messages:
 > box()
 
 > title(main = "The Level of Interest in R", font.main = 4, 
-    col.main = "red")
++     col.main = "red")
 
 > title(xlab = "1996", col.lab = "red")
 
@@ -709,15 +708,15 @@ In addition: Warning messages:
 > x <- rnorm(1000)
 
 > hist(x, xlim = range(-4, 4, x), col = "lavender", 
-    main = "")
++     main = "")
 
 > title(main = "1000 Normal Random Variates", font.main = 3)
 
 > pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
-    font.main = 4, pch = 19)
++     font.main = 4, pch = 19)
 
 > pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
-    pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
++     pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
 > x <- 10 * 1:nrow(volcano)
 
@@ -744,30 +743,30 @@ In addition: Warning messages:
 > yadd <- 0.5 * (pin[2]/scale - ydelta)
 
 > plot(numeric(0), numeric(0), xlim = range(x) + c(-1, 
-    1) * xadd, ylim = range(y) + c(-1, 1) * yadd, type = "n", 
-    ann = FALSE)
++     1) * xadd, ylim = range(y) + c(-1, 1) * yadd, type = "n", 
++     ann = FALSE)
 
 > usr <- par("usr")
 
 > rect(usr[1], usr[3], usr[2], usr[4], col = "green3")
 
 > contour(x, y, volcano, levels = lev, col = "yellow", 
-    lty = "solid", add = TRUE)
++     lty = "solid", add = TRUE)
 
 > box()
 
 > title("A Topographic Map of Maunga Whau", font = 4)
 
 > title(xlab = "Meters North", ylab = "Meters West", 
-    font = 3)
++     font = 3)
 
 > mtext("10 Meter Contour Spacing", side = 3, line = 0.35, 
-    outer = FALSE, at = mean(par("usr")[1:2]), cex = 0.7, font = 3)
++     outer = FALSE, at = mean(par("usr")[1:2]), cex = 0.7, font = 3)
 
 > par(bg = "cornsilk")
 
 > coplot(lat ~ long | depth, data = quakes, pch = 21, 
-    bg = "green3")
++     bg = "green3")
 
 > par(opar)
 
@@ -794,7 +793,7 @@ In addition: Warning messages:
 > image(x, y, volcano, col = terrain.colors(100), axes = FALSE)
 
 > contour(x, y, volcano, levels = seq(90, 200, by = 5), 
-    add = TRUE, col = "brown")
++     add = TRUE, col = "brown")
 
 > axis(1, at = x.at)
 
@@ -803,12 +802,12 @@ In addition: Warning messages:
 > box()
 
 > title(main = "Maunga Whau Volcano", sub = "col=terrain.colors(100)", 
-    font.main = 4)
++     font.main = 4)
 
 > image(x, y, volcano, col = heat.colors(100), axes = FALSE)
 
 > contour(x, y, volcano, levels = seq(90, 200, by = 5), 
-    add = TRUE, col = "brown")
++     add = TRUE, col = "brown")
 
 > axis(1, at = x.at)
 
@@ -817,12 +816,12 @@ In addition: Warning messages:
 > box()
 
 > title(main = "Maunga Whau Volcano", sub = "col=heat.colors(100)", 
-    font.main = 4)
++     font.main = 4)
 
 > image(x, y, volcano, col = gray(100:200/200), axes = FALSE)
 
 > contour(x, y, volcano, levels = seq(90, 200, by = 5), 
-    add = TRUE, col = "black")
++     add = TRUE, col = "black")
 
 > axis(1, at = x.at)
 
@@ -831,7 +830,7 @@ In addition: Warning messages:
 > box()
 
 > title(main = "Maunga Whau Volcano \n col=gray(100:200/200)", 
-    font.main = 4)
++     font.main = 4)
 
 > example(filled.contour)
 
@@ -842,23 +841,25 @@ flld.c> x <- 10 * 1:nrow(volcano)
 flld.c> y <- 10 * 1:ncol(volcano)
 
 flld.c> filled.contour(x, y, volcano, color = terrain.colors, 
-    plot.title = title(main = "The Topography of Maunga Whau", 
-        xlab = "Meters North", ylab = "Meters West"), plot.axes = {
-        axis(1, seq(100, 800, by = 100))
-        axis(2, seq(10 .... [TRUNCATED] 
+flld.c+     plot.title = title(main = "The Topography of Maunga Whau", 
+flld.c+         xlab = "Meters North", ylab = "Meters West"), plot.axes = {
+flld.c+         axis(1, seq(100, 800, by = 100))
+flld.c+         axis(2, seq(100, 600, by = 100))
+flld.c+     }, key.title = title(main = "Height\n(meters)"), key.axes = axis(4, 
+flld.c+         seq(90, 190, by = 10)))
 
 flld.c> mtext(paste("filled.contour(.) from", R.version.string), 
-    side = 1, line = 4, adj = 1, cex = 0.66)
+flld.c+     side = 1, line = 4, adj = 1, cex = 0.66)
 
 flld.c> a <- expand.grid(1:20, 1:20)
 
 flld.c> b <- matrix(a[, 1] + a[, 2], 20)
 
 flld.c> filled.contour(x = 1:20, y = 1:20, z = b, plot.axes = {
-    axis(1)
-    axis(2)
-    points(10, 10)
-})
+flld.c+     axis(1)
+flld.c+     axis(2)
+flld.c+     points(10, 10)
+flld.c+ })
 
 flld.c> x <- y <- seq(-4 * pi, 4 * pi, len = 27)
 
@@ -867,8 +868,8 @@ flld.c> r <- sqrt(outer(x^2, y^2, "+"))
 flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), axes = FALSE)
 
 flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE, 
-    plot.axes = {
-    })
+flld.c+     plot.axes = {
+flld.c+     })
 
 > par(opar)
 
@@ -889,13 +890,13 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > y <- x
 
 > rotsinc <- function(x, y) {
-    sinc <- function(x) {
-        y <- sin(x)/x
-        y[is.na(y)] <- 1
-        y
-    }
-    10 * sinc(sqrt(x^2 + y^2))
-}
++     sinc <- function(x) {
++         y <- sin(x)/x
++         y[is.na(y)] <- 1
++         y
++     }
++     10 * sinc(sqrt(x^2 + y^2))
++ }
 
 > sinc.exp <- expression(z == Sinc(sqrt(x^2 + y^2)))
 
@@ -904,15 +905,15 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > par(bg = "white")
 
 > persp(x, y, z, theta = 30, phi = 30, expand = 0.5, 
-    col = "lightblue")
++     col = "lightblue")
 
 > title(sub = ".")
 
 > title(main = sinc.exp)
 
 > persp(x, y, z, theta = 30, phi = 30, expand = 0.5, 
-    col = "lightblue", ltheta = 120, shade = 0.75, ticktype = "detailed", 
-    xlab = "X", ylab = "Y", zlab = "Z")
++     col = "lightblue", ltheta = 120, shade = 0.75, ticktype = "detailed", 
++     xlab = "X", ylab = "Y", zlab = "Z")
 
 > title(sub = ".")
 
@@ -925,7 +926,7 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > y <- 10 * (1:ncol(z))
 
 > persp(x, y, z, theta = 120, phi = 15, scale = FALSE, 
-    axes = FALSE)
++     axes = FALSE)
 
 > z0 <- min(z) - 20
 
@@ -936,7 +937,7 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > y <- c(min(y) - 1e-10, y, max(y) + 1e-10)
 
 > fill <- matrix("green3", nr = nrow(z) - 1, nc = ncol(z) - 
-    1)
++     1)
 
 > fill[, i2 <- c(1, ncol(fill))] <- "gray"
 
@@ -945,37 +946,37 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > par(bg = "lightblue")
 
 > persp(x, y, z, theta = 120, phi = 15, col = fill, 
-    scale = FALSE, axes = FALSE)
++     scale = FALSE, axes = FALSE)
 
 > title(main = "Maunga Whau\nOne of 50 Volcanoes in the Auckland Region.", 
-    font.main = 4)
++     font.main = 4)
 
 > par(bg = "slategray")
 
 > persp(x, y, z, theta = 135, phi = 30, col = fill, 
-    scale = FALSE, ltheta = -120, lphi = 15, shade = 0.65, axes = FALSE)
++     scale = FALSE, ltheta = -120, lphi = 15, shade = 0.65, axes = FALSE)
 
 > persp(x, y, z, theta = 135, phi = 30, col = "green3", 
-    scale = FALSE, ltheta = -120, shade = 0.75, border = NA, 
-    box = FALSE)
++     scale = FALSE, ltheta = -120, shade = 0.75, border = NA, 
++     box = FALSE)
 
 > fcol <- fill
 
 > fcol[] <- terrain.colors(nrow(fcol))
 
 > persp(x, y, z, theta = 135, phi = 30, col = fcol, 
-    scale = FALSE, ltheta = -120, shade = 0.3, border = NA, box = FALSE)
++     scale = FALSE, ltheta = -120, shade = 0.3, border = NA, box = FALSE)
 
 > fcol <- fill
 
 > zi <- volcano[-1, -1] + volcano[-1, -61] + volcano[-87, 
-    -1] + volcano[-87, -61]
++     -1] + volcano[-87, -61]
 
 > fcol[-i1, -i2] <- terrain.colors(20)[cut(zi, quantile(zi, 
-    seq(0, 1, len = 21)), include.lowest = TRUE)]
++     seq(0, 1, len = 21)), include.lowest = TRUE)]
 
 > persp(x, y, 2 * z, theta = 110, phi = 40, col = fcol, 
-    scale = FALSE, ltheta = -120, shade = 0.4, border = NA, box = FALSE)
++     scale = FALSE, ltheta = -120, shade = 0.4, border = NA, box = FALSE)
 
 > par(opar)
 
@@ -987,12 +988,12 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 [1] TRUE
 
 > Fr <- c(68, 42, 42, 30, 37, 52, 24, 43, 66, 50, 33, 
-    23, 47, 55, 23, 47, 63, 53, 29, 27, 57, 49, 19, 29)
++     23, 47, 55, 23, 47, 63, 53, 29, 27, 57, 49, 19, 29)
 
 > Temp <- gl(2, 2, 24, labels = c("Low", "High"))
 
 > Soft <- gl(3, 8, 24, labels = c("Hard", "Medium", 
-    "Soft"))
++     "Soft"))
 
 > M.user <- gl(2, 4, 24, labels = c("N", "Y"))
 
@@ -1001,7 +1002,7 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 > detg <- data.frame(Fr, Temp, Soft, M.user, Brand)
 
 > detg.m0 <- glm(Fr ~ M.user * Temp * Soft + Brand, 
-    family = poisson, data = detg)
++     family = poisson, data = detg)
 
 > summary(detg.m0)
 
@@ -1041,8 +1042,8 @@ Number of Fisher Scoring iterations: 4
 
 
 > detg.mod <- glm(terms(Fr ~ M.user * Temp * Soft + 
-    Brand * M.user * Temp, keep.order = TRUE), family = poisson, 
-    data = detg)
++     Brand * M.user * Temp, keep.order = TRUE), family = poisson, 
++     data = detg)
 
 > summary(detg.mod)
 
@@ -1161,7 +1162,7 @@ S Tukey smoother resulting from  smooth(x = x3R, kind = "S")
  [1] 3 3 3 3 4 4 4 4 2 2 2
 
 smooth> sm.3RS <- function(x, ...) smooth(smooth(x, "3R", 
-    ...), "S", ...)
+smooth+     ...), "S", ...)
 
 smooth> y <- c(1, 1, 19:1)
 
@@ -1178,7 +1179,7 @@ smooth> x <- c(8:10, 10, 0, 0, 9, 9)
 smooth> plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
 
 smooth> matlines(cbind(smooth(x, "3R"), smooth(x, "S"), smooth(x, 
-    "3RSS"), smooth(x)))
+smooth+     "3RSS"), smooth(x)))
 
 smooth> presidents[is.na(presidents)] <- 0
 
@@ -1216,14 +1217,14 @@ smooth> lines(sm3, col = 3, lwd = 1.5)
 smooth> lines(sm, col = 2, lwd = 1.25)
 
 > showSmooth <- function(x, leg.x = 1, leg.y = max(x)) {
-    ss <- cbind(x, "3c" = smooth(x, "3", end = "copy"), "3" = smooth(x, 
-        "3"), "3Rc" = smooth(x, "3R", end = "copy"), "3R" = smooth(x, 
-        "3R"), sm = smooth(x))
-    k <- ncol(ss) -  .... [TRUNCATED] 
++     ss <- cbind(x, "3c" = smooth(x, "3", end = "copy"), "3" = smooth(x, 
++         "3"), "3Rc" = smooth(x, "3R", end = "copy"), "3R" = smooth(x, 
++         "3R"), sm = smooth(x))
++     k <- n .... [TRUNCATED] 
 
 > for (x in list(c(4, 6, 2, 2, 6, 3, 6, 6, 5, 2), c(3, 
-    2, 1, 4, 5, 1, 3, 2, 4, 5, 2), c(2, 4, 2, 6, 1, 1, 2, 6, 
-    3, 1, 6), x1)) print(t(showSmooth(x)))
++     2, 1, 4, 5, 1, 3, 2, 4, 5, 2), c(2, 4, 2, 6, 1, 1, 2, 6, 
++     3, 1, 6), x1)) print(t(showSmooth(x)))
     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 x      4    6    2    2    6    3    6    6    5     2
 3c     4    4    2    2    3    6    6    6    5     2
@@ -1256,5 +1257,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  7.198 0.447 16.419 0 0 
+Time elapsed:  5.22 0.14 5.38 NA NA 
 > 

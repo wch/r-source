@@ -806,6 +806,7 @@ typedef SEXP (*R_ExternalRoutine)(SEXP);
 
 SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    DL_FUNC ofun = NULL;
     R_ExternalRoutine fun = NULL;
     SEXP retval;
     R_RegisteredNativeSymbol symbol = {R_EXTERNAL_SYM, {NULL}, NULL};
@@ -813,8 +814,9 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
     char *vmax = vmaxget(), buf[128];
 
-    args = resolveNativeRoutine(args, (DL_FUNC *) &fun, &symbol, buf, NULL, NULL,
+    args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call);
+    fun = (R_ExternalRoutine) ofun;
 
     /* Some external symbols that are registered may have 0 as the
        expected number of arguments.  We may want a warning

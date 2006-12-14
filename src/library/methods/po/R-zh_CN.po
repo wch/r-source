@@ -409,9 +409,8 @@ msgstr ""
 msgid "assigning as \"%s\" a class representation with internal name \"%s\""
 msgstr "无法将内部名字为\"%2$s\"的类别表現指定成\"%1$s\""
 
-#, fuzzy
 msgid "Class \"%s\" has a locked definition in package \"%s\""
-msgstr "类别\"%s\"在程輯包或环境'%s'里没有看得见的定义"
+msgstr "类别\"%s\"在程輯包'%s'里的定义被锁住了"
 
 msgid "'externalptr' objects cannot be initialized from new()"
 msgstr "'externalptr'目标对象无法从new()里来进行初始化"
@@ -519,26 +518,27 @@ msgid "unable to find an environment containing class \"%s\""
 msgstr "找不到包含类别\"%s\"的环境"
 
 msgid "Undefined subclass, \"%s\", of class \"%s\"; definition not updated"
-msgstr ""
+msgstr "子类别没有定义，\"%2$s\"的\"%1$s\"；因此其定义没有被更新"
 
 msgid ""
 "Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new "
 "inheritance information; consider setClassUnion()"
 msgstr ""
+"\"%2$s\"类别的\"%1$s\"子类别不是局部的，因此无法按新的繼承信息进行更新；考虑"
+"用setClassUnion()"
 
 msgid ""
 "No definition of inheritance from \"%s\" to \"%s\", though the relation was "
 "implied by the setIs() from \"%s\""
-msgstr ""
+msgstr "不存在从\"%s\"到\"%s\"类别的繼承定义，虽然\"%s\"中的setIs()暗示其存在"
 
 msgid ""
 "Couldn't find superclass \"%s\" to clean up when removing subclass "
 "references to class \"%s\""
-msgstr ""
+msgstr "在删除类别\"%2$s\"之子类别關聯时没有找到\"%1$s\"这样一个超类别"
 
-#, fuzzy
 msgid "No class \"%s\" found as expected in removing subclass \"%s\""
-msgstr "类别\"%s\"不能擴充不存在的类别\"%s\""
+msgstr "在删除类别\"%2$s\"时没有找到类别\"%1$s\""
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "

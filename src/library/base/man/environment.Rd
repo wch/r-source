@@ -10,6 +10,7 @@
 \alias{parent.env}
 \alias{parent.env<-}
 \alias{.BaseNamespaceEnv}
+\alias{environmentName}
 \title{Environment Access}
 \description{
   Get, set, test for and create environments.
@@ -31,6 +32,8 @@ new.env(hash = FALSE, parent = parent.frame())
 
 parent.env(env)
 parent.env(env) <- value
+
+environmentName(env)
 }
 \arguments{
   \item{fun}{a \code{\link{function}}, a \code{\link{formula}}, or
@@ -60,7 +63,11 @@ parent.env(env) <- value
   \code{parent.env} returns the parent environment of its argument.
 
   \code{parent.env<-} sets the enclosing environment of its first
-  argument. } 
+  argument.
+
+  \code{envrironmentName} returns a character string, that given when
+  the envrionment is printed or \code{""} if it is not a named environment.
+} 
 
 \details{     
   Environments consist of a \emph{frame}, or collection of named

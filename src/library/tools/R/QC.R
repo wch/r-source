@@ -1486,7 +1486,7 @@ function(package, dir, lib.loc = NULL)
     ## Not yet:
     code_env <- .make_S3_group_generic_env(parent = code_env)
     ## </FIXME>
-    
+
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
     ## generic functions.
@@ -1512,6 +1512,16 @@ function(package, dir, lib.loc = NULL)
         methods
     })
     all_methods_in_package <- unlist(methods_in_package)
+    ## There are situations where S3 methods might be documented as
+    ## functions (i.e., with their full name), if they do something
+    ## useful also for arguments not inheriting from the class they
+    ## provide a method for.  Let's allow for this in the case the
+    ## package has a namespace and the method is exported (even though
+    ## we strongly prefer using FOO(as.BAR(x)) to FOO.BAR(x) for such
+    ## cases).
+    if(has_namespace)
+        all_methods_in_package <-
+            all_methods_in_package %w/o% functions_in_code
 
     db <- if(!missing(package))
         Rd_db(package, lib.loc = dirname(dir))
@@ -1894,6 +1904,7 @@ function(package, dir, lib.loc = NULL)
                 function(f) is.function(get(f, envir = code_env)))
 
     S3_group_generics <- .get_S3_group_generics()
+    S3_primitive_generics <- .get_S3_primitive_generics()
 
     checkArgs <- function(g, m) {
         ## Do the arguments of method m (in code_env) 'extend' those of
@@ -1908,7 +1919,8 @@ function(package, dir, lib.loc = NULL)
         gm <- if(m %in% S3_reg) {
             ## See registerS3method() in namespace.R.
             defenv <-
-                if (g %in% S3_group_generics) .BaseNamespaceEnv
+                if (g %in% S3_group_generics || g %in% S3_primitive_generics)
+                    .BaseNamespaceEnv
                 else {
                     if(.isMethodsDispatchOn()
                        && methods::is(genfun, "genericFunction"))
@@ -1969,11 +1981,12 @@ function(package, dir, lib.loc = NULL)
                  .get_S3_generics_as_seen_from_package(dir,
                                                        !missing(package),
                                                        FALSE),
-                 S3_group_generics))
+                 S3_group_generics, S3_primitive_generics))
     ## <FIXME>
     ## Not yet:
     code_env <- .make_S3_group_generic_env(parent = code_env)
     ## </FIXME>
+    code_env <- .make_S3_primitive_generic_env(parent = code_env)
 
     ## Now determine the 'bad' methods in the function objects of the
     ## package.
@@ -3103,7 +3116,9 @@ function(package, dir, lib.loc = NULL)
         lapply(unlist(.get_standard_package_names()[c("base",
                                                       "recommended")],
                       use.names = FALSE),
-               Rd_aliases, lib.loc = .Library)
+               Rd_aliases, lib.loc = NULL)
+    ## (Don't use lib.loc = .Library, as recommended packages may have
+    ## been installed to a different place.)
 
     ## Add the aliases from the package itself, and build a db with all
     ## \link xrefs in the package Rd objects.

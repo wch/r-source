@@ -76,7 +76,7 @@ angle=45)
 
 <<viewport, echo=FALSE, results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 grid.show.viewport(viewport(x = 0.5, y = 0.5, width = 0.5, height = 0.25,
-angle=45))
+  angle=45))
 
 @
 \begin{figure}[p]
@@ -131,22 +131,22 @@ does some more drawing there (see Figure \ref{figure:viewports}).
 <<pushviewports, results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 grid.rect(gp=gpar(lty="dashed"))
 vp1 <- viewport(x=0, y=0.5, w=0.5, h=0.5, 
-just=c("left", "bottom"), name="vp1")
+  just=c("left", "bottom"), name="vp1")
 vp2 <- viewport(x=0.5, y=0, w=0.5, h=0.5, 
-just=c("left", "bottom"))
+  just=c("left", "bottom"))
 pushViewport(vp1)
 grid.rect(gp=gpar(col="grey"))
 grid.text("Some drawing in graphics region 1", 
-y=0.8)
+  y=0.8)
 upViewport()
 pushViewport(vp2)
 grid.rect(gp=gpar(col="grey"))
 grid.text("Some drawing in graphics region 2", 
-y=0.8)
+  y=0.8)
 upViewport()
 downViewport("vp1")
 grid.text("MORE drawing in graphics region 1", 
-y=0.2)
+  y=0.2)
 popViewport()
 
 @
@@ -179,7 +179,7 @@ vp <- viewport(width = 0.5, height = 0.5)
 pushViewport(vp)
 grid.rect(gp=gpar(col="grey"))
 grid.text("quarter of the page",
-y=0.85)
+  y=0.85)
 pushViewport(vp)
 grid.rect()
 grid.text("quarter of the\nprevious viewport")
@@ -334,8 +334,8 @@ height=0.8, just="bottom", xscale=c(0, 100)))
 grid.rect(gp=gpar(col="grey"))
 grid.xaxis()
 pushViewport(viewport(x=unit(60, "native"), y=unit(0.5, "npc"),
-width=unit(1, "strwidth", "coordinates for everyone"),
-height=unit(3, "inches")))
+  width=unit(1, "strwidth", "coordinates for everyone"),
+  height=unit(3, "inches")))
 grid.rect()
 grid.text("coordinates for everyone")
 popViewport(2)
@@ -373,7 +373,7 @@ pushViewport(viewport(layout=grid.layout(4, 5)))
 grid.rect(gp=gpar(col="grey"))
 grid.segments(c(1:4/5, rep(0, 3)), c(rep(0, 4), 1:3/4),
               c(1:4/5, rep(1, 3)), c(rep(1, 4), 1:3/4),
-gp=gpar(col="grey"))
+              gp=gpar(col="grey"))
 pushViewport(viewport(layout.pos.col=2:3, layout.pos.row=3))
 grid.rect(gp=gpar(lwd=3))
 popViewport(2)
@@ -400,8 +400,8 @@ Figure \ref{figure:vplayoutcomplex}).
 
 <<layoutcomplex, results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 grid.show.layout(grid.layout(4, 4, widths=unit(c(3, 1, 1, 1),
-c("lines", "null", "null", "cm")), heights=c(1, 1, 2, 3), 
-c("cm", "null", "null", "lines")))
+  c("lines", "null", "null", "cm")), heights=c(1, 1, 2, 3), 
+  c("cm", "null", "null", "lines")))
 
 @
 \begin{figure}[p]
@@ -631,7 +631,7 @@ legend.width <- max(unit(rep(1, length(legLabels)),
                     unit(2, "lines"),
                     unit(0.5, "inches") + unit(2, "lines"))
 pushViewport(viewport(layout=grid.layout(1, 2, 
-widths=unit.c(unit(1,"null"), legend.width))))
+  widths=unit.c(unit(1,"null"), legend.width))))
 pushViewport(viewport(layout.pos.col=1))
 bp(barData)
 popViewport()
@@ -775,13 +775,13 @@ someText <- paste("A panel of text",
 latticePlot <- xyplot(y ~ x | g, layout=c(2, 4))
 grid.rect(gp=gpar(lty="dashed"))
 pushViewport(viewport(layout=grid.layout(1, 2,
-widths=unit.c(unit(1, "strwidth", someText) + unit(2, "cm"),
-unit(1, "null")))))
+  widths=unit.c(unit(1, "strwidth", someText) + unit(2, "cm"),
+  unit(1, "null")))))
 pushViewport(viewport(layout.pos.col=1))
 grid.rect(gp=gpar(fill="light grey"))
 grid.text(someText,
-x = unit(1, "cm"), y=unit(1, "npc") - unit(1, "inches"),
-just=c("left", "top"))
+  x = unit(1, "cm"), y=unit(1, "npc") - unit(1, "inches"),
+  just=c("left", "top"))
 popViewport()
 pushViewport(viewport(layout.pos.col=2))
 print(latticePlot, newpage=FALSE)

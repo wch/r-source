@@ -16,8 +16,8 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \arguments{
   \item{\dots}{arguments \code{paper}, \code{horizontal}, \code{width},
     \code{height}, \code{family}, \code{encoding}, \code{pointsize},
-    \code{bg}, \code{fg}, \code{onefile}, \code{print.it}, and
-    \code{append} (ignored) can be supplied.}
+    \code{bg}, \code{fg}, \code{onefile}, \code{print.it},
+    \code{colormodel} and \code{append} (ignored) can be supplied.}
   \item{reset, override.check}{logical arguments passed to
     \code{\link{check.options}}.  See the Examples.}
 }

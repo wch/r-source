@@ -7,7 +7,7 @@
                                                dataPart = "logical",
                                                distance = "numeric"),
              where = where)
-    assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"), where);
+    assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"), where)
 }
 
 .simpleExtCoerce <- function(from, strict = TRUE)from

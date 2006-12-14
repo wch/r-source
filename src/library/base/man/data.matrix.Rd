@@ -8,11 +8,15 @@
   codes.
 }
 \usage{
-data.matrix(frame)
+data.matrix(frame, rownames.force = FALSE)
 }
 \arguments{
   \item{frame}{a data frame whose components are logical vectors,
     factors or numeric vectors.}
+  \item{rownames.force}{logical indicating if the resulting matrix must
+    have non-NULL \code{\link{rownames}}.  The default, \code{FALSE},
+    leads to memory-saving behavior \emph{different} than in \R versions
+    2.4.x and earlier.}
 }
 \details{
   Supplying a data frame with columns which are not numeric, factor or logical
@@ -22,7 +26,9 @@ data.matrix(frame)
 \value{
   If \code{frame} is a data frame, a numeric matrix of the same
   dimensions as \code{frame}, with dimnames taken from the row.names and
-  names.
+  names.  When the row.names are \dQuote{trivial}, i.e., equivalent to
+  \code{1:nrow(.)}, the resulting matrix gets \code{\link{NULL}}
+  dimnames[[1]] unless \code{rownames.force} is true.
 
   Otherwise, the result of \code{\link{as.matrix}}.
 }

@@ -17,7 +17,7 @@ substring <- function(text,first,last=1000000)
 }
 
 `substr<-` <- function(x, start, stop, value)
-    .Internal(substrgets(x, as.integer(start), as.integer(stop), value))
+    .Internal(`substr<-`(x, as.integer(start), as.integer(stop), value))
 
 `substring<-` <- function(text, first, last=1000000, value)
     `substr<-`(text, first, last, value)

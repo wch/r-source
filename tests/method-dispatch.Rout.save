@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-09-11 r39251)
+R version 2.5.0 Under development (unstable) (2006-11-30 r40078)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -20,15 +20,19 @@ Type 'q()' to quit R.
 > 
 > ###-- Group methods
 > 
+> ## previous versions used print() and hit an auto-printing bug.
+> 
 > ### Arithmetic "Ops" :
-> ">.bar" <- function(...) print(">.bar")
-> ">.foo" <- function(...) print(">.foo")
+> ">.bar" <- function(...) {cat("using >.bar\n"); FALSE}
+> ">.foo" <- function(...) {cat("using >.foo\n"); TRUE}
 > Ops.foo <- function(...) {
-+     print("Ops.foo")
++     cat("using Ops.foo\n")
 +     NextMethod()
 + }
-> Ops.bar <- function(...)
-+     print("Ops.bar")
+> Ops.bar <- function(...) {
++     cat("using Ops.bar\n")
++     TRUE
++ }
 > 
 > x <- 2:4 ; class(x) <- c("foo", "bar")
 > y <- 4:2 ; class(y) <- c("bar", "foo")
@@ -52,12 +56,14 @@ Warning message:
 Incompatible methods ("Ops.foo", "Ops.bar") for "<=" 
 > 
 > x > 3 ##[1] ">.foo"
-[1] ">.foo"
+using >.foo
+[1] TRUE
 > 
 > rm(list=">.foo")
 > x > 3 #-> "Ops.foo" and ">.bar"
-[1] "Ops.foo"
-[1] ">.bar"
+using Ops.foo
+using >.bar
+[1] FALSE
 > 
 > 
 > 

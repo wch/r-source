@@ -452,14 +452,17 @@ foreach my $pkg (@ARGV) {
 	    }
 
 	    if($thispkg_src_subdir ne "no") {
+		## Recognized extensions for sources or headers.
+		my $exts = "(" .
+		    &make_file_exts("sources") . "|" .
+		    &make_file_exts("headers") . ")";
 		foreach my $dir (@dirs) {
 		    if((-d &file_path($pkgdir, $dir))) {
 			chdir(&file_path($pkgdir, $dir));
 			if(!(-f "Makefile") && !(-f "Makefile.win")) {
 			    opendir(DIR, ".") or die "cannot opendir $dir: $!";
 			    @srcfiles = grep { 
-				!(/\.([Ccfh]|cc|cpp|f90|f95)$/
-				  || /^Makevars/ || /-win\.def$/ )
+				!(/\.$exts$/ || /^Makevars/ || /-win\.def$/ )
 				    && -f "$_" } readdir(DIR);
 			    closedir(DIR);
 			    if(@srcfiles) {
@@ -1118,7 +1121,7 @@ sub check_pkg {
     ## </NOTE>
     if( (-d "src") && !( (-f &file_path("src", "Makefile"))
 			 || (-f &file_path("src", "Makefile.win")) )) {
-	if( !(&list_files_with_exts("src", "([Ccf]|cc|cpp|f90|f95)"))) {
+	if( !(&list_files_with_type("src", "sources"))) {
 	    $log->warning() unless $any;
 	    $any++;
 	    $log->print("Subdirectory 'src' contains no source files.\n");
@@ -1682,7 +1685,7 @@ sub check_pkg {
 
     if(!$is_base_pkg && (-d "src")) {
 	$log->checking("for CRLF line endings in C/C++/Fortran sources/headers");
-	my @src_files = &list_files_with_exts("src", "(c|h|f|cc|cpp)");
+	my @src_files = &list_files_with_type("src", "src_no_CRLF");
 	my @bad_files = ();
 	foreach my $file (@src_files) {
 	    open(FILE, "< $file")

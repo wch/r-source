@@ -171,7 +171,7 @@ void attribute_hidden R_restore_globals(RCNTXT *cptr)
 
 static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 {
-    int savevis = R_Visible;
+    Rboolean savevis = R_Visible;
 
     /* run onexit/cend code for all contexts down to but not including
        the jump target */
@@ -235,7 +235,7 @@ void endcontext(RCNTXT * cptr)
     R_RestartStack = cptr->restartstack;
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
 	SEXP s = cptr->conexit;
-	int savevis = R_Visible;
+	Rboolean savevis = R_Visible;
 	cptr->conexit = R_NilValue; /* prevent recursion */
 	PROTECT(s);
 	eval(s, cptr->cloenv);

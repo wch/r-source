@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2006-12-11 10:50\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -360,6 +360,10 @@ msgstr "'agrep' 명세는 적적하지 않습니다"
 
 msgid "no package '%s' was found"
 msgstr "패키지 '%s'는 검색되지 않았습니다"
+
+#, fuzzy
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr "패키지 '%s'의 DESCRIPTION 파일은 잘못되어지거나 파손되었습니다"
 
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
 msgstr ""

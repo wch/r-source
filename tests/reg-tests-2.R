@@ -1998,6 +1998,14 @@ lowess(x, y)
 ## MAD of iterated residuals was zero, and result depended on the platform.
 
 
+## PR#9263: problems with R_Visible
+a <- list(b=5)
+a[[(t<-'b')]]
+x <- matrix(5:-6, 3)
+x[2, invisible(3)]
+## both invisible in 2.4.0
+
+
 ### end of tests added in 2.4.1 ###
 
 
