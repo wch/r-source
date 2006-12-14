@@ -1238,7 +1238,7 @@ These are the following 1-, 2-, and @math{N}-argument functions:
 
 @example
 @group
-               [    [[    $    @
+               [    [[    $    @@
 <-   <<-  =    [<-  [[<-  $<-
 
 +    -    *    /     ^    %%   %*%  %/%
