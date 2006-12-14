@@ -28,6 +28,9 @@ length(x) <- value
   pairlists (including language objects and dotlists) it is the length
   of the pairlist chain.  All other objects (including functions) have
   length one: note that for functions this differs from S.
+
+  The replacement form removes all the attributes of \code{x} except its
+  names.
 }
 \details{
   Both functions are generic: you can write methods to handle specific
