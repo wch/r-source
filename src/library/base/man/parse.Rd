@@ -3,7 +3,7 @@
 \title{Parse Expressions}
 \description{
   \code{parse} returns the parsed but unevaluated expressions in a
-  list.  Each element of the list is of mode \code{expression}.
+  list.
 }
 \usage{
 parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)

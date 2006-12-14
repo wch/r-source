@@ -82,7 +82,7 @@ function(x, base = NULL)
 }
 
 as.character.package_version <-
-function(x)
+function(x, ...)
     as.character(unlist(lapply(x, paste, collapse = ".")))
 
 print.package_version <-

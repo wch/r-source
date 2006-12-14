@@ -28,8 +28,8 @@ as.expression(x, \dots)
   individual calls.
 }
 \value{
-  \code{expression} returns a vector of mode \code{"expression"}
-  containing its arguments as unevaluated \dQuote{\link{call}s}.
+  \code{expression} returns a vector of type \code{"expression"}
+  containing its arguments (unevaluated).
 
   \code{is.expression} returns \code{TRUE} if \code{expr} is an
   expression object and \code{FALSE} otherwise.

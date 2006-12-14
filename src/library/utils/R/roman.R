@@ -19,7 +19,7 @@ function(x)
 }
 
 as.character.roman <-
-function(x)
+function(x, ...)
     .numeric2roman(x)
 format.roman <-
 function(x, ...)
@@ -55,7 +55,7 @@ function(x) {
         }
         paste(y, collapse = "")
     }
-    
+
     out <- character(length(x))
     x <- as.integer(x)
     ind <- is.na(x) | (x <= 0) | (x >= 3900)

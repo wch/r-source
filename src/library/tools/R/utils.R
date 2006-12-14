@@ -277,20 +277,13 @@ function(db)
 ### ** .get_internal_S3_generics
 
 .get_internal_S3_generics <-
-function(primitive = TRUE)
+function(primitive = TRUE) # primitive means 'include primitives'
 {
     out <-
         ## Get the names of R internal S3 generics (via DispatchOrEval(),
         ## cf. zMethods.Rd).
-        c("[", "[[", "$", "[<-", "[[<-", "$<-", "length", "length<-",
-          "dimnames<-", "dimnames", "dim<-", "dim", "c", "unlist",
-          "as.character", "as.vector", "is.array", "is.atomic", "is.call",
-          "is.character", "is.complex", "is.double", "is.environment",
-          "is.function", "is.integer", "is.language", "is.logical",
-          "is.list", "is.matrix", "is.na", "is.nan", "is.null",
-          "is.numeric", "is.object", "is.pairlist", "is.recursive",
-          "is.single", "is.symbol", "levels<-", "names", "names<-",
-          "rep", "seq.int",
+        c("[", "[[", "$", "[<-", "[[<-", "$<-", "as.vector", "unlist",
+          .get_S3_primitive_generics(),
           ## and also the members of the group generics from
           ## groupGeneric.Rd
           "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round",
@@ -419,13 +412,13 @@ function()
 
 .get_S3_primitive_generics <-
 function()
-    c("as.character", "c", "dim", "dim<", "dimnames", "dimnames<-",
+    c("as.character", "c", "dim", "dim<-", "dimnames", "dimnames<-",
       "is.array", "is.atomic", "is.call", "is.character", "is.complex",
       "is.double", "is.environment", "is.function", "is.integer",
       "is.language", "is.logical", "is.list", "is.matrix", "is.na", "is.nan",
       "is.null", "is.numeric", "is.object", "is.pairlist", "is.recursive",
-      "is.single", "is.symbol",
-      "length", "length<-", "levels<-", "names", "names<-", "unlist")
+      "is.single", "is.symbol", "length", "length<-", "levels<-", "names",
+      "names<-", "rep", "seq.int")
 
 ### ** .get_standard_Rd_keywords
 
@@ -644,6 +637,34 @@ function(parent = parent.frame())
     assign("length<-", function(x, value) UseMethod("length<-"), envir = env)
     assign("levels<-", function(x, value) UseMethod("levels<-"), envir = env)
     assign("names<-", function(x, value) UseMethod("names<-"), envir = env)
+    assign("rep", function(x, ...) UseMethod("rep"), envir = env)
+    assign("seq.int", function(from, to, by, length.out, along.with, ...)
+           UseMethod("seq.int"), envir = env)
+    ## now add the group generics
+    ## log, round, signif and the gamma fns are not primitive
+    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
+               'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
+               'tanh', 'acosh', 'asinh', 'atanh',
+               'cumsum', 'cumprod', 'cummax', 'cummin')) {
+        fx <- function(x, ...) {}
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
+               '==', '!=', '<', '<=', '>=', '>')) {
+        fx <- function(e1, e2) {}
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    ## none of Summary is primitive
+    for(f in c("Arg", "Conj", "Im", "Mod", "Re")) {
+        fx <- function(z) {}
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
     env
 }
 

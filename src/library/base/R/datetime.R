@@ -378,7 +378,7 @@ print.difftime <- function(x, digits = getOption("digits"), ...)
     invisible(x)
 }
 
-round.difftime <- function (x, digits = 0)
+round.difftime <- function (x, digits = 0, ...)
 {
    units <- attr(x, "units")
    structure(NextMethod(), units=units, class="difftime")

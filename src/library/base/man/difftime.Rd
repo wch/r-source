@@ -22,7 +22,7 @@ difftime(time1, time2, tz = "",
 
 as.difftime(tim, format = "\%X")
 
-\method{round}{difftime}(x, digits = 0)
+\method{round}{difftime}(x, digits = 0, \dots)
 }
 \arguments{
   \item{time1, time2}{\link[base:DateTimeClasses]{date-time} or
@@ -37,6 +37,7 @@ as.difftime(tim, format = "\%X")
     \code{\link{strptime}}.  The default is a locale-specific time format.}
   \item{x}{an object inheriting from class \code{"difftime"}.}
   \item{digits}{integer.  Number of significant digits to retain.}
+  \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{
   Function \code{difftime} takes a difference of two date/time objects
