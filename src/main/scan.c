@@ -1466,7 +1466,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
              * a LGLSXP of the right length
              */
             rval = dup;
-            TYPEOF(rval) = INTSXP;
+	    SET_TYPEOF(rval, INTSXP);
 
 	    /* put the levels in lexicographic order */
 
