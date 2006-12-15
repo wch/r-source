@@ -160,6 +160,8 @@ NEW FEATURES
     o	{re,un}tracemem() are now primitives for efficiency and so
 	migrate from 'utils' to 'base'.
 
+    o	tcltk:tk_select.list() now chooses the width to fit the widest item.
+
 
 DEPRECATED & DEFUNCT
 

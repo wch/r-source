@@ -42,14 +42,14 @@ tk_select.list <-
     if(ht < length(list)) {
         scr <- tkscrollbar(dlg, repeatinterval = 5,
                            command = function(...) tkyview(box, ...))
-        box <- tklistbox(dlg, height = ht,
+        box <- tklistbox(dlg, height = ht, width = 0,
                          listvariable = lvar, bg = "white",
                          selectmode = ifelse(multiple, "multiple", "single"),
                          yscrollcommand = function(...)tkset(scr,...))
         tkpack(box, side="left", fill="both", expand=TRUE)
         tkpack(scr, side="right", fill="y")
     } else {
-        box <- tklistbox(dlg, height = ht,
+        box <- tklistbox(dlg, height = ht, width = 0,
                          listvariable = lvar, bg = "white",
                          selectmode = ifelse(multiple, "multiple", "single"))
         tkpack(box, side="left", fill="both")
