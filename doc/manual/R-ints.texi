@@ -1443,24 +1443,29 @@ do work in the standard way.
 A small number of primitives are @emph{specials} rather than
 @emph{builtins}, that is they are entered with unevaluated arguments.
 This is clearly necessary for the language constructs and the assignment
-operators.  @code{&&} are @code{||} special as they conditionally
-evaluate their second argument.
+operators.  @code{&&} and @code{||} conditionally evaluate their second
+argument.  @code{~}, @code{.Internal}, @code{call}, @code{expression}
+and @code{missing} do not evaluate their arguments.
 
 @code{rep} and @code{seq.int} are special as they evaluate some of their
 arguments conditional on which are non-missing.
 
-Also special are @code{~}, @code{.Internal}, @code{c}, @code{call},
-@code{seq_along}, @code{expression}, @code{missing}, @code{UseMethod} as
-well as subsetting, subassignment and @code{@@} operators.
+The subsetting, subassignment and @code{@@} operators are all special.
+(For both extraction and replacement forms, @code{$} and @code{@@}
+take a symbol argument, and @code{[} and @code{[[} allow missing
+arguments.)
 
+@c c() and UseMethod() are also special.
 
 @node Special internals,  , Special primitives, .Internal vs .Primitive
 @section Special internals
 
 There are also special @code{.Internal} functions: @code{switch},
-@code{Recall}, @code{cbind}, @code{rbind}, @code{unlist},
-@code{parent.frame}, @code{lapply}, @code{eapply}, @code{NextMethod} and
-the family of @code{sys.*} functions.
+@code{Recall}, @code{cbind}, @code{rbind} (to allow for the
+@code{deparse.level} argument) @code{lapply}, @code{eapply} and
+@code{NextMethod}.
+
+@c unlist is special: why?
 
 
 @node R coding standards, Testing R code, .Internal vs .Primitive, Top
