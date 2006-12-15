@@ -2759,7 +2759,7 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
     SEXP ans;
     if (GenerateCode) {
         if (KeepSource && SrcFile)
-            REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
+		REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
 	PROTECT(ans = GrowList(exprlist, expr));
     }
     else
@@ -3451,7 +3451,7 @@ finish:
     if (SrcFile) {
     	PROTECT(rval);
     	t = CDR(SrcRefs);
-    	srval = allocVector(LISTSXP, length(rval));
+    	srval = allocVector(VECSXP, length(rval));
     	for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
     	    SET_VECTOR_ELT(srval, n, CAR(t));
     	setAttrib(rval, R_SrcrefSymbol, srval);
