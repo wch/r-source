@@ -210,8 +210,10 @@ UTILITIES
     o	R CMD build now takes the package name from the DESCRIPTION
 	file and not from the directory.  (PR#9266)
 
-    o	checkS3methods (and hence R CMD check now checks agreement
-	with primitive internal generics).
+    o	checkS3methods() (and hence R CMD check) now checks agreement
+	with primitive internal generics.
+
+	codoc() now knows the argument lists of primitive functions.
 
 
 BUG FIXES

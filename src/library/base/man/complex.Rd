@@ -18,11 +18,11 @@ complex(length.out = 0, real = numeric(), imaginary = numeric(),
 as.complex(x, \dots)
 is.complex(x)
 
-Re(x)
-Im(x)
-Mod(x)
-Arg(x)
-Conj(x)
+Re(z)
+Im(z)
+Mod(z)
+Arg(z)
+Conj(z)
 }
 \arguments{
   \item{length.out}{numeric.  Desired length of the output vector,
@@ -32,6 +32,8 @@ Conj(x)
   \item{modulus}{numeric vector.}
   \item{argument}{numeric vector.}
   \item{x}{an object, probably of mode \code{complex}.}
+  \item{z}{an object of mode \code{complex}, or one of a class for which
+    a methods has been defined.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -54,7 +56,8 @@ Conj(x)
   complex values.  Modulus and argument are also called the \emph{polar
     coordinates}.  If \eqn{z = x + i y} with real \eqn{x} and \eqn{y},
   for \eqn{r = \code{Mod}(z) = \sqrt{x^2 + y^2}}, and
-  \eqn{\phi = \code{Arg}(z)}, \eqn{x = r*\cos(\phi)} and \eqn{y = r*\sin(\phi)}.
+  \eqn{\phi = \code{Arg}(z)}, \eqn{x = r*\cos(\phi)} and
+  \eqn{y = r*\sin(\phi)}.
   They are all generic functions: methods can be defined
   for them individually or via the \code{\link{Complex}} group generic.
 

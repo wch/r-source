@@ -233,13 +233,13 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 
 /* Mathematical Functions */
+/* Note that the number of arguments in this group only applies
+   to the default method */
 {"round",	do_Math2,	10001,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"atan",	do_atan,	10002,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"log",		do_log,		10003,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"signif",	do_Math2,	10004,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"abs",		do_abs,		6,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-
-/* KH(1999/09/12)-> complex: {"abs", do_math1, 0, 1, 1, {PP_FUNCALL, PREC_FN,	0}}, */
 {"floor",	do_math1,	1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"ceiling",	do_math1,	2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sqrt",	do_math1,	3,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -266,12 +266,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"lgamma",	do_math1,	40,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"gamma",	do_math1,	41,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-/* Polygamma Functions */
-
 {"digamma",	do_math1,	42,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"trigamma",	do_math1,	43,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-/* {"tetragamma",	do_math1,	44,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"pentagamma",	do_math1,	45,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},*/
 {"gammaCody",	do_math1,	46,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 /* see "psigamma" below !*/
 
@@ -445,6 +441,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"cov",		do_cov,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"cor",		do_cov,		1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
+/* Note that the number of arguments in this group only applies
+   to the default method */
 {"cumsum",	do_cum,		1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cumprod",	do_cum,		2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cummax",	do_cum,		3,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},

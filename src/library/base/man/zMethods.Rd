@@ -60,6 +60,9 @@
   \code{\link{is.symbol}},
   \code{\link{rep}} and%                             [seq.c]
   \code{\link{seq.int}}.%                            [seq.c]
+
+  In addition, \code{is.name} is a synonym for \code{is.symbol} and
+  dispatches methods for the latter.
 }
 \seealso{
   \code{\link{methods}} for the methods which are available.
