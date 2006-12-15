@@ -1421,6 +1421,7 @@ UseMethod  invisible  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
 .subset    .subset2   .primTrace  .primUntrace
+tracemem   retracemem untracemem
 rep        seq.int
 @end group
 @end example

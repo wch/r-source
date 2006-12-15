@@ -721,12 +721,15 @@ function(parent = parent.frame(), fixup = FALSE)
     assign("pos.to.env", function(x) {}, envir = env)
     assign("proc.time", function() {}, envir = env)
     assign("quote", function(expr) {}, envir = env)
+    assign("retracemem", function(x, previous = NULL) {}, envir = env)
     assign("seq_along", function(along.with) {}, envir = env)
     assign("seq_len", function(length.out) {}, envir = env)
     assign("standardGeneric", function(f) {}, envir = env)
+    assign("tracemem", function(x) {}, envir = env)
     assign("unclass", function(x) {}, envir = env)
     assign("undebug", function(fun) {}, envir = env)
     assign("UseMethod", function(generic, object) {}, envir = env)
+    assign("untracemem", function(x) {}, envir = env)
     env
 }
 

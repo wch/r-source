@@ -157,6 +157,9 @@ NEW FEATURES
     o	levels<-(), names() and names<-() now dispatch internally for
 	efficiency and so no longer have S3 default methods.
 
+    o	{re,un}tracemem() are now primitives for efficiency and so
+	migrate from 'utils' to 'base'.
+
 
 DEPRECATED & DEFUNCT
 
