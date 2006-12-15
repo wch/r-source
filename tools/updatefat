@@ -21,7 +21,7 @@ fi
 
 #echo "architecture: $thisarch";
 if [ -e "$1" ]; then \
-    if lipo -detailed_info "$1"|grep "architecture:* $thisarch" > /dev/null; then
+    if lipo -detailed_info "$1"|grep "architecture:* $thisarch\$" > /dev/null; then
 	if lipo -info "$1"|grep ^Non-fat > /dev/null; then
 	    lipo -create "$2" -o "$1"
 	else
