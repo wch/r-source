@@ -9,9 +9,6 @@
     setClass("EmptyMethodsList", representation(argument = "name", sublist = "list"),
              where = envir); clList <- c(clList, "EmptyMethodsList")
 
-    setClass("LinearMethodsList", representation(methods = "list", arguments = "list",
-                                                 classes = "list", fromClasses = "list"),
-             where = envir); clList <- c(clList, "LinearMethodsList")
     ## the classes for method definitions
     setClass("PossibleMethod", where = envir); clList <- c(clList, "PossibleMethod")
     ## functions (esp. primitives) are methods
@@ -49,6 +46,9 @@
     setClass("nonstandardGroupGenericFunction",
              representation("groupGenericFunction", "nonstandardGeneric"),
              where = envir); clList <- c(clList, "nonstandardGroupGenericFunction")
+    setClass("LinearMethodsList", representation(methods = "list", arguments = "list",
+                                                 classes = "list", generic = "genericFunction"),
+             where = envir); clList <- c(clList, "LinearMethodsList")
     setClass("ObjectsWithPackage", representation("character", package = "character"),
              where = envir); clList <- c(clList, "ObjectsWithPackage")
     assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir)

@@ -162,6 +162,12 @@ NEW FEATURES
 
     o	tcltk:tk_select.list() now chooses the width to fit the widest item.
 
+    o  The class "LinearMethodsList" has been extended and will be
+        used to create list versions of methods, derived from the
+        methods tables (environments).  The older recursive
+        "MethodsList" class will be deprecated (by the release of
+        2.5.0 if possible).
+
 
 DEPRECATED & DEFUNCT
 
@@ -251,6 +257,11 @@ BUG FIXES
 
     o	Several primitives such as dim() were not checking the number
 	of arguments supplied before method dispatch.
+
+    o  Tracing of primitive functions has been corrected.  It should
+        now be the case that tracing either works or is not allowed
+        for all primitive functions. (Problems remain if you make a
+        primitive into a generic when it's being traced.  To be fixed later.)
 
 
 

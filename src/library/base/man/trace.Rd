@@ -3,6 +3,7 @@
 \alias{trace}
 \alias{untrace}
 \alias{tracingState}
+\alias{.doTrace}
 %% internal
 \alias{.primTrace}
 \alias{.primUntrace}
@@ -20,6 +21,7 @@ trace(what, tracer, exit, at, print, signature,
 untrace(what, signature = NULL, where = topenv(parent.frame()))
 
 tracingState(on = NULL)
+.doTrace(expr, msg)
 }
 \arguments{
   \item{what}{The name (quoted or not) of a function to be traced or
@@ -69,12 +71,18 @@ tracingState(on = NULL)
   (Yes, it's subtle, but the semantics here are central to how
   namespaces work in R.)
   }
-  \item{on}{logical; a call to \code{tracingState} returns \code{TRUE}
+  \item{on}{logical; a call to  the support function \code{tracingState} returns \code{TRUE}
     if tracing is globally turned on, \code{FALSE} otherwise.  An
     argument of one or the other of those values sets the state.  If the
     tracing state is \code{FALSE}, none of the trace actions will
     actually occur (used, for example, by debugging functions to shut
     off tracing during debugging).}
+  \item{expr, msg} { arguments to the support function \code{.doTrace}, calls to
+      which are inserted into the modified function or method:
+      \code{expr} is the tracing action (such as a call to
+      \code{browser()}, and \code{msg} is a string identifying the
+      place where the trace action occurs.
+    }
 }
 \details{
   The \code{trace} function operates by constructing a revised version

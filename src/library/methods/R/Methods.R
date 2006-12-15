@@ -786,12 +786,7 @@ showMethods <-
 {
     if(missing(showEmpty))
 	showEmpty <- !missing(f)
-    if(identical(printTo, FALSE)) {
-        tmp <- tempfile()
-        on.exit(unlink(tmp))
-        con <- file(tmp, "w")
-    }
-    else con <- printTo
+    con <- printTo
     ## must resolve showEmpty in line; using an equivalent default
     ## fails because R resets the "missing()" result for f later on (grumble)
     if(is(f, "function"))
@@ -804,9 +799,7 @@ showMethods <-
     if(length(f) == 0)
 	cat(file = con, "No applicable functions\n")
     else if(length(f) > 1) {
-        if(identical(printTo, FALSE))
-          stop(gettextf("The special case of printTo=FALSE only works when a single generic function is specified"))
-        for(ff in f) { ## recall for each
+            for(ff in f) { ## recall for each
             fdef <- getGeneric(ff, where = where)
             if(is.null(fdef))
                 next
@@ -816,41 +809,17 @@ showMethods <-
         }
 
     }
-    else { ## f of length 1 --- the "working horse" :
+    else { ## f of length 1 --- the "workhorse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
         if(!isGeneric(f, where))
             cat(file = con, out, "<not a generic function>\n")
-        else {
-            if(.UsingMethodsTables()) {
-		## maybe no output for showEmpty=FALSE
-		.showMethodsTable(getGeneric(f, where = where), includeDefs, inherited,
+        else 
+            ## maybe no output for showEmpty=FALSE
+            .showMethodsTable(getGeneric(f, where = where), includeDefs, inherited,
 				  classes = classes, showEmpty = showEmpty,
 				  printTo = con)
-            }
-            else {
-              mlist <-  getMethods(f, where)
-              if(is.null(mlist))
-                cat(file = con, out, "<no applicable methods>\n")
-              else {
-                ##NotYet         linML <- linearizeMlist(mlist, inherited,
-                ##NotYet                                  drop.empty4class = classes)
-                ##NotYet         ##_ if(showEmpty || length(linML@methods) > 0) {
-                ##NotYet             cat(file = con, out)
-                ##NotYet             showMlist(linML = linML, includeDefs = includeDefs,
-                ##NotYet                       printTo = con)
-                ##NotYet         ##_ }
-                cat(file = con, out)
-                showMlist(mlist, includeDefs, inherited, classes, printTo = con)
-              }
-            }
-        }
     }
-    if(identical(printTo, FALSE)) {
-        close(con)
-        readLines(tmp)
-    }
-    else
-      invisible(printTo)
+    invisible(printTo)
 }
 
 ## this should be made obsolete
