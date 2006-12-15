@@ -93,13 +93,13 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
 		       nos, "$", sep = "")
     }
+    srcrefs <- attr(exprs, "srcref")
     for (i in 1:Ne) {
 	if (verbose)
 	    cat("\n>>>> eval(expression_nr.", i, ")\n\t	 =================\n")
 	ei <- exprs[i]
 	if (echo) {
-	    srcref <- attr(ei[[1]], "srcref")
-	    if (is.null(srcref)) {
+	    if (i > length(srcrefs) || is.null(srcref <- srcrefs[[i]])) {
 	        # Deparse.  Must drop "expression(...)"
 		dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
 	    		  collapse = "\n"), 12, 1e+06)

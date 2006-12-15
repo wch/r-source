@@ -635,16 +635,6 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     char tpb[120];
     int i, n;
 
-    if ((d->opts & USESOURCE) && (!isNull(t = getAttrib(s, R_SrcrefSymbol)))) {
-    	PROTECT(t = eval(lang2(install("as.character"), t), R_GlobalEnv));
-    	n = length(t);
-    	for(i = 0 ; i < n ; i++) {
-	    print2buff(CHAR(STRING_ELT(t, i)), d);
-	    if(i < n-1) writeline(d);
-	}
-    	UNPROTECT(1);
-    	return;
-    }
     
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -1288,14 +1278,19 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 
 static void vec2buff(SEXP v, LocalParseData *d)
 {
-    SEXP nv;
-    int i, n;
+    SEXP nv, sv, t;
+    int i, n, is, ns;
     Rboolean lbreak = FALSE;
     Rboolean localOpts = d->opts;
 
     n = length(v);
     nv = getAttrib(v, R_NamesSymbol);
     if (length(nv) == 0) nv = R_NilValue;
+    
+    if (d->opts & USESOURCE) 
+   	sv = getAttrib(v, R_SrcrefSymbol);
+   else
+   	sv = R_NilValue;
 
     for(i = 0 ; i < n ; i++) {
 	if (i > 0)
@@ -1314,7 +1309,16 @@ static void vec2buff(SEXP v, LocalParseData *d)
 	    d->opts = localOpts;
 	    print2buff(" = ", d);
 	}
-	deparse2buff(VECTOR_ELT(v, i), d);
+	if (!isNull(sv) && !isNull(t = VECTOR_ELT(sv, i))) {
+	    PROTECT(t = eval(lang2(install("as.character"), t), R_GlobalEnv));
+            ns = length(t);
+            for(is = 0 ; is < ns ; is++) {
+            	print2buff(CHAR(STRING_ELT(t, is)), d);
+    	    	if(is < ns-1) writeline(d);
+    	    }
+            UNPROTECT(1);	
+	} else 
+	    deparse2buff(VECTOR_ELT(v, i), d);
     }
     if (lbreak)
 	d->indent--;

@@ -117,7 +117,8 @@ srcref <- function(srcfile, lloc) {
     structure(as.integer(lloc), srcfile=srcfile, class="srcref")
 }
   
-as.character.srcref <- function(srcref, useSource = TRUE) {
+as.character.srcref <- function(x, useSource = TRUE, ...) {
+    srcref <- x
     srcfile <- attr(srcref, "srcfile")
     if (useSource) lines <- try(getSrcLines(srcfile, srcref[1], srcref[3]), TRUE)
     if (!useSource || inherits(lines, "try-error")) 

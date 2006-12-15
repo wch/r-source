@@ -48,7 +48,7 @@ These functions and classes handle source code references.
 The \code{srcfile} function produces an object of class
 \code{srcfile}, which contains the name and directory of a source code
 file, along with its timestamp, for use in source level debugging (not
-yet implemented).
+yet implemented) and source echoing.
 
 The \code{srcfilecopy} function produces an object of the descendant
 class \code{srcfilecopy}, which saves the source lines in a character
@@ -73,10 +73,12 @@ error occurs (e.g. the file no longer exists), text like
 \code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
 indicating the \code{line:column} ranges of the first and last character.
 
-By default, several object types (functions, expressions, etc.) are printed by
+Lists of srcref objects may be attached to expressions as the
+\code{"srcref"} attribute.  (The list of srcref objects should be the same
+length as the expression.)  By default, expressions are printed by
 \code{\link{print.default}} using the associated \code{srcref}.  To
 see deparsed code instead, call \code{\link{print}} with argument
-\code{useSource = FALSE}.  If the \code{srcref} attribute of an object
+\code{useSource = FALSE}.  If a \code{srcref} object
 is printed with \code{useSource = FALSE}, the \code{<srcref: ...>}
 record will be printed.
 

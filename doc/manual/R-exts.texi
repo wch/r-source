@@ -6927,8 +6927,9 @@ error.  Other values which might be returned are @code{PARSE_INCOMPLETE}
 (an incomplete expression was found) and @code{PARSE_ERROR} (a syntax
 error), in both cases the value returned being @code{R_NilValue}.
 The fourth argument is a @code{srcfile} object or the @R{} @code{NULL}
-object (as in the example above). In the former case @code{srcref}
-attributes would be attached to each expression, to allow it to be
+object (as in the example above). In the former case a @code{srcref}
+attribute would be attached to the result, containing a list of
+@code{srcref} objects of the same length as the expression, to allow it to be
 echoed with its original formatting.
 
 @node External pointers and weak references, Vector accessor functions, Parsing R code from C, System and foreign language interfaces
