@@ -2742,8 +2742,6 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans,tmp;
     if (GenerateCode) {
-        if (KeepSource && SrcFile)
-            REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
 	PROTECT(tmp = NewList());
 	PROTECT(ans = GrowList(tmp, expr));
 	UNPROTECT(1);
@@ -2758,8 +2756,6 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-        if (KeepSource && SrcFile)
-		REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
 	PROTECT(ans = GrowList(exprlist, expr));
     }
     else
