@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-12-10
+@set FAQ_DATE @value{FAQ_YEAR}-12-16
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -2536,6 +2536,9 @@ R. Tibshirani, 1993, Chapman and Hall.
 @item bqtl
 QTL mapping toolkit for inbred crosses and recombinant inbred lines.
 Includes maximum likelihood and Bayesian tools.
+@item brainwaver
+Basic wavelet analysis of multivariate time series with a vizualisation
+and parametrization using graph theory.
 @item brlr
 Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
@@ -3604,6 +3607,8 @@ distribution.
 @c @item nprq
 @c Nonparametric quantile regression.  @emph{Defunct}.
 @c </COMMENT>
+@item nsRFA
+Non-supervised Regional Frequency Analysis.
 @item numDeriv
 Accurate numerical derivatives.
 @item nws
@@ -4150,6 +4155,8 @@ Shrinkage @math{t} statistic.
 @c distribution.
 @item startupmsg
 Utilities for start-up messages.
+@item stashR
+A Set of Tools for Administering SHared Repositories.
 @c <COMMENT>
 @c Merged into foreign.
 @c @item stataread
@@ -4544,6 +4551,8 @@ Suffix Trees in R via the libstree C library.
 @item Rstem
 Interface to Snowball implementation of Porter's word stemming
 algorithm.
+@item RwxWidgets
+Facilities to program GUIs using wxWidgets in R.
 @item Ryacas
 R interface to yacas.
 @item SASXML
