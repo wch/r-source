@@ -1,9 +1,11 @@
 \name{apropos}
 \title{Find Objects by (Partial) Name}
 \usage{
-apropos(what, where = FALSE, mode = "any")
+apropos(what, where = FALSE, ignore.case = TRUE, mode = "any",
+        character.only = FALSE)
 
-find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
+find(what, mode = "any", numeric. = FALSE, simple.words = TRUE,
+     character.only = !is.character(what))
 }
 \alias{apropos}
 \alias{find}
@@ -11,7 +13,13 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   \item{what}{name of an object, or \link{regular expression} to match against}
   \item{where, numeric.}{a logical indicating whether positions in the
     search list should also be returned}
+  \item{ignore.case}{logical indicating if the search should be
+    case-insensitive.  Note that R versions prior to 2.5.0 used to
+    implicitly use \code{ignore.case = FALSE}.}
   \item{mode}{character; if not \code{"any"}, only objects whose
+    \code{\link{mode}} equals \code{mode} are searched.}
+  \item{character.only}{logical indicating if \code{what} must be
+    character or should be \code{\link{deparse}(\link{substitute}(.))}d.}
     \code{\link{mode}} equals \code{mode} are searched.}
   \item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
     only searched as whole word.}
@@ -35,7 +43,7 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 \author{Kurt Hornik and Martin Maechler (May 1997).}
 \seealso{
   \code{\link{glob2rx}} to convert wildcard patterns to regular expressions.
-  
+
   \code{\link{objects}} for listing objects from one place,
   \code{\link{help.search}} for searching the help system,
   \code{\link{search}} for the search path.
@@ -43,7 +51,8 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 \examples{
 %% some of these have enormous output that varies a lot by version
 \dontrun{apropos("lm")}
-apropos(ls)
+apropos(fit)
+apropos(GLM, i = TRUE)
 apropos("lq")
 
 cor <- 1:pi

@@ -144,14 +144,13 @@ NEW FEATURES
     o	dimnames.data.frame() has a new argument 'maybeNULL = FALSE' which
 	allows dimnames(<dframe>, maybeNULL = TRUE) to return
 	list(NULL, <whatever>), with dramatical memory saving for large
-	data frames with trivial row names.
-	Consequently, it and the dimnames() generic now also have a '...' argument.
+	data frames with trivial row names. Consequently, it and the
+	dimnames() generic now also have a '...' argument.
 	We plan to add "maybeNULL = TRUE" in quite a few places in order to
 	increase memory efficiency (with loss of strict backward compatibility).
-
     o	postscript() now by default writes grey colors (including black
 	and white) via 'setgray', which gives more widely acceptable
-	output.  There are options to write pure RGB, CMYK or gray via
+	output.	 There are options to write pure RGB, CMYK or gray via
 	the new argument 'colormodel'.
 
     o	levels<-(), names() and names<-() now dispatch internally for
@@ -162,11 +161,19 @@ NEW FEATURES
 
     o	tcltk:tk_select.list() now chooses the width to fit the widest item.
 
-    o  The class "LinearMethodsList" has been extended and will be
-        used to create list versions of methods, derived from the
-        methods tables (environments).  The older recursive
-        "MethodsList" class will be deprecated (by the release of
-        2.5.0 if possible).
+    o	The class "LinearMethodsList" has been extended and will be
+	used to create list versions of methods, derived from the
+	methods tables (environments).	The older recursive
+	"MethodsList" class will be deprecated (by the release of
+	2.5.0 if possible).
+
+    o	apropos() has a new argument 'ignore.case' which defaults to TRUE,
+	potentially matching more than previously, thanks to a suggestion
+	by Seth Falcon.
+
+    o	Both apropos() and find() have a new 'character.only' argument
+	which allows to turn-off non-standard evaluation; also e.g.,
+	apropos(fit) now works.
 
 
 DEPRECATED & DEFUNCT
