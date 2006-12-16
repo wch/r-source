@@ -24,7 +24,7 @@ apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any",
 }
 
 find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE,
-                 character.only = is.character(what))
+		 character.only = is.character(what))
 {
     if(!character.only)
 	what <- as.character(substitute(what))

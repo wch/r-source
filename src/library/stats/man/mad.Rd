@@ -53,4 +53,3 @@ c(mad(x, co=1), mad(x, co=1, lo = TRUE), mad(x, co=1, hi = TRUE))
 }
 \keyword{univar}
 \keyword{robust}
-
