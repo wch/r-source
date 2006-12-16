@@ -63,6 +63,9 @@
 
   In addition, \code{is.name} is a synonym for \code{is.symbol} and
   dispatches methods for the latter.
+
+  Note that most of the \link{group generic} functions are also
+  internal/primitive and allow methods to be written for them.
 }
 \seealso{
   \code{\link{methods}} for the methods which are available.

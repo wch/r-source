@@ -10,7 +10,7 @@
 %not in S3 \alias{Arith}
 %not in S3 \alias{Compare}
 \alias{Complex}
-\alias{group generic} % used in class.Rd
+\alias{group generic} % used in class.Rd and zMethods.Rd
 \concept{group generic}
 \title{S3 Group Generic Functions}
 \description{
