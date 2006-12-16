@@ -58,6 +58,9 @@
   \code{\link{is.symbol}},
   \code{\link{rep}} and
   \code{\link{seq.int}}.
+
+  Note that most of the \link{group generic} functions are also
+  internal/primitive and allow methods to be written for them.
 }
 \seealso{
   \code{\link{methods}} for the methods of non-Internal generic functions.

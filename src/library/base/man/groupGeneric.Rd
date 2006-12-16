@@ -8,7 +8,7 @@
 \alias{Summary}
 \alias{Summary.data.frame}
 \alias{Complex}
-\alias{group generic} % used in class.Rd
+\alias{group generic} % used in class.Rd and zMethods.Rd
 \concept{group generic}
 \title{S3 Group Generic Functions}
 \description{
