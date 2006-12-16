@@ -180,7 +180,7 @@ list("!" = function(e1)
 {
     standardGeneric("dim")
 }
-, "dimnames" = function(x, ...)
+, "dimnames" = function(x)
 {
     standardGeneric("dimnames")
 }

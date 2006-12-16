@@ -18,7 +18,7 @@ data.matrix <- function(frame, rownames.force = FALSE)
             warning("class information lost from one or more columns")
     }
     x <- matrix(as.integer(NA), nr=d[1], nc=d[2],
-		dimnames = dimnames(frame, maybeNULL = !rownames.force))
+		dimnames = .dimnames(frame, maybeNULL = !rownames.force))
     for(i in seq(len=d[2])) {
 	xi <- frame[[i]]
 	x[,i] <-
