@@ -20,7 +20,8 @@ max.col(m, ties.method=c("random", "first", "last"))
   When \code{ties.method = "random"}, as per default, ties are broken at
   random.  In this case, the determination of \dQuote{tie} assumes that
   the entries are probabilities: there is a relative tolerance of
-  \eqn{10^{-5}}{1e-5}, relative to the largest entry in the row.
+  \eqn{10^{-5}}{1e-5}, relative to the largest (in magnitude, omitting
+  infinity) entry in the row.
 
   If \code{ties.method = "first"}, \code{max.col} returns the
   column number of the \emph{first} of several maxima in every row, the

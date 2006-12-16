@@ -4,9 +4,9 @@ co.intervals <- function (x, number = 6, overlap = 0.5)
     n <- length(x)
     ## "from the record"
     r <- n/(number * (1 - overlap) + overlap)
-    ii <- round(0:(number - 1) * (1 - overlap) * r)
-    x1 <- x[1 + ii]
-    xr <- x[r + ii]
+    ii <- 0:(number - 1) * (1 - overlap) * r
+    x1 <- x[round(1 + ii)]
+    xr <- x[round(r + ii)]
     ## Omit any range of values identical with the previous range;
     ## happens e.g. when `number' is less than the number of distinct x values.
     keep <- c(TRUE, diff(x1) > 0 | diff(xr) > 0)

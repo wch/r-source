@@ -258,10 +258,16 @@ BUG FIXES
     o	Several primitives such as dim() were not checking the number
 	of arguments supplied before method dispatch.
 
-    o  Tracing of primitive functions has been corrected.  It should
-        now be the case that tracing either works or is not allowed
-        for all primitive functions. (Problems remain if you make a
-        primitive into a generic when it's being traced.  To be fixed later.)
+    o	Tracing of primitive functions has been corrected.  It should
+	now be the case that tracing either works or is not allowed
+	for all primitive functions. (Problems remain if you make a
+	primitive into a generic when it's being traced.  To be fixed
+	later.)
+
+    o	max.col() now omits infinite values in determining the
+	relative tolerance.
+
+    o	co.intervals() sometimes failed to cover the largest value.
 
 
 
