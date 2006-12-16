@@ -5,7 +5,7 @@ apropos(what, where = FALSE, ignore.case = TRUE, mode = "any",
         character.only = FALSE)
 
 find(what, mode = "any", numeric. = FALSE, simple.words = TRUE,
-     character.only = !is.character(what))
+     character.only = is.character(what))
 }
 \alias{apropos}
 \alias{find}
@@ -14,13 +14,12 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE,
   \item{where, numeric.}{a logical indicating whether positions in the
     search list should also be returned}
   \item{ignore.case}{logical indicating if the search should be
-    case-insensitive.  Note that R versions prior to 2.5.0 used to
-    implicitly use \code{ignore.case = FALSE}.}
+    case-insensitive, \code{TRUE} by default.  Note that in \R versions
+    prior to 2.5.0, the default was implicitly \code{ignore.case = FALSE}.}
   \item{mode}{character; if not \code{"any"}, only objects whose
     \code{\link{mode}} equals \code{mode} are searched.}
   \item{character.only}{logical indicating if \code{what} must be
     character or should be \code{\link{deparse}(\link{substitute}(.))}d.}
-    \code{\link{mode}} equals \code{mode} are searched.}
   \item{simple.words}{logical; if \code{TRUE}, the \code{what} argument is
     only searched as whole word.}
 }
