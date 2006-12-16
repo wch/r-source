@@ -632,7 +632,7 @@ function(parent = parent.frame(), fixup = FALSE)
     assign("as.character", function(x, ...) UseMethod("as.character"),
            envir = env)
     assign("c", function(..., recursive = FALSE) UseMethod("c"), envir = env)
-    assign("dimnames", function(x, ...) UseMethod("dimnames"), envir = env)
+    assign("dimnames", function(x) UseMethod("dimnames"), envir = env)
     assign("dim<-", function(x, value) UseMethod("dim<-"), envir = env)
     assign("dimnames<-", function(x, value) UseMethod("dimnames<-"), envir = env)
     assign("length<-", function(x, value) UseMethod("length<-"), envir = env)
