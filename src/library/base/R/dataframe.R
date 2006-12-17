@@ -75,11 +75,6 @@ dimnames.data.frame <- function(x, maybeNULL = FALSE, ...)
 ## an alternative which leaves dimnames() generic with one single argument:
 dimnames.data.frame <- function(x) list(row.names(x), names(x))
 
-.dimnames <- function(x, maybeNULL = FALSE)
-    list(if(maybeNULL && .Call("R_shortRowNames", x, PACKAGE = "base") >= 0)
-         NULL else row.names(x),
-	 names(x))
-
 
 "dimnames<-.data.frame" <- function(x, value)
 {
@@ -1139,6 +1134,12 @@ print.data.frame <-
 
 as.matrix.data.frame <- function (x, rownames.force = FALSE)
 {
+    .dimnames <- function(x, maybeNULL = FALSE)
+        list(if(maybeNULL &&
+                .Call("R_shortRowNames", x, PACKAGE = "base") >= 0)
+             NULL else row.names(x),
+             names(x))
+
     dm <- dim(x)
     dn <- .dimnames(x, maybeNULL = !rownames.force)
     if(any(dm == 0))

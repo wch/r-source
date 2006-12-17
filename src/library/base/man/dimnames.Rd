@@ -2,7 +2,6 @@
 \title{Dimnames of an Object}
 \alias{dimnames}
 \alias{dimnames<-}
-\alias{.dimnames}% < not documented; maybe temporary; for data.frames
 \alias{dimnames.data.frame}
 \alias{dimnames<-.data.frame}
 \description{
