@@ -136,6 +136,7 @@ static void print2buff(char *, LocalParseData *);
 static void printtab2buff(int, LocalParseData *);
 static void writeline(LocalParseData *);
 static void vector2buff(SEXP, LocalParseData *);
+static Rboolean src2buff(SEXP, int, LocalParseData *);
 static void vec2buff(SEXP, LocalParseData *);
 static void linebreak(Rboolean *lbreak, LocalParseData *);
 static void deparse2(SEXP, SEXP, LocalParseData *);
@@ -1272,14 +1273,34 @@ static void vector2buff(SEXP vector, LocalParseData *d)
     }
 }
 
+/* src2buff : Deparse source element k to buffer, if possible; return FALSE on failure */
+
+static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
+{
+    SEXP t;
+    int i, n;
+    
+    if (!isNull(sv) && !isNull(t = VECTOR_ELT(sv, k))) {
+	PROTECT(t = eval(lang2(install("as.character"), t), R_GlobalEnv));
+	n = length(t);
+	for(i = 0 ; i < n ; i++) {
+	    print2buff(CHAR(STRING_ELT(t, i)), d);
+	    if(i < n-1) writeline(d);
+	}
+	UNPROTECT(2);
+        return TRUE;
+    }
+    else return FALSE;
+}
+            
 /* vec2buff : New Code */
 /* Deparse vectors of S-expressions. */
 /* In particular, this deparses objects of mode expression. */
 
 static void vec2buff(SEXP v, LocalParseData *d)
 {
-    SEXP nv, sv, t;
-    int i, n, is, ns;
+    SEXP nv, sv;
+    int i, n;
     Rboolean lbreak = FALSE;
     Rboolean localOpts = d->opts;
 
@@ -1289,7 +1310,7 @@ static void vec2buff(SEXP v, LocalParseData *d)
     
     if (d->opts & USESOURCE) 
    	sv = getAttrib(v, R_SrcrefSymbol);
-   else
+    else
    	sv = R_NilValue;
 
     for(i = 0 ; i < n ; i++) {
@@ -1309,15 +1330,7 @@ static void vec2buff(SEXP v, LocalParseData *d)
 	    d->opts = localOpts;
 	    print2buff(" = ", d);
 	}
-	if (!isNull(sv) && !isNull(t = VECTOR_ELT(sv, i))) {
-	    PROTECT(t = eval(lang2(install("as.character"), t), R_GlobalEnv));
-            ns = length(t);
-            for(is = 0 ; is < ns ; is++) {
-            	print2buff(CHAR(STRING_ELT(t, is)), d);
-    	    	if(is < ns-1) writeline(d);
-    	    }
-            UNPROTECT(1);	
-	} else 
+	if (!src2buff(sv, i, d))
 	    deparse2buff(VECTOR_ELT(v, i), d);
     }
     if (lbreak)
