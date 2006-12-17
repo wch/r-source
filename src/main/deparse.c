@@ -1287,7 +1287,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
 	    print2buff(CHAR(STRING_ELT(t, i)), d);
 	    if(i < n-1) writeline(d);
 	}
-	UNPROTECT(2);
+	UNPROTECT(1);
         return TRUE;
     }
     else return FALSE;
