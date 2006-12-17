@@ -204,7 +204,11 @@ SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 	TYPEOF(object) == SPECIALSXP)
 	errorcall(call, _("argument must not be a function"));
 
-    if(length(args) >= 2) origin = CADR(args); else origin = R_NilValue;
+    if(length(args) >= 2) {
+	origin = CADR(args);
+	if(!isString(origin))
+	    errorcall(call, _("invalid '%s' argument"), "origin");
+    } else origin = R_NilValue;
 
     if (TRACE(object)){
 	snprintf(buffer, 20, "<%p>", (void *) object);
