@@ -19,7 +19,7 @@
 environment(fun = NULL)
 environment(fun) <- value
 
-is.environment(obj)
+is.environment(x)
 
 .GlobalEnv
 globalenv()
@@ -39,7 +39,7 @@ environmentName(env)
   \item{fun}{a \code{\link{function}}, a \code{\link{formula}}, or
     \code{NULL}, which is the default.}
   \item{value}{an environment to associate with the function}
-  \item{obj}{an arbitrary \R object.}
+  \item{x}{an arbitrary \R object.}
   \item{hash}{a logical, if \code{TRUE} the environment will be hashed}
   \item{parent}{an environment to be used as the enclosure of the
     environment created.}

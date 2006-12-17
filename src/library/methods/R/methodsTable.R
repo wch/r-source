@@ -781,4 +781,38 @@ outerLabels <- function(labels, new) {
     }
   }
 
+.getGenericSigArgs <- function(fdef, env = environment(fdef), check = TRUE) {
+    if(check && !exists(".SigLength", envir = env, inherits = FALSE))
+      .setupMethodsTables(fdef)
+    n <- get(".SigLength", envir = env)
+    args <-  get(".SigArgs", envir = env)
+    length(args) <- n
+    args
+}
 
+
+listFromMethods <- function(generic, where, table) {
+    fdef <- getGeneric(generic)
+    if(missing(table)) {
+        if(missing(where))
+          table <- .getMethodsTable(fdef)
+        else
+          table <-  get(.TableMetaName(fdef@generic, fdef@package),
+                        envir = as.environment(where), inherits = FALSE)
+    }
+    fev <- environment(fdef)
+    nSigArgs <- .getGenericSigLength(fdef, fev)
+    names <- objects(table, all=TRUE)
+    methods <- lapply(names, function(x)get(x, envir = table))
+    if(nSigArgs > 1) {
+        n <- length(names)
+        sigs <- vector("list", n)
+        namesCon <- textConnection(names)
+        for(i in seq(length=n)) 
+            sigs[[i]] <- scan(namesCon, "", sep ="#", nmax = nSigArgs, quiet=TRUE)
+    }
+    else
+      sigs <- as.list(names)
+    new("LinearMethodsList", classes=sigs, methods=methods,
+        arguments = .getGenericSigArgs(fdef, fev), generic = fdef)
+}

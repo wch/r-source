@@ -232,14 +232,14 @@ tclvalue.default <- function(x) tclvalue(tcl("set", as.character(x)))
     x
 }
 
-as.character.tclVar <- function(x) ls(unclass(x)$env)
+as.character.tclVar <- function(x, ...) ls(unclass(x)$env)
 
-as.character.tclObj <- function(x) .External("RTcl_ObjAsCharVector",
-                                             x, PACKAGE="tcltk")
-as.double.tclObj <- function(x, ...) .External("RTcl_ObjAsDoubleVector",
-                                             x, PACKAGE="tcltk")
-as.integer.tclObj <- function(x, ...) .External("RTcl_ObjAsIntVector",
-                                             x, PACKAGE="tcltk")
+as.character.tclObj <- function(x, ...)
+    .External("RTcl_ObjAsCharVector", x, PACKAGE="tcltk")
+as.double.tclObj <- function(x, ...)
+    .External("RTcl_ObjAsDoubleVector", x, PACKAGE="tcltk")
+as.integer.tclObj <- function(x, ...)
+    .External("RTcl_ObjAsIntVector", x, PACKAGE="tcltk")
 as.logical.tclObj <- function(x, ...)
     as.logical(.External("RTcl_ObjAsIntVector",
                          x, PACKAGE="tcltk"))

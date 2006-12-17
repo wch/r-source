@@ -22,7 +22,7 @@ void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth)
     int	  r, c, m, n_r = *nr;
     double a, b, large;
     Rboolean isna,
-	used_random=FALSE,
+	used_random = FALSE,
 	do_rand = *ties_meth == 1;
 
     for (r = 0; r < n_r; r++) {
@@ -32,6 +32,7 @@ void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth)
 	for (c = 0; c < *nc; c++) {
 	    a = matrix[r + c * n_r];
 	    if (ISNAN(a)) { isna = TRUE; break; }
+	    if (!R_FINITE(a)) continue;
 	    if (do_rand) large = fmax2(large, fabs(a));
 	}
 	if (isna) { maxes[r] = NA_INTEGER; continue; }

@@ -407,6 +407,7 @@ function(package, dir, lib.loc = NULL,
     ## base for objects shown in \usage but missing from the code, we
     ## get the primitive functions from the version of R we are using.
     ## Maybe one day we will have R code for the primitives as well ...
+    ## As from R 2.5.0 we do for most generics.
     if(is_base) {
         objects_in_base <-
             objects(envir = baseenv(), all.names = TRUE)
@@ -416,6 +417,14 @@ function(package, dir, lib.loc = NULL,
               c(".First.lib", ".Last.lib", ".Random.seed",
                 ".onLoad", ".onAttach", ".onUnload"))
         objects_in_code_or_namespace <- objects_in_code
+        known_env <- .make_S3_primitive_generic_env(code_env, fixup=TRUE)
+        extras <- ls(known_env, all = TRUE)
+        functions_in_code <- c(functions_in_code, extras)
+        code_env <- known_env
+        known_env <- .make_S3_primitive_nongeneric_env(code_env)
+        extras <- ls(known_env, all = TRUE)
+        functions_in_code <- c(functions_in_code, extras)
+        code_env <- known_env
     }
     ## </FIXME>
 

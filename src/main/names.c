@@ -145,6 +145,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 
 /* Binary Operators */
+/* these are group generic and so need to eval args */
 {"+",		do_arith,	PLUSOP,	1,	2,	{PP_BINARY,  PREC_SUM,	  0}},
 {"-",		do_arith,	MINUSOP,1,	2,	{PP_BINARY,  PREC_SUM,	  0}},
 {"*",		do_arith,	TIMESOP,1,	2,	{PP_BINARY,  PREC_PROD,	  0}},
@@ -152,9 +153,12 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"^",		do_arith,	POWOP,	1,	2,	{PP_BINARY2, PREC_POWER,  1}},
 {"%%",		do_arith,	MODOP,	1,	2,	{PP_BINARY2, PREC_PERCENT,0}},
 {"%/%",		do_arith,	IDIVOP,	1,	2,	{PP_BINARY2, PREC_PERCENT,0}},
+
 {"%*%",		do_matprod,	0,	1,	2,	{PP_BINARY,  PREC_PERCENT,0}},
 {"crossprod",	do_matprod,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"tcrossprod",	do_matprod,	2,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+
+/* these are group generic and so need to eval args */
 {"==",		do_relop,	EQOP,	1,	2,	{PP_BINARY,  PREC_COMPARE,0}},
 {"!=",		do_relop,	NEOP,	1,	2,	{PP_BINARY,  PREC_COMPARE,0}},
 {"<",		do_relop,	LTOP,	1,	2,	{PP_BINARY,  PREC_COMPARE,0}},
@@ -164,6 +168,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"&",		do_logic,	1,	1,	2,	{PP_BINARY,  PREC_AND,	  0}},
 {"|",		do_logic,	2,	1,	2,	{PP_BINARY,  PREC_OR,	  0}},
 {"!",		do_logic,	3,	1,	1,	{PP_UNARY,   PREC_NOT,	  0}},
+
 {"&&",		do_logic2,	1,	0,	2,	{PP_BINARY,  PREC_AND,	  0}},
 {"||",		do_logic2,	2,	0,	2,	{PP_BINARY,  PREC_OR,	  0}},
 {":",		do_colon,	0,	1,	2,	{PP_BINARY2, PREC_COLON,  0}},
@@ -171,7 +176,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 
 /* Logic Related Functions */
-
+/* these are group generic and so need to eval args */
 {"all",		do_logic3,	1,	11,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"any",		do_logic3,	2,	11,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 
@@ -200,7 +205,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"unclass",	do_unclass,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"names",	do_names,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"names<-",	do_namesgets,	0,	1,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
-{"dimnames",	do_dimnames,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"dimnames",	do_dimnames,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dimnames<-",	do_dimnamesgets,0,	1,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
 {"all.names",	do_allnames,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"dim",		do_dim,		0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -233,13 +238,14 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 
 /* Mathematical Functions */
+/* these are group generic and so need to eval args */
+/* Note that the number of arguments for the primitives in this group 
+   only applies to the default method. */
 {"round",	do_Math2,	10001,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"atan",	do_atan,	10002,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"log",		do_log,		10003,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"signif",	do_Math2,	10004,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"abs",		do_abs,		6,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-
-/* KH(1999/09/12)-> complex: {"abs", do_math1, 0, 1, 1, {PP_FUNCALL, PREC_FN,	0}}, */
 {"floor",	do_math1,	1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"ceiling",	do_math1,	2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sqrt",	do_math1,	3,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -266,12 +272,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"lgamma",	do_math1,	40,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"gamma",	do_math1,	41,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-/* Polygamma Functions */
-
 {"digamma",	do_math1,	42,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"trigamma",	do_math1,	43,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-/* {"tetragamma",	do_math1,	44,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"pentagamma",	do_math1,	45,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},*/
 {"gammaCody",	do_math1,	46,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 /* see "psigamma" below !*/
 
@@ -315,6 +317,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 
 /* Mathematical Functions of a Complex Argument */
+/* these are group generic and so need to eval args */
 
 {"Re",		do_cmathfuns,	1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Im",		do_cmathfuns,	2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -435,7 +438,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"set.seed",	do_setseed,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Data Summaries */
-
+/* sum, min, max, prod, range are group generic and so need to eval args */
 {"sum",		do_summary,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mean",	do_summary,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"min",		do_summary,	2,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -445,6 +448,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"cov",		do_cov,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"cor",		do_cov,		1,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
+/* Note that the number of arguments in this group only applies
+   to the default method */
 {"cumsum",	do_cum,		1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cumprod",	do_cum,		2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cummax",	do_cum,		3,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -617,7 +622,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"rep.int",	do_rep_int,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"seq.int",	do_seq,		0,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"seq_len",	do_seq_len,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"seq_along",	do_seq_along,	0,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"seq_along",	do_seq_along,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"list",	do_makelist,	1,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"split",	do_split,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.loaded",	do_isloaded,	0,	11,	-1,	{PP_FOREIGN, PREC_FN,	0}},
@@ -635,16 +640,16 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"eval",	do_eval,	0,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"eval.with.vis",do_eval,	1,	211,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"expression",	do_expression,	1,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.parent",	do_sys,		1,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.call",	do_sys,		2,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.frame",	do_sys,		3,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.nframe",	do_sys,		4,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.calls",	do_sys,		5,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.frames",	do_sys,		6,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.on.exit",	do_sys,		7,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.parents",	do_sys,		8,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"sys.function",do_sys,		9,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"parent.frame",do_parentframe,	0,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.parent",	do_sys,		1,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.call",	do_sys,		2,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.frame",	do_sys,		3,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.nframe",	do_sys,		4,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.calls",	do_sys,		5,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.frames",	do_sys,		6,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.on.exit",	do_sys,		7,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.parents",	do_sys,		8,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"sys.function",do_sys,		9,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"parent.frame",do_parentframe,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sort",	do_sort,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.unsorted",	do_isunsorted,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"psort",	do_psort,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -689,9 +694,9 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"rowMeans",	do_colsum,	3,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"Rprof",	do_Rprof,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"Rprofmem",	do_Rprofmem,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"memtrace",    do_memtrace,    0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
-{"memretrace",  do_memretrace,  0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
-{"memuntrace",  do_memuntrace,  0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
+{"tracemem",    do_memtrace,    0,      1,	1,      {PP_FUNCALL, PREC_FN,	0}},
+{"retracemem",  do_memretrace,  0,      1,     -1,      {PP_FUNCALL, PREC_FN,	0}},
+{"untracemem",  do_memuntrace,  0,      101,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"object.size",	do_objectsize,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"mem.limits",	do_memlimits,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"merge",	do_merge,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},

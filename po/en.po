@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49+0000\n"
+"POT-Creation-Date: 2006-12-15 06:32+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -724,15 +724,15 @@ msgstr ""
 msgid "first argument is not a matrix"
 msgstr ""
 
-#: src/main/apply.c:195
+#: src/main/apply.c:192
 msgid "invalid 'f' argument"
 msgstr ""
 
-#: src/main/apply.c:197
+#: src/main/apply.c:194
 msgid "invalid 'classes' argument"
 msgstr ""
 
-#: src/main/apply.c:200
+#: src/main/apply.c:197
 msgid "invalid 'how' argument"
 msgstr ""
 
@@ -856,59 +856,55 @@ msgstr ""
 msgid "allocArray: too many elements specified by 'dims'"
 msgstr ""
 
-#: src/main/array.c:343
-msgid "incorrect number of args to 'length'"
-msgstr ""
-
-#: src/main/array.c:362
+#: src/main/array.c:361
 msgid "incorrect number of arguments to 'row/col'"
 msgstr ""
 
-#: src/main/array.c:364
+#: src/main/array.c:363
 msgid "a matrix is required as argument to 'row/col'"
 msgstr ""
 
-#: src/main/array.c:571
+#: src/main/array.c:570
 msgid "requires numeric matrix/vector arguments"
 msgstr ""
 
-#: src/main/array.c:644 src/main/array.c:648 src/main/array.c:652
+#: src/main/array.c:643 src/main/array.c:647 src/main/array.c:651
 msgid "non-conformable arguments"
 msgstr ""
 
-#: src/main/array.c:936
+#: src/main/array.c:935
 msgid "argument is not a matrix"
 msgstr ""
 
-#: src/main/array.c:974
+#: src/main/array.c:973
 msgid "invalid first argument, must be an array"
 msgstr ""
 
-#: src/main/array.c:991
+#: src/main/array.c:990
 msgid "'perm' is of wrong length"
 msgstr ""
 
-#: src/main/array.c:999
+#: src/main/array.c:998
 msgid "value out of range in 'perm'"
 msgstr ""
 
-#: src/main/array.c:1002
+#: src/main/array.c:1001
 msgid "invalid permutation ('perm')"
 msgstr ""
 
-#: src/main/array.c:1137
+#: src/main/array.c:1136
 msgid "invalid value of 'n'"
 msgstr ""
 
-#: src/main/array.c:1139
+#: src/main/array.c:1138
 msgid "invalid value of 'p'"
 msgstr ""
 
-#: src/main/array.c:1140
+#: src/main/array.c:1139
 msgid "invalid value of 'na.rm'"
 msgstr ""
 
-#: src/main/array.c:1149
+#: src/main/array.c:1148
 msgid "'x' must be numeric"
 msgstr ""
 
@@ -964,113 +960,113 @@ msgstr ""
 msgid "attempt to set invalid 'class' attribute"
 msgstr ""
 
-#: src/main/attrib.c:661
+#: src/main/attrib.c:666
 msgid "incompatible 'names' argument"
 msgstr ""
 
-#: src/main/attrib.c:713
+#: src/main/attrib.c:718
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr ""
 
-#: src/main/attrib.c:780
+#: src/main/attrib.c:790
 msgid "'dimnames' applied to non-array"
 msgstr ""
 
-#: src/main/attrib.c:784
+#: src/main/attrib.c:794
 msgid "'dimnames' must be a list"
 msgstr ""
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:797
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 
-#: src/main/attrib.c:804
+#: src/main/attrib.c:814
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr ""
 
-#: src/main/attrib.c:807
+#: src/main/attrib.c:817
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr ""
 
-#: src/main/attrib.c:867
+#: src/main/attrib.c:877
 msgid "dim<- : invalid first argument"
 msgstr ""
 
-#: src/main/attrib.c:870
+#: src/main/attrib.c:880
 msgid "dim<- : invalid second argument"
 msgstr ""
 
-#: src/main/attrib.c:878
+#: src/main/attrib.c:888
 msgid "dim: length-0 dimension vector is invalid"
 msgstr ""
 
-#: src/main/attrib.c:883
+#: src/main/attrib.c:893
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr ""
 
-#: src/main/attrib.c:965
+#: src/main/attrib.c:988
 msgid "attributes must be in a list"
 msgstr ""
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:1012
 msgid "attributes must be named"
 msgstr ""
 
-#: src/main/attrib.c:993
+#: src/main/attrib.c:1016
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr ""
 
-#: src/main/attrib.c:1036
+#: src/main/attrib.c:1059
 msgid "attribute 'name' must be of mode character"
 msgstr ""
 
-#: src/main/attrib.c:1038
+#: src/main/attrib.c:1061
 msgid "exactly one attribute 'name' must be given"
 msgstr ""
 
-#: src/main/attrib.c:1106
+#: src/main/attrib.c:1129
 msgid "'name' must be non-null character"
 msgstr ""
 
-#: src/main/attrib.c:1214 src/main/attrib.c:1253 src/main/attrib.c:1344
+#: src/main/attrib.c:1234 src/main/attrib.c:1273 src/main/attrib.c:1364
 msgid "invalid type or length for slot name"
 msgstr ""
 
-#: src/main/attrib.c:1228
+#: src/main/attrib.c:1248
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1236
+#: src/main/attrib.c:1256
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 
-#: src/main/attrib.c:1339
+#: src/main/attrib.c:1359
 msgid "formal classes cannot be used without the methods package"
 msgstr ""
 
-#: src/main/attrib.c:1350
+#: src/main/attrib.c:1370
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr ""
 
-#: src/main/attrib.c:1359
+#: src/main/attrib.c:1379
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
 msgstr ""
 
-#: src/main/attrib.c:1378
+#: src/main/attrib.c:1398
 msgid "invalid slot type"
 msgstr ""
 
@@ -1131,7 +1127,7 @@ msgstr ""
 
 #: src/main/builtin.c:68 src/main/builtin.c:91 src/main/builtin.c:100
 #: src/main/builtin.c:226 src/main/builtin.c:253 src/main/builtin.c:283
-#: src/main/builtin.c:292 src/main/coerce.c:1401 src/main/connections.c:2043
+#: src/main/builtin.c:292 src/main/coerce.c:1398 src/main/connections.c:2043
 #: src/main/engine.c:2686 src/main/envir.c:855 src/main/envir.c:949
 #: src/main/envir.c:1404 src/main/envir.c:1497 src/main/envir.c:1565
 #: src/main/envir.c:1681 src/main/envir.c:2320 src/main/envir.c:2373
@@ -1218,7 +1214,7 @@ msgstr ""
 msgid "length<- missing value for 'length'"
 msgstr ""
 
-#: src/main/builtin.c:772 src/main/coerce.c:2191 src/main/coerce.c:2232
+#: src/main/builtin.c:772 src/main/coerce.c:2187 src/main/coerce.c:2228
 msgid "... used in an incorrect context"
 msgstr ""
 
@@ -1469,73 +1465,73 @@ msgstr ""
 msgid "cannot coerce to vector"
 msgstr ""
 
-#: src/main/coerce.c:1397
+#: src/main/coerce.c:1394
 msgid "list argument expected"
 msgstr ""
 
-#: src/main/coerce.c:1405 src/main/eval.c:3507 src/main/eval.c:3514
+#: src/main/coerce.c:1402 src/main/eval.c:3507 src/main/eval.c:3514
 msgid "invalid environment"
 msgstr ""
 
-#: src/main/coerce.c:1409
+#: src/main/coerce.c:1406
 msgid "argument must have length at least 1"
 msgstr ""
 
-#: src/main/coerce.c:1434
+#: src/main/coerce.c:1431
 msgid "invalid body for function"
 msgstr ""
 
-#: src/main/coerce.c:1453
+#: src/main/coerce.c:1450
 msgid "invalid length 0 argument"
 msgstr ""
 
-#: src/main/coerce.c:1468
+#: src/main/coerce.c:1465
 msgid "invalid argument list"
 msgstr ""
 
-#: src/main/coerce.c:1715
+#: src/main/coerce.c:1712
 msgid "type \"single\" unimplemented in R"
 msgstr ""
 
-#: src/main/coerce.c:1717
+#: src/main/coerce.c:1714
 msgid "unimplemented predicate"
 msgstr ""
 
-#: src/main/coerce.c:1856 src/main/coerce.c:1954
+#: src/main/coerce.c:1853 src/main/coerce.c:1950
 #, c-format
 msgid "%s() applied to non-(list or vector)"
 msgstr ""
 
-#: src/main/coerce.c:2110 src/main/coerce.c:2112
+#: src/main/coerce.c:2106 src/main/coerce.c:2108
 msgid "first argument must be a character string or a function"
 msgstr ""
 
-#: src/main/coerce.c:2118
+#: src/main/coerce.c:2114
 msgid "'envir' must be an environment"
 msgstr ""
 
-#: src/main/coerce.c:2271
+#: src/main/coerce.c:2267
 msgid "invalid environment specified"
 msgstr ""
 
-#: src/main/coerce.c:2349
+#: src/main/coerce.c:2345
 msgid "invalid replacement object to be a class string"
 msgstr ""
 
-#: src/main/coerce.c:2367
+#: src/main/coerce.c:2363
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 
-#: src/main/coerce.c:2383
+#: src/main/coerce.c:2379
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 msgstr ""
 
-#: src/main/coerce.c:2389
+#: src/main/coerce.c:2385
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
@@ -2223,6 +2219,30 @@ msgstr ""
 
 #: src/main/dcf.c:63 src/main/dcf.c:66 src/main/dcf.c:111 src/main/dcf.c:164
 msgid "could not allocate memory for 'read.dcf'"
+msgstr ""
+
+#: src/main/debug.c:40 src/main/debug.c:63
+msgid "argument must be a function"
+msgstr ""
+
+#: src/main/debug.c:117 src/main/debug.c:150 src/main/debug.c:203
+msgid "argument must not be a function"
+msgstr ""
+
+#: src/main/debug.c:120
+msgid "cannot trace NULL"
+msgstr ""
+
+#: src/main/debug.c:124
+msgid "'tracemem' is not useful for promise and environment objects"
+msgstr ""
+
+#: src/main/debug.c:127
+msgid "'tracemem' is not useful for weak reference or external pointer objects"
+msgstr ""
+
+#: src/main/debug.c:133 src/main/debug.c:155
+msgid "R was not compiled with support for memory profiling"
 msgstr ""
 
 #: src/main/deparse.c:158
@@ -3933,31 +3953,31 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
 
-#: src/main/names.c:938
+#: src/main/names.c:937
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:946
+#: src/main/names.c:945
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1061
+#: src/main/names.c:1060
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1063
+#: src/main/names.c:1062
 msgid "symbol print-name too long"
 msgstr ""
 
-#: src/main/names.c:1090
+#: src/main/names.c:1089
 msgid "invalid .Internal() argument"
 msgstr ""
 
-#: src/main/names.c:1093
+#: src/main/names.c:1092
 msgid "invalid internal function"
 msgstr ""
 
-#: src/main/names.c:1095
+#: src/main/names.c:1094
 #, c-format
 msgid "no internal function \"%s\""
 msgstr ""

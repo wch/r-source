@@ -9,6 +9,7 @@ Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien
 "Brazil (SP 2)",Brazil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando@vps.fmvz.usp.br>"
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>"
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>"
+Chile,Chile,Valdivia,http://trapananda.homelinux.org/r-project/,"Universidad Austral de Chile","Jorge Cornejo <jorgecornejo@uach.cl>"
 China,China,Nanjing,http://www.lmbe.seu.edu.cn/CRAN/,"Southeast University, Nanjing",xsun@seu.edu.cn
 Croatia,Croatia,Zagreb,http://june.irb.hr/r/,"Rudjer Boskovic Institute",mislav.malenica@irb.hr
 Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org
@@ -33,7 +34,8 @@ Israel,Israel,Tel-Aviv,http://cran.active.co.il/,"Activetech Ltd, Tel-Aviv","""R
 "Japan (Tokyo)",Japan,Tokyo,ftp://ftp.ecc.u-tokyo.ac.jp/CRAN/,"University of Tokyo","Teru KAMOGASHIRA <teru@sodan.ecc.u-tokyo.ac.jp>"
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
 Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme@gmail.com>"
-Netherlands,Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl
+"Netherlands (Amsterdam 1)",Netherlands,Amsterdam,http://cran.nedmirror.nl/,"Nedmirror, Amsterdam",mirror@nedmirror.nl
+"Netherlands (Amsterdam 2)",Netherlands,Amsterdam,http://cran.dsmirror.nl/,"Dsmirror, Amsterdam","Webmaster Dsmirror <webmaster@dsmirror.nl>"
 Norway,Norway,Bergen,http://cran.ii.uib.no/,"University of Bergen",webmaster@ii.uib.no
 "Poland (Lublin)",Poland,Lublin,http://novum.am.lublin.pl/CRAN/,"Skubiszewski Medical University, Lublin","Lukasz Komsta <luke@novum.am.lublin.pl>"
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Pawel Netzel <netzel@meteo.uni.wroc.pl>"
@@ -44,7 +46,7 @@ Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",ne
 "South Africa (Grahamstown)","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
 "Spain (Alicante)",Spain,Alicante,http://cran.noha.es/,"NumismaticProject, Alicante","Mundo Numismatico Monedas del Mundo <monedasdelmundo@gmail.com>"
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>"
-Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Göran Broström <gb@stat.umu.se>"
+Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","GÃ¶ran BrostrÃ¶m <gb@stat.umu.se>"
 "Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org
 "Switzerland (Bern 1)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>"
 "Switzerland (Bern 2)",Switzerland,Bern,http://cran.prokmu.com/,"Prokmu Hosting, Bern",info@prokmu.com

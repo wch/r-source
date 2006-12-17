@@ -36,6 +36,7 @@ src/main/cov.c
 src/main/cum.c
 src/main/datetime.c
 src/main/dcf.c
+src/main/debug.c
 src/main/deparse.c
 src/main/deriv.c
 src/main/dotcode.c

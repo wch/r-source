@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49+0000\n"
+"POT-Creation-Date: 2006-12-15 06:32+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -744,17 +744,17 @@ msgstr "부적절한 길이입니다"
 msgid "first argument is not a matrix"
 msgstr "최초의 인수가 행렬이 아닙니다"
 
-#: src/main/apply.c:195
+#: src/main/apply.c:192
 #, fuzzy
 msgid "invalid 'f' argument"
 msgstr "'%s'인수가 부적절합니다"
 
-#: src/main/apply.c:197
+#: src/main/apply.c:194
 #, fuzzy
 msgid "invalid 'classes' argument"
 msgstr "'%s'인수가 부적절합니다"
 
-#: src/main/apply.c:200
+#: src/main/apply.c:197
 #, fuzzy
 msgid "invalid 'how' argument"
 msgstr "'%s'인수가 부적절합니다"
@@ -885,59 +885,55 @@ msgstr "allocMatrix에 두고, 지정 되었던 요소수가 너무 많습니다
 msgid "allocArray: too many elements specified by 'dims'"
 msgstr "allocArray: 'dims'에 의해 지정된 요소수가 너무 많습니다"
 
-#: src/main/array.c:343
-msgid "incorrect number of args to 'length'"
-msgstr "'length'에 대한 인수의 개수가 올바르지 않습니다"
-
-#: src/main/array.c:362
+#: src/main/array.c:361
 msgid "incorrect number of arguments to 'row/col'"
 msgstr "'row/col'에서의 인수 개수가 올바르지 않습니다"
 
-#: src/main/array.c:364
+#: src/main/array.c:363
 msgid "a matrix is required as argument to 'row/col'"
 msgstr "'row/col'함수의 인수는 행렬이어야만 합니다"
 
-#: src/main/array.c:571
+#: src/main/array.c:570
 msgid "requires numeric matrix/vector arguments"
 msgstr "수치 행렬 또는 벡터가 요구됩니다"
 
-#: src/main/array.c:644 src/main/array.c:648 src/main/array.c:652
+#: src/main/array.c:643 src/main/array.c:647 src/main/array.c:651
 msgid "non-conformable arguments"
 msgstr "적절한 인수가 아닙니다"
 
-#: src/main/array.c:936
+#: src/main/array.c:935
 msgid "argument is not a matrix"
 msgstr "인수가 행렬이 아닙니다"
 
-#: src/main/array.c:974
+#: src/main/array.c:973
 msgid "invalid first argument, must be an array"
 msgstr "첫번째의 인수가 부적절합니다. 배열이어야만 합니다"
 
-#: src/main/array.c:991
+#: src/main/array.c:990
 msgid "'perm' is of wrong length"
 msgstr "'perm'의 길이가 이상합니다"
 
-#: src/main/array.c:999
+#: src/main/array.c:998
 msgid "value out of range in 'perm'"
 msgstr "'perm'안의 값이 범위를 초과하고 있습니다"
 
-#: src/main/array.c:1002
+#: src/main/array.c:1001
 msgid "invalid permutation ('perm')"
 msgstr "부적절한 치환입니다('perm')"
 
-#: src/main/array.c:1137
+#: src/main/array.c:1136
 msgid "invalid value of 'n'"
 msgstr "'n'의 값이 부적절합니다"
 
-#: src/main/array.c:1139
+#: src/main/array.c:1138
 msgid "invalid value of 'p'"
 msgstr "'p'의 값이 부적절합니다"
 
-#: src/main/array.c:1140
+#: src/main/array.c:1139
 msgid "invalid value of 'na.rm'"
 msgstr "'na.rm'의 값이 부적절합니다"
 
-#: src/main/array.c:1149
+#: src/main/array.c:1148
 msgid "'x' must be numeric"
 msgstr "'x'는 수치이어야만 합니다"
 
@@ -993,100 +989,100 @@ msgstr ""
 msgid "attempt to set invalid 'class' attribute"
 msgstr "부적절한 'class'속성을 설정하려고 했습니다"
 
-#: src/main/attrib.c:661
+#: src/main/attrib.c:666
 msgid "incompatible 'names' argument"
 msgstr "'names'인수에 호환성이 없습니다"
 
-#: src/main/attrib.c:713
+#: src/main/attrib.c:718
 #, fuzzy, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "'names'속성으로 설정하기에는 부적절한 유형입니다"
 
-#: src/main/attrib.c:780
+#: src/main/attrib.c:790
 msgid "'dimnames' applied to non-array"
 msgstr "'names'속성으로 설정하기에는 부적절한 유형입니다"
 
-#: src/main/attrib.c:784
+#: src/main/attrib.c:794
 msgid "'dimnames' must be a list"
 msgstr "'dimnames'는 리스트가 아니면 안됩니다"
 
-#: src/main/attrib.c:787
+#: src/main/attrib.c:797
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "'dimnames'의 길이[%d]는 'dims'의 길이[%d]와 동일하여야만 합니다"
 
-#: src/main/attrib.c:804
+#: src/main/attrib.c:814
 #, fuzzy, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "'dimnames'의 유형이 부적절합니다(벡터이어야만 합니다)"
 
-#: src/main/attrib.c:807
+#: src/main/attrib.c:817
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimames'의 길이[%d]가 배열의 크기와 다릅니다"
 
-#: src/main/attrib.c:867
+#: src/main/attrib.c:877
 msgid "dim<- : invalid first argument"
 msgstr "dim<-:  최초의 인수가 부적절합니다"
 
-#: src/main/attrib.c:870
+#: src/main/attrib.c:880
 msgid "dim<- : invalid second argument"
 msgstr "dim<-: 두번째의 인수가 부적절합니다"
 
-#: src/main/attrib.c:878
+#: src/main/attrib.c:888
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim:  길이0차원 벡터는 부적절합니다"
 
-#: src/main/attrib.c:883
+#: src/main/attrib.c:893
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<-: dims [product %d]는 object[%d]의 길이에 정합하지 않습니다"
 
-#: src/main/attrib.c:965
+#: src/main/attrib.c:988
 msgid "attributes must be in a list"
 msgstr "속성은 리스트안에 있어야만 합니다"
 
-#: src/main/attrib.c:989
+#: src/main/attrib.c:1012
 msgid "attributes must be named"
 msgstr "속성은 이름을 붙어야만 합니다"
 
-#: src/main/attrib.c:993
+#: src/main/attrib.c:1016
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "모든 속성은 이름을 가지고 있어야만 합니다[%d가 가지고 있지 않습니다]"
 
-#: src/main/attrib.c:1036
+#: src/main/attrib.c:1059
 msgid "attribute 'name' must be of mode character"
 msgstr "'name'속성은 모드를 표시하는 문자이어야만 합니다"
 
-#: src/main/attrib.c:1038
+#: src/main/attrib.c:1061
 msgid "exactly one attribute 'name' must be given"
 msgstr "정확히 하나의 속성 'name'가 주어져야 합니다"
 
-#: src/main/attrib.c:1106
+#: src/main/attrib.c:1129
 msgid "'name' must be non-null character"
 msgstr "'name'는 NULL아닌 문자열이어야만 합니다"
 
-#: src/main/attrib.c:1214 src/main/attrib.c:1253 src/main/attrib.c:1344
+#: src/main/attrib.c:1234 src/main/attrib.c:1273 src/main/attrib.c:1364
 msgid "invalid type or length for slot name"
 msgstr "축 라벨의 유형이 부적절합니다"
 
-#: src/main/attrib.c:1228
+#: src/main/attrib.c:1248
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "형태 \"%s\"의 오브젝트로부터 슬롯(\"%s\")을 받을수가 없습니다"
 
-#: src/main/attrib.c:1236
+#: src/main/attrib.c:1256
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "이름 \"%s\" 라고 하는 slot이 클래스\"%s\"의  오브젝트에는 존재하지 않습니다"
 
-#: src/main/attrib.c:1339
+#: src/main/attrib.c:1359
 msgid "formal classes cannot be used without the methods package"
 msgstr "메소드 패키지 없이 (formal class)는 사용할수 없습니다"
 
-#: src/main/attrib.c:1350
+#: src/main/attrib.c:1370
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1095,7 +1091,7 @@ msgstr ""
 "slot \"%s\"를 slot를 가지지 않는 기본 클래스(\"%s\")의 오브젝트로부터 얻으려"
 "고 했습니다"
 
-#: src/main/attrib.c:1359
+#: src/main/attrib.c:1379
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1103,7 +1099,7 @@ msgid ""
 msgstr ""
 "slot \"%s\"를 정의하지않는 클래스(\"%s\")의 오브젝트로부터 얻으려고 했습니다"
 
-#: src/main/attrib.c:1378
+#: src/main/attrib.c:1398
 msgid "invalid slot type"
 msgstr "slot 유형가 부적절합니다"
 
@@ -1164,7 +1160,7 @@ msgstr "지정된 벡터의 사이즈가 너무 깁니다"
 
 #: src/main/builtin.c:68 src/main/builtin.c:91 src/main/builtin.c:100
 #: src/main/builtin.c:226 src/main/builtin.c:253 src/main/builtin.c:283
-#: src/main/builtin.c:292 src/main/coerce.c:1401 src/main/connections.c:2043
+#: src/main/builtin.c:292 src/main/coerce.c:1398 src/main/connections.c:2043
 #: src/main/engine.c:2686 src/main/envir.c:855 src/main/envir.c:949
 #: src/main/envir.c:1404 src/main/envir.c:1497 src/main/envir.c:1565
 #: src/main/envir.c:1681 src/main/envir.c:2320 src/main/envir.c:2373
@@ -1253,7 +1249,7 @@ msgstr "length<-에서,두번째의 인수가 부적절합니다"
 msgid "length<- missing value for 'length'"
 msgstr "length<-에서,'length'의 값이 없습니다"
 
-#: src/main/builtin.c:772 src/main/coerce.c:2191 src/main/coerce.c:2232
+#: src/main/builtin.c:772 src/main/coerce.c:2187 src/main/coerce.c:2228
 msgid "... used in an incorrect context"
 msgstr "...가 부적절한 문맥으로 사용되었습니다"
 
@@ -1510,60 +1506,60 @@ msgstr "유형%s는 %s벡터로 변환할수 없습니다"
 msgid "cannot coerce to vector"
 msgstr "벡터로 변환할수 없습니다"
 
-#: src/main/coerce.c:1397
+#: src/main/coerce.c:1394
 msgid "list argument expected"
 msgstr "리스트 인수가 예측되어 있습니다"
 
-#: src/main/coerce.c:1405 src/main/eval.c:3507 src/main/eval.c:3514
+#: src/main/coerce.c:1402 src/main/eval.c:3507 src/main/eval.c:3514
 msgid "invalid environment"
 msgstr "부적절한 환경입니다"
 
-#: src/main/coerce.c:1409
+#: src/main/coerce.c:1406
 msgid "argument must have length at least 1"
 msgstr "인수는 길이가 1 이상이어야만 합니다"
 
-#: src/main/coerce.c:1434
+#: src/main/coerce.c:1431
 msgid "invalid body for function"
 msgstr ""
 
-#: src/main/coerce.c:1453
+#: src/main/coerce.c:1450
 msgid "invalid length 0 argument"
 msgstr "길이가 0의 인수는 부적절합니다"
 
-#: src/main/coerce.c:1468
+#: src/main/coerce.c:1465
 msgid "invalid argument list"
 msgstr "인수 리스트가 부적절합니다"
 
-#: src/main/coerce.c:1715
+#: src/main/coerce.c:1712
 msgid "type \"single\" unimplemented in R"
 msgstr "\"single\" 형태는 R에는 실제 적용되지 않습니다"
 
-#: src/main/coerce.c:1717
+#: src/main/coerce.c:1714
 msgid "unimplemented predicate"
 msgstr "실제 적용 되지 않는 [술어]입니다"
 
-#: src/main/coerce.c:1856 src/main/coerce.c:1954
+#: src/main/coerce.c:1853 src/main/coerce.c:1950
 #, c-format
 msgid "%s() applied to non-(list or vector)"
 msgstr "%s()는 벡터, 리스트 이외에만 사용할수가 있습니다"
 
-#: src/main/coerce.c:2110 src/main/coerce.c:2112
+#: src/main/coerce.c:2106 src/main/coerce.c:2108
 msgid "first argument must be a character string or a function"
 msgstr "첫번째에서 뺀 수는 문자열 또는 함수이어야만 합니다"
 
-#: src/main/coerce.c:2118
+#: src/main/coerce.c:2114
 msgid "'envir' must be an environment"
 msgstr "'envir'는 환경이어야만 합니다"
 
-#: src/main/coerce.c:2271
+#: src/main/coerce.c:2267
 msgid "invalid environment specified"
 msgstr "부적절한 환경 지정입니다"
 
-#: src/main/coerce.c:2349
+#: src/main/coerce.c:2345
 msgid "invalid replacement object to be a class string"
 msgstr "class 문자열이라고 하기에는 부적절한 치환 오브젝트입니다"
 
-#: src/main/coerce.c:2367
+#: src/main/coerce.c:2363
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1571,7 +1567,7 @@ msgstr ""
 "\"%s\"는 오브젝트가 이 형태를 가지고 있는 때에만 class으로서 설정할수가 있습"
 "니다. \"%s\"가 검색되었습니다"
 
-#: src/main/coerce.c:2383
+#: src/main/coerce.c:2379
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1580,7 +1576,7 @@ msgstr ""
 "만약 차원 속성이 길이(%d)2가 나오지 아닌한, 행렬에 class를 설정하는것은\n"
 "부적절합니다"
 
-#: src/main/coerce.c:2389
+#: src/main/coerce.c:2385
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr "차원 속성이 길이 > 0  나오지 아닌한, 배열에 class를 설정할수 없습니다"
@@ -2284,6 +2280,32 @@ msgstr "비어있지 않는 POSIXlt 구조에는 길이 0의 요소가 있습니
 #: src/main/dcf.c:63 src/main/dcf.c:66 src/main/dcf.c:111 src/main/dcf.c:164
 msgid "could not allocate memory for 'read.dcf'"
 msgstr "'read.dcf'에 위한 메모리를 할당할수가 없었습니다"
+
+#: src/main/debug.c:40 src/main/debug.c:63
+#, fuzzy
+msgid "argument must be a function"
+msgstr "두번째의 인수는 함수이어야만 합니다"
+
+#: src/main/debug.c:117 src/main/debug.c:150 src/main/debug.c:203
+#, fuzzy
+msgid "argument must not be a function"
+msgstr "두번째의 인수는 함수이어야만 합니다"
+
+#: src/main/debug.c:120
+msgid "cannot trace NULL"
+msgstr ""
+
+#: src/main/debug.c:124
+msgid "'tracemem' is not useful for promise and environment objects"
+msgstr ""
+
+#: src/main/debug.c:127
+msgid "'tracemem' is not useful for weak reference or external pointer objects"
+msgstr ""
+
+#: src/main/debug.c:133 src/main/debug.c:155
+msgid "R was not compiled with support for memory profiling"
+msgstr ""
 
 #: src/main/deparse.c:158
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
@@ -4042,31 +4064,31 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "부의 길이가 벡터에서는 허용되지 않습니다"
 
-#: src/main/names.c:938
+#: src/main/names.c:937
 msgid "string argument required"
 msgstr "문자열 인수가 요구되어져 있습니다"
 
-#: src/main/names.c:946
+#: src/main/names.c:945
 msgid "no such primitive function"
 msgstr "그러한 원시적 함수는 없습니다"
 
-#: src/main/names.c:1061
+#: src/main/names.c:1060
 msgid "attempt to use zero-length variable name"
 msgstr "길이 0의 변수명을 사용했습니다"
 
-#: src/main/names.c:1063
+#: src/main/names.c:1062
 msgid "symbol print-name too long"
 msgstr "심벌의 표시명이 너무 깁니다"
 
-#: src/main/names.c:1090
+#: src/main/names.c:1089
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 인수가 부적절합니다"
 
-#: src/main/names.c:1093
+#: src/main/names.c:1092
 msgid "invalid internal function"
 msgstr "내부 함수가 부적절합니다"
 
-#: src/main/names.c:1095
+#: src/main/names.c:1094
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "내부 함수 \"%s \" 가 없습니다"
@@ -7313,6 +7335,9 @@ msgstr "X11 모듈은 적재할수가 없습니다"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11를 이용할수가 없습니다"
+
+#~ msgid "incorrect number of args to 'length'"
+#~ msgstr "'length'에 대한 인수의 개수가 올바르지 않습니다"
 
 #~ msgid "ReadItem: unknown type %i"
 #~ msgstr "ReadItem: 알수 없는 유형 %i입니다"

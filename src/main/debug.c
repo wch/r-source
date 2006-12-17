@@ -37,7 +37,7 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
     find_char_fun
 
     if (TYPEOF(CAR(args)) != CLOSXP)
-	errorcall(call, "argument must be a function");
+	errorcall(call, _("argument must be a function"));
     switch(PRIMVAL(op)) {
     case 0:
 	SET_DEBUG(CAR(args), 1);
@@ -60,7 +60,7 @@ SEXP attribute_hidden do_trace(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(CAR(args)) != CLOSXP &&
 	TYPEOF(CAR(args)) != BUILTINSXP &&
 	TYPEOF(CAR(args)) != SPECIALSXP)
-	    errorcall(call, "argument must be a function");
+	    errorcall(call, _("argument must be a function"));
 
     switch(PRIMVAL(op)) {
     case 0:
@@ -111,26 +111,26 @@ SEXP attribute_hidden do_memtrace(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     object = CAR(args);
-    if (TYPEOF(object) == CLOSXP || 
+    if (TYPEOF(object) == CLOSXP ||
 	TYPEOF(object) == BUILTINSXP ||
 	TYPEOF(object) == SPECIALSXP)
-	    errorcall(call, "argument must not be a function");
+	errorcall(call, _("argument must not be a function"));
 
     if(object == R_NilValue)
-	    errorcall(call, "cannot trace NULL");
+	errorcall(call, _("cannot trace NULL"));
 
     if(TYPEOF(object) == ENVSXP || TYPEOF(object) == PROMSXP)
-	    errorcall(call,
-  "memtrace is not useful for promise and environment objects");
+	errorcall(call,
+		  _("'tracemem' is not useful for promise and environment objects"));
     if(TYPEOF(object) == EXTPTRSXP || TYPEOF(object) == WEAKREFSXP)
-	    errorcall(call,
-  "memtrace is not useful for weak reference or external pointer objects");
+	errorcall(call,
+		  _("'tracemem' is not useful for weak reference or external pointer objects"));
 
     SET_TRACE(object, 1);
-    sprintf(buffer, "<%p>", (void *) object);
+    snprintf(buffer, 20, "<%p>", (void *) object);
     return mkString(buffer);
 #else
-    errorcall(call,"R not compiled with memory profiling");
+    errorcall(call, _("R was not compiled with support for memory profiling"));
     return R_NilValue;
 #endif
 }
@@ -144,15 +144,15 @@ SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     object=CAR(args);
-    if (TYPEOF(object) == CLOSXP || 
+    if (TYPEOF(object) == CLOSXP ||
 	TYPEOF(object) == BUILTINSXP ||
 	TYPEOF(object) == SPECIALSXP)
-	    errorcall(call, "argument must not be a function");
+	errorcall(call, _("argument must not be a function"));
 
     if (TRACE(object))
-	    SET_TRACE(object, 0);
+	SET_TRACE(object, 0);
 #else
-    errorcall(call,"R not compiled with memory profiling");
+    errorcall(call, _("R was not compiled with support for memory profiling"));
 #endif
     return R_NilValue;
 }
@@ -160,10 +160,11 @@ SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifndef R_MEMORY_PROFILING
 void attribute_hidden memtrace_report(void* old, void *_new) {
-     return;
+    return;
 }
 #else
-static void memtrace_stack_dump(void){
+static void memtrace_stack_dump(void)
+{
     RCNTXT *cptr;
 
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
@@ -176,12 +177,12 @@ static void memtrace_stack_dump(void){
 	}
     }
     Rprintf("\n");
-
-
 }
-void attribute_hidden memtrace_report(void * old, void * _new) {
+
+void attribute_hidden memtrace_report(void * old, void * _new)
+{
     if (!R_current_trace_state()) return;
-    Rprintf("memtrace[%p->%p]: ", (void *) old, _new);
+    Rprintf("tracemem[%p -> %p]: ", (void *) old, _new);
     memtrace_stack_dump();
 }
 
@@ -193,27 +194,30 @@ SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP object, origin, ans;
     char buffer[20];
 
-    checkArity(op, args);
+    /* checkArity(op, args); */
+    if(length(args) < 1 || length(args) > 2)
+	errorcall(call, _("invalid number of arguments"));
 
     object = CAR(args);
-    if (TYPEOF(object) == CLOSXP || 
+    if (TYPEOF(object) == CLOSXP ||
 	TYPEOF(object) == BUILTINSXP ||
 	TYPEOF(object) == SPECIALSXP)
-	    errorcall(call, "argument must not be a function");
+	errorcall(call, _("argument must not be a function"));
 
-    origin = CADR(args);
+    if(length(args) >= 2) origin = CADR(args); else origin = R_NilValue;
 
     if (TRACE(object)){
-	    sprintf(buffer, "<%p>", (void *) object);
-	    ans= mkString(buffer);
-    } else ans=R_NilValue;
+	snprintf(buffer, 20, "<%p>", (void *) object);
+	ans = mkString(buffer);
+    } else ans = R_NilValue;
 
-    if (origin!=R_NilValue){
-       SET_TRACE(object, 1);
-       if (R_current_trace_state()) {
-	       Rprintf("memtrace[%s->%p]: ",CHAR(STRING_ELT(origin, 0)), object);
-	       memtrace_stack_dump();
-       }
+    if (origin != R_NilValue){
+	SET_TRACE(object, 1);
+	if (R_current_trace_state()) {
+	    Rprintf("tracemem[%s -> %p]: ", 
+		    CHAR(STRING_ELT(origin, 0)), (void *) object);
+	    memtrace_stack_dump();
+	}
     }
     return ans;
 #else

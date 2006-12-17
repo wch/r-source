@@ -23,11 +23,11 @@ srcfile(filename)
 srcfilecopy(filename, lines)
 getSrcLines(srcfile, first, last)
 srcref(srcfile, lloc)
-\method{print}{srcfile}(x, ...)
-\method{open}{srcfile}(con, line, ...)
-\method{close}{srcfile}(con, ...)
-\method{print}{srcref}(x, useSource = TRUE, ...)
-\method{as.character}{srcref}(srcref, useSource = TRUE)
+\method{print}{srcfile}(x, \dots)
+\method{open}{srcfile}(con, line, \dots)
+\method{close}{srcfile}(con, \dots)
+\method{print}{srcref}(x, useSource = TRUE, \dots)
+\method{as.character}{srcref}(x, useSource = TRUE, \dots)
 .isOpen(srcfile)
 }
 \arguments{
@@ -38,9 +38,8 @@ srcref(srcfile, lloc)
   \item{first, last, line}{ Line numbers }
   \item{lloc}{ A vector of four values giving a source location; see Details }
   \item{x, con}{ An object of the appropriate type }
-  \item{srcref}{ A \code{srcref} object }
   \item{useSource}{ Whether to read the \code{srcfile} to obtain the text of a \code{srcref} }
-  \item{...}{ Additional arguments to the methods; these will be ignored }
+  \item{\dots}{ Additional arguments to the methods; these will be ignored }
 }
 \details{
 These functions and classes handle source code references.  
@@ -79,7 +78,7 @@ length as the expression.)  By default, expressions are printed by
 \code{\link{print.default}} using the associated \code{srcref}.  To
 see deparsed code instead, call \code{\link{print}} with argument
 \code{useSource = FALSE}.  If a \code{srcref} object
-is printed with \code{useSource = FALSE}, the \code{<srcref: ...>}
+is printed with \code{useSource = FALSE}, the \code{<srcref: \dots>}
 record will be printed.
 
 \code{.isOpen} is intended for internal use:  it checks whether the 

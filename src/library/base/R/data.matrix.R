@@ -1,5 +1,11 @@
 data.matrix <- function(frame, rownames.force = FALSE)
 {
+    .dimnames <- function(x, maybeNULL = FALSE)
+        list(if(maybeNULL &&
+                .Call("R_shortRowNames", x, PACKAGE = "base") >= 0)
+             NULL else row.names(x),
+             names(x))
+
     if(!is.data.frame(frame))
 	return(as.matrix(frame))
     d <- dim(frame)
@@ -17,12 +23,11 @@ data.matrix <- function(frame, rownames.force = FALSE)
         if(length(cl) && any(cl))
             warning("class information lost from one or more columns")
     }
-    x <- matrix(as.integer(NA), nr=d[1], nc=d[2],
-		dimnames = dimnames(frame, maybeNULL = !rownames.force))
-    for(i in seq(len=d[2])) {
+    x <- matrix(NA_integer_, nr = d[1], nc = d[2],
+		dimnames = .dimnames(frame, maybeNULL = !rownames.force))
+    for(i in seq_len(d[2]) ) {
 	xi <- frame[[i]]
-	x[,i] <-
-	    if(is.logical(xi) || is.factor(xi)) as.numeric(xi) else xi
+	x[,i] <- if(is.logical(xi) || is.factor(xi)) as.integer(xi) else xi
     }
     x
 }

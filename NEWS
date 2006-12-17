@@ -13,10 +13,7 @@ USER-VISIBLE CHANGES
 
     o	str.default() typically prints fewer entries of logical vectors.
 
-    o	abs(<integer>) now returns integer [experimental, as of 2006-12-08]
-
-    o	The dimnames() generic function has a new argument '...', see also
-	below.
+    o	abs(x) now returns integer for integer or logical arguments.
 
     o	as.matrix(<data frame with trivial rownames>) now has NULL
 	rownames.  Consequently, e.g., t(.) for such data frames has NULL
@@ -141,21 +138,32 @@ NEW FEATURES
 	names; consequently, dim.data.frame() has become very fast for
 	large such data frames.
 
-    o	dimnames.data.frame() has a new argument 'maybeNULL = FALSE' which
-	allows dimnames(<dframe>, maybeNULL = TRUE) to return
-	list(NULL, <whatever>), with dramatical memory saving for large
-	data frames with trivial row names.
-	Consequently, it and the dimnames() generic now also have a '...' argument.
-	We plan to add "maybeNULL = TRUE" in quite a few places in order to
-	increase memory efficiency (with loss of strict backward compatibility).
-
     o	postscript() now by default writes grey colors (including black
 	and white) via 'setgray', which gives more widely acceptable
-	output.  There are options to write pure RGB, CMYK or gray via
+	output.	 There are options to write pure RGB, CMYK or gray via
 	the new argument 'colormodel'.
 
     o	levels<-(), names() and names<-() now dispatch internally for
 	efficiency and so no longer have S3 default methods.
+
+    o	{re,un}tracemem() are now primitives for efficiency and so
+	migrate from 'utils' to 'base'.
+
+    o	tcltk:tk_select.list() now chooses the width to fit the widest item.
+
+    o	The class "LinearMethodsList" has been extended and will be
+	used to create list versions of methods, derived from the
+	methods tables (environments).	The older recursive
+	"MethodsList" class will be deprecated (by the release of
+	2.5.0 if possible).
+
+    o	apropos() has a new argument 'ignore.case' which defaults to TRUE,
+	potentially matching more than previously, thanks to a suggestion
+	by Seth Falcon.
+
+    o	Both apropos() and find() have a new 'character.only' argument
+	which allows to turn-off non-standard evaluation; also e.g.,
+	apropos(fit) now works.
 
 
 DEPRECATED & DEFUNCT
@@ -210,8 +218,10 @@ UTILITIES
     o	R CMD build now takes the package name from the DESCRIPTION
 	file and not from the directory.  (PR#9266)
 
-    o	checkS3methods (and hence R CMD check now checks agreement
-	with primitive internal generics).
+    o	checkS3methods() (and hence R CMD check) now checks agreement
+	with primitive internal generics.
+
+	codoc() now knows the argument lists of primitive functions.
 
 
 BUG FIXES
@@ -244,6 +254,17 @@ BUG FIXES
 
     o	Several primitives such as dim() were not checking the number
 	of arguments supplied before method dispatch.
+
+    o	Tracing of primitive functions has been corrected.  It should
+	now be the case that tracing either works or is not allowed
+	for all primitive functions. (Problems remain if you make a
+	primitive into a generic when it's being traced.  To be fixed
+	later.)
+
+    o	max.col() now omits infinite values in determining the
+	relative tolerance.
+
+    o	co.intervals() sometimes failed to cover the largest value.
 
 
 

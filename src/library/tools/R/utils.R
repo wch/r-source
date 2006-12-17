@@ -277,20 +277,13 @@ function(db)
 ### ** .get_internal_S3_generics
 
 .get_internal_S3_generics <-
-function(primitive = TRUE)
+function(primitive = TRUE) # primitive means 'include primitives'
 {
     out <-
         ## Get the names of R internal S3 generics (via DispatchOrEval(),
         ## cf. zMethods.Rd).
-        c("[", "[[", "$", "[<-", "[[<-", "$<-", "length", "length<-",
-          "dimnames<-", "dimnames", "dim<-", "dim", "c", "unlist",
-          "as.character", "as.vector", "is.array", "is.atomic", "is.call",
-          "is.character", "is.complex", "is.double", "is.environment",
-          "is.function", "is.integer", "is.language", "is.logical",
-          "is.list", "is.matrix", "is.na", "is.nan", "is.null",
-          "is.numeric", "is.object", "is.pairlist", "is.recursive",
-          "is.single", "is.symbol", "levels<-", "names", "names<-",
-          "rep", "seq.int",
+        c("[", "[[", "$", "[<-", "[[<-", "$<-", "as.vector", "unlist",
+          .get_S3_primitive_generics(),
           ## and also the members of the group generics from
           ## groupGeneric.Rd
           "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round",
@@ -419,13 +412,13 @@ function()
 
 .get_S3_primitive_generics <-
 function()
-    c("as.character", "c", "dim", "dim<", "dimnames", "dimnames<-",
+    c("as.character", "c", "dim", "dim<-", "dimnames", "dimnames<-",
       "is.array", "is.atomic", "is.call", "is.character", "is.complex",
       "is.double", "is.environment", "is.function", "is.integer",
       "is.language", "is.logical", "is.list", "is.matrix", "is.na", "is.nan",
-      "is.null", "is.numeric", "is.object", "is.pairlist", "is.recursive",
-      "is.single", "is.symbol",
-      "length", "length<-", "levels<-", "names", "names<-", "unlist")
+      "is.name", "is.null", "is.numeric", "is.object", "is.pairlist",
+      "is.recursive", "is.single", "is.symbol", "length", "length<-",
+      "levels<-", "names", "names<-", "rep", "seq.int")
 
 ### ** .get_standard_Rd_keywords
 
@@ -625,7 +618,7 @@ function(parent = parent.frame())
 ### ** .make_S3_primitive_generic_env
 
 .make_S3_primitive_generic_env <-
-function(parent = parent.frame())
+function(parent = parent.frame(), fixup = FALSE)
 {
     ## Create an environment with pseudo-definitions for the S3 primitive
     ## generics
@@ -638,12 +631,105 @@ function(parent = parent.frame())
     }
     assign("as.character", function(x, ...) UseMethod("as.character"),
            envir = env)
-    assign("dimnames", function(x, ...) UseMethod("dimnames"), envir = env)
+    assign("c", function(..., recursive = FALSE) UseMethod("c"), envir = env)
+    assign("dimnames", function(x) UseMethod("dimnames"), envir = env)
     assign("dim<-", function(x, value) UseMethod("dim<-"), envir = env)
     assign("dimnames<-", function(x, value) UseMethod("dimnames<-"), envir = env)
     assign("length<-", function(x, value) UseMethod("length<-"), envir = env)
     assign("levels<-", function(x, value) UseMethod("levels<-"), envir = env)
     assign("names<-", function(x, value) UseMethod("names<-"), envir = env)
+    assign("rep", function(x, ...) UseMethod("rep"), envir = env)
+    assign("seq.int", function(from, to, by, length.out, along.with, ...)
+           UseMethod("seq.int"), envir = env)
+    ## now add the group generics
+    ## log, round, signif and the gamma fns are not primitive
+    fx <- if(fixup) function(x) {} else function(x, ...) {}
+    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
+               'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
+               'tanh', 'acosh', 'asinh', 'atanh',
+               'cumsum', 'cumprod', 'cummax', 'cummin')) {
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    fx <- if(fixup) function(x, y) {} else function(e1, e2) {}
+    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
+               '==', '!=', '<', '<=', '>=', '>')) {
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    ## none of Summary is primitive
+    for(f in c("Arg", "Conj", "Im", "Mod", "Re")) {
+        fx <- function(z) {}
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    env
+}
+
+### ** .make_S3_primitive_generic_env
+
+.make_S3_primitive_nongeneric_env <-
+function(parent = parent.frame(), fixup = FALSE)
+{
+    ## Create an environment with pseudo-definitions for the S3 primitive
+    ## non-generics
+    env <- new.env(parent = parent)
+    assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) {},
+           envir = env)
+    assign(".Fortrn", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) {},
+           envir = env)
+    assign(".Call", function(name, ..., PACKAGE) {}, envir = env)
+    assign(".Call.graphics", function(name, ..., PACKAGE) {}, envir = env)
+    assign(".External", function(name, ..., PACKAGE) {}, envir = env)
+    assign(".External.graphics", function(name, ..., PACKAGE) {}, envir = env)
+    assign(".Internal", function(call) {}, envir = env)
+    assign(".Primitive", function(name) {}, envir = env)
+    assign(".primTrace", function(obj) {}, envir = env)
+    assign(".primUntrace", function(obj) {}, envir = env)
+    assign(".subset", function(x, ...) {}, envir = env)
+    assign(".subset2", function(x, ...) {}, envir = env)
+    assign("as.call", function(x) {}, envir = env)
+    assign("as.environment", function(object) {}, envir = env)
+    assign("attr", function(x, which) {}, envir = env)
+    assign("attr<-", function(x, which, value) {}, envir = env)
+    assign("attributes", function(obj) {}, envir = env)
+    assign("attributes<-", function(obj, value) {}, envir = env)
+    assign("baseenv", function() {}, envir = env)
+    assign("browser", function() {}, envir = env)
+    assign("call", function(name, ...) {}, envir = env)
+    assign("class", function(x) {}, envir = env)
+    assign("class<-", function(x, value) {}, envir = env)
+    assign("debug", function(fun) {}, envir = env)
+    assign("emptyenv", function() {}, envir = env)
+    assign("environment<-", function(fun, value) {}, envir = env)
+    assign("expression", function(...) {}, envir = env)
+    assign("gc.time", function(on = TRUE) {}, envir = env)
+    assign("globalenv", function() {}, envir = env)
+    assign("interactive", function() {}, envir = env)
+    assign("invisible", function(x) {}, envir = env)
+    assign("is.finite", function(x) {}, envir = env)
+    assign("is.infinite", function(x) {}, envir = env)
+    assign("is.real", function(x) {}, envir = env)
+    assign("list", function(...) {}, envir = env)
+    assign("missing", function(x) {}, envir = env)
+    assign("nargs", function() {}, envir = env)
+    assign("oldClass", function(x) {}, envir = env)
+    assign("oldClass<-", function(x, value) {}, envir = env)
+    assign("pos.to.env", function(x) {}, envir = env)
+    assign("proc.time", function() {}, envir = env)
+    assign("quote", function(expr) {}, envir = env)
+    assign("retracemem", function(x, previous = NULL) {}, envir = env)
+    assign("seq_along", function(along.with) {}, envir = env)
+    assign("seq_len", function(length.out) {}, envir = env)
+    assign("standardGeneric", function(f) {}, envir = env)
+    assign("tracemem", function(x) {}, envir = env)
+    assign("unclass", function(x) {}, envir = env)
+    assign("undebug", function(fun) {}, envir = env)
+    assign("UseMethod", function(generic, object) {}, envir = env)
+    assign("untracemem", function(x) {}, envir = env)
     env
 }
 

@@ -8,17 +8,18 @@
   Retrieve or set the dimnames of an object.
 }
 \usage{
-dimnames(x, \dots)
-\method{dimnames}{data.frame}(x, maybeNULL = FALSE, \dots)
+dimnames(x)
+%MM dimnames(x, \dots)
+%MM \method{dimnames}{data.frame}(x, maybeNULL = FALSE, \dots)
 dimnames(x) <- value
 }
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
-  \item{\dots}{potentially further arguments for \code{dimnames} methods.}
-  \item{maybeNULL}{for the \code{\link{data.frame}} method, a
-    \code{\link{logical}} indicating if the \code{dimnames()[[1]]}
-    component may be \code{\link{NULL}} when \code{x} is a data frame
-    with trivial row names, i.e., rownames equivalent to \code{1:nrow(x)}.}
+%MM \item{\dots}{potentially further arguments for \code{dimnames} methods.}
+%MM \item{maybeNULL}{for the \code{\link{data.frame}} method, a
+%MM   \code{\link{logical}} indicating if the \code{dimnames()[[1]]}
+%MM   component may be \code{\link{NULL}} when \code{x} is a data frame
+%MM   with trivial row names, i.e., rownames equivalent to \code{1:nrow(x)}.}
   \item{value}{a possible value for \code{dimnames(x)}: see
     \dQuote{Value}.}
 }

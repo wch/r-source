@@ -30,6 +30,10 @@ match.arg <- function (arg, choices, several.ok = FALSE)
 	formal.args <- formals(sys.function(sys.parent()))
 	choices <- eval(formal.args[[deparse(substitute(arg))]])
     }
+    if (is.null(arg)) return(choices[1])
+    else if(length(arg) == 0 || !is.character(arg))
+	## warn for now; should become an error eventually:
+	warning("'arg' must be NULL or a character vector of length >= 1")
     if (!several.ok) { # most important (default) case:
         if(all(arg == choices)) return(choices[1])
     } else {

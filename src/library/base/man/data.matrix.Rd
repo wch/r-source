@@ -24,11 +24,12 @@ data.matrix(frame, rownames.force = FALSE)
   as then information can be lost.
 }
 \value{
-  If \code{frame} is a data frame, a numeric matrix of the same
-  dimensions as \code{frame}, with dimnames taken from the row.names and
-  names.  When the row.names are \dQuote{trivial}, i.e., equivalent to
-  \code{1:nrow(.)}, the resulting matrix gets \code{\link{NULL}}
-  dimnames[[1]] unless \code{rownames.force} is true.
+  If \code{frame} inherits from class \code{"data.frame"}, an integer or
+  numeric matrix of the same dimensions as \code{frame}, with dimnames
+  taken from the \code{row.names} and \code{names}.  When the row.names
+  are \dQuote{trivial}, i.e., equivalent to \code{1:nrow(.)}, the
+  resulting matrix gets \code{\link{NULL}} \code{dimnames[[1]]} unless
+  \code{rownames.force} is true.
 
   Otherwise, the result of \code{\link{as.matrix}}.
 }

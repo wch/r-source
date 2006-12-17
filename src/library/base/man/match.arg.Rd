@@ -5,14 +5,16 @@ match.arg(arg, choices, several.ok = FALSE)
 }
 \alias{match.arg}
 \arguments{
-  \item{arg}{a character string}
+  \item{arg}{a character vector (of length one unless \code{several.ok}
+    is \code{TRUE}) or \code{NULL}.}
   \item{choices}{a character vector of candidate values}
   \item{several.ok}{logical specifying if \code{arg} should be allowed
     to have more than one element.}
 }
 \description{
   \code{match.arg} matches \code{arg} against a table of candidate
-  values as specified by \code{choices}.
+  values as specified by \code{choices}, where \code{NULL} means to take
+  the first one.
 }
 \details{
   In the one-argument form \code{match.arg(arg)}, the choices are
@@ -25,7 +27,7 @@ match.arg(arg, choices, several.ok = FALSE)
 \value{
   The unabbreviated version of the unique partial match if there is one;
   otherwise, an error is signalled if \code{several.ok} is false, as per
-  default. When \code{several.ok} is true and there is more than one
+  default.  When \code{several.ok} is true and there is more than one
   match, all unabbreviated versions of matches are returned.
 }
 \seealso{
@@ -47,6 +49,8 @@ x <- rcauchy(10)
 center(x, "t")       # Works
 center(x, "med")     # Works
 try(center(x, "m"))  # Error
+stopifnot(identical(center(x),       center(x, "mean")),
+          identical(center(x, NULL), center(x, "mean")) )
 
 ## Allowing more than one match:
 % '3 of 4' -> warning when match.arg() is not coded well enough:

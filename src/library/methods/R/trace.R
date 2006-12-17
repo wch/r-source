@@ -7,6 +7,19 @@
 
 .traceTraceState <- FALSE
 
+## the internal functions in the evaluator.  These are all prohibited,
+## although some of them could just barely be accomodated, with some
+## specially designed new definitions (not using ..., for example).
+## The gain does not seem worth the inconsistencies; and "if" can
+## never be traced, since it has to be used to determine if tracing is
+## on.  (see .doTrace())
+## The remaining invalid functions create miscellaneous bugs, maybe
+## related to the use of "..." as the introduced arguments.  Aside from
+## .Call, tracing them seems of marginal value.
+
+.InvalidTracedFunctions <- c("if", "where", "for", "repeat", "(", "{",
+                            "next", "break", ".Call", ".Internal", ".Primitive")
+
 .TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at =
                               numeric(), print = TRUE, signature =
                               NULL, where = .GlobalEnv, edit = FALSE,
@@ -71,6 +84,9 @@
         whereF <- temp$whereF
         pname <- temp$pname
     }
+    if(what %in% .InvalidTracedFunctions)
+      stop(gettextf("Tracing the internal function \"%s\" is not allowed",
+                    what))
  if(.traceTraceState) {
     message(".TraceWithMethods: after computing what, whereF")
     browser()
@@ -253,28 +269,28 @@
                 stop("cannot use 'at' argument unless the function body has the form '{ ... }'")
             for(i in at) {
                 if(print)
-                    expri <- substitute({methods::.doTrace(TRACE, MSG); EXPR},
+                    expri <- substitute({.doTrace(TRACE, MSG); EXPR},
                                         list(TRACE = tracer, MSG = paste("step",i), EXPR = fBody[[i]]))
                 else
-                    expri <- substitute({methods::.doTrace(TRACE); EXPR},
+                    expri <- substitute({.doTrace(TRACE); EXPR},
                                         list(TRACE=tracer, EXPR = fBody[[i]]))
                 fBody[[i]] <- expri
             }
         }
         else if(!is.null(tracer)){
             if(print)
-                fBody <- substitute({methods::.doTrace(TRACE, MSG); EXPR},
+                fBody <- substitute({.doTrace(TRACE, MSG); EXPR},
                                     list(TRACE = tracer, MSG = paste("on entry"), EXPR = fBody))
             else
-                fBody <- substitute({methods::.doTrace(TRACE); EXPR},
+                fBody <- substitute({.doTrace(TRACE); EXPR},
                                     list(TRACE=tracer, EXPR = fBody))
         }
         if(!is.null(exit)) {
             if(print)
-                exit <- substitute(methods::.doTrace(EXPR, MSG),
+                exit <- substitute(.doTrace(EXPR, MSG),
                                    list(EXPR = exit, MSG = paste("on exit")))
             else
-                exit <- substitute(methods::.doTrace(EXPR),
+                exit <- substitute(.doTrace(EXPR),
                                    list(EXPR = exit))
             fBody <- substitute({on.exit(TRACE); BODY},
                                 list(TRACE=exit, BODY=fBody))
@@ -334,20 +350,6 @@
     cat("Tracing", call, msg, "\n")
 }
 
-.doTrace <- function(expr, msg) {
-  if(!tracingState(FALSE))
-    return(NULL)
-  on.exit(tracingState(TRUE)) # restore on exit, keep off during trace
-  if(!missing(msg)) {
-    call <- deparse(sys.call(sys.parent(1)))
-    if(length(call)>1)
-        call <- paste(call[[1]], "....")
-    cat("Tracing", call, msg, "\n")
-  }
-  exprObj <- substitute(expr)
-  eval.parent(exprObj)
-}
-
 .traceClassName <- function(className) {
     className[] <- paste(className, "WithTrace", sep="")
     className
@@ -380,6 +382,8 @@ trySilent <- function(expr) {
     if(is.function(value)) {
         ## assign in the namespace for the function as well
         fenv <- environment(value)
+        if(is.null(fenv)) # primitives
+          fenv <- baseenv()
         if(!identical(fenv, where) && exists(what, envir = fenv, inherits = FALSE #?
                                              ) && bindingIsLocked(what, fenv)) {
             unlockBinding(what, fenv)

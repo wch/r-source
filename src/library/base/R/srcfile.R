@@ -1,7 +1,7 @@
 # a srcfile is a file with a timestamp
 
 srcfile <- function(filename) {
-    stopifnot(is.character(filename), length(filename) == 1)  
+    stopifnot(is.character(filename), length(filename) == 1)
 
     e <- new.env(parent=emptyenv())
 
@@ -28,7 +28,7 @@ open.srcfile <- function(con, line, ...) {
     conn <- srcfile$conn
     if (is.null(conn)) {
 	olddir <- setwd(srcfile$wd)
-	on.exit(setwd(olddir))   
+	on.exit(setwd(olddir))
 	timestamp <- file.info(srcfile$filename)[1,"mtime"]
 	if (timestamp != srcfile$timestamp) warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
 	srcfile$conn <- conn <- file(srcfile$filename, open="rt")
@@ -59,13 +59,13 @@ close.srcfile <- function(con, ...) {
 # srcfilecopy saves a copy of lines from a file
 
 srcfilecopy <- function(filename, lines) {
-    stopifnot(is.character(filename), length(filename) == 1)  
+    stopifnot(is.character(filename), length(filename) == 1)
 
     e <- new.env(parent=emptyenv())
 
     e$filename <- filename
     e$lines <- as.character(lines)
-    
+
     class(e) <- c("srcfilecopy", "srcfile")
     return(e)
 }
@@ -108,7 +108,7 @@ getSrcLines <- function(srcfile, first, last) {
     return(lines)
 }
 
-# a srcref gives start and stop positions of text 
+# a srcref gives start and stop positions of text
 # lloc entries are first_line, first_column, last_line, last_column
 # all are inclusive
 
@@ -116,20 +116,20 @@ srcref <- function(srcfile, lloc) {
     stopifnot(inherits(srcfile, "srcfile"), length(lloc) == 4)
     structure(as.integer(lloc), srcfile=srcfile, class="srcref")
 }
-  
-as.character.srcref <- function(x, useSource = TRUE, ...) {
-    srcref <- x
-    srcfile <- attr(srcref, "srcfile")
-    if (useSource) lines <- try(getSrcLines(srcfile, srcref[1], srcref[3]), TRUE)
-    if (!useSource || inherits(lines, "try-error")) 
-    	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ", srcref[1],":",srcref[2],
-    	               " to ",srcref[3],":",srcref[4], ">", sep="")
+
+as.character.srcref <- function(x, useSource = TRUE, ...)
+{
+    srcfile <- attr(x, "srcfile")
+    if (useSource) lines <- try(getSrcLines(srcfile, x[1], x[3]), TRUE)
+    if (!useSource || inherits(lines, "try-error"))
+    	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",
+                       x[1],":",x[2], " to ",x[3],":",x[4], ">", sep="")
     else {
-    	lines[length(lines)] <- substring(lines[length(lines)], 1, srcref[4])
-    	lines[1] <- substring(lines[1], srcref[2])
+    	lines[length(lines)] <- substring(lines[length(lines)], 1, x[4])
+    	lines[1] <- substring(lines[1], x[2])
     }
     lines
 }
 
-print.srcref <- function(x, useSource = TRUE, ...) 
+print.srcref <- function(x, useSource = TRUE, ...)
     cat(as.character(x, useSource = useSource), sep="\n")
