@@ -874,6 +874,17 @@ a method, it dispatches to that method with a call based on promises to
 evaluate the remaining arguments.  If no method is found, the remaining
 arguments are evaluated before return to the internal generic.
 
+@cindex generic, generic
+@findex DispatchGeneric
+The other way that internal functions can be generic is to be group
+generic.  All such functions are builtins (so immediately evaluate all
+their arguments), and contain a call to the C function
+@code{DispatchGeneric}.  There are some peculiarities over the number of
+arguments for the @code{"Math"} group generic, with some members
+allowing only one argument, some having two (with a default for the
+second) but the primitive members (most) allowing one or more arguments
+for the generic but only one if the default method is used.
+
 @menu
 * Missingness::                 
 * Dot-dot-dot arguments::       
@@ -1448,24 +1459,21 @@ argument.  @code{~}, @code{.Internal}, @code{call}, @code{expression}
 and @code{missing} do not evaluate their arguments.
 
 @code{rep} and @code{seq.int} are special as they evaluate some of their
-arguments conditional on which are non-missing.
+arguments conditional on which are non-missing.  @code{c} is special to
+allow it to be used with language objects.
 
 The subsetting, subassignment and @code{@@} operators are all special.
 (For both extraction and replacement forms, @code{$} and @code{@@}
 take a symbol argument, and @code{[} and @code{[[} allow missing
 arguments.)
 
-@c c() and UseMethod() are also special.
-
 @node Special internals,  , Special primitives, .Internal vs .Primitive
 @section Special internals
 
 There are also special @code{.Internal} functions: @code{switch},
 @code{Recall}, @code{cbind}, @code{rbind} (to allow for the
-@code{deparse.level} argument) @code{lapply}, @code{eapply} and
+@code{deparse.level} argument), @code{lapply}, @code{eapply} and
 @code{NextMethod}.
-
-@c unlist is special: why?
 
 
 @node R coding standards, Testing R code, .Internal vs .Primitive, Top
