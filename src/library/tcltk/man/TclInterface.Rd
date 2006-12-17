@@ -90,7 +90,7 @@ tclObj(x) <- value
 as.tclObj(x, drop=FALSE)
 is.tclObj(x)
 
-\method{as.character}{tclObj}(x. ...)
+\method{as.character}{tclObj}(x, ...)
 \method{as.integer}{tclObj}(x, ...)
 \method{as.double}{tclObj}(x, ...)
 \method{tclvalue}{tclObj}(x)
