@@ -30,9 +30,9 @@ grid.locator(unit = "native")
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{viewport}}, \code{\link{unit}},
-  \code{locator} in package graphics, and for an application
-  see \code{trellis.focus} and \code{panel.identify} in
-  package lattice.
+  \code{locator} in package \pkg{graphics}, and for an application
+  see \code{\link[lattice:interaction]{trellis.focus}} and
+  \code{\link[lattice:interaction]{panel.identify}} in package \pkg{lattice}.
 }
 \examples{
 if (interactive()) {
