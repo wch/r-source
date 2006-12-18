@@ -1281,13 +1281,14 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
     int i, n;
     
     if (!isNull(sv) && !isNull(t = VECTOR_ELT(sv, k))) {
-	PROTECT(t = eval(lang2(install("as.character"), t), R_GlobalEnv));
+    	PROTECT(t = lang2(install("as.character"), t));
+	PROTECT(t = eval(t, R_BaseEnv));
 	n = length(t);
 	for(i = 0 ; i < n ; i++) {
 	    print2buff(CHAR(STRING_ELT(t, i)), d);
 	    if(i < n-1) writeline(d);
 	}
-	UNPROTECT(1);
+	UNPROTECT(2);
         return TRUE;
     }
     else return FALSE;

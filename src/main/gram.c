@@ -3135,9 +3135,10 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 	SET_TYPEOF(a2, LANGSXP);
 	SETCAR(a2, a1);
 	if (KeepSource && SrcFile) {
-	    prevSrcrefs = getAttrib(a2, R_SrcrefSymbol);	
+	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
 	    PROTECT(ans = attachSrcrefs(a2));
-	    SrcRefs = prevSrcrefs;
+	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
+	    UNPROTECT_PTR(prevSrcrefs);
 	} 
 	else
 	    PROTECT(ans = a2);	
