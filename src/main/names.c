@@ -194,7 +194,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"row",		do_rowscols,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"col",		do_rowscols,	2,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"c",/* bind.c:*/do_c,		0,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"unlist",	do_unlist,	0,	10,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"unlist",	do_unlist,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"cbind",	do_bind,	1,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"rbind",	do_bind,	2,	10,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"drop",	do_drop,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -821,7 +821,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"UseMethod",	do_usemethod,	0,     200,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"UseMethod",	do_usemethod,	0,     201,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"NextMethod",	do_nextmethod,	0,     210,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"standardGeneric",do_standardGeneric,0, 201,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 

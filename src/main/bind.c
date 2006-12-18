@@ -812,7 +812,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Attempt method dispatch. */
 
-    if (DispatchOrEval(call, op, "unlist", args, env, &ans, 1, 0))
+    if (DispatchOrEval(call, op, "unlist", args, env, &ans, 0, 1))
 	return(ans);
 
     /* Method dispatch has failed; run the default code. */
