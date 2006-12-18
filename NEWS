@@ -266,6 +266,9 @@ BUG FIXES
 
     o	co.intervals() sometimes failed to cover the largest value.
 
+    o	R CMD Sweave and R CMD Stangle now respond to --help and --version
+	like other utilities.
+
 
 
 
