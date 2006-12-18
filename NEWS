@@ -258,13 +258,11 @@ BUG FIXES
     o	Tracing of primitive functions has been corrected.  It should
 	now be the case that tracing either works or is not allowed
 	for all primitive functions. (Problems remain if you make a
-	primitive into a generic when it's being traced.  To be fixed
+	primitive into a generic when it is being traced.  To be fixed
 	later.)
 
     o	max.col() now omits infinite values in determining the
 	relative tolerance.
-
-    o	co.intervals() sometimes failed to cover the largest value.
 
     o	R CMD Sweave and R CMD Stangle now respond to --help and --version
 	like other utilities.
@@ -277,6 +275,14 @@ BUG FIXES
 	*	       2.4 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.4.1 patched
+
+BUG FIXES
+
+    o	co.intervals() sometimes failed to cover the largest value.
+
 
 
 		CHANGES IN R VERSION 2.4.1
