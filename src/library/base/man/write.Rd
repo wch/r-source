@@ -8,7 +8,7 @@ write(x, file = "data",
 \alias{write}
 \arguments{
   \item{x}{the data to be written out.}
-  \item{file}{A connection, or  a character string naming the file to write to.
+  \item{file}{A connection, or a character string naming the file to write to.
     If \code{""}, print to the standard output connection.
 #ifdef unix
     If it is \code{"|cmd"}, the output is piped to the command given
@@ -16,7 +16,8 @@ write(x, file = "data",
 #endif
   }
   \item{ncolumns}{the number of columns to write the data in.}
-  \item{append}{if \code{TRUE} the data \code{x} is appended to file \code{file}.}
+  \item{append}{if \code{TRUE} the data \code{x} are appended to the
+    connection.}
   \item{sep}{a string used to separate columns.  Using \code{sep = "\t"}
     gives tab delimited output; default is \code{" "}.}
 }
@@ -31,6 +32,9 @@ write(x, file = "data",
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{write} is a wrapper for \code{\link{cat}}, which gives further
+  details on the format used.
+  
   \code{\link{save}} for writing any \R objects,
   \code{\link{write.table}} for data frames,
   and \code{\link{scan}} for reading data.
