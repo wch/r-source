@@ -43,6 +43,9 @@ fixInNamespace(x, ns, pos = -1, envir = as.environment(pos), \dots)
   They are really intended to be used \emph{only} for objects which are
   not exported from the namespace.  They do attempt to alter a copy
   registered as an S3 method if one is found.
+
+  They can only be used to change the values of objects in the
+  namespace, not to create new objects.
 }
 \value{
   \code{getFromNamespace} returns the object found (or gives an error).
