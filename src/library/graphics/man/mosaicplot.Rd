@@ -116,7 +116,7 @@ mosaicplot(x, \dots)
   Zeileis and Hornik, 2005).
 }
 \author{
-  S-PLUS original by John Emerson \email{emerson@stat.yale.edu}.
+  S-PLUS original by John Emerson \email{john.emerson@yale.edu}.
   Originally modified and enhanced for \R by Kurt Hornik.
 }
 \references{

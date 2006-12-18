@@ -22,9 +22,9 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
     i.e., draw transparent rectangles, unless \code{density} is specified.}
   \item{border}{color for rectangle border(s).  The default means
     \code{par("fg")}.  Use \code{border = NA} to omit borders.
-
-    Can also be \code{FALSE} to suppress the border, or \code{TRUE} in
-    which case \code{col} is used.}
+    If there are shading
+    lines, \code{border = TRUE} means use the same colour for
+    the border as for the shading lines.}
   \item{lty}{line type for borders and shading; defaults to \code{"solid"}.}
   \item{lwd}{line width for borders and shading.}
   \item{\dots}{graphical parameters such as \code{xpd}, \code{lend},
