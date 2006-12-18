@@ -270,6 +270,10 @@ BUG FIXES
     o	abline(reg) now also correctly works with intercept-only models,
 	and abline() warns more when it's called illogically.
 
+    o	tempfile() is now random across sessions as well as within a
+	session.  (On some systems it would give the same hex suffix
+	at the start of each session.)
+
 
 
 
