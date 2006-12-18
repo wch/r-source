@@ -810,6 +810,7 @@ handles internationalization slightly odd.  For further details see
 * Hyperlinks in HTML do not work.::  
 * update.packages() fails::     
 * How do I add to the list of repositories?::  
+* Help is not shown for some of the packages::  
 @end menu
 
 
@@ -981,15 +982,25 @@ installation process by preventing the renaming of temporary files,
 @emph{Google Desktop} being a known example.
 
 
-@node How do I add to the list of repositories?,  , update.packages() fails, Packages
+@node How do I add to the list of repositories?, Help is not shown for some of the packages, update.packages() fails, Packages
 @section How do I add to the list of repositories?
 
 as shown in the @code{Select repositories...} item on the
 @code{Packages} menu?
 
-This reads from the tab-delimited file @file{R_HOME/etc/repositories},
-which you can edit, or put a modified copy at @file{.R/repositories}
+This reads from the tab-delimited file @file{R_HOME\etc\repositories},
+which you can edit, or put a modified copy at @file{.R\repositories}
 in your HOME directory (@pxref{What are HOME and working directories?}).
+
+@node Help is not shown for some of the packages,  , How do I add to the list of repositories?, Packages
+@section Help is not shown for some of the packages
+
+Is this for Compiled HTML help (the default)?  If a help viewer appears
+but says the page cannot be displayed, this may be due to a recent
+Windows security patch (@url{http://support.microsoft.com/kb/896358}).
+Either apply the workarounds given at that URL or choose another form of
+help as the default (on installation or by editing
+@file{R_HOME\etc\Rprofile.site}.
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
