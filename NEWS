@@ -488,6 +488,8 @@ BUG FIXES
 	and the incorrect documentation of what happened with
 	character objects is corrected.
 
+    o	url() was not supporting 'encoding' except on file:// URLs.
+
 
 
 		CHANGES IN R VERSION 2.4.0
