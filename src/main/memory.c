@@ -2802,11 +2802,9 @@ static void R_OutputStackTrace(FILE *file)
 
 static void R_ReportAllocation(R_size_t size)
 {
-    int newline = 0;
-
     if (R_IsMemReporting) {
 	if(size > R_MemReportingThreshold) {
-	    fprintf(R_MemReportingOutfile,"%ld :", (unsigned long) size);
+	    fprintf(R_MemReportingOutfile, "%ld :", (unsigned long) size);
 	    R_OutputStackTrace(R_MemReportingOutfile);
 	}
     }
@@ -2815,15 +2813,12 @@ static void R_ReportAllocation(R_size_t size)
 
 static void R_ReportNewPage(void)
 {
-    int newline = 0;
-
     if (R_IsMemReporting) {
 	fprintf(R_MemReportingOutfile, "new page:");
 	R_OutputStackTrace(R_MemReportingOutfile);
     }
     return;
 }
-
 
 static void R_EndMemReporting()
 {
