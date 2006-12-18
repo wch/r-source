@@ -71,7 +71,7 @@ SEXP attribute_hidden getParseContext()
 	}
 	context[i] = '\0';
 	SET_STRING_ELT(ans, nread-1, mkChar(context + last));
-	last = i+1;
+	last = i;
     }
     /* get rid of empty line after last newline */
     if (nread && !length(STRING_ELT(ans, nread-1))) nread--;
