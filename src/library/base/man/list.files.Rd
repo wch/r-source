@@ -51,10 +51,12 @@ for interactive selection.
 
   \code{\link{glob2rx}} to convert wildcards (as used by system file
   commands and shells) to regular expressions.
+
+  \code{\link{Sys.glob}} for wildcard expansion on file paths.
 }
 \examples{
 list.files(R.home())
-## Only files starting with a-l or r (*including* uppercase):
+## Only files starting with a-l or r
 dir("../..", pattern = "^[a-lr]",full.names=TRUE)
 }
 \keyword{file}

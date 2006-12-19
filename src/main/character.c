@@ -2491,6 +2491,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if(!isString(x = CAR(args)))
 	errorcall(call, "invalid '%s' argument", "paths");
+    if(!LENGTH(x)) return allocVector(STRSXP, 0);
     for(i = 0; i < LENGTH(x); i++) {
 	res = glob(CHAR(STRING_ELT(x, i)), i ? GLOB_APPEND : 0, NULL, &globbuf);
 	if(res == GLOB_ABORTED)
@@ -2509,7 +2510,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    errorcall(call, _("'Sys.glob is not implemented on this platform"));
+    errorcall(call, _("'Sys.glob' is not implemented on this platform"));
     return R_NilValue;
 }
 #endif
