@@ -340,7 +340,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("'UseMethod' used in an inappropriate fashion"));
     callenv = cptr->sysparent;
     if (nargs)
-	PROTECT(generic = CAR(args));
+	PROTECT(generic = eval(CAR(args), env));
     else 
 	errorcall(call, _("there must be a first argument"));
     /* We need to find the generic to find out where it is defined.
@@ -370,7 +370,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nargs > 2)  /* R-lang says there should be a warning */
 	warningcall(call, _("arguments after the first two are ignored"));
     if (nargs >= 2)
-	PROTECT(obj = CADR(args));
+	PROTECT(obj = eval(CADR(args), env));
     else {
 	cptr = R_GlobalContext;
 	while (cptr != NULL) {

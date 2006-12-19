@@ -1467,6 +1467,9 @@ The subsetting, subassignment and @code{@@} operators are all special.
 take a symbol argument, and @code{[} and @code{[[} allow missing
 arguments.)
 
+@code{UseMethod} is special to avoid the additional contexts added to
+calls to builtins when profiling (via @code{Rprof}).
+
 @node Special internals,  , Special primitives, .Internal vs .Primitive
 @section Special internals
 
