@@ -2770,7 +2770,7 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
     	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
     	}	
 	PROTECT(ans = GrowList(tmp, expr));
-	UNPROTECT(1);
+	UNPROTECT_PTR(tmp);
     }
     else
 	PROTECT(ans = R_NilValue);
@@ -3138,6 +3138,8 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
 	    PROTECT(ans = attachSrcrefs(a2));
 	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
+	    /* SrcRefs got NAMED by being an attribute... */
+	    SET_NAMED(SrcRefs, 0);
 	    UNPROTECT_PTR(prevSrcrefs);
 	} 
 	else
