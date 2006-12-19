@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:50\n"
+"POT-Creation-Date: 2006-12-19 10:30\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -498,6 +498,28 @@ msgstr "程序包%s相互依赖"
 msgid "no packages were specified"
 msgstr "没有设定程序包"
 
+#, fuzzy
+msgid "argument 'lib' is missing: using '%s'"
+msgstr "没有'lib'这个变元：改用%s"
+
+#, fuzzy
+msgid "'lib' is not writable"
+msgstr "没有'%s'这种相依关系"
+
+msgid ""
+"Would you like to create a personal library\n"
+"'%s'\n"
+"to install packages into?"
+msgstr ""
+
+#, fuzzy
+msgid "unable to install packages"
+msgstr "找不到程序包'%s'"
+
+#, fuzzy
+msgid "unable to create"
+msgstr "无法建立'%s'"
+
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
 
@@ -872,6 +894,11 @@ msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "找不到'%s'这个目标对象"
 msgstr[1] "找不到'%s'这个目标对象"
+
+#, fuzzy
+msgid "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0] "'destdir'不是目录"
 
 msgid "dependency '%s' is not available"
 msgid_plural "dependencies '%s' are not available"

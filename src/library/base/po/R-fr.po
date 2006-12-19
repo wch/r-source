@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
+"POT-Creation-Date: 2006-12-19 10:29\n"
 "PO-Revision-Date: 2006-12-05 20:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -873,6 +873,10 @@ msgstr "argument 'category' incorrect"
 
 msgid "must specify formal argument names to vectorize"
 msgstr "les noms d'arguments formels doivent être spécifiés pour vectoriser"
+
+#, fuzzy
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'normal.kind' doit être une chaîne de caractères de longueur 1."
 
 msgid "'arg' should be one of"
 msgstr "'arg' doit être un de"

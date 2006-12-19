@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2006-12-19 10:30\n"
 "PO-Revision-Date: 2006-12-10 00:36-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -1440,6 +1440,14 @@ msgstr "eff.aovlist: не-ортогональные контрасты могут дать неправильный ответ"
 
 msgid "no terms component"
 msgstr "нет компонента выражений"
+
+#, fuzzy
+msgid "'termlabels' must be a character vector of length at least one"
+msgstr "'ColSideColors' должен быть текстовым вектором с длиной = ncol(x)"
+
+#, fuzzy
+msgid "'termobj' must be a object of class \"terms\""
+msgstr "'centers' должны быть числом или матрицей"
 
 msgid ""
 "variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"

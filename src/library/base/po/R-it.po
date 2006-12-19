@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:49\n"
+"POT-Creation-Date: 2006-12-19 10:29\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -859,6 +859,10 @@ msgstr "argomento 'category' non valido"
 
 msgid "must specify formal argument names to vectorize"
 msgstr ""
+
+#, fuzzy
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'normal.kind' deve essere una stringa di caratteri di lunghezza 1"
 
 msgid "'arg' should be one of"
 msgstr "'arg' deve essere uno tra"

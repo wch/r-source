@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2006-12-19 10:30\n"
 "PO-Revision-Date: 2006-12-12 09:44+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1424,6 +1424,14 @@ msgstr "eff.aovlist：直交しない対比は誤った結果を与えるかも�
 
 msgid "no terms component"
 msgstr "terms 成分がありません"
+
+#, fuzzy
+msgid "'termlabels' must be a character vector of length at least one"
+msgstr "'ColSideColors' は長さの ncol(x) の文字ベクトルでなければなりません"
+
+#, fuzzy
+msgid "'termobj' must be a object of class \"terms\""
+msgstr "中心('centers')は数値か行列でなければなりません"
 
 msgid ""
 "variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
