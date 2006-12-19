@@ -823,7 +823,6 @@ void setup_Rmainloop(void)
     /* At least temporarily unlock some bindings uses in graphics */
     R_unLockBinding(install(".Device"), R_BaseEnv);
     R_unLockBinding(install(".Devices"), R_BaseEnv);
-    /* allow Rprofile.site to set this */
     R_unLockBinding(install(".Library.site"), R_BaseEnv);
 
     /* require(methods) if it is in the default packages */
@@ -862,6 +861,7 @@ void setup_Rmainloop(void)
     }
 
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
+    R_LockBinding(install(".Library.site"), R_BaseEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.

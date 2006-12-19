@@ -42,6 +42,9 @@
   By default \env{R\_LIBS} is unset, and \env{R\_LIBS\_USER} is set to
   directory \file{R/\var{R.version\$platform}-library/\var{x.y}}
   of the home directory, for \R \var{x.y.z}.
+
+  \code{.Library.site} can be set via the environment variable 
+  \env{R\_LIBS\_SITE} (as a colon-separated list of library trees).
 #endif
 #ifdef windows
   The library search path is initialized at startup from the environment
@@ -53,6 +56,9 @@
   By default \env{R\_LIBS} is unset, and \env{R\_LIBS\_USER} is set to
   subdirectory \file{R/win-library/\var{x.y}} of the home directory,
   for \R \var{x.y.z}.
+
+  \code{.Library.site} can be set via the environment variable
+  \env{R\_LIBS\_SITE} (as a semicolon-separated list of library trees).
 #endif
 
   Function \code{.libPaths} always uses the values of \code{.Library}

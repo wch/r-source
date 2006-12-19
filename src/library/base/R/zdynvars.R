@@ -23,7 +23,7 @@
     .lib.loc <- character(0)            # Profiles need to set this.
     function(new) {
         if(!missing(new)) {
-            paths <- path.expand(unique(c(new, .Library.site, .Library)))
+            paths <- unique(path.expand(c(new, .Library.site, .Library)))
             .lib.loc <<- paths[file.exists(paths)]
         }
         else

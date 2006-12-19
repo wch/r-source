@@ -1,7 +1,10 @@
 ###-*- R -*-
 
 .Library <- file.path(chartr("\\", "/", R.home()), "library")
-.Library.site <- file.path(chartr("\\", "/", R.home()), "site-library")
+.Library.site <- Sys.getenv("R_LIBS_SITE")
+.Library.site <- if(!nchar(.Library.site)) file.path(R.home(), "site-library") else unlist(strsplit(.Library.site, ";"))
+.Library.site <- chartr("\\", "/", .Library.site)
+.Library.site <- .Library.site[file.exists(.Library.site)]
 
 if(nchar(Sys.getenv("R_LIBS_USER")) == 0)
     Sys.putenv(R_LIBS_USER=
