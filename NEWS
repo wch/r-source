@@ -165,6 +165,14 @@ NEW FEATURES
 	which allows to turn-off non-standard evaluation; also e.g.,
 	apropos(fit) now works.
 
+    o	.libPaths() now does tilde expansion.
+
+    o	There are more flexible ways to specify the default library search
+	path.  In addition to R_LIBS and .Library, there are .Library.site
+	(defaults to R_HOME/site-library) and R_LIBS_USER (defaults to
+	a platform- and version-specific directory in ~/R).  See
+	?.libPaths for details.
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,7 +1,11 @@
 ###-*- R -*- Unix Specific ----
 
 .Library <- file.path(R.home(), "library")
-invisible(.libPaths(unlist(strsplit(Sys.getenv("R_LIBS"), ":"))))
+.Library.site <- file.path(R.home(), "site-library")
+
+invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ":")),
+                      unlist(strsplit(Sys.getenv("R_LIBS_USER"), ":")
+                      ))))
 
 local({
 ## we distinguish between R_PAPERSIZE as set by the user and by configure

@@ -49,6 +49,8 @@ AC_SUBST(PACKAGE)
 VERSION=[${PACKAGE_VERSION}]
 AC_DEFINE_UNQUOTED(VERSION, "${VERSION}", [Version number of package])
 AC_SUBST(VERSION)
+MAJ_MIN_VERSION=`echo ${VERSION} | sed 's/\.[[0-9]]$//'`
+AC_SUBST(MAJ_MIN_VERSION)
 
 ## Autoheader initialization.
 AH_TOP([#ifndef R_CONFIG_H

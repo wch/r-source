@@ -47,6 +47,11 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
 
 .First.sys <- function()
 {
+    assign(".Library.site",
+           base::.Library.site[file.exists(base::.Library.site)],
+           envir = baseenv())
+    lockBinding(".Library.site", baseenv())
+    .libPaths(.libPaths()) # update for setting .Library.site
     for(pkg in getOption("defaultPackages")) {
         res <- require(pkg, quietly = TRUE, warn.conflicts = FALSE,
                        character.only = TRUE, save = FALSE)

@@ -1,8 +1,23 @@
 ###-*- R -*-
 
 .Library <- file.path(chartr("\\", "/", R.home()), "library")
-invisible(.libPaths(unlist(strsplit(chartr("\\", "/", Sys.getenv("R_LIBS")),
-                                    ";"))))
+.Library.site <- file.path(chartr("\\", "/", R.home()), "site-library")
+
+if(nchar(Sys.getenv("R_LIBS_USER")) == 0)
+    Sys.putenv(R_LIBS_USER=
+               file.path(chartr("\\", "/", Sys.getenv("R_USER")), "R",
+                         "win-library",
+                         paste(R.version$major,
+                               sub("\\..*$", "", R.version$minor),
+                               sep=".")
+                         ))
+
+invisible(.libPaths(c(unlist(strsplit(chartr("\\", "/", Sys.getenv("R_LIBS")),
+                                      ";")),
+                      unlist(strsplit(chartr("\\", "/",
+                                             Sys.getenv("R_LIBS_USER")),
+                                      ";"))
+                      )))
 
 if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
     options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
