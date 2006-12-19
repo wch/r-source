@@ -39,7 +39,7 @@ download.packages(pkgs, destdir, available = NULL,
 install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
                  method, available = NULL, destdir = NULL,
-		 installWithVers = FALSE, dependencies = FALSE,
+		 installWithVers = FALSE, dependencies = NA,
                  type = getOption("pkgType"),
                  configure.args = character(0),
                  clean = FALSE)
@@ -115,21 +115,24 @@ contrib.url(repos, type = getOption("pkgType"))
 
     Only supported if \code{lib} is of length one (or missing),
     so it is unambiguous where to install the dependent packages.
+
+    The default, \code{NA}, means \code{c("Depends", "Imports")} if
+    \code{lib} is unambiguous, and \code{FALSE} otherwise.
   }
   \item{configure.args}{a character vector or a named list.
-      If a character vector with no names is supplied, the elements are
-      concatenated into a single string (separated by a space) and used
-      as the value for the \code{--configure-args}
-      flag in the call to \code{R CMD INSTALL}.
-      If the character vector has names, these are assumed to identify
-      values for \code{--configure-args} for individual packages.
-      This allows one to specify settings for an entire collection of packages
-      which will be used if any of those packages are installed.
-      These settings can therefore be reused and act as default settings.
-      A named list can be used also to the same effect, and that
-      allows multi-element character strings for each package
-      which are concatenated to a single string to be used as the
-      value for \code{--configure-args}.
+    If a character vector with no names is supplied, the elements are
+    concatenated into a single string (separated by a space) and used
+    as the value for the \code{--configure-args}
+    flag in the call to \code{R CMD INSTALL}.
+    If the character vector has names, these are assumed to identify
+    values for \code{--configure-args} for individual packages.
+    This allows one to specify settings for an entire collection of packages
+    which will be used if any of those packages are installed.
+    These settings can therefore be reused and act as default settings.
+    A named list can be used also to the same effect, and that
+    allows multi-element character strings for each package
+    which are concatenated to a single string to be used as the
+    value for \code{--configure-args}.
   }
   \item{\dots}{
     (for \code{update.packages}).  Arguments such as \code{destdir},
@@ -227,7 +230,11 @@ contrib.url(repos, type = getOption("pkgType"))
   It takes a vector of names and a destination library, downloads the
   packages from the repositories and installs them.  (If the library is
   omitted it defaults to the first directory in \code{.libPaths()}, with
-  a warning if there is more than one.)
+  a warning if there is more than one.)  If \code{lib} is omitted or is
+  of length one and is not a writeable directory, the code offers to
+  create a personal library tree (the first element of
+  \code{Sys.getenv("R_LIBS_USER")} and install there.
+
 %  The first argument can be an unquoted name, as in
 %  \code{install.packages(nlme)}.
 #ifdef windows

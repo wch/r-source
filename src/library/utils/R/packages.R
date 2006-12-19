@@ -78,7 +78,7 @@ available.packages <-
     }
     ## ignore packages which don't fit our version of R
     if(length(res)) {
-        currentR <- getRversion()        
+        currentR <- getRversion()
         .checkRversion <- function(x) {
             if(is.na(xx <- x["Depends"])) return(TRUE)
             xx <- tools:::.split_dependencies(xx)
@@ -162,11 +162,12 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     if(!is.null(update)) {
         if(is.null(instlib)) instlib <-  update[,"LibPath"]
-
-        install.packages(update[,"Package"], instlib,
-                         contriburl = contriburl,
-                         method = method,
-                         available = available, ..., type = type)
+        ## do this a library at a time, to handle dependencies correctly.
+        libs <- unique(instlib)
+        for(l in libs)
+            install.packages(update[instlib == l ,"Package"], l,
+                             contriburl = contriburl, method = method,
+                             available = available, ..., type = type)
     }
 }
 

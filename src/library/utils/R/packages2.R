@@ -2,13 +2,15 @@ install.packages <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
              method, available = NULL, destdir = NULL,
-             installWithVers = FALSE, dependencies = FALSE,
+             installWithVers = FALSE, dependencies = NA,
              type = getOption("pkgType"), configure.args = character(0),
              clean = FALSE)
 {
-
     if (is.logical(clean) && clean)
         clean <- "--clean"
+    if(is.logical(dependencies) && is.na(dependencies))
+        dependencies <- if(!missing(lib) && length(lib) > 1) FALSE
+        else c("Depends", "Imports")
 
     explode_bundles <- function(a)
     {
@@ -90,6 +92,26 @@ install.packages <-
         if(length(.libPaths()) > 1)
             warning(gettextf("argument 'lib' is missing: using %s", lib),
                     immediate. = TRUE, domain = NA)
+    }
+
+    info <- file.info(lib)
+    ok <- info$isdir & substr(info$mode, 1, 1) == "7"
+    if(length(ok) > 1 && any(!ok))
+        stop("'lib' element ", paste(lib[!ok], collapse=", "),
+             " is not a writable directory")
+    if(length(ok) == 1 && !ok) {
+        warning("'lib' is not writable", immediate.=TRUE)
+        userdir <- Sys.getenv("R_LIBS_USER")[1] # will give NA if not set
+        if(interactive() && !is.na(userdir) && !file.exists(userdir)) {
+            ans <-
+                readline(paste("\nWould you like to create a personal library\n",
+                               sQuote(userdir), "to install in (y/n): "))
+            if(substr(ans, 1, 1) == "n") stop("unable to install packages")
+            if(!dir.create(userdir, recursive = TRUE))
+                stop("uable to create ", sQuote(userdir))
+            lib <- userdir
+            .libPaths(c(userdir, .libPaths()))
+        } else stop("unable to install packages")
     }
 
     if(.Platform$OS.type == "windows") {

@@ -251,7 +251,7 @@
 
 menuInstallPkgs <- function(type = getOption("pkgType"))
 {
-    install.packages(NULL, .libPaths()[1], dependencies=TRUE, type = type)
+    install.packages(NULL, .libPaths()[1], dependencies=NA, type = type)
 }
 
 menuInstallLocal <- function()

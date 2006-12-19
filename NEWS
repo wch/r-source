@@ -59,8 +59,8 @@ NEW FEATURES
     o	abbreviate() no longer has an 8191 byte limit on the size of
 	strings it can handle.
 
-    o	New function withVisible() allows R level access to the visibility
-	flag.
+    o	New function withVisible() allows R level access to the
+	visibility flag.
 
     o	system.time() and proc.time() now return an object of class
 	"proc_time" with a print() method that returns a POSIX-like
@@ -170,8 +170,21 @@ NEW FEATURES
     o	There are more flexible ways to specify the default library search
 	path.  In addition to R_LIBS and .Library, there are .Library.site
 	(defaults to R_HOME/site-library) and R_LIBS_USER (defaults to
-	a platform- and version-specific directory in ~/R).  See
-	?.libPaths for details.
+	a platform- and version-specific directory in ~/R).
+	See ?.libPaths for details.
+
+    o	install.packages(dependencies = NA) is a new default, which is
+	to install essential dependencies when installing from
+	repositories to a single library.  As a result of this change,
+	update.packages() will install any new dependencies of the
+	packages it is updating (alongside the package in the same
+	library tree).
+
+	If 'lib' is not specified or is specified of length one and
+	the chosen location is not a writable directory,
+	install.packages() offers to create a personal library
+	directory for you if one does not already exist, and to
+	install there.
 
 
 DEPRECATED & DEFUNCT
@@ -216,9 +229,10 @@ C-LEVEL FACILITIES
 
 UTILITIES
 
-    o	Additional Sweave internal functions are exported to help
-	writing new drivers, RweaveLatexRuncode is now created using a
-	helper function (all from a patch submitted by Seth Falcon).
+    o	Additional Sweave() internal functions are exported to help
+	writing new drivers, and RweaveLatexRuncode() is now created
+	using a helper function (all from a patch submitted by Seth
+	Falcon).
 
     o	The following additional flags are accessible from R CMD config:
 	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
@@ -275,10 +289,10 @@ BUG FIXES
     o	R CMD Sweave and R CMD Stangle now respond to --help and --version
 	like other utilities.
 
-
     o	tempfile() is now random across sessions as well as within a
 	session.  (On some systems it would give the same hex suffix
 	at the start of each session.)
+
 
 
 

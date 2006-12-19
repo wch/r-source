@@ -21,6 +21,9 @@ The printf function used for printing has been altered to implement a
 round-to-even rule.  This means that output is more likely to be
 identical to that on Unix-alikes.
 
+The 'Install packages ...' menu item now only installs essential
+dependencies ('Depends' and 'Imports' but not 'Suggests'), using
+install.packages(dependencies=NA).
 
 
 
