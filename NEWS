@@ -186,6 +186,9 @@ NEW FEATURES
 	directory for you if one does not already exist, and to
 	install there.
 
+    o	New function Sys.glob(), a wrapper for the POSIX.2 function
+	glob(3) to do wildcard expansion (on systems which have it).
+
 
 DEPRECATED & DEFUNCT
 

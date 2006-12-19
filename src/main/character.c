@@ -2477,3 +2477,39 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return s;
 }
+
+#ifdef HAVE_GLOB
+#ifdef HAVE_GLOB_H
+# include <glob.h>
+#endif
+SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, ans;
+    int i, n, res;
+    glob_t globbuf;
+
+    checkArity(op, args);
+    if(!isString(x = CAR(args)))
+	errorcall(call, "invalid '%s' argument", "paths");
+    for(i = 0; i < LENGTH(x); i++) {
+	res = glob(CHAR(STRING_ELT(x, i)), i ? GLOB_APPEND : 0, NULL, &globbuf);
+	if(res == GLOB_ABORTED)
+	    warningcall(call, _("read error on '%s'"), CHAR(STRING_ELT(x, i)));
+	if(res == GLOB_NOSPACE)
+	    errorcall(call, _("internal out-of-memory condition"));
+    }
+    n = globbuf.gl_pathc;
+    PROTECT(ans = allocVector(STRSXP, n));
+    for(i = 0; i < n; i++)
+	SET_STRING_ELT(ans, i, mkChar(globbuf.gl_pathv[i]));
+    UNPROTECT(1);
+    globfree(&globbuf);
+    return ans;
+}
+#else
+SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    errorcall(call, _("'Sys.glob is not implemented on this platform"));
+    return R_NilValue;
+}
+#endif

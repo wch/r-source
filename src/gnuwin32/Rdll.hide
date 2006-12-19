@@ -741,6 +741,7 @@
  do_getlocale
  do_gettext
  do_getwd
+ do_glob
  do_globalenv
  do_gpregexpr
  do_gray

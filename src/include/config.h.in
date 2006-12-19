@@ -273,6 +273,12 @@
    problem with getting the prototype of strptime(). */
 #undef HAVE_GLIBC2
 
+/* Define to 1 if you have the `glob' function. */
+#undef HAVE_GLOB
+
+/* Define to 1 if you have the <glob.h> header file. */
+#undef HAVE_GLOB_H
+
 /* Define to 1 if you have the <grp.h> header file. */
 #undef HAVE_GRP_H
 
