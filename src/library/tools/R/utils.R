@@ -679,7 +679,7 @@ function(parent = parent.frame(), fixup = FALSE)
     env <- new.env(parent = parent)
     assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) {},
            envir = env)
-    assign(".Fortrn", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) {},
+    assign(".Fortran", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) {},
            envir = env)
     assign(".Call", function(name, ..., PACKAGE) {}, envir = env)
     assign(".Call.graphics", function(name, ..., PACKAGE) {}, envir = env)
