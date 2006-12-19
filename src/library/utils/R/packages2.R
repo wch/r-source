@@ -90,25 +90,32 @@ install.packages <-
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning(gettextf("argument 'lib' is missing: using %s", lib),
+            warning(gettextf("argument 'lib' is missing: using '%s'", lib),
                     immediate. = TRUE, domain = NA)
     }
 
     info <- file.info(lib)
     ok <- info$isdir & substr(info$mode, 1, 1) == "7"
-    if(length(ok) > 1 && any(!ok))
-        stop("'lib' element ", paste(lib[!ok], collapse=", "),
-             " is not a writable directory")
-    if(length(ok) == 1 && !ok) {
+    if(length(lib) > 1 && any(!ok))
+        stop(sprintf(ngettext(sum(!ok),
+                              "'lib' element '%s'  is not a writable directory",
+                              "'lib' elements '%s' are not writable directories"),
+                     paste(lib[!ok], collapse=", ")), domain = NA)
+    if(length(lib) == 1 && !ok) {
         warning("'lib' is not writable", immediate.=TRUE)
         userdir <- Sys.getenv("R_LIBS_USER")[1] # will give NA if not set
         if(interactive() && !is.na(userdir) && !file.exists(userdir)) {
-            ans <-
-                readline(paste("\nWould you like to create a personal library\n",
-                               sQuote(userdir), "to install in (y/n): "))
-            if(substr(ans, 1, 1) == "n") stop("unable to install packages")
+            msg <- gettext("Would you like to create a personal library\n'%s'\nto install packages into?")
+            if(.Platform$OS.type == "windows") {
+                ans <- winDialog("yesno", sprintf(msg, userdir))
+                if(ans != "YES") stop("unable to install packages")
+            } else {
+                ans <-
+                    readline(paste(sprintf(msg, userdir), " (y/n) "))
+                if(substr(ans, 1, 1) == "n") stop("unable to install packages")
+            }
             if(!dir.create(userdir, recursive = TRUE))
-                stop("uable to create ", sQuote(userdir))
+                stop("unable to create ", sQuote(userdir))
             lib <- userdir
             .libPaths(c(userdir, .libPaths()))
         } else stop("unable to install packages")
