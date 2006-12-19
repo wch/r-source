@@ -1310,7 +1310,6 @@ static void vec2buff(SEXP v, LocalParseData *d)
     n = length(v);
     nv = getAttrib(v, R_NamesSymbol);
     if (length(nv) == 0) nv = R_NilValue;
-    R_PV(v);
     
     if (d->opts & USESOURCE) 
    	sv = getAttrib(v, R_SrcrefSymbol);

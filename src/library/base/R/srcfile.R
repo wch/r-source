@@ -40,7 +40,7 @@ open.srcfile <- function(con, line, ...) {
 	oldline <- 1
     }
     if (oldline < line) {
-	readLines(conn, line-oldline)
+	readLines(conn, line-oldline, warn=FALSE)
 	srcfile$line <- line
     }
     invisible(conn)
@@ -88,7 +88,7 @@ open.srcfilecopy <- function(con, line, ...) {
 	oldline <- 1
     }
     if (oldline < line) {
-	readLines(conn, line-oldline)
+	readLines(conn, line-oldline, warn=FALSE)
 	srcfile$line <- line
     }
     invisible(conn)
@@ -103,7 +103,7 @@ getSrcLines <- function(srcfile, first, last) {
     if (first > last) return(character(0))
     if (!.isOpen(srcfile)) on.exit(close(srcfile))
     conn <- open(srcfile, first)
-    lines <- readLines(conn, n=last-first+1)
+    lines <- readLines(conn, n=last-first+1, warn=FALSE)
     srcfile$line <- first + length(lines)
     return(lines)
 }

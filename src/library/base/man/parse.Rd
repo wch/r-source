@@ -6,7 +6,7 @@
   list.
 }
 \usage{
-parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)
+parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile)
 }
 \arguments{
   \item{file}{a connection, or a character string giving the name of a
@@ -21,8 +21,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)
     to character (without method dispatch) if possible.}
   \item{prompt}{the prompt to print when parsing from the keyboard.
     \code{NULL} means to use \R's prompt, \code{getOption("prompt")}.}
-  \item{srcfile}{a \code{\link{srcfile}} object.  Ignored if \code{file}
-    is a character string.}
+  \item{srcfile}{\code{NULL}, or a \code{\link{srcfile}} object.  See the Details.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -51,11 +50,22 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile = NULL)
 #ifdef windows
   (The EOF character is Ctrl-Z for the Windows front-ends.)
 #endif
+
+  The default for \code{srcfile} is set as follows.  If
+  \code{options("keep.source")} is \code{FALSE}, \code{srcfile}
+  defaults to \code{NULL}. Otherwise, if \code{text} is used,
+  \code{srcfile} will be set to a \code{\link{srcfilecopy}} containing
+  the text.  If a character string is used for \code{file}, a
+  \code{\link{srcfile}} object referring to that file will be used.
 }
 \value{
   An object of type \code{"\link{expression}"}, with up to \code{n}
   elements if specified as a non-negative integer.
 
+  When \code{srcfile} is non-\code{NULL}, a \code{"srcref"} attribute
+  will be attached to the result containing a list of \code{\link{srcref}}
+  records corresponding to each element.
+  
   A syntax error (including an incomplete expression) will throw an error.
 }
 \examples{

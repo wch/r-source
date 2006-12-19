@@ -510,7 +510,7 @@ static SEXP attachSrcrefs(SEXP val)
 static int xxvalue(SEXP v, int k, YYLTYPE *lloc)
 {
     if (k > 2) {
-    	if (KeepSource && SrcFile)
+    	if (SrcFile)
     	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
     	UNPROTECT_PTR(v);
     }
@@ -582,7 +582,7 @@ static SEXP xxexprlist0()
     SEXP ans;
     if (GenerateCode) {
 	PROTECT(ans = NewList());
-	if (KeepSource && SrcFile) {
+	if (SrcFile) {
 	    setAttrib(ans, R_SrcrefSymbol, SrcRefs);
     	    REPROTECT(SrcRefs = NewList(), srindex);
     	}
@@ -597,7 +597,7 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
     SEXP ans,tmp;
     if (GenerateCode) {
 	PROTECT(tmp = NewList());
-	if (KeepSource && SrcFile) {
+	if (SrcFile) {
 	    setAttrib(tmp, R_SrcrefSymbol, SrcRefs);
     	    REPROTECT(SrcRefs = NewList(), srindex);
     	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
@@ -615,7 +615,7 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-	if (KeepSource && SrcFile) 
+	if (SrcFile) 
     	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);   
 	PROTECT(ans = GrowList(exprlist, expr));
     }
@@ -967,7 +967,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
     if (GenerateCode) {
 	SET_TYPEOF(a2, LANGSXP);
 	SETCAR(a2, a1);
-	if (KeepSource && SrcFile) {
+	if (SrcFile) {
 	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
 	    PROTECT(ans = attachSrcrefs(a2));
 	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
@@ -1285,7 +1285,9 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
-    }    
+    } 
+    else SrcFile = NULL;
+    
     for(i = 0; ; ) {
 	if(n >= 0 && i >= n) break;
 	ParseInit();
@@ -1412,12 +1414,15 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
     bufp = buf;
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
+    
+    xxlineno = 1;
+    xxcolno = 0;      
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
-	xxlineno = 1;
-	xxcolno = 0;    
-    }       
+    }      
+    else SrcFile = NULL;
+    
     for(i = 0; ; ) {
 	if(n >= 0 && i >= n) break;
 	if (!*bufp) {

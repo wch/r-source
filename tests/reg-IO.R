@@ -1,5 +1,8 @@
 ## NB: this file must be a DOS (CRLF) format file
 
+## Keep comments and original formatting
+options(keep.source=TRUE)
+
 ## simple tests that multiple lines are read correctly
 print(2+3)
 print(4+5)
