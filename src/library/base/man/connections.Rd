@@ -167,6 +167,16 @@ isIncomplete(con)
 #endif
   Also, no attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
+
+  Note that \code{https://} connections are
+#ifdef unix
+  not supported.
+#endif
+#ifdef windows
+  only supported if \code{--internet2} was used (to make use of Internet
+  Explorer internals), and then only if the certificate is considered to
+  be valid.
+#endif
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},

@@ -100,7 +100,7 @@ typedef struct outtextconn {
     int lastlinelength; /* buffer size */
 } *Routtextconn;
 
-typedef enum {HTTPsh, FTPsh} UrlScheme;
+typedef enum {HTTPsh, FTPsh, HTTPSsh} UrlScheme;
 
 typedef struct urlconn {
     void *ctxt;

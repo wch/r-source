@@ -27,6 +27,10 @@ The 'Install packages ...' menu item now only installs essential
 dependencies ('Depends' and 'Imports' but not 'Suggests'), using
 install.packages(dependencies=NA).
 
+https:// sites can be accessed by download.file() and url() if
+--internet2 is used (and provided the certificate is known to be
+valid).
+
 
 
 R 2.4.1

@@ -55,6 +55,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   The remaining details apply to method \code{"internal"} only.
 
+  Note that \code{https://} connections are
+#ifdef unix
+  not supported.
+#endif
+#ifdef windows
+  only supported if \code{--internet2} was used (to make use of Internet
+  Explorer internals), and then only if the certificate is considered to
+  be valid.
+#endif
+
   See \code{\link{url}} for how \code{"file://"} URLs are interpreted,
   especially on Windows.  This function does decode encoded URLs.
 
