@@ -95,7 +95,8 @@ isIncomplete(con)
   \code{bzfile} to those compressed by \file{bzip2}.  \code{gzfile} can
   also open uncompressed files.  In each case the actual file is opened
   in binary mode and so no translations are done if the original file
-  was a text file.
+  was a text file.  (See \code{\link{gzcon}} for a way to add
+  compression to non-file connections.)
   
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path, with \file{.zip} extension if required.
@@ -315,6 +316,8 @@ isIncomplete(con)
 
   \code{\link{capabilities}} to see if \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
+
+  \code{\link{gzcon}} to wrap gzip (de)compression around a connection.
 
 #ifdef windows
   To flush output to the console, see \code{\link{flush.console}}.

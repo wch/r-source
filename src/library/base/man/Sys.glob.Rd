@@ -95,7 +95,8 @@ Sys.glob(paths, dirmark = FALSE)
   accessible file paths (but not necessarily accessible files).
 #ifdef unix
   
-  An error, on platforms which do not have the \code{glob} system call.
+  On platforms which do not have the \code{glob} system call,
+  \code{paths} is returned unchanged.
 #endif
 }
 \seealso{

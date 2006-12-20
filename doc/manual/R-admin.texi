@@ -1224,6 +1224,7 @@ execution is allowed.
 @cindex Packages
 
 @menu
+* Managing libraries::          
 * Installing packages::         
 * Updating packages::           
 * Removing packages::           
@@ -1237,7 +1238,46 @@ is @file{@var{R_HOME}/library}, but others can be used, for example by
 setting the environment variable @env{R_LIBS} or using the @R{} function
 @code{.libPaths()}.
 
-@node Installing packages, Updating packages, Add-on packages, Add-on packages
+@node Managing libraries, Installing packages, Add-on packages, Add-on packages
+@section Managing libraries
+@cindex Libraries, managing
+
+@R{} packages are installed into @emph{libraries}, which are
+directories in the file system containing a subdirectory for each
+package installed there.
+
+@R{} comes with a single library, @file{R_HOME/library} which is the
+value of the @R{} object @samp{.Library} containing the standard and
+recommended@footnote{unless they were excluded in the build.}
+packages.  Both sites and users can create others and make use of them
+(or not) in an @R{} session.  At the lowest level @samp{.libPaths()}
+can be used to add paths to the collection of libraries or to report
+the current collection.
+
+@cindex Libraries, site
+@cindex Site libraries
+As from @R{} 2.5.0 @R{} will automatically make use of a site-specific
+library @file{R_HOME/site-library} if this exists (it does not in a
+vanilla @R{} installation).  This location cna be overridden by
+setting@footnote{its binding is looked once that files has been read,
+so users cannot easily change it.} @samp{.Library.site} in
+@file{R_HOME/etc/Rprofile.site}, or (not recommended) by setting the
+environment variable @env{R_LIBS_SITE}.  Like @samp{.Library}, the
+site libraries are always include by @samp{.libPaths()}.
+
+@cindex Libraries, user
+@cindex User libraries
+As from @R{} 2.5.0 users can have one or more libraries, normally
+specified by the environment variable @env{R_LIBS_USER}.  This has a
+default value (use @samp{Sys.getenv("R_LIBS_USER")} within an @R{}
+session to see what it is), but only is used if the corresponding
+directory actually exists (which by default it will not).
+
+Both @env{R_LIBS_USER} and @env{R_LIBS_SITE} can specify multiple
+library paths, separated by colons (semicolons on Windows).
+
+
+@node Installing packages, Updating packages, Managing libraries, Add-on packages
 @section Installing packages
 @cindex Packages, installing
 
@@ -1250,6 +1290,13 @@ documentation for your platform for details.
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
 more than one library, of course.
+
+For most users it suffices to call @samp{install.packages(pkgname)} or
+its GUI equivalent if the intention is to install a @acronym{CRAN}
+package and internet access is available.@footnote{If a proxy needs to
+be set, see @command{?download.file}.}  On most systems
+@samp{install.packages()} will allow packages to be selected from a
+list box.
 
 To install packages from source in Unix use
 
@@ -1284,9 +1331,15 @@ and install packages @pkg{pkg1} and @pkg{pkg2} by
 @end example
 
 @noindent
+The essential depedencies of the specified packages will also be fetched.
 Unless the library is specified (argument @code{lib}) the first library
-in the library search path is used.  If you want to fetch a package and
-all those it depends on that are not already installed, use e.g.
+in the library search path is used: if this is not writable, @R{} will
+ask the user (in an interactive session) if the default user library
+should be created, and if allowed to will install the packages there.
+
+
+If you want to fetch a package and all those it depends on that are
+not already installed, use e.g.
 
 @example
 > install.packages("Rcmdr", dependencies = TRUE)

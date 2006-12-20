@@ -165,7 +165,7 @@ NEW FEATURES
 	which allows to turn-off non-standard evaluation; also e.g.,
 	apropos(fit) now works.
 
-    o	.libPaths() now does tilde expansion.
+    o	.libPaths() now does both tilde and glob expansion.
 
     o	There are more flexible ways to specify the default library search
 	path.  In addition to R_LIBS and .Library, there are .Library.site
@@ -296,6 +296,9 @@ BUG FIXES
     o	tempfile() is now random across sessions as well as within a
 	session.  (On some systems it would give the same hex suffix
 	at the start of each session.)
+
+    o	.libPaths() adds only existing directories (as it was
+	documented to, but could add non-directories).
 
 
 

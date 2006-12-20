@@ -2537,7 +2537,11 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    errorcall(call, _("'Sys.glob' is not implemented on this platform"));
-    return R_NilValue;
+    SEXP x;
+
+    checkArity(op, args);
+    if(!isString(x = CAR(args)))
+	errorcall(call, _("invalid '%s' argument"), "paths");
+    return x;
 }
 #endif
