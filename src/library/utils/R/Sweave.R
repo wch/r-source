@@ -419,13 +419,13 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 
           if(length(chunkexps)==0)
             return(object)
-
+            
+	  srcrefs <- attr(chunkexps, "srcref")
 	  lastshown <- 0
           for(nce in 1:length(chunkexps))
             {
                 ce <- chunkexps[[nce]]
-                srcref <- attr(ce, "srcref")
-                if (!is.null(srcref)) {
+                if (nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
                     srcfile <- attr(srcref, "srcfile")
                     dce <- getSrcLines(srcfile, lastshown+1, srcref[3])
 	    	    leading <- srcref[1]-lastshown

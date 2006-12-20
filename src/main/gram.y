@@ -93,6 +93,8 @@ static int	xxlineno, xxcolno, xxlinesave, xxcolsave;
 static int	xxlastlinelen;
 
 static SEXP     SrcFile = NULL;
+static SEXP	SrcRefs = NULL;
+static PROTECT_INDEX srindex;
 
 #if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
@@ -476,7 +478,7 @@ static int xxungetc(int c)
 
 static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
 {
-    SEXP result, val;
+    SEXP val;
     
     PROTECT(val = allocVector(INTSXP, 4));
     INTEGER(val)[0] = lloc->first_line;
@@ -485,18 +487,31 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     INTEGER(val)[3] = lloc->last_column;
     setAttrib(val, R_SrcfileSymbol, srcfile);
     setAttrib(val, R_ClassSymbol, mkString("srcref"));
-    result = allocList(1);
-    SETCAR(result, val);
-    SET_TAG(result, R_SrcrefSymbol);
     UNPROTECT(1);
-    return result;
+    return val;
+}
+
+static SEXP attachSrcrefs(SEXP val)
+{
+    SEXP t, srval;
+    int n;
+    
+    PROTECT(val);
+    t = CDR(SrcRefs);
+    srval = allocVector(VECSXP, length(t));
+    for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
+    	SET_VECTOR_ELT(srval, n, CAR(t));
+    setAttrib(val, R_SrcrefSymbol, srval);
+    UNPROTECT(1);
+    SrcRefs = NULL;
+    return val;
 }
 
 static int xxvalue(SEXP v, int k, YYLTYPE *lloc)
 {
     if (k > 2) {
-    	if (KeepSource && SrcFile)
-    	    SET_ATTRIB(v, makeSrcref(lloc, SrcFile));
+    	if (SrcFile)
+    	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
     	UNPROTECT_PTR(v);
     }
     R_CurrentExpr = v;
@@ -565,8 +580,13 @@ static SEXP xxaddformal1(SEXP formlist, SEXP sym, SEXP expr)
 static SEXP xxexprlist0()
 {
     SEXP ans;
-    if (GenerateCode) 
+    if (GenerateCode) {
 	PROTECT(ans = NewList());
+	if (SrcFile) {
+	    setAttrib(ans, R_SrcrefSymbol, SrcRefs);
+    	    REPROTECT(SrcRefs = NewList(), srindex);
+    	}
+    } 
     else
 	PROTECT(ans = R_NilValue);
     return ans;
@@ -576,11 +596,14 @@ static SEXP xxexprlist1(SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans,tmp;
     if (GenerateCode) {
-        if (KeepSource && SrcFile)
-            SET_ATTRIB(expr, makeSrcref(lloc, SrcFile));
 	PROTECT(tmp = NewList());
+	if (SrcFile) {
+	    setAttrib(tmp, R_SrcrefSymbol, SrcRefs);
+    	    REPROTECT(SrcRefs = NewList(), srindex);
+    	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);
+    	}	
 	PROTECT(ans = GrowList(tmp, expr));
-	UNPROTECT(1);
+	UNPROTECT_PTR(tmp);
     }
     else
 	PROTECT(ans = R_NilValue);
@@ -592,8 +615,8 @@ static SEXP xxexprlist2(SEXP exprlist, SEXP expr, YYLTYPE *lloc)
 {
     SEXP ans;
     if (GenerateCode) {
-        if (KeepSource && SrcFile)
-            SET_ATTRIB(expr, makeSrcref(lloc, SrcFile));
+	if (SrcFile) 
+    	    REPROTECT(SrcRefs = GrowList(SrcRefs, makeSrcref(lloc, SrcFile)), srindex);   
 	PROTECT(ans = GrowList(exprlist, expr));
     }
     else
@@ -938,11 +961,22 @@ static SEXP xxsubscript(SEXP a1, SEXP a2, SEXP a3)
 static SEXP xxexprlist(SEXP a1, SEXP a2)
 {
     SEXP ans;
+    SEXP prevSrcrefs;
+    
     EatLines = 0;
     if (GenerateCode) {
 	SET_TYPEOF(a2, LANGSXP);
 	SETCAR(a2, a1);
-	PROTECT(ans = a2);
+	if (SrcFile) {
+	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
+	    PROTECT(ans = attachSrcrefs(a2));
+	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
+	    /* SrcRefs got NAMED by being an attribute... */
+	    SET_NAMED(SrcRefs, 0);
+	    UNPROTECT_PTR(prevSrcrefs);
+	} 
+	else
+	    PROTECT(ans = a2);	
     }
     else
 	PROTECT(ans = R_NilValue);
@@ -1244,13 +1278,18 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     int i;
     SEXP t, rval;
 
-    if (!isNull(srcfile)) 
-	SrcFile = srcfile;
-    xxlineno = 1;
-    xxcolno = 0;
     ParseContextInit();
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
+    
+    xxlineno = 1;
+    xxcolno = 0;    
+    if (!isNull(srcfile)) {
+	SrcFile = srcfile;
+	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
+    } 
+    else SrcFile = NULL;
+    
     for(i = 0; ; ) {
 	if(n >= 0 && i >= n) break;
 	ParseInit();
@@ -1274,11 +1313,15 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     }
 
 finish:
-    SrcFile = NULL;
+
     t = CDR(t);
     rval = allocVector(EXPRSXP, length(t));
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
+    if (SrcFile) {
+    	rval = attachSrcrefs(rval);
+        SrcFile = NULL;    
+    }
     R_PPStackTop = savestack;
     *status = PARSE_OK;
     return rval;
@@ -1373,6 +1416,15 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
     bufp = buf;
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
+    
+    xxlineno = 1;
+    xxcolno = 0;      
+    if (!isNull(srcfile)) {
+	SrcFile = srcfile;
+	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
+    }      
+    else SrcFile = NULL;
+    
     for(i = 0; ; ) {
 	if(n >= 0 && i >= n) break;
 	if (!*bufp) {
@@ -1386,14 +1438,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	    if (c == ';' || c == '\n') break;
 	}
 
-	if (!isNull(srcfile))
-	    SrcFile = srcfile;
-	
-	xxlineno = 1;
-	xxcolno = 0;
-	
 	rval = R_Parse1Buffer(buffer, 1, status);
-	SrcFile = NULL;
 	
 	switch(*status) {
 	case PARSE_NULL:
@@ -1419,6 +1464,10 @@ finish:
     rval = allocVector(EXPRSXP, length(t));
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
+    if (SrcFile) {
+    	rval = attachSrcrefs(rval);
+        SrcFile = NULL;    
+    }	
     R_PPStackTop = savestack;
     *status = PARSE_OK;
     return rval;

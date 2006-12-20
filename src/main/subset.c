@@ -180,6 +180,13 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 	setAttrib(result, R_NamesSymbol, nattrib);
 	UNPROTECT(1);
     }
+    if (result != R_NilValue && (attrib = getAttrib(x, R_SrcrefSymbol)) != R_NilValue) {
+	nattrib = allocVector(VECSXP, n);
+	PROTECT(nattrib); /* seems unneeded */
+	nattrib = ExtractSubset(attrib, nattrib, indx, call);
+	setAttrib(result, R_SrcrefSymbol, nattrib);
+	UNPROTECT(1);
+    }    
     UNPROTECT(3);
     return result;
 }
