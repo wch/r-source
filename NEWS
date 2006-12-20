@@ -187,7 +187,8 @@ NEW FEATURES
 	install there.
 
     o	New function Sys.glob(), a wrapper for the POSIX.2 function
-	glob(3) to do wildcard expansion (on systems which have it).
+	glob(3) to do wildcard expansion (on systems which have it,
+	plus an emulation on Windows).
 
 
 DEPRECATED & DEFUNCT

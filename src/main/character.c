@@ -2478,26 +2478,53 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-#ifdef HAVE_GLOB
+#if defined(HAVE_GLOB) || defined(Win32)
 #ifdef HAVE_GLOB_H
 # include <glob.h>
+#endif
+#ifdef Win32
+#include <dos_glob.h>
+#define glob dos_glob
+#define globfree dos_globfree
+#else
+# ifndef GLOB_QUOTE
+#  define GLOB_QUOTE 0
+# endif
 #endif
 SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans;
-    int i, n, res;
+    int i, n, res, dirmark;
     glob_t globbuf;
 
     checkArity(op, args);
     if(!isString(x = CAR(args)))
-	errorcall(call, "invalid '%s' argument", "paths");
+	errorcall(call, _("invalid '%s' argument"), "paths");
     if(!LENGTH(x)) return allocVector(STRSXP, 0);
+    dirmark = asLogical(CADR(args));
+    if(dirmark == NA_LOGICAL)
+	errorcall(call, _("invalid '%s' argument"), "dirmark");
+#ifndef GLOB_MARK
+    if(dirmark)
+	errorcall(call, 
+		  _("'dirmark = TRUE' is not supported on this platform"));
+#endif
+    
     for(i = 0; i < LENGTH(x); i++) {
-	res = glob(CHAR(STRING_ELT(x, i)), i ? GLOB_APPEND : 0, NULL, &globbuf);
+	res = glob(CHAR(STRING_ELT(x, i)), 
+#ifdef GLOB_MARK
+		   (dirmark ? GLOB_MARK : 0) |
+#endif
+		   GLOB_QUOTE | (i ? GLOB_APPEND : 0),
+		   NULL, &globbuf);
+#ifdef GLOB_ABORTED
 	if(res == GLOB_ABORTED)
 	    warningcall(call, _("read error on '%s'"), CHAR(STRING_ELT(x, i)));
+#endif
+#ifdef GLOB_NOSPACE
 	if(res == GLOB_NOSPACE)
 	    errorcall(call, _("internal out-of-memory condition"));
+#endif
     }
     n = globbuf.gl_pathc;
     PROTECT(ans = allocVector(STRSXP, n));

@@ -205,5 +205,5 @@ Sys.sleep <- function(time)
 path.expand <- function(path)
     .Internal(path.expand(path))
 
-Sys.glob <- function(paths)
-    .Internal(Sys.glob(paths))
+Sys.glob <- function(paths, dirmark = FALSE)
+    .Internal(Sys.glob(paths, dirmark))
