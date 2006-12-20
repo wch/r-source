@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-25 r39992)
+R version 2.5.0 Under development (unstable) (2006-12-19 r40259)
 Copyright (C) 2006 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -47,40 +47,49 @@ Type 'q()' to quit R.
 	demo(is.things)
 	---- ~~~~~~~~~
 
-> ls.base <- ls("package:base", all = TRUE)
+> ## being a 'builtin' function is not the same as being in base
+> ## and what about objects starting with '.'?
+> ls.base <- ls("package:base", all=TRUE)
 
 > base.is.f <- sapply(ls.base, function(x) is.function(get(x)))
 
 > bi <- ls.base[base.is.f]
 
-> cat("\nNumber of base objects:\t\t", length(ls.base), 
-+     "\nNumber of functions in base:\t", sum(base.is.f), "\n\t starting with 'is.' :\t  ", 
-+     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
+> cat("\nNumber of base objects:\t\t", length(ls.base),
++     "\nNumber of functions in base:\t", sum(base.is.f),
++     "\n\t starting with 'is.' :\t  ",
++     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1102 
-Number of functions in base:	 1077 
+Number of base objects:		 1104 
+Number of functions in base:	 1079 
 	 starting with 'is.' :	   46 
 
+> ## 0.14  : 31
+> ## 0.50  : 33
+> ## 0.60  : 34
+> ## 0.63  : 37
+> ## 1.0.0 : 38
+> ## 1.3.0 : 41
+> ## 1.6.0 : 45
+> ## 2.0.0 : 45
+> 
+> ## Do we have a method (probably)?
 > is.method <- function(fname) {
-+     isFun <- function(name) (exists(name, mode = "function") && 
-+         is.na(match(name, c("is", "as"))))
-+     np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
-+     if (np <= 1) 
-+         FALSE
-+     e .... [TRUNCATED] 
++     isFun <- function(name) (exists(name, mode= .... [TRUNCATED] 
 
-> is.ALL <- function(obj, func.names = ls(pos = length(search())), 
-+     not.using = c("is.single", "is.loaded", "is.empty.model", 
-+         "is.R", "is.element"), true.only = FALSE, debug = FALSE) {
-+     is.fn <- func.names[substring(func.names,  .... [TRUNCATED] 
+> is.ALL <- function(obj, func.names = ls(pos=length(search())),
++ 		   not.using = c("is.single", "is.loaded",
++                      "is.empty.model", "is.R", "is.element"),
++ 		   true.only = FALSE, debug = FALSE)
++ {
++     ## Purpose: show many ' .... [TRUNCATED] 
 
-> print.isList <- function(x, ..., verbose = getOption("verbose")) {
-+     if (is.list(x)) {
-+         if (verbose) 
-+             cat("print.isList(): list case (length=", length(x), 
-+                 ")\n")
-+         nm <- format(names(x))
-+       .... [TRUNCATED] 
+> print.isList <- function(x, ..., verbose = getOption("verbose"))
++ {
++     ## Purpose:	 print METHOD  for `isList' objects
++     ## ------------------------------------------------
++     ## Author: Martin Maechler, Date: 12 Mar 1997
++     if(is.lis .... [TRUNCATED] 
 
 > is.ALL(NULL)
 is.array           : . 
@@ -119,22 +128,25 @@ is.table           : .
 is.unsorted        : . 
 is.vector          : . 
 
-> is.ALL(NULL, true.only = TRUE)
+> ##fails: is.ALL(NULL, not.using = c("is.single", "is.loaded"))
+> is.ALL(NULL,   true.only = TRUE)
 [1] "is.atomic"   "is.null"     "is.pairlist"
 
 > all.equal(NULL, pairlist())
 [1] TRUE
 
+> ## list() != NULL == pairlist() :
 > is.ALL(list(), true.only = TRUE)
 [1] "is.list"      "is.recursive" "is.vector"   
 
-> (pl <- is.ALL(pairlist(1, list(3, "A")), true.only = TRUE))
+> (pl <- is.ALL(pairlist(1,    list(3,"A")), true.only = TRUE))
 [1] "is.list"      "is.pairlist"  "is.recursive"
 
-> (ll <- is.ALL(list(1, pairlist(3, "A")), true.only = TRUE))
+> (ll <- is.ALL(    list(1,pairlist(3,"A")), true.only = TRUE))
 [1] "is.list"      "is.recursive" "is.vector"   
 
-> all.equal(pl[pl != "is.pairlist"], ll[ll != "is.vector"])
+> all.equal(pl[pl != "is.pairlist"],
++           ll[ll != "is.vector"])## TRUE
 [1] TRUE
 
 > is.ALL(1:5)
@@ -287,11 +299,10 @@ is.table           : .
 is.unsorted        : NA 
 is.vector          : | 
 
-> is.ALL(substitute(expression(a + 3), list(a = 1)), 
-+     true.only = TRUE)
+> is.ALL(substitute(expression(a + 3), list(a=1)), true.only = TRUE)
 [1] "is.call"      "is.language"  "is.recursive"
 
-> is.ALL(y ~ x)
+> is.ALL(y ~ x) #--> NA	 for is.na & is.finite
 is.array           : . 
 is.atomic          : . 
 is.call            : | 
@@ -371,16 +382,16 @@ logical(0)
 > all(ispi[is0.ok] == is0)
 [1] TRUE
 
-> is.ALL(numeric(0), true = TRUE)
+> is.ALL(numeric(0), true=TRUE)
 [1] "is.atomic"  "is.double"  "is.numeric" "is.real"    "is.vector" 
 
-> is.ALL(array(1, 1:3), true = TRUE)
+> is.ALL(array(1,1:3), true=TRUE)
 [1] "is.array"   "is.atomic"  "is.double"  "is.numeric" "is.real"   
 
-> is.ALL(cbind(1:3), true = TRUE)
+> is.ALL(cbind(1:3), true=TRUE)
 [1] "is.array"   "is.atomic"  "is.integer" "is.matrix"  "is.numeric"
 
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
+> is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
 is.array           : . 
 is.atomic          : | 
 is.call            : . 
@@ -417,13 +428,10 @@ is.table           : .
 is.unsorted        : . 
 is.vector          : | 
 
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
-+     true.only = TRUE)
+> is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
 [1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
 
-> x <- 1:20
-
-> y <- 5 + 6 * x + rnorm(20)
+> x <- 1:20 ; y <- 5 + 6*x + rnorm(20)
 
 > lm.xy <- lm(y ~ x)
 
@@ -464,7 +472,7 @@ is.table           : .
 is.unsorted        : NA 
 is.vector          : . 
 
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")))
+> is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
 is.array           : . 
 is.atomic          : | 
 is.call            : . 
@@ -501,63 +509,68 @@ is.table           : .
 is.unsorted        : . 
 is.vector          : | 
 
-> is.ALL(structure(1:7, names = paste("a", 1:7, sep = "")), 
-+     true.only = TRUE)
+> is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
 [1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
 
 
 	demo(recursion)
 	---- ~~~~~~~~~
 
-> area <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
-+     ...), limit = 10, eps = 1e-05) {
+> ## Adaptive integration:	 Venables and Ripley pp. 105-110
+> ## This is the basic integrator.
+> 
+> area <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, ...), limit
++ 		 = 10, eps = 1.e-5)
++ {
 +     h <- b - a
 +     d <- (a + b)/2
-+     fd <- f(d, ...)
-+     a1 <- ((fa + fb) * h)/2
-+     a2 <- ((fa + 4 * fd + fb) * h)/6
-+     if (abs(a1 - a2) .... [TRUNCATED] 
++     fd <- f(d .... [TRUNCATED] 
 
-> fbeta <- function(x, alpha, beta) {
+> ## The function to be integrated
+> 
+> fbeta <- function(x, alpha, beta)
++ {
 +     x^(alpha - 1) * (1 - x)^(beta - 1)
 + }
 
-> b0 <- area(fbeta, 0, 1, alpha = 3.5, beta = 1.5)
+> ## Compute the approximate integral, the exact integral and the error
+> 
+> b0 <- area(fbeta, 0, 1, alpha=3.5, beta=1.5)
 
 > b1 <- exp(lgamma(3.5) + lgamma(1.5) - lgamma(5))
 
-> c(b0, b1, b0 - b1)
+> c(b0, b1, b0-b1)
 [1]  1.227170e-01  1.227185e-01 -1.443996e-06
 
-> fbeta.tmp <- function(x, alpha, beta) {
+> ## Modify the function so that it records where it was evaluated
+> 
+> fbeta.tmp <- function (x, alpha, beta)
++ {
 +     val <<- c(val, x)
 +     x^(alpha - 1) * (1 - x)^(beta - 1)
 + }
 
+> ## Recompute and plot the evaluation points.
+> 
 > val <- NULL
 
-> b0 <- area(fbeta.tmp, 0, 1, alpha = 3.5, beta = 1.5)
+> b0 <- area(fbeta.tmp, 0, 1, alpha=3.5, beta=1.5)
 
-> plot(val, fbeta(val, 3.5, 1.5), pch = 0)
+> plot(val, fbeta(val, 3.5, 1.5), pch=0)
 
-> area <- function(f, a, b, ..., limit = 10, eps = 1e-05) {
-+     area2 <- function(f, a, b, ..., fa = f(a, ...), fb = f(b, 
-+         ...), limit = limit, eps = eps) {
-+         h <- b - a
-+         d <- (a + b)/2
-+         fd <- f(d, ...)
-+         .... [TRUNCATED] 
+> ## Better programming style -- renaming the function will have no effect.
+> ## The use of "Recall" as in V+R is VERY black magic.  You can get the
+> ## same effect transparently by supplying a wrapper function.
+> ## This is the approved Abelson+Sus .... [TRUNCATED] 
 
 
 	demo(scoping)
 	---- ~~~~~~~
 
-> open.account <- function(total) {
-+     list(deposit = function(amount) {
-+         if (amount <= 0) stop("Deposits must be positive!\n")
-+         total <<- total + amount
-+         cat(amount, "deposited. Your balance is", total, "\n\n")
-+     }, .... [TRUNCATED] 
+> ## Here is a little example which shows a fundamental difference between
+> ## R and S.  It is a little example from Abelson and Sussman which models
+> ## the way in which bank accounts work.	It shows how R functions can
+> ## encapsulate state infor .... [TRUNCATED] 
 
 > ross <- open.account(100)
 
@@ -583,7 +596,7 @@ Your balance is 200
 Your balance is 120 
 
 
-> try(ross$withdraw(500))
+> try(ross$withdraw(500)) # no way..
 Error in ross$withdraw(500) : You don't have that much money!
 In addition: Warning messages:
 1: is.nan() applied to non-(list or vector) in: fn(obj) 
@@ -605,122 +618,141 @@ In addition: Warning messages:
 
 > opar <- par(ask = dev.interactive(orNone = TRUE))
 
-> x <- rnorm(50)
+> ## Here is some code which illustrates some of the differences between
+> ## R and S graphics capabilities.  Note that colors are generally specified
+> ## by a character string name (taken from the X11 rgb.txt file) and that line
+> ## textures are g .... [TRUNCATED] 
 
 > opar <- c(opar, par(bg = "white"))
 
 > plot(x, ann = FALSE, type = "n")
 
-> abline(h = 0, col = gray(0.9))
+> abline(h = 0, col = gray(.90))
 
 > lines(x, col = "green4", lty = "dotted")
 
 > points(x, bg = "limegreen", pch = 21)
 
-> title(main = "Simple Use of Color In a Plot", xlab = "Just a Whisper of a Label", 
-+     col.main = "blue", col.lab = gray(0.8), cex.main = 1.2, cex.lab = 1, 
-+     font.main = 4, font.lab = 3)
+> title(main = "Simple Use of Color In a Plot",
++       xlab = "Just a Whisper of a Label",
++       col.main = "blue", col.lab = gray(.8),
++       cex.main = 1.2, cex.lab = 1.0, font.main = 4, font.lab = 3)
 
-> par(bg = "gray")
+> ## A little color wheel.	 This code just plots equally spaced hues in
+> ## a pie chart.	If you have a cheap SVGA monitor (like me) you will
+> ## probably find that numerically equispaced does not mean visually
+> ## equispaced.  On my display at hom .... [TRUNCATED] 
 
-> pie(rep(1, 24), col = rainbow(24), radius = 0.9)
+> pie(rep(1,24), col = rainbow(24), radius = 0.9)
 
-> title(main = "A Sample Color Wheel", cex.main = 1.4, 
-+     font.main = 3)
+> title(main = "A Sample Color Wheel", cex.main = 1.4, font.main = 3)
 
-> title(xlab = "(Use this as a test of monitor linearity)", 
-+     cex.lab = 0.8, font.lab = 3)
+> title(xlab = "(Use this as a test of monitor linearity)",
++       cex.lab = 0.8, font.lab = 3)
 
+> ## We have already confessed to having these.  This is just showing off X11
+> ## color names (and the example (from the postscript manual) is pretty "cute".
+> 
 > pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
 
-> names(pie.sales) <- c("Blueberry", "Cherry", "Apple", 
-+     "Boston Cream", "Other", "Vanilla Cream")
+> names(pie.sales) <- c("Blueberry", "Cherry",
++ 		      "Apple", "Boston Cream", "Other", "Vanilla Cream")
 
-> pie(pie.sales, col = c("purple", "violetred1", "green3", 
-+     "cornsilk", "cyan", "white"))
+> pie(pie.sales,
++     col = c("purple","violetred1","green3","cornsilk","cyan","white"))
 
-> title(main = "January Pie Sales", cex.main = 1.8, 
-+     font.main = 1)
+> title(main = "January Pie Sales", cex.main = 1.8, font.main = 1)
 
-> title(xlab = "(Don't try this at home kids)", cex.lab = 0.8, 
-+     font.lab = 3)
+> title(xlab = "(Don't try this at home kids)", cex.lab = 0.8, font.lab = 3)
 
-> par(bg = "cornsilk")
+> ## Boxplots:  I couldn't resist the capability for filling the "box".
+> ## The use of color seems like a useful addition, it focuses attention
+> ## on the central bulk of the data.
+> 
+> par(bg="cornsilk")
 
 > n <- 10
 
-> g <- gl(n, 100, n * 100)
+> g <- gl(n, 100, n*100)
 
-> x <- rnorm(n * 100) + sqrt(as.numeric(g))
+> x <- rnorm(n*100) + sqrt(as.numeric(g))
 
-> boxplot(split(x, g), col = "lavender", notch = TRUE)
+> boxplot(split(x,g), col="lavender", notch=TRUE)
 
-> title(main = "Notched Boxplots", xlab = "Group", font.main = 4, 
-+     font.lab = 1)
+> title(main="Notched Boxplots", xlab="Group", font.main=4, font.lab=1)
 
-> par(bg = "white")
+> ## An example showing how to fill between curves.
+> 
+> par(bg="white")
 
 > n <- 100
 
-> x <- c(0, cumsum(rnorm(n)))
+> x <- c(0,cumsum(rnorm(n)))
 
-> y <- c(0, cumsum(rnorm(n)))
+> y <- c(0,cumsum(rnorm(n)))
 
 > xx <- c(0:n, n:0)
 
 > yy <- c(x, rev(y))
 
-> plot(xx, yy, type = "n", xlab = "Time", ylab = "Distance")
+> plot(xx, yy, type="n", xlab="Time", ylab="Distance")
 
-> polygon(xx, yy, col = "gray")
+> polygon(xx, yy, col="gray")
 
 > title("Distance Between Brownian Motions")
 
-> x <- c(0, 0.4, 0.86, 0.85, 0.69, 0.48, 0.54, 1.09, 
-+     1.11, 1.73, 2.05, 2.02)
+> ## Colored plot margins, axis labels and titles.	 You do need to be
+> ## careful with these kinds of effects.	It's easy to go completely
+> ## over the top and you can end up with your lunch all over the keyboard.
+> ## On the other hand, my market r .... [TRUNCATED] 
 
-> par(bg = "lightgray")
+> par(bg="lightgray")
 
-> plot(x, type = "n", axes = FALSE, ann = FALSE)
+> plot(x, type="n", axes=FALSE, ann=FALSE)
 
 > usr <- par("usr")
 
-> rect(usr[1], usr[3], usr[2], usr[4], col = "cornsilk", 
-+     border = "black")
+> rect(usr[1], usr[3], usr[2], usr[4], col="cornsilk", border="black")
 
-> lines(x, col = "blue")
+> lines(x, col="blue")
 
-> points(x, pch = 21, bg = "lightcyan", cex = 1.25)
+> points(x, pch=21, bg="lightcyan", cex=1.25)
 
-> axis(2, col.axis = "blue", las = 1)
+> axis(2, col.axis="blue", las=1)
 
-> axis(1, at = 1:12, lab = month.abb, col.axis = "blue")
+> axis(1, at=1:12, lab=month.abb, col.axis="blue")
 
 > box()
 
-> title(main = "The Level of Interest in R", font.main = 4, 
-+     col.main = "red")
+> title(main= "The Level of Interest in R", font.main=4, col.main="red")
 
-> title(xlab = "1996", col.lab = "red")
+> title(xlab= "1996", col.lab="red")
 
-> par(bg = "cornsilk")
+> ## A filled histogram, showing how to change the font used for the
+> ## main title without changing the other annotation.
+> 
+> par(bg="cornsilk")
 
 > x <- rnorm(1000)
 
-> hist(x, xlim = range(-4, 4, x), col = "lavender", 
-+     main = "")
+> hist(x, xlim=range(-4, 4, x), col="lavender", main="")
 
-> title(main = "1000 Normal Random Variates", font.main = 3)
+> title(main="1000 Normal Random Variates", font.main=3)
 
-> pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
-+     font.main = 4, pch = 19)
+> ## A scatterplot matrix
+> ## The good old Iris data (yet again)
+> 
+> pairs(iris[1:4], main="Edgar Anderson's Iris Data", font.main=4, pch=19)
 
-> pairs(iris[1:4], main = "Edgar Anderson's Iris Data", 
-+     pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
+> pairs(iris[1:4], main="Edgar Anderson's Iris Data", pch=21,
++       bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
-> x <- 10 * 1:nrow(volcano)
+> ## Contour plotting
+> ## This produces a topographic map of one of Auckland's many volcanic "peaks".
+> 
+> x <- 10*1:nrow(volcano)
 
-> y <- 10 * 1:ncol(volcano)
+> y <- 10*1:ncol(volcano)
 
 > lev <- pretty(range(volcano), 10)
 
@@ -738,35 +770,34 @@ In addition: Warning messages:
 
 > scale <- min(xscale, yscale)
 
-> xadd <- 0.5 * (pin[1]/scale - xdelta)
+> xadd <- 0.5*(pin[1]/scale - xdelta)
 
-> yadd <- 0.5 * (pin[2]/scale - ydelta)
+> yadd <- 0.5*(pin[2]/scale - ydelta)
 
-> plot(numeric(0), numeric(0), xlim = range(x) + c(-1, 
-+     1) * xadd, ylim = range(y) + c(-1, 1) * yadd, type = "n", 
-+     ann = FALSE)
+> plot(numeric(0), numeric(0),
++      xlim = range(x)+c(-1,1)*xadd, ylim = range(y)+c(-1,1)*yadd,
++      type = "n", ann = FALSE)
 
 > usr <- par("usr")
 
-> rect(usr[1], usr[3], usr[2], usr[4], col = "green3")
+> rect(usr[1], usr[3], usr[2], usr[4], col="green3")
 
-> contour(x, y, volcano, levels = lev, col = "yellow", 
-+     lty = "solid", add = TRUE)
+> contour(x, y, volcano, levels = lev, col="yellow", lty="solid", add=TRUE)
 
 > box()
 
-> title("A Topographic Map of Maunga Whau", font = 4)
+> title("A Topographic Map of Maunga Whau", font= 4)
 
-> title(xlab = "Meters North", ylab = "Meters West", 
-+     font = 3)
+> title(xlab = "Meters North", ylab = "Meters West", font= 3)
 
-> mtext("10 Meter Contour Spacing", side = 3, line = 0.35, 
-+     outer = FALSE, at = mean(par("usr")[1:2]), cex = 0.7, font = 3)
+> mtext("10 Meter Contour Spacing", side=3, line=0.35, outer=FALSE,
++       at = mean(par("usr")[1:2]), cex=0.7, font=3)
 
-> par(bg = "cornsilk")
+> ## Conditioning plots
+> 
+> par(bg="cornsilk")
 
-> coplot(lat ~ long | depth, data = quakes, pch = 21, 
-+     bg = "green3")
+> coplot(lat ~ long | depth, data = quakes, pch = 21, bg = "green3")
 
 > par(opar)
 
@@ -782,94 +813,89 @@ In addition: Warning messages:
 
 > opar <- par(ask = dev.interactive(orNone = TRUE))
 
-> x <- 10 * (1:nrow(volcano))
+> x <- 10*(1:nrow(volcano)); x.at <- seq(100, 800, by=100)
 
-> x.at <- seq(100, 800, by = 100)
+> y <- 10*(1:ncol(volcano)); y.at <- seq(100, 600, by=100)
 
-> y <- 10 * (1:ncol(volcano))
+> 					# Using Terrain Colors
+> 
+> image(x, y, volcano, col=terrain.colors(100),axes=FALSE)
 
-> y.at <- seq(100, 600, by = 100)
+> contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
 
-> image(x, y, volcano, col = terrain.colors(100), axes = FALSE)
+> axis(1, at=x.at)
 
-> contour(x, y, volcano, levels = seq(90, 200, by = 5), 
-+     add = TRUE, col = "brown")
-
-> axis(1, at = x.at)
-
-> axis(2, at = y.at)
+> axis(2, at=y.at)
 
 > box()
 
-> title(main = "Maunga Whau Volcano", sub = "col=terrain.colors(100)", 
-+     font.main = 4)
+> title(main="Maunga Whau Volcano", sub = "col=terrain.colors(100)", font.main=4)
 
-> image(x, y, volcano, col = heat.colors(100), axes = FALSE)
+> 					# Using Heat Colors
+> 
+> image(x, y, volcano, col=heat.colors(100), axes=FALSE)
 
-> contour(x, y, volcano, levels = seq(90, 200, by = 5), 
-+     add = TRUE, col = "brown")
+> contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="brown")
 
-> axis(1, at = x.at)
+> axis(1, at=x.at)
 
-> axis(2, at = y.at)
-
-> box()
-
-> title(main = "Maunga Whau Volcano", sub = "col=heat.colors(100)", 
-+     font.main = 4)
-
-> image(x, y, volcano, col = gray(100:200/200), axes = FALSE)
-
-> contour(x, y, volcano, levels = seq(90, 200, by = 5), 
-+     add = TRUE, col = "black")
-
-> axis(1, at = x.at)
-
-> axis(2, at = y.at)
+> axis(2, at=y.at)
 
 > box()
 
-> title(main = "Maunga Whau Volcano \n col=gray(100:200/200)", 
-+     font.main = 4)
+> title(main="Maunga Whau Volcano", sub = "col=heat.colors(100)", font.main=4)
 
+> 					# Using Gray Scale
+> 
+> image(x, y, volcano, col=gray(100:200/200), axes=FALSE)
+
+> contour(x, y, volcano, levels=seq(90, 200, by=5), add=TRUE, col="black")
+
+> axis(1, at=x.at)
+
+> axis(2, at=y.at)
+
+> box()
+
+> title(main="Maunga Whau Volcano \n col=gray(100:200/200)", font.main=4)
+
+> ## Filled Contours are even nicer sometimes :
 > example(filled.contour)
 
-flld.c> filled.contour(volcano, color = terrain.colors, asp = 1)
+flld.c> filled.contour(volcano, color = terrain.colors, asp = 1)# simple
 
-flld.c> x <- 10 * 1:nrow(volcano)
+flld.c> x <- 10*1:nrow(volcano)
 
-flld.c> y <- 10 * 1:ncol(volcano)
+flld.c> y <- 10*1:ncol(volcano)
 
-flld.c> filled.contour(x, y, volcano, color = terrain.colors, 
-flld.c+     plot.title = title(main = "The Topography of Maunga Whau", 
-flld.c+         xlab = "Meters North", ylab = "Meters West"), plot.axes = {
-flld.c+         axis(1, seq(100, 800, by = 100))
-flld.c+         axis(2, seq(100, 600, by = 100))
-flld.c+     }, key.title = title(main = "Height\n(meters)"), key.axes = axis(4, 
-flld.c+         seq(90, 190, by = 10)))
+flld.c> filled.contour(x, y, volcano, color = terrain.colors,
+flld.c+     plot.title = title(main = "The Topography of Maunga Whau",
+flld.c+     xlab = "Meters North", ylab = "Meters West"),
+flld.c+     plot.axes = { axis(1, seq(100, 800, by = 100))
+flld.c+                   axis(2, seq(100, 600, by = 100)) },
+flld.c+     key.title = title(main="Height\n(meters)"),
+flld.c+     key.axes = axis(4, seq(90, 190, by = 10)))# maybe also asp=1
 
-flld.c> mtext(paste("filled.contour(.) from", R.version.string), 
-flld.c+     side = 1, line = 4, adj = 1, cex = 0.66)
+flld.c> mtext(paste("filled.contour(.) from", R.version.string),
+flld.c+       side = 1, line = 4, adj = 1, cex = .66)
 
+flld.c> # Annotating a filled contour plot
 flld.c> a <- expand.grid(1:20, 1:20)
 
-flld.c> b <- matrix(a[, 1] + a[, 2], 20)
+flld.c> b <- matrix(a[,1] + a[,2], 20)
 
-flld.c> filled.contour(x = 1:20, y = 1:20, z = b, plot.axes = {
-flld.c+     axis(1)
-flld.c+     axis(2)
-flld.c+     points(10, 10)
-flld.c+ })
+flld.c> filled.contour(x = 1:20, y = 1:20, z = b,
+flld.c+                plot.axes={ axis(1); axis(2); points(10,10) })
 
-flld.c> x <- y <- seq(-4 * pi, 4 * pi, len = 27)
+flld.c> ## Persian Rug Art:
+flld.c> x <- y <- seq(-4*pi, 4*pi, len = 27)
 
 flld.c> r <- sqrt(outer(x^2, y^2, "+"))
 
-flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), axes = FALSE)
+flld.c> filled.contour(cos(r^2)*exp(-r/(2*pi)), axes = FALSE)
 
-flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE, 
-flld.c+     plot.axes = {
-flld.c+     })
+flld.c> ## rather, the key *should* be labeled:
+flld.c> filled.contour(cos(r^2)*exp(-r/(2*pi)), frame.plot = FALSE, plot.axes = {})
 
 > par(opar)
 
@@ -877,6 +903,9 @@ flld.c+     })
 	demo(persp)
 	---- ~~~~~
 
+> ### Demos for  persp()  plots   -- things not in  example(persp)
+> ### -------------------------
+> 
 > require(datasets)
 [1] TRUE
 
@@ -885,17 +914,17 @@ flld.c+     })
 
 > opar <- par(ask = dev.interactive(orNone = TRUE))
 
+> ## (1) The Obligatory Mathematical surface.
+> ##     Rotated sinc function.
+> 
 > x <- seq(-10, 10, length = 50)
 
 > y <- x
 
-> rotsinc <- function(x, y) {
-+     sinc <- function(x) {
-+         y <- sin(x)/x
-+         y[is.na(y)] <- 1
-+         y
-+     }
-+     10 * sinc(sqrt(x^2 + y^2))
+> rotsinc <- function(x,y)
++ {
++     sinc <- function(x) { y <- sin(x)/x ; y[is.na(y)] <- 1; y }
++     10 * sinc( sqrt(x^2+y^2) )
 + }
 
 > sinc.exp <- expression(z == Sinc(sqrt(x^2 + y^2)))
@@ -904,30 +933,34 @@ flld.c+     })
 
 > par(bg = "white")
 
-> persp(x, y, z, theta = 30, phi = 30, expand = 0.5, 
-+     col = "lightblue")
+> persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue")
 
-> title(sub = ".")
-
-> title(main = sinc.exp)
-
-> persp(x, y, z, theta = 30, phi = 30, expand = 0.5, 
-+     col = "lightblue", ltheta = 120, shade = 0.75, ticktype = "detailed", 
-+     xlab = "X", ylab = "Y", zlab = "Z")
-
-> title(sub = ".")
+> title(sub=".")## work around persp+plotmath bug
 
 > title(main = sinc.exp)
 
-> z <- 2 * volcano
+> persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
++       ltheta = 120, shade = 0.75, ticktype = "detailed",
++       xlab = "X", ylab = "Y", zlab = "Z")
 
-> x <- 10 * (1:nrow(z))
+> title(sub=".")## work around persp+plotmath bug
 
-> y <- 10 * (1:ncol(z))
+> title(main = sinc.exp)
 
-> persp(x, y, z, theta = 120, phi = 15, scale = FALSE, 
-+     axes = FALSE)
+> ## (2) Visualizing a simple DEM model
+> 
+> z <- 2 * volcano        # Exaggerate the relief
 
+> x <- 10 * (1:nrow(z))   # 10 meter spacing (S to N)
+
+> y <- 10 * (1:ncol(z))   # 10 meter spacing (E to W)
+
+> persp(x, y, z, theta = 120, phi = 15, scale = FALSE, axes = FALSE)
+
+> ## (3) Now something more complex
+> ##     We border the surface, to make it more "slice like"
+> ##     and color the top and sides of the surface differently.
+> 
 > z0 <- min(z) - 20
 
 > z <- rbind(z0, cbind(z0, z, z0), z0)
@@ -936,73 +969,73 @@ flld.c+     })
 
 > y <- c(min(y) - 1e-10, y, max(y) + 1e-10)
 
-> fill <- matrix("green3", nr = nrow(z) - 1, nc = ncol(z) - 
-+     1)
+> fill <- matrix("green3", nr = nrow(z)-1, nc = ncol(z)-1)
 
-> fill[, i2 <- c(1, ncol(fill))] <- "gray"
+> fill[ , i2 <- c(1,ncol(fill))] <- "gray"
 
-> fill[i1 <- c(1, nrow(fill)), ] <- "gray"
+> fill[i1 <- c(1,nrow(fill)) , ] <- "gray"
 
 > par(bg = "lightblue")
 
-> persp(x, y, z, theta = 120, phi = 15, col = fill, 
-+     scale = FALSE, axes = FALSE)
+> persp(x, y, z, theta = 120, phi = 15, col = fill, scale = FALSE, axes = FALSE)
 
-> title(main = "Maunga Whau\nOne of 50 Volcanoes in the Auckland Region.", 
-+     font.main = 4)
+> title(main = "Maunga Whau\nOne of 50 Volcanoes in the Auckland Region.",
++       font.main = 4)
 
 > par(bg = "slategray")
 
-> persp(x, y, z, theta = 135, phi = 30, col = fill, 
-+     scale = FALSE, ltheta = -120, lphi = 15, shade = 0.65, axes = FALSE)
+> persp(x, y, z, theta = 135, phi = 30, col = fill, scale = FALSE,
++       ltheta = -120, lphi = 15, shade = 0.65, axes = FALSE)
 
-> persp(x, y, z, theta = 135, phi = 30, col = "green3", 
-+     scale = FALSE, ltheta = -120, shade = 0.75, border = NA, 
-+     box = FALSE)
+> ## Don't draw the grid lines :  border = NA
+> persp(x, y, z, theta = 135, phi = 30, col = "green3", scale = FALSE,
++       ltheta = -120, shade = 0.75, border = NA, box = FALSE)
 
+> ## `color gradient in the soil' :
+> fcol <- fill ; fcol[] <- terrain.colors(nrow(fcol))
+
+> persp(x, y, z, theta = 135, phi = 30, col = fcol, scale = FALSE,
++       ltheta = -120, shade = 0.3, border = NA, box = FALSE)
+
+> ## `image like' colors on top :
 > fcol <- fill
 
-> fcol[] <- terrain.colors(nrow(fcol))
+> zi <- volcano[ -1,-1] + volcano[ -1,-61] +
++            volcano[-87,-1] + volcano[-87,-61]  ## / 4
 
-> persp(x, y, z, theta = 135, phi = 30, col = fcol, 
-+     scale = FALSE, ltheta = -120, shade = 0.3, border = NA, box = FALSE)
+> fcol[-i1,-i2] <-
++     terrain.colors(20)[cut(zi, quantile(zi, seq(0,1, len = 21)),
++                            include.lowest = TRUE)]
 
-> fcol <- fill
+> persp(x, y, 2*z, theta = 110, phi = 40, col = fcol, scale = FALSE,
++       ltheta = -120, shade = 0.4, border = NA, box = FALSE)
 
-> zi <- volcano[-1, -1] + volcano[-1, -61] + volcano[-87, 
-+     -1] + volcano[-87, -61]
-
-> fcol[-i1, -i2] <- terrain.colors(20)[cut(zi, quantile(zi, 
-+     seq(0, 1, len = 21)), include.lowest = TRUE)]
-
-> persp(x, y, 2 * z, theta = 110, phi = 40, col = fcol, 
-+     scale = FALSE, ltheta = -120, shade = 0.4, border = NA, box = FALSE)
-
+> ## reset par():
 > par(opar)
 
 
 	demo(glm.vr)
 	---- ~~~~~~
 
+> #### -*- R -*-
 > require(stats)
 [1] TRUE
 
-> Fr <- c(68, 42, 42, 30, 37, 52, 24, 43, 66, 50, 33, 
-+     23, 47, 55, 23, 47, 63, 53, 29, 27, 57, 49, 19, 29)
+> Fr <- c(68,42,42,30, 37,52,24,43,
++ 	66,50,33,23, 47,55,23,47,
++ 	63,53,29,27, 57,49,19,29)
 
 > Temp <- gl(2, 2, 24, labels = c("Low", "High"))
 
-> Soft <- gl(3, 8, 24, labels = c("Hard", "Medium", 
-+     "Soft"))
+> Soft <- gl(3, 8, 24, labels = c("Hard","Medium","Soft"))
 
 > M.user <- gl(2, 4, 24, labels = c("N", "Y"))
 
 > Brand <- gl(2, 1, 24, labels = c("X", "M"))
 
-> detg <- data.frame(Fr, Temp, Soft, M.user, Brand)
+> detg <- data.frame(Fr,Temp, Soft,M.user, Brand)
 
-> detg.m0 <- glm(Fr ~ M.user * Temp * Soft + Brand, 
-+     family = poisson, data = detg)
+> detg.m0 <- glm(Fr ~ M.user*Temp*Soft + Brand, family = poisson, data = detg)
 
 > summary(detg.m0)
 
@@ -1041,9 +1074,9 @@ AIC: 191.24
 Number of Fisher Scoring iterations: 4
 
 
-> detg.mod <- glm(terms(Fr ~ M.user * Temp * Soft + 
-+     Brand * M.user * Temp, keep.order = TRUE), family = poisson, 
-+     data = detg)
+> detg.mod <- glm(terms(Fr ~ M.user*Temp*Soft + Brand*M.user*Temp,
++                       keep.order = TRUE),
++ 		family = poisson, data = detg)
 
 > summary(detg.mod)
 
@@ -1136,22 +1169,23 @@ Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
 	demo(smooth)
 	---- ~~~~~~
 
-> require(stats)
+> ### This used to be in   example(smooth) before we had package-specific demos
+> 
+> require(stats); require(graphics); require(datasets)
+[1] TRUE
+[1] TRUE
 [1] TRUE
 
-> require(graphics)
-[1] TRUE
+> op <- par(ask = interactive(), mfrow = c(1,1))
 
-> require(datasets)
-[1] TRUE
+> ## The help(smooth) examples:
+> example(smooth, package="stats")
 
-> op <- par(ask = interactive(), mfrow = c(1, 1))
+smooth> ## see also   demo(smooth) !
+smooth> 
+smooth> x1 <- c(4, 1, 3, 6, 6, 4, 1, 6, 2, 4, 2) # very artificial
 
-> example(smooth, package = "stats")
-
-smooth> x1 <- c(4, 1, 3, 6, 6, 4, 1, 6, 2, 4, 2)
-
-smooth> (x3R <- smooth(x1, "3R"))
+smooth> (x3R <- smooth(x1, "3R")) # 2 iterations of "3"
 3R Tukey smoother resulting from  smooth(x = x1, kind = "3R") 
  used 2 iterations
  [1] 3 3 3 6 6 4 4 4 2 2 2
@@ -1161,10 +1195,10 @@ S Tukey smoother resulting from  smooth(x = x3R, kind = "S")
  changed
  [1] 3 3 3 3 4 4 4 4 2 2 2
 
-smooth> sm.3RS <- function(x, ...) smooth(smooth(x, "3R", 
-smooth+     ...), "S", ...)
+smooth> sm.3RS <- function(x, ...)
+smooth+    smooth(smooth(x, "3R", ...), "S", ...)
 
-smooth> y <- c(1, 1, 19:1)
+smooth> y <- c(1,1, 19:1)
 
 smooth> plot(y, main = "misbehaviour of \"3RSR\"", col.main = 3)
 
@@ -1172,16 +1206,15 @@ smooth> lines(sm.3RS(y))
 
 smooth> lines(smooth(y))
 
-smooth> lines(smooth(y, "3RSR"), col = 3, lwd = 2)
+smooth> lines(smooth(y, "3RSR"), col = 3, lwd = 2)# the horror
 
-smooth> x <- c(8:10, 10, 0, 0, 9, 9)
+smooth> x <- c(8:10,10, 0,0, 9,9)
 
 smooth> plot(x, main = "breakdown of  3R  and  S  and hence  3RSS")
 
-smooth> matlines(cbind(smooth(x, "3R"), smooth(x, "S"), smooth(x, 
-smooth+     "3RSS"), smooth(x)))
+smooth> matlines(cbind(smooth(x,"3R"),smooth(x,"S"), smooth(x,"3RSS"),smooth(x)))
 
-smooth> presidents[is.na(presidents)] <- 0
+smooth> presidents[is.na(presidents)] <- 0 # silly
 
 smooth> summary(sm3 <- smooth(presidents, "3R"))
 3R Tukey smoother resulting from
@@ -1190,41 +1223,47 @@ smooth> summary(sm3 <- smooth(presidents, "3R"))
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     0.0    44.0    57.0    54.2    71.0    82.0 
 
-smooth> summary(sm2 <- smooth(presidents, "3RSS"))
+smooth> summary(sm2 <- smooth(presidents,"3RSS"))
 3RSS Tukey smoother resulting from
  smooth(x = presidents, kind = "3RSS") ;  n = 120 
  used 5 iterations
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    0.00   44.00   57.00   55.45   69.00   82.00 
 
-smooth> summary(sm <- smooth(presidents))
+smooth> summary(sm  <- smooth(presidents))
 3RS3R Tukey smoother resulting from
  smooth(x = presidents) ;  n = 120 
  used 7 iterations
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   24.00   44.00   57.00   55.88   69.00   82.00 
 
-smooth> all.equal(c(sm2), c(smooth(smooth(sm3, "S"), "S")))
+smooth> all.equal(c(sm2),c(smooth(smooth(sm3, "S"), "S"))) # 3RSS  === 3R S S
 [1] TRUE
 
-smooth> all.equal(c(sm), c(smooth(smooth(sm3, "S"), "3R")))
+smooth> all.equal(c(sm), c(smooth(smooth(sm3, "S"), "3R")))# 3RS3R === 3R S 3R
 [1] TRUE
 
 smooth> plot(presidents, main = "smooth(presidents0, *) :  3R and default 3RS3R")
 
-smooth> lines(sm3, col = 3, lwd = 1.5)
+smooth> lines(sm3,col = 3, lwd = 1.5)
 
 smooth> lines(sm, col = 2, lwd = 1.25)
 
+> ## Didactical investigation:
+> 
 > showSmooth <- function(x, leg.x = 1, leg.y = max(x)) {
-+     ss <- cbind(x, "3c" = smooth(x, "3", end = "copy"), "3" = smooth(x, 
-+         "3"), "3Rc" = smooth(x, "3R", end = "copy"), "3R" = smooth(x, 
-+         "3R"), sm = smooth(x))
-+     k <- n .... [TRUNCATED] 
++   ss <- cbind(x, "3c"  = smooth(x, "3", end="copy"),
++                  "3"   = smooth(x, "3"),
++                  "3Rc" = smooth(x, "3R", end="copy"),
++     .... [TRUNCATED] 
 
-> for (x in list(c(4, 6, 2, 2, 6, 3, 6, 6, 5, 2), c(3, 
-+     2, 1, 4, 5, 1, 3, 2, 4, 5, 2), c(2, 4, 2, 6, 1, 1, 2, 6, 
-+     3, 1, 6), x1)) print(t(showSmooth(x)))
+> ## 4 simple didactical examples, showing different steps in smooth():
+> 
+> for(x in list(c(4, 6, 2, 2, 6, 3, 6, 6, 5, 2),
++               c(3, 2, 1, 4, 5, 1, 3, 2, 4, 5, 2),
++               c(2, 4, 2, 6, 1, 1, 2, 6, 3, 1, 6),
++               x1))
++ .... [TRUNCATED] 
     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 x      4    6    2    2    6    3    6    6    5     2
 3c     4    4    2    2    3    6    6    6    5     2
@@ -1257,5 +1296,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  5.22 0.14 5.38 NA NA 
+Time elapsed:  5.54 0.25 5.87 NA NA 
 > 
