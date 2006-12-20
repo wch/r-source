@@ -133,7 +133,7 @@ setIs <-
     if(doComplete) {
       classDef@contains <- completeExtends(classDef, class2, obj, where = where)
       if(!is(classDef, "ClassUnionRepresentation")) #unions are handled in assignClassDef
-        .checkSubclasses(class1, classDef, class2, classDef2, where1)
+        .checkSubclasses(class1, classDef, class2, classDef2, where1, where2)
     }
     assignClassDef(class1, classDef, where1, TRUE)
     invisible(classDef)

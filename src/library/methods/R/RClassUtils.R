@@ -1691,8 +1691,9 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## alternative to .recacheSubclasses, only needed for non-unions
 ## Inferior in that nonlocal subclasses will not be updated, hence the
 ## warning when the subclass is not in where
-.checkSubclasses <- function(class, def, class2, def2, where) {
+.checkSubclasses <- function(class, def, class2, def2, where, where2) {
     where <- as.environment(where)
+    where2 <- as.environment(where2)
    subs <- def@subclasses
     subNames <- names(subs)
     extDefs <- def2@subclasses
@@ -1701,8 +1702,14 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         if(.identC(what, class2))
           next # catch recursive relations
         cname <- classMetaName(what)
-        if(exists(cname, envir = where, inherits = FALSE))
-          subDef <- get(cname, where)
+        if(exists(cname, envir = where, inherits = FALSE)) {
+            subDef <- get(cname, envir = where)
+            cwhere <- where
+        }
+        else if(exists(cname, envir = where2, inherits = FALSE)) {
+            subDef <- get(cname, envir = where2)
+            cwhere <- where2
+        }
         else {
           warning(
              gettextf("Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new inheritance information; consider setClassUnion()",
@@ -1716,7 +1723,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
                        what, def2@className, class))
         else if(is.na(match(class2, names(subDef@contains)))) {
             subDef@contains[[class2]] <- extension
-            assignClassDef(what, subDef, where, TRUE)
+            assignClassDef(what, subDef, cwhere, TRUE)
         }
     }
 }
