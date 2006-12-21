@@ -38,10 +38,11 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
     \code{start}.  If unspecified, all parameters are assumed to be
     unconstrained.
   }
-  \item{\dots}{Ffurther arguments to be supplied to \code{objective}.}
+  \item{\dots}{Further arguments to be supplied to \code{objective}.}
 }
 \details{
-  The PORT documentation is at \url{http://netlib.bell-labs.com/cm/cs/cstr/153.pdf}.
+  The PORT documentation is at
+  \url{http://netlib.bell-labs.com/cm/cs/cstr/153.pdf}.
 }
 \value{
   A list with components:
