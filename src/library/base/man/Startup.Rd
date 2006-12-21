@@ -29,7 +29,7 @@
   The user files searched for are \file{.Renviron} in the current or in
   the user's home directory (in that order).
 #ifdef windows
-  (See \sQuote{See also} for how the home directory is found on Windows.
+  (See \sQuote{See also} for how the home directory is found on Windows.)
 #endif
   See \bold{Details} for how the files are read.
 
