@@ -95,7 +95,9 @@ install.packages <-
     }
 
     info <- file.info(lib)
-    ok <- info$isdir & substr(info$mode, 1, 1) == "7"
+    ok <- info$isdir
+    nc <- nchar(info$mode)
+    ok <- ok & (nc >= 3) & (substr(info$mode, nc-2, nc-2) == "7")
     if(length(lib) > 1 && any(!ok))
         stop(sprintf(ngettext(sum(!ok),
                               "'lib' element '%s'  is not a writable directory",
@@ -103,8 +105,9 @@ install.packages <-
                      paste(lib[!ok], collapse=", ")), domain = NA)
     if(length(lib) == 1 && !ok) {
         warning("'lib' is not writable", immediate.=TRUE)
-        userdir <- Sys.getenv("R_LIBS_USER")[1] # will give NA if not set
-        if(interactive() && !is.na(userdir) && !file.exists(userdir)) {
+        userdir <- unlist(strsplit(Sys.getenv("R_LIBS_USER"),
+                                   .Platform$path.sep))[1]
+        if(interactive() && !file.exists(userdir)) {
             msg <- gettext("Would you like to create a personal library\n'%s'\nto install packages into?")
             if(.Platform$OS.type == "windows") {
                 ans <- winDialog("yesno", sprintf(msg, userdir))
