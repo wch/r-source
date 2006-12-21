@@ -436,8 +436,7 @@ the same way.  This is useful for variables which should be set for all
 users and all usages of this R installation.  (Their values can be
 overridden in a @file{.Renviron} file or on the command line.)
 
-See @code{?Startup} for more details of environment files, include
-the site-wide environment file @file{Renviron.site}.
+See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
@@ -871,6 +870,21 @@ OR use a package by, e.g.
 library(mypkg, lib.loc="p:/myRlib")
 @end example
 
+You can also have you a personal library, which defaults to the
+directory @file{R\win-library\@var{x.y}} of your home directory for
+versions @var{x.y.z} of R.  This location can be changed by setting
+the environment variable @env{R_LIBS_USER}, and can be found from inside
+R by running @code{Sys.getenv("R_LIBS_USER")}.  This will only be
+used if it exists so you may need to create it: you can use
+
+@example
+dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE)
+@end example
+
+@noindent
+to do so.  If you use @code{install.packages} and do not have permission
+to write to the main library, it will offer to create a personal library
+for you and install the packages there.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
