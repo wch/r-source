@@ -128,7 +128,10 @@ if($opt_library){
     $library = Win32::GetShortPathName($library) if $library =~ / /;
     chdir($startdir);
 } else {
-    $library = $R_HOME . "/library";
+    my @out = R_runR("cat(.libPaths()[1])", "--slave");
+    $library = @out[0];
+    $library = Win32::GetShortPathName($library) if $library =~ / /;
+    print "installing to '$library'\n";
 }
 
 my $helpflags = "HELP=YES WINHELP=CHM";

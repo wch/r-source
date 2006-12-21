@@ -249,6 +249,11 @@ UTILITIES
 
 	codoc() now knows the argument lists of primitive functions.
 
+    o	R CMD INSTALL and R CMD REMOVE now use as the default library
+	(if -l is not specified) the first library that would be used
+	if R were run in the current environment (and they run R to
+	find it).
+
 
 BUG FIXES
 

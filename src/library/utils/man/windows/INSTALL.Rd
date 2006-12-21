@@ -15,13 +15,17 @@
     Use \code{R CMD INSTALL --help} for the current list of options.}
 }
 \description{
-  To install packages into the default library tree (which is rooted at
-  \file{\$R\_HOME/library}), do \code{R CMD INSTALL pkgs}.
+  Utility for installing add-on source packages.
+}
+\details{
+  If used as \code{R CMD INSTALL pkgs} without explicitly specifying
+  \code{lib}, packages are installed into the library tree rooted at the
+  first directory in the library path which would be used by \R run in
+  the current environment.
 
   To install into the library tree \code{lib} instead of the default
   one, use \code{R CMD INSTALL -l lib pkgs}.
-}
-\details{
+
   Windows Perl and the files for installing from source packages need to
   be installed.
   

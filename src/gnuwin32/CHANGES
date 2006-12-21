@@ -31,6 +31,10 @@ https:// sites can be accessed by download.file() and url() if
 --internet2 is used (and provided the certificate is known to be
 valid).
 
+R CMD INSTALL now installs by default into the first library on the
+library path if R was run in the current environment.  Similarly, R
+CMD REMOVE by default removes from that library.
+
 
 
 R 2.4.1
