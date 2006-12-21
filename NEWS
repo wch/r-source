@@ -300,8 +300,8 @@ BUG FIXES
     o	.libPaths() adds only existing directories (as it was
 	documented to, but could add non-directories).
 
-    o  setIs() and setClassUnion() failed to find some existing
-        subclasses and produced spurious warnings, now fixed.
+    o	setIs() and setClassUnion() failed to find some existing
+	subclasses and produced spurious warnings, now fixed.
 
 
 
