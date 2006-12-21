@@ -709,6 +709,7 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 # define InitMemory		Rf_InitMemory
 # define InitNames		Rf_InitNames
 # define InitOptions		Rf_InitOptions
+# define InitRand		Rf_InitRand
 # define InitTempDir		Rf_InitTempDir
 # define initStack		Rf_initStack
 # define IntegerFromComplex	Rf_IntegerFromComplex
@@ -886,6 +887,7 @@ void InitMemory(void);
 void InitNames(void);
 void InitOptions(void);
 void Init_R_Variables(SEXP);
+void InitRand(void);
 void InitTempDir(void);
 void initStack(void);
 void R_InsertRestartHandlers(RCNTXT *, Rboolean);

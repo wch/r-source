@@ -12,6 +12,13 @@ BUG FIXES
 
     o	co.intervals() sometimes failed to cover the largest value.
 
+    o	tempfile() is now random across sessions as well as within a
+	session.  (On some systems it would give the same hex suffix
+	at the start of each session.)
+
+    o	Added infinite recursion test to internal function isMissing.
+	(PR#9426)
+
 
 
 		CHANGES IN R VERSION 2.4.1
