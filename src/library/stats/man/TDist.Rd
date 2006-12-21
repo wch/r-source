@@ -12,10 +12,10 @@
   (and optional noncentrality parameter \code{ncp}).
 }
 \usage{
-dt(x, df, ncp = 0, log = FALSE)
-pt(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
-qt(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE)
-rt(n, df, ncp = 0)
+dt(x, df, ncp, log = FALSE)
+pt(q, df, ncp, lower.tail = TRUE, log.p = FALSE)
+qt(p, df, ncp, lower.tail = TRUE, log.p = FALSE)
+rt(n, df, ncp)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}
@@ -27,7 +27,7 @@ rt(n, df, ncp = 0)
     currently supported.}
   \item{ncp}{non-centrality parameter \eqn{\delta};
     currently for \code{pt()} and \code{dt()}, only for
-    \code{abs(ncp) <= 37.62}.}
+    \code{abs(ncp) <= 37.62}.  If omitted, use the central t distribution.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
