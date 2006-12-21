@@ -259,6 +259,7 @@ calcCurveGrob <- function(x, debug) {
     squareShape <- x$squareShape
     inflect <- x$inflect
     arrow <- x$arrow
+    open <- x$open
     gp <- x$gp
     
     # Calculate a set of control points based on:
@@ -367,7 +368,7 @@ calcCurveGrob <- function(x, debug) {
                                 shape=c(rep(0, ncurve), shape1,
                                   rep(0, ncurve), shape2,
                                   rep(0, ncurve)),
-                                arrow=arrow,
+                                arrow=arrow, open=open,
                                 gp=gp)
                 } else {
                     shape <- rep(rep(shape, length=ncp), ncurve)
@@ -397,7 +398,7 @@ calcCurveGrob <- function(x, debug) {
                                 default.units="inches",
                                 shape=c(rep(0, ncurve), shape,
                                   rep(0, ncurve)),
-                                arrow=arrow,
+                                arrow=arrow, open=open,
                                 gp=gp)
                 }
             }
@@ -420,6 +421,7 @@ validDetails.curve <- function(x) {
     x$inflect <- as.logical(x$inflect)
     if (!is.null(x$arrow) && !inherits(x$arrow, "arrow"))
         stop("'arrow' must be an arrow object or NULL")
+    x$open <- as.logical(x$open)
     x
 }
 
@@ -446,7 +448,8 @@ heightDetails.curve <- function(x) {
 curveGrob <- function(x1, y1, x2, y2, default.units="npc",
                       curvature=1, angle=90, ncp=1, 
                       shape=0.5, square=TRUE, squareShape=1,
-                      inflect=FALSE, arrow=NULL, debug=FALSE,
+                      inflect=FALSE, arrow=NULL, open=TRUE,
+                      debug=FALSE, 
                       name=NULL, gp=gpar(), vp=NULL) {
     # FIXME:  add arg checking
     # FIXME:  angle MUST be between 0 and 180
@@ -461,7 +464,7 @@ curveGrob <- function(x1, y1, x2, y2, default.units="npc",
     grob(x1=x1, y1=y1, x2=x2, y2=y2,
          curvature=curvature, angle=angle, ncp=ncp, 
          shape=shape, square=square, squareShape=squareShape,
-         inflect=inflect, arrow=arrow, debug=debug,
+         inflect=inflect, arrow=arrow, open=open, debug=debug,
          name=name, gp=gp, vp=vp,
          cl="curve")
 }
