@@ -293,10 +293,6 @@ BUG FIXES
     o	R CMD Sweave and R CMD Stangle now respond to --help and --version
 	like other utilities.
 
-    o	tempfile() is now random across sessions as well as within a
-	session.  (On some systems it would give the same hex suffix
-	at the start of each session.)
-
     o	.libPaths() adds only existing directories (as it was
 	documented to, but could add non-directories).
 
@@ -318,6 +314,13 @@ BUG FIXES
 BUG FIXES
 
     o	co.intervals() sometimes failed to cover the largest value.
+
+    o	tempfile() is now random across sessions as well as within a
+	session.  (On some systems it would give the same hex suffix
+	at the start of each session.)
+
+    o	Added infinite recursion test to internal function isMissing.
+	(PR#9426)
 
 
 
