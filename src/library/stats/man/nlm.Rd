@@ -64,6 +64,9 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
 
   From the three methods available in the original source, we always use
   method \dQuote{1} which is line search.
+
+  The functions supplied must always return finite (including not
+  \code{NA} and not \code{NaN}) values.
 }
 \value{
   A list containing the following components:

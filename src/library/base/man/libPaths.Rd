@@ -37,6 +37,9 @@
   directories at which \R library trees are rooted) by calling
   \code{.libPaths} with the directories specified in \env{R\_LIBS}.
 #endif
+
+  Function \code{.libPaths} always uses the value of \code{.Library} in
+  the base namespace.
 }
 \value{
   A character vector of file paths.
