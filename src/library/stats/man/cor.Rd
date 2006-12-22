@@ -64,7 +64,7 @@ cov2cor(V)
   each pair of variables is computed using all complete pairs
   of observations on those variables.
   This can result in covariance or correlation matrices which are not
-  positive semidefinite. \code{"pairwise.complete.obs"} only works with
+  positive semi-definite. \code{"pairwise.complete.obs"} only works with
   the \code{"pearson"} method for \code{cov} and \code{var}.
 
 

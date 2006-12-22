@@ -1,17 +1,19 @@
 \name{browse.pkgs}
 \alias{browse.pkgs}
 \alias{browse.install.pkgs}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Download R packages}
 \description{
-    Visual browsers for downloading R binary or source p ackages from a
+    Visual browsers for downloading R binary or source packages from a
   repository, usually invoked from the Packages menu. \code{browse.pkgs}
   shows all available packages, \code{browse.update.pkgs} shows only
   installed packages with different version numbers on the repository.
 }
 \usage{
-browse.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"), contriburl, global = FALSE)
-browse.update.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"), in.place = TRUE)
+browse.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"),
+            contriburl, global = FALSE)
+
+browse.update.pkgs(where = c("CRAN", "BIOC"), type = c("binary","source"),
+                   in.place = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,5 +36,5 @@ browse.update.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"), in.p
   \code{install.packages},
   \code{update}.
 }
-\keyword{connection}% at least one, from doc/KEYWORDS
-\keyword{utilities}% __ONLY ONE__ keyword per line
+\keyword{connection}
+\keyword{utilities}

@@ -27,7 +27,7 @@ setwd(dir)
   On Windows the path returned will use \code{/} as the path separator.
 #endif
 
-  \code{setwd} returns the currrent directory before the change,
+  \code{setwd} returns the current directory before the change,
   invisibly.  It will give an error if it does not succeed.
 }
 \examples{

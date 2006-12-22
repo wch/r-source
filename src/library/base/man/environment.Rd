@@ -51,7 +51,7 @@ parent.env(env) <- value
   The replacement form sets the environment of the function or formula
   \code{fun} to the \code{value} given.
 
-  \code{is.environment(obj)} returns \code{TRUE} iff \code{obj} is an
+  \code{is.environment(obj)} returns \code{TRUE} if and only if \code{obj} is an
   \code{environment}.
 
   \code{new.env} returns a new (empty) environment enclosed in the

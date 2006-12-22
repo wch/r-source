@@ -55,7 +55,7 @@ vpTree(parent, children)
     and maximum on the y-scale.}
   \item{angle}{A numeric value indicating the angle of rotation of the
     viewport.  Positive values indicate the amount of rotation, in
-    degrees, anitclockwise from the positive x-axis.}
+    degrees, anticlockwise from the positive x-axis.}
   \item{layout}{A Grid layout object which splits the viewport into
     subregions.}
   \item{layout.pos.row}{A numeric vector giving the

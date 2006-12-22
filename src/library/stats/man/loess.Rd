@@ -84,7 +84,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
 }
 \author{
   B.D. Ripley, based on the \code{cloess} package of Cleveland,
-  Grosse and Shyu avaliable at \url{http://www.netlib.org/a/}.
+  Grosse and Shyu available at \url{http://www.netlib.org/a/}.
 }
 \note{
   As this is based on the \code{cloess} package available at

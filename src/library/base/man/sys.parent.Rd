@@ -58,7 +58,7 @@ parent.frame(n = 1)
   as described in the first paragraph.
 
   \code{sys.calls} and \code{sys.frames} give a pairlist of all the
-  active calls and frames, repectively, and \code{sys.parents} returns
+  active calls and frames, respectively, and \code{sys.parents} returns
   an integer vector of indices of the parent frames of each of those
   frames.
 

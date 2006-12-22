@@ -50,7 +50,7 @@ p.adjust.methods
 
   Note that you can set \code{n} larger than \code{length(p)} which
   means the unobserved p-values are assumed to be greater than all the
-  observed p   for "bonferonni" and "holm" methods and equal to 1 for
+  observed p for \code{"bonferroni"} and \code{"holm"} methods and equal to 1 for
   the other methods.
 }
 

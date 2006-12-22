@@ -58,7 +58,7 @@ fourfoldplot(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
   size from those in the other direction; color is used to show this
   direction.  Confidence rings for the odds ratio allow a visual test of
   the null of no association; the rings for adjacent quadrants overlap
-  iff the observed counts are consistent with the null hypothesis.
+  if and only if the observed counts are consistent with the null hypothesis.
 
   Typically, the number \eqn{k} corresponds to the number of levels of a
   stratifying variable, and it is of interest to see whether the

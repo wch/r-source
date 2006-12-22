@@ -51,7 +51,7 @@ par(mfrow = c(3, 1))
 plot(Nile)
 ## local level model
 (fit <- StructTS(Nile, type = "level"))
-lines(fitted(fit), lty = 2)              # contempareneous smoothing
+lines(fitted(fit), lty = 2)              # contemparaneous smoothing
 lines(tsSmooth(fit), lty = 2, col = 4)   # fixed-interval smoothing
 plot(residuals(fit)); abline(h = 0, lty = 3)
 ## local trend model

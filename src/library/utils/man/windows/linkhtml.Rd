@@ -43,11 +43,11 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   \code{fixup.libraries.URLs} calls \code{fixup.package.URLs} on all
   packages in current library trees except the standard one.
 
-  The functions will give a warning if the files are not writeable.
+  The functions will give a warning if the files are not writable.
 }
 \value{
   \code{make.packages.html} and \code{fixup.package.URLs} return a
-  logical showing if they suceeded.
+  logical showing if they succeeded.
   
   The files
   \file{R\_HOME\\doc\\html\\packages.html} and

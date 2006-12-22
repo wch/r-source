@@ -59,9 +59,9 @@ alist(\dots)
   inconsistent with functions such as \code{\link{as.character}}, and is
   for efficiency since lists can be expensive to copy.)
 
-  \code{is.list} returns \code{TRUE} iff its argument
+  \code{is.list} returns \code{TRUE} if and only if its argument
   is a \code{list} \emph{or} a \code{pairlist} of \code{length} \eqn{> 0}.
-  \code{is.pairlist} returns \code{TRUE} iff the argument is a pairlist
+  \code{is.pairlist} returns \code{TRUE} if and only if the argument is a pairlist
   or \code{NULL} (see below).
 
   \code{is.list} and \code{is.pairlist} are generic: you can write

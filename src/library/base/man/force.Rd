@@ -23,7 +23,7 @@ force(x)
   \code{force} does not force the evaluation of other
   \link[=delayedAssign]{promises}.  (It works by forcing the promise that
   is created when the actual arguments of a call are matched to the
-  formal arguments of a closure, the mechanism which implememnts
+  formal arguments of a closure, the mechanism which implements
   \emph{lazy evaluation}.)
 }
 \examples{

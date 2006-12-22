@@ -113,7 +113,7 @@
 #ifdef unix
   The file \file{\$R\_HOME/etc/Renviron} is always read very early in
   the start-up processing.  It contains environment variables set by \R
-  in the configure process.  Values in that file can be overriden in
+  in the configure process.  Values in that file can be overridden in
   site or user environment files: do not change
   \file{\$R\_HOME/etc/Renviron} itself.  Note that this is distinct from
   \file{\$R\_HOME/etc/Renviron.site}.

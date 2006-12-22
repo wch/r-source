@@ -39,7 +39,7 @@ mauchly.test(object, Sigma = diag(nrow = p),
 
   The common use of this test is in repeated measurements designs, with
   \code{X=~1}. This is almost, but not quite the same as testing for
-  compund symmetry in the untransformed covariance matrix.
+  compound symmetry in the untransformed covariance matrix.
 
   This is a generic function with methods for classes \code{"mlm"} and
   \code{"\link{SSD}"}.

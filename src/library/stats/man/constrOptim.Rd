@@ -64,7 +64,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
 }
 
 \seealso{
-  \code{\link{optim}}, especially \code{method="L-BGFS-B"} which
+  \code{\link{optim}}, especially \code{method="L-BFGS-B"} which
   does box-constrained optimisation.
 }
 

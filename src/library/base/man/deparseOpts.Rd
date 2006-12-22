@@ -60,7 +60,7 @@
 
   Using \code{control = "all"} comes closest to making \code{deparse()}
   an inverse of \code{parse()}.  However, not all objects are
-  deparseable even with this option.  A warning will be issued if the
+  deparse-able even with this option.  A warning will be issued if the
   function recognizes that it is being asked to do the impossible.
 }
 \value{
