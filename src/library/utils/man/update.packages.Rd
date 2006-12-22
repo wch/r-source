@@ -211,7 +211,7 @@ contrib.url(repos, type = getOption("pkgType"))
 
   The main function of the set is \code{update.packages}.  First a list
   of all packages/bundles found in \code{lib.loc} is created and
-  compared with those available at the repostories.  If \code{ask =
+  compared with those available at the repositories.  If \code{ask =
     TRUE} (the default) packages/bundles with a newer version are
   reported and for each one the user can specify if it should be
   updated.

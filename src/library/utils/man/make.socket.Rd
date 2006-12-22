@@ -44,7 +44,7 @@ daytime <- function(host = "localhost"){
     on.exit(close.socket(a))
     read.socket(a)
 }
-## Offical time (UTC) from US Naval Observatory
+## Official time (UTC) from US Naval Observatory
 \dontrun{daytime("tick.usno.navy.mil")}
 }
 \keyword{misc}

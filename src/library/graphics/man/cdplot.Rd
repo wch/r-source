@@ -52,7 +52,7 @@ cdplot(x, \dots)
 
   This visualization technique is similar to spinograms (see \code{\link{spineplot}})
   and plots \eqn{P(y | x)} against \eqn{x}. The conditional probabilities
-  are not derived by descretization (as in the spinogram), but using a smoothing
+  are not derived by discretization (as in the spinogram), but using a smoothing
   approach via \code{\link{density}}.
   
   Note, that the estimates of the conditional densities are more reliable for 

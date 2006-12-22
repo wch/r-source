@@ -18,7 +18,7 @@ setChildren(x, children)
 \arguments{
   \item{gTree, x}{A gTree object.}
   \item{gPath}{ A gPath object. For \code{grid.add} this
-    specifyies a gTree on the display list.  For \code{addGrob} this
+    specifies a gTree on the display list.  For \code{addGrob} this
     specifies a descendant of the specified gTree. }
   \item{child}{ A grob object. }
   \item{children}{ A gList object. }

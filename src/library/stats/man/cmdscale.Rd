@@ -15,9 +15,9 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     represented in; must be in \eqn{\{1,2,\ldots,n-1\}}.}
   \item{eig}{indicates whether eigenvalues should be returned.}
   \item{add}{logical indicating if an additive constant \eqn{c*} should
-    be computed, and added to the non-diagonal dissimilarites such that
+    be computed, and added to the non-diagonal dissimilarities such that
     all \eqn{n-1} eigenvalues are non-negative.}
-  \item{x.ret}{indicates whether the doubly centered symmetric distance
+  \item{x.ret}{indicates whether the doubly centred symmetric distance
     matrix should be returned.}
 }
 \details{

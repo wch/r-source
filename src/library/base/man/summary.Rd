@@ -37,7 +37,7 @@ summary(object, \dots)
     summarized in \code{"(Others)"} (resulting in \code{maxsum} frequencies).
 
     The functions \code{summary.lm} and \code{summary.glm} are examples
-    of particular methods which summarise the results produced by
+    of particular methods which summarize the results produced by
     \code{\link{lm}} and \code{\link{glm}}.
 }
 \value{

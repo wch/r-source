@@ -17,7 +17,7 @@
   \item{new}{a character vector with the locations of \R library
     trees.  Tilde expansion (\code{\link{path.expand}}) is done, and if
     any element contains one of \code{*?[}, globbing is done where
-    suppoerted by the platform: see \code{\link{Sys.glob}}.}
+    supported by the platform: see \code{\link{Sys.glob}}.}
 }
 \details{
   \code{.Library} is a character string giving the location of the

@@ -103,7 +103,7 @@ loadMethod(method, fname, envir)
 
     \item{\code{showMlist}:}{
       Prints the contents of the MethodsList.  If \code{includeDefs} the
-      signatures and the corresonding definitions will be printed;
+      signatures and the corresponding definitions will be printed;
       otherwise, only the signatures.
     }
 

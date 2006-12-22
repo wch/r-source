@@ -106,7 +106,7 @@ try(new("track", y = sort(rnorm(10))))
 ## we don't inhibit classes that extend "track" from using the general
 ## form of the new() function.  In the previous version, they could only
 ## use x and y as arguments to new, unless they wrote their own
-## intialize method.
+## initialize method.
 
 setMethod("initialize", "track", function(.Object, ...) {
     .Object <- callNextMethod()

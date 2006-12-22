@@ -25,7 +25,7 @@ rgb2hsv(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
 }
 \details{
  Value (brightness) gives the amount of light in the color.\cr
- Hue describes the dominant wavelegth.\cr
+ Hue describes the dominant wavelength.\cr
  Saturation is the amount of Hue mixed into the color.
 }
 \value{

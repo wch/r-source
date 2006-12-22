@@ -65,8 +65,8 @@ environmentName(env)
   \code{parent.env<-} sets the enclosing environment of its first
   argument.
 
-  \code{envrironmentName} returns a character string, that given when
-  the envrionment is printed or \code{""} if it is not a named environment.
+  \code{environmentName} returns a character string, that given when
+  the environment is printed or \code{""} if it is not a named environment.
 } 
 
 \details{     

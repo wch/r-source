@@ -25,7 +25,7 @@ order.dendrogram(x)
   is returned.  From \code{r <- order.dendrogram()}, each element is the
   index into the original data (from which the dendrogram was computed).
 }
-\author{R. Gentleman (\code{order.dendrogam} and Martin Maechler
+\author{R. Gentleman (\code{order.dendrogram} and Martin Maechler
   (\code{labels.dendrogram}).}
 
 \seealso{\code{\link{reorder}}, \code{\link{dendrogram}}.

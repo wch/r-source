@@ -15,7 +15,7 @@ removeGrob(gTree, gPath, strict = FALSE, grep = FALSE,
 \arguments{
   \item{gTree}{A gTree object.}
   \item{gPath}{ A gPath object. For \code{grid.remove} this
-    specifyies a gTree on the display list.  For \code{removeGrob} this
+    specifies a gTree on the display list.  For \code{removeGrob} this
     specifies a descendant of the specified gTree. }
   \item{strict}{ A boolean indicating whether the gPath must be
     matched exactly. }

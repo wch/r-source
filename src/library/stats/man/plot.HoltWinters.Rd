@@ -31,13 +31,13 @@
   \item{ylim}{Limits of the y-axis. If \code{NULL}, the range is chosen
     such that the plot contains the original series, the fitted values,
     and the predicted values if any.}
-  \item{\dots}{Other graphics parametes.}
+  \item{\dots}{Other graphics parameters.}
 }
 \references{
   C. C. Holt (1957)
   Forecasting seasonals and trends by exponentially weighted
   moving averages,
-  ONR Research Memorandum, Carnigie Institute 52.
+  ONR Research Memorandum, Carnegie Institute 52.
   
   P. R. Winters (1960)
   Forecasting sales by exponentially weighted moving averages,

@@ -82,7 +82,7 @@ persp(x, \dots)
 \value{
   \code{persp()} returns the \emph{viewing transformation matrix}, say
   \code{VT}, a \eqn{4 \times 4}{4 x 4} matrix suitable for projecting 3D coordinates
-  \eqn{(x,y,z)} into the 2D plane using homogenous 4D coordinates
+  \eqn{(x,y,z)} into the 2D plane using homogeneous 4D coordinates
   \eqn{(x,y,z,t)}.
   It can be used to superimpose additional graphical elements on the 3D
   plot, by \code{\link{lines}()} or \code{\link{points}()},

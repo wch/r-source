@@ -166,7 +166,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   character sequences commencing with \code{\%} \emph{are} conversion
   specifications) is system-specific.
 #ifdef windows
-  For output on Windows, a coversion specification is \code{\%}
+  For output on Windows, a conversion specification is \code{\%}
   optionally followed by \code{#} and then by a single letter.  Any
   conversion specification which is unimplemented is ignored.
 #endif

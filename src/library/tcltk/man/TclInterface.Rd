@@ -196,7 +196,7 @@ tclRequire(package, warn = TRUE)
   \code{tclVar}  are  uniquely named and automatically unset by the 
   garbage collector when the representing object is no longer in use. 
 
-  \code{tclArray} creates a new Tcl array and initalizes it to the empty
+  \code{tclArray} creates a new Tcl array and initializes it to the empty
   array. An R object of class \code{tclArray} and inheriting from class
   \code{tclVar} is created to represent it. You can access elements of
   the Tcl array using indexing with \code{[[} or \code{$}, which also
@@ -218,7 +218,7 @@ tclRequire(package, warn = TRUE)
   \code{"double"}, or \code{"integer"}. Conversely, such vectors can be
   converted using \code{as.tclObj}. There is an ambiguity as to what
   should happen for length one vectors, controlled by the \code{drop}
-  argument; there are cases where the distiction matters to Tcl,
+  argument; there are cases where the distinction matters to Tcl,
   although mostly it treats them equivalently. Notice that
   \code{tclvalue} and \code{as.character} differ on an object whose
   string representation has embedded spaces, the former is sometimes to

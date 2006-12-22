@@ -5,7 +5,7 @@ charmatch(x, table, nomatch = NA)
 }
 \alias{charmatch}
 \arguments{
-  \item{x}{the values to be matched: converte to a character vector by
+  \item{x}{the values to be matched: converted to a character vector by
     \code{\link{as.character}}.}
   \item{table}{the values to be matched against: converted to a character
     vector.}

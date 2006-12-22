@@ -34,7 +34,7 @@ format(x, \dots)
     \code{\link{getOption}(digits)}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits, and also to satisfy \code{nsmall}.
-    (For the intepretation for complex numbers see \code{\link{signif}}.)}
+    (For the interpretation for complex numbers see \code{\link{signif}}.)}
   \item{nsmall}{the minimum number of digits to the right of the decimal
     point in formatting real/complex numbers in non-scientific formats.
     Allowed values are \code{0 <= nsmall <= 20}.}
@@ -47,7 +47,7 @@ format(x, \dots)
     objects.  \code{NULL} corresponds to the default 12.
   }
   \item{na.encode}{logical: should \code{NA} strings be encoded?}
-  \item{scientific}{Either a logical specifiying whether
+  \item{scientific}{Either a logical specifying whether
     elements of a real or complex vector should be encoded in scientific
     format, or an integer penalty (see \code{\link{options}("scipen")}.
     Missing values correspond to the current default penalty.}

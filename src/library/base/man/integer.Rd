@@ -40,7 +40,7 @@ is.integer(x)
   \code{as.integer(x)} equals \code{\link{trunc}(x)} there), and
   imaginary parts of complex numbers are discarded (with a warning).
   Character strings containing either a decimal representation or a
-  heaxadecimal representation (starting with \code{0x} or \code{0X}) can
+  hexadecimal representation (starting with \code{0x} or \code{0X}) can
   be converted, as well as any allowed by the platform for real numbers.
   Like \code{\link{as.vector}} it strips attributes including names.
 

@@ -50,7 +50,7 @@ var.test(x, \dots)
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the F test statistic.}
-  \item{parameter}{the degrees of the freedom of the F distribtion of
+  \item{parameter}{the degrees of the freedom of the F distribution of
     the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{conf.int}{a confidence interval for the ratio of the population

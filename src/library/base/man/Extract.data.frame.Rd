@@ -76,7 +76,7 @@ x$name <- value
   contain \code{NULL} elements which will cause the corresponding
   columns to be deleted.  (See the Examples.)
 
-  Matrixing indexing using \code{[} is not recommended, and barely
+  Matrix indexing using \code{[} is not recommended, and barely
   supported.  For extraction, \code{x} is first coerced to a matrix.
   For replacement a logical matrix (only) can be used to select the
   elements to be replaced in the same way as for a matrix.

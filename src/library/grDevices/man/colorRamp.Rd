@@ -69,7 +69,7 @@ filled.contour(volcano,
                                         bias = 0.5),
                asp = 1)
 
-## 'jet.colors' is "as in Matlab" (and hurting the eye by oversaturation)
+## 'jet.colors' is "as in Matlab" (and hurting the eye by over-saturation)
 jet.colors <-
   colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan",
                      "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))

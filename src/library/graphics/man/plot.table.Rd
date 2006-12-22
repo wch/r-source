@@ -20,7 +20,7 @@
   \item{xlab, ylab}{x- and y-axis labels.}
   \item{frame.plot}{logical indicating if a frame (\code{\link{box}})
     should be drawn in the 1D case.  Defaults to true when \code{x} has
-    \code{\link{dimnames}} coerceable to numbers.}
+    \code{\link{dimnames}} coerce-able to numbers.}
   \item{\dots}{further graphical arguments, see \code{\link{plot.default}}.}
 }
 \details{
