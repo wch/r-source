@@ -1007,7 +1007,7 @@ dnl substitute RODBC_CPPFLAGS and LIBS
 AC_SUBST(RODBC_CPPFLAGS)
 AC_SUBST(LIBS)
 AC_CONFIG_HEADERS([src/config.h])
-dnl and do subsitution in the src/Makevars.in and src/config.h
+dnl and do substitution in the src/Makevars.in and src/config.h
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
 @end smallexample
@@ -4802,7 +4802,7 @@ encoding names are not standardized, and not all @R{} builds support
 re-encoding. (The argument is ignored with a warning if re-encoding is
 not supported at all: @R{} code can test for this @emph{via}
 @code{capabilities("iconv")}.)  But this can be useful to allow code to
-work in a UTF-8 locale by specifiying @code{ENCODING = "latin1"}.
+work in a UTF-8 locale by specifying @code{ENCODING = "latin1"}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
@@ -5613,7 +5613,7 @@ For many purposes it is sufficient to allocate @R{} objects and
 manipulate those.  There are quite a few @code{alloc@var{Xxx}} functions
 defined in @file{Rinternals.h}---you may want to explore them.  These
 allocate @R{} objects of various types, and for the standard vector
-types there are equlvalent @code{NEW_@var{XXX}} macros defined in
+types there are equivalent @code{NEW_@var{XXX}} macros defined in
 @file{Rdefines.h}.
 
 If storage is required for C objects during the calculations this is
@@ -8980,7 +8980,7 @@ the @pkg{tcltk} package.
 @node Threading issues,  , Meshing event loops, Embedding R under Unix-alikes
 @subsection Threading issues
 
-Enbedded @R{} is designed to be run in the main thread, and all the
+Embedded @R{} is designed to be run in the main thread, and all the
 testing is done in that context.  There is a potential issue with the
 stack-checking mechanism where threads are involved.  This uses two
 variables declared in @file{Rinterface.h} (if @code{CSTACK_DEFNS} is
