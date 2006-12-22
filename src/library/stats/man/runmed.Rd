@@ -105,7 +105,7 @@ with(cars, lines(speed, runmed(dist, k = 3), col = 2))
 ## nice quadratic with a few outliers
 y <- ys <- (-20:20)^2
 y [c(1,10,21,41)] <- c(150, 30, 400, 450)
-all(y == runmed(y, 1)) # 1-neigborhood <==> interpolation
+all(y == runmed(y, 1)) # 1-neigbourhood <==> interpolation
 plot(y) ## lines(y, lwd=.1, col="light gray")
 lines(lowess(seq(y),y, f = .3), col = "brown")
 lines(runmed(y, 7), lwd=2, col = "blue")

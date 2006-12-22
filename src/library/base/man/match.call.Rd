@@ -18,7 +18,7 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
   specified by their full names.
 }
 \details{
-  \code{match.call} is most commonly used in two circumstamces:
+  \code{match.call} is most commonly used in two circumstances:
   \itemize{
     \item To record the call for later re-use: for example most
     model-fitting functions record the call as element \code{call} of

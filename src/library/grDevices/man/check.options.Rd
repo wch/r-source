@@ -28,7 +28,7 @@ check.options(new, name.opt, reset = FALSE, assign.opt = FALSE,
   \item{override.check}{logical vector of length \code{length(new)} (or 1
     which entails recycling).
     For those \code{new[i]} where \code{override.check[i] == TRUE}, the
-    checks are overriden and the changes made anyway.}
+    checks are overridden and the changes made anyway.}
 }
 %% Source in ../R/postscript.R
 \value{

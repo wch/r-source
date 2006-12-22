@@ -77,7 +77,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{xpd}{logical or NA indicating if clipping should be done, see
     \code{\link{par}(xpd = .)}.}
   \item{mar}{argument to \code{\link{par}(mar = *)}, typically choosing
-    smaller margings than by default.}
+    smaller margins than by default.}
   \item{\dots}{further arguments, passed to the first call of
     \code{plot()}, see \code{\link{plot.default}} and to
     \code{\link{box}()} if \code{frame.plot} is true.}

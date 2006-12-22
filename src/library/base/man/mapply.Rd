@@ -20,7 +20,7 @@ Vectorize(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
 }
 \arguments{
   \item{FUN}{function to apply, found via \code{\link{match.fun}}.}
-  \item{\dots}{arguments to vectorise over (list or vector).}
+  \item{\dots}{arguments to vectorize over (list or vector).}
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
   \item{SIMPLIFY}{logical; attempt to reduce the result to a vector or matrix?}
   \item{USE.NAMES}{logical; use names if the first \dots argument has

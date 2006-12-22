@@ -326,7 +326,7 @@ setDataPart(object, value)
       consulting the definition of the class.  Called from the C code
       that assigns slots.
 
-      For privileged slots (those that can only be set by accesor
+      For privileged slots (those that can only be set by accessor
       functions defined along with the class itself), the class designer
       may choose to improve efficiency by validating the value to be
       assigned in the accessor function and then calling \code{slot<-}

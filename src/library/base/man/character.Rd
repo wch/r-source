@@ -30,7 +30,7 @@ is.character(x)
   \code{DBL_DIG}, which will be 15 on machines supporting IEC60559
   arithmetic according to the C99 standard).  This ensures that all the
   digits in the result will be reliable (and not the result of
-  representation error), but does mean that coversion to character and
+  representation error), but does mean that conversion to character and
   back to numeric may change the number.  If you want to convert numbers
   to character with the maximum possible precision, use
   \code{\link{format}}.

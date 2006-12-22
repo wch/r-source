@@ -128,7 +128,7 @@ get("N", envir=env)
 ## Uses of local()
 ##
 
-# Mutual recursives.
+# Mutually recursive.
 # gg gets value of last assignment, an anonymous version of f.
 
 gg <- local({

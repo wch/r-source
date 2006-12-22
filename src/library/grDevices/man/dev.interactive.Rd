@@ -13,7 +13,7 @@ dev.interactive(orNone = FALSE)
     \code{\link{getOption}("device")} is among the interactive devices.}
 }
 \value{
-  \code{dev.interactive()} returns a logical, \code{TRUE} iff an
+  \code{dev.interactive()} returns a logical, \code{TRUE} if and only if an
   interactive (screen) device is in use.
 }
 \details{

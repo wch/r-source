@@ -34,7 +34,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
  \item{nknots}{integer giving the number of knots to use when
    \code{all.knots=FALSE}.  Per default, this is less than \eqn{n}, the
    number of unique \code{x} values for \eqn{n > 49}.}
- \item{keep.data}{logical specifiying if the input data should be kept
+ \item{keep.data}{logical specifying if the input data should be kept
    in the result.  If \code{TRUE} (as per default), fitted values and
    residuals are available from the result.}
  \item{df.offset}{allows the degrees of freedom to be increased by
