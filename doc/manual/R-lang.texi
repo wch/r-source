@@ -1600,7 +1600,7 @@ set elements to @code{NA} using @code{is.na<-}.
 
 As from @R{} 2.5.0 there are constants @code{NA_integer_},
 @code{NA_real_}, @code{NA_complex_} and @code{NA_character_} which will
-generate (in the parser) an @code{NA} value of the approrpriate type,
+generate (in the parser) an @code{NA} value of the appropriate type,
 and will be used in deparsing when it is not otherwise possible to
 identify the type of an @code{NA} (and the @code{control} options ask
 for this to be done).
@@ -3826,7 +3826,7 @@ FORTRAN code respectively, but the @code{.C} function can be used with
 other languages which can generate C interfaces, for example C++.
 
 Functions @code{.Call} and @code{.External} provide interfaces which allow
-compiled code (primarily compiled @C{} code) to mainipulate @R{} objects.
+compiled code (primarily compiled @C{} code) to manipulate @R{} objects.
 
 @node .Internal and .Primitive,  , Foreign language interfaces, System and foreign language interfaces
 @section .Internal and .Primitive
@@ -4380,7 +4380,7 @@ are generally accessed via @code{get} and @code{assign}, although they
 can also be represented by text strings in some limited circumstances
 when there is no ambiguity (e.g.@: @code{"x" <- 1}). As @code{get} and
 @code{assign} are not restricted to names that are identifiers they do
-not recognise subscripting operators or assigment functions. The
+not recognise subscripting operators or assignment functions. The
 following pairs are @emph{not} equivalent
 @findex get
 @findex assign

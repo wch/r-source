@@ -1331,7 +1331,7 @@ and install packages @pkg{pkg1} and @pkg{pkg2} by
 @end example
 
 @noindent
-The essential depedencies of the specified packages will also be fetched.
+The essential dependencies of the specified packages will also be fetched.
 Unless the library is specified (argument @code{lib}) the first library
 in the library search path is used: if this is not writable, @R{} will
 ask the user (in an interactive session) if the default user library
@@ -1797,7 +1797,7 @@ translation, the less specific catalogues are consulted.  For example,
 examples: there are catalogues for @samp{es}, which is Spanish as
 written in Spain and these will by default also be used in
 Spanish-speaking Latin American countries, and also for @samp{pt_BR},
-which are used for Brazlian locales but not for locales specifying
+which are used for Brazilian locales but not for locales specifying
 Portugal.
 
 Translations in the right language but the wrong charset be made use of
@@ -3095,7 +3095,7 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 @noindent
 Note particularly the last, which is needed to ensure that a shared
 version of @code{libc} is found.  The flag @option{-Kieee} ensures strict
-compilance to IEC60659.  Also,
+compliance to IEC60659.  Also,
 @url{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
 suggests that @option{-pc64} may be desirable.
 
@@ -3566,7 +3566,7 @@ hardware/OS platform.  These include
 @strong{Floating Point Arithmetic}: @R{} requires arithmetic compliant
 with @acronym{IEC}@tie{}60559, also know as @acronym{IEEE}@tie{}754.
 This mandates the use of plus and minus infinity and @code{NaN} (not a
-number) as well as specific details of rounding.  Althugh almost all
+number) as well as specific details of rounding.  Although almost all
 current FPUs can support this, selecting such support can be a pain.
 The problem is that there is no agreement on how to set the signalling
 behaviour; Sun/Sparc, SGI/IRIX and @cputype{ix86} Linux require no
@@ -3708,9 +3708,9 @@ Solaris, whereas @code{jre}@tie{}1.5.0 and @code{j2re}@tie{}1.4.2_01
 We have not seen any problems on Windows provided a Java Virtual Machine
 has been installed and is operational: Sun's current
 @code{j2re}@tie{}1.5.0 works in Internet Explorer, Netscape@tie{}7.x,
-Mozilla@tie{}1.6/7 and Mozilla FireFox on Windows XP.  Note that a
+Mozilla@tie{}1.6/7 and Mozilla Firefox on Windows XP.  Note that a
 recent Windows system may not have a JVM installed at all.  For
-Netscape/Mozilla/FireFox visit
+Netscape/Mozilla/Firefox visit
 @url{http://java.sun.com/getjava/manual.html,
 @code{java.sun.com/getjava/manual.html}} to install a Sun JVM.  Which
 (if any) JVM is enabled can be set in `Set Program Access and Defaults'
