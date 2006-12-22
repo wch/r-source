@@ -46,7 +46,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
 }
 \details{
   By default, an X11 device will use the best color rendering
-  strategy that it can.  The choice can be overriden with the
+  strategy that it can.  The choice can be overridden with the
   \code{colortype} parameter.  A value of \code{"mono"} results in
   black and white graphics, \code{"gray"} in grayscale and
   \code{"true"} in truecolor graphics (if this is possible).  The

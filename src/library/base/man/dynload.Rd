@@ -133,7 +133,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 
   \code{is.loaded} checks if the symbol name is loaded and hence
   available for use in \code{.C} or \code{.Fortran} or \code{.Call} or
-  \code{.Exernal}: it requires the name you would give to \code{.C} etc
+  \code{.External}: it requires the name you would give to \code{.C} etc
   and \strong{not} (as in S) that remapped by deprecated functions
   \code{\link{symbol.C}} or \code{\link{symbol.For}}.  It will succeed
   if any one of the four calling functions would succeed in using the

@@ -42,7 +42,7 @@ extern double atanh(double x);
 /* y vector length n of observations
    Z vector length p for observation equation y_t = Za_t +  eps_t
    a vector length p of initial state
-   P p x p matrix for initial state uncertainty (contempareneous)
+   P p x p matrix for initial state uncertainty (contemparaneous)
    T  p x p transition matrix
    V  p x p = RQR'
    h = var(eps_t)

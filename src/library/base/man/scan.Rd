@@ -127,7 +127,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
     The escapes which are interpreted are the control characters
     \code{\a, \b, \f, \n, \r, \t, \v} and octal and
-    hexadecimal representatons like \code{\040} and \code{\0x2A}.  Any
+    hexadecimal representations like \code{\040} and \code{\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
   }
 }

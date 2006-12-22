@@ -80,7 +80,7 @@ sys.save.image(name)
   are not loaded, and given an error if none are.  This function is not
   meant to be called by users, and its interface might change in future
   versions.  Note that currently \code{package} must include the
-  version mumber if versioned installs are used.
+  version number if versioned installs are used.
 
   \code{.getRequiredPackages2} attaches all the packages mentioned in the
   \code{Depends} field: failure to find a package is an error.  It also

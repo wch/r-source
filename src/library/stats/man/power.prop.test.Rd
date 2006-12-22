@@ -38,7 +38,7 @@ power.prop.test(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
   \code{note} elements. 
 }
 \author{Peter Dalgaard.  Based on previous work by Claus
-  \enc{Ekstrøm}{Ekstrom}}
+  \enc{Ekstrøm}{Ekstroem}}
 
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so

@@ -24,7 +24,7 @@ checkVignettes(package, dir, lib.loc = NULL, tangle = TRUE,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
     to search for \code{package}.}
-  \item{tangle}{Perform a tangle and \code{\link{source}} the extraced code?}
+  \item{tangle}{Perform a tangle and \code{\link{source}} the extracted code?}
   \item{weave}{Perform a weave?}
   \item{workdir}{Directory used as working directory while checking the
     vignettes. If \code{"tmp"} then a temporary directory is created,

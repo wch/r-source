@@ -38,7 +38,7 @@
   defining how the function is being used as a method.  The
   \code{target} slot is the class signature for which the method will
   be dispatched, and the \code{defined} slot the signature for which
-  the method was orignally specified (that is, the one that appeared
+  the method was originally specified (that is, the one that appeared
   in some call to \code{\link{setMethod}}).
 }
 \seealso{class \code{\link{MethodsList-class}} for the objects

@@ -205,7 +205,7 @@ typedef enum {
 } LJustification;
 
 /* An arbitrarily-oriented rectangle.
- * The vertices are assumed to be in order going anitclockwise 
+ * The vertices are assumed to be in order going anticlockwise 
  * around the rectangle.
  */
 typedef struct {

@@ -23,7 +23,7 @@ biplot(x, \dots)
     single colour is specified it will be used for both sets.  If
     missing the default colour is looked for in the
     \code{\link{palette}}: if there it and the next colour as used,
-    otherwise the first two colours of the paletter are used.}
+    otherwise the first two colours of the palette are used.}
   \item{cex}{The character expansion factor used for labelling the
     points. The labels can be of different sizes for the two sets by
     supplying a vector of length two.}

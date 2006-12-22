@@ -30,7 +30,7 @@ as.single(x, \dots)
   \code{as.double} attempts to coerce its argument to be of double
   type: like \code{\link{as.vector}} it strips attributes including
   names.  Character strings containing either a decimal representation or a
-  heaxadecimal representation (starting with \code{0x} or \code{0X}) can
+  hexadecimal representation (starting with \code{0x} or \code{0X}) can
   be converted.
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on

@@ -225,7 +225,7 @@ addNextMethod(method, f, mlist, optional, envir)
       not that of the current R base package implementation.  But beware
       that it works reliably only if no assignment has yet been made to
       the argument.  (For method dispatch this is fine, because
-      computations are done at the begining of the call.)
+      computations are done at the beginning of the call.)
     }
 
     \item{\code{balanceMethodsList}:}{

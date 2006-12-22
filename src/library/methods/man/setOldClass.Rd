@@ -44,7 +44,7 @@
   Register an old-style (a.k.a. `S3') class as a formally defined
   class. The \code{Classes} argument is the character vector used as the
   \code{class} attribute; in particular, if there is more than one
-  string,  old-style class inheritance is mimiced.  Registering via
+  string,  old-style class inheritance is mimicked.  Registering via
   \code{setOldClass} allows S3 classes to appear  in method
   signatures, and as a slot in an S4 class if a prototype is included.
 }

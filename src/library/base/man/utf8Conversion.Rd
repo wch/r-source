@@ -1,7 +1,7 @@
 \name{utf8Conversion}
 \alias{utf8ToInt}
 \alias{intToUtf8}
-\title{Convert to or from UTF-8-enconded Character Vectors}
+\title{Convert to or from UTF-8-encoded Character Vectors}
 \description{
   Conversion of UTF-8 encoded character vectors to and from integer vectors.
 }

@@ -9,7 +9,7 @@
   extend it are formal classes analogous to S language structures such
   as arrays and time-series}
 \usage{
-## The folowing class names can appear in method signatures,
+## The following class names can appear in method signatures,
 ## as the class in as() and is() expressions, and, except for
 ## the classes commented as VIRTUAL, in calls to new()
 

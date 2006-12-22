@@ -75,7 +75,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   For \code{KalmanForecast}, a list with components \code{pred}, the
   predictions, and \code{var}, the unscaled variances of the prediction
-  errors (to be muliplied by \code{s2}).
+  errors (to be multiplied by \code{s2}).
 
   For \code{makeARIMA}, a model list including components for
   its arguments.

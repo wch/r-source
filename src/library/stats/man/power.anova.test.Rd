@@ -31,7 +31,7 @@ power.anova.test(groups = NULL, n = NULL, between.var = NULL,
   \code{note} elements. 
 }
 
-\author{Claus \enc{Ekstrøm}{Ekstrom}}
+\author{Claus \enc{Ekstrøm}{Ekstroem}}
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so
   you may see errors from it, notably about inability to bracket the
