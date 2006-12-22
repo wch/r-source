@@ -1,10 +1,6 @@
-apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any",
-                     character.only = FALSE)
+apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any")
 {
-    if(character.only)
-	stopifnot(is.character(what))
-    else
-	what <- as.character(substitute(what))
+    stopifnot(is.character(what))
     x <- character(0)
     check.mode <- mode != "any"
     for (i in seq_along(search())) {
@@ -23,11 +19,9 @@ apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any",
     x
 }
 
-find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE,
-		 character.only = is.character(what))
+find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE)
 {
-    if(!character.only)
-	what <- as.character(substitute(what))
+    stopifnot(is.character(what))
     if(length(what) > 1) {
         warning("elements of 'what' after the first will be ignored")
         what <- what[1]

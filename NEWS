@@ -15,6 +15,9 @@ USER-VISIBLE CHANGES
 
     o	abs(x) now returns integer for integer or logical arguments.
 
+    o	apropos(x) and find(x) now both only work for character 'x',
+	and hence drop all non-standard evaluation behavior.
+
     o	as.matrix(<data frame with trivial rownames>) now has NULL
 	rownames.  Consequently, e.g., t(.) for such data frames has NULL
 	column names.  This change leads to memory reductions in several
@@ -160,10 +163,6 @@ NEW FEATURES
     o	apropos() has a new argument 'ignore.case' which defaults to TRUE,
 	potentially matching more than previously, thanks to a suggestion
 	by Seth Falcon.
-
-    o	Both apropos() and find() have a new 'character.only' argument
-	which allows to turn-off non-standard evaluation; also e.g.,
-	apropos(fit) now works.
 
     o	.libPaths() now does both tilde and glob expansion.
 
