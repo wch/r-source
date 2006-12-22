@@ -1,9 +1,8 @@
       SUBROUTINE DOPGTR( UPLO, N, AP, TAU, Q, LDQ, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -162,10 +161,9 @@
       SUBROUTINE DOPMTR( SIDE, UPLO, TRANS, M, N, AP, TAU, C, LDC, WORK,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS, UPLO
@@ -419,10 +417,9 @@
       END
       SUBROUTINE DORG2L( M, N, K, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, M, N
@@ -547,10 +544,9 @@
       END
       SUBROUTINE DORG2R( M, N, K, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, M, N
@@ -677,10 +673,9 @@
       END
       SUBROUTINE DORGBR( VECT, M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          VECT
@@ -753,7 +748,7 @@
 *          reflector H(i) or G(i), which determines Q or P**T, as
 *          returned by DGEBRD in its array argument TAUQ or TAUP.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -922,10 +917,9 @@
       END
       SUBROUTINE DORGHR( N, ILO, IHI, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            IHI, ILO, INFO, LDA, LWORK, N
@@ -968,7 +962,7 @@
 *          TAU(i) must contain the scalar factor of the elementary
 *          reflector H(i), as returned by DGEHRD.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -1087,10 +1081,9 @@
       END
       SUBROUTINE DORGL2( M, N, K, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, M, N
@@ -1221,10 +1214,9 @@
       END
       SUBROUTINE DORGLQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, LWORK, M, N
@@ -1270,7 +1262,7 @@
 *          TAU(i) must contain the scalar factor of the elementary
 *          reflector H(i), as returned by DGELQF.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -1437,10 +1429,9 @@
       END
       SUBROUTINE DORGQL( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, LWORK, M, N
@@ -1487,7 +1478,7 @@
 *          TAU(i) must contain the scalar factor of the elementary
 *          reflector H(i), as returned by DGEQLF.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -1530,9 +1521,6 @@
 *     Test the input arguments
 *
       INFO = 0
-      NB = ILAENV( 1, 'DORGQL', ' ', M, N, K, -1 )
-      LWKOPT = MAX( 1, N )*NB
-      WORK( 1 ) = LWKOPT
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -1542,9 +1530,22 @@
          INFO = -3
       ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
          INFO = -5
-      ELSE IF( LWORK.LT.MAX( 1, N ) .AND. .NOT.LQUERY ) THEN
-         INFO = -8
       END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( N.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            NB = ILAENV( 1, 'DORGQL', ' ', M, N, K, -1 )
+            LWKOPT = N*NB
+         END IF
+         WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.MAX( 1, N ) .AND. .NOT.LQUERY ) THEN
+            INFO = -8
+         END IF
+      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DORGQL', -INFO )
          RETURN
@@ -1555,7 +1556,6 @@
 *     Quick return if possible
 *
       IF( N.LE.0 ) THEN
-         WORK( 1 ) = 1
          RETURN
       END IF
 *
@@ -1651,10 +1651,9 @@
       END
       SUBROUTINE DORGQR( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, LWORK, M, N
@@ -1701,7 +1700,7 @@
 *          TAU(i) must contain the scalar factor of the elementary
 *          reflector H(i), as returned by DGEQRF.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -1868,10 +1867,9 @@
       END
       SUBROUTINE DORGR2( M, N, K, A, LDA, TAU, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, M, N
@@ -2000,10 +1998,9 @@
       END
       SUBROUTINE DORGRQ( M, N, K, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, K, LDA, LWORK, M, N
@@ -2050,7 +2047,7 @@
 *          TAU(i) must contain the scalar factor of the elementary
 *          reflector H(i), as returned by DGERQF.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -2093,9 +2090,6 @@
 *     Test the input arguments
 *
       INFO = 0
-      NB = ILAENV( 1, 'DORGRQ', ' ', M, N, K, -1 )
-      LWKOPT = MAX( 1, M )*NB
-      WORK( 1 ) = LWKOPT
       LQUERY = ( LWORK.EQ.-1 )
       IF( M.LT.0 ) THEN
          INFO = -1
@@ -2105,9 +2099,22 @@
          INFO = -3
       ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
          INFO = -5
-      ELSE IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
-         INFO = -8
       END IF
+*
+      IF( INFO.EQ.0 ) THEN
+         IF( M.LE.0 ) THEN
+            LWKOPT = 1
+         ELSE
+            NB = ILAENV( 1, 'DORGRQ', ' ', M, N, K, -1 )
+            LWKOPT = M*NB
+         END IF
+         WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
+            INFO = -8
+         END IF
+      END IF
+*
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DORGRQ', -INFO )
          RETURN
@@ -2118,7 +2125,6 @@
 *     Quick return if possible
 *
       IF( M.LE.0 ) THEN
-         WORK( 1 ) = 1
          RETURN
       END IF
 *
@@ -2214,10 +2220,9 @@
       END
       SUBROUTINE DORGTR( UPLO, N, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -2262,7 +2267,7 @@
 *          TAU(i) must contain the scalar factor of the elementary
 *          reflector H(i), as returned by DSYTRD.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -2399,10 +2404,9 @@
       SUBROUTINE DORM2L( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -2593,10 +2597,9 @@
       SUBROUTINE DORM2R( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -2791,10 +2794,9 @@
       SUBROUTINE DORMBR( VECT, SIDE, TRANS, M, N, K, A, LDA, TAU, C,
      $                   LDC, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS, VECT
@@ -2888,7 +2890,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -3073,10 +3075,9 @@
       SUBROUTINE DORMHR( SIDE, TRANS, M, N, ILO, IHI, A, LDA, TAU, C,
      $                   LDC, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -3151,7 +3152,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -3275,10 +3276,9 @@
       SUBROUTINE DORML2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -3473,10 +3473,9 @@
       SUBROUTINE DORMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -3548,7 +3547,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -3741,10 +3740,9 @@
       SUBROUTINE DORMQL( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -3816,7 +3814,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -3874,10 +3872,10 @@
 *
       IF( LEFT ) THEN
          NQ = M
-         NW = N
+         NW = MAX( 1, N )
       ELSE
          NQ = N
-         NW = M
+         NW = MAX( 1, M )
       END IF
       IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
          INFO = -1
@@ -3893,19 +3891,25 @@
          INFO = -7
       ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
          INFO = -10
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -12
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
 *
-*        Determine the block size.  NB may be at most NBMAX, where NBMAX
-*        is used to define the local array T.
+*           Determine the block size.  NB may be at most NBMAX, where
+*           NBMAX is used to define the local array T.
 *
-         NB = MIN( NBMAX, ILAENV( 1, 'DORMQL', SIDE // TRANS, M, N, K,
-     $        -1 ) )
-         LWKOPT = MAX( 1, NW )*NB
+            NB = MIN( NBMAX, ILAENV( 1, 'DORMQL', SIDE // TRANS, M, N,
+     $                               K, -1 ) )
+            LWKOPT = NW*NB
+         END IF
          WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.NW .AND. .NOT.LQUERY ) THEN
+            INFO = -12
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -3917,8 +3921,7 @@
 *
 *     Quick return if possible
 *
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 ) THEN
-         WORK( 1 ) = 1
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
          RETURN
       END IF
 *
@@ -3998,10 +4001,9 @@
       SUBROUTINE DORMQR( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -4073,7 +4075,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -4259,10 +4261,9 @@
       SUBROUTINE DORMR2( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -4453,10 +4454,9 @@
       SUBROUTINE DORMR3( SIDE, TRANS, M, N, K, L, A, LDA, TAU, C, LDC,
      $                   WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -4660,10 +4660,9 @@
       SUBROUTINE DORMRQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -4735,7 +4734,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -4794,10 +4793,10 @@
 *
       IF( LEFT ) THEN
          NQ = M
-         NW = N
+         NW = MAX( 1, N )
       ELSE
          NQ = N
-         NW = M
+         NW = MAX( 1, M )
       END IF
       IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
          INFO = -1
@@ -4813,19 +4812,25 @@
          INFO = -7
       ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
          INFO = -10
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -12
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+            LWKOPT = 1
+         ELSE
 *
-*        Determine the block size.  NB may be at most NBMAX, where NBMAX
-*        is used to define the local array T.
+*           Determine the block size.  NB may be at most NBMAX, where
+*           NBMAX is used to define the local array T.
 *
-         NB = MIN( NBMAX, ILAENV( 1, 'DORMRQ', SIDE // TRANS, M, N, K,
-     $        -1 ) )
-         LWKOPT = MAX( 1, NW )*NB
+            NB = MIN( NBMAX, ILAENV( 1, 'DORMRQ', SIDE // TRANS, M, N,
+     $                               K, -1 ) )
+            LWKOPT = NW*NB
+         END IF
          WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.NW .AND. .NOT.LQUERY ) THEN
+            INFO = -12
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -4837,8 +4842,7 @@
 *
 *     Quick return if possible
 *
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 ) THEN
-         WORK( 1 ) = 1
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
          RETURN
       END IF
 *
@@ -4924,10 +4928,9 @@
       SUBROUTINE DORMRZ( SIDE, TRANS, M, N, K, L, A, LDA, TAU, C, LDC,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS
@@ -5004,7 +5007,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -5069,10 +5072,10 @@
 *
       IF( LEFT ) THEN
          NQ = M
-         NW = N
+         NW = MAX( 1, N )
       ELSE
          NQ = N
-         NW = M
+         NW = MAX( 1, M )
       END IF
       IF( .NOT.LEFT .AND. .NOT.LSAME( SIDE, 'R' ) ) THEN
          INFO = -1
@@ -5091,19 +5094,24 @@
          INFO = -8
       ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
          INFO = -11
-      ELSE IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
-         INFO = -13
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+            LWKOPT = 1
 *
-*        Determine the block size.  NB may be at most NBMAX, where NBMAX
-*        is used to define the local array T.
+*           Determine the block size.  NB may be at most NBMAX, where
+*           NBMAX is used to define the local array T.
 *
-         NB = MIN( NBMAX, ILAENV( 1, 'DORMRQ', SIDE // TRANS, M, N, K,
-     $        -1 ) )
-         LWKOPT = MAX( 1, NW )*NB
+            NB = MIN( NBMAX, ILAENV( 1, 'DORMRQ', SIDE // TRANS, M, N,
+     $                               K, -1 ) )
+            LWKOPT = NW*NB
+         END IF
          WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.MAX( 1, NW ) .AND. .NOT.LQUERY ) THEN
+            INFO = -13
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -5115,7 +5123,7 @@
 *
 *     Quick return if possible
 *
-      IF( M.EQ.0 .OR. N.EQ.0 .OR. K.EQ.0 ) THEN
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
          WORK( 1 ) = 1
          RETURN
       END IF
@@ -5212,10 +5220,9 @@
       SUBROUTINE DORMTR( SIDE, UPLO, TRANS, M, N, A, LDA, TAU, C, LDC,
      $                   WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          SIDE, TRANS, UPLO
@@ -5288,7 +5295,7 @@
 *  LDC     (input) INTEGER
 *          The leading dimension of the array C. LDC >= max(1,M).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -5435,10 +5442,11 @@
       SUBROUTINE DPBCON( UPLO, N, KD, AB, LDAB, ANORM, RCOND, WORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -5513,6 +5521,9 @@
       INTEGER            IX, KASE
       DOUBLE PRECISION   AINVNM, SCALE, SCALEL, SCALEU, SMLNUM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       INTEGER            IDAMAX
@@ -5520,7 +5531,7 @@
       EXTERNAL           LSAME, IDAMAX, DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLATBS, DRSCL, XERBLA
+      EXTERNAL           DLACN2, DLATBS, DRSCL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS
@@ -5564,7 +5575,7 @@
       KASE = 0
       NORMIN = 'N'
    10 CONTINUE
-      CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+      CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
       IF( KASE.NE.0 ) THEN
          IF( UPPER ) THEN
 *
@@ -5622,10 +5633,9 @@
       END
       SUBROUTINE DPBEQU( UPLO, N, KD, AB, LDAB, S, SCOND, AMAX, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -5790,10 +5800,11 @@
       SUBROUTINE DPBRFS( UPLO, N, KD, NRHS, AB, LDAB, AFB, LDAFB, B,
      $                   LDB, X, LDX, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -5909,8 +5920,11 @@
       INTEGER            COUNT, I, J, K, KASE, L, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DPBTRS, DSBMV, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DPBTRS, DSBMV, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX, MIN
@@ -6069,7 +6083,7 @@
 *        is incremented by SAFE1 if the i-th component of
 *        abs(A)*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(A) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(A)*abs(X)+abs(B) )))
 *
@@ -6083,8 +6097,8 @@
 *
          KASE = 0
   100    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -6126,10 +6140,9 @@
       END
       SUBROUTINE DPBSTF( UPLO, N, KD, AB, LDAB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -6377,10 +6390,9 @@
       END
       SUBROUTINE DPBTF2( UPLO, N, KD, AB, LDAB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -6572,10 +6584,9 @@
       END
       SUBROUTINE DPBTRF( UPLO, N, KD, AB, LDAB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -6937,10 +6948,9 @@
       END
       SUBROUTINE DPBTRS( UPLO, N, KD, NRHS, AB, LDAB, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -7084,10 +7094,11 @@
       SUBROUTINE DPOCON( UPLO, N, A, LDA, ANORM, RCOND, WORK, IWORK,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -7154,6 +7165,9 @@
       INTEGER            IX, KASE
       DOUBLE PRECISION   AINVNM, SCALE, SCALEL, SCALEU, SMLNUM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       INTEGER            IDAMAX
@@ -7161,7 +7175,7 @@
       EXTERNAL           LSAME, IDAMAX, DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLATRS, DRSCL, XERBLA
+      EXTERNAL           DLACN2, DLATRS, DRSCL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX
@@ -7203,7 +7217,7 @@
       KASE = 0
       NORMIN = 'N'
    10 CONTINUE
-      CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+      CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
       IF( KASE.NE.0 ) THEN
          IF( UPPER ) THEN
 *
@@ -7256,10 +7270,9 @@
       END
       SUBROUTINE DPOEQU( N, A, LDA, S, SCOND, AMAX, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, N
@@ -7394,10 +7407,11 @@
       SUBROUTINE DPORFS( UPLO, N, NRHS, A, LDA, AF, LDAF, B, LDB, X,
      $                   LDX, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -7510,8 +7524,11 @@
       INTEGER            COUNT, I, J, K, KASE, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DPOTRS, DSYMV, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DPOTRS, DSYMV, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX
@@ -7665,7 +7682,7 @@
 *        is incremented by SAFE1 if the i-th component of
 *        abs(A)*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(A) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(A)*abs(X)+abs(B) )))
 *
@@ -7679,8 +7696,8 @@
 *
          KASE = 0
   100    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -7720,10 +7737,9 @@
       END
       SUBROUTINE DPOTF2( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -7888,10 +7904,9 @@
       END
       SUBROUTINE DPOTRF( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -8072,10 +8087,9 @@
       END
       SUBROUTINE DPOTRI( UPLO, N, A, LDA, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -8169,10 +8183,9 @@
       END
       SUBROUTINE DPOTRS( UPLO, N, NRHS, A, LDA, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -8302,10 +8315,11 @@
       END
       SUBROUTINE DPPCON( UPLO, N, AP, ANORM, RCOND, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -8374,6 +8388,9 @@
       INTEGER            IX, KASE
       DOUBLE PRECISION   AINVNM, SCALE, SCALEL, SCALEU, SMLNUM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       INTEGER            IDAMAX
@@ -8381,7 +8398,7 @@
       EXTERNAL           LSAME, IDAMAX, DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLATPS, DRSCL, XERBLA
+      EXTERNAL           DLACN2, DLATPS, DRSCL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS
@@ -8421,7 +8438,7 @@
       KASE = 0
       NORMIN = 'N'
    10 CONTINUE
-      CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+      CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
       IF( KASE.NE.0 ) THEN
          IF( UPPER ) THEN
 *
@@ -8474,10 +8491,9 @@
       END
       SUBROUTINE DPPEQU( UPLO, N, AP, S, SCOND, AMAX, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -8644,10 +8660,11 @@
       SUBROUTINE DPPRFS( UPLO, N, NRHS, AP, AFP, B, LDB, X, LDX, FERR,
      $                   BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -8754,8 +8771,11 @@
       INTEGER            COUNT, I, IK, J, K, KASE, KK, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DPPTRS, DSPMV, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DPPTRS, DSPMV, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX
@@ -8912,7 +8932,7 @@
 *        is incremented by SAFE1 if the i-th component of
 *        abs(A)*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(A) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(A)*abs(X)+abs(B) )))
 *
@@ -8926,8 +8946,8 @@
 *
          KASE = 0
   100    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -8967,10 +8987,9 @@
       END
       SUBROUTINE DPPTRF( UPLO, N, AP, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -9145,10 +9164,9 @@
       END
       SUBROUTINE DPPTRI( UPLO, N, AP, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -9274,10 +9292,9 @@
       END
       SUBROUTINE DPPTRS( UPLO, N, NRHS, AP, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -9409,10 +9426,9 @@
       END
       SUBROUTINE DPTCON( N, D, E, ANORM, RCOND, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, N
@@ -9559,10 +9575,9 @@
       END
       SUBROUTINE DPTEQR( COMPZ, N, D, E, Z, LDZ, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPZ
@@ -9750,10 +9765,9 @@
       SUBROUTINE DPTRFS( N, NRHS, D, E, DF, EF, B, LDB, X, LDX, FERR,
      $                   BERR, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDB, LDX, N, NRHS
@@ -10051,10 +10065,9 @@
       END
       SUBROUTINE DPTSV( N, NRHS, D, E, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 25, 1997
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDB, N, NRHS
@@ -10152,10 +10165,9 @@
       SUBROUTINE DPTSVX( FACT, N, NRHS, D, E, DF, EF, B, LDB, X, LDX,
      $                   RCOND, FERR, BERR, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          FACT
@@ -10348,9 +10360,8 @@
 *
 *        Return if INFO is non-zero.
 *
-         IF( INFO.NE.0 ) THEN
-            IF( INFO.GT.0 )
-     $         RCOND = ZERO
+         IF( INFO.GT.0 )THEN
+            RCOND = ZERO
             RETURN
          END IF
       END IF
@@ -10363,11 +10374,6 @@
 *
       CALL DPTCON( N, DF, EF, ANORM, RCOND, WORK, INFO )
 *
-*     Set INFO = N+1 if the matrix is singular to working precision.
-*
-      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
-     $   INFO = N + 1
-*
 *     Compute the solution vectors X.
 *
       CALL DLACPY( 'Full', N, NRHS, B, LDB, X, LDX )
@@ -10379,6 +10385,11 @@
       CALL DPTRFS( N, NRHS, D, E, DF, EF, B, LDB, X, LDX, FERR, BERR,
      $             WORK, INFO )
 *
+*     Set INFO = N+1 if the matrix is singular to working precision.
+*
+      IF( RCOND.LT.DLAMCH( 'Epsilon' ) )
+     $   INFO = N + 1
+*
       RETURN
 *
 *     End of DPTSVX
@@ -10386,10 +10397,9 @@
       END
       SUBROUTINE DPTTRF( N, D, E, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, N
@@ -10429,7 +10439,7 @@
 *          > 0: if INFO = k, the leading minor of order k is not
 *               positive definite; if k < N, the factorization could not
 *               be completed, while if k = N, the factorization was
-*               completed, but D(N) = 0.
+*               completed, but D(N) <= 0.
 *
 *  =====================================================================
 *
@@ -10539,10 +10549,9 @@
       END
       SUBROUTINE DPTTRS( N, NRHS, D, E, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDB, N, NRHS
@@ -10654,10 +10663,9 @@
       END
       SUBROUTINE DPTTS2( N, NRHS, D, E, B, LDB )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            LDB, N, NRHS
@@ -10749,10 +10757,9 @@
       SUBROUTINE DSBGST( VECT, UPLO, N, KA, KB, AB, LDAB, BB, LDBB, X,
      $                   LDX, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO, VECT
@@ -10873,7 +10880,7 @@
          INFO = -3
       ELSE IF( KA.LT.0 ) THEN
          INFO = -4
-      ELSE IF( KB.LT.0 ) THEN
+      ELSE IF( KB.LT.0 .OR. KB.GT.KA ) THEN
          INFO = -5
       ELSE IF( LDAB.LT.KA+1 ) THEN
          INFO = -7
@@ -12095,10 +12102,9 @@
       SUBROUTINE DSBTRD( VECT, UPLO, N, KD, AB, LDAB, D, E, Q, LDQ,
      $                   WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO, VECT
@@ -12648,10 +12654,11 @@
       SUBROUTINE DSPCON( UPLO, N, AP, IPIV, ANORM, RCOND, WORK, IWORK,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -12721,12 +12728,15 @@
       INTEGER            I, IP, KASE
       DOUBLE PRECISION   AINVNM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DSPTRS, XERBLA
+      EXTERNAL           DLACN2, DSPTRS, XERBLA
 *     ..
 *     .. Executable Statements ..
 *
@@ -12784,7 +12794,7 @@
 *
       KASE = 0
    30 CONTINUE
-      CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+      CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
       IF( KASE.NE.0 ) THEN
 *
 *        Multiply by inv(L*D*L') or inv(U*D*U').
@@ -12805,10 +12815,9 @@
       END
       SUBROUTINE DSPGST( ITYPE, UPLO, N, AP, BP, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -12839,7 +12848,7 @@
 *          = 1: compute inv(U**T)*A*inv(U) or inv(L)*A*inv(L**T);
 *          = 2 or 3: compute U*A*U**T or L**T*A*L.
 *
-*  UPLO    (input) CHARACTER
+*  UPLO    (input) CHARACTER*1
 *          = 'U':  Upper triangle of A is stored and B is factored as
 *                  U**T*U;
 *          = 'L':  Lower triangle of A is stored and B is factored as
@@ -13015,10 +13024,11 @@
       SUBROUTINE DSPRFS( UPLO, N, NRHS, AP, AFP, IPIV, B, LDB, X, LDX,
      $                   FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -13130,8 +13140,11 @@
       INTEGER            COUNT, I, IK, J, K, KASE, KK, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DSPMV, DSPTRS, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DSPMV, DSPTRS, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX
@@ -13288,7 +13301,7 @@
 *        is incremented by SAFE1 if the i-th component of
 *        abs(A)*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(A) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(A)*abs(X)+abs(B) )))
 *
@@ -13302,8 +13315,8 @@
 *
          KASE = 0
   100    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -13345,10 +13358,9 @@
       END
       SUBROUTINE DSPTRD( UPLO, N, AP, D, E, TAU, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -13574,10 +13586,9 @@
       END
       SUBROUTINE DSPTRF( UPLO, N, AP, IPIV, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -14122,10 +14133,9 @@
       END
       SUBROUTINE DSPTRI( UPLO, N, AP, IPIV, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -14457,10 +14467,9 @@
       END
       SUBROUTINE DSPTRS( UPLO, N, NRHS, AP, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -14837,10 +14846,10 @@
      $                   M, NSPLIT, W, IBLOCK, ISPLIT, WORK, IWORK,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*     8-18-00:  Increase FUDGE factor for T3E (eca)
 *
 *     .. Scalar Arguments ..
       CHARACTER          ORDER, RANGE
@@ -14872,14 +14881,14 @@
 *  Arguments
 *  =========
 *
-*  RANGE   (input) CHARACTER
+*  RANGE   (input) CHARACTER*1
 *          = 'A': ("All")   all eigenvalues will be found.
 *          = 'V': ("Value") all eigenvalues in the half-open interval
 *                           (VL, VU] will be found.
 *          = 'I': ("Index") the IL-th through IU-th eigenvalues (of the
 *                           entire matrix) will be found.
 *
-*  ORDER   (input) CHARACTER
+*  ORDER   (input) CHARACTER*1
 *          = 'B': ("By Block") the eigenvalues will be grouped by
 *                              split-off block (see IBLOCK, ISPLIT) and
 *                              ordered from smallest to largest within
@@ -15010,7 +15019,7 @@
       PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0, TWO = 2.0D0,
      $                   HALF = 1.0D0 / TWO )
       DOUBLE PRECISION   FUDGE, RELFAC
-      PARAMETER          ( FUDGE = 2.0D0, RELFAC = 2.0D0 )
+      PARAMETER          ( FUDGE = 2.1D0, RELFAC = 2.0D0 )
 *     ..
 *     .. Local Scalars ..
       LOGICAL            NCNVRG, TOOFEW
@@ -15485,64 +15494,51 @@
 *     End of DSTEBZ
 *
       END
-      SUBROUTINE DSTEGR( JOBZ, RANGE, N, D, E, VL, VU, IL, IU, ABSTOL,
-     $                   M, W, Z, LDZ, ISUPPZ, WORK, LWORK, IWORK,
-     $                   LIWORK, INFO )
+      SUBROUTINE DSTEGR( JOBZ, RANGE, N, D, E, VL, VU, IL, IU,
+     $           ABSTOL, M, W, Z, LDZ, ISUPPZ, WORK, LWORK, IWORK,
+     $           LIWORK, INFO )
+
+      IMPLICIT NONE
 *
-*  -- LAPACK computational routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*
+*  -- LAPACK computational routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBZ, RANGE
       INTEGER            IL, INFO, IU, LDZ, LIWORK, LWORK, M, N
-      DOUBLE PRECISION   ABSTOL, VL, VU
+      DOUBLE PRECISION ABSTOL, VL, VU
 *     ..
 *     .. Array Arguments ..
       INTEGER            ISUPPZ( * ), IWORK( * )
-      DOUBLE PRECISION   D( * ), E( * ), W( * ), WORK( * ), Z( LDZ, * )
+      DOUBLE PRECISION   D( * ), E( * ), W( * ), WORK( * )
+      DOUBLE PRECISION   Z( LDZ, * )
 *     ..
 *
 *  Purpose
 *  =======
 *
-* DSTEGR computes selected eigenvalues and, optionally, eigenvectors
-* of a real symmetric tridiagonal matrix T.  Eigenvalues and
-* eigenvectors can be selected by specifying either a range of values
-* or a range of indices for the desired eigenvalues. The eigenvalues
-* are computed by the dqds algorithm, while orthogonal eigenvectors are
-* computed from various ``good'' L D L^T representations (also known as
-* Relatively Robust Representations). Gram-Schmidt orthogonalization is
-* avoided as far as possible. More specifically, the various steps of
-* the algorithm are as follows. For the i-th unreduced block of T,
-*     (a) Compute T - sigma_i = L_i D_i L_i^T, such that L_i D_i L_i^T
-*         is a relatively robust representation,
-*     (b) Compute the eigenvalues, lambda_j, of L_i D_i L_i^T to high
-*         relative accuracy by the dqds algorithm,
-*     (c) If there is a cluster of close eigenvalues, "choose" sigma_i
-*         close to the cluster, and go to step (a),
-*     (d) Given the approximate eigenvalue lambda_j of L_i D_i L_i^T,
-*         compute the corresponding eigenvector by forming a
-*         rank-revealing twisted factorization.
-*  The desired accuracy of the output can be specified by the input
-*  parameter ABSTOL.
+*  DSTEGR computes selected eigenvalues and, optionally, eigenvectors
+*  of a real symmetric tridiagonal matrix T. Any such unreduced matrix has
+*  a well defined set of pairwise different real eigenvalues, the corresponding
+*  real eigenvectors are pairwise orthogonal.
 *
-*  For more details, see "A new O(n^2) algorithm for the symmetric
-*  tridiagonal eigenvalue/eigenvector problem", by Inderjit Dhillon,
-*  Computer Science Division Technical Report No. UCB/CSD-97-971,
-*  UC Berkeley, May 1997.
+*  The spectrum may be computed either completely or partially by specifying
+*  either an interval (VL,VU] or a range of indices IL:IU for the desired
+*  eigenvalues.
 *
-*  Note 1 : Currently DSTEGR is only set up to find ALL the n
-*  eigenvalues and eigenvectors of T in O(n^2) time
-*  Note 2 : Currently the routine DSTEIN is called when an appropriate
-*  sigma_i cannot be chosen in step (c) above. DSTEIN invokes modified
-*  Gram-Schmidt when eigenvalues are close.
-*  Note 3 : DSTEGR works only on machines which follow ieee-754
-*  floating-point standard in their handling of infinities and NaNs.
-*  Normal execution of DSTEGR may create NaNs and infinities and hence
+*  DSTEGR is a compatability wrapper around the improved DSTEMR routine.
+*  See DSTEMR for further details.
+*
+*  One important change is that the ABSTOL parameter no longer provides any
+*  benefit and hence is no longer used.
+*
+*  Note : DSTEGR and DSTEMR work only on machines which follow
+*  IEEE-754 floating-point standard in their handling of infinities and
+*  NaNs.  Normal execution may create these exceptiona values and hence
 *  may abort due to a floating point exception in environments which
-*  do not conform to the ieee standard.
+*  do not conform to the IEEE-754 standard.
 *
 *  Arguments
 *  =========
@@ -15556,18 +15552,18 @@
 *          = 'V': all eigenvalues in the half-open interval (VL,VU]
 *                 will be found.
 *          = 'I': the IL-th through IU-th eigenvalues will be found.
-********** Only RANGE = 'A' is currently supported *********************
 *
 *  N       (input) INTEGER
 *          The order of the matrix.  N >= 0.
 *
 *  D       (input/output) DOUBLE PRECISION array, dimension (N)
-*          On entry, the n diagonal elements of the tridiagonal matrix
+*          On entry, the N diagonal elements of the tridiagonal matrix
 *          T. On exit, D is overwritten.
 *
 *  E       (input/output) DOUBLE PRECISION array, dimension (N)
-*          On entry, the (n-1) subdiagonal elements of the tridiagonal
-*          matrix T in elements 1 to N-1 of E; E(N) need not be set.
+*          On entry, the (N-1) subdiagonal elements of the tridiagonal
+*          matrix T in elements 1 to N-1 of E. E(N) need not be set on
+*          input, but is used internally as workspace.
 *          On exit, E is overwritten.
 *
 *  VL      (input) DOUBLE PRECISION
@@ -15580,24 +15576,12 @@
 *  IU      (input) INTEGER
 *          If RANGE='I', the indices (in ascending order) of the
 *          smallest and largest eigenvalues to be returned.
-*          1 <= IL <= IU <= N, if N > 0; IL = 1 and IU = 0 if N = 0.
+*          1 <= IL <= IU <= N, if N > 0.
 *          Not referenced if RANGE = 'A' or 'V'.
 *
 *  ABSTOL  (input) DOUBLE PRECISION
-*          The absolute error tolerance for the
-*          eigenvalues/eigenvectors. IF JOBZ = 'V', the eigenvalues and
-*          eigenvectors output have residual norms bounded by ABSTOL,
-*          and the dot products between different eigenvectors are
-*          bounded by ABSTOL. If ABSTOL is less than N*EPS*|T|, then
-*          N*EPS*|T| will be used in its place, where EPS is the
-*          machine precision and |T| is the 1-norm of the tridiagonal
-*          matrix. The eigenvalues are computed to an accuracy of
-*          EPS*|T| irrespective of ABSTOL. If high relative accuracy
-*          is important, set ABSTOL to DLAMCH( 'Safe minimum' ).
-*          See Barlow and Demmel "Computing Accurate Eigensystems of
-*          Scaled Diagonally Dominant Matrices", LAPACK Working Note #7
-*          for a discussion of which matrices define their eigenvalues
-*          to high relative accuracy.
+*          Unused.  Was the absolute error tolerance for the
+*          eigenvalues/eigenvectors in previous versions.
 *
 *  M       (output) INTEGER
 *          The total number of eigenvalues found.  0 <= M <= N.
@@ -15608,7 +15592,7 @@
 *          ascending order.
 *
 *  Z       (output) DOUBLE PRECISION array, dimension (LDZ, max(1,M) )
-*          If JOBZ = 'V', then if INFO = 0, the first M columns of Z
+*          If JOBZ = 'V', and if INFO = 0, then the first M columns of Z
 *          contain the orthonormal eigenvectors of the matrix T
 *          corresponding to the selected eigenvalues, with the i-th
 *          column of Z holding the eigenvector associated with W(i).
@@ -15616,24 +15600,26 @@
 *          Note: the user must ensure that at least max(1,M) columns are
 *          supplied in the array Z; if RANGE = 'V', the exact value of M
 *          is not known in advance and an upper bound must be used.
+*          Supplying N columns is always safe.
 *
 *  LDZ     (input) INTEGER
 *          The leading dimension of the array Z.  LDZ >= 1, and if
-*          JOBZ = 'V', LDZ >= max(1,N).
+*          JOBZ = 'V', then LDZ >= max(1,N).
 *
 *  ISUPPZ  (output) INTEGER ARRAY, dimension ( 2*max(1,M) )
 *          The support of the eigenvectors in Z, i.e., the indices
-*          indicating the nonzero elements in Z. The i-th eigenvector
+*          indicating the nonzero elements in Z. The i-th computed eigenvector
 *          is nonzero only in elements ISUPPZ( 2*i-1 ) through
-*          ISUPPZ( 2*i ).
+*          ISUPPZ( 2*i ). This is relevant in the case when the matrix
+*          is split. ISUPPZ is only accessed when JOBZ is 'V' and N > 0.
 *
 *  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
 *          On exit, if INFO = 0, WORK(1) returns the optimal
 *          (and minimal) LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK.  LWORK >= max(1,18*N)
-*
+*          The dimension of the array WORK. LWORK >= max(1,18*N)
+*          if JOBZ = 'V', and LWORK >= max(1,12*N) if JOBZ = 'N'.
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
 *          this value as the first entry of the WORK array, and no error
@@ -15644,17 +15630,22 @@
 *
 *  LIWORK  (input) INTEGER
 *          The dimension of the array IWORK.  LIWORK >= max(1,10*N)
-*
+*          if the eigenvectors are desired, and LIWORK >= max(1,8*N)
+*          if only the eigenvalues are to be computed.
 *          If LIWORK = -1, then a workspace query is assumed; the
 *          routine only calculates the optimal size of the IWORK array,
 *          returns this value as the first entry of the IWORK array, and
 *          no error message related to LIWORK is issued by XERBLA.
 *
 *  INFO    (output) INTEGER
+*          On exit, INFO
 *          = 0:  successful exit
 *          < 0:  if INFO = -i, the i-th argument had an illegal value
-*          > 0:  if INFO = 1, internal error in DLARRE,
-*                if INFO = 2, internal error in DLARRV.
+*          > 0:  if INFO = 1X, internal error in DLARRE,
+*                if INFO = 2X, internal error in DLARRV.
+*                Here, the digit X = ABS( IINFO ) < 10, where IINFO is
+*                the nonzero error code returned by DLARRE or
+*                DLARRV, respectively.
 *
 *  Further Details
 *  ===============
@@ -15662,225 +15653,23 @@
 *  Based on contributions by
 *     Inderjit Dhillon, IBM Almaden, USA
 *     Osni Marques, LBNL/NERSC, USA
+*     Christof Voemel, LBNL/NERSC, USA
 *
 *  =====================================================================
 *
-*     .. Parameters ..
-      DOUBLE PRECISION   ZERO, ONE
-      PARAMETER          ( ZERO = 0.0D0, ONE = 1.0D0 )
-*     ..
 *     .. Local Scalars ..
-      LOGICAL            ALLEIG, INDEIG, LQUERY, VALEIG, WANTZ
-      INTEGER            I, IBEGIN, IEND, IINDBL, IINDWK, IINFO, IINSPL,
-     $                   INDGRS, INDWOF, INDWRK, ITMP, J, JJ, LIWMIN,
-     $                   LWMIN, NSPLIT
-      DOUBLE PRECISION   BIGNUM, EPS, RMAX, RMIN, SAFMIN, SCALE, SMLNUM,
-     $                   THRESH, TMP, TNRM, TOL
-*     ..
-*     .. External Functions ..
-      LOGICAL            LSAME
-      DOUBLE PRECISION   DLAMCH, DLANST
-      EXTERNAL           LSAME, DLAMCH, DLANST
+      LOGICAL TRYRAC
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLARRE, DLARRV, DLASET, DSCAL, DSWAP, XERBLA
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DBLE, MAX, MIN, SQRT
+      EXTERNAL DSTEMR
 *     ..
 *     .. Executable Statements ..
-*
-*     Test the input parameters.
-*
-      WANTZ = LSAME( JOBZ, 'V' )
-      ALLEIG = LSAME( RANGE, 'A' )
-      VALEIG = LSAME( RANGE, 'V' )
-      INDEIG = LSAME( RANGE, 'I' )
-*
-      LQUERY = ( ( LWORK.EQ.-1 ) .OR. ( LIWORK.EQ.-1 ) )
-      LWMIN = 18*N
-      LIWMIN = 10*N
-*
       INFO = 0
-      IF( .NOT.( WANTZ .OR. LSAME( JOBZ, 'N' ) ) ) THEN
-         INFO = -1
-      ELSE IF( .NOT.( ALLEIG .OR. VALEIG .OR. INDEIG ) ) THEN
-         INFO = -2
-*
-*     The following two lines need to be removed once the
-*     RANGE = 'V' and RANGE = 'I' options are provided.
-*
-      ELSE IF( VALEIG .OR. INDEIG ) THEN
-         INFO = -2
-      ELSE IF( N.LT.0 ) THEN
-         INFO = -3
-      ELSE IF( VALEIG .AND. N.GT.0 .AND. VU.LE.VL ) THEN
-         INFO = -7
-      ELSE IF( INDEIG .AND. IL.LT.1 ) THEN
-         INFO = -8
-*     The following change should be made in DSTEVX also, otherwise
-*     IL can be specified as N+1 and IU as N.
-*     ELSE IF( INDEIG .AND. ( IU.LT.MIN( N, IL ) .OR. IU.GT.N ) ) THEN
-      ELSE IF( INDEIG .AND. ( IU.LT.IL .OR. IU.GT.N ) ) THEN
-         INFO = -9
-      ELSE IF( LDZ.LT.1 .OR. ( WANTZ .AND. LDZ.LT.N ) ) THEN
-         INFO = -14
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -17
-      ELSE IF( LIWORK.LT.LIWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -19
-      END IF
-      IF( INFO.EQ.0 ) THEN
-         WORK( 1 ) = LWMIN
-         IWORK( 1 ) = LIWMIN
-      END IF
-*
-      IF( INFO.NE.0 ) THEN
-         CALL XERBLA( 'DSTEGR', -INFO )
-         RETURN
-      ELSE IF( LQUERY ) THEN
-         RETURN
-      END IF
-*
-*     Quick return if possible
-*
-      M = 0
-      IF( N.EQ.0 )
-     $   RETURN
-*
-      IF( N.EQ.1 ) THEN
-         IF( ALLEIG .OR. INDEIG ) THEN
-            M = 1
-            W( 1 ) = D( 1 )
-         ELSE
-            IF( VL.LT.D( 1 ) .AND. VU.GE.D( 1 ) ) THEN
-               M = 1
-               W( 1 ) = D( 1 )
-            END IF
-         END IF
-         IF( WANTZ )
-     $      Z( 1, 1 ) = ONE
-         RETURN
-      END IF
-*
-*     Get machine constants.
-*
-      SAFMIN = DLAMCH( 'Safe minimum' )
-      EPS = DLAMCH( 'Precision' )
-      SMLNUM = SAFMIN / EPS
-      BIGNUM = ONE / SMLNUM
-      RMIN = SQRT( SMLNUM )
-      RMAX = MIN( SQRT( BIGNUM ), ONE / SQRT( SQRT( SAFMIN ) ) )
-*
-*     Scale matrix to allowable range, if necessary.
-*
-      SCALE = ONE
-      TNRM = DLANST( 'M', N, D, E )
-      IF( TNRM.GT.ZERO .AND. TNRM.LT.RMIN ) THEN
-         SCALE = RMIN / TNRM
-      ELSE IF( TNRM.GT.RMAX ) THEN
-         SCALE = RMAX / TNRM
-      END IF
-      IF( SCALE.NE.ONE ) THEN
-         CALL DSCAL( N, SCALE, D, 1 )
-         CALL DSCAL( N-1, SCALE, E, 1 )
-         TNRM = TNRM*SCALE
-      END IF
-      INDGRS = 1
-      INDWOF = 2*N + 1
-      INDWRK = 3*N + 1
-*
-      IINSPL = 1
-      IINDBL = N + 1
-      IINDWK = 2*N + 1
-*
-      CALL DLASET( 'Full', N, N, ZERO, ZERO, Z, LDZ )
-*
-*     Compute the desired eigenvalues of the tridiagonal after splitting
-*     into smaller subblocks if the corresponding of-diagonal elements
-*     are small
-*
-      THRESH = EPS*TNRM
-      CALL DLARRE( N, D, E, THRESH, NSPLIT, IWORK( IINSPL ), M, W,
-     $             WORK( INDWOF ), WORK( INDGRS ), WORK( INDWRK ),
-     $             IINFO )
-      IF( IINFO.NE.0 ) THEN
-         INFO = 1
-         RETURN
-      END IF
-*
-      IF( WANTZ ) THEN
-*
-*        Compute the desired eigenvectors corresponding to the computed
-*        eigenvalues
-*
-         TOL = MAX( ABSTOL, DBLE( N )*THRESH )
-         IBEGIN = 1
-         DO 20 I = 1, NSPLIT
-            IEND = IWORK( IINSPL+I-1 )
-            DO 10 J = IBEGIN, IEND
-               IWORK( IINDBL+J-1 ) = I
-   10       CONTINUE
-            IBEGIN = IEND + 1
-   20    CONTINUE
-*
-         CALL DLARRV( N, D, E, IWORK( IINSPL ), M, W, IWORK( IINDBL ),
-     $                WORK( INDGRS ), TOL, Z, LDZ, ISUPPZ,
-     $                WORK( INDWRK ), IWORK( IINDWK ), IINFO )
-         IF( IINFO.NE.0 ) THEN
-            INFO = 2
-            RETURN
-         END IF
-*
-      END IF
-*
-      IBEGIN = 1
-      DO 40 I = 1, NSPLIT
-         IEND = IWORK( IINSPL+I-1 )
-         DO 30 J = IBEGIN, IEND
-            W( J ) = W( J ) + WORK( INDWOF+I-1 )
-   30    CONTINUE
-         IBEGIN = IEND + 1
-   40 CONTINUE
-*
-*     If matrix was scaled, then rescale eigenvalues appropriately.
-*
-      IF( SCALE.NE.ONE ) THEN
-         CALL DSCAL( M, ONE / SCALE, W, 1 )
-      END IF
-*
-*     If eigenvalues are not in order, then sort them, along with
-*     eigenvectors.
-*
-      IF( NSPLIT.GT.1 ) THEN
-         DO 60 J = 1, M - 1
-            I = 0
-            TMP = W( J )
-            DO 50 JJ = J + 1, M
-               IF( W( JJ ).LT.TMP ) THEN
-                  I = JJ
-                  TMP = W( JJ )
-               END IF
-   50       CONTINUE
-            IF( I.NE.0 ) THEN
-               W( I ) = W( J )
-               W( J ) = TMP
-               IF( WANTZ ) THEN
-                  CALL DSWAP( N, Z( 1, I ), 1, Z( 1, J ), 1 )
-                  ITMP = ISUPPZ( 2*I-1 )
-                  ISUPPZ( 2*I-1 ) = ISUPPZ( 2*J-1 )
-                  ISUPPZ( 2*J-1 ) = ITMP
-                  ITMP = ISUPPZ( 2*I )
-                  ISUPPZ( 2*I ) = ISUPPZ( 2*J )
-                  ISUPPZ( 2*J ) = ITMP
-               END IF
-            END IF
-   60    CONTINUE
-      END IF
-*
-      WORK( 1 ) = LWMIN
-      IWORK( 1 ) = LIWMIN
-      RETURN
+      TRYRAC = .FALSE.
+
+      CALL DSTEMR( JOBZ, RANGE, N, D, E, VL, VU, IL, IU,
+     $                   M, W, Z, LDZ, N, ISUPPZ, TRYRAC, WORK, LWORK,
+     $                   IWORK, LIWORK, INFO )
 *
 *     End of DSTEGR
 *
@@ -15888,10 +15677,9 @@
       SUBROUTINE DSTEIN( N, D, E, M, W, IBLOCK, ISPLIT, Z, LDZ, WORK,
      $                   IWORK, IFAIL, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDZ, M, N
@@ -15921,9 +15709,9 @@
 *  D       (input) DOUBLE PRECISION array, dimension (N)
 *          The n diagonal elements of the tridiagonal matrix T.
 *
-*  E       (input) DOUBLE PRECISION array, dimension (N)
+*  E       (input) DOUBLE PRECISION array, dimension (N-1)
 *          The (n-1) subdiagonal elements of the tridiagonal matrix
-*          T, in elements 1 to N-1.  E(N) need not be set.
+*          T, in elements 1 to N-1.
 *
 *  M       (input) INTEGER
 *          The number of eigenvectors to be found.  0 <= M <= N.
@@ -16249,10 +16037,9 @@
       END
       SUBROUTINE DSTEQR( COMPZ, N, D, E, Z, LDZ, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPZ
@@ -16750,10 +16537,9 @@
       END
       SUBROUTINE DSTERF( N, D, E, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, N
@@ -17116,10 +16902,11 @@
       SUBROUTINE DSYCON( UPLO, N, A, LDA, IPIV, ANORM, RCOND, WORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -17191,12 +16978,15 @@
       INTEGER            I, KASE
       DOUBLE PRECISION   AINVNM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       EXTERNAL           LSAME
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DSYTRS, XERBLA
+      EXTERNAL           DLACN2, DSYTRS, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          MAX
@@ -17255,7 +17045,7 @@
 *
       KASE = 0
    30 CONTINUE
-      CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+      CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
       IF( KASE.NE.0 ) THEN
 *
 *        Multiply by inv(L*D*L') or inv(U*D*U').
@@ -17276,10 +17066,9 @@
       END
       SUBROUTINE DSYGS2( ITYPE, UPLO, N, A, LDA, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -17310,7 +17099,7 @@
 *          = 1: compute inv(U')*A*inv(U) or inv(L)*A*inv(L');
 *          = 2 or 3: compute U*A*U' or L'*A*L.
 *
-*  UPLO    (input) CHARACTER
+*  UPLO    (input) CHARACTER*1
 *          Specifies whether the upper or lower triangular part of the
 *          symmetric matrix A is stored, and how B has been factorized.
 *          = 'U':  Upper triangular
@@ -17488,10 +17277,9 @@
       END
       SUBROUTINE DSYGST( ITYPE, UPLO, N, A, LDA, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -17522,7 +17310,7 @@
 *          = 1: compute inv(U**T)*A*inv(U) or inv(L)*A*inv(L**T);
 *          = 2 or 3: compute U*A*U**T or L**T*A*L.
 *
-*  UPLO    (input) CHARACTER
+*  UPLO    (input) CHARACTER*1
 *          = 'U':  Upper triangle of A is stored and B is factored as
 *                  U**T*U;
 *          = 'L':  Lower triangle of A is stored and B is factored as
@@ -17739,10 +17527,11 @@
       SUBROUTINE DSYRFS( UPLO, N, NRHS, A, LDA, AF, LDAF, IPIV, B, LDB,
      $                   X, LDX, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -17860,8 +17649,11 @@
       INTEGER            COUNT, I, J, K, KASE, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DSYMV, DSYTRS, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DSYMV, DSYTRS, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX
@@ -18016,7 +17808,7 @@
 *        is incremented by SAFE1 if the i-th component of
 *        abs(A)*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(A) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(A)*abs(X)+abs(B) )))
 *
@@ -18030,8 +17822,8 @@
 *
          KASE = 0
   100    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -18073,10 +17865,9 @@
       END
       SUBROUTINE DSYTD2( UPLO, N, A, LDA, D, E, TAU, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -18322,10 +18113,9 @@
       END
       SUBROUTINE DSYTF2( UPLO, N, A, LDA, IPIV, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -18398,6 +18188,17 @@
 *  Further Details
 *  ===============
 *
+*  09-29-06 - patch from
+*    Bobby Cheng, MathWorks
+*
+*    Replace l.204 and l.372
+*         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+*    by
+*         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
+*
+*  01-01-96 - Based on modifications by
+*    J. Lewis, Boeing Computer Services Company
+*    A. Petitet, Computer Science Dept., Univ. of Tenn., Knoxville, USA
 *  1-96 - Based on modifications by J. Lewis, Boeing Computer Services
 *         Company
 *
@@ -18450,9 +18251,9 @@
      $                   ROWMAX, T, WK, WKM1, WKP1
 *     ..
 *     .. External Functions ..
-      LOGICAL            LSAME
+      LOGICAL            LSAME, DISNAN
       INTEGER            IDAMAX
-      EXTERNAL           LSAME, IDAMAX
+      EXTERNAL           LSAME, IDAMAX, DISNAN
 *     ..
 *     .. External Subroutines ..
       EXTERNAL           DSCAL, DSWAP, DSYR, XERBLA
@@ -18513,9 +18314,9 @@
             COLMAX = ZERO
          END IF
 *
-         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
 *
-*           Column K is zero: set INFO and continue
+*           Column K is zero or contains a NaN: set INFO and continue
 *
             IF( INFO.EQ.0 )
      $         INFO = K
@@ -18681,9 +18482,9 @@
             COLMAX = ZERO
          END IF
 *
-         IF( MAX( ABSAKK, COLMAX ).EQ.ZERO ) THEN
+         IF( (MAX( ABSAKK, COLMAX ).EQ.ZERO) .OR. DISNAN(ABSAKK) ) THEN
 *
-*           Column K is zero: set INFO and continue
+*           Column K is zero or contains a NaN: set INFO and continue
 *
             IF( INFO.EQ.0 )
      $         INFO = K
@@ -18833,10 +18634,9 @@
       END
       SUBROUTINE DSYTRD( UPLO, N, A, LDA, D, E, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -18898,7 +18698,7 @@
 *          The scalar factors of the elementary reflectors (see Further
 *          Details).
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -19128,10 +18928,9 @@
       END
       SUBROUTINE DSYTRF( UPLO, N, A, LDA, IPIV, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -19192,7 +18991,7 @@
 *          IPIV(k+1) < 0, then rows and columns k+1 and -IPIV(k) were
 *          interchanged and D(k:k+1,k:k+1) is a 2-by-2 diagonal block.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -19416,10 +19215,9 @@
       END
       SUBROUTINE DSYTRI( UPLO, N, A, LDA, IPIV, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -19729,10 +19527,9 @@
       END
       SUBROUTINE DSYTRS( UPLO, N, NRHS, A, LDA, IPIV, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          UPLO
@@ -20100,10 +19897,11 @@
       SUBROUTINE DTBCON( NORM, UPLO, DIAG, N, KD, AB, LDAB, RCOND, WORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -20186,6 +19984,9 @@
       INTEGER            IX, KASE, KASE1
       DOUBLE PRECISION   AINVNM, ANORM, SCALE, SMLNUM, XNORM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       INTEGER            IDAMAX
@@ -20193,7 +19994,7 @@
       EXTERNAL           LSAME, IDAMAX, DLAMCH, DLANTB
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLATBS, DRSCL, XERBLA
+      EXTERNAL           DLACN2, DLATBS, DRSCL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, MAX
@@ -20254,7 +20055,7 @@
          END IF
          KASE = 0
    10    CONTINUE
-         CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+         CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.KASE1 ) THEN
 *
@@ -20298,10 +20099,11 @@
       SUBROUTINE DTBRFS( UPLO, TRANS, DIAG, N, KD, NRHS, AB, LDAB, B,
      $                   LDB, X, LDX, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, TRANS, UPLO
@@ -20413,8 +20215,11 @@
       INTEGER            I, J, K, KASE, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DTBMV, DTBSV, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DTBMV, DTBSV, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX, MIN
@@ -20621,7 +20426,7 @@
 *        is incremented by SAFE1 if the i-th component of
 *        abs(op(A))*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(op(A)) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(op(A))*abs(X)+abs(B) )))
 *
@@ -20635,8 +20440,8 @@
 *
          KASE = 0
   210    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -20679,10 +20484,9 @@
       SUBROUTINE DTBTRS( UPLO, TRANS, DIAG, N, KD, NRHS, AB, LDAB, B,
      $                   LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, TRANS, UPLO
@@ -20839,21 +20643,20 @@
 *     End of DTBTRS
 *
       END
-      SUBROUTINE DTGEVC( SIDE, HOWMNY, SELECT, N, A, LDA, B, LDB, VL,
+      SUBROUTINE DTGEVC( SIDE, HOWMNY, SELECT, N, S, LDS, P, LDP, VL,
      $                   LDVL, VR, LDVR, MM, M, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
-      INTEGER            INFO, LDA, LDB, LDVL, LDVR, M, MM, N
+      INTEGER            INFO, LDP, LDS, LDVL, LDVR, M, MM, N
 *     ..
 *     .. Array Arguments ..
       LOGICAL            SELECT( * )
-      DOUBLE PRECISION   A( LDA, * ), B( LDB, * ), VL( LDVL, * ),
+      DOUBLE PRECISION   P( LDP, * ), S( LDS, * ), VL( LDVL, * ),
      $                   VR( LDVR, * ), WORK( * )
 *     ..
 *
@@ -20861,35 +20664,31 @@
 *  Purpose
 *  =======
 *
-*  DTGEVC computes some or all of the right and/or left generalized
-*  eigenvectors of a pair of real upper triangular matrices (A,B).
+*  DTGEVC computes some or all of the right and/or left eigenvectors of
+*  a pair of real matrices (S,P), where S is a quasi-triangular matrix
+*  and P is upper triangular.  Matrix pairs of this type are produced by
+*  the generalized Schur factorization of a matrix pair (A,B):
 *
-*  The right generalized eigenvector x and the left generalized
-*  eigenvector y of (A,B) corresponding to a generalized eigenvalue
-*  w are defined by:
+*     A = Q*S*Z**T,  B = Q*P*Z**T
 *
-*          (A - wB) * x = 0  and  y**H * (A - wB) = 0
+*  as computed by DGGHRD + DHGEQZ.
 *
+*  The right eigenvector x and the left eigenvector y of (S,P)
+*  corresponding to an eigenvalue w are defined by:
+*  
+*     S*x = w*P*x,  (y**H)*S = w*(y**H)*P,
+*  
 *  where y**H denotes the conjugate tranpose of y.
-*
-*  If an eigenvalue w is determined by zero diagonal elements of both A
-*  and B, a unit vector is returned as the corresponding eigenvector.
-*
-*  If all eigenvectors are requested, the routine may either return
-*  the matrices X and/or Y of right or left eigenvectors of (A,B), or
-*  the products Z*X and/or Q*Y, where Z and Q are input orthogonal
-*  matrices.  If (A,B) was obtained from the generalized real-Schur
-*  factorization of an original pair of matrices
-*     (A0,B0) = (Q*A*Z**H,Q*B*Z**H),
-*  then Z*X and Q*Y are the matrices of right or left eigenvectors of
-*  A.
-*
-*  A must be block upper triangular, with 1-by-1 and 2-by-2 diagonal
-*  blocks.  Corresponding to each 2-by-2 diagonal block is a complex
-*  conjugate pair of eigenvalues and eigenvectors; only one
-*  eigenvector of the pair is computed, namely the one corresponding
-*  to the eigenvalue with positive imaginary part.
-*
+*  The eigenvalues are not input to this routine, but are computed
+*  directly from the diagonal blocks of S and P.
+*  
+*  This routine returns the matrices X and/or Y of right and left
+*  eigenvectors of (S,P), or the products Z*X and/or Q*Y,
+*  where Z and Q are input matrices.
+*  If Q and Z are the orthogonal factors from the generalized Schur
+*  factorization of a matrix pair (A,B), then Z*X and Q*Y
+*  are the matrices of right and left eigenvectors of (A,B).
+* 
 *  Arguments
 *  =========
 *
@@ -20900,78 +20699,84 @@
 *
 *  HOWMNY  (input) CHARACTER*1
 *          = 'A': compute all right and/or left eigenvectors;
-*          = 'B': compute all right and/or left eigenvectors, and
-*                 backtransform them using the input matrices supplied
-*                 in VR and/or VL;
+*          = 'B': compute all right and/or left eigenvectors,
+*                 backtransformed by the matrices in VR and/or VL;
 *          = 'S': compute selected right and/or left eigenvectors,
 *                 specified by the logical array SELECT.
 *
 *  SELECT  (input) LOGICAL array, dimension (N)
 *          If HOWMNY='S', SELECT specifies the eigenvectors to be
-*          computed.
-*          If HOWMNY='A' or 'B', SELECT is not referenced.
-*          To select the real eigenvector corresponding to the real
-*          eigenvalue w(j), SELECT(j) must be set to .TRUE.  To select
-*          the complex eigenvector corresponding to a complex conjugate
-*          pair w(j) and w(j+1), either SELECT(j) or SELECT(j+1) must
-*          be set to .TRUE..
+*          computed.  If w(j) is a real eigenvalue, the corresponding
+*          real eigenvector is computed if SELECT(j) is .TRUE..
+*          If w(j) and w(j+1) are the real and imaginary parts of a
+*          complex eigenvalue, the corresponding complex eigenvector
+*          is computed if either SELECT(j) or SELECT(j+1) is .TRUE.,
+*          and on exit SELECT(j) is set to .TRUE. and SELECT(j+1) is
+*          set to .FALSE..
+*          Not referenced if HOWMNY = 'A' or 'B'.
 *
 *  N       (input) INTEGER
-*          The order of the matrices A and B.  N >= 0.
+*          The order of the matrices S and P.  N >= 0.
 *
-*  A       (input) DOUBLE PRECISION array, dimension (LDA,N)
-*          The upper quasi-triangular matrix A.
+*  S       (input) DOUBLE PRECISION array, dimension (LDS,N)
+*          The upper quasi-triangular matrix S from a generalized Schur
+*          factorization, as computed by DHGEQZ.
 *
-*  LDA     (input) INTEGER
-*          The leading dimension of array A.  LDA >= max(1, N).
+*  LDS     (input) INTEGER
+*          The leading dimension of array S.  LDS >= max(1,N).
 *
-*  B       (input) DOUBLE PRECISION array, dimension (LDB,N)
-*          The upper triangular matrix B.  If A has a 2-by-2 diagonal
-*          block, then the corresponding 2-by-2 block of B must be
-*          diagonal with positive elements.
+*  P       (input) DOUBLE PRECISION array, dimension (LDP,N)
+*          The upper triangular matrix P from a generalized Schur
+*          factorization, as computed by DHGEQZ.
+*          2-by-2 diagonal blocks of P corresponding to 2-by-2 blocks
+*          of S must be in positive diagonal form.
 *
-*  LDB     (input) INTEGER
-*          The leading dimension of array B.  LDB >= max(1,N).
+*  LDP     (input) INTEGER
+*          The leading dimension of array P.  LDP >= max(1,N).
 *
 *  VL      (input/output) DOUBLE PRECISION array, dimension (LDVL,MM)
 *          On entry, if SIDE = 'L' or 'B' and HOWMNY = 'B', VL must
 *          contain an N-by-N matrix Q (usually the orthogonal matrix Q
 *          of left Schur vectors returned by DHGEQZ).
 *          On exit, if SIDE = 'L' or 'B', VL contains:
-*          if HOWMNY = 'A', the matrix Y of left eigenvectors of (A,B);
+*          if HOWMNY = 'A', the matrix Y of left eigenvectors of (S,P);
 *          if HOWMNY = 'B', the matrix Q*Y;
-*          if HOWMNY = 'S', the left eigenvectors of (A,B) specified by
+*          if HOWMNY = 'S', the left eigenvectors of (S,P) specified by
 *                      SELECT, stored consecutively in the columns of
 *                      VL, in the same order as their eigenvalues.
-*          If SIDE = 'R', VL is not referenced.
 *
 *          A complex eigenvector corresponding to a complex eigenvalue
 *          is stored in two consecutive columns, the first holding the
 *          real part, and the second the imaginary part.
 *
+*          Not referenced if SIDE = 'R'.
+*
 *  LDVL    (input) INTEGER
-*          The leading dimension of array VL.
-*          LDVL >= max(1,N) if SIDE = 'L' or 'B'; LDVL >= 1 otherwise.
+*          The leading dimension of array VL.  LDVL >= 1, and if
+*          SIDE = 'L' or 'B', LDVL >= N.
 *
 *  VR      (input/output) DOUBLE PRECISION array, dimension (LDVR,MM)
 *          On entry, if SIDE = 'R' or 'B' and HOWMNY = 'B', VR must
-*          contain an N-by-N matrix Q (usually the orthogonal matrix Z
+*          contain an N-by-N matrix Z (usually the orthogonal matrix Z
 *          of right Schur vectors returned by DHGEQZ).
+*
 *          On exit, if SIDE = 'R' or 'B', VR contains:
-*          if HOWMNY = 'A', the matrix X of right eigenvectors of (A,B);
-*          if HOWMNY = 'B', the matrix Z*X;
-*          if HOWMNY = 'S', the right eigenvectors of (A,B) specified by
-*                      SELECT, stored consecutively in the columns of
-*                      VR, in the same order as their eigenvalues.
-*          If SIDE = 'L', VR is not referenced.
+*          if HOWMNY = 'A', the matrix X of right eigenvectors of (S,P);
+*          if HOWMNY = 'B' or 'b', the matrix Z*X;
+*          if HOWMNY = 'S' or 's', the right eigenvectors of (S,P)
+*                      specified by SELECT, stored consecutively in the
+*                      columns of VR, in the same order as their
+*                      eigenvalues.
 *
 *          A complex eigenvector corresponding to a complex eigenvalue
 *          is stored in two consecutive columns, the first holding the
 *          real part and the second the imaginary part.
+*          
+*          Not referenced if SIDE = 'L'.
 *
 *  LDVR    (input) INTEGER
-*          The leading dimension of the array VR.
-*          LDVR >= max(1,N) if SIDE = 'R' or 'B'; LDVR >= 1 otherwise.
+*          The leading dimension of the array VR.  LDVR >= 1, and if
+*          SIDE = 'R' or 'B', LDVR >= N.
 *
 *  MM      (input) INTEGER
 *          The number of columns in the arrays VL and/or VR. MM >= M.
@@ -21040,7 +20845,7 @@
 *  partial sums.  Since FORTRAN arrays are stored columnwise, this has
 *  the advantage that at each step, the elements of C that are accessed
 *  are adjacent to one another, whereas with the rowwise method, the
-*  elements accessed at a step are spaced LDA (and LDB) words apart.
+*  elements accessed at a step are spaced LDS (and LDP) words apart.
 *
 *  When finding left eigenvectors, the matrix in question is the
 *  transpose of the one in storage, so the rowwise method then
@@ -21067,8 +20872,8 @@
      $                   XSCALE
 *     ..
 *     .. Local Arrays ..
-      DOUBLE PRECISION   BDIAG( 2 ), SUM( 2, 2 ), SUMA( 2, 2 ),
-     $                   SUMB( 2, 2 )
+      DOUBLE PRECISION   BDIAG( 2 ), SUM( 2, 2 ), SUMS( 2, 2 ),
+     $                   SUMP( 2, 2 )
 *     ..
 *     .. External Functions ..
       LOGICAL            LSAME
@@ -21076,7 +20881,7 @@
       EXTERNAL           LSAME, DLAMCH
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DGEMV, DLACPY, DLAG2, DLALN2, XERBLA
+      EXTERNAL           DGEMV, DLABAD, DLACPY, DLAG2, DLALN2, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX, MIN
@@ -21093,7 +20898,7 @@
          IHWMNY = 2
          ILALL = .FALSE.
          ILBACK = .FALSE.
-      ELSE IF( LSAME( HOWMNY, 'B' ) .OR. LSAME( HOWMNY, 'T' ) ) THEN
+      ELSE IF( LSAME( HOWMNY, 'B' ) ) THEN
          IHWMNY = 3
          ILALL = .TRUE.
          ILBACK = .TRUE.
@@ -21125,9 +20930,9 @@
          INFO = -2
       ELSE IF( N.LT.0 ) THEN
          INFO = -4
-      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+      ELSE IF( LDS.LT.MAX( 1, N ) ) THEN
          INFO = -6
-      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+      ELSE IF( LDP.LT.MAX( 1, N ) ) THEN
          INFO = -8
       END IF
       IF( INFO.NE.0 ) THEN
@@ -21146,7 +20951,7 @@
                GO TO 10
             END IF
             IF( J.LT.N ) THEN
-               IF( A( J+1, J ).NE.ZERO )
+               IF( S( J+1, J ).NE.ZERO )
      $            ILCPLX = .TRUE.
             END IF
             IF( ILCPLX ) THEN
@@ -21166,11 +20971,11 @@
       ILABAD = .FALSE.
       ILBBAD = .FALSE.
       DO 20 J = 1, N - 1
-         IF( A( J+1, J ).NE.ZERO ) THEN
-            IF( B( J, J ).EQ.ZERO .OR. B( J+1, J+1 ).EQ.ZERO .OR.
-     $          B( J, J+1 ).NE.ZERO )ILBBAD = .TRUE.
+         IF( S( J+1, J ).NE.ZERO ) THEN
+            IF( P( J, J ).EQ.ZERO .OR. P( J+1, J+1 ).EQ.ZERO .OR.
+     $          P( J, J+1 ).NE.ZERO )ILBBAD = .TRUE.
             IF( J.LT.N-1 ) THEN
-               IF( A( J+2, J+1 ).NE.ZERO )
+               IF( S( J+2, J+1 ).NE.ZERO )
      $            ILABAD = .TRUE.
             END IF
          END IF
@@ -21213,30 +21018,30 @@
 *     blocks) of A and B to check for possible overflow in the
 *     triangular solver.
 *
-      ANORM = ABS( A( 1, 1 ) )
+      ANORM = ABS( S( 1, 1 ) )
       IF( N.GT.1 )
-     $   ANORM = ANORM + ABS( A( 2, 1 ) )
-      BNORM = ABS( B( 1, 1 ) )
+     $   ANORM = ANORM + ABS( S( 2, 1 ) )
+      BNORM = ABS( P( 1, 1 ) )
       WORK( 1 ) = ZERO
       WORK( N+1 ) = ZERO
 *
       DO 50 J = 2, N
          TEMP = ZERO
          TEMP2 = ZERO
-         IF( A( J, J-1 ).EQ.ZERO ) THEN
+         IF( S( J, J-1 ).EQ.ZERO ) THEN
             IEND = J - 1
          ELSE
             IEND = J - 2
          END IF
          DO 30 I = 1, IEND
-            TEMP = TEMP + ABS( A( I, J ) )
-            TEMP2 = TEMP2 + ABS( B( I, J ) )
+            TEMP = TEMP + ABS( S( I, J ) )
+            TEMP2 = TEMP2 + ABS( P( I, J ) )
    30    CONTINUE
          WORK( J ) = TEMP
          WORK( N+J ) = TEMP2
          DO 40 I = IEND + 1, MIN( J+1, N )
-            TEMP = TEMP + ABS( A( I, J ) )
-            TEMP2 = TEMP2 + ABS( B( I, J ) )
+            TEMP = TEMP + ABS( S( I, J ) )
+            TEMP2 = TEMP2 + ABS( P( I, J ) )
    40    CONTINUE
          ANORM = MAX( ANORM, TEMP )
          BNORM = MAX( BNORM, TEMP2 )
@@ -21266,7 +21071,7 @@
             END IF
             NW = 1
             IF( JE.LT.N ) THEN
-               IF( A( JE+1, JE ).NE.ZERO ) THEN
+               IF( S( JE+1, JE ).NE.ZERO ) THEN
                   ILCPLX = .TRUE.
                   NW = 2
                END IF
@@ -21285,8 +21090,8 @@
 *           (c) complex eigenvalue.
 *
             IF( .NOT.ILCPLX ) THEN
-               IF( ABS( A( JE, JE ) ).LE.SAFMIN .AND.
-     $             ABS( B( JE, JE ) ).LE.SAFMIN ) THEN
+               IF( ABS( S( JE, JE ) ).LE.SAFMIN .AND.
+     $             ABS( P( JE, JE ) ).LE.SAFMIN ) THEN
 *
 *                 Singular matrix pencil -- return unit eigenvector
 *
@@ -21313,10 +21118,10 @@
 *
 *              Real eigenvalue
 *
-               TEMP = ONE / MAX( ABS( A( JE, JE ) )*ASCALE,
-     $                ABS( B( JE, JE ) )*BSCALE, SAFMIN )
-               SALFAR = ( TEMP*A( JE, JE ) )*ASCALE
-               SBETA = ( TEMP*B( JE, JE ) )*BSCALE
+               TEMP = ONE / MAX( ABS( S( JE, JE ) )*ASCALE,
+     $                ABS( P( JE, JE ) )*BSCALE, SAFMIN )
+               SALFAR = ( TEMP*S( JE, JE ) )*ASCALE
+               SBETA = ( TEMP*P( JE, JE ) )*BSCALE
                ACOEF = SBETA*ASCALE
                BCOEFR = SALFAR*BSCALE
                BCOEFI = ZERO
@@ -21358,7 +21163,7 @@
 *
 *              Complex eigenvalue
 *
-               CALL DLAG2( A( JE, JE ), LDA, B( JE, JE ), LDB,
+               CALL DLAG2( S( JE, JE ), LDS, P( JE, JE ), LDP,
      $                     SAFMIN*SAFETY, ACOEF, TEMP, BCOEFR, TEMP2,
      $                     BCOEFI )
                BCOEFI = -BCOEFI
@@ -21390,9 +21195,9 @@
 *
 *              Compute first two components of eigenvector
 *
-               TEMP = ACOEF*A( JE+1, JE )
-               TEMP2R = ACOEF*A( JE, JE ) - BCOEFR*B( JE, JE )
-               TEMP2I = -BCOEFI*B( JE, JE )
+               TEMP = ACOEF*S( JE+1, JE )
+               TEMP2R = ACOEF*S( JE, JE ) - BCOEFR*P( JE, JE )
+               TEMP2I = -BCOEFI*P( JE, JE )
                IF( ABS( TEMP ).GT.ABS( TEMP2R )+ABS( TEMP2I ) ) THEN
                   WORK( 2*N+JE ) = ONE
                   WORK( 3*N+JE ) = ZERO
@@ -21401,10 +21206,10 @@
                ELSE
                   WORK( 2*N+JE+1 ) = ONE
                   WORK( 3*N+JE+1 ) = ZERO
-                  TEMP = ACOEF*A( JE, JE+1 )
-                  WORK( 2*N+JE ) = ( BCOEFR*B( JE+1, JE+1 )-ACOEF*
-     $                             A( JE+1, JE+1 ) ) / TEMP
-                  WORK( 3*N+JE ) = BCOEFI*B( JE+1, JE+1 ) / TEMP
+                  TEMP = ACOEF*S( JE, JE+1 )
+                  WORK( 2*N+JE ) = ( BCOEFR*P( JE+1, JE+1 )-ACOEF*
+     $                             S( JE+1, JE+1 ) ) / TEMP
+                  WORK( 3*N+JE ) = BCOEFI*P( JE+1, JE+1 ) / TEMP
                END IF
                XMAX = MAX( ABS( WORK( 2*N+JE ) )+ABS( WORK( 3*N+JE ) ),
      $                ABS( WORK( 2*N+JE+1 ) )+ABS( WORK( 3*N+JE+1 ) ) )
@@ -21427,11 +21232,11 @@
                END IF
 *
                NA = 1
-               BDIAG( 1 ) = B( J, J )
+               BDIAG( 1 ) = P( J, J )
                IF( J.LT.N ) THEN
-                  IF( A( J+1, J ).NE.ZERO ) THEN
+                  IF( S( J+1, J ).NE.ZERO ) THEN
                      IL2BY2 = .TRUE.
-                     BDIAG( 2 ) = B( J+1, J+1 )
+                     BDIAG( 2 ) = P( J+1, J+1 )
                      NA = 2
                   END IF
                END IF
@@ -21457,13 +21262,13 @@
 *              Compute dot products
 *
 *                    j-1
-*              SUM = sum  conjg( a*A(k,j) - b*B(k,j) )*x(k)
+*              SUM = sum  conjg( a*S(k,j) - b*P(k,j) )*x(k)
 *                    k=je
 *
 *              To reduce the op count, this is done as
 *
 *              _        j-1                  _        j-1
-*              a*conjg( sum  A(k,j)*x(k) ) - b*conjg( sum  B(k,j)*x(k) )
+*              a*conjg( sum  S(k,j)*x(k) ) - b*conjg( sum  P(k,j)*x(k) )
 *                       k=je                          k=je
 *
 *              which may cause underflow problems if A or B are close
@@ -21500,15 +21305,15 @@ CIBM              PREFER SCALAR
 *$PL$ CMCHAR='*'
 *
                   DO 110 JA = 1, NA
-                     SUMA( JA, JW ) = ZERO
-                     SUMB( JA, JW ) = ZERO
+                     SUMS( JA, JW ) = ZERO
+                     SUMP( JA, JW ) = ZERO
 *
                      DO 100 JR = JE, J - 1
-                        SUMA( JA, JW ) = SUMA( JA, JW ) +
-     $                                   A( JR, J+JA-1 )*
+                        SUMS( JA, JW ) = SUMS( JA, JW ) +
+     $                                   S( JR, J+JA-1 )*
      $                                   WORK( ( JW+1 )*N+JR )
-                        SUMB( JA, JW ) = SUMB( JA, JW ) +
-     $                                   B( JR, J+JA-1 )*
+                        SUMP( JA, JW ) = SUMP( JA, JW ) +
+     $                                   P( JR, J+JA-1 )*
      $                                   WORK( ( JW+1 )*N+JR )
   100                CONTINUE
   110             CONTINUE
@@ -21528,15 +21333,15 @@ CIBM           PREFER SCALAR
 *
                DO 130 JA = 1, NA
                   IF( ILCPLX ) THEN
-                     SUM( JA, 1 ) = -ACOEF*SUMA( JA, 1 ) +
-     $                              BCOEFR*SUMB( JA, 1 ) -
-     $                              BCOEFI*SUMB( JA, 2 )
-                     SUM( JA, 2 ) = -ACOEF*SUMA( JA, 2 ) +
-     $                              BCOEFR*SUMB( JA, 2 ) +
-     $                              BCOEFI*SUMB( JA, 1 )
+                     SUM( JA, 1 ) = -ACOEF*SUMS( JA, 1 ) +
+     $                              BCOEFR*SUMP( JA, 1 ) -
+     $                              BCOEFI*SUMP( JA, 2 )
+                     SUM( JA, 2 ) = -ACOEF*SUMS( JA, 2 ) +
+     $                              BCOEFR*SUMP( JA, 2 ) +
+     $                              BCOEFI*SUMP( JA, 1 )
                   ELSE
-                     SUM( JA, 1 ) = -ACOEF*SUMA( JA, 1 ) +
-     $                              BCOEFR*SUMB( JA, 1 )
+                     SUM( JA, 1 ) = -ACOEF*SUMS( JA, 1 ) +
+     $                              BCOEFR*SUMP( JA, 1 )
                   END IF
   130          CONTINUE
 *
@@ -21544,7 +21349,7 @@ CIBM           PREFER SCALAR
 *              Solve  ( a A - b B )  y = SUM(,)
 *              with scaling and perturbation of the denominator
 *
-               CALL DLALN2( .TRUE., NA, NW, DMIN, ACOEF, A( J, J ), LDA,
+               CALL DLALN2( .TRUE., NA, NW, DMIN, ACOEF, S( J, J ), LDS,
      $                      BDIAG( 1 ), BDIAG( 2 ), SUM, 2, BCOEFR,
      $                      BCOEFI, WORK( 2*N+J ), N, SCALE, TEMP,
      $                      IINFO )
@@ -21631,7 +21436,7 @@ CIBM           PREFER SCALAR
             END IF
             NW = 1
             IF( JE.GT.1 ) THEN
-               IF( A( JE, JE-1 ).NE.ZERO ) THEN
+               IF( S( JE, JE-1 ).NE.ZERO ) THEN
                   ILCPLX = .TRUE.
                   NW = 2
                END IF
@@ -21650,8 +21455,8 @@ CIBM           PREFER SCALAR
 *           (c) complex eigenvalue.
 *
             IF( .NOT.ILCPLX ) THEN
-               IF( ABS( A( JE, JE ) ).LE.SAFMIN .AND.
-     $             ABS( B( JE, JE ) ).LE.SAFMIN ) THEN
+               IF( ABS( S( JE, JE ) ).LE.SAFMIN .AND.
+     $             ABS( P( JE, JE ) ).LE.SAFMIN ) THEN
 *
 *                 Singular matrix pencil -- unit eigenvector
 *
@@ -21680,10 +21485,10 @@ CIBM           PREFER SCALAR
 *
 *              Real eigenvalue
 *
-               TEMP = ONE / MAX( ABS( A( JE, JE ) )*ASCALE,
-     $                ABS( B( JE, JE ) )*BSCALE, SAFMIN )
-               SALFAR = ( TEMP*A( JE, JE ) )*ASCALE
-               SBETA = ( TEMP*B( JE, JE ) )*BSCALE
+               TEMP = ONE / MAX( ABS( S( JE, JE ) )*ASCALE,
+     $                ABS( P( JE, JE ) )*BSCALE, SAFMIN )
+               SALFAR = ( TEMP*S( JE, JE ) )*ASCALE
+               SBETA = ( TEMP*P( JE, JE ) )*BSCALE
                ACOEF = SBETA*ASCALE
                BCOEFR = SALFAR*BSCALE
                BCOEFI = ZERO
@@ -21726,14 +21531,14 @@ CIBM           PREFER SCALAR
 *              (See "Further Details", above.)
 *
                DO 260 JR = 1, JE - 1
-                  WORK( 2*N+JR ) = BCOEFR*B( JR, JE ) -
-     $                             ACOEF*A( JR, JE )
+                  WORK( 2*N+JR ) = BCOEFR*P( JR, JE ) -
+     $                             ACOEF*S( JR, JE )
   260          CONTINUE
             ELSE
 *
 *              Complex eigenvalue
 *
-               CALL DLAG2( A( JE-1, JE-1 ), LDA, B( JE-1, JE-1 ), LDB,
+               CALL DLAG2( S( JE-1, JE-1 ), LDS, P( JE-1, JE-1 ), LDP,
      $                     SAFMIN*SAFETY, ACOEF, TEMP, BCOEFR, TEMP2,
      $                     BCOEFI )
                IF( BCOEFI.EQ.ZERO ) THEN
@@ -21765,9 +21570,9 @@ CIBM           PREFER SCALAR
 *              Compute first two components of eigenvector
 *              and contribution to sums
 *
-               TEMP = ACOEF*A( JE, JE-1 )
-               TEMP2R = ACOEF*A( JE, JE ) - BCOEFR*B( JE, JE )
-               TEMP2I = -BCOEFI*B( JE, JE )
+               TEMP = ACOEF*S( JE, JE-1 )
+               TEMP2R = ACOEF*S( JE, JE ) - BCOEFR*P( JE, JE )
+               TEMP2I = -BCOEFI*P( JE, JE )
                IF( ABS( TEMP ).GE.ABS( TEMP2R )+ABS( TEMP2I ) ) THEN
                   WORK( 2*N+JE ) = ONE
                   WORK( 3*N+JE ) = ZERO
@@ -21776,10 +21581,10 @@ CIBM           PREFER SCALAR
                ELSE
                   WORK( 2*N+JE-1 ) = ONE
                   WORK( 3*N+JE-1 ) = ZERO
-                  TEMP = ACOEF*A( JE-1, JE )
-                  WORK( 2*N+JE ) = ( BCOEFR*B( JE-1, JE-1 )-ACOEF*
-     $                             A( JE-1, JE-1 ) ) / TEMP
-                  WORK( 3*N+JE ) = BCOEFI*B( JE-1, JE-1 ) / TEMP
+                  TEMP = ACOEF*S( JE-1, JE )
+                  WORK( 2*N+JE ) = ( BCOEFR*P( JE-1, JE-1 )-ACOEF*
+     $                             S( JE-1, JE-1 ) ) / TEMP
+                  WORK( 3*N+JE ) = BCOEFI*P( JE-1, JE-1 ) / TEMP
                END IF
 *
                XMAX = MAX( ABS( WORK( 2*N+JE ) )+ABS( WORK( 3*N+JE ) ),
@@ -21799,12 +21604,12 @@ CIBM           PREFER SCALAR
                CRE2B = BCOEFR*WORK( 2*N+JE ) - BCOEFI*WORK( 3*N+JE )
                CIM2B = BCOEFI*WORK( 2*N+JE ) + BCOEFR*WORK( 3*N+JE )
                DO 270 JR = 1, JE - 2
-                  WORK( 2*N+JR ) = -CREALA*A( JR, JE-1 ) +
-     $                             CREALB*B( JR, JE-1 ) -
-     $                             CRE2A*A( JR, JE ) + CRE2B*B( JR, JE )
-                  WORK( 3*N+JR ) = -CIMAGA*A( JR, JE-1 ) +
-     $                             CIMAGB*B( JR, JE-1 ) -
-     $                             CIM2A*A( JR, JE ) + CIM2B*B( JR, JE )
+                  WORK( 2*N+JR ) = -CREALA*S( JR, JE-1 ) +
+     $                             CREALB*P( JR, JE-1 ) -
+     $                             CRE2A*S( JR, JE ) + CRE2B*P( JR, JE )
+                  WORK( 3*N+JR ) = -CIMAGA*S( JR, JE-1 ) +
+     $                             CIMAGB*P( JR, JE-1 ) -
+     $                             CIM2A*S( JR, JE ) + CIM2B*P( JR, JE )
   270          CONTINUE
             END IF
 *
@@ -21819,23 +21624,23 @@ CIBM           PREFER SCALAR
 *              next iteration to process it (when it will be j:j+1)
 *
                IF( .NOT.IL2BY2 .AND. J.GT.1 ) THEN
-                  IF( A( J, J-1 ).NE.ZERO ) THEN
+                  IF( S( J, J-1 ).NE.ZERO ) THEN
                      IL2BY2 = .TRUE.
                      GO TO 370
                   END IF
                END IF
-               BDIAG( 1 ) = B( J, J )
+               BDIAG( 1 ) = P( J, J )
                IF( IL2BY2 ) THEN
                   NA = 2
-                  BDIAG( 2 ) = B( J+1, J+1 )
+                  BDIAG( 2 ) = P( J+1, J+1 )
                ELSE
                   NA = 1
                END IF
 *
 *              Compute x(j) (and x(j+1), if 2-by-2 block)
 *
-               CALL DLALN2( .FALSE., NA, NW, DMIN, ACOEF, A( J, J ),
-     $                      LDA, BDIAG( 1 ), BDIAG( 2 ), WORK( 2*N+J ),
+               CALL DLALN2( .FALSE., NA, NW, DMIN, ACOEF, S( J, J ),
+     $                      LDS, BDIAG( 1 ), BDIAG( 2 ), WORK( 2*N+J ),
      $                      N, BCOEFR, BCOEFI, SUM, 2, SCALE, TEMP,
      $                      IINFO )
                IF( SCALE.LT.ONE ) THEN
@@ -21855,7 +21660,7 @@ CIBM           PREFER SCALAR
   300             CONTINUE
   310          CONTINUE
 *
-*              w = w + x(j)*(a A(*,j) - b B(*,j) ) with scaling
+*              w = w + x(j)*(a S(*,j) - b P(*,j) ) with scaling
 *
                IF( J.GT.1 ) THEN
 *
@@ -21893,19 +21698,19 @@ CIBM           PREFER SCALAR
      $                           BCOEFR*WORK( 3*N+J+JA-1 )
                         DO 340 JR = 1, J - 1
                            WORK( 2*N+JR ) = WORK( 2*N+JR ) -
-     $                                      CREALA*A( JR, J+JA-1 ) +
-     $                                      CREALB*B( JR, J+JA-1 )
+     $                                      CREALA*S( JR, J+JA-1 ) +
+     $                                      CREALB*P( JR, J+JA-1 )
                            WORK( 3*N+JR ) = WORK( 3*N+JR ) -
-     $                                      CIMAGA*A( JR, J+JA-1 ) +
-     $                                      CIMAGB*B( JR, J+JA-1 )
+     $                                      CIMAGA*S( JR, J+JA-1 ) +
+     $                                      CIMAGB*P( JR, J+JA-1 )
   340                   CONTINUE
                      ELSE
                         CREALA = ACOEF*WORK( 2*N+J+JA-1 )
                         CREALB = BCOEFR*WORK( 2*N+J+JA-1 )
                         DO 350 JR = 1, J - 1
                            WORK( 2*N+JR ) = WORK( 2*N+JR ) -
-     $                                      CREALA*A( JR, J+JA-1 ) +
-     $                                      CREALB*B( JR, J+JA-1 )
+     $                                      CREALA*S( JR, J+JA-1 ) +
+     $                                      CREALB*P( JR, J+JA-1 )
   350                   CONTINUE
                      END IF
   360             CONTINUE
@@ -21988,10 +21793,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTGEXC( WANTQ, WANTZ, N, A, LDA, B, LDB, Q, LDQ, Z,
      $                   LDZ, IFST, ILST, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ, WANTZ
@@ -22085,11 +21889,12 @@ CIBM           PREFER SCALAR
 *          final position (which may differ from its input value by
 *          +1 or -1). 1 <= IFST, ILST <= N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK. LWORK >= 4*N + 16.
+*          The dimension of the array WORK.
+*          LWORK >= 1 when N <= 1, otherwise LWORK >= 4*N + 16.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
@@ -22138,7 +21943,6 @@ CIBM           PREFER SCALAR
 *     Decode and test input arguments.
 *
       INFO = 0
-      LWMIN = MAX( 1, 4*N+16 )
       LQUERY = ( LWORK.EQ.-1 )
       IF( N.LT.0 ) THEN
          INFO = -3
@@ -22154,12 +21958,19 @@ CIBM           PREFER SCALAR
          INFO = -12
       ELSE IF( ILST.LT.1 .OR. ILST.GT.N ) THEN
          INFO = -13
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -15
       END IF
 *
       IF( INFO.EQ.0 ) THEN
-         WORK( 1 ) = LWMIN
+         IF( N.LE.1 ) THEN
+            LWMIN = 1
+         ELSE
+            LWMIN = 4*N + 16
+         END IF
+         WORK(1) = LWMIN
+*
+         IF (LWORK.LT.LWMIN .AND. .NOT.LQUERY) THEN
+            INFO = -15
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -22423,10 +22234,11 @@ CIBM           PREFER SCALAR
      $                   ALPHAR, ALPHAI, BETA, Q, LDQ, Z, LDZ, M, PL,
      $                   PR, DIF, WORK, LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       LOGICAL            WANTQ, WANTZ
@@ -22566,7 +22378,8 @@ CIBM           PREFER SCALAR
 *          The dimension of the specified pair of left and right eigen-
 *          spaces (deflating subspaces). 0 <= M <= N.
 *
-*  PL, PR  (output) DOUBLE PRECISION
+*  PL      (output) DOUBLE PRECISION
+*  PR      (output) DOUBLE PRECISION
 *          If IJOB = 1, 4 or 5, PL, PR are lower bounds on the
 *          reciprocal of the norm of "projections" onto left and right
 *          eigenspaces with respect to the selected cluster.
@@ -22582,7 +22395,7 @@ CIBM           PREFER SCALAR
 *          If M = 0 or N, DIF(1:2) = F-norm([A, B]).
 *          If IJOB = 0 or 1, DIF is not referenced.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          IF IJOB = 0, WORK is not referenced.  Otherwise,
 *          on exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
@@ -22596,7 +22409,7 @@ CIBM           PREFER SCALAR
 *          this value as the first entry of the WORK array, and no error
 *          message related to LWORK is issued by XERBLA.
 *
-*  IWORK   (workspace/output) INTEGER array, dimension (LIWORK)
+*  IWORK   (workspace/output) INTEGER array, dimension (MAX(1,LIWORK))
 *          IF IJOB = 0, IWORK is not referenced.  Otherwise,
 *          on exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
@@ -22764,8 +22577,11 @@ CIBM           PREFER SCALAR
      $                   MN2, N1, N2
       DOUBLE PRECISION   DSCALE, DSUM, EPS, RDSCAL, SMLNUM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLACPY, DLAG2, DLASSQ, DTGEXC, DTGSYL,
+      EXTERNAL           DLACN2, DLACPY, DLAG2, DLASSQ, DTGEXC, DTGSYL,
      $                   XERBLA
 *     ..
 *     .. External Functions ..
@@ -23002,7 +22818,7 @@ CIBM           PREFER SCALAR
 *
 *
 *           Compute 1-norm-based estimates of Difu and Difl using
-*           reversed communication with DLACON. In each step a
+*           reversed communication with DLACN2. In each step a
 *           generalized Sylvester equation or a transposed variant
 *           is solved.
 *
@@ -23016,8 +22832,8 @@ CIBM           PREFER SCALAR
 *           1-norm-based estimate of Difu.
 *
    40       CONTINUE
-            CALL DLACON( MN2, WORK( MN2+1 ), WORK, IWORK, DIF( 1 ),
-     $                   KASE )
+            CALL DLACN2( MN2, WORK( MN2+1 ), WORK, IWORK, DIF( 1 ),
+     $                   KASE, ISAVE )
             IF( KASE.NE.0 ) THEN
                IF( KASE.EQ.1 ) THEN
 *
@@ -23045,8 +22861,8 @@ CIBM           PREFER SCALAR
 *           1-norm-based estimate of Difl.
 *
    50       CONTINUE
-            CALL DLACON( MN2, WORK( MN2+1 ), WORK, IWORK, DIF( 2 ),
-     $                   KASE )
+            CALL DLACN2( MN2, WORK( MN2+1 ), WORK, IWORK, DIF( 2 ),
+     $                   KASE, ISAVE )
             IF( KASE.NE.0 ) THEN
                IF( KASE.EQ.1 ) THEN
 *
@@ -23141,10 +22957,9 @@ CIBM           PREFER SCALAR
      $                   LDB, TOLA, TOLB, ALPHA, BETA, U, LDU, V, LDV,
      $                   Q, LDQ, WORK, NCYCLE, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          JOBQ, JOBU, JOBV
@@ -23657,10 +23472,9 @@ CIBM           PREFER SCALAR
      $                   LDVL, VR, LDVR, S, DIF, MM, M, WORK, LWORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, JOB
@@ -23779,12 +23593,11 @@ CIBM           PREFER SCALAR
 *          conjugate pair of eigenvalues, two elements are used.
 *          If HOWMNY = 'A', M is set to N.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
-*          If JOB = 'E', WORK is not referenced.  Otherwise,
-*          on exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
+*          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The dimension of the array WORK. LWORK >= N.
+*          The dimension of the array WORK. LWORK >= max(1,N).
 *          If JOB = 'V' or 'B' LWORK >= 2*N*(N+2)+16.
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
@@ -23978,12 +23791,6 @@ CIBM           PREFER SCALAR
       INFO = 0
       LQUERY = ( LWORK.EQ.-1 )
 *
-      IF( LSAME( JOB, 'V' ) .OR. LSAME( JOB, 'B' ) ) THEN
-         LWMIN = MAX( 1, 2*N*( N+2 )+16 )
-      ELSE
-         LWMIN = 1
-      END IF
-*
       IF( .NOT.WANTS .AND. .NOT.WANTDF ) THEN
          INFO = -1
       ELSE IF( .NOT.LSAME( HOWMNY, 'A' ) .AND. .NOT.SOMCON ) THEN
@@ -24029,17 +23836,20 @@ CIBM           PREFER SCALAR
             M = N
          END IF
 *
+         IF( N.EQ.0 ) THEN
+            LWMIN = 1
+         ELSE IF( LSAME( JOB, 'V' ) .OR. LSAME( JOB, 'B' ) ) THEN
+            LWMIN = 2*N*( N + 2 ) + 16
+         ELSE
+            LWMIN = N
+         END IF
+         WORK( 1 ) = LWMIN
+*
          IF( MM.LT.M ) THEN
             INFO = -15
          ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
             INFO = -18
-*        ELSE IF( WANTDF .AND. LWORK.LT.2*N*( N+2 )+16 ) THEN
-*           INFO = -18
          END IF
-      END IF
-*
-      IF( INFO.EQ.0 ) THEN
-         WORK( 1 ) = LWMIN
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -24242,10 +24052,9 @@ CIBM           PREFER SCALAR
      $                   LDD, E, LDE, F, LDF, SCALE, DIF, WORK, LWORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANS
@@ -24389,13 +24198,12 @@ CIBM           PREFER SCALAR
 *          solutions R and L, respectively, to the homogeneous system
 *          with C = F = 0. Normally, SCALE = 1.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
-*          If IJOB = 0, WORK is not referenced.  Otherwise,
-*          on exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
+*          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK. LWORK > = 1.
-*          If IJOB = 1 or 2 and TRANS = 'N', LWORK >= 2*M*N.
+*          If IJOB = 1 or 2 and TRANS = 'N', LWORK >= max(1,2*M*N).
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
@@ -24434,6 +24242,8 @@ CIBM           PREFER SCALAR
 *      July 1989, pp 745-751.
 *
 *  =====================================================================
+*  Replaced various illegal calls to DCOPY by calls to DLASET.
+*  Sven Hammarling, 1/5/02.
 *
 *     .. Parameters ..
       DOUBLE PRECISION   ZERO, ONE
@@ -24451,7 +24261,7 @@ CIBM           PREFER SCALAR
       EXTERNAL           LSAME, ILAENV
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DCOPY, DGEMM, DLACPY, DSCAL, DTGSY2, XERBLA
+      EXTERNAL           DGEMM, DLACPY, DLASET, DSCAL, DTGSY2, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          DBLE, MAX, SQRT
@@ -24464,44 +24274,66 @@ CIBM           PREFER SCALAR
       NOTRAN = LSAME( TRANS, 'N' )
       LQUERY = ( LWORK.EQ.-1 )
 *
-      IF( ( IJOB.EQ.1 .OR. IJOB.EQ.2 ) .AND. NOTRAN ) THEN
-         LWMIN = MAX( 1, 2*M*N )
-      ELSE
-         LWMIN = 1
-      END IF
-*
       IF( .NOT.NOTRAN .AND. .NOT.LSAME( TRANS, 'T' ) ) THEN
          INFO = -1
-      ELSE IF( ( IJOB.LT.0 ) .OR. ( IJOB.GT.4 ) ) THEN
-         INFO = -2
-      ELSE IF( M.LE.0 ) THEN
-         INFO = -3
-      ELSE IF( N.LE.0 ) THEN
-         INFO = -4
-      ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
-         INFO = -6
-      ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
-         INFO = -8
-      ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
-         INFO = -10
-      ELSE IF( LDD.LT.MAX( 1, M ) ) THEN
-         INFO = -12
-      ELSE IF( LDE.LT.MAX( 1, N ) ) THEN
-         INFO = -14
-      ELSE IF( LDF.LT.MAX( 1, M ) ) THEN
-         INFO = -16
-      ELSE IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
-         INFO = -20
+      ELSE IF( NOTRAN ) THEN
+         IF( ( IJOB.LT.0 ) .OR. ( IJOB.GT.4 ) ) THEN
+            INFO = -2
+         END IF
+      END IF
+      IF( INFO.EQ.0 ) THEN
+         IF( M.LE.0 ) THEN
+            INFO = -3
+         ELSE IF( N.LE.0 ) THEN
+            INFO = -4
+         ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
+            INFO = -6
+         ELSE IF( LDB.LT.MAX( 1, N ) ) THEN
+            INFO = -8
+         ELSE IF( LDC.LT.MAX( 1, M ) ) THEN
+            INFO = -10
+         ELSE IF( LDD.LT.MAX( 1, M ) ) THEN
+            INFO = -12
+         ELSE IF( LDE.LT.MAX( 1, N ) ) THEN
+            INFO = -14
+         ELSE IF( LDF.LT.MAX( 1, M ) ) THEN
+            INFO = -16
+         END IF
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         IF( NOTRAN ) THEN
+            IF( IJOB.EQ.1 .OR. IJOB.EQ.2 ) THEN
+               LWMIN = MAX( 1, 2*M*N )
+            ELSE
+               LWMIN = 1
+            END IF
+         ELSE
+            LWMIN = 1
+         END IF
          WORK( 1 ) = LWMIN
+*
+         IF( LWORK.LT.LWMIN .AND. .NOT.LQUERY ) THEN
+            INFO = -20
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
          CALL XERBLA( 'DTGSYL', -INFO )
          RETURN
       ELSE IF( LQUERY ) THEN
+         RETURN
+      END IF
+*
+*     Quick return if possible
+*
+      IF( M.EQ.0 .OR. N.EQ.0 ) THEN
+         SCALE = 1
+         IF( NOTRAN ) THEN
+            IF( IJOB.NE.0 ) THEN
+               DIF = 0
+            END IF
+         END IF
          RETURN
       END IF
 *
@@ -24512,14 +24344,14 @@ CIBM           PREFER SCALAR
 *
       ISOLVE = 1
       IFUNC = 0
-      IF( IJOB.GE.3 .AND. NOTRAN ) THEN
-         IFUNC = IJOB - 2
-         DO 10 J = 1, N
-            CALL DCOPY( M, ZERO, 0, C( 1, J ), 1 )
-            CALL DCOPY( M, ZERO, 0, F( 1, J ), 1 )
-   10    CONTINUE
-      ELSE IF( IJOB.GE.1 .AND. NOTRAN ) THEN
-         ISOLVE = 2
+      IF( NOTRAN ) THEN
+         IF( IJOB.GE.3 ) THEN
+            IFUNC = IJOB - 2
+            CALL DLASET( 'F', M, N, ZERO, ZERO, C, LDC )
+            CALL DLASET( 'F', M, N, ZERO, ZERO, F, LDF )
+         ELSE IF( IJOB.GE.1 ) THEN
+            ISOLVE = 2
+         END IF
       END IF
 *
       IF( ( MB.LE.1 .AND. NB.LE.1 ) .OR. ( MB.GE.M .AND. NB.GE.N ) )
@@ -24544,14 +24376,14 @@ CIBM           PREFER SCALAR
             END IF
 *
             IF( ISOLVE.EQ.2 .AND. IROUND.EQ.1 ) THEN
-               IFUNC = IJOB
+               IF( NOTRAN ) THEN
+                  IFUNC = IJOB
+               END IF
                SCALE2 = SCALE
                CALL DLACPY( 'F', M, N, C, LDC, WORK, M )
                CALL DLACPY( 'F', M, N, F, LDF, WORK( M*N+1 ), M )
-               DO 20 J = 1, N
-                  CALL DCOPY( M, ZERO, 0, C( 1, J ), 1 )
-                  CALL DCOPY( M, ZERO, 0, F( 1, J ), 1 )
-   20          CONTINUE
+               CALL DLASET( 'F', M, N, ZERO, ZERO, C, LDC )
+               CALL DLASET( 'F', M, N, ZERO, ZERO, F, LDF )
             ELSE IF( ISOLVE.EQ.2 .AND. IROUND.EQ.2 ) THEN
                CALL DLACPY( 'F', M, N, WORK, M, C, LDC )
                CALL DLACPY( 'F', M, N, WORK( M*N+1 ), M, F, LDF )
@@ -24684,14 +24516,14 @@ CIBM           PREFER SCALAR
                END IF
             END IF
             IF( ISOLVE.EQ.2 .AND. IROUND.EQ.1 ) THEN
-               IFUNC = IJOB
+               IF( NOTRAN ) THEN
+                  IFUNC = IJOB
+               END IF
                SCALE2 = SCALE
                CALL DLACPY( 'F', M, N, C, LDC, WORK, M )
                CALL DLACPY( 'F', M, N, F, LDF, WORK( M*N+1 ), M )
-               DO 140 J = 1, N
-                  CALL DCOPY( M, ZERO, 0, C( 1, J ), 1 )
-                  CALL DCOPY( M, ZERO, 0, F( 1, J ), 1 )
-  140          CONTINUE
+               CALL DLASET( 'F', M, N, ZERO, ZERO, C, LDC )
+               CALL DLASET( 'F', M, N, ZERO, ZERO, F, LDF )
             ELSE IF( ISOLVE.EQ.2 .AND. IROUND.EQ.2 ) THEN
                CALL DLACPY( 'F', M, N, WORK, M, C, LDC )
                CALL DLACPY( 'F', M, N, WORK( M*N+1 ), M, F, LDF )
@@ -24775,10 +24607,11 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTPCON( NORM, UPLO, DIAG, N, AP, RCOND, WORK, IWORK,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -24854,6 +24687,9 @@ CIBM           PREFER SCALAR
       INTEGER            IX, KASE, KASE1
       DOUBLE PRECISION   AINVNM, ANORM, SCALE, SMLNUM, XNORM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       INTEGER            IDAMAX
@@ -24861,7 +24697,7 @@ CIBM           PREFER SCALAR
       EXTERNAL           LSAME, IDAMAX, DLAMCH, DLANTP
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLATPS, DRSCL, XERBLA
+      EXTERNAL           DLACN2, DLATPS, DRSCL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, MAX
@@ -24918,7 +24754,7 @@ CIBM           PREFER SCALAR
          END IF
          KASE = 0
    10    CONTINUE
-         CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+         CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.KASE1 ) THEN
 *
@@ -24962,10 +24798,11 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTPRFS( UPLO, TRANS, DIAG, N, NRHS, AP, B, LDB, X, LDX,
      $                   FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, TRANS, UPLO
@@ -25070,8 +24907,11 @@ CIBM           PREFER SCALAR
       INTEGER            I, J, K, KASE, KC, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DTPMV, DTPSV, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DTPMV, DTPSV, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX
@@ -25281,7 +25121,7 @@ CIBM           PREFER SCALAR
 *        is incremented by SAFE1 if the i-th component of
 *        abs(op(A))*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(op(A)) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(op(A))*abs(X)+abs(B) )))
 *
@@ -25295,8 +25135,8 @@ CIBM           PREFER SCALAR
 *
          KASE = 0
   210    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -25336,10 +25176,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DTPTRI( UPLO, DIAG, N, AP, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, UPLO
@@ -25512,10 +25351,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DTPTRS( UPLO, TRANS, DIAG, N, NRHS, AP, B, LDB, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, TRANS, UPLO
@@ -25667,10 +25505,11 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTRCON( NORM, UPLO, DIAG, N, A, LDA, RCOND, WORK,
      $                   IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, NORM, UPLO
@@ -25750,6 +25589,9 @@ CIBM           PREFER SCALAR
       INTEGER            IX, KASE, KASE1
       DOUBLE PRECISION   AINVNM, ANORM, SCALE, SMLNUM, XNORM
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       INTEGER            IDAMAX
@@ -25757,7 +25599,7 @@ CIBM           PREFER SCALAR
       EXTERNAL           LSAME, IDAMAX, DLAMCH, DLANTR
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLATRS, DRSCL, XERBLA
+      EXTERNAL           DLACN2, DLATRS, DRSCL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, MAX
@@ -25816,7 +25658,7 @@ CIBM           PREFER SCALAR
          END IF
          KASE = 0
    10    CONTINUE
-         CALL DLACON( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE )
+         CALL DLACN2( N, WORK( N+1 ), WORK, IWORK, AINVNM, KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.KASE1 ) THEN
 *
@@ -25860,10 +25702,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTREVC( SIDE, HOWMNY, SELECT, N, T, LDT, VL, LDVL, VR,
      $                   LDVR, MM, M, WORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, SIDE
@@ -25880,28 +25721,23 @@ CIBM           PREFER SCALAR
 *
 *  DTREVC computes some or all of the right and/or left eigenvectors of
 *  a real upper quasi-triangular matrix T.
-*
+*  Matrices of this type are produced by the Schur factorization of
+*  a real general matrix:  A = Q*T*Q**T, as computed by DHSEQR.
+*  
 *  The right eigenvector x and the left eigenvector y of T corresponding
 *  to an eigenvalue w are defined by:
-*
-*               T*x = w*x,     y'*T = w*y'
-*
-*  where y' denotes the conjugate transpose of the vector y.
-*
-*  If all eigenvectors are requested, the routine may either return the
-*  matrices X and/or Y of right or left eigenvectors of T, or the
-*  products Q*X and/or Q*Y, where Q is an input orthogonal
-*  matrix. If T was obtained from the real-Schur factorization of an
-*  original matrix A = Q*T*Q', then Q*X and Q*Y are the matrices of
-*  right or left eigenvectors of A.
-*
-*  T must be in Schur canonical form (as returned by DHSEQR), that is,
-*  block upper triangular with 1-by-1 and 2-by-2 diagonal blocks; each
-*  2-by-2 diagonal block has its diagonal elements equal and its
-*  off-diagonal elements of opposite sign.  Corresponding to each 2-by-2
-*  diagonal block is a complex conjugate pair of eigenvalues and
-*  eigenvectors; only one eigenvector of the pair is computed, namely
-*  the one corresponding to the eigenvalue with positive imaginary part.
+*  
+*     T*x = w*x,     (y**H)*T = w*(y**H)
+*  
+*  where y**H denotes the conjugate transpose of y.
+*  The eigenvalues are not input to this routine, but are read directly
+*  from the diagonal blocks of T.
+*  
+*  This routine returns the matrices X and/or Y of right and left
+*  eigenvectors of T, or the products Q*X and/or Q*Y, where Q is an
+*  input matrix.  If Q is the orthogonal factor that reduces a matrix
+*  A to Schur form T, then Q*X and Q*Y are the matrices of right and
+*  left eigenvectors of A.
 *
 *  Arguments
 *  =========
@@ -25914,21 +25750,21 @@ CIBM           PREFER SCALAR
 *  HOWMNY  (input) CHARACTER*1
 *          = 'A':  compute all right and/or left eigenvectors;
 *          = 'B':  compute all right and/or left eigenvectors,
-*                  and backtransform them using the input matrices
-*                  supplied in VR and/or VL;
+*                  backtransformed by the matrices in VR and/or VL;
 *          = 'S':  compute selected right and/or left eigenvectors,
-*                  specified by the logical array SELECT.
+*                  as indicated by the logical array SELECT.
 *
 *  SELECT  (input/output) LOGICAL array, dimension (N)
 *          If HOWMNY = 'S', SELECT specifies the eigenvectors to be
 *          computed.
-*          If HOWMNY = 'A' or 'B', SELECT is not referenced.
-*          To select the real eigenvector corresponding to a real
-*          eigenvalue w(j), SELECT(j) must be set to .TRUE..  To select
-*          the complex eigenvector corresponding to a complex conjugate
-*          pair w(j) and w(j+1), either SELECT(j) or SELECT(j+1) must be
-*          set to .TRUE.; then on exit SELECT(j) is .TRUE. and
-*          SELECT(j+1) is .FALSE..
+*          If w(j) is a real eigenvalue, the corresponding real
+*          eigenvector is computed if SELECT(j) is .TRUE..
+*          If w(j) and w(j+1) are the real and imaginary parts of a
+*          complex eigenvalue, the corresponding complex eigenvector is
+*          computed if either SELECT(j) or SELECT(j+1) is .TRUE., and
+*          on exit SELECT(j) is set to .TRUE. and SELECT(j+1) is set to
+*          .FALSE..
+*          Not referenced if HOWMNY = 'A' or 'B'.
 *
 *  N       (input) INTEGER
 *          The order of the matrix T. N >= 0.
@@ -25945,15 +25781,6 @@ CIBM           PREFER SCALAR
 *          of Schur vectors returned by DHSEQR).
 *          On exit, if SIDE = 'L' or 'B', VL contains:
 *          if HOWMNY = 'A', the matrix Y of left eigenvectors of T;
-*                           VL has the same quasi-lower triangular form
-*                           as T'. If T(i,i) is a real eigenvalue, then
-*                           the i-th column VL(i) of VL  is its
-*                           corresponding eigenvector. If T(i:i+1,i:i+1)
-*                           is a 2-by-2 block whose eigenvalues are
-*                           complex-conjugate eigenvalues of T, then
-*                           VL(i)+sqrt(-1)*VL(i+1) is the complex
-*                           eigenvector corresponding to the eigenvalue
-*                           with positive real part.
 *          if HOWMNY = 'B', the matrix Q*Y;
 *          if HOWMNY = 'S', the left eigenvectors of T specified by
 *                           SELECT, stored consecutively in the columns
@@ -25962,11 +25789,11 @@ CIBM           PREFER SCALAR
 *          A complex eigenvector corresponding to a complex eigenvalue
 *          is stored in two consecutive columns, the first holding the
 *          real part, and the second the imaginary part.
-*          If SIDE = 'R', VL is not referenced.
+*          Not referenced if SIDE = 'R'.
 *
 *  LDVL    (input) INTEGER
-*          The leading dimension of the array VL.  LDVL >= max(1,N) if
-*          SIDE = 'L' or 'B'; LDVL >= 1 otherwise.
+*          The leading dimension of the array VL.  LDVL >= 1, and if
+*          SIDE = 'L' or 'B', LDVL >= N.
 *
 *  VR      (input/output) DOUBLE PRECISION array, dimension (LDVR,MM)
 *          On entry, if SIDE = 'R' or 'B' and HOWMNY = 'B', VR must
@@ -25974,15 +25801,6 @@ CIBM           PREFER SCALAR
 *          of Schur vectors returned by DHSEQR).
 *          On exit, if SIDE = 'R' or 'B', VR contains:
 *          if HOWMNY = 'A', the matrix X of right eigenvectors of T;
-*                           VR has the same quasi-upper triangular form
-*                           as T. If T(i,i) is a real eigenvalue, then
-*                           the i-th column VR(i) of VR  is its
-*                           corresponding eigenvector. If T(i:i+1,i:i+1)
-*                           is a 2-by-2 block whose eigenvalues are
-*                           complex-conjugate eigenvalues of T, then
-*                           VR(i)+sqrt(-1)*VR(i+1) is the complex
-*                           eigenvector corresponding to the eigenvalue
-*                           with positive real part.
 *          if HOWMNY = 'B', the matrix Q*X;
 *          if HOWMNY = 'S', the right eigenvectors of T specified by
 *                           SELECT, stored consecutively in the columns
@@ -25991,11 +25809,11 @@ CIBM           PREFER SCALAR
 *          A complex eigenvector corresponding to a complex eigenvalue
 *          is stored in two consecutive columns, the first holding the
 *          real part and the second the imaginary part.
-*          If SIDE = 'L', VR is not referenced.
+*          Not referenced if SIDE = 'L'.
 *
 *  LDVR    (input) INTEGER
-*          The leading dimension of the array VR.  LDVR >= max(1,N) if
-*          SIDE = 'R' or 'B'; LDVR >= 1 otherwise.
+*          The leading dimension of the array VR.  LDVR >= 1, and if
+*          SIDE = 'R' or 'B', LDVR >= N.
 *
 *  MM      (input) INTEGER
 *          The number of columns in the arrays VL and/or VR. MM >= M.
@@ -26799,7 +26617,6 @@ CIBM           PREFER SCALAR
 *
 *              Copy the vector x or Q*x to VL and normalize.
 *
-  210          CONTINUE
                IF( .NOT.OVER ) THEN
                   CALL DCOPY( N-KI+1, WORK( KI+N ), 1, VL( KI, IS ), 1 )
                   CALL DCOPY( N-KI+1, WORK( KI+N2 ), 1, VL( KI, IS+1 ),
@@ -26865,10 +26682,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTREXC( COMPQ, N, T, LDT, Q, LDQ, IFST, ILST, WORK,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPQ
@@ -27211,10 +27027,11 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTRRFS( UPLO, TRANS, DIAG, N, NRHS, A, LDA, B, LDB, X,
      $                   LDX, FERR, BERR, WORK, IWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, TRANS, UPLO
@@ -27323,8 +27140,11 @@ CIBM           PREFER SCALAR
       INTEGER            I, J, K, KASE, NZ
       DOUBLE PRECISION   EPS, LSTRES, S, SAFE1, SAFE2, SAFMIN, XK
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Subroutines ..
-      EXTERNAL           DAXPY, DCOPY, DLACON, DTRMV, DTRSV, XERBLA
+      EXTERNAL           DAXPY, DCOPY, DLACN2, DTRMV, DTRSV, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX
@@ -27524,7 +27344,7 @@ CIBM           PREFER SCALAR
 *        is incremented by SAFE1 if the i-th component of
 *        abs(op(A))*abs(X) + abs(B) is less than SAFE2.
 *
-*        Use DLACON to estimate the infinity-norm of the matrix
+*        Use DLACN2 to estimate the infinity-norm of the matrix
 *           inv(op(A)) * diag(W),
 *        where W = abs(R) + NZ*EPS*( abs(op(A))*abs(X)+abs(B) )))
 *
@@ -27538,8 +27358,8 @@ CIBM           PREFER SCALAR
 *
          KASE = 0
   210    CONTINUE
-         CALL DLACON( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
-     $                KASE )
+         CALL DLACN2( N, WORK( 2*N+1 ), WORK( N+1 ), IWORK, FERR( J ),
+     $                KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -27582,10 +27402,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTRSEN( JOB, COMPQ, SELECT, N, T, LDT, Q, LDQ, WR, WI,
      $                   M, S, SEP, WORK, LWORK, IWORK, LIWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          COMPQ, JOB
@@ -27693,27 +27512,27 @@ CIBM           PREFER SCALAR
 *          M = 0 or N, SEP = norm(T).
 *          If JOB = 'N' or 'E', SEP is not referenced.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK.
 *          If JOB = 'N', LWORK >= max(1,N);
-*          if JOB = 'E', LWORK >= M*(N-M);
-*          if JOB = 'V' or 'B', LWORK >= 2*M*(N-M).
+*          if JOB = 'E', LWORK >= max(1,M*(N-M));
+*          if JOB = 'V' or 'B', LWORK >= max(1,2*M*(N-M)).
 *
 *          If LWORK = -1, then a workspace query is assumed; the routine
 *          only calculates the optimal size of the WORK array, returns
 *          this value as the first entry of the WORK array, and no error
 *          message related to LWORK is issued by XERBLA.
 *
-*  IWORK   (workspace) INTEGER array, dimension (LIWORK)
-*          IF JOB = 'N' or 'E', IWORK is not referenced.
+*  IWORK   (workspace) INTEGER array, dimension (MAX(1,LIWORK))
+*          On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK.
 *
 *  LIWORK  (input) INTEGER
 *          The dimension of the array IWORK.
 *          If JOB = 'N' or 'E', LIWORK >= 1;
-*          if JOB = 'V' or 'B', LIWORK >= M*(N-M).
+*          if JOB = 'V' or 'B', LIWORK >= max(1,M*(N-M)).
 *
 *          If LIWORK = -1, then a workspace query is assumed; the
 *          routine only calculates the optimal size of the IWORK array,
@@ -27814,13 +27633,16 @@ CIBM           PREFER SCALAR
      $                   NN
       DOUBLE PRECISION   EST, RNORM, SCALE
 *     ..
+*     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
+*     ..
 *     .. External Functions ..
       LOGICAL            LSAME
       DOUBLE PRECISION   DLANGE
       EXTERNAL           LSAME, DLANGE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLACPY, DTREXC, DTRSYL, XERBLA
+      EXTERNAL           DLACN2, DLACPY, DTREXC, DTRSYL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX, SQRT
@@ -27989,7 +27811,7 @@ CIBM           PREFER SCALAR
          EST = ZERO
          KASE = 0
    30    CONTINUE
-         CALL DLACON( NN, WORK( NN+1 ), WORK, IWORK, EST, KASE )
+         CALL DLACN2( NN, WORK( NN+1 ), WORK, IWORK, EST, KASE, ISAVE )
          IF( KASE.NE.0 ) THEN
             IF( KASE.EQ.1 ) THEN
 *
@@ -28040,10 +27862,11 @@ CIBM           PREFER SCALAR
      $                   LDVR, S, SEP, MM, M, WORK, LDWORK, IWORK,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
+*
+*     Modified to call DLACN2 in place of DLACON, 5 Feb 03, SJH.
 *
 *     .. Scalar Arguments ..
       CHARACTER          HOWMNY, JOB
@@ -28156,14 +27979,14 @@ CIBM           PREFER SCALAR
 *          used to store the estimated condition numbers.
 *          If HOWMNY = 'A', M is set to N.
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (LDWORK,N+1)
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (LDWORK,N+6)
 *          If JOB = 'E', WORK is not referenced.
 *
 *  LDWORK  (input) INTEGER
 *          The leading dimension of the array WORK.
 *          LDWORK >= 1; and if JOB = 'V' or 'B', LDWORK >= N.
 *
-*  IWORK   (workspace) INTEGER array, dimension (N)
+*  IWORK   (workspace) INTEGER array, dimension (2*(N-1))
 *          If JOB = 'E', IWORK is not referenced.
 *
 *  INFO    (output) INTEGER
@@ -28223,6 +28046,7 @@ CIBM           PREFER SCALAR
      $                   MU, PROD, PROD1, PROD2, RNRM, SCALE, SMLNUM, SN
 *     ..
 *     .. Local Arrays ..
+      INTEGER            ISAVE( 3 )
       DOUBLE PRECISION   DUMMY( 1 )
 *     ..
 *     .. External Functions ..
@@ -28231,7 +28055,7 @@ CIBM           PREFER SCALAR
       EXTERNAL           LSAME, DDOT, DLAMCH, DLAPY2, DNRM2
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLACON, DLACPY, DLAQTR, DTREXC, XERBLA
+      EXTERNAL           DLACN2, DLACPY, DLAQTR, DTREXC, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, MAX, SQRT
@@ -28466,8 +28290,8 @@ CIBM           PREFER SCALAR
                EST = ZERO
                KASE = 0
    50          CONTINUE
-               CALL DLACON( NN, WORK( 1, N+2 ), WORK( 1, N+4 ), IWORK,
-     $                      EST, KASE )
+               CALL DLACN2( NN, WORK( 1, N+2 ), WORK( 1, N+4 ), IWORK,
+     $                      EST, KASE, ISAVE )
                IF( KASE.NE.0 ) THEN
                   IF( KASE.EQ.1 ) THEN
                      IF( N2.EQ.1 ) THEN
@@ -28532,10 +28356,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTRSYL( TRANA, TRANB, ISGN, M, N, A, LDA, B, LDB, C,
      $                   LDC, SCALE, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          TRANA, TRANB
@@ -28642,7 +28465,7 @@ CIBM           PREFER SCALAR
       EXTERNAL           LSAME, DDOT, DLAMCH, DLANGE
 *     ..
 *     .. External Subroutines ..
-      EXTERNAL           DLALN2, DLASY2, DSCAL, XERBLA
+      EXTERNAL           DLABAD, DLALN2, DLASY2, DSCAL, XERBLA
 *     ..
 *     .. Intrinsic Functions ..
       INTRINSIC          ABS, DBLE, MAX, MIN
@@ -29445,10 +29268,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DTRTI2( UPLO, DIAG, N, A, LDA, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     February 29, 1992
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, UPLO
@@ -29592,10 +29414,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DTRTRI( UPLO, DIAG, N, A, LDA, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, UPLO
@@ -29770,10 +29591,9 @@ CIBM           PREFER SCALAR
       SUBROUTINE DTRTRS( UPLO, TRANS, DIAG, N, NRHS, A, LDA, B, LDB,
      $                   INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     March 31, 1993
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          DIAG, TRANS, UPLO
@@ -29917,10 +29737,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DTZRQF( M, N, A, LDA, TAU, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     September 30, 1994
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, M, N
@@ -30082,10 +29901,9 @@ CIBM           PREFER SCALAR
       END
       SUBROUTINE DTZRZF( M, N, A, LDA, TAU, WORK, LWORK, INFO )
 *
-*  -- LAPACK routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     June 30, 1999
+*  -- LAPACK routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            INFO, LDA, LWORK, M, N
@@ -30114,7 +29932,7 @@ CIBM           PREFER SCALAR
 *          The number of rows of the matrix A.  M >= 0.
 *
 *  N       (input) INTEGER
-*          The number of columns of the matrix A.  N >= 0.
+*          The number of columns of the matrix A.  N >= M.
 *
 *  A       (input/output) DOUBLE PRECISION array, dimension (LDA,N)
 *          On entry, the leading M-by-N upper trapezoidal part of the
@@ -30130,7 +29948,7 @@ CIBM           PREFER SCALAR
 *  TAU     (output) DOUBLE PRECISION array, dimension (M)
 *          The scalar factors of the elementary reflectors.
 *
-*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (LWORK)
+*  WORK    (workspace/output) DOUBLE PRECISION array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
@@ -30212,17 +30030,23 @@ CIBM           PREFER SCALAR
          INFO = -2
       ELSE IF( LDA.LT.MAX( 1, M ) ) THEN
          INFO = -4
-      ELSE IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
-         INFO = -7
       END IF
 *
       IF( INFO.EQ.0 ) THEN
+         IF( M.EQ.0 .OR. M.EQ.N ) THEN
+            LWKOPT = 1
+         ELSE
 *
-*        Determine the block size.
+*           Determine the block size.
 *
-         NB = ILAENV( 1, 'DGERQF', ' ', M, N, -1, -1 )
-         LWKOPT = M*NB
+            NB = ILAENV( 1, 'DGERQF', ' ', M, N, -1, -1 )
+            LWKOPT = M*NB
+         END IF
          WORK( 1 ) = LWKOPT
+*
+         IF( LWORK.LT.MAX( 1, M ) .AND. .NOT.LQUERY ) THEN
+            INFO = -7
+         END IF
       END IF
 *
       IF( INFO.NE.0 ) THEN
@@ -30235,13 +30059,11 @@ CIBM           PREFER SCALAR
 *     Quick return if possible
 *
       IF( M.EQ.0 ) THEN
-         WORK( 1 ) = 1
          RETURN
       ELSE IF( M.EQ.N ) THEN
          DO 10 I = 1, N
             TAU( I ) = ZERO
    10    CONTINUE
-         WORK( 1 ) = 1
          RETURN
       END IF
 *

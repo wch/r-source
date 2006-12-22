@@ -291,6 +291,20 @@ while test -n "${1}"; do
   shift
 done
 
+<<<<<<< .mine
+if test -z "${lib}"; then
+#   if test -n "${R_LIBS}"; then
+#     lib=`echo "${R_LIBS}" | cut -f1 -d:`
+#   else
+#     lib="${R_HOME}/library"
+#   fi
+  lib=`echo "cat(.libPaths()[1])" | \
+    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave`
+  message "Installing to library '$lib'"
+fi
+
+
+=======
 if test -z "${lib}"; then
   lib=`echo "cat(.libPaths()[1])" | \
     R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave`
@@ -298,6 +312,7 @@ if test -z "${lib}"; then
 fi
 
 
+>>>>>>> .r40283
 if (${tar_up} && ${fake}); then
   error "building a fake installation is disallowed"
   do_cleanup_tmpdir;

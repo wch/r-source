@@ -189,6 +189,10 @@ NEW FEATURES
 	glob(3) to do wildcard expansion (on systems which have it,
 	plus an emulation on Windows).
 
+    o	LAPACK has been updated to version 3.1.0.  This should cause
+	only small changes to the output, but do remember that the sign
+	of eigenvectors (and principal components) is indeterminate.
+
 
 DEPRECATED & DEFUNCT
 

@@ -19,7 +19,7 @@ SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = Lapack.h
 
-LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
+LIBSOURCES = dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f \
   @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
 LIBOBJECTS = $(LIBSOURCES:.f=.o)
 
@@ -30,7 +30,7 @@ DISTFILES = \
 	$(HEADERS) Lapack.c \
 	vecLibg95c.c vecLibg95f.f \
 	cmplx.f \
-	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f
+	dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f
 
 lapack_la = lapack$(SHLIB_EXT)
 Rlapack_la = libRlapack$(DYLIB_EXT)
@@ -60,7 +60,7 @@ Makedeps: Makefile $(DEPENDS)
 ## treated separately: e.g. we need to force stores with 
 ## gcc >= 3.4.0 at least on i686
 DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
-dlamc.o: dlamc.f
+dlamch.o: dlamch.f
 	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
 
 R: Makefile

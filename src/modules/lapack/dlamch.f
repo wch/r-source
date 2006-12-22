@@ -1,9 +1,8 @@
       DOUBLE PRECISION FUNCTION DLAMCH( CMACH )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       CHARACTER          CMACH
@@ -72,7 +71,6 @@
 *     .. Executable Statements ..
 *
       IF( FIRST ) THEN
-         FIRST = .FALSE.
          CALL DLAMC2( BETA, IT, LRND, EPS, IMIN, RMIN, IMAX, RMAX )
          BASE = BETA
          T = IT
@@ -120,6 +118,7 @@
       END IF
 *
       DLAMCH = RMACH
+      FIRST  = .FALSE.
       RETURN
 *
 *     End of DLAMCH
@@ -130,10 +129,9 @@
 *
       SUBROUTINE DLAMC1( BETA, T, RND, IEEE1 )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            IEEE1, RND
@@ -198,7 +196,6 @@
 *     .. Executable Statements ..
 *
       IF( FIRST ) THEN
-         FIRST = .FALSE.
          ONE = 1
 *
 *        LBETA,  LIEEE1,  LT and  LRND  are the  local values  of  BETA,
@@ -307,6 +304,7 @@
       T = LT
       RND = LRND
       IEEE1 = LIEEE1
+      FIRST = .FALSE.
       RETURN
 *
 *     End of DLAMC1
@@ -317,10 +315,9 @@
 *
       SUBROUTINE DLAMC2( BETA, T, RND, EPS, EMIN, RMIN, EMAX, RMAX )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            RND
@@ -407,7 +404,6 @@
 *     .. Executable Statements ..
 *
       IF( FIRST ) THEN
-         FIRST = .FALSE.
          ZERO = 0
          ONE = 1
          TWO = 2
@@ -521,12 +517,13 @@
 *         ( A guess; no known machine )
             IWARN = .TRUE.
          END IF
+         FIRST = .FALSE.
 ***
 * Comment out this if block if EMIN is ok
-C          IF( IWARN ) THEN
-C             FIRST = .TRUE.
-C             WRITE( 6, FMT = 9999 )LEMIN
-C          END IF
+         IF( IWARN ) THEN
+            FIRST = .TRUE.
+            WRITE( 6, FMT = 9999 )LEMIN
+         END IF
 ***
 *
 *        Assume IEEE arithmetic if we found denormalised  numbers above,
@@ -561,12 +558,12 @@ C          END IF
 *
       RETURN
 *
-C  9999 FORMAT( / / ' WARNING. The value EMIN may be incorrect:-',
-C      $      '  EMIN = ', I8, /
-C      $      ' If, after inspection, the value EMIN looks',
-C      $      ' acceptable please comment out ',
-C      $      / ' the IF block as marked within the code of routine',
-C      $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
+ 9999 FORMAT( / / ' WARNING. The value EMIN may be incorrect:-',
+     $      '  EMIN = ', I8, /
+     $      ' If, after inspection, the value EMIN looks',
+     $      ' acceptable please comment out ',
+     $      / ' the IF block as marked within the code of routine',
+     $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
 *
 *     End of DLAMC2
 *
@@ -576,10 +573,9 @@ C      $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
 *
       DOUBLE PRECISION FUNCTION DLAMC3( A, B )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       DOUBLE PRECISION   A, B
@@ -595,7 +591,8 @@ C      $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
 *  Arguments
 *  =========
 *
-*  A, B    (input) DOUBLE PRECISION
+*  A       (input) DOUBLE PRECISION
+*  B       (input) DOUBLE PRECISION
 *          The values A and B.
 *
 * =====================================================================
@@ -614,10 +611,9 @@ C      $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
 *
       SUBROUTINE DLAMC4( EMIN, START, BASE )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       INTEGER            BASE, EMIN
@@ -632,7 +628,7 @@ C      $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
 *  Arguments
 *  =========
 *
-*  EMIN    (output) EMIN
+*  EMIN    (output) INTEGER 
 *          The minimum exponent before (gradual) underflow, computed by
 *          setting A = START and dividing by BASE until the previous A
 *          can not be recovered.
@@ -698,10 +694,9 @@ C      $      ' DLAMC2,', / ' otherwise supply EMIN explicitly.', / )
 *
       SUBROUTINE DLAMC5( BETA, P, EMIN, IEEE, EMAX, RMAX )
 *
-*  -- LAPACK auxiliary routine (version 3.0) --
-*     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
-*     Courant Institute, Argonne National Lab, and Rice University
-*     October 31, 1992
+*  -- LAPACK auxiliary routine (version 3.1) --
+*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..
+*     November 2006
 *
 *     .. Scalar Arguments ..
       LOGICAL            IEEE
