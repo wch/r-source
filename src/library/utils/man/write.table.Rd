@@ -1,4 +1,4 @@
-name{write.table}
+\name{write.table}
 \alias{write.table}
 \alias{write.csv}
 \alias{write.csv2}
