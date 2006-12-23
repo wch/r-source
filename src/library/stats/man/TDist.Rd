@@ -26,8 +26,8 @@ rt(n, df, ncp)
       = Inf} is allowed.  For \code{qt} only values of at least one are
     currently supported.}
   \item{ncp}{non-centrality parameter \eqn{\delta};
-    currently for \code{pt()} and \code{dt()}, only for
-    \code{abs(ncp) <= 37.62}.  If omitted, use the central t distribution.}
+    currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
+    If omitted, use the central t distribution.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -40,9 +40,10 @@ rt(n, df, ncp)
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
 }
-\note{setting \code{ncp = 0} is \emph{not} equivalent to omitting
+\note{
+  Setting \code{ncp = 0} is \emph{not} equivalent to omitting
   \code{ncp}.  \R uses the non-centrality functionality whenever \code{ncp}
-  is specified which provides (right)continuous behavior at \eqn{ncp=0}.
+  is specified which provides continuous behavior at \eqn{ncp=0}.
 }
 \details{
   The \eqn{t} distribution with \code{df} \eqn{= \nu}{= n} degrees of
