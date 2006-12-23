@@ -44,9 +44,9 @@ all.equal(unname(im.lm0 $ infmat),
                  ))
 
 all.equal(rstandard(roller.lm9),
-          rstandard(roller.lm0),tol=1e-15)
+          rstandard(roller.lm0),tol=1e-14)
 all.equal(rstudent(roller.lm9),
-          rstudent(roller.lm0),tol=1e-15)
+          rstudent(roller.lm0),tol=1e-14)
 all.equal(rstudent(roller.lm),
           rstudent(roller.glm))
 all.equal(cooks.distance(roller.lm),
@@ -54,9 +54,9 @@ all.equal(cooks.distance(roller.lm),
 
 
 all.equal(summary(roller.lm0)$coef,
-          summary(roller.lm9)$coef, tol=1e-15)
+          summary(roller.lm9)$coef, tol=1e-14)
 all.equal(print(anova(roller.lm0), signif.st=FALSE),
-                anova(roller.lm9), tol=1e-15)
+                anova(roller.lm9), tol=1e-14)
 
 
 ###  more regression tests for lm(), glm(), etc :
