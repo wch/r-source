@@ -195,9 +195,8 @@
 
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from
-  the sources at
-  \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}. If PCRE
-  support was compiled from the sources within \R, the PCRE version is 6.7
+  the sources at \url{http://www.pcre.org}. If PCRE
+  support was compiled from the sources within \R, the PCRE version is 7.0
   as described here (version \eqn{\ge}{>=} 4.0 is required if \R is
   configured to use the system's PCRE library).
 
@@ -252,6 +251,9 @@
   subject or before newline at end, \code{\\z} matches at end of a
   subject. and \code{\\G} matches at first matching position in a
   subject. \code{\\C} matches a single byte. including a newline.
+  \code{\\R} matches any Unicode newline character (not just CR).
+  \code{\\X} matches any number of Unicode characters that form an
+  extended Unicode sequence.
 
   The same repetition quantifiers as extended POSIX are supported.
   However, if a quantifier is followed by \code{?}, the match is
@@ -283,7 +285,7 @@
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2 and the
-  \code{pcrepattern} man page from PCRE 6.7.
+  \code{pcrepattern} man page from PCRE 7.0.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
