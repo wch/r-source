@@ -40,6 +40,10 @@ rt(n, df, ncp)
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
 }
+\note{setting \code{ncp = 0} is \emph{not} equivalent to omitting
+  \code{ncp}.  \R uses the non-centrality functionality whenever \code{ncp}
+  is specified which provides (right)continuous behavior at \eqn{ncp=0}.
+}
 \details{
   The \eqn{t} distribution with \code{df} \eqn{= \nu}{= n} degrees of
   freedom has density
@@ -77,11 +81,11 @@ rt(n, df, ncp)
 \source{
   The central \code{dt} is computed via an accurate formula
   provided by Catherine Loader (see the reference in \code{\link{dbinom}}).
-  
+
   For the non-central case of \code{dt}, contributed by
   Claus \enc{Ekstrøm}{Ekstroem} based on the relationship (for
   \eqn{x \neq 0}{x != 0}) to the cumulative distribution.
-  
+
   For the central case of \code{pt}, a normal approximation in the
   tails, otherwise via \code{\link{pbeta}}.
 
