@@ -1,4 +1,4 @@
-			Dear Emacs, please make this -*-Text-*- mode!
+\			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
 	*	       2.5 SERIES NEWS			 *
@@ -76,8 +76,6 @@ NEW FEATURES
 	suitable X11-using systens.
 
     o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
-
-    o	Added support for Objective C in R and packages (if available).
 
     o	boxplot(*, notch = TRUE) now warns when notches are outside hinges;
 	related to PR#7690.
@@ -193,6 +191,8 @@ NEW FEATURES
 	only small changes to the output, but do remember that the sign
 	of eigenvectors (and principal components) is indeterminate.
 
+    o	PCRE has been updated to version 7.0.
+
 
 DEPRECATED & DEFUNCT
 
@@ -232,6 +232,8 @@ C-LEVEL FACILITIES
 
     o	Functions str2type, type2char and type2str are now available in
 	Rinternals.h.
+
+    o	Added support for Objective C in R and packages (if available).
 
 
 UTILITIES
