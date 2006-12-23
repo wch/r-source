@@ -29,7 +29,7 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # If you want to use AMD's ACML BLAS,
 # set to YES and specify the path to libacml.a 
 USE_ACML=NO
-ACML_PATH=c:/Program Files/AMD/acml3.5.0/gnu32/lib
+ACML_PATH=c:/Program Files/AMD/acml3.6.0/gnu32/lib
 ## Set this to YES if you want to use ACML's LAPACK not R's.
 USE_ACML_LAPACK=NO
 
