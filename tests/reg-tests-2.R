@@ -2027,3 +2027,10 @@ dput(x, tmp, control=c("all", "S_compatible"))
 stopifnot(identical(dget(tmp), x))
 unlink(tmp)
 ## changes in 2.5.0
+
+
+## give better error message for nls with no parameters
+## Ivo Welch, R-help, 2006-12-23.
+d <- data.frame(y= runif(10), x=runif(10))
+try(nls(y ~ 1/(1+x), data = d, start=list(x=0.5,y=0.5), trace=TRUE))
+## changed in 2.4.1 patched

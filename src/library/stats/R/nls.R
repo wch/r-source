@@ -481,6 +481,7 @@ nls <-
     ## If it is a parameter it is not a variable (nothing to guess here :-)
     if(length(pnames))
         varNames <- varNames[is.na(match(varNames, pnames))]
+    if(!length(varNames)) stop("no parameters to fit")
     ## This aux.function needs to be as complicated because
     ## exists(var, data) does not work (with lists or dataframes):
     lenVar <- function(var) tryCatch(length(eval(as.name(var), data, env)),
