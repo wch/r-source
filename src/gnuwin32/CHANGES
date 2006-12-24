@@ -37,6 +37,15 @@ CMD REMOVE by default removes from that library.
 
 
 
+R 2.4.1 patched
+===============
+
+Using the AltGr key in the script editor was treated as a control key.
+This was fixed for the rest of R in 0.9.1, and unfixed by the
+contributed code implementing the script editor.  (PR#9430)
+
+
+
 R 2.4.1
 =======
 
