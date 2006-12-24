@@ -925,9 +925,12 @@ static int TranslateMenuKeys(MSG *msg)
 		msg->message = WM_KEYDOWN;
 
 	/* Check for menu control keys. */
-	/* disabled : Alt-Gr bug*/ /* Re-enabled for the moment, CJ */
+	/* disabled for R 0.9.1 to 1.9.1. 
+	   Added proper AltGr fix for 2.5.0 */
 
-	if ((GetKeyState(VK_CONTROL) < 0) && (msg->message == WM_KEYDOWN))
+	if ((GetKeyState(VK_CONTROL) & 0x8000)
+	    && (msg->message == WM_KEYDOWN)
+	    && !(GetKeyState(VK_RMENU) & 0x8000))
 	{
 		/* ctrl-letter or ctrl-number is a menu key */
 		if (((key >= 'A') && (key <= 'Z')) ||
