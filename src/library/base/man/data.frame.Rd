@@ -59,7 +59,8 @@ default.stringsAsFactors()
   (If that component is subsequently recycled, the names are discarded
   with a warning.)  If \code{row.names} was supplied as \code{NULL} or no
   suitable component was found the row names are the integer sequence
-  starting at one.
+  starting at one (and such row names are considered to be
+  \sQuote{automatic}, and not preserved by \code{\link{as.matrix}}).
 
   If row names are supplied of length one and the data frame has a
   single row, the \code{row.names} is taken to specify the row names and

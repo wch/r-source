@@ -71,14 +71,13 @@ str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
 !identical(d00, d000)
 dput(d00)
 dput(d000)
+row.names(d) <- 1:10 # don't expect automatic row names to be preserved
 stopifnot(identical(d, cbind(d, d0)),
-          identical(d, cbind(d0, d)),
-          identical(d, rbind(d,d.0)),
+          identical(d, cbind(d0, d)))
+stopifnot(identical(d, rbind(d,d.0)),
           identical(d, rbind(d.0,d)),
           identical(d, rbind(d00,d)),
-          identical(d, rbind(d,d00)),
-
-          TRUE )
+          identical(d, rbind(d,d00)))
 ## Comments: failed before ver. 1.4.0
 
 ## diag
@@ -2034,3 +2033,13 @@ unlink(tmp)
 d <- data.frame(y= runif(10), x=runif(10))
 try(nls(y ~ 1/(1+x), data = d, start=list(x=0.5,y=0.5), trace=TRUE))
 ## changed in 2.4.1 patched
+
+
+## manipulating rownames: problems in pre-2.5.0
+A <- data.frame(a=character(0))
+try(row.names(A) <- 1:10) # succeeded in Dec 2006
+A <- list(a=1:3)
+class(A) <- "data.frame"
+row.names(A) <- letters[24:26] # failed at one point in Dec 2006
+A
+##

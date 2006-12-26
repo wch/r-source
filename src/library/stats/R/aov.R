@@ -350,7 +350,7 @@ summary.aov <- function(object, intercept = FALSE, split,
             ## 'nterms' ~= 'Residuals' have no P-value
         }
         class(x) <- c("anova", "data.frame")
-        row.names(x) <- format(nmrows)
+        attr(x, "row.names") <- format(nmrows)
         if(!keep.zero.df) x <- x[df > 0, ]
         pm <- pmatch("(Intercept)", row.names(x), 0)
         if(!intercept && pm > 0) x <- x[-pm ,]

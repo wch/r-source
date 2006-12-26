@@ -89,7 +89,7 @@ file.info <- function(...)
     class(res$mtime) <- class(res$ctime) <- class(res$atime) <-
         c("POSIXt", "POSIXct")
     class(res) <- "data.frame"
-    row.names(res) <- fn
+    attr(res, "row.names") <- fn # not row.names<- as that does a length check
     res
 }
 

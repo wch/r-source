@@ -167,7 +167,7 @@ SEXP getAttrib(SEXP vec, SEXP name)
     if (name == R_RowNamesSymbol) {
 	SEXP s = getAttrib0(vec, R_RowNamesSymbol);
 	if(isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER) {
-	    int i, n = INTEGER(s)[1];
+	    int i, n = abs(INTEGER(s)[1]);
 	    PROTECT(s = allocVector(INTSXP, n));
 	    for(i = 0; i < n; i++)
 		INTEGER(s)[i] = i+1;
@@ -178,19 +178,27 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	return getAttrib0(vec, name);
 }
 
-SEXP R_shortRowNames(SEXP vec)
+SEXP R_shortRowNames(SEXP vec, SEXP stype)
 {
-    /* return  n { = nrow(.)} if the data frame 'vec' has c(NA, n) rownames;
-     *	      - nrow(.) otherwise;  note that data frames with nrow(.) == 0
+    /* return  n if the data frame 'vec' has c(NA, n) rownames;
+     *	       nrow(.) otherwise;  note that data frames with nrow(.) == 0
      *		have no row.names.
-  ==> is also used in dim.data.frame() */
-    SEXP s = getAttrib0(vec, R_RowNamesSymbol),
-	r = allocVector(INTSXP, 1);
+     ==> is also used in dim.data.frame() */
+    SEXP s = getAttrib0(vec, R_RowNamesSymbol), ans = s;
+    int type = asInteger(stype);
 
-    INTEGER(r)[0] = (isInteger(s) && LENGTH(s) == 2 &&
-		     INTEGER(s)[0] == NA_INTEGER)
-	? INTEGER(s)[1] : (isNull(s) ? 0 : -LENGTH(s));
-    return r;
+    if( type < 0 || type > 2)
+	error(_("invalid '%s' argument"), "type");
+    
+    if(type >= 1) {
+	ans = allocVector(INTSXP, 1);
+	int n = (isInteger(s) && LENGTH(s) == 2 &&
+			 INTEGER(s)[0] == NA_INTEGER)
+	    ? INTEGER(s)[1] : (isNull(s) ? 0 : LENGTH(s));
+
+	INTEGER(ans)[0] = (type == 1) ? n : abs(n);
+    }
+    return ans;
 }
 
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)

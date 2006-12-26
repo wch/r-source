@@ -191,17 +191,19 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     }
 
     ##	now determine row names
-
+    compactRN <- TRUE
     if (missing(row.names)) {
 	if (rlabp) {
 	    row.names <- data[[1]]
 	    data <- data[-1]
             keep <- keep[-1]
+            compactRN <- FALSE
 	}
-	else row.names <- as.character(seq_len(nlines))
+	else row.names <- c(NA_integer_, -as.integer(nlines))
     } else if (is.null(row.names)) {
-	row.names <- as.character(seq_len(nlines))
+	row.names <- c(NA_integer_, -as.integer(nlines))
     } else if (is.character(row.names)) {
+        compactRN <- FALSE
 	if (length(row.names) == 1) {
 	    rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]
 	    row.names <- data[[rowvar]]
@@ -209,6 +211,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
             keep <- keep[-rowvar]
 	}
     } else if (is.numeric(row.names) && length(row.names) == 1) {
+        compactRN <- FALSE
 	rlabp <- row.names
 	row.names <- data[[rlabp]]
 	data <- data[-rlabp]
@@ -216,40 +219,52 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     } else stop("invalid 'row.names' specification")
     data <- data[keep]
 
+    ## rownames<- is interpreted, so avoid it for efficiency (it will copy)
+    if(is.object(row.names) || !(is.integer(row.names)) )
+        row.names <- as.character(row.names)
+    if(!compactRN) {
+        if (length(row.names) != nlines)
+            stop("invalid 'row.names' length")
+        if (any(duplicated(row.names)))
+            stop("duplicate 'row.names' are not allowed")
+        if (any(is.na(row.names)))
+            stop("missing values in 'row.names' are not allowed")
+    }
+
     ##	this is extremely underhanded
     ##	we should use the constructor function ...
     ##	don't try this at home kids
 
     class(data) <- "data.frame"
-    row.names(data) <- row.names
+    attr(data, "row.names") <- row.names
     data
 }
 
 read.csv <-
-function (file, header = TRUE, sep = ",", quote="\"", dec=".",
-          fill = TRUE, comment.char="", ...)
+function (file, header = TRUE, sep = ",", quote = "\"", dec = ".",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char,  ...)
+               comment.char = comment.char,  ...)
 
 read.csv2 <-
-function (file, header = TRUE, sep = ";", quote="\"", dec=",",
-          fill = TRUE, comment.char="",...)
+function (file, header = TRUE, sep = ";", quote = "\"", dec = ",",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char, ...)
+               comment.char = comment.char, ...)
 
 read.delim <-
-function (file, header = TRUE, sep = "\t", quote="\"", dec=".",
-          fill = TRUE, comment.char="",...)
+function (file, header = TRUE, sep = "\t", quote = "\"", dec = ".",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char, ...)
+               comment.char = comment.char, ...)
 
 read.delim2 <-
-function (file, header = TRUE, sep = "\t", quote="\"", dec=",",
-          fill = TRUE, comment.char="",...)
+function (file, header = TRUE, sep = "\t", quote = "\"", dec = ",",
+          fill = TRUE, comment.char = "", ...)
     read.table(file = file, header = header, sep = sep,
                quote = quote, dec = dec, fill = fill,
-               comment.char=comment.char, ...)
+               comment.char = comment.char, ...)
 

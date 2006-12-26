@@ -227,7 +227,7 @@ static R_CallMethodDef callMethods [] = {
      */
     CALLDEF(R_r2dtable, 3),
 
-    CALLDEF(R_shortRowNames, 1),
+    CALLDEF(R_shortRowNames, 2),
 
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),

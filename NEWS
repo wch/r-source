@@ -18,11 +18,12 @@ USER-VISIBLE CHANGES
     o	apropos(x) and find(x) now both only work for character 'x',
 	and hence drop all non-standard evaluation behavior.
 
-    o	as.matrix(<data frame with trivial rownames>) now has NULL
-	rownames.  Consequently, e.g., t(.) for such data frames has NULL
-	column names.  This change leads to memory reductions in several
-	places, but can break code which assumes character
-	dimnames for such data frame derived matrices.
+    o	Data frames can have 'automatic' row names which are not
+	converted to dimnames by as.matrix().  (Consequently, e.g.,
+	t(.)  for such data frames has NULL column names.)  This
+	change leads to memory reductions in several places, but can
+	break code which assumes character dimnames for data frames
+	derived from matrices.
 
 
 NEW FEATURES
@@ -135,9 +136,9 @@ NEW FEATURES
 
     o	interaction() has a new argument lex.order.
 
-    o	.Call("R_shortRowNames") utility for data frames with trivial row
-	names; consequently, dim.data.frame() has become very fast for
-	large such data frames.
+    o	row_names_info() utility to find the number of rows efficiently
+	for data frames; consequently, dim.data.frame() has become
+	very fast for large data frames with 'automatic' row names.
 
     o	postscript() now by default writes grey colors (including black
 	and white) via 'setgray', which gives more widely acceptable
@@ -192,6 +193,14 @@ NEW FEATURES
 	of eigenvectors (and principal components) is indeterminate.
 
     o	PCRE has been updated to version 7.0.
+
+    o	read.table() handles row names more efficiently (in particular
+	making use of integer row names and avoiding at least one copy
+	in assigning them).
+
+    o	data.frame() and standard as.data.frame() methods handle
+	row names more efficiently, not generating long dummy row
+	names and then discarding them.
 
 
 DEPRECATED & DEFUNCT

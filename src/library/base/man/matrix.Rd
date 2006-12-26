@@ -53,7 +53,9 @@ is.matrix(x)
   these numeric alikes.  In the other case, the usual coercion hierarchy
   (logical < integer < double < complex) will be used, e.g., all-logical
   data frames will be coerced to a logical matrix, mixed logical-integer
-  will give integer, etc.
+  will give integer, etc.  \sQuote{Automatic} row names (see
+  \code{\link{data.frame}}) are converted to \code{NULL} rownames on the
+  matrix.
 
   When coercing a vector, it produces a one-column matrix, and
   promotes the names (if any) of the vector to the rownames of the matrix.

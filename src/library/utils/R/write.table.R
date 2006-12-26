@@ -38,6 +38,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
             }
         }
         d <- dimnames(x)
+        if(is.null(d[[1]])) d[[1]] <- seq_len(nrow(x))
         p <- ncol(x)
     }
     nocols <- p==0

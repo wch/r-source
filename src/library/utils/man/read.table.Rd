@@ -79,7 +79,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     row names.  Otherwise if \code{row.names} is missing, the rows are
     numbered.
 
-    Using \code{row.names = NULL} forces row numbering.
+    Using \code{row.names = NULL} forces row numbering. Missing or
+    \code{NULL} \code{row.names} generate row names that are considered
+    to be \sQuote{automatic} (and not preserved by \code{\link{as.matrix}}).
   }
 
   \item{col.names}{a vector of optional names for the variables.
@@ -162,7 +164,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?}
 
-  \item{\dots}{Further arguments to \code{read.table}.}
+  \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }
 \value{
   A data frame (\code{\link{data.frame}}) containing a representation of

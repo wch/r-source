@@ -9,6 +9,7 @@
 \alias{.isMethodsDispatchOn}
 \alias{sys.save.image}
 \alias{sys.load.image}
+\alias{row_names_info}
 
 \title{Internal Functions in the Base Package}
 \description{
@@ -35,6 +36,8 @@ testPlatformEquivalence(built, run)
 
 sys.load.image(name, quiet)
 sys.save.image(name)
+
+row_names_info(x, type = 1L)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -53,6 +56,13 @@ sys.save.image(name)
     \code{"packageDescription2"}.}
   \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
   \item{name}{name of image file to save or load.}
+  \item{x}{an object with a \code{"row.names"} attribute, typically a
+    data frame.}
+  \item{type}{integer. Currently \code{type = 0} returns the internal
+    \code{"row.names"} attribute (possibly \code{NULL}), \code{type = 2}
+    the number of rows implied by the attribute, and \code{type = 1} the
+    latter with a negative sign for \sQuote{automatic} row names.}
+  }
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
