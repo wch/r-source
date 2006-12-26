@@ -471,7 +471,7 @@ data.frame <-
         ## handle the column only subsetting ...
         ## this is not the same as the 2-arg case, as 'drop' is used.
         if(missing(j) && drop && length(x) == 1) return(.subset2(x, 1))
-        y <- .subset(x, j)
+        y <- if(missing(j)) x else .subset(x, j)
         if(drop && length(y) == 1) return(.subset2(y, 1))
 	cols <- names(y)
 	if(any(is.na(cols))) stop("undefined columns selected")
