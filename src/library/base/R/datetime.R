@@ -355,22 +355,56 @@ difftime <-
 
 ## "difftime" constructor
 ## Martin Maechler, Date: 16 Sep 2002
-as.difftime <- function(tim, format="%X")
+## Numeric input version Peter Dalgaard, December 2006
+as.difftime <- function(tim, format="%X", units="auto")
 {
-    difftime(strptime(tim, format=format),
-             strptime("0:0:0", format="%X"))
+    if (inherits(tim, "difftime")) return(tim)
+    if (is.character(tim)){
+        difftime(strptime(tim, format=format),
+             strptime("0:0:0", format="%X"), units=units)
+    } else {
+        if (!is.numeric(tim)) stop("tim is not character or numeric")
+	if (units=="auto") stop("need explicit units for numeric conversion")
+        if (!(units %in% c("secs", "mins", "hours", "days", "weeks")))
+	    stop("invalid units specified")
+        structure(tim, units=units, class="difftime")
+    }
 }
+
+### For now, these have only difftime methods, but you never know...
+units <- function(x) UseMethod("units")
+"units<-" <- function(x,value) UseMethod("units<-")
+
+units.difftime <- function(x) attr(x, "units")
+"units<-.difftime" <- function(x,value) {
+    from <- units(x)
+    if (from == value) return(x)
+    if (!(value %in% c("secs", "mins", "hours", "days", "weeks")))
+        stop("invalid units specified")
+    sc <- cumprod(c(sec=1, mins=60, hours=60, days=24, weeks=7))
+    newx <- as.vector(x)*sc[from]/sc[value]
+    structure(newx, units=value, class="difftime")
+}
+
+as.double.difftime <- function(x, units="auto", ...) {
+    if (units != "auto")
+        units(x) <- units
+    as.double(as.vector(x))
+}
+
+as.data.frame.difftime <- as.data.frame.vector
+
+format.difftime <- function(x,...) paste(format(unclass(x),...), units(x))
+
+
 
 print.difftime <- function(x, digits = getOption("digits"), ...)
 {
-    if(is.array(x)) {
+    if(is.array(x) || length(x) > 1) {
         cat("Time differences in ", attr(x, "units"), "\n", sep="")
         y <- unclass(x); attr(y, "units") <- NULL
         print(y)
-    } else if(length(x) > 1)
-        cat("Time differences of ",
-            paste(format(unclass(x), digits=digits), collapse = ", "), " ",
-            attr(x, "units"), "\n", sep="")
+    }
     else
         cat("Time difference of ", format(unclass(x), digits=digits), " ",
             attr(x, "units"), "\n", sep="")

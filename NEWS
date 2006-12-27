@@ -215,6 +215,13 @@ NEW FEATURES
 	so calling colnames<- on a data frame no longer alters the
 	representation of the row names.
 
+    o   Objects of class "difftime" are now handled more flexibly. The
+        units of such objects can now be accessed via a units() function,
+        which also has an assignment form, and there are conversion methods
+        to and from numeric, which also allow the specification of units.
+        Objects of this class can also be stored in data frames now. A
+	format() method has been added, and the print method was revised.
+
 
 DEPRECATED & DEFUNCT
 

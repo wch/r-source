@@ -18,6 +18,7 @@
 \alias{as.data.frame.ts}
 \alias{as.data.frame.vector}
 \alias{as.data.frame.array}
+\alias{as.data.frame.difftime}
 
 \title{
   Coerce to a Data Frame
