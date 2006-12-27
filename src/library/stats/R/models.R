@@ -1,14 +1,15 @@
 formula <- function(x, ...) UseMethod("formula")
-formula.default <- function (x,env=parent.frame(), ...)
+formula.default <- function (x, env = parent.frame(), ...)
 {
-    if (!is.null(x$formula))		eval(x$formula)
-    else if (!is.null(x$terms))		{z <- x$terms; oldClass(z) <- "formula"; z}
+    if (!is.null(x$formula)) eval(x$formula)
+    else if (!is.null(x$terms))	{z <- x$terms; oldClass(z) <- "formula"; z}
     else if (!is.null(x$call$formula))	eval(x$call$formula)
     else if (!is.null(attr(x, "formula"))) attr(x, "formula")
-    else {form<-switch(mode(x),
-		NULL = structure(NULL, class = "formula"),
-		character = formula(eval(parse(text = x)[[1]])),
-		call = eval(x), stop("invalid formula"))
+    else {
+        form <- switch(mode(x),
+                       NULL = structure(NULL, class = "formula"),
+                       character = formula(eval(parse(text = x)[[1]])),
+                       call = eval(x), stop("invalid formula"))
         environment(form)<-env
         form
     }
@@ -29,11 +30,11 @@ formula.data.frame <- function (x, ...)
     nm <- sapply(names(x), as.name)
     lhs <- nm[1]
     if (length(nm) > 1) {
-       rhs <- nm[-1]
+        rhs <- nm[-1]
     }
     else {
-       rhs <- nm[1]
-       lhs <- NULL
+        rhs <- nm[1]
+        lhs <- NULL
     }
     ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"))
     ff<-eval(ff)
@@ -49,17 +50,18 @@ print.formula <- function(x, ...) {
 "[.formula" <- function(x,i) {
     ans <- NextMethod("[")
     ## as.character gives a vector.
-    if(as.character(ans[[1]])[1] == "~"){
+    if(as.character(ans[[1]])[1] == "~") {
 	class(ans) <- "formula"
         environment(ans)<-environment(x)
     }
     ans
 }
 
-as.formula <- function(object,env=parent.frame()){
+as.formula <- function(object, env = parent.frame())
+{
     if(inherits(object, "formula"))
-           object
-    else{
+        object
+    else {
         rval<-formula(object,env=baseenv())
         if (identical(environment(rval), baseenv()) || !missing(env))
             environment(rval)<-env
@@ -127,7 +129,7 @@ drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
 	termobj
     else {
         if(!inherits(termobj, "terms"))
-           stop("'termobj' must be a object of class \"terms\"")
+            stop("'termobj' must be a object of class \"terms\"")
 	newformula <- reformulate(attr(termobj, "term.labels")[-dropx],
 				  if (keep.response) termobj[[2]] else NULL)
         environment(newformula) <- environment(termobj)
@@ -165,7 +167,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
             tmp <- c(tmp, tmp2[ind])
         }
 	form <- formula(object)
-	lhs <- if(length(form) == 2) NULL else paste(deparse(form[[2]]),collapse="")
+	lhs <- if(length(form) == 2) NULL else
+          paste(deparse(form[[2]]), collapse="")
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
 	formula(paste(lhs, "~", rhs))
@@ -272,8 +275,8 @@ model.frame.default <-
     ## and note the number of rows.
     possible_newdata <-
         !missing(data) && is.data.frame(data) &&
-    identical(deparse(substitute(data)), "newdata") &&
-    (nr <- nrow(data)) > 0
+        identical(deparse(substitute(data)), "newdata") &&
+        (nr <- nrow(data)) > 0
 
     ## were we passed just a fitted model object?
     ## the fit might have a saved model object
@@ -335,7 +338,7 @@ model.frame.default <-
         nr2 <- max(sapply(variables, NROW))
         if(nr2 != nr)
             warning(gettextf(
-                   "'newdata' had %d rows but variable(s) found have %d rows",
+                    "'newdata' had %d rows but variable(s) found have %d rows",
                              nr, nr2), call.=FALSE)
     }
     if(is.null(attr(formula, "predvars"))) {
@@ -416,7 +419,7 @@ model.matrix.default <- function(object, data = environment(object),
 	    data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")
-    if(length(data)) { # otherwise no rhs terms, so skip all this
+    if(length(data)) {      # otherwise no rhs terms, so skip all this
         contr.funs <- as.character(getOption("contrasts"))
         namD <- names(data)
         ## turn any character columns into factors
@@ -448,7 +451,7 @@ model.matrix.default <- function(object, data = environment(object),
                 }
             }
         }
-    } else { # internal model.matrix needs some variable
+    } else {               # internal model.matrix needs some variable
         isF <-  FALSE
         data <- list(x=rep(0, nrow(data)))
     }
