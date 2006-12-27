@@ -632,7 +632,7 @@ data.frame <-
 		nrr <- as.character((nrows + 1L):nn)
 		if(inherits(value, "data.frame") &&
 		   (dim(value)[1L]) >= length(nrr)) {
-		    new.rows <- attr(value, "row.names")[seq_len(nrr)]
+		    new.rows <- attr(value, "row.names")[seq_along(nrr)]
 		    repl <- duplicated(new.rows) | match(new.rows, rows, 0L)
 		    if(any(repl))
 			new.rows[repl] <- nrr[repl]
