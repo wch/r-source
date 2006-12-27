@@ -137,7 +137,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                         switch(ext,
                                R = , r = {
                                    ## ensure utils is visible
-                                   library(utils)
+                                   library("utils")
                                    sys.source(zfile, chdir = TRUE,
                                               envir = envir)
                                },
