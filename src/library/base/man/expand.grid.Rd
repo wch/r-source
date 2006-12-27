@@ -18,7 +18,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE)
   A data frame containing one row for each combination of the supplied
   factors.  The first factors vary fastest.  The columns are labelled by
   the factors if these are supplied as named arguments or named
-  components of a list.
+  components of a list.  The row names are \sQuote{automatic}.
 
   Attribute \code{"out.attrs"} is a list which gives the dimension and
   dimnames for use by \code{\link{predict}} methods.

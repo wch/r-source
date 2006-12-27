@@ -65,12 +65,12 @@ merge(x, y, \dots)
 }
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
-  common columns, but for \code{sort=FALSE} are in an unspecified order.
+  common columns, but for \code{sort = FALSE} are in an unspecified order.
   The columns are the common columns followed by the
   remaining columns in \code{x} and then those in \code{y}.  If the
   matching involved row names, an extra character column called
   \code{Row.names} is added at the left, and in all cases the result has
-  no special row names.
+  \sQuote{automatic} row names.
 }
 \seealso{
   \code{\link{data.frame}},

@@ -15,7 +15,7 @@ rank <- function(x, na.last = TRUE,
 	NAkeep <- (na.last == "keep")
 	if(NAkeep || na.last) {
 	    x[!nas] <- y
-	    if(!NAkeep) x[nas] <- (length(y) + 1:1):length(x)
+	    if(!NAkeep) x[nas] <- (length(y) + 1L):length(x)
 	} else {
 	    len <- sum(nas)
 	    x[!nas] <- y + len

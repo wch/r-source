@@ -415,7 +415,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
             v[cpos[pos[!ivpars]]] <- as.double(unlist(control[!ivpars]))
     }
     if (trace)
-        iv[19] <- 1:1
+        iv[19] <- 1L
     scale <- 1
     low <- upp <- NULL
     if (any(lower != -Inf) || any(upper != Inf)) {

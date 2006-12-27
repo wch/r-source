@@ -58,7 +58,7 @@ splineDesign <-
         if(outer.ok) { ## x[] is allowed to be 'anywhere'
             ## extend knots set "temporarily"
             in.x <- knots[1] < x & x < knots[nk]
-	    knots <- knots[c(rep.int(1:1, o1), 1:nk, rep.int(nk, o1))]
+	    knots <- knots[c(rep.int(1L, o1), 1:nk, rep.int(nk, o1))]
             if((x.out <- !all(in.x))) {
                 x <- x[in.x]
                 nnx <- length(x)

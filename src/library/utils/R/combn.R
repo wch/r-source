@@ -67,7 +67,7 @@ combn <- function(x, m, FUN = NULL, simplify = TRUE, ...)
     }
 
     i <- 2
-    ._1 <- 1:1 # to keep integer arithmetic
+    ._1 <- 1L # to keep integer arithmetic
     nmmp1 <- n - m + ._1
     while(a[1] != nmmp1) {
 	if(e < n - h) {

@@ -72,9 +72,9 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	entries <- as.list(iS)
 	## entries have no labels !
 
-	iS <- c(iS, nl+1:1)
+	iS <- c(iS, nl+1L)
 	for(i in seq(along = entries)) {
-	    entries[[i]] <- parseEntry(ll[iS[i] : (iS[i+1] - 1:1)])
+	    entries[[i]] <- parseEntry(ll[iS[i] : (iS[i+1] - 1L)])
 	}
 	entries
     }
@@ -90,9 +90,9 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	if(trace) cat("	 with ", length(iC), "sections\n")
 	sections <- as.list(iC)
 	names(sections) <- ll[iC]
-	iC <- c(iC, length(ll)+1:1) # such that	 iC[i] : (iC[i+1]-1)  makes sense
+	iC <- c(iC, length(ll)+1L) # such that	 iC[i] : (iC[i+1]-1)  makes sense
 	for(i in seq(along = sections)) {
-	    sections[[i]] <- parseSection(ll[(iC[i]+ 1:1) : (iC[i+1] - 1:1)],
+	    sections[[i]] <- parseSection(ll[(iC[i]+ 1L) : (iC[i+1] - 1L)],
 					  kind = names(sections)[i])
 	}
 	sections
@@ -109,9 +109,9 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	versions <- as.list(iC)
 	names(versions) <- sub(s.pre, '', ll[iC])
 
-	iC <- c(iC, length(ll)+1:1) # such that	 iC[i] : (iC[i+1]-1)  makes sense
+	iC <- c(iC, length(ll)+1L) # such that	 iC[i] : (iC[i+1]-1)  makes sense
 	for(i in seq(along = versions)) {
-	    versions[[i]] <- parseVersion(ll[(iC[i]+ 1:1) : (iC[i+1] - 1:1)],
+	    versions[[i]] <- parseVersion(ll[(iC[i]+ 1L) : (iC[i+1] - 1L)],
 					  ver = names(versions)[i])
 	}
 	versions
@@ -153,9 +153,9 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
         cat("Now parsing each: ...\n")
     }
 
-    iS <- c(iS, nl+1:1) # such that  iS[i] : (iS[i+1]-1)  makes sense
+    iS <- c(iS, nl+1L) # such that  iS[i] : (iS[i+1]-1)  makes sense
     for(i in seq(along = series)) {
-	series[[i]] <- parseSeries(ll[(iS[i]+ 1:1) : (iS[i+1] - 1:1)],
+	series[[i]] <- parseSeries(ll[(iS[i]+ 1L) : (iS[i+1] - 1L)],
 				   ver = names(series)[i])
     }
     attr(series, "call") <- cl

@@ -1,4 +1,4 @@
-\			Dear Emacs, please make this -*-Text-*- mode!
+			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
 	*	       2.5 SERIES NEWS			 *
@@ -24,6 +24,10 @@ USER-VISIBLE CHANGES
 	change leads to memory reductions in several places, but can
 	break code which assumes character dimnames for data frames
 	derived from matrices.
+
+	No existing R object is regarded as having 'automatic' row
+	names, and it may be beneficial to recreate such objects via
+	read.table() or data.frame().
 
 
 NEW FEATURES
@@ -195,13 +199,21 @@ NEW FEATURES
 
     o	PCRE has been updated to version 7.0.
 
-    o	read.table() handles row names more efficiently (in particular
-	making use of integer row names and avoiding at least one copy
-	in assigning them).
+    o	Several functions handle row names nore efficiently:
 
-    o	data.frame() and standard as.data.frame() methods handle
-	row names more efficiently, not generating long dummy row
-	names and then discarding them.
+	- read.table() and read.DIF() make use of integer row names
+	  where appropriate, and avoids at least one copy in assigning
+	  them.
+
+	- data.frame() and the standard as.data.frame() methods avoid
+	  generating long dummy row names and then discarding them.
+
+	- expand.grid() and merge() generate compact 'automatic' row
+          names.
+
+    o	colnames<-() and rownames<-() now handle data frames explicitly,
+	so calling colnames<- on a data frame no longer alters the
+	representation of the row names.
 
 
 DEPRECATED & DEFUNCT

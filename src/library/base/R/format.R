@@ -292,7 +292,7 @@ prettyNum <-
 			  P0("\\1",small.mark), A.[i.sml])
     }
     ## extraneous trailing dec.marks: paste(B., A., sep = decimal.mark)
-    A. <- P0(B., c(decimal.mark, "")[iN+ 1:1], A.)
+    A. <- P0(B., c(decimal.mark, "")[iN+ 1L], A.)
     if(preserve.width != "none") {
 	nnc <- nchar(A.)
 	d.len <- nnc - nchar(x) # extra space added by 'marks' above

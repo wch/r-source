@@ -5,14 +5,14 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 {
     stopifnot(length(object$order) > 0)
     if (is.null(object$labels))
-	object$labels <- 1:length(object$order)
+	object$labels <- 1L:length(object$order)
     z <- list()
     nMerge <- length(oHgt <- object$height)
     if (nMerge != nrow(object$merge))
 	stop("'merge' and 'height' do not fit!")
     hMax <- oHgt[nMerge]
-    one <- 1:1;	   two <- 2:2 # integer!
-    for (k in 1:nMerge) {
+    one <- 1L;	   two <- 2L # integer!
+    for (k in 1L:nMerge) {
 	x <- object$merge[k, ]# no sort() anymore!
 	if (any(neg <- x < 0))
 	    h0 <- if (hang < 0) 0 else max(0, oHgt[k] - hang * hMax)
@@ -73,7 +73,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     r <- attr(x,"x.member")
     if(is.null(r)) {
 	r <- attr(x,"members")
-	if(is.null(r)) r <- 1:1
+	if(is.null(r)) r <- 1L
     }
     r
 }
@@ -96,7 +96,7 @@ midcache.dendrogram <- function (x, type = "hclust")
 	    stop("dendrogram node with non-positive #{branches}")
 	r <- d # incl. attributes!
 	midS <- 0
-	for(j in 1:k) {
+	for(j in 1L:k) {
 	    r[[j]] <- unclass(setmid(d[[j]], type))
 	    midS <- midS + .midDend(r[[j]])
 	}
@@ -157,7 +157,7 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
             format(hgt, digits=digits.d), if(give.attr) at,
             "]", if(max.level > 0 && nest.lev == max.level)" ..", "\n", sep="")
 	if (max.level==0 || nest.lev < max.level) {
-	    for(i in 1:le) {
+	    for(i in 1L:le) {
 		##cat(indent.str, nam.ob[i], ":", sep="")
 		str(object[[i]], nest.lev = nest.lev + 1,
 		    indent.str= paste(indent.str, if(i < le) " |" else "  "),
@@ -306,7 +306,7 @@ plotNode <-
 		segments(y0, x0, y1, x1, col = col, lty = lty, lwd = lwd)
 	    else segments(x0, y0, x1, y1, col = col, lty = lty, lwd = lwd)
 	}
-	for (k in 1:length(subtree)) {
+	for (k in 1L:length(subtree)) {
 	    child <- subtree[[k]]
 	    ## draw lines to the children and draw them recursively
 	    yBot <- attr(child, "height")
@@ -373,7 +373,7 @@ plotNode <-
 		vlm <- strheight(c(edgeText,"h"), cex = t.cex)/2
 		hlm <- strwidth (c(edgeText,"m"), cex = t.cex)/2
 		hl3 <- c(hlm[1], hlm[1] + hlm[2], hlm[1])
-                polygon(mx+ c(-hl3, hl3), my + sum(vlm)*c(-1:1,1:-1),
+                polygon(mx+ c(-hl3, hl3), my + sum(vlm)*c(-1L:1L, 1L:-1L),
                         col = p.col, border= p.border, lty = p.lty, lwd = p.lwd)
 		text(mx, my, edgeText, cex = t.cex, col = t.col, font = t.font)
 	    }
@@ -393,7 +393,7 @@ plotNodeLimit <- function(x1, x2, subtree, center)
 	mTop <- .memberDend(subtree)
 	limit <- integer(K)
 	xx1 <- x1
-	for(k in 1:K) {
+	for(k in 1L:K) {
 	    m <- .memberDend(subtree[[k]])
 	    ##if(is.null(m)) m <- 1
 	    xx1 <- xx1 + (if(center) (x2-x1) * m/mTop else m)
@@ -419,7 +419,7 @@ cut.dendrogram <- function(x, h, ...)
 	    if(!(K <- length(subtree)))
 		stop("non-leaf subtree of length 0")
 	    new.mem <- 0:0
-	    for(k in 1:K) {
+	    for(k in 1L:K) {
                 sub <- subtree[[k]]
 		if(attr(sub, "height") <= h) {
 		    ## cut it, i.e. save to LOWER[] and make a leaf
@@ -427,7 +427,7 @@ cut.dendrogram <- function(x, h, ...)
 		    at$leaf <- TRUE
                     at$class <- NULL# drop it from leaf
 		    at$x.member <- at$members
-		    new.mem <- new.mem + (at$members <- 1:1)
+		    new.mem <- new.mem + (at$members <- 1L)
 		    at$label <- paste("Branch", X)
 		    subtree[[k]] <- X #paste("Branch", X)
 		    attributes(subtree[[k]]) <- at
@@ -485,7 +485,7 @@ reorder.dendrogram <- function(x, wts, agglo.FUN = sum, ...)
         k <- length(x)
         if(k == 0) stop("invalid (length 0) node in dendrogram")
         vals <- numeric(k)
-        for(j in 1:k) {
+        for(j in 1L:k) {
             ## insert/compute 'wts' recursively down the branches:
             b <- oV(x[[j]], wts)
             x[[j]] <- b
@@ -507,7 +507,7 @@ rev.dendrogram <- function(x) {
     if(k < 1)
 	stop("dendrogram non-leaf node with non-positive #{branches}")
     r <- x # incl. attributes!
-    for(j in 1:k) ## recurse
+    for(j in 1L:k) ## recurse
 	r[[j]] <- rev(x[[k+1-j]])
     midcache.dendrogram( r )
 }
@@ -582,7 +582,7 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	if(nr != length(rowInd <- order.dendrogram(ddr)))
 	    stop("row dendrogram ordering gave index of wrong length")
     }
-    else rowInd <- 1:nr
+    else rowInd <- 1L:nr
 
     if(doCdend) {
 	if(inherits(Colv, "dendrogram"))
@@ -601,18 +601,18 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	if(nc != length(colInd <- order.dendrogram(ddc)))
 	    stop("column dendrogram ordering gave index of wrong length")
     }
-    else colInd <- 1:nc
+    else colInd <- 1L:nc
 
     ## reorder x
     x <- x[rowInd, colInd]
 
     labRow <-
 	if(is.null(labRow))
-	    if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x)
+	    if(is.null(rownames(x))) (1L:nr)[rowInd] else rownames(x)
 	else labRow[rowInd]
     labCol <-
 	if(is.null(labCol))
-	    if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x)
+	    if(is.null(colnames(x))) (1L:nc)[colInd] else colnames(x)
 	else labCol[colInd]
 
     if(scale == "row") {
@@ -656,11 +656,11 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     ## draw the side bars
     if(!missing(RowSideColors)) {
 	par(mar = c(margins[1],0, 0,0.5))
-	image(rbind(1:nr), col = RowSideColors[rowInd], axes = FALSE)
+	image(rbind(1L:nr), col = RowSideColors[rowInd], axes = FALSE)
     }
     if(!missing(ColSideColors)) {
 	par(mar = c(0.5,0, 0,margins[2]))
-	image(cbind(1:nc), col = ColSideColors[colInd], axes = FALSE)
+	image(cbind(1L:nc), col = ColSideColors[colInd], axes = FALSE)
     }
     ## draw the main carpet
     par(mar = c(margins[1], 0, 0, margins[2]))
@@ -670,11 +670,11 @@ function (x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	iy <- nr:1
 	ddr <- rev(ddr)
 	x <- x[,iy]
-    } else iy <- 1:nr
+    } else iy <- 1L:nr
 
-    image(1:nc, 1:nr, x, xlim = 0.5+ c(0, nc), ylim = 0.5+ c(0, nr),
+    image(1L:nc, 1L:nr, x, xlim = 0.5+ c(0, nc), ylim = 0.5+ c(0, nr),
 	  axes = FALSE, xlab = "", ylab = "", ...)
-    axis(1, 1:nc, labels= labCol, las= 2, line= -0.5, tick= 0, cex.axis= cexCol)
+    axis(1, 1L:nc, labels= labCol, las= 2, line= -0.5, tick= 0, cex.axis= cexCol)
     if(!is.null(xlab)) mtext(xlab, side = 1, line = margins[1] - 1.25)
     axis(4, iy, labels= labRow, las= 2, line= -0.5, tick= 0, cex.axis= cexRow)
     if(!is.null(ylab)) mtext(ylab, side = 4, line = margins[2] - 1.25)
