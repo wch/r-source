@@ -154,7 +154,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     if(cols != length(data)) { # this should never happen
 	warning("cols = ", cols, " != length(data) = ", length(data),
                 domain = NA)
-    cols <- length(data)
+	cols <- length(data)
     }
 
     if(is.logical(as.is)) {
@@ -194,17 +194,19 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     }
 
     ##	now determine row names
-
+    compactRN <- TRUE
     if (missing(row.names)) {
 	if (rlabp) {
 	    row.names <- data[[1]]
 	    data <- data[-1]
             keep <- keep[-1]
+            compactRN <- FALSE
 	}
-	else row.names <- as.character(seq_len(nlines))
+	else row.names <- c(NA_integer_, -as.integer(nlines))
     } else if (is.null(row.names)) {
-	row.names <- as.character(seq_len(nlines))
+	row.names <- c(NA_integer_, -as.integer(nlines))
     } else if (is.character(row.names)) {
+        compactRN <- FALSE
 	if (length(row.names) == 1) {
 	    rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]
 	    row.names <- data[[rowvar]]
@@ -212,12 +214,30 @@ read.DIF <- function(file, header = FALSE, dec = ".",
             keep <- keep[-rowvar]
 	}
     } else if (is.numeric(row.names) && length(row.names) == 1) {
+        compactRN <- FALSE
 	rlabp <- row.names
 	row.names <- data[[rlabp]]
 	data <- data[-rlabp]
         keep <- keep[-rlabp]
     } else stop("invalid 'row.names' specification")
     data <- data[keep]
-    row.names(data) <- row.names
+
+    ## rownames<- is interpreted, so avoid it for efficiency (it will copy)
+    if(is.object(row.names) || !(is.integer(row.names)) )
+        row.names <- as.character(row.names)
+    if(!compactRN) {
+        if (length(row.names) != nlines)
+            stop("invalid 'row.names' length")
+        if (any(duplicated(row.names)))
+            stop("duplicate 'row.names' are not allowed")
+        if (any(is.na(row.names)))
+            stop("missing values in 'row.names' are not allowed")
+    }
+
+    ##	this is extremely underhanded
+    ##	we should use the constructor function ...
+    ##	don't try this at home kids
+
+    attr(data, "row.names") <- row.names
     data
 }
