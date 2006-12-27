@@ -10,7 +10,7 @@
 ## As from 2.5.0 c(NA, n > 0) indicates deliberately assigned row names,
 ## and c(NA, n < 0) automatic row names.
 
-row_names_info <- function(x, type = 1L)
+.row_names_info <- function(x, type = 1L)
     .Call("R_shortRowNames", x, type, PACKAGE = "base")
 
 row.names <- function(x) UseMethod("row.names")
@@ -21,7 +21,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
 "row.names<-.data.frame" <- function(x, value) {
     if (!is.data.frame(x))
 	x <- as.data.frame(x)
-    n <- row_names_info(x, 2L)
+    n <- .row_names_info(x, 2L)
     if(is.null(value)) { # set automatic row.names
         attr(x, "row.names") <- c(as.integer(NA), -n)
         return(x)
@@ -50,7 +50,7 @@ row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
 is.na.data.frame <- function (x)
 {
     y <- do.call("cbind", lapply(x, "is.na"))
-    if(row_names_info(x) > 0) rownames(y) <- row.names(x)
+    if(.row_names_info(x) > 0) rownames(y) <- row.names(x)
     y
 }
 
@@ -72,7 +72,7 @@ t.data.frame <- function(x) {
     NextMethod("t")
 }
 
-dim.data.frame <- function(x) c(row_names_info(x, 2L), length(x))
+dim.data.frame <- function(x) c(.row_names_info(x, 2L), length(x))
 
 dimnames.data.frame <- function(x) list(row.names(x), names(x))
 
@@ -113,7 +113,7 @@ as.data.frame.data.frame <- function(x, row.names = NULL, ...)
     if(i > 1)
 	class(x) <- cl[ - (1:(i-1))]
     if(!is.null(row.names)){
-        nr <- row_names_info(x, 2L)
+        nr <- .row_names_info(x, 2L)
 	if(length(row.names) == nr)
 	    attr(x, "row.names") <- row.names
 	else stop(gettextf("invalid 'row.names', length %d for a data frame with %d rows",
@@ -351,7 +351,7 @@ data.frame <-
                                stringsAsFactors = stringsAsFactors)
         else as.data.frame(x[[i]], optional = TRUE)
 
-        nrows[i] <- row_names_info(xi)
+        nrows[i] <- .row_names_info(xi)
 	ncols[i] <- length(xi)
 	namesi <- names(xi)
 	if(ncols[i] > 1) {
@@ -464,7 +464,7 @@ data.frame <-
         if(any(duplicated(nm))) names(y) <- make.unique(nm)
         ## since we have not touched the rows, copy over the raw row.names
 	return(structure(y, class = oldClass(x),
-                         row.names = row_names_info(x, 0L)))
+                         row.names = .row_names_info(x, 0L)))
     }
 
     if(missing(i)) { # df[, j] or df[ , ]
@@ -476,10 +476,10 @@ data.frame <-
 	cols <- names(y)
 	if(any(is.na(cols))) stop("undefined columns selected")
         if(any(duplicated(cols))) names(y) <- make.unique(cols)
-        n <- row_names_info(x)
+        n <- .row_names_info(x)
         if(abs(n) != 1) {  # don't need to consider 'drop'
             return(structure(y, class = oldClass(x),
-                             row.names = row_names_info(x, 0L)))
+                             row.names = .row_names_info(x, 0L)))
         }
         ## resume previous handling to consider 'drop'
         rows <- attr(x, "row.names")
@@ -615,7 +615,7 @@ data.frame <-
     rows <- attr(x, "row.names")  ## FIXME we can avoid this in many cases
     new.cols <- NULL
     nvars <- length(x)
-    nrows <- row_names_info(x, 2L)
+    nrows <- .row_names_info(x, 2L)
     if(has.i) { # df[i, ] or df[i, j]
         if(any(is.na(i)))
             stop("missing values are not allowed in subscripted assignments of data frames")
@@ -753,7 +753,7 @@ data.frame <-
     if(length(new.cols)) {
         ## extend and name now, as assignment of NULL may delete cols later.
         nm <- names(x)
-        rows <- row_names_info(x, 0L)
+        rows <- .row_names_info(x, 0L)
         x <- c(x, vector("list", length(new.cols)))
         names(x) <- c(nm, new.cols)
         attr(x, "row.names") <- rows
@@ -799,7 +799,7 @@ data.frame <-
     ## delete class: Version 3 idiom
     ## to avoid any special methods for [[<-
     class(x) <- NULL
-    nrows <- row_names_info(x, 2L)
+    nrows <- .row_names_info(x, 2L)
     if(is.atomic(value)) names(value) <- NULL
     if(nargs() < 4) {
 	## really ambiguous, but follow common use as if list
@@ -890,7 +890,7 @@ data.frame <-
     ## delete class: Version 3 idiom
     ## to avoid any special methods for [[<-
     class(x) <- NULL
-    nrows <- row_names_info(x, 2L)
+    nrows <- .row_names_info(x, 2L)
     if(!is.null(value)) {
         N <- NROW(value)
         if(N > nrows)
@@ -1152,7 +1152,7 @@ print.data.frame <-
 as.matrix.data.frame <- function (x, rownames.force = FALSE)
 {
     dm <- dim(x)
-    dn <- list(if(!rownames.force && row_names_info(x) <= 0)
+    dn <- list(if(!rownames.force && .row_names_info(x) <= 0)
                NULL else row.names(x), names(x))
     if(any(dm == 0))
 	return(array(NA, dim = dm, dimnames = dn))
@@ -1250,15 +1250,15 @@ Ops.data.frame <- function(e1, e2 = NULL)
     f <- if (unary) quote(FUN(left)) else quote(FUN(left, right))
     lscalar <- rscalar <- FALSE
     if(lclass && rclass) {
-        nr <- row_names_info(e1, 2L)
-	if(row_names_info(e1) > 0) rn <- attr(e1, "row.names")
+        nr <- .row_names_info(e1, 2L)
+	if(.row_names_info(e1) > 0) rn <- attr(e1, "row.names")
 	cn <- names(e1)
 	if(any(dim(e2) != dim(e1)))
 	    stop(.Generic, " only defined for equally-sized data frames")
     } else if(lclass) {
 	## e2 is not a data frame, but e1 is.
-        nr <- row_names_info(e1, 2L)
-	if(row_names_info(e1) > 0) rn <- attr(e1, "row.names")
+        nr <- .row_names_info(e1, 2L)
+	if(.row_names_info(e1) > 0) rn <- attr(e1, "row.names")
 	cn <- names(e1)
 	rscalar <- length(e2) <= 1 # e2 might be null
 	if(isList(e2)) {
@@ -1273,8 +1273,8 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	}
     } else {
 	## e1 is not a data frame, but e2 is.
-        nr <- row_names_info(e2, 2L)
-	if(row_names_info(e2) > 0) rn <- attr(e2, "row.names")
+        nr <- .row_names_info(e2, 2L)
+	if(.row_names_info(e2) > 0) rn <- attr(e2, "row.names")
 	cn <- names(e2)
 	lscalar <- length(e1) <= 1
 	if(isList(e1)) {

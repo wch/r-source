@@ -19,7 +19,7 @@ data.matrix <- function(frame, rownames.force = FALSE)
     }
     x <- matrix(NA_integer_, nr = d[1], nc = d[2],
 		dimnames = list(if(!rownames.force &&
-                row_names_info(frame) <= 0) NULL else row.names(frame),
+                .row_names_info(frame) <= 0) NULL else row.names(frame),
                 names(frame)))
     for(i in seq_len(d[2]) ) {
 	xi <- frame[[i]]

@@ -136,9 +136,10 @@ NEW FEATURES
 
     o	interaction() has a new argument lex.order.
 
-    o	row_names_info() utility to find the number of rows efficiently
-	for data frames; consequently, dim.data.frame() has become
-	very fast for large data frames with 'automatic' row names.
+    o	.row_names_info() utility function finds the number of rows
+	efficiently for data frames; consequently, dim.data.frame()
+	has become very fast for large data frames with 'automatic'
+	row names.
 
     o	postscript() now by default writes grey colors (including black
 	and white) via 'setgray', which gives more widely acceptable
