@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2006
-@set FAQ_DATE @value{FAQ_YEAR}-12-18
+@set FAQ_DATE @value{FAQ_YEAR}-12-27
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -1842,6 +1842,8 @@ A number of functions for biodemographycal analysis.
 @item Bolstad
 Functions and data sets for the book ``Introduction to Bayesian
 Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
+@item BootCL
+Bootstrapping test for chromosomal localization.
 @item BradleyTerry
 Specify and fit the Bradley-Terry model and structured versions.
 @item BSDA
@@ -1875,6 +1877,8 @@ Functions for calculating the CreditMetrics risk model.
 @item DAAG
 Various data sets used in examples and exercises in ``Data Analysis and
 Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
+@item DAAGxtras
+Data sets and functions additional to @strong{DAAG}.
 @item DBI
 A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
@@ -2300,6 +2304,10 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SIN
 A SINful approach to selection of Gaussian Graphical Markov Models.
+@item SMPracticals
+Data sets and a few functions for use with the practicals outlined in
+Appendix A of the book ``Statistical Models'' by Anthony Davison, 2003,
+Cambridge University Press.
 @item SNPassoc
 SNP-based whole genome association studies.
 @item SQLiteDF
@@ -3798,6 +3806,8 @@ Quality Control Charts.  Shewhart quality control charts for continuous,
 attribute and count data.  Cusum and EWMA charts.  Operating
 characteristic curves.  Process capability analysis.  Pareto chart and
 cause-and-effect chart.
+@item qgen
+Quantitative Genetics using R.
 @item qp
 @math{q}-order partial correlation graph search algorithm.
 @item qtl
@@ -3870,6 +3880,8 @@ models.
 RELAtive IMPOrtance of regressors in linear models.
 @item relax
 Functions for report writing, presentation, and programming.
+@item relaxo
+Relaxed Lasso.
 @item reldist
 Functions for the comparison of distributions, including nonparametric
 estimation of the relative distribution PDF and CDF and numerical
@@ -4248,6 +4260,8 @@ Time tracking for developers.
 Titration analysis for mass spectrometry data.
 @item titecrm
 TIme-To-Event Continual Reassessment Method and calibration tools.
+@item tkrgl
+TK widget tools for @strong{rgl} package.
 @item tkrplot
 Simple mechanism for placing R graphics in a Tk widget.
 @item tlnise
