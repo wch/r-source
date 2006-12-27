@@ -46,13 +46,14 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     are one of the first six types listed or \code{NULL}, see section
     \sQuote{Details} below.}
 
-  \item{nmax}{the maximum number of data values to be read, or if
+  \item{nmax}{integer: the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If
-    omitted or not positive (and \code{nlines} is not set to a
-    positive value), \code{scan} will read to the end of \code{file}.}
+    omitted or not positive or an invalid value for an integer
+    (and \code{nlines} is not set to a positive value), \code{scan} will
+    read to the end of \code{file}.}
 
-  \item{n}{the maximum number of data values to be read, defaulting to
-    no limit.}
+  \item{n}{integer: the maximum number of data values to be read, defaulting to
+    no limit.  Invalid values will be ignored.}
 
   \item{sep}{by default, scan expects to read white-space delimited
     input fields.  Alternatively, \code{sep} can be used to specify a

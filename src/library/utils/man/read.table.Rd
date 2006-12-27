@@ -124,10 +124,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     variable) and so includes the column of row names (if any).
   }
 
-  \item{nrows}{the maximum number of rows to read in.  Negative values
-    are ignored.}
+  \item{nrows}{integer: the maximum number of rows to read in.  Negative
+    and other invalid values are ignored.}
 
-  \item{skip}{the number of lines of the data file to skip before
+  \item{skip}{integer: the number of lines of the data file to skip before
     beginning to read data.}
 
   \item{check.names}{logical.  If \code{TRUE} then the names of the
