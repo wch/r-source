@@ -2043,3 +2043,16 @@ class(A) <- "data.frame"
 row.names(A) <- letters[24:26] # failed at one point in Dec 2006
 A
 ##
+
+
+## extreme cases for subsetting of data frames
+w <- women[1, ]
+w[]
+w[,drop = TRUE]
+w[1,]
+w[,]
+w[1, , drop = FALSE]
+w[, , drop = FALSE]
+w[1, , drop = TRUE]
+w[, , drop = TRUE]
+## regression test: code changed for 2.5.0

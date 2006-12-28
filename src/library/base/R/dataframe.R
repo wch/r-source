@@ -455,75 +455,77 @@ data.frame <-
 	if(is.matrix(i))
 	    return(as.matrix(x)[i])  # desperate measures
 	y <- NextMethod("[")
-        nm <- names(y)
+        cols <- names(y)
         ## zero-column data frames prior to 2.4.0 had no names.
-	if(!is.null(nm) && any(is.na(nm))) stop("undefined columns selected")
+	if(!is.null(cols) && any(is.na(cols)))
+            stop("undefined columns selected")
         ## added in 1.8.0
-        if(any(duplicated(nm))) names(y) <- make.unique(nm)
+        if(any(duplicated(cols))) names(y) <- make.unique(cols)
         ## since we have not touched the rows, copy over the raw row.names
 	return(structure(y, class = oldClass(x),
                          row.names = .row_names_info(x, 0L)))
     }
 
     if(missing(i)) { # df[, j] or df[ , ]
-        ## handle the column only subsetting ...
-        ## this is not the same as the 2-arg case, as 'drop' is used.
+        ## not quite the same as the 1/2-arg case, as 'drop' is used.
         if(missing(j) && drop && length(x) == 1L) return(.subset2(x, 1L))
         y <- if(missing(j)) x else .subset(x, j)
         if(drop && length(y) == 1L) return(.subset2(y, 1L))
 	cols <- names(y)
 	if(any(is.na(cols))) stop("undefined columns selected")
         if(any(duplicated(cols))) names(y) <- make.unique(cols)
-        n <- .row_names_info(x)
-        if(abs(n) != 1L) {  # don't need to consider 'drop'
+        nrow <- .row_names_info(x, 2L)
+        if(drop && !mdrop && nrow == 1L)
+            return(structure(y, class = NULL, row.names = NULL))
+        else
             return(structure(y, class = oldClass(x),
                              row.names = .row_names_info(x, 0L)))
-        }
-        ## resume previous handling to consider 'drop'
-        rows <- attr(x, "row.names")
-        cl <- oldClass(x) # doesn't really matter unless called directly
-        x <- y
-        cols <- names(x)
-        oldClass(x) <- attr(x, "row.names") <- NULL
     }
-    else { # df[i, j] or df[i , ]
-        ## preserve the attributes for later use ...
-        rows <- attr(x, "row.names")
+
+    ### df[i, j] or df[i , ]
+    ## rewritten for R 2.5.0 to avoid duplicating x.
+    xx <- x
+    cols <- names(xx)
+    ## make a shallow copy
+    x <- vector("list", length(x))
+    x <- .Call("R_copyDFattr", xx, x)
+    ## attributes(x) <- attributes(xx)
+    oldClass(x) <- attr(x, "row.names") <- NULL
+
+    if(!missing(j)) { # df[i, j]
+        x <- x[j]
         cols <- names(x)
-        cl <- oldClass(x) # doesn't really matter unless called directly
-        oldClass(x) <- attr(x, "row.names") <- NULL
-	if(is.character(i))
-	    i <- pmatch(i, as.character(rows), duplicates.ok = TRUE)
-	rows <- rows[i]
-	if(!missing(j)) { # df[i, j]
-	    x <- x[j]
-	    cols <- names(x)
-	    if(any(is.na(cols))) stop("undefined columns selected")
-	}
-	for(j in seq_along(x)) {
-	    xj <- x[[j]]
-            ## had drop = drop prior to 1.8.0
-	    x[[j]] <- if(length(dim(xj)) != 2L) xj[i] else xj[i, , drop = FALSE]
-	}
+        if(any(is.na(cols))) stop("undefined columns selected")
+        sxx <- match(cols, names(xx))
+    } else sxx <- seq_along(x)
+
+    rows <- NULL # placeholder
+    if(is.character(i)) {
+        rows <- attr(xx, "row.names")
+        i <- pmatch(i, rows, duplicates.ok = TRUE)
     }
+    for(j in seq_along(x)) {
+        xj <- xx[[ sxx[j] ]]
+        ## had drop = drop prior to 1.8.0
+        x[[j]] <- if(length(dim(xj)) != 2L) xj[i] else xj[i, , drop = FALSE]
+    }
+
     if(drop) {
 	n <- length(x)
-	if(n == 1L) return(x[[1L]])
+	if(n == 1L) return(x[[1L]]) # drops attributes
 	if(n > 1L) {
 	    xj <- x[[1L]]
 	    nrow <- if(length(dim(xj)) == 2L) dim(xj)[1L] else length(xj)
             ## for consistency with S: don't drop (to a list)
             ## if only one row, unless explicitly asked for
             drop <- !mdrop && nrow == 1L
-            if(drop) {
-		names(x) <- cols
-		attr(x, "row.names") <- NULL
-	    }
 	} else drop <- FALSE ## for n == 0
     }
+
     if(!drop) { # not else as previous section might reset drop
-	names(x) <- cols
         ## row names might have NAs.
+        if(is.null(rows)) rows <- attr(xx, "row.names")
+        rows <- rows[i]
 	if((ina <- any(is.na(rows))) | (dup <- any(duplicated(rows)))) {
 	    ## both will coerce integer 'rows' to character:
 	    if(ina)
@@ -533,8 +535,9 @@ data.frame <-
 	}
         ## new in 1.8.0  -- might have duplicate columns
         if(any(duplicated(nm <- names(x)))) names(x) <- make.unique(nm)
+        if(is.null(rows)) rows <- attr(xx, "row.names")[i]
 	attr(x, "row.names") <- rows
-	oldClass(x) <- cl
+	oldClass(x) <- oldClass(xx)
     }
     x
 }
@@ -610,14 +613,15 @@ data.frame <-
     cl <- oldClass(x)
     ## delete class: S3 idiom to avoid any special methods for [[, etc
     class(x) <- NULL
-    rows <- attr(x, "row.names")  ## FIXME we can avoid this in many cases
     new.cols <- NULL
     nvars <- length(x)
     nrows <- .row_names_info(x, 2L)
     if(has.i) { # df[i, ] or df[i, j]
+        rows <- NULL  # indicator that it is not yet set
         if(any(is.na(i)))
             stop("missing values are not allowed in subscripted assignments of data frames")
 	if(char.i <- is.character(i)) {
+            rows <- attr(x, "row.names")
 	    ii <- match(i, rows)
 	    nextra <- sum(new.rows <- is.na(ii))
 	    if(nextra > 0L) {
@@ -628,14 +632,14 @@ data.frame <-
 	}
 	if(all(i >= 0L) && (nn <- max(i)) > nrows) {
 	    ## expand
+            if(is.null(rows)) rows <- attr(x, "row.names")
 	    if(!char.i) {
-		nrr <- as.character((nrows + 1L):nn)
+		nrr <- (nrows + 1L):nn
 		if(inherits(value, "data.frame") &&
 		   (dim(value)[1L]) >= length(nrr)) {
 		    new.rows <- attr(value, "row.names")[seq_along(nrr)]
 		    repl <- duplicated(new.rows) | match(new.rows, rows, 0L)
-		    if(any(repl))
-			new.rows[repl] <- nrr[repl]
+		    if(any(repl)) new.rows[repl] <- nrr[repl]
 		}
 		else new.rows <- nrr
 	    }
@@ -644,10 +648,10 @@ data.frame <-
 	    nrows <- length(rows)
 	}
 	iseq <- seq_len(nrows)[i]
-	if(any(is.na(iseq)))
-	    stop("non-existent rows not allowed")
+	if(any(is.na(iseq))) stop("non-existent rows not allowed")
     }
     else iseq <- NULL
+
     if(has.j) {
         if(any(is.na(j)))
             stop("missing values are not allowed in subscripted assignments of data frames")
@@ -680,6 +684,7 @@ data.frame <-
 	}
     }
     else jseq <- seq_along(x)
+
     ## addition in 1.8.0
     if(any(duplicated(jseq)))
         stop("duplicate subscripts for columns")
@@ -840,13 +845,12 @@ data.frame <-
     if(all(i >= 0L) && (nn <- max(i)) > nrows) {
 	## expand
 	if(n == 0L) {
-	    nrr <- as.character((nrows + 1L):nn)
+	    nrr <- (nrows + 1L):nn
 	    if(inherits(value, "data.frame") &&
 	       (dim(value)[1L]) >= length(nrr)) {
 		new.rows <- attr(value, "row.names")[seq_len(nrr)]
 		repl <- duplicated(new.rows) | match(new.rows, rows, 0L)
-		if(any(repl))
-		    new.rows[repl] <- nrr[repl]
+		if(any(repl)) new.rows[repl] <- nrr[repl]
 	    }
 	    else new.rows <- nrr
 	}

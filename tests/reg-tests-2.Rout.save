@@ -5670,3 +5670,42 @@ y 2
 z 3
 > ##
 > 
+> 
+> ## extreme cases for subsetting of data frames
+> w <- women[1, ]
+> w[]
+  height weight
+1     58    115
+> w[,drop = TRUE]
+  height weight
+1     58    115
+Warning message:
+drop argument will be ignored in: `[.data.frame`(w, , drop = TRUE) 
+> w[1,]
+  height weight
+1     58    115
+> w[,]
+  height weight
+1     58    115
+> w[1, , drop = FALSE]
+  height weight
+1     58    115
+> w[, , drop = FALSE]
+  height weight
+1     58    115
+> w[1, , drop = TRUE]
+$height
+[1] 58
+
+$weight
+[1] 115
+
+> w[, , drop = TRUE]
+$height
+[1] 58
+
+$weight
+[1] 115
+
+> ## regression test: code changed for 2.5.0
+> 

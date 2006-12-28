@@ -322,7 +322,7 @@ model.frame.default <-
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     env <- environment(formula)
-    rownames <- attr(data, "row.names")
+    rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
     if(is.null(predvars)) predvars <- vars

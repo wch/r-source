@@ -226,8 +226,8 @@ static R_CallMethodDef callMethods [] = {
      * using Patefield's algorithm.
      */
     CALLDEF(R_r2dtable, 3),
-
     CALLDEF(R_shortRowNames, 2),
+    CALLDEF(R_copyDFattr, 2),
 
     /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),

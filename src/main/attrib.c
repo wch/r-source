@@ -201,6 +201,14 @@ SEXP R_shortRowNames(SEXP vec, SEXP stype)
     return ans;
 }
 
+/* This is allowed to change 'out' */
+SEXP R_copyDFattr(SEXP in, SEXP out)
+{
+    SET_ATTRIB(out, ATTRIB(in));
+    return out;
+}
+
+
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 {
     if (isString(name))

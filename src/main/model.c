@@ -1389,8 +1389,12 @@ SEXP attribute_hidden do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(row_names) == nr) {
 	setAttrib(data, R_RowNamesSymbol, row_names);
     } else {
+	/*
 	PROTECT(row_names = allocVector(INTSXP, nr));
-	for (i = 0; i < nr; i++) INTEGER(row_names)[i] = i+1;
+	for (i = 0; i < nr; i++) INTEGER(row_names)[i] = i+1; */
+	PROTECT(row_names = allocVector(INTSXP, 2));
+	INTEGER(row_names)[0] = NA_INTEGER;
+	INTEGER(row_names)[1] = nr;
 	setAttrib(data, R_RowNamesSymbol, row_names);
 	UNPROTECT(1);
     }
