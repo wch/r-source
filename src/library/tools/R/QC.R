@@ -1976,7 +1976,8 @@ function(package, dir, lib.loc = NULL)
             ipos <- ipos[seq.int(from = 1, length = dotsPos[1] - 1)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
-        if(posMatchOK && argMatchOK)
+        margMatchOK <- all(mArgs %in% gArgs) || length(dotsPos) > 0
+        if(posMatchOK && argMatchOK && margMatchOK)
             NULL
         else {
             l <- list(ogArgs, omArgs)

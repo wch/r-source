@@ -211,6 +211,9 @@ NEW FEATURES
 	- expand.grid() and merge() generate compact 'automatic' row
           names.
 
+	- data.matrix() and as.matrix.data.frame() have a new argument
+	  'rownames.force' that by default drops 'automatic' row names.
+
     o	colnames<-() and rownames<-() now handle data frames explicitly,
 	so calling colnames<- on a data frame no longer alters the
 	representation of the row names.
@@ -283,7 +286,9 @@ UTILITIES
 	file and not from the directory.  (PR#9266)
 
     o	checkS3methods() (and hence R CMD check) now checks agreement
-	with primitive internal generics.
+	with primitive internal generics, and checks for additional
+	arguments in methods where the generic does not have a '...'
+	argument.
 
 	codoc() now knows the argument lists of primitive functions.
 

@@ -485,21 +485,22 @@ data.frame <-
     ### df[i, j] or df[i , ]
     ## rewritten for R 2.5.0 to avoid duplicating x.
     xx <- x
-    cols <- names(xx)
+    cols <- names(xx)  # needed for 'drop'
     ## make a shallow copy
     x <- vector("list", length(x))
-    x <- .Call("R_copyDFattr", xx, x)
-    ## attributes(x) <- attributes(xx)
+    ## attributes(x) <- attributes(xx) expands row names
+    x <- .Call("R_copyDFattr", xx, x, PACKAGE="base")
     oldClass(x) <- attr(x, "row.names") <- NULL
 
     if(!missing(j)) { # df[i, j]
         x <- x[j]
-        cols <- names(x)
+        cols <- names(x)  # also needed for 'drop'
         if(any(is.na(cols))) stop("undefined columns selected")
         sxx <- match(cols, names(xx))
     } else sxx <- seq_along(x)
 
-    rows <- NULL # placeholder
+    rows <- NULL # placeholder: only create row names when needed
+                 # as this can be expensive.
     if(is.character(i)) {
         rows <- attr(xx, "row.names")
         i <- pmatch(i, rows, duplicates.ok = TRUE)
@@ -891,6 +892,8 @@ data.frame <-
     cl <- oldClass(x)
     ## delete class: Version 3 idiom
     ## to avoid any special methods for [[<-
+    ## This forces a copy, but we are going to need one anyway
+    ## and NAMED=1 prevents any further copying.
     class(x) <- NULL
     nrows <- .row_names_info(x, 2L)
     if(!is.null(value)) {
@@ -1150,11 +1153,13 @@ print.data.frame <-
     invisible(x)
 }
 
-as.matrix.data.frame <- function (x, rownames.force = FALSE)
+as.matrix.data.frame <- function (x, rownames.force = NA)
 {
     dm <- dim(x)
-    dn <- list(if(!rownames.force && .row_names_info(x) <= 0L)
-               NULL else row.names(x), names(x))
+    rn <- if(rownames.force %in% FALSE) NULL
+    else if(rownames.force %in% TRUE) row.names(x)
+    else {if(.row_names_info(x) <= 0) NULL else row.names(x)}
+    dn <- list(rn, names(x))
     if(any(dm == 0L))
 	return(array(NA, dim = dm, dimnames = dn))
     p <- dm[2L]
