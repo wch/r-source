@@ -63,15 +63,11 @@ summary(bI <- besselI(x = x <- 10:700, 1))
 ## data.frame
 set.seed(123)
 L3 <- LETTERS[1:3]
-str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
+d <- data.frame(cbind(x=1, y=1:10), fac = sample(L3, 10, replace=TRUE))
+str(d)
 (d0  <- d[, FALSE]) # NULL dataframe with 10 rows
 (d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
-(d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
-(d000 <- data.frame()) #but not quite the same as d00:
-!identical(d00, d000)
-dput(d00)
-dput(d000)
-row.names(d) <- 1:10 # don't expect automatic row names to be preserved
+(d00 <- d0[FALSE,]) # NULL dataframe with 0 rows
 stopifnot(identical(d, cbind(d, d0)),
           identical(d, cbind(d0, d)))
 stopifnot(identical(d, rbind(d,d.0)),
@@ -2056,3 +2052,25 @@ w[, , drop = FALSE]
 w[1, , drop = TRUE]
 w[, , drop = TRUE]
 ## regression test: code changed for 2.5.0
+
+
+## data.frame() with zero columns ignored 'row.names'
+(x <- data.frame(row.names=1:4))
+nrow(x)
+row.names(x)
+attr(x, "row.names")
+## ignored prior to 2.5.0.
+
+
+## identical on data.frames
+d0 <- d1 <- data.frame(1:4, row.names=1:4)
+row.names(d0) <- NULL
+dput(d0)
+dput(d1)
+identical(d0, d1)
+all.equal(d0, d1)
+row.names(d1) <- as.character(1:4)
+dput(d1)
+identical(d0, d1)
+all.equal(d0, d1)
+## identical used internal representation prior to 2.5.0

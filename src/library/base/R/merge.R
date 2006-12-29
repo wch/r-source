@@ -122,6 +122,6 @@ merge.data.frame <-
     }
     ## avoid a copy
     ## row.names(res) <- NULL
-    attr(res, "row.names") <- c(NA_integer_, nrow(res))
+    attr(res, "row.names") <- .set_row_names(nrow(res))
     res
 }

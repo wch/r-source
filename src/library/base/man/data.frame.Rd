@@ -38,7 +38,8 @@ default.stringsAsFactors()
 }
 \details{
   A data frame is a list of variables of the same length with unique row
-  names, given class \code{"data.frame"}.
+  names, given class \code{"data.frame"}.  If there are zero variables,
+  the row names determine the number of rows.
 
   \code{data.frame} converts each of its arguments to a data frame by
   calling \code{\link{as.data.frame}(optional=TRUE)}.  As that is a

@@ -347,6 +347,13 @@ BUG FIXES
     o	setIs() and setClassUnion() failed to find some existing
 	subclasses and produced spurious warnings, now fixed.
 
+    o	data.frame() ignored 'row.names' for 0-column data frames, and
+	no longer treats an explicit row.names=NULL differently from
+	the defautl value.
+
+    o	identical() looked at the internal structure of the
+	'row.names' attribute, and not the value visible at R level.
+
 
 
 

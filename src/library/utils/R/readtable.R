@@ -199,9 +199,9 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
             keep <- keep[-1]
             compactRN <- FALSE
 	}
-	else row.names <- c(NA_integer_, -as.integer(nlines))
+	else row.names <- .set_row_names(as.integer(nlines))
     } else if (is.null(row.names)) {
-	row.names <- c(NA_integer_, -as.integer(nlines))
+	row.names <- .set_row_names(as.integer(nlines))
     } else if (is.character(row.names)) {
         compactRN <- FALSE
 	if (length(row.names) == 1) {

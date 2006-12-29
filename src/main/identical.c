@@ -78,8 +78,14 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 		char *tx = CHAR(PRINTNAME(TAG(elx)));
 		for(ely = ay; ely != R_NilValue; ely = CDR(ely))
 		    if(streql(tx, CHAR(PRINTNAME(TAG(ely))))) {
-			if(!compute_identical(CAR(elx), CAR(ely))) 
-			    return FALSE;
+			/* We need to treat row.names specially here */
+			if(streql(tx, "row.names")) {
+			    if(!compute_identical(getAttrib(x, R_RowNamesSymbol),
+						  getAttrib(y, R_RowNamesSymbol)))
+			       return FALSE;
+			} else
+			    if(!compute_identical(CAR(elx), CAR(ely))) 
+				return FALSE;
 			break;
 		    }
 		if(ely == R_NilValue) return FALSE;

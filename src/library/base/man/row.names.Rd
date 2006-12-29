@@ -39,7 +39,7 @@ row.names(x) <- value
   (Use \code{attr(x, "row.names")} if you need an integer value.)
 
   Using \code{NULL} for the value resets the row names to
-  \code{seq_len(nrow(x))} (regarded as \sQuote{automatic}).
+  \code{seq_len(nrow(x))}, regarded as \sQuote{automatic}.
 }
 \value{
   \code{row.names} returns a character vector.
@@ -56,7 +56,8 @@ row.names(x) <- value
   \code{\link{attr}(x, "row.names")}.  Additionally, some names of this
   sort are marked as \sQuote{automatic} and handled differently by
   \code{\link{as.matrix}} and \code{\link{data.matrix}} (and potentially
-  other functions).
+  other functions).  (All zero-row data frames are regarded as having
+  automatic row.names.)
 }
 \references{
   Chambers, J. M. (1992)

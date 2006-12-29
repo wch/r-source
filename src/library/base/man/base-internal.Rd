@@ -10,6 +10,7 @@
 \alias{sys.save.image}
 \alias{sys.load.image}
 \alias{.row_names_info}
+\alias{.set_row_names}
 
 \title{Internal Functions in the Base Package}
 \description{
@@ -38,6 +39,7 @@ sys.load.image(name, quiet)
 sys.save.image(name)
 
 .row_names_info(x, type = 1L)
+.set_row_names(n)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -62,7 +64,7 @@ sys.save.image(name)
     \code{"row.names"} attribute (possibly \code{NULL}), \code{type = 2}
     the number of rows implied by the attribute, and \code{type = 1} the
     latter with a negative sign for \sQuote{automatic} row names.}
-  }
+  \item{n}{integer.  The number of rows.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially

@@ -16,7 +16,7 @@ data.matrix(frame, rownames.force = NA)
   \item{rownames.force}{logical indicating if the resulting matrix must
     have non-NULL \code{\link{rownames}}.  The default, \code{NA},
     uses NULL rownames if the data frame has \sQuote{automatic}
-    row.names.}
+    row.names or for a zero-row data frame.}
 }
 \details{
   Supplying a data frame with columns which are not numeric, factor or logical

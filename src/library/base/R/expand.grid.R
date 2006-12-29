@@ -35,6 +35,6 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE)
     }
     if(KEEP.OUT.ATTRS)
 	attr(cargs, "out.attrs") <- list(dim=d, dimnames=dn)
-    rn <- c(NA_integer_, -as.integer(prod(d))) # automatic row names
+    rn <- .set_row_names( as.integer(prod(d)) )
     structure(cargs, class = "data.frame", row.names = rn)
 }

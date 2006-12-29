@@ -17,12 +17,15 @@ row.names <- function(x) UseMethod("row.names")
 row.names.data.frame <- function(x) as.character(attr(x, "row.names"))
 row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
 
+.set_row_names <- function(n)
+    if(n > 0) c(NA_integer_, -n) else integer(0)
+
 "row.names<-" <- function(x, value) UseMethod("row.names<-")
 "row.names<-.data.frame" <- function(x, value) {
     if (!is.data.frame(x)) x <- as.data.frame(x)
     n <- .row_names_info(x, 2L)
     if(is.null(value)) { # set automatic row.names
-        attr(x, "row.names") <- c(as.integer(NA), -n)
+        attr(x, "row.names") <- .set_row_names(n)
         return(x)
     }
     ## do this here, as e.g. POSIXlt changes length when coerced.
@@ -155,7 +158,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...)
 	    row.names <- character(0L)
 	else if(length(row.names <- names(x)) == nrows &&
 		!any(duplicated(row.names))) {}
-	else row.names <- c(NA_integer_, -nrows)
+	else row.names <- .set_row_names(nrows)
     }
     names(x) <- NULL # remove names as from 2.0.0
     value <- list(x)
@@ -218,7 +221,7 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...,
 	    value[[i]] <- as.vector(x[,i])
     }
     if(length(row.names) != nrows)
-	row.names <- c(NA_integer_, -nrows)
+	row.names <- .set_row_names(nrows)
     if(length(collabs) == ncols)
 	names(value) <- collabs
     else if(!optional)
@@ -242,7 +245,7 @@ as.data.frame.model.matrix <-
             stop(gettextf("supplied %d row names for %d rows",
                           length(row.names), nrows), domain = NA)
     }
-    else row.names <- c(NA_integer_, -nrows)
+    else row.names <- .set_row_names(nrows)
     if(!optional) names(value) <- deparse(substitute(x))[[1L]]
     attr(value, "row.names") <- row.names
     class(value) <- "data.frame"
@@ -287,7 +290,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
                 row.names <- character(0L)
             else if(length(row.names <- names(x)) == nrows &&
                     !any(duplicated(row.names))) {}
-            else row.names <- c(NA_integer_, -nrows)
+            else row.names <- .set_row_names(nrows)
         }
         value <- list(x)
         if(!optional) names(value) <- nm
@@ -306,7 +309,7 @@ data.frame <-
              stringsAsFactors = default.stringsAsFactors())
 {
     data.row.names <-
-	if(check.rows && missing(row.names))
+	if(check.rows && mrn)
 	    function(current, new, i) {
 		if(is.character(current)) new <- as.character(new)
 		if(is.character(new)) current <- as.character(current)
@@ -329,13 +332,24 @@ data.frame <-
 	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1]
-    mrn <- missing(row.names)
+    mrn <- is.null(row.names) # missing or NULL
     x <- list(...)
     n <- length(x)
-    if(n < 1L)
+    if(n < 1L) {
+        if(!mrn) {
+            if(is.object(row.names) || !is.integer(row.names))
+                row.names <- as.character(row.names)
+            if(any(is.na(row.names)))
+                stop("row names contain missing values")
+            if(any(duplicated(row.names)))
+                stop("duplicate row.names: ",
+                     paste(unique(row.names[duplicated(row.names)]),
+                           collapse = ", "))
+        } else row.names <- integer(0)
 	return(structure(list(), names = character(0L),
-                         row.names = character(0L),
+                         row.names = row.names,
 			 class = "data.frame"))
+    }
     vnames <- names(x)
     if(length(vnames) != n)
 	vnames <- character(n)
@@ -349,7 +363,7 @@ data.frame <-
                                stringsAsFactors = stringsAsFactors)
         else as.data.frame(x[[i]], optional = TRUE)
 
-        nrows[i] <- .row_names_info(xi)
+        nrows[i] <- .row_names_info(xi) # signed for now
 	ncols[i] <- length(xi)
 	namesi <- names(xi)
 	if(ncols[i] > 1L) {
@@ -364,12 +378,12 @@ data.frame <-
                 if( substr(tmpname, 1L, 2L) == "I(" ) {
                     ntmpn <- nchar(tmpname)
                     if(substr(tmpname, ntmpn, ntmpn) == ")")
-                        tmpname <- substr(tmpname, 3L, ntmpn-1L)
+                        tmpname <- substr(tmpname, 3L, ntmpn - 1L)
                 }
                 vnames[[i]] <- tmpname
             }
         } # end of ncols[i] <= 1
-	if(missing(row.names) &&  nrows[i] > 0L) {
+	if(is.null(row.names) && nrows[i] > 0L) {
             rowsi <- attr(xi, "row.names")
             ## old way to mark optional names
             if(!(rowsi[[1L]] %in% ""))
@@ -381,7 +395,7 @@ data.frame <-
     nr <- max(nrows)
     for(i in seq_len(n)[nrows < nr]) {
 	xi <- vlist[[i]]
-	if(length(xi) == 1L && nrows[i] > 0L && nr%%nrows[i] == 0L) {
+	if(length(xi) == 1L && nrows[i] > 0L && nr %% nrows[i] == 0L) {
             xi1 <- xi[[1L]]
             if(is.vector(xi1) || is.factor(xi1)) {
                 vlist[[i]] <- list(rep(xi1, length.out = nr))
@@ -406,7 +420,7 @@ data.frame <-
     if(check.names)
 	vnames <- make.names(vnames, unique=TRUE)
     names(value) <- vnames
-    if(!mrn) { # row.names arg was supplied
+    if(!mrn) { # non-null row.names arg was supplied
         if(length(row.names) == 1L && nr != 1L) {  # one of the variables
             if(is.character(row.names))
                 row.names <- match(row.names, vnames, 0L)
@@ -416,17 +430,17 @@ data.frame <-
             i <- row.names
             row.names <- value[[i]]
             value <- value[ - i]
-        } else if (length(row.names) > 0L && length(row.names) != nr)
+        } else if ( !is.null(row.names) && length(row.names) != nr )
             stop("row names supplied are of the wrong length")
-    } else if(length(row.names) > 0L && length(row.names) != nr) {
+    } else if( !is.null(row.names) && length(row.names) != nr ) {
         warning("row names were found from a short variable and have been discarded")
         row.names <- NULL
     }
-    if(length(row.names) == 0L)
-        row.names <- c(NA_integer_, -nr) #seq_len(nr)
+    if(is.null(row.names))
+        row.names <- .set_row_names(nr) #seq_len(nr)
     else {
         if(is.object(row.names) || !is.integer(row.names))
-        row.names <- as.character(row.names)
+            row.names <- as.character(row.names)
         if(any(is.na(row.names)))
             stop("row names contain missing values")
         if(any(duplicated(row.names)))
