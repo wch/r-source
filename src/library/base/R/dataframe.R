@@ -309,7 +309,7 @@ data.frame <-
              stringsAsFactors = default.stringsAsFactors())
 {
     data.row.names <-
-	if(check.rows && mrn)
+	if(check.rows && is.null(row.names))
 	    function(current, new, i) {
 		if(is.character(current)) new <- as.character(new)
 		if(is.character(new)) current <- as.character(current)
