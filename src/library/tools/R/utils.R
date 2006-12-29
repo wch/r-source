@@ -761,6 +761,7 @@ function(package)
              ape = "sort.index",
              boot = "exp.tilt",
              car = "scatterplot.matrix",
+	     calibrator = "t.fun",
              grDevices = "boxplot.stats",
              graphics = c("close.screen",
              "plot.design", "plot.new", "plot.window", "plot.xy",
