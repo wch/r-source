@@ -1961,7 +1961,7 @@ function(package, dir, lib.loc = NULL)
         ## formula.  (Note that any argument name mismatch throws an
         ## error in current S-PLUS versions.)
         if(length(grep("\\.formula$", m)) > 0) {
-            gArgs <- gArgs[-1]
+            if(gArgs[1] != "...") gArgs <- gArgs[-1]
             mArgs <- mArgs[-1]
         }
         dotsPos <- which(gArgs == "...")
@@ -1976,7 +1976,7 @@ function(package, dir, lib.loc = NULL)
             ipos <- ipos[seq.int(from = 1, length = dotsPos[1] - 1)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
-        margMatchOK <- all(mArgs %in% gArgs) || length(dotsPos) > 0
+        margMatchOK <- all(mArgs %in% c("...", gArgs)) || "..." %in% ogArgs
         if(posMatchOK && argMatchOK && margMatchOK)
             NULL
         else {

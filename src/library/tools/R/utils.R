@@ -767,6 +767,7 @@ function(package)
              "plot.design", "plot.new", "plot.window", "plot.xy",
              "split.screen"),
              hier.part = "all.regs",
+             mratios = c("t.test.ratio.default", "t.test.ratio.formula"),
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
              sm = "print.graph",
