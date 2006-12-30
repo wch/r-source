@@ -2034,7 +2034,7 @@ try(nls(y ~ 1/(1+x), data = d, start=list(x=0.5,y=0.5), trace=TRUE))
 ## cut(breaks="years"), in part PR#9433
 cut(as.Date(c("2000-01-17","2001-01-13","2001-01-20")), breaks="years")
 cut(as.POSIXct(c("2000-01-17","2001-01-13","2001-01-20")), breaks="years")
-## did not get day 1 < 2.4.1 patched
+## did not get day 01 < 2.4.1 patched
 
 
 ## manipulating rownames: problems in pre-2.5.0
