@@ -662,7 +662,7 @@ cut.POSIXt <-
 	    incr <- 7*86400
 	}
 	if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
-	if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
+	if(valid == 7) { start$mon <- 0; start$mday <- 1; incr <- 366*86400 }
         if(valid == 8) incr <- 25*3600
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
 	maxx <- max(x, na.rm = TRUE)

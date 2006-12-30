@@ -298,7 +298,7 @@ cut.Date <-
 	    incr <- 7
 	}
 	if(valid == 3) { start$mday <- 1; incr <- 31 }
-	if(valid == 4) { start$mon <- 0; incr <- 366 }
+	if(valid == 4) { start$mon <- 0; start$mday <- 1; incr <- 366 }
         start <- .Internal(POSIXlt2Date(start))
         if (length(by2) == 2) incr <- incr * as.integer(by2[1])
 	maxx <- max(x, na.rm = TRUE)
