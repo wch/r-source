@@ -13,8 +13,6 @@ USER-VISIBLE CHANGES
 
     o	str.default() typically prints fewer entries of logical vectors.
 
-    o	abs(x) now returns integer for integer or logical arguments.
-
     o	apropos(x) and find(x) now both only work for character 'x',
 	and hence drop all non-standard evaluation behaviour.
 
@@ -168,6 +166,8 @@ NEW FEATURES
 	potentially matching more than previously, thanks to a suggestion
 	by Seth Falcon.
 
+    o	abs(x) now returns integer for integer or logical arguments.
+
     o	.libPaths() now does both tilde and glob expansion.
 
     o	There are more flexible ways to specify the default library search
@@ -224,13 +224,13 @@ NEW FEATURES
 
     o	Objects of class "difftime" are now handled more flexibly. The
         units of such objects can now be accessed via a units()
-        function, which also has an replacement form, and there are
+        function, which also has a replacement form, and there are
         conversion methods to and from numeric, which also allow the
         specification of units.  Objects of this class can also be
         stored in data frames now.  A format() method has been added,
         and the print method was revised.
 
-    o	args() and print() now give the argument lists of primitive
+    o	args(), str() and print() now give the argument lists of primitive
 	functions.
 
 
@@ -358,6 +358,8 @@ BUG FIXES
     o	identical() looked at the internal structure of the
 	'row.names' attribute, and not the value visible at R level.
 
+    o	abline(reg) now also correctly works with intercept-only lm
+	models, and abline() warns more when it's called illogically.
 
 
 
