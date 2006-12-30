@@ -19,6 +19,10 @@ BUG FIXES
     o	Added infinite recursion test to internal function isMissing.
 	(PR#9426)
 
+    o	The "Date" and "POSIXt" methods for cut() were not choosing
+	the first day of the year for breaks = "years".
+	(In part, PR#9433.)
+
 
 
 		CHANGES IN R VERSION 2.4.1
