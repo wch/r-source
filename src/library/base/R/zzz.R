@@ -24,3 +24,117 @@
         c(baseGenerics, utilsGenerics, graphicsGenerics, statsGenerics)
     tmp
 })
+
+.ArgsEnv <- new.env(hash = TRUE, parent = emptyenv())
+
+assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) NULL,
+           envir = .ArgsEnv)
+assign(".Fortran", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) NULL,
+           envir = .ArgsEnv)
+assign(".Call", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".Call.graphics", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".External", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".External.graphics", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".Internal", function(call) NULL, envir = .ArgsEnv)
+assign(".Primitive", function(name) NULL, envir = .ArgsEnv)
+assign(".primTrace", function(obj) NULL, envir = .ArgsEnv)
+assign(".primUntrace", function(obj) NULL, envir = .ArgsEnv)
+assign(".subset", function(x, ...) NULL, envir = .ArgsEnv)
+assign(".subset2", function(x, ...) NULL, envir = .ArgsEnv)
+assign("as.call", function(x) NULL, envir = .ArgsEnv)
+assign("as.environment", function(object) NULL, envir = .ArgsEnv)
+assign("attr", function(x, which) NULL, envir = .ArgsEnv)
+assign("attr<-", function(x, which, value) NULL, envir = .ArgsEnv)
+assign("attributes", function(obj) NULL, envir = .ArgsEnv)
+assign("attributes<-", function(obj, value) NULL, envir = .ArgsEnv)
+assign("baseenv", function() NULL, envir = .ArgsEnv)
+assign("browser", function() NULL, envir = .ArgsEnv)
+assign("call", function(name, ...) NULL, envir = .ArgsEnv)
+assign("class", function(x) NULL, envir = .ArgsEnv)
+assign("class<-", function(x, value) NULL, envir = .ArgsEnv)
+assign("debug", function(fun) NULL, envir = .ArgsEnv)
+assign("emptyenv", function() NULL, envir = .ArgsEnv)
+assign("environment<-", function(fun, value) NULL, envir = .ArgsEnv)
+assign("expression", function(...) NULL, envir = .ArgsEnv)
+assign("gc.time", function(on = TRUE) NULL, envir = .ArgsEnv)
+assign("globalenv", function() NULL, envir = .ArgsEnv)
+assign("interactive", function() NULL, envir = .ArgsEnv)
+assign("invisible", function(x) NULL, envir = .ArgsEnv)
+assign("is.finite", function(x) NULL, envir = .ArgsEnv)
+assign("is.infinite", function(x) NULL, envir = .ArgsEnv)
+assign("is.real", function(x) NULL, envir = .ArgsEnv)
+assign("list", function(...) NULL, envir = .ArgsEnv)
+assign("missing", function(x) NULL, envir = .ArgsEnv)
+assign("nargs", function() NULL, envir = .ArgsEnv)
+assign("oldClass", function(x) NULL, envir = .ArgsEnv)
+assign("oldClass<-", function(x, value) NULL, envir = .ArgsEnv)
+assign("pos.to.env", function(x) NULL, envir = .ArgsEnv)
+assign("proc.time", function() NULL, envir = .ArgsEnv)
+assign("quote", function(expr) NULL, envir = .ArgsEnv)
+assign("retracemem", function(x, previous = NULL) NULL, envir = .ArgsEnv)
+assign("seq_along", function(along.with) NULL, envir = .ArgsEnv)
+assign("seq_len", function(length.out) NULL, envir = .ArgsEnv)
+assign("standardGeneric", function(f) NULL, envir = .ArgsEnv)
+assign("tracemem", function(x) NULL, envir = .ArgsEnv)
+assign("unclass", function(x) NULL, envir = .ArgsEnv)
+assign("undebug", function(fun) NULL, envir = .ArgsEnv)
+assign("untracemem", function(x) NULL, envir = .ArgsEnv)
+assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
+
+
+.S3PrimitiveGenerics <-
+    c("as.character", "c", "dim", "dim<-", "dimnames", "dimnames<-",
+      "is.array", "is.atomic", "is.call", "is.character", "is.complex",
+      "is.double", "is.environment", "is.function", "is.integer",
+      "is.language", "is.logical", "is.list", "is.matrix", "is.na", "is.nan",
+      "is.name", "is.null", "is.numeric", "is.object", "is.pairlist",
+      "is.recursive", "is.single", "is.symbol", "length", "length<-",
+      "levels<-", "names", "names<-", "rep", "seq.int")
+
+.GenericArgsEnv <- local({
+    env <- new.env(hash = TRUE, parent = emptyenv())
+    for(f in .S3PrimitiveGenerics) {
+        fx <- function(x) {}
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    assign("as.character", function(x, ...) UseMethod("as.character"),
+           envir = env)
+    assign("c", function(..., recursive = FALSE) UseMethod("c"), envir = env)
+    assign("dimnames", function(x) UseMethod("dimnames"), envir = env)
+    assign("dim<-", function(x, value) UseMethod("dim<-"), envir = env)
+    assign("dimnames<-", function(x, value) UseMethod("dimnames<-"), envir = env)
+    assign("length<-", function(x, value) UseMethod("length<-"), envir = env)
+    assign("levels<-", function(x, value) UseMethod("levels<-"), envir = env)
+    assign("names<-", function(x, value) UseMethod("names<-"), envir = env)
+    assign("rep", function(x, ...) UseMethod("rep"), envir = env)
+    assign("seq.int", function(from, to, by, length.out, along.with, ...)
+           UseMethod("seq.int"), envir = env)
+    ## now add the group generics
+    ## log, round, signif and the gamma fns are not primitive
+    fx <- function(x, ...) {}
+    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
+               'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
+               'tanh', 'acosh', 'asinh', 'atanh',
+               'cumsum', 'cumprod', 'cummax', 'cummin')) {
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    fx <- function(e1, e2) {}
+    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
+               '==', '!=', '<', '<=', '>=', '>')) {
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    ## none of Summary is primitive
+    for(f in c("Arg", "Conj", "Im", "Mod", "Re")) {
+        fx <- function(z) {}
+        body(fx) <- substitute(UseMethod(ff), list(ff=f))
+        environment(fx) <- emptyenv()
+        assign(f, fx, envir = env)
+    }
+    env
+})

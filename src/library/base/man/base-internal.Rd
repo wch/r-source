@@ -11,7 +11,9 @@
 \alias{sys.load.image}
 \alias{.row_names_info}
 \alias{.set_row_names}
-
+\alias{.ArgsEnv}
+\alias{.GenericArgsEnv}
+\alias{.S3PrimitiveGenerics}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible

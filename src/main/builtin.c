@@ -163,18 +163,53 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_args(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s;
+    
     checkArity(op,args);
     if (TYPEOF(CAR(args)) == STRSXP && length(CAR(args))==1) {
 	PROTECT(s = install(CHAR(STRING_ELT(CAR(args), 0))));
 	SETCAR(args, findFun(s, rho));
 	UNPROTECT(1);
     }
+
     if (TYPEOF(CAR(args)) == CLOSXP) {
 	s = allocSExp(CLOSXP);
 	SET_FORMALS(s, FORMALS(CAR(args)));
 	SET_BODY(s, R_NilValue);
 	SET_CLOENV(s, R_GlobalEnv);
-	return(s);
+	return s;
+    }
+
+    if (TYPEOF(CAR(args)) == BUILTINSXP || TYPEOF(CAR(args)) == SPECIALSXP) {
+	char *nm = PRIMNAME(CAR(args));
+	SEXP env, s2;
+	PROTECT_INDEX xp;
+
+	PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv, 
+						 install(".ArgsEnv"), TRUE),
+			   &xp);
+	
+	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
+	PROTECT(s2 = findVarInFrame3(env, install(nm), TRUE));
+	if(s2 != R_UnboundValue) {
+	    s = duplicate(s2);
+	    SET_CLOENV(s, R_GlobalEnv);
+	    UNPROTECT(2);
+	    return s;
+	}
+	UNPROTECT(1); /* s2 */
+	REPROTECT(env = findVarInFrame3(R_BaseEnv, install(".GenericArgsEnv"),
+					TRUE), xp);
+	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
+	PROTECT(s2 = findVarInFrame3(env, install(nm), TRUE));
+	if(s2 != R_UnboundValue) {
+	    s = allocSExp(CLOSXP);
+	    SET_FORMALS(s, FORMALS(s2));
+	    SET_BODY(s, R_NilValue);
+	    SET_CLOENV(s, R_GlobalEnv);
+	    UNPROTECT(2);
+	    return s;
+	}
+	UNPROTECT(2);
     }
     return R_NilValue;
 }

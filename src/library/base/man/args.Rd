@@ -9,14 +9,13 @@
 args(name)
 }
 \arguments{
-  \item{name}{an interpreted function.
+  \item{name}{a function.
     If \code{name} is a character string then the function with that
     name is found and used.}
 }
 \value{
   A function with identical formal argument list but an empty body if
-  given an interpreted function; \code{NULL} in case of a variable or
-  primitive (non-interpreted) function.
+  given a function; \code{NULL} in case of a variable.
 }
 \details{
   This function is mainly used interactively.

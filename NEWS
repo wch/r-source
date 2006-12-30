@@ -16,7 +16,7 @@ USER-VISIBLE CHANGES
     o	abs(x) now returns integer for integer or logical arguments.
 
     o	apropos(x) and find(x) now both only work for character 'x',
-	and hence drop all non-standard evaluation behavior.
+	and hence drop all non-standard evaluation behaviour.
 
     o	Data frames can have 'automatic' row names which are not
 	converted to dimnames by as.matrix().  (Consequently, e.g.,
@@ -78,7 +78,7 @@ NEW FEATURES
 	integer rather than numeric values, e.g. 100L, 0x10L, 1e2L.
 
     o	file() can read the X11 clipboard selection as "X11_clipboard" on
-	suitable X11-using systens.
+	suitable X11-using systems.
 
     o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
 
@@ -120,7 +120,7 @@ NEW FEATURES
 	the interval (suggestion of Tamas Papp).
 
     o	rgb() now accepts the red, green and blue components in a
-    	single matrix or dataframe.
+    	single matrix or data frame.
 
     o	New utility function RShowDoc() in package 'utils' to find and
 	display manuals and other documentation files.
@@ -199,10 +199,10 @@ NEW FEATURES
 
     o	PCRE has been updated to version 7.0.
 
-    o	Several functions handle row names nore efficiently:
+    o	Several functions handle row names more efficiently:
 
 	- read.table() and read.DIF() make use of integer row names
-	  where appropriate, and avoids at least one copy in assigning
+	  where appropriate, and avoid at least one copy in assigning
 	  them.
 
 	- data.frame() and the standard as.data.frame() methods avoid
@@ -219,7 +219,8 @@ NEW FEATURES
 	representation of the row names.
 
     o	<data frame>[i, j] is substantially more memory-efficient when
-	only a small part of the data frame is selected.
+	only a small part of the data frame is selected, especially
+	when (part of) a single column is selected.
 
     o	Objects of class "difftime" are now handled more flexibly. The
         units of such objects can now be accessed via a units()
@@ -228,6 +229,9 @@ NEW FEATURES
         specification of units.  Objects of this class can also be
         stored in data frames now.  A format() method has been added,
         and the print method was revised.
+
+    o	args() and print() now give the argument lists of primitive
+	functions.
 
 
 DEPRECATED & DEFUNCT
@@ -349,7 +353,7 @@ BUG FIXES
 
     o	data.frame() ignored 'row.names' for 0-column data frames, and
 	no longer treats an explicit row.names=NULL differently from
-	the defautl value.
+	the default value.
 
     o	identical() looked at the internal structure of the
 	'row.names' attribute, and not the value visible at R level.

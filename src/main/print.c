@@ -593,7 +593,33 @@ void attribute_hidden PrintValueRec(SEXP s,SEXP env)
     case SPECIALSXP:
     case BUILTINSXP:
 	/* This is OK as .Internals are not visible to be printed */
-	Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
+    {
+	char *nm = PRIMNAME(s);
+	SEXP env, s2;
+	PROTECT_INDEX xp;
+	PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv, 
+						 install(".ArgsEnv"), TRUE),
+			   &xp);
+	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
+	s2 = findVarInFrame3(env, install(nm), TRUE);
+	if(s2 == R_UnboundValue) {
+	    REPROTECT(env = findVarInFrame3(R_BaseEnv, 
+					    install(".GenericArgsEnv"), TRUE),
+		      xp);
+	    if (TYPEOF(env) == PROMSXP) 
+		REPROTECT(env = eval(env, R_BaseEnv), xp);
+	    s2 = findVarInFrame3(env, install(nm), TRUE);
+	}
+	if(s2 != R_UnboundValue) {
+	    PROTECT(s2);
+	    t = deparse1(s2, 0, SIMPLEDEPARSE);
+	    Rprintf("%s ", CHAR(STRING_ELT(t, 0)));
+	    Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
+	    UNPROTECT(1);
+	} else /* missing definition, e.g. 'if' */
+	    Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
+	UNPROTECT(1);
+    }
 	break;
     case CHARSXP:
 	Rprintf("<CHARSXP: ");
