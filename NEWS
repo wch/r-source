@@ -233,6 +233,9 @@ NEW FEATURES
     o	args(), str() and print() now give the argument lists of primitive
 	functions.
 
+    o	as.matrix() gains the '...' argument that several packages have
+	assumed it always had (and S-PLUS has).
+
 
 DEPRECATED & DEFUNCT
 

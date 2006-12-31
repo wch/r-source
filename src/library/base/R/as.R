@@ -45,8 +45,8 @@ as.list.environment <- function(x, all.names=FALSE, ...)
 ##as.vector dispatches internally so no need for a generic
 as.vector <- function(x, mode = "any") .Internal(as.vector(x, mode))
 
-as.matrix <- function(x) UseMethod("as.matrix")
-as.matrix.default <- function(x) {
+as.matrix <- function(x, ...) UseMethod("as.matrix")
+as.matrix.default <- function(x, ...) {
     if (is.matrix(x))
 	x
     else

@@ -13,10 +13,11 @@ data.matrix(frame, rownames.force = NA)
 \arguments{
   \item{frame}{a data frame whose components are logical vectors,
     factors or numeric vectors.}
-  \item{rownames.force}{logical indicating if the resulting matrix must
-    have non-NULL \code{\link{rownames}}.  The default, \code{NA},
-    uses NULL rownames if the data frame has \sQuote{automatic}
-    row.names or for a zero-row data frame.}
+  \item{rownames.force}{logical indicating if the resulting matrix
+    should have character (rather than \code{NULL})
+    \code{\link{rownames}}.  The default, \code{NA}, uses \code{NULL}
+    rownames if the data frame has \sQuote{automatic} row.names or for a
+    zero-row data frame.}
 }
 \details{
   Supplying a data frame with columns which are not numeric, factor or logical
@@ -32,7 +33,7 @@ data.matrix(frame, rownames.force = NA)
   Otherwise, the result of \code{\link{as.matrix}}.
 }
 \note{
-  The default behaviour for rownames differs from \R < 2.5.0 which
+  The default behaviour for data frames differs from \R < 2.5.0 which
   always gave the result character rownames.
 }
 \seealso{

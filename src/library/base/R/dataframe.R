@@ -1167,7 +1167,7 @@ print.data.frame <-
     invisible(x)
 }
 
-as.matrix.data.frame <- function (x, rownames.force = NA)
+as.matrix.data.frame <- function (x, rownames.force = NA, ...)
 {
     dm <- dim(x)
     rn <- if(rownames.force %in% FALSE) NULL

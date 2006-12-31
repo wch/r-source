@@ -312,9 +312,9 @@ ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
 ISOdate <- function(year, month, day, hour=12, min=0, sec=0, tz="GMT")
     ISOdatetime(year, month, day, hour, min, sec, tz)
 
-as.matrix.POSIXlt <- function(x)
+as.matrix.POSIXlt <- function(x, ...)
 {
-    as.matrix(as.data.frame(unclass(x)))
+    as.matrix(as.data.frame(unclass(x)), ...)
 }
 
 mean.POSIXct <- function (x, ...)

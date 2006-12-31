@@ -18,20 +18,26 @@
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE,
        dimnames = NULL)
 
-as.matrix(x)
+as.matrix(x, \dots)
+\method{as.matrix}{data.frame}(x, rownames.force = NA, \dots)
 
 is.matrix(x)
 }
 \arguments{
   \item{data}{an optional data vector.}
-  \item{nrow}{the desired number of rows}
-  \item{ncol}{the desired number of columns}
-  \item{byrow}{logical. If \code{FALSE}
-    (the default) the matrix is filled by columns, otherwise the matrix is
-    filled by rows.}
+  \item{nrow}{the desired number of rows.}
+  \item{ncol}{the desired number of columns.}
+  \item{byrow}{logical. If \code{FALSE} (the default) the matrix is
+    filled by columns, otherwise the matrix is filled by rows.}
   \item{dimnames}{A \code{\link{dimnames}} attribute for the matrix: a
     \code{list} of length 2 giving the row and column names respectively.}
   \item{x}{an \R object.}
+  \item{\dots}{additional arguments to be passed to or from methods.}
+  \item{rownames.force}{logical indicating if the resulting matrix
+    should have character (rather than \code{NULL})
+    \code{\link{rownames}}.  The default, \code{NA}, uses \code{NULL}
+    rownames if the data frame has \sQuote{automatic} row.names or for a
+    zero-row data frame.}
 }
 \details{
   If either of \code{nrow} or \code{ncol} is not given, an attempt is
@@ -50,12 +56,10 @@ is.matrix(x)
   \code{as.matrix} is a generic function.  The method for data frames
   will return a character matrix if there is any
   non-(numeric/logical/complex) column, applying \code{\link{format}} to
-  these numeric alikes.  In the other case, the usual coercion hierarchy
+  non-character columns.  Otherwise, the usual coercion hierarchy
   (logical < integer < double < complex) will be used, e.g., all-logical
   data frames will be coerced to a logical matrix, mixed logical-integer
-  will give integer, etc.  \sQuote{Automatic} row names (see
-  \code{\link{data.frame}}) are converted to \code{NULL} rownames on the
-  matrix.
+  will give a integer matrix, etc.
 
   When coercing a vector, it produces a one-column matrix, and
   promotes the names (if any) of the vector to the rownames of the matrix.
