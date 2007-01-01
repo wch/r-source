@@ -23,9 +23,9 @@ stack.default <- function(x, ...)
 
 unstack <- function(x, ...) UseMethod("unstack")
 
-unstack.data.frame <- function(x, form = formula(x), ...)
+unstack.data.frame <- function(x, form, ...)
 {
-    form <- as.formula(form)
+    form <- if(missing(form)) stats::formula(x) else stats::as.formula(form)
     if (length(form) < 3)
         stop("'form' must be a two-sided formula")
     res <- c(tapply(eval(form[[2]], x), eval(form[[3]], x), as.vector))
@@ -37,7 +37,7 @@ unstack.data.frame <- function(x, form = formula(x), ...)
 unstack.default <- function(x, form, ...)
 {
     x <- as.list(x)
-    form <- as.formula(form)
+    form <- stats::as.formula(form)
     if (length(form) < 3)
         stop("'form' must be a two-sided formula")
     res <- c(tapply(eval(form[[2]], x), eval(form[[3]], x), as.vector))
