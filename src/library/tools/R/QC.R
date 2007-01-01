@@ -111,13 +111,13 @@ function(package, dir, lib.loc = NULL)
         }
     }
 
-    ## Undocumented objects?
+    ## There was a time when packages contained code or data (or both).
+    ## But not anymore ...
     if(!missing(package)
        && (length(code_objs) == 0)
-       && (length(data_objs) == 0))
-        warning("neither code nor data objects found")
-    ## When working on the sources, we will not get any code objects in
-    ## case a package provides "just" S4 classes and methods.
+       && (length(data_objs) == 0)
+       && getOption("verbose"))
+        message("neither code nor data objects found")
 
     if(!is_base) {
         ## Code objects in add-on packages with names starting with a
