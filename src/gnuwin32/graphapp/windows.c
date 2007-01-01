@@ -632,12 +632,12 @@ void show_window(object obj)
 		}
 	}
 	obj->state |= Visible;
-        if (hwndClient && (hwnd==hwndFrame) && (MDIFrameFirstTime)) {
+        if (hwndClient && (hwnd == hwndFrame) && (MDIFrameFirstTime)) {
 	    ShowWindow(hwnd, MDIsizeSet ? SW_SHOWNORMAL : SW_SHOWMAXIMIZED);
 	    MDIFrameFirstTime = 0;
         }
         else
-	    ShowWindow(hwnd, SW_SHOWNORMAL);
+	    ShowWindow(hwnd, SW_SHOW /* SW_SHOWNORMAL */);
 
 	/* workaround for Show bug */
 	if (incremented_aw && !IsWindowVisible(hwnd) ) active_windows -- ;
