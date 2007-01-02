@@ -812,7 +812,7 @@ anovalist.nls <- function (object, ..., test = NULL)
     df <- c(NA, -diff(df.r))
     ss <- c(NA, -diff(ss.r))
     ms <- ss/df
-    f <- p <- rep(as.numeric(NA), nmodels)
+    f <- p <- rep(NA_real_, nmodels)
     for(i in 2:nmodels) {
 	if(df[i] > 0) {
 	    f[i] <- ms[i]/(ss.r[i]/df.r[i])

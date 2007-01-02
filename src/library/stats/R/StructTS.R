@@ -84,7 +84,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     a0 <- Z$a
     vx <- var(x, na.rm=TRUE)/100
     np <- switch(type, "level" = 1, "trend" = 2, "BSM" = 3)
-    if (is.null(fixed)) fixed <- rep(as.numeric(NA), np+1)
+    if (is.null(fixed)) fixed <- rep(NA_real_, np+1)
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
     cf <- fixed/vx

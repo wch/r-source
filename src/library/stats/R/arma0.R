@@ -92,7 +92,7 @@ arima0 <- function(x, order = c(0, 0, 0),
         ncxreg <- ncxreg + 1
     }
 
-    if (is.null(fixed)) fixed <- rep(as.numeric(NA), narma + ncxreg)
+    if (is.null(fixed)) fixed <- rep(NA_real_, narma + ncxreg)
     else if(length(fixed) != narma + ncxreg) stop("wrong length for 'fixed'")
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")

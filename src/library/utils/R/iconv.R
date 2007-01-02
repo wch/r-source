@@ -30,12 +30,12 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         if(en %in% "ka") return("GEORGIAN-PS")
         if(en %in% "kk") return("PT154")
         ## not safe to guess for zh
-        return(as.character(NA))
+        return(NA_character_)
     }
     if(locale %in% c("C", "POSIX")) return("ASCII")
     if(.Platform$OS.type == "windows") {
         x <- strsplit(locale, ".", fixed=TRUE)[[1]]
-        if(length(x) != 2) return(as.character(NA))
+        if(length(x) != 2) return(NA_character_)
         ## PUTTY suggests mapping Windows code pages as
         ## 1250 -> ISO 8859-2
         ## 1251 -> KOI8-U
@@ -97,6 +97,6 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
             if(enc == "utf8") return(c("UTF-8", guess(ll)))
             else return(guess(ll))
         }
-        return(as.character(NA))
+        return(NA_character_)
     }
 }

@@ -30,7 +30,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
     if (is.na(nrow) || is.na(ncol)) stop("row and column counts not found")
 
     data <- matrix("", nrow, ncol)
-    types <- matrix(as.character(NA), nrow, ncol)
+    types <- matrix(NA_character_, nrow, ncol)
 
     row <- 0
     while (i < length(lines)) {
@@ -121,7 +121,7 @@ read.DIF <- function(file, header = FALSE, dec = ".",
         if(is.null(nmColClasses)) {
             colClasses <- rep(colClasses, length.out=cols)
         } else {
-            tmp <- rep(as.character(NA), length.out=cols)
+            tmp <- rep(NA_character_, length.out=cols)
             names(tmp) <- col.names
             i <- match(nmColClasses, col.names, 0)
             if(any(i <= 0))

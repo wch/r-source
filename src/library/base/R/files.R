@@ -115,7 +115,7 @@ format.octmode <- function(x, ...)
         y <- floor(y/8)
         ans0 <- paste(z, ans0, sep="")
     }
-    ans <- rep.int(as.character(NA), length(x))
+    ans <- rep.int(NA_character_, length(x))
     ans[!isna] <- ans0
     ans
 }
@@ -147,7 +147,7 @@ format.hexmode <- function(x, ...)
         y <- floor(y/16)
         ans0 <- paste(c(0:9, letters)[1+z], ans0, sep="")
     }
-    ans <- rep.int(as.character(NA), length(x))
+    ans <- rep.int(NA_character_, length(x))
     ans[!isna] <- ans0
     dim(ans) <- dim(x)
     dimnames(ans) <- dimnames(x)

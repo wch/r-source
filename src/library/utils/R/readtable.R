@@ -113,7 +113,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         if(is.null(nmColClasses)) {
             colClasses <- rep(colClasses, length.out=cols)
         } else {
-            tmp <- rep(as.character(NA), length.out=cols)
+            tmp <- rep(NA_character_, length.out=cols)
             names(tmp) <- col.names
             i <- match(nmColClasses, col.names, 0)
             if(any(i <= 0))

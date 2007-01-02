@@ -50,14 +50,14 @@ qr.coef <- function(qr, y)
     if (p==0) return( if (im) matrix(0,p,ny) else numeric(0) )
     if(is.complex(qr$qr)) {
 	if(!is.complex(y)) y[] <- as.complex(y)
-	coef <- matrix(as.complex(NA), nr=p, nc=ny)
+	coef <- matrix(NA_complex_, nr=p, nc=ny)
 	coef[qr$pivot,] <- .Call("qr_coef_cmplx", qr, y, PACKAGE = "base")
 	return(if(im) coef else c(coef))
     }
     ## else {not complex} :
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a) {
-	coef <- matrix(as.double(NA), nr=p, nc=ny)
+	coef <- matrix(NA_real_, nr=p, nc=ny)
 	coef[qr$pivot,] <- .Call("qr_coef_real", qr, y, PACKAGE = "base")
 	return(if(im) coef else c(coef))
     }
@@ -77,7 +77,7 @@ qr.coef <- function(qr, y)
 		  NAOK = TRUE, PACKAGE="base")[c("coef","info")]
     if(z$info != 0) stop("exact singularity in 'qr.coef'")
     if(k < p) {
-	coef <- matrix(as.double(NA), nr=p, nc=ny)
+	coef <- matrix(NA_real_, nr=p, nc=ny)
 	coef[qr$pivot[1:k],] <- z$coef
     }
     else coef <- z$coef

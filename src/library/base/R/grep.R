@@ -8,7 +8,7 @@ function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
     ## behaves like == for NA pattern
     if (is.na(pattern)) {
         if(value)
-            return(structure(rep.int(as.character(NA), length(x)),
+            return(structure(rep.int(NA_character_, length(x)),
                              names = names(x)))
         else
             return(rep.int(NA, length(x)))
@@ -29,7 +29,7 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
     replacement <- as.character(replacement)
     if(!is.character(x)) x <- as.character(x)
     if (is.na(pattern))
-        return(rep.int(as.character(NA), length(x)))
+        return(rep.int(NA_character_, length(x)))
 
     if(perl)
         .Internal(sub.perl(pattern, replacement, x, ignore.case, useBytes))
@@ -46,7 +46,7 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
     replacement <- as.character(replacement)
     if(!is.character(x)) x <- as.character(x)
     if (is.na(pattern))
-        return(rep.int(as.character(NA), length(x)))
+        return(rep.int(NA_character_, length(x)))
 
     if(perl)
         .Internal(gsub.perl(pattern, replacement, x, ignore.case, useBytes))
@@ -88,7 +88,7 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
     ## behaves like == for NA pattern
     if (is.na(pattern)){
         if (value)
-            return(structure(rep.int(as.character(NA), length(x)),
+            return(structure(rep.int(NA_character_, length(x)),
                              names = names(x)))
         else
             return(rep.int(NA, length(x)))

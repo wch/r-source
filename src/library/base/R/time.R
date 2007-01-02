@@ -1,6 +1,6 @@
 system.time <- function(expr, gcFirst = TRUE)
 {
-    if(!exists("proc.time")) return(rep(as.numeric(NA), 5))
+    if(!exists("proc.time")) return(rep(NA_real_, 5))
     loc.frame <- parent.frame()
     if(gcFirst)  gc(FALSE)
     expr <- substitute(expr)

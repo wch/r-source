@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-11-23 r36429)
+R version 2.5.0 Under development (unstable) (2007-01-01 r40338)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > ####=== Numerical / Arithmetic Tests
@@ -299,7 +299,10 @@ Warning messages:
 [1] TRUE
 > 
 > 
-> is.na(mean(c(1,NA,NA)[-1], trim = .1, na.rm = TRUE))
+> ## not sure what the point of this is: it gives mean(numeric(0)), that is NaN
+> (z <- mean(rep(NA_real_, 2), trim = .1, na.rm = TRUE))
+[1] NaN
+> is.na(z)
 [1] TRUE
 > 
 > ## Last Line:

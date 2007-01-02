@@ -227,7 +227,7 @@ format.AsIs <- function(x, width = 12, ...)
     if(is.character(x)) return(format.default(x, ...))
     if(is.null(width)) width = 12
     n <- length(x)
-    rvec <- rep.int(as.character(NA), n)
+    rvec <- rep.int(NA_character_, n)
     for(i in 1:n) rvec[i] <- toString(x[[i]], width = width, ...)
     ## AsIs might be around a matrix, which is not a class.
     dim(rvec) <- dim(x)

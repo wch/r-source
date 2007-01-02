@@ -180,7 +180,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             setNamespaceInfo(env, "imports", list("base" = TRUE))
             setNamespaceInfo(env, "path", file.path(lib, name))
             setNamespaceInfo(env, "dynlibs", NULL)
-            setNamespaceInfo(env, "S3methods", matrix(as.character(NA), 0, 3))
+            setNamespaceInfo(env, "S3methods", matrix(NA_character_, 0, 3))
             assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
                    envir = env)
             .Internal(registerNamespace(name, env))
@@ -920,7 +920,7 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     importMethods <- list()
     importClasses <- list()
     dynlibs <- character(0)
-    S3methods <- matrix(as.character(NA), 500, 3)
+    S3methods <- matrix(NA_character_, 500, 3)
     nativeRoutines <- list()
     nS3 <- 0
     parseDirective <- function(e) {

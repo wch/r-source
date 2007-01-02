@@ -203,7 +203,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	stats::quantile(diff(sort(if(xlog) log(at) else at)), 0.10) })
     medlty    <- pcycle(pars$medlty,	p("lty"), par("lty"))
     medlwd    <- pcycle(pars$medlwd,	3*p("lwd"), 3*par("lwd"))
-    medpch    <- pcycle(pars$medpch,	as.integer(NA))# NA when that works
+    medpch    <- pcycle(pars$medpch,	NA_integer_)# NA when that works
     medcex    <- pcycle(pars$medcex,	p("cex"), par("cex"))
     medcol    <- pcycle(pars$medcol,	border)
     medbg     <- pcycle(pars$medbg,	p("bg"),  par("bg"))

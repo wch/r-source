@@ -65,7 +65,7 @@ quantile.default <-
                          ifelse(h == 1, x[j+3], (1-h)*x[j+2] + h*x[j+3]))
         }
     } else {
-	qs <- rep(as.numeric(NA), np)
+	qs <- rep(NA_real_, np)
     }
     if(names && np > 0) {
 	dig <- max(2, getOption("digits"))

@@ -10,7 +10,7 @@ available.packages <-
 	stopifnot(is.character(fields))
 	fields <- unique(c(requiredFields, fields))
     }
-    res <- matrix(as.character(NA), 0, length(fields) + 1,
+    res <- matrix(NA_character_, 0, length(fields) + 1,
 		  dimnames = list(NULL, c(fields, "Repository")))
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0
@@ -66,7 +66,7 @@ available.packages <-
         if (length(res0)) {
             missingFields <- fields[!(fields %in% colnames(res0))]
             if (length(missingFields)) {
-                toadd <- matrix(as.character(NA), nrow=nrow(res0),
+                toadd <- matrix(NA_character_, nrow=nrow(res0),
                                 ncol=length(missingFields),
                                 dimnames=list(NULL, missingFields))
                 res0 <- cbind(res0, toadd)
@@ -356,7 +356,7 @@ installed.packages <-
                                            encoding = NA)
                 ## this gives NA if the package has no Version field
                 if (is.logical(desc)) {
-                    desc <- rep(as.character(NA), length(fields))
+                    desc <- rep(NA_character_, length(fields))
                     names(desc) <- fields
                 } else {
                     desc <- unlist(desc)
