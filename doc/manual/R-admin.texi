@@ -3,6 +3,7 @@
 @setfilename R-admin.info
 @settitle R Installation and Administration
 @setchapternewpage on
+@defcodeindex en
 @c %**end of header
 
 @syncodeindex fn vr
@@ -78,6 +79,7 @@ The current version of this document is @value{VERSION}.
 * The Windows toolset::         
 * Function and variable index::  
 * Concept index::               
+* Environment variable index::  
 @end menu
 
 @node Obtaining R, Installing R under Unix-alikes, Top, Top
@@ -267,6 +269,7 @@ of this chapter we consider only building from the sources.
 
 First review the essential and useful tools and libraries in
 @ref{Essential and useful other programs under Unix}, and install those you
+@enindex TMPDIR
 want or need.  Ensure that the environment variable @env{TMPDIR} is
 either unset (and @file{/tmp} exists and can be written in and executed
 from) or points to a valid temporary directory.
@@ -423,6 +426,7 @@ be followed in the first two.  The info files are suitable for reading
 online with Emacs or the standalone @acronym{GNU} Info.  The DVI and PDF
 versions will be created using the papersize selected at configuration
 (default ISO a4):  this can be overridden by setting @env{R_PAPERSIZE}
+@enindex R_PAPERSIZE
 on the @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
 a different papersize, you should first delete the file
@@ -469,6 +473,7 @@ to examine the logs carefully.  This was the default in @R{} version
 @end table
 
 The default can be overridden by setting the environment variable
+@enindex R_RD4PDF
 @env{R_RD4PDF}.  (On Unix, this will be picked up at install time.)  The
 default value is @code{times,hyper}: omit @code{hyper} if you do not
 want hyperlinks, e.g.@: for printing.
@@ -882,6 +887,7 @@ should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 @subsection Checking the build
 
 You can test a build by running @code{make check}.  You may need to set
+@enindex TMPDIR
 @env{TMPDIR} to the absolute path to a suitable temporary directory: the
 default is @samp{c:/TEMP}.  (Use forward slashes and do not use a path
 including spaces.)
@@ -1211,6 +1217,7 @@ do, the final default is @file{/tmp} on Unix-alikes and the value of
 
 Some Unix-alike systems are set up to remove files and directories
 periodically from @file{/tmp}, for example by a @command{cron} job
+@enindex TMPDIR
 running @command{tmpwatch}.  Set @env{TMPDIR} to another directory
 before running long-running jobs on such a system.
 
@@ -1222,8 +1229,10 @@ execution is allowed.
 @node Add-on packages, Internationalization, Running R, Top
 @chapter Add-on packages
 @cindex Packages
+@cindex Libraries
 
 @menu
+* Default packages::            
 * Managing libraries::          
 * Installing packages::         
 * Updating packages::           
@@ -1235,10 +1244,36 @@ It is helpful to use the correct terminology.  A @emph{package} is
 loaded from a @emph{library} by the function @code{library()}.  Thus a
 library is a directory containing installed packages; the main library
 is @file{@var{R_HOME}/library}, but others can be used, for example by
+@enindex R_LIBS
 setting the environment variable @env{R_LIBS} or using the @R{} function
 @code{.libPaths()}.
 
-@node Managing libraries, Installing packages, Add-on packages, Add-on packages
+@node Default packages, Managing libraries, Add-on packages, Add-on packages
+@section Default packages
+@cindex Packages, default
+
+The set of packages loaded on startup is by default
+
+@example
+> getOption("defaultPackages")
+[1] "datasets"  "utils"     "grDevices" "graphics"  "stats"     "methods"
+@end example
+
+@noindent
+(plus, of course, @pkg{base}) and this can be changed by setting the
+option in startup code (e.g.@: in @file{~/.Rprofile}).  It is initially
+@enindex R_DEFAULT_PACKAGES
+set to the value of the environment variable @env{R_DEFAULT_PACKAGES} if
+set (as a comma-separated list).  Setting @env{R_DEFAULT_PACKAGES=NULL}
+ensures that only package @pkg{base} is loaded.
+
+Changing the set of default packages is normally used to reduce the set
+for speed when scripting: in particular on using @pkg{methods} will
+typically halve the start-up time.  But it can also be used to customize
+@R{}, e.g.@: for class use.
+
+
+@node Managing libraries, Installing packages, Default packages, Add-on packages
 @section Managing libraries
 @cindex Libraries, managing
 
@@ -1262,11 +1297,13 @@ vanilla @R{} installation).  This location cna be overridden by
 setting@footnote{its binding is looked once that files has been read,
 so users cannot easily change it.} @samp{.Library.site} in
 @file{R_HOME/etc/Rprofile.site}, or (not recommended) by setting the
+@enindex R_LIBS_SITE
 environment variable @env{R_LIBS_SITE}.  Like @samp{.Library}, the
 site libraries are always include by @samp{.libPaths()}.
 
 @cindex Libraries, user
 @cindex User libraries
+@enindex R_LIBS_USER
 As from @R{} 2.5.0 users can have one or more libraries, normally
 specified by the environment variable @env{R_LIBS_USER}.  This has a
 default value (use @samp{Sys.getenv("R_LIBS_USER")} within an @R{}
@@ -1306,9 +1343,11 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 
 @noindent
 The part @samp{-l /path/to/library} can be omitted, in which case the
+@enindex R_LIBS
 first library in @env{R_LIBS} is used if set, otherwise the main library
 @file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked for in the
 environment: note that @file{.Renviron} is not read by @command{R CMD}.)
+@enindex TMPDIR
 Ensure that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or points to
 a valid temporary directory.
@@ -1747,6 +1786,10 @@ the encoding (which is @code{UTF-8}).
 
 The preferred language for messages is by default taken from the locale.
 This can be overridden first by the setting of the environment variable
+@enindex LANGUAGE
+@enindex LC_ALL
+@enindex LC_MESSAGES
+@enindex LANG
 @env{LANGUAGE} and then by the environment variables @env{LC_ALL},
 @env{LC_MESSAGES} and @env{LANG}. (The last three are normally used to
 set the locale and so should not be needed, but the first is only used
@@ -2003,7 +2046,7 @@ particular, the version of @code{zlib} 1.2.3 in the @R{} sources has
 enhancements to work with large file systems on 32-bit platforms.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
-libraries.  These are normally part of an X11 installation (e.g. the
+libraries.  These are normally part of an X11 installation (e.g.@: the
 Debian meta-package @samp{xorg-dev}), but some distributions have
 split this into smaller parts, so for example Fedora Core 5/6 require
 the @samp{libXmu} and @samp{libXmu-devel} RPMs.
@@ -2045,6 +2088,7 @@ no longer supported.
 
 @command{configure} looks for Java support on the host system, and if it
 finds it sets some settings which are useful for Java-using packages.
+@enindex JAVA_HOME
 @env{JAVA_HOME} can be set during the @command{configure} run to point
 to a specific JRE/JDK.
 
@@ -2066,7 +2110,8 @@ and @file{R_HOME/etc/ldpaths}. See @code{R CMD javareconf --help} for
 details.
 
 Another alternative of overriding those setting is to  set
-@env{R_JAVA_LD_LIBRARY_PATH} (e.g. in @file{~/.Renviron}), or use
+@enindex R_JAVA_LD_LIBRARY_PATH
+@env{R_JAVA_LD_LIBRARY_PATH} (e.g.@: in @file{~/.Renviron}), or use
 @file{/etc/ld.so.conf} to specify the Java runtime library paths to
 the system. Other settings are recorded in @file{etc/Makeconf} (or a
 sub-architecture-specific version), e.g.
@@ -2111,6 +2156,7 @@ You can specify a particular BLAS library @emph{via} a value for the
 configuration option @option{--with-blas} and not to use an external
 BLAS library by @option{--without-blas} (the default).  If
 @option{--with-blas} is given with no, its value is taken from the
+@enindex BLAS_LIBS
 environment variable @env{BLAS_LIBS}, set for example in
 @file{config.site}.  If neither the option nor the environment variable
 supply a value, a search is made for a suitable BLAS.  If the value is
@@ -2225,6 +2271,7 @@ the AMD Core Math Library (ACML) @url{http://www.amd.com/acml,
 
 @noindent
 if the appropriate library directory (such as
+@enindex LD_LIBRRARY_PATH
 @file{/opt/acml3.6.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.  For
 other compilers, see the ACML documentation.  Although the documentation
 is unclear, 32-bit versions of ACML do run on other @cputype{ia32} chips
@@ -2374,7 +2421,9 @@ subset of LAPACK.  To do so specify something like
 
 @noindent
 since the ATLAS subset of LAPACK depends on @code{libcblas}.  A value
-for @option{--with-lapack} can be set @emph{via} the environment variable
+for @option{--with-lapack} can be set @emph{via} the environment
+variable
+@enindex LAPACK_LIBS
 @env{LAPACK_LIBS}, but this will only be used if @option{--with-lapack}
 is specified (as the default value is @code{no}) and the BLAS library
 does not contain LAPACK.
@@ -2555,6 +2604,7 @@ set) or on the command line as
 If you are building in a directory different from the sources, there can
 be copies of @file{config.site} in the source and the build directories,
 and both will be read (in that order).  To force a single file to be
+@enindex CONFIG_SITE
 read, set the environment variable @env{CONFIG_SITE} to the location of
 the file.
 
@@ -2583,6 +2633,7 @@ option @option{--config-cache} (or @option{-C}) to enable caching.
 
 @node Setting paper size, Setting the browser, Configuration variables, Configuration variables
 @subsection Setting paper size
+@enindex R_PAPERSIZE
 One common variable to change is @env{R_PAPERSIZE}, which defaults to
 @samp{a4}, not @samp{letter}.  (Valid values are @samp{a4},
 @samp{letter}, @samp{legal} and @samp{executive}.)
@@ -2593,12 +2644,14 @@ papersize when making DVI and PDF manuals.
 
 The configure default will most often be @samp{a4} if @env{R_PAPERSIZE}
 is unset.  (If the (Debian Linux) program @command{paperconf} is found
+@enindex PAPERSIZE
 or the environment variable @env{PAPERSIZE} is set, these are used to
 produce the default.)
 
 @node Setting the browser, Compilation flags, Setting paper size, Configuration variables
 @subsection Setting the browser
 
+@enindex R_BROWSER
 Another precious variable is @env{R_BROWSER}, the default browser, which
 should take a value of an executable in the user's path or specify
 a full path.
@@ -2625,13 +2678,16 @@ On most platforms using @command{gcc}, having @samp{-O3} in
 @code{CFLAGS} and @code{FFLAGS} produces worthwhile performance gains.
 On systems using the GNU linker (especially those using @R{} as a shared
 library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
-is worthwhile, and on recent systems@footnote{e.g. Fedora Core 6}
+is worthwhile, and on recent systems@footnote{e.g.@: Fedora Core 6}
 @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
 @url{http://lwn.net/Articles/192624/}
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
 
+@enindex R_RD4DVI
+@enindex R_RD4PDF
+@enindex R_PAPERSIZE
 The default settings for making the manuals are controlled by
 @env{R_RD4PDF}, @env{R_RD4DVI} and @env{R_PAPERSIZE}.
 
@@ -2697,6 +2753,7 @@ running @command{configure}, or use the configure variable @code{F77} to
 specify its full path.
 
 If your FORTRAN libraries are in slightly peculiar places, you should
+@enindex LD_LIBRARY_PATH
 also look at @env{LD_LIBRARY_PATH} or your system's equivalent to make
 sure that all libraries are on this path.
 
@@ -2813,6 +2870,7 @@ defines to be used when compiling C code in R itself
 
 @noindent
 Library paths specified as @option{-L/lib/path} in @code{LDFLAGS} are
+@enindex LD_LIBRARY_PATH
 collected together and prepended to @env{LD_LIBRARY_PATH} (or your
 system's equivalent), so there should be no need for @option{-R} or
 @option{-rpath} flags.
@@ -3123,6 +3181,7 @@ OS X @acronym{FAQ}}.
 
 If you use the X window manager and prefer @code{Terminal.app} to
 @code{xterm}, you should be aware that @R{}, like many Unix tools, uses
+@enindex DISPLAY
 the existence of a @env{DISPLAY} environment variable to determine
 whether an X system is running.  This affects the default graphics
 device for the commmand-line version of R and the behaviour of the
@@ -3239,6 +3298,7 @@ LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @noindent
 replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.x.y.  Note
 that @file{/usr/local/lib/sparcv9} may need to be in the
+@enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.  (@command{configure} will
 append @code{-std=gnu99} to @code{CC}.)
 
@@ -3435,6 +3495,7 @@ tests to fail unless Arthur Olson's timezone data
 @url{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html,
 @code{cspry.co.uk/@/computing/@/Indy_admin/@/TIMEZONE.html}}) and
 @code{-ltz} is added to the list of libraries (for example, in
+@enindex LIBS
 environment variable @env{LIBS}).
 
 The flag @option{-OPT:IEEE_NaN_inf=ON} is added for the native
@@ -3915,6 +3976,8 @@ TexLive 2005 (@url{http://www.tug.org/texlive/,
 available from @url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/,
 @code{www.fsci.fuk.kindai.ac.jp/@/kakuto/@/win32-ptex}}.
 
+@enindex R_RD4DVI
+@enindex R_RD4PDF
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
 and set the environment variables @env{R_RD4DVI} and @env{R_RD4PDF}
 suitably; ensure you have the required fonts installed.
@@ -3935,10 +3998,16 @@ location where Inno Setup was installed.
 
 @printindex vr
 
-@node Concept index,  , Function and variable index, Top
+@node Concept index, Environment variable index, Function and variable index, Top
 @unnumbered Concept index
 
 @printindex cp
+
+@node Environment variable index,  , Concept index, Top
+@unnumbered Environment variable index
+
+@printindex en
+
 
 @bye
 
