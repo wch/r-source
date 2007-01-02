@@ -6890,6 +6890,10 @@ Combine @option{--no-save}, @option{--no-environ}
 @option{--no-site-file}, @option{--no-init-file} and @option{--no-restore}.
 In Windows, this also includes @option{--no-Rconsole}.
 
+@item -f file
+@itemx --file=file
+Take input from @file{file}.
+
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This
 is useful when running @R{} from within Emacs using the @acronym{ESS}

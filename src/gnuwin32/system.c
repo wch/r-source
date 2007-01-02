@@ -61,6 +61,7 @@ Rboolean UseInternet2 = FALSE;
 
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
+static FILE *ifp = NULL;
 
 /* used in devWindows.c */
 int RbitmapAlreadyLoaded = 0;
@@ -275,7 +276,7 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	fputs(prompt, stdout);
 	fflush(stdout);
     }
-    if (fgets(buf, len, stdin) == NULL) return 0;
+    if (fgets(buf, len, ifp ? ifp : stdin) == NULL) return 0;
     /* translate if necessary */
     if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
 	size_t res, inb = strlen(buf), onb = len;
@@ -296,7 +297,7 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 /* according to system.txt, should be terminated in \n, so check this
    at eof or error */
     ll = strlen((char *)buf);
-    if ((err || feof(stdin))
+    if ((err || feof(ifp ? ifp: stdin))
 	&& buf[ll - 1] != '\n' && ll < len) {
 	buf[ll++] = '\n'; buf[ll] = '\0';
     }
@@ -443,6 +444,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 	PrintWarnings();
     app_cleanup();
     RConsole = NULL;
+    if(ifp) fclose(ifp);
     exit(status);
 }
 
@@ -712,7 +714,7 @@ char *PrintUsage(void)
 	msg3[] =
 "  -q, --quiet           Don't print startup message\n  --silent              Same as --quiet\n  --slave               Make R run as quietly as possible\n  --verbose             Print more information about progress\n  --args                Skip the rest of the command line\n",
 	msg4[] =
-"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use";
+"  --ess                 Don't use getline for command-line editing\n                          and assert interactive use\n   -f file              Take input from 'file'\n  --file=file           ditto";
     if(CharacterMode == RTerm)
 	strcpy(msg, "Usage: Rterm [options] [< infile] [> outfile] [EnvVars]\n\n");
     else strcpy(msg, "Usage: Rgui [options] [EnvVars]\n\n");
@@ -905,6 +907,23 @@ int cmdlineoptions(int ac, char **av)
 		breaktodebugger();
 	    } else if(!strcmp(*av, "--args")) {
 		break;
+	    } else if(CharacterMode == RTerm && !strcmp(*av, "-f")) {
+		ac--; av++;
+		Rp->R_Interactive = FALSE;
+		Rp->ReadConsole = FileReadConsole;
+		ifp = R_fopen(*av, "r");
+		if(!ifp) {
+		    snprintf(s, 1024, _("cannot open file '%s'"), *av);
+		    R_Suicide(s);
+		}
+	    } else if(CharacterMode == RTerm && !strncmp(*av, "--file=", 7)) {
+		Rp->R_Interactive = FALSE;
+		Rp->ReadConsole = FileReadConsole;
+		ifp = R_fopen( (*av)+7, "r");
+		if(!ifp) {
+		    snprintf(s, 1024, _("cannot open file '%s'"), (*av)+7);
+		    R_Suicide(s);
+		}
 	    } else {
 		snprintf(s, 1024, _("WARNING: unknown option '%s'\n"), *av);
 		R_ShowMessage(s);

@@ -236,6 +236,10 @@ NEW FEATURES
     o	as.matrix() gains the '...' argument that several packages have
 	assumed it always had (and S-PLUS has).
 
+    o	Command-line R (and Rterm.exe under Windows) accepts the
+	options '-f filename' and '--file=filename' to follow other
+	script interpreters.
+
 
 DEPRECATED & DEFUNCT
 
@@ -257,10 +261,10 @@ DEPRECATED & DEFUNCT
 
 INSTALLATION
 
-    o	Autoconf 2.60 is used to create 'configure'.  This makes a
-	number of small changes, and in particular incorporates the
-	changes to the detection of a C99-compliant C compiler
-	backported for 2.4.0 patched.
+    o	Autoconf 2.60 or later is used to create 'configure'.  This
+	makes a number of small changes, and in particular
+	incorporates the changes to the detection of a C99-compliant C
+	compiler backported for 2.4.1.
 
     o	Detection of a Java development environment was added such that
 	packages don't need to provide their own Java detection.

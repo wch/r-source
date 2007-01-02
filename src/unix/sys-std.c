@@ -61,6 +61,7 @@
 
 extern SA_TYPE SaveAction;
 extern Rboolean UsingReadline;
+extern FILE* ifp;
 
 /*
  *  1) FATAL MESSAGES AT STARTUP
@@ -587,7 +588,7 @@ Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	int ll, err = 0;
 	if (!R_Slave)
 	    fputs(prompt, stdout);
-	if (fgets((char *)buf, len, stdin) == NULL)
+	if (fgets((char *)buf, len, ifp ? ifp: stdin) == NULL)
 	    return 0;
 	ll = strlen((char *)buf);
 	/* remove CR in CRLF ending */
@@ -620,7 +621,7 @@ Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
     	}
 /* according to system.txt, should be terminated in \n, so check this
    at eof and error */
-	if ((err || feof(stdin)) 
+	if ((err || feof(ifp ? ifp : stdin)) 
 	    && (ll == 0 || buf[ll - 1] != '\n') && ll < len) {
 	    buf[ll++] = '\n'; buf[ll] = '\0';
 	}
@@ -814,6 +815,7 @@ void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
     R_CleanTempDir();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings();	/* from device close and .Last */
+    if(ifp) fclose(ifp);
     fpu_setup(FALSE);
 
     exit(status);
