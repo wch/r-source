@@ -6891,13 +6891,14 @@ Combine @option{--no-save}, @option{--no-environ}
 In Windows, this also includes @option{--no-Rconsole}.
 
 @item --no-readline
-(UNIX only) Turn off command-line editing via @strong{readline}.  This is useful
-when running @R{} from within Emacs using the @acronym{ESS} (``Emacs
-Speaks Statistics'') package.  @xref{The command-line editor}, for more
-information.
+(UNIX only) Turn off command-line editing via @strong{readline}.  This
+is useful when running @R{} from within Emacs using the @acronym{ESS}
+(``Emacs Speaks Statistics'') package.  @xref{The command-line editor},
+for more information.
 
 @item --ess
-(Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
+(Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in
+@acronym{ESS}.
 
 @item --min-vsize=@var{N}
 @itemx --max-vsize=@var{N}
@@ -6933,7 +6934,8 @@ Do not print out the initial copyright and welcome messages.
 
 @item --slave
 Make @R{} run as quietly as possible.  This option is intended to
-support programs which use @R{} to compute results for them.
+support programs which use @R{} to compute results for them.  It implies
+@code{--quiet} and @code{--no-slave}.
 
 @item --verbose
 Print more information about progress, and in particular set @R{}'s
