@@ -6892,7 +6892,7 @@ In Windows, this also includes @option{--no-Rconsole}.
 
 @item -f file
 @itemx --file=file
-Take input from @file{file}.
+Take input from @file{file}: @code{-} means @code{stdin}.
 
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This

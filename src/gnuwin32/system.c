@@ -911,18 +911,22 @@ int cmdlineoptions(int ac, char **av)
 		ac--; av++;
 		Rp->R_Interactive = FALSE;
 		Rp->ReadConsole = FileReadConsole;
-		ifp = R_fopen(*av, "r");
-		if(!ifp) {
-		    snprintf(s, 1024, _("cannot open file '%s'"), *av);
-		    R_Suicide(s);
+		if(strcmp(*av, "-")) {
+		    ifp = R_fopen(*av, "r");
+		    if(!ifp) {
+			snprintf(s, 1024, _("cannot open file '%s'"), *av);
+			R_Suicide(s);
+		    }
 		}
 	    } else if(CharacterMode == RTerm && !strncmp(*av, "--file=", 7)) {
 		Rp->R_Interactive = FALSE;
 		Rp->ReadConsole = FileReadConsole;
-		ifp = R_fopen( (*av)+7, "r");
-		if(!ifp) {
-		    snprintf(s, 1024, _("cannot open file '%s'"), (*av)+7);
-		    R_Suicide(s);
+		if(strcmp((*av)+7, "-")) {
+		    ifp = R_fopen( (*av)+7, "r");
+		    if(!ifp) {
+			snprintf(s, 1024, _("cannot open file '%s'"), (*av)+7);
+			R_Suicide(s);
+		    }
 		}
 	    } else {
 		snprintf(s, 1024, _("WARNING: unknown option '%s'\n"), *av);
