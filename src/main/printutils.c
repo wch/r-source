@@ -481,7 +481,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		}
 
 	    } else { /* invalid char */
-		snprintf(q, 5, "<%02x>", *((unsigned char *)p));
+		snprintf(q, 5, "\\x%02x", *((unsigned char *)p));
 		q += 4; p++;
 	    }
 	}

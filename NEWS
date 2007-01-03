@@ -240,6 +240,10 @@ NEW FEATURES
 	options '-f filename' and '--file=filename' to follow other
 	script interpreters.
 
+    o	Invalid bytes in character strings in an MBCS now deparse/print
+	in the form "\xc1" rather than "<ci>", which means they can be
+	parsed/scanned.
+
 
 DEPRECATED & DEFUNCT
 
