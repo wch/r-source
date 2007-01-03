@@ -278,7 +278,7 @@ int Rstrwid(char *str, int slen, int quote)
 
 	mbs_init(&mb_st);
 	for (i = 0; i < slen; i++) {
-	    res = mbrtowc(&wc, p, MB_CUR_MAX, NULL);
+	    res = (int) mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    if(res >= 0) {
 		k = wc;
 		if(0x20 <= k && k < 0x7f && iswprint(wc)) {
@@ -427,7 +427,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 
 	mbs_init(&mb_st);
 	for (i = 0; i < cnt; i++) {
-	    res = Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
+	    res = (int) mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
 	    if(res >= 0) { /* res = 0 is a terminator */
 		k = wc;
 		/* To be portable, treat \0 explicitly */
