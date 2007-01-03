@@ -23,6 +23,10 @@ BUG FIXES
 	the first day of the year for breaks = "years".
 	(In part, PR#9433.)
 
+    o	R is now able to deparse/print invalid multibyte strings in
+	MBCS locales (such as UTF-8) using hex escapes.  This means
+	that e.g. demo(Hershey) works in all such locales.
+
 
 
 		CHANGES IN R VERSION 2.4.1
