@@ -42,7 +42,10 @@
   a single character.  Most characters, including all letters and
   digits, are regular expressions that match themselves.  Any
   metacharacter with special meaning may be quoted by preceding it with
-  a backslash.  The metacharacters are \code{. \\ | ( ) [ \{ ^ $ * + ?}.
+  a backslash.  (Escaping other characters with a backslash is
+  undefined.)  The metacharacters are in EREs are
+  \code{. \\ | ( ) [ \{ ^ $ * + ?}, but note that whether these have a
+  special meaning depends on the context.
 
   A \emph{character class} is a list of characters enclosed by \code{[}
   and \code{]} which matches any single character in that list; if the first
@@ -119,7 +122,7 @@
   include a literal \code{]}, place it first in the list.  Similarly, to
   include a literal \code{^}, place it anywhere but first.  Finally, to
   include a literal \code{-}, place it first or last (or, for
-  \code{perl = TRUE} only, precede it by a backslash.). (Only these and
+  \code{perl = TRUE} only, precede it by a backslash.).  (Only these and
   \code{\\} remain special inside character classes.)
 
   The period \code{.} matches any single character.  The symbol
@@ -294,5 +297,9 @@
   \code{\link{ls}} and \code{\link{strsplit}}.
   
   \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html}
+
+  The \code{pcrepattern} can be found as part of
+  \url{http://www.pcre.org/pcre.txt}, and details of Perl's own
+  implementation at \url{http://perldoc.perl.org/perlre.html}.
 }
 \keyword{character}
