@@ -11,7 +11,4 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef);
 SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef);
 SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef);
 
-/* the conditional on here is now fixed by adding to asChar's switch
- #define CHAR_STAR(obj) (CHAR(TYPEOF(obj) == SYMSXP ? PRINTNAME(obj) : asChar(obj)))
-*/
 #endif   /* R_RSMETHODS_H */

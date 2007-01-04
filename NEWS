@@ -244,6 +244,10 @@ NEW FEATURES
 	in the form "\xc1" rather than "<ci>", which means they can be
 	parsed/scanned.
 
+    o	experimental 'verbose' argument for selectMethod().  Might be
+	replaced later by a better interface for method selection
+	inspection.
+
 
 DEPRECATED & DEFUNCT
 
