@@ -283,13 +283,11 @@
       if(nargs == 1)
         classDefs <-  list(def)
       ## else, defined before
-      if(verbose) cat("* getting best methods, reducing from", length(methods),"\n")
-      methods <- .getBestMethods(methods, classDefs, fromGroup, verbose = verbose)
-      if(length(methods) > 1)
-	warning(gettextf(paste("Ambiguous method selection for \"%s\", target \"%s\"",
-                               "(the first of the signatures shown will be used)\n%s\n"),
-			 fdef@generic, .sigLabel(classes),
-			 paste("   ", names(methods), collapse = "\n")))
+      if(verbose) cat("* getting best methods, reducing from", length(methods))
+      methods <- .getBestMethods(methods, classDefs, fromGroup)
+      if(length(methods)>1)
+        warning(gettextf("Ambiguous method selection for \"%s\", target \"%s\" (the first of the signatures shown will be used)\n%s\n",
+              fdef@generic, .sigLabel(classes), paste("   ", names(methods), collapse = "\n")))
       methods <- methods[1]
   }
   if(doMtable  && length(methods)>0) {
@@ -390,7 +388,8 @@
     }
     containsDist <- lapply(classDefs, .inhDistances)
     maxDist <- max(unlist(containsDist), na.rm = TRUE) + 1
-    if(verbose) { cat("** initial methods distances:\n"); print(containsDist) }
+    if(verbose) cat("* initial methods distances:",
+		    paste(formatC(containsDist), collapse= ","), "\n")
     ## add up the inheritance distances for each argument (row of defClasses)
     for(i in 1:nArg) {
 	ihi <- containsDist[[i]]

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2006  the R Development Core Team
+ *  Copyright (C) 2001-2004  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -343,10 +343,15 @@ void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
                     integral approximations over the subintervals,
                    work(limit*3+1), ..., work(limit*3)
                     contain the error estimates.
-
+***references  (none)
 ***routines called  dqagie
 ***end prologue  dqagi */
 
+    /* Parameter adjustments */
+    --iwork;
+    --work;
+
+    /* Function Body */
     *ier = 6;
     *neval = 0;
     *last = 0;
@@ -354,12 +359,12 @@ void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
     *abserr = 0.;
     if (*limit < 1 || *lenw < *limit << 2) return;
 
-    l1 = *limit;
+    l1 = *limit + 1;
     l2 = *limit + l1;
     l3 = *limit + l2;
 
     rdqagie(f, ex, bound, inf, epsabs, epsrel, limit, result, abserr, neval, ier,
-	    work, &work[l1], &work[l2], &work[l3], iwork, last);
+	    &work[1], &work[l1], &work[l2], &work[l3], &iwork[1], last);
 
     return;
 } /* Rdqagi */
@@ -367,10 +372,13 @@ void Rdqagi(integr_fn f, void *ex, double *bound, int *inf,
 static
 void rdqagie(integr_fn f, void *ex, double *bound, int *inf, double *
 	     epsabs, double *epsrel, int *limit, double *result,
-	     double *abserr, int *neval, int *ier, double *alist,
+	     double *abserr, int *neval, int *ier, double *alist__,
 	     double *blist, double *rlist, double *elist, int *
 	     iord, int *last)
 {
+    /* System generated locals */
+    double d__1, d__2;
+
     /* Local variables */
     double area, dres;
     int ksgn;
@@ -541,6 +549,7 @@ standard fortran subroutine
                     number of subintervals actually produced
                     in the subdivision process
 
+***references  (none)
 ***routines called  dqelg,dqk15i,dqpsrt
 ***end prologue  dqagie
 
@@ -603,7 +612,7 @@ standard fortran subroutine
     --elist;
     --rlist;
     --blist;
-    --alist;
+    --alist__;
 
     /* Function Body */
     epmach = DBL_EPSILON;
@@ -616,7 +625,7 @@ standard fortran subroutine
     *last = 0;
     *result = 0.;
     *abserr = 0.;
-    alist[1] = 0.;
+    alist__[1] = 0.;
     blist[1] = 1.;
     rlist[1] = 0.;
     elist[1] = 0.;
@@ -684,8 +693,8 @@ standard fortran subroutine
 
 /*           bisect the subinterval with nrmax-th largest error estimate. */
 
-	a1 = alist[maxerr];
-	b1 = (alist[maxerr] + blist[maxerr]) * .5;
+	a1 = alist__[maxerr];
+	b1 = (alist__[maxerr] + blist[maxerr]) * .5;
 	a2 = b1;
 	b2 = blist[maxerr];
 	erlast = errmax;
@@ -699,18 +708,24 @@ standard fortran subroutine
 	erro12 = error1 + error2;
 	errsum = errsum + erro12 - errmax;
 	area = area + area12 - rlist[maxerr];
-	if (!(defab1 == error1 || defab2 == error2)) {
-	    if (fabs(rlist[maxerr] - area12) <= fabs(area12) * 1e-5 &&
-		erro12 >= errmax * .99) {
-		if (extrap)
-		    ++iroff2;
-		else /* if (! extrap) */
-		    ++iroff1;
-	    }
-	    if (*last > 10 && erro12 > errmax)
-		++iroff3;
+	if (defab1 == error1 || defab2 == error2) {
+	    goto L15;
 	}
-
+	if (fabs(rlist[maxerr] - area12) > fabs(area12) * 1e-5 ||
+		 erro12 < errmax * .99) {
+	    goto L10;
+	}
+	if (extrap) {
+	    ++iroff2;
+	}
+	if (! extrap) {
+	    ++iroff1;
+	}
+L10:
+	if (*last > 10 && erro12 > errmax) {
+	    ++iroff3;
+	}
+L15:
 	rlist[maxerr] = area1;
 	rlist[*last] = area2;
 	errbnd = fmax2(*epsabs, *epsrel * fabs(area));
@@ -739,78 +754,80 @@ standard fortran subroutine
 
 /*           append the newly-created intervals to the list. */
 
-	if (error2 <= error1) {
-	    alist[*last] = a2;
-	    blist[maxerr] = b1;
-	    blist[*last] = b2;
-	    elist[maxerr] = error1;
-	    elist[*last] = error2;
+	if (error2 > error1) {
+	    goto L20;
 	}
-	else {
-	    alist[maxerr] = a2;
-	    alist[*last] = a1;
-	    blist[*last] = b1;
-	    rlist[maxerr] = area2;
-	    rlist[*last] = area1;
-	    elist[maxerr] = error2;
-	    elist[*last] = error1;
-	}
+	alist__[*last] = a2;
+	blist[maxerr] = b1;
+	blist[*last] = b2;
+	elist[maxerr] = error1;
+	elist[*last] = error2;
+	goto L30;
+L20:
+	alist__[maxerr] = a2;
+	alist__[*last] = a1;
+	blist[*last] = b1;
+	rlist[maxerr] = area2;
+	rlist[*last] = area1;
+	elist[maxerr] = error2;
+	elist[*last] = error1;
 
 /*           call subroutine dqpsrt to maintain the descending ordering
 	     in the list of error estimates and select the subinterval
 	     with nrmax-th largest error estimate (to be bisected next). */
 
+L30:
 	rdqpsrt(limit, last, &maxerr, &errmax, &elist[1], &iord[1], &nrmax);
 	if (errsum <= errbnd) {
 	    goto L115;
 	}
-	if (*ier != 0)	    break;
-	if (*last == 2) { /* L80: */
-	    small = .375;
-	    erlarg = errsum;
-	    ertest = errbnd;
-	    rlist2[1] = area; continue;
-	}
-	if (noext) 	    continue;
+	if (*ier != 0)	    goto L100;
+	if (*last == 2)     goto L80;
+	if (noext) 	    goto L90;
 
 	erlarg -= erlast;
 	if (fabs(b1 - a1) > small) {
 	    erlarg += erro12;
 	}
-	if (!extrap) {
+	if (extrap) {
+	    goto L40;
+	}
 
 /*           test whether the interval to be bisected next is the
 	     smallest interval. */
 
-	    if (fabs(blist[maxerr] - alist[maxerr]) > small) {
-		continue;
-	    }
-	    extrap = TRUE;
-	    nrmax = 2;
+	if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
+	    goto L90;
+	}
+	extrap = TRUE;
+	nrmax = 2;
+L40:
+	if (ierro == 3 || erlarg <= ertest) {
+	    goto L60;
 	}
 
-	if (ierro != 3 && erlarg > ertest) {
+/*           the smallest interval has the largest error.
+	     before bisecting decrease the sum of the errors over the
+	     larger intervals (erlarg) and perform extrapolation. */
 
-/*	    the smallest interval has the largest error.
-	    before bisecting decrease the sum of the errors over the
-	    larger intervals (erlarg) and perform extrapolation. */
-
-	    id = nrmax;
-	    jupbnd = *last;
-	    if (*last > *limit / 2 + 2) {
-		jupbnd = *limit + 3 - *last;
-	    }
-	    for (k = id; k <= jupbnd; ++k) {
-		maxerr = iord[nrmax];
-		errmax = elist[maxerr];
-		if (fabs(blist[maxerr] - alist[maxerr]) > small) {
-		    continue;
-		}
-		++nrmax;
-		/* L50: */
-	    }
+	id = nrmax;
+	jupbnd = *last;
+	if (*last > *limit / 2 + 2) {
+	    jupbnd = *limit + 3 - *last;
 	}
-/*           perform extrapolation.  L60: */
+	for (k = id; k <= jupbnd; ++k) {
+	    maxerr = iord[nrmax];
+	    errmax = elist[maxerr];
+	    if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
+		goto L90;
+	    }
+	    ++nrmax;
+/* L50: */
+	}
+
+/*           perform extrapolation. */
+
+L60:
 	++numrl2;
 	rlist2[numrl2 - 1] = area;
 	rdqelg(&numrl2, rlist2, &reseps, &abseps, res3la, &nres);
@@ -825,9 +842,11 @@ standard fortran subroutine
 	*abserr = abseps;
 	*result = reseps;
 	correc = erlarg;
-	ertest = fmax2(*epsabs, *epsrel * fabs(reseps));
+/* Computing MAX */
+	d__1 = *epsabs, d__2 = *epsrel * fabs(reseps);
+	ertest = fmax2(d__1,d__2);
 	if (*abserr <= ertest) {
-	    break;
+	    goto L100;
 	}
 
 /*            prepare bisection of the smallest interval. */
@@ -837,7 +856,7 @@ L70:
 	    noext = TRUE;
 	}
 	if (*ier == 5) {
-	    break;
+	    goto L100;
 	}
 	maxerr = iord[1];
 	errmax = elist[maxerr];
@@ -845,11 +864,20 @@ L70:
 	extrap = FALSE;
 	small *= .5;
 	erlarg = errsum;
+	goto L90;
+L80:
+	small = .375;
+	erlarg = errsum;
+	ertest = errbnd;
+	rlist2[1] = area;
+L90:
+	;
     }
 
-/* L100:     set final result and error estimate. */
-/*	     ------------------------------------ */
+/*           set final result and error estimate. */
+/*           ------------------------------------ */
 
+L100:
     if (*abserr == oflow) {
 	goto L115;
     }
@@ -862,22 +890,27 @@ L70:
     if (*ier == 0) {
 	*ier = 3;
     }
-    if (*result == 0. || area == 0.) {
-	if (*abserr > errsum)
-	    goto L115;
-
-	if (area == 0.)
-	    goto L130;
+    if (*result != 0. && area != 0.) {
+	goto L105;
     }
-    else { /* L105: */
-	if (*abserr / fabs(*result) > errsum / fabs(area)) {
-	    goto L115;
-	}
+    if (*abserr > errsum) {
+	goto L115;
+    }
+    if (area == 0.) {
+	goto L130;
+    }
+    goto L110;
+L105:
+    if (*abserr / fabs(*result) > errsum / fabs(area)) {
+	goto L115;
     }
 
 /*           test on divergence */
+
 L110:
-    if (ksgn == -1 && fmax2(fabs(*result), fabs(area)) <= defabs * .01) {
+/* Computing MAX */
+    d__1 = fabs(*result), d__2 = fabs(area);
+    if (ksgn == -1 && fmax2(d__1,d__2) <= defabs * .01) {
 	goto L130;
     }
     if (.01 > *result / area || *result / area > 100. || errsum > fabs(area)) {
@@ -1060,11 +1093,21 @@ void Rdqags(integr_fn f, void *ex, double *a, double *b,
                    work(limit*3+1), ..., work(limit*3+last)
                     contain the error estimates.
 
+***references  (none)
 ***routines called  dqagse
 ***end prologue  dqags */
 
+
+
+
 /*         check validity of limit and lenw. */
 
+/* ***first executable statement  dqags */
+    /* Parameter adjustments */
+    --iwork;
+    --work;
+
+    /* Function Body */
     *ier = 6;
     *neval = 0;
     *last = 0;
@@ -1074,12 +1117,12 @@ void Rdqags(integr_fn f, void *ex, double *a, double *b,
 
 /*         prepare call for dqagse. */
 
-    l1 = *limit;
+    l1 = *limit + 1;
     l2 = *limit + l1;
     l3 = *limit + l2;
 
     rdqagse(f, ex, a, b, epsabs, epsrel, limit, result, abserr, neval, ier,
-	    work, &work[l1], &work[l2], &work[l3], iwork, last);
+	    &work[1], &work[l1], &work[l2], &work[l3], &iwork[1], last);
 
     return;
 } /* rdqags_ */
@@ -1087,7 +1130,7 @@ void Rdqags(integr_fn f, void *ex, double *a, double *b,
 static
 void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 	     epsabs, double *epsrel, int *limit, double *result,
-	     double *abserr, int *neval, int *ier, double *alist,
+	     double *abserr, int *neval, int *ier, double *alist__,
 	     double *blist, double *rlist, double *elist, int *
 	     iord, int *last)
 {
@@ -1316,7 +1359,7 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
     --elist;
     --rlist;
     --blist;
-    --alist;
+    --alist__;
 
     /* Function Body */
     epmach = DBL_EPSILON;
@@ -1328,7 +1371,7 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
     *last = 0;
     *result = 0.;
     *abserr = 0.;
-    alist[1] = *a;
+    alist__[1] = *a;
     blist[1] = *b;
     rlist[1] = 0.;
     elist[1] = 0.;
@@ -1390,8 +1433,8 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 
 /*           bisect the subinterval with the nrmax-th largest error estimate. */
 
-	a1 = alist[maxerr];
-	b1 = (alist[maxerr] + blist[maxerr]) * .5;
+	a1 = alist__[maxerr];
+	b1 = (alist__[maxerr] + blist[maxerr]) * .5;
 	a2 = b1;
 	b2 = blist[maxerr];
 	erlast = errmax;
@@ -1405,18 +1448,24 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 	erro12 = error1 + error2;
 	errsum = errsum + erro12 - errmax;
 	area = area + area12 - rlist[maxerr];
-	if (!(defab1 == error1 || defab2 == error2)) {
-
-	    if (fabs(rlist[maxerr] - area12) <= fabs(area12) * 1e-5 &&
-		erro12 >= errmax * .99) {
-		if (extrap)
-		    ++iroff2;
-		else /* if(! extrap) */
-		    ++iroff1;
-	    }
-	    if (*last > 10 && erro12 > errmax)
-		++iroff3;
+	if (defab1 == error1 || defab2 == error2) {
+	    goto L15;
 	}
+	if (fabs(rlist[maxerr] - area12) > fabs(area12) * 1e-5 ||
+		 erro12 < errmax * .99) {
+	    goto L10;
+	}
+	if (extrap) {
+	    ++iroff2;
+	}
+	if (! extrap) {
+	    ++iroff1;
+	}
+L10:
+	if (*last > 10 && erro12 > errmax) {
+	    ++iroff3;
+	}
+L15:
 	rlist[maxerr] = area1;
 	rlist[*last] = area2;
 	errbnd = fmax2(*epsabs, *epsrel * fabs(area));
@@ -1443,15 +1492,15 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 /*           append the newly-created intervals to the list. */
 
 	if (error2 > error1) {
-	    alist[maxerr] = a2;
-	    alist[*last] = a1;
+	    alist__[maxerr] = a2;
+	    alist__[*last] = a1;
 	    blist[*last] = b1;
 	    rlist[maxerr] = area2;
 	    rlist[*last] = area1;
 	    elist[maxerr] = error2;
 	    elist[*last] = error1;
 	} else {
-	    alist[*last] = a2;
+	    alist__[*last] = a2;
 	    blist[maxerr] = b1;
 	    blist[*last] = b2;
 	    elist[maxerr] = error1;
@@ -1466,54 +1515,54 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 	rdqpsrt(limit, last, &maxerr, &errmax, &elist[1], &iord[1], &nrmax);
 
 	if (errsum <= errbnd)   goto L115;/* ***jump out of do-loop */
-	if (*ier != 0)		break;
-	if (*last == 2)	{ /* L80: */
-	    small = fabs(*b - *a) * .375;
-	    erlarg = errsum;
-	    ertest = errbnd;
-	    rlist2[1] = area;	continue;
-	}
-	if (noext)		continue;
+	if (*ier != 0)		goto L100;/* ***jump out of do-loop */
+
+	if (*last == 2)		goto L80;
+	if (noext)		goto L90;
 
 	erlarg -= erlast;
 	if (fabs(b1 - a1) > small) {
 	    erlarg += erro12;
 	}
-	if (!extrap) {
-
-/*          test whether the interval to be bisected next is the
-	    smallest interval. */
-
-	    if (fabs(blist[maxerr] - alist[maxerr]) > small) {
-		continue;
-	    }
-	    extrap = TRUE;
-	    nrmax = 2;
+	if (extrap) {
+	    goto L40;
 	}
 
-	if (ierro != 3 && erlarg > ertest) {
+/*           test whether the interval to be bisected next is the
+	     smallest interval. */
+
+	if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
+	    goto L90;
+	}
+	extrap = TRUE;
+	nrmax = 2;
+L40:
+	if (ierro == 3 || erlarg <= ertest) {
+	    goto L60;
+	}
 
 /*           the smallest interval has the largest error.
 	     before bisecting decrease the sum of the errors over the
 	     larger intervals (erlarg) and perform extrapolation. */
 
-	    id = nrmax;
-	    jupbnd = *last;
-	    if (*last > *limit / 2 + 2) {
-		jupbnd = *limit + 3 - *last;
-	    }
-	    for (k = id; k <= jupbnd; ++k) {
-		maxerr = iord[nrmax];
-		errmax = elist[maxerr];
-		if (fabs(blist[maxerr] - alist[maxerr]) > small) {
-		    continue;
-		}
-		++nrmax;
-		/* L50: */
-	    }
+	id = nrmax;
+	jupbnd = *last;
+	if (*last > *limit / 2 + 2) {
+	    jupbnd = *limit + 3 - *last;
 	}
-/*           perform extrapolation.  L60: */
+	for (k = id; k <= jupbnd; ++k) {
+	    maxerr = iord[nrmax];
+	    errmax = elist[maxerr];
+	    if (fabs(blist[maxerr] - alist__[maxerr]) > small) {
+		goto L90;/* ***jump out of do-loop */
+	    }
+	    ++nrmax;
+/* L50: */
+	}
 
+/*           perform extrapolation. */
+
+L60:
 	++numrl2;
 	rlist2[numrl2 - 1] = area;
 	rdqelg(&numrl2, rlist2, &reseps, &abseps, res3la, &nres);
@@ -1521,24 +1570,26 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 	if (ktmin > 5 && *abserr < errsum * .001) {
 	    *ier = 5;
 	}
-	if (abseps < *abserr) {
-	    ktmin = 0;
-	    *abserr = abseps;
-	    *result = reseps;
-	    correc = erlarg;
-	    ertest = fmax2(*epsabs, *epsrel * fabs(reseps));
-	    if (*abserr <= ertest) {
-		break;
-	    }
+	if (abseps >= *abserr) {
+	    goto L70;
+	}
+	ktmin = 0;
+	*abserr = abseps;
+	*result = reseps;
+	correc = erlarg;
+	ertest = fmax2(*epsabs, *epsrel * fabs(reseps));
+	if (*abserr <= ertest) {
+	    goto L100;/* ***jump out of do-loop */
 	}
 
-/*           prepare bisection of the smallest interval.  L70: */
+/*           prepare bisection of the smallest interval. */
 
+L70:
 	if (numrl2 == 1) {
 	    noext = TRUE;
 	}
 	if (*ier == 5) {
-	    break;
+	    goto L100;
 	}
 	maxerr = iord[1];
 	errmax = elist[maxerr];
@@ -1546,25 +1597,33 @@ void rdqagse(integr_fn f, void *ex, double *a, double *b, double *
 	extrap = FALSE;
 	small *= .5;
 	erlarg = errsum;
+	goto L90;
+L80:
+	small = fabs(*b - *a) * .375;
+	erlarg = errsum;
+	ertest = errbnd;
+	rlist2[1] = area;
+L90:
+	;
     }
 
 
-/* L100:	set final result and error estimate. */
+L100:/*		set final result and error estimate. */
 /*		------------------------------------ */
-
     if (*abserr == oflow) 	goto L115;
     if (*ier + ierro == 0) 	goto L110;
     if (ierro == 3)
 	*abserr += correc;
     if (*ier == 0)
 	*ier = 3;
-    if (*result == 0. || area == 0.) {
-	if (*abserr > errsum) 	goto L115;
-	if (area == 0.) 	goto L130;
-    }
-    else { /* L105:*/
-	if (*abserr / fabs(*result) > errsum / fabs(area))
-	    goto L115;
+    if (*result != 0. && area != 0.) goto L105;
+    if (*abserr > errsum) 	goto L115;
+    if (area == 0.) 		goto L130;
+    goto L110;
+
+L105:
+    if (*abserr / fabs(*result) > errsum / fabs(area)) {
+	goto L115;
     }
 
 L110:/*		test on divergence. */

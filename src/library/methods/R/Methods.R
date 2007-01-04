@@ -340,8 +340,7 @@ setMethod <-
         fdef <- getGeneric(f, where = if(identical(gwhere, baseenv())) where else gwhere)
     }
     if(.lockedForMethods(fdef, where))
-        stop(gettextf("the environment \"%s\" is locked; cannot assign methods for function \"%s\"",
-                      getPackageName(where), f), domain = NA)
+        stop(gettextf("the environment \"%s\" is locked; cannot assign methods for function \"%s\"", getPackageName(where), f), domain = NA)
     hasMethods <- !is.null(fdef)
     deflt <- getFunction(f, generic = FALSE, mustFind = FALSE, where = where)
     ## where to insert the methods in generic
@@ -608,71 +607,57 @@ selectMethod <-
     function(f, signature, optional = FALSE,
              useInherited = TRUE,
              mlist = (if(is.null(fdef)) NULL else getMethodsForDispatch(f, fdef)),
-             fdef = getGeneric(f, !optional),
-             verbose = FALSE)
+             fdef = getGeneric(f, !optional))
 {
     if(is.environment(mlist))  {# using methods tables
         fenv <- environment(fdef)
         nsig <- .getGenericSigLength(fdef, fenv, FALSE)
-        if(verbose)
-            cat("* mlist environment with", length(mlist),"potential methods\n")
         if(length(signature) < nsig)
-            signature[(length(signature)+1):nsig] <- "ANY"
+          signature[(length(signature)+1):nsig] <- "ANY"
         if(missing(useInherited))
-            useInherited <- is.na(match(signature, "ANY"))
+          useInherited <- is.na(match(signature, "ANY"))
+        allmethods <- .getMethodsTable(fdef, fenv, FALSE, TRUE)
         method <- .findMethodInTable(signature, mlist, fdef)
-	if(is.null(method)) {
-	    methods <-
-		if(any(useInherited)) {
-		    allmethods <- .getMethodsTable(fdef, fenv, FALSE, TRUE)
-		    ## look in the supplied (usually standard) table, cache w. inherited
-		    .findInheritedMethods(signature, fdef,
-					  mtable = allmethods, table = mlist,
-					  useInherited = useInherited,
-					  verbose = verbose)
-		    ##MM: TODO? allow 'excluded' to be passed
-		}
-		else list() # just look in the direct table
-
-	    if(length(methods) > 0)
-		return(methods[[1]])
-	    else if(optional)
-		return(NULL)
-	    else stop(gettextf("No method found for signature %s",
-			       paste(signature, collapse=", ")))
-	}
-	else
-	  return(method)
-    }
-    else if(is.null(mlist)) {
-	if(optional)
-	    return(mlist)
-	else
-	    stop(gettextf('"%s" has no methods defined', f), domain = NA)
-    }
-
-    ## ELSE  {mlist not an environment nor NULL }
-
+        if(is.null(method)) {
+            if(any(useInherited))
+              ## look in the supplied (usually standard) table, cache w. inherited
+              methods <- .findInheritedMethods(signature, fdef,
+                                               mtable = allmethods,
+                                               table = mlist,
+                                               useInherited = useInherited)
+            else # just look in the direct table
+              methods <- list()
+            if(length(methods)>0)
+              return(methods[[1]])
+            else if(optional)
+              return(NULL)
+            else stop(gettextf("No method found for signature %s", paste(signature,
+                                                                        collapse=", ")))
+        }
+        else
+          return(method)
+  }
     evalArgs <- is.environment(signature)
-    env <-
-	if(evalArgs)
-	    signature
-	else if(length(names(signature)) == length(signature))
-	    sigToEnv(signature, fdef)
-	else if(is.character(signature)) {
-	    argNames <-	 formalArgs(fdef)
-	    length(argNames) <- length(signature)
-	    argNames <- argNames[is.na(match(argNames, "..."))]
-	    names(signature) <- argNames
-	    sigToEnv(signature, fdef)
-	}
-	else
-	    stop("signature must be a vector of classes or an environment")
-
+    if(evalArgs)
+        env <- signature
+    else if(length(names(signature)) == length(signature))
+        env <- sigToEnv(signature, fdef)
+    else if(is.character(signature)) {
+        argNames <-  formalArgs(fdef)
+        length(argNames) <- length(signature)
+        argNames <- argNames[is.na(match(argNames, "..."))]
+        names(signature) <- argNames
+        env <- sigToEnv(signature, fdef)
+    }
+    else
+        stop("signature must be a vector of classes or an environment")
+    if(is.null(mlist)) {
+        if(optional)
+            return(mlist)
+        else
+            stop(gettextf('"%s" has no methods defined', f), domain = NA)
+    }
     selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
-    if(verbose)
-	cat("* mlist non-environment ... => 'env' of length", length(env),
-	    if(is.null(selection)) "; selection = NULL -- further search", "\n")
     if(is.null(selection) && !identical(useInherited, FALSE)) {
       ## do the inheritance computations to update the methods list, try again.
       ##
@@ -689,10 +674,8 @@ selectMethod <-
       ##</FIXME>
       mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = evalArgs,
                                  useInherited = useInherited, resetAllowed = FALSE)
-      if(verbose) cat("* new mlist with", length(mlist), "potential methods\n")
       if(is(mlist, "MethodsList"))
           selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
-      ## else: selection remains NULL
     }
     if(is(selection, "function"))
         selection
@@ -830,7 +813,7 @@ showMethods <-
         out <- paste("\nFunction \"", f, "\":\n", sep="")
         if(!isGeneric(f, where))
             cat(file = con, out, "<not a generic function>\n")
-        else
+        else 
             ## maybe no output for showEmpty=FALSE
             .showMethodsTable(getGeneric(f, where = where), includeDefs, inherited,
 				  classes = classes, showEmpty = showEmpty,
