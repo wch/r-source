@@ -58,7 +58,7 @@ if(interactive()) {
    example(factor, echo = FALSE)
    example(table, echo = FALSE)
    example(ftable, echo = FALSE)
-   example(lm, echo = FALSE)
+   example(lm, echo = FALSE, ask = FALSE)
    example(str, echo = FALSE)
 
    ## and browse them:
