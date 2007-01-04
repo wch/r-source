@@ -406,6 +406,10 @@ BUG FIXES
 	MBCS locales (such as UTF-8) using hex escapes.  This means
 	that e.g. demo(Hershey) works in all such locales.
 
+    o	optimize() could give incorrect answers in some rare problems
+	with exact symmetry about the midpoint of the interval
+	supplied.  (PR#9438)
+
 
 
 		CHANGES IN R VERSION 2.4.1
