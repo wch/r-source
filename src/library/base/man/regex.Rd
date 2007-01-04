@@ -25,9 +25,9 @@
   \code{strsplit} is called with argument \code{extended = FALSE} or
   \code{perl = TRUE}.
 
-  Patterns are described here as they would be printed by \code{cat}: do
-  remember that backslashes need to be doubled in entering \R character
-  strings from the keyboard.
+  Patterns are described here as they would be printed by \code{cat}:
+  \emph{do remember that backslashes need to be doubled when entering \R
+    character strings from the keyboard}.
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed if \code{extended
@@ -118,7 +118,8 @@
   Most metacharacters lose their special meaning inside lists.  To
   include a literal \code{]}, place it first in the list.  Similarly, to
   include a literal \code{^}, place it anywhere but first.  Finally, to
-  include a literal \code{-}, place it first or last. (Only these and
+  include a literal \code{-}, place it first or last (or, for
+  \code{perl = TRUE} only, precede it by a backslash.). (Only these and
   \code{\\} remain special inside character classes.)
 
   The period \code{.} matches any single character.  The symbol
