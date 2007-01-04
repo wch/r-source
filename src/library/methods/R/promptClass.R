@@ -118,6 +118,7 @@ function (clName, filename = NULL, type = "class",
     slotclasses <- as.character(slotclasses)
     nslots <- length(slotclasses)
     .usage <- "\\section{Objects from the Class}"
+    clNameQ <- paste0('"', clName, '"')
     if(isVirtualClass(clName)) {
 	.usage <- paste0(.usage, "{A virtual Class: No objects may be created from it.}")
     }
@@ -125,7 +126,7 @@ function (clName, filename = NULL, type = "class",
 	initMethod <- unRematchDefinition(selectMethod("initialize", clName))
 	argNames <- formalArgs(initMethod)
 	## but for new() the first argument is the class name
-	argNames[[1]] <- paste0('"', clName, '"')
+	argNames[[1]] <- clNameQ
 	.usage <- c(paste0(.usage,"{"),
 		    paste0("Objects can be created by calls of the form \\code{", .makeCallString(initMethod, "new", argNames), "}."),
 		    "	 ~~ describe objects here ~~ ", "}")
@@ -183,8 +184,8 @@ function (clName, filename = NULL, type = "class",
     }
     else {
 	.meths.head <- "\\section{Methods}{"
-	.meths.body <- paste0("No methods defined with class \"", clName,
-			      "\" in the signature.")
+	.meths.body <- paste("No methods defined with class", clNameQ,
+                             "in the signature.")
     }
     .meths.tail <- "}"
     .keywords <- paste0("\\keyword{", keywords, "}")
@@ -218,7 +219,7 @@ function (clName, filename = NULL, type = "class",
 		     "for links to other classes"),
 	       "}"),
 	     examples = c("\\examples{",
-	     "##---- Should be DIRECTLY executable !! ----",
+	     paste0("showClass(", clNameQ, ")"),
 	     "}"),
 	     keywords = .keywords)
 

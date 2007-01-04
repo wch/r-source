@@ -636,7 +636,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     char tpb[120];
     int i, n;
 
-    
+
     switch (TYPEOF(s)) {
     case NILSXP:
 	print2buff("NULL", d);
@@ -1091,10 +1091,17 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff(tpb, d);
 	break;
     case S4SXP:
+#ifdef S4_SIMPLE_DEPARSE
       d->sourceable = FALSE;
       print2buff("<S4 object of class ", d);
       deparse2buff(getAttrib(s, R_ClassSymbol), d);
       print2buff(">", d);
+#else
+      sprintf(tpb, "new(\"%s\",\n", CHAR(getAttrib(s, R_ClassSymbol)));
+      print2buff(tpb, d);
+
+      print2buff(")", d);
+#endif
       break;
     default:
     	d->sourceable = FALSE;
@@ -1248,14 +1255,14 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	if(tlen > 1) print2buff("c(", d);
 	allNA = allNA && !(d->opts & S_COMPAT);
 	for (i = 0; i < tlen; i++) {
-	    if(allNA && TYPEOF(vector) == REALSXP && 
+	    if(allNA && TYPEOF(vector) == REALSXP &&
 	       ISNA(REAL(vector)[i])) {
 		strp = "NA_real_";
 	    } else if (allNA && TYPEOF(vector) == CPLXSXP &&
-		       (ISNA(COMPLEX(vector)[i].r) 
+		       (ISNA(COMPLEX(vector)[i].r)
 			|| ISNA(COMPLEX(vector)[i].i)) ) {
 		strp = "NA_complex_";
-	    } else if (allNA && TYPEOF(vector) == STRSXP && 
+	    } else if (allNA && TYPEOF(vector) == STRSXP &&
 		       STRING_ELT(vector, i) == NA_STRING) {
 		strp = "NA_character_";
 	    } else if (TYPEOF(vector) == REALSXP && (d->opts & S_COMPAT)) {
@@ -1279,7 +1286,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
 {
     SEXP t;
     int i, n;
-    
+
     if (length(sv) > k && !isNull(t = VECTOR_ELT(sv, k))) {
         PROTECT(t);
 
@@ -1295,7 +1302,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
     }
     else return FALSE;
 }
-            
+
 /* vec2buff : New Code */
 /* Deparse vectors of S-expressions. */
 /* In particular, this deparses objects of mode expression. */
@@ -1310,8 +1317,8 @@ static void vec2buff(SEXP v, LocalParseData *d)
     n = length(v);
     nv = getAttrib(v, R_NamesSymbol);
     if (length(nv) == 0) nv = R_NilValue;
-    
-    if (d->opts & USESOURCE) 
+
+    if (d->opts & USESOURCE)
    	sv = getAttrib(v, R_SrcrefSymbol);
     else
    	sv = R_NilValue;

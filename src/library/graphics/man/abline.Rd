@@ -81,6 +81,7 @@ text(1,3, "abline( 1, 2 )", col=2, adj=c(-.1,-.1))
 sale5 <- c(6, 4, 9, 7, 6, 12, 8, 10, 9, 13)
 plot(sale5)
 abline(lsfit(1:10,sale5))
+abline(lsfit(1:10,sale5, intercept = FALSE), col= 4) # less fitting
 
 z <- lm(dist ~ speed, data = cars)
 plot(cars)

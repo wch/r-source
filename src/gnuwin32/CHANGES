@@ -302,7 +302,7 @@ return to the left margin in the same way as Rterm (it was previously
 ignored).  Note that copy/cut of overtyped output will not necessarily
 pick up the visible layer of text.
 
-The "Edit|GUI preferences..." dialog now allows Rconsole files to be 
+The "Edit|GUI preferences..." dialog now allows Rconsole files to be
 loaded as well as saved.  A new function loadRconsole() has also been
 added.
 
@@ -408,7 +408,7 @@ problems with reading compressed data files via gzfile().
 winMenuAdd() now has no limits on the number of menus or items, and
 names are now limited to 500 (not 50) bytes.
 
-Several fixes to Rproxy have been submitted by Thomas Baier, so it 
+Several fixes to Rproxy have been submitted by Thomas Baier, so it
 handles more types of objects.
 
 Outputting \b in Rgui deleted the last byte and not the last character.
@@ -429,7 +429,7 @@ directories with leading spaces in the name.
 tempdir() and tempfile() use all backslashes again (2.2.1 did not).
 
 When a graphics window was double-buffered, it would update too
-frequently while waiting for input, overloading some remote display 
+frequently while waiting for input, overloading some remote display
 utilities.
 
 
@@ -488,7 +488,7 @@ The installer will be called R-2.2.0-win32.exe and by default install
 into (the local equivalent of) C:/Program Files/R/R-2.2.0.  The
 'rw2010' notation has been dropped.
 
-file:// URLs are now interpreted by download.file(), download.packages() 
+file:// URLs are now interpreted by download.file(), download.packages()
 and url() in the same way as Mozilla-based browsers.  That is, the
 expected form is
 
@@ -499,11 +499,11 @@ with *three* slashes.
 library.dynam() temporarily adds the <package>/libs dir to the path so
 that dependent DLLs can be put there and found with no further action.
 
-The (D)COM support has been updated, and header files and an import 
+The (D)COM support has been updated, and header files and an import
 library (src/gnuwin32/librproxy.a) are now installed.  See the rcom
 package for usage.
 
-There are now Brazilian Portuguese, Chinese (Traditional) and 
+There are now Brazilian Portuguese, Chinese (Traditional) and
 Russian translations of the RGui menus.
 
 win.graph(), x11() and X11() now behave in the same way as windows()
@@ -660,7 +660,7 @@ window size based on that.  It allows multiple preselections if
 multiple=TRUE.
 
 The instructions for compiling packages from source and for
-compiling R itself have been moved to the R Installation and 
+compiling R itself have been moved to the R Installation and
 Administration manual; the PDF copy of that manual has been added
 to the Rgui Help | Manuals menu list.
 
@@ -747,7 +747,7 @@ get away with backslashes here, but forward slashes are safer.
 
 select.list(preselect=) was not working. (PR#7328)
 
-The graphics recording mechanism windows(record = TRUE) could cause memory 
+The graphics recording mechanism windows(record = TRUE) could cause memory
 corruption.
 
 

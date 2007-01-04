@@ -1,4 +1,7 @@
 \name{base-internal}
+\alias{.subassign}
+\alias{.subassign2}
+\alias{.subset2}
 \alias{.subset}
 \alias{.subset2}
 \alias{.find.package}
@@ -105,10 +108,10 @@ sys.save.image(name)
   \code{.getRequiredPackages} is a wrapper to
   \code{.getRequiredPackages2} using a \file{DESCRIPTION} file.
 
-  \code{testPlatformEquivalence} is used to test if a package with 
+  \code{testPlatformEquivalence} is used to test if a package with
   compiled code can safely be loaded into a build of \R, which it does by
   comparing their \sQuote{canonical} \code{"cpu-vendor-os"} descriptions.
-  The default function omits the \code{vendor} part and allows small 
+  The default function omits the \code{vendor} part and allows small
   mismatches elsewhere.  Cognescenti can replace this function in the
   \code{base} namespace.
 
@@ -128,7 +131,7 @@ sys.save.image(name)
 \value{
   \code{.find.package} and \code{.path.packages} return a character
   vector of paths to installed packages.
-  
+
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
   return \code{invisible()}.
 

@@ -33,7 +33,7 @@ hasMethod(f, signature=character(), where)
 selectMethod(f, signature, optional = FALSE, useInherited = TRUE,
              mlist = (if (is.null(fdef)) NULL else
                       getMethodsForDispatch(f, fdef)),
-             fdef = getGeneric(f, !optional))
+             fdef = getGeneric(f, !optional), verbose = FALSE)
 
 MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
                   useInherited, fdef, resetAllowed)
@@ -65,9 +65,11 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     \code{getMethodsMetaData(f,where)}.  For \code{selectMethod}, see
     the discussion of argument \code{fdef}.
     }
-  \item{fdef}{Optionally, the generic function from which the method is 
+  \item{fdef}{Optionally, the generic function from which the method is
       to be retrieved.
     (Unlikely to be used, except internally in the package source.)}
+  \item{verbose}{logical indicating if method selection should print
+    some info about its progress.}
   \item{env}{The environment in which argument evaluations are done in
     \code{MethodsListSelect}.  Currently must be supplied, but should
     usually be \code{sys.frame(sys.parent())} when calling the function
