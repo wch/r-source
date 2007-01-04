@@ -29,8 +29,11 @@ env <- new.env()
 env$a <- 1:10
 env$beta <- exp(-3:3)
 env$logic <- c(TRUE,FALSE,FALSE,TRUE)
-# compute the list mean for each list element
-eapply(env,mean)
+# what have we there?
+eapply(env, str)
+
+# compute the mean for each list element
+eapply(env, mean)
 # median and quartiles for each list element
 eapply(env, quantile, probs = 1:3/4)
 eapply(env, quantile)

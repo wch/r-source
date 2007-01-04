@@ -74,7 +74,8 @@ replicate(n, expr, simplify = TRUE)
   \code{\link{apply}}, \code{\link{tapply}},
   \code{\link{mapply}} for applying a function to \bold{m}ultiple
   arguments, and \code{\link{rapply}} for a \bold{r}ecursive version of
-  \code{lapply()}.
+  \code{lapply()}, \code{\link{eapply}} for applying a function to each
+  entry in an \code{\link{environment}}.
 }
 \examples{
 x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
