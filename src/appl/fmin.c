@@ -151,26 +151,16 @@ double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 
 	/*  update  a, b, v, w, and x */
 
-	if (fx <= fu) {
-	    if (u < x)
-		a = u;
-	    else
-		b = u;
-	}
 	if (fu <= fx) {
-	    if (u < x)
-		b = x;
-	    else
-		a = x;
+	    if (u < x) b = x; else a = x;
 	    v = w;    w = x;   x = u;
 	    fv = fw; fw = fx; fx = fu;
-	}
-	else {
+	} else {
+	    if (u < x) a = u; else b = u;
 	    if (fu <= fw || w == x) {
 		v = w; fv = fw;
 		w = u; fw = fu;
-	    }
-	    else if (fu <= fv || v == x || v == w) {
+	    } else if (fu <= fv || v == x || v == w) {
 		v = u; fv = fu;
 	    }
 	}

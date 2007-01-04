@@ -4548,3 +4548,13 @@ stopifnot(inherits(z, "try-error"))
 ## removed 'a', 'b' and 'c' in 2.4.0
 
 ### end of tests added in 2.4.1 ###
+
+
+## translation error in optimize (PR#9438)
+ex2 <- function(x) log((18/41) * x - 2 * x^2) +
+    16 * log(4 * x^2 - (36/41) * x + (9/41)) +
+    24 * log((23/82) + (18/41) * x - 2 * x^2)
+opt <- optimise(ex2, lower = 0, upper = 9/41, maximum = TRUE)$maximum
+# there are two global maxima
+stopifnot(abs(opt - 0.187) < 0.01 || abs(opt - 0.033) < 0.01)
+## changed both ends of interval at the first step, gave opt = 0.136
