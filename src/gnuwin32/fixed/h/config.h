@@ -187,6 +187,9 @@
 /* Define to 1 if you have the <errno.h> header file. */
 #define HAVE_ERRNO_H 1
 
+/* Define to 1 if you have the `execv' function. */
+#define HAVE_EXECV 1
+
 /* Define to 1 if you have the `expm1' function. */
 #define HAVE_EXPM1 1
 
