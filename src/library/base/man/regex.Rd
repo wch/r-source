@@ -25,9 +25,9 @@
   \code{strsplit} is called with argument \code{extended = FALSE} or
   \code{perl = TRUE}.
 
-  Patterns are described here as they would be printed by \code{cat}: do
-  remember that backslashes need to be doubled in entering \R character
-  strings from the keyboard.
+  Patterns are described here as they would be printed by \code{cat}:
+  \emph{do remember that backslashes need to be doubled when entering \R
+    character strings from the keyboard}.
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed if \code{extended
@@ -42,7 +42,10 @@
   a single character.  Most characters, including all letters and
   digits, are regular expressions that match themselves.  Any
   metacharacter with special meaning may be quoted by preceding it with
-  a backslash.  The metacharacters are \code{. \\ | ( ) [ \{ ^ $ * + ?}.
+  a backslash.  (Escaping other characters with a backslash is
+  undefined.)  The metacharacters are in EREs are
+  \code{. \\ | ( ) [ \{ ^ $ * + ?}, but note that whether these have a
+  special meaning depends on the context.
 
   A \emph{character class} is a list of characters enclosed by \code{[}
   and \code{]} which matches any single character in that list; if the first
@@ -118,7 +121,8 @@
   Most metacharacters lose their special meaning inside lists.  To
   include a literal \code{]}, place it first in the list.  Similarly, to
   include a literal \code{^}, place it anywhere but first.  Finally, to
-  include a literal \code{-}, place it first or last. (Only these and
+  include a literal \code{-}, place it first or last (or, for
+  \code{perl = TRUE} only, precede it by a backslash.).  (Only these and
   \code{\\} remain special inside character classes.)
 
   The period \code{.} matches any single character.  The symbol
@@ -195,8 +199,7 @@
 
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from
-  the sources at
-  \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}. If PCRE
+  the sources at \url{http://www.pcre.org}. If PCRE
   support was compiled from the sources within \R, the PCRE version is 6.7
   as described here (version \eqn{\ge}{>=} 4.0 is required if \R is
   configured to use the system's PCRE library).
@@ -291,5 +294,9 @@
   \code{\link{ls}} and \code{\link{strsplit}}.
   
   \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html}
+
+  The \code{pcrepattern} can be found as part of
+  \url{http://www.pcre.org/pcre.txt}, and details of Perl's own
+  implementation at \url{http://perldoc.perl.org/perlre.html}.
 }
 \keyword{character}
