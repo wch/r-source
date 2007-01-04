@@ -21,7 +21,7 @@ HEADERS = Runix.h hpdlfcn.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-  Makefile.in $(SOURCES_C_BASE) Rembedded.c \
+  Makefile.in $(SOURCES_C_BASE) Rembedded.c Rscript.c \
   $(HEADERS) hpdlfcn.c system.txt
 
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
@@ -42,6 +42,7 @@ R: Makefile
 	@$(MAKE) Makedeps
 @WANT_R_SHLIB_FALSE@	@$(MAKE) libunix.a
 @WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
+	@$(MAKE) rhome=$(abs_top_builddir) install-Rscript
 
 ## is this portable?
 ../include/Rversion.h:
@@ -63,7 +64,18 @@ distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
 
-install install-strip uninstall TAGS info dvi check:
+## we need to build at install time to capture the correct 'rhome'
+install-Rscript:
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -DR_HOME='"$(rhome)"' -o Rscript \
+	  $(srcdir)/Rscript.c
+	@$(MKINSTALLDIRS) "$(Rexecbindir)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change Rscript "$(Rexecbindir)/Rscript"
+install: install-Rscript
+	@cp Rscript "$(bindir)/Rscript"
+uninstall:
+	@rm -f "$(bindir)/Rscript" "$(Rexecbindir)/Rscript"
+
+install-strip TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
