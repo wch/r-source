@@ -428,6 +428,9 @@ BUG FIXES
 	with exact symmetry about the midpoint of the interval
 	supplied.  (PR#9438)
 
+    o	The residuals from an lm() fit with no coefficients but an 
+	offset were incorrect.
+
 
 
 		CHANGES IN R VERSION 2.4.1
