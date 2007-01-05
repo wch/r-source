@@ -1,6 +1,7 @@
-Sys.getenv <- function(x) {
-    if (missing(x)) {
-	x <- strsplit(.Internal(getenv(character())), "=", fixed=TRUE)
+Sys.getenv <- function(x = NULL, empty = "")
+{
+    if (is.null(x)) {
+	x <- strsplit(.Internal(Sys.getenv(character(), "")), "=", fixed=TRUE)
 	v <- n <- character(LEN <- length(x))
 	for (i in 1:LEN) {
 	    n[i] <- x[[i]][1]
@@ -8,17 +9,17 @@ Sys.getenv <- function(x) {
 	}
 	structure(v, names = n)
     } else {
-	structure(.Internal(getenv(x)), names = x)
+	structure(.Internal(Sys.getenv(as.character(x), as.character(empty))),
+                  names = x)
     }
 }
 
 Sys.putenv <- function(...)
 {
     x <- list(...)
-    nm <- names(x)
-    val <- as.character(unlist(x))
-    x <- paste(nm,val, sep="=")
-    invisible(.Internal(putenv(x)))
+    .Internal(Sys.putenv(names(x), as.character(unlist(x))))
 }
 
-Sys.getpid <- function() .Internal(getpid())
+Sys.unsetenv <- function(x) .Internal(Sys.unsetenv(as.character(x)))
+
+Sys.getpid <- function() .Internal(Sys.getpid())

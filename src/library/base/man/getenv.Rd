@@ -1,21 +1,28 @@
 \name{Sys.getenv}
 \title{Get Environment Variables}
 \usage{
-Sys.getenv(x)
+Sys.getenv(x = NULL, empty = "")
 }
 \alias{Sys.getenv}
 \arguments{
-  \item{x}{a character vector, or missing}
+  \item{x}{a character vector, or \code{NULL}.}
+  \item{empty}{a character string.}
 }
 \description{
-  \code{Sys.getenv} obtains the values of the environment variables named by
-  \code{x}.
+  \code{Sys.getenv} obtains the values of the environment variables.
+}
+\details{
+  Both arguments will be coerced to character if necessary.
+
+  Setting \code{empty = NA} will enable unset variables and those set to
+  the value \code{""} to be distinguished, \emph{if the OS does}.
 }
 \value{
   A vector of the same length as \code{x}, with the variable names as
   its \code{names} attribute.  Each element holds the value of the
   environment variable named by the corresponding component of \code{x}
-  (or \code{""} if no environment variable with that name was found).
+  (or the value of \code{empty} if no environment variable with that
+  name was found).
 
   On most platforms \code{Sys.getenv()} will return a named vector giving
   the values of all the environment variables.

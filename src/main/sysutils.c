@@ -196,7 +196,7 @@ int R_system(char *command)
 	if(useaqua)
 		val = ptr_CocoaSystem(command);
     else
-#endif		
+#endif
     val = system(command);
     sigprocmask(SIG_UNBLOCK, &ss, NULL);
 #else
@@ -226,6 +226,9 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(CAR(args)))
 	errorcall(call, _("wrong type for argument"));
 
+    if (!isString(CADR(args)) || LENGTH(CADR(args)) != 1)
+	errorcall(call, _("wrong type for argument"));
+
     i = LENGTH(CAR(args));
     if (i == 0) {
 #ifdef Win32
@@ -248,7 +251,7 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j = 0; j < i; j++) {
 	    s = getenv(CHAR(STRING_ELT(CAR(args), j)));
 	    if (s == NULL)
-		SET_STRING_ELT(ans, j, mkChar(""));
+		SET_STRING_ELT(ans, j, STRING_ELT(CADR(args), 0));
 	    else
 		SET_STRING_ELT(ans, j, mkChar(s));
 	}
@@ -257,13 +260,13 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
-#ifdef HAVE_PUTENV
-static int Rputenv(char *str)
+#if !defined(HAVE_SETENV) && defined(HAVE_PUTENV)
+static int Rputenv(char *nm, char *val)
 {
     char *buf;
-    buf = (char *) malloc((strlen(str) + 1) * sizeof(char));
+    buf = (char *) malloc((strlen(nm) + strlen(val) + 2) * sizeof(char));
     if(!buf) return 1;
-    strcpy(buf, str);
+    sprintf(buf, "%s=%s", nm, val);
     putenv(buf);
     /* no free here: storage remains in use */
     return 0;
@@ -273,7 +276,42 @@ static int Rputenv(char *str)
 
 SEXP attribute_hidden do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-#ifdef HAVE_PUTENV
+#if defined(HAVE_PUTENV) || defined(HAVE_SETENV)
+    int i, n;
+    SEXP ans, nm, vars;
+
+    checkArity(op, args);
+
+    if (!isString(nm = CAR(args)))
+	errorcall(call, _("wrong type for argument"));
+    if (!isString(vars = CADR(args)))
+	errorcall(call, _("wrong type for argument"));
+    if(LENGTH(nm) != LENGTH(vars))
+	errorcall(call, _("wrong length for argument"));
+
+    n = LENGTH(vars);
+    PROTECT(ans = allocVector(LGLSXP, n));
+#ifdef HAVE_SETENV
+    for (i = 0; i < n; i++)
+	LOGICAL(ans)[i] = setenv(CHAR(STRING_ELT(nm, i)),
+				 CHAR(STRING_ELT(vars, i)),
+				 1) == 0;
+#else
+    for (i = 0; i < n; i++)
+	LOGICAL(ans)[i] = Rputenv(CHAR(STRING_ELT(nm, i)),
+				  CHAR(STRING_ELT(vars, i))) == 0;
+#endif
+    UNPROTECT(1);
+    return ans;
+#else
+    error(_("'Sys.putenv' is not available on this system"));
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#if defined(HAVE_UNSETENV) || defined(Win32)
     int i, n;
     SEXP ans, vars;
 
@@ -281,16 +319,24 @@ SEXP attribute_hidden do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isString(vars = CAR(args)))
 	errorcall(call, _("wrong type for argument"));
-
     n = LENGTH(vars);
     PROTECT(ans = allocVector(LGLSXP, n));
-    for (i = 0; i < n; i++) {
-	LOGICAL(ans)[i] = Rputenv(CHAR(STRING_ELT(vars, i))) == 0;
+#ifdef Win32
+    {
+	char buf[1000];
+	for (i = 0; i < n; i++) {
+	    snprintf(buf, 1000, "%s=", CHAR(STRING_ELT(vars, i)));
+	    LOGICAL(ans)[i] = putenv(buf) == 0;
+	}
     }
+#else
+    for (i = 0; i < n; i++)
+	LOGICAL(ans)[i] = unsetenv(CHAR(STRING_ELT(vars, i))) == 0;
+#endif
     UNPROTECT(1);
     return ans;
 #else
-    error(_("'putenv' is not available on this system"));
+        error(_("'Sys.unsetenv' is not available on this system"));
     return R_NilValue; /* -Wall */
 #endif
 }
@@ -312,7 +358,7 @@ static void iconv_Init(void)
 {
     static int initialized = 0;
     char dllpath[PATH_MAX];
-    snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", getenv("R_HOME"), 
+    snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", getenv("R_HOME"),
 	     FILESEP, FILESEP, "iconv", SHLIB_EXT);
     if(!initialized) {
 	int res = R_moduleCdynload("iconv", 1, 1);
@@ -344,19 +390,19 @@ typedef void* iconv_t;
 #ifdef HAVE_ICONVLIST
 static unsigned int cnt;
 
-static int 
+static int
 count_one (unsigned int namescount, char * *names, void *data)
 {
     cnt += namescount;
     return 0;
 }
 
-static int 
+static int
 write_one (unsigned int namescount, char * *names, void *data)
 {
   unsigned int i;
   SEXP ans = (SEXP) data;
-  
+
   for (i = 0; i < namescount; i++)
       SET_STRING_ELT(ans, cnt++, mkChar(names[i]));
   return 0;
@@ -377,7 +423,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     char *sub;
     size_t inb, outb, res;
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
-    
+
     checkArity(op, args);
 #ifdef Win32
     iconv_Init();
@@ -420,7 +466,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* Then convert input  */
 	    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
 	    *outbuf = '\0';
-	    /* other possible error conditions are incomplete 
+	    /* other possible error conditions are incomplete
 	       and invalid multibyte chars */
 	    if(res == -1 && errno == E2BIG) {
 		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
@@ -445,7 +491,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		inbuf++; inb--;
 		goto next_char;
 	    }
-	
+
 	    if(res != -1 && inb == 0)
 		SET_STRING_ELT(ans, i, mkChar(cbuff.data));
 	    else SET_STRING_ELT(ans, i, NA_STRING);
@@ -478,7 +524,7 @@ void * Riconv_open (char* tocode, char* fromcode)
 #endif
 }
 
-size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft, 
+size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
     return iconv((iconv_t) cd, inbuf, inbytesleft, outbuf, outbytesleft);
@@ -495,7 +541,7 @@ void * Riconv_open (char* tocode, char* fromcode)
     return (void *)-1;
 }
 
-size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft, 
+size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
     error(_("'iconv' is not available on this system"));
@@ -563,9 +609,9 @@ void attribute_hidden InitTempDir()
 	tm = getenv("TMPDIR");
 	if (!isDir(tm)) {
 	    tm = getenv("TMP");
-	    if (!isDir(tm)) { 
+	    if (!isDir(tm)) {
 		tm = getenv("TEMP");
-		if (!isDir(tm)) 
+		if (!isDir(tm))
 #ifdef Win32
 		    tm = getenv("R_USER"); /* this one will succeed */
 #else
@@ -601,7 +647,7 @@ void attribute_hidden InitTempDir()
 
     len = strlen(tmp) + 1;
     p = (char *) malloc(len);
-    if(!p) 
+    if(!p)
 	R_Suicide(_("cannot allocate R_TempDir"));
     else {
 	R_TempDir = p;
@@ -658,9 +704,9 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
 #else
 	sprintf(tm, "%s%s%s%x%x", tmp1, filesep, prefix, rand(), rand());
 #endif
-        if(!R_FileExists(tm)) { 
-	    done = 1; 
-	    break; 
+        if(!R_FileExists(tm)) {
+	    done = 1;
+	    break;
 	}
     }
     if(!done)
