@@ -55,7 +55,7 @@ static char rhome[] = R_HOME;
 # include "rterm.c"
 #endif
 
-#define RSVERSION "$Rev: 40294 $"
+#define RSVERSION "$Rev$"
 
 #ifdef HAVE_EXECV
 static int verbose = 0;
