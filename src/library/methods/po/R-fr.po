@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:30\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
 "PO-Revision-Date: 2006-12-05 23:00+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -208,11 +208,11 @@ msgstr "pas de méthode définie pour la fonction \"%s\" et la signature %s"
 msgid "No method found for signature %s"
 msgstr "aucune méthode trouvée pour la signature %s"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "la signature doit être un vecteur de classes ou un environnement"
-
 msgid "\"%s\" has no methods defined"
 msgstr "\"%s\" n'a aucune méthode définie"
+
+msgid "signature must be a vector of classes or an environment"
+msgstr "la signature doit être un vecteur de classes ou un environnement"
 
 msgid "no unique method corresponding to this signature"
 msgstr "plus d'une méthode correspond à cette signature"
@@ -1198,9 +1198,16 @@ msgstr ""
 "Tentative de recherche d'une table de méthodes dans une fonction non "
 "générique"
 
+#, fuzzy
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr ""
+"Sélection de méthode ambigüe pour \"%s\", cible \"%s\" (la première des "
+"signature sera utilisée)\n"
+"%s"
+
+#, fuzzy
 msgid ""
-"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
-"signatures shown will be used)\n"
+"(the first of the signatures shown will be used)\n"
 "%s"
 msgstr ""
 "Sélection de méthode ambigüe pour \"%s\", cible \"%s\" (la première des "

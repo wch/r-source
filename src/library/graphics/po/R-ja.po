@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-21 08:26\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
 "PO-Revision-Date: 2006-09-22 09:42+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -12,6 +12,18 @@ msgstr ""
 "Report- Msgid-Bugs-To: bugs@r-project.org\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 0.10.1rc1\n"
+
+msgid "'a' is overridden by 'reg'"
+msgstr ""
+
+msgid "only using the first two of"
+msgstr ""
+
+msgid "regression coefficients"
+msgstr ""
+
+msgid "'a' and 'b' are overridden by 'coef'"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' は二元分割表でなければなりません"

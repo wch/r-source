@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:29\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
 "PO-Revision-Date: 2006-12-12 10:36+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -249,6 +249,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "--> row.names は使われません"
 
+msgid "row names contain missing values"
+msgstr "列名は欠測値を含んでいます"
+
+msgid "duplicate row.names:"
+msgstr "row.names が重複しています："
+
 msgid "arguments imply differing number of rows:"
 msgstr "引数は異なった列数を意味します:"
 
@@ -260,12 +266,6 @@ msgstr "与えられた列名は誤った長さです"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr "列名は短い変数から見つけられ、捨て去られました"
-
-msgid "row names contain missing values"
-msgstr "列名は欠測値を含んでいます"
-
-msgid "duplicate row.names:"
-msgstr "row.names が重複しています："
 
 msgid "drop argument will be ignored"
 msgstr "drop 引数は無視されます"
@@ -465,6 +465,16 @@ msgstr "\"POSIXct\" オブジェクトに対しては定義されていません
 
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "\"POSIXlt\" オブジェクトに対しては定義されていません"
+
+msgid "tim is not character or numeric"
+msgstr ""
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+#, fuzzy
+msgid "invalid units specified"
+msgstr "無効な 'quote' 指定です"
 
 msgid "not defined for \"difftime\" objects"
 msgstr "\"difftime\" オブジェクトに対しては定義されていません"
@@ -886,6 +896,10 @@ msgstr "次元が 2 未満のオブジェクトに列名を設定しようとし
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr "引数は数値でも論理値でもありません。NA 値を返します"
+
+#, fuzzy
+msgid "'trim' must be numeric of length one"
+msgstr "'origin' は長さ 1 でなければなりません"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "複素数データに対しては刈込み平均は定義されません"
@@ -1464,9 +1478,6 @@ msgstr[0] "警告メッセージ：\n"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "'quote' 中に無効な数値があります"
-
-#~ msgid "invalid 'quote' specification"
-#~ msgstr "無効な 'quote' 指定です"
 
 #~ msgid "col.names = NA makes no sense when row.names = FALSE"
 #~ msgstr "row.names = FALSE の時 col.names = NA は意味をなしません"

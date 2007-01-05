@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:29\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -250,6 +250,12 @@ msgstr "，"
 msgid "--> row.names NOT used"
 msgstr "--> row.names不再有用"
 
+msgid "row names contain missing values"
+msgstr "行名里有遗漏值"
+
+msgid "duplicate row.names:"
+msgstr "row.names有重复:"
+
 msgid "arguments imply differing number of rows:"
 msgstr "变元值意味着不同的行数"
 
@@ -261,12 +267,6 @@ msgstr "行名长度不对"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr "短变数里找到了行名，因此不用"
-
-msgid "row names contain missing values"
-msgstr "行名里有遗漏值"
-
-msgid "duplicate row.names:"
-msgstr "row.names有重复:"
 
 msgid "drop argument will be ignored"
 msgstr "忽略drop变元"
@@ -461,6 +461,16 @@ msgstr "对\"POSIXct\"对象不适用"
 
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "对\"POSIXlt\"对象不适用"
+
+msgid "tim is not character or numeric"
+msgstr ""
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+#, fuzzy
+msgid "invalid units specified"
+msgstr "'quote'的设定不对"
 
 msgid "not defined for \"difftime\" objects"
 msgstr "对\"difftime\"对象不适用"
@@ -864,6 +874,10 @@ msgstr "不能给维度小于二的对名设列名"
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr "变元不是数值也不是逻辑值：回覆NA"
+
+#, fuzzy
+msgid "'trim' must be numeric of length one"
+msgstr "'origin'的长度必需为1"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "复数数据不能有切尾平均值"
@@ -1429,9 +1443,6 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "'quote'里的数不对"
-
-#~ msgid "invalid 'quote' specification"
-#~ msgstr "'quote'的设定不对"
 
 #~ msgid "col.names = NA makes no sense when row.names = FALSE"
 #~ msgstr "当row.names = FALSE时col.names = NA是没有意义的"

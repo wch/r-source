@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:29\n"
-"PO-Revision-Date: 2006-12-19 10:29\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
+"PO-Revision-Date: 2007-01-05 11:57\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -267,6 +267,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "--> row.names NOT used"
 
+msgid "row names contain missing values"
+msgstr "row names contain missing values"
+
+msgid "duplicate row.names:"
+msgstr "duplicate row.names:"
+
 msgid "arguments imply differing number of rows:"
 msgstr "arguments imply differing number of rows:"
 
@@ -278,12 +284,6 @@ msgstr "row names supplied are of the wrong length"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr "row names were found from a short variable and have been discarded"
-
-msgid "row names contain missing values"
-msgstr "row names contain missing values"
-
-msgid "duplicate row.names:"
-msgstr "duplicate row.names:"
 
 msgid "drop argument will be ignored"
 msgstr "drop argument will be ignored"
@@ -480,6 +480,15 @@ msgstr "not defined for “POSIXct” objects"
 
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "not defined for “POSIXlt” objects"
+
+msgid "tim is not character or numeric"
+msgstr "tim is not character or numeric"
+
+msgid "need explicit units for numeric conversion"
+msgstr "need explicit units for numeric conversion"
+
+msgid "invalid units specified"
+msgstr "invalid units specified"
 
 msgid "not defined for \"difftime\" objects"
 msgstr "not defined for “difftime” objects"
@@ -884,6 +893,9 @@ msgstr "attempt to set colnames on object with less than two dimensions"
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr "argument is not numeric or logical: returning NA"
+
+msgid "'trim' must be numeric of length one"
+msgstr "‘trim’ must be numeric of length one"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "trimmed means are not defined for complex data"

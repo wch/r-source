@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:30\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
 "PO-Revision-Date: 2006-12-12 09:44+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1545,6 +1545,10 @@ msgstr "パラメータの初期値で勾配行列が特異です"
 
 msgid "'data' must be a list or an environment"
 msgstr "'data' はリストか環境でなければなりません"
+
+#, fuzzy
+msgid "no parameters to fit"
+msgstr "すべてのパラメータが固定されていました"
 
 msgid "No starting values specified"
 msgstr "初期値が与えられていません"

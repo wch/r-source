@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:30\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -177,11 +177,11 @@ msgstr "函数'%s'和标记%s没有设定方法"
 msgid "No method found for signature %s"
 msgstr "标记'%s'里不存在任何方法"
 
-msgid "signature must be a vector of classes or an environment"
-msgstr "标记要么是个含类别的向量，要么是个环境"
-
 msgid "\"%s\" has no methods defined"
 msgstr "'%s'没有设定任何方法"
+
+msgid "signature must be a vector of classes or an environment"
+msgstr "标记要么是个含类别的向量，要么是个环境"
 
 msgid "no unique method corresponding to this signature"
 msgstr "这一标记没有与之相对应的唯一方法"
@@ -969,9 +969,15 @@ msgstr "同属函数的方法表不对，或还没有设制"
 msgid "Trying to find a methods table in a non-generic function"
 msgstr "在非同属函数里是找不到方法列表的"
 
+#, fuzzy
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr ""
+"\"%s\"的方法选择不明确，目标\"%s\" (将使用所显示的第一个标记)\n"
+"%s"
+
+#, fuzzy
 msgid ""
-"Ambiguous method selection for \"%s\", target \"%s\" (the first of the "
-"signatures shown will be used)\n"
+"(the first of the signatures shown will be used)\n"
 "%s"
 msgstr ""
 "\"%s\"的方法选择不明确，目标\"%s\" (将使用所显示的第一个标记)\n"

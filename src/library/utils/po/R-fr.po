@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:30\n"
+"POT-Creation-Date: 2007-01-05 11:58\n"
 "PO-Revision-Date: 2006-12-05 21:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -703,6 +703,16 @@ msgstr "'as.is' de longueur incorrecte %d != cols = %d"
 
 msgid "invalid 'row.names' specification"
 msgstr "spécification de 'row.names' incorrecte"
+
+#, fuzzy
+msgid "invalid 'row.names' length"
+msgstr "spécification de 'row.names' incorrecte"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr ""
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr ""
 
 msgid "missing lengths for some fields"
 msgstr "longueur manquante pour certains champs"

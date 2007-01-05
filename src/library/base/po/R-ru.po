@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:29\n"
+"POT-Creation-Date: 2007-01-05 11:57\n"
 "PO-Revision-Date: 2006-12-10 00:35-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -254,6 +254,12 @@ msgstr ","
 msgid "--> row.names NOT used"
 msgstr "--> 'row.names' НЕ использованы"
 
+msgid "row names contain missing values"
+msgstr "имена строк содержат пропущенные значения"
+
+msgid "duplicate row.names:"
+msgstr "одинаковые имена строк:"
+
 msgid "arguments imply differing number of rows:"
 msgstr "аргументы подразумевают разные количества строк:"
 
@@ -265,12 +271,6 @@ msgstr "предложенные имена строк неправильной длины"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr "имена строк взяты из короткой переменной и поэтому сброшены"
-
-msgid "row names contain missing values"
-msgstr "имена строк содержат пропущенные значения"
-
-msgid "duplicate row.names:"
-msgstr "одинаковые имена строк:"
 
 msgid "drop argument will be ignored"
 msgstr "аргумент 'drop' не будет учтен"
@@ -470,6 +470,16 @@ msgstr "не определен для объектов \"POSIXct\""
 
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "не определен для объектов \"POSIXlt\""
+
+msgid "tim is not character or numeric"
+msgstr ""
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+#, fuzzy
+msgid "invalid units specified"
+msgstr "неправильное указание 'quote'"
 
 msgid "not defined for \"difftime\" objects"
 msgstr "не определен для объектов \"difftime\""
@@ -876,6 +886,10 @@ msgstr ""
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
+
+#, fuzzy
+msgid "'trim' must be numeric of length one"
+msgstr "'origin' должен быть длиной 1"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "обрезанные средние не определены для комплексных данных"
@@ -1459,9 +1473,6 @@ msgstr[2] "Предупреждения:\n"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "неправильные числа в 'quote'"
-
-#~ msgid "invalid 'quote' specification"
-#~ msgstr "неправильное указание 'quote'"
 
 #~ msgid "col.names = NA makes no sense when row.names = FALSE"
 #~ msgstr "col.names = NA не имеет смысла, если row.names = FALSE"
