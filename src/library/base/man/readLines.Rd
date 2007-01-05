@@ -2,7 +2,7 @@
 \alias{readLines}
 \title{Read Text Lines from a Connection}
 \description{
-  Read text lines from a connection.
+  Read some or all text lines from a connection.
 }
 \usage{
 readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
@@ -10,10 +10,10 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
 \arguments{
   \item{con}{a connection object or a character string.}
   \item{n}{integer.  The (maximal) number of lines to
-    read. Negative values indicate that one should read up to the end of
+    read.  Negative values indicate that one should read up to the end of
     the connection.}
   \item{ok}{logical.  Is it OK to reach the end of the connection before
-    \code{n > 0} lines are read? If not, an error will be generated.}
+    \code{n > 0} lines are read?  If not, an error will be generated.}
   \item{warn}{logical.  Warn if a text file is missing a final EOL.}
 }
 \details{
@@ -26,7 +26,7 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
   closed again.
 
   If the final line is incomplete (no final EOL marker) the behaviour
-  depends on whether the connection is blocking or not. For a blocking
+  depends on whether the connection is blocking or not.  For a blocking
   text-mode connection (or a non-text-mode connection) the line
   will be accepted, with a warning.  For a non-blocking text-mode
   connection the incomplete line is pushed back, silently.
@@ -36,6 +36,10 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
 }
 \value{
   A character vector of length the number of lines read.
+}
+\note{
+  The default connection, \code{\link{stdin}}, may be different from
+  \code{con = "stdin"}: see \code{\link{file}}.
 }
 \seealso{
   \code{\link{connections}}, \code{\link{writeLines}}, \code{\link{readBin}},

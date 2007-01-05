@@ -41,9 +41,17 @@
   be overridden by setting the environment variable \env{RHOME}.
 #endif
 #ifdef windows
+  The \R files are found from the location of the \file{Rscript.exe}
+  executable.   If this is copied elsewhere, the environment variable
+  \env{RHOME} should be set to the top directory of the \R installation.
+  
   Unlike Unix-alikes, this links directly to \file{R.dll} rather than
   running a separate process.
 #endif
+
+  \code{\link{stdin}()} refers to the input file, and
+  \code{\link{file}("stdin")} to the \code{stdin} file stream of the
+  process.
 }
 #ifdef unix
 \note{

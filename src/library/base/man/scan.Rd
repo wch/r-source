@@ -15,7 +15,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
     specified file is \code{""}, then input is taken from the keyboard
-    (or \code{stdin} if input is redirected).
+    (or whatever \code{\link{stdin}()} reads if input is redirected or
+    \R is embedded).
     (In this case input can be terminated by a blank line or an EOF
     signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.)
 
@@ -23,6 +24,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     current working directory (given by \code{\link{getwd}()}),
     unless it specifies an \emph{absolute} path.
     Tilde-expansion is performed where supported.
+    When running \R from a script, \code{file="stdin"} can be used to
+    refer to the process's \code{stdin} file stream.
 
     Alternatively, \code{file} can be a \code{\link{connection}},
     which will be opened if necessary, and if so closed at the end of

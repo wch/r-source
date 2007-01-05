@@ -248,6 +248,11 @@ NEW FEATURES
 	replaced later by a better interface for method selection
 	inspection.
 
+    o	file("stdin") is now recognized, and refers to the process's
+	'stdin' file stream whereas stdin() refers to the console.
+	These may differ, for example for a GUI console, an embedded
+	application of R or if --file= has been used.
+
 
 DEPRECATED & DEFUNCT
 

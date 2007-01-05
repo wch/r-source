@@ -46,11 +46,12 @@ stderr()
   connections, restoring all \code{\link{sink}} diversions as it does so.
 }
 \note{
-  \code{stdin()} refers to the console and not to the C-level
+  \code{stdin()} refers to the \sQuote{console} and not to the C-level
   \file{stdin} of the process.  The distinction matters in GUI consoles
   (which may not have an active \file{stdin}, and if they do it may not
-  be connected to console input).  If you want access to the C-level
-  \file{stdin}, use \code{\link{file}("stdin")}.
+  be connected to console input), and also in embedded applications.
+  If you want access to the C-level file stream \file{stdin}, use
+  \code{\link{file}("stdin")}.
 
   When \R is reading a script from a file, the \emph{file} is the
   \sQuote{console}: this is traditional usage to allow in-line data (see
