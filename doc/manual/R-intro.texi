@@ -7112,7 +7112,7 @@ accessible from within the GUI.
 If you just want to run a file @file{foo.R} of @R{} commands, the
 recommended way is to use @command{R CMD BATCH foo.R}.  If you want to
 run this in the background or as a batch job use OS-specific facilities
-to do so: for example in many shell @command{R CMD BATCH foo.R &} runs a
+to do so: for example in most shells @command{R CMD BATCH foo.R &} runs a
 background job.
 
 You can pass parameters to scripts via additional arguments on the
@@ -7144,14 +7144,14 @@ Unix-alikes, and in some Windows shells)
 @example
 #! /path/to/Rscript
 args <- commandArgs()
-args <- args[-(1:match("--args", args)]
+args <- args[-(1:match("--args", args))]
 ...
 q(status=<exit status code>)
 @end example
 
 @noindent
 If this is entered into a text file @file{runfoo} and this is made
-executable (by @command{chmod 755 runfoo}, it can be invoked for
+executable (by @command{chmod 755 runfoo}), it can be invoked for
 different arguments by
 
 @example
@@ -7160,7 +7160,7 @@ runfoo arg1 arg2
 
 @noindent
 For further options see @command{help("Rscript")}.  If you do not wish
-to hardcode the path to @command{Rscript} but has it in your path (which
+to hardcode the path to @command{Rscript} but have it in your path (which
 is normally the case for an installed @R{}), use
 
 @example
