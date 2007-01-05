@@ -1,3 +1,4 @@
+
 lm <- function (formula, data, subset, weights, na.action,
 		method = "qr", model = TRUE, x = FALSE, y = FALSE,
 		qr = TRUE, singular.ok = TRUE, contrasts = NULL,
@@ -38,7 +39,10 @@ lm <- function (formula, data, subset, weights, na.action,
                     matrix(,0,3) else numeric(0), residuals = y,
 		  fitted.values = 0 * y, weights = w, rank = 0,
 		  df.residual = if (is.matrix(y)) nrow(y) else length(y))
-        if(!is.null(offset)) z$fitted.values <- offset
+        if(!is.null(offset)) {
+            z$fitted.values <- offset
+            z$residuals <- y - offset
+        }
     }
     else {
 	x <- model.matrix(mt, mf, contrasts)
