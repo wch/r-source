@@ -331,7 +331,7 @@ UTILITIES
 	find it).
 
     o	There is a new front-end Rscript which can be used for #!
-	scripts and similar tasks.  See help("Rscript") adn 'An
+	scripts and similar tasks.  See help("Rscript") and 'An
 	Introduction to R' for further details.
 
 
