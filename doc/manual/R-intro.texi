@@ -7127,7 +7127,7 @@ will pass arguments to a script which can be retrieved as a character
 vector by
 
 @example
-args <- commandArgs(); args <- args[-(1:match("--args", args)]
+args <- commandArgs(); args <- args[-(1:match("--args", args))]
 @end example
 
 This is made simpler by the alternative front-end @command{Rscript},
