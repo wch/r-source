@@ -34,7 +34,7 @@
 # define _SVID_SOURCE 1
 #endif
 
-#include <stdlib.h> /* for putenv */
+#include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h> /* for PATH_MAX */
 #include <Rinterface.h>
 
@@ -127,10 +127,16 @@ static void Putenv(char *a, char *b)
     char *buf, *value, *p, *q, quote='\0';
     int inquote = 0;
 
+#ifdef HAVE_SETENV
+    buf = (char *) malloc((strlen(b) + 1) * sizeof(char));
+    if(!buf) R_Suicide("allocation failure in reading Renviron");
+    value = buf;
+#else
     buf = (char *) malloc((strlen(a) + strlen(b) + 2) * sizeof(char));
     if(!buf) R_Suicide("allocation failure in reading Renviron");
     strcpy(buf, a); strcat(buf, "=");
     value = buf+strlen(buf);
+#endif
 
     /* now process the value */
     for(p = b, q = value; *p; p++) {
@@ -153,12 +159,16 @@ static void Putenv(char *a, char *b)
 	*q++ = *p;
     }
     *q = '\0';
-#ifdef HAVE_PUTENV
+#ifdef HAVE_SETENV
+    setenv(a, buf, 1);
+    free(buf);
+#elif defined(HAVE_PUTENV)
     putenv(buf);
+    /* no free here: storage remains in use */
 #else
     /* pretty pointless, and was not tested prior to 2.3.0 */
+    free(buf);
 #endif
-    /* no free here: storage remains in use */
 }
 
 
