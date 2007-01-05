@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-01-01
+@set FAQ_DATE @value{FAQ_YEAR}-01-05
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2304,6 +2304,9 @@ examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 @item SIN
 A SINful approach to selection of Gaussian Graphical Markov Models.
+@item SLmisc
+Miscellaneous Functions for analysis of gene expression data at SIRS-Lab
+GmbH.
 @item SMPracticals
 Data sets and a few functions for use with the practicals outlined in
 Appendix A of the book ``Statistical Models'' by Anthony Davison, 2003,
@@ -4173,6 +4176,8 @@ parameters.
 State SPace models In R.
 @item st
 Shrinkage @math{t} statistic.
+@item staRt
+Inferenza classica con TI-83 Plus.
 @c @item stable
 @c Density, distribution, quantile and hazard functions of a stable
 @c variate; generalized linear models for the parameters of a stable
