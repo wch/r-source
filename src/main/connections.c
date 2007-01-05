@@ -432,7 +432,16 @@ static Rboolean file_open(Rconnection con)
 	name = R_tmpnam("Rf", R_TempDir);
     } else name = R_ExpandFileName(con->description);
     errno = 0; /* some systems require this */
-    fp = R_fopen(name, con->mode);
+    if(strcmp(name, "stdin")) {
+	fp = R_fopen(name, con->mode);
+    } else {  /* use file("stdin") to refer to the file and not the console */
+#ifdef HAVE_FDOPEN
+	fp = fdopen(0, con-> mode);
+#else
+        warning(_("cannot open file '%s', reason '%s'"), name,
+		"fdopen is not supported on this platform");
+#endif
+    }
     if(!fp) {
 #ifdef HAVE_STRERROR
 	warning(_("cannot open file '%s', reason '%s'"), name, strerror(errno));
@@ -479,7 +488,7 @@ static Rboolean file_open(Rconnection con)
 static void file_close(Rconnection con)
 {
     Rfileconn this = con->private;
-    fclose(this->fp);
+    if(strcmp(con->description, "stdin")) fclose(this->fp);
     con->isopen = FALSE;
 #ifdef Win32
     if(this->anon_file) unlink(this->name);

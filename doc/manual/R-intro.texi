@@ -7168,6 +7168,20 @@ is normally the case for an installed @R{}), use
 ...
 @end example
 
+One thing to consider is what @code{stdin()} refers to.  It is
+commonplace to write @R{} scripts with segments like
+
+@example
+chem <- scan(n=24)
+2.90 3.10 3.40 3.40 3.70 3.70 2.80 2.50 2.40 2.40 2.70 2.20
+5.28 3.37 3.03 3.03 28.95 3.77 3.40 2.20 3.50 3.60 3.70 3.70
+@end example
+
+@noindent
+and @code{stdin()} refers to the script file to allow such traditional
+usage.  If you want to refer to the process's @file{stdin}, use the
+connection @code{file("stdin")}.
+
 
 @node The command-line editor, Function and variable index, Invoking R, Top
 @appendix The command-line editor

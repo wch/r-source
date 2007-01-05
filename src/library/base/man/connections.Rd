@@ -91,6 +91,16 @@ isIncomplete(con)
   connection is not opened (except for \code{socketConnection}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
+  \code{file} allows \code{description="stdin"} to refer to the C-level
+  \code{stdin} of the process (which need not be connected to anything
+#ifdef unix
+  in a console version or embedded version of \R.)
+#endif
+#ifdef windows
+  in a console version or embedded version of \R, and is not in \code{RGui}.)
+#endif
+
+  
   \code{gzfile} applies to files compressed by \file{gzip}, and
   \code{bzfile} to those compressed by \file{bzip2}.  \code{gzfile} can
   also open uncompressed files.  In each case the actual file is opened
