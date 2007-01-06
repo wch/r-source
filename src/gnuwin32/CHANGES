@@ -11,6 +11,11 @@ There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and
 returns to the comand prompt.
 
+Sys.getenv() has been changed to use the C-level environment and not
+the Windows environment block for the process, for consistency with
+Sys.getenv("FOO"), Sys.putenv and Sys.unsetenv().  A few
+Windows-specific environment variables (such as =C:) no longer appear.
+
 More of the messages from the script editor are translatable.
 
 There is support for x86_64 cross-compilers as well as for ix86.
@@ -27,8 +32,8 @@ The 'Install packages ...' menu item now only installs essential
 dependencies ('Depends' and 'Imports' but not 'Suggests'), using
 install.packages(dependencies=NA).
 
-https:// sites can be accessed by download.file() and url() if
---internet2 is used (and provided the certificate is known to be
+https:// URLs can be accessed by download.file() and url() if
+--internet2 is used (and provided the certificate is accepted as
 valid).
 
 R CMD INSTALL now installs by default into the first library on the

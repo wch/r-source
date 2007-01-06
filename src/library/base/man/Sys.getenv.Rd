@@ -25,7 +25,8 @@ Sys.getenv(x = NULL, empty = "")
   name was found).
 
   On most platforms \code{Sys.getenv()} will return a named vector giving
-  the values of all the environment variables.
+  the values of all the environment variables.  (It may be confused by
+  names containing \code{"="} which some platforms allow but POSIX does not.)
 }
 \seealso{
   \code{\link{Sys.putenv}},

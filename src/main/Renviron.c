@@ -160,10 +160,14 @@ static void Putenv(char *a, char *b)
     }
     *q = '\0';
 #ifdef HAVE_SETENV
-    setenv(a, buf, 1);
+    if(setenv(a, buf, 1))
+	warningcall(R_NilValue, 
+		    _("problem in setting variable '%s' in Renviron"), a);
     free(buf);
 #elif defined(HAVE_PUTENV)
-    putenv(buf);
+    if(putenv(buf))
+	warningcall(R_NilValue, 
+		    _("problem in setting variable '%s' in Renviron"), a);
     /* no free here: storage remains in use */
 #else
     /* pretty pointless, and was not tested prior to 2.3.0 */

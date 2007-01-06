@@ -24,7 +24,8 @@ Sys.unsetenv(x)
 }
 \details{
   Non-standard \R names must be quoted in \code{Sys.putenv}:
-  see the examples.
+  see the examples.  Most platforms (and POSIX) do not allow names
+  containing \code{"="}.
 }
 \note{
   Not all systems need support \code{Sys.putenv} (although all known

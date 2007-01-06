@@ -54,7 +54,7 @@
 #endif
 
 #include <time.h>
-#include <stdlib.h> /* for putenv */
+#include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>
 
 /* The glibc in RH8.0 is broken and assumes that dates before 1970-01-01
@@ -478,13 +478,13 @@ static int set_tz(char *tz, char *oldtz)
     p = getenv("TZ");
     if(p) strcpy(oldtz, p);
 #ifdef HAVE_SETENV
-    setenv("TZ", tz, 1);
+    if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
     settz = 1;
 #elif defined(HAVE_PUTENV)
     {
 	static char buff[200];
 	strcpy(buff, "TZ="); strcat(buff, tz);
-	putenv(buff);
+	if(putenv(buff)) warning(_("problem with setting timezone"));
     }
     settz = 1;
 #else
@@ -498,21 +498,21 @@ static void reset_tz(char *tz)
 {
     if(strlen(tz)) {
 #ifdef HAVE_SETENV
-	setenv("TZ", tz, 1);
+	if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
 #elif defined(HAVE_PUTENV)
 	{
 	    static char buff[200];
 	    strcpy(buff, "TZ="); strcat(buff, tz);
-	    putenv(buff);
+	    if(putenv(buff)) warning(_("problem with setting timezone"));
 	}
 #endif
     } else {
 #ifdef HAVE_UNSETENV
-	unsetenv("TZ");
+	if(unsetenv("TZ")) warning(_("problem with unsetting timezone"));
 #elif defined(HAVE_PUTENV_UNSET)
-	putenv("TZ");
+	if(putenv("TZ")) warning(_("problem with unsetting timezone"));
 #elif defined(HAVE_PUTENV_UNSET2)
-	putenv("TZ=");
+	if(putenv("TZ=")) warning(_("problem with unsetting timezone"));
 #endif
     }
     tzset();

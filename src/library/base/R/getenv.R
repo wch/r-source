@@ -1,6 +1,8 @@
 Sys.getenv <- function(x = NULL, empty = "")
 {
     if (is.null(x)) {
+        ## This presumes that '=' does not appear as part of the name
+        ## of an environment variable.  That used to happen on Windows.
 	x <- strsplit(.Internal(Sys.getenv(character(), "")), "=", fixed=TRUE)
 	v <- n <- character(LEN <- length(x))
 	for (i in 1:LEN) {
