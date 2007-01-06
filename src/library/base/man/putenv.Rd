@@ -9,7 +9,7 @@ Sys.putenv(\dots)
     coercible to a character string.}
 }
 \description{
-  \code{putenv} sets environment variables (for other processes called
+  \code{Sys.putenv} sets environment variables (for other processes called
   from within \R or future calls to \code{\link{Sys.getenv}} from this
   \R process).
 }
