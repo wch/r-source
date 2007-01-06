@@ -229,6 +229,7 @@
  R_ParseContextLast
  R_ParseError
  R_ParseFile
+ R_PreciousList
  R_Quiet
  R_RestartStack
  R_RestartToken
@@ -297,6 +298,7 @@
  R_sysparent
  R_unary
  Rconsolesetwidth
+ Rf_CheckFormals
  Rf_CoercionWarning
  Rf_ComplexFromInteger
  Rf_ComplexFromLogical
@@ -326,6 +328,7 @@
  Rf_InitGraphics
  Rf_InitMemory
  Rf_InitOptions
+ Rf_InitRand
  Rf_InitTempDir
  Rf_IntegerFromComplex
  Rf_IntegerFromLogical
@@ -434,6 +437,7 @@
  Rrowsum_matrix
  Rwin_rename
  SET_ACTIVE_BINDING_BIT
+ Sys_TempDir
  UNLOCK_BINDING
  UseInternet2
  WrongArgCount
@@ -457,6 +461,7 @@
  _nl_normalize_codeset
  _pcre_OP_lengths
  _pcre_default_tables
+ _pcre_is_newline
  _pcre_ord2utf8
  _pcre_try_flipped
  _pcre_ucp_findchar
@@ -468,6 +473,7 @@
  _pcre_utt
  _pcre_utt_size
  _pcre_valid_utf8
+ _pcre_was_newline
  _pcre_xclass
  _setextradata
  _tr_align
@@ -632,6 +638,7 @@
  do_close
  do_cmathfuns
  do_col2RGB
+ do_colon
  do_colors
  do_colsum
  do_commandArgs
@@ -689,6 +696,7 @@
  do_env2list
  do_envIsLocked
  do_envir
+ do_envirName
  do_envirgets
  do_erase
  do_eval
@@ -753,7 +761,7 @@
  do_hcl
  do_hsv
  do_iconv
- do_ident
+ do_identical
  do_identify
  do_if
  do_image
@@ -786,6 +794,7 @@
  do_layout
  do_length
  do_lengthgets
+ do_levelsgets
  do_libfixup
  do_listfiles
  do_load
@@ -916,6 +925,7 @@
  do_relop_dflt
  do_remove
  do_rep
+ do_rep_int
  do_repeat
  do_replay
  do_resetCondHands
@@ -935,6 +945,8 @@
  do_segments
  do_selectlist
  do_seq
+ do_seq_along
+ do_seq_len
  do_serializeToConn
  do_set
  do_setGPar
@@ -992,6 +1004,7 @@
  do_termsform
  do_text
  do_textconnection
+ do_textconvalue
  do_tilde
  do_title
  do_tolower
@@ -1005,6 +1018,7 @@
  do_unlist
  do_unregNS
  do_unserializeFromConn
+ do_unsetenv
  do_unz
  do_updateform
  do_url
@@ -1026,6 +1040,8 @@
  do_writelines
  do_writetable
  do_zeroin
+ dos_glob
+ dos_globfree
  dpois_raw
  drawconsole
  editorchecksave
@@ -1142,6 +1158,7 @@
  malloc_trim
  malloc_usable_size
  mallopt
+ max_contour_segments
  mb_char_len
  mbswidth
  memtrace_report
