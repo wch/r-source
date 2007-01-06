@@ -8,16 +8,15 @@ Sys.putenv(\dots)
 Sys.unsetenv(x)
 }
 \arguments{
-  \item{\dots}{arguments in \code{name=value} form, with \code{value}
-    coercible to a character string.}
+  \item{\dots}{named arguments with values coercible to a character string.}
   \item{x}{a character vector, or an object coercible to character.}
 }
 \description{
-  \code{putenv} sets environment variables (for other processes called
+  \code{Sys.putenv} sets environment variables (for other processes called
   from within \R or future calls to \code{\link{Sys.getenv}} from this
   \R process).
 
-  \code{unsetenv} removes environment variables.
+  \code{Sys.unsetenv} removes environment variables.
 }
 \value{
   A logical vector, with elements being true if (un)setting the
@@ -29,7 +28,7 @@ Sys.unsetenv(x)
 }
 \note{
   Not all systems need support \code{Sys.putenv} (although all known
-  current platforms do) nor \code{Sys.unsetenv}
+  current platforms do) nor \code{Sys.unsetenv}.
 }
 \seealso{
   \code{\link{Sys.getenv}}, \link{Startup} for ways to set environment
