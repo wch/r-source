@@ -3477,6 +3477,70 @@ int main () {
 ])
 
 
+## R_PUTENV_AS_UNSETENV
+## --------------------
+## On some OSes putenv can unset an environment variable via
+## putenv(FOO) (glibc >= 2.2) or putenv(FOO=) (Windows)
+AC_DEFUN([R_PUTENV_AS_UNSETENV],
+[
+  AC_CACHE_CHECK([whether putenv("FOO") can unset an environment variable],
+  [r_cv_putenv_unset],
+  [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <stdlib.h>
+#include <string.h>
+int main()
+{
+    char *p;
+#ifdef HAVE_PUTENV
+    putenv("R_TEST=testit");
+    p = getenv("R_TEST");
+    if(!p) exit(10);
+    if(strcmp(p, "testit")) exit(11);
+    putenv("R_TEST");
+    p = getenv("R_TEST");
+    if(!p) exit(0);
+#endif
+    exit(1);
+}
+  ]])], [r_cv_putenv_unset=yes], [r_cv_putenv_unset=no], 
+    [r_cv_putenv_unset=no])])
+
+  if test $r_cv_putenv_unset = yes; then
+    AC_DEFINE(HAVE_PUTENV_UNSET, 1, [Define if putenv("FOO") can unset an environment variable])
+  fi
+]
+[
+  AC_CACHE_CHECK([whether putenv("FOO=") can unset an environment variable],
+  [r_cv_putenv_unset2],
+  [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <stdlib.h>
+#include <string.h>
+int main()
+{
+    char *p;
+#ifdef HAVE_PUTENV
+    putenv("R_TEST=testit");
+    p = getenv("R_TEST");
+    if(!p) exit(10);
+    if(strcmp(p, "testit")) exit(11);
+    putenv("R_TEST=");
+    p = getenv("R_TEST");
+    if(!p) exit(0);
+#endif
+    exit(1);
+}
+  ]])], [r_cv_putenv_unset2=yes], [r_cv_putenv_unset2=no], 
+    [r_cv_putenv_unset2=no])])
+
+  if test $r_cv_putenv_unset2 = yes; then
+    AC_DEFINE(HAVE_PUTENV_UNSET2, 1, [Define if putenv("FOO=") can unset an environment variable])
+  fi
+]
+)
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

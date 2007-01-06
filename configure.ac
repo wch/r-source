@@ -1622,6 +1622,10 @@ fi
 ## IEEE 754. We rely on this in e.g. the working log test.
 R_IEEE_754
 
+## check if putenv can substitute for unsetenv
+R_PUTENV_AS_UNSETENV
+
+
 ## check whether nl_langinfo(CODESET) is in langinfo.h
 ## defines HAVE_LANGINFO_CODESET if it's there
 AM_LANGINFO_CODESET

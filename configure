@@ -35151,6 +35151,170 @@ echo "$as_me: error: IEEE 754 floating-point arithmetic is required" >&2;}
 fi
 
 
+## check if putenv can substitute for unsetenv
+
+  { echo "$as_me:$LINENO: checking whether putenv(\"FOO\") can unset an environment variable" >&5
+echo $ECHO_N "checking whether putenv(\"FOO\") can unset an environment variable... $ECHO_C" >&6; }
+if test "${r_cv_putenv_unset+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "$cross_compiling" = yes; then
+  r_cv_putenv_unset=no
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include "confdefs.h"
+#include <stdlib.h>
+#include <string.h>
+int main()
+{
+    char *p;
+#ifdef HAVE_PUTENV
+    putenv("R_TEST=testit");
+    p = getenv("R_TEST");
+    if(!p) exit(10);
+    if(strcmp(p, "testit")) exit(11);
+    putenv("R_TEST");
+    p = getenv("R_TEST");
+    if(!p) exit(0);
+#endif
+    exit(1);
+}
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_putenv_unset=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+r_cv_putenv_unset=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+
+fi
+{ echo "$as_me:$LINENO: result: $r_cv_putenv_unset" >&5
+echo "${ECHO_T}$r_cv_putenv_unset" >&6; }
+
+  if test $r_cv_putenv_unset = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_PUTENV_UNSET 1
+_ACEOF
+
+  fi
+
+
+  { echo "$as_me:$LINENO: checking whether putenv(\"FOO=\") can unset an environment variable" >&5
+echo $ECHO_N "checking whether putenv(\"FOO=\") can unset an environment variable... $ECHO_C" >&6; }
+if test "${r_cv_putenv_unset2+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "$cross_compiling" = yes; then
+  r_cv_putenv_unset2=no
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include "confdefs.h"
+#include <stdlib.h>
+#include <string.h>
+int main()
+{
+    char *p;
+#ifdef HAVE_PUTENV
+    putenv("R_TEST=testit");
+    p = getenv("R_TEST");
+    if(!p) exit(10);
+    if(strcmp(p, "testit")) exit(11);
+    putenv("R_TEST=");
+    p = getenv("R_TEST");
+    if(!p) exit(0);
+#endif
+    exit(1);
+}
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_putenv_unset2=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+r_cv_putenv_unset2=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+
+fi
+{ echo "$as_me:$LINENO: result: $r_cv_putenv_unset2" >&5
+echo "${ECHO_T}$r_cv_putenv_unset2" >&6; }
+
+  if test $r_cv_putenv_unset2 = yes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_PUTENV_UNSET2 1
+_ACEOF
+
+  fi
+
+
+
+
 ## check whether nl_langinfo(CODESET) is in langinfo.h
 ## defines HAVE_LANGINFO_CODESET if it's there
 

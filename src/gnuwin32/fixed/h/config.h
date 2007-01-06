@@ -472,6 +472,12 @@
 /* Define to 1 if you have the `putenv' function. */
 #define HAVE_PUTENV 1
 
+/* Define if putenv("FOO") can unset an environment variable */
+/* #undef HAVE_PUTENV_UNSET */
+
+/* Define if putenv("FOO=") can unset an environment variable */
+#define HAVE_PUTENV_UNSET2 1
+
 /* Define to 1 if you have the <pwd.h> header file. */
 /* #undef HAVE_PWD_H */
 
