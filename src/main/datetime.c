@@ -473,22 +473,22 @@ static int set_tz(char *tz, char *oldtz)
 {
     char *p = NULL;
     int settz = 0;
-    static char buff[200];
 
     strcpy(oldtz, "");
     p = getenv("TZ");
     if(p) strcpy(oldtz, p);
-#ifdef HAVE_PUTENV
-    strcpy(buff, "TZ="); strcat(buff, tz);
-    putenv(buff);
-    settz = 1;
-#else
-# ifdef HAVE_SETENV
+#ifdef HAVE_SETENV
     setenv("TZ", tz, 1);
     settz = 1;
-# else
+#elif defined(HAVE_PUTENV)
+    {
+	static char buff[200];
+	strcpy(buff, "TZ="); strcat(buff, tz);
+	putenv(buff);
+    }
+    settz = 1;
+#else
     warning(_("cannot set timezones on this system"));
-# endif
 #endif
     tzset();
     return settz;
@@ -497,24 +497,22 @@ static int set_tz(char *tz, char *oldtz)
 static void reset_tz(char *tz)
 {
     if(strlen(tz)) {
-#ifdef HAVE_PUTENV
-        static char buff[200];
-	strcpy(buff, "TZ="); strcat(buff, tz);
-	putenv(buff);
-#else
-# ifdef HAVE_SETENV
+#ifdef HAVE_SETENV
 	setenv("TZ", tz, 1);
-# endif
+#elif defined(HAVE_PUTENV)
+	{
+	    static char buff[200];
+	    strcpy(buff, "TZ="); strcat(buff, tz);
+	    putenv(buff);
+	}
 #endif
     } else {
 #ifdef HAVE_UNSETENV
 	unsetenv("TZ");
-#else
-# ifdef HAVE_PUTENV
-	/* This ought (POSIX) to set the value to "", but on MinGW
-	   it removes the variable which happens to be what we want. */
+#elif defined(HAVE_PUTENV_UNSET)
+	putenv("TZ");
+#elif defined(HAVE_PUTENV_UNSET2)
 	putenv("TZ=");
-# endif
 #endif
     }
     tzset();
