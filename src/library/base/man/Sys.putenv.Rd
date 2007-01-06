@@ -1,8 +1,10 @@
-\name{Sys.putenv}
+\name{Sys.setenv}
+\alias{Sys.setenv}
 \alias{Sys.putenv}
 \alias{Sys.unsetenv}
 \title{Set or Unset Environment Variables}
 \usage{
+Sys.setenv(\dots)
 Sys.putenv(\dots)
 
 Sys.unsetenv(x)
@@ -12,7 +14,8 @@ Sys.unsetenv(x)
   \item{x}{a character vector, or an object coercible to character.}
 }
 \description{
-  \code{Sys.putenv} sets environment variables (for other processes called
+  \code{Sys.setenv} and \code{Sys.putenv} are synonyms: they
+  set environment variables (for other processes called
   from within \R or future calls to \code{\link{Sys.getenv}} from this
   \R process).
 
@@ -23,13 +26,26 @@ Sys.unsetenv(x)
   corresponding variable succeeded.
 }
 \details{
-  Non-standard \R names must be quoted in \code{Sys.putenv}:
+  The names \code{setenv} and \code{putenv} come from different Unix
+  traditions: as from \R 2.5.0 \code{Sys.setenv} is preferred but both
+  forms are accepted.  The internal code uses \code{setenv} if
+  available, otherwise \code{putenv}.
+  
+  Non-standard \R names must be quoted in \code{Sys.setenv}:
   see the examples.  Most platforms (and POSIX) do not allow names
   containing \code{"="}.
+#ifdef Windows
+  (Windows does, but the facilities provided by \R may not handle these
+  correctly so they should be avoided.)
+#endif
 }
 \note{
-  Not all systems need support \code{Sys.putenv} (although all known
+  Not all systems need support \code{Sys.setenv} (although all known
   current platforms do) nor \code{Sys.unsetenv}.
+#ifdef windows
+  Both are provided on Windows (although C-level \code{unsetenv} is not
+  available).
+#endif
 }
 \seealso{
   \code{\link{Sys.getenv}}, \link{Startup} for ways to set environment
@@ -38,7 +54,7 @@ Sys.unsetenv(x)
   \code{\link{setwd}} for the working directory.
 }
 \examples{
-print(Sys.putenv(R_TEST="testit", "A+C"=123))
+print(Sys.setenv(R_TEST="testit", "A+C"=123))  # `A+C` could also be used
 Sys.getenv("R_TEST")
 #ifdef windows
 Sys.unsetenv("R_TEST")
@@ -46,7 +62,7 @@ Sys.unsetenv("R_TEST")
 #ifdef unix
 try(Sys.unsetenv("R_TEST"))  # may not be implemented
 #endif
-Sys.getenv("R_TEST", NA)
+Sys.getenv("R_TEST", unset=NA)
 }
 \keyword{environment}
 \keyword{utilities}

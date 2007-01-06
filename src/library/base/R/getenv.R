@@ -1,4 +1,4 @@
-Sys.getenv <- function(x = NULL, empty = "")
+Sys.getenv <- function(x = NULL, unset = "")
 {
     if (is.null(x)) {
         ## This presumes that '=' does not appear as part of the name
@@ -11,12 +11,12 @@ Sys.getenv <- function(x = NULL, empty = "")
 	}
 	structure(v, names = n)
     } else {
-	structure(.Internal(Sys.getenv(as.character(x), as.character(empty))),
+	structure(.Internal(Sys.getenv(as.character(x), as.character(unset))),
                   names = x)
     }
 }
 
-Sys.putenv <- function(...)
+Sys.setenv <- Sys.putenv <- function(...)
 {
     x <- list(...)
     nm <- names(x)

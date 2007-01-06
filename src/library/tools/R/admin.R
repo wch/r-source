@@ -509,9 +509,9 @@ function(dir, outDir, keep.source = FALSE)
     ## (Yes, it would be nice to have envPath() similar to file.path().)
     texinputs <- Sys.getenv("TEXINPUTS")
     bibinputs <- Sys.getenv("BIBINPUTS")
-    on.exit(Sys.putenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
+    on.exit(Sys.setenv(TEXINPUTS = texinputs, BIBINPUTS = bibinputs),
             add = TRUE)
-    Sys.putenv(TEXINPUTS = paste(vignetteDir, Sys.getenv("TEXINPUTS"),
+    Sys.setenv(TEXINPUTS = paste(vignetteDir, Sys.getenv("TEXINPUTS"),
                sep = envSep),
                BIBINPUTS = paste(vignetteDir, Sys.getenv("BIBINPUTS"),
                sep = envSep))

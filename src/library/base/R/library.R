@@ -571,9 +571,9 @@ function(chname, package = NULL, lib.loc = NULL,
         ## mechanism).  Note that this only works under Windows, and a
         ## more general solution will have to be found eventually.
         PATH <- Sys.getenv("PATH")
-        Sys.putenv("PATH" =
+        Sys.setenv(PATH =
                    paste(gsub("/", "\\\\", dirname(file)), PATH, sep=";"))
-        on.exit(Sys.putenv("PATH" = PATH))
+        on.exit(Sys.setenv(PATH = PATH))
     }
     if(verbose)
         message(gettextf("now dyn.load(\"%s\") ...", file), domain = NA)

@@ -241,7 +241,7 @@ NEW FEATURES
 	script interpreters.
 
     o	Invalid bytes in character strings in an MBCS now deparse/print
-	in the form "\xc1" rather than "<ci>", which means they can be
+	in the form "\xc1" rather than "<c1>", which means they can be
 	parsed/scanned.
 
     o	Experimental 'verbose' argument for selectMethod().  Might be
@@ -253,20 +253,21 @@ NEW FEATURES
 	These may differ, for example for a GUI console, an embedded
 	application of R or if --file= has been used.
 
-    o	Sys.getenv() has a new argument 'empty' to allow unset and set
-	to "" to be distinguished (not all OSes do).
+    o	Sys.getenv() has a new argument 'unset' to allow unset and set
+	to "" to be distinguished (if the OS does).
 
     o	New function Sys.unsetenv() to remove environment variables
 	(on systems where unsetenv is implemented, and on Windows).
 
-    o	Sys.putenv() uses the POSIX-preferred 'setenv' rather than
-	'putenv' where the former is available.
+    o	Sys.setenv() is a new (and preferred) synonym for Sys.putenv.
+	The internal C code uses the POSIX-preferred 'setenv' rather
+	than 'putenv' where the former is available.
 
 
 DEPRECATED & DEFUNCT
 
-    o	symbol.C() and symbol.For() are defunct, and have been
-	replaced by wrappers that give a warning.
+    o	symbol.C() and symbol.For() are defunct, and have been replaced
+	by wrappers that give a warning.
 
     o	Calling a builtin function with an empty argument is now always
 	an error.
