@@ -616,6 +616,11 @@ case "${host_os}" in
     ;;
 esac
 
+## record how to strip shared/dynamic libraries.
+ltout=`./libtool --config | grep '^striplib='`
+eval "${ltout}"
+AC_SUBST(striplib)
+
 ## <NOTE>
 ## This actually comes from libtool.m4.
 AC_CHECK_LIBM
