@@ -6,12 +6,13 @@
   other scripting applications.
 }
 \usage{
-\special{Rscript [options] file [args]}
+\special{Rscript [options] [-e expression] file [args]}
 }
 \arguments{
   \item{options}{A list of options beginning with \code{--}.  These can
     be any of the options of the standard \R front-end, and also those
     described in the details.}
+  \item{expression}{a \R expression.}
   \item{file}{The name of a file containing \R commands.  \code{-}
     indicates \file{stdin}.}
   \item{args}{Arguments to be passed to the script in \code{file}.}
@@ -26,7 +27,10 @@
   \code{--slave --no-restore} are always supplied: these imply
   \code{--no-save}.
 
-  Additional options accepted are
+  \emph{Either} one or more \options{-e} options or \code{file} should
+  be supplied.
+
+  Additional options accepted (before \code{file} or \code{args}) are
   \describe{
     \item{\code{--verbose}}{gives details of what \code{Rscript} is
       doing.  Also passed on to \R.}
@@ -60,6 +64,8 @@
 }
 #endif
 \examples{\dontrun{
+Rscript -e 'date()' -e 'format(Sys.time(), "%a %b %d %X %Y")'
+
 ## example #! script
 
 #! /path/to/Rscript --vanilla --default-packages=utils

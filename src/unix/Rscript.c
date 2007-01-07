@@ -63,7 +63,7 @@ static int verbose = 0;
 
 void usage()
 {
-    fprintf(stderr, "Usage: /path/to/Rscript [--options] file [args]\n\n");
+    fprintf(stderr, "Usage: /path/to/Rscript [--options] [-e expr] file [args]\n\n");
     fprintf(stderr, "--options accepted are\n");
     fprintf(stderr, "  --help              Print usage and exit\n");
     fprintf(stderr, "  --version           Print version and exit\n");
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 {
 #ifdef HAVE_EXECV
     char cmd[PATH_MAX+1], buf[PATH_MAX+8], buf2[200], *p;
-    int i, i0 = 0, ac = 0, res = 0;
+    int i, i0 = 0, ac = 0, res = 0, e_mode = 0;
     char **av;
 
     if(argc <= 1) {
@@ -119,8 +119,6 @@ int main(int argc, char *argv[])
     av[ac++] = "--slave";
     av[ac++] = "--no-restore";
     
-    /* first copy in any --foo args, which might have come from the
-       script invocation */
     if(argc == 2) {
 	if(strcmp(argv[1], "--help") == 0) {
 	    usage();
@@ -135,33 +133,47 @@ int main(int argc, char *argv[])
 	}
     }
     
-    if(argc > 2)
-	for(i = 1; i < argc; i++) {
-	    if(strncmp(argv[i], "--", 2)) break;
-	    if(strcmp(argv[i], "--verbose") == 0) {
-		verbose = 1;
-		i0 = i;
-		continue;
-	    }
-	    if(strncmp(argv[i], "--default-packages=", 18) == 0) {
-		snprintf(buf2, 200, "R_DEFAULT_PACKAGES=%s", argv[i]+19);
-		if(verbose)
-		    fprintf(stderr, "setting '%s'\n", buf2);
-#ifdef HAVE_PUTENV
-		if(putenv(buf2)) 
-#endif
-		{
-		    fprintf(stderr, "unable to set R_DEFAULT_PACKAGES\n");
-		    exit(1);
-		}
-		i0 = i;
-		continue;
+    /* first copy over any -e or --foo args */
+    for(i = 1; i < argc; i++) {
+	if(strcmp(argv[i], "-e") == 0) {
+	    e_mode = 1;
+	    av[ac++] = argv[i];
+	    if(!argv[++i]) {
+		fprintf(stderr, "-e not followed by an expression\n");
+		exit(1);
 	    }
 	    av[ac++] = argv[i];
 	    i0 = i;
+	    continue;
 	}
-    i0++;
-    snprintf(buf, PATH_MAX+8, "--file=%s", argv[i0]); av[ac++] = buf;
+	if(strncmp(argv[i], "--", 2)) break;
+	if(strcmp(argv[i], "--verbose") == 0) {
+	    verbose = 1;
+	    i0 = i;
+	    continue;
+	}
+	if(strncmp(argv[i], "--default-packages=", 18) == 0) {
+	    snprintf(buf2, 200, "R_DEFAULT_PACKAGES=%s", argv[i]+19);
+	    if(verbose)
+		fprintf(stderr, "setting '%s'\n", buf2);
+#ifdef HAVE_PUTENV
+	    if(putenv(buf2)) 
+#endif
+	    {
+		fprintf(stderr, "unable to set R_DEFAULT_PACKAGES\n");
+		exit(1);
+	    }
+	    i0 = i;
+	    continue;
+	}
+	av[ac++] = argv[i];
+	i0 = i;
+    }
+
+    if(!e_mode) {
+	snprintf(buf, PATH_MAX+8, "--file=%s", argv[++i0]); 
+	av[ac++] = buf;
+    }
     av[ac++] = "--args";
     for(i = i0+1; i < argc; i++) av[ac++] = argv[i];
     av[ac] = (char *) NULL;

@@ -6894,6 +6894,12 @@ In Windows, this also includes @option{--no-Rconsole}.
 @item -f file
 @itemx --file=file
 Take input from @file{file}: @code{-} means @code{stdin}.
+Implies @code{--no-save} unless @code{--save} has been set.
+
+@item -e expression
+Use @code{expression} as an input line.  One or more @option{-e} options
+can be used, but not together with @option{-e} or @option{--file}.
+Implies @code{--no-save} unless @code{--save} has been set.
 
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This

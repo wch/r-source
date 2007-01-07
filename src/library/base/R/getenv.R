@@ -9,7 +9,7 @@ Sys.getenv <- function(x = NULL, unset = "")
 	    n[i] <- x[[i]][1]
 	    v[i] <- paste(x[[i]][-1], collapse = "=")
 	}
-	structure(v, names = n)
+	structure(v, names = n)[sort.list(n)]
     } else {
 	structure(.Internal(Sys.getenv(as.character(x), as.character(unset))),
                   names = x)

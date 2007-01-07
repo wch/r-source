@@ -236,9 +236,10 @@ NEW FEATURES
     o	as.matrix() gains the '...' argument that several packages have
 	assumed it always had (and S-PLUS has).
 
-    o	Command-line R (and Rterm.exe under Windows) accepts the
-	options '-f filename' and '--file=filename' to follow other
-	script interpreters.
+    o	Command-line R (and Rterm.exe under Windows) accepts the options
+	'-f filename', '--file=filename' and '-e expression' to follow
+	other script interpreters.  These imply --no-save unless
+	--save is specified.
 
     o	Invalid bytes in character strings in an MBCS now deparse/print
 	in the form "\xc1" rather than "<c1>", which means they can be
@@ -254,7 +255,8 @@ NEW FEATURES
 	application of R or if --file= has been used.
 
     o	Sys.getenv() has a new argument 'unset' to allow unset and set
-	to "" to be distinguished (if the OS does).
+	to "" to be distinguished (if the OS does).  The results of
+	Sys.getenv() are now sorted (by name).
 
     o	New function Sys.unsetenv() to remove environment variables
 	(on systems where unsetenv is implemented, and on Windows).

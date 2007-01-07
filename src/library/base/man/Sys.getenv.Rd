@@ -25,9 +25,9 @@ Sys.getenv(x = NULL, unset = "")
   name was found).
 
   On most platforms \code{Sys.getenv()} will return a named vector giving
-  the values of all the environment variables.  (It may be confused by
-  names containing \code{"="} which some platforms allow but POSIX does
-  not.)
+  the values of all the environment variables, collated in the current
+  locale.  (It may be confused by names containing \code{"="} which some
+  platforms allow but POSIX does not.)
 #ifdef windows
   (Windows is such a platform.)
 #endif
@@ -41,7 +41,7 @@ Sys.getenv(x = NULL, unset = "")
 ## whether HOST is set will be shell-dependent e.g. Solaris' csh does not.
 Sys.getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 
-str(s <- Sys.getenv()) # all settings (rather do not print)
+names(s <- Sys.getenv()) # all settings (the values could be very long)
 
 ## Language and Locale settings -- but rather use Sys.getlocale()
 s[grep("^L(C|ANG)", names(s))]
