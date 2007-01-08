@@ -90,11 +90,18 @@ make install
 make uninstall
 
 will (un)install the header Rmath.h and shared and static libraries
-(if built) under ${prefix} (default /usr/local).  Add prefix=/path/to/here
-to the command line to change the installation directory.
+(if built) under ${prefix} (default /usr/local).  Add
+prefix=/path/to/here to the command line to change the installation
+directory (at least under GNU make).
 
 More precise control on where things are installed is available at 
 configure time: the location for the header files can be specified by
 --includedir= (or includedir= on the make command line) and that for the
 libraries by --libdir= (or libdir= on the make command line).
 
+'make install' installs a file for pkg-config to use by e.g.
+
+$(CC) `pkg-config --cflags libRmath` -c test.c
+$(CC) `pkg-config --libs libRmath` test.o -o test
+
+On some systems 'make install-strip' will install a stripped shared library.

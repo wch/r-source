@@ -22,7 +22,7 @@ HEADERS = Runix.h hpdlfcn.h
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
   Makefile.in $(SOURCES_C_BASE) Rembedded.c Rscript.c \
-  $(HEADERS) hpdlfcn.c system.txt
+  $(HEADERS) hpdlfcn.c libR.pc.in system.txt
 
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 
@@ -70,11 +70,18 @@ install-Rscript:
 	  $(srcdir)/Rscript.c
 	@$(MKINSTALLDIRS) "$(Rexecbindir)"
 	@$(INSTALL_PROGRAM) Rscript "$(Rexecbindir)/Rscript"
-install: install-Rscript
+## substitute at install time to allow 'prefix' to be overridden
+install-pc:
+	@$(MKINSTALLDIRS) "$(libdir)/pkgconfig"
+	@$(SED) -e "s:@rhome:$(rhome):" -e "s:@rincludedir:$(rincludedir):" \
+	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
+	  > "$(libdir)/pkgconfig/libR.pc"
+install: install-Rscript @WANT_R_SHLIB_TRUE@ install-pc
 	@$(MKINSTALLDIRS) "$(bindir)"
 	@$(INSTALL_PROGRAM) Rscript "$(bindir)/Rscript"
 uninstall:
-	@rm -f "$(bindir)/Rscript" "$(Rexecbindir)/Rscript"
+	@rm -f "$(bindir)/Rscript" "$(Rexecbindir)/Rscript" \
+	  "$(libdir)/pkgconfig/libR.pc"
 
 install-strip:
 	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install

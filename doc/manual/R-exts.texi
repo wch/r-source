@@ -8348,8 +8348,8 @@ C program include
 @end example
 
 @noindent
-and link against @samp{-lRmath}.  There is an example file
-@file{test.c}.
+and link against @samp{-lRmath} (and perhaps @samp{-lm}.  There is an
+example file @file{test.c}.
 
 A little care is needed to use the random-number routines. You will
 need to supply the uniform random number generator
@@ -8751,12 +8751,34 @@ contain an existing writable directory (no check is done), and it is not
 cleaned up when @R{} is shut down.
 
 @menu
+* Compiling against the R shared library::  
 * Setting R callbacks::         
 * Meshing event loops::         
 * Threading issues::            
 @end menu
 
-@node Setting R callbacks, Meshing event loops, Embedding R under Unix-alikes, Embedding R under Unix-alikes
+@node Compiling against the R shared library, Setting R callbacks, Embedding R under Unix-alikes, Embedding R under Unix-alikes
+@subsection Compiling against the R shared library
+
+Suitable flags to compile and link against the @R{} shared library
+can be found by
+
+@example
+R CMD config --cppflags
+R CMD config --ldflags
+@end example
+
+If @R{} is installed, @code{pkg-config} is available and
+sub-architectures have not be used, alternatives are
+
+@example
+pkg-config --cflags libR
+pkg-config --libs libR
+@end example
+
+
+
+@node Setting R callbacks, Meshing event loops, Compiling against the R shared library, Embedding R under Unix-alikes
 @subsection Setting R callbacks
 
 For Unix-alkes there is a public header file @file{Rinterface.h} that

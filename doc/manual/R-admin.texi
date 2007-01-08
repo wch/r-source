@@ -542,7 +542,7 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with GNU @command{make}.
+at least with GNU @command{make} (but not e.g.@: Solaris 8's @command{make}).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, many of them are
@@ -559,7 +559,8 @@ architecture-dependent files, defaults to @var{prefix}, and can be set
 via the configure option @option{--exec-prefix}.
 
 All of @code{bindir} and @code{mandir} and @code{libdir} can also be
-specified on the @command{make install} command line.
+specified on the @command{make install} command line (at least for GNU
+@command{make}).
 
 The @command{configure} or @command{make} variables @code{rdocdir} and
 @code{rsharedir} can be used to install the system-independent

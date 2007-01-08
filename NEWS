@@ -303,6 +303,9 @@ INSTALLATION
 	also the shared libraries and modules on platforms where
 	'libtool' knows how to do so.
 
+    o	Building R as a shared library and standalone nmath now
+	installs pkg-config files libR.pc and libRmath.pc respectively.
+
 
 C-LEVEL FACILITIES
 
