@@ -26,6 +26,10 @@
 #include <config.h>
 #endif
 
+#if defined(__APPLE__) && ( ! defined(_POSIX_C_SOURCE) || (_POSIX_C_SOURCE < 200112L) )
+#define _POSIX_C_SOURCE 200112L /* for correct unsetenv */
+#endif
+
 #include <stdlib.h> /* for putenv */
 #include <Defn.h>
 #include <R_ext/Riconv.h>

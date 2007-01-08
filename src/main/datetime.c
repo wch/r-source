@@ -53,6 +53,10 @@
 # endif
 #endif
 
+#if defined(__APPLE__) && ( ! defined(_POSIX_C_SOURCE) || (_POSIX_C_SOURCE < 200112L) )
+#define _POSIX_C_SOURCE 200112L /* for correct unsetenv */
+#endif
+
 #include <time.h>
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>
