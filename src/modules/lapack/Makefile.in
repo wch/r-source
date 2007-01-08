@@ -90,8 +90,16 @@ install: installdirs
 @USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
 installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+install-strip-Rlapack:
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(Rexeclibdir)/$(Rlapack_la)"; \
+	fi
+install-strip: @USE_EXTERNAL_LAPACK_FALSE@ install-strip-Rlapack
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(Rexecmodulesdir)/$(lapack_la)"; \
+	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/$(lapack_la)"
 

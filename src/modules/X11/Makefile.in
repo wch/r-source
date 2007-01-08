@@ -54,8 +54,11 @@ install: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(Rexecmodulesdir)/$(R_X11_la)"
 installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+install-strip: installdirs
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) "$(Rexecmodulesdir)/$(R_X11_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(Rexecmodulesdir)/$(R_X11_la)" ;\
+	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/R_X11$(SHLIB_EXT)"
 

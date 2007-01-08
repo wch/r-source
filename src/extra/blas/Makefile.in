@@ -40,6 +40,13 @@ Rblas_install: $(Rblas_la)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rblas_la) \
 	  $(Rexeclibdir)/$(Rblas_la)
 
+Rblas_install-strip: $(Rblas_la)
+	@$(MKINSTALLDIRS) $(Rexeclibdir)
+	@$(INSTALL) $(Rblas_la) $(Rexeclibdir)/$(Rblas_la)
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(Rexeclibdir)/$(Rblas_la)" ;\
+	fi
+
 mostlyclean: clean
 clean:
 	@-rm -f *.o $(Rblas_la)
@@ -48,7 +55,9 @@ distclean: clean
 maintainer-clean: distclean
 
 install: @BLAS_SHLIB_TRUE@ Rblas_install
-install-strip uninstall TAGS info dvi check:
+install-strip: @BLAS_SHLIB_TRUE@ Rblas_install-strip
+
+uninstall TAGS info dvi check:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win Rblas.def \

@@ -299,6 +299,10 @@ INSTALLATION
 
     o	Added workaround for reported non-POSIX sh on OSF1.  (PR#9375)
 
+    o	'make install-strip' now works, stripping the executables and
+	also the shared libraries and modules on platforms where
+	'libtool' knows how to do so.
+
 
 C-LEVEL FACILITIES
 

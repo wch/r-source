@@ -69,13 +69,17 @@ install-Rscript:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -DR_HOME='"$(rhome)"' -o Rscript \
 	  $(srcdir)/Rscript.c
 	@$(MKINSTALLDIRS) "$(Rexecbindir)"
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change Rscript "$(Rexecbindir)/Rscript"
+	@$(INSTALL_PROGRAM) Rscript "$(Rexecbindir)/Rscript"
 install: install-Rscript
-	@cp Rscript "$(bindir)/Rscript"
+	@$(MKINSTALLDIRS) "$(bindir)"
+	@$(INSTALL_PROGRAM) Rscript "$(bindir)/Rscript"
 uninstall:
 	@rm -f "$(bindir)/Rscript" "$(Rexecbindir)/Rscript"
 
-install-strip TAGS info dvi check:
+install-strip:
+	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+
+TAGS info dvi check:
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

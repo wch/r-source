@@ -74,7 +74,7 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	@(cd src/library && $(MAKE) $@)
 
-install: installdirs svnonly
+install install-strip: installdirs svnonly
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
@@ -121,8 +121,6 @@ install-libR-exists:
 
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)

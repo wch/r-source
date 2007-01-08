@@ -189,8 +189,12 @@ install-bin: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir2)/R"
 install-lib: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
-install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+install-strip: installdirs
+	@${INSTALL_PROGRAM} -s $(R_binary) "$(Rexecbindir2)/R"
+	@if test -f $(libR_la); then $(MAKE) install-lib; fi
+	@if test -n "$(STRIP_LIBS)"; then \
+	  if test -f $(libR_la); then $(STRIP_LIBS) "$(Rexeclibdir)/$(libR_la)"; fi; \
+	fi
 uninstall:
 	@rm -f "$(Rexecbindir)/exec/$(R_ARCH)/R" "$(Rexecbindir)/R.bin"
 	@rm -f "$(Rexeclibdir)/libR$(DYLIB_EXT)"

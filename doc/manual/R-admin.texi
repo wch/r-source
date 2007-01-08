@@ -580,6 +580,13 @@ make prefix=/path/to/here install-libR
 where @code{prefix} is optional, and @code{libdir} will give more
 precise control.
 
+@example
+make install-strip
+@end example
+
+@noindent
+will install stripped executables, and on platforms where this is
+supported, stripped libraries in directories @file{lib} and @file{modules}.
 
 @cindex Manuals, installing
 

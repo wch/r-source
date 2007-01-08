@@ -115,7 +115,7 @@ install: installdirs
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)/library"
 install-strip:
-	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@echo "uninstalling packages ..."
 	@(cd "$(rhome)/library"; \
