@@ -353,6 +353,9 @@ UTILITIES
 	was the default unless --slave is specified and the latter is
 	no longer overridden.
 
+	On all OSes it makes use of the -f argument to R, so
+	file("stdin") can be used from BATCH scripts.
+
 
 BUG FIXES
 

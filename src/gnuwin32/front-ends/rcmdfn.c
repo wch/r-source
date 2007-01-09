@@ -64,7 +64,7 @@ void rcmdusage (char *RCMD)
 
     fprintf(stderr, "\n%s%s%s%s",
 	    "Use\n  ", RCMD, " command --help\n",
-	    "for usage information for each command.\n\n");    
+	    "for usage information for each command.\n\n");
 }
 
 #define CMD_LEN 10000
@@ -85,11 +85,11 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	RSHARE[MAX_PATH];
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
-    
-    if(!strncmp(argv[0]+len-4, "Rcmd", 4) || 
+
+    if(!strncmp(argv[0]+len-4, "Rcmd", 4) ||
        !strncmp(argv[0]+len-4, "rcmd", 4) ||
-       !strncmp(argv[0]+len-8, "Rcmd.exe", 8) || 
-       !strncmp(argv[0]+len-8, "rcmd.exe", 8)) 
+       !strncmp(argv[0]+len-8, "Rcmd.exe", 8) ||
+       !strncmp(argv[0]+len-8, "rcmd.exe", 8))
 	strcpy(RCMD, "Rcmd");
 
 
@@ -98,10 +98,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	rcmdusage(RCMD);
 	return(0);
     }
-    if (argc == cmdarg+1 && 
+    if (argc == cmdarg+1 &&
 	(!strcmp(argv[cmdarg], "--help") || !strcmp(argv[cmdarg], "-h"))
 	) {
-	/* need to cover Rcmd --help, R CMD --help and R --help, 
+	/* need to cover Rcmd --help, R CMD --help and R --help,
 	   as well as -h versions.
 	 */
 	if(cmdarg == 2 || (cmdarg == 1 && strcmp(RCMD, "Rcmd")) == 0) {
@@ -119,19 +119,22 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
     if (cmdarg > 0 && argc > cmdarg && strcmp(argv[cmdarg], "BATCH") == 0) {
 	/* handle Rcmd BATCH internally */
-	char infile[MAX_PATH], outfile[MAX_PATH], *p;
+	char infile[MAX_PATH], outfile[MAX_PATH], *p, cmd_extra[CMD_LEN];
 	DWORD ret;
 	SECURITY_ATTRIBUTES sa;
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;
-	HANDLE hIN = INVALID_HANDLE_VALUE, hOUT = INVALID_HANDLE_VALUE;
-
+	HANDLE hOUT = INVALID_HANDLE_VALUE;
 
 	/* process the command line */
-	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe --restore --save", getRHOME());
+	cmd_extra[0] = '\0';
 	if((p = getenv("R_BATCH_OPTIONS")) && strlen(p)) {
-	    strcat(cmd, " ");
-	    strcat(cmd, p);
+	    if(1+strlen(p) >= CMD_LEN) {
+		fprintf(stderr, "command line too long\n");
+		return(27);
+	    }
+	    strcat(cmd_extra, " ");
+	    strcat(cmd_extra, p);
 	}
 
 	for(i = cmdarg + 1, iused = cmdarg; i < argc; i++) {
@@ -164,12 +167,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		break;
 	    }
 	    if (argv[i][0] == '-') {
-		if (strlen(cmd) + strlen(argv[i]) > 9900) {
+		if (strlen(cmd_extra) + strlen(argv[i]) > 9900) {
 		    fprintf(stderr, "command line too long\n");
 		    return(27);
 		}
-		strcat(cmd, " ");
-		strcat(cmd, argv[i]);
+		strcat(cmd_extra, " ");
+		strcat(cmd_extra, argv[i]);
 		iused = i;
 	    } else break;
 	}
@@ -187,6 +190,15 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    if (!strcmp(outfile+len-2, ".R")) strcat(outfile, "out");
 	    else strcat(outfile, ".Rout");
 	}
+
+	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe -f %s --restore --save",
+		 getRHOME(), infile);
+	if(strlen(cmd) + strlen(cmd_extra) >= CMD_LEN) {
+	    fprintf(stderr, "command line too long\n");
+	    return(27);
+	}
+	strcat(cmd, cmd_extra);
+
 	/* fprintf(stderr, "%s->%s\n", infile, outfile);
 	   fprintf(stderr, "%s\n", cmd); */
 
@@ -194,19 +206,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	sa.lpSecurityDescriptor = NULL;
 	sa.bInheritHandle = TRUE;
 
-	hIN = CreateFile(infile, GENERIC_READ, FILE_SHARE_READ,
-			 &sa, OPEN_EXISTING, 0, NULL);
-	if (hIN == INVALID_HANDLE_VALUE) {
-	    fprintf(stderr, "unable to open input file\n");
-	    return(1);
-	}
 	hOUT = CreateFile(outfile, GENERIC_WRITE, FILE_SHARE_READ,
 			  &sa, CREATE_ALWAYS, 0, NULL);
 	if (hOUT == INVALID_HANDLE_VALUE) {
 	    fprintf(stderr, "unable to open output file\n");
 	    return(2);
 	}
-	SetStdHandle(STD_INPUT_HANDLE, hIN);
 	SetStdHandle(STD_OUTPUT_HANDLE, hOUT);
 	SetStdHandle(STD_ERROR_HANDLE, hOUT);
 	si.cb = sizeof(si);
@@ -218,7 +223,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	si.dwFlags = STARTF_USESHOWWINDOW;
 	si.wShowWindow = SW_SHOWDEFAULT;
 	ret = CreateProcess(0, cmd, &sa, &sa, TRUE, 0, NULL, NULL, &si, &pi);
-	CloseHandle(hIN);
 	CloseHandle(hOUT);
 	if (!ret) {
 	    fprintf(stderr, "unable to run Rterm.exe\n");
@@ -276,17 +280,17 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
 	    if (strcmp(p, "Rd2dvi") == 0) {
-		strcpy(cmd, "sh "); 
+		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh");
 	    } else if (strcmp(p, "Sweave") == 0) {
-		strcpy(cmd, "sh "); 
+		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Sweave.sh");
 	    } else if (strcmp(p, "Stangle") == 0) {
-		strcpy(cmd, "sh "); 
+		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Stangle.sh");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
-		    strcpy(cmd, "sh "); 
+		    strcpy(cmd, "sh ");
 		    strcat(cmd, RHome); strcat(cmd, "/bin/");
 		} else if (!strcmp(".bat", p + strlen(p) - 4)) strcpy(cmd, "");
 		else if (!strcmp(".exe", p + strlen(p) - 4)) strcpy(cmd, "");
