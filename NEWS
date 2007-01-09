@@ -8,6 +8,11 @@
 
 		CHANGES IN R VERSION 2.4.1 patched
 
+NEW FEATURES
+
+    o	The Simplified Chinese translations have been completed.
+
+
 BUG FIXES
 
     o	co.intervals() sometimes failed to cover the largest value.
@@ -33,6 +38,9 @@ BUG FIXES
 
     o	The residuals from an lm() fit with no coefficients but an 
 	offset were incorrect.
+
+    o	oneway.test() was expecting a literal formula and did not
+	accept a variable containing a formula.
 
 
 
