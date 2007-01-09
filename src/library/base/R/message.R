@@ -23,7 +23,7 @@ function(..., domain = NULL, appendLF = TRUE)
             message <- paste(args, collapse = "")
         }
         else message <- ""
-        if(appendLF) message <- paste(message, "\n")
+        if(appendLF) message <- paste(message, "\n", sep="")
         call <- sys.call()
         cond <- simpleMessage(message, call)
     }
