@@ -8,7 +8,7 @@ range(\dots, na.rm = FALSE)
 \method{range}{default}(\dots, na.rm = FALSE, finite = FALSE)
 }
 \arguments{
-  \item{\dots}{any \code{\link{numeric}} objects.}
+  \item{\dots}{any \code{\link{numeric}} or character objects.}
   \item{na.rm}{logical, indicating if \code{\link{NA}}'s should be
     omitted.}
   \item{finite}{logical, indicating if all non-finite elements should

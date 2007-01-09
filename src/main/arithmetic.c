@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2006	    The R Development Core Team.
+ *  Copyright (C) 1998--2007	    The R Development Core Team.
  *  Copyright (C) 2003-4       	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify

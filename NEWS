@@ -269,6 +269,11 @@ NEW FEATURES
     o	strptime() now sets the "tzone" attribute on the result if
 	tz != "".
 
+    o	message() has a new argument 'appendLF' to handle messages
+	with and without newlines.
+
+    o	max(), min() and range() now work with character vectors.
+
 
 DEPRECATED & DEFUNCT
 
