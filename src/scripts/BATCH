@@ -46,8 +46,9 @@ done
 in=${1}
 out=${2-`basename ${1} .R`.Rout}
 
-(echo "invisible(options(echo = TRUE))"
-  cat ${in}
+## this used to set options(echo=TRUE), but that is the default
+## except for --slave, and why inhibit the latter?
+(cat ${in}
   echo ''; echo "proc.time()"
 ) | ${R_HOME}/bin/R ${opts} ${R_BATCH_OPTIONS} >${out} 2>&1
 

@@ -93,7 +93,8 @@ getOption(x)
     % note use of \code as otherwise -- is an en-dash.
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,
       when it controls whether input is echoed.  Command-line option
-      \code{--slave} sets this initially to \code{FALSE}.}
+      \code{--slave} sets this to \code{FALSE}, but otherwise
+      it starts the session as \code{TRUE}.}
 
     \item{\code{encoding}:}{The name of an encoding, default
       \code{"native.enc"}).  See \code{\link{connections}}.}

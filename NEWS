@@ -348,6 +348,11 @@ UTILITIES
 	scripts and similar tasks.  See help("Rscript") and 'An
 	Introduction to R' for further details.
 
+    o	R CMD BATCH (not WIndows) no longer prepends
+	'invisible(options(echo = TRUE))' to the input script.  This
+	was the default unless --slave is specified and the latter is
+	no longer overridden.
+
 
 BUG FIXES
 
