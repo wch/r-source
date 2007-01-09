@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:57\n"
+"POT-Creation-Date: 2007-01-09 09:01\n"
 "PO-Revision-Date: 2006-12-12 10:36+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -643,6 +643,10 @@ msgstr "以下に対する値："
 
 msgid "' not found"
 msgstr "が見つけられません"
+
+#, fuzzy
+msgid "all arguments must be named"
+msgstr "全ての引数は同じ長さでなければなりません"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' は空でない文字列でなければなりません"

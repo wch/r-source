@@ -30,7 +30,6 @@ all: Makefile R
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-## why do we use INSTALL_SCRIPT here, and cp/chmod for $(bindir)/R ?
 R: $(SCRIPTS_B) R.fe
 	@$(MAKE) rhome=$(top_builddir) install-cmds
 	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
@@ -99,8 +98,9 @@ install: installdirs install-cmds
 	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
 	  sed -e "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s+\\(R_SHARE_DIR=\\).*+\\1$(rsharedir)+;" -e  "s+\\(R_INCLUDE_DIR=\\).*+\\1$(rincludedir)+;" -e "s+\\(R_DOC_DIR=\\).*+\\1$(rdocdir)+;"\
 	  < R.fe > "$(Rexecbindir)/R")
-	@cp  "$(Rexecbindir)/R" "$(bindir)/R"
+	@$(INSTALL_SCRIPT)  "$(Rexecbindir)/R" "$(bindir)/R"
 	@chmod 755 "$(bindir)/R" "$(Rexecbindir)/R"
+## why of all the scriots does this alone chmod just one copy?
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
 install-cmds:
@@ -112,6 +112,7 @@ install-cmds:
 	  $(INSTALL_SCRIPT) $${f} "$(Rexecbindir)"; \
 	done
 	@$(INSTALL_SCRIPT) $(top_builddir)/libtool "$(Rexecbindir)"
+## there are no programs to install in this dir
 install-strip:
 	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:

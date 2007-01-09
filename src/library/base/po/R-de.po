@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:57\n"
+"POT-Creation-Date: 2007-01-09 09:01\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -647,6 +647,10 @@ msgstr "Wert für '"
 
 msgid "' not found"
 msgstr "' nicht gefunden"
+
+#, fuzzy
+msgid "all arguments must be named"
+msgstr "alle Argumente müssen die selbe Länge haben"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' muss nichtleere Zeichenkette sein"

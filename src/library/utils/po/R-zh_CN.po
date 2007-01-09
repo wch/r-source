@@ -502,9 +502,8 @@ msgstr "没有设定程序包"
 msgid "argument 'lib' is missing: using '%s'"
 msgstr "没有'lib'这个变元：改用%s"
 
-#, fuzzy
 msgid "'lib' is not writable"
-msgstr "没有'%s'这种相依关系"
+msgstr ""
 
 msgid ""
 "Would you like to create a personal library\n"

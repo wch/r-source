@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:56+0000\n"
+"POT-Creation-Date: 2007-01-09 09:01+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -107,9 +107,9 @@ msgstr "R_unlink의 'names'이 부적절합니다"
 #: src/main/connections.c:3360 src/main/connections.c:3366
 #: src/main/connections.c:3618 src/main/connections.c:3630
 #: src/main/connections.c:3634 src/main/connections.c:3638
-#: src/main/datetime.c:624 src/main/datetime.c:693 src/main/datetime.c:695
-#: src/main/datetime.c:699 src/main/datetime.c:830 src/main/datetime.c:832
-#: src/main/datetime.c:956 src/main/debug.c:210 src/main/dounzip.c:182
+#: src/main/datetime.c:622 src/main/datetime.c:691 src/main/datetime.c:693
+#: src/main/datetime.c:697 src/main/datetime.c:828 src/main/datetime.c:830
+#: src/main/datetime.c:963 src/main/debug.c:210 src/main/dounzip.c:182
 #: src/main/dounzip.c:188 src/main/envir.c:1406 src/main/envir.c:1410
 #: src/main/envir.c:1499 src/main/envir.c:1505 src/main/envir.c:1571
 #: src/main/envir.c:1587 src/main/envir.c:1594 src/main/envir.c:1688
@@ -135,7 +135,7 @@ msgstr "R_unlink의 'names'이 부적절합니다"
 #: src/main/random.c:473 src/main/saveload.c:2077 src/main/saveload.c:2342
 #: src/main/saveload.c:2392 src/main/seq.c:348 src/main/seq.c:352
 #: src/main/seq.c:370 src/main/seq.c:374 src/main/seq.c:380
-#: src/main/sysutils.c:399 src/main/sysutils.c:401 src/main/sysutils.c:403
+#: src/main/sysutils.c:445 src/main/sysutils.c:447 src/main/sysutils.c:449
 #: src/main/unique.c:584 src/main/util.c:546 src/main/util.c:549
 #: src/modules/internet/internet.c:261 src/modules/internet/internet.c:267
 #: src/modules/internet/internet.c:273 src/modules/internet/internet.c:276
@@ -220,8 +220,8 @@ msgstr "태그가 부적절합니다"
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
 
-#: src/gnuwin32/extra.c:608 src/main/datetime.c:560 src/main/datetime.c:626
-#: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:736
+#: src/gnuwin32/extra.c:608 src/main/datetime.c:558 src/main/datetime.c:624
+#: src/main/datetime.c:832 src/main/dotcode.c:191 src/main/errors.c:736
 #: src/main/errors.c:764 src/main/errors.c:863 src/main/errors.c:888
 #: src/main/errors.c:893 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:181 src/main/optimize.c:188
@@ -430,52 +430,62 @@ msgstr "'%s'를 열수가 없습니다"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): 파일'%s'는 존재하지 않습니다\n"
 
-#: src/gnuwin32/system.c:885
+#: src/gnuwin32/system.c:887
 msgid "WARNING: no max-mem-size given\n"
 msgstr "경고: max-mem-size가 주어지고 있지 않습니다\n"
 
-#: src/gnuwin32/system.c:891
+#: src/gnuwin32/system.c:893
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "경고:  --max-mem-size 값이 부적절해서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:893
+#: src/gnuwin32/system.c:895
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgstr "경고:  --max-mem-size=%lu'%c'는 너무 커서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:898
+#: src/gnuwin32/system.c:900
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:901
+#: src/gnuwin32/system.c:903
 #, fuzzy, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "경고: --max-mem-size  =%4.1fM'는 너무 작아서 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:917 src/gnuwin32/system.c:927
-#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:306
-#: src/unix/system.c:315
+#: src/gnuwin32/system.c:919 src/gnuwin32/system.c:929
+#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:307
+#: src/unix/system.c:316
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "파일 '%s'를 열수가 없습니다"
 
-#: src/gnuwin32/system.c:932 src/unix/system.c:327
+#: src/gnuwin32/system.c:939 src/unix/system.c:327
+#, c-format
+msgid "WARNING: '-e %s' omitted as input is too long\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:943 src/unix/system.c:338
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "경고: 알수 없는 '%s'옵션입니다\n"
 
-#: src/gnuwin32/system.c:957 src/unix/system.c:331
+#: src/gnuwin32/system.c:968 src/unix/system.c:342
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "인수'%s'는 무시되었습니다\n"
 
-#: src/gnuwin32/system.c:974 src/unix/system.c:369
+#: src/gnuwin32/system.c:975 src/unix/system.c:348
+#, fuzzy
+msgid "cannot use -e with -f or --file"
+msgstr "벡터가 non-Vector이지만 길이는 설정할수 없습니다"
+
+#: src/gnuwin32/system.c:996 src/unix/system.c:392
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'-- save', '--no-save', '--vanilia' 어느쪽이든을 지정해 주십시오"
 
-#: src/gnuwin32/system.c:979
+#: src/gnuwin32/system.c:1001
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -2288,12 +2298,23 @@ msgstr "복소수에 대해서 min/max는 정의 되어 있지 않습니다"
 msgid "unknown cumxxx function"
 msgstr "알수 없는 cumxxx 함수입니다"
 
-#: src/main/datetime.c:490
+#: src/main/datetime.c:481 src/main/datetime.c:487 src/main/datetime.c:501
+#: src/main/datetime.c:506
+#, fuzzy
+msgid "problem with setting timezone"
+msgstr "연결의 기입에는 문제가 있습니다"
+
+#: src/main/datetime.c:491
 msgid "cannot set timezones on this system"
 msgstr "이 시스템에서 timezones은 설정 할수가 없습니다"
 
-#: src/main/datetime.c:644 src/main/datetime.c:646 src/main/datetime.c:964
-#: src/main/datetime.c:966
+#: src/main/datetime.c:513 src/main/datetime.c:515
+#, fuzzy
+msgid "problem with unsetting timezone"
+msgstr "editor %s의 실행에 관계되어 문제가 발생하였습니다"
+
+#: src/main/datetime.c:642 src/main/datetime.c:644 src/main/datetime.c:971
+#: src/main/datetime.c:973
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "비어있지 않는 POSIXlt 구조에는 길이 0의 요소가 있습니다"
 
@@ -4084,31 +4105,31 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "부의 길이가 벡터에서는 허용되지 않습니다"
 
-#: src/main/names.c:945
+#: src/main/names.c:946
 msgid "string argument required"
 msgstr "문자열 인수가 요구되어져 있습니다"
 
-#: src/main/names.c:953
+#: src/main/names.c:954
 msgid "no such primitive function"
 msgstr "그러한 원시적 함수는 없습니다"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1069
 msgid "attempt to use zero-length variable name"
 msgstr "길이 0의 변수명을 사용했습니다"
 
-#: src/main/names.c:1070
+#: src/main/names.c:1071
 msgid "symbol print-name too long"
 msgstr "심벌의 표시명이 너무 깁니다"
 
-#: src/main/names.c:1097
+#: src/main/names.c:1098
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 인수가 부적절합니다"
 
-#: src/main/names.c:1100
+#: src/main/names.c:1101
 msgid "invalid internal function"
 msgstr "내부 함수가 부적절합니다"
 
-#: src/main/names.c:1102
+#: src/main/names.c:1103
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "내부 함수 \"%s \" 가 없습니다"
@@ -6348,52 +6369,68 @@ msgstr "'pattern'가 없습니다"
 msgid "no 'tempdir'"
 msgstr "'tempdir'가 없습니다"
 
-#: src/main/sysutils.c:227 src/main/sysutils.c:283
+#: src/main/sysutils.c:227 src/main/sysutils.c:230 src/main/sysutils.c:284
+#: src/main/sysutils.c:286 src/main/sysutils.c:319
 msgid "wrong type for argument"
 msgstr "인수의 형태가 부적적합니다"
 
-#: src/main/sysutils.c:293
-msgid "'putenv' is not available on this system"
+#: src/main/sysutils.c:288
+#, fuzzy
+msgid "wrong length for argument"
+msgstr "'mode' 인수의 길이가 부적절합니다"
+
+#: src/main/sysutils.c:305
+#, fuzzy
+msgid "'Sys.putenv' is not available on this system"
 msgstr "'putenv'는 이 시스템에서 사용할수가 없습니다"
 
-#: src/main/sysutils.c:326
+#: src/main/sysutils.c:339
+#, fuzzy
+msgid "'Sys.unsetenv' is not available on this system"
+msgstr "'putenv'는 이 시스템에서 사용할수가 없습니다"
+
+#: src/main/sysutils.c:372
 msgid "failed to find symbols in iconv.dll"
 msgstr "iconv.dll로 심벌이 검색되지 않았습니다"
 
-#: src/main/sysutils.c:330
+#: src/main/sysutils.c:376
 msgid "iconv.dll is not available on this system"
 msgstr "iconv.dll는 이 시스템에서는 사용할수가 없습니다"
 
-#: src/main/sysutils.c:397
+#: src/main/sysutils.c:443
 msgid "'x' must be a character vector"
 msgstr "'x'의 문자 벡터가 아니면 안됩니다"
 
-#: src/main/sysutils.c:410
+#: src/main/sysutils.c:456
 msgid "unsupported conversion"
 msgstr "서포트되어 있지 않은 변환입니다"
 
-#: src/main/sysutils.c:459 src/main/sysutils.c:494 src/main/sysutils.c:501
-#: src/main/sysutils.c:507
+#: src/main/sysutils.c:505 src/main/sysutils.c:540 src/main/sysutils.c:547
+#: src/main/sysutils.c:553
 msgid "'iconv' is not available on this system"
 msgstr "이 시스템에서는 'iconv'를 사용할수가 없습니다"
 
-#: src/main/sysutils.c:589
+#: src/main/sysutils.c:635
 msgid "cannot mkdir R_TempDir"
 msgstr "디렉토리  R_TempDir를 작성할수가 없습니다"
 
-#: src/main/sysutils.c:605
+#: src/main/sysutils.c:639 src/main/sysutils.c:646 src/main/sysutils.c:649
+msgid "unable to set R_SESSION_TMPDIR"
+msgstr ""
+
+#: src/main/sysutils.c:658
 msgid "cannot allocate R_TempDir"
 msgstr "R_TempDir를 할당할 수가 없습니다"
 
-#: src/main/sysutils.c:652
+#: src/main/sysutils.c:705
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam에서 'tempdir'가 부적절합니다"
 
-#: src/main/sysutils.c:667
+#: src/main/sysutils.c:720
 msgid "cannot find unused tempfile name"
 msgstr "사용하지 않는 tempfile 이름을 검색할수가 없습니다"
 
-#: src/main/sysutils.c:689
+#: src/main/sysutils.c:742
 msgid "proc.time() is not implemented on this system"
 msgstr "이 시스템에서는 proc.time()함수가 실제 적용되지 않습니다"
 
@@ -7317,22 +7354,22 @@ msgstr "이 platform에서 intern=TRUE은 실제 적용되어 있지 않습니�
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info()은 이 시스템에서는 실제 적용되어 있지 않습니다"
 
-#: src/unix/system.c:245
+#: src/unix/system.c:246
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "경고:  --gui 또는 - g 로, 값이 지정되어 있지 않기때문에 무시되었습니다"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:268
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "경고: \"%s\"는 알수없는 gui입니다.  X11을 사용합니다\n"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:271
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "경고:  \"%s\"는 알수없는 gui 입니다. 아무것도 사용하지 않습니다\n"
 
-#: src/unix/system.c:407
+#: src/unix/system.c:430
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "경고:  파일 리스트의 첫번째만을 편집합니다"
 

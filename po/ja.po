@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:56+0000\n"
+"POT-Creation-Date: 2007-01-09 09:01+0000\n"
 "PO-Revision-Date: 2006-12-12 09:33+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -107,9 +107,9 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/connections.c:3360 src/main/connections.c:3366
 #: src/main/connections.c:3618 src/main/connections.c:3630
 #: src/main/connections.c:3634 src/main/connections.c:3638
-#: src/main/datetime.c:624 src/main/datetime.c:693 src/main/datetime.c:695
-#: src/main/datetime.c:699 src/main/datetime.c:830 src/main/datetime.c:832
-#: src/main/datetime.c:956 src/main/debug.c:210 src/main/dounzip.c:182
+#: src/main/datetime.c:622 src/main/datetime.c:691 src/main/datetime.c:693
+#: src/main/datetime.c:697 src/main/datetime.c:828 src/main/datetime.c:830
+#: src/main/datetime.c:963 src/main/debug.c:210 src/main/dounzip.c:182
 #: src/main/dounzip.c:188 src/main/envir.c:1406 src/main/envir.c:1410
 #: src/main/envir.c:1499 src/main/envir.c:1505 src/main/envir.c:1571
 #: src/main/envir.c:1587 src/main/envir.c:1594 src/main/envir.c:1688
@@ -135,7 +135,7 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/random.c:473 src/main/saveload.c:2077 src/main/saveload.c:2342
 #: src/main/saveload.c:2392 src/main/seq.c:348 src/main/seq.c:352
 #: src/main/seq.c:370 src/main/seq.c:374 src/main/seq.c:380
-#: src/main/sysutils.c:399 src/main/sysutils.c:401 src/main/sysutils.c:403
+#: src/main/sysutils.c:445 src/main/sysutils.c:447 src/main/sysutils.c:449
 #: src/main/unique.c:584 src/main/util.c:546 src/main/util.c:549
 #: src/modules/internet/internet.c:261 src/modules/internet/internet.c:267
 #: src/modules/internet/internet.c:273 src/modules/internet/internet.c:276
@@ -218,8 +218,8 @@ msgstr "タイムスタンプが不正です"
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "'loadRconsole' はRgui でしか使用することができない"
 
-#: src/gnuwin32/extra.c:608 src/main/datetime.c:560 src/main/datetime.c:626
-#: src/main/datetime.c:834 src/main/dotcode.c:191 src/main/errors.c:736
+#: src/gnuwin32/extra.c:608 src/main/datetime.c:558 src/main/datetime.c:624
+#: src/main/datetime.c:832 src/main/dotcode.c:191 src/main/errors.c:736
 #: src/main/errors.c:764 src/main/errors.c:863 src/main/errors.c:888
 #: src/main/errors.c:893 src/main/optimize.c:95 src/main/optimize.c:102
 #: src/main/optimize.c:111 src/main/optimize.c:181 src/main/optimize.c:188
@@ -424,52 +424,62 @@ msgstr "'%s' を開くことができません"
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show()：ファイル '%s' は存在しません\n"
 
-#: src/gnuwin32/system.c:885
+#: src/gnuwin32/system.c:887
 msgid "WARNING: no max-mem-size given\n"
 msgstr "警告: max-mem-size が与えられていません\n"
 
-#: src/gnuwin32/system.c:891
+#: src/gnuwin32/system.c:893
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "警告: --max-mem-size 値が不正なので無視されました\n"
 
-#: src/gnuwin32/system.c:893
+#: src/gnuwin32/system.c:895
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgstr "警告: --max-mem-size =%lu'%c' は大きすぎるので無視されました\n"
 
-#: src/gnuwin32/system.c:898
+#: src/gnuwin32/system.c:900
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されました\n"
 
-#: src/gnuwin32/system.c:901
+#: src/gnuwin32/system.c:903
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "警告: max-mem-size =%4.1fM は大きすぎるので、3Gbとされました\n"
 
-#: src/gnuwin32/system.c:917 src/gnuwin32/system.c:927
-#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:306
-#: src/unix/system.c:315
+#: src/gnuwin32/system.c:919 src/gnuwin32/system.c:929
+#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:307
+#: src/unix/system.c:316
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "ファイル '%s' を開くことができません"
 
-#: src/gnuwin32/system.c:932 src/unix/system.c:327
+#: src/gnuwin32/system.c:939 src/unix/system.c:327
+#, c-format
+msgid "WARNING: '-e %s' omitted as input is too long\n"
+msgstr ""
+
+#: src/gnuwin32/system.c:943 src/unix/system.c:338
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 未知の '%s' オプション\n"
 
-#: src/gnuwin32/system.c:957 src/unix/system.c:331
+#: src/gnuwin32/system.c:968 src/unix/system.c:342
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引数 '%s' は無視されました\n"
 
-#: src/gnuwin32/system.c:974 src/unix/system.c:369
+#: src/gnuwin32/system.c:975 src/unix/system.c:348
+#, fuzzy
+msgid "cannot use -e with -f or --file"
+msgstr "ベクトルでないものの長さは設定できません"
+
+#: src/gnuwin32/system.c:996 src/unix/system.c:392
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save' ,  '--no-save',  '--vanilla' のいずれかを指定してください"
 
-#: src/gnuwin32/system.c:979
+#: src/gnuwin32/system.c:1001
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr "'reader thread' を作れません。システムのリソースを幾らか解放すべきです"
@@ -2268,12 +2278,23 @@ msgstr "複素数に対しては min/max は定義されていません"
 msgid "unknown cumxxx function"
 msgstr "未知の cumxxx 関数です"
 
-#: src/main/datetime.c:490
+#: src/main/datetime.c:481 src/main/datetime.c:487 src/main/datetime.c:501
+#: src/main/datetime.c:506
+#, fuzzy
+msgid "problem with setting timezone"
+msgstr "コネクションへの書き込みに問題があります"
+
+#: src/main/datetime.c:491
 msgid "cannot set timezones on this system"
 msgstr "このシステムではタイムゾーンは設定できません"
 
-#: src/main/datetime.c:644 src/main/datetime.c:646 src/main/datetime.c:964
-#: src/main/datetime.c:966
+#: src/main/datetime.c:513 src/main/datetime.c:515
+#, fuzzy
+msgid "problem with unsetting timezone"
+msgstr "エディタ %s の実行に関し問題がおきました"
+
+#: src/main/datetime.c:642 src/main/datetime.c:644 src/main/datetime.c:971
+#: src/main/datetime.c:973
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "空ではない POSIXlt 構造の中に長さゼロの成分があります"
 
@@ -4027,31 +4048,31 @@ msgstr "モデル行列中では複素数は現在許されていません"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "タイプ '%s' の変数はモデル行列中では許されません"
 
-#: src/main/names.c:945
+#: src/main/names.c:946
 msgid "string argument required"
 msgstr "文字列引数が要求されています"
 
-#: src/main/names.c:953
+#: src/main/names.c:954
 msgid "no such primitive function"
 msgstr "そのようなプリミティブ関数はありません"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1069
 msgid "attempt to use zero-length variable name"
 msgstr "長さ0の変数名を使おうとしました"
 
-#: src/main/names.c:1070
+#: src/main/names.c:1071
 msgid "symbol print-name too long"
 msgstr "シンボルの表示名が長すぎます"
 
-#: src/main/names.c:1097
+#: src/main/names.c:1098
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 引数が不正です"
 
-#: src/main/names.c:1100
+#: src/main/names.c:1101
 msgid "invalid internal function"
 msgstr "内部関数が不正です"
 
-#: src/main/names.c:1102
+#: src/main/names.c:1103
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "内部関数 \"%s\" がありません"
@@ -6289,52 +6310,68 @@ msgstr "'pattern' がありません"
 msgid "no 'tempdir'"
 msgstr "'tempdir' がありません"
 
-#: src/main/sysutils.c:227 src/main/sysutils.c:283
+#: src/main/sysutils.c:227 src/main/sysutils.c:230 src/main/sysutils.c:284
+#: src/main/sysutils.c:286 src/main/sysutils.c:319
 msgid "wrong type for argument"
 msgstr "引数の型が不正です"
 
-#: src/main/sysutils.c:293
-msgid "'putenv' is not available on this system"
+#: src/main/sysutils.c:288
+#, fuzzy
+msgid "wrong length for argument"
+msgstr "'%s' 引数の長さが不正です"
+
+#: src/main/sysutils.c:305
+#, fuzzy
+msgid "'Sys.putenv' is not available on this system"
 msgstr "'putenv' はこのシステムでは使えません"
 
-#: src/main/sysutils.c:326
+#: src/main/sysutils.c:339
+#, fuzzy
+msgid "'Sys.unsetenv' is not available on this system"
+msgstr "'putenv' はこのシステムでは使えません"
+
+#: src/main/sysutils.c:372
 msgid "failed to find symbols in iconv.dll"
 msgstr "iconv.dll でシンボルが見つかりませんでした"
 
-#: src/main/sysutils.c:330
+#: src/main/sysutils.c:376
 msgid "iconv.dll is not available on this system"
 msgstr "icomv.dll はこのシステムでは使えません"
 
-#: src/main/sysutils.c:397
+#: src/main/sysutils.c:443
 msgid "'x' must be a character vector"
 msgstr "'x' は文字列ベクトルでなくてはなりません"
 
-#: src/main/sysutils.c:410
+#: src/main/sysutils.c:456
 msgid "unsupported conversion"
 msgstr "サポートされていない変換です"
 
-#: src/main/sysutils.c:459 src/main/sysutils.c:494 src/main/sysutils.c:501
-#: src/main/sysutils.c:507
+#: src/main/sysutils.c:505 src/main/sysutils.c:540 src/main/sysutils.c:547
+#: src/main/sysutils.c:553
 msgid "'iconv' is not available on this system"
 msgstr "このシステムでは 'iconv' が使えません"
 
-#: src/main/sysutils.c:589
+#: src/main/sysutils.c:635
 msgid "cannot mkdir R_TempDir"
 msgstr "ディレクトリ R_TempDir を作成できません"
 
-#: src/main/sysutils.c:605
+#: src/main/sysutils.c:639 src/main/sysutils.c:646 src/main/sysutils.c:649
+msgid "unable to set R_SESSION_TMPDIR"
+msgstr ""
+
+#: src/main/sysutils.c:658
 msgid "cannot allocate R_TempDir"
 msgstr "R_TempDir を割り当てることができません"
 
-#: src/main/sysutils.c:652
+#: src/main/sysutils.c:705
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam において 'tempdir' が不正です"
 
-#: src/main/sysutils.c:667
+#: src/main/sysutils.c:720
 msgid "cannot find unused tempfile name"
 msgstr "未使用の一時ファイル名を探すことができません"
 
-#: src/main/sysutils.c:689
+#: src/main/sysutils.c:742
 msgid "proc.time() is not implemented on this system"
 msgstr "このシステムでは proc.time 関数は未実装です"
 
@@ -7235,22 +7272,22 @@ msgstr "このプラットフォームでは 'intern=TRUE' は実装されてい
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() はこのシステムでは実装されていません"
 
-#: src/unix/system.c:245
+#: src/unix/system.c:246
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui または -g で，値が指定されていないので無視されました"
 
-#: src/unix/system.c:267
+#: src/unix/system.c:268
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: \"%s\" は未知の gui です。X11 を使います\n"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:271
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: \"%s\" は未知の gui です。何も使いません\n"
 
-#: src/unix/system.c:407
+#: src/unix/system.c:430
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: ファイルリストの最初のみを編集します"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:57\n"
+"POT-Creation-Date: 2007-01-09 09:01\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -644,6 +644,10 @@ msgstr "이하에 대한 값 :"
 
 msgid "' not found"
 msgstr "(을)를 찾아낼수가 없습니다"
+
+#, fuzzy
+msgid "all arguments must be named"
+msgstr "모든 인수는 동일 길이가 나오지 않으면 되지 않습니다"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
