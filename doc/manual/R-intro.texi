@@ -7178,6 +7178,11 @@ is normally the case for an installed @R{}), use
 ...
 @end example
 
+@noindent
+At least in Bourne and bash shells, the @code{#!} mechanism does
+@strong{not} allow extra arguments like 
+@code{#! /usr/bin/env Rscript --vanilla}.
+
 One thing to consider is what @code{stdin()} refers to.  It is
 commonplace to write @R{} scripts with segments like
 
