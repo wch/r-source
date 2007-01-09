@@ -26,10 +26,6 @@
 #include <config.h>
 #endif
 
-#if defined(__APPLE__) && ( ! defined(_POSIX_C_SOURCE) || (_POSIX_C_SOURCE < 200112L) )
-#define _POSIX_C_SOURCE 200112L /* for correct unsetenv */
-#endif
-
 #include <stdlib.h> /* for putenv */
 #include <Defn.h>
 #include <R_ext/Riconv.h>
@@ -322,23 +318,22 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(vars = CAR(args)))
 	errorcall(call, _("wrong type for argument"));
     n = LENGTH(vars);
-    PROTECT(ans = allocVector(LGLSXP, n));
 #ifdef HAVE_UNSETENV
-    for (i = 0; i < n; i++)
-	LOGICAL(ans)[i] = unsetenv(CHAR(STRING_ELT(vars, i))) == 0;
+    for (i = 0; i < n; i++) unsetenv(CHAR(STRING_ELT(vars, i)));
 #elif defined(HAVE_PUTENV_UNSET)
-	for (i = 0; i < n; i++) {
-	LOGICAL(ans)[i] = putenv(CHAR(STRING_ELT(vars, i))) == 0;
+    for (i = 0; i < n; i++) putenv(CHAR(STRING_ELT(vars, i)));
 #elif defined(HAVE_PUTENV_UNSET2)
     {
 	char buf[1000];
 	for (i = 0; i < n; i++) {
 	    snprintf(buf, 1000, "%s=", CHAR(STRING_ELT(vars, i)));
-	    LOGICAL(ans)[i] = putenv(buf) == 0;
+	    putenv(buf);
 	}
     }
 #endif
-    UNPROTECT(1);
+    ans = allocVector(LGLSXP, n);
+    for (i = 0; i < n; i++)
+	LOGICAL(ans)[i] = !getenv(CHAR(STRING_ELT(vars, i)));
     return ans;
 #else
         error(_("'Sys.unsetenv' is not available on this system"));

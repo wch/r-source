@@ -53,10 +53,6 @@
 # endif
 #endif
 
-#if defined(__APPLE__) && ( ! defined(_POSIX_C_SOURCE) || (_POSIX_C_SOURCE < 200112L) )
-#define _POSIX_C_SOURCE 200112L /* for correct unsetenv */
-#endif
-
 #include <time.h>
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h>
@@ -512,7 +508,7 @@ static void reset_tz(char *tz)
 #endif
     } else {
 #ifdef HAVE_UNSETENV
-	if(unsetenv("TZ")) warning(_("problem with unsetting timezone"));
+	unsetenv("TZ") /* FreeBSD variants do not return a value */
 #elif defined(HAVE_PUTENV_UNSET)
 	if(putenv("TZ")) warning(_("problem with unsetting timezone"));
 #elif defined(HAVE_PUTENV_UNSET2)

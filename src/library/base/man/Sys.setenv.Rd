@@ -23,7 +23,8 @@ Sys.unsetenv(x)
 }
 \value{
   A logical vector, with elements being true if (un)setting the
-  corresponding variable succeeded.
+  corresponding variable succeeded.  (For \code{Sys.unsetenv} this
+  includes attempting to remove a non-existent variable.)
 }
 \details{
   The names \code{setenv} and \code{putenv} come from different Unix
