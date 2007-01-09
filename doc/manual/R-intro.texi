@@ -10,6 +10,9 @@
 @c  ~~~~~~~~~~~
 @syncodeindex fn vr
 
+@c for François
+@documentencoding ISO-8859-1
+
 @dircategory Programming
 @direntry
 * R Introduction: (R-intro).    An introduction to R.
@@ -7148,8 +7151,8 @@ Rscript foo.R arg1 arg2
 @end example
 
 @noindent
-and this can also be used to write script files like (at least on
-Unix-alikes, and in some Windows shells)
+and this can also be used to write executable script files like (at
+least on Unix-alikes, and in some Windows shells)
 
 @example
 #! /path/to/Rscript
@@ -7196,6 +7199,23 @@ chem <- scan(n=24)
 and @code{stdin()} refers to the script file to allow such traditional
 usage.  If you want to refer to the process's @file{stdin}, use
 @code{"stdin"} as a @code{file} connection, e.g.@: @code{scan("stdin", ...)}.
+
+Another way to write executable script files (suggested by François
+Pinard) is to use a @emph{here document} like
+
+@example
+#!/bin/sh
+[environment variables can be set here]
+R --slave [other options] <<EOF
+
+   R program goes here...
+
+EOF
+@end example
+
+@noindent
+but here both @code{stdin()} refers to the program source and
+@code{"stdin"} will not be usable.
 
 
 @node The command-line editor, Function and variable index, Invoking R, Top
