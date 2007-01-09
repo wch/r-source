@@ -259,11 +259,15 @@ NEW FEATURES
 	Sys.getenv() are now sorted (by name).
 
     o	New function Sys.unsetenv() to remove environment variables
-	(on systems where unsetenv is implemented, and on Windows).
+	(on systems where unsetenv is implemented or putenv can remove
+	variables, such as on Windows).
 
     o	Sys.setenv() is a new (and preferred) synonym for Sys.putenv.
 	The internal C code uses the POSIX-preferred 'setenv' rather
 	than 'putenv' where the former is available.
+
+    o	strptime() now sets the "tzone" attribute on the result if
+	tz != "".
 
 
 DEPRECATED & DEFUNCT

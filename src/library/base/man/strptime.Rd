@@ -182,7 +182,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The timezone is used to set the
-  \code{isdst} component.
+  \code{isdst} component and (as from \R 2.5.0) to set the
+  \code{"tzone"} attribute if \code{tz != ""}.
 
   \code{ISOdatetime} and \code{ISOdate} return an object of class
   \code{"\link{POSIXct}"}.
@@ -268,6 +269,11 @@ z # prints without fractional seconds
 op <- options(digits.secs=3)
 z
 options(op)
+
+## timezones are not portable, but 'EST5EDT' comes pretty close.
+(x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
+               "\%Y-\%m-\%d \%H:\%M:\%S", tz="EST5EDT"))
+attr(x, "tzone")
 }
 \keyword{utilities}
 \keyword{chron}

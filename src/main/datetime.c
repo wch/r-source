@@ -817,7 +817,7 @@ static void glibc_fix(struct tm *tm, int *invalid)
 
 SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans, ansnames, klass, stz;
+    SEXP x, sformat, ans, ansnames, klass, stz, tzone;
     int i, n, m, N, invalid, isgmt = 0, settz = 0;
     struct tm tm, tm2;
     char *tz = NULL, oldtz[20] = "";
@@ -880,13 +880,27 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	invalid = invalid || validate_tm(&tm) != 0;
 	makelt(&tm, ans, i, !invalid, psecs - floor(psecs));
     }
-    if(settz) reset_tz(oldtz);
 
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(klass = allocVector(STRSXP, 2));
     SET_STRING_ELT(klass, 0, mkChar("POSIXt"));
     SET_STRING_ELT(klass, 1, mkChar("POSIXlt"));
     classgets(ans, klass);
+    if (isgmt) {
+	PROTECT(tzone = allocVector(STRSXP, 1));
+	SET_STRING_ELT(tzone, 0, mkChar(tz));
+	setAttrib(ans, install("tzone"), tzone);
+	UNPROTECT(1);
+    } else if(strlen(tz)) {
+	PROTECT(tzone = allocVector(STRSXP, 3));
+	SET_STRING_ELT(tzone, 0, mkChar(tz));
+	SET_STRING_ELT(tzone, 1, mkChar(tzname[0]));
+	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
+	setAttrib(ans, install("tzone"), tzone);
+	UNPROTECT(1);
+    }
+    if(settz) reset_tz(oldtz);
+
     UNPROTECT(3);
     return ans;
 }
