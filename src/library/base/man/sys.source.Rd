@@ -36,5 +36,16 @@ sys.source(file, envir = baseenv(), chdir = FALSE,
 \seealso{\code{\link{source}}, and \code{\link{library}} which uses
   \code{sys.source}.
 }
+\examples{
+## a simple way to put some objects in an environment high on the search path
+tmp <- tempfile()
+writeLines("aaa <- pi", tmp)
+env <- attach(NULL, name = "myenv")
+sys.source(tmp, env)
+unlink(tmp)
+search()
+aaa
+detach("myenv")
+}
 \keyword{file}
 \keyword{utilities}
