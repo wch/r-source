@@ -292,7 +292,7 @@ msgstr "'x' と 'y' は長さ 1 でなければならない"
 msgid "invalid 'arrow' argument"
 msgstr "不正な 'arrow' 引数です"
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
 msgstr "'id' と 'id.lengths' の両方を指定することは出来ません"
 
 msgid "'x' and 'y' must be same length"

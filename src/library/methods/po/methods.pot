@@ -58,7 +58,7 @@ msgstr ""
 #: methods_list_dispatch.c:419
 #, c-format
 msgid ""
-"invalid  generic function object for method selection for function '%s': "
+"invalid generic function object for method selection for function '%s': "
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
 

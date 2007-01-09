@@ -275,7 +275,7 @@ msgstr ""
 msgid "invalid 'arrow' argument"
 msgstr ""
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
 msgstr ""
 
 msgid "'x' and 'y' must be same length"

@@ -295,8 +295,8 @@ msgstr "'x' и 'y' должны иметь длину 1"
 msgid "invalid 'arrow' argument"
 msgstr "неправильный аргумент 'arrow'"
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
-msgstr "Нельзя устанавливать одновременно и 'id', и 'id.lenghts'"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
+msgstr "Нельзя устанавливать одновременно и 'id', и 'id.lengths'"
 
 msgid "'x' and 'y' must be same length"
 msgstr "'x' и 'y' должны быть одной длины"

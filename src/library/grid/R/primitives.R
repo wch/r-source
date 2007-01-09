@@ -194,7 +194,7 @@ validDetails.polyline <- function(x) {
       !is.unit(x$y))
       stop("'x' and 'y' must be units")
   if (!is.null(x$id) && !is.null(x$id.lengths))
-      stop("It is invalid to specify both 'id' and 'id.lengths")
+      stop("It is invalid to specify both 'id' and 'id.lengths'")
   if (length(x$x) != length(x$y))
       stop("'x' and 'y' must be same length")
   if (!is.null(x$id) && (length(x$id) != length(x$x)))

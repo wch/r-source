@@ -307,7 +307,7 @@ msgstr "'x' et 'y' doivent être de longueur unitaire"
 msgid "invalid 'arrow' argument"
 msgstr "argument 'arrow' incorrect"
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
 msgstr "Il n'est pas permi de spécifier simultanément 'id' et 'id.lengths'"
 
 msgid "'x' and 'y' must be same length"

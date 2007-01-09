@@ -295,7 +295,7 @@ msgstr "'x' 그리고 'y'는 길이 1이 아니면 안됩니다"
 msgid "invalid 'arrow' argument"
 msgstr "부적절한 'rot' 값입니다"
 
-msgid "It is invalid to specify both 'id' and 'id.lengths"
+msgid "It is invalid to specify both 'id' and 'id.lengths'"
 msgstr "'id' 그리고 'id.lengths'의 양쪽 모두를 지정할수 없지 않습니다"
 
 msgid "'x' and 'y' must be same length"
