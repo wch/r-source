@@ -1,9 +1,10 @@
 oneway.test <-
-function(formula, data, subset, na.action, var.equal = FALSE) {
+function(formula, data, subset, na.action, var.equal = FALSE)
+{
     if(missing(formula) || (length(formula) != 3))
         stop("'formula' missing or incorrect")
-    DNAME <- paste(deparse(substitute(formula)[[2]]), "and",
-                   deparse(substitute(formula)[[3]]))
+    dp <- as.character(formula)
+    DNAME <- paste(dp[[2]], "and", dp[[3]])
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
