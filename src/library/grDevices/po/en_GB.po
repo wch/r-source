@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-12-01 10:45+0000\n"
+"POT-Creation-Date: 2007-01-09 08:54+0000\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "unknown AFM entity encountered"
 msgstr ""
 
-#: devPS.c:735 devPS.c:738 devPS.c:3979 devPS.c:6616 devPicTeX.c:501
+#: devPS.c:735 devPS.c:738 devPS.c:3979 devPS.c:6620 devPicTeX.c:501
 #: devPicTeX.c:503
 #, c-format
 msgid "invalid string in '%s'"
@@ -226,7 +226,7 @@ msgstr ""
 msgid "family '%s' not included in PostScript device"
 msgstr ""
 
-#: devPS.c:3790 devPS.c:3818 devPS.c:4775 devPS.c:6468 devPS.c:6514
+#: devPS.c:3790 devPS.c:3818 devPS.c:4775 devPS.c:6470 devPS.c:6518
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr ""
@@ -240,7 +240,7 @@ msgstr ""
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr ""
 
-#: devPS.c:3966 devPS.c:4830 devPS.c:6602
+#: devPS.c:3966 devPS.c:4830 devPS.c:6606
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -356,44 +356,44 @@ msgstr ""
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr ""
 
-#: devPS.c:6162
+#: devPS.c:6164
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr ""
 
-#: devPS.c:6175
+#: devPS.c:6177
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
 "  please shut down the PDF device"
 msgstr ""
 
-#: devPS.c:6445 devPS.c:6720 devPS.c:6763
+#: devPS.c:6445 devPS.c:6724 devPS.c:6767
 msgid "Failed to find or load PDF font"
 msgstr ""
 
-#: devPS.c:6557 devPS.c:6677
+#: devPS.c:6561 devPS.c:6681
 msgid "Failed to find or load PDF CID font"
 msgstr ""
 
-#: devPS.c:6869 devPS.c:6873 devPS.c:7025 devPS.c:7029
+#: devPS.c:6873 devPS.c:6877 devPS.c:7029 devPS.c:7033
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr ""
 
-#: devPS.c:6891 devPS.c:7041
+#: devPS.c:6895 devPS.c:7045
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:6907
+#: devPS.c:6911
 msgid "unable to start device PostScript"
 msgstr ""
 
-#: devPS.c:6976
+#: devPS.c:6980
 msgid "unable to start device xfig"
 msgstr ""
 
-#: devPS.c:7059
+#: devPS.c:7063
 msgid "unable to start device pdf"
 msgstr ""
 

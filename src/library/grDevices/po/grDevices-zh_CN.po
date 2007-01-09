@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-12-01 10:45+0000\n"
+"POT-Creation-Date: 2007-01-09 08:54+0000\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -37,7 +37,7 @@ msgstr "无法对字符信息作句法分析"
 msgid "unknown AFM entity encountered"
 msgstr "遇到了不存在AFM值这样的错误"
 
-#: devPS.c:735 devPS.c:738 devPS.c:3979 devPS.c:6616 devPicTeX.c:501
+#: devPS.c:735 devPS.c:738 devPS.c:3979 devPS.c:6620 devPicTeX.c:501
 #: devPicTeX.c:503
 #, c-format
 msgid "invalid string in '%s'"
@@ -228,7 +228,7 @@ msgstr "PostScript装置里没有CID系列'%s'"
 msgid "family '%s' not included in PostScript device"
 msgstr "PostScript装置里没有'%s'系列"
 
-#: devPS.c:3790 devPS.c:3818 devPS.c:4775 devPS.c:6468 devPS.c:6514
+#: devPS.c:3790 devPS.c:3818 devPS.c:4775 devPS.c:6470 devPS.c:6518
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "不能用%d这个字体，代用字体1"
@@ -242,7 +242,7 @@ msgstr "'mbcsToSbcs'不存在'%s'这样的编码"
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr "'mbcsToSbcs'中转换出错"
 
-#: devPS.c:3966 devPS.c:4830 devPS.c:6602
+#: devPS.c:3966 devPS.c:4830 devPS.c:6606
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "文字转换到编码'%s'时出了错"
@@ -358,11 +358,11 @@ msgstr "增加PDF版本到1.3"
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr "无法打开'pdf'文本变元'%s'"
 
-#: devPS.c:6162
+#: devPS.c:6164
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr "无法增加页数限制: 请关闭pdf装置"
 
-#: devPS.c:6175
+#: devPS.c:6177
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -371,33 +371,33 @@ msgstr ""
 "无法打开'pdf'文本变元'%s'\n"
 "  请关闭PDF装置"
 
-#: devPS.c:6445 devPS.c:6720 devPS.c:6763
+#: devPS.c:6445 devPS.c:6724 devPS.c:6767
 msgid "Failed to find or load PDF font"
 msgstr "找不到也载不入PDF字体"
 
-#: devPS.c:6557 devPS.c:6677
+#: devPS.c:6561 devPS.c:6681
 msgid "Failed to find or load PDF CID font"
 msgstr "找不到也载不入PDFCID字体"
 
-#: devPS.c:6869 devPS.c:6873 devPS.c:7025 devPS.c:7029
+#: devPS.c:6873 devPS.c:6877 devPS.c:7029 devPS.c:7033
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s里的'system'参数不对"
 
-#: devPS.c:6891 devPS.c:7041
+#: devPS.c:6895 devPS.c:7045
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:6907
+#: devPS.c:6911
 msgid "unable to start device PostScript"
 msgstr "无法启动PostScript装置"
 
-#: devPS.c:6976
+#: devPS.c:6980
 msgid "unable to start device xfig"
 msgstr "无法启动xfig装置"
 
-#: devPS.c:7059
+#: devPS.c:7063
 msgid "unable to start device pdf"
 msgstr "无法启动pdf装置"
 

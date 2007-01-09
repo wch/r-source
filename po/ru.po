@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-12-11 10:41+0000\n"
+"POT-Creation-Date: 2007-01-09 08:54+0000\n"
 "PO-Revision-Date: 2006-12-10 00:33-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -114,8 +114,8 @@ msgstr "неправильные 'names' в R_unlink"
 #: src/main/envir.c:1507 src/main/envir.c:1573 src/main/envir.c:1589
 #: src/main/envir.c:1596 src/main/envir.c:1690 src/main/envir.c:1698
 #: src/main/envir.c:1706 src/main/envir.c:1720 src/main/envir.c:1726
-#: src/main/envir.c:1730 src/main/envir.c:2293 src/main/envir.c:2566
-#: src/main/envir.c:3115 src/main/eval.c:279 src/main/eval.c:1633
+#: src/main/envir.c:1730 src/main/envir.c:2296 src/main/envir.c:2569
+#: src/main/envir.c:3118 src/main/eval.c:279 src/main/eval.c:1633
 #: src/main/eval.c:1657 src/main/eval.c:1661 src/main/memory.c:2859
 #: src/main/model.c:1597 src/main/model.c:1605 src/main/optim.c:229
 #: src/main/paste.c:71 src/main/paste.c:163 src/main/paste.c:170
@@ -136,9 +136,9 @@ msgstr "неправильные 'names' в R_unlink"
 #: src/main/seq.c:350 src/main/seq.c:368 src/main/seq.c:372 src/main/seq.c:378
 #: src/main/sysutils.c:398 src/main/sysutils.c:400 src/main/sysutils.c:402
 #: src/main/unique.c:576 src/main/util.c:527 src/main/util.c:530
-#: src/modules/internet/internet.c:254 src/modules/internet/internet.c:260
-#: src/modules/internet/internet.c:266 src/modules/internet/internet.c:269
-#: src/modules/internet/internet.c:273 src/unix/sys-std.c:934
+#: src/modules/internet/internet.c:255 src/modules/internet/internet.c:261
+#: src/modules/internet/internet.c:267 src/modules/internet/internet.c:270
+#: src/modules/internet/internet.c:274 src/unix/sys-std.c:934
 #: src/unix/sys-std.c:956
 #, c-format
 msgid "invalid '%s' argument"
@@ -316,7 +316,7 @@ msgstr "'which' должен быть единичной длины"
 #: src/main/connections.c:3256 src/main/connections.c:3483
 #: src/main/connections.c:3485 src/main/connections.c:3487
 #: src/main/connections.c:3517 src/main/context.c:481 src/main/context.c:493
-#: src/main/context.c:497 src/main/envir.c:1919 src/main/saveload.c:1964
+#: src/main/context.c:497 src/main/envir.c:1922 src/main/saveload.c:1964
 #: src/main/saveload.c:1967 src/main/saveload.c:1970 src/main/saveload.c:2242
 #: src/main/saveload.c:2247 src/main/saveload.c:2250
 #, c-format
@@ -1153,10 +1153,10 @@ msgstr "указанный размер вектора слишком велик"
 #: src/main/builtin.c:292 src/main/coerce.c:1400 src/main/connections.c:2043
 #: src/main/engine.c:2682 src/main/envir.c:856 src/main/envir.c:950
 #: src/main/envir.c:1406 src/main/envir.c:1499 src/main/envir.c:1567
-#: src/main/envir.c:1683 src/main/envir.c:2323 src/main/envir.c:2376
-#: src/main/envir.c:2659 src/main/envir.c:2687 src/main/envir.c:2707
-#: src/main/envir.c:2729 src/main/envir.c:2763 src/main/envir.c:2783
-#: src/main/envir.c:3107 src/main/envir.c:3111 src/main/eval.c:3498
+#: src/main/envir.c:1683 src/main/envir.c:2326 src/main/envir.c:2379
+#: src/main/envir.c:2662 src/main/envir.c:2690 src/main/envir.c:2710
+#: src/main/envir.c:2732 src/main/envir.c:2766 src/main/envir.c:2786
+#: src/main/envir.c:3110 src/main/envir.c:3114 src/main/eval.c:3498
 #: src/main/objects.c:175 src/main/objects.c:181 src/main/saveload.c:2072
 #: src/main/saveload.c:2338 src/main/saveload.c:2388 src/main/serialize.c:2175
 msgid "use of NULL environment is defunct"
@@ -2095,7 +2095,7 @@ msgstr ""
 "файл(\"\") поддерживает только open = \"w+\" and open = \"w+b\": использую "
 "второе"
 
-#: src/main/connections.c:3666 src/modules/internet/internet.c:480
+#: src/main/connections.c:3666 src/modules/internet/internet.c:481
 msgid "unsupported URL scheme"
 msgstr "не поддерживаемая схема URL"
 
@@ -2782,126 +2782,126 @@ msgstr "второй аргумент должен быть окружением"
 msgid "wrong length for '%s' argument"
 msgstr "неправильная длина аргумента '%s''"
 
-#: src/main/envir.c:1809
+#: src/main/envir.c:1812
 msgid "invalid use of 'missing'"
 msgstr "неправильное использование 'missing'"
 
-#: src/main/envir.c:1834
+#: src/main/envir.c:1837
 msgid "'missing' can only be used for arguments"
 msgstr "'missing' может использоваться только для аргументов"
 
-#: src/main/envir.c:1929
+#: src/main/envir.c:1932
 msgid "all elements of a list must be named"
 msgstr "все элементы должны быть именованы"
 
-#: src/main/envir.c:1952
+#: src/main/envir.c:1955
 msgid "'attach' only works for lists, data frames and environments"
 msgstr "'attach' работает только со списками, таблицами данных и окружениями"
 
-#: src/main/envir.c:2035
+#: src/main/envir.c:2038
 msgid "detaching \"package:base\" is not allowed"
 msgstr "отделение \"package:base\" не разрешено"
 
-#: src/main/envir.c:2325 src/main/envir.c:2378
+#: src/main/envir.c:2328 src/main/envir.c:2381
 msgid "argument must be an environment"
 msgstr "аргумент должен быть окружением"
 
-#: src/main/envir.c:2382
+#: src/main/envir.c:2385
 msgid "arguments must be symbolic"
 msgstr "аргументы должны быть символическими"
 
-#: src/main/envir.c:2485 src/main/random.c:34 src/main/random.c:563
+#: src/main/envir.c:2488 src/main/random.c:34 src/main/random.c:563
 msgid "invalid arguments"
 msgstr "неправильные аргументы"
 
-#: src/main/envir.c:2543
+#: src/main/envir.c:2546
 msgid "no enclosing environment"
 msgstr "нет вложенного окружения"
 
-#: src/main/envir.c:2590
+#: src/main/envir.c:2593
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "в списке поиска нет пункта по имени \"%s\""
 
-#: src/main/envir.c:2607
+#: src/main/envir.c:2610
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr "использование 'as.environment(NULL)' не одобряется"
 
-#: src/main/envir.c:2610
+#: src/main/envir.c:2613
 msgid "invalid object for 'as.environment'"
 msgstr "неправильный объект для 'as.environment'"
 
-#: src/main/envir.c:2634 src/main/envir.c:2661 src/main/envir.c:2689
-#: src/main/envir.c:2709 src/main/envir.c:2731 src/main/envir.c:2765
-#: src/main/envir.c:2785
+#: src/main/envir.c:2637 src/main/envir.c:2664 src/main/envir.c:2692
+#: src/main/envir.c:2712 src/main/envir.c:2734 src/main/envir.c:2768
+#: src/main/envir.c:2788
 msgid "not an environment"
 msgstr "не окружение"
 
-#: src/main/envir.c:2685 src/main/envir.c:2705 src/main/envir.c:2725
-#: src/main/envir.c:2761 src/main/envir.c:2781 src/main/envir.c:2879
+#: src/main/envir.c:2688 src/main/envir.c:2708 src/main/envir.c:2728
+#: src/main/envir.c:2764 src/main/envir.c:2784 src/main/envir.c:2882
 msgid "not a symbol"
 msgstr "не символ"
 
-#: src/main/envir.c:2697 src/main/envir.c:2717 src/main/envir.c:2773
-#: src/main/envir.c:2793
+#: src/main/envir.c:2700 src/main/envir.c:2720 src/main/envir.c:2776
+#: src/main/envir.c:2796
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "нет связи для \"%s\""
 
-#: src/main/envir.c:2727
+#: src/main/envir.c:2730
 msgid "not a function"
 msgstr "не функция"
 
-#: src/main/envir.c:2734 src/main/envir.c:2750
+#: src/main/envir.c:2737 src/main/envir.c:2753
 msgid "symbol already has a regular binding"
 msgstr "символ уже имеет правильную связь"
 
-#: src/main/envir.c:2838
+#: src/main/envir.c:2841
 msgid "unknown op"
 msgstr "неизвестный op"
 
-#: src/main/envir.c:2883
+#: src/main/envir.c:2886
 msgid "cannot unbind a locked binding"
 msgstr "не могу освободить блокированную связь"
 
-#: src/main/envir.c:2885
+#: src/main/envir.c:2888
 msgid "cannot unbind an active binding"
 msgstr "не могу освободить активную связь"
 
-#: src/main/envir.c:2948
+#: src/main/envir.c:2951
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "использую .GlobalEnv вместо '%s'"
 
-#: src/main/envir.c:3015
+#: src/main/envir.c:3018
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "пространства имен недоступны; использую .GlobalEnv"
 
-#: src/main/envir.c:3039
+#: src/main/envir.c:3042
 msgid "bad name space name"
 msgstr "неправильное имя пространства имен"
 
-#: src/main/envir.c:3051
+#: src/main/envir.c:3054
 msgid "name space already registered"
 msgstr "пространство имен уже зарегистрировано"
 
-#: src/main/envir.c:3063
+#: src/main/envir.c:3066
 msgid "name space not registered"
 msgstr "пространство имен не регистрировано"
 
-#: src/main/envir.c:3109
+#: src/main/envir.c:3112
 msgid "bad import environment argument"
 msgstr "неправильный аргумент импорта окружения"
 
-#: src/main/envir.c:3113
+#: src/main/envir.c:3116
 msgid "bad export environment argument"
 msgstr "неправильный аргумент экспорта окружения"
 
-#: src/main/envir.c:3117
+#: src/main/envir.c:3120
 msgid "length of import and export names must match"
 msgstr "длины экспортируемых и импортируемых имен должны совпадать"
 
-#: src/main/envir.c:3140
+#: src/main/envir.c:3143
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "экспортируемый символ '%s' не имеет значения"
@@ -3656,63 +3656,63 @@ msgstr "ошибка: системные команды не поддерживаются в этой версии R.\n"
 msgid "Error: segfault from C stack overflow\n"
 msgstr "Ошибка сегментации памяти из переполненного стека C\n"
 
-#: src/main/main.c:797
+#: src/main/main.c:798
 msgid "unable to open the base package\n"
 msgstr "не могу открыть пакет 'base'\n"
 
-#: src/main/main.c:856
+#: src/main/main.c:857
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "ВНИМАНИЕ: локали UTF-8 не поддерживаются в этой сборке R\n"
 
-#: src/main/main.c:877
+#: src/main/main.c:878
 msgid "unable to restore saved data in .RData\n"
 msgstr "не могу восстановить сохраненные в .RData данные\n"
 
-#: src/main/main.c:918
+#: src/main/main.c:919
 msgid "During startup - "
 msgstr "Во время загрузки - "
 
-#: src/main/main.c:1115
+#: src/main/main.c:1116
 msgid "cannot quit from browser"
 msgstr "не могу выйти из браузера"
 
-#: src/main/main.c:1119
+#: src/main/main.c:1120
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "ожидается одно из: \"yes\", \"no\", \"ask\" или \"default\"."
 
-#: src/main/main.c:1124
+#: src/main/main.c:1125
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" во время неинтерактивной работы: будет использована командная "
 "строка по умолчанию"
 
-#: src/main/main.c:1132
+#: src/main/main.c:1133
 msgid "unrecognized value of 'save'"
 msgstr "нераспознанное значение 'save'"
 
-#: src/main/main.c:1135
+#: src/main/main.c:1136
 msgid "invalid 'status', 0 assumed"
 msgstr "неправильный 'status', принят 0"
 
-#: src/main/main.c:1140
+#: src/main/main.c:1141
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "неправильный 'runLast', принято FALSE"
 
-#: src/main/main.c:1171
+#: src/main/main.c:1172
 msgid "cannot allocate space for toplevel callback element"
 msgstr "не могу выделить место обратного вызова элемента верхнего уровня"
 
-#: src/main/main.c:1249
+#: src/main/main.c:1250
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "отрицательный индекс передан в R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1362
+#: src/main/main.c:1363
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 "предупреждающие сообщения из обратного вызова задачи верхнего уровня '%s'\n"
 
-#: src/main/main.c:1422
+#: src/main/main.c:1423
 msgid "top-level task callback did not return a logical value"
 msgstr "обратный вызов задачи верхнего уровня не вернул логического значения"
 
@@ -5417,8 +5417,8 @@ msgid "an xdr complex data read error occurred"
 msgstr "произошла ошибка чтения комплексных xdr-данных"
 
 #: src/main/saveload.c:1799 src/main/serialize.c:1578
-#: src/main/serialize.c:2063 src/modules/internet/internet.c:312
-#: src/modules/internet/internet.c:358 src/modules/internet/internet.c:440
+#: src/main/serialize.c:2063 src/modules/internet/internet.c:313
+#: src/modules/internet/internet.c:359 src/modules/internet/internet.c:441
 msgid "write failed"
 msgstr "запись не удалась"
 
@@ -6260,11 +6260,11 @@ msgstr "не могу создать папку 'R_TempDir'"
 msgid "cannot allocate R_TempDir"
 msgstr "не могу разместить 'R_TempDir'"
 
-#: src/main/sysutils.c:623
+#: src/main/sysutils.c:651
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "неправильная 'tempdir' в R_tmpnam"
 
-#: src/main/sysutils.c:638
+#: src/main/sysutils.c:666
 msgid "cannot find unused tempfile name"
 msgstr "не могу найти неиспользованное имя временного файла"
 
@@ -6495,65 +6495,65 @@ msgstr "Тут должно быть по крайней мере 3 контрольных точки"
 msgid "unknown URL scheme"
 msgstr "неизвестная схема URL"
 
-#: src/modules/internet/internet.c:162 src/modules/internet/internet.c:166
-#: src/modules/internet/internet.c:172 src/modules/internet/internet.c:184
+#: src/modules/internet/internet.c:163 src/modules/internet/internet.c:167
+#: src/modules/internet/internet.c:173 src/modules/internet/internet.c:185
 msgid "allocation of url connection failed"
 msgstr "размещение url-соединения не удалось"
 
-#: src/modules/internet/internet.c:256
+#: src/modules/internet/internet.c:257
 msgid "only first element of 'url' argument used"
 msgstr "использован только первый элемент аргумента 'url'"
 
-#: src/modules/internet/internet.c:262
+#: src/modules/internet/internet.c:263
 msgid "only first element of 'destfile' argument used"
 msgstr "использован только первый элемент аргумента 'destfile'"
 
-#: src/modules/internet/internet.c:287
+#: src/modules/internet/internet.c:288
 msgid "Download progress"
 msgstr "Процент скачивания"
 
-#: src/modules/internet/internet.c:307 src/modules/internet/internet.c:394
-#: src/modules/internet/internet.c:476
+#: src/modules/internet/internet.c:308 src/modules/internet/internet.c:395
+#: src/modules/internet/internet.c:477
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "не могу открыть URL '%s'"
 
-#: src/modules/internet/internet.c:309 src/modules/internet/internet.c:328
-#: src/modules/internet/internet.c:407
+#: src/modules/internet/internet.c:310 src/modules/internet/internet.c:329
+#: src/modules/internet/internet.c:408
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "не могу открыть файл назначения '%s'"
 
-#: src/modules/internet/internet.c:331 src/modules/internet/internet.c:410
+#: src/modules/internet/internet.c:332 src/modules/internet/internet.c:411
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "пробую URL '%s'\n"
 
-#: src/modules/internet/internet.c:338 src/modules/internet/internet.c:417
+#: src/modules/internet/internet.c:339 src/modules/internet/internet.c:418
 msgid "opened URL\n"
 msgstr "открытие URL\n"
 
-#: src/modules/internet/internet.c:390 src/modules/internet/internet.c:472
+#: src/modules/internet/internet.c:391 src/modules/internet/internet.c:473
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "скачанный размер %d != сообщенному размеру %d"
 
-#: src/modules/internet/internet.c:506 src/modules/internet/internet.c:735
+#: src/modules/internet/internet.c:507 src/modules/internet/internet.c:736
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "не могу открыть: статус HTTP был '%d %s'"
 
-#: src/modules/internet/internet.c:679 src/modules/internet/internet.c:835
+#: src/modules/internet/internet.c:680 src/modules/internet/internet.c:836
 msgid "InternetOpenUrl timed out"
 msgstr "тайм-аут 'InternetOpenUrl'"
 
-#: src/modules/internet/internet.c:706 src/modules/internet/internet.c:720
-#: src/modules/internet/internet.c:857 src/modules/internet/internet.c:866
+#: src/modules/internet/internet.c:707 src/modules/internet/internet.c:721
+#: src/modules/internet/internet.c:858 src/modules/internet/internet.c:867
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "'InternetOpenUrl' не удалось: '%s'"
 
-#: src/modules/internet/internet.c:770
+#: src/modules/internet/internet.c:771
 msgid "Internet read timed out"
 msgstr "тайм-аут чтения из Internet"
 
