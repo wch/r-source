@@ -78,7 +78,7 @@
     \item{\code{year}}{Years since 1900.}
     \item{\code{wday}}{0--6 day of the week, starting on Sunday.}
     \item{\code{yday}}{0--365: day of the year.}
-    \item{\code{isdst}}{Daylight savings time flag. Positive if in
+    \item{\code{isdst}}{Daylight savings time flag.  Positive if in
       force, zero if not, negative if unknown.}
   }
   The classes correspond to the ANSI C constructs of \dQuote{calendar

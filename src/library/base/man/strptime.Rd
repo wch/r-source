@@ -27,8 +27,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 \arguments{
   \item{x}{An object to be converted.}
   \item{tz}{A timezone specification to be used for the conversion.
-    System-specific, but \code{""} is the current time zone, and
-    \code{"GMT"} is UTC.}
+    System-specific (see \code{\link{as.POSIXlt}}), but \code{""} is the
+    current time zone, and \code{"GMT"} is UTC.}
   \item{format}{A character string.  The default is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
@@ -181,11 +181,11 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   representing the time.
 
   \code{strptime} turns character representations into an object of
-  class \code{"POSIXlt"}.  The timezone is used to set the \code{isdst}
-  component.
+  class \code{"\link{POSIXlt}"}.  The timezone is used to set the
+  \code{isdst} component.
 
   \code{ISOdatetime} and \code{ISOdate} return an object of class
-  \code{"POSIXct"}.
+  \code{"\link{POSIXct}"}.
 }
 \note{
   The default formats follow the rules of the ISO 8601 international
