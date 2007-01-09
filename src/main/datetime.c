@@ -818,9 +818,9 @@ static void glibc_fix(struct tm *tm, int *invalid)
 SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, ansnames, klass, stz;
-    int i, n, m, N, invalid, isgmt = 0;
+    int i, n, m, N, invalid, isgmt = 0, settz = 0;
     struct tm tm, tm2;
-    char *tz = NULL;
+    char *tz = NULL, oldtz[20] = "";
     double psecs = 0.0;
 
     checkArity(op, args);
@@ -831,7 +831,14 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString((stz = CADDR(args))) || LENGTH(stz) != 1)
 	error(_("invalid '%s' value"), "tz");
     tz = CHAR(STRING_ELT(stz, 0));
+    if(strlen(tz) == 0) {
+	/* do a direct look up here as this does not otherwise
+	   work on Windows */
+	char *p = getenv("TZ");
+	if(p) tz = p;
+    }
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
+    if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
     n = LENGTH(x); m = LENGTH(sformat);
     if(n > 0) N = (m > n)?m:n; else N = 0;
@@ -873,6 +880,8 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	invalid = invalid || validate_tm(&tm) != 0;
 	makelt(&tm, ans, i, !invalid, psecs - floor(psecs));
     }
+    if(settz) reset_tz(oldtz);
+
     setAttrib(ans, R_NamesSymbol, ansnames);
     PROTECT(klass = allocVector(STRSXP, 2));
     SET_STRING_ELT(klass, 0, mkChar("POSIXt"));
