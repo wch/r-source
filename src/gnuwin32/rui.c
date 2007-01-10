@@ -555,12 +555,14 @@ static void menurwFAQ(control m)
 
 static void menuabout(control m)
 {
-    char  s[256];
+    char  s[256], s2[256];
 
-    sprintf(s, "%s %s.%s %s\n%s, %s\n\n%s",
-	    "R", R_MAJOR, R_MINOR, "- A Language and Environment",
-	    "              Copyright ", R_YEAR,
-	    "    The R Development Core Team");
+    
+    PrintVersionString(s2);
+    sprintf(s, "%s\n%s %s %s",
+	    s2,
+	    "Copyright (C)", R_YEAR,
+	    "The R Foundation for Statistical Computing");
     askok(s);
 /*    show(RConsole); */
 }
@@ -1001,8 +1003,7 @@ int setupui()
 
 	TRACERUI("status bar");
 	addstatusbar();
-	sprintf(s, "%s %s.%s %s",
-		"R", R_MAJOR, R_MINOR, "- A Language and Environment");
+	PrintVersionString(s);
 	addto(RConsole);
 	setstatus(s);
 	TRACERUI("status bar done");
