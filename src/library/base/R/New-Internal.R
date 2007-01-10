@@ -48,9 +48,15 @@ choose <- function(n,k).Internal(choose(n,k))
 lchoose <- function(n,k).Internal(lchoose(n,k))
 
 ##-- 2nd part --
-# Machine <- function().Internal(Machine())
 R.Version <- function().Internal(Version())
-commandArgs <- function() .Internal(commandArgs())
+
+commandArgs <- function(trailingOnly = FALSE) {
+    args <- .Internal(commandArgs())
+    if(trailingOnly) {
+        m <- match("--args", args, 0)
+        if(m) args[-(1:m)] else character(0)
+    } else args
+}
 
 args <- function(name).Internal(args(name))
 

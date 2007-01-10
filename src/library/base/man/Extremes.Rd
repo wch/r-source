@@ -72,7 +72,7 @@ pmin(\dots, na.rm=FALSE)
   The type of the result will be that of the highest of the inputs in
   the hierarchy integer < real < character, including empty character
   vectors.  Further, if there are only numeric inputs and all are
-  empty (after possible removal of \code{MA}s), the result is double
+  empty (after possible removal of \code{NA}s), the result is double
   (\code{Inf} or \code{-Inf}).
 }
 \references{

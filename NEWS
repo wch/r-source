@@ -276,6 +276,9 @@ NEW FEATURES
 
     o	max(), min() and range() now work with character vectors.
 
+    o	commandArgs() has a new 'trailingOnly' argument to be used in
+	conjunctions with --args.
+
 
 DEPRECATED & DEFUNCT
 

@@ -20,11 +20,7 @@
 /* This is intended to be used in scripts like
 
 #! /path/to/Rscript --vanilla
-scriptArgs <- function() {
-    args <- commandArgs()
-    args[-(1:match("--args", args)]
-}
-scriptArgs()
+commandArgs(TRUE)
 q(status=7)
 
 This invokes R with a command line like

@@ -6,7 +6,11 @@
   this \R session was invoked.
 }
 \usage{
-commandArgs()
+commandArgs(trailingOnly=FALSE)
+}
+\arguments{
+  \item{trailingOnly}{logical.  Should only arguments after
+    \code{--args} be returned?}
 }
 \details{
   These arguments are captured before the standard \R command line
@@ -15,7 +19,7 @@ commandArgs()
   indicated whether we want the unprocessed or processed values.
 
   This is especially useful with the \code{--args} command-line flag to
-  \R, as all of the command line after than flag is skipped.
+  \R, as all of the command line after that flag is skipped.
 }
 \value{
   A character vector containing the name of the executable and the
@@ -24,6 +28,9 @@ commandArgs()
   exact form of this element is platform dependent.  It may be the fully
   qualified name, or simply the last component (or basename) of the
   application.
+
+  If \code{trailingOnly=TRUE}, a character vector of those arguments
+  (if any) supplied after \code{==args}.
 }
 %\author{DTL}
 \seealso{\code{\link{Startup}}

@@ -6978,7 +6978,7 @@ support is available, @samp{Tk} and @samp{gnome} provided that package
 @item --args
 This flag does nothing except cause the rest of the command line to be
 skipped: this can be useful to retrieve values from it with
-@code{commandArgs()}.
+@code{commandArgs(TRUE)}.
 @end table
 
 Note that input and output can be redirected in the usual way (using
@@ -7140,7 +7140,7 @@ will pass arguments to a script which can be retrieved as a character
 vector by
 
 @example
-args <- commandArgs(); args <- args[-(1:match("--args", args))]
+args <- commandArgs(TRUE)
 @end example
 
 This is made simpler by the alternative front-end @command{Rscript},
@@ -7156,8 +7156,7 @@ least on Unix-alikes, and in some Windows shells)
 
 @example
 #! /path/to/Rscript
-args <- commandArgs()
-args <- args[-(1:match("--args", args))]
+args <- commandArgs(TRUE)
 ...
 q(status=<exit status code>)
 @end example
@@ -7214,7 +7213,7 @@ EOF
 @end example
 
 @noindent
-but here both @code{stdin()} refers to the program source and
+but here @code{stdin()} refers to the program source and
 @code{"stdin"} will not be usable.
 
 
