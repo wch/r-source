@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:57\n"
+"POT-Creation-Date: 2007-01-10 22:29\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -83,6 +83,21 @@ msgstr "x$lag는 적어도 1열을 포함하지 않으면 되지 않습니다"
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "최초 lag가 0 일때만  ci.type=\"ma\"를 사용할수가 있습니다"
 
+msgid "par(*) :"
+msgstr ""
+
+msgid "Page ["
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "]: i ="
+msgstr ""
+
+msgid "; j ="
+msgstr ""
+
 msgid "univariate time series only"
 msgstr "일변양시계열만 입니다"
 
@@ -91,6 +106,9 @@ msgstr "scope에 항이 없습니다"
 
 msgid "no terms in scope for adding to object"
 msgstr "오브젝트에 첨가해야 할 항이 scope중에 있지 않습니다"
+
+msgid "trying +"
+msgstr ""
 
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "사용중의 행수가 변했습니다: 결손값을 제거합니까?"
@@ -106,6 +124,9 @@ msgstr "\"mlm\" 모델에서 'add1'메소드는 실제 적용되지 않습니다
 
 msgid "scope is not a subset of term labels"
 msgstr "scope는 label항의 부분 집합이 아닙니다"
+
+msgid "trying -"
+msgstr ""
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "메소드 'drop1'는 mlm 모델에서 실제 적용되어 있지 않습니다"
@@ -125,6 +146,12 @@ msgstr "상위의 scope는 모델을 포함하고 있지 않습니다"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "AIC는 이 모델에서 정의 되지 않습니다, 따라서 'step'를 진행시킬 수가 없습니다"
+
+msgid "Start:  AIC="
+msgstr ""
+
+msgid "Step:  AIC="
+msgstr ""
 
 #, fuzzy
 msgid "'A' must be an array or table"
@@ -227,6 +254,9 @@ msgstr "residuals에 자유도가 없습니다"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object'는 에러'qr'요소를 포함하고는 있지 않습니다"
+
+msgid "Refitting model to allow projection"
+msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "'contrast.obj'의 열은 대비(총계가 0)를 정의하지 않으면 되지 않습니다"
@@ -561,6 +591,9 @@ msgid ""
 msgstr ""
 "'tree'의 'height'요소는 승순에 sort되어 있지 않습니다.\n"
 "최초로 as.hclust()를 적용하는 것을 고려해 주십시오"
+
+msgid "cutree(): k(h) ="
+msgstr ""
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k'의 요소는 1과 %d의 사이에 없으면 되지 않습니다"
@@ -1045,9 +1078,6 @@ msgstr "수치적으로 0인 적용시키고 비율이 초래해졌습니다"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "'anova.glm'에의 다음의 인수는 무효이고, 제거 되었습니다"
-
-msgid ","
-msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
 msgstr ""

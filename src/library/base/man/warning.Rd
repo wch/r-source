@@ -11,8 +11,9 @@ warning(\dots, call. = TRUE, immediate. = FALSE, domain = NULL)
 suppressWarnings(expr)
 }
 \arguments{
-  \item{\dots}{character vectors (which are pasted together with no
-    separator), a condition object, or \code{NULL}.}
+  \item{\dots}{zero or more objects which can be coerced to character
+    (and which are pasted together with no separator) or a single
+    condition object.}
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
   \item{immediate.}{logical, indicating if the call should be output
@@ -26,15 +27,19 @@ suppressWarnings(expr)
   \code{\link{options}("warn")} and on handlers established in the
   executing code.
 
+  If a condition object is supplied it should be the only argument, and
+  further arguments will be ignored, with a message.
+
   \code{warning} signals a warning condition by (effectively) calling
   \code{signalCondition}.  If there are no handlers or if all handlers
-  return, then the value of \code{warn} is used to determine the
-  appropriate action.  If \code{warn} is negative warnings are
-  ignored; if it is zero they are stored and printed after the
-  top--level function has completed; if it is one they are printed as
-  they occur and if it is 2 (or larger) warnings are turned into
-  errors.  Calling \code{warning(immediate. = TRUE)} turns
-  \code{warn <= 0} into \code{warn = 1} for this call only.
+  return, then the value of \code{warn = \link{getOption}("warn")} is
+  used to determine the appropriate action.  If \code{warn} is negative
+  warnings are ignored; if it is zero they are stored and printed after
+  the top--level function has completed; if it is one they are printed
+  as they occur and if it is 2 (or larger) warnings are turned into
+  errors. Calling \code{warning(immediate. = TRUE)} turns \code{warn <=
+    0} into \code{warn = 1} for this call only.
+
 
   If \code{warn} is zero (the default), a read-only variable
   \code{last.warning} is created.  It contains the warnings which can be

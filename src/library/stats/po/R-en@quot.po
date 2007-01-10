@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:57\n"
-"PO-Revision-Date: 2007-01-05 11:57\n"
+"POT-Creation-Date: 2007-01-10 22:29\n"
+"PO-Revision-Date: 2007-01-10 22:29\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -102,6 +102,21 @@ msgstr "x$lag must have at least 1 column"
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "can use ci.type=“ma” only if first lag is 0"
 
+msgid "par(*) :"
+msgstr "par(*) :"
+
+msgid "Page ["
+msgstr "Page ["
+
+msgid ","
+msgstr ","
+
+msgid "]: i ="
+msgstr "]: i ="
+
+msgid "; j ="
+msgstr "; j ="
+
 msgid "univariate time series only"
 msgstr "univariate time series only"
 
@@ -110,6 +125,9 @@ msgstr "no terms in scope"
 
 msgid "no terms in scope for adding to object"
 msgstr "no terms in scope for adding to object"
+
+msgid "trying +"
+msgstr "trying +"
 
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "number of rows in use has changed: remove missing values?"
@@ -126,6 +144,9 @@ msgstr "no ‘add1’ method implemented for “mlm” models"
 msgid "scope is not a subset of term labels"
 msgstr "scope is not a subset of term labels"
 
+msgid "trying -"
+msgstr "trying -"
+
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "no ‘drop1’ method for “mlm” models"
 
@@ -140,6 +161,12 @@ msgstr "upper scope does not include model term(s) %s"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "AIC is not defined for this model, so ‘step’ cannot proceed"
+
+msgid "Start:  AIC="
+msgstr "Start:  AIC="
+
+msgid "Step:  AIC="
+msgstr "Step:  AIC="
 
 msgid "'A' must be an array or table"
 msgstr "‘A’ must be an array or table"
@@ -241,6 +268,9 @@ msgstr "no degrees of freedom for residuals"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "‘object’ does not include an error ‘qr’ component"
+
+msgid "Refitting model to allow projection"
+msgstr "Refitting model to allow projection"
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "columns of ‘contrast.obj’ must define a contrast(sum to zero)"
@@ -573,6 +603,9 @@ msgid ""
 msgstr ""
 "the ‘height’ component of ‘tree’ is not sorted\n"
 "(increasingly); consider applying as.hclust() first"
+
+msgid "cutree(): k(h) ="
+msgstr "cutree(): k(h) ="
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "elements of ‘k’ must be between 1 and %d"
@@ -1021,9 +1054,6 @@ msgstr "fitted rates numerically 0 occurred"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "the following arguments to ‘anova.glm’ are invalid and dropped:"
-
-msgid ","
-msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
 msgstr "using F test with a %s family is inappropriate"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:57\n"
+"POT-Creation-Date: 2007-01-10 22:29\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -85,6 +85,21 @@ msgstr "x$lag deve avere almeno 1 colonna"
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "si può usare ci.type=\"ma\" solo se il primo lag è 0"
 
+msgid "par(*) :"
+msgstr ""
+
+msgid "Page ["
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "]: i ="
+msgstr ""
+
+msgid "; j ="
+msgstr ""
+
 msgid "univariate time series only"
 msgstr "solo serie storiche unidimensionali"
 
@@ -93,6 +108,9 @@ msgstr "scope senza termini"
 
 msgid "no terms in scope for adding to object"
 msgstr "scope senza termini da aggiungere all'oggetto"
+
+msgid "trying +"
+msgstr ""
 
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "il numero di righe in uso è cambiato: elimino i missing value?"
@@ -108,6 +126,9 @@ msgstr "nessun metodo 'add1' implementato per modelli \"mlm\""
 
 msgid "scope is not a subset of term labels"
 msgstr "scope non è un sottoinsieme delle etichette dei termini"
+
+msgid "trying -"
+msgstr ""
 
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "nessun metodo 'drop1' per modelli \"mlm\""
@@ -126,6 +147,12 @@ msgstr "scope superiore non include il modello"
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr ""
 "l'AIC non è definito per questo modello, quindi 'step' non può procedere"
+
+msgid "Start:  AIC="
+msgstr ""
+
+msgid "Step:  AIC="
+msgstr ""
 
 #, fuzzy
 msgid "'A' must be an array or table"
@@ -231,6 +258,9 @@ msgstr "residui senza gradi di libertà"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object' non contiene una componente di errore 'qr'"
+
+msgid "Refitting model to allow projection"
+msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr ""
@@ -568,6 +598,9 @@ msgid ""
 msgstr ""
 "la componente 'height' di 'tree' non è ordinata\n"
 "(in modo crescente); prova ad usare prima as.hclust()"
+
+msgid "cutree(): k(h) ="
+msgstr ""
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "gli elementi di 'k' devono essere tra 1 e %d"
@@ -1050,9 +1083,6 @@ msgstr "si è verificato che i tassi stimati sono numericamente pari a 0"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "gli argomenti seguenti di 'anova.glm' sono sbagliati o ignorati:"
-
-msgid ","
-msgstr ""
 
 msgid "using F test with a %s family is inappropriate"
 msgstr ""

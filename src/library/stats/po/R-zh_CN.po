@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:57\n"
+"POT-Creation-Date: 2007-01-10 22:29\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -85,6 +85,21 @@ msgstr "x$lag至少需要有1列"
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "只有在第一个滯後为0时才能用ci.type=\"ma\" "
 
+msgid "par(*) :"
+msgstr ""
+
+msgid "Page ["
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "]: i ="
+msgstr ""
+
+msgid "; j ="
+msgstr ""
+
 msgid "univariate time series only"
 msgstr "只适用于单变量时间序列"
 
@@ -93,6 +108,9 @@ msgstr "範疇里没有项"
 
 msgid "no terms in scope for adding to object"
 msgstr "加入目标对象时的範疇内没有项"
+
+msgid "trying +"
+msgstr ""
 
 msgid "number of rows in use has changed: remove missing values?"
 msgstr "行数有变化：是不是删除了遺漏值?"
@@ -109,6 +127,9 @@ msgstr "\"mlm\"模型还没有实现'add1'方法"
 msgid "scope is not a subset of term labels"
 msgstr "範疇不是项标记集的子集"
 
+msgid "trying -"
+msgstr ""
+
 msgid "no 'drop1' method for \"mlm\" models"
 msgstr "\"mlm\" 模型没有'drop1'方法"
 
@@ -123,6 +144,12 @@ msgstr "模型上範疇里没有这些词条%s "
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
 msgstr "这个模型没有AIC定义，因此不能用'step'这一功能"
+
+msgid "Start:  AIC="
+msgstr ""
+
+msgid "Step:  AIC="
+msgstr ""
 
 msgid "'A' must be an array or table"
 msgstr "'A'必需是矩阵或是数据框"
@@ -223,6 +250,9 @@ msgstr "残差没有自由度"
 
 msgid "'object' does not include an error 'qr' component"
 msgstr "'object'不包含误差'qr'组件"
+
+msgid "Refitting model to allow projection"
+msgstr ""
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
 msgstr "'contrast.obj'的列必需设定对比(总和为0)"
@@ -553,6 +583,9 @@ msgid ""
 msgstr ""
 "'tree'里的'height'组件没有排序\n"
 "由小到大；应该先用as.hclust()"
+
+msgid "cutree(): k(h) ="
+msgstr ""
 
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k'的单元必需在1和%d之间"
@@ -995,9 +1028,6 @@ msgstr "拟合速率算出来是数值0"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "以下'anova.glm'的变元不对因此略过不用:"
-
-msgid ","
-msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
 msgstr "将F检验用于%s 分布族是不对的"

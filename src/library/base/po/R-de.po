@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-09 09:01\n"
+"POT-Creation-Date: 2007-01-10 22:37\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -924,6 +924,9 @@ msgstr "'by' muss gültige Spalte(n) spezifizieren"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' und 'by.y' geben unterschiedliche Zahlen von Spalten an"
 
+msgid "additional arguments ignored in message()"
+msgstr ""
+
 msgid "(loaded the methods namespace)"
 msgstr ""
 
@@ -1291,6 +1294,9 @@ msgstr ""
 msgid "' has changed"
 msgstr ""
 
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
 msgid "is not"
 msgstr "ist nicht"
 
@@ -1298,6 +1304,9 @@ msgid "all"
 msgstr ""
 
 msgid "TRUE"
+msgstr ""
+
+msgid "additional arguments ignored in warning()"
 msgstr ""
 
 msgid "incorrect value for 'x'"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-09 09:01\n"
+"POT-Creation-Date: 2007-01-10 22:37\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -930,6 +930,9 @@ msgstr "'by' deve especificar coluna(s) válida(s)"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' e 'by.y' especificam números de colunas diferentes"
 
+msgid "additional arguments ignored in message()"
+msgstr ""
+
 msgid "(loaded the methods namespace)"
 msgstr ""
 
@@ -1299,6 +1302,9 @@ msgstr ""
 msgid "' has changed"
 msgstr ""
 
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
 #, fuzzy
 msgid "is not"
 msgstr "não é TRUE"
@@ -1307,6 +1313,9 @@ msgid "all"
 msgstr ""
 
 msgid "TRUE"
+msgstr ""
+
+msgid "additional arguments ignored in warning()"
 msgstr ""
 
 msgid "incorrect value for 'x'"

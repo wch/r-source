@@ -10,35 +10,44 @@ function(expr)
                         invokeRestart("muffleMessage"))
 
 message <-
-function(..., domain = NULL, appendLF = TRUE, type = simpleMessage)
+function(..., domain = NULL, appendLF = TRUE)
 {
     args <- list(...)
-    if (length(args) == 1 && inherits(args[[1]], "condition"))
-        cond <- args[[1]]
-    else {
-        if(length(args) > 0) {
-            args <- lapply(list(...), as.character)
-            if(is.null(domain) || !is.na(domain))
-                args <- .Internal(gettext(domain, unlist(args)))
-            message <- paste(args, collapse = "")
-        }
-        else message <- ""
-        if(appendLF) message <- paste(message, "\n", sep="")
+    cond <- if (length(args) == 1 && inherits(args[[1]], "condition")) {
+        if(nargs() > 1)
+            warning("additional arguments ignored in message()")
+        args[[1]]
+    } else {
+        msg <- .makeMessage(..., domain=domain, appendLF = appendLF)
         call <- sys.call()
-        cond <- type(message, call)
+        simpleMessage(msg, call)
     }
     defaultHandler <- function(c) {
         ## Maybe use special connection here?
         cat(conditionMessage(c), file=stderr(), sep="")
     }
     withRestarts({
-                    signalCondition(cond)
-                    ## We don't get to the default handler if the signal
-                    ## is handled with a non-local exit, e.g. by
-                    ## invoking the muffleMessage restart.
-                    defaultHandler(cond)
-                 }, muffleMessage = function() NULL)
-    invisible(NULL)
+        signalCondition(cond)
+        ## We don't get to the default handler if the signal
+        ## is handled with a non-local exit, e.g. by
+        ## invoking the muffleMessage restart.
+        defaultHandler(cond)
+    }, muffleMessage = function() NULL)
+    invisible()
+}
+
+## also used by warning() and stop()
+.makeMessage <- function(..., domain = NULL, appendLF = FALSE)
+ {
+    args <- list(...)
+    if(length(args) > 0) {
+        args <- lapply(list(...), as.character)
+        if(is.null(domain) || !is.na(domain))
+            args <- .Internal(gettext(domain, unlist(args)))
+        msg <- paste(args, collapse = "")
+    }
+    else msg <- ""
+    if(appendLF) paste(msg, "\n", sep = "") else msg
 }
 
 .packageStartupMessage <- function (message, call = NULL)
@@ -51,5 +60,8 @@ suppressPackageStartupMessages <- function (expr)
                         invokeRestart("muffleMessage"))
 
 packageStartupMessage <- function(..., domain = NULL, appendLF = TRUE)
-    message(..., domain = domain, appendLF = appendLF,
-            type = .packageStartupMessage)
+{
+    call <- sys.call()
+    msg <- .makeMessage(..., domain=domain, appendLF = appendLF)
+    message(.packageStartupMessage(msg, call))
+}

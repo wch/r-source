@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-09 09:01\n"
+"POT-Creation-Date: 2007-01-10 22:37\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -901,6 +901,9 @@ msgstr "'by'所指定的那些列有错"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x'和'by.y'设定了不同数目的列"
 
+msgid "additional arguments ignored in message()"
+msgstr ""
+
 msgid "(loaded the methods namespace)"
 msgstr "(载入了methods名字空间)"
 
@@ -1261,6 +1264,9 @@ msgstr ""
 msgid "' has changed"
 msgstr ""
 
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
 msgid "is not"
 msgstr "不是"
 
@@ -1269,6 +1275,9 @@ msgstr "所有"
 
 msgid "TRUE"
 msgstr "TRUE"
+
+msgid "additional arguments ignored in warning()"
+msgstr ""
 
 msgid "incorrect value for 'x'"
 msgstr "'x'的值不对"

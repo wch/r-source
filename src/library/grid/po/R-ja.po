@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-12-19 10:30\n"
+"POT-Creation-Date: 2007-01-10 22:35\n"
 "PO-Revision-Date: 2006-09-22 13:05+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -474,6 +474,10 @@ msgstr "'x' or 'xscale' のうち少なくとも一つを指定しなければ�
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' か 'yscale' のうち少なくとも一つを指定しなければなりません"
+
+#, fuzzy
+#~ msgid "It is invalid to specify both 'id' and 'id.lengths"
+#~ msgstr "'id' と 'id.lengths' の両方を指定することは出来ません"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x' は数値でなければなりません"

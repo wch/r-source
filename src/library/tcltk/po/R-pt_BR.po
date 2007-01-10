@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 12:15\n"
+"POT-Creation-Date: 2007-01-10 22:38\n"
 "PO-Revision-Date: 2005-11-05 16:50-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -97,9 +97,6 @@ msgstr ""
 #, fuzzy
 msgid "Tcl/Tk support is not available on this system"
 msgstr "arquivos de suporte a Tcl/Tk não foram instalados"
-
-msgid "R-tcltk"
-msgstr ""
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "arquivos de suporte a Tcl/Tk não foram instalados"

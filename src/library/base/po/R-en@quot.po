@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-09 09:01\n"
-"PO-Revision-Date: 2007-01-09 09:01\n"
+"POT-Creation-Date: 2007-01-10 22:37\n"
+"PO-Revision-Date: 2007-01-10 22:37\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -918,6 +918,9 @@ msgstr "‘by’ must specify valid column(s)"
 msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "‘by.x’ and ‘by.y’ specify different numbers of columns"
 
+msgid "additional arguments ignored in message()"
+msgstr "additional arguments ignored in message()"
+
 msgid "(loaded the methods namespace)"
 msgstr "(loaded the methods namespace)"
 
@@ -1281,6 +1284,9 @@ msgstr "Timestamp of '"
 msgid "' has changed"
 msgstr "' has changed"
 
+msgid "additional arguments ignored in stop()"
+msgstr "additional arguments ignored in stop()"
+
 msgid "is not"
 msgstr "is not"
 
@@ -1289,6 +1295,9 @@ msgstr "all"
 
 msgid "TRUE"
 msgstr "TRUE"
+
+msgid "additional arguments ignored in warning()"
+msgstr "additional arguments ignored in warning()"
 
 msgid "incorrect value for 'x'"
 msgstr "incorrect value for ‘x’"

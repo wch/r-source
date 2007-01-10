@@ -3,22 +3,14 @@ stop <- function(..., call. = TRUE, domain = NULL)
     args <- list(...)
     if (length(args) == 1 && inherits(args[[1]], "condition")) {
         cond <- args[[1]]
+        if(nargs() > 1)
+            warning("additional arguments ignored in stop()")
         message <- conditionMessage(cond)
-        call = conditionCall(cond)
+        call <- conditionCall(cond)
         .Internal(.signalCondition(cond, message, call))
         .Internal(.dfltStop(message, call))
-    }
-    else {
-        if (length(args) > 0) {
-            args <- lapply(list(...), as.character)
-            ## don't simplify this, as call sequence matters.
-            if(is.null(domain) || !is.na(domain))
-                args <- .Internal(gettext(domain, unlist(args)))
-            message <- paste(args, collapse = "")
-        }
-        else message <- ""
-        .Internal(stop(as.logical(call.), message))
-    }
+    } else
+        .Internal(stop(as.logical(call.), .makeMessage(..., domain = domain)))
 }
 
 stopifnot <- function(...)
@@ -41,24 +33,19 @@ warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
     args <- list(...)
     if (length(args) == 1 && inherits(args[[1]], "condition")) {
         cond <- args[[1]]
+        if(nargs() > 1)
+            cat(gettext("additional arguments ignored in warning()"),
+                "\n", sep="", file = stderr())
         message <- conditionMessage(cond)
-        call = conditionCall(cond)
+        call <- conditionCall(cond)
         withRestarts({
                 .Internal(.signalCondition(cond, message, call))
                 .Internal(.dfltWarn(message, call))
             }, muffleWarning = function() NULL) #**** allow simpler form??
         invisible(message)
-    }
-    else {
-        if (length(args) > 0) {
-            args <- lapply(list(...), as.character)
-            ## don't simplify this, as call sequence matters.
-            if(is.null(domain) || !is.na(domain))
-                args <- .Internal(gettext(domain, unlist(args)))
-            message <- paste(args, collapse = "")
-        } else message <- ""
-        .Internal(warning(as.logical(call.), as.logical(immediate.), message))
-    }
+    } else
+        .Internal(warning(as.logical(call.), as.logical(immediate.),
+                          .makeMessage(..., domain = domain)))
 }
 
 gettext <- function(..., domain = NULL) {
