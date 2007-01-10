@@ -19,7 +19,7 @@ pmin(\dots, na.rm=FALSE)
   \item{na.rm}{a logical indicating whether missing values should be
     removed.}
 }
-\value{
+\details{
   \code{max} and \code{min} return the maximum or minimum of \emph{all}
   the  values present in their arguments, as \code{\link{integer}} if
   all are \code{integer}, % and at least one is nonempty
@@ -71,7 +71,7 @@ pmin(\dots, na.rm=FALSE)
   \code{pmax}, a vector of length the longest of the input vectors.
   The type of the result will be that of the highest of the inputs in
   the hierarchy integer < real < character, including empty character
-  vectors.  Further, if there are only numeric inputs and all
+  vectors.  Further, if there are only numeric inputs and all are
   empty (after possible removal of \code{MA}s), the result is double
   (\code{Inf} or \code{-Inf}).
 }
