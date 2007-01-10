@@ -10,7 +10,7 @@ function(expr)
                         invokeRestart("muffleMessage"))
 
 message <-
-function(..., domain = NULL, appendLF = TRUE)
+function(..., domain = NULL, appendLF = TRUE, type = simpleMessage)
 {
     args <- list(...)
     if (length(args) == 1 && inherits(args[[1]], "condition"))
@@ -25,7 +25,7 @@ function(..., domain = NULL, appendLF = TRUE)
         else message <- ""
         if(appendLF) message <- paste(message, "\n", sep="")
         call <- sys.call()
-        cond <- simpleMessage(message, call)
+        cond <- type(message, call)
     }
     defaultHandler <- function(c) {
         ## Maybe use special connection here?
@@ -40,3 +40,16 @@ function(..., domain = NULL, appendLF = TRUE)
                  }, muffleMessage = function() NULL)
     invisible(NULL)
 }
+
+.packageStartupMessage <- function (message, call = NULL)
+    structure(list(message = message, call = call),
+              class = c("packageStartupMessage", "condition", "message",
+              "simpleMessage"))
+
+suppressPackageStartupMessages <- function (expr)
+    withCallingHandlers(expr, packageStartupMessage=function(c)
+                        invokeRestart("muffleMessage"))
+
+packageStartupMessage <- function(..., domain = NULL, appendLF = TRUE)
+    message(..., domain = domain, appendLF = appendLF,
+            type = .packageStartupMessage)

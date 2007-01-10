@@ -1,10 +1,12 @@
-.onLoad <- function(lib, pkg) {
+.onLoad <- function(lib, pkg)
+{
+    packageStartupMessage("Loading Tcl/Tk interface ...", domain = "R-tcltk",
+                          appendLF = FALSE)
     ## Use local=FALSE to allow easy loading of Tcl extensions
-    cat(gettext("Loading Tcl/Tk interface ...", domain = "R-tcltk"))
     library.dynam("tcltk", pkg, lib, local=FALSE)
     .C("tcltk_init", PACKAGE="tcltk")
     addTclPath(system.file("exec", package = "tcltk"))
-    cat(" ", gettext("done", domain = "R-tcltk"), "\n", sep="")
+    packageStartupMessage(" ", "done", domain = "R-tcltk")
     ## This kind of stuff could be added to build a more extensive GUI ##
     ##   not a good idea to do this unconditionally                    ##
 ###    userpager <- getOption("tkpager")

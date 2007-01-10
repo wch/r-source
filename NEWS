@@ -270,7 +270,9 @@ NEW FEATURES
 	tz != "".
 
     o	message() has a new argument 'appendLF' to handle messages
-	with and without newlines.
+	with and without newlines.  There is a new message class
+	packageStartupMessage() that can be suppressed separately.
+	[Both experimental for now.]
 
     o	max(), min() and range() now work with character vectors.
 

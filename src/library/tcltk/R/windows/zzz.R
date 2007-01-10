@@ -1,7 +1,7 @@
 .onLoad <- function(lib, pkg)
 {
-    message(gettext("Loading Tcl/Tk interface ...", domain = "R-tcltk"),
-            appendLF = FALSE)
+    packageStartupMessage("Loading Tcl/Tk interface ...", domain = "R-tcltk",
+                          appendLF = FALSE)
     if(nchar(Sys.getenv("MY_TCLTK"))) {
         library.dynam("tcltk", pkg, lib)
     } else {
@@ -18,7 +18,7 @@
     extra <- system.file("exec", package = "tcltk")
     extra <- gsub("\\\\", "/", extra)
     addTclPath(extra)
-    message(" ", gettext("done", domain = "R-tcltk"))
+    packageStartupMessage(" ", "done", domain = "R-tcltk")
     invisible()
 }
 

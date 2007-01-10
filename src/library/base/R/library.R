@@ -122,7 +122,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                          package),
                                 domain = NA)
                     }
-                    message(paste("\n\tThe following object(s) are masked",
+                    packageStartupMessage(paste("\n\tThe following object(s) are masked",
                                   if (i < lib.pos) "_by_" else "from", sp[i],
                                   ":\n\n\t", same, "\n"))
                 }
@@ -638,8 +638,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 
     if (!loaded) {
 	if (!quietly)
-            message(gettextf("Loading required package: %s", package),
-                    domain = NA)
+            packageStartupMessage(gettextf("Loading required package: %s",
+                                           package), domain = NA)
 	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
                          logical = TRUE, warn.conflicts = warn.conflicts,
                          keep.source = keep.source, version = version)
@@ -995,9 +995,8 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 }
 
                 if (!quietly)
-                    message(gettextf("Loading required package: %s",
-                                     pkg),
-                            domain = NA)
+                    packageStartupMessage(gettextf("Loading required package: %s",
+                                     pkg), domain = NA)
                 library(pkg, character.only = TRUE, logical = TRUE,
                         lib.loc = lib.loc) ||
                 stop(gettextf("package '%s' could not be loaded", pkg),
