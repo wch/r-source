@@ -4553,3 +4553,12 @@ acf(1, lag.max=0, plot=FALSE)
 ## gave an error in 2.4.0
 stopifnot( all.equal(ccf(1:3,-(1:3))$acf[2,1,1], -1) )
 ## gave positive lag 0 cross-correlation after patching PR#9360
+
+
+## regression tests for complex sum/prod (briefly broken in Jan 2007)
+z <- rnorm(10) + rnorm(10)*(0+1i)
+sum(z)
+(x <- sum(pi, z))
+stopifnot(all.equal(x, sum(pi,Re(z)) + sum(Im(z))*(0+1i)))
+prod(z)
+##
