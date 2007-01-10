@@ -1829,6 +1829,8 @@ Bayesian Model Averaging for linear models, generalizable linear models
 and survival models (Cox regression).
 @item BRugs
 OpenBUGS and its R interface BRugs.
+@item BayHaz
+Functions for Bayesian Hazard rate estimation.
 @item BayesTree
 Bayesian methods for tree based models.
 @item BayesValidate
@@ -1846,6 +1848,8 @@ Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
 Bootstrapping test for chromosomal localization.
 @item BradleyTerry
 Specify and fit the Bradley-Terry model and structured versions.
+@item Brobdingnag
+Very large numbers in R.
 @item BSDA
 Data sets for the book ``Basic Statistics and Data Analysis'' by
 L. J. Kitchens, 2003, Duxbury.
@@ -4277,13 +4281,15 @@ TK widget tools for @strong{rgl} package.
 Simple mechanism for placing R graphics in a Tk widget.
 @item tlnise
 Two-level normal independent sampling estimation.
-@item triangle
-Standard distribution functions for the triangle distribution.
+@item tm
+A framework for text mining applications within R.
 @item tree
 Classification and regression trees.
 @item treeglia
 Stem analysis functions for volume increment and carbon uptake
 assessment from tree-rings.
+@item triangle
+Standard distribution functions for the triangle distribution.
 @item trimcluster
 Cluster analysis with trimming.
 @item trip
