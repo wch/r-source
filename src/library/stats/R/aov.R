@@ -619,7 +619,7 @@ se.contrast.aovlist <-
         sum(resid^2)/rdf
     }
     if(is.null(attr(object, "error.qr"))) {
-        cat("Refitting model to allow projection\n")
+        message("Refitting model to allow projection")
         object <- update(object, qr = TRUE)
     }
     contrast.obj <-
