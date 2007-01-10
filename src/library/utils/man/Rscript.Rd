@@ -27,7 +27,7 @@
   \code{--slave --no-restore} are always supplied: these imply
   \code{--no-save}.
 
-  \emph{Either} one or more \options{-e} options or \code{file} should
+  \emph{Either} one or more \option{-e} options or \code{file} should
   be supplied.
 
   Additional options accepted (before \code{file} or \code{args}) are
