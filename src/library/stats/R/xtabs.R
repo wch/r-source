@@ -1,10 +1,15 @@
 xtabs <- function(formula = ~., data = parent.frame(), subset,
 		  na.action, exclude = c(NA, NaN), drop.unused.levels = FALSE)
 {
-    if(!missing(formula) && !inherits(formula, "formula"))
-	stop("'formula' missing or incorrect")
     if(missing(formula) && missing(data))
         stop("must supply either 'formula' or 'data'")
+    if(!missing(formula)){
+        ## We need to coerce the formula argument now, but model.frame
+        ## will coerce the original version later.
+        formula <- as.formula(formula)
+        if(!inherits(formula, "formula"))
+            stop("'formula' missing or incorrect")
+    }
     if(any(attr(terms(formula, data=data), "order") > 1))
 	stop("interactions are not allowed")
     m <- match.call(expand.dots = FALSE)

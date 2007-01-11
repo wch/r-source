@@ -16,8 +16,10 @@ lm(formula, data, subset, weights, na.action,
    singular.ok = TRUE, contrasts = NULL, offset, \dots)
 }
 \arguments{
-  \item{formula}{a symbolic description of the model to be fit.
-    The details of model specification are given below.}
+  \item{formula}{an object of class \code{"\link{formula}"} (or one that
+    can be coerced to that class): a symbolic description of the
+    model to be fitted.  The details of model specification are given
+    under Details.}
 
   \item{data}{an optional data frame, list or environment (or object
     coercible by \code{\link{as.data.frame}} to a data frame) containing

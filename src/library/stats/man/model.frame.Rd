@@ -65,18 +65,18 @@ get_all_vars(formula, data, \dots)
   used when fitting the model (if any, often selected by argument
   \code{model = TRUE}) or pass the call used when fitting on to the
   default method.  The default method itself can cope with rather
-  standard model objects such as those of classes
-  \code{"\link[MASS]{lqs}"} and \code{"\link[ppr]{ppr}"} from
-  package \pkg{MASS} if no other arguments are supplied.
+  standard model objects such as those of class
+  \code{"\link[MASS]{lqs}"} from package \pkg{MASS} if no other
+  arguments are supplied.
   
   The rest of this section applies only to the default method.
 
   If either \code{formula} or \code{data} is already a model frame (a
   data frame with a \code{"terms"} attribute and the other is missing,
   the model frame is returned.  Unless \code{formula} is a terms object,
-  \code{terms} is called on it.  (If you wish to use the
-  \code{keep.order} argument of \code{terms.formula}, pass a terms
-  object rather than a formula.)
+  \code{as.formula} and then \code{terms} is called on it.  (If you wish
+  to use the \code{keep.order} argument of \code{terms.formula}, pass a
+  terms object rather than a formula.)
 
   Row names for the model frame are taken from the \code{data} argument
   if present, then from the names of the response in the formula (or

@@ -280,8 +280,12 @@ NEW FEATURES
 	conjunction with --args.
 
     o	New function get_all_vars() to retrieve all the
-	(untransformed) variables that model.frame.default() would use
-	to create the model frame.
+	(untransformed) variables that the default method of
+	model.frame() would use to create the model frame.
+
+    o	Functions lm(), glm() loess(), xtabs() and the default method
+	of model.frame() coerce their 'formula'	argument (if supplied)
+	to a formula.
 
 
 DEPRECATED & DEFUNCT

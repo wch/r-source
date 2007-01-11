@@ -27,8 +27,10 @@ glm.fit(x, y, weights = rep(1, nobs),
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
 \arguments{
-  \item{formula}{a symbolic description of the model to be fit.
-    The details of model specification are given below.}
+  \item{formula}{an object of class \code{"\link{formula}"} (or one that
+    can be coerced to that class): a symbolic description of the
+    model to be fitted.  The details of model specification are given
+    under Details.}
 
   \item{family}{a description of the error distribution and link
     function to be used in the model. This can be a character string
