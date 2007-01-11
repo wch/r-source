@@ -7,7 +7,7 @@ rle <- function(x)
         return(list(lengths = integer(0), values = x))
     y <- x[-1] != x[-n]
     i <- c(which(y | is.na(y)), n)
-    structure(list(lengths = diff(c(0:0, i)), values = x[i]),
+    structure(list(lengths = diff(c(0L, i)), values = x[i]),
               class = "rle")
 }
 

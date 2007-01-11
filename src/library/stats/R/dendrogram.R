@@ -418,7 +418,7 @@ cut.dendrogram <- function(x, h, ...)
 	if(!is.leaf(subtree)) {
 	    if(!(K <- length(subtree)))
 		stop("non-leaf subtree of length 0")
-	    new.mem <- 0:0
+	    new.mem <- 0L
 	    for(k in 1L:K) {
                 sub <- subtree[[k]]
 		if(attr(sub, "height") <= h) {
