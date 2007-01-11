@@ -15,7 +15,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
 
     type <- match.arg(type)
     if(missing(what) || length(what) != 1 || !is.character(what)) {
-        cat("   RShowDoc() should be used with a character string argument specifiying\n   a documentation file\n")
+        message("   RShowDoc() should be used with a character string argument specifying\n   a documentation file")
         return(invisible())
     }
     if(!missing(package)) {
@@ -60,7 +60,9 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     }
     if(what == "FAQ") what <- "R-FAQ"
     if(what %in% c("NEWS", "COPYING")) {
-        file.show(file.path(R.home(), what))
+        path <- file.path(R.home(), what)
+        file.show(path)
+        return(invisible(path))
     } else if(what %in% c("R-admin", "R-data", "R-exts", "R-FAQ", "R-intro",
                           "R-ints", "R-lang")) {
         if(type == "pdf") {
