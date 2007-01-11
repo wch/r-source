@@ -15,7 +15,7 @@ abline <- function(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
 	if (p > 2)
 	    warning("only using the first two of ",p, "regression coefficients")
 	islm <- inherits(a, "lm")
-	noInt <- if(islm) !as.logical(attr(terms(a), "intercept")) else p == 1
+	noInt <- if(islm) !as.logical(attr(stats::terms(a), "intercept")) else p == 1
 	if (noInt) {
 	    a <- 0
 	    b <- coefa[1]

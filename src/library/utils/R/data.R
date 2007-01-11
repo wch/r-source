@@ -90,7 +90,8 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                     ## found it, so copy objects from database
                     found <- TRUE
                     if(verbose)
-                        cat("name=", name, ":\t found in Rdata.rdb\n")
+                        message(gettextf("name=%s:\t found in Rdata.rdb", name),
+                                domain=NA)
                     thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
                     thispkg <- sub("_.*$", "", thispkg) # versioned installs.
                     thispkg <- paste("package:", thispkg, sep="")
@@ -123,9 +124,9 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                 ## have a plausible candidate (or more)
                 for(file in files) {
                     if(verbose)
-                        cat("name=", name, ":\t file= ...",
-                            .Platform$file.sep, basename(file), "::\t",
-                            sep = "")
+                        message("name=", name, ":\t file= ...",
+                                .Platform$file.sep, basename(file), "::\t",
+                                appendLF = FALSE)
                     ext <- fileExt(file)
                     ## make sure the match is really for 'name.ext'
                     if(basename(file) != paste(name, ".", ext, sep = ""))
@@ -159,7 +160,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                     }
                     if (found) break # from files
                 }
-                if(verbose) cat(if(!found) "*NOT* ", "found\n")
+                if(verbose) message(if(!found) "*NOT* ", "found")
             }
             if (found) break # from paths
         }

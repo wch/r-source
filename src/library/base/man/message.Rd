@@ -16,7 +16,7 @@ suppressMessages(expr)
 packageStartupMessage(\dots, domain = NULL, appendLF = TRUE)
 suppressPackageStartupMessages(expr)
 
-.makeMessage(\dots, domain = NULL, appendLF = TRUE)
+.makeMessage(\dots, domain = NULL, appendLF = FALSE)
 }
 \arguments{
   \item{\dots}{zero or more objects which can be coerced to character
