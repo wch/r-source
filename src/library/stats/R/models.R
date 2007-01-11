@@ -533,3 +533,45 @@ makepredictcall.default  <- function(var, call)
         xlev[!sapply(xlev, is.null)]
     } else NULL
 }
+
+get_all_vars <- function(formula, data = NULL, ...)
+{
+    if(missing(formula)) {
+	if(!missing(data) && inherits(data, "data.frame") &&
+	   length(attr(data, "terms")) > 0)
+	    return(data)
+	formula <- as.formula(data)
+    }
+    else if(missing(data) && inherits(formula, "data.frame")) {
+	if(length(attr(formula, "terms")))
+	    return(formula)
+	data <- formula
+	formula <- as.formula(data)
+    }
+    if(missing(data))
+	data <- environment(formula)
+    else if (!is.data.frame(data) && !is.environment(data)
+             && !is.null(attr(data, "class")))
+        data <- as.data.frame(data)
+    else if (is.array(data))
+        stop("'data' must be a data.frame, not a matrix or an array")
+    if(!inherits(formula, "terms"))
+	formula <- terms(formula, data = data)
+    env <- environment(formula)
+    rownames <- .row_names_info(data, 0L) #attr(data, "row.names")
+    varnames <- all.vars(formula)
+    inp <- parse(text=paste("list(", paste(varnames, collapse=","), ")"))
+    variables <- eval(inp, data, env)
+    if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
+        ## see if we can get rownames from the response
+        lhs <- variables[[resp]]
+        rownames <- if(is.matrix(lhs)) rownames(lhs) else names(lhs)
+    }
+    extras <- substitute(list(...))
+    extranames <- names(extras[-1])
+    extras <- eval(extras, data, env)
+    x <- as.data.frame(c(variables, extras), optional=TRUE)
+    names(x) <- c(varnames, extranames)
+    row.names(x) <- rownames
+    x
+}

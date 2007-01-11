@@ -277,7 +277,11 @@ NEW FEATURES
     o	max(), min() and range() now work with character vectors.
 
     o	commandArgs() has a new 'trailingOnly' argument to be used in
-	conjunctions with --args.
+	conjunction with --args.
+
+    o	New function get_all_vars() to retrieve all the
+	(untransformed) variables that model.frame.default() would use
+	to create the model frame.
 
 
 DEPRECATED & DEFUNCT

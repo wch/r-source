@@ -4,6 +4,7 @@
 \alias{model.frame.lm}
 \alias{model.frame.glm}
 \alias{model.frame.aovlist}
+\alias{get_all_vars}
 \title{Extracting the ``Environment'' of a Model Formula}
 \usage{
 model.frame(formula, \dots)
@@ -17,6 +18,8 @@ model.frame(formula, \dots)
 \method{model.frame}{glm}(formula, \dots)
 
 \method{model.frame}{lm}(formula, \dots)
+
+get_all_vars(formula, data, \dots)
 }
 \arguments{
   \item{formula}{a model \code{\link{formula}} or \code{\link{terms}}
@@ -100,6 +103,11 @@ model.frame(formula, \dots)
   character can be included in a model frame: this includes classed
   variables such as factors (whose underlying type is integer), but
   excludes lists.
+
+  \code{get_all_vars} returns a code{\link{data.frame}} containing the
+  variables used in \code{formula} plus those specified \code{\dots}.
+  Unlike \code{model.frame.default}, it returns the input variables and
+  not those resulting from function calls in \code{formula}.
 }
 \value{
   A \code{\link{data.frame}} containing the variables used in
