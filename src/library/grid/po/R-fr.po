@@ -488,9 +488,6 @@ msgstr "Il faut spécifier au moins 'x' ou 'xscale'"
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Il faut spécifier au moins 'y' ou 'yscale'"
 
-#, fuzzy
-#~ msgid "It is invalid to specify both 'id' and 'id.lengths"
-#~ msgstr "Il n'est pas permi de spécifier simultanément 'id' et 'id.lengths'"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x' doit être numérique"

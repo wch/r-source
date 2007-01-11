@@ -475,9 +475,5 @@ msgstr "'x' or 'xscale' のうち少なくとも一つを指定しなければ�
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "'y' か 'yscale' のうち少なくとも一つを指定しなければなりません"
 
-#, fuzzy
-#~ msgid "It is invalid to specify both 'id' and 'id.lengths"
-#~ msgstr "'id' と 'id.lengths' の両方を指定することは出来ません"
-
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x' は数値でなければなりません"

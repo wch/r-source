@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:29\n"
+"POT-Creation-Date: 2007-01-11 02:05\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -82,21 +82,6 @@ msgstr "x$lag는 적어도 1열을 포함하지 않으면 되지 않습니다"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "최초 lag가 0 일때만  ci.type=\"ma\"를 사용할수가 있습니다"
-
-msgid "par(*) :"
-msgstr ""
-
-msgid "Page ["
-msgstr ""
-
-msgid ","
-msgstr ","
-
-msgid "]: i ="
-msgstr ""
-
-msgid "; j ="
-msgstr ""
 
 msgid "univariate time series only"
 msgstr "일변양시계열만 입니다"
@@ -592,9 +577,6 @@ msgstr ""
 "'tree'의 'height'요소는 승순에 sort되어 있지 않습니다.\n"
 "최초로 as.hclust()를 적용하는 것을 고려해 주십시오"
 
-msgid "cutree(): k(h) ="
-msgstr ""
-
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k'의 요소는 1과 %d의 사이에 없으면 되지 않습니다"
 
@@ -1078,6 +1060,9 @@ msgstr "수치적으로 0인 적용시키고 비율이 초래해졌습니다"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "'anova.glm'에의 다음의 인수는 무효이고, 제거 되었습니다"
+
+msgid ","
+msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
 msgstr ""

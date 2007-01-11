@@ -289,7 +289,6 @@ msgstr "'x'和'y'的长度必需为一"
 msgid "invalid 'arrow' argument"
 msgstr "'arrow'变元不对"
 
-#, fuzzy
 msgid "It is invalid to specify both 'id' and 'id.lengths'"
 msgstr "不能同时对'id'和'id.lengths'进行设定"
 

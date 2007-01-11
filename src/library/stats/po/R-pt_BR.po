@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:29\n"
+"POT-Creation-Date: 2007-01-11 02:05\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -90,21 +90,6 @@ msgstr "x$lag deve ter pelo menos uma coluna"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "só é possível usar ci.type=\"ma\" se o primeiro lag é 0"
-
-msgid "par(*) :"
-msgstr ""
-
-msgid "Page ["
-msgstr ""
-
-msgid ","
-msgstr ","
-
-msgid "]: i ="
-msgstr ""
-
-msgid "; j ="
-msgstr ""
 
 msgid "univariate time series only"
 msgstr "somente séries temporais univariadas"
@@ -597,9 +582,6 @@ msgstr ""
 "o componente 'height' de 'tree' não está ordenado\n"
 "(crescentemente); considere aplicar as.hclust() primeiro"
 
-msgid "cutree(): k(h) ="
-msgstr ""
-
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "elementos de 'k' devem estar entre 1 e %d"
 
@@ -1078,6 +1060,9 @@ msgstr "taxas ajustadas numericamente iguais a 0 ocorreram"
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr ""
 "os seguintes argumentos para 'anova.glm' são inválidos e foram descartados"
+
+msgid ","
+msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
 msgstr "uso do teste F com a família %s é inapropriado"

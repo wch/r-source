@@ -471,9 +471,5 @@ msgstr "Надо задать по крайней мере одно из 'x' или 'xscale'"
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Надо задать по крайней мере одно из 'y' или 'yscale'"
 
-#, fuzzy
-#~ msgid "It is invalid to specify both 'id' and 'id.lengths"
-#~ msgstr "Нельзя устанавливать одновременно и 'id', и 'id.lengths'"
-
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x' должен быть числом"

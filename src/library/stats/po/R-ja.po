@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:29\n"
+"POT-Creation-Date: 2007-01-11 02:05\n"
 "PO-Revision-Date: 2006-12-12 09:44+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -81,21 +81,6 @@ msgstr "x$lag は少なくとも一つの列を含まねばなりません"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "第一ラグが 0 であるときだけ ci.type=\"ma\" を使用することができます"
-
-msgid "par(*) :"
-msgstr ""
-
-msgid "Page ["
-msgstr ""
-
-msgid ","
-msgstr ","
-
-msgid "]: i ="
-msgstr ""
-
-msgid "; j ="
-msgstr ""
 
 msgid "univariate time series only"
 msgstr "一変量時系列専用です"
@@ -587,9 +572,6 @@ msgstr ""
 "'tree' の 'height' 成分は昇順にソートされていません。\n"
 "最初に as.hclust() を適用することを考慮してください"
 
-msgid "cutree(): k(h) ="
-msgstr ""
-
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "'k' の要素は 1 と %d の間になければなりません"
 
@@ -1048,6 +1030,9 @@ msgstr "数値的に 0 である当てはめ比率が生じました"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "'anova.glm' への次の引数は無効であり、除去されました："
+
+msgid ","
+msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
 msgstr "%s ファミリに F 検定を使うことは適当ではありません"

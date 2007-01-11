@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:29\n"
+"POT-Creation-Date: 2007-01-11 02:05\n"
 "PO-Revision-Date: 2006-12-10 00:36-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -91,21 +91,6 @@ msgstr "x$lag должен иметь как минимум 1 колонку"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
 msgstr "могу использовать ci.type=\"ma\" только если первый лаг -- ноль"
-
-msgid "par(*) :"
-msgstr ""
-
-msgid "Page ["
-msgstr ""
-
-msgid ","
-msgstr ","
-
-msgid "]: i ="
-msgstr ""
-
-msgid "; j ="
-msgstr ""
 
 msgid "univariate time series only"
 msgstr "только одномерные временные ряды"
@@ -597,9 +582,6 @@ msgstr ""
 "у 'tree' компонент 'height' не сортирован\n"
 "(по возрастанию); попробуйте сначала использовать as.hclust()"
 
-msgid "cutree(): k(h) ="
-msgstr ""
-
 msgid "elements of 'k' must be between 1 and %d"
 msgstr "элементы 'k' должны быть между 1 и %d"
 
@@ -1054,6 +1036,9 @@ msgstr "подогнанные доли: возник 0"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "следующие аргументы 'anova.glm' неправильные и были сброшены:"
+
+msgid ","
+msgstr ","
 
 msgid "using F test with a %s family is inappropriate"
 msgstr "использовать тест Фишера с семейством %s неправильно"

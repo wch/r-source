@@ -135,8 +135,8 @@ plot.acf <-
         opar <- par(mfrow = rep(nr, 2), mar = mar, oma = oma, mgp = mgp,
                     ask = ask, xpd = xpd, cex.main = cex.main)
         on.exit(par(opar))
-        if(verbose) {
-            message("par(*) : ", appendLF=FALSE)
+        if(verbose) { # FIXME: message() can be suppressed but not str()
+            message("par(*) : ", appendLF=FALSE, domain = NA)
             str(par("mfrow","cex", "cex.main","cex.axis","cex.lab","cex.sub"))
         }
     }
@@ -160,7 +160,7 @@ plot.acf <-
         if(verbose)
             message("Page [",I,",",J,"]: i =",
                     paste(iind,collapse=","),"; j =",
-                    paste(jind,collapse=","))
+                    paste(jind,collapse=","), domain = NA)
         for (i in iind) for (j in jind)
             if(max(i,j) > nser) {
                 frame(); box(col = "light gray")
