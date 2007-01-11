@@ -48,8 +48,8 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
 
     qstring <- paste(string, mpp, format, sortby, res, sep = "&")
     browseURL(qstring)
-    message("A search query has been submitted to",
-            "http://search.r-project.org")
+    message(gettextf("A search query has been submitted to %s",
+            "http://search.r-project.org"), domain = NA)
     message("The results page should open in your browser shortly")
     invisible(qstring)
 }

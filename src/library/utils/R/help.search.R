@@ -139,7 +139,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	for(p in packages_in_hsearch_db) {
 	    np <- np + 1
 	    if(verbose)
-		message(" ", p, appendLF = ((np %% 5) == 0))
+		message(" ", p, appendLF = ((np %% 5) == 0), domain=NA)
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
 		stop(gettextf("could not find package '%s'", p), domain = NA)
@@ -335,7 +335,7 @@ function(pattern, fields = c("alias", "concept", "title"),
     db <- dbBase[sort(unique(i)),
 		 c("topic", "title", "Package", "LibPath"),
 		 drop = FALSE]
-    if(verbose) message("matched", NROW(db), "objects.")
+    if(verbose) message(gettextf("matched %d objects.", NROW(db)), domain=NA)
 
     ## Retval.
     y <- list(pattern = pattern, fields = fields,

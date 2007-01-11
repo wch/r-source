@@ -549,6 +549,7 @@ get_all_vars <- function(formula, data = NULL, ...)
 	data <- formula
 	formula <- as.formula(data)
     }
+    formula <- as.formula(formula)
     if(missing(data))
 	data <- environment(formula)
     else if (!is.data.frame(data) && !is.environment(data)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:58\n"
+"POT-Creation-Date: 2007-01-11 16:56\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -15,6 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr ""
 
 #, fuzzy
 msgid "no documentation for '%s' found in package '%s'"
@@ -37,7 +42,8 @@ msgstr ""
 "限制设定得不对。\n"
 "用'%s'"
 
-msgid "A search query has been submitted to"
+#, fuzzy
+msgid "A search query has been submitted to %s"
 msgstr "檢索查詢疑問已被提出于"
 
 msgid "The results page should open in your browser shortly"
@@ -329,14 +335,34 @@ msgstr "不知道要搜查什么"
 msgid "argument 'help.db' is deprecated"
 msgstr "变元'help.db'已经不再用了"
 
+msgid "Rebuilding the data base ..."
+msgstr ""
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr ""
+
 msgid "could not find package '%s'"
 msgstr "找不到程序包'%s'"
+
+msgid "package '%s' has empty hsearch data - strangely"
+msgstr ""
 
 msgid "no hsearch.rds meta data for package"
 msgstr "程序包里没有hsearch.rds样的隐喻数据"
 
+msgid "reencoding ..."
+msgstr ""
+
+#, fuzzy
+msgid "done"
+msgstr "做完了。"
+
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "删除所有多字節字符数据出错的分錄"
+
+#, fuzzy
+msgid "saving the database ..."
+msgstr "用第一个相配…"
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
@@ -344,6 +370,9 @@ msgstr "数据库里没有关于程序包'%s'的信息：是不是需要设定'r
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
+
+msgid "matched %d objects."
+msgstr ""
 
 msgid "no package '%s' was found"
 msgstr "找不到'%s'这样一个程序包"

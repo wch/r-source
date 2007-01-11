@@ -52,7 +52,7 @@ matplot <- function(x, y, type = "p",
 	message("matplot: doing ", k, " plots with ",
 	    paste(" col= (", paste.ch(col), ")", sep=''),
 	    paste(" pch= (", paste.ch(pch), ")", sep=''),
-	    " ...\n")
+	    " ...\n", domain=NA)
     ii <- match("log", names(xargs <- list(...)), nomatch = 0)
     log <- if (ii != 0) xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log=log)

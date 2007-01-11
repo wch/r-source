@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:58\n"
+"POT-Creation-Date: 2007-01-11 16:56\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -11,6 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr ""
 
 #, fuzzy
 msgid "no documentation for '%s' found in package '%s'"
@@ -37,7 +42,8 @@ msgstr ""
 "제한은 잘못된 지정을 했습니다.\n"
 "'%s'를 사용 해주십시오"
 
-msgid "A search query has been submitted to"
+#, fuzzy
+msgid "A search query has been submitted to %s"
 msgstr "탐색에 관한 query는 받아들여졌습니다"
 
 msgid "The results page should open in your browser shortly"
@@ -342,14 +348,33 @@ msgstr "무엇을 검색해야할 것인지를 알수가 없습니다"
 msgid "argument 'help.db' is deprecated"
 msgstr "인수 'help.db'는 반대합니다"
 
+msgid "Rebuilding the data base ..."
+msgstr ""
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr ""
+
 msgid "could not find package '%s'"
 msgstr "패키지 '%s'를 검색할수 가 없었습니다"
+
+msgid "package '%s' has empty hsearch data - strangely"
+msgstr ""
 
 msgid "no hsearch.rds meta data for package"
 msgstr ""
 
+msgid "reencoding ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
+
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "무효의 다중 바이트 문자 데이터를 갖춘 엔트리가 모두 제거하였습니다"
+
+#, fuzzy
+msgid "saving the database ..."
+msgstr "첫번째 match를 사용해주십시오..."
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
@@ -357,6 +382,9 @@ msgstr ""
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 명세는 적적하지 않습니다"
+
+msgid "matched %d objects."
+msgstr ""
 
 msgid "no package '%s' was found"
 msgstr "패키지 '%s'는 검색되지 않았습니다"

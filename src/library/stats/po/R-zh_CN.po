@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-11 02:05\n"
+"POT-Creation-Date: 2007-01-11 16:52\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1574,6 +1574,9 @@ msgstr "公式'%s'的形式必需是'~expr'"
 
 msgid "'%s' cannot be of mode '%s'"
 msgstr "'%s'不可能有'%s'状态"
+
+msgid "a two-sided formula is required"
+msgstr ""
 
 msgid "not enough groups"
 msgstr "组个数不够"

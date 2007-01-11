@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-05 11:58\n"
+"POT-Creation-Date: 2007-01-11 16:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,6 +10,9 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+
+msgid "RShowDoc() should be used with a character string argument specifying\n   a documentation file"
+msgstr ""
 
 msgid "no documentation for '%s' found in package '%s'"
 msgstr ""
@@ -26,7 +29,7 @@ msgstr ""
 msgid "wrong restriction specified.\nUsing '%s'"
 msgstr ""
 
-msgid "A search query has been submitted to"
+msgid "A search query has been submitted to %s"
 msgstr ""
 
 msgid "The results page should open in your browser shortly"
@@ -290,19 +293,40 @@ msgstr ""
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
+msgid "Rebuilding the data base ..."
+msgstr ""
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr ""
+
 msgid "could not find package '%s'"
+msgstr ""
+
+msgid "package '%s' has empty hsearch data - strangely"
 msgstr ""
 
 msgid "no hsearch.rds meta data for package"
 msgstr ""
 
+msgid "reencoding ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
+
 msgid "removing all entries with invalid multi-byte character data"
+msgstr ""
+
+msgid "saving the database ..."
 msgstr ""
 
 msgid "no information in the data base for package '%s': need 'rebuild = TRUE'?"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
+msgstr ""
+
+msgid "matched %d objects."
 msgstr ""
 
 msgid "no package '%s' was found"
