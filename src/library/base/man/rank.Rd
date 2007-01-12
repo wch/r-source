@@ -2,8 +2,8 @@
 \alias{rank}
 \title{Sample Ranks}
 \description{
-  Returns the sample ranks of the values in a vector.
-  Ties, i.e., equal values, result in ranks being averaged, by default.
+  Returns the sample ranks of the values in a vector.  Ties (i.e., equal
+  values) and missing values can be handled in several ways.
 }
 \usage{
 rank(x, na.last = TRUE,
@@ -14,7 +14,7 @@ rank(x, na.last = TRUE,
   \item{na.last}{for controlling the treatment of \code{\link{NA}}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed; if
-    \code{"keep"} they are kept.}
+    \code{"keep"} they are kept with rank \code{NA}.}
   \item{ties.method}{a character string specifying how ties are treated,
     see below; can be abbreviated.}
 }
@@ -24,19 +24,24 @@ rank(x, na.last = TRUE,
   Wadsworth \& Brooks/Cole.
 }
 \details{
-  If all components are different, the ranks are well defined, with
-  values in \code{1:n} where \code{n <- length(x)} and we assume no
-  \code{NA}s for the moment.  Otherwise, with some values equal, called
-  \sQuote{ties}, the argument \code{ties.method} determines
-  the result at the corresponding indices.  The \code{"first"} method
-  results in a permutation with increasing values at each index set of
-  ties.  The \code{"random"} method puts these in random order whereas the
+  If all components are different (and no \code{NA}s), the ranks are
+  well defined, with values in \code{seq_len(x)}.  With some values equal
+  (called \sQuote{ties}), the argument \code{ties.method} determines the
+  result at the corresponding indices. The \code{"first"} method results
+  in a permutation with increasing values at each index set of ties.
+  The \code{"random"} method puts these in random order whereas the
   default, \code{"average"}, replaces them by their mean, and
   \code{"max"} and \code{"min"} replaces them by their maximum and
   minimum respectively, the latter being the typical \dQuote{sports}
   ranking.
+
+  \code{NA} values are never considered to be equal: for \code{na.last =
+    TRUE} and \code{na.last = FALSE} they are given distinct ranks in
+  the order in which they occur in \code{x}.
 }
-\seealso{\code{\link{order}} and \code{\link{sort}}.}
+\seealso{
+  \code{\link{order}} and \code{\link{sort}}.
+}
 \examples{
 (r1 <- rank(x1 <- c(3, 1, 4, 15, 92)))
 x2 <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5)
