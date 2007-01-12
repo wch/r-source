@@ -35,11 +35,13 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   later have been tested): the full path to the executable can be set by
   the environment variable \env{R\_GSCMD}.
 #ifdef unix
-  (If this is unset the command \code{"gs"} is used.)
+  (If this is unset the command \code{"gs"} is used, which will work if
+  it is in your path.)
 #endif  
 #ifdef windows
-  (If this is unset the command \code{"gswin32c.exe"} is used.)
-#endif  
+  (If this is unset the command \code{"gswin32c.exe"} is used, which
+  will work if it is in your \env{PATH}.)
+#endif
 
   The types available will depend on the version of \code{ghostscript},
   but are likely to include
@@ -64,6 +66,11 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   For \code{dev2bitmap} if just one of \code{width} and \code{height} is
   specified, the other is chosen to preserve aspect ratio of the
   device being copied.
+
+#ifdef windows
+  As from \R 2.5.0, paths for \code{file} and \env{R\_GSCMD} which
+  contain spaces are mapped \emph{via} \code{\link{shortPathNames}}.
+#endif  
 }
 \value{
   None.
