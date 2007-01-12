@@ -434,6 +434,10 @@ BUG FIXES
     o	abline(reg) now also correctly works with intercept-only lm
 	models, and abline() warns more when it's called illogically.
 
+    o	warning() was truncating messages at
+	getOption("warning.length") - 1 (not as documented), with no
+	indication.
+
 
 
 	**************************************************

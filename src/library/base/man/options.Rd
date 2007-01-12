@@ -234,7 +234,7 @@ getOption(x)
 
     \item{\code{warnings.length}:}{sets the truncation limit for error
       and warning messages.  A non-negative integer, with allowed values
-      100\dots8192, default 1000.}
+      100\dots8170, default 1000.}
 
     \item{\code{width}:}{controls the number of characters on a line.
       You may want to change this if you re-size the window that \R is

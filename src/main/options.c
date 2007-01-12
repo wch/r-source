@@ -443,7 +443,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "warning.length")) {
 		k = asInteger(argi);
-		if (k < 100 || k > 8192)
+		if (k < 100 || k > 8170)
 		    errorcall(call, _("warning.length parameter invalid"));
 		R_WarnLength = k;
                 SET_VECTOR_ELT(value, i, SetOption(tag, argi));

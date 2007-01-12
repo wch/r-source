@@ -225,10 +225,12 @@ void warning(const char *format, ...)
 
     va_list(ap);
     va_start(ap, format);
-    Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
+    Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
     va_end(ap);
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
+    if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
+	strcat(buf, " [... truncated]");
     warningcall(R_NilValue, buf);
 }
 
@@ -287,6 +289,8 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 
     if(w >= 2) { /* make it an error */
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
+	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
+	    strcat(buf, " [... truncated]");
 	inWarning = 0; /* PR#1570 */
 	errorcall(call, _("(converted from warning) %s"), buf);
     }
@@ -298,7 +302,9 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	}
 	else
 	    REprintf(_("Warning: "));
-	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
+	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
+	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
+	    strcat(buf, " [... truncated]");
 	REprintf("%s\n", buf);
     }
     else if(w == 0) {	/* collect them */
@@ -307,7 +313,9 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	if( R_CollectWarnings > 49 )
 	    return;
 	SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
-	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength), format, ap);
+	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
+	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
+	    strcat(buf, " [... truncated]");
 	names = CAR(ATTRIB(R_Warnings));
 	SET_STRING_ELT(names, R_CollectWarnings++, mkChar(buf));
     }

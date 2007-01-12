@@ -45,8 +45,8 @@ suppressWarnings(expr)
   \code{last.warning} is created.  It contains the warnings which can be
   printed via a call to \code{\link{warnings}}.
 
-  Warnings will be truncated to \code{getOption("warning.length")}
-  characters, default 1000.
+  Warnings will be truncated to \code{\link{getOption}("warning.length")}
+  characters, default 1000, indicated by \code{[... truncated]}.
 
   While the warning is being processed, a \code{muffleWarning} restart
   is available.  If this restart is invoked with \code{invokeRestart},
