@@ -40,6 +40,9 @@ R CMD INSTALL now installs by default into the first library on the
 library path if R was run in the current environment.  Similarly, R
 CMD REMOVE by default removes from that library.
 
+bitmap() and dev2bitmap() will now accept paths in GS_CMD which
+contain spaces.
+
 
 
 R 2.4.1 patched
