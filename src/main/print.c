@@ -217,7 +217,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(R_print.useSource == NA_LOGICAL)
     	errorcall(call, _("invalid '%s' argument"), "useSource");
     if(R_print.useSource) R_print.useSource = USESOURCE;
-    
+
     tryS4 = asLogical(CAR(args));
     if(tryS4 == NA_LOGICAL)
 	errorcall(call, _("invalid 'tryS4' internal argument"));
@@ -225,7 +225,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(tryS4 && IS_S4_OBJECT(x) && isMethodsDispatchOn())
       callShow = TRUE;
     args = CDR(args);
-    
+
     if(callShow) {
 	SEXP call;
 	PROTECT(call = lang2(install("show"), x));
@@ -547,7 +547,7 @@ static void PrintExpression(SEXP s)
     SEXP u;
     int i, n;
 
-    u = deparse1(s, 0, R_print.useSource);
+    u = deparse1(s, 0, R_print.useSource | KEEPINTEGER | KEEPNA);
     n = LENGTH(u);
     for (i = 0; i < n ; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i)));
@@ -597,16 +597,16 @@ void attribute_hidden PrintValueRec(SEXP s,SEXP env)
 	char *nm = PRIMNAME(s);
 	SEXP env, s2;
 	PROTECT_INDEX xp;
-	PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv, 
+	PROTECT_WITH_INDEX(env = findVarInFrame3(R_BaseEnv,
 						 install(".ArgsEnv"), TRUE),
 			   &xp);
 	if (TYPEOF(env) == PROMSXP) REPROTECT(env = eval(env, R_BaseEnv), xp);
 	s2 = findVarInFrame3(env, install(nm), TRUE);
 	if(s2 == R_UnboundValue) {
-	    REPROTECT(env = findVarInFrame3(R_BaseEnv, 
+	    REPROTECT(env = findVarInFrame3(R_BaseEnv,
 					    install(".GenericArgsEnv"), TRUE),
 		      xp);
-	    if (TYPEOF(env) == PROMSXP) 
+	    if (TYPEOF(env) == PROMSXP)
 		REPROTECT(env = eval(env, R_BaseEnv), xp);
 	    s2 = findVarInFrame3(env, install(nm), TRUE);
 	}
@@ -633,7 +633,7 @@ void attribute_hidden PrintValueRec(SEXP s,SEXP env)
     case LANGSXP:
 	t = getAttrib(s, R_SourceSymbol);
 	if (isNull(t) || !R_print.useSource)
-	    t = deparse1(s, 0, R_print.useSource);
+	    t = deparse1(s, 0, R_print.useSource | KEEPINTEGER | KEEPNA);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING_ELT(t, i)));
 #ifdef BYTECODE
@@ -796,7 +796,7 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		*/
 		SEXP s, t, na_string = R_print.na_string,
 		    na_string_noquote = R_print.na_string_noquote;
-		int quote = R_print.quote, 
+		int quote = R_print.quote,
 		    digits = R_print.digits, gap = R_print.gap,
 		    na_width = R_print.na_width,
 		    na_width_noquote = R_print.na_width_noquote;
