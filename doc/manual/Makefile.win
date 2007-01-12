@@ -338,7 +338,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 mostlyclean: clean
 clean:
 	@-rm -f *.aux *.toc *refman.i?? *.out *.log
-	@-rm -f *.cp *.cps *.fn *.fns *.ky *.kys \
+	@-rm -f *.cp *.cps *.en *.fn *.fns *.ky *.kys \
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex fullrefman.tex *-pkg.tex 
 distclean: clean
