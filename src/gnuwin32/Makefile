@@ -553,7 +553,7 @@ recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 ifeq ($(strip $(BUILD)),CROSS)
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-          $(R_EXE) CMD perl XINSTALL --unsafe -l $(RHOME)/library--docs=normal ../library/$${p} || exit 1; \
+          $(R_EXE) CMD perl XINSTALL --unsafe -l $(RHOME)/library --docs=normal ../library/$${p} || exit 1; \
         done
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
