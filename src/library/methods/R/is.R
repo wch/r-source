@@ -23,15 +23,14 @@ extends <-
   ## Returns `maybe' if the extension includes a non-trivial test.
   function(class1, class2, maybe = TRUE, fullInfo = FALSE)
 {
-    if(is(class1, "classRepresentation")) {
-        classDef1 <- class1
-        class1 <- classDef1@className
-    }
-    else if(is.character(class1)){
-        classDef1 <- getClassDef(class1)
+    if(is.character(class1)) {
+	classDef1 <- getClassDef(class1)
+    } else if(is(class1, "classRepresentation")) {
+	classDef1 <- class1
+	class1 <- classDef1@className
     }
     else
-        stop("'class1' must be the name of a class or a class definition")
+	stop("'class1' must be the name of a class or a class definition")
     if(missing(class2)) {
         if(is.null(classDef1))
             return(class1)
@@ -53,7 +52,7 @@ extends <-
 	## the [[1]] below handles old-style classes & throws away package attributes
 	## {Really? :} A cleaner version needed, to also ignore attr's of class2
 	if(.identC(class1[[1]], class2) || .identC(class2, "ANY") ||
-	   class2 %in% classDef1@contains)
+	   class2 %in% names(classDef1@contains))
 	    return(TRUE)
 	else
 	    classDef2 <- getClassDef(class2)
