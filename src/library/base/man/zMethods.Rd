@@ -2,6 +2,7 @@
 \alias{InternalMethods}
 \alias{InternalGenerics}
 \alias{internal generic}
+\alias{.S3PrimitiveGenerics}
 \title{Internal Generic Functions}
 \description{
   Many \R-internal functions are \emph{generic} and allow
@@ -43,6 +44,7 @@
   \code{\link{is.complex}},
   \code{\link{is.double}},
   \code{\link{is.environment}},
+  \code{\link{is.expression}},
   \code{\link{is.function}},
   \code{\link{is.integer}},
   \code{\link{is.language}},
@@ -62,10 +64,13 @@
   \code{\link{seq.int}}.%                            [seq.c]
 
   In addition, \code{is.name} is a synonym for \code{is.symbol} and
-  dispatches methods for the latter.
+  dispatches methods for the latter.  
 
   Note that most of the \link{group generic} functions are also
   internal/primitive and allow methods to be written for them.
+
+  \code{.S3PrimitiveGenerics} is a character vector listing the
+  primitives which are internal generic and not \link{group generic}.
 }
 \seealso{
   \code{\link{methods}} for the methods which are available.

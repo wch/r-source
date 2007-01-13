@@ -11,6 +11,10 @@ y ~ model
 \arguments{
   \item{y, model}{symbolic expressions.}
 }
+\details{
+  The left-hand side is optional, and one-sided formulae are used in
+  some contexts.
+}
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical models.}
