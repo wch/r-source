@@ -32,7 +32,8 @@ as.expression(x, \dots)
   containing its arguments (unevaluated).
 
   \code{is.expression} returns \code{TRUE} if \code{expr} is an
-  expression object and \code{FALSE} otherwise.
+  expression object and \code{FALSE} otherwise.  It is internally S3
+  generic.
 
   \code{as.expression} attempts to coerce its argument into an
   expression object.
