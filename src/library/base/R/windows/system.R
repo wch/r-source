@@ -2,13 +2,11 @@ system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
                    show.output.on.console = FALSE, minimized = FALSE,
                    invisible = FALSE, ignore.stderr = FALSE)
 {
-    if(!missing(ignore.stderr))
-        warning("argument 'ignore.stderr' is only available on the Unix version of 'system'")
     f <- ""
     if (!is.null(input)) {
         f <- tempfile()
         on.exit(unlink(f))
-        cat(input,file=f,sep="\n")
+        cat(input, file = f, sep="\n")
     }
     if (intern)
         flag <- 3
@@ -20,6 +18,7 @@ system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
     }
     if (invisible) flag <- 20 + flag
     else if (minimized) flag <- 10 + flag
+    if(ignore.stderr) flag <- flag + 100
     .Internal(system(command, as.integer(flag), f))
 }
 
