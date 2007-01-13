@@ -3954,12 +3954,18 @@ function(dir)
 
 print.check_T_and_F <- function(x, ...) {
     if(length(x$bad_closures)) {
-        msg <- gettext("Found possibly global T or F in the following functions:")
+        msg <- ngettext(length(x$bad_closures),
+                        "Found possibly global 'T' or 'F' in the following function:",
+                        "Found possibly global 'T' or 'F' in the following functions:"
+                        )
         writeLines(strwrap(msg))
         .pretty_print(x$bad_closures)
     }
     if(length(x$bad_examples)) {
-        msg <- gettext("Found possibly global T or F in the following Rd example files:")
+        msg <- ngettext(length(x$bad_examples),
+                        "Found possibly global 'T' or 'F' in the following Rd example file:",
+                        "Found possibly global 'T' or 'F' in the following Rd example files:"
+                        )
         writeLines(strwrap(msg))
         writeLines(paste(" ", x$bad_examples))
     }
