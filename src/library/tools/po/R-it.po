@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2007-01-13 16:16\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -33,6 +33,9 @@ msgid "Undocumented S4 classes:"
 msgstr ""
 
 msgid "Undocumented S4 methods:"
+msgstr ""
+
+msgid "Prototyped non-primitives:"
 msgstr ""
 
 msgid "Undocumented %s:"
@@ -347,12 +350,6 @@ msgstr ""
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
-msgid "Found possibly global T or F in the following functions:"
-msgstr ""
-
-msgid "Found possibly global T or F in the following Rd example files:"
-msgstr ""
-
 msgid "argument 'lines' must be a character vector"
 msgstr "argomento 'lines' deve essere un vettore carattere"
 
@@ -579,3 +576,14 @@ msgstr "fatto"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] ""
+msgstr[1] ""

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
-"PO-Revision-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2007-01-13 16:16\n"
+"PO-Revision-Date: 2007-01-13 16:16\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -56,6 +56,9 @@ msgstr "Undocumented S4 classes:"
 
 msgid "Undocumented S4 methods:"
 msgstr "Undocumented S4 methods:"
+
+msgid "Prototyped non-primitives:"
+msgstr "Prototyped non-primitives:"
 
 msgid "Undocumented %s:"
 msgstr "Undocumented %s:"
@@ -362,12 +365,6 @@ msgstr "‘::’ or ‘:::’ imports not declared from:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "‘library’ or ‘require’ calls not declared from:"
 
-msgid "Found possibly global T or F in the following functions:"
-msgstr "Found possibly global T or F in the following functions:"
-
-msgid "Found possibly global T or F in the following Rd example files:"
-msgstr "Found possibly global T or F in the following Rd example files:"
-
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"
 
@@ -584,3 +581,14 @@ msgstr "done"
 
 msgid "parsing '%s'"
 msgstr "parsing ‘%s’"
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] "Found possibly global ‘T’ or ‘F’ in the following function:"
+msgstr[1] "Found possibly global ‘T’ or ‘F’ in the following functions:"
+
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] "Found possibly global ‘T’ or ‘F’ in the following Rd example file:"
+msgstr[1] "Found possibly global ‘T’ or ‘F’ in the following Rd example files:"

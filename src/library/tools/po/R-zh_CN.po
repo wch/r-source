@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2007-01-13 16:16\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -39,6 +39,9 @@ msgstr "没有说明的S4类别:"
 
 msgid "Undocumented S4 methods:"
 msgstr "没有说明的S4方法:"
+
+msgid "Prototyped non-primitives:"
+msgstr ""
 
 msgid "Undocumented %s:"
 msgstr "没有说明的%s:"
@@ -339,12 +342,6 @@ msgstr "'::'或':::'引进没有声明:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
-msgid "Found possibly global T or F in the following functions:"
-msgstr "在下面的函数里遇到了有可能是全局的T或F值:"
-
-msgid "Found possibly global T or F in the following Rd example files:"
-msgstr "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
-
 msgid "argument 'lines' must be a character vector"
 msgstr "变元'lines'必需是字符向量"
 
@@ -560,3 +557,14 @@ msgstr "好了"
 
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
+
+#, fuzzy
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
+
+#, fuzzy
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"

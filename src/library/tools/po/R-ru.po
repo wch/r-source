@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2007-01-13 16:16\n"
 "PO-Revision-Date: 2006-09-25 04:17-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -42,6 +42,9 @@ msgstr "Недокументированные классы S4:"
 
 msgid "Undocumented S4 methods:"
 msgstr "Недокументированные методы S4:"
+
+msgid "Prototyped non-primitives:"
+msgstr ""
 
 msgid "Undocumented %s:"
 msgstr "Недокументированные %s:"
@@ -353,12 +356,6 @@ msgstr "не объявлен импорт '::' или ':::' из:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
 
-msgid "Found possibly global T or F in the following functions:"
-msgstr "Найдены возможные глобальные T или F в следующих функциях:"
-
-msgid "Found possibly global T or F in the following Rd example files:"
-msgstr "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
-
 msgid "argument 'lines' must be a character vector"
 msgstr "аргумент 'lines' должен быть текстовым вектором"
 
@@ -575,3 +572,21 @@ msgstr "готово"
 
 msgid "parsing '%s'"
 msgstr "разбор '%s'"
+
+#, fuzzy
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] "Найдены возможные глобальные T или F в следующих функциях:"
+msgstr[1] "Найдены возможные глобальные T или F в следующих функциях:"
+msgstr[2] "Найдены возможные глобальные T или F в следующих функциях:"
+
+#, fuzzy
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] ""
+"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+msgstr[1] ""
+"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+msgstr[2] ""
+"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"

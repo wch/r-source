@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:23\n"
+"POT-Creation-Date: 2007-01-13 16:16\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -33,6 +33,9 @@ msgid "Undocumented S4 classes:"
 msgstr ""
 
 msgid "Undocumented S4 methods:"
+msgstr ""
+
+msgid "Prototyped non-primitives:"
 msgstr ""
 
 msgid "Undocumented %s:"
@@ -345,12 +348,6 @@ msgstr ""
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
-msgid "Found possibly global T or F in the following functions:"
-msgstr ""
-
-msgid "Found possibly global T or F in the following Rd example files:"
-msgstr ""
-
 msgid "argument 'lines' must be a character vector"
 msgstr "인수'lines'는 문자 벡터이어야만 합니다"
 
@@ -578,3 +575,12 @@ msgstr "행해졌습니다"
 
 msgid "parsing '%s'"
 msgstr "분석 '%s'"
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] ""
+
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] ""
