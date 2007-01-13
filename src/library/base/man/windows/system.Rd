@@ -5,26 +5,27 @@
 \usage{
 system(command, intern = FALSE, wait = TRUE, input = NULL,
        show.output.on.console = FALSE,
-       minimized = FALSE, invisible = FALSE)
+       minimized = FALSE, invisible = FALSE, ignore.stderr = FALSE)
 }
 \arguments{
-    \item{command}{the system command to be invoked, as a string.}
-    \item{intern}{a logical, indicates whether to make the output of the
-	command an \R object.}
-    \item{wait}{should the \R interpreter wait for the command to finish?
-	The default is to wait, and the interpreter will always wait if
-	\code{intern = TRUE}.}
-    \item{input}{if a character vector is supplied, this is copied one
-	string per line to a temporary file, and the standard input of
-	\code{command} is redirected to the file.}
-    \item{show.output.on.console}{a logical, indicates whether to capture
-          the output of the command and show it on the \R console (not used
-	  by \code{Rterm}, which captures the output unless \code{wait}
-	  is false).}
-    \item{minimized}{a logical, indicates whether the command window
-	  should be initially displayed as a minimized window.}
-    \item{invisible}{a logical, indicates whether the command window
-	  should be visible on the screen.}
+  \item{command}{the system command to be invoked, as a string.}
+  \item{intern}{a logical, indicates whether to make the output of the
+    command an \R object.}
+  \item{wait}{should the \R interpreter wait for the command to finish?
+    The default is to wait, and the interpreter will always wait if
+    \code{intern = TRUE}.}
+  \item{input}{if a character vector is supplied, this is copied one
+    string per line to a temporary file, and the standard input of
+    \code{command} is redirected to the file.}
+  \item{show.output.on.console}{a logical, indicates whether to capture
+    the output of the command and show it on the \R console (not used
+    by \code{Rterm}, which captures the output unless \code{wait}
+    is false).}
+  \item{minimized}{a logical, indicates whether the command window
+    should be initially displayed as a minimized window.}
+  \item{invisible}{a logical, indicates whether the command window
+    should be visible on the screen.}
+  \item{ignore.stderr}{logical, ignored with a warning on this platform.}
 }
 \description{
     \code{system} invokes the system command specified by \code{command}.

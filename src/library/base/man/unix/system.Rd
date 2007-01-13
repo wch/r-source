@@ -6,7 +6,9 @@
   \code{system} invokes the OS command specified by \code{command}.
 }
 \usage{
-system(command, intern = FALSE, ignore.stderr = FALSE)
+system(command, intern = FALSE, ignore.stderr = FALSE,
+       wait = TRUE, input = NULL, show.output.on.console = FALSE,
+       minimized = FALSE, invisible = FALSE)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a string.}
@@ -15,6 +17,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE)
     \code{popen} is supported on the platform.}
   \item{ignore.stderr}{a logical indicating whether error messages (written
     to \file{stderr}) should be ignored.}
+  \item{wait, input, show.output.on.console, minimized, invisible}{arguments
+    that are accepted on other platforms but ignored on this one, with a warning.}
 }
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the

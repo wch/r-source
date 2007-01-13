@@ -1,7 +1,9 @@
 system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
                    show.output.on.console = FALSE, minimized = FALSE,
-                   invisible = FALSE)
+                   invisible = FALSE, ignore.stderr = FALSE)
 {
+    if(!missing(ignore.stderr))
+        warning("argument 'ignore.stderr' is only available on the Unix version of 'system'")
     f <- ""
     if (!is.null(input)) {
         f <- tempfile()

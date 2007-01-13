@@ -287,6 +287,10 @@ NEW FEATURES
 	of model.frame() coerce their 'formula'	argument (if supplied)
 	to a formula.
 
+    o	system() now takes the same set of arguments on all platforms,
+	with those which are not applicable being ignored with a
+	warning.
+
 
 DEPRECATED & DEFUNCT
 
