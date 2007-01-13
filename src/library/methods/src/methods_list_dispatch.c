@@ -742,8 +742,8 @@ SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
 
 SEXP R_identC(SEXP e1, SEXP e2)
 {
-    if(TYPEOF(e1) == STRSXP  && TYPEOF(e1) == STRSXP &&
-       length(e1) == 1 && length(e2) == 1 &&
+    if(TYPEOF(e1) == STRSXP && TYPEOF(e2) == STRSXP &&
+       LENGTH(e1) == 1 && LENGTH(e2) == 1 &&
        streql(CHAR(STRING_ELT(e1, 0)), CHAR(STRING_ELT(e2, 0))))
 	return R_TRUE;
     else
