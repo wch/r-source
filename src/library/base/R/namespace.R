@@ -18,7 +18,7 @@ getNamespace <- function(name) {
                                   call. = FALSE, domain = NA)
                           return(getNamespace("stats"))
                       }
-                      else stop(e, domain = NA)
+                      else stop(e)
                   })
 }
 

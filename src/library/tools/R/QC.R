@@ -259,6 +259,24 @@ function(package, dir, lib.loc = NULL)
                               "generic '\\1' and siglist '\\2'",
                               S4_methods))))
     }
+    if(is_base) {
+        ## we use .ArgsEnv and .GenericArgsEnv in checkS3methods and codoc,
+        ## so we check here that the set of primiitives has not been changed.
+        base_funs <- ls("package:base", all=TRUE)
+        prim <- sapply(base_funs, function(x) is.primitive(get(x, "package:base")))
+        prims <- base_funs[prim]
+        prototypes <- sort(c(ls(envir=.ArgsEnv, all=TRUE),
+                             ls(envir=.GenericArgsEnv, all=TRUE)))
+        extras <- prototypes %w/o% prims
+        if(length(extras))
+            undoc_things <- c(undoc_things, list(prim_extra=extras))
+        langElts <- c("$","$<-","&&","(",":","@","[","[[",
+                      "[[<-","[<-","{","||","~","<-","<<-","=","break","for",
+                      "function","if","next","repeat","return", "while")
+        miss <- prims %w/o% c(langElts, prototypes)
+        if(length(miss))
+            undoc_things <- c(undoc_things, list(primitives=miss))
+    }
 
     class(undoc_things) <- "undoc"
     undoc_things
@@ -278,6 +296,8 @@ function(x, ...)
                       gettext("Undocumented S4 classes:"),
                       "S4 methods" =
                       gettext("Undocumented S4 methods:"),
+                      prim_extra =
+                      gettext("Prototyped non-primitives:"),
                       gettextf("Undocumented %s:", tag))
         writeLines(msg)
         ## We avoid markup for indicating S4 methods, hence need to

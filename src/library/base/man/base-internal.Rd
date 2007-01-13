@@ -13,7 +13,6 @@
 \alias{.set_row_names}
 \alias{.ArgsEnv}
 \alias{.GenericArgsEnv}
-\alias{.S3PrimitiveGenerics}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
@@ -124,6 +123,23 @@ sys.save.image(name)
   is able to open a connection to save the image.  This is appropriate
   when called from \code{q()} and allies, but reinforces the warning
   that it should not be called directly.
+
+  \code{\link{row.names}} can be stored internally in compact form.
+  \code{.set_row_names(n)} generates that form for automatic row names
+  of length \code{n}, to be assigned to
+  \code{attr(<a data frame>, "row.names")}.  \code{.row_names_info}
+  gives information on the internal form of the row names for a data
+  frame: for details of what information see the argument \code{type}.
+
+  \code{.GenericArgsEnv} and \code{.ArgsEnv} are environments that
+  contain closures with the argument lists that the primitives would
+  have had had they been closures.  All the primitives that are internal
+  S3 generics have corresponding members of \code{.GenericArgsEnv} and
+  the remaining non-language-element primitives correspond to
+  \code{.ArgsEnv}. See the \sQuote{R Internals} manual for further
+  details.  They are used by \code{\link{args}} and
+  \code{\link{print.default}} and the QC functions \code{\link{codoc}}
+  and \code{\link{checkS3methods}}.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character

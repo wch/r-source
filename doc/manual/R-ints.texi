@@ -1446,6 +1446,7 @@ do work in the standard way.
 @menu
 * Special primitives::          
 * Special internals::           
+* Prototypes for primitives::   
 @end menu
 
 @node Special primitives, Special internals, .Internal vs .Primitive, .Internal vs .Primitive
@@ -1455,7 +1456,7 @@ A small number of primitives are @emph{specials} rather than
 @emph{builtins}, that is they are entered with unevaluated arguments.
 This is clearly necessary for the language constructs and the assignment
 operators.  @code{&&} and @code{||} conditionally evaluate their second
-argument.  @code{~}, @code{.Internal}, @code{call}, @code{expression}
+argument, and  @code{~}, @code{.Internal}, @code{call}, @code{expression}
 and @code{missing} do not evaluate their arguments.
 
 @code{rep} and @code{seq.int} are special as they evaluate some of their
@@ -1470,7 +1471,7 @@ arguments.)
 @code{UseMethod} is special to avoid the additional contexts added to
 calls to builtins when profiling (via @code{Rprof}).
 
-@node Special internals,  , Special primitives, .Internal vs .Primitive
+@node Special internals, Prototypes for primitives, Special primitives, .Internal vs .Primitive
 @section Special internals
 
 There are also special @code{.Internal} functions: @code{switch},
@@ -1478,6 +1479,61 @@ There are also special @code{.Internal} functions: @code{switch},
 @code{deparse.level} argument), @code{lapply}, @code{eapply} and
 @code{NextMethod}.
 
+@node Prototypes for primitives,  , Special internals, .Internal vs .Primitive
+@section Prototypes for primitives
+
+As from @R{} 2.5.0, prototypes are available for the primitive functions
+and operators, and there are used for printing, @code{args} and package
+checking (e.g.@: by @code{tools::checkS3methods} and by package
+@pkg{codetools}).  There are two environments in the @pkg{base} package
+(and namespace), @samp{.GenericArgsEnv} for those primitives which are
+internal S3 generics, and @samp{.ArgsEnv} for the rest.  Those
+environments contain closures with the same names as the primitives,
+formal argumnts derived (manually) from the help pages, a body which
+as suitable call to @code{UseMethod} or @code{NULL} and environment the
+base namespace.
+
+The C code for @code{print.default} and @code{args} uses the closures in
+these environments in preference to the definitions in base (as
+primitives).
+
+The QC function @code{undoc} checks that all the functions prototyped in
+these environments are currently primitive, and that the primitives not
+included are better thought of as language elements (at the time of
+writing
+
+@example
+$  $<-  &&  (  :  @  [  [[  [[<-  [<-  @{  ||  ~  <-  <<-  =
+break  for function  if  next  repeat  return  while
+@end example
+
+@noindent
+.  One could argue about @code{~}, but it is known to the parser and has
+semantics quite unlike a normal function.)
+
+The QC functions @code{codoc} and @code{checkS3methods} also make use of
+these environments (effectively placing them in front of base in the
+search path), and hence the formals of the functions they contain are
+checked against the help pages by @code{codoc}.  However, there are two
+problems with the generic primitives.  The first is that many of the
+operators are part of the S3 group generic @code{Ops} and that defines
+their arguments to be @code{e1} and @code{e2}: although it would be very
+unusual, an operator could be called as e.g.@: @code{"+"(e1=a, e2=b)}
+and if method dispatch occurred to a closure, there would be an argument
+name mismatch.  So the definitions in environment @code{.GenericArgsEnv}
+have to use argument names @code{e1} and @code{e2} even though the
+traditional documentation is in terms of @code{x} and @code{y}:
+@code{codoc} makes the appropriate adjustment via
+@code{tools:::.make_S3_primitive_generic_env}.  The second discrepancy
+is with the @code{Math} group generics, where the group generic is
+defined with argument list @code{(x, ...)}, but most of the members only
+allow one argument when used as the default method (and @code{round} and
+@code{signif} allow two as default methods): again fix-ups are used.
+
+There is no way to know if a @code{.Internal} or primitive function is
+internally generic except by reading the source code: do not rely on the
+help pages (or even the presence or not in @code{.GenericArgsEnv}) as
+they cannot be checked automatically.
 
 @node R coding standards, Testing R code, .Internal vs .Primitive, Top
 @chapter R coding standards

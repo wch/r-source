@@ -27,6 +27,7 @@
 
 .ArgsEnv <- new.env(hash = TRUE, parent = emptyenv())
 
+assign("%*%", function(a, b) NULL, envir = .ArgsEnv)
 assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) NULL,
            envir = .ArgsEnv)
 assign(".Fortran", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) NULL,
@@ -68,6 +69,7 @@ assign("missing", function(x) NULL, envir = .ArgsEnv)
 assign("nargs", function() NULL, envir = .ArgsEnv)
 assign("oldClass", function(x) NULL, envir = .ArgsEnv)
 assign("oldClass<-", function(x, value) NULL, envir = .ArgsEnv)
+assign("on.exit", function(expr, add = FALSE) NULL, envir = .ArgsEnv)
 assign("pos.to.env", function(x) NULL, envir = .ArgsEnv)
 assign("proc.time", function() NULL, envir = .ArgsEnv)
 assign("quote", function(expr) NULL, envir = .ArgsEnv)
@@ -75,6 +77,7 @@ assign("retracemem", function(x, previous = NULL) NULL, envir = .ArgsEnv)
 assign("seq_along", function(along.with) NULL, envir = .ArgsEnv)
 assign("seq_len", function(length.out) NULL, envir = .ArgsEnv)
 assign("standardGeneric", function(f) NULL, envir = .ArgsEnv)
+assign("substitute", function(expr, env) NULL, envir = .ArgsEnv)
 assign("tracemem", function(x) NULL, envir = .ArgsEnv)
 assign("unclass", function(x) NULL, envir = .ArgsEnv)
 assign("undebug", function(fun) NULL, envir = .ArgsEnv)
@@ -82,35 +85,23 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 
 
-.S3PrimitiveGenerics <-
-    c("as.character", "c", "dim", "dim<-", "dimnames", "dimnames<-",
-      "is.array", "is.atomic", "is.call", "is.character", "is.complex",
-      "is.double", "is.environment", "is.function", "is.integer",
-      "is.language", "is.logical", "is.list", "is.matrix", "is.na", "is.nan",
-      "is.name", "is.null", "is.numeric", "is.object", "is.pairlist",
-      "is.recursive", "is.single", "is.symbol", "length", "length<-",
-      "levels<-", "names", "names<-", "rep", "seq.int")
+.S3PrimitiveGenerics <- c("as.character", "c", "dim", "dim<-",
+    "dimnames", "dimnames<-", "is.array", "is.atomic", "is.call",
+    "is.character", "is.complex", "is.double", "is.environment",
+    "is.expression", "is.function", "is.integer", "is.language",
+    "is.logical", "is.list", "is.matrix", "is.na", "is.nan",
+    "is.name", "is.null", "is.numeric", "is.object", "is.pairlist",
+    "is.recursive", "is.single", "is.symbol", "length", "length<-",
+    "levels<-", "names", "names<-", "rep", "seq.int")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
     for(f in .S3PrimitiveGenerics) {
         fx <- function(x) {}
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
-        environment(fx) <- emptyenv()
+        environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
-    assign("as.character", function(x, ...) UseMethod("as.character"),
-           envir = env)
-    assign("c", function(..., recursive = FALSE) UseMethod("c"), envir = env)
-    assign("dimnames", function(x) UseMethod("dimnames"), envir = env)
-    assign("dim<-", function(x, value) UseMethod("dim<-"), envir = env)
-    assign("dimnames<-", function(x, value) UseMethod("dimnames<-"), envir = env)
-    assign("length<-", function(x, value) UseMethod("length<-"), envir = env)
-    assign("levels<-", function(x, value) UseMethod("levels<-"), envir = env)
-    assign("names<-", function(x, value) UseMethod("names<-"), envir = env)
-    assign("rep", function(x, ...) UseMethod("rep"), envir = env)
-    assign("seq.int", function(from, to, by, length.out, along.with, ...)
-           UseMethod("seq.int"), envir = env)
     ## now add the group generics
     ## log, round, signif and the gamma fns are not primitive
     fx <- function(x, ...) {}
@@ -119,22 +110,40 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
                'tanh', 'acosh', 'asinh', 'atanh',
                'cumsum', 'cumprod', 'cummax', 'cummin')) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
-        environment(fx) <- emptyenv()
+        environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
     fx <- function(e1, e2) {}
     for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
                '==', '!=', '<', '<=', '>=', '>')) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
-        environment(fx) <- emptyenv()
+        environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
     ## none of Summary is primitive
     for(f in c("Arg", "Conj", "Im", "Mod", "Re")) {
         fx <- function(z) {}
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
-        environment(fx) <- emptyenv()
+        environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
     env
 })
+### do these outside to get the base namespace as the environment.
+assign("as.character", function(x, ...) UseMethod("as.character"),
+       envir = .GenericArgsEnv)
+assign("c", function(..., recursive = FALSE) UseMethod("c"),
+       envir = .GenericArgsEnv)
+assign("dimnames", function(x) UseMethod("dimnames"), envir = .GenericArgsEnv)
+assign("dim<-", function(x, value) UseMethod("dim<-"), envir = .GenericArgsEnv)
+assign("dimnames<-", function(x, value) UseMethod("dimnames<-"),
+       envir = .GenericArgsEnv)
+assign("length<-", function(x, value) UseMethod("length<-"),
+       envir = .GenericArgsEnv)
+assign("levels<-", function(x, value) UseMethod("levels<-"),
+       envir = .GenericArgsEnv)
+assign("names<-", function(x, value) UseMethod("names<-"),
+       envir = .GenericArgsEnv)
+assign("rep", function(x, ...) UseMethod("rep"), envir = .GenericArgsEnv)
+assign("seq.int", function(from, to, by, length.out, along.with, ...)
+       UseMethod("seq.int"), envir = .GenericArgsEnv)
