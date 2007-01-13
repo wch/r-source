@@ -176,21 +176,20 @@ getClassDef <-
         return(Class)
     value <- .getClassFromCache(Class, where)
     if(is.null(value)) {
-    if(length(Class)>1)
-        ## S3 class; almost certainly has no packageSLot, but we'll continue anyway
-        cname <- classMetaName(Class[[1]])
-    else
-        cname <- classMetaName(Class)
-    value <- NULL
-    ## a string with a package slot strongly implies the class definition
-    ## should be in that package.
-    if(!is.null(package)) {
-        whereP <- .requirePackage(package)
-        if(exists(cname, whereP))
-            value <- get(cname, whereP)
-    }
-    if(is.null(value) && exists(cname, where))
-        value <- get(cname, where)
+	cname <-
+	    classMetaName(if(length(Class) > 1)
+			  ## S3 class; almost certainly has no packageSlot,
+			  ## but we'll continue anyway
+			  Class[[1]] else Class)
+	## a string with a package slot strongly implies the class definition
+	## should be in that package.
+	if(!is.null(package)) {
+	    whereP <- .requirePackage(package)
+	    if(exists(cname, whereP))
+		value <- get(cname, whereP)
+	}
+	if(is.null(value) && exists(cname, where))
+	    value <- get(cname, where)
     }
     value
 }
@@ -389,72 +388,78 @@ validObject <- function(object, test = FALSE, complete = FALSE)
     slotTypes <- classDef@slots
     slotNames <- names(slotTypes)
     for(i in seq_along(slotTypes)) {
-        classi <- slotTypes[[i]]
-        sloti <- slot(object, slotNames[[i]])
-        classDefi <- getClassDef(classi, where = where)
-        if(is.null(classDefi)) {
-          errors <- c(errors, paste("class for slot \"", slotNames[[i]],
-                                    "\" (\"", classi, "\")", sep=""))
-          next
-        }
-        ## note that the use of possibleExtends is shared with checkSlotAssignment(), in case a
-        ## future revision improves on it!
-        ok <- possibleExtends(class(sloti), classi, ClassDef2 = classDefi)
-        if(identical(ok, FALSE)) {
-            errors <- c(errors,
-                        paste("invalid object for slot \"", slotNames[[i]],
-                              "\" in class \"", Class,
-                              "\": got class \"", class(sloti),
-                              "\", should be or extend class \"", classi, "\"", sep = ""))
-            next
-        }
-        if(!complete)
-          next
-        validityMethod <- classDefi@validity
-        if(is(validityMethod, "function")) {
-            errori <- anyStrings(validityMethod(sloti))
-            if(length(errori)>0) {
-                errori <- paste("In slot \"", slotNames[[i]],
-                                "\" of class \"", class(sloti), "\": ",
-                                sep = "", errori)
-                errors <- c(errors, errori)
-            }
-        }
+	classi <- slotTypes[[i]]
+	sloti <- slot(object, slotNames[[i]])
+	classDefi <- getClassDef(classi, where = where)
+	if(is.null(classDefi)) {
+	    errors <- c(errors, paste("class for slot \"", slotNames[[i]],
+				      "\" (\"", classi, "\")", sep=""))
+	    next
+	}
+	## note that the use of possibleExtends is shared with checkSlotAssignment(), in case a
+	## future revision improves on it!
+	ok <- possibleExtends(class(sloti), classi, ClassDef2 = classDefi)
+	if(identical(ok, FALSE)) {
+	    errors <- c(errors,
+			paste("invalid object for slot \"", slotNames[[i]],
+			      "\" in class \"", Class,
+			      "\": got class \"", class(sloti),
+			      "\", should be or extend class \"", classi, "\"",
+			      sep = ""))
+	    next
+	}
+	if(!complete)
+	    next
+	validityMethod <- classDefi@validity
+	if(is(validityMethod, "function")) {
+	    errori <- anyStrings(validityMethod(sloti))
+	    if(length(errori) > 0) {
+		errori <- paste("In slot \"", slotNames[[i]],
+				"\" of class \"", class(sloti), "\": ",
+				errori, sep = "")
+		errors <- c(errors, errori)
+	    }
+	}
     }
-    extends <- rev(classDef@contains); i <- 1
-    while(length(errors) == 0 && i <= length(extends)) {
-        exti <- extends[[i]]
-        superClass <- exti@superClass
-        i <- i+1
-        if(!exti@simple && !is(object, superClass))
-            next ## skip conditional relations that don't hold for this object
-        superDef <- getClassDef(superClass, where = where)
-        if(is.null(superDef)) {
-            errors <- c(errors, paste("superclass \"", superClass, "\" not defined in the environment of the object's class", sep=""))
-            next
-        }
-        validityMethod <- superDef@validity
-        if(is(validityMethod, "function"))
-            errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
+    extends <- rev(classDef@contains)
+    for(i in seq_along(extends)) {
+	exti <- extends[[i]]
+	superClass <- exti@superClass
+	if(!exti@simple && !is(object, superClass))
+	    next ## skip conditional relations that don't hold for this object
+	superDef <- getClassDef(superClass, where = where)
+	if(is.null(superDef)) {
+	    errors <- c(errors,
+			paste("superclass \"", superClass,
+			      "\" not defined in the environment of the object's class",
+			      sep=""))
+	    break
+	}
+	validityMethod <- superDef@validity
+	if(is(validityMethod, "function")) {
+	    errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
+	    if(length(errors))
+		break
+	}
     }
     validityMethod <- classDef@validity
     if(length(errors) == 0 && is(validityMethod, "function")) {
-        errors <- c(errors, anyStrings(validityMethod(object)))
+	errors <- c(errors, anyStrings(validityMethod(object)))
     }
     if(length(errors) > 0) {
-        if(test)
-            errors
-        else {
-            msg <- gettextf("invalid class \"%s\" object:", Class)
-            if(length(errors) > 1)
-                stop(paste(msg,
-                           paste(paste(1:length(errors), errors, sep=": ")),
-                           collapse = "\n"), domain = NA)
-            else stop(msg, " ", errors, domain = NA)
+	if(test)
+	    errors
+	else {
+	    msg <- gettextf("invalid class \"%s\" object:", Class)
+	    if(length(errors) > 1)
+		stop(paste(msg,
+			   paste(paste(seq_along(errors), errors, sep=": ")),
+			   collapse = "\n"), domain = NA)
+	    else stop(msg, " ", errors, domain = NA)
+	}
     }
-}
-  else
-    TRUE
+    else
+	TRUE
 }
 
 setValidity <-
