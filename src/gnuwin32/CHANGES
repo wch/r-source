@@ -262,7 +262,7 @@ unless you know exactly what happened.
 There is a new function choose.dir() to choose a folder (as used for
 'Change dir...' on the File menu in RGui.)
 
-New function shortPathNames() to convert names to DOS-style paths (8+3
+New function shortPathName() to convert names to DOS-style paths (8+3
 names and no spaces).
 
 Added workaround to Windows graphics devices (windows(),
