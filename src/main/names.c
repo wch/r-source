@@ -733,7 +733,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 /*{"Platform",	do_Platform,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},*/
 {"index.search",do_indexsearch, 0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.getenv",	do_getenv,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"Sys.putenv",	do_putenv,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"Sys.setenv",	do_setenv,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.unsetenv",do_unsetenv,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"getwd",	do_getwd,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"setwd",	do_setwd,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},

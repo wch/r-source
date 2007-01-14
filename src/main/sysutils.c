@@ -272,7 +272,7 @@ static int Rputenv(char *nm, char *val)
 #endif
 
 
-SEXP attribute_hidden do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_PUTENV) || defined(HAVE_SETENV)
     int i, n;

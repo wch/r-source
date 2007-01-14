@@ -262,7 +262,7 @@ NEW FEATURES
 	(on systems where unsetenv is implemented or putenv can remove
 	variables, such as on Windows).
 
-    o	Sys.setenv() is a new (and preferred) synonym for Sys.putenv.
+    o	Sys.setenv() is a new (and preferred) synonym for Sys.putenv().
 	The internal C code uses the POSIX-preferred 'setenv' rather
 	than 'putenv' where the former is available.
 
@@ -308,6 +308,9 @@ DEPRECATED & DEFUNCT
 
     o	The deprecated behaviour of structure() in adding a class when
 	specifying with "tsp" or "levels" attributes is now defunct.
+
+    o	Sys.putenv() is now deprecated in favour of Sys.setenv(),
+	following the POSIX recommendation.
 
 
 INSTALLATION

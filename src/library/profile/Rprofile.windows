@@ -7,7 +7,7 @@
 .Library.site <- .Library.site[file.exists(.Library.site)]
 
 if(nchar(Sys.getenv("R_LIBS_USER")) == 0)
-    Sys.putenv(R_LIBS_USER=
+    Sys.setenv(R_LIBS_USER=
                file.path(chartr("\\", "/", Sys.getenv("R_USER")), "R",
                          "win-library",
                          paste(R.version$major,

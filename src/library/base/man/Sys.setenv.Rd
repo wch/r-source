@@ -1,11 +1,9 @@
 \name{Sys.setenv}
 \alias{Sys.setenv}
-\alias{Sys.putenv}
 \alias{Sys.unsetenv}
 \title{Set or Unset Environment Variables}
 \usage{
 Sys.setenv(\dots)
-Sys.putenv(\dots)
 
 Sys.unsetenv(x)
 }
@@ -14,10 +12,9 @@ Sys.unsetenv(x)
   \item{x}{a character vector, or an object coercible to character.}
 }
 \description{
-  \code{Sys.setenv} and \code{Sys.putenv} are synonyms: they
-  set environment variables (for other processes called
-  from within \R or future calls to \code{\link{Sys.getenv}} from this
-  \R process).
+  \code{Sys.setenv} sets environment variables (for other processes
+  called from within \R or future calls to \code{\link{Sys.getenv}} from
+  this \R process).
 
   \code{Sys.unsetenv} removes environment variables.
 }
@@ -28,9 +25,8 @@ Sys.unsetenv(x)
 }
 \details{
   The names \code{setenv} and \code{putenv} come from different Unix
-  traditions: as from \R 2.5.0 \code{Sys.setenv} is preferred but both
-  forms are accepted.  The internal code uses \code{setenv} if
-  available, otherwise \code{putenv}.
+  traditions: \R also has \code{Sys.putenv}, but this is now deprecated.
+  The internal code uses \code{setenv} if available, otherwise \code{putenv}.
   
   Non-standard \R names must be quoted in \code{Sys.setenv}:
   see the examples.  Most platforms (and POSIX) do not allow names

@@ -32,8 +32,8 @@ if(.Platform$GUI == "AQUA") {
     ## this is set to let RAqua use both X11 device and
     ## X11/TclTk
     if (Sys.getenv("DISPLAY") == "")
-	Sys.putenv("DISPLAY" = ":0")
+	Sys.setenv("DISPLAY" = ":0")
 
     ## this is to allow g77 compiler to work
-    Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
+    Sys.setenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
 }## end "Aqua"

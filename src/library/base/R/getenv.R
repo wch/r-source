@@ -16,13 +16,13 @@ Sys.getenv <- function(x = NULL, unset = "")
     }
 }
 
-Sys.setenv <- Sys.putenv <- function(...)
+Sys.setenv <- function(...)
 {
     x <- list(...)
     nm <- names(x)
     if(is.null(nm) || "" %in% nm)
         stop("all arguments must be named")
-    .Internal(Sys.putenv(nm, as.character(unlist(x))))
+    .Internal(Sys.setenv(nm, as.character(unlist(x))))
 }
 
 Sys.unsetenv <- function(x) .Internal(Sys.unsetenv(as.character(x)))

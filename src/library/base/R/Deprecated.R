@@ -20,10 +20,9 @@
 
 
 ## <entry>
-## Deprecated in 2.4.0
-## symbol.C and symbol.For are primitives
-## La.chol <- function(x) {
-##     .Deprecated("chol")
-##     .Call("La_chol", as.matrix(x), PACKAGE = "base")
-## }
+## Deprecated in 2.5.0
+Sys.putenv <- function(...) {
+    .Deprecated("Sys.setenv")
+    Sys.setenv(...)
+}
 ## </entry>
