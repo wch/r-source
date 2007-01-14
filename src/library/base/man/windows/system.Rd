@@ -25,7 +25,8 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
     should be initially displayed as a minimized window.}
   \item{invisible}{a logical, indicates whether the command window
     should be visible on the screen.}
-  \item{ignore.stderr}{logical, ignored with a warning on this platform.}
+  \item{ignore.stderr}{logical. If true, output from the command to
+    \code{stderr} is suppressed.}
 }
 \description{
     \code{system} invokes the system command specified by \code{command}.
@@ -51,7 +52,7 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   (\code{Rterm}).
 }
 \details{
-  \code{cmd} is parsed as a command plus arguments separated by spaces.
+  \code{command} is parsed as a command plus arguments separated by spaces.
   So if the path to the command contains spaces, it must be
   (double-)quoted.  See the examples.  (Note: a Windows path name cannot
   contain a double quote, so we do not need to worry about escaping
