@@ -28,7 +28,7 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        topicName, toBibtex, toLatex, type.convert, unstack,
        update.packageStatus, update.packages, upgrade,
        url.show, vi, vignette, withVisible, write.csv, write.csv2,
-       write.socket, write.table, wsbrowser, xedit, xemacs)
+       write.socket, write.table, wsbrowser, xedit, xemacs, zip.file.extract)
 
 S3method("[", getAnywhere)
 S3method("[", roman)

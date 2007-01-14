@@ -45,6 +45,8 @@ NEW FEATURES
     o	read.table(), write.table() and allies have been moved to package
 	utils.
 
+    o	zip.file.extract() has been moved to package utils.
+
     o	A few more cases of subassignment work, e.g. <raw>[] <- <list>
 	and <vector>[] <- <expression>, with suitable coercion of the LHS.
 
