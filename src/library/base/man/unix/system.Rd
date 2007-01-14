@@ -17,8 +17,15 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
     \code{popen} is supported on the platform.}
   \item{ignore.stderr}{a logical indicating whether error messages (written
     to \file{stderr}) should be ignored.}
-  \item{wait, input, show.output.on.console, minimized, invisible}{arguments
-    that are accepted on other platforms but ignored on this one, with a warning.}
+  \item{wait}{a logical indicating whether \R should wait for the
+    command to finish, or run it asynchronously (when \code{intern} will
+    not be useful.}
+  \item{input}{if a character vector is supplied, this is copied one
+    string per line to a temporary file, and the standard input of
+    \code{command} is redirected to the file.}
+  \item{show.output.on.console, minimized, invisible}{arguments
+    that are accepted on other platforms but ignored on this one, with a
+    warning.}
 }
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the
@@ -47,8 +54,16 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
     system("some command 2>&1", intern=TRUE)
   }
 
+  \code{wait} is implemented by appending \code{&} to the command: this
+  is shell-dependent and not supported in Bourne shells.
+
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.
+
+  The Windows version of \R has the additional commands accepted for
+  compatibility, and also has \code{ignore.stderr} in a different place
+  in the argument list.  It is recommended to name all arguments after
+  the first.
 }
 \seealso{
   \code{\link{.Platform}} for platform specific variables.
@@ -60,9 +75,9 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 # t1 is a character vector, each one
 # representing a separate line of output from who
 # (if the platform has popen and who)
-t1 <- try(system("who", TRUE))
+t1 <- try(system("who", intern = TRUE))
 
-try(system("ls fizzlipuzzli", TRUE, TRUE))
+try(system("ls fizzlipuzzli", intern = TRUE, ignore.stderr = TRUE))
 # empty since file doesn't exist
 }
 \keyword{interface}

@@ -2,11 +2,19 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
                    wait = TRUE, input = NULL,
                    show.output.on.console = FALSE, minimized = FALSE,
                    invisible = FALSE) {
-    if(!missing(wait) || !missing(input) || !missing(show.output.on.console) ||
-       !missing(minimized) || !missing(invisible))
-        warning("the only arguments used by system() on this platform are\n  'command', 'intern' and 'ignore.stderr'")
-    .Internal(system(if(ignore.stderr) paste(command, "2>/dev/null") else
-		     command, intern))
+    if(!missing(show.output.on.console) || !missing(minimized) || !missing(invisible))
+        warning("arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only")
+    if(ignore.stderr) command <- paste(command, "2>/dev/null")
+    if(!is.null(input)) {
+        if(!is.character(input))
+            stop("'input' must be a character vector or 'NULL'")
+        f <- tempfile()
+        on.exit(unlink(f))
+        cat(input, file=f, sep="\n")
+        command <- paste(command, "<", f)
+    }
+    if(!wait) command <- paste(command, "&")
+    .Internal(system(command, intern))
 }
 
 unix <- function(call, intern = FALSE) {
