@@ -414,7 +414,8 @@ getOption(x)
     }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 
-    \item{\code{unzip}:}{the command used for unzipping help files.
+    \item{\code{unzip}:}{a character string, the path of the command
+      used for unzipping help files, or \code{"internal"}.
 #ifdef unix
       Defaults to the value of \env{R\_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during
