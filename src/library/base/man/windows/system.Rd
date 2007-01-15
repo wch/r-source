@@ -39,14 +39,14 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   on the RGui console unless \code{ignore.stderr = TRUE}.
 
   If \code{intern = FALSE}, the return value is an error code, given the
-  invisible attribute (so needs to be printed explicitly). If the
+  invisible attribute (so needs to be printed explicitly).  If the
   command could not be run for any reason, the value is \code{-1} and
   an \R warning is generated.  Otherwise if \code{wait = TRUE} the value
   is the error code returned by the command, and if \code{wait = FALSE}
   it is the zero (the conventional success value),
 
   If \code{intern = FALSE} and \code{show.output.on.console = TRUE}
-  the \code{stdout} and \code{stderr} (unless \code{ignore.stderr =
+  the \file{stdout} and \file{stderr} (unless \code{ignore.stderr =
     TRUE} output from a command that is a console application will
   appear in the \R console (\code{Rgui}) or the window running \R
   (\code{Rterm}).
@@ -63,17 +63,16 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   \code{.cmd} and \code{.bat} are tried in turn if none
   is supplied. (To use DOS internal commands use
   \code{paste(Sys.getenv("COMSPEC"),"/c",cmd)}.)
-  The search path for \code{command}
-  may be system-dependent: it will include the \R \code{bin}
-  directory, the working directory and the Windows system directories
-  before \code{PATH}.
+  The search path for \code{command} may be system-dependent: it will
+  include the \R \code{bin} directory, the working directory and the
+  Windows system directories before \code{PATH}.
 
   Precisely what is seen by the user depends on whether \code{Rgui} or
   \code{Rterm} is being used.  For \code{Rgui} a new console will
   always be used, so a commands window will appear for the duration of
-  console applications unless \code{invisible} is true. For
-  \code{Rterm} a separate commands window
-  will appear for console applications only if \code{wait = FALSE}.
+  console applications unless \code{invisible} is true.  For
+  \code{Rterm} a separate commands window will appear for console
+  applications only if \code{wait = FALSE}.
 
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.
@@ -83,7 +82,7 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 
   Do not run console applications that require user
   input from \code{Rgui} setting \code{intern = TRUE} and/or
-  \code{show.output.on.console = TRUE}. They will not work,
+  \code{show.output.on.console = TRUE}.  They will not work,
   may hang and then will probably hang \code{Rgui} too.
 }
 
@@ -95,8 +94,6 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 \examples{
 # launch an editor, wait for it to quit
 \dontrun{system("notepad myfile.txt")}
-# launch a Windows 9x process monitor (from Win9x KernelToys)
-\dontrun{system("wintop", wait = FALSE)}
 # launch your favourite shell:
 \dontrun{system(Sys.getenv("COMSPEC"))}
 \dontrun{

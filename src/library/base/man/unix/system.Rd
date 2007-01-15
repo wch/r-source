@@ -38,9 +38,9 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   (\code{0} for success).
 }
 \details{
-  On Unix-alikes \code{system} runs the shell, and so both the command
-  in \code{command} and any file-path arguments need to be enclosed in
-  quotes (see \code{\link{shQuote}}).
+  On Unix-alikes \code{system} runs the system shell, and so both the
+  command in \code{command} and any filepath arguments need to be
+  enclosed in quotes (see \code{\link{shQuote}}).
   
   If \code{intern} is \code{TRUE} then \code{popen} is used to invoke the
   command and the output collected, line by line, into an \R
@@ -57,7 +57,11 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   \preformatted{
     system("some command 2>&1", intern=TRUE)
   }
-
+  What happens to output sent to \file{stdout} and \file{stderr} if
+  \code{intern = FALSE} is interface-specific, and it is unsafe to
+  assume that such messages will appear on the console (they do not in
+  the \pkg{gnomeGUI} console, for example).
+  
   \code{wait} is implemented by appending \code{&} to the command: this
   is shell-dependent, but required by POSIX and so widely supported.
 
