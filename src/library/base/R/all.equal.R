@@ -49,7 +49,7 @@ all.equal.numeric <-
     out <- is.na(target)
     if(any(out != is.na(current))) {
 	msg <- c(msg, paste("'is.NA' value mismatch:", sum(is.na(current)),
-			    "in current,", sum(out), " in target"))
+			    "in current", sum(out), "in target"))
 	return(msg)
     }
     out <- out | target == current
@@ -72,7 +72,8 @@ all.equal.numeric <-
 	}
 
     if(is.na(xy) || xy > tolerance)
-       msg <- c(msg, paste("Mean", what, if(cplx)"Mod", "difference:", format(xy)))
+       msg <- c(msg, paste("Mean", what, if(cplx)"Mod", "difference:",
+                           format(xy)))
 
     if(is.null(msg)) TRUE else msg
 }
@@ -97,10 +98,10 @@ all.equal.character <-
 	target <- target[ll]
 	current <- current[ll]
     }
-    nas <- is.na(target)
-    if (any(nas != is.na(current))) {
-	msg <- c(msg, paste("'is.NA' value mismatch:", sum(is.na(current)),
-		     "in current,", sum(nas), " in target"))
+    nas <- is.na(target); nasc <- is.na(current)
+    if (any(nas != nasc)) {
+	msg <- c(msg, paste("'is.NA' value mismatch:", sum(nasc),
+                            "in current", sum(nas), "in target"))
 	return(msg)
     }
     ne <- !nas & (target != current)
@@ -137,7 +138,7 @@ all.equal.formula <- function(target, current, ...)
 {
     if(length(target) != length(current))
 	return(paste("target, current differ in having response: ",
-		     length(target) == 3, ", ", length(current) == 3))
+		     length(target) == 3, ", ", length(current) == 3), sep="")
     if(all(deparse(target) != deparse(current)))
 	"formulas differ in contents"
     else TRUE
@@ -155,10 +156,10 @@ all.equal.language <- function(target, current, ...)
 	     paste("Modes of target, current: ", mt, ", ", mc, sep = ""),
 	     if(ttxt != ctxt) {
 		 if(pmatch(ttxt, ctxt, FALSE))
-		     "target a subset of current"
+		     "target is a subset of current"
 		 else if(pmatch(ctxt, ttxt, FALSE))
-		     "current a subset of target"
-		 else	"target, current do not match when deparsed"
+		     "current is a subset of target"
+		 else "target, current do not match when deparsed"
 	     })
     if(is.null(msg)) TRUE else msg
 }

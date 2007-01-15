@@ -455,7 +455,13 @@ BUG FIXES
     o	all.equal() was ignoring 'check.attributes' for list and
 	expression targets, and checking only attributes on raw vectors.
 	Logical vectors were being compared as if they were numeric,
-	(with a mean difference).
+	(with a mean difference being quoted).
+
+    o	Calculating the number of significant digits in a number was
+	itself subject to rounding errors for digits >= 16.  The
+	calculation has been changed to err on the side of slightly
+	too few significant digits (but still at least 15) rather than
+	far too many.  (An example is print(1.001, digits=16).)
 
 
 
