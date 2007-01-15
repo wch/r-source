@@ -103,8 +103,8 @@ print.vignette <- function(x, ...){
         ## openPDF() along the lines of browseURL() ...
         if(.Platform$OS.type == "windows")
             shell.exec(x$pdf)
-        else
-            system(paste(getOption("pdfviewer"), x$pdf, "&"))
+        else # use of '&' is shell-specific
+            system(paste(shQuote(getOption("pdfviewer")), shQuote(x$pdf), "&"))
         ## </FIXME>
     } else {
         warning(gettextf("vignette '%s' has no PDF", x$topic),

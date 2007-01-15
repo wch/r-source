@@ -3,7 +3,8 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     paste0 <- function(x, ext) paste(x, ext, sep=".")
     pdf_viewer <- function(path) {
         if(.Platform$OS.type == "windows") shell.exec(path)
-        else system(paste(getOption("pdfviewer"), path, "&"))
+        else system(paste(shQuote(getOption("pdfviewer")), shQuote(path)),
+                    wait = FALSE)
     }
 
     html_viewer <- function(path) {

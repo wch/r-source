@@ -110,7 +110,9 @@ tkStartGUI <- function() {
     pdfBase <- file.path(R.home("doc"), "manual")
     apply(manuals, 1, function(x) {
 	f <- file.path(pdfBase, paste(x[1], ".pdf", sep="") )
-        cmd <- function() system(paste(getOption("pdfviewer"), f, "&"))
+        cmd <- function() system(paste(shQuote(getOption("pdfviewer")),
+                                       shQuote(f)),
+                                 wait = FALSE)
 	tkadd(helpPDFMenu, "command", label=x[2], command=cmd,
               state=if (file.exists(f)) "normal" else "disabled")
     })
