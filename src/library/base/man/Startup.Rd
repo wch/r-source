@@ -154,7 +154,8 @@ TCL_LIBRARY=c:/packages/Tcl/lib/tcl8.4
 # Example of .Rprofile
 options(width=65, digits=5)
 options(show.signif.stars=FALSE)
-ps.options(horizontal=FALSE)
+setHook(packageEvent("grDevices", "onLoad"),
+        function(...) grDevices::ps.options(horizontal=FALSE))
 set.seed(1234)
 .First <- function() cat("\n   Welcome to R!\n\n")
 .Last <- function()  cat("\n   Goodbye!\n\n")

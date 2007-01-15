@@ -39,7 +39,7 @@
   quotes) unless this is a character \code{NA} \emph{and} \code{quote =
     FALSE}, when \code{<NA>} is printed.
 
-  The same number of decimal places is used throughout a vector,  This
+  The same number of decimal places is used throughout a vector.  This
   means that \code{digits} specifies the minimum number of significant
   digits to be used, and that at least one entry will be encoded with
   that minimum number.  However, if all the encoded elements then have
@@ -54,6 +54,10 @@
   When the \pkg{methods} package is attached, \code{print} will call
   \code{\link{show}} for \R objects with formal classes if called
   with no optional arguments.
+
+  Using too large a value of \code{digits} may lead to representation
+  errors in the calculation of the number of significant digits and the
+  decimal representation: these are likely for \code{digits >= 16}.
 }
 \section{Single-byte locales}{
   If a non-printable character is encountered during output, it is
