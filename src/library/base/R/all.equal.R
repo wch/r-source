@@ -105,7 +105,8 @@ all.equal.character <-
     }
     ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
-    else if(any(ne)) c(msg, paste(sum(ne), "string mismatch(es)"))
+    else if(sum(ne) == 1) c(msg, paste("1 string mismatch"))
+    else if(sum(ne) > 1) c(msg, paste(sum(ne), "string mismatches"))
     else msg
 }
 
@@ -113,17 +114,21 @@ all.equal.factor <- function(target, current, check.attributes = TRUE, ...)
 {
     if(!inherits(current, "factor"))
 	return("'current' is not a factor")
-    msg <-  if(check.attributes) attr.all.equal(target, current)
+    msg <-  if(check.attributes) attr.all.equal(target, current, ...)
     class(target) <- class(current) <- NULL
     nax <- is.na(target)
     nay <- is.na(current)
-    if(n <- sum(nax != nay))
-	msg <- c(msg, paste("NA mismatch(es):", n))
+    n <- sum(nax != nay)
+    if(n > 1)
+	msg <- c(msg, paste(n, "NA mismatches"))
+    else if (n == 1)
+        msg <- c(msg, paste("1, NA mismatch"))
     else {
 	target <- levels(target)[target[!nax]]
 	current <- levels(current)[current[!nay]]
-	if(is.character(n <- all.equal(target, current, check.attributes = check.attributes)))
-	    msg <- c(msg, n)
+        n <- all.equal(target, current, check.attributes = check.attributes,
+                       ...)
+	if(is.character(n)) msg <- c(msg, n)
     }
     if(is.null(msg)) TRUE else msg
 }
@@ -217,7 +222,8 @@ all.equal.raw <-
     }
     ne <- target != current
     if(!any(ne) && is.null(msg)) TRUE
-    else if(any(ne)) c(msg, paste(sum(ne), "element mismatch(es)"))
+    else if(sum(ne) == 1) c(msg, paste("1 element mismatch"))
+    else if(sum(ne) > 1) c(msg, paste(sum(ne), "element mismatches"))
     else msg
 }
 
