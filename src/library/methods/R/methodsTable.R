@@ -206,7 +206,7 @@
   doExcluded <- length(excluded) > 0
   nargs <- length(classes)
   if(verbose)
-      cat(sprintf("* .findInheritedM..(): nargs=%d, returnAll=%s\n",
+      cat(sprintf("* .findInheritedMethods(): nargs=%d, returnAll=%s\n",
                   nargs, returnAll))
   methods <- list()
   if(!missing(useInherited) && length(useInherited) < nargs)
@@ -242,10 +242,8 @@
       classDefs[[1]] <- def
       for(i in 2:nargs) {
           cc <- classDefs[[i]] <- getClass(classes[[i]], .Force = TRUE)
-          if(missing(useInherited) || useInherited[[i]])
-            allLabels <- c(cc@className, names(cc@contains), "ANY")
-          else
-            allLabels <- cc@className
+          allLabels <- if(missing(useInherited) || useInherited[[i]])
+              c(cc@className, names(cc@contains), "ANY") else cc@className
           labels <- outerLabels(labels, allLabels)
       }
   }
@@ -260,17 +258,16 @@
       ##  add the  group methods recursively found but each time
       ## only those not already included in found.
       groupmethods <- .getGroupMethods(labels, groupGenerics, found)
-      fromGroup <- c(rep(0, length(methods)), rep(1, length(groupmethods)))
+      fromGroup <- c(rep(FALSE, length(methods)), rep(TRUE, length(groupmethods)))
       methods <- c(methods, groupmethods)
   }
   else
-      fromGroup <- rep(0, length(methods))
-  if(verbose) cat("*", length(methods),"preliminary methods:",
-		  substr(deparse(names(methods)),2, 1e6), "\n")
+      fromGroup <- rep(FALSE, length(methods))
+  if(verbose) cat("*", length(methods), "preliminary methods:",
+		  substr(deparse(names(methods)), 2, 1e6), "\n")
   ## remove default if its not the only method
   if(length(methods) > 1 && !returnAll) {
-      defaultLabel <- paste(rep("ANY", nargs), collapse =
-                            "#")
+      defaultLabel <- paste(rep("ANY", nargs), collapse = "#")
       i <- match(defaultLabel, names(methods), 0)
       if(i > 0) {
           methods <- methods[-i]
@@ -281,9 +278,10 @@
     methods <- methods[is.na(match(names(methods), as.character(excluded)))]
   if(length(methods) > 1 && !returnAll) {
       if(nargs == 1)
-        classDefs <-  list(def)
+          classDefs <- list(def)
       ## else, defined before
-      if(verbose) cat("* getting best methods, reducing from", length(methods),"\n")
+      if(verbose) cat("* getting best methods, reducing from remaining preliminary",
+		      length(methods),"ones\n")
       methods <- .getBestMethods(methods, classDefs, fromGroup, verbose = verbose)
       if(length(methods) > 1)
 	warning(gettextf(paste("Ambiguous method selection for \"%s\", target \"%s\"",
@@ -390,7 +388,7 @@
     }
     containsDist <- lapply(classDefs, .inhDistances)
     maxDist <- max(unlist(containsDist), na.rm = TRUE) + 1
-    if(verbose) { cat("** initial methods distances:\n"); print(containsDist) }
+    if(verbose) { cat("** individual arguments' distances:\n"); print(containsDist) }
     ## add up the inheritance distances for each argument (row of defClasses)
     for(i in 1:nArg) {
 	ihi <- containsDist[[i]]
@@ -398,8 +396,8 @@
 	cli <- defClasses[i,]
 	dist <- dist + ihi[match(cli, names(ihi))]
     }
-    if(verbose) cat("** final  methods distances:",
-		    paste(formatC(dist), collapse= ","), "\n")
+    if(verbose) cat("** final methods' distances: (",
+		    paste(formatC(dist), collapse= ", "), ")\n", sep='')
     best <- dist == min(dist)
     ## of the least distance methods, choose direct, rather than group
     ## methods, unless all the best methods are from group generics
