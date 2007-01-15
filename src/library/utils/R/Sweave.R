@@ -353,7 +353,7 @@ RweaveLatexSetup <-
                     engine="R", print=FALSE, eval=eval,
                     fig=FALSE, pdf=pdf, eps=eps,
                     width=6, height=6, term=TRUE,
-                    echo=echo, keep.source=keep.source, results="verbatim", 
+                    echo=echo, keep.source=keep.source, results="verbatim",
                     split=split, strip.white="true", include=TRUE,
                     pdf.version="1.1", pdf.encoding="default")
 
@@ -375,7 +375,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           if(!(options$engine %in% c("R", "S"))){
               return(object)
           }
-          
+
           if(!object$quiet){
               cat(formatC(options$chunknr, width=2), ":")
               if(options$echo) cat(" echo")
@@ -409,7 +409,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 
 	  saveopts <- options(keep.source=options$keep.source)
 	  on.exit(options(saveopts))
-	  
+
           SweaveHooks(options, run=TRUE)
 
           chunkexps <- try(parse(text=chunk), silent=TRUE)
@@ -419,7 +419,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
 
           if(length(chunkexps)==0)
             return(object)
-            
+
 	  srcrefs <- attr(chunkexps, "srcref")
 	  lastshown <- 0
           for(nce in 1:length(chunkexps))
@@ -429,7 +429,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                     srcfile <- attr(srcref, "srcfile")
                     dce <- getSrcLines(srcfile, lastshown+1, srcref[3])
 	    	    leading <- srcref[1]-lastshown
-	    	    lastshown <- srcref[3]	    	
+	    	    lastshown <- srcref[3]
 	    	    while (length(dce) && length(grep("^[ \\t]*$", dce[1]))) {
 	    		dce <- dce[-1]
 	    		leading <- leading - 1
@@ -643,11 +643,13 @@ RweaveLatexOptions <- function(options)
         }
     }
 
-    options$results <- tolower(as.character(options$results))
+    if(!is.null(options$results))
+        options$results <- tolower(as.character(options$results))
     options$results <- match.arg(options$results,
                                  c("verbatim", "tex", "hide"))
 
-    options$strip.white <- tolower(as.character(options$strip.white))
+    if(!is.null(options$strip.white))
+        options$strip.white <- tolower(as.character(options$strip.white))
     options$strip.white <- match.arg(options$strip.white,
                                      c("true", "false", "all"))
 

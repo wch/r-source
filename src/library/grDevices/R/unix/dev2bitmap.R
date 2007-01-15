@@ -33,10 +33,10 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
                      pointsize=pointsize, paper="special",
                      horizontal=FALSE, ...))
     dev.set(current.device)
-    cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
+    cmd <- paste(shQuote(gsexe), " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  " -g", ceiling(res*width), "x", ceiling(res*height),
-                 " -sOutputFile=", file, " ", tmp, sep="")
+                 " -sOutputFile=", shQuote(file), " ", tmp, sep="")
     system(cmd)
     invisible()
 }
@@ -64,10 +64,11 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
                       paste(gsdevs, collapse="\n")),
              domain = NA)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
-    cmd <- paste("|", gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
+    cmd <- paste("|", shQuote(gsexe),
+                 " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  " -g", ceiling(res*width), "x", ceiling(res*height),
-                 " -sOutputFile=", file, " -", sep="")
+                 " -sOutputFile=", shQuote(file), " -", sep="")
     postscript(file=cmd, width=width, height=height,
                pointsize=pointsize, paper="special", horizontal=FALSE, ...)
     invisible()

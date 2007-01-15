@@ -53,10 +53,10 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 }
 \details{
   \code{command} is parsed as a command plus arguments separated by spaces.
-  So if the path to the command contains spaces, it must be
-  (double-)quoted.  See the examples.  (Note: a Windows path name cannot
-  contain a double quote, so we do not need to worry about escaping
-  embedded quotes.)
+  So if the path to the command (or a filepath argument) contains
+  spaces, it must be (double-)quoted, e.g. by \code{\link{shQuote}}.
+  See the examples. (Note: a Windows path name cannot contain a double
+  quote, so we do not need to worry about escaping embedded quotes.)
 
   The command is run directly as a Windows command by the Windows API
   call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},

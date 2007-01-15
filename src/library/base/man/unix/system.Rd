@@ -38,6 +38,10 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   (\code{0} for success).
 }
 \details{
+  On Unix-alikes \code{system} runs the shell, and so both the command
+  in \code{command} and any file-path arguments need to be enclosed in
+  quotes (see \code{\link{shQuote}}).
+  
   If \code{intern} is \code{TRUE} then \code{popen} is used to invoke the
   command and the output collected, line by line, into an \R
   \code{\link{character}} vector which is returned as the value of
@@ -55,7 +59,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   }
 
   \code{wait} is implemented by appending \code{&} to the command: this
-  is shell-dependent and not supported in Bourne shells.
+  is shell-dependent, but required by POSIX and so widely supported.
 
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.

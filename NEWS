@@ -449,6 +449,10 @@ BUG FIXES
 	getOption("warning.length") - 1 (not as documented), with no
 	indication.
 
+    o	Stangle/Sweave were throwing spurious warnings if options
+	'result' or 'strip.white' were unset.
+
+
 
 
 	**************************************************
