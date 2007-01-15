@@ -26,6 +26,8 @@ zip.file.extract(file, zipname = "R.zip", unzip = getOption("unzip"))
   that name.
 }
 \note{
+  The \code{"internal"} method is very simple, and will not set file dates.
+
   This is a helper function for \code{\link{help}},
   \code{\link{example}} and \code{\link{data}}.  As such, it handles
   file paths in an unusual way.  Any path component of \code{zipname} is
@@ -35,9 +37,6 @@ zip.file.extract(file, zipname = "R.zip", unzip = getOption("unzip"))
 \value{
   The name of the original or extracted file.  Success is indicated by
   returning a different name.
-}
-\note{
-  The \code{"internal"} method is very simple, and will not set file dates.
 }
 
 \keyword{file}
