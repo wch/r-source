@@ -2080,3 +2080,17 @@ dput(d1)
 identical(d0, d1)
 all.equal(d0, d1)
 ## identical used internal representation prior to 2.5.0
+
+
+## all.equal
+# ignored check.attributes in 2.4.1
+all.equal(data.frame(x=1:5, row.names=letters[1:5]),
+          data.frame(x=1:5,row.names=LETTERS[1:5]),
+          check.attributes=FALSE)
+# treated logicals as numeric
+all.equal(c(T, F, F), c(T, T, F))
+all.equal(c(T, T, F), c(T, F, F))
+# ignored raw:
+all.equal(as.raw(1:3), as.raw(1:3))
+all.equal(as.raw(1:3), as.raw(3:1))
+##

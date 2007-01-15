@@ -1,7 +1,7 @@
 all.equal <- function(target, current, ...) UseMethod("all.equal")
 
 all.equal.default <-
-    function(target, current, check.attributes = TRUE, ...)
+    function(target, current, ...)
 {
     ## Really a dispatcher given mode() of args :
     ## use data.class as unlike class it does not give "Integer"
@@ -9,19 +9,17 @@ all.equal.default <-
 	return(all.equal.language(target, current, ...))
     if(is.recursive(target))
 	return(all.equal.list(target, current, ...))
-    msg <- c(if(check.attributes) attr.all.equal(target, current, ...),
-	     if(is.numeric(target)) {
-		 all.equal.numeric(target, current, check.attributes = check.attributes, ...)
-	     } else
-	     switch (mode(target),
-		     logical = ,
-		     complex = ,
-		     numeric = all.equal.numeric(target, current, check.attributes = check.attributes, ...),
-		     character = all.equal.character(target, current, check.attributes = check.attributes, ...),
-		      if(data.class(target) != data.class(current)) {
-		 paste("target is ", data.class(target), ", current is ",
-		       data.class(current), sep = "")
-	     } else NULL))
+    msg <- switch (mode(target),
+                   integer = ,
+                   complex = ,
+                   numeric = all.equal.numeric(target, current, ...),
+                   character = all.equal.character(target, current, ...),
+                   logical = ,
+                   raw = all.equal.raw(target, current, ...),
+                   if(data.class(target) != data.class(current)) {
+                       paste("target is ", data.class(target), ", current is ",
+                             data.class(current), sep = "")
+                   } else NULL)
     if(is.null(msg)) TRUE else msg
 }
 
@@ -50,7 +48,7 @@ all.equal.numeric <-
     current <- as.vector(current)
     out <- is.na(target)
     if(any(out != is.na(current))) {
-	msg <- c(msg, paste("'is.NA' value mismatches:", sum(is.na(current)),
+	msg <- c(msg, paste("'is.NA' value mismatch:", sum(is.na(current)),
 			    "in current,", sum(out), " in target"))
 	return(msg)
     }
@@ -101,13 +99,13 @@ all.equal.character <-
     }
     nas <- is.na(target)
     if (any(nas != is.na(current))) {
-	msg <- c(msg, paste("'is.NA' value mismatches:", sum(is.na(current)),
+	msg <- c(msg, paste("'is.NA' value mismatch:", sum(is.na(current)),
 		     "in current,", sum(nas), " in target"))
 	return(msg)
     }
     ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
-    else if(any(ne)) c(msg, paste(sum(ne), "string mismatches"))
+    else if(any(ne)) c(msg, paste(sum(ne), "string mismatch(es)"))
     else msg
 }
 
@@ -120,7 +118,7 @@ all.equal.factor <- function(target, current, check.attributes = TRUE, ...)
     nax <- is.na(target)
     nay <- is.na(current)
     if(n <- sum(nax != nay))
-	msg <- c(msg, paste("NA mismatches:", n))
+	msg <- c(msg, paste("NA mismatch(es):", n))
     else {
 	target <- levels(target)[target[!nax]]
 	current <- levels(current)[current[!nay]]
@@ -140,12 +138,12 @@ all.equal.formula <- function(target, current, ...)
     else TRUE
 }
 
-all.equal.language <- function(target, current, check.attributes = TRUE, ...)
+all.equal.language <- function(target, current, ...)
 {
     mt <- mode(target)
     mc <- mode(current)
     if(mt == "expression" && mc == "expression")
-	return(all.equal.list(target, current, check.attributes = check.attributes, ...))
+	return(all.equal.list(target, current, ...))
     ttxt <- paste(deparse(target), collapse = "\n")
     ctxt <- paste(deparse(current), collapse = "\n")
     msg <- c(if(mt != mc)
@@ -155,7 +153,7 @@ all.equal.language <- function(target, current, check.attributes = TRUE, ...)
 		     "target a subset of current"
 		 else if(pmatch(ctxt, ttxt, FALSE))
 		     "current a subset of target"
-		 else	"target, current don't match when deparsed"
+		 else	"target, current do not match when deparsed"
 	     })
     if(is.null(msg)) TRUE else msg
 }
@@ -195,6 +193,32 @@ all.equal.list <- function(target, current, check.attributes = TRUE, ...)
 	    msg <- c(msg, paste("Component ", i, ": ", mi, sep=""))
     }
     if(is.null(msg)) TRUE else msg
+}
+
+all.equal.raw <-
+    function(target, current, check.attributes = TRUE, ...)
+{
+    msg <-  if(check.attributes) attr.all.equal(target, current, ...)
+    if(data.class(target) != data.class(current)) {
+	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
+			    data.class(current), sep = ""))
+	return(msg)
+    }
+    lt <- length(target)
+    lc <- length(current)
+    if(lt != lc) {
+	if(!is.null(msg)) msg <- msg[- grep("\\bLengths\\b", msg)]
+	msg <- c(msg, paste("Lengths (", lt, ", ", lc,
+		     ") differ (comparison on first ", ll <- min(lt, lc),
+		     " components)", sep = ""))
+	ll <- seq_len(ll)
+	target <- target[ll]
+	current <- current[ll]
+    }
+    ne <- target != current
+    if(!any(ne) && is.null(msg)) TRUE
+    else if(any(ne)) c(msg, paste(sum(ne), "element mismatch(es)"))
+    else msg
 }
 
 

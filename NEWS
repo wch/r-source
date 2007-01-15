@@ -452,6 +452,11 @@ BUG FIXES
     o	Stangle/Sweave were throwing spurious warnings if options
 	'result' or 'strip.white' were unset.
 
+    o	all.equal() was ignoring 'check.attributes' for list and
+	expression targets, and checking only attributes on raw vectors.
+	Logical vectors were being compared as if they were numeric,
+	(with a mean difference).
+
 
 
 
