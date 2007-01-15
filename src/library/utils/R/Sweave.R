@@ -76,7 +76,7 @@ Sweave <- function(file, driver=RweaveLatex(),
         }
     }
     if(!is.null(chunk)){
-        if(mode=="doc") driver$writedoc(drobj, chunk)
+        if(mode=="doc") drobj <- driver$writedoc(drobj, chunk)
         else drobj <- driver$runcode(drobj, chunk, chunkopts)
     }
 
