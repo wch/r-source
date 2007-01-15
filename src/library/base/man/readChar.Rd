@@ -13,7 +13,7 @@ writeChar(object, con,
           nchars = nchar(object, type="chars"), eos = "")
 }
 \arguments{
-  \item{con}{A connection object or a character string naming a file.}
+  \item{con}{A connection object, or a character string naming a file, or a raw vector.}
   \item{nchars}{integer, giving the lengths in characters of (unterminated)
     character strings to be read or written. Must be >= 0 and not missing.}
   \item{object}{A character vector to be written to the connection, at
@@ -37,6 +37,11 @@ writeChar(object, con,
   position.  If it is not open, it is opened for the duration of the call
   and then closed again.  Connections can be open in either text or
   binary mode.
+  
+  If \code{readChar} is called with \code{con} a raw vector, the data in
+  the vector is used as input.  If \code{writeChar} is called with
+  \code{con} a raw vector, it is just an indication that a raw vector
+  should be returned.  
 
   In a single-byte locale, character strings containing ASCII
   \code{nul}(s) will be read correctly by \code{readChar} and appear
@@ -55,7 +60,8 @@ writeChar(object, con,
   For \code{readChar}, a character vector of length the number of
   items read (which might be less than \code{length(nchars)}).
 
-  For \code{writeChar} none (strictly, invisible \code{NULL}).
+  For \code{writeChar}, a raw vector (if \code{con} is a raw vector) or
+  invisibly \code{NULL}.
 }
 \seealso{
   The \emph{R Data Import/Export} manual.

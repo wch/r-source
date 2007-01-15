@@ -876,7 +876,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"readBin", 	do_readbin,	0,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeBin", 	do_writebin,	0,      211,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"readChar", 	do_readchar,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
-{"writeChar", 	do_writechar,	0,      111,     4,      {PP_FUNCALL, PREC_FN,	0}},
+{"writeChar", 	do_writechar,	0,      211,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"open", 	do_open,	0,      11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"isOpen", 	do_isopen,	0,      11,     2,      {PP_FUNCALL, PREC_FN,	0}},
 {"isIncomplete",do_isincomplete,0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},

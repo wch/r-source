@@ -2697,6 +2697,22 @@ static SEXP rawOneString(Rbyte *bytes, int nbytes, int *np)
     return res;
 }
 
+static SEXP rawFixedString(Rbyte *bytes, int len, int nbytes, int *np)
+{
+    int i;
+    char *buf;
+    SEXP res;
+
+    i = *np + len;
+    if(i < nbytes) nbytes = i;
+    /* no terminator */
+    buf = R_chk_calloc(nbytes - (*np) + 1, 1);
+    memcpy(buf, bytes+(*np), nbytes-(*np));
+    res = mkChar(buf);
+    Free(buf);
+    *np = nbytes;
+    return res;
+}
 
 /* readBin(con, what, n, swap) */
 SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -3176,31 +3192,42 @@ static SEXP readFixedString(Rconnection con, int len)
 SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, onechar, nchars;
-    int i, len, n, m = 0;
-    Rboolean wasopen;
+    int i, len, n, m = 0, nbytes = 0, np = 0;
+    Rboolean wasopen = TRUE;
+    Rboolean isRaw = FALSE;
     Rconnection con = NULL;
     char *vmax = vmaxget();
+    Rbyte *bytes = NULL;
 
     checkArity(op, args);
-    i = asInteger(CAR(args));
-    if(i == NA_INTEGER || !(con = Connections[i]))
-	error(_("invalid connection"));
-    if(!con->canread)
-	error(_("cannot read from this connection"));
+    
+    if(TYPEOF(CAR(args)) == RAWSXP) {
+    	isRaw = TRUE;
+    	bytes = RAW(CAR(args));
+    	nbytes = LENGTH(CAR(args));
+    } else {
+    	i = asInteger(CAR(args));
+    	if(i == NA_INTEGER || !(con = Connections[i]))
+	    error(_("invalid connection"));
+    	if(!con->canread)
+	    error(_("cannot read from this connection"));
+    }
     nchars = CADR(args);
     n = LENGTH(nchars);
     if(n == 0) return allocVector(STRSXP, 0);
-
-    wasopen = con->isopen;
-    if(!wasopen)
-	if(!con->open(con)) error(_("cannot open the connection"));
-
+  
+    if (!isRaw) {
+    	wasopen = con->isopen;
+    	if(!wasopen)
+	    if(!con->open(con)) error(_("cannot open the connection"));
+    }
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0, m = i+1; i < n; i++) {
 	len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
 	    error(_("invalid value for '%s'"), "nchar");
-	onechar = readFixedString(con, len);
+	onechar = isRaw ? rawFixedString(bytes, len, nbytes, &np)
+	    : readFixedString(con, len);
 	if(onechar != R_NilValue) {
 	    SET_STRING_ELT(ans, i, onechar);
 	    m++;
@@ -3219,10 +3246,10 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 /* writeChar(object, con, nchars, sep) */
 SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP object, nchars, sep;
+    SEXP object, nchars, sep, ans = R_NilValue;
     int i, len, lenb, lenc, n, nwrite=0, slen, tlen;
     char *s, *buf, *ssep = "";
-    Rboolean wasopen, usesep;
+    Rboolean wasopen = TRUE, usesep, isRaw = FALSE;
     Rconnection con = NULL;
     char *vmax = vmaxget();
 #ifdef SUPPORT_MBCS
@@ -3233,12 +3260,17 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     object = CAR(args);
     if(TYPEOF(object) != STRSXP)
 	error(_("invalid value for '%s'"), "object");
-    i = asInteger(CADR(args));
-    if(i == NA_INTEGER || !(con = Connections[i]))
-	error(_("invalid connection"));
-    if(!con->canwrite)
-	error(_("cannot write to this connection"));
-
+    if(TYPEOF(CADR(args)) == RAWSXP) {
+    	isRaw = TRUE;
+    } else {
+    	i = asInteger(CADR(args));
+    	if(i == NA_INTEGER || !(con = Connections[i]))
+	    error(_("invalid connection"));
+    	if(!con->canwrite)
+	    error(_("cannot write to this connection"));
+	wasopen = con->isopen;
+    }
+    
     nchars = CADDR(args);
     sep = CADDDR(args);
     if(isNull(sep)) {
@@ -3252,27 +3284,36 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	slen = strlen(ssep) + 1;
     }
     n = LENGTH(nchars);
-    if(n == 0) return R_NilValue;
     if(LENGTH(object) < n)
-	error(_("'object' is too short"));
+	error(_("'object' is too short"));    
+    if(n == 0) {
+    	if(isRaw) return allocVector(RAWSXP, 0); else return R_NilValue;
+    }
 
     len = 0;
-    for(i = 0; i < n; i++) {
-	/* This is not currently needed, just future-proofing in case
-	   the logic gets changed */
-	tlen = strlen(CHAR(STRING_ELT(object, i)));
-	if (tlen > len) len = tlen;
-	tlen = INTEGER(nchars)[i];
-	if(tlen == NA_INTEGER || tlen < 0)
-	    error(_("invalid value for '%s'"), "nchar");
-	if (tlen > len) len = tlen;
+    if (!isRaw) {
+	for(i = 0; i < n; i++) {
+	    /* This is not currently needed, just future-proofing in case
+	       the logic gets changed */
+	    tlen = strlen(CHAR(STRING_ELT(object, i)));
+	    if (tlen > len) len = tlen;
+	    tlen = INTEGER(nchars)[i];
+	    if(tlen == NA_INTEGER || tlen < 0)
+		error(_("invalid value for '%s'"), "nchar");
+	    if (tlen > len) len = tlen;
+	}
+	buf = (char *) R_alloc(len + slen, sizeof(char));
+    } else {
+    	for (i = 0; i < n; i++) 
+    	    len += INTEGER(nchars)[i] + slen;
+    	PROTECT(ans = allocVector(RAWSXP, len));
+    	buf = (char*)RAW(ans);
     }
-    buf = (char *) R_alloc(len + slen, sizeof(char));
-
-    wasopen = con->isopen;
+    
     if(!wasopen)
 	if(!con->open(con)) error(_("cannot open the connection"));
 
+    	    
     for(i = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
 	s = CHAR(STRING_ELT(object, i));
@@ -3307,15 +3348,25 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    strcat(buf, ssep);
 	    lenb += slen;
 	}
-	nwrite = con->write(buf, sizeof(char), lenb, con);
-	if(!nwrite) {
-	    warning(_("problem writing to connection"));
-	    break;
-	}
+	if (!isRaw) {
+	    nwrite = con->write(buf, sizeof(char), lenb, con);
+	    if(!nwrite) {
+	    	warning(_("problem writing to connection"));
+	    	break;
+	    }
+	} else 
+	    buf += lenb;
     }
     vmaxset(vmax);
     if(!wasopen) con->close(con);
-    return R_NilValue;
+    if(isRaw) {
+    	R_Visible = TRUE;
+    	UNPROTECT(1);
+    } else {
+    	ans = R_NilValue;
+    	R_Visible = FALSE;
+    }
+    return ans;
 }
 
 /* ------------------- push back text  --------------------- */
