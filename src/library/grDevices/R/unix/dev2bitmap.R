@@ -7,7 +7,7 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
     gsexe <- Sys.getenv("R_GSCMD")
     if(is.null(gsexe) || nchar(gsexe) == 0) {
         gsexe <- "gs"
-        rc <- system(paste(gsexe, "-help > /dev/null"))
+        rc <- system(paste(shQuote(gsexe), "-help > /dev/null"))
         if(rc != 0) stop("sorry, 'gs' cannot be found")
     }
     gshelp <- system(paste(gsexe, "-help"), intern=TRUE)
