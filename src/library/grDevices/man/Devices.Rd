@@ -52,8 +52,7 @@
     \code{GhostScript} (if available).
   }
 #ifdef unix
-  The following devices will be available if \R was compiled to use them
-  and started with the appropriate \option{--gui} argument:
+  The following devices will be available if \R was compiled to use them:
   \itemize{
     \item \code{\link{X11}} The graphics driver for the X11 Window
     system
@@ -67,7 +66,6 @@
 #endif
 %% </FIXME>
   }
-  None of these are available under \code{R CMD \link{BATCH}}.
 #endif
 }
 \details{
@@ -75,9 +73,9 @@
   a device to be opened.  Which device is given by
   \code{\link{options}("device")} which is initially set as the most
   appropriate for each platform: a screen device for most interactive use and
-  \code{\link{postscript}} otherwise. The exception is interactive
+  \code{\link{postscript}} otherwise.  The exception is interactive
   use under Unix if no screen device is known to be available, when
-  postscript() is used for most systems; pdf() for Mac OS X.
+  \code{postscript()} is used for most systems; \code{pdf()} for Mac OS X.
 }
 \seealso{
   The individual help files for further information on any of the

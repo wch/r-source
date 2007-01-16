@@ -64,7 +64,14 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   For \code{dev2bitmap} if just one of \code{width} and \code{height} is
   specified, the other is chosen to preserve aspect ratio of the
   device being copied.
+
+#ifdef windows
+  Paths for \code{file} and \env{R\_GSCMD} which contain spaces should be
+  quoted (see \code{\link{shQuote{}} or converted \emph{via} 
+  \code{\link{shortPathName}}.
 }
+#endif
+
 \value{
   None.
 }
