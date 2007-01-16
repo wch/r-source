@@ -67,9 +67,9 @@ environmentName(env)
 
   \code{environmentName} returns a character string, that given when
   the environment is printed or \code{""} if it is not a named environment.
-} 
+}
 
-\details{     
+\details{
   Environments consist of a \emph{frame}, or collection of named
   objects, and a pointer to an \emph{enclosing environment}.  The most
   common example is the frame of variables local to a function call;
@@ -78,11 +78,11 @@ environmentName(env)
   \emph{parent frame}:  the latter (returned by
   \code{\link{parent.frame}}) refers to the environment of the caller
   of a function.
-  
+
   When \code{\link{get}} or \code{\link{exists}} search an environment
   with the default \code{inherits = TRUE}, they look for the variable
   in the frame, then in the enclosing frame, and so on.
-    
+
   The global environment \code{.GlobalEnv}, more often known as the
   user's workspace, is the first item on the search path.  It can also
   be accessed by \code{globalenv()}.  On the search path, each item's
@@ -108,8 +108,11 @@ environmentName(env)
 \seealso{
   The \code{envir} argument of \code{\link{eval}}, \code{\link{get}},
   and \code{\link{exists}}.
-  
-  \code{\link{ls}} may be used to view the objects in an environment.
+
+  \code{\link{ls}} may be used to view the objects in an environment,
+  and hence \code{\link{ls.str}} may be useful for an overview.
+
+  \code{\link{sys.source}} can be used to \dQuote{fill} an environment.
 }
 \examples{
 f <- function() "top level function"
@@ -128,7 +131,7 @@ e2 <- new.env(parent = e1)
 assign("a", 3, env=e1)
 ls(e1)
 ls(e2)
-exists("a", env=e2)	# this succeeds by inheritance	   
+exists("a", env=e2)	# this succeeds by inheritance
 exists("a", env=e2, inherits = FALSE)
 exists("+", env=e2)	# this succeeds by inheritance
 }
