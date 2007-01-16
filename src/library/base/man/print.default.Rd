@@ -57,7 +57,8 @@
 
   Using too large a value of \code{digits} may lead to representation
   errors in the calculation of the number of significant digits and the
-  decimal representation: these are likely for \code{digits >= 16}.
+  decimal representation: these are likely for \code{digits >= 16}, and
+  as from \R 2.5.0 only about 15 digits will be printed.
 }
 \section{Single-byte locales}{
   If a non-printable character is encountered during output, it is

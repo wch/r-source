@@ -454,8 +454,8 @@ getOption(x)
 options() # printing all current options
 op <- options(); str(op) # nicer printing
 
-options('width')[[1]] == options()$width # the latter needs more memory
-options(digits = 20)
+getOption("width") == options()$width # the latter needs more memory
+options(digits = 15)
 pi
 
 # set the editor, and save previous value
@@ -470,7 +470,7 @@ print(1e5)
 options(scipen=3); print(1e5)
 
 options(op)     # reset (all) initial options
-options('digits')
+options("digits")
 
 \dontrun{## set contrast handling to be like S
 options(contrasts = c("contr.helmert", "contr.poly"))
