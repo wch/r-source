@@ -2094,3 +2094,23 @@ all.equal(c(T, T, F), c(T, F, F))
 all.equal(as.raw(1:3), as.raw(1:3))
 all.equal(as.raw(1:3), as.raw(3:1))
 ##
+
+
+## tests of deparsing
+# if we run this from stdin, we will have no source, so fake it
+f <- function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
+attr(f, "source") <-
+    "function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}"
+f # uses the source
+dput(f) # not source
+dput(f, control="all") # uses the source
+cat(deparse(f), sep="\n")
+dump("f", file="")
+# remove the source
+attr(f, "source") <- NULL
+f
+dput(f, control="all")
+dump("f", file="")
+
+expression(bin <- bin + 1L)
+## did not preserve e.g. 1L at some point in pre-2.5.0

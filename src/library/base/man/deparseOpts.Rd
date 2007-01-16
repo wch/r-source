@@ -21,7 +21,9 @@
     \item{\code{keepInteger}}{
       Either surround integer vectors by \code{as.integer()} or use
       suffix \code{L}, so they are not converted to type double when
-      parsed.
+      parsed.  This includes making sure that integer \code{NA}s are
+      preserved (via \code{NA_integer_} if there are no non-\code{NA}
+      values in the vector, unless \code{"S_compatible"} is set).
     }
     \item{\code{quoteExpressions}}{
       Surround expressions with \code{quote()}, so they are not
@@ -64,8 +66,11 @@
   }
   For the most readable (but perhaps incomplete) display, use
   \code{control = NULL}. This displays the object's value, but not its
-  attributes.  The default is to display the attributes as well, but
-  not to use any of the other options to make the result parseable.
+  attributes.  The default in \code{\link{deparse}} is to display the
+  attributes as well, but not to use any of the other options to make
+  the result parseable.  (\code{\link{dput}} and \code{\link{dump}} do
+  use more default options, and printing of functions without sources
+  uses \code{c("keepInteger", "keepNA")}.)
 
   Using \code{control = "all"} comes closest to making \code{deparse()}
   an inverse of \code{parse()}.  However, not all objects are

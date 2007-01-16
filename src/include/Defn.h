@@ -806,7 +806,7 @@ SEXP R_GetVarLocSymbol(R_varloc_t);
 Rboolean R_GetVarLocMISSING(R_varloc_t);
 void R_SetVarLocValue(R_varloc_t, SEXP);
 
-/* deparse option bits */
+/* deparse option bits: change do_dump if more are added */
 
 #define KEEPINTEGER 		1
 #define QUOTEEXPRESSIONS 	2

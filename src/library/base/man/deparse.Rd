@@ -38,6 +38,9 @@ deparse(expr, width.cutoff = 60,
   an inverse of \code{parse()}.  However, not all objects are
   deparse-able even with this option and a warning will be issued if the
   function recognizes that it is being asked to do the impossible.
+
+  Numeric and complex vectors are converted using 15 significant digits:
+  see \code{\link{as.character}} for more details.
 }
 \note{
   To avoid the risk of a source attribute out of sync with the actual

@@ -346,9 +346,10 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     source = CADDR(args);
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
 	error(_("bad environment"));
-    opts = FORSOURCING;
-    if (!isNull(CADDDR(args)))
-    	opts = asInteger(CADDDR(args));
+    opts = asInteger(CADDDR(args));
+    /* <NOTE>: change this if extra options are added */ 
+    if(opts == NA_INTEGER || opts < 0 || opts > 256)
+	errorcall(call, _("'opts' should be small non-negative integer"));
     evaluate = asLogical(CAD4R(args));
     if (!evaluate) opts |= DELAYPROMISES;
 
@@ -624,6 +625,9 @@ static char * backquotify(char *s)
 
 /* This is the recursive part of deparsing. */
 
+#define SIMPLE_OPTS (~QUOTEEXPRESSIONS & ~SHOWATTRIBUTES & ~DELAYPROMISES)
+/* keep KEEPINTEGER | USESOURCE | KEEPNA | S_COMPAT, also
+   WARNINCOMPLETE but that is not used below this point. */
 
 static void deparse2buff(SEXP s, LocalParseData *d)
 {
@@ -675,13 +679,16 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case CLOSXP:
         if (localOpts & SHOWATTRIBUTES) attr1(s, d);
-        if ((d->opts & USESOURCE) && (n = length(t = getAttrib(s, R_SourceSymbol))) > 0) {
+        if ((d->opts & USESOURCE) && 
+	    (n = length(t = getAttrib(s, R_SourceSymbol))) > 0) {
     	    for(i = 0 ; i < n ; i++) {
 	    	print2buff(CHAR(STRING_ELT(t, i)), d);
 	    	writeline(d);
 	    }
 	} else {
-	    d->opts &= USESOURCE;
+	    /* We have established that we don't want to use the
+	       source for this function */
+	    d->opts &= SIMPLE_OPTS & ~USESOURCE;
 	    print2buff("function (", d);
 	    args2buff(FORMALS(s), 0, 1, d);
 	    print2buff(") ", d);
@@ -709,7 +716,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    print2buff("expression()", d);
 	else {
 	    print2buff("expression(", d);
-	    d->opts &= USESOURCE;
+	    d->opts &= SIMPLE_OPTS;
 	    vec2buff(s, d);
 	    d->opts = localOpts;
 	    print2buff(")", d);
@@ -745,7 +752,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	printcomment(s, d);
 	if (localOpts & QUOTEEXPRESSIONS) {
 	    print2buff("quote(", d);
-	    d->opts &= USESOURCE;
+	    d->opts &= SIMPLE_OPTS;
 	}
 	if (TYPEOF(CAR(s)) == SYMSXP) {
 	    if ((TYPEOF(SYMVALUE(CAR(s))) == BUILTINSXP) ||

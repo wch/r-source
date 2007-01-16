@@ -294,6 +294,11 @@ NEW FEATURES
 	warning.
 	
     o	readChar() and writeChar() can now work with a raw vector.
+	
+    o	Printing functions (without source attributes) and expressions
+	now preserves integers (using the L suffix) and NAs (using
+	NA_real_ etc where necessary).
+
 
 
 DEPRECATED & DEFUNCT

@@ -80,8 +80,8 @@ write.csv2(\dots)
   such conversions.
 
   In almost all cases the conversion of numeric quantities is governed
-  by the options in force, in particular by \code{"digits"} and
-  \code{"scipen"} (see \code{\link{options}}).  For finer control, use
+  by the option \code{"scipen"} (see \code{\link{options}}), but with
+  the internal equivalent of \code{digits=15}.  For finer control, use
   \code{\link{format}} to make a character matrix/data frame, and call
   \code{write.table} on that.
 

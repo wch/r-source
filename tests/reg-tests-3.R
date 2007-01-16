@@ -82,6 +82,5 @@ if(require(MASS)) {
 
 ## calculating no of signif digits
 print(1.001, digits=16)
-## 2.4.1 gave  1.001000000000000, which is OK, as
-##             1.009999999999998 has the same representation.
+## 2.4.1 gave  1.001000000000000
 ## 2.5.0 errs on the side of caution.
