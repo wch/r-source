@@ -69,7 +69,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 
 #ifdef windows
   As from \R 2.5.0, paths for \code{file} and \env{R\_GSCMD} which
-  contain spaces are mapped \emph{via} \code{\link{shortPathNames}}.
+  contain spaces are mapped \emph{via} \code{\link{shortPathName}}.
 #endif  
 }
 \value{
