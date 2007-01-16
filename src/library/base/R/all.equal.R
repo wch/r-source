@@ -221,7 +221,14 @@ all.equal.raw <-
 	target <- target[ll]
 	current <- current[ll]
     }
-    ne <- target != current
+    # raws do not have NAs, but logicals do
+    nas <- is.na(target); nasc <- is.na(current)
+    if (any(nas != nasc)) {
+	msg <- c(msg, paste("'is.NA' value mismatch:", sum(nasc),
+                            "in current", sum(nas), "in target"))
+	return(msg)
+    }
+    ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
     else if(sum(ne) == 1) c(msg, paste("1 element mismatch"))
     else if(sum(ne) > 1) c(msg, paste(sum(ne), "element mismatches"))
