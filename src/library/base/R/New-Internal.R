@@ -79,6 +79,8 @@ rbind <- function(..., deparse.level = 1)
 
 .deparseOpts <- function(control) {
     opts <- pmatch(as.character(control),
+                   ## the exact order of these is determined by the integer codes in
+                   ## ../../../include/Defn.h
                    c("all",
                      "keepInteger", "quoteExpressions", "showAttributes",
                      "useSource", "warnIncomplete", "delayPromises",
@@ -90,7 +92,7 @@ rbind <- function(..., deparse.level = 1)
                      paste(sQuote(control[is.na(opts)]), collapse=", ")),
              call. = FALSE, domain = NA)
     if (any(opts == 1))
-        opts <- unique(c(opts[opts != 1],2,3,4,5,6,8))
+        opts <- unique(c(opts[opts != 1], 2,3,4,5,6,8))# not (7,9)
     return(sum(2^(opts-2)))
 }
 
