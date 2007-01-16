@@ -369,11 +369,9 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (CAR(o) == R_UnboundValue) continue;
 		obj_name = CHAR(STRING_ELT(names, i));
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
-		/* figure out if we need to quote the name */
-		if(!isValidName(obj_name))
-		    Rprintf("`%s` <-\n", obj_name);
-		else
-		    Rprintf("%s <-\n", obj_name);
+		Rprintf(/* figure out if we need to quote the name */
+			isValidName(obj_name) ? "%s <-\n" : "`%s` <-\n",
+			obj_name);
 		tval = deparse1(CAR(o), 0, opts);
 		for (j = 0; j < LENGTH(tval); j++)
 		    Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));
@@ -631,12 +629,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 {
     PPinfo fop;
     Rboolean lookahead = FALSE, lbreak = FALSE, parens;
-    Rboolean localOpts = d->opts;
     SEXP op, t;
     char tpb[120];
-    int i, n;
+    int localOpts = d->opts, i, n;
 
-    
     switch (TYPEOF(s)) {
     case NILSXP:
 	print2buff("NULL", d);
@@ -1248,14 +1244,14 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	if(tlen > 1) print2buff("c(", d);
 	allNA = allNA && !(d->opts & S_COMPAT);
 	for (i = 0; i < tlen; i++) {
-	    if(allNA && TYPEOF(vector) == REALSXP && 
+	    if(allNA && TYPEOF(vector) == REALSXP &&
 	       ISNA(REAL(vector)[i])) {
 		strp = "NA_real_";
 	    } else if (allNA && TYPEOF(vector) == CPLXSXP &&
-		       (ISNA(COMPLEX(vector)[i].r) 
+		       (ISNA(COMPLEX(vector)[i].r)
 			|| ISNA(COMPLEX(vector)[i].i)) ) {
 		strp = "NA_complex_";
-	    } else if (allNA && TYPEOF(vector) == STRSXP && 
+	    } else if (allNA && TYPEOF(vector) == STRSXP &&
 		       STRING_ELT(vector, i) == NA_STRING) {
 		strp = "NA_character_";
 	    } else if (TYPEOF(vector) == REALSXP && (d->opts & S_COMPAT)) {
@@ -1279,7 +1275,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
 {
     SEXP t;
     int i, n;
-    
+
     if (length(sv) > k && !isNull(t = VECTOR_ELT(sv, k))) {
         PROTECT(t);
 
@@ -1295,7 +1291,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
     }
     else return FALSE;
 }
-            
+
 /* vec2buff : New Code */
 /* Deparse vectors of S-expressions. */
 /* In particular, this deparses objects of mode expression. */
@@ -1310,8 +1306,8 @@ static void vec2buff(SEXP v, LocalParseData *d)
     n = length(v);
     nv = getAttrib(v, R_NamesSymbol);
     if (length(nv) == 0) nv = R_NilValue;
-    
-    if (d->opts & USESOURCE) 
+
+    if (d->opts & USESOURCE)
    	sv = getAttrib(v, R_SrcrefSymbol);
     else
    	sv = R_NilValue;
