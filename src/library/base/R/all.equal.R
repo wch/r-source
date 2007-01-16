@@ -16,6 +16,7 @@ all.equal.default <-
                    character = all.equal.character(target, current, ...),
                    logical = ,
                    raw = all.equal.raw(target, current, ...),
+		   S4 = attr.all.equal(target, current, ...),
                    if(data.class(target) != data.class(current)) {
                        paste("target is ", data.class(target), ", current is ",
                              data.class(current), sep = "")
