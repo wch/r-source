@@ -51,11 +51,11 @@ dump(list, file = "dumpdata.R", append = FALSE,
   simplifications that make \code{source} less likely to produce an
   identical copy.  See \code{\link{deparse}} for details.
   
-  To deparse the internal function representation rather than displaying
-  the saved source, use \code{control = c("keepInteger", "quoteExpressions", 
-  "showAttributes", "warnIncomplete")}.  This will lose all
-  formatting and comments, but may be useful in those cases where
-  the saved source is no longer correct.
+  To deparse the internal representation of a function rather than
+  displaying the saved source, use \code{control = c("keepInteger",
+    "warnIncomplete")}.  This will lose all formatting and
+  comments, but may be useful in those cases where the saved source is
+  no longer correct.
 
   Promises will normally only be encountered by users as a result of
   lazy-loading (when the default \code{evaluate = TRUE} is essential)

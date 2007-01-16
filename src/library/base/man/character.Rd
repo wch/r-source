@@ -25,8 +25,8 @@ is.character(x)
   default method calls \code{\link{as.vector}}, so dispatch is first on
   methods for \code{as.character} and then for methods for \code{as.vector}.
 
-  \code{as.character} represents real and complex numbers to 15 decimal
-  places (technically the compiler's setting of the ISO C constant
+  \code{as.character} represents real and complex numbers to 15 significant
+  digits (technically the compiler's setting of the ISO C constant
   \code{DBL_DIG}, which will be 15 on machines supporting IEC60559
   arithmetic according to the C99 standard).  This ensures that all the
   digits in the result will be reliable (and not the result of
