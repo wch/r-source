@@ -547,7 +547,7 @@ static void PrintExpression(SEXP s)
     SEXP u;
     int i, n;
 
-    u = deparse1(s, 0, R_print.useSource | KEEPINTEGER | KEEPNA);
+    u = deparse1(s, 0, R_print.useSource | DEFAULTDEPARSE);
     n = LENGTH(u);
     for (i = 0; i < n ; i++)
 	Rprintf("%s\n", CHAR(STRING_ELT(u, i)));
@@ -633,7 +633,7 @@ void attribute_hidden PrintValueRec(SEXP s,SEXP env)
     case LANGSXP:
 	t = getAttrib(s, R_SourceSymbol);
 	if (isNull(t) || !R_print.useSource)
-	    t = deparse1(s, 0, R_print.useSource | KEEPINTEGER | KEEPNA);
+	    t = deparse1(s, 0, R_print.useSource | DEFAULTDEPARSE);
 	for (i = 0; i < LENGTH(t); i++)
 	    Rprintf("%s\n", CHAR(STRING_ELT(t, i)));
 #ifdef BYTECODE
