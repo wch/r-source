@@ -59,8 +59,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   }
   What happens to output sent to \file{stdout} and \file{stderr} if
   \code{intern = FALSE} is interface-specific, and it is unsafe to
-  assume that such messages will appear on the console (they do not in
-  the \pkg{gnomeGUI} console, for example).
+  assume that such messages will appear on the console (they do on the
+  MacOS X console but not on the \pkg{gnomeGUI} console, for example).
   
   \code{wait} is implemented by appending \code{&} to the command: this
   is shell-dependent, but required by POSIX and so widely supported.

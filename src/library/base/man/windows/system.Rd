@@ -4,8 +4,8 @@
 \title{Invoke a System Command}
 \usage{
 system(command, intern = FALSE, wait = TRUE, input = NULL,
-       show.output.on.console = FALSE,
-       minimized = FALSE, invisible = FALSE, ignore.stderr = FALSE)
+       show.output.on.console = TRUE,
+       minimized = FALSE, invisible = TRUE, ignore.stderr = FALSE)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a string.}

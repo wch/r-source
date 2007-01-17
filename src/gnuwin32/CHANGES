@@ -13,7 +13,7 @@ returns to the comand prompt.
 
 Sys.getenv() has been changed to use the C-level environment and not
 the Windows environment block for the process, for consistency with
-Sys.getenv("FOO"), Sys.putenv and Sys.unsetenv().  A few
+Sys.getenv("FOO"), Sys.setenv and Sys.unsetenv().  A few
 Windows-specific environment variables (such as =C:) no longer appear.
 
 More of the messages from the script editor are translatable.
@@ -41,12 +41,16 @@ library path if R was run in the current environment.  Similarly, R
 CMD REMOVE by default removes from that library.
 
 bitmap() and dev2bitmap() will now accept paths in 'GS_CMD' and 'file'
-which contain spaces.
+which contain spaces (by converting to short path names inside the
+functions).
 
 system() gains an 'ignore.stderr' argument for consistency with Unix.
+The defaults have been changed to 'show.output.on.console=TRUE,
+invisible=TRUE' which make system() in Rgui more consistent with Rterm
+and with other ports of R.
 
 For consistency with Unix, system(intern=TRUE) and pipe(, "r")
-connections no longer capture stderr, only stdout (except on RGui is
+connections no longer capture stderr, only stdout (except on Rgui if
 ignore.stderr = FALSE, since there is no separate stderr).
 
 
@@ -55,7 +59,7 @@ R 2.4.1 patched
 ===============
 
 Using the AltGr key in the script editor was treated as a control key.
-This was fixed for the rest of R in 0.9.1, and unfixed by the
+This was fixed for the rest of Rgui in R 0.9.1, and unfixed by the
 contributed code implementing the script editor.  (PR#9430)
 
 Returning focus to a window (e.g. the script editor after saving) no
@@ -73,7 +77,7 @@ Reverted 2.4.0 change that required case-sensitive specification of
 commands to R CMD.
 
 The Simplified Chinese menu messages were in the wrong format, causing
-RGui to crash on startup. (PR#9277)
+Rgui to crash on startup. (PR#9277)
 
 Menu messages are now available in a Spanish translation.
 
@@ -266,7 +270,7 @@ objects in memory, so it is advisable to save your work and restart R
 unless you know exactly what happened.
 
 There is a new function choose.dir() to choose a folder (as used for
-'Change dir...' on the File menu in RGui.)
+'Change dir...' on the File menu in Rgui.)
 
 New function shortPathName() to convert names to DOS-style paths (8+3
 names and no spaces).
@@ -451,17 +455,17 @@ utilities.
 R 2.2.1
 =======
 
-Using the latest binutils allows us to distribute RGui.exe and Rterm.exe
+Using the latest binutils allows us to distribute Rgui.exe and Rterm.exe
 as large-address-aware (see the rw-FAQ Q2.9).
 
-The maximum C stack size for RGui.exe and Rterm.exe has been increased
+The maximum C stack size for Rgui.exe and Rterm.exe has been increased
 to 10Mb (from 2Mb); this is comparable with the default on Linux systems
 and may allow some larger programs to run without crashes.
 
 Overwrite mode in the console now works for MBCS charsets.  (Patch
 contributed by Haruki Koyanagi.)
 
-Input from the RGui console was changing the letter 255 (ÿ in Latin-2)
+Input from the Rgui console was changing the letter 255 (ÿ in Latin-2)
 in the character set to letter 1.
 
 R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
@@ -518,7 +522,7 @@ library (src/gnuwin32/librproxy.a) are now installed.  See the rcom
 package for usage.
 
 There are now Brazilian Portuguese, Chinese (Traditional) and 
-Russian translations of the RGui menus.
+Russian translations of the Rgui menus.
 
 win.graph(), x11() and X11() now behave in the same way as windows()
 in respect of the xpinch, ypinch, graphics.record, gamma and
