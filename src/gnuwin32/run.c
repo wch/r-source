@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
  *  Copyright (C) 1999-2001  Guido Masarotto  and Brian Ripley
+ *            (C) 2007       the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +22,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#include <Defn.h>
 #include "win-nls.h"
 
 #define WIN32_LEAN_AND_MEAN 1
@@ -307,6 +309,8 @@ rpipe * rpipeOpen(char *cmd, int visible, char *finput, int io)
     return r;
 }
 
+#include "graphapp/ga.h"
+extern Rboolean UserBreak;
 
 int
 rpipeGetc(rpipe * r)
@@ -328,6 +332,14 @@ rpipeGetc(rpipe * r)
 	    else
 		return NOLAUNCH;/* error but...treated as eof */
 	}
+	/* we want to look for user break here */
+	while (peekevent()) doevent();
+	if (UserBreak) {
+	    rpipeClose(r);
+	    break;
+	}
+	R_ProcessEvents();
+	Sleep(100);
     }
     return NOLAUNCH;		/* again.. */
 }
@@ -376,7 +388,6 @@ int rpipeClose(rpipe * r)
 
 /* ------------------- Windows pipe connections --------------------- */
 
-#include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
 

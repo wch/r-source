@@ -62,17 +62,24 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},
   \code{.cmd} and \code{.bat} are tried in turn if none
   is supplied. (To use DOS internal commands use
-  \code{paste(Sys.getenv("COMSPEC"),"/c",cmd)}.)
+  \code{paste(Sys.getenv("COMSPEC"),"/c",cmd)}.)  This means that
+  redirection, pipes, \dots cannot be used: see \code{\link{shell}}.
+  
   The search path for \code{command} may be system-dependent: it will
   include the \R \code{bin} directory, the working directory and the
   Windows system directories before \code{PATH}.
 
   Precisely what is seen by the user depends on whether \code{Rgui} or
-  \code{Rterm} is being used.  For \code{Rgui} a new console will
-  always be used, so a commands window will appear for the duration of
-  console applications unless \code{invisible} is true.  For
-  \code{Rterm} a separate commands window will appear for console
-  applications only if \code{wait = FALSE}.
+  \code{Rterm} is being used.  For \code{Rgui} a new \sQuote{console}
+  will always be used, so a commands window will appear for the duration
+  of console applications unless \code{invisible} is true (which it is
+  by default). For \code{Rterm} a separate commands window will appear
+  for console applications only if \code{wait = FALSE} and
+  \code{invisible=FALSE}.
+
+  If the \R process is waiting for output from the command it is
+  possible to interrupt the running command from the keyboard or Rgui
+  menu: this should at least return control to the \R console.
 
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.
