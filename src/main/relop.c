@@ -75,11 +75,13 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	return ans;
     }
 
+    /* That symbols and calls were allowwed was undocumented prior to
+       R 2.5.0.  We deparse them as deparse() would, minus attributes */
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(x) :
-		       STRING_ELT(deparse1(x, 0, SIMPLEDEPARSE), 0));
+		       STRING_ELT(deparse1(x, 0, DEFAULTDEPARSE), 0));
 	REPROTECT(x = tmp, xpi);
 	UNPROTECT(1);
     }
@@ -87,7 +89,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	SEXP tmp = allocVector(STRSXP, 1);
 	PROTECT(tmp);
 	SET_STRING_ELT(tmp, 0, (iS) ? PRINTNAME(y) :
-		       STRING_ELT(deparse1(y, 0, SIMPLEDEPARSE), 0));
+		       STRING_ELT(deparse1(y, 0, DEFAULTDEPARSE), 0));
 	REPROTECT(y = tmp, ypi);
 	UNPROTECT(1);
     }

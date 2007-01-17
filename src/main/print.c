@@ -612,7 +612,7 @@ void attribute_hidden PrintValueRec(SEXP s,SEXP env)
 	}
 	if(s2 != R_UnboundValue) {
 	    PROTECT(s2);
-	    t = deparse1(s2, 0, SIMPLEDEPARSE);
+	    t = deparse1(s2, 0, DEFAULTDEPARSE);
 	    Rprintf("%s ", CHAR(STRING_ELT(t, 0)));
 	    Rprintf(".Primitive(\"%s\")\n", PRIMNAME(s));
 	    UNPROTECT(1);

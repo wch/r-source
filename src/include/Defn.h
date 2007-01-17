@@ -818,7 +818,8 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 #define S_COMPAT       		128
 /* common combinations of the above */
 #define SIMPLEDEPARSE		0
-#define FORSOURCING		95
+#define DEFAULTDEPARSE		65 /* KEEPINTEGER | KEEPNA, used for calls */
+#define FORSOURCING		95 /* not DELAYPROMISES, used in edit.c */
 
 /* Coercion functions */
 int Rf_LogicalFromString(SEXP, int*);

@@ -19,8 +19,8 @@ x == y
 x != y
 }
 \arguments{
-  \item{x, y}{atomic vectors, or other objects for which methods have
-    been written.}
+  \item{x, y}{atomic vectors, symbols, calls, or other objects for which
+    methods have been written.}
 }
 \details{
   The binary comparison operators are generic functions: methods can be
@@ -54,6 +54,9 @@ x != y
   involving them will always result in \code{NA}.  Missing values can
   also result when character strings are compared and one is not valid
   in the current collation locale. 
+
+  Language objects such as symbols and calls are deparsed to
+  character strings before conparison.
 }
 \value{
   A vector of logicals indicating the result of the element by element

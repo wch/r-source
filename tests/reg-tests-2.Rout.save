@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-01-16 r40495)
+R version 2.5.0 Under development (unstable) (2007-01-16 r40507)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -4720,7 +4720,7 @@ out-of-range values treated as 0 in coercion to raw
 [1] 2 2
 > # but not allowed
 > try(df2[df2 == 2] <- 1:2)
-Error in x[[v]][thisvar] <- if (N > 1) value[n + seq_len(nv)] else value : 
+Error in x[[v]][thisvar] <- if (N > 1L) value[n + seq_len(nv)] else value : 
 	NAs are not allowed in subscripted assignments
 > try(m2[m2 == 2] <- 1:2)
 Error in m2[m2 == 2] <- 1:2 : NAs are not allowed in subscripted assignments
@@ -5785,10 +5785,10 @@ function (x, xm = max(1L, x))
 function(x, xm  = max(1L, x)) {xx <- 0L; yy <- NA_real_}
 
 > cat(deparse(f), sep="\n")
-function (x, xm = max(1, x)) 
+function (x, xm = max(1L, x)) 
 {
-    xx <- 0
-    yy <- NA
+    xx <- 0L
+    yy <- NA_real_
 }
 > dump("f", file="")
 f <-

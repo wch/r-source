@@ -7,7 +7,7 @@
 \usage{
 deparse(expr, width.cutoff = 60,
         backtick = mode(expr) \%in\% c("call", "expression", "("),
-        control = "showAttributes")
+        control = c("keepinteger", "showAttributes", "keepNA") )
 }
 \arguments{
   \item{expr}{any \R expression.}

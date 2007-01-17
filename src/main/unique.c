@@ -775,10 +775,8 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(funcall) == EXPRSXP)
 	funcall = VECTOR_ELT(funcall, 0);
 
-    if (TYPEOF(funcall) != LANGSXP) {
-	b = deparse1(funcall, 1, SIMPLEDEPARSE);
-	errorcall(call, _("'%s' is not a valid call"), CHAR(STRING_ELT(b, 0)));
-    }
+    if (TYPEOF(funcall) != LANGSXP)
+	errorcall(call, ("invalid '%s' argument", "call"));
 
     /* Get the function definition */
     sysp = R_GlobalContext->sysparent;
@@ -832,18 +830,14 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* It must be a closure! */
 
-    if (TYPEOF(b) != CLOSXP) {
-	b = deparse1(b, 1, SIMPLEDEPARSE);
-	errorcall(call, _("'%s' is not a function"), CHAR(STRING_ELT(b, 0)));
-    }
+    if (TYPEOF(b) != CLOSXP)
+	errorcall(call, ("invalid '%s' argument", "definition"));
 
     /* Do we expand ... ? */
 
     expdots = asLogical(CAR(CDDR(args)));
-    if (expdots == NA_LOGICAL) {
-	b = deparse1(CADDR(args), 1, SIMPLEDEPARSE);
-	errorcall(call, _("'%s' is not a logical"), CHAR(STRING_ELT(b, 0)));
-    }
+    if (expdots == NA_LOGICAL)
+	errorcall(call, ("invalid '%s' argument", "expand.dots"));
 
     /* Get the formals and match the actual args */
 

@@ -105,8 +105,8 @@ NEW FEATURES
 
 	Integer sequences m:n are now deparsed in that form.
 
-    o	dput() now includes "keepInteger" and "keepNA" in its default
-	'control' argument.
+    o	deparse() and dput() now include "keepInteger" and "keepNA" in
+	their defaults for the 'control' argument.
 
     o	There are new constants NA_integer_, NA_real_, NA_complex_ and
 	NA_character_ to denote NAs of those types, and they will be

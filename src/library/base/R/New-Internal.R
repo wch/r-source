@@ -99,7 +99,7 @@ rbind <- function(..., deparse.level = 1)
 deparse <-
     function(expr, width.cutoff = 60,
 	     backtick = mode(expr) %in% c("call", "expression", "("),
-	     control = "showAttributes")
+	     control = c("keepInteger", "showAttributes", "keepNA"))
     .Internal(deparse(expr, width.cutoff, backtick, .deparseOpts(control)))
 
 do.call <- function(what, args, quote = FALSE, envir = parent.frame())
