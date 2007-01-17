@@ -514,6 +514,11 @@ BUG FIXES
     o	oneway.test() was expecting a literal formula and did not
 	accept a variable containing a formula.
 
+    o	The legacy Quartz device (used by console R) displayed its
+	window outside the screen estate in some dual-head setups.
+	Now it will be always displayed in the center of the main
+	screen.
+
 
 
 		CHANGES IN R VERSION 2.4.1

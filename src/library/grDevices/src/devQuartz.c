@@ -481,7 +481,7 @@ SEXP Quartz(SEXP args)
     double height, width, ps;
     Rboolean  antialias, autorefresh;
     SInt32 macVer;
-    int quartzpos = 1;
+    int quartzpos = kQuartzCenter;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
