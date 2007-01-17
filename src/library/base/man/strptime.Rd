@@ -43,6 +43,13 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     Fractional seconds are allowed.}
 }
 \details{
+  The \code{format} and \code{as.character} methods and \code{strftime}
+  convert objects from the classes \code{"POSIXlt"} and \code{"POSIXct"}
+  (not \code{strftime}) to character vectors.
+  
+  \code{strptime} converts character strings to class \code{"POSIXlt"}:
+  its input \code{x} is first coerced to character if necessary.
+
   \code{strftime} is an alias for \code{format.POSIXlt}, and
   \code{format.POSIXct} first converts to class \code{"POSIXlt"} by
   calling \code{\link{as.POSIXlt}}.  Note that only that conversion
