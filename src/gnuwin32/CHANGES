@@ -15,6 +15,12 @@ Returning focus to a window (e.g. the script editor after saving) no
 longer changes the size or position, e.g. leaving a maximized window
 maximized.
 
+When reading from pipes (which includes pipe(open="r") and system()
+with intern=TRUE or show.output.on.console=TRUE in Rgui) it is now
+possible to interrupt the command and the Rgui console will be
+responsive whilst it is running (and R will take up far less of the
+CPU).
+
 
 
 R 2.4.1

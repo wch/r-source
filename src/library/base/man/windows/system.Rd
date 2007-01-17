@@ -36,7 +36,7 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   than 8095 characters will be split.)
 
   If \code{intern = FALSE}, the return value is an error code, given the
-  invisible attribute (so needs to be printed explicitly). If the
+  invisible attribute (so needs to be printed explicitly).  If the
   command could not be run for any reason, the value is \code{-1} and
   an \R warning is generated.  Otherwise if \code{wait = TRUE} the value
   is the error code returned by the command, and if \code{wait = FALSE}
@@ -48,28 +48,34 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   (\code{Rterm}).
 }
 \details{
-  \code{cmd} is parsed as a command plus arguments separated by spaces.
-  So if the path to the command contains spaces, it must be
-  (double-)quoted.  See the examples.  (Note: a Windows path name cannot
-  contain a double quote, so we do not need to worry about escaping
-  embedded quotes.)
+  \code{command} is parsed as a command plus arguments separated by spaces.
+  So if the path to the command (or a filepath argument) contains
+  spaces, it must be (double-)quoted, e.g. by \code{\link{shQuote}}.
+  See the examples. (Note: a Windows path name cannot contain a double
+  quote, so we do not need to worry about escaping embedded quotes.)
 
   The command is run directly as a Windows command by the Windows API
   call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},
   \code{.cmd} and \code{.bat} are tried in turn if none
   is supplied. (To use DOS internal commands use
-  \code{paste(Sys.getenv("COMSPEC"),"/c",cmd)}.)
-  The search path for \code{command}
-  may be system-dependent: it will include the \R \code{bin}
-  directory, the working directory and the Windows system directories
-  before \code{PATH}.
+  \code{paste(Sys.getenv("COMSPEC"),"/c",cmd)}.)  This means that
+  redirection, pipes, \dots cannot be used: see \code{\link{shell}}.
+  
+  The search path for \code{command} may be system-dependent: it will
+  include the \R \code{bin} directory, the working directory and the
+  Windows system directories before \code{PATH}.
 
   Precisely what is seen by the user depends on whether \code{Rgui} or
-  \code{Rterm} is being used.  For \code{Rgui} a new console will
-  always be used, so a commands window will appear for the duration of
-  console applications unless \code{invisible} is true. For
-  \code{Rterm} a separate commands window
-  will appear for console applications only if \code{wait = FALSE}.
+  \code{Rterm} is being used.  For \code{Rgui} a new \sQuote{console}
+  will always be used, so a commands window will appear for the duration
+  of console applications unless \code{invisible} is true (which it is
+  by default). For \code{Rterm} a separate commands window will appear
+  for console applications only if \code{wait = FALSE} and
+  \code{invisible=FALSE}.
+
+  If the \R process is waiting for output from the command it is
+  possible to interrupt the running command from the keyboard or Rgui
+  menu: this should at least return control to the \R console.
 
   \code{unix} is a \emph{deprecated} alternative, available for
   backwards compatibility.
@@ -79,7 +85,7 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 
   Do not run console applications that require user
   input from \code{Rgui} setting \code{intern = TRUE} and/or
-  \code{show.output.on.console = TRUE}. They will not work,
+  \code{show.output.on.console = TRUE}.  They will not work,
   may hang and then will probably hang \code{Rgui} too.
 }
 
@@ -91,8 +97,6 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 \examples{
 # launch an editor, wait for it to quit
 \dontrun{system("notepad myfile.txt")}
-# launch a Windows 9x process monitor (from Win9x KernelToys)
-\dontrun{system("wintop", wait = FALSE)}
 # launch your favourite shell:
 \dontrun{system(Sys.getenv("COMSPEC"))}
 \dontrun{
