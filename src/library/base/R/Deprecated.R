@@ -18,6 +18,13 @@
 
 ## consider keeping one (commented) entry here, for easier additions
 
+## <entry>
+## Deprecated in 1999
+unix <- function(call, intern = FALSE) {
+    .Deprecated("system")
+    system(call, intern)
+}
+## </entry>
 
 ## <entry>
 ## Deprecated in 2.5.0

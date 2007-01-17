@@ -22,12 +22,6 @@ system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
     .Internal(system(command, as.integer(flag), f))
 }
 
-unix <- function(call, intern = FALSE)
-{
-    .Deprecated("system")
-    system(call, intern)
-}
-
 unlink <- function(x, recursive=FALSE)
     invisible(.Internal(unlink(x, recursive)))
 

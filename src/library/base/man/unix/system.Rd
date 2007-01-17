@@ -1,6 +1,5 @@
 \name{system}
 \alias{system}
-\alias{unix}
 \title{Invoke a System Command}
 \description{
   \code{system} invokes the OS command specified by \code{command}.
@@ -64,9 +63,6 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   
   \code{wait} is implemented by appending \code{&} to the command: this
   is shell-dependent, but required by POSIX and so widely supported.
-
-  \code{unix} is a \emph{deprecated} alternative, available for
-  backwards compatibility.
 
   The Windows version of \R has the additional commands accepted for
   compatibility, and also has \code{ignore.stderr} in a different place

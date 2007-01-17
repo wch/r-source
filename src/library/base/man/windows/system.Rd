@@ -1,6 +1,5 @@
 \name{system}
 \alias{system}
-\alias{unix}
 \title{Invoke a System Command}
 \usage{
 system(command, intern = FALSE, wait = TRUE, input = NULL,
@@ -80,9 +79,6 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   If the \R process is waiting for output from the command it is
   possible to interrupt the running command from the keyboard or Rgui
   menu: this should at least return control to the \R console.
-
-  \code{unix} is a \emph{deprecated} alternative, available for
-  backwards compatibility.
 }
 \section{Warning}{
   The command cannot be interrupted by the \R process.

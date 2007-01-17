@@ -17,11 +17,6 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
     .Internal(system(command, intern))
 }
 
-unix <- function(call, intern = FALSE) {
-    .Deprecated("system")
-    system(call, intern)
-}
-
 ##--- The following should/could really be done in C [platform !] :
 unlink <- function(x, recursive = FALSE) {
     if(!is.character(x)) stop("argument must be character")
