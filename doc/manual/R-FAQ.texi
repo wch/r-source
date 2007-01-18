@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-01-13
+@set FAQ_DATE @value{FAQ_YEAR}-01-14
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2013,6 +2013,8 @@ datasets, imputing missing values, advanced table making, variable
 clustering, character string manipulation, conversion of S objects to
 @LaTeX{} code, recoding variables, and bootstrap repeated measures
 analysis.
+@item HydroMe
+Estimation of soil hydraulic parameters from experimental data.
 @item HyperbolicDist
 Basic functions for the hyperbolic distribution: probability density
 function, distribution function, quantile function, a routine for
