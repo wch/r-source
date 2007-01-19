@@ -47,6 +47,10 @@ BUG FIXES
 	Now it will be always displayed in the center of the main
 	screen.
 
+    o	read.ftable() was not functional on non-seekable connections
+	such as URLs.
+
+
 
 
 		CHANGES IN R VERSION 2.4.1
