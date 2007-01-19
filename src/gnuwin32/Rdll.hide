@@ -229,7 +229,6 @@
  R_ParseContextLast
  R_ParseError
  R_ParseFile
- R_PreciousList
  R_Quiet
  R_RestartStack
  R_RestartToken

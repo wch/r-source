@@ -251,6 +251,7 @@ void R_SetPPSize(R_size_t size)
 /* Miscellaneous Globals. */
 
 static SEXP R_VStack = NULL;		/* R_alloc stack pointer */
+static SEXP R_PreciousList = NULL;      /* List of Persistent Objects */
 static R_size_t R_LargeVallocSize = 0;
 static R_size_t R_SmallVallocSize = 0;
 static R_size_t orig_R_NSize;
@@ -1593,6 +1594,9 @@ void attribute_hidden InitMemory()
     R_weak_refs = R_NilValue;
 
     R_HandlerStack = R_RestartStack = R_NilValue;
+
+    /*  Unbound values which are to be preserved through GCs */
+    R_PreciousList = R_NilValue;
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just

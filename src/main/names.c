@@ -1046,8 +1046,6 @@ void InitNames()
     /*  Builtin Functions */
     for (i = 0; R_FunTab[i].name; i++)
 	installFunTab(i);
-    /*  Unbound values which are to be preserved through GCs */
-    R_PreciousList = R_NilValue;
     framenames = R_NilValue;
 #ifdef BYTECODE
     R_initialize_bcode();
