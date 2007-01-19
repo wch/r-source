@@ -776,7 +776,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	funcall = VECTOR_ELT(funcall, 0);
 
     if (TYPEOF(funcall) != LANGSXP)
-	errorcall(call, ("invalid '%s' argument", "call"));
+	errorcall(call, _("invalid '%s' argument"), "call");
 
     /* Get the function definition */
     sysp = R_GlobalContext->sysparent;
@@ -831,13 +831,13 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     /* It must be a closure! */
 
     if (TYPEOF(b) != CLOSXP)
-	errorcall(call, ("invalid '%s' argument", "definition"));
+	errorcall(call, _("invalid '%s' argument"), "definition");
 
     /* Do we expand ... ? */
 
     expdots = asLogical(CAR(CDDR(args)));
     if (expdots == NA_LOGICAL)
-	errorcall(call, ("invalid '%s' argument", "expand.dots"));
+	errorcall(call, _("invalid '%s' argument"), "expand.dots");
 
     /* Get the formals and match the actual args */
 
