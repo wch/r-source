@@ -468,9 +468,6 @@ BUG FIXES
 	too few significant digits (but still at least 15) rather than
 	far too many.  (An example is print(1.001, digits=16).)
 
-    o	read.ftable() was not functional on non-seekable connections
-	such as URLs.
-
 
 
 
@@ -521,6 +518,9 @@ BUG FIXES
 	window outside the screen estate in some dual-head setups.
 	Now it will be always displayed in the center of the main
 	screen.
+
+    o	read.ftable() was not functional on non-seekable connections
+	such as URLs.
 
 
 
