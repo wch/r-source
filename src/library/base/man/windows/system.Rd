@@ -1,15 +1,20 @@
 \name{system}
 \alias{system}
 \title{Invoke a System Command}
+\description{
+  \code{system} invokes the OS command specified by \code{command}.
+}
 \usage{
-system(command, intern = FALSE, wait = TRUE, input = NULL,
-       show.output.on.console = TRUE,
-       minimized = FALSE, invisible = TRUE, ignore.stderr = FALSE)
+system(command, intern = FALSE, ignore.stderr = FALSE,
+       wait = TRUE, input = NULL, show.output.on.console = TRUE,
+       minimized = FALSE, invisible = TRUE)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a string.}
-  \item{intern}{a logical, indicates whether to make the output of the
-    command an \R object.}
+  \item{intern}{a logical (not \code{NA}) which indicates whether to
+    make the output of the command an \R object.}
+  \item{ignore.stderr}{logical. If true, output from the command to
+    \file{stderr} is suppressed.}
   \item{wait}{should the \R interpreter wait for the command to finish?
     The default is to wait, and the interpreter will always wait if
     \code{intern = TRUE}.}
@@ -24,16 +29,11 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
     should be initially displayed as a minimized window.}
   \item{invisible}{a logical, indicates whether the command window
     should be visible on the screen.}
-  \item{ignore.stderr}{logical. If true, output from the command to
-    \code{stderr} is suppressed.}
-}
-\description{
-    \code{system} invokes the system command specified by \code{command}.
 }
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string.  If the command could not be
-  run or gives an error a \R error is generated.  (Output lines of more
+  run or gives an error an \R error is generated.  (Output lines of more
   than 8095 characters will be split.)  This also captures \code{stderr}
   on the RGui console unless \code{ignore.stderr = TRUE}.
 
@@ -77,12 +77,15 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   \code{invisible=FALSE}.
 
   If the \R process is waiting for output from the command it is
-  possible to interrupt the running command from the keyboard or Rgui
-  menu: this should at least return control to the \R console.
+  possible to interrupt the running command from the keyboard or
+  \code{Rgui} menu: this should at least return control to the \R
+  console.  Otherwise it it not possible to interrupt the running
+  command.
+
+  The ordering of arguments after the first two has changed from time to
+  time: it is recommended to name all arguments after the first.
 }
 \section{Warning}{
-  The command cannot be interrupted by the \R process.
-
   Do not run console applications that require user
   input from \code{Rgui} setting \code{intern = TRUE} and/or
   \code{show.output.on.console = TRUE}.  They will not work,

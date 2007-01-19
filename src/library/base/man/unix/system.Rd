@@ -6,8 +6,8 @@
 }
 \usage{
 system(command, intern = FALSE, ignore.stderr = FALSE,
-       wait = TRUE, input = NULL, show.output.on.console = FALSE,
-       minimized = FALSE, invisible = FALSE)
+       wait = TRUE, input = NULL, show.output.on.console = TRUE,
+       minimized = FALSE, invisible = TRUE)
 }
 \arguments{
   \item{command}{the system command to be invoked, as a string.}
@@ -64,10 +64,11 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   \code{wait} is implemented by appending \code{&} to the command: this
   is shell-dependent, but required by POSIX and so widely supported.
 
-  The Windows version of \R has the additional commands accepted for
-  compatibility, and also has \code{ignore.stderr} in a different place
-  in the argument list.  It is recommended to name all arguments after
-  the first.
+  The Windows version of \R has additional arguments accepted for
+  compatibility.
+
+  The ordering of arguments after the first two has changed from time to
+  time: it is recommended to name all arguments after the first.
 }
 \seealso{
   \code{\link{.Platform}} for platform specific variables.

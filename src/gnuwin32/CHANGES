@@ -7,51 +7,63 @@ See the file NEWS for changes that affect all versions of R.
 R 2.5.0
 =======
 
+GUI changes
+-----------
+
 There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and
 returns to the comand prompt.
+
+The 'Install packages ...' menu item now only installs essential
+dependencies ('Depends' and 'Imports' but not 'Suggests'), using
+install.packages(dependencies=NA).
+
+
+Function changes
+----------------
 
 Sys.getenv() has been changed to use the C-level environment and not
 the Windows environment block for the process, for consistency with
 Sys.getenv("FOO"), Sys.setenv and Sys.unsetenv().  A few
 Windows-specific environment variables (such as =C:) no longer appear.
 
-More of the messages from the script editor are translatable.
-
-There is support for x86_64 cross-compilers as well as for ix86.
-
-mingw-runtime >= 3.11 is needed to build R.
-
-src/extra/trio has been updated to 1.12.
-
-The printf function used for printing has been altered to implement a
-round-to-even rule.  This means that output is more likely to be
-identical to that on Unix-alikes.
-
-The 'Install packages ...' menu item now only installs essential
-dependencies ('Depends' and 'Imports' but not 'Suggests'), using
-install.packages(dependencies=NA).
-
 https:// URLs can be accessed by download.file() and url() if
 --internet2 is used (and provided the certificate is accepted as
 valid).
-
-R CMD INSTALL now installs by default into the first library on the
-library path if R was run in the current environment.  Similarly, R
-CMD REMOVE by default removes from that library.
 
 bitmap() and dev2bitmap() will now accept paths in 'GS_CMD' and 'file'
 which contain spaces (by converting to short path names inside the
 functions).
 
 system() gains an 'ignore.stderr' argument for consistency with Unix.
-The defaults have been changed to 'show.output.on.console=TRUE,
-invisible=TRUE' which make system() in Rgui more consistent with Rterm
-and with other ports of R.
+(This changes the order of arguments.)  The defaults have been changed
+to 'show.output.on.console=TRUE, invisible=TRUE' which make system()
+in Rgui more consistent with Rterm and with other ports of R.
 
 For consistency with Unix, system(intern=TRUE) and pipe(, "r")
 connections no longer capture stderr, only stdout (except on Rgui if
 ignore.stderr = FALSE, since there is no separate stderr).
+
+
+Others
+------
+
+The printf function used for printing has been altered to implement a
+round-to-even rule.  This means that output is more likely to be
+identical to that on Unix-alikes.
+
+R CMD INSTALL now installs by default into the first library on the
+library path if R was run in the current environment.  Similarly, R
+CMD REMOVE by default removes from that library.
+
+More of the messages from the script editor are translatable.
+
+There is support for x86_64 cross-compilers as well as for ix86.
+
+mingw-runtime >= 3.11 is needed to build R.  (E.g., it provides
+isblank that was previously missing.)
+
+src/extra/trio has been updated to 1.12.
 
 
 
@@ -70,7 +82,7 @@ When reading from pipes (which includes pipe(open="r") and system()
 with intern=TRUE or show.output.on.console=TRUE in Rgui) it is now
 possible to interrupt the command and the Rgui console will be
 responsive whilst it is running (and R will take up far less of the
-CPU).
+CPU).  (Proably also fixes PR#7634.)
 
 
 

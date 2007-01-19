@@ -1,6 +1,7 @@
-system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
+system <- function(command, intern = FALSE, ignore.stderr = FALSE,
+                   wait = TRUE, input = NULL,
                    show.output.on.console = TRUE, minimized = FALSE,
-                   invisible = TRUE, ignore.stderr = FALSE)
+                   invisible = TRUE)
 {
     f <- ""
     if (!is.null(input)) {

@@ -1,9 +1,12 @@
 system <- function(command, intern = FALSE, ignore.stderr = FALSE,
                    wait = TRUE, input = NULL,
-                   show.output.on.console = FALSE, minimized = FALSE,
-                   invisible = FALSE) {
-    if(!missing(show.output.on.console) || !missing(minimized) || !missing(invisible))
+                   show.output.on.console = TRUE, minimized = FALSE,
+                   invisible = TRUE)
+{
+    if(!missing(show.output.on.console) || !missing(minimized)
+       || !missing(invisible))
         warning("arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only")
+
     if(ignore.stderr) command <- paste(command, "2>/dev/null")
     if(!is.null(input)) {
         if(!is.character(input))
@@ -21,7 +24,7 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
 unlink <- function(x, recursive = FALSE) {
     if(!is.character(x)) stop("argument must be character")
     if(recursive)
-        system(paste("rm -rf ", paste(x, collapse = " ")))
+        system(paste("rm -rf ", paste(shQuote(x), collapse = " ")))
     else
-        system(paste("rm -f ", paste(x, collapse = " ")))
+        system(paste("rm -f ", paste(shQuote(x), collapse = " ")))
 }

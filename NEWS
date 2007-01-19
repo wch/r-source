@@ -291,10 +291,11 @@ NEW FEATURES
 
     o	system() now takes the same set of arguments on all platforms,
 	with those which are not applicable being ignored with a
-	warning.
-	
+	warning.  Unix-alikes gain 'input' and 'wait', and Windows
+	gains 'ignore.stderr'.
+
     o	readChar() and writeChar() can now work with a raw vector.
-	
+
     o	Printing functions (without source attributes) and expressions
 	now preserves integers (using the L suffix) and NAs (using
 	NA_real_ etc where necessary).
@@ -467,6 +468,8 @@ BUG FIXES
 	calculation has been changed to err on the side of slightly
 	too few significant digits (but still at least 15) rather than
 	far too many.  (An example is print(1.001, digits=16).)
+
+    o	unlink() on Unix-alikes failed for paths containing spaces.
 
 
 
