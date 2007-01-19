@@ -82,7 +82,7 @@ BINPREF=i586-mingw32-
 HEADER=/users/ripley/R/cross-tools5/i586-mingw32/include
 endif
 # path (possibly full path) to same version of R on the host system
-# R_EXE=R
+R_EXE='I failed to read the instructions'
 
 ## =============== end of user-customizable parts  ===================
 
