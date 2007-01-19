@@ -5,14 +5,14 @@
 \title{Student's Sleep Data}
 \description{
   Data which show the effect of two soporific drugs (increase in hours
-  of sleep) on groups consisting of 10 patients each.
+  of sleep compared to control) on 10 patients.
 }
 \usage{sleep}
 \format{
   A data frame with 20 observations on 2 variables.
   \tabular{rlll}{
     [, 1] \tab extra \tab numeric \tab increase in hours of sleep\cr
-    [, 2] \tab group \tab factor  \tab patient group
+    [, 2] \tab group \tab factor  \tab drug given
   }
 }
 \source{
@@ -31,7 +31,7 @@
 }
 \examples{
 require(stats)
-## ANOVA
-anova(lm(extra ~ group, data = sleep))
+## Student's paired t-test
+t.test(extra ~ group, data = sleep, paired = TRUE)
 }
 \keyword{datasets}
