@@ -3540,6 +3540,41 @@ int main()
 ]
 )
 
+## R_FUNC_SIGACTION
+## ----------------
+## Some people claim that the SA_SIGINFO flag is an extension,
+## despite the clarity of POSIX markup.  One such case is Hurd.
+AC_DEFUN([R_FUNC_SIGACTION],
+[
+  AC_CACHE_CHECK([for working sigaction],
+                 [r_cv_func_sigaction_works],
+                 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <stdlib.h>
+#include <signal.h>
+int main ()
+{
+    struct sigaction sa;
+    siginfo_t si, *ip;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
+    ip = &si;
+    {
+	void *addr = ip->si_addr;
+	int code = ip->si_code;
+    } 
+    exit(0);
+}
+]])],
+               [r_cv_func_sigaction_works=yes],
+               [r_cv_func_sigaction_works=no],
+               [r_cv_func_sigaction_works=no])])
+  if test "x${r_cv_func_sigaction_works}" = xyes; then
+    AC_DEFINE(HAVE_WORKING_SIGACTION, 1, 
+              [Define if sigaction() is complete enough for R's usage])
+  fi
+])# R_FUNC_SIGACTION
+
 
 ### Local variables: ***
 ### mode: outline-minor ***

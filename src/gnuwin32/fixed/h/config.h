@@ -713,6 +713,9 @@
 /* Define if log1p() exists and is accurate enough. */
 #define HAVE_WORKING_LOG1P 1
 
+/* Define if sigaction() is complete enough for R's usage */
+/* #undef HAVE_WORKING_SIGACTION */
+
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
 /* #undef HAVE_X11 */

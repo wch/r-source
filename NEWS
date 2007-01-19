@@ -77,13 +77,13 @@ NEW FEATURES
     o	Introduced the suffix L for integer literals to create
 	integer rather than numeric values, e.g. 100L, 0x10L, 1e2L.
 
-    o	file() can read the X11 clipboard selection as "X11_clipboard" on
-	suitable X11-using systems.
+    o	file() can read the X11 clipboard selection as "X11_clipboard"
+	on suitable X11-using systems.
 
     o	New data set 'crimtab' on Student(1908)'s 3000 criminals.
 
-    o	boxplot(*, notch = TRUE) now warns when notches are outside hinges;
-	related to PR#7690.
+    o	boxplot(*, notch = TRUE) now warns when notches are outside
+	hinges; related to PR#7690.
 
     o	The statistics reported when gcinfo(TRUE) are now of the amounts
 	used (in Mb) and not of the amounts free (which are not really
@@ -136,9 +136,9 @@ NEW FEATURES
 	environments such as "namespace:base".
 	This is now used by str().
 
-    o	cut.default() has a new argument ordered_result.
+    o	cut.default() has a new argument 'ordered_result'.
 
-    o	interaction() has a new argument lex.order.
+    o	interaction() has a new argument 'lex.order'.
 
     o	New .row_names_info() utility function finds the number of rows
 	efficiently for data frames; consequently, dim.data.frame()
@@ -164,19 +164,19 @@ NEW FEATURES
 	"MethodsList" class will be deprecated (by the release of
 	2.5.0 if possible).
 
-    o	apropos() has a new argument 'ignore.case' which defaults to TRUE,
-	potentially matching more than previously, thanks to a suggestion
-	by Seth Falcon.
+    o	apropos() has a new argument 'ignore.case' which defaults to
+	TRUE, potentially matching more than previously, thanks to a
+	suggestion by Seth Falcon.
 
     o	abs(x) now returns integer for integer or logical arguments.
 
     o	.libPaths() now does both tilde and glob expansion.
 
-    o	There are more flexible ways to specify the default library search
-	path.  In addition to R_LIBS and .Library, there are .Library.site
-	(defaults to R_HOME/site-library) and R_LIBS_USER (defaults to
-	a platform- and version-specific directory in ~/R).
-	See ?.libPaths for details.
+    o	There are more flexible ways to specify the default library
+	search path.  In addition to R_LIBS and .Library, there are
+	.Library.site (defaults to R_HOME/site-library) and
+	R_LIBS_USER (defaults to a platform- and version-specific
+	directory in ~/R).  See ?.libPaths for details.
 
     o	install.packages(dependencies = NA) is a new default, which is
 	to install essential dependencies when installing from
@@ -343,7 +343,9 @@ INSTALLATION
 	'libtool' knows how to do so.
 
     o	Building R as a shared library and standalone nmath now
-	installs pkg-config files libR.pc and libRmath.pc respectively.
+	installs pkg-config files 'libR.pc' and 'libRmath.pc' respectively.
+
+    o	Added test for insufficiently complete implementation of sigaction.
 
 
 C-LEVEL FACILITIES

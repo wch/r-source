@@ -37020,6 +37020,84 @@ _ACEOF
 fi
 
 
+  { echo "$as_me:$LINENO: checking for working sigaction" >&5
+echo $ECHO_N "checking for working sigaction... $ECHO_C" >&6; }
+if test "${r_cv_func_sigaction_works+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "$cross_compiling" = yes; then
+  r_cv_func_sigaction_works=no
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include "confdefs.h"
+#include <stdlib.h>
+#include <signal.h>
+int main ()
+{
+    struct sigaction sa;
+    siginfo_t si, *ip;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
+    ip = &si;
+    {
+	void *addr = ip->si_addr;
+	int code = ip->si_code;
+    }
+    exit(0);
+}
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_func_sigaction_works=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+r_cv_func_sigaction_works=no
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+
+
+fi
+{ echo "$as_me:$LINENO: result: $r_cv_func_sigaction_works" >&5
+echo "${ECHO_T}$r_cv_func_sigaction_works" >&6; }
+  if test "x${r_cv_func_sigaction_works}" = xyes; then
+
+cat >>confdefs.h <<\_ACEOF
+#define HAVE_WORKING_SIGACTION 1
+_ACEOF
+
+  fi
+
+
 
   { echo "$as_me:$LINENO: checking whether C99 double complex is supported" >&5
 echo $ECHO_N "checking whether C99 double complex is supported... $ECHO_C" >&6; }

@@ -430,7 +430,7 @@ static void win32_segv(int signum)
 }
 #endif
 
-#if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_SIGEMPTYSET)
+#if defined(HAVE_SIGALTSTACK) && defined(HAVE_SIGACTION) && defined(HAVE_WORKING_SIGACTION) && defined(HAVE_SIGEMPTYSET)
 
 /* NB: this really isn't safe, but suffices for experimentation for now.
    In due course just set a flag and do this after the return.  OTOH,
