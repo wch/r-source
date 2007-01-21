@@ -570,6 +570,13 @@ static double MT_genrand()
     return ( (double)y * 2.3283064365386963e-10 ); /* reals: [0,1)-interval */
 }
 
+/* 
+   The following code was taken from earlier versions of
+   http://www-cs-faculty.stanford.edu/~knuth/programs/rng.c-old
+   http://www-cs-faculty.stanford.edu/~knuth/programs/rng.c
+*/
+
+
 #define long Int32
 #define Void void
 #define void static void
@@ -606,11 +613,9 @@ static double MT_genrand()
 /*long ran_x[KK]; */                   /* the generator state */
 
 /* void ran_array(long aa[],int n) */
-void ran_array(long *aa, int n)    /* put n new random numbers in aa */
-/*
-  aa;   destination 
-  n;    array length (must be at least KK) 
-*/
+void ran_array(aa,n)    /* put n new random numbers in aa */
+  long *aa;   /* destination */
+  int n;      /* array length (must be at least KK) */
 {
   register int i,j;
   for (j=0;j<KK;j++) aa[j]=ran_x[j];
@@ -624,8 +629,8 @@ void ran_array(long *aa, int n)    /* put n new random numbers in aa */
 #define evenize(x) ((x)&(MM-2))   /* make x even */
 
 /* void ran_start(long seed) */
-void ran_start(long seed)    /* do this before using ran_array */
-   /* seed; selector for different streams */
+void ran_start(seed)    /* do this before using ran_array */
+  long seed;            /* selector for different streams */
 {
   register int t,j;
   long x[KK+KK-1];              /* the preparation buffer */
@@ -659,16 +664,16 @@ void ran_start(long seed)    /* do this before using ran_array */
 /* after calling ran_start, get new randoms by, e.g., "x=ran_arr_next()" */
 
 #define QUALITY 1009 /* recommended quality level for high-res use */
-static long ran_arr_buf[QUALITY];
-static long ran_arr_sentinel=(long)-1;
-static long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
+long ran_arr_buf[QUALITY];
+long ran_arr_sentinel=-1;
+long *ran_arr_ptr=&ran_arr_sentinel; /* the next random number, or -1 */
 
 #define ran_arr_next() (*ran_arr_ptr>=0? *ran_arr_ptr++: ran_arr_cycle())
-static long ran_arr_cycle()
+long ran_arr_cycle()
 {
   ran_array(ran_arr_buf,QUALITY);
-  ran_arr_buf[100] = -1;
-  ran_arr_ptr = ran_arr_buf+1;
+  ran_arr_buf[100]=-1;
+  ran_arr_ptr=ran_arr_buf+1;
   return ran_arr_buf[0];
 }
 
