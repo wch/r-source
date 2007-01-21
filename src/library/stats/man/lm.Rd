@@ -181,6 +181,10 @@ lm(formula, data, subset, weights, na.action,
   \code{\link[datasets]{longley}},
   \code{\link[datasets]{stackloss}},
   \code{\link[datasets]{swiss}}.
+
+  \code{biglm} in package \pkg{biglm} for an alternative
+  way to fit linear models to large datasets (especially those with many
+  cases).
 }
 \references{
   Chambers, J. M. (1992)

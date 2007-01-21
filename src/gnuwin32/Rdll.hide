@@ -212,6 +212,10 @@
  R_IoBufferPutc
  R_IoBufferWriteReset
  R_JumpToContext
+ R_KT_ran_arr_buf
+ R_KT_ran_arr_cycle
+ R_KT_ran_arr_ptr
+ R_KT_ran_arr_sentinel
  R_KeepSource
  R_LoadFromFile
  R_Log10

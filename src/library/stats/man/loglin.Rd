@@ -90,7 +90,13 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   New York: Wiley.
 }
 \author{Kurt Hornik}
-\seealso{\code{\link{table}}}
+\seealso{
+  \code{\link{table}}.
+
+  \code{\link[MASS]{loglm}} in package \pkg{MASS} for a user-friendly wrapper.
+
+  \code{\link{glm}} for another way to fit log-linear models.
+}
 \examples{
 ## Model of joint independence of sex from hair and eye color.
 fm <- loglin(HairEyeColor, list(c(1, 2), c(1, 3), c(2, 3)))
