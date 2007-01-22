@@ -484,20 +484,61 @@ function(package, dir, lib.loc = NULL,
         ## we only source the assignments, and hence do not get any
         ## S4 classes or methods.
         ## </NOTE>
-        lapply(methods::getGenerics(code_env),
-               function(f) {
-                   meths <-
-                       methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
-                   sigs <- sapply(methods::slot(meths, "classes"),
-                                  paste, collapse = ",")
-                   if(!length(sigs)) return()
-                   args <- lapply(methods::slot(meths, "methods"),
-                                  formals)
-                   names(args) <-
-                       paste("\\S4method{", f, "}{", sigs, "}",
-                             sep = "")
-                   function_args_in_code <<- c(function_args_in_code, args)
-               })
+        ## <NOTE>
+        ## In principle, we can get codoc checking for S4 methods
+        ## documented explicitly using the \S4method{GENERIC}{SIGLIST}  
+        ## markup by adding the corresponding "pseudo ## functions"
+        ## using the Rd markup as their name.  However: the formals
+        ## recorded in the methods db only pertain to the signature, not
+        ## to the ones of the function actually registered.  It seems
+        ## that we can only get these by working on the internal
+        ## representation ... hence, let's make this optional for the
+        ## time being. 
+        ## </NOTE>
+        check_S4_methods <-
+            identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
+                      TRUE)
+        if(check_S4_methods) {
+            get_formals_from_method_definition <- function(m) {
+                ## Argh, see methods:::rematchDefinition().
+                ## We get the original definition in case it has the
+                ## same formals as the generic.  Otherwise, we get a
+                ## redefition of the form
+                ## function(ARGLIST) {
+                ##   .local <- function(FORMALS) BODY
+                ##   .local(ARGLIST)
+                ## }
+                fun <- methods::slot(m, ".Data")
+                bdy <- body(fun)
+                if((length(bdy) == 3)
+                   && (bdy[[1]] == as.name("{"))
+                   && (length(bdy[[2]]) == 3)
+                   && (bdy[[2]][[2]] == as.name(".local"))
+                   && (class(bdy[[3]]) == "call")
+                   && (bdy[[3]][[1]] == as.name(".local"))) {
+                    ## Could add more tests :-)
+                    formals(bdy[[2]][[3]])
+                } else
+                    formals(fun)
+            }
+            lapply(methods::getGenerics(code_env),
+                   function(f) {
+                       meths <-
+                           methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
+                       sigs <- sapply(methods::slot(meths, "classes"),
+                                      paste, collapse = ",")
+                       if(!length(sigs)) return()
+                       nm <- paste("\\S4method{", f, "}{", sigs, "}",
+                                   sep = "")
+                       args <- lapply(methods::slot(meths, "methods"),
+                                      get_formals_from_method_definition)
+                       names(args) <- nm
+                       functions_in_code <<-
+                           c(functions_in_code, nm)
+                       function_args_in_code <<-
+                           c(function_args_in_code, args)
+                   })
+        }
     }
 
     check_codoc <- function(fName, ffd) {
@@ -3864,6 +3905,14 @@ function(x, ...)
 .check_T_and_F <-
 function(package, dir, lib.loc = NULL)
 {
+    ## Seems that checking examples has several problems, and can result
+    ## in "strange" diagnostic output.  Let's more or less disable this
+    ## for the time being.
+    check_examples <-
+        identical(as.logical(Sys.getenv("_R_CHECK_RD_EXAMPLES_T_AND_F_")),
+                  TRUE)
+
+        
     bad_closures <- character()
     bad_examples <- character()
 
@@ -3883,13 +3932,16 @@ function(package, dir, lib.loc = NULL)
         env <- new.env()
         x <- lapply(txts,
                     function(txt) {
-                        eval(parse(text =
-                                   paste("FOO <- function() {",
-                                         paste(txt, collapse = "\n"),
-                                         "}",
-                                         collapse = "\n")),
-                             env)
-                        find_bad_closures(env)
+                        tryCatch({
+                            eval(parse(text =
+                                       paste("FOO <- function() {",
+                                             paste(txt, collapse = "\n"),
+                                             "}",
+                                             collapse = "\n")),
+                                 env)
+                            find_bad_closures(env)
+                        },
+                                 error = function(e) character())
                     })
         names(txts)[sapply(x, length) > 0]
     }
@@ -3904,8 +3956,9 @@ function(package, dir, lib.loc = NULL)
             code_env <- .package_env(package)
             bad_closures <- find_bad_closures(code_env)
         }
-        example_texts <-
-            .get_example_texts_from_example_dir(file.path(dir, "R-ex"))
+        if(check_examples)
+            example_texts <-
+                .get_example_texts_from_example_dir(file.path(dir, "R-ex"))
     }
     else {
         ## The dir case.
@@ -3919,10 +3972,12 @@ function(package, dir, lib.loc = NULL)
             .source_assignments_in_code_dir(code_dir, code_env)
             bad_closures <- find_bad_closures(code_env)
         }
-        example_texts <- .get_example_texts_from_source_dir(dir)
+        if(check_examples)
+            example_texts <- .get_example_texts_from_source_dir(dir)
     }
 
-    bad_examples <- find_bad_examples(example_texts)
+    if(check_examples)    
+        bad_examples <- find_bad_examples(example_texts)
 
     out <- list(bad_closures = bad_closures,
                 bad_examples = bad_examples)
