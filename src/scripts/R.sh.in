@@ -60,8 +60,7 @@ Options:
 			(default), 'Tk' and (with package gnomeGUI) 'gnome'
   --arch=NAME		Specify a sub-architecture
   --args                Skip the rest of the command line
-   -f file              Take input from 'file'
-  --file=file           ditto
+  -f, --file=FILE       Take input from 'FILE'
 
 Commands:
   BATCH			Run R in batch mode

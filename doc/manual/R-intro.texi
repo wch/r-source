@@ -6896,17 +6896,17 @@ Combine @option{--no-save}, @option{--no-environ},
 @option{--no-restore}.  Under Windows, this also includes
 @option{--no-Rconsole}.
 
-@item -f file
-@itemx --file=file
-Take input from @file{file}: @code{-} means @code{stdin}.
-Implies @code{--no-save} unless @code{--save} has been set.
+@item -f @var{file}
+@itemx --file=@var{file}
+Take input from @var{file}: @samp{-} means @code{stdin}.
+Implies @option{--no-save} unless @option{--save} has been set.
 
-@item -e expression
-Use @code{expression} as an input line.  One or more @option{-e} options
+@item -e @var{expression}
+Use @var{expression} as an input line.  One or more @option{-e} options
 can be used, but not together with @option{-e} or @option{--file}.
-Implies @code{--no-save} unless @code{--save} has been set.
-(There is a limit of 10,000 bytes on the total length of expressions
-used in this way.)
+Implies @option{--no-save} unless @option{--save} has been set.  (There
+is a limit of 10,000 bytes on the total length of expressions used in
+this way.)
 
 @item --no-readline
 (UNIX only) Turn off command-line editing via @strong{readline}.  This
@@ -6953,7 +6953,7 @@ Do not print out the initial copyright and welcome messages.
 @item --slave
 Make @R{} run as quietly as possible.  This option is intended to
 support programs which use @R{} to compute results for them.  It implies
-@code{--quiet} and @code{--no-save}.
+@option{--quiet} and @option{--no-save}.
 
 @item --verbose
 Print more information about progress, and in particular set @R{}'s
