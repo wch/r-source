@@ -35,6 +35,15 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   \code{red}, and leaving \code{blue} and \code{green} missing.
   In this case the first three columns of \code{red} are taken to be
   the \code{red}, \code{green} and \code{blue} values.
+
+  Semi-transparent colors are supported only on a few devices: at the
+  time of writing only on the \code{\link{pdf}} and (on MacOS X)
+  \code{quartz} devices.
+}
+\value{
+  A character vector with elements of 7 or 9 characters, \code{"#"}
+  followed by the red, blue, green and optionally alpha values in
+  hexadecimal (after rescaling to \code{0 ... 255}).
 }
 \seealso{
   \code{\link{col2rgb}} the \dQuote{inverse} for translating \R colors

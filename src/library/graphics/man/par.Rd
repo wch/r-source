@@ -337,7 +337,7 @@ par(\dots, no.readonly = FALSE)
       as one of the character strings \code{"blank"}, \code{"solid"},
       \code{"dashed"}, \code{"dotted"}, \code{"dotdash"},
       \code{"longdash"}, or \code{"twodash"}, where \code{"blank"} uses
-      \sQuote{invisible lines} (i.e., doesn't draw them).
+      \sQuote{invisible lines} (i.e., does not draw them).
 
       Alternatively, a string of up to 8 characters (from \code{c(1:9,
 	"A":"F")}) may be given, giving the length of line segments
@@ -351,9 +351,11 @@ par(\dots, no.readonly = FALSE)
     \item{\code{lwd}}{The line width, a \emph{positive} number,
       defaulting to \code{1}.  The interpretation is device-specific,
       and some devices do not implement line widths less than one.
-      (Some functions such as \code{\link{lines}} accept a vector of values
+      (See the help on the device for details of the interpretation.)
+      
+      Some functions such as \code{\link{lines}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.)
+      a vector of length greater than one is supplied.
     }
     \item{\code{mai}}{A numerical vector of the form \code{c(bottom,
 	left, top, right)} which gives the margin size specified in
@@ -526,7 +528,7 @@ par(\dots, no.readonly = FALSE)
   Colors can be specified in several different ways. The simplest way is
   with a character string giving the color name (e.g., \code{"red"}).  A
   list of the possible colors can be obtained with the function
-  \code{\link{colors}}. Alternatively, colors can be specified directly in
+  \code{\link{colors}}.  Alternatively, colors can be specified directly in
   terms of their RGB components with a string of the form \code{"#RRGGBB"}
   where each of the pairs \code{RR}, \code{GG}, \code{BB} consist of two
   hexadecimal digits giving a value in the range \code{00} to \code{FF}.
@@ -536,11 +538,13 @@ par(\dots, no.readonly = FALSE)
 
   Additionally, \code{"transparent"} or (integer) \code{NA} is
   \emph{transparent}, useful for filled areas (such as the background!),
-  and just invisible for things like lines or text.
+  and just invisible for things like lines or text.  Semi-transparent
+  colors are available for use on devices that support them.
 
   The functions \code{\link{rgb}}, \code{\link{hsv}}, \code{\link{hcl}},
   \code{\link{gray}} and \code{\link{rainbow}}
-  provide additional ways of generating colors.}
+  provide additional ways of generating colors.
+}
 
 \section{Line Type Specification}{
   Line types can either be specified by giving an index into a small
