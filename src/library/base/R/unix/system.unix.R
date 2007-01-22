@@ -16,7 +16,7 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
         cat(input, file=f, sep="\n")
         command <- paste(command, "<", f)
     }
-    if(!wait) command <- paste(command, "&")
+    if(!wait && !intern) command <- paste(command, "&")
     .Internal(system(command, intern))
 }
 
