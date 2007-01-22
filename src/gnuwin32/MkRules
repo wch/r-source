@@ -219,8 +219,13 @@ lib%.dll.a: %.def
 	@$(RM) $@
 	$(AR) crs $@ $^
 
+ifeq ($(strip $(BUILD)),CROSS)
+%.o: %.rc
+	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -I $(HEADER) -i $< -o $@
+else
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
+endif
 
 .f90.o:
 	"$(F95)" $(F95FLAGS) -c $< -o $@
