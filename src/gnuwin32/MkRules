@@ -81,7 +81,7 @@ BINPREF=i586-mingw32-
 # It should contain fcntl.h and windows.h
 HEADER=/users/ripley/R/cross-tools5/i586-mingw32/include
 # path (possibly full path) to same version of R on the host system
-R_EXE='I failed to read the instructions'
+R_EXE='I failed to read the instructions to set R_EXE in MkRules'
 endif
 
 ## =============== end of user-customizable parts  ===================
