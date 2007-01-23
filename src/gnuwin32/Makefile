@@ -55,7 +55,7 @@ R-DLLFLAGS = -mwindows
 endif
 
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion $(LIBEXTRAS)
-dllversion-RESFLAGS =--include-dir ../include
+dllversion-RESFLAGS =-I ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c embeddedR.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
