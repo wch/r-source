@@ -44,6 +44,7 @@
 \alias{La.chol2inv}
 \alias{symbol.C}
 \alias{symbol.For}
+\alias{unix}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -118,6 +119,9 @@ La.chol2inv(x, size = ncol(x))
 symbol.C(name)
 symbol.For(name)
 % </Removed 2.4.0>
+% Removed in 2.5.0
+unix(call, intern = FALSE)
+% </Removed 2.5.0>
 }
 \details{
   \code{category} has been an old-S function before there were factors;
@@ -201,8 +205,12 @@ symbol.For(name)
   unchanged, whereas \code{symbol.For} will map to lower case and
   append an underscore on those platforms (almost all) which do so for
   Fortran symbols.  These are no longer of any use in \R.
+
+  \code{unix} was a \emph{deprecated} (since the 1990s) alternative to
+  \code{\link{system}}, available for backwards compatibility.
 }
 \seealso{
   \code{\link{Defunct}}, \code{\link{base-deprecated}}
 }
+
 \keyword{internal}

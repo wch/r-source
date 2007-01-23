@@ -319,6 +319,9 @@ DEPRECATED & DEFUNCT
     o	The deprecated behaviour of structure() in adding a class when
 	specifying with "tsp" or "levels" attributes is now defunct.
 
+    o	unix() is now finally defunct, having been deprecated for
+	at least seven years.
+
     o	Sys.putenv() is now deprecated in favour of Sys.setenv(),
 	following the POSIX recommendation.
 
