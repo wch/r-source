@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004-5  R Development Core Team
+ *  Copyright (C) 2004-7  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 
 #include <R.h>
+#define ROL_UNUSED
 #include "md5.h"
 #include <stdlib.h>
 #include <stdio.h>
