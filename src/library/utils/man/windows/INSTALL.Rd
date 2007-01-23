@@ -1,6 +1,9 @@
 \name{INSTALL}
-\title{Install Add-on Packages from Sources}
 \alias{INSTALL}
+\title{Install Add-on Packages from Sources}
+\description{
+  Utility for installing add-on source packages.
+}
 \usage{
 \special{R CMD INSTALL [options] [-l lib] pkgs}
 }
@@ -14,17 +17,17 @@
     be quoted.
     Use \code{R CMD INSTALL --help} for the current list of options.}
 }
-\description{
-  Utility for installing add-on source packages.
-}
 \details{
   If used as \code{R CMD INSTALL pkgs} without explicitly specifying
   \code{lib}, packages are installed into the library tree rooted at the
   first directory in the library path which would be used by \R run in
   the current environment.
 
-  To install into the library tree \code{lib} instead of the default
-  one, use \code{R CMD INSTALL -l lib pkgs}.
+  To install into the library tree \code{lib}, use
+  \code{R CMD INSTALL -l lib pkgs}.  This prepends \code{lib} to
+  \env{R\_LIBS} for duration of the install, so required packages in the
+  installation directory will be found (and used in preference to those
+  in other libraries).
 
   Windows Perl and the files for installing from source packages need to
   be installed.
@@ -54,11 +57,14 @@
   creating a binary image: use the flags \code{LazyLoad} and
   \code{SaveImage} in the \file{DESCRIPTION} file to ensure this.
 }
+
 \seealso{
   \code{\link{REMOVE}} and \code{\link{library}} for information on
   using several library trees;
   \code{\link{update.packages}} for automatic update of packages using
-  the internet;
+  the internet (or other \R level installation of packages, such as by
+  \code{install.packages});
+
   the section on \dQuote{Add-on packages} in \dQuote{R Installation and
     Administration} and
   the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R

@@ -126,6 +126,8 @@ if($opt_library){
 	die "Error: cannot change to directory \`$opt_library'\n";
     $library = cwd();
     $library = Win32::GetShortPathName($library) if $library =~ / /;
+    my $R_LIBS = $ENV{'R_LIBS'};
+    $ENV{'R_LIBS'} = join(";", $library, $R_LIBS);
     chdir($startdir);
 } else {
     my @out = R_runR("cat(.libPaths()[1])", "--slave");
