@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-01-14
+@set FAQ_DATE @value{FAQ_YEAR}-01-22
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -500,12 +500,13 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2006-10-31:
+@c Linux binaries as of 2007-01-22:
 @c
 @c debian
-@c   stable  i386   2.4.0  Christian T. Steigies <cts@debian.org>
-@c   oldstable
-@c           i386   2.1.1  Christian T. Steigies <cts@debian.org>
+@c   stable  i386   2.4.1  Johannes Ranke
+@c           amd64  2.4.1  Johannes Ranke
+@c   testing i386   2.4.1  Johannes Ranke
+@c           amd64  2.4.1  Johannes Ranke
 @c redhat
 @c   el3     i386   2.3.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   el4     i386   2.4.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
@@ -533,8 +534,9 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   10.1    i586   2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           x86_64 2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c ubuntu
-@c   dapper  i386   2.4.0  Christian T. Steigies <cts@debian.org>
-@c           amd64  2.4.0  Christian T. Steigies <cts@debian.org>
+@c   dapper  i386   2.4.1  Vincent Goulet
+@c   edgy    i386   2.4.1  Vincent Goulet
+@c           
 @c vinelinux
 @c   3.2     i386   2.3.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
@@ -542,9 +544,10 @@ The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
 
 @quotation
-@multitable {Debian et al.} {x86_64} {9.0/9.1/9.2/9.3/10.0/10.1} {James Henstridge}
+@multitable {VineLinux} {x86_64} {9.0/9.1/9.2/9.3/10.0/10.1} {James Henstridge}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian et al. @tab i386 @tab stable/oldstable @tab Christian Steigies
+@item Debian   @tab i386 @tab stable/testing @tab Johannes Ranke
+@item          @tab amd64 @tab stable/testing @tab Johannes Ranke
 @item Red Hat  @tab i386 @tab FC3/FC4/FC5/FC6 @tab Martyn Plummer
 @item          @tab x86_64 @tab FC3 @tab Brian Ripley
 @item          @tab x86_64 @tab FC4/FC5 @tab Martyn Plummer
@@ -553,8 +556,7 @@ packages.
 @item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
 @item          @tab i586   @tab 9.0/9.1/9.2/9.3/10.0/10.1 @tab Detlef Steuer
 @item          @tab x86_64 @tab 9.2/9.3/10.0/10.1 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab dapper @tab Christian Steigies
-@item          @tab amd64  @tab dapper @tab Christian Steigies
+@item Ubuntu   @tab i386   @tab dapper/edgy @tab Vincent Goulet
 @item VineLinux @tab i386 @tab 3.2 @tab Susunu Tanimura
 @end multitable
 @end quotation
@@ -567,7 +569,7 @@ recommended packages.  If you also want to build R packages from source,
 also run @code{apt-get install r-base-dev} to obtain the additional
 tools required for this.  So-called ``backports'' of the current R
 packages for the @dfn{stable} distribution of Debian are provided by
-Christian Steigies, and available from CRAN.  Simply add the line
+Johannes Ranke, and available from CRAN.  Simply add the line
 
 @example
 deb http://cran.R-project.org/bin/linux/debian stable/
@@ -577,10 +579,9 @@ deb http://cran.R-project.org/bin/linux/debian stable/
 (feel free to use a @CRAN{} mirror instead of the master) to the file
 @file{/etc/apt/sources.list}, and install as usual.  More details on
 installing and administering R on Debian Linux can be found at
-@url{http://cran.r-project.org/bin/linux/debian/README}.  While the
-@dfn{stable} backport was built for Debian, it has also been found to be
-directly usable for Ubuntu/Kubuntu, and should be suitable for other
-Debian derivatives.
+@url{http://cran.r-project.org/bin/linux/debian/README}.  These
+backports should also be suitable for other Debian derivatives.  Native
+backports for Ubuntu are provided by Vincent Goulet.
 
 @c Once you have added that line the programs @command{apt-get},
 @c @command{apt-cache}, and @command{dselect} (using the apt access
@@ -2838,6 +2839,9 @@ A suite of elliptic and related functions including Weierstrass and
 Jacobi forms.
 @item elrm
 Exact Logistic Regression via MCMC.
+@item emdbook
+Data sets and auxiliary functions for ``Ecological Models and Data'' by
+Ben Bolker (work in progress).
 @item emme2
 Functions to read from and write to an EMME/2 databank.
 @item emplik
@@ -3228,6 +3232,8 @@ An S4 class for handling irregular time series.
 The ``laboratory for capacities'', an S4 tool box for capacity (or
 non-additive measure, fuzzy measure) and integral manipulation on a
 finite setting.
+@item kernelPop
+Spatially explicit population genetic simulations.
 @item kernlab
 Kernel-based machine learning methods including support vector machines.
 @item kinship
@@ -4110,6 +4116,8 @@ Simple Network of Workstations: support for simple parallel computing in
 R.
 @item snowFT
 Fault Tolerant Simple Network of Workstations.
+@item snp.plotter
+Plots of @math{p}-values using single SNP and/or haplotype data.
 @item som
 Self-Organizing Maps (with application in gene clustering).
 @item sound
