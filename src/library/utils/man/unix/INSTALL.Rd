@@ -76,12 +76,11 @@
   using several library trees;
   \code{\link{update.packages}} for automatic update of packages using
   the internet (or other \R level installation of packages, such as by
-  \code{install.packages});
+  \code{install.packages}).
 
-  the section on \dQuote{Add-on packages} in \dQuote{R Installation and
-    Administration} and
-  the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R
-    Extensions}
-  (see the \file{doc/manual} subdirectory of the \R source tree).
+  The section on \dQuote{Add-on packages} in \dQuote{R Installation and
+    Administration} and the chapter on \dQuote{Creating R packages} in
+  \dQuote{Writing \R Extensions} (see \code{\link{RShowDoc}} and the
+  \file{doc/manual} subdirectory of the \R source tree).
 }
 \keyword{utilities}

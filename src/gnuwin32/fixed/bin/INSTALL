@@ -24,7 +24,9 @@ use File::Path;
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
+use Win32::Process;
 
+my $PID=Win32::Process::GetCurrentProcessID();
 
 my $revision = ' $Rev$ ';
 my $version;
@@ -190,8 +192,9 @@ foreach $pkg (@ARGV){
 	$pkgname =~ s/\.tar\.gz$//;
 	$pkgname =~ s/\.tgz$//;
 	$pkgname =~ s/_[0-9\.-]*$//;
-	my $dir = "R.INSTALL";
-	if(! -d $dir) {
+	my $dir = "R.INSTALL.$PID";
+	rmtree($dir);  # zap in the likely event it is already there
+	if(! -d $dir) {  # reuse if we failed to zap
 	    mkdir($dir, 0755) or die "Error: cannot create $dir\n";
 	}
 	$tardir = $dir;
@@ -228,6 +231,7 @@ foreach $pkg (@ARGV){
 	    }
 	    next;
 	}
+	if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	die "cannot install package '${pkgname}' of type '$Type'\n"
     }
  
@@ -301,12 +305,14 @@ foreach $pkg (@ARGV){
 	if(-d $lockdir || -f $lockdir) {
 	    print "Failed to lock directory '${library}' for modifying\n";
 	    print "Try removing '${lockdir}'\n";
+	    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	    exit 3;
 	}
 	mkpath($lockdir);
 	if(! -d $lockdir) {
 	    print "Failed to lock directory '${library}' for modifying\n";
 	    print "Permission problem?\n";
+	    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
 	    exit 3;
 	}
     }
@@ -463,12 +469,10 @@ foreach $pkg (@ARGV){
     }
     # wipe out lockdir
     rmtree($lockdir) if $safe;
+    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
     exit $res if $res;
     print("\* DONE ($intname)\n");
 }
-
-## remove unpack directory
-if ($istar > 0) { chdir($startdir); rmtree("R.INSTALL"); }
 
 sub parse_description_field { # fieldname
     my ($field) = @_;
