@@ -1067,12 +1067,12 @@ for suggesting WiX and building a prototype installer.
 It is possible to cross-build @R{} or packages on (at least)
 @cputype{ix86} and @cputype{x86_64} Linux, and the @cputype{ix86}
 cross-compilers have also been used successfully on @cputype{x86_64}
-Linux..
+Linux.
 
 You will need suitable cross-compilers installed and in your path.
 There is currently a complete set of tools at
-@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2,
-@code{www.stats.ox.ac.uk/@/pub/@/Rtools/@/mingw-cross5.tar.bz2}} (Just
+@url{http://www.stats.ox.ac.uk/pub/Rtools/i586-cross-tools.tar.bz2,
+@code{www.stats.ox.ac.uk/pub/Rtools/mingw-cross5.tar.bz2}} (Just
 unpack this somewhere and put its @file{bin} directory in your path.)
 It is also straightforward to build a set of cross-compilers via the
 scripts available at
