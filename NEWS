@@ -393,6 +393,9 @@ UTILITIES
 	On all OSes it makes use of the -f argument to R, so
 	file("stdin") can be used from BATCH scripts.
 
+    o	R CMD INSTALL now prepends the installation directory (if
+	specified) to the library search path.
+
 
 BUG FIXES
 

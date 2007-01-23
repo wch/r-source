@@ -104,6 +104,9 @@ tmpdir=`cd "${tmpdir}" && ${GETWD}`
 R_EXE="${R_HOME}/bin/R"
 ## </NOTE>
 
+## record R_LIBS at this point
+R_LIBS0=${R_LIBS}
+
 ## <NOTE>
 ## This could be made a bit more general: if R CMD INSTALL is run by
 ## another tool (e.g., when building or checking a package, its messages
@@ -295,6 +298,11 @@ if test -z "${lib}"; then
   lib=`echo "cat(.libPaths()[1])" | \
     R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave`
   message "Installing to library '$lib'"
+else
+  lib0=${lib}
+  cd ${lib}
+  lib=`${GETWD}`
+  cd ${startdir}
 fi
 
 
@@ -431,6 +439,17 @@ do_install_source () {
   export R_LIBRARY_DIR
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
+
+  if test -n ${lib0} ; then
+    ## set R_LIBS to include the current installation directory
+    if test -n "${R_LIBS}"; then
+      R_LIBS="${lib}:${R_LIBS}"
+    else
+      R_LIBS="${lib}"
+    fi
+    export R_LIBS
+  fi
+  
 
   Type=`get_dcf_field Type DESCRIPTION`
   if test "$Type" = "Frontend" ; then

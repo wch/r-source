@@ -25,7 +25,10 @@
   the current environment.
 
   To install into the library tree \code{lib}, use
-  \code{R CMD INSTALL -l lib pkgs}.
+  \code{R CMD INSTALL -l lib pkgs}.  This prepends \code{lib} to
+  \env{R\_LIBS} for duration of the install, so required packages in the
+  installation directory will be found (and used in preference to those
+  in other libraries).
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
