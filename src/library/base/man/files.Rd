@@ -59,7 +59,7 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
   of different lengths.
 
   \code{file.copy} works in a similar way to \code{file.append} but with
-  the arguments in the natural order for copying. Copying to existing
+  the arguments in the natural order for copying.  Copying to existing
   destination files is skipped unless \code{overwrite = TRUE}.
   The \code{to} argument can specify a single existing directory.
 
@@ -92,6 +92,8 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
   \code{\link{file.info}}, \code{\link{file.access}}, \code{\link{file.path}},
   \code{\link{file.show}}, \code{\link{list.files}},
   \code{\link{unlink}}, \code{\link{basename}}, \code{\link{path.expand}}.
+
+  \code{\link{file_test}}.
 }
 
 \examples{

@@ -1,18 +1,17 @@
-#Platform <- function()
-#.Internal(Platform())
-
 R.home <- function(component="home")
 {
     rh <- .Internal(R.home())
     switch(component,
            "home" = rh,
-           "share"= if(nchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p else file.path(rh, component),
-	   "doc"=if(nchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p else file.path(rh, component),
+           "share"= if(nchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p
+           else file.path(rh, component),
+	   "doc"=if(nchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p
+           else file.path(rh, component),
            file.path(rh, component))
 }
 file.show <-
-function (..., header=rep("", nfiles), title="R Information",
-          delete.file=FALSE, pager=getOption("pager"))
+    function (..., header=rep("", nfiles), title="R Information",
+              delete.file=FALSE, pager=getOption("pager"))
 {
     file <- c(...)
     nfiles <- length(file)
@@ -25,17 +24,17 @@ function (..., header=rep("", nfiles), title="R Information",
 }
 
 file.append <- function(file1, file2)
-.Internal(file.append(file1, file2))
+    .Internal(file.append(file1, file2))
 
 file.remove <- function(...)
-.Internal(file.remove(c(...)))
+    .Internal(file.remove(c(...)))
 
 file.rename <- function(from, to)
-.Internal(file.rename(from, to))
+    .Internal(file.rename(from, to))
 
 list.files <- function(path=".", pattern=NULL, all.files=FALSE,
                        full.names=FALSE, recursive=FALSE)
-.Internal(list.files(path, pattern, all.files, full.names, recursive))
+    .Internal(list.files(path, pattern, all.files, full.names, recursive))
 
 dir <- list.files
 
@@ -47,25 +46,24 @@ function(..., fsep=.Platform$file.sep)
 }
 
 
-file.exists <- function(...)
-.Internal(file.exists(c(...)))
+file.exists <- function(...) .Internal(file.exists(c(...)))
 
 file.create <- function(...)
-.Internal(file.create(c(...)))
+    .Internal(file.create(c(...)))
 
-file.choose <- function(new=FALSE)
-.Internal(file.choose(new))
+file.choose <- function(new=FALSE) .Internal(file.choose(new))
 
 file.copy <- function(from, to, overwrite=FALSE)
 {
     if (!(nf <- length(from))) stop("no files to copy from")
     if (!(nt <- length(to)))   stop("no files to copy to")
+    ## we don't use file_test as that is in utils.
     if (nt == 1 && file.exists(to) && file.info(to)$isdir)
         to <- file.path(to, basename(from))
     else if (nf > nt) stop("more 'from' files than 'to' files")
     if(nt > nf) from <- rep(from, length.out = nt)
-    if (!overwrite) okay <- !file.exists(to)
-    else okay <- rep.int(TRUE, length(to))
+    okay <- file.exists(from)
+    if (!overwrite) okay[file.exists(to)] <- FALSE
     if (any(from[okay] %in% to[okay]))
         stop("file can not be copied both 'from' and 'to'")
     if (any(okay)) { ## care: create could fail but append work.
@@ -171,7 +169,7 @@ print.hexmode <- function(x, ...)
 }
 
 system.file <-
-function(..., package = "base", lib.loc = NULL)
+    function(..., package = "base", lib.loc = NULL)
 {
     if(nargs() == 0)
         return(file.path(.Library, "base"))
