@@ -78,7 +78,8 @@ getOption(x)
 
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
-      are 1\dots22 with default 7.  See \code{\link{print.default}}.}
+      are 1\dots22 with default 7.  See the warning in
+      \code{\link{print.default}} about values greater than 15.}
 
     \item{\code{digits.secs}:}{controls the maximum number of digits to
       print when formatting time values in seconds.  Valid values
