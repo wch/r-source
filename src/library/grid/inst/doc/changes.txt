@@ -4,6 +4,10 @@ Changes from grid_2.4.0 to grid_2.5.0:
 1.  Added 'open' argument to grid.curve().  This allows, for example,
     filling the segment of a circle.
 
+2.  Fixed bug in arrow() function:  segfault produced if either 
+    'ends' or 'type' argument are given as NULL.  Thanks to
+    Sebastien Luque for the report.
+
 
 Changes from grid_2.3.0 to grid_2.4.0:
 ------------------------------------
