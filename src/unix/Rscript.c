@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
     av[ac] = (char *) NULL;
 #ifdef HAVE_PUTENV
     if(!set_dp && !getenv("R_DEFAULT_PACKAGES"))
-	putenv("R_DEFAULT_PACKAGES=datasets,utils,grdevices,graphics,stats");
+	putenv("R_DEFAULT_PACKAGES=datasets,utils,grDevices,graphics,stats");
 #endif
     if(verbose) {
 	fprintf(stderr, "running\n  '%s", cmd);
