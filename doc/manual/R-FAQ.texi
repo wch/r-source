@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-01-22
+@set FAQ_DATE @value{FAQ_YEAR}-01-25
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2206,6 +2206,8 @@ Chapman & Hall/CRC.
 @item RII
 Estimation of the relative index of inequality for interval-censored
 data using natural cubic splines.
+@item RJDBC
+Access to databases through the JDBC interface.
 @item RJaCGH
 Reversible Jump MCMC for the analysis of CGH arrays.
 @item RLMM
@@ -2261,6 +2263,8 @@ Sampling binary matrices with fixed margins.
 @item Rcmdr
 A platform-independent basic-statistics @acronym{GUI} (graphical user
 interface) for R, based on the @strong{tcltk} package.
+@item Rcmdr.HH
+Rcmdr support for the introductory course at Temple University.
 @item RcppTemplate
 An illustration of the use of the Rcpp R/C++ interface library.
 @item ResistorArray
@@ -3466,6 +3470,8 @@ Estimation/multiple imputation programs for mixed categorical and
 continuous data.
 @item mixreg
 Functions to fit mixtures of regressions.
+@item mixstock
+Mixed stock analysis functions.
 @item mixtools
 Tools for mixture models.
 @item mlCopulaSelection
@@ -4187,6 +4193,8 @@ Spatial and space-time point pattern analysis functions.
 @c for summarising these objects, and for permitting their use in spatial
 @c data analysis.
 @c </COMMENT>
+@item spsurvey
+Spatial survey design and analysis.
 @item ssanv
 Sample Size Adjusted for Nonadherence or Variability of input
 parameters.
