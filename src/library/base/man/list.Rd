@@ -86,6 +86,7 @@ alist(\dots)
 \seealso{
   \code{\link{vector}("list", length)} for creation of a list with empty
   components; \code{\link{c}}, for concatenation; \code{\link{formals}}.
+  \code{\link{unlist}} is an approximate inverse to \code{as.list()}.
 }
 \examples{
 # create a plotting structure
