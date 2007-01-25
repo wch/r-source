@@ -45,6 +45,9 @@ substring(text, first, last = 1000000) <- value
   string length then no replacement is done.  If the portion to be
   replaced is longer than the replacement string, then only the
   portion the length of the string is replaced.
+
+  If any argument is an \code{NA} element, the corresponding element of
+  the answer is \code{NA}.
 }
 \note{
   The S4 version of \code{substring<-} ignores \code{last}; this version

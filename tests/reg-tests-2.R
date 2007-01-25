@@ -2114,3 +2114,14 @@ dump("f", file="")
 
 expression(bin <- bin + 1L)
 ## did not preserve e.g. 1L at some point in pre-2.5.0
+
+
+## NAs in substr were handled as large negative numbers
+x <- "abcde"
+substr(x, 1, 3)
+substr(x, NA, 1)
+substr(x, 1, NA)
+substr(x, NA, 3) <- "abc"; x
+substr(x, 1, NA) <- "AA"; x
+substr(x, 1, 2) <- NA_character_; x
+## "" or no change in 2.4.1, except last
