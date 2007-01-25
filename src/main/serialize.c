@@ -1870,6 +1870,7 @@ static void resize_buffer(membuf_t mb, int needed)
     mb->buf = realloc(mb->buf, newsize);
     if (mb->buf == NULL)
 	error(_("cannot allocate buffer"));
+    mb->size = newsize;
 }
 
 static void OutCharMem(R_outpstream_t stream, int c)
