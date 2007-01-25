@@ -2053,6 +2053,10 @@ respectively.
 @node Writing portable packages, Diagnostic messages, Package name spaces, Creating R packages
 @section Writing portable packages
 
+@menu
+* Encoding issues::             
+@end menu
+
 @code{R CMD check} provides a basic set of checks, but often further
 problems emerge when people try to install and use packages submitted to
 @acronym{CRAN} -- many of these involve compiled code.  Here are some
@@ -2096,7 +2100,9 @@ See @ref{Using valgrind} for a tool which can be used to look for this.
 @item
 The Mac OS X linker has some restrictions not found on other platforms.
 Try to ensure that C entry points shared between source files are
-declared as @code{extern} in all but one of the files.
+declared as @code{extern} in all but one of the files.  (This is no
+longer needed in recent versions of @R{}, but is if your package is
+not restricted to such versions.)
 
 @item
 Many platforms will allow unsatisfied entry points in compiled code, but
@@ -2119,6 +2125,60 @@ well as ensuring you have used the @code{PACKAGE} argument that @code{R
 CMD check} checks for.
 
 @end itemize
+
+@node Encoding issues,  , Writing portable packages, Writing portable packages
+@subsection Encoding issues
+
+Care is needed if your package contains non-ASCII text, and in
+particular if it is intended to be used in more than one locale.
+It is possible to mark the encoding used in the @file{DESCRIPTION}
+file and in @file{.Rd} files, as discussed elsewhere in this manual.
+What is not possible is to mark the encoding used by character strings
+in @R{}.
+
+First, consider carefully if you really need non-ASCII text.  Most
+users of @R{} will only be able to view correctly text in their native
+language group (e.g.@: Western European, Eastern European, Simplified
+Chinese) and ASCII.  Other characters may not be rendered at all,
+rendered incorrectly, or cause your @R{} code to give an error.
+For documentation, marking the encoding and including ASCII
+transliterations is likely to do a reasonable job, but character data
+is a lot more problematic.
+
+The most favourable circumstance is using UTF-8-encoded text in a
+package that will only ever be used in a UTF-8 locale (and hence not
+on Windows, for example).  In that case it is likely that text will be
+rendered correctly in the terminal used to run @R{}, and files written
+will be readable by other UTF-8-aware applications.  However, plotting
+will be problematic.  On-screen plotting using the @samp{X11()} device
+will use a font that only covers a small proportion of UTF-8, and
+different fonts will likely need to be selected for Polish, Russian
+and Japanese (see @code{help("X11")}).  Using @samp{postscript} or
+@samp{pdf} will choose a default 8-bit encoding depending on the
+language of the UTF-8 locale, and your users would need to be told how
+to select the @samp{encoding} argument.
+
+Another fairly common scenario is where a package will only be used in
+one language, e.g.@: French.  It is not very safe to assume that all
+such users would have their computers set to a French locale, but let
+us assume so.  The problem then is that there are several possible
+encodings for French locales, the most common ones being @samp{CP1251}
+(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-9} (latin-9
+which includes the Euro), and @samp{UTF-8}.  For characters in the
+French language the first three agree, but they do not agree with
+@samp{UTF-8}. Further, you (or different users) can run @R{} in
+different locales in different sessions, say @samp{fr_CA.utf8} one day
+and @samp{fr_CH.iso88591} the next.  In this scenario the safest thing
+to do is to keep the French text on a file in @samp{ISO
+8859-1},@footnote{If all the systems to be used support @samp{iconv},
+the text could also be stored in UTF-8, but if they do not, they are
+most likely running a 8-bit encoding compatible with @samp{ISO
+8859-1}.} and load it into @R{} when the package is loaded (or the
+data is needed).  Then the @samp{encoding} argument to @samp{source},
+@samp{file} and so on can be used to tell @R{} that this is @samp{ISO
+8859-1} text.  Even in this scenario, a workspace saved in one session
+may not be valid if loaded into another with a different locale.
+
 
 @node Diagnostic messages, Localization, Writing portable packages, Creating R packages
 @section Diagnostic messages
