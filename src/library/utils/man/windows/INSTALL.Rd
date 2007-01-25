@@ -35,9 +35,8 @@
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
   names of package archive files of the form \file{pkg\_version.tar.gz}
-  as obtained from CRAN---these are then extracted to a temporary
-  directory (with a name of the form \file{R.INSTALL.abcd} for the
-  process ID \code{abcd}) of the current directory.
+  as obtained from CRAN (these are then extracted in a temporary
+  directory \file{R.INSTALL} of the current directory).
 
   Which forms of help are produced is controlled by the \option{--docs}
   option which takes values \code{none} or \code{normal} (text and HTML)
@@ -64,12 +63,12 @@
   using several library trees;
   \code{\link{update.packages}} for automatic update of packages using
   the internet (or other \R level installation of packages, such as by
-  \code{install.packages}).
+  \code{install.packages});
 
-  The section on \dQuote{Add-on packages} in \dQuote{R Installation and
-    Administration} and the chapter on \dQuote{Creating R packages} in
-  \dQuote{Writing \R Extensions} (see the Help menu in \code{RGui},
-  \code{\link{RShowDoc}} and the \file{doc/manual} subdirectory of the
-  \R source tree).
+  the section on \dQuote{Add-on packages} in \dQuote{R Installation and
+    Administration} and
+  the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R
+    Extensions}
+  (see the \file{doc/manual} subdirectory of the \R source tree).
 }
 \keyword{utilities}

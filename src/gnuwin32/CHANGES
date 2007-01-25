@@ -54,8 +54,7 @@ identical to that on Unix-alikes.
 
 R CMD INSTALL now installs by default into the first library on the
 library path if R was run in the current environment.  Similarly, R
-CMD REMOVE by default removes from that library.  R CMD INSTALL does
-a better job of removing its temporary directory.
+CMD REMOVE by default removes from that library.
 
 More of the messages from the script editor are translatable.
 
