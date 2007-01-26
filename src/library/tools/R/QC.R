@@ -414,6 +414,13 @@ function(package, dir, lib.loc = NULL,
         }
     }
 
+    ## Find the data sets to work on.
+    data_dir <- file.path(dir, "data")
+    data_sets_in_code <- if(file_test("-d", data_dir))
+        names(list_data_in_pkg(dataDir = data_dir))
+    else
+        character()
+
     ## Find the function objects to work on.
     functions_in_code <-
         .filter(objects_in_code,
@@ -609,6 +616,7 @@ function(package, dir, lib.loc = NULL,
     variables_in_usages <- character()
     data_sets_in_usages <- character()
     functions_in_usages_not_in_code <- list()
+    data_sets_in_usages_not_in_code <- list()
 
     for(docObj in db_names) {
 
@@ -629,9 +637,12 @@ function(package, dir, lib.loc = NULL,
                                  (length(e) == 2)
                                  && e[[1]] == as.symbol("data")))
         if(any(ind)) {
-            data_sets_in_usages <-
-                c(data_sets_in_usages,
-                  sapply(exprs[ind], function(e) as.character(e[[2]])))
+            data_sets <- sapply(exprs[ind],
+                                function(e) as.character(e[[2]]))
+            data_sets_in_usages <- c(data_sets_in_usages, data_sets)
+            data_sets <- data_sets %w/o% data_sets_in_code
+            if(length(data_sets) > 0)
+                data_sets_in_usages_not_in_code[[docObj]] <- data_sets
             exprs <- exprs[!ind]
         }
         functions <- sapply(exprs, function(e) as.character(e[[1]]))
@@ -723,6 +734,8 @@ function(package, dir, lib.loc = NULL,
         functions_in_usages_not_in_code
     attr(bad_doc_objects, "function_args_in_code") <-
         function_args_in_code
+    attr(bad_doc_objects, "data_sets_in_usages_not_in_code") <-
+        data_sets_in_usages_not_in_code
     attr(bad_doc_objects, "has_namespace") <- has_namespace
     attr(bad_doc_objects, "with_synopsis") <- with_synopsis
     attr(bad_doc_objects, "bad_lines") <- bad_lines
@@ -789,6 +802,17 @@ function(x, ...)
             writeLines(gettextf("Functions/methods with usage in documentation object '%s' but not in code:",
                                 fname))
             .pretty_print(unique(functions_in_usages_not_in_code[[fname]]))
+            writeLines("")
+        }
+    }
+
+    data_sets_in_usages_not_in_code <- 
+        attr(x, "data_sets_in_usages_not_in_code")
+    if(length(data_sets_in_usages_not_in_code) > 0) {
+        for(fname in names(data_sets_in_usages_not_in_code)) {
+            writeLines(gettextf("Data sets with usage in documentation object '%s' but not in code:",
+                                fname))
+            .pretty_print(unique(data_sets_in_usages_not_in_code[[fname]]))
             writeLines("")
         }
     }
