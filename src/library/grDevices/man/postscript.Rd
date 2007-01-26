@@ -146,7 +146,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch: nultiples less than 1 are allowed.  \code{pch="."} with
-  \code{cex = 1} corresponds to a square of side 1/72 inch.
+  \code{cex = 1} corresponds to a square of side 1/72 inch, which is
+  also the \sQuote{pixel} size assumed for graphics parameters such as
+  \code{"cra"}.
 }
 
 \section{Families}{

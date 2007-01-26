@@ -224,7 +224,9 @@ par(\dots, no.readonly = FALSE)
     \item{\code{col.main}}{The color to be used for plot main titles.}
     \item{\code{col.sub}}{The color to be used for plot sub-titles.}
     \item{\code{cra}}{\emph{\bold{R.O.}}; size of default character
-      \code{(width, height)} in \dQuote{rasters} (pixels).}
+      \code{(width, height)} in \dQuote{rasters} (pixels).  Some devices
+      have no concept of pixels and so assume an arbitrary pixel size,
+      usually 1/72 inch.}
     \item{\code{crt}}{A numerical value specifying (in degrees) how
       single characters should be rotated.  It is unwise to expect
       values other than multiples of 90 to work.  Compare with
@@ -557,7 +559,8 @@ par(\dots, no.readonly = FALSE)
   units on followed by three off and \code{"3313"} specifies three units
   on followed by three off followed by one on and finally three off.
   The \sQuote{units} here are (on most devices) proportional to
-  \code{lwd}, and with \code{lwd = 1} are in pixels or points.
+  \code{lwd}, and with \code{lwd = 1} are in pixels or points or 1/96
+  inch.
 
   The five standard dash-dot line types (\code{lty = 2:6}) correspond to
   \code{c("44", "13", "1343", "73", "2262")}.

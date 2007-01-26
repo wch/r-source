@@ -54,10 +54,13 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
   of memory in Windows 95/98/ME.
 
   By default no resolution is recorded in the file.  Readers will often
-  assume nominal resolution of 72dpi when none is recorded.  As
+  assume a nominal resolution of 72dpi when none is recorded.  As
   resolutions in PNG files are recorded in pixels/metre, the dpi value
   will be changed slightly.
 
+  For graphics parameters that make use of dimensions in inches, a
+  resolution of 96dpi is assumed.
+  
   Both \code{bmp} and \code{png} will use a palette if there are less
   than 256 colours on the page, and record a 24-bit RGB file otherwise.
 }
