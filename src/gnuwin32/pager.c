@@ -404,7 +404,7 @@ static pager pagercreate()
     gchangescrollbar(c, HWINSB, 0, COLS-1, COLS, 1);
     setbackground(c, consolebg);
 #ifdef USE_MDI
-    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
+    if (ismdi()) {
         int btsize = 24;
         rect r = rect(2, 2, btsize, btsize);
         control tb, bt;
@@ -479,6 +479,7 @@ static pager pagercreate()
     }
 #ifdef USE_MDI
     if (ismdi()) newmdimenu();
+    if (ismdi() && !(RguiMDI & RW_TOOLBAR)) toolbar_hide();
 #endif
     MCHECK(BM = newbitmap(WIDTH, HEIGHT, 2));
     setdata(c, p);

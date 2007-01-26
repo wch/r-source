@@ -216,6 +216,18 @@ static void handle_char(object obj, int ch)
 	}
 }
 
+static int showMDIToolbar = 1;
+void toolbar_show()
+{
+    showMDIToolbar = 1;
+    SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
+}
+void toolbar_hide()
+{
+    showMDIToolbar = 0;
+    SendMessage(hwndFrame,WM_PAINT, (WPARAM) 0, (LPARAM) 0);
+}
+
 static void handle_mdiframesize() {
      HWND tool=NULL ,status=NULL;
      RECT rFrame,rToolbar;
@@ -223,7 +235,7 @@ static void handle_mdiframesize() {
      GetClientRect(hwndFrame,&rFrame);
      fw = rFrame.right-rFrame.left;
      fh = rFrame.bottom-rFrame.top;
-     if (MDIToolbar) {
+     if (showMDIToolbar && MDIToolbar) {
         tool = (HWND)MDIToolbar->handle;
         GetWindowRect(tool,&rToolbar);
         th = rToolbar.bottom-rToolbar.top;

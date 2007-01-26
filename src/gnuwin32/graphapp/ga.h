@@ -77,6 +77,7 @@ int 	addtooltip(control c, char *tp);
 
 /* status.c */
 int 	addstatusbar();
+int 	delstatusbar();
 void 	setstatus(char *text);
 
 /* dialogs.c */
@@ -214,8 +215,12 @@ void replacedialog(textbox t);
 int modeless_active();
 
 
-/* menus.h */
+/* menus.c */
 void 	remove_menu_item(menuitem obj);
+
+/* events.c */
+void toolbar_show();
+void toolbar_hide();
 
 #endif /* __GA__VERSION */
 

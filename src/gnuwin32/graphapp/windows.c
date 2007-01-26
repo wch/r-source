@@ -653,11 +653,13 @@ void show_window(object obj)
           else
 	    DrawMenuBar(hwnd);
         }
+#if 0
         if (obj->toolbar) {
             if (MDIToolbar) hide(MDIToolbar);
             MDIToolbar = obj->toolbar;
             SendMessage(hwndFrame,WM_PAINT,(WPARAM) 0,(LPARAM) 0);
         }
+#endif
         SetFocus(hwnd);
 	UpdateWindow(hwnd);
 	select_sibling(obj->child);

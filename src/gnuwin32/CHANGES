@@ -10,6 +10,10 @@ R 2.5.0
 GUI changes
 -----------
 
+In MDI mode there is a new View menu when the console is in focus
+which allows the toolbar and statusbar to be (de)selected, with the
+initial settings taken from the Rconsole file as before.
+
 There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and
 returns to the comand prompt.

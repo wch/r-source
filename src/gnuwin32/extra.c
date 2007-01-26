@@ -1281,7 +1281,8 @@ SEXP do_setTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP title = CAR(args);
 
     checkArity(op, args);
-    if(!isString(title)  || LENGTH(title) != 1)
+    if(!isString(title)  || LENGTH(title) != 1 || 
+       STRING_ELT(title, 0) == NA_STRING)
 	errorcall(call, _("'title' must be a character string"));
     return setTitle(CHAR(STRING_ELT(title, 0)));
 }
@@ -1291,6 +1292,19 @@ SEXP do_getWindowTitle(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     return getWindowTitle();
 }
+
+SEXP do_setStatusBar(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP text = CAR(args);
+
+    checkArity(op, args);
+    if(!isString(text)  || LENGTH(text) != 1 || 
+       STRING_ELT(text, 0) == NA_STRING)
+	errorcall(call, _("'text' must be a character string"));
+    setstatus(CHAR(STRING_ELT(text, 0)));
+    return R_NilValue;
+}
+
 
 int getConsoleHandle(char *which)
 {
