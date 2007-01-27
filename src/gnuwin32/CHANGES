@@ -89,6 +89,8 @@ possible to interrupt the command and the Rgui console will be
 responsive whilst it is running (and R will take up far less of the
 CPU).  (Proably also fixes PR#7634.)
 
+menu.ttest2() in example package 'windlgs' was broken.
+
 
 
 R 2.4.1
