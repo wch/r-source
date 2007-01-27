@@ -76,7 +76,8 @@ env.profile(env)
   the environment is printed or \code{""} if it is not a named environment.
 
   \code{env.profile} returns a list with the following components:
-  \code{size} the size of the raw hash table, \code{nchains} the
+  \code{size} the number of chains that can be stored in the hash table,
+  \code{nchains} the
   number of non-empty chains in the table (as reported by HASHPRI),
   and \code{counts} an integer vector giving the length of each chain
   (zero for empty chains).  This function is intended to assess the
