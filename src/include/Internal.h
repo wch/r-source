@@ -553,6 +553,6 @@ SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
-
+SEXP do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho);
 
 #endif /* not R_INTERNAL_H */

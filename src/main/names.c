@@ -928,6 +928,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"getRegisteredNamespace",do_getRegNS,	0, 11,  1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getNamespaceRegistry",do_getNSRegistry, 0, 11, 0,     {PP_FUNCALL, PREC_FN,	0}},
 {"importIntoEnv",do_importIntoEnv, 0, 	11, 	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"env.profile",  do_envprofile,    0, 	211, 	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"write.table",	do_writetable,	0,    111,     11,	{PP_FUNCALL, PREC_FN,	0}},
 

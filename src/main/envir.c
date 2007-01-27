@@ -477,6 +477,56 @@ static SEXP R_HashFrame(SEXP rho)
 }
 
 
+/* ---------------------------------------------------------------------
+
+   R_HashProfile
+
+   Profiling tool for analyzing hash table performance.  Returns a
+   three element list with components:
+
+   size: the total size of the hash table
+
+   nchains: the number of non-null chains in the table (as reported by
+            HASHPRI())
+
+   counts: an integer vector the same length as size giving the length of
+           each chain (or zero if no chain is present).  This allows
+           for assessing collisions in the hash table.
+ */
+
+static SEXP R_HashProfile(SEXP table)
+{
+    SEXP chain, ans, chain_counts, nms;
+    int i, count;
+
+    PROTECT(ans = allocVector(VECSXP, 3));
+    PROTECT(nms = allocVector(STRSXP, 3));
+    SET_STRING_ELT(nms, 0, mkChar("size"));    /* size of hashtable */
+    SET_STRING_ELT(nms, 1, mkChar("nchains")); /* number of non-null chains */
+    SET_STRING_ELT(nms, 2, mkChar("counts"));  /* length of each chain */
+    setAttrib(ans, R_NamesSymbol, nms);
+    UNPROTECT(1);
+
+    SET_VECTOR_ELT(ans, 0, ScalarInteger(length(table)));
+    SET_VECTOR_ELT(ans, 1, ScalarInteger(HASHPRI(table)));
+
+    PROTECT(chain_counts = allocVector(INTSXP, length(table)));
+    for (i = 0; i < length(table); i++) {
+        chain = VECTOR_ELT(table, i);
+        count = 0;
+        for (; chain != R_NilValue ; chain = CDR(chain)) {
+            count++;
+        }
+        INTEGER(chain_counts)[i] = count;
+    }
+
+    SET_VECTOR_ELT(ans, 2, chain_counts);
+
+    UNPROTECT(2);
+    return ans;
+}
+
+
 
 /*----------------------------------------------------------------------
 
@@ -3136,4 +3186,24 @@ SEXP attribute_hidden do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    defineVar(impsym, val, impenv);
     }
     return R_NilValue;
+}
+
+
+SEXP do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    /* Return a list containing profiling informated given a hashed
+       environment.  For non-hashed environments, this function
+       returns R_NilValue.  This seems appropriate since there is no
+       way to test whether an environment is hashed at the R level.
+    */
+    SEXP env, ans;
+    env = CAR(args);
+    if (isEnvironment(env)) {
+        if (IS_HASHED(env))
+            ans = R_HashProfile(HASHTAB(env));
+        else
+            ans = R_NilValue;
+    } else
+        error("argument must be a hashed environment");
+    return ans;
 }

@@ -11,6 +11,7 @@
 \alias{parent.env<-}
 \alias{.BaseNamespaceEnv}
 \alias{environmentName}
+\alias{env.profile}
 \title{Environment Access}
 \description{
   Get, set, test for and create environments.
@@ -34,6 +35,8 @@ parent.env(env)
 parent.env(env) <- value
 
 environmentName(env)
+
+env.profile(env)
 }
 \arguments{
   \item{fun}{a \code{\link{function}}, a \code{\link{formula}}, or
@@ -67,6 +70,14 @@ environmentName(env)
 
   \code{environmentName} returns a character string, that given when
   the environment is printed or \code{""} if it is not a named environment.
+
+  \code{env.profile} returns a list with the following components:
+  \code{size} the size of the raw hash table, \code{nchains} the
+  number of non-empty chains in the table (as reported by HASHPRI),
+  and \code{counts} an integer vector giving the length of each chain
+  (zero for empty chains).  This function is intended to assess the
+  performance of hashed environments.  When \code{env} is a non-hashed
+  environment, \code{NULL} is returned.
 }
 
 \details{
