@@ -168,7 +168,7 @@ sealClass(Class, where)
   Then extensions will add some new slots and new behavior.
 
   Another variety of extension starts with one of the built-in data types,
-  perhaps with the intension of modifying R's standard behavior for that
+  perhaps with the intention of modifying R's standard behavior for that
   class.  In this case, the new class inherits the built-in data type
   as its \dQuote{data} part.  See the \dQuote{numWithId} example below.
 
