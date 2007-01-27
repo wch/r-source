@@ -188,7 +188,7 @@ function(package, dir, lib.loc = NULL)
         ## The bad ones:
         S4_classes <-
             S4_classes[!sapply(S4_classes,
-                               function(u) utils::topicName("class", u))
+                               function(u) utils:::topicName("class", u))
                        %in% all_doc_topics]
         undoc_things <-
             c(undoc_things, list("S4 classes" = unique(S4_classes)))
@@ -250,7 +250,7 @@ function(package, dir, lib.loc = NULL)
         S4_methods <-
             S4_methods[!sapply(S4_methods,
                                function(u)
-                               utils::topicName("method", u))
+                               utils:::topicName("method", u))
                        %in% all_doc_topics]
         undoc_things <-
             c(undoc_things,
@@ -493,14 +493,14 @@ function(package, dir, lib.loc = NULL,
         ## </NOTE>
         ## <NOTE>
         ## In principle, we can get codoc checking for S4 methods
-        ## documented explicitly using the \S4method{GENERIC}{SIGLIST}  
+        ## documented explicitly using the \S4method{GENERIC}{SIGLIST}
         ## markup by adding the corresponding "pseudo ## functions"
         ## using the Rd markup as their name.  However: the formals
         ## recorded in the methods db only pertain to the signature, not
         ## to the ones of the function actually registered.  It seems
         ## that we can only get these by working on the internal
         ## representation ... hence, let's make this optional for the
-        ## time being. 
+        ## time being.
         ## </NOTE>
         check_S4_methods <-
             identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
@@ -806,7 +806,7 @@ function(x, ...)
         }
     }
 
-    data_sets_in_usages_not_in_code <- 
+    data_sets_in_usages_not_in_code <-
         attr(x, "data_sets_in_usages_not_in_code")
     if(length(data_sets_in_usages_not_in_code) > 0) {
         for(fname in names(data_sets_in_usages_not_in_code)) {
@@ -1011,7 +1011,7 @@ function(package, lib.loc = NULL)
 
     S4_classes_checked <- character()
     for(cl in S4_classes) {
-        idx <- which(utils::topicName("class", cl) == aliases)
+        idx <- which(utils:::topicName("class", cl) == aliases)
         if(length(idx) == 1) {
             ## Add sanity checking later ...
             S4_classes_checked <- c(S4_classes_checked, cl)
@@ -3936,7 +3936,7 @@ function(package, dir, lib.loc = NULL)
         identical(as.logical(Sys.getenv("_R_CHECK_RD_EXAMPLES_T_AND_F_")),
                   TRUE)
 
-        
+
     bad_closures <- character()
     bad_examples <- character()
 
@@ -4000,7 +4000,7 @@ function(package, dir, lib.loc = NULL)
             example_texts <- .get_example_texts_from_source_dir(dir)
     }
 
-    if(check_examples)    
+    if(check_examples)
         bad_examples <- find_bad_examples(example_texts)
 
     out <- list(bad_closures = bad_closures,

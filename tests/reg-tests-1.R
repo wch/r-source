@@ -4562,3 +4562,16 @@ sum(z)
 stopifnot(all.equal(x, sum(pi,Re(z)) + sum(Im(z))*(0+1i)))
 prod(z)
 ##
+
+
+## problems with 0-row data frames created by read.table
+x <- structure(list(one = NULL, two = NULL, three = NULL),
+               .Names = c("one", "two", "three"), class = "data.frame")
+y <- data.frame(one=1,two=2,three=3)
+(z <- rbind(x,y))
+stopifnot(dim(z) == c(1, 3))
+(z <- rbind(y,x))
+stopifnot(dim(z) == c(1, 3))
+(z <- rbind(x,x))
+stopifnot(dim(z) == c(0, 3))
+## variously failed or gave zero-column data frame in 2.4.1

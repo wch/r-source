@@ -585,14 +585,14 @@ promptMethods <- function(f, filename = NULL, methods)
     signatures <- object@classes
     labels <- character(n)
     aliases <- character(n)
-    fullName <- utils::topicName("methods", f)
+    fullName <- utils:::topicName("methods", f)
     for(i in seq_len(n)) {
         sigi <- paste("\"", signatures[[i]], "\"", sep ="")
         labels[[i]] <-
             paste(args[[i]], sigi, collapse = ", ", sep = " = ")
         aliases[[i]] <-
             paste0("\\alias{",
-                   utils::topicName("method", c(f, signatures[[i]])),
+                   utils:::topicName("method", c(f, signatures[[i]])),
                    "}")
     }
     text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")

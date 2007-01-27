@@ -300,9 +300,18 @@ NEW FEATURES
 	now preserves integers (using the L suffix) and NAs (using
 	NA_real_ etc where necessary).
 
-    o	New function env.profile provides R level access to summary
-	statistics on environments. In a related patch, new.env
-	now allows the user to specify an initial size.
+    o	New function env.profile() provides R level access to summary
+	statistics on environments.  In a related patch, new.env()
+	now allows the user to specify an initial size for a hashed
+	environment.
+
+    o	rbind.data.frame() now ignores all zero-row inputs, as well as
+	zero-column inputs (which it used to do, undocumented).  This
+	is because read.table() can create zero-row data frames with
+	NULL columns, and those cannot be extended.
+
+    o	The 'internal' objects .helpForCall, .tryHelp and topicName are
+	no longer exported from 'utils'.
 
 
 DEPRECATED & DEFUNCT
@@ -483,6 +492,10 @@ BUG FIXES
     o	unlink() on Unix-alikes failed for paths containing spaces.
 
     o	substr() and friends treated NA 'start' or 'stop' incorrectly.
+
+    o	merge(x, y, all.y = TRUE) would sometimes incorrectly return
+	logical columns for columns only in x when there were no
+	common rows.
 
 
 

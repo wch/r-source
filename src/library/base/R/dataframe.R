@@ -997,6 +997,16 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     allargs <- list(...)
     allargs <- allargs[sapply(allargs, length) > 0L]
+    if(length(allargs)) {
+    ## drop any zero-row data frames, as they may not have proper column
+    ## types (e.g. NULL).
+        nr <- sapply(allargs, function(x)
+                     if(is.data.frame(x)) .row_names_info(x, 2L)
+                     else if(is.list(x)) length(x[[1]]) # mismatched lists are checked later
+                     else length(x))
+        if(any(nr > 0L)) allargs <- allargs[nr > 0L]
+        else return(allargs[[1]]) # pretty arbitrary
+    }
     n <- length(allargs)
     if(n == 0L)
 	return(structure(list(),
@@ -1091,9 +1101,9 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	return(structure(list(), class = "data.frame",
 			 row.names = integer()))
     pseq <- seq_len(nvar)
-    if(is.null(value)) {
+    if(is.null(value)) { # this happens if there has been no data frame
 	value <- list()
-	value[pseq] <- list(logical(nrow))
+	value[pseq] <- list(logical(nrow)) # OK for coercion except to raw.
     }
     names(value) <- clabs
     for(j in pseq)

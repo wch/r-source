@@ -97,8 +97,12 @@ merge.data.frame <-
             ## need to have factor levels extended as well -> using [cr]bind
             ya <- y[m$y.alone, by.y, drop=FALSE]
             names(ya) <- nm.by
-            x <- rbind(x, cbind(ya, matrix(NA, nyy, ncx-l.b,
-                                           dimnames=list(NULL,nm.x))))
+            ## this used to use a logical matrix, but that is not good
+            ## enough as x could be zero-row.
+            ya <- cbind(ya, x[rep.int(NA_integer_, nyy), nm.x, drop=FALSE ])
+            x <- rbind(x, ya)
+            #x <- rbind(x, cbind(ya, matrix(NA, nyy, ncx-l.b,
+            #                               dimnames=list(NULL,nm.x))))
         }
         ## y (w/o 'by'):
         if(has.common.nms) {

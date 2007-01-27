@@ -61,12 +61,15 @@ rbind(\dots, deparse.level = 1)
   (columns), for S compatibility.
   (Zero-extent matrices do not occur in S3 and are not ignored in \R.)
 
-  The \code{rbind} data frame method takes the classes of the columns
-  from the first data frame, and matches columns by name (rather than by
-  position).  Factors have their levels expanded as necessary (in
-  the order of the levels of the levelsets of the factors encountered)
-  and the result is an ordered factor if and only if all the components
-  were ordered factors.  (The last point differs from S-PLUS.)
+  The \code{rbind} data frame method first drops all zero-column and
+  zero-row arguments.  (If that leaves none, it returns the first
+  argument with columns otherwise a zero-column zero-row data frame.)
+  It then takes the classes of the columns from the
+  first data frame, and matches columns by name (rather than by
+  position).  Factors have their levels expanded as necessary (in the
+  order of the levels of the levelsets of the factors encountered) and
+  the result is an ordered factor if and only if all the components were
+  ordered factors.  (The last point differs from S-PLUS.)
 }
 \value{
   A matrix or data frame combining the \code{\dots} arguments
