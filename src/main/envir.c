@@ -3191,18 +3191,16 @@ SEXP attribute_hidden do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    /* Return a list containing profiling informated given a hashed
+    /* Return a list containing profiling information given a hashed
        environment.  For non-hashed environments, this function
        returns R_NilValue.  This seems appropriate since there is no
        way to test whether an environment is hashed at the R level.
     */
-    SEXP env, ans;
+    SEXP env, ans = R_NilValue /* -Wall */;
     env = CAR(args);
     if (isEnvironment(env)) {
         if (IS_HASHED(env))
             ans = R_HashProfile(HASHTAB(env));
-        else
-            ans = R_NilValue;
     } else
         error("argument must be a hashed environment");
     return ans;
