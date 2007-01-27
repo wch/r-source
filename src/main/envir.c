@@ -313,12 +313,12 @@ static SEXP R_NewHashTable(int size, int growth_rate)
   size/growth settings.  The only non-static hash table function.
 */
 
-SEXP R_NewHashedEnv(SEXP enclos)
+SEXP R_NewHashedEnv(SEXP enclos, SEXP size)
 {
     SEXP s;
 
     PROTECT(s = NewEnvironment(R_NilValue, R_NilValue, enclos));
-    SET_HASHTAB(s, R_NewHashTable(0,0)); /* 0,0 gets the recomended minima */
+    SET_HASHTAB(s, R_NewHashTable(asInteger(size), 0));
     UNPROTECT(1);
     return s;
 }
@@ -621,7 +621,7 @@ void attribute_hidden InitGlobalEnv()
     SET_SYMVALUE(install(".BaseNamespaceEnv"), R_BaseNamespace);
     R_BaseNamespaceName = ScalarString(mkChar("base"));
     R_PreserveObject(R_BaseNamespaceName);
-    R_NamespaceRegistry = R_NewHashedEnv(R_NilValue);
+    R_NamespaceRegistry = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
     R_PreserveObject(R_NamespaceRegistry);
     defineVar(install("base"), R_BaseNamespace, R_NamespaceRegistry);
     /**** needed to properly initialize the base name space */

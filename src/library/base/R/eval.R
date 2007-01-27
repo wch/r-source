@@ -16,8 +16,8 @@ evalq <-
     function (expr, envir, enclos)
     eval.parent(substitute(eval(quote(expr), envir, enclos)))
 
-new.env <- function (hash=FALSE, parent=parent.frame())
-    .Internal(new.env(hash, parent))
+new.env <- function (hash=FALSE, parent=parent.frame(), size=29L)
+    .Internal(new.env(hash, parent, size))
 
 parent.env <- function(env)
     .Internal(parent.env(env))

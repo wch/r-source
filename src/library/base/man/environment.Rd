@@ -29,7 +29,7 @@ globalenv()
 emptyenv()
 baseenv()
 
-new.env(hash = FALSE, parent = parent.frame())
+new.env(hash = FALSE, parent = parent.frame(), size = 29L)
 
 parent.env(env)
 parent.env(env) <- value
@@ -47,6 +47,10 @@ env.profile(env)
   \item{parent}{an environment to be used as the enclosure of the
     environment created.}
   \item{env}{an environment}
+  \item{size}{an integer specifying the initial size for a hashed
+    environment.  An internal default value will be used if
+    \code{size} is \code{NA} or zero.  This argument is ignored if
+    \code{hash} is \code{FALSE}.}
 }
 \value{
   If \code{fun} is a function or a formula then \code{environment(fun)}

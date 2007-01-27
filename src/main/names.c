@@ -701,7 +701,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"mem.limits",	do_memlimits,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"merge",	do_merge,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"capabilities",do_capabilities,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"new.env",	do_newenv,	0,	11,     2,      {PP_FUNCALL, PREC_FN,	0}},
+{"new.env",	do_newenv,	0,	11,     3,      {PP_FUNCALL, PREC_FN,	0}},
 {"parent.env",  do_parentenv,   0,	11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"parent.env<-",do_parentenvgets, 0,	11,     2,      {PP_FUNCALL, PREC_LEFT,	1}},
 #if 0

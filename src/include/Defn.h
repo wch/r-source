@@ -931,7 +931,7 @@ void RemoveClass(SEXP, char *);
 SEXP R_data_class(SEXP , Rboolean);
 SEXP R_data_class2(SEXP);
 SEXP R_LoadFromFile(FILE*, int);
-SEXP R_NewHashedEnv(SEXP);
+SEXP R_NewHashedEnv(SEXP, SEXP);
 extern int R_Newhashpjw(char*);
 FILE* R_OpenLibraryFile(char *);
 char *R_LibraryFileName(char *, char *, size_t);
