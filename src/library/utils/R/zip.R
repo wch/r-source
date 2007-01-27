@@ -11,8 +11,10 @@ zip.file.extract <- function(file, zipname = "R.zip",
         if(unzip != "internal") {
             cmd <- paste(unzip, "-oq", shQuote(file.path(path, zipname)),
                          topic, " -d ", tmpd)
+            ## there is an unzip clone about that does not respect -q, so
+            ## use redirection here.
             res <- if(.Platform$OS.type == "windows")
-                system(cmd, invisible = TRUE) else system(cmd)
+                system(cmd, invisible = TRUE) else system(paste(cmd, "> /dev/null"))
             if(!res) file <- file.path(tmpd, topic)
         } else {
             rc <- .Internal(int.unzip(file.path(path, zipname), topic, tmpd))

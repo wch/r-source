@@ -6,7 +6,7 @@ DLL.version <- function(path) .Internal(DLL.version(path))
 
 getClipboardFormats <- function()
     .Internal(getClipboardFormats())
-    
+
 readClipboard <- function(format = 1, raw = FALSE) {
     result <- .Internal(readClipboard(format, raw))
     if (!is.null(result) && !raw) {
@@ -28,6 +28,9 @@ setWindowTitle <- function(suffix, title = paste(getIdentification(), suffix))
 
 getWindowTitle <- function()
     .Internal(getWindowTitle())
+
+setStatusBar <- function(text)
+    .Internal(setStatusBar(text))
 
 getWindowsHandle <- function(which = "Console") {
     if (is.numeric(which)) {
