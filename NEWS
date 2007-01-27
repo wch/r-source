@@ -300,10 +300,10 @@ NEW FEATURES
 	now preserves integers (using the L suffix) and NAs (using
 	NA_real_ etc where necessary).
 
+    o	New function env.profile provides R level access to summary
+	statistics on environments. In a related patch, new.env
+	now allows the user to specify an initial size.
 
-    o   New function env.profile provides R level access to summary
-        statistics on environments. In a related patch, new.env
-        now allows the user to specify an initial size.
 
 DEPRECATED & DEFUNCT
 
