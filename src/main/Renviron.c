@@ -30,8 +30,16 @@
 #endif
 
 #if defined(HAVE_GLIBC2)
-/* for isnan in Rinlinedfuns.h */
-# define _SVID_SOURCE 1
+#include <features.h>
+# ifndef __USE_POSIX
+#  define __USE_POSIX           /* so that we get isnan */
+# endif
+# ifndef __USE_SVID
+#  define __USE_SVID             /* so that we get putenv */
+# endif
+# ifndef __USE_BSD
+#  define __USE_BSD             /* so that we get setenv() */
+# endif
 #endif
 
 #include <stdlib.h> /* for setenv or putenv */

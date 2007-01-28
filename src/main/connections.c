@@ -419,7 +419,7 @@ void init_con(Rconnection new, char *description, const char * const mode)
 static Rboolean file_open(Rconnection con)
 {
     char *name;
-    FILE *fp;
+    FILE *fp = NULL;
     Rfileconn this = con->private;
     Rboolean temp = FALSE;
 #ifdef HAVE_FCNTL

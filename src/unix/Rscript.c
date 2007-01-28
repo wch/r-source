@@ -39,11 +39,38 @@ R --slave --no-restore --vanilla --file=foo [script_args]
 # include <config.h>
 #endif
 
+#if defined(HAVE_GLIBC2)
+#include <features.h>
+# ifndef __USE_SVID
+#  define __USE_SVID             /* so that we get putenv declared */
+# endif
+#endif
+
+
+
 #include <stdio.h>
 #include <limits.h> /* for PATH_MAX */
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h> /* for execv */
+
+
+/* Maximal length of an entire file name */
+#if !defined(PATH_MAX)
+# if defined(HAVE_SYS_PARAM_H)
+#  include <sys/param.h>
+# endif
+# if !defined(PATH_MAX)
+#  if defined(MAXPATHLEN)
+#    define PATH_MAX MAXPATHLEN
+#  elif defined(Win32)
+#    define PATH_MAX 260
+#  else
+/* quite possibly unlimited, so we make this large, and test when used */
+#    define PATH_MAX 5000
+#  endif
+# endif
+#endif
 
 #ifndef WIN32
 static char rhome[] = R_HOME;
@@ -81,7 +108,7 @@ void usage()
 int main(int argc, char *argv[])
 {
 #ifdef HAVE_EXECV
-    char cmd[PATH_MAX+1], buf[PATH_MAX+8], buf2[200], *p;
+    char cmd[PATH_MAX+1], buf[PATH_MAX+8], buf2[1100], *p;
     int i, i0 = 0, ac = 0, res = 0, e_mode = 0, set_dp = 0;
     char **av;
 
@@ -109,7 +136,12 @@ int main(int argc, char *argv[])
     }
 #else
     if(!(p && strlen(p))) p = rhome;
-    snprintf(cmd, PATH_MAX+1, "%s/bin/R", p);
+    /* we cannot assume snprintf here */
+    if(strlen(p) + 6 > PATH_MAX) {
+	fprintf(stderr, "impossibly long path for RHOME\n");
+	exit(1);
+    }
+    sprintf(cmd, "%s/bin/R", p);
 #endif
     av[ac++] = cmd;
     av[ac++] = "--slave";
@@ -150,7 +182,11 @@ int main(int argc, char *argv[])
 	}
 	if(strncmp(argv[i], "--default-packages=", 18) == 0) {
 	    set_dp = 1;
-	    snprintf(buf2, 200, "R_DEFAULT_PACKAGES=%s", argv[i]+19);
+	    if(strlen(argv[i]) > 1000) {
+		fprintf(stderr, "unable to set R_DEFAULT_PACKAGES\n");
+		exit(1);
+	    }
+	    sprintf(buf2, "R_DEFAULT_PACKAGES=%s", argv[i]+19);
 	    if(verbose)
 		fprintf(stderr, "setting '%s'\n", buf2);
 #ifdef HAVE_PUTENV
@@ -168,7 +204,11 @@ int main(int argc, char *argv[])
     }
 
     if(!e_mode) {
-	snprintf(buf, PATH_MAX+8, "--file=%s", argv[++i0]); 
+	if(strlen(argv[++i0]) > PATH_MAX) {
+	    fprintf(stderr, "file name is too long\n");
+	    exit(1);
+	}
+	sprintf(buf, "--file=%s", argv[i0]); 
 	av[ac++] = buf;
     }
     av[ac++] = "--args";
