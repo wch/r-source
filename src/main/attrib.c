@@ -191,11 +191,10 @@ SEXP R_shortRowNames(SEXP vec, SEXP stype)
 	error(_("invalid '%s' argument"), "type");
 
     if(type >= 1) {
+	int n;
 	ans = allocVector(INTSXP, 1);
-	int n = (isInteger(s) && LENGTH(s) == 2 &&
-			 INTEGER(s)[0] == NA_INTEGER)
+	n = (isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER)
 	    ? INTEGER(s)[1] : (isNull(s) ? 0 : LENGTH(s));
-
 	INTEGER(ans)[0] = (type == 1) ? n : abs(n);
     }
     return ans;
