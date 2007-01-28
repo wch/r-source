@@ -94,10 +94,11 @@ isIncomplete(con)
   \code{file} allows \code{description="stdin"} to refer to the C-level
   \code{stdin} of the process (which need not be connected to anything
 #ifdef unix
-  in a console version or embedded version of \R.)
+  in a console version or embedded version of \R), provided the C99 function
+  \code{fdopen} is supported on the platform.
 #endif
 #ifdef windows
-  in a console version or embedded version of \R, and is not in \code{RGui}.)
+  in a console version or embedded version of \R, and is not in \code{RGui}).
 #endif
 
   
