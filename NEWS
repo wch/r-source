@@ -372,6 +372,9 @@ C-LEVEL FACILITIES
 
     o	Added support for Objective C in R and packages (if available).
 
+    o	R_ParseVector() has a new 4th argument 'SEXP srcfile' allowing
+	source references to be attached to the returned expression list.
+	
 
 UTILITIES
 
