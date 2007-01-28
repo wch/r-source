@@ -36,9 +36,7 @@
   relative path names of directories.  \code{pkgs} may also contain
   names of package archive files of the form \file{pkg\_version.tar.gz}
   as obtained from CRAN---these are then extracted to a temporary
-  directory \file{R.INSTALL} of the current directory.
-  %(with a name of the form \file{R.INSTALL.abcd} for the
-  %process ID \code{abcd}) of the current directory).
+  directory \file{R.INSTALL.????} of the current directory.
 
   Which forms of help are produced is controlled by the \option{--docs}
   option which takes values \code{none} or \code{normal} (text and HTML)

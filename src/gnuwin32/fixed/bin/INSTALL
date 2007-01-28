@@ -189,8 +189,8 @@ foreach $pkg (@ARGV){
 	$pkgname =~ s/\.tar\.gz$//;
 	$pkgname =~ s/\.tgz$//;
 	$pkgname =~ s/_[0-9\.-]*$//;
-	my $dir = "R.INSTALL";
-	rmtree($dir);
+	my $dir = "R.INSTALL.$$";
+	rmtree($dir);  # zap in the likely event it is already there
 	if(! -d $dir) {  # reuse if we failed to zap
 	    mkdir($dir, 0755) or die "Error: cannot create $dir\n";
 	}
