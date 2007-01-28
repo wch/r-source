@@ -168,13 +168,17 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 }
 \value{
   A data frame (\code{\link{data.frame}}) containing a representation of
-  the data in the file.  Empty input is an error unless \code{col.names}
-  is specified, when a 0-row data frame is returned: similarly giving
-  just a header line if \code{header = TRUE} results in a 0-row data frame.
+  the data in the file.
 
-  This function is the principal means of reading tabular data into \R.
+  Empty input is an error unless \code{col.names} is specified, when a
+  0-row data frame is returned: similarly giving just a header line if
+  \code{header = TRUE} results in a 0-row data frame.  Note that
+  in either case tthe columns will logical unless \code{colClasses} was
+  supplied.
 }
 \details{
+  This function is the principal means of reading tabular data into \R.
+
   A field or line is \sQuote{blank} if it contains nothing (except
   whitespace if no separator is specified) before a comment character or
   the end of the field or line.
@@ -227,13 +231,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   especially those with many columns: it is designed to read
   \emph{data frames} which may have columns of very different classes.
   Use \code{\link{scan}} instead.
-
-  Prior to version 1.9.0, underscores were not valid in variable names,
-  and code that relies on them being converted to dots will no longer
-  work. The simplest workaround is to use
-   \code{names(d) <- gsub("_", ".", names(d))},
-  or, avoiding the (small) risk of creating duplicate names,
-   \code{names(d) <- make.names(gsub("_", ".", names(d)), unique=TRUE)}.
+%
+%   Prior to version 1.9.0, underscores were not valid in variable names,
+%   and code that relies on them being converted to dots will no longer
+%   work. The simplest workaround is to use
+%    \code{names(d) <- gsub("_", ".", names(d))},
+%   or, avoiding the (small) risk of creating duplicate names,
+%    \code{names(d) <- make.names(gsub("_", ".", names(d)), unique=TRUE)}.
 }
 
 \seealso{

@@ -47,63 +47,57 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                                      blank.lines.skip, quote, sep))
     nlines <- length(lines)
     if(!nlines) {
-        if(missing(col.names))
-            stop("no lines available in input")
-        else {
-            tmp <- vector("list", length(col.names))
-            names(tmp) <- col.names
-            class(tmp) <- "data.frame"
-            return(tmp)
-        }
-    }
-    if(all(nchar(lines) == 0)) stop("empty beginning of file")
-    if(nlines < n0lines && file == 0)  {# stdin() has reached EOF
-        pushBack(c(lines, lines, ""), file)
-        on.exit(.Internal(clearPushBack(stdin())))
-    } else
-        pushBack(c(lines, lines), file)
-    first <- scan(file, what = "", sep = sep, quote = quote,
-                  nlines = 1, quiet = TRUE, skip = 0,
-                  strip.white = TRUE,
-                  blank.lines.skip = blank.lines.skip,
-                  comment.char = comment.char, allowEscapes = allowEscapes)
-    col1 <- if(missing(col.names)) length(first) else length(col.names)
-    col <- numeric(nlines - 1)
-    if (nlines > 1)
-        for (i in seq_along(col))
-            col[i] <- length(scan(file, what = "", sep = sep,
-                                  quote = quote,
-                                  nlines = 1, quiet = TRUE, skip = 0,
-                                  strip.white = strip.white,
-                                  blank.lines.skip = blank.lines.skip,
-                                  comment.char = comment.char,
-                                  allowEscapes = allowEscapes))
-    cols <- max(col1, col)
-
-    ##	basic column counting and header determination;
-    ##	rlabp (logical) := it looks like we have column names
-
-    rlabp <- (cols - col1) == 1
-    if(rlabp && missing(header))
-	header <- TRUE
-    if(!header) rlabp <- FALSE
-
-    if (header) {
-        readLines(file, 1) # skip over header
-        if(missing(col.names)) col.names <- first
-        else if(length(first) != length(col.names))
-            warning("header and 'col.names' are of different lengths")
-
-    } else if (missing(col.names))
-	col.names <- paste("V", 1:cols, sep = "")
-    if(length(col.names) + rlabp < cols)
-        stop("more columns than column names")
-    if(fill && length(col.names) > cols)
+        if(missing(col.names)) stop("no lines available in input")
+        rlabp <- FALSE
         cols <- length(col.names)
-    if(!fill && cols > 0 && length(col.names) > cols)
-        stop("more column names than columns")
-    if(cols == 0) stop("first five rows are empty: giving up")
+    } else {
+        if(all(nchar(lines) == 0)) stop("empty beginning of file")
+        if(nlines < n0lines && file == 0)  { # stdin() has reached EOF
+            pushBack(c(lines, lines, ""), file)
+            on.exit(.Internal(clearPushBack(stdin())))
+        } else pushBack(c(lines, lines), file)
+        first <- scan(file, what = "", sep = sep, quote = quote,
+                      nlines = 1, quiet = TRUE, skip = 0,
+                      strip.white = TRUE,
+                      blank.lines.skip = blank.lines.skip,
+                      comment.char = comment.char, allowEscapes = allowEscapes)
+        col1 <- if(missing(col.names)) length(first) else length(col.names)
+        col <- numeric(nlines - 1)
+        if (nlines > 1)
+            for (i in seq_along(col))
+                col[i] <- length(scan(file, what = "", sep = sep,
+                                      quote = quote,
+                                      nlines = 1, quiet = TRUE, skip = 0,
+                                      strip.white = strip.white,
+                                      blank.lines.skip = blank.lines.skip,
+                                      comment.char = comment.char,
+                                      allowEscapes = allowEscapes))
+        cols <- max(col1, col)
 
+        ##	basic column counting and header determination;
+        ##	rlabp (logical) := it looks like we have column names
+
+        rlabp <- (cols - col1) == 1
+        if(rlabp && missing(header))
+            header <- TRUE
+        if(!header) rlabp <- FALSE
+
+        if (header) {
+            readLines(file, 1)          # skip over header
+            if(missing(col.names)) col.names <- first
+            else if(length(first) != length(col.names))
+                warning("header and 'col.names' are of different lengths")
+
+        } else if (missing(col.names))
+            col.names <- paste("V", 1:cols, sep = "")
+        if(length(col.names) + rlabp < cols)
+            stop("more columns than column names")
+        if(fill && length(col.names) > cols)
+            cols <- length(col.names)
+        if(!fill && cols > 0 && length(col.names) > cols)
+            stop("more column names than columns")
+        if(cols == 0) stop("first five rows are empty: giving up")
+    }
 
     if(check.names) col.names <- make.names(col.names, unique = TRUE)
     if (rlabp) col.names <- c("row.names", col.names)

@@ -497,6 +497,10 @@ BUG FIXES
 	logical columns for columns only in x when there were no
 	common rows.
 
+    o	read.table(fn, col.names=) on an empty file returned NULL
+	columns, rather than logical(0) columns (which is what results
+	from reading a file with just a header).
+
 
 
 
