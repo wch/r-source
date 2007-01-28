@@ -417,7 +417,7 @@ function(package, dir, lib.loc = NULL,
     ## Find the data sets to work on.
     data_dir <- file.path(dir, "data")
     data_sets_in_code <- if(file_test("-d", data_dir))
-        names(list_data_in_pkg(dataDir = data_dir))
+        names(suppressWarnings(list_data_in_pkg(dataDir = data_dir)))
     else
         character()
 
