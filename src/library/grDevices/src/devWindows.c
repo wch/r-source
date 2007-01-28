@@ -1482,7 +1482,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 
     addto(xd->gawin);
     gsetcursor(xd->gawin, ArrowCursor);
-    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
+    if (ismdi()) {
 	int btsize = 24;
 	rect r = rect(2, 2, btsize, btsize);
 	control bt, tb;
@@ -1629,6 +1629,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     setdata(xd->mR, (void *) dd);
     setdata(xd->mfit, (void *) dd);
     setdata(xd->mfix, (void *) dd);
+    if (ismdi() && !(RguiMDI & RW_TOOLBAR)) toolbar_hide();
     show(xd->gawin); /* twice, for a Windows bug */
     show(xd->gawin);
     BringToTop(xd->gawin, 0);

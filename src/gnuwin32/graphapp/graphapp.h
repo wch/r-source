@@ -271,6 +271,7 @@ typedef void (*dropfn)(control c, char *data);
 #define deletion_traversal		GA_deletion_traversal
 #define delimage		GA_delimage
 #define delobj		GA_delobj
+#define delstatusbar		GA_delstatusbar
 #define deviceheight		GA_deviceheight
 #define deviceheightmm		GA_deviceheightmm
 #define devicepixelsx		GA_devicepixelsx
@@ -575,7 +576,8 @@ typedef void (*dropfn)(control c, char *data);
 #define texturerect		GA_texturerect
 #define to_c_string		GA_to_c_string
 #define to_dos_string		GA_to_dos_string
-#define topleft		GA_topleft
+#define toolbar_hide		GA_toolbar_hide
+#define toolbar_show		GA_toolbar_show
 #define topright		GA_topright
 #define tree_search		GA_tree_search
 #define uncheck		GA_uncheck

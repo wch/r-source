@@ -1022,14 +1022,15 @@ int setupui()
           MCHECK(addtooltip(bt, G_("Print")));
     }
     if (ismdi() && (RguiMDI & RW_STATUSBAR)) {
-	char  s[256];
-
 	TRACERUI("status bar");
 	addstatusbar();
-	PrintVersionString(s);
 	addto(RConsole);
-	setstatus(s);
 	TRACERUI("status bar done");
+    }
+    if (ismdi()) {
+	char s[256];
+	PrintVersionString(s);
+	setstatus(s);
     }
 #endif
     addto(RConsole);

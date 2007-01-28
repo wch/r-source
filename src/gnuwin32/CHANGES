@@ -12,7 +12,9 @@ GUI changes
 
 In MDI mode there is a new View menu when the console is in focus
 which allows the toolbar and statusbar to be (de)selected, with the
-initial settings taken from the Rconsole file as before.
+initial settings taken from the Rconsole file as before.  The default
+setting for the statusbar has been changed to 'no', as it is barely
+used by default.
 
 There is a new menu item in Rgui to 'Stop all computations' which
 kills all R computations immediately, skips any on.exit conditions and

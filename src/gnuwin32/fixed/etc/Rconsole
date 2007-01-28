@@ -1,5 +1,5 @@
 # Optional parameters for the console and the pager
-# The system-wide copy is in rwxxxx/etc.
+# The system-wide copy is in R_HOME/etc.
 # A user copy can be installed in `R_USER'.
 
 ## Style
@@ -9,7 +9,7 @@
 
 # the next two are only relevant for MDI
 toolbar = yes
-statusbar = yes
+statusbar = no
 
 ## Font.
 # Please use only fixed width font.

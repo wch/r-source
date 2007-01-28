@@ -80,6 +80,7 @@
  GA_decrease_refcount
  GA_del_all_contexts
  GA_del_context
+ GA_del_statusbar
  GA_del_string
  GA_deletion_traversal
  GA_erase_image
@@ -159,6 +160,7 @@
  GA_this_instance
  GA_to_c_string
  GA_to_dos_string
+ GA_toolbar_show
  GA_tree_search
  GA_updatestatus
  GA_win_rgb
