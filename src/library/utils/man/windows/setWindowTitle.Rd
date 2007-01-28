@@ -37,7 +37,8 @@ setStatusBar(text)
   
   \code{getIdentification} returns the normal window identification.
 
-  \code{setStatusBar} sets the text in the console statusbar of an MDI frame.
+  \code{setStatusBar} sets the text in the statusbar of an MDI
+  frame: if this is not currently shown it is selected and shown.
 }
 \value{
   The first three functions return a length 1 character vector.

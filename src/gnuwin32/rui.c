@@ -321,6 +321,15 @@ static void menutools(control m)
     }
 }
 
+void showstatusbar()
+{
+    if(ismdi() && !ischecked(mstatus)) {
+	addstatusbar();
+	check(mstatus);
+    }
+}
+
+
 static void menustatus(control m)
 {
     if(ischecked(mstatus)) {
