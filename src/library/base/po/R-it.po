@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:37\n"
+"POT-Creation-Date: 2007-01-28 12:18\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1397,6 +1397,15 @@ msgstr "l'argomento di 'which' non è di tipo logico"
 
 msgid "invalid 'digits'"
 msgstr "'digits' non valido"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' e 'target' devono essere vettori di caratteri"
 
 msgid "argument must be character"
 msgstr "l'argomento deve essere di tipo character"

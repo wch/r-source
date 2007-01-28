@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:37\n"
+"POT-Creation-Date: 2007-01-28 12:18\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1392,6 +1392,15 @@ msgstr "argumento para 'which' não é lógico"
 
 msgid "invalid 'digits'"
 msgstr "'digits' inválido"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' e 'target' devem ser vetores de caracteres"
 
 msgid "argument must be character"
 msgstr "argumento deve ser caracter"

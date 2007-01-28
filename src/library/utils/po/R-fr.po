@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-11 16:56\n"
+"POT-Creation-Date: 2007-01-28 12:18\n"
 "PO-Revision-Date: 2006-12-05 21:08+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -849,6 +849,10 @@ msgstr ""
 
 msgid "attempt to change '%s' ignored"
 msgstr ""
+
+#, fuzzy
+msgid "'unzip' must be a single character string"
+msgstr "l'argument '%s' doit être une seule chaîne de caractères"
 
 msgid "'subject' missing"
 msgstr "'subject' manquant"

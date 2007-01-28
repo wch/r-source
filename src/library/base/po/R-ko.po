@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:37\n"
+"POT-Creation-Date: 2007-01-28 12:18\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1390,6 +1390,15 @@ msgstr "'which'에서 인수는 논리값이 아닙니다"
 
 msgid "invalid 'digits'"
 msgstr "무효인 'digits'입니다"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
 
 msgid "argument must be character"
 msgstr "인수는 문자가 아니면 되지 않습니다"

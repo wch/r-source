@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:37\n"
+"POT-Creation-Date: 2007-01-28 12:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1320,6 +1320,12 @@ msgid "argument to 'which' is not logical"
 msgstr ""
 
 msgid "invalid 'digits'"
+msgstr ""
+
+msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
+msgstr ""
+
+msgid "'input' must be a character vector or 'NULL'"
 msgstr ""
 
 msgid "argument must be character"

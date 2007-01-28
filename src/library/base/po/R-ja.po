@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-10 22:37\n"
+"POT-Creation-Date: 2007-01-28 12:18\n"
 "PO-Revision-Date: 2006-12-12 10:36+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1392,6 +1392,15 @@ msgstr "'which' への引数は論理値ではありません"
 
 msgid "invalid 'digits'"
 msgstr "無効な 'digits' です"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'zero.print' は文字、論理値、または NULL でなければなりません"
 
 msgid "argument must be character"
 msgstr "引数は文字でなければなりません"
