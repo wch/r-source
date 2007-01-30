@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-01-26
+@set FAQ_DATE @value{FAQ_YEAR}-01-28
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2162,6 +2162,8 @@ penalisations.  Also includes some other multiway methods.
 @item PearsonICA
 Independent component analysis using score functions from the Pearson
 system.
+@item PhySim
+Phylogenetic tree simulation.
 @item ProbForecastGOP
 Probabilistic weather field forecasts using the Geostatistical Output
 Perturbation method introduced by Gel, Raftery and Gneiting (2004).
@@ -3434,6 +3436,8 @@ additive regression splines (MARS), adaptive back-fitting splines
 @c Mean Score method for missing covariate data in logistic regression
 @c models.
 @c </COMMENT>
+@item meboot
+Maximum entropy bootstrap for time series.
 @item merror
 Accuracy and precision of measurements.
 @item meta
