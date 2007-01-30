@@ -22,18 +22,32 @@ graphics.off()
 }
 \description{
   These functions provide control over multiple graphics devices.
-
-  Only one device is the \emph{active} device.  This is the device in
-  which all graphics operations occur.
+}
+\details{
+  Only one device is the \sQuote{active} device: this is the device in
+  which all graphics operations occur.  There is a \code{"null device"}
+  which is always open but is really a placeholder: any attempt to use
+  it will open a new device specified by
+  \code{\link{getOption}("device")}).
 
   Devices are associated with a name (e.g., \code{"X11"} or
-  \code{"postscript"}) and a number; the \code{"null device"} is always
-  device 1.
-
-  \code{dev.off} shuts down the specified (by default the current) device.
+  \code{"postscript"}) and a number in the range 1 to 63; the
+  \code{"null device"} is always device 1.  Once a device has been
+  opened the null device is not considered as a possible active device.
+  There is a list of open devices, and this is considered as a circular
+  list not including the null device.  \code{dev.next} and
+  \code{dev.prev} select the next open device in the appropriate
+  direction, unless no device is open.
+  
+  \code{dev.off} shuts down the specified (by default the current)
+  device.  If the current device is shut down and any other devices are
+  open, the next open device is made current.  It is an error to
+  attempt to shut down device 1.
   \code{graphics.off()} shuts down all open graphics devices.
 
-  \code{dev.set} makes the specified device the active device.
+  \code{dev.set} makes the specified device the active device.  If there
+  is no device with that number, it is equivalent to \code{dev.next}.
+  If \code{which = 1} it opens a new device and selects that.
 }
 \value{
   \code{dev.cur} returns the number and name of the active device,
@@ -44,9 +58,8 @@ graphics.off()
   giving the names, or \code{NULL} is there is no open device.
 
   \code{dev.next} and \code{dev.prev} return the number and name of the
-  next / previous device in the list of devices.  The list is regarded as
-  a circular list, and \code{"null device"} will be included only if there
-  are no open devices.
+  next / previous device in the list of devices.  This will be the null
+  device if and only if there are no open devices.
 
   \code{dev.off} returns the name and number of the new active device
   (after the specified device has been shut down).
