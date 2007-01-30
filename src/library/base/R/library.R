@@ -470,7 +470,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(length(a) == 0)
                 nopkgs <- c(nopkgs, lib)
         }
-        colnames(db) <- c("Package", "LibPath", "Title")
+        dimnames(db) <- list(NULL, c("Package", "LibPath", "Title"))
         if((length(nopkgs) > 0) && !missing(lib.loc)) {
             pkglist <- paste(sQuote(nopkgs), collapse = ", ")
             msg <- sprintf(ngettext(length(nopkgs),
