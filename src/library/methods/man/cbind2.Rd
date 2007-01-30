@@ -24,7 +24,7 @@
   \code{methods:::bind_activation(TRUE)}\cr
   is needed to install a
   \dQuote{\code{cbind2}-calling} version of \code{cbind} (into the
-  \code{base} namespace) and the same for \code{rbind}.\cr
+  \code{base} name space) and the same for \code{rbind}.\cr
   \code{methods:::bind_activation(FALSE)} reverts to the
   previous internal version of \code{cbind} which does not build on
   \code{cbind2}, see the examples.

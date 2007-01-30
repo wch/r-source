@@ -39,7 +39,7 @@
   header file for type checking.
 }
 \examples{\dontrun{
-##  Marsaglia's conguential PRNG
+##  Marsaglia's congruential PRNG
 #include <R_ext/Random.h>
 
 static Int32 seed;

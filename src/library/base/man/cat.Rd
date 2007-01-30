@@ -63,7 +63,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
 }
 \note{
   Despite its name and earlier documentation, \code{sep} is a vector of
-  terminatord rather than separators, being output after every vector
+  terminators rather than separators, being output after every vector
   element (including the last).  Entries are recycled as needed.
 }
 \value{

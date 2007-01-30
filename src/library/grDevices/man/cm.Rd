@@ -1,6 +1,6 @@
 \name{cm}
 \alias{cm}
-\title{Unit tansformation}
+\title{Unit Transformation}
 \description{
   Translates from inches to cm (centimeters).
 }

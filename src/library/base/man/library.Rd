@@ -59,7 +59,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   \item{keep.source}{logical.  If \code{TRUE}, functions
     \dQuote{keep their source} including comments, see argument
     \code{keep.source} to \code{\link{options}}.  This applies only to
-    the named package, and not to any packages or namespaces which might be
+    the named package, and not to any packages or name spaces which might be
     loaded to satisfy dependencies or imports.
 
     This argument does not apply to packages using lazy-loading or saved
@@ -108,8 +108,8 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   future versions.  When used with the default value (\code{NULL}) for
   \code{lib.loc}, the loaded packages are searched before the libraries.
 
-  \code{.First.lib} is called when a package without a namespace is
-  loaded by \code{library}.  (For packages with namespaces see
+  \code{.First.lib} is called when a package without a name space is
+  loaded by \code{library}.  (For packages with name spaces see
   \code{\link{.onLoad}}.)  It is called with two arguments, the name of
   the library directory where the package was found (i.e., the
   corresponding element of \code{lib.loc}), and the name of the package

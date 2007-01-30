@@ -69,7 +69,7 @@ is.loaded(symbol, PACKAGE = "", type = "")
 #ifdef unix
   The \code{local} argument allows one to control whether the symbols in
   the DLL being attached are visible to other DLLs.  While maintaining
-  the symbols in their own namespace is good practice, the ability to
+  the symbols in their own name space is good practice, the ability to
   share symbols across related \dQuote{chapters} is useful in many
   cases.  Additionally, on certain platforms and versions of an
   operating system, certain libraries must have their symbols loaded

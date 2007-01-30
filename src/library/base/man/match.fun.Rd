@@ -47,7 +47,7 @@ match.fun(FUN, descend = TRUE)
 
   It is impossible to fully foolproof this.  If one \code{attach}es a
   list or data frame containing a length-one character vector with the
-  same name as a function, it may be used (although namespaces
+  same name as a function, it may be used (although name spaces
   will help).
 }
 \seealso{

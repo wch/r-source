@@ -33,7 +33,7 @@ supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)
  
   The FORTRAN code says: \dQuote{For small samples (\code{n < 40}) or if
     there are substantial serial correlations between observations close
-    in x-value, then a prespecified fixed span smoother (\code{span >
+    in x-value, then a pre-specified fixed span smoother (\code{span >
       0}) should be used.  Reasonable span values are 0.2 to 0.4.}
 }
 \value{

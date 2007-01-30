@@ -72,7 +72,7 @@ alist(\dots)
   environment to a named list.  The user can request that all named
   objects are copied.  The list is in no particular order (the order
   depends on the order of creation of objects and whether the
-  environmnent is hashed).  No parent environments are searched.  (Objects
+  environment is hashed).  No parent environments are searched.  (Objects
   copied are duplicated so this can be an expensive operation.)
 
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This

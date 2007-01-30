@@ -55,7 +55,7 @@ dimnames(x) <- value
 }
 \note{
   Setting components of the dimnames, e.g.
-  \code{dimanames(A)[[1]] <- value} is a common paradigm, but note that
+  \code{dimnames(A)[[1]] <- value} is a common paradigm, but note that
   it will not work if the value assigned is \code{NULL}.  Use
   \code{\link{rownames}} instead, or (as it does) manipulate the whole
   dimnames list.

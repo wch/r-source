@@ -16,7 +16,7 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
   \item{grob}{A grob object.}
   \item{\dots}{Zero or more named arguments specifying new slot values.}
   \item{gPath}{ A gPath object. For \code{grid.edit} this
-    specifyies a grob on the display list.  For \code{editGrob} this
+    specifies a grob on the display list.  For \code{editGrob} this
     specifies a descendant of the specified grob. }
   \item{strict}{ A boolean indicating whether the gPath must be
     matched exactly. }

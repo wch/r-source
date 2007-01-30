@@ -59,10 +59,10 @@ codocData(package, lib.loc = NULL)
   values of the argument \code{use.values}.  Synopsis sections are used
   if present; their occurrence is reported if \code{verbose} is true.
 
-  If a package has a namespace both exported and unexported objects are
+  If a package has a name space both exported and unexported objects are
   checked, as well as registered S3 methods.  (In the unlikely event of
   differences the order is exported objects in the package, registered
-  S3 methods and finally objects in the namespace and only the first
+  S3 methods and finally objects in the name space and only the first
   found is checked.)
 
   Currently, the R documentation format has no high-level markup for the

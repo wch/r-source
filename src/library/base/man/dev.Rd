@@ -8,7 +8,7 @@
   A pairlist of the names of open graphics devices is stored in
   \code{.Devices}. The name of the active device (see
   \code{\link{dev.cur}}) is stored in \code{.Device}.  Both are symbols
-  and so appear in the base namespace.
+  and so appear in the base name space.
 }
 \value{
   \code{.Device} is a length-one character vector.

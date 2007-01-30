@@ -44,11 +44,11 @@ sealClass(Class, where)
     environment in which to store or remove the
     definition.  Defaults to the top-level environment of the calling function
     (the global environment for ordinary computations, but the
-    environment or namespace of a package when loading that package).
+    environment or name space of a package when loading that package).
 
     For other functions, \code{where} defines where to do the search
     for the class definition, and the default is to search from the top-level
-    environment or namespace of the caller to this function.
+    environment or name space of the caller to this function.
   }
   \item{unique}{if \code{findClass} expects a unique location for the
     class, \code{unique} is a character string explaining the purpose
@@ -122,7 +122,7 @@ sealClass(Class, where)
     \item{\code{findClass}:}{
       The list of environments or positions on the search list in
       which a class definition of \code{Class} is found.  If
-      \code{where} is supplied, this is an environment (or namespace)
+      \code{where} is supplied, this is an environment (or name space)
       from which the search takes place; otherwise the top-level
       environment of the caller is used.  If \code{unique} is supplied
       as a character string, \code{findClass} returns a single

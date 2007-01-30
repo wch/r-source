@@ -204,7 +204,7 @@ getOption(x)
       \code{\link{data.frame}} and \code{\link{read.table}}.}
 
     \item{\code{texi2dvi}:}{used by the unexported function
-      \code{texi2dvi} in namespace \pkg{tools}.}
+      \code{texi2dvi} in name space \pkg{tools}.}
 
     \item{\code{timeout}:}{integer.  The timeout for some Internet
       operations, in seconds.  Default 60 seconds.  See

@@ -16,7 +16,7 @@
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
-  because of the special nature of the base namespace.
+  because of the special nature of the base name space.
 }
 \usage{
 .subset(x, \dots)
@@ -108,8 +108,8 @@ sys.save.image(name)
   compiled code can safely be loaded into a build of \R, which it does by
   comparing their \sQuote{canonical} \code{"cpu-vendor-os"} descriptions.
   The default function omits the \code{vendor} part and allows small 
-  mismatches elsewhere.  Cognescenti can replace this function in the
-  \code{base} namespace.
+  mismatches elsewhere.  Cognoscenti can replace this function in the
+  \code{base} name space.
 
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if
   the S4 method dispatch has been turned on in the evaluator (usually by

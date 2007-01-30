@@ -54,7 +54,7 @@
     such as \code{PATH} and \code{TEXINPUTS}.
   }
   \item{r_arch}{
-    character string, posssibly \code{""}.  The name of the
+    character string, possibly \code{""}.  The name of the
     architecture-specific directories used in this build of \R.
   }
 }

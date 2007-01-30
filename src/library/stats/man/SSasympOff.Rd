@@ -15,7 +15,7 @@ SSasympOff(input, Asym, lrc, c0)
    response is zero.}
 }
 \description{
-  This \code{selfStart} model evaluates an alternative parameterization
+  This \code{selfStart} model evaluates an alternative parametrization
   of the asymptotic
   regression function and the gradient with respect to those parameters.
   It has an \code{initial}

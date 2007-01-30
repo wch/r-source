@@ -53,7 +53,7 @@ xgettext2pot(dir, potFile)
   (which has a \code{print} method), one per source file that
   potentially contains translatable strings
 
-  For \code{nxgettext}, a list of objects of class \code{"xngettext"},
+  For \code{xngettext}, a list of objects of class \code{"xngettext"},
   which are themselves lists of length-2 character strings.
 }
 \examples{\dontrun{## in a source-directory build of R:

@@ -72,7 +72,7 @@ bug.report(subject = "",
 
    Finally, a command's intended definition may not be best for
    statistical analysis.  This is a very important sort of problem, but
-   it is also a matter of judgment.  Also, it is easy to come to such a
+   it is also a matter of judgement.  Also, it is easy to come to such a
    conclusion out of ignorance of some of the existing features.  It is
    probably best not to complain about such a problem until you have
    checked the documentation in the usual ways, feel confident that you

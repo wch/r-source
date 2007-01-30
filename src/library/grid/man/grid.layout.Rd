@@ -32,7 +32,7 @@ grid.layout(nrow = 1, ncol = 1,
   \item{just}{A string vector indicating how the layout should be
     justified if it is not the same size as its parent viewport.
     If there are two values, the first
-    value specifes horizontal justification and the second value specifies
+    value specifies horizontal justification and the second value specifies
     vertical justification.  Possible values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
     and \code{"top"}.  NOTE that in this context,

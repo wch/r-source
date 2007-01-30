@@ -25,7 +25,7 @@ bindtextdomain(domain, dirname = NULL)
 }
 \details{
   If \code{domain} is \code{NULL} or \code{""}, a domain is searched for
-  based on the namespace which contains the function calling
+  based on the name space which contains the function calling
   \code{gettext} or \code{ngettext}.  If a suitable domain can be found,
   each character string is offered for translation, and replaced by its
   translation into the current language if one is found.
@@ -62,7 +62,7 @@ bindtextdomain(domain, dirname = NULL)
   source files. 
 }
 \examples{
-bindtextdomain("R")  # non-null iff NLS is enabled
+bindtextdomain("R")  # non-null if and only if NLS is enabled
 
 for(n in 0:3)
     print(sprintf(ngettext(n, "\%d variable has missing values",

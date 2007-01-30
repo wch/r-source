@@ -9,7 +9,7 @@
 \description{
   Density, distribution function, quantile function and random
   generation for the t distribution with \code{df} degrees of freedom
-  (and optional noncentrality parameter \code{ncp}).
+  (and optional non-centrality parameter \code{ncp}).
 }
 \usage{
 dt(x, df, ncp, log = FALSE)
@@ -127,7 +127,7 @@ ncp <- seq(0,6, len=31)
 ptn <- outer(tt,ncp, function(t,d) pt(t, df = 3, ncp=d))
 image(tt,ncp,ptn, zlim=c(0,1),main=t.tit <- "Non-central t - Probabilities")
 persp(tt,ncp,ptn, zlim=0:1, r=2, phi=20, theta=200, main=t.tit,
-      xlab = "t", ylab = "noncentrality parameter", zlab = "Pr(T <= t)")
+      xlab = "t", ylab = "non-centrality parameter", zlab = "Pr(T <= t)")
 
 plot(function(x) dt(x, df = 3, ncp = 2), -3, 11, ylim = c(0, 0.32),
      main="Non-central t - Density", yaxs="i")

@@ -56,7 +56,7 @@ x != y
   in the current collation locale. 
 
   Language objects such as symbols and calls are deparsed to
-  character strings before conparison.
+  character strings before comparison.
 }
 \value{
   A vector of logicals indicating the result of the element by element
