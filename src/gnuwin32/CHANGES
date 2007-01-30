@@ -63,6 +63,9 @@ library path if R was run in the current environment.  Similarly, R
 CMD REMOVE by default removes from that library.  R CMD INSTALL does
 a better job of removing its temporary directory.
 
+R CMD BATCH now prints the result of proc.time() at the end of the
+output, as it long has on Unix-alikes.
+
 More of the messages from the script editor are translatable.
 
 There is support for x86_64 cross-compilers as well as for ix86.
@@ -71,6 +74,10 @@ mingw-runtime >= 3.11 is needed to build R.  (E.g., it provides
 isblank that was previously missing.)
 
 src/extra/trio has been updated to 1.12.
+
+file.access() would give an error if asking about execute permission
+on Vista: the underlying C function has been changed to be
+incompatible with POSIX and we now work around this.
 
 
 

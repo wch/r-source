@@ -999,7 +999,11 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     mode = asInteger(CADR(args));
     if(mode < 0 || mode > 7) error(_("invalid '%s' value"), "mode");
     modemask = 0;
+    /* Versions for Windows prior to Vista ignored X_OK, but it has
+       been changed to be an error to set it. */
+#ifndef Win32
     if (mode & 1) modemask |= X_OK;
+#endif
     if (mode & 2) modemask |= W_OK;
     if (mode & 4) modemask |= R_OK;
     PROTECT(ans = allocVector(INTSXP, n));
