@@ -198,6 +198,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(27);
 	}
 	strcat(cmd, cmd_extra);
+	putenv("R_BATCH=1234"); /* to get Last.sys run */
 
 	/* fprintf(stderr, "%s->%s\n", infile, outfile);
 	   fprintf(stderr, "%s\n", cmd); */

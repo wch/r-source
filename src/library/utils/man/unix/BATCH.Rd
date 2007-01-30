@@ -28,7 +28,7 @@
   (EOL) mark) are processed correctly.
 
   A final expression \samp{proc.time()} will be executed after the input
-  script unless the latter calls \code{\link{q}} or is aborted.
+  script unless the latter calls \code{\link{q}(runLast=FALSE)} or is aborted.
   
   Additional options can be set by the environment variable
   \code{R_BATCH_OPTIONS}: these come after \samp{--restore --save

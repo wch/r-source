@@ -413,6 +413,9 @@ UTILITIES
 	On all OSes it makes use of the -f argument to R, so
 	file("stdin") can be used from BATCH scripts.
 
+	On all OSes it reports proc.time() at the end of the script
+	unless q() is called with options to inhibit this.
+
     o	R CMD INSTALL now prepends the installation directory (if
 	specified) to the library search path.
 

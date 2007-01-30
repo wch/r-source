@@ -66,3 +66,11 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
                     ' in options("defaultPackages") was not found', call.=FALSE)
     }
 }
+
+if(Sys.getenv("R_BATCH") != "") {
+    .Last.sys <- function()
+    {
+        cat("> proc.time()\n")
+        print(proc.time())
+    }
+}

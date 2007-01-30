@@ -46,20 +46,14 @@ done
 in=${1}
 out=${2-`basename ${1} .R`.Rout}
 
-tmpfile=${TMPDIR-/tmp}/R-BATCH.${$}
-
+R_BATCH=${$}
+export R_BATCH
 ## this used to set options(echo=TRUE), but that is the default
 ## except for --slave, and why inhibit the latter?
-cp ${in} ${tmpfile}
-(echo ''; echo "proc.time()") >> ${tmpfile}
 
 ## need to put -f first in case user does --args
-${R_HOME}/bin/R -f ${tmpfile} ${opts} ${R_BATCH_OPTIONS} >${out} 2>&1
-exitstatus=$?
+${R_HOME}/bin/R -f ${in} ${opts} ${R_BATCH_OPTIONS} >${out} 2>&1
 
-rm -f ${tmpfile}
-
-exit ${exitstatus}
 ### Local Variables: ***
 ### mode: sh ***
 ### sh-indentation: 2 ***

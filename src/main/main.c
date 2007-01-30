@@ -1108,6 +1108,14 @@ void R_dot_Last(void)
 	UNPROTECT(1);
     }
     UNPROTECT(1);
+    PROTECT(cmd = install(".Last.sys"));
+    R_CurrentExpr = findVar(cmd, R_BaseNamespace);
+    if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {
+	PROTECT(R_CurrentExpr = lang1(cmd));
+	R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+	UNPROTECT(1);
+    }
+    UNPROTECT(1);
 }
 
 SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
