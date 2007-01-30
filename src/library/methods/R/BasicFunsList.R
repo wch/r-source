@@ -124,6 +124,10 @@ list("!" = function(e1)
 }
 , "missing" = FALSE
 , "on.exit" = FALSE
+, "rep" = function(x, ...)
+{
+    standardGeneric("rep")
+}
 , "substitute" = FALSE
 , "symbol.C" = FALSE
 , "symbol.For" = FALSE
