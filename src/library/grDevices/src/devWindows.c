@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-6      The R Development Core Team
+ *  Copyright (C) 2004-7      The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2099,10 +2099,8 @@ static void GA_Close(NewDevDesc *dd)
 	hide(xd->gawin);
 	
 	del(xd->bm);
+	/* If this is the active device and buffered, shut updates off */
 	if (xd == GA_xd) GA_xd = NULL;
-	/* graphapp will do this for us
-	deleteGraphMenus(devNumber((DevDesc*) dd) + 1);
-	*/
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
 	SaveAsBitmap(dd, xd->res_dpi);
     } 
@@ -2112,6 +2110,8 @@ static void GA_Close(NewDevDesc *dd)
  * this is needed since the GraphApp delayed clean-up
  * ,i.e, I want free all resources NOW
  */
+    /* I think the concern is rather to run all pending events on the
+       device (but also on the console and others) */
     doevent();
     free(xd);
 }
