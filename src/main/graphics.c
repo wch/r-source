@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *  Copyright (C) 2002--2005  The R Foundation
  *
@@ -4505,23 +4505,21 @@ void DevNull(void) {}
 
 static int R_CurrentDevice = 0;
 static int R_NumDevices = 1;
+/* 
+   R_MaxDevices is defined in Rgraphics.h to be 64.  Slots are
+   initiialized to be NULL, and returned to NULL when a device is
+   removed.
+
+   Slot 0 is the null device, and slot 63 is keep empty as a sentinel
+   for over-allocation: if a driver fails to call
+   R_CheckDeviceAvailable and uses this slot the device it allocated
+   will be killed.
+ */
 static DevDesc* R_Devices[R_MaxDevices];
-static int R_LastDeviceEntry = R_MaxDevices - 1;  /* used to catch creation
-						     of too many devices */
-static int R_MaxRegularDevices =  R_MaxDevices - 1; /* not coulting the
-						       LastDeivceEntry */
 
 /* a dummy description to point to when there are no active devices */
 
 static DevDesc nullDevice;
-
-/* unused
-void devError(void)
-{
-    error("No graphics device is active -- "
-	  "SHOULDN'T happen anymore -- please report");
-}
-*/
 
 int NoDevices(void)
 {
@@ -4563,13 +4561,13 @@ DevDesc* GetDevice(int i)
 
 void R_CheckDeviceAvailable(void)
 {
-    if (R_NumDevices >= R_MaxRegularDevices)
+    if (R_NumDevices >= R_MaxDevices - 1)
 	error(_("too many open devices"));
 }
 
 Rboolean R_CheckDeviceAvailableBool(void)
 {
-    if (R_NumDevices >= R_MaxRegularDevices) return FALSE;
+    if (R_NumDevices >= R_MaxDevices - 1) return FALSE;
     else return TRUE;
 }
 
@@ -4682,14 +4680,14 @@ void addDevice(DevDesc *dd)
 	    s = CDR(s);
     }
     R_CurrentDevice = i;
-    R_NumDevices += 1;
+    R_NumDevices++;
     R_Devices[i] = dd;
 
     GEregisterWithDevice((GEDevDesc*) dd);
     ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
 
     /* maintain .Devices (.Device has already been set) */
-    PROTECT(t = mkString(CHAR(STRING_ELT(getSymbolValue(".Device"), 0))));
+    PROTECT(t = ScalarString(STRING_ELT(getSymbolValue(".Device"), 0)));
     if (appnd)
 	SETCDR(s, CONS(t, R_NilValue));
     else
@@ -4705,7 +4703,7 @@ void addDevice(DevDesc *dd)
        then call killDevice here.  This ensures that the device gets a
        chance to deallocate its resources and the current active
        device is restored to a sane value. */
-    if (i == R_LastDeviceEntry) {
+    if (i == R_MaxDevices - 1) {
         killDevice(i);
         error(_("too many open devices"));
     }
@@ -4739,9 +4737,8 @@ int devNumber(DevDesc *dd)
 int selectDevice(int devNum)
 {
     /* valid to select nullDevice */
-    if ((devNum >= 0) &&
-	(devNum < R_MaxDevices) &&
-	(R_Devices[devNum] != NULL)) {
+    if((devNum >= 0) && (devNum < R_MaxDevices) && (R_Devices[devNum] != NULL))
+    {
 	DevDesc *oldd, *dd;
 
 	if (!NoDevices()) {
@@ -4757,50 +4754,54 @@ int selectDevice(int devNum)
 		R_BaseEnv);
 
 	dd = CurrentDevice();
-	if (!NoDevices()) {
+	if (!NoDevices())
 	    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
-	}
 	return devNum;
     }
     else
 	return selectDevice(nextDevice(devNum));
 }
 
+/* historically the close was in the [kK]illDevices */
 static
 void removeDevice(int devNum)
 {
-    if ((devNum > 0) &&
-	(devNum < R_MaxDevices) &&
-	(R_Devices[devNum] != NULL)) {
+    /* Not vaild to remove nullDevice */
+    if((devNum > 0) && (devNum < R_MaxDevices) && (R_Devices[devNum] != NULL)) 
+    {
 	int i;
 	SEXP s;
+	GEDevDesc *g = (GEDevDesc*) R_Devices[devNum];
 
-	GEdestroyDevDesc((GEDevDesc*) R_Devices[devNum]);
+	/* <FIXME> This closes and destroys the device before removing
+	   it from the list of open devices.  This could be a problem if
+	   this gets called from a GUI callback, as for example multiple
+	   devices could be being shut at the same time and one could 
+	   select another to be the next active device. */
 
+	g->dev->close(g->dev);
+	GEdestroyDevDesc(g);
 	R_Devices[devNum] = NULL;
-	R_NumDevices -= 1;
+	R_NumDevices--;
 
 	/* maintain .Devices */
 	PROTECT(s = getSymbolValue(".Devices"));
-	for (i=0; i<devNum; i++)
-	    s = CDR(s);
+	for (i = 0; i < devNum; i++) s = CDR(s);
 	SETCAR(s, mkString(""));
 	UNPROTECT(1);
 
 	/* determine new current device */
 	if (devNum == R_CurrentDevice) {
-	    DevDesc *dd;
-
 	    R_CurrentDevice = nextDevice(R_CurrentDevice);
 
 	    /* maintain .Device */
 	    gsetVar(install(".Device"),
-		    elt(getSymbolValue(".Devices"),
-			R_CurrentDevice),
+		    elt(getSymbolValue(".Devices"), R_CurrentDevice),
 		    R_BaseEnv);
 
+	    /* activate new current device */
 	    if (!NoDevices()) {
-		dd = CurrentDevice();
+		DevDesc *dd = CurrentDevice();
 		((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
 		copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
 		GReset(dd);
@@ -4809,29 +4810,20 @@ void removeDevice(int devNum)
     }
 }
 
-
-
 void KillDevice(DevDesc *dd)
 {
-    ((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
     removeDevice(deviceNumber(dd));
 }
 
 
 void killDevice(int devNum)
 {
-    if (!NoDevices() &&
-	(devNum > 0) &&
-	(devNum < R_MaxDevices)) {
-	DevDesc *dd = R_Devices[devNum];
-	if (dd != NULL) {
-	    ((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
-	    removeDevice(devNum);
-	}
-    }
+    removeDevice(devNum);
 }
 
 
+/* Used by front-ends in R_CleanUp to shutdown all graphics devices
+   at the end of a session. */
 void KillAllDevices(void)
 {
     /* don't try to close or remove the null device ! */
