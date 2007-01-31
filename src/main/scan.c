@@ -1305,12 +1305,12 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     char *endp, *tmp = NULL;
     LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE,
 		      FALSE, 0};
-    data.NAstrings = R_NilValue;
     Typecvt_Info typeInfo;      /* keep track of possible types of cvec */
     typeInfo.islogical = TRUE;  /* we can't rule anything out initially */
     typeInfo.isinteger = TRUE;
     typeInfo.isreal = TRUE;
     typeInfo.iscomplex = TRUE;
+    data.NAstrings = R_NilValue;
 
     checkArity(op,args);
 
