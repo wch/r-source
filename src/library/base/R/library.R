@@ -118,9 +118,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
-                        message(gettextf("\nAttaching package: '%s'\n",
-                                         package),
-                                domain = NA)
+                        packageStartupMessage(gettextf("\nAttaching package: '%s'\n",
+                                                       package),
+                                              domain = NA)
                     }
                     packageStartupMessage(paste("\n\tThe following object(s) are masked",
                                   if (i < lib.pos) "_by_" else "from", sp[i],
