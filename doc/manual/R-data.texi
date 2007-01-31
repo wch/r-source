@@ -175,7 +175,7 @@ by a client with a floppy disc or CD-R of data in some proprietary
 binary format, for example `an Excel spreadsheet' or `an SPSS file'.
 Often the simplest thing to do is to use the originating application to
 export the data as a text file (and statistical consultants will have
-copies of the commonest applications on their computers for that
+copies of the most common applications on their computers for that
 purpose).  However, this is not always possible, and @ref{Importing from
 other statistical systems} discusses what facilities are available to
 access such files directly from @R{}.  For Excel spreadsheets, the
@@ -214,7 +214,7 @@ then @code{close} it.
 
 @findex write
 @findex write.table
-The commonest task is to write a matrix or data frame to file as a
+The most common task is to write a matrix or data frame to file as a
 rectangular grid of numbers, possibly with row and column labels.  This
 can be done by the functions @code{write.table} and @code{write}.
 Function @code{write} just writes out a matrix or vector in a specified
@@ -2088,7 +2088,7 @@ project at @url{http://www.omegahat.org/RSCORBA/}.
 @node Reading Excel spreadsheets, References, Network interfaces, Top
 @chapter Reading Excel spreadsheets
 
-The commonest R data import/export question seems to be `how do I read an
+The most common R data import/export question seems to be `how do I read an
 Excel spreadsheet'.  This chapter collects together advice and options
 given earlier.
 

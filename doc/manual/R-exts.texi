@@ -830,7 +830,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 @subsection Using @file{Makevars}
 
 Sometimes writing your own @file{configure} script can be avoided by
-supplying a file @file{Makevars}: also one of the commonest uses of a
+supplying a file @file{Makevars}: also one of the most common uses of a
 @file{configure} script is to make @file{Makevars} from
 @file{Makevars.in}.
 

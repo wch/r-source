@@ -6,7 +6,7 @@
   These functions return functions that interpolate a set of given
   colors to create new color palettes (like \code{\link{topo.colors}}) and
   color ramps, functions that map the interval \eqn{[0, 1]} to colors
-  (like \code{\link{grey}}.
+  (like \code{\link{grey}}).
 }
 \usage{
 colorRamp(colors, bias = 1, space = c("rgb", "Lab"),
