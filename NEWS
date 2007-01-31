@@ -313,8 +313,6 @@ NEW FEATURES
     o	The 'internal' objects .helpForCall, .tryHelp and topicName are
 	no longer exported from 'utils'.
 
-    o	The internal regex code has been upgraded to glibc-2.5 (from 2.3.6).
-
 
 DEPRECATED & DEFUNCT
 
