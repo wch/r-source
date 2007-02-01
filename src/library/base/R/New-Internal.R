@@ -219,7 +219,7 @@ encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
 
 l10n_info <- function() .Internal(l10n_info())
 
-iconv <- function(x, from, to, sub = NA) {
+iconv <- function(x, from = "", to = "", sub = NA) {
     if(!is.character(x)) x <- as.character(x)
     .Internal(iconv(x, from, to, as.character(sub)))
 }

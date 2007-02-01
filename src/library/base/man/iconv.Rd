@@ -7,7 +7,7 @@
   encodings: the \sQuote{i} stands for \sQuote{internationalization}.
 }
 \usage{
-iconv(x, from, to, sub=NA)
+iconv(x, from ="", to = "", sub=NA)
 
 iconvlist()
 }
@@ -25,7 +25,7 @@ iconvlist()
 
 \details{
   The names of encodings and which ones are available (and indeed, if
-  any are) is platform-dependent.  On systems that support \R's
+  any are) is platform-dependent.  On all systems that support
   \code{iconv} you can use \code{""} for the encoding of the current
   locale, as well as \code{"latin1"} and \code{"UTF-8"}.
 
