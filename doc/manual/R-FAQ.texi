@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-01-28
+@set FAQ_DATE @value{FAQ_YEAR}-02-01
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2130,9 +2130,14 @@ Sons.
 @item NISTnls
 A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
+@item NMMAPSlite
+U.S. National Morbidity, Mortality, and Air Pollution Study data lite.
 @item NORMT3
 Evaluates complex erf, erfc and density of sum of Gaussian and Student's 
 @math{t}.
+@item NRAIA
+Data sets with sample code from ``Nonlinear Regression Analysis and Its
+Applications'' by Doug Bates and Donald Watts, 1988, Wiley.
 @item Oarray
 Arrays with arbitrary offsets.
 @item PBSmapping
@@ -3158,6 +3163,8 @@ Use known groups in high-dimensional data to derive scores for plots.
 Interface to the @acronym{NCSA} HDF5 library.
 @item hdrcde
 Highest Density Regions and Conditional Density Estimation.
+@item heplots
+Visualizing tests in multivariate linear models.
 @item hett
 Functions for the fitting and summarizing of heteroscedastic
 t-regression.
