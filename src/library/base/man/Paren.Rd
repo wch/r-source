@@ -16,6 +16,11 @@
   \code{function(x) x}, whereas \code{\{} is slightly more interesting,
   see examples.
 }
+\value{
+  For \code{(}, the result of evaluating the argument.
+
+  For \code{\{}, the result of the last expression evaluated.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
