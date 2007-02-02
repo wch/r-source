@@ -4514,13 +4514,25 @@ static int R_NumDevices = 1;
    for over-allocation: if a driver fails to call
    R_CheckDeviceAvailable and uses this slot the device it allocated
    will be killed.
+
+   'active' means has been successfully opened and is not in the
+   process of being closed and destroyed.  We do this to allow for GUI
+   callbacks starting to kill a device whilst another is being killed.
  */
 static DevDesc* R_Devices[R_MaxDevices];
+static Rboolean active[R_MaxDevices];
 
 /* a dummy description to point to when there are no active devices */
 
 static DevDesc nullDevice;
 
+/* In many cases this is used to mean that the current device is
+   the null device, and in others to mean that there is no open device.
+   The two condiions are currently the same, as no way is provided to
+   select the null device (selectDevice(0) immediately opens a device).
+
+   But watch out if you intend to change the logic of any of this.
+*/
 int NoDevices(void)
 {
     return (R_NumDevices == 1 || R_CurrentDevice == 0);
@@ -4577,8 +4589,11 @@ void attribute_hidden InitGraphics(void)
     SEXP s, t;
 
     R_Devices[0] = &nullDevice;
-    for (i = 1; i < R_MaxDevices; i++)
+    active[0] = TRUE;
+    for (i = 1; i < R_MaxDevices; i++) {
 	R_Devices[i] = NULL;
+	active[i] = FALSE;
+    }
 
     /* init .Device and .Devices */
     PROTECT(s = mkString("null device"));
@@ -4615,14 +4630,12 @@ int nextDevice(int from)
 	int i = from;
 	int nextDev = 0;
 	while ((i < (R_MaxDevices-1)) && (nextDev == 0))
-	    if (R_Devices[++i] != NULL)
-		nextDev = i;
+	    if (active[++i]) nextDev = i;
 	if (nextDev == 0) {
 	    /* start again from 1 */
 	    i = 0;
-	    while (nextDev == 0)
-		if (R_Devices[++i] != NULL)
-		    nextDev = i;
+	    while ((i < (R_MaxDevices-1)) && (nextDev == 0))
+		if (active[++i]) nextDev = i;
 	}
 	return nextDev;
     }
@@ -4637,14 +4650,12 @@ int prevDevice(int from)
 	int i = from;
 	int prevDev = 0;
 	while ((i > 1) && (prevDev == 0))
-	    if (R_Devices[--i] != NULL)
-		prevDev = i;
+	    if (active[--i]) prevDev = i;
 	if (prevDev == 0) {
 	    /* start again from R_MaxDevices */
 	    i = R_MaxDevices;
-	    while (prevDev == 0)
-		if (R_Devices[--i] != NULL)
-		    prevDev = i;
+	    while ((i > 1) && (prevDev == 0))
+		if (active[--i]) prevDev = i;
 	}
 	return prevDev;
     }
@@ -4682,6 +4693,7 @@ void addDevice(DevDesc *dd)
     R_CurrentDevice = i;
     R_NumDevices++;
     R_Devices[i] = dd;
+    active[i] = TRUE;
 
     GEregisterWithDevice((GEDevDesc*) dd);
     ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
@@ -4736,14 +4748,17 @@ int devNumber(DevDesc *dd)
 
 int selectDevice(int devNum)
 {
-    /* valid to select nullDevice */
-    if((devNum >= 0) && (devNum < R_MaxDevices) && (R_Devices[devNum] != NULL))
+    /* Valid to select nullDevice, but that will open a new device.
+       See ?dev.set.
+     */
+    if((devNum >= 0) && (devNum < R_MaxDevices) && 
+       (R_Devices[devNum] != NULL) && active[devNum]) 
     {
-	DevDesc *oldd, *dd;
+	DevDesc *dd;
 
 	if (!NoDevices()) {
-	    oldd = CurrentDevice();
-	    ((GEDevDesc*) oldd)->dev->deactivate(((GEDevDesc *) oldd)->dev);
+	    GEDevDesc *oldd = (GEDevDesc*) CurrentDevice();
+	    oldd->dev->deactivate(oldd->dev);
 	}
 
 	R_CurrentDevice = devNum;
@@ -4753,8 +4768,8 @@ int selectDevice(int devNum)
 		elt(getSymbolValue(".Devices"), devNum),
 		R_BaseEnv);
 
-	dd = CurrentDevice();
-	if (!NoDevices())
+	dd = CurrentDevice(); /* will start a device if current is null */
+	if (!NoDevices()) /* which it always will be */
 	    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
 	return devNum;
     }
@@ -4762,73 +4777,78 @@ int selectDevice(int devNum)
 	return selectDevice(nextDevice(devNum));
 }
 
-/* historically the close was in the [kK]illDevices */
+/* historically the close was in the [kK]illDevices.
+   only use findNext= TRUE when shutting R dowm, and .Device[s] are not
+   updated.
+*/
 static
-void removeDevice(int devNum)
+void removeDevice(int devNum, Rboolean findNext)
 {
     /* Not vaild to remove nullDevice */
-    if((devNum > 0) && (devNum < R_MaxDevices) && (R_Devices[devNum] != NULL)) 
+    if((devNum > 0) && (devNum < R_MaxDevices) && 
+       (R_Devices[devNum] != NULL) && active[devNum]) 
     {
 	int i;
 	SEXP s;
 	GEDevDesc *g = (GEDevDesc*) R_Devices[devNum];
 
-	/* <FIXME> This closes and destroys the device before removing
-	   it from the list of open devices.  This could be a problem if
-	   this gets called from a GUI callback, as for example multiple
-	   devices could be being shut at the same time and one could 
-	   select another to be the next active device. */
+	active[devNum] = FALSE; /* stops it being selected again */
+	R_NumDevices--;
 
+	if(findNext) {
+	    /* maintain .Devices */
+	    PROTECT(s = getSymbolValue(".Devices"));
+	    for (i = 0; i < devNum; i++) s = CDR(s);
+	    SETCAR(s, mkString(""));
+	    UNPROTECT(1);
+
+	    /* determine new current device */
+	    if (devNum == R_CurrentDevice) {
+		R_CurrentDevice = nextDevice(R_CurrentDevice);
+		/* maintain .Device */
+		gsetVar(install(".Device"),
+			elt(getSymbolValue(".Devices"), R_CurrentDevice),
+			R_BaseEnv);
+
+		/* activate new current device */
+		if (R_CurrentDevice) {
+		    DevDesc *dd = CurrentDevice();
+		    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
+		    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
+		    GReset(dd);
+		}
+	    }
+	}
 	g->dev->close(g->dev);
 	GEdestroyDevDesc(g);
 	R_Devices[devNum] = NULL;
-	R_NumDevices--;
-
-	/* maintain .Devices */
-	PROTECT(s = getSymbolValue(".Devices"));
-	for (i = 0; i < devNum; i++) s = CDR(s);
-	SETCAR(s, mkString(""));
-	UNPROTECT(1);
-
-	/* determine new current device */
-	if (devNum == R_CurrentDevice) {
-	    R_CurrentDevice = nextDevice(R_CurrentDevice);
-
-	    /* maintain .Device */
-	    gsetVar(install(".Device"),
-		    elt(getSymbolValue(".Devices"), R_CurrentDevice),
-		    R_BaseEnv);
-
-	    /* activate new current device */
-	    if (!NoDevices()) {
-		DevDesc *dd = CurrentDevice();
-		((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
-		copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
-		GReset(dd);
-	    }
-	}
     }
 }
 
 void KillDevice(DevDesc *dd)
 {
-    removeDevice(deviceNumber(dd));
+    removeDevice(deviceNumber(dd), TRUE);
 }
 
 
 void killDevice(int devNum)
 {
-    removeDevice(devNum);
+    removeDevice(devNum, TRUE);
 }
 
 
-/* Used by front-ends in R_CleanUp to shutdown all graphics devices
-   at the end of a session. */
+/* Used by front-ends via R_CleanUp to shutdown all graphics devices
+   at the end of a session. Not the same as graphics.off(), and leaves
+   .Devices and .Device in an invalid state. */
 void KillAllDevices(void)
 {
-    /* don't try to close or remove the null device ! */
-    while (R_NumDevices > 1)
-	killDevice(R_CurrentDevice);
+    /* Avoid lots of activation followed by removal of devices
+       while (R_NumDevices > 1) killDevice(R_CurrentDevice);
+    */
+    int i;
+    for(i = R_MaxDevices-1; i > 0; i--) removeDevice(i, FALSE);
+    R_CurrentDevice = 0;  /* the null device, for tidyness */
+
     /* <FIXME> Disable this for now */
     /*
      * Free the font and encoding structures used by
@@ -4836,6 +4856,7 @@ void KillAllDevices(void)
      */
     /* freeType1Fonts();
        </FIXME>*/
+
     /* FIXME: There should really be a formal graphics finaliser
      * but this is a good proxy for now.
      */
