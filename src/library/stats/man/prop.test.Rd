@@ -91,6 +91,19 @@ prop.test(x, n, p = NULL,
     whether Yates' continuity correction was applied.}
   \item{data.name}{a character string giving the names of the data.}
 }
+\references{
+  Wilson, E.B. (1927) Probable inference, the law of succession, and
+  statistical inference.
+  \emph{J. Am. Stat. Assoc.}, \bold{22}, 209--212.
+
+  Newcombe R.G. (1998) Two-Sided Confidence Intervals for the Single
+  Proportion: Comparison of Seven Methods.
+  \emph{Statistics in Medicine}, \bold{17} 857--872.
+
+  Newcombe R.G. (1998) Interval Estimation for the Difference Between
+  Independent Proportions: Comparison of Eleven Methods.
+  \emph{Statistics in Medicine}, \bold{17} 873--890.
+}  
 \seealso{\code{\link{binom.test}} for an \emph{exact} test of a binomial
   hypothesis.}
 \examples{
