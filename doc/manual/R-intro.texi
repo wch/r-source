@@ -453,9 +453,9 @@ second character must not be a digit.
 
 Elementary commands consist of either @emph{expressions} or
 @emph{assignments}.  If an expression is given as a command, it is
-evaluated, printed, and the value is lost.  An assignment also evaluates
-an expression and passes the value to a variable but the result is not
-automatically printed.
+evaluated, printed (unless specifically made invisible), and the value
+is lost.  An assignment also evaluates an expression and passes the
+value to a variable but the result is not automatically printed.
 
 Commands are separated either by a semi-colon (@samp{@code{;}}), or by a
 newline.  Elementary commands can be grouped together into one compound
