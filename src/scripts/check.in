@@ -399,16 +399,6 @@ foreach my $pkg (@ARGV) {
 		$log->print(join("\n", @out) . "\n");
 		$log->print(wrap("", "", @msg_DESCRIPTION));
 		exit(1);
-	    }
-	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=NULL");
-	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
-	    if(scalar(@out) > 0) {
-		$log->warning();
-		$log->print(join("\n", @out) . "\n");
-		$log->print(wrap("", "", @msg_DESCRIPTION));
 	    } else {
 		$log->result("OK");
 	    }
@@ -1173,8 +1163,27 @@ sub check_pkg {
 
     ## Check R code for syntax errors and for non-ASCII chars which
     ## might be syntax errors in some locales.
+    ## We need to do the non-ASCII check first to get the more
+    ## specific warning message before an error.
 
     if(!$is_base_pkg && (-d "R")) {
+	$log->checking("R files for non-ASCII characters");
+	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
+			 "${R_opts} --slave");
+	if(scalar(@out) > 0) {
+	    $log->warning();
+	    $log->print(wrap("", "",
+			     ("Found the following files with",
+			      "non-ASCII characters:\n")));
+	    $log->print("  " . join("\n  ", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("Portable packages must use only ASCII",
+			      "characters in their R code,\n",
+			      "except perhaps in comments.\n")));
+	} else {
+	    $log->result("OK");
+	}
+
 	$log->checking("R files for syntax errors");
 	my $Rcmd = "options(warn=1);tools:::.check_package_code_syntax(\"R\")";
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
@@ -1190,25 +1199,7 @@ sub check_pkg {
 	    $log->print(join("\n", @out) . "\n");
 	} else {
 	    $log->result("OK");
-	}
-	
-	$log->checking("R files for non-ASCII characters");
-	my @out = R_runR("tools:::.check_package_ASCII_code('.')",
-			 "${R_opts} --slave");
-	if(scalar(@out) > 0) {
-	    $log->warning();
-	    $log->print(wrap("", "",
-			     ("Found the following files with",
-			      "non-ASCII characters:\n")));
-	    $log->print("  " . join("\n  ", @out) . "\n");
-	    $log->print(wrap("", "",
-			     ("Portable packages must use only ASCII",
-			      "characters in their R code,\n",
-			      "except perhaps in comments.\n")));
 	}	
-	else {
-	    $log->result("OK");
-	}
     }
 
     
@@ -1249,6 +1240,23 @@ sub check_pkg {
 	    $log->result("OK");
 	}
     }
+
+    ## this needs to read the package code, and will fail on
+    ## syntax errors such as non-ASCII code.
+    $log->checking("for unstated dependencies in R code");
+    my $Rcmd = "options(warn=1);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
+    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+		     "R_DEFAULT_PACKAGES=NULL");
+    @out = grep(!/^\>/, @out);
+    @out = grep(!/^Warning:.*unrecognized escape/, @out);
+    if(scalar(@out) > 0) {
+	$log->warning();
+	$log->print(join("\n", @out) . "\n");
+	$log->print(wrap("", "", @msg_DESCRIPTION));
+    } else {
+	$log->result("OK");
+    }
+
 
     ## and if it has a namespace, that we can load just the namespace
 
