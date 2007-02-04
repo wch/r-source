@@ -419,6 +419,12 @@ UTILITIES
     o	R CMD INSTALL now prepends the installation directory (if
 	specified) to the library search path.
 
+    o	Package installation now re-encodes R files if the DESCRIPTION
+	file specifies an encoding.  This will help if a package needs
+	to be used in (say) both latin1 and UTF-8 locales on different
+	systems.  It also sets the encoding used for reading files in
+	preparing for LazyData.
+
 
 BUG FIXES
 

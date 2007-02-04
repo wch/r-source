@@ -251,19 +251,40 @@ function(dir, outDir)
         stop(gettextf("cannot open directory '%s'", outCodeDir),
              domain = NA)
     outFile <- file.path(outCodeDir, db["Package"])
-    ## <NOTE>
-    ## It may be safer to do
-    ##   writeLines(sapply(codeFiles, readLines), outFile)
-    ## instead, but this would be much slower ...
     if(!file.create(outFile))
-        stop(gettextf("unable to create '%s'", outFile),
-             domain = NA)
+        stop(gettextf("unable to create '%s'", outFile), domain = NA)
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
-    # use fast version of file.append that ensures LF between files
-    if(!all(.file_append_ensuring_LFs(outFile, codeFiles)))
-        stop("unable to write code files")
-    ## </NOTE>
+    enc <- db["Encoding"]
+    need_enc <- !is.na(enc) # Encoding was specified
+    ## skip a few simple cases
+    enc0 <- utils::localeToCharset()[1]
+    if(need_enc) {
+        if(enc == enc0) need_enc <- FALSE
+        else if(enc0 == "ASCII") need_enc <- FALSE
+        else if(enc0 == "ISO8859-1" &&
+                (enc == "latin1" || enc == "Latin-1")) need_enc <- FALSE
+    }
+    if(need_enc && capabilities("iconv")) {
+        con <- file(outFile, "a")
+        on.exit(close(con))  # Windows does not like files left open
+        for(f in codeFiles) {
+            tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "")
+            if(any(is.na(tmp)))
+               stop(gettextf("unable to re-encode '%s'", basename(f)),
+                    domain = NA, call. = FALSE)
+            writeLines(tmp, con)
+        }
+    } else {
+        ## <NOTE>
+        ## It may be safer to do
+        ##   writeLines(sapply(codeFiles, readLines), outFile)
+        ## instead, but this would be much slower ...
+        ## use fast version of file.append that ensures LF between files
+        if(!all(.file_append_ensuring_LFs(outFile, codeFiles)))
+            stop("unable to write code files")
+        ## </NOTE>
+    }
 
     invisible()
 }

@@ -1185,7 +1185,7 @@ sub check_pkg {
 	}
 
 	$log->checking("R files for syntax errors");
-	my $Rcmd = "options(warn=1);tools:::.check_package_code_syntax(\"R\")";
+	my $Rcmd = "invisible(Sys.setlocale('LC_ALL', 'C'));options(warn=1);tools:::.check_package_code_syntax(\"R\")";
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
@@ -1241,23 +1241,6 @@ sub check_pkg {
 	}
     }
 
-    ## this needs to read the package code, and will fail on
-    ## syntax errors such as non-ASCII code.
-    $log->checking("for unstated dependencies in R code");
-    my $Rcmd = "options(warn=1);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
-    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-		     "R_DEFAULT_PACKAGES=NULL");
-    @out = grep(!/^\>/, @out);
-    @out = grep(!/^Warning:.*unrecognized escape/, @out);
-    if(scalar(@out) > 0) {
-	$log->warning();
-	$log->print(join("\n", @out) . "\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-    } else {
-	$log->result("OK");
-    }
-
-
     ## and if it has a namespace, that we can load just the namespace
 
     if($opt_install && -f "${pkgdir}/NAMESPACE") {
@@ -1281,6 +1264,41 @@ sub check_pkg {
 	    $log->result("OK");
 	}
     }
+
+    if(-d "R") {
+	if($opt_install) {
+	    $log->checking("for unstated dependencies in R code");
+	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(package=\"${pkgname}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg_DESCRIPTION));
+	    } else {
+		$log->result("OK");
+	    }
+	} elsif(!$is_base_pkg) {
+	    ## this needs to read the package code, and will fail on
+	    ## syntax errors such as non-ASCII code.
+	    $log->checking("for unstated dependencies in R code");
+	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
+	    if(scalar(@out) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n");
+		$log->print(wrap("", "", @msg_DESCRIPTION));
+	    } else {
+		$log->result("OK");
+	    }
+	}
+    }
+
 
     ## Check whether methods have all arguments of the corresponding
     ## generic.

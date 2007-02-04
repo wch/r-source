@@ -3635,6 +3635,9 @@ function(dir) {
     ## We should really have a more general-purpose tree walker.
     ## </NOTE>
 
+    db <- .read_description(file.path(dir, "..", "DESCRIPTION"))
+    enc <-  db["Encoding"]
+
     ## Workhorse function.
     filter <- function(file) {
         matches <- list()
@@ -3650,7 +3653,11 @@ function(dir) {
             if(is.recursive(e))
                 for(i in seq_along(e)) Recall(e[[i]])
         }
-        exprs <- parse(file)
+        exprs <- if(!is.na(enc)) {
+	    con <- file(file, encoding=enc)
+	    parse(con)
+	    close(con)
+	} else parse(file)
         for(i in seq_along(exprs)) walker(exprs[[i]])
         matches
     }

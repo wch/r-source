@@ -387,10 +387,10 @@ Windows build will zip up the data directory or no: set this to
 
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
-currently used as the encoding of the @file{DESCRIPTION} file itself,
-and may in the future be taken as the encoding for other documentation
-in the package.  Only encoding names @code{latin1}, @code{latin2} and
-@code{UTF-8} are known to be portable.
+currently used as the encoding of the @file{DESCRIPTION} file itself and
+of @code{R} files, and may in the future be taken as the encoding for
+other documentation in the package.  Only encoding names @code{latin1},
+@code{latin2} and @code{UTF-8} are known to be portable.
 
 
 The optional @samp{Type} field specifies the type of the package:
@@ -2179,6 +2179,10 @@ data is needed).  Then the @samp{encoding} argument to @samp{source},
 8859-1} text.  Even in this scenario, a workspace saved in one session
 may not be valid if loaded into another with a different locale.
 
+As from @R{} 2.5.0, @R{} files will be re-encoded to the locale used at
+installation if the @file{DESCRIPTION} file specifies an encoding.
+This will enable e.g.@: packages with French messages to be used on
+either latin-1 or UTF-8 systems.
 
 @node Diagnostic messages, Localization, Writing portable packages, Creating R packages
 @section Diagnostic messages
