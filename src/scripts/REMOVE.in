@@ -25,6 +25,7 @@ Options:
 Report bugs to <r-bugs@r-project.org>."
 
 GETWD='@GETWD@'
+R_EXE="${R_HOME}/bin/R"
 
 lib=
 pkgs=
