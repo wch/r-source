@@ -1325,9 +1325,10 @@ sub html_functionfoot
 
 sub chm_functionhead
 {
-    my ($title, $pkgname, $name) = @_;
+    my ($title, $pkgname, $name, $enc) = @_;
 
     my $retval = "<html><head><title>$title</title>\n" .
+	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=$enc\">\n" .
 	"<link rel=\"stylesheet\" type=\"text/css\" href=\"Rchm.css\">\n".
 	    "</head>\n<body>\n\n";
 
@@ -2574,7 +2575,7 @@ sub text2latex {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
 	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
-	if($encoding eq "unknown") { # \enc withou \encoding
+	if($encoding eq "unknown") { # \enc without \encoding
 	    $enc = $ascii if $ascii;
 	    $enc =~ s/\\([^&])/$1/go;
 	}
@@ -2907,11 +2908,15 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
     } else {
 	$htmlout = "STDOUT";
     }
+    $encoding = mime_canonical_encoding($blocks{"encoding"})
+	if defined $blocks{"encoding"};
     $using_chm = 1;
     $nlink = 0;
     print $htmlout (chm_functionhead(html_striptitle($blocks{"title"}),
 				     $pkgname,
-				     &html_escape_name($blocks{"name"})));
+				     &html_escape_name($blocks{"name"}),
+				     $encoding,
+				     ));
 
     html_print_block("description", "Description");
     html_print_codeblock("usage", "Usage");
