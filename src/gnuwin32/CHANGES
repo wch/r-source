@@ -23,6 +23,8 @@ CPU).
 
 menu.ttest2() in example package 'windlgs' was broken.
 
+CHM help is now converted with support for the \encoding{} section.
+
 
 
 R 2.4.1
