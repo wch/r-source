@@ -23,8 +23,14 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
 }
 \details{
   Either \code{interval} or both \code{lower} and \code{upper} must be
-  specified.  The function uses Fortran subroutine \file{"zeroin"} (from
-  Netlib) based on algorithms given in the reference below.
+  specified: the upper endpoint must be strictly larger than the lower
+  endpoint.  The function values at the endpoints must be of opposite
+  signs (or zero).
+
+  The function uses Fortran subroutine \file{"zeroin"} (from Netlib)
+  based on algorithms given in the reference below.  They assume a
+  continuous function (which then is known to have at least one root in
+  the interval).
 
   Convergence is declared either if \code{f(x) == 0} or the change in
   \code{x} for one step of the algorithm is less than \code{tol} (plus an
