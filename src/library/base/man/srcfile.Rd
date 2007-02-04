@@ -19,7 +19,7 @@
 These functions are for working with source files.
 }
 \usage{
-srcfile(filename)
+srcfile(filename, encoding = getOption("encoding"))
 srcfilecopy(filename, lines)
 getSrcLines(srcfile, first, last)
 srcref(srcfile, lloc)
@@ -32,6 +32,7 @@ srcref(srcfile, lloc)
 }
 \arguments{
   \item{filename}{ The name of a file }
+  \item{encoding}{ The character encoding to assume for the file }
   \item{lines}{ A character vector of source lines.  Other \R objects will be coerced
     to character. }
   \item{srcfile}{ A \code{srcfile} object }
@@ -47,7 +48,9 @@ These functions and classes handle source code references.
 The \code{srcfile} function produces an object of class
 \code{srcfile}, which contains the name and directory of a source code
 file, along with its timestamp, for use in source level debugging (not
-yet implemented) and source echoing.
+yet implemented) and source echoing.  The encoding of the file is
+saved; see \code{\link{file}} for a discussion of encodings, and
+\code{\link{iconvlist}} for a list of allowable encodings on your platform.
 
 The \code{srcfilecopy} function produces an object of the descendant
 class \code{srcfilecopy}, which saves the source lines in a character

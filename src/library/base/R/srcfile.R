@@ -1,6 +1,6 @@
 # a srcfile is a file with a timestamp
 
-srcfile <- function(filename) {
+srcfile <- function(filename, encoding = getOption("encoding")) {
     stopifnot(is.character(filename), length(filename) == 1)
 
     e <- new.env(parent=emptyenv())
@@ -8,6 +8,7 @@ srcfile <- function(filename) {
     e$wd <- getwd()
     e$filename <- filename
     e$timestamp <- file.info(filename)[1,"mtime"]
+    e$encoding <- encoding
 
     class(e) <- "srcfile"
     return(e)
@@ -31,7 +32,7 @@ open.srcfile <- function(con, line, ...) {
 	on.exit(setwd(olddir))
 	timestamp <- file.info(srcfile$filename)[1,"mtime"]
 	if (timestamp != srcfile$timestamp) warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
-	srcfile$conn <- conn <- file(srcfile$filename, open="rt")
+	srcfile$conn <- conn <- file(srcfile$filename, open="rt", encoding=srcfile$encoding)
 	srcfile$line <- 1
 	oldline <- 1
     } else if (!isOpen(conn)) {
