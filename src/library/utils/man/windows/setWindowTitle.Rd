@@ -2,7 +2,7 @@
 \alias{setWindowTitle}
 \alias{getWindowTitle}
 \alias{getIdentification}
-\alias{setStatusbar}
+\alias{setStatusBar}
 \title{Set or get the Window Title, or Set the Statusbar}
 \description{
   Set the title of the R window which will appear in the task bar, or of
