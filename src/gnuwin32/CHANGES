@@ -8,7 +8,7 @@ R 2.4.1 patched
 ===============
 
 Using the AltGr key in the script editor was treated as a control key.
-This was fixed for the rest of R in 0.9.1, and unfixed by the
+This was fixed for the rest of Rgui in R 0.9.1, and unfixed by the
 contributed code implementing the script editor.  (PR#9430)
 
 Returning focus to a window (e.g. the script editor after saving) no
@@ -19,7 +19,7 @@ When reading from pipes (which includes pipe(open="r") and system()
 with intern=TRUE or show.output.on.console=TRUE in Rgui) it is now
 possible to interrupt the command and the Rgui console will be
 responsive whilst it is running (and R will take up far less of the
-CPU).
+CPU).  (Probably also fixes PR#7634.)
 
 menu.ttest2() in example package 'windlgs' was broken.
 
@@ -231,7 +231,7 @@ unless you know exactly what happened.
 There is a new function choose.dir() to choose a folder (as used for
 'Change dir...' on the File menu in RGui.)
 
-New function shortPathNames() to convert names to DOS-style paths (8+3
+New function shortPathName() to convert names to DOS-style paths (8+3
 names and no spaces).
 
 Added workaround to Windows graphics devices (windows(),
