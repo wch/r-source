@@ -79,8 +79,6 @@ file.access() would give an error if asking about execute permission
 on Vista: the underlying C function has been changed to be
 incompatible with POSIX and we now work around this.
 
-CHM help is now converted with support for the \encoding{} section.
-
 
 
 R 2.4.1 patched
