@@ -24,7 +24,7 @@
 }
 \details{
   \code{R CMD SHLIB} uses the mechanism as used by \code{\link{INSTALL}}
-  to compile source code in packages. To use \code{SHLIB} you need to
+  to compile source code in packages.  To use \code{SHLIB} you need to
   have installed (from the \R installer) the files for compiling source
   packages as well as the tools described in the \sQuote{R Installation and 
   Administration} manual.
@@ -38,6 +38,10 @@
   \code{.cc}, \code{.C}, \code{.f}, \code{.f90}, \code{.f95} and \code{.m},
   are regarded as source files, and those with extension \code{.o} as
   object files.  All other items are passed to the linker.
+
+  If there is an exports file \file{dllname-win.def} in the current
+  directory it will be used, otherwise all entry points in objects (but
+  not libraries) will be exported from the DLL.
 }
 \seealso{
   \code{\link{dyn.load}}, \code{\link{library.dynam}}.

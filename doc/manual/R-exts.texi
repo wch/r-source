@@ -5294,6 +5294,11 @@ installed.)  For details of building DLLs with a variety of compilers,
 see @samp{README.packages} and
 @url{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/} .
 
+Under Windows you can supply an exports file called
+@file{@var{dllname}-win.def}: otherwise all entry points in objects (but
+not libraries) will be exported from the DLL.  An example is
+@file{stats-win.def} for the @pkg{stats} package.
+
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared objects, System and foreign language interfaces
 @section Interfacing C++ code
