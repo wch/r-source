@@ -494,13 +494,12 @@ function(package, dir, lib.loc = NULL,
         ## <NOTE>
         ## In principle, we can get codoc checking for S4 methods
         ## documented explicitly using the \S4method{GENERIC}{SIGLIST}
-        ## markup by adding the corresponding "pseudo ## functions"
-        ## using the Rd markup as their name.  However: the formals
-        ## recorded in the methods db only pertain to the signature, not
-        ## to the ones of the function actually registered.  It seems
-        ## that we can only get these by working on the internal
-        ## representation ... hence, let's make this optional for the
-        ## time being.
+        ## markup by adding the corresponding "pseudo functions" using
+        ## the Rd markup as their name.  However: the formals recorded
+        ## in the methods db only pertain to the signature, not to the
+        ## ones of the function actually registered.  It seems that we
+        ## can only get these by working on the internal representation:
+        ## hence, let's make this optional for the time being.
         ## </NOTE>
         check_S4_methods <-
             identical(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")),
