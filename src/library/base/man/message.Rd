@@ -33,6 +33,8 @@ suppressPackageStartupMessages(expr)
   messages which are neither warnings nor errors, but nevertheless
   represented as conditions.  Unlike warnings and errors, a final
   newline is regarded as part of the message, and is optional.
+  The default handler sends the message to the
+  \code{\link{stderr}()} connection.
 
   If a condition object is supplied  to \code{message} it should be
   the only argument, and further arguments will be ignored, with a warning.

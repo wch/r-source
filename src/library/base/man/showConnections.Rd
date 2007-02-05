@@ -36,6 +36,9 @@ stderr()
   The \code{stdout()} and \code{stderr()} connections can be
   re-directed by \code{\link{sink}}.
 
+  The encoding for \code{\link{stdin}()} when redirected can
+  be set by the command-line flag \code{--encoding}.
+
   \code{showConnections} returns a matrix of information.  If a
   connection object has been lost or forgotten, \code{getConnection}
   will take a row number from the table and return a connection object
