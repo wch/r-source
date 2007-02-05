@@ -1266,7 +1266,7 @@ sub check_pkg {
     }
 
     if(-d "R") {
-	if($opt_install) {
+	if($opt_install && !$is_base_pkg) {
 	    $log->checking("for unstated dependencies in R code");
 	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(package=\"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
