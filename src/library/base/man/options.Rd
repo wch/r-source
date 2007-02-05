@@ -154,17 +154,22 @@ getOption(x)
       used as the decimal point in output conversions, that is in
       printing, plotting and \code{as.character} but not deparsing.}
 
-    \item{\code{pager}:}{the (stand-alone) program used for displaying
-      text files on \R's console, also used by \code{\link{file.show}} and
-      sometimes \code{\link{help}}.
+    \item{\code{pager}:}{the command used for displaying text files by
+      \code{\link{file.show}}.
 #ifdef unix
-      Defaults to \file{\$R\_HOME/bin/pager}.}
+      Defaults to \file{\$R\_HOME/bin/pager}, which selects a pager via
+      the \env{PAGER} environment variable (and that usually defaults to
+      \code{less}).
 #endif
 #ifdef windows
       Defaults to \code{"internal"}, which uses a pager similar to the
       GUI console.  Another possibility is \code{"console"} to use the
-      console itself.}
+      console itself.
 #endif
+      Can be a character string or an \R function, in which case it
+      needs to accept the same first four arguments as
+      \code{\link{file.show}}.
+    }
 
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
