@@ -1265,8 +1265,8 @@ sub check_pkg {
 	}
     }
 
-    if(-d "R") {
-	if($opt_install && !$is_base_pkg) {
+    if(!$is_base_pkg && (-d "R")) {
+	if($opt_install) {
 	    $log->checking("for unstated dependencies in R code");
 	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(package=\"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
@@ -1280,7 +1280,7 @@ sub check_pkg {
 	    } else {
 		$log->result("OK");
 	    }
-	} elsif(!$is_base_pkg) {
+	} else {
 	    ## this needs to read the package code, and will fail on
 	    ## syntax errors such as non-ASCII code.
 	    $log->checking("for unstated dependencies in R code");
