@@ -315,6 +315,11 @@ NEW FEATURES
 
     o	The internal regex code has been upgraded to glibc-2.5 (from 2.3.6).
 
+    o	file.show() gains an 'encoding' argument.
+
+    o	Text help now attempts to display files which have an \encoding
+	section in the specified encoding via file.show().
+
 
 DEPRECATED & DEFUNCT
 

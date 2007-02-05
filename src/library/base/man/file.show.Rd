@@ -4,7 +4,7 @@
 \description{Display one or more files.}
 \usage{
 file.show(\dots, header = rep("",nfiles), title = "R Information",
-          delete.file=FALSE, pager=getOption("pager"))
+          delete.file = FALSE, pager = getOption("pager"), encoding = "")
 }
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the
@@ -19,6 +19,7 @@ file.show(\dots, header = rep("",nfiles), title = "R Information",
   \item{delete.file}{should the files be deleted after display?  Used
     for temporary files.}
   \item{pager}{the pager to be used.}
+  \item{encoding}{charset to be assumed for the file(s).}
 }
 \details{
   This function provides the core of the R help system, but it can be

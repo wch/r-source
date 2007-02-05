@@ -10,17 +10,29 @@ R.home <- function(component="home")
            file.path(rh, component))
 }
 file.show <-
-    function (..., header=rep("", nfiles), title="R Information",
-              delete.file=FALSE, pager=getOption("pager"))
+    function (..., header = rep("", nfiles), title = "R Information",
+              delete.file = FALSE, pager = getOption("pager"), encoding = "")
 {
-    file <- c(...)
-    nfiles <- length(file)
+    files <- c(...)
+    nfiles <- length(files)
     if(nfiles == 0)
         return(invisible(NULL))
+    if(!is.na(encoding) && encoding != "" && capabilities("iconv")) {
+        for(i in seq_along(files)) {
+            f <- files[i]
+            tf <- tempfile()
+            tmp <- readLines(f)
+            tmp2 <- iconv(tmp, encoding, "", "byte")
+            writeLines(tmp2, tf)
+            files[i] <- tf
+            if(delete.file) unlink(f)
+        }
+        delete.file <- TRUE
+    }
     if(is.function(pager))
-	pager(file, header, title, delete.file)
+	pager(files, header, title, delete.file)
     else
-        .Internal(file.show(file, header, title, delete.file, pager))
+        .Internal(file.show(files, header, title, delete.file, pager))
 }
 
 file.append <- function(file1, file2)

@@ -1364,6 +1364,9 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     } else {
 	$txtout = "STDOUT";
     }
+    local $encoding = "unknown";
+    $encoding = latex_canonical_encoding($blocks{"encoding"})
+	if defined $blocks{"encoding"};
 
     $INDENT = 3;  # indent for \itemize and \enumerate first line
     $INDENTD = 0; # indent for \describe list first line
@@ -1371,9 +1374,12 @@ sub rdoc2txt { # (filename); 0 for STDOUT
 
     if ($pkgname) {
 	my $pad = 75 - length($blocks{"name"}) - length($pkgname) - 30;
+	$pad = $pad - 2 - length($encoding) if $encoding ne "unknown";
 	$pad = int($pad/2);
 	print $txtout  &html_escape_name($blocks{"name"}), " " x $pad,
-	"package:$pkgname", " " x $pad,"R Documentation\n\n";
+	"package:$pkgname", " " x $pad,"R Documentation";
+	print $txtout "($encoding)" if $encoding ne "unknown";
+	print $txtout "\n\n";
     }
     print $txtout (txt_header(txt_striptitle($blocks{"title"})), "\n");
     txt_print_block("description", "Description");

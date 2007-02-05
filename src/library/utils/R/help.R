@@ -163,12 +163,16 @@ function(x, ...)
         }
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
-            if(file.exists(zfile))
+            if(file.exists(zfile)) {
+                first <- readLines(zfile, n = 1)
+                enc <- if(length(grep("\\(.*\\)$", first)) > 0)
+                    sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
+                if(enc == "utf8") enc <- "UTF-8"
                 file.show(zfile,
                           title = gettextf("R Help on '%s'", topic),
                           delete.file = (zfile != file),
-                          pager = attr(x, "pager"))
-            else
+                          pager = attr(x, "pager"), encoding = enc)
+            } else
                 stop(gettextf("No text help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
         }
         else if(type == "latex") {
