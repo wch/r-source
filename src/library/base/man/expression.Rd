@@ -14,7 +14,8 @@ is.expression(x)
 as.expression(x, \dots)
 }
 \arguments{
-  \item{\dots}{valid \R calls, symbols or constants.}
+  \item{\dots}{\code{expression}: valid \R calls, symbols or constants.\cr
+    \code{as.expression}: arguments to be passed to methods.}
   \item{x}{an arbitrary \R object.}
 }
 \details{
@@ -25,7 +26,7 @@ as.expression(x, \dots)
 
   As an object of mode \code{"expression"} is a list, it can be
   subsetted by both \code{[} and by \code{[[}, the latter extracting
-  individual calls.
+  individual calls etc.
 }
 \value{
   \code{expression} returns a vector of type \code{"expression"}
