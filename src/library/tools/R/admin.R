@@ -255,16 +255,8 @@ function(dir, outDir)
         stop(gettextf("unable to create '%s'", outFile), domain = NA)
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
-    enc <- db["Encoding"]
+    enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
-    ## skip a few simple cases
-    enc0 <- utils::localeToCharset()[1]
-    if(need_enc) {
-        if(enc == enc0) need_enc <- FALSE
-        else if(enc0 == "ASCII") need_enc <- FALSE
-        else if(enc0 == "ISO8859-1" &&
-                (enc == "latin1" || enc == "Latin-1")) need_enc <- FALSE
-    }
     if(need_enc && capabilities("iconv")) {
         con <- file(outFile, "a")
         on.exit(close(con))  # Windows does not like files left open
