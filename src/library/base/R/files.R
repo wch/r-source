@@ -22,8 +22,9 @@ file.show <-
             f <- files[i]
             tf <- tempfile()
             tmp <- readLines(f)
-            tmp2 <- iconv(tmp, encoding, "", "byte")
-            writeLines(tmp2, tf)
+            tmp2 <- try(iconv(tmp, encoding, "", "byte"))
+            if(inherits(tmp2, "try-error")) file.copy(f, tf)
+            else writeLines(tmp2, tf)
             files[i] <- tf
             if(delete.file) unlink(f)
         }
