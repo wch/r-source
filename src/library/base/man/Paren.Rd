@@ -17,9 +17,11 @@
   see examples.
 }
 \value{
-  For \code{(}, the result of evaluating the argument.
+  For \code{(}, the result of evaluating the argument.  This has
+  visibility set, so will auto-print if used at top-level.
 
-  For \code{\{}, the result of the last expression evaluated.
+  For \code{\{}, the result of the last expression evaluated. This has
+  the visibility of the last evaluation.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -39,5 +41,11 @@ identical(f(e), e)
 
 do <- get("\{")
 do(x <- 3, y <- 2*x-3, 6-x-y); x; y
+
+## note the differences
+(2+3)
+{2+3; 4+5}
+(invisible(2+3))
+{invisible(2+3)}
 }
 \keyword{programming}
