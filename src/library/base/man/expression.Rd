@@ -37,7 +37,12 @@ as.expression(x, \dots)
   generic.
 
   \code{as.expression} attempts to coerce its argument into an
-  expression object.
+  expression object.  It is generic, and only the default method is
+  described here.  \code{NULL}, calls, symbols (see
+  \code{\link{as.symbol}}) and lists are returned as the element of
+  a length-one expression vector.  Atomic vectors are placed
+  element-by-element into an expression vector.  Other types are not
+  currently supported.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
