@@ -63,9 +63,6 @@ Conj(z)
 
   In addition, the elementary trigonometric, logarithmic and exponential
   functions are available for complex values.
-
-  \code{is.complex} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

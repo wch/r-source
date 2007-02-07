@@ -9,10 +9,6 @@ values in R.
 \arguments{
   \item{x}{object to be tested.}
 }
-\details{
-  \code{is.single} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
-}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

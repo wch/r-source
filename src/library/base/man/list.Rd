@@ -61,11 +61,8 @@ alist(\dots)
 
   \code{is.list} returns \code{TRUE} if and only if its argument
   is a \code{list} \emph{or} a \code{pairlist} of \code{length} \eqn{> 0}.
-  \code{is.pairlist} returns \code{TRUE} if and only if the argument is a pairlist
-  or \code{NULL} (see below).
-
-  \code{is.list} and \code{is.pairlist} are generic: you can write
-  methods to handle specific classes of objects, see \link{InternalMethods}.
+  \code{is.pairlist} returns \code{TRUE} if and only if the argument
+  is a pairlist or \code{NULL} (see below).
 
   The \code{"\link{environment}"} method for \code{as.list} copies the
   name-value pairs (for names not beginning with a dot) from an

@@ -194,38 +194,18 @@ list("!" = function(e1)
 {
     standardGeneric("is.array")
 }
-, "is.atomic" = function(x)
-{
-    standardGeneric("is.atomic")
-}
-, "is.call" = function(x)
-{
-    standardGeneric("is.call")
-}
-, "is.character" = function(x)
-{
-    standardGeneric("is.character")
-}
-, "is.complex" = function(x)
-{
-    standardGeneric("is.complex")
-}
-, "is.double" = function(x)
-{
-    standardGeneric("is.double")
-}
-, "is.expression" = function(x)
-{
-    standardGeneric("is.expression")
-}
+, "is.atomic" = FALSE
+, "is.call" = FALSE
+, "is.character" = FALSE
+, "is.complex" = FALSE
+, "is.double" = FALSE
+, "is.environment" = FALSE
+, "is.expression" = FALSE
 , "is.finite" = function(x)
 {
     standardGeneric("is.finite")
 }
-, "is.function" = function(x)
-{
-    standardGeneric("is.function")
-}
+, "is.function" = FALSE
 , "is.infinite" = function(x)
 {
     standardGeneric("is.infinite")
@@ -234,18 +214,9 @@ list("!" = function(e1)
 {
     standardGeneric("is.integer")
 }
-, "is.language" = function(x)
-{
-    standardGeneric("is.language")
-}
-, "is.list" = function(x)
-{
-    standardGeneric("is.list")
-}
-, "is.logical" = function(x)
-{
-    standardGeneric("is.logical")
-}
+, "is.language" = FALSE
+, "is.list" = FALSE
+, "is.logical" = FALSE
 , "is.matrix" = function(x)
 {
     standardGeneric("is.matrix")
@@ -254,10 +225,7 @@ list("!" = function(e1)
 {
     standardGeneric("is.na")
 }
-, "is.name" = function(x)
-{
-    standardGeneric("is.name")
-}
+, "is.name" = FALSE
 , "is.nan" = function(x)
 {
     standardGeneric("is.nan")
@@ -270,14 +238,12 @@ list("!" = function(e1)
 {
     standardGeneric("is.numeric")
 }
-, "is.recursive" = function(x)
-{
-    standardGeneric("is.recursive")
-}
-, "is.single" = function(x)
-{
-    standardGeneric("is.single")
-}
+, "is.object" = FALSE
+, "is.pairlist" = FALSE
+, "is.real" = FALSE
+, "is.recursive" = FALSE
+, "is.single" = FALSE
+, "is.symbol" = FALSE
 , "length" = function(x)
 {
     standardGeneric("length")
@@ -313,26 +279,6 @@ list("!" = function(e1)
 , "globalenv" = FALSE
 , "if" = FALSE
 , "interactive" = FALSE
-, "is.environment" = function(obj)
-{
-    standardGeneric("is.environment")
-}
-, "is.object" = function(x)
-{
-    standardGeneric("is.object")
-}
-, "is.pairlist" = function(x)
-{
-    standardGeneric("is.pairlist")
-}
-, "is.real" = function(x)
-{
-    standardGeneric("is.real")
-}
-, "is.symbol" = function(x)
-{
-    standardGeneric("is.symbol")
-}
 , "nargs" = FALSE
 , "next" = FALSE
 , "pos.to.env" = FALSE

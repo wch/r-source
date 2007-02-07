@@ -3,7 +3,6 @@
 \alias{numeric}
 \alias{as.numeric}
 \alias{is.numeric}
-\alias{is.numeric.factor}
 \description{
   Creates or tests for objects of type \code{"numeric"}.
 }
@@ -23,9 +22,6 @@ is.numeric(x)
 
   \code{is.numeric} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
-  \cr
-  Note that \code{is.numeric()} returns \code{FALSE} for a factor via its
-  \code{"factor"} method.
 }
 \value{
   \code{numeric} creates a real vector of the specified length.  The
@@ -37,14 +33,20 @@ is.numeric(x)
   levels, not the numeric representation of the labels, see also
   \code{\link{factor}}.
 
-  \code{is.numeric} returns \code{TRUE} if its argument is of
-  \link{mode} \code{"numeric"} (\link{type} \code{"double"} or type
-  \code{"integer"}) and not a factor, and \code{FALSE} otherwise.
+  The default method for \code{is.numeric} returns \code{TRUE}
+  if its argument is of \link{mode} \code{"numeric"}
+  (\link{type} \code{"double"} or type \code{"integer"}) and not a
+  factor, and \code{FALSE} otherwise.  That is,
+  \code{is.integer(x) || is.double(x)}, or
+  \code{(mode(x) == "numeric") && !is.factor(x)}.
 }
 
 \note{
   \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}.
+}
+\seealso{
+  \code{\link{double}}, \code{\link{integer}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

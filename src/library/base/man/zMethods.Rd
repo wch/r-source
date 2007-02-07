@@ -38,28 +38,10 @@
   \code{\link{as.character}},
   \code{\link{as.vector}},%   % do_asvector()        [coerce.c]
   \code{\link{is.array}},
-  \code{\link{is.atomic}},
-  \code{\link{is.call}},
-  \code{\link{is.character}},
-  \code{\link{is.complex}},
-  \code{\link{is.double}},
-  \code{\link{is.environment}},
-  \code{\link{is.expression}},
-  \code{\link{is.function}},
-  \code{\link{is.integer}},
-  \code{\link{is.language}},
-  \code{\link{is.logical}},
-  \code{\link{is.list}},
   \code{\link{is.matrix}},
   \code{\link{is.na}},%       % do_isna()            [coerce.c]
   \code{\link{is.nan}},%      % do_isnan()           [coerce.c]
-  \code{\link{is.null}},
   \code{\link{is.numeric}},
-  \code{\link{is.object}},
-  \code{\link{is.pairlist}},
-  \code{\link{is.recursive}},
-  \code{\link{is.single}},
-  \code{\link{is.symbol}},
   \code{\link{rep}} and%                             [seq.c]
   \code{\link{seq.int}}
   (which dispatches methods for \code{"seq"}.%       [seq.c]

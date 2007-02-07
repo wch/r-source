@@ -12,10 +12,6 @@ is.object(x)
 \arguments{
   \item{x}{object to be tested.}
 }
-\details{
-  \code{is.object} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
-}
 \seealso{\code{\link[base]{class}}, and \code{\link{methods}}.}
 
 \examples{

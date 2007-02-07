@@ -34,9 +34,7 @@ as.single(x, \dots)
   be converted.
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of double \link{type} or not.  It is generic:
-  you can write methods to handle specific classes of objects, see
-  \link{InternalMethods}.
+  whether its argument is of double \link{type} or not.
 }
 \note{
   \emph{\R has no single precision data type.  All real numbers are

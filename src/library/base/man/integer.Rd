@@ -3,7 +3,6 @@
 \alias{as.integer}
 \alias{as.integer.default}
 \alias{is.integer}
-\alias{is.integer.factor}
 \title{Integer Vectors}
 \description{
   Creates or tests for objects of type \code{"integer"}.
@@ -45,10 +44,8 @@ is.integer(x)
   Like \code{\link{as.vector}} it strips attributes including names.
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of integer \link{type} or not.
-  \code{is.integer} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
-  There is a method for factors which returns \code{FALSE}.
+  whether its argument is of integer \link{type} or not, unless it is a
+  factor when it returns \code{FALSE}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

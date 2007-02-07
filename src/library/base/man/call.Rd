@@ -30,10 +30,6 @@ as.call(x)
   
   \code{is.call} is used to determine whether \code{x} is a call (i.e.,
   of mode \code{"call"}).
-  %NO We don't differentiate between expressions and function calls.
-  %NO So \code{is.call} is the same as \code{is.expression}.
-  It is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
   
   Objects of mode \code{"list"} can be coerced to mode \code{"call"}.
   The first element of the list becomes the function part of the call,

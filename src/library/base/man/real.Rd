@@ -12,10 +12,10 @@ is.real(x)
   \code{real} creates a double precision vector of the specified
   length. Each element of the vector is equal to \code{0}.
 
-  \code{as.real} attempts to coerce its argument to be of real type.
+  \code{as.real} attempts to coerce its argument to be of double type.
 
   \code{is.real} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of real type or not.
+  whether its argument is of double type or not.
 }
 \arguments{
   \item{length}{desired length.}
@@ -25,5 +25,6 @@ is.real(x)
 \note{
   \emph{\R has no single precision data type.
     All real numbers are stored in double precision format}.
+  These functions are the same as their \code{double} equivalents.
 }
 \keyword{classes}

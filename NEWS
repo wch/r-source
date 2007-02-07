@@ -327,6 +327,16 @@ NEW FEATURES
 	factors and POSIXt and Date objects, and is done via the
 	new utility function as.graphicsAnnot() in package grDevices.
 
+    o	is.atomic, is.call, is.character, is.complex, is.double (== is.real),
+	is.environment, is.expression, is.function, is.integer,
+	is.list, is.logical, is.null, is.object, is.pairlist,
+	is.recursive, is.single and is.symbol (== is.name) are no
+	longer internally S3 generic, nor can S4 methods be written
+	for them.
+
+	The "factor" methods of is.integer and is.numeric have been
+	replaced by internal code.
+
 
 DEPRECATED & DEFUNCT
 

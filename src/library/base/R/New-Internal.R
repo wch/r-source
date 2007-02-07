@@ -202,8 +202,8 @@ data.class <- function(x) {
     }
 }
 
-is.numeric.factor <- function(x) FALSE
-is.integer.factor <- function(x) FALSE
+## is.numeric.factor <- function(x) FALSE # internal in 2.5.0
+## is.integer.factor <- function(x) FALSE # internal in 2.5.0
 
 encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
                          justify = c("left", "right", "centre", "none"))

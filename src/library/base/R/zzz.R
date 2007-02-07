@@ -61,9 +61,28 @@ assign("gc.time", function(on = TRUE) NULL, envir = .ArgsEnv)
 assign("globalenv", function() NULL, envir = .ArgsEnv)
 assign("interactive", function() NULL, envir = .ArgsEnv)
 assign("invisible", function(x) NULL, envir = .ArgsEnv)
+assign("is.atomic", function(x) NULL, envir = .ArgsEnv)
+assign("is.call", function(x) NULL, envir = .ArgsEnv)
+assign("is.character", function(x) NULL, envir = .ArgsEnv)
+assign("is.complex", function(x) NULL, envir = .ArgsEnv)
+assign("is.double", function(x) NULL, envir = .ArgsEnv)
+assign("is.environment", function(x) NULL, envir = .ArgsEnv)
+assign("is.expression", function(x) NULL, envir = .ArgsEnv)
 assign("is.finite", function(x) NULL, envir = .ArgsEnv)
+assign("is.function", function(x) NULL, envir = .ArgsEnv)
 assign("is.infinite", function(x) NULL, envir = .ArgsEnv)
+assign("is.integer", function(x) NULL, envir = .ArgsEnv)
+assign("is.language", function(x) NULL, envir = .ArgsEnv)
+assign("is.list", function(x) NULL, envir = .ArgsEnv)
+assign("is.logical", function(x) NULL, envir = .ArgsEnv)
+assign("is.name", function(x) NULL, envir = .ArgsEnv)
+assign("is.null", function(x) NULL, envir = .ArgsEnv)
+assign("is.object", function(x) NULL, envir = .ArgsEnv)
+assign("is.pairlist", function(x) NULL, envir = .ArgsEnv)
 assign("is.real", function(x) NULL, envir = .ArgsEnv)
+assign("is.recursive", function(x) NULL, envir = .ArgsEnv)
+assign("is.single", function(x) NULL, envir = .ArgsEnv)
+assign("is.symbol", function(x) NULL, envir = .ArgsEnv)
 assign("list", function(...) NULL, envir = .ArgsEnv)
 assign("missing", function(x) NULL, envir = .ArgsEnv)
 assign("nargs", function() NULL, envir = .ArgsEnv)
@@ -86,13 +105,9 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 
 
 .S3PrimitiveGenerics <- c("as.character", "c", "dim", "dim<-",
-    "dimnames", "dimnames<-", "is.array", "is.atomic", "is.call",
-    "is.character", "is.complex", "is.double", "is.environment",
-    "is.expression", "is.function", "is.integer", "is.language",
-    "is.logical", "is.list", "is.matrix", "is.na", "is.nan",
-    "is.name", "is.null", "is.numeric", "is.object", "is.pairlist",
-    "is.recursive", "is.single", "is.symbol", "length", "length<-",
-    "levels<-", "names", "names<-", "rep", "seq.int")
+    "dimnames", "dimnames<-", "is.array", "is.matrix", "is.na",
+    "is.nan", "is.numeric", "length", "length<-", "levels<-",
+    "names", "names<-", "rep", "seq.int")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
