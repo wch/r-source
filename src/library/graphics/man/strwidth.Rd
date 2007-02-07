@@ -35,7 +35,7 @@ strheight(s, units = "user", cex = NULL)
 str.ex <- c("W","w","I",".","WwI.")
 op <- par(pty='s'); plot(1:100,1:100, type="n")
 sw <- strwidth(str.ex); sw
-all.equal(sum(sw[2:4]), sw[5])#- since the last string contains the others
+all.equal(sum(sw[1:4]), sw[5])#- since the last string contains the others
 
 sw.i <- strwidth(str.ex, "inches"); 25.4 * sw.i # width in [mm]
 unique(sw / sw.i)
