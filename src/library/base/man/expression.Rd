@@ -14,7 +14,8 @@ is.expression(x)
 as.expression(x, \dots)
 }
 \arguments{
-  \item{\dots}{\code{expression}: valid \R calls, symbols or constants.\cr
+  \item{\dots}{\code{expression}: \R objects, typically calls, symbols
+    or constants.\cr
     \code{as.expression}: arguments to be passed to methods.}
   \item{x}{an arbitrary \R object.}
 }
@@ -22,7 +23,7 @@ as.expression(x, \dots)
   \sQuote{Expression} here is not being used in its colloquial sense,
   that of mathematical expressions.  Those are calls (see
   \code{\link{call}}) in \R, and an \R expression vector is a list of
-  calls etc, typically as returned by \code{\link{parse}}.
+  calls, symbols etc, typically as returned by \code{\link{parse}}.
 
   As an object of mode \code{"expression"} is a list, it can be
   subsetted by both \code{[} and by \code{[[}, the latter extracting
@@ -33,8 +34,7 @@ as.expression(x, \dots)
   containing its arguments (unevaluated).
 
   \code{is.expression} returns \code{TRUE} if \code{expr} is an
-  expression object and \code{FALSE} otherwise.  It is internally S3
-  generic.
+  expression object and \code{FALSE} otherwise.
 
   \code{as.expression} attempts to coerce its argument into an
   expression object.  It is generic, and only the default method is

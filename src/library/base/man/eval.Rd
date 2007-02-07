@@ -62,6 +62,10 @@ local(expr, envir = new.env())
   functions and as a kind of limited name space feature since variables
   defined in the environment are not visible from the outside.
 }
+\value{
+  The result of evaluating the object: for an expression vector this it
+  the result of evaluating the last elements.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
