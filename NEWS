@@ -539,6 +539,8 @@ BUG FIXES
 
     o	grid.[xy]axis(label=logical(0)) failed.
 
+    o	expression() was unnecessarily duplicating arguments.
+
 
 
 

@@ -599,7 +599,10 @@ SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(EXPRSXP, n));
     a = args;
     for (i = 0; i < n; i++) {
-	SET_VECTOR_ELT(ans, i, duplicate(CAR(a)));
+	if(NAMED(CAR(a)))
+	    SET_VECTOR_ELT(ans, i, duplicate(CAR(a)));
+	else
+	    SET_VECTOR_ELT(ans, i, CAR(a));
 	if (TAG(a) != R_NilValue) named = 1;
 	a = CDR(a);
     }
