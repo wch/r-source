@@ -41,6 +41,7 @@ test-src-demo = demos.R demos2.R
 test-src-internet = internet.R
 test-src-isas = isas-tests.R
 test-src-lapack = lapack.R
+test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
 test-src-segfault = no-segfault.R
 
@@ -56,7 +57,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
 	$(test-src-demo) demos.Rout.save \
 	$(test-src-internet) internet.Rout.save \
-	$(test-src-lapack) \
+	$(test-src-lapack) $(test-src-primitive) \
 	$(test-src-random) p-r-random-tests.Rout.save \
 	$(test-src-reg) $(test-src-reg3) \
 	  reg-S4.Rout.save \
@@ -82,6 +83,7 @@ test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
 test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-lapack = $(test-src-lapack:.R=.Rout)
+test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
@@ -97,7 +99,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Lapack Random Demo Segfault \
+all-devel-tests = Docs IsAs Lapack Random Demo Primitive Segfault \
    Standalone Packages
 
 all check: Makefile test-all-basics
@@ -256,6 +258,10 @@ test-IsAs:
 test-Lapack:
 	@echo "running tests of LAPACK-based functions"
 	@$(MAKE) $(test-out-lapack) RVAL_IF_DIFF=0
+
+test-Primitive:
+	@echo "running tests of primitives"
+	@$(MAKE) $(test-out-primitive) RVAL_IF_DIFF=0
 
 test-Random:
 	@echo "running tests of random deviate generation"

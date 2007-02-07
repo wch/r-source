@@ -106,10 +106,6 @@ list("!" = function(e1)
 {
     standardGeneric("expression")
 }
-, "is.loaded" = function(symbol)
-{
-    standardGeneric("is.loaded")
-}
 , "length<-" = function(x, value)
 {
     standardGeneric("length<-")
@@ -129,8 +125,6 @@ list("!" = function(e1)
     standardGeneric("rep")
 }
 , "substitute" = FALSE
-, "symbol.C" = FALSE
-, "symbol.For" = FALSE
 , "trace" = function(what = character(), tracer = TRUE, exit.tracer, at = numeric(), print
 	 = TRUE, signature)
 {
@@ -351,6 +345,23 @@ list("!" = function(e1)
 }
 , "while" = FALSE
 , "{" = FALSE
+, "=" = FALSE
+, "@" = FALSE
+, ".primTrace" = FALSE
+, ".primUntrace" = FALSE
+, ".subset" = FALSE
+, ".subset2" = FALSE
+, "as.environment" = FALSE
+, "oldClass" = FALSE
+, "oldClass<-" = FALSE
+, "quote" = FALSE
+, "retracemem" = FALSE
+, "seq.int" = FALSE
+, "seq_along" = FALSE
+, "seq_len" = FALSE
+, "standardGeneric" = FALSE
+, "tracemem" = FALSE
+, "untracemem" = FALSE
 )
 
 ## the names of the basic funs with the style of "["

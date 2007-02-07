@@ -61,7 +61,8 @@
   \code{\link{is.single}},
   \code{\link{is.symbol}},
   \code{\link{rep}} and%                             [seq.c]
-  \code{\link{seq.int}}.%                            [seq.c]
+  \code{\link{seq.int}}
+  (which dispatches methods for \code{"seq"}.%       [seq.c]
 
   In addition, \code{is.name} is a synonym for \code{is.symbol} and
   dispatches methods for the latter.  
