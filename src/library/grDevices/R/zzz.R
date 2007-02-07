@@ -30,3 +30,19 @@
 
     initPSandPDFfonts()
 }
+
+### Used by text, mtext, strwidth, strheight, title, axis,
+### L_text and L_textBounds, all of which
+### coerce SYMSXPs and LANGSXPs to EXPRSXPs
+
+### Possibly later have
+### if (is.language(x)) x
+### else if(isS4(x)) methods::as(x, "character")
+### else if(is.object(x)) as.character(x)
+### else x
+
+as.graphicsAnnot <- function(x)
+    ## avoid is.language as it is generic
+    if(typeof(x) %in% c("expression", "language", "symbol")
+       || !is.object(x)) x else as.character(x)
+

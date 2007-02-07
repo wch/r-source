@@ -320,6 +320,13 @@ NEW FEATURES
     o	Text help now attempts to display files which have an \encoding
 	section in the specified encoding via file.show().
 
+    o	text(), mtext(), strheight(), strwidth(), legend(), axis(),
+        title(), pie(), grid.text() and textGrob() all attempt to
+	coerce non-language annotation objects (in the sense of is.object)
+	to character vectors.  This is principally intended to cover
+	factors and POSIXt and Date objects, and is done via the
+	new utility function as.graphicsAnnot() in package grDevices.
+
 
 DEPRECATED & DEFUNCT
 
@@ -513,12 +520,14 @@ BUG FIXES
     o	substr() and friends treated NA 'start' or 'stop' incorrectly.
 
     o	merge(x, y, all.y = TRUE) would sometimes incorrectly return
-	logical columns for columns only in x when there were no
+	logical columns for columns only in y when there were no
 	common rows.
 
     o	read.table(fn, col.names=) on an empty file returned NULL
 	columns, rather than logical(0) columns (which is what results
 	from reading a file with just a header).
+
+    o	grid.[xy]axis(label=logical(0)) failed.
 
 
 

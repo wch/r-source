@@ -33,14 +33,15 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   plotting functions.  They must be of type \code{\link{character}} or
   \code{\link{expression}}. In the latter case, quite a bit of
   mathematical notation is available such as sub- and superscripts,
-  greek letters, fractions, etc.
+  greek letters, fractions, etc: see \link{plotmath}
 }
 \details{
-  The labels passed to \code{title} can be a character vector or a
-  language object (names, calls or expressions), or a list
+  The labels passed to \code{title} can be a character strings or
+  language objects (names, calls or expressions), or a list
   containing the string to be plotted, and a selection of the optional
   modifying graphical parameters \code{cex=}, \code{col=} and
-  \code{font=}.
+  \code{font=}.  Other objects will be coerced by
+  \code{\link{as.graphicsAnnot}}. 
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

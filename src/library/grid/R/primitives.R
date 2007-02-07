@@ -952,14 +952,16 @@ validDetails.text <- function(x) {
 }
 
 drawDetails.text <- function(x, recording=TRUE) {
-  grid.Call.graphics("L_text", x$label, x$x, x$y,
+  grid.Call.graphics("L_text", as.graphicsAnnot(x$label),
+                     x$x, x$y,
                      resolveHJust(x$just, x$hjust),
                      resolveVJust(x$just, x$vjust),
                      x$rot, x$check.overlap)
 }
 
 xDetails.text <- function(x, theta) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, theta)
@@ -970,7 +972,8 @@ xDetails.text <- function(x, theta) {
 }
 
 yDetails.text <- function(x, theta) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, theta)
@@ -981,7 +984,8 @@ yDetails.text <- function(x, theta) {
 }
 
 widthDetails.text <- function(x) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, 0)
@@ -992,7 +996,8 @@ widthDetails.text <- function(x) {
 }
 
 heightDetails.text <- function(x) {
-  bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
+  bounds <- grid.Call("L_textBounds", as.graphicsAnnot(x$label),
+                      x$x, x$y,
                       resolveHJust(x$just, x$hjust),
                       resolveVJust(x$just, x$vjust),
                       x$rot, 0)

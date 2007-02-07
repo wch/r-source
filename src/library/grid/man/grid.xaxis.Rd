@@ -17,7 +17,7 @@ xaxisGrob(at = NULL, label = TRUE, main = TRUE,
 \arguments{
   \item{at}{A numeric vector of x-value locations for the tick marks.}
   \item{label}{A logical value indicating whether to draw the labels
-    on the tick marks, or an expression or string vector which
+    on the tick marks, or an expression or character vector which
     specify the labels to use.  If not logical, must be the same
     length as the \code{at} argument.}
   \item{main}{A logical value indicating whether to draw the axis

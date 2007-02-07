@@ -8,6 +8,7 @@ pie <-
 	stop("'x' values must be positive.")
     if (is.null(labels))
 	labels <- as.character(1:length(x))
+    else labels <- as.graphicsAnnot(labels)
     x <- c(0, cumsum(x)/sum(x))
     dx <- diff(x)
     nx <- length(dx)

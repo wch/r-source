@@ -1021,17 +1021,18 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* The expressions are used to set mathematical labelling. */
 
     dolabels = TRUE;
-    if (isLogical(CAR(args)) && length(CAR(args)) > 0) {
-	i = asLogical(CAR(args));
+    lab = CAR(args);
+    if (isLogical(lab) && length(lab) > 0) {
+	i = asLogical(lab);
 	if (i == 0 || i == NA_LOGICAL)
 	    dolabels = FALSE;
 	PROTECT(lab = R_NilValue);
-    }
-    else if (isExpression(CAR(args))) {
-	PROTECT(lab = CAR(args));
-    }
-    else {
-	PROTECT(lab = coerceVector(CAR(args), STRSXP));
+    } else if (TYPEOF(lab) == LANGSXP || TYPEOF(lab) == SYMSXP) {
+	PROTECT(lab = coerceVector(lab, EXPRSXP));
+    } else if (isExpression(lab)) {
+	PROTECT(lab);
+    } else {
+	PROTECT(lab = coerceVector(lab, STRSXP));
     }
     args = CDR(args);
 
