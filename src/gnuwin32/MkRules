@@ -159,7 +159,8 @@ NM=$(BINPREF)nm
 CPP=$(CC) -E
 RESCOMP=$(BINPREF)windres
 
-.SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d .f90 .f95 .m
+.SUFFIXES:
+.SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d .f90 .f95 .m .S
 
 .c.d:
 	@echo "making $@ from $<"
