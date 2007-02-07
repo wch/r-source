@@ -36,7 +36,8 @@ contour(x, \dots)
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
   \item{labels}{a vector giving the labels for the contour lines.  If
-    \code{NULL} then the levels are used as labels.}
+    \code{NULL} then the levels are used as labels, otherwise this is
+    coerced by \code{\link{as.character}}.}
   \item{labcex}{\code{cex} for contour labelling.  This is an absolute
     size, not a multiple of \code{par("cex")}.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
