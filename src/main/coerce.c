@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2007  Robert Gentleman, Ross Ihaka and the
  *			     R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -926,7 +926,10 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
     int i, n=0;
     SEXP rval= R_NilValue, vp, names;
 
+    /* Hmm, this is also called to LANGSXP, and coerceVector already
+       did the check of TYPEOF(v) == type */
     if(type == LISTSXP) return v;/* IS pairlist */
+
     names = v;
     if (type == EXPRSXP) {
 	PROTECT(rval = allocVector(type, 1));
@@ -1595,8 +1598,8 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* These are all builtins, so we do not need to worry about
        evaluating arguments in DispatchOrEval */
     if(PRIMVAL(op) >= 100 && PRIMVAL(op) < 200 &&
-       isObject(CAR(args)) && 
-       DispatchOrEval(call, op,CHAR(PRINTNAME(CAR(call))), 
+       isObject(CAR(args)) &&
+       DispatchOrEval(call, op,CHAR(PRINTNAME(CAR(call))),
 		      args, rho, &ans, 0,1))
 	return(ans);
 
@@ -1609,7 +1612,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == LGLSXP);
 	break;
     case INTSXP:	/* is.integer */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == INTSXP) 
+	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == INTSXP)
 	    && !inherits(CAR(args), "factor");
 	break;
     case REALSXP:	/* is.double == is.real */
@@ -2162,14 +2165,14 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* 
+/*
    do_substitute has two arguments, an expression and an environment
    (optional).	Symbols found in the expression are substituted with their
    values as found in the environment.	There is no inheritance so only
    the supplied environment is searched. If no environment is specified
    the environment in which substitute was called is used.  If the
    specified environment is R_GlobalEnv it is converted to R_NilValue, for
-   historical reasons. In substitute(), R_NilValue signals that no 
+   historical reasons. In substitute(), R_NilValue signals that no
    substitution should be done, only extraction of promise expressions.
    Arguments to do_substitute should not be evaluated.
 */
