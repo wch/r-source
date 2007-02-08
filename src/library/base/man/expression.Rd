@@ -39,8 +39,8 @@ as.expression(x, \dots)
   \code{as.expression} attempts to coerce its argument into an
   expression object.  It is generic, and only the default method is
   described here.  \code{NULL}, calls, symbols (see
-  \code{\link{as.symbol}}) and lists are returned as the element of
-  a length-one expression vector.  Atomic vectors are placed
+  \code{\link{as.symbol}}) and pairlists are returned as the element of
+  a length-one expression vector.  Vectors (including lists) are placed
   element-by-element into an expression vector.  Other types are not
   currently supported.
 }

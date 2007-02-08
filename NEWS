@@ -541,6 +541,10 @@ BUG FIXES
 
     o	expression() was unnecessarily duplicating arguments.
 
+    o	as.expression(<list>) returned a single-element expression
+	vector, which was not compatible with S: it now copies lists
+	element-by-element.
+
 
 
 

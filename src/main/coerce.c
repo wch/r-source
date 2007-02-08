@@ -1010,18 +1010,18 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
     /* expression -> list, new in R 2.4.0 */
     if (type == VECSXP && TYPEOF(v) == EXPRSXP) {
 	/* This is sneaky but saves us rewriting a lot of the duplicate code */
-	rval = duplicate(v);
+	rval = NAMED(v) ? duplicate(v) : v;
 	SET_TYPEOF(rval, VECSXP);
 	return rval;
     }
 
-    if (type == EXPRSXP) {
-	PROTECT(rval = allocVector(type, 1));
-	SET_VECTOR_ELT(rval, 0, v);
-	UNPROTECT(1);
+    if (type == EXPRSXP && TYPEOF(v) == VECSXP) {
+	rval = NAMED(v) ? duplicate(v) : v;
+	SET_TYPEOF(rval, EXPRSXP);
 	return rval;
     }
-    else if (type == STRSXP) {
+
+    if (type == STRSXP) {
 	n = length(v);
 	PROTECT(rval = allocVector(type, n));
 #ifdef R_MEMORY_PROFILING
