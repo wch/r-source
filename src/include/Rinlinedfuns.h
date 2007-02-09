@@ -412,6 +412,8 @@ INLINE_FUN Rboolean isMatrix(SEXP s)
     SEXP t;
     if (isVector(s)) {
 	t = getAttrib(s, R_DimSymbol);
+	/* You are not supposed to be able to assign a non-integer dim,
+	   although this might be possible by misuse of ATTRIB. */
 	if (TYPEOF(t) == INTSXP && LENGTH(t) == 2)
 	    return TRUE;
     }
@@ -423,6 +425,8 @@ INLINE_FUN Rboolean isArray(SEXP s)
     SEXP t;
     if (isVector(s)) {
 	t = getAttrib(s, R_DimSymbol);
+	/* You are not supposed to be able to assign a 0-length dim,
+	 nor a non-integer dim */
 	if (TYPEOF(t) == INTSXP && LENGTH(t) > 0)
 	    return TRUE;
     }

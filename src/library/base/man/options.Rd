@@ -242,11 +242,18 @@ getOption(x)
       and warning messages.  A non-negative integer, with allowed values
       100\dots8170, default 1000.}
 
-    \item{\code{width}:}{controls the number of characters on a line.
+    \item{\code{width}:}{controls the maximum number of columns on a
+      line used in printing vectors, matrices and arrays, and when
+      filling by \code{\link{cat}}.
+
+      Columns are normally the same as characters except in CJK languages.
+
       You may want to change this if you re-size the window that \R is
       running in.  Valid values are 10\dots10000 with default normally
       80.  (The limits on valid values are in file \file{Print.h} and can be
-      changed by re-compiling \R.)}
+      changed by re-compiling \R.)  Some \R consoles automatically change
+      the value when they are resized.
+    }
  }
 
   The \sQuote{factory-fresh} default settings of some of these options are
@@ -287,7 +294,7 @@ getOption(x)
       in batch use or if a screen is not available.}
 
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
-      and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
+      and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
     \item{\code{par.ask.default}:}{logical.  The default for
@@ -325,7 +332,8 @@ getOption(x)
       continuous plotting (default 500).}
 
     \item{\code{xpinch, ypinch}:}{double.  Pixels per inch, horizontally and
-      vertically.  If unset (the default), taken from Windows.}
+      vertically, for the \code{\link{windows}} device.  If unset
+      (the default), taken from Windows.}
 #endif
   }
 }
@@ -485,10 +493,12 @@ options("digits")
 \dontrun{## set contrast handling to be like S
 options(contrasts = c("contr.helmert", "contr.poly"))
 }
+
 \dontrun{## on error, terminate the R session with error status 66
 options(error = quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
 }
+
 \dontrun{## Set error actions for debugging:
 ## enter browser on error, see ?recover:
 options(error = recover)

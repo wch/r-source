@@ -11,8 +11,6 @@
   \code{as.matrix} attempts to turn its argument into a matrix.
 
   \code{is.matrix} tests if its argument is a (strict) matrix.
-  It is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
 }
 \usage{
 matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE,
@@ -49,9 +47,11 @@ is.matrix(x)
   length zero, \code{NA} of an appropriate type is used for atomic
   vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
-  \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix (i.e., it
-  is \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}
-  attribute of length 2) and \code{FALSE} otherwise.
+  \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix and has a
+  \code{\link{dim}} attribute of length 2) and \code{FALSE} otherwise.
+  Note that a \code{\link{data.frame}} is \strong{not} a matrix by this
+  test.  It is generic: you can write methods to handle
+  specific classes of objects, see \link{InternalMethods}.
 
   \code{as.matrix} is a generic function.  The method for data frames
   will return a character matrix if there is any
