@@ -845,13 +845,11 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = LENGTH(x);
     for(i = 0; i < n; i++) {
 	tmp = STRING_ELT(x, i);
+	UNSET_LATIN1(tmp);
+	UNSET_UTF8(tmp);
 	this = CHAR(STRING_ELT(enc, i % m));
 	if(streql(this, "latin1")) SET_LATIN1(tmp);
 	else if(streql(this, "UTF-8")) SET_UTF8(tmp);
-	else {
-	    UNSET_LATIN1(tmp);
-	    UNSET_UTF8(tmp);
-	}
 	SET_STRING_ELT(x, i, tmp);
     }
     UNPROTECT(1);
