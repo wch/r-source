@@ -342,9 +342,12 @@ NEW FEATURES
 	appropriately in other locales.  This is principally intended
 	to make it possible to use data in Western European languages
 	in both Latin-1 and UTF-8 locales.  Currently scan(),
-	read.table(), parse() and source() allow encodings to be
-	specified, and console input in suitable locales is also
-	recognized. [Work in progress]
+	read.table(), readLines(), parse() and source() allow
+	encodings to be declared, and console input in suitable
+	locales is also recognized. [Work in progress]
+
+	New function Encoding() can read or set the declared encodings
+	for a character vector.
 
 
 DEPRECATED & DEFUNCT

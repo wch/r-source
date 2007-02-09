@@ -247,5 +247,8 @@ Cstack_info <- function() .Internal(Cstack_info())
 reg.finalizer <- function(e, f, onexit = FALSE)
     .Internal(reg.finalizer(e, f, onexit))
 
+Encoding <- function(x) .Internal(Encoding(x))
+`Encoding<-` <- function(x, value) .Internal(setEncoding(x, value))
+
 ## base has no S4 generics
 .noGenerics <- TRUE

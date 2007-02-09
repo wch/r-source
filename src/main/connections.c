@@ -2498,11 +2498,11 @@ int Rconn_printf(Rconnection con, const char *format, ...)
 #define BUF_SIZE 1000
 SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans = R_NilValue, ans2;
+    SEXP ans = R_NilValue, ans2, tmp;
     int i, n, nn, nnn, ok, warn, nread, c, nbuf, buf_size = BUF_SIZE;
     Rconnection con = NULL;
     Rboolean wasopen;
-    char *buf;
+    char *buf, *encoding;
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
@@ -2519,6 +2519,9 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid value for '%s'"), "warn");
     if(!con->canread)
 	errorcall(call, _("cannot read from this connection"));
+    if(!isString(CAD4R(args)) || LENGTH(CAD4R(args)) != 1)
+	errorcall(call, _("invalid '%s' value"), "encoding");
+    encoding = CHAR(STRING_ELT(CAD4R(args), 0));
     wasopen = con->isopen;
     if(!wasopen) {
 	if(!con->open(con)) error(_("cannot open the connection"));
@@ -2555,7 +2558,10 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(c != '\n') buf[nbuf++] = c; else break;
 	}
 	buf[nbuf] = '\0';
-	SET_STRING_ELT(ans, nread, mkChar(buf));
+	tmp = mkChar(buf);
+	if(streql(encoding, "latin1")) SET_LATIN1(tmp);
+	else if(streql(encoding, "UTF-8")) SET_UTF8(tmp);
+	SET_STRING_ELT(ans, nread, tmp);
 	if(c == R_EOF) goto no_more_lines;
     }
     UNPROTECT(1);

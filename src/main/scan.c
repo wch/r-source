@@ -957,7 +957,6 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, _("invalid '%s' value"), "encoding");
     encoding = CHAR(STRING_ELT(CAR(args), 0));
-    known_to_be_latin1 = known_to_be_utf8 = FALSE;
     if(streql(encoding, "latin1")) data.isLatin1 = TRUE;
     if(streql(encoding, "UTF-8"))  data.isUTF8 = TRUE;
 

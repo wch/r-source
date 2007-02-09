@@ -76,7 +76,7 @@ The current version of this document is @value{VERSION}.
 @node R Internal Structures, .Internal vs .Primitive, Top, Top
 @chapter R Internal Structures
 
-This appendix is the beginnings of documentation about @R{} internal
+This chapter is the beginnings of documentation about @R{} internal
 structures.  It is written for the R core team and others studying the
 code in the @file{src/main} directory.
 
@@ -92,6 +92,7 @@ checked against the current version of the source code.
 * Autoprinting::                
 * The write barrier::           
 * Serialization Formats::       
+* Encodings for CHARSXPs::      
 * Internal use of global and base environments::  
 * Modules::                     
 @end menu
@@ -194,8 +195,8 @@ actual arguments for the call (and with the tags if present giving the
 specified argument names).
 
 @cindex expression
-Expressions are of type @code{EXPRSXP}: they are a vector of language
-objects most often seen as the result of @code{parse()}.
+Expressions are of type @code{EXPRSXP}: they are a vector of (usually
+language) objects most often seen as the result of @code{parse()}.
 
 @cindex function
 The functions are of types @code{CLOSXP}, @code{SPECIALSXP} and
@@ -280,7 +281,7 @@ a <- `dim<-`(a, c(7, 2))
 @end example
 
 @noindent
-but for no longer, and so some internal functions can be optimized to
+but for no longer, and so some primitive functions can be optimized to
 avoid a copy in this case.
 
 The @code{gp} bits are by definition `general purpose'.  As of version
@@ -393,7 +394,7 @@ number of primary slots in use, and for the reference hash tables in
 serialization(@code{VECSXP}s), where @code{truelength} is the number of
 slots in use.} of the vector, and then followed by the data (aligned as
 required: on most 32-bit systems with a 24-byte @code{VECTOR_SEXPREC}
-node the data can follow immediately after the node).  The data is a
+node the data can follow immediately after the node).  The data are a
 block of memory of the appropriate length to store `true length'
 elements (rounded up to a multiple of 8 bytes, with the 8-byte blocks
 being the `Vcells' referred in the documentation for @code{gc()}).
@@ -1060,7 +1061,7 @@ For background papers see
 @url{http://www.stat.uiowa.edu/~luke/R/barrier.html} and
 @url{http://www.stat.uiowa.edu/~luke/R/gengcnotes.html}.
 
-@node Serialization Formats, Internal use of global and base environments, The write barrier, R Internal Structures
+@node Serialization Formats, Encodings for CHARSXPs, The write barrier, R Internal Structures
 @section Serialization Formats
 
 @cindex serialization
@@ -1135,8 +1136,54 @@ name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
 enclosure, frame, tag and attributes.
 
+@node Encodings for CHARSXPs, Internal use of global and base environments, Serialization Formats, R Internal Structures
+@section Encodings for CHARSXPs
 
-@node Internal use of global and base environments, Modules, Serialization Formats, R Internal Structures
+Character data in @R{} is stored in the sexptype @code{CHARSXP}.  Until
+@R{} 2.1.0 it was assumed that the data were in the platform's native
+8-bit encoding, and furthermore it was quite often assumed that the
+encoding was ISO Latin-1 or a compatible charset (such as Windows'
+CP1252 or Latin-9).
+
+As from @R{} 2.1.0 there was support for other encodings, in particular
+UTF-8 and the multi-byte encodings used on Windows for CJK languages.
+However, there was no way of indicating which encoding had been used,
+even if this was known (and e.g.@: @code{scan} would not know the
+encoding of the file it was reading).  This lead to packages with data
+in French encoded in Latin-1 in @code{.rda} files which could not be
+read in other locales (and they would be able to be displayed in a
+French UTF-8 locale, if not in most Japanese locales).
+
+@R{} 2.5.0 introduced a limited means to indicate the encoding of a
+@code{CHARSXP} via two of the `general purpose' bits which are used to
+declare the encoding to be either Latin-1 or UTF-8.  (Note that it is
+possible for a character vector to contain elements in different
+encodings.)  Both printing and plotting notice the declaration and
+convert the string to the current locale (possibly using @code{<xx>} to
+display bytes that are not valid in the current locale).  Many (but not
+all) of the character manipulation functions will either preserve the
+declaration or re-encode the character string.
+
+When are character strings declared to be of known encoding?  One way is
+to do so directly via @code{Encoding}.  The parser declares the encoding
+if this is known, either via the @code{encoding} argument to
+@code{parse} or from the locale within which parsing is being done at
+the @R{} command line.  Functions @code{scan}, @code{read.table},
+@code{readLines} and @code{source} have an @code{encoding} argument, but
+do not assume anything about files from the current locale.  Also,
+@code{iconv} marks character strings it converts to Latin-1 or UTF-8.
+
+It is not necessary to declare the encoding of ASCII strings as they
+will work in any locale, but the overhead in doing so is small.
+
+The rationale behind considering only UTF-8 and Latin-1 is that most
+systems are capable of producing UTF-8 strings and this is the nearest
+we have to a universal format.  For those that do not (for example those
+lacking a powerful enough @code{iconv}), it is likely that they work in
+Latin-1, the old @R{} assumption.
+
+
+@node Internal use of global and base environments, Modules, Encodings for CHARSXPs, R Internal Structures
 @section Internal use of global and base environments
 
 This section notes known use by the system of these environments: the

@@ -805,6 +805,61 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+SEXP attribute_hidden do_encoding(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans, x;
+    int i, n;
+    char *tmp;
+
+    checkArity(op, args);
+    if (TYPEOF(x = CAR(args)) != STRSXP)
+	errorcall(call, _("a character vector argument expected"));
+    n = LENGTH(x);
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (i = 0; i < n; i++) {
+	if(IS_LATIN1(STRING_ELT(x, i))) tmp = "latin1";
+	else if(IS_UTF8(STRING_ELT(x, i))) tmp = "UTF-8";
+	else tmp = "unknown";
+	SET_STRING_ELT(ans, i, mkChar(tmp));
+    }
+    UNPROTECT(1);
+    return ans;
+}
+
+SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP x, enc, tmp;
+    int i, m, n;
+    char *this;
+
+    checkArity(op, args);
+    if (TYPEOF(x = CAR(args)) != STRSXP)
+	errorcall(call, _("a character vector argument expected"));
+    if (TYPEOF(enc = CADR(args)) != STRSXP)
+	errorcall(call, _("a character vector argument expected"));
+    m = LENGTH(enc);
+    if(m == 0)
+	errorcall(call, _("'value must be of positive length"));
+    if(NAMED(x)) x = duplicate(x);
+    PROTECT(x);
+    n = LENGTH(x);
+    for(i = 0; i < n; i++) {
+	tmp = STRING_ELT(x, i);
+	this = CHAR(STRING_ELT(enc, i % m));
+	if(streql(this, "latin1")) SET_LATIN1(tmp);
+	else if(streql(this, "UTF-8")) SET_UTF8(tmp);
+	else {
+	    UNSET_LATIN1(tmp);
+	    UNSET_UTF8(tmp);
+	}
+	SET_STRING_ELT(x, i, tmp);
+    }
+    UNPROTECT(1);
+    return x;
+}
+
+
+
 /* Note: this is designed to be fast and valid only for UTF-8 strings.
    It is also correct in EUC-* locales. */
 Rboolean utf8strIsASCII(char *str)
