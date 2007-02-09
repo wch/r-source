@@ -68,20 +68,32 @@ Rcomplex Rf_ComplexFromLogical(int, int*);
 Rcomplex Rf_ComplexFromInteger(int, int*);
 Rcomplex Rf_ComplexFromReal(double, int*);
 
-/* CHARSXP charset bits */
-#define LATIN1_MASK (1<<2)
-#define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
-#define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
-#define UNSET_LATIN1(x) (((x)->sxpinfo.gp) &= ~LATIN1_MASK)
-#define UTF8_MASK (1<<3)
-#define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
-#define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
-#define UNSET_UTF8(x) (((x)->sxpinfo.gp) &= ~UTF8_MASK)
 
 #define CALLED_FROM_DEFN_H 1
 #include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
 #undef CALLED_FROM_DEFN_H
+
+/* CHARSXP charset bits */
+#ifdef USE_RINTERNALS
+# define LATIN1_MASK (1<<2)
+# define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
+# define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
+# define UNSET_LATIN1(x) (((x)->sxpinfo.gp) &= ~LATIN1_MASK)
+# define UTF8_MASK (1<<3)
+# define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
+# define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
+# define UNSET_UTF8(x) (((x)->sxpinfo.gp) &= ~UTF8_MASK)
+#else
+/* Needed only for write-barrier testing */
+int IS_LATIN1(SEXP x);
+void SET_LATIN1(SEXP x);
+void UNSET_LATIN1(SEXP x);
+int IS_UTF8(SEXP x);
+void SET_UTF8(SEXP x);
+void UNSET_UTF8(SEXP x);
+#endif
+
 
 #include "Internal.h"		/* do_FOO */
 

@@ -167,6 +167,8 @@
  GRecording
  GetCurrentWinPos
  IS_ACTIVE_BINDING
+ IS_LATIN1
+ IS_UTF8
  InitDynload
  Init_R_Variables
  LOCK_BINDING
@@ -443,8 +445,12 @@
  Rrowsum_matrix
  Rwin_rename
  SET_ACTIVE_BINDING_BIT
+ SET_LATIN1
+ SET_UTF8
  Sys_TempDir
  UNLOCK_BINDING
+ UNSET_LATIN1
+ UNSET_UTF8
  UseInternet2
  WrongArgCount
  _dist_code
