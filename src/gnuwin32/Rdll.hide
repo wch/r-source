@@ -414,6 +414,7 @@
  Rf_ssort
  Rf_stirlerr
  Rf_substituteList
+ Rf_translateChar
  Rf_unbindVar
  Rf_vectorSubscript
  Rf_yychar
@@ -1124,6 +1125,9 @@
  internal_shellexec
  intpr0_
  isMethodsDispatchOn
+ known_to_be_latin1
+ known_to_be_utf8
+ latin1locale
  libintl_bind_textdomain_codeset
  libintl_bindtextdomain
  libintl_dcigettext
