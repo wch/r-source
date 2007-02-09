@@ -10,7 +10,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
-     comment.char = "", allowEscapes = FALSE)
+     comment.char = "", allowEscapes = FALSE, encoding = "unknown")
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -134,6 +134,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     hexadecimal representations like \code{\040} and \code{\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
   }
+  \item{encoding}{encoding to be assumed for input strings.  It is
+    used to mark character strings as known to be in
+    Latin-1 or UTF-8: it is not used to re-encode the input.}
 }
 \details{
   The value of \code{what} can be a list of types, in which case

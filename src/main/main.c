@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006   The R Development Core Team
+ *  Copyright (C) 1998-2007   The R Development Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -736,7 +736,12 @@ void setup_Rmainloop(void)
     InitGraphics();
     R_Is_Running = 1;
 #ifdef HAVE_LANGINFO_CODESET
-    utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
+    {
+	char  *p = nl_langinfo(CODESET);
+	if(streql(p, "UTF-8")) known_to_be_utf8 = utf8locale =TRUE;
+	if(streql(p, "ISO-8859-1")) known_to_be_latin1 = latin1locale =TRUE;
+	/* fprintf(stderr, "using %s\n", p); */
+    }
 #endif
 #ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
@@ -746,6 +751,8 @@ void setup_Rmainloop(void)
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;
 	p = strrchr(ctype, '.');
 	if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 1252;
+	/* Not 100% correct */
+	known_to_be_latin1 = latin1locale = (localeCP == 1252);
     }
 #endif
 #if defined(Win32) && defined(SUPPORT_UTF8)

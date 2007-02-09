@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2006  The R Development Core Team.
+ *  Copyright (C) 1998--2007  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,6 +67,16 @@ double Rf_RealFromComplex(Rcomplex, int*);
 Rcomplex Rf_ComplexFromLogical(int, int*);
 Rcomplex Rf_ComplexFromInteger(int, int*);
 Rcomplex Rf_ComplexFromReal(double, int*);
+
+/* CHARSXP charset bits */
+#define LATIN1_MASK (1<<2)
+#define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
+#define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
+#define UNSET_LATIN1(x) (((x)->sxpinfo.gp) &= ~LATIN1_MASK)
+#define UTF8_MASK (1<<3)
+#define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
+#define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
+#define UNSET_UTF8(x) (((x)->sxpinfo.gp) &= ~UTF8_MASK)
 
 #define CALLED_FROM_DEFN_H 1
 #include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
@@ -594,6 +604,7 @@ extern0 SEXP	R_RestartStack;	/* Stack of available restarts */
 
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
+extern0   Rboolean latin1locale INI_as(FALSE); /* is this a Latin-1 locale? */
 #ifdef Win32
 LibExtern unsigned int localeCP  INI_as(1252); /* the locale's codepage */
 #endif
@@ -641,6 +652,9 @@ typedef struct {
 LibExtern AccuracyInfo R_AccuracyInfo;
 
 extern0 unsigned int max_contour_segments INI_as(25000);
+
+extern0 Rboolean known_to_be_latin1 INI_as(FALSE);
+extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
 
 #ifdef __MAIN__
@@ -720,6 +734,7 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 # define LogicalFromString	Rf_LogicalFromString
 # define mainloop		Rf_mainloop
 # define makeSubscript		Rf_makeSubscript
+# define markKnown		Rf_markKnown
 # define mat2indsub		Rf_mat2indsub
 # define matchArg		Rf_matchArg
 # define matchArgExact		Rf_matchArgExact
@@ -762,6 +777,7 @@ extern0 unsigned int max_contour_segments INI_as(25000);
 # define StringFromReal		Rf_StringFromReal
 # define StrToInternal		Rf_StrToInternal
 # define substituteList		Rf_substituteList
+# define translateChar		Rf_translateChar
 # define tsConform		Rf_tsConform
 # define tspgets		Rf_tspgets
 # define type2symbol		Rf_type2symbol
@@ -892,6 +908,7 @@ void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
 SEXP makeSubscript(SEXP, SEXP, int *);
+void markKnown(SEXP, SEXP);
 SEXP mat2indsub(SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
@@ -954,6 +971,7 @@ SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
+char *translateChar(SEXP);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2symbol(SEXPTYPE);

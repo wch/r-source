@@ -337,6 +337,15 @@ NEW FEATURES
 	The "factor" methods of is.integer and is.numeric have been
 	replaced by internal code.
 
+    o	R now attempts to keep track of character strings which are
+	known to be in Latin-1 or UTF-8 and print or plot them
+	appropriately in other locales.  This is principally intended
+	to make it possible to use data in Western European languages
+	in both Latin-1 and UTF-8 locales.  Currently scan(),
+	read.table(), parse() and source() allow encodings to be
+	specified, and console input in suitable locales is also
+	recognized. [Work in progress]
+
 
 DEPRECATED & DEFUNCT
 

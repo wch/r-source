@@ -831,7 +831,7 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -967,7 +967,7 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     if(length(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(scmd, 0));
+    file = translateChar(STRING_ELT(scmd, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -1157,7 +1157,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -1339,7 +1339,7 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -1756,7 +1756,7 @@ static void text_init(Rconnection con, SEXP text)
     Rtextconn this = (Rtextconn)con->private;
 
     for(i = 0; i < nlines; i++)
-	nchars += strlen(CHAR(STRING_ELT(text, i))) + 1;
+	nchars += strlen(translateChar(STRING_ELT(text, i))) + 1;
     this->data = (char *) malloc(nchars+1);
     if(!this->data) {
 	free(this); free(con->description); free(con->class); free(con);
@@ -1764,7 +1764,7 @@ static void text_init(Rconnection con, SEXP text)
     }
     *(this->data) = '\0';
     for(i = 0; i < nlines; i++) {
-	strcat(this->data, CHAR(STRING_ELT(text, i)));
+	strcat(this->data, translateChar(STRING_ELT(text, i)));
 	strcat(this->data, "\n");
     }
     this->nchars = nchars;
@@ -2041,7 +2041,7 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if(!isString(sfile) || length(sfile) != 1)
 	error(_("invalid '%s' argument"), "description");
-    desc = CHAR(STRING_ELT(sfile, 0));
+    desc = translateChar(STRING_ELT(sfile, 0));
     stext = CADR(args);
     sopen = CADDR(args);
     if(!isString(sopen) || length(sopen) != 1)
@@ -2067,7 +2067,7 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	    con = Connections[ncon] = newouttext("NULL", stext, open, ncon);
 	else if(isString(stext) && length(stext) == 1)
 	    con = Connections[ncon] =
-		newouttext(CHAR(STRING_ELT(stext, 0)), stext, open, ncon);
+		newouttext(translateChar(STRING_ELT(stext, 0)), stext, open, ncon);
 	else
 	    error(_("invalid '%s' argument"), "text");
     }
@@ -2118,7 +2118,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     scmd = CAR(args);
     if(!isString(scmd) || length(scmd) != 1)
 	error(_("invalid '%s' argument"), "host");
-    host = CHAR(STRING_ELT(scmd, 0));
+    host = translateChar(STRING_ELT(scmd, 0));
     args = CDR(args);
     port = asInteger(CAR(args));
     if(port == NA_INTEGER || port < 0)
@@ -2186,7 +2186,7 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -2592,6 +2592,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
     int i;
     Rboolean wasopen;
     Rconnection con=NULL;
+    char *ssep;
     SEXP text, sep;
 
     checkArity(op, args);
@@ -2609,9 +2610,10 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(con->mode, "wt");
 	if(!con->open(con)) error(_("cannot open the connection"));
     }
+    ssep = translateChar(STRING_ELT(sep, 0));
     for(i = 0; i < length(text); i++)
-	Rconn_printf(con, "%s%s", CHAR(STRING_ELT(text, i)),
-		     CHAR(STRING_ELT(sep, 0)));
+	Rconn_printf(con, "%s%s", translateChar(STRING_ELT(text, i)),
+		     ssep);
     if(!wasopen) con->close(con);
     return R_NilValue;
 }
@@ -3295,7 +3297,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 0; i < n; i++) {
 	    /* This is not currently needed, just future-proofing in case
 	       the logic gets changed */
-	    tlen = strlen(CHAR(STRING_ELT(object, i)));
+	    tlen = strlen(translateChar(STRING_ELT(object, i)));
 	    if (tlen > len) len = tlen;
 	    tlen = INTEGER(nchars)[i];
 	    if(tlen == NA_INTEGER || tlen < 0)
@@ -3316,7 +3318,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     	    
     for(i = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
-	s = CHAR(STRING_ELT(object, i));
+	s = translateChar(STRING_ELT(object, i));
 	lenb = lenc = strlen(s);
 #ifdef SUPPORT_MBCS
 	if(mbcslocale) lenc = mbstowcs(NULL, s, 0);
@@ -3669,7 +3671,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     if(length(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
-    url = CHAR(STRING_ELT(scmd, 0));
+    url = translateChar(STRING_ELT(scmd, 0));
 #ifdef HAVE_INTERNET
     if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
     else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;

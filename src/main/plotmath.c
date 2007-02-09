@@ -1231,7 +1231,7 @@ static BBOX RenderNumber(SEXP expr, int draw, mathContext *mc,
 static BBOX RenderString(SEXP expr, int draw, mathContext *mc,
 			 R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    return RenderStr(CHAR(STRING_ELT(expr, 0)), draw, mc, gc, dd);
+    return RenderStr(translateChar(STRING_ELT(expr, 0)), draw, mc, gc, dd);
 }
 
 /* Code for Ellipsis (ldots, cdots, ...) */

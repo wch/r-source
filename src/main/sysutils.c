@@ -439,6 +439,9 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = R_NilValue);
 #endif
     } else {
+	char *from, *to;
+	Rboolean isLatin1 = FALSE, isUTF8 = FALSE;
+
 	if(TYPEOF(x) != STRSXP)
 	    errorcall(call, _("'x' must be a character vector"));
 	if(!isString(CADR(args)) || length(CADR(args)) != 1)
@@ -449,9 +452,14 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, _("invalid '%s' argument"), "sub");
 	if(STRING_ELT(CADDDR(args), 0) == NA_STRING) sub = NULL;
 	else sub = CHAR(STRING_ELT(CADDDR(args), 0));
-
-	obj = Riconv_open(CHAR(STRING_ELT(CADDR(args), 0)),
-			  CHAR(STRING_ELT(CADR(args), 0)));
+	from = CHAR(STRING_ELT(CADR(args), 0));
+	to = CHAR(STRING_ELT(CADDR(args), 0));
+	/* Should we do something about marked CHARSXPs in 'from = ""'? */
+	if(streql(to, "UTF-8")) isUTF8 = TRUE;
+	if(streql(to, "latin1") || streql(to, "ISO_8859-1")) isLatin1 = TRUE;
+	if(streql(to, "") && known_to_be_latin1) isLatin1 = TRUE;
+	if(streql(to, "") && known_to_be_utf8) isUTF8 = TRUE;
+	obj = Riconv_open(to, from);
 	if(obj == (iconv_t)(-1))
 	    errorcall(call, _("unsupported conversion"));
 	PROTECT(ans = duplicate(x));
@@ -492,8 +500,11 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		goto next_char;
 	    }
 
-	    if(res != -1 && inb == 0)
+	    if(res != -1 && inb == 0) {
 		SET_STRING_ELT(ans, i, mkChar(cbuff.data));
+		if(isLatin1) SET_LATIN1(STRING_ELT(ans, i));
+		if(isUTF8) SET_UTF8(STRING_ELT(ans, i));
+	    }
 	    else SET_STRING_ELT(ans, i, NA_STRING);
 	}
 	Riconv_close(obj);
@@ -534,6 +545,51 @@ int Riconv_close (void *cd)
 {
     return iconv_close((iconv_t) cd);
 }
+
+attribute_hidden char *translateChar(SEXP x)
+{
+    void * obj;
+    char *inbuf, *outbuf, *ans = CHAR(x), *p;
+    size_t inb, outb, res;
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+
+    if(x == NA_STRING || !(IS_LATIN1(x) || IS_UTF8(x))) return ans;
+    if(utf8locale && IS_UTF8(x)) return ans;
+    if(latin1locale && IS_LATIN1(x)) return ans;
+    if(utf8strIsASCII(CHAR(x))) return ans;
+
+    obj = Riconv_open("", IS_LATIN1(x) ? "latin1" : "UTF-8");
+    if(obj == (iconv_t)(-1)) error(_("unsupported conversion"));
+    R_AllocStringBuffer(0, &cbuff);
+top_of_loop:
+    inbuf = ans; inb = strlen(inbuf);
+    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
+    /* First initialize output */
+    Riconv (obj, NULL, NULL, &outbuf, &outb);
+next_char:
+    /* Then convert input  */
+    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
+    if(res == -1 && errno == E2BIG) {
+	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	goto top_of_loop;
+    } else if(res == -1 && errno == EILSEQ) {
+	if(outb < 5) {
+	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+	    goto top_of_loop;
+	}
+	snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
+	outbuf += 4; outb -= 4;
+	inbuf++; inb--;
+	goto next_char;
+    }
+    Riconv_close(obj);
+    *outbuf = '\0';
+    res = strlen(cbuff.data) + 1;
+    p = R_alloc(res, 1);
+    memcpy(p, cbuff.data, res);
+    R_FreeStringBuffer(&cbuff);
+    return p;
+}
 #else
 void * Riconv_open (char* tocode, char* fromcode)
 {
@@ -552,6 +608,11 @@ int Riconv_close (void * cd)
 {
     error(_("'iconv' is not available on this system"));
     return -1;
+}
+
+SEXP attribute_hidden translateChar(SEXP x)
+{
+    return x;
 }
 #endif
 

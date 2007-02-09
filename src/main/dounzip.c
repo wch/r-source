@@ -170,7 +170,7 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, _("invalid zip name argument"));
-    p = CHAR(STRING_ELT(CAR(args), 0));
+    p = translateChar(STRING_ELT(CAR(args), 0));
     if (strlen(p) > PATH_MAX - 1)
 	errorcall(call, _("zip path is too long"));
     strcpy(zipname, p);
@@ -181,12 +181,12 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isString(fn) || ntopics > 500)
 	    errorcall(call, _("invalid '%s' argument"), "topics");
 	for (i = 0; i < ntopics; i++)
-	    topics[i] = CHAR(STRING_ELT(fn, i));
+	    topics[i] = translateChar(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, _("invalid '%s' argument"), "destination");
-    p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
+    p = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
 	errorcall(call, _("'destination' is too long"));
     strcpy(dest, p);

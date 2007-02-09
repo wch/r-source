@@ -345,6 +345,11 @@ finalize', 'finalize on exit').
 Bit 0 is used by the condition handling system (on a @code{VECSXP}) to
 indicate a calling handler.
 
+As from @R{} 2.5.0, bits 2 and 3 for a @code{CHARSXP} are used to note
+that it is known to be in Latin-1 and UTF-8 respectively.  (These are not
+usually set if it is also known to be in ASCII, since code does not need
+to know the charset to handle ASCII strings.)
+
 @c Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
 @c the internal code for @code{terms.formula} to compute the @code{order}
 @c attribute of the result.  This is computed on an internal pairlist, and

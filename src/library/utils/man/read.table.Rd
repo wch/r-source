@@ -17,7 +17,8 @@ read.table(file, header = FALSE, sep = "", quote = "\"'",
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
            comment.char = "#", allowEscapes = FALSE, flush = FALSE,
-           stringsAsFactors = default.stringsAsFactors())
+           stringsAsFactors = default.stringsAsFactors(),
+           encoding = "unknown")
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, comment.char="", \dots)
@@ -163,6 +164,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{stringsAsFactors}{logical: should character vectors be converted
     to factors?}
+
+  \item{encoding}{encoding to be assumed for input strings.  It is
+    used to mark character strings as known to be in
+    Latin-1 or UTF-8: it is not used to re-encode the input.}
 
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }

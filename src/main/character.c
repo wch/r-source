@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -90,6 +90,16 @@ static void DeallocBuffer(R_StringBuffer *cbuff)
     if(cbuff->bufsize != MAXELTSIZE) R_FreeStringBuffer(cbuff);
 }
 
+static SEXP mkChar2(const char *name, SEXP ref)
+{
+    SEXP c = allocString(strlen(name));
+    strcpy(CHAR(c), name);
+    if(IS_LATIN1(ref) || IS_UTF8(ref)) {
+	if(known_to_be_latin1) SET_LATIN1(c);
+	if(known_to_be_utf8) SET_UTF8(c);
+    }
+    return c;
+}
 
 
 /* Functions to perform analogues of the standard C string library. */
@@ -121,18 +131,18 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < len; i++) {
 	if(strncmp(type, "bytes", ntype) == 0) {
 	    /* This works for NA strings too */	
-    INTEGER(s)[i] = length(STRING_ELT(x, i));
+	    INTEGER(s)[i] = length(STRING_ELT(x, i));
 	} else if(strncmp(type, "chars", ntype) == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = 2;
 	    } else {
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
-		    nc = mbstowcs(NULL, CHAR(STRING_ELT(x, i)), 0);
+		    nc = mbstowcs(NULL, translateChar(STRING_ELT(x, i)), 0);
 		    INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
 		} else
 #endif
-		    INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
+		    INTEGER(s)[i] = strlen(translateChar(STRING_ELT(x, i)));
 	    }
 	} else if(strncmp(type, "width", ntype) == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
@@ -140,7 +150,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else {
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
-		    xi = CHAR(STRING_ELT(x, i));
+		    xi = translateChar(STRING_ELT(x, i));
 		    nc = mbstowcs(NULL, xi, 0);
 		    if(nc >= 0) {
 			AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
@@ -152,7 +162,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 			INTEGER(s)[i] = NA_INTEGER;
 		} else
 #endif
-		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
+		INTEGER(s)[i] = strlen(translateChar(STRING_ELT(x, i)));
 	    }
 	} else
 	    errorcall(call, _("invalid '%s' argument"), "type");
@@ -194,7 +204,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, x, sa, so;
     int i, len, start, stop, slen, k, l;
-    char *buff;
+    char *buff, *ss;
 
     checkArity(op, args);
     x = CAR(args);
@@ -218,7 +228,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	slen = 0;
 	for (i = 0; i < len; i++) 
 	    if (STRING_ELT(x,i) != NA_STRING)
-		slen = imax2(slen, strlen(CHAR(STRING_ELT(x, i))) + 1);
+		slen = imax2(slen, strlen(translateChar(STRING_ELT(x, i))) + 1);
 	buff = Calloc(slen, char);
 
 	for (i = 0; i < len; i++) {
@@ -230,15 +240,16 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(s, i, NA_STRING);
 		continue;
 	    }
-	    slen = strlen(CHAR(STRING_ELT(x, i)));
+	    ss = translateChar(STRING_ELT(x, i));
+	    slen = strlen(ss);
 	    if (start < 1) start = 1;
 	    if (start > stop || start > slen) {
 		buff[0] = '\0';
 	    } else {
 		if (stop > slen) stop = slen;
-		substr(buff, CHAR(STRING_ELT(x, i)), start, stop);
+		substr(buff, ss, start, stop);
 	    }
-	    SET_STRING_ELT(s, i, mkChar(buff));
+	    SET_STRING_ELT(s, i, mkChar2(buff, STRING_ELT(x, i)));
 	}
 	Free(buff);
     }
@@ -274,6 +285,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, x, sa, so, value;
     int i, len, start, stop, slen, vlen, k, l, v;
+    char *ss;
 
     checkArity(op, args);
     x = CAR(args);
@@ -305,24 +317,25 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(s, i, NA_STRING);
 		continue;
 	    }
-	    slen = strlen(CHAR(STRING_ELT(x, i)));
+	    ss = translateChar(STRING_ELT(x, i));
+	    slen = strlen(ss);
 	    if (start < 1) start = 1;
 	    if (stop > slen) stop = slen;
 	    if (start > stop) {
 		/* just copy element across */
 		SET_STRING_ELT(s, i, STRING_ELT(x, i));
 	    } else {
-		vlen = strlen(CHAR(STRING_ELT(value, i % v)));
+		vlen = strlen(translateChar(STRING_ELT(value, i % v)));
 #ifdef SUPPORT_MBCS
 		AllocBuffer(slen+vlen, &cbuff);  /* might expand under MBCS */
 #else
 		AllocBuffer(slen, &cbuff);
 #endif
-		strcpy(cbuff.data, CHAR(STRING_ELT(x, i)));
+		strcpy(cbuff.data, ss);
 		if(stop > start + vlen - 1) stop = start + vlen - 1;
-		substrset(cbuff.data, CHAR(STRING_ELT(value, i % v)), 
+		substrset(cbuff.data, translateChar(STRING_ELT(value, i % v)), 
 			  start, stop);
-		SET_STRING_ELT(s, i, mkChar(cbuff.data));
+		SET_STRING_ELT(s, i, mkChar2(cbuff.data, STRING_ELT(x, i)));
 	    }
 	}
 	DeallocBuffer(&cbuff);
@@ -379,7 +392,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     len = LENGTH(x);
     tlen = LENGTH(tok);
     /* special case split="" for efficiency */
-    if(tlen == 1 && strlen(CHAR(STRING_ELT(tok, 0))) == 0) tlen = 0;
+    if(tlen == 1 && strlen(translateChar(STRING_ELT(tok, 0))) == 0) tlen = 0;
 
     PROTECT(s = allocVector(VECSXP, len));
     for(i = 0; i < len; i++) {
@@ -390,19 +403,19 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    UNPROTECT(1);
 	    continue;
 	}
-	buf = CHAR(STRING_ELT(x, i));
+	buf = translateChar(STRING_ELT(x, i));
 	if(tlen > 0) {
 	    /* NA token doesn't split */
 	    if (STRING_ELT(tok,i % tlen) == NA_STRING){
 		    PROTECT(t = allocVector(STRSXP, 1));
 		    bufp = buf;
-		    SET_STRING_ELT(t, 0, mkChar(bufp));
+		    SET_STRING_ELT(t, 0, mkChar2(bufp, STRING_ELT(x, i)));
 		    SET_VECTOR_ELT(s, i, t);
 		    UNPROTECT(1);
 		    continue;
 	    }
 	    /* find out how many splits there will be */
-	    split = CHAR(STRING_ELT(tok, i % tlen));
+	    split = translateChar(STRING_ELT(tok, i % tlen));
 	    slen = strlen(split);
 	    ntok = 0;
 	    if(fixed) {
@@ -480,7 +493,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			bufp += MAX(slen-1, 0);
 			laststart = bufp+1;
-			SET_STRING_ELT(t, j, mkChar(pt));
+			SET_STRING_ELT(t, j, mkChar2(pt, STRING_ELT(x, i)));
 			break;
 		    }
 		    bufp = laststart;
@@ -499,7 +512,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    SET_STRING_ELT(t, j, mkChar(pt));
+		    SET_STRING_ELT(t, j, mkChar2(pt, STRING_ELT(x, i)));
 		} else {
 		    regexec(&reg, bufp, 1, regmatch, 0);
 		    if(regmatch[0].rm_eo > 0) {
@@ -514,11 +527,11 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			pt[1] = '\0';
 			bufp++;
 		    }
-		    SET_STRING_ELT(t, j, mkChar(pt));
+		    SET_STRING_ELT(t, j, mkChar2(pt, STRING_ELT(x, i)));
 		}
 	    }
 	    if(*bufp != '\0')
-		SET_STRING_ELT(t, ntok, mkChar(bufp));
+		SET_STRING_ELT(t, ntok, mkChar2(bufp, STRING_ELT(x, i)));
 	} else {
 	    /* split into individual characters (not bytes) */
 #ifdef SUPPORT_MBCS
@@ -538,7 +551,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			/* This is valid as we have already checked */
 			used = mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
 			memcpy(bf, p, used); bf[used] = '\0';
-			SET_STRING_ELT(t, j, mkChar(bf));
+			SET_STRING_ELT(t, j, mkChar2(bf, STRING_ELT(x, i)));
 		    }
 		}
 	    } else
@@ -550,7 +563,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		bf[1] = '\0';
 		for (j = 0; j < ntok; j++) {
 		    bf[0] = buf[j];
-		    SET_STRING_ELT(t, j, mkChar(bf));
+		    SET_STRING_ELT(t, j, mkChar2(bf, STRING_ELT(x, i)));
 		}
 	    }
 	}
@@ -615,7 +628,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     int i, j, nspace = 0, upper;
     char *buff1 = cbuff.data;
 
-    mystrcpy(buff1, CHAR(inchar));
+    mystrcpy(buff1, translateChar(inchar));
     upper = strlen(buff1)-1;
 
     /* remove leading blanks */
@@ -753,7 +766,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid value of 'allow_'"));
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
-	_this = CHAR(STRING_ELT(arg, i));
+	_this = translateChar(STRING_ELT(arg, i));
 	l = strlen(_this);
 	/* need to prefix names not beginning with alpha or ., as
 	   well as . followed by a number */
@@ -783,10 +796,10 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (need_prefix) {
 	    tmp = Calloc(l+2, char);
 	    strcpy(tmp, "X");
-	    strcat(tmp, CHAR(STRING_ELT(arg, i)));
+	    strcat(tmp, translateChar(STRING_ELT(arg, i)));
 	} else {
 	    tmp = Calloc(l+1, char);
-	    strcpy(tmp, CHAR(STRING_ELT(arg, i)));
+	    strcpy(tmp, translateChar(STRING_ELT(arg, i)));
 	}
 #ifdef SUPPORT_MBCS
 	if (mbcslocale) {
@@ -920,9 +933,9 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0 ; i < n ; i++) {
 	    LOGICAL(ind)[i] = 0;
 	    if (STRING_ELT(vec, i) != NA_STRING) {
+		char *s = translateChar(STRING_ELT(vec, i));
 #ifdef SUPPORT_MBCS
-		if(!useBytes && mbcslocale &&
-		   !mbcsValid(CHAR(STRING_ELT(vec, i)))) {
+		if(!useBytes && mbcslocale && !mbcsValid(s)) {
 		    warningcall(call,
 				_("input string %d is invalid in this locale"),
 				i+1);
@@ -931,9 +944,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		if (fixed_opt) LOGICAL(ind)[i] =
 				   fgrep_one(CHAR(STRING_ELT(pat, 0)),
-					     CHAR(STRING_ELT(vec, i)),
-					     useBytes) >= 0;
-		else if(regexec(&reg, CHAR(STRING_ELT(vec, i)), 0, NULL, 0) == 0)
+					     s, useBytes) >= 0;
+		else if(regexec(&reg, s, 0, NULL, 0) == 0)
 		    LOGICAL(ind)[i] = 1;
 	    }
 	    if(LOGICAL(ind)[i]) nmatches++;
@@ -1098,7 +1110,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* end NA handling */
 	offset = 0;
 	nmatch = 0;
-	s = CHAR(STRING_ELT(vec, i));
+	s = translateChar(STRING_ELT(vec, i));
 	t = CHAR(STRING_ELT(rep, 0));
 	ns = strlen(s);
 
@@ -1120,7 +1132,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 			s += st+patlen;
 		    } while((st = fgrep_one(spat, s, useBytes)) >= 0);
 		    /* and reset */
-		    s = CHAR(STRING_ELT(vec, i));
+		    s = translateChar(STRING_ELT(vec, i));
 		    st = fgrep_one(spat, s, useBytes);
 		} else nr = 1;
 		SET_STRING_ELT(ans, i, allocString(ns + nr*(replen - patlen)));
@@ -1162,7 +1174,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(ans, i, allocString(ns));
 		offset = 0;
 		nmatch = 0;
-		s = CHAR(STRING_ELT(vec, i));
+		s = translateChar(STRING_ELT(vec, i));
 		t = CHAR(STRING_ELT(rep, 0));
 		u = CHAR(STRING_ELT(ans, i));
 		ns = strlen(s);
@@ -1238,9 +1250,9 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(text, i) == NA_STRING) {
 	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = R_NaInt;
 	} else {
+	    char *s = translateChar(STRING_ELT(text, i));
 #ifdef SUPPORT_MBCS
-	    if(!useBytes && mbcslocale &&
-	       !mbcsValid(CHAR(STRING_ELT(text, i)))) {
+	    if(!useBytes && mbcslocale && !mbcsValid(s)) {
 		warningcall(call,
 			    _("input string %d is invalid in this locale"),
 			    i+1);
@@ -1249,7 +1261,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 #endif
 	    if (fixed_opt) {
-		st = fgrep_one(spat, CHAR(STRING_ELT(text, i)), useBytes);
+		st = fgrep_one(spat, s, useBytes);
 		INTEGER(ans)[i] = (st > -1)?(st+1):-1;
 #ifdef SUPPORT_MBCS
 		if(!useBytes && mbcslocale) {
@@ -1260,7 +1272,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			strlen(spat):-1;
 	    } else {
-		if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, regmatch, 0)
+		if(regexec(&reg, s, 1, regmatch, 0)
 		   == 0) {
 		    st = regmatch[0].rm_so;
 		    INTEGER(ans)[i] = st + 1; /* index from one */
@@ -1272,14 +1284,14 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			   use chars instead */
 			if(st > 0) {
 			    AllocBuffer(st, &cbuff);
-			    memcpy(cbuff.data, CHAR(STRING_ELT(text, i)), st);
+			    memcpy(cbuff.data, s, st);
 			    cbuff.data[st] = '\0';
 			    INTEGER(ans)[i] = 1+mbstowcs(NULL, cbuff.data, 0);
 			    if(INTEGER(ans)[i] <= 0) /* an invalid string */
 				INTEGER(ans)[i] = NA_INTEGER;
 			}
 			AllocBuffer(mlen+1, &cbuff);
-			memcpy(cbuff.data, CHAR(STRING_ELT(text, i))+st, mlen);
+			memcpy(cbuff.data, s+st, mlen);
 			cbuff.data[mlen] = '\0';
 			INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
 			if(INTEGER(matchlen)[i] < 0) /* an invalid string */
@@ -1523,13 +1535,12 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ansList = allocVector(VECSXP, n));
     for (i = 0 ; i < n ; i++) {
         int foundAll, foundAny, matchIndex, offset;
-        char *s;
         foundAll = foundAny = offset = 0;
         matchIndex = -1;
-        s = CHAR(STRING_ELT(text, i));
 	if (STRING_ELT(text, i) == NA_STRING) {
             PROTECT(ans = gregexpr_NAInputAns());
 	} else {
+	    char *s = translateChar(STRING_ELT(text, i));
 #ifdef SUPPORT_MBCS
 	    if(!useBytes && mbcslocale && !mbcsValid(s)) {
 		warningcall(call,
@@ -1578,7 +1589,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
             if (STRING_ELT(x, i) == NA_STRING)
                 SET_STRING_ELT(y, i, NA_STRING);
             else {
-                xi = CHAR(STRING_ELT(x, i));
+                xi = translateChar(STRING_ELT(x, i));
                 nc = mbstowcs(NULL, xi, 0);
                 if(nc >= 0) {
                     AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
@@ -1588,6 +1599,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
                     nb = wcstombs(NULL, wc, 0);
                     SET_STRING_ELT(y, i, allocString(nb));
                     wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
+		    markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
                 } else {
                     errorcall(call, _("invalid multibyte string %d"), i+1);
                 }
@@ -1601,11 +1613,12 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
                 if (STRING_ELT(x, i) == NA_STRING)
                     SET_STRING_ELT(y, i, NA_STRING);
                 else {
-                    xi = CHAR(STRING_ELT(x, i));
+                    xi = translateChar(STRING_ELT(x, i));
                     SET_STRING_ELT(y, i, allocString(strlen(xi)));
                     strcpy(CHAR(STRING_ELT(y, i)), xi);
                     for(p = CHAR(STRING_ELT(y, i)); *p != '\0'; p++)
                         *p = ul ? toupper(*p) : tolower(*p);
+		    markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
                 }
             }
         }
@@ -1869,7 +1882,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
             if (STRING_ELT(x,i) == NA_STRING)
                 SET_STRING_ELT(y, i, NA_STRING);
             else {
-                xi = CHAR(STRING_ELT(x, i));
+                xi = translateChar(STRING_ELT(x, i));
                 nc = mbstowcs(NULL, xi, 0);
                 if(nc < 0)
                     errorcall(call, _("invalid input multibyte string %d"),
@@ -1881,6 +1894,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
                 nb = wcstombs(NULL, wc, 0);
                 SET_STRING_ELT(y, i, allocString(nb));
                 wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
+		markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
             }
         }
         DeallocBuffer(&cbuff);
@@ -1930,10 +1944,12 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
             for(i = 0; i < n; i++) {
                 if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
                 else {
-                    SET_STRING_ELT(y, i, allocString(strlen(CHAR(STRING_ELT(x, i)))));
-                    strcpy(CHAR(STRING_ELT(y, i)), CHAR(STRING_ELT(x, i)));
+		    char *xi = translateChar(STRING_ELT(x, i));
+                    SET_STRING_ELT(y, i, allocString(strlen(xi)));
+                    strcpy(CHAR(STRING_ELT(y, i)), xi);
                     for(p = (unsigned char *) CHAR(STRING_ELT(y, i));
                         *p != '\0'; p++) *p = xtable[*p];
+		    markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
                 }
             }
         }
@@ -2042,7 +2058,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
             LOGICAL(ind)[i] = 0;
             continue;
         }
-        str = CHAR(STRING_ELT(vec, i));
+        str = translateChar(STRING_ELT(vec, i));
         /* Set case ignore flag for the whole string to be matched. */
         if(!apse_set_caseignore_slice(aps, 0,
                                       (apse_ssize_t)strlen(str),
@@ -2448,7 +2464,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
             continue;
         }
         w = INTEGER(width)[i % nw];
-        _this = CHAR(STRING_ELT(x, i));
+        _this = translateChar(STRING_ELT(x, i));
         nc = strlen(_this);
         AllocBuffer(nc, &cbuff);
 #if defined(SUPPORT_MBCS)
@@ -2473,7 +2489,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
         strncpy(cbuff.data, _this, w);
         cbuff.data[w] = '\0';
 #endif
-        SET_STRING_ELT(s, i, mkChar(cbuff.data));
+        SET_STRING_ELT(s, i, mkChar2(cbuff.data, STRING_ELT(x, i)));
     }
     if(len > 0) DeallocBuffer(&cbuff);
     SET_ATTRIB(s, duplicate(ATTRIB(x)));
@@ -2516,7 +2532,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     
     for(i = 0; i < LENGTH(x); i++) {
-	res = glob(CHAR(STRING_ELT(x, i)), 
+	res = glob(translateChar(STRING_ELT(x, i)), 
 #ifdef GLOB_MARK
 		   (dirmark ? GLOB_MARK : 0) |
 #endif
@@ -2524,7 +2540,8 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 		   NULL, &globbuf);
 #ifdef GLOB_ABORTED
 	if(res == GLOB_ABORTED)
-	    warningcall(call, _("read error on '%s'"), CHAR(STRING_ELT(x, i)));
+	    warningcall(call, _("read error on '%s'"), 
+			translateChar(STRING_ELT(x, i)));
 #endif
 #ifdef GLOB_NOSPACE
 	if(res == GLOB_NOSPACE)
@@ -2534,7 +2551,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     n = globbuf.gl_pathc;
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
-	SET_STRING_ELT(ans, i, mkChar(globbuf.gl_pathv[i]));
+	SET_STRING_ELT(ans, i, mkChar2(globbuf.gl_pathv[i], STRING_ELT(x, i)));
     UNPROTECT(1);
     globfree(&globbuf);
     return ans;

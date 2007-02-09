@@ -26,7 +26,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
          check.names = TRUE, fill = !blank.lines.skip,
          strip.white = FALSE, blank.lines.skip = TRUE,
          comment.char = "#", allowEscapes = FALSE, flush = FALSE,
-         stringsAsFactors = default.stringsAsFactors())
+         stringsAsFactors = default.stringsAsFactors(),
+         encoding = "unknown")
 {
     if(is.character(file)) {
         file <- file(file, "r")
@@ -60,7 +61,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                       nlines = 1, quiet = TRUE, skip = 0,
                       strip.white = TRUE,
                       blank.lines.skip = blank.lines.skip,
-                      comment.char = comment.char, allowEscapes = allowEscapes)
+                      comment.char = comment.char, allowEscapes = allowEscapes,
+                      encoding = encoding)
         col1 <- if(missing(col.names)) length(first) else length(col.names)
         col <- numeric(nlines - 1)
         if (nlines > 1)
@@ -136,7 +138,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                  strip.white = strip.white,
                  blank.lines.skip = blank.lines.skip, multi.line = FALSE,
                  comment.char = comment.char, allowEscapes = allowEscapes,
-                 flush = flush)
+                 flush = flush, encoding = encoding)
 
     nlines <- length(data[[ which(keep)[1] ]])
 

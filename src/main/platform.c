@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2001-6 The R Development Core Team
+ *  Copyright (C) 1998, 2001-7 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1157,16 +1157,20 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     UNPROTECT(1);
 #ifdef HAVE_LANGINFO_CODESET
-    utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
+    p = nl_langinfo(CODESET);
+    if(streql(p, "UTF-8")) known_to_be_utf8 = utf8locale =TRUE;
+    if(streql(p, "ISO-8859-1")) known_to_be_latin1 = latin1locale =TRUE;
 #endif
 #ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
 #endif
 #ifdef Win32
     {
-	char *ctype = setlocale(LC_CTYPE, NULL), *p;
+	char *ctype = setlocale(LC_CTYPE, NULL);
 	p = strrchr(ctype, '.');
 	if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 1252;
+	/* Not 100% correct */
+	known_to_be_latin1 = latin1locale = (localeCP == 1252);
     }
 #endif
 #if defined(Win32) && defined(SUPPORT_UTF8)

@@ -196,6 +196,7 @@ static SEXP duplicate1(SEXP s)
 	PROTECT(t = allocString(strlen(CHAR(s))));
 	strcpy(CHAR(t), CHAR(s));
 	DUPLICATE_ATTRIB(t, s);
+	markKnown(t, s);
 	UNPROTECT(2);
 	break;
     case EXPRSXP:

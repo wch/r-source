@@ -595,7 +595,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"select.list",	do_selectlist,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"aqua.custom.print", do_aqua_custom_print, 0, 11, 2,   {PP_FUNCALL, PREC_FN,   0}},
 #endif
-{"parse",	do_parse,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"parse",	do_parse,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"save",	do_save,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"saveToConn",	do_saveToConn,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"load",	do_load,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -660,7 +660,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"rank",	do_rank,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"missing",	do_missing,	1,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"nargs",	do_nargs,	1,	0,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"scan",	do_scan,	0,	11,	17,	{PP_FUNCALL, PREC_FN,	0}},
+{"scan",	do_scan,	0,	11,	18,	{PP_FUNCALL, PREC_FN,	0}},
 {"count.fields",do_countfields,	0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"readTableHead",do_readtablehead,0,	11,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"t.default",	do_transpose,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

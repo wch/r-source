@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -122,13 +122,14 @@ SEXP attribute_hidden do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     nmatches = 0;
     for (i = 0 ; i < n ; i++) {
 	int rc, ovector;
-	char *s = CHAR(STRING_ELT(vec, i));
-	if (STRING_ELT(vec,i) == NA_STRING){
+	char *s;
+	if (STRING_ELT(vec, i) == NA_STRING) {
 	    INTEGER(ind)[i] = 0;
 	    continue;
 	}
+	s = translateChar(STRING_ELT(vec, i));
 #ifdef SUPPORT_UTF8
-	if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i)))) {
+	if(!useBytes && mbcslocale && !mbcsValid(s)) {
 	    warningcall(call, _("input string %d is invalid in this locale"),
 			i+1);
 	    continue;
@@ -356,7 +357,7 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    continue;
 	}
 	/* end NA handling */
-	s = CHAR(STRING_ELT(vec, i));
+	s = translateChar(STRING_ELT(vec, i));
 	t = CHAR(STRING_ELT(rep, 0));
 	nns = ns = strlen(s);
 
@@ -404,7 +405,7 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    SET_STRING_ELT(ans, i, allocString(ns));
 	    offset = 0;
-	    s = CHAR(STRING_ELT(vec, i));
+	    s = translateChar(STRING_ELT(vec, i));
 	    t = CHAR(STRING_ELT(rep, 0));
 	    uu = u = CHAR(STRING_ELT(ans, i));
 	    eflag = 0; last_end = -1;
@@ -444,6 +445,7 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		*u++ = s[j];
 	    *u = '\0';
 	}
+	markKnown(STRING_ELT(ans, i), STRING_ELT(vec, i));
     }
     (pcre_free)(re_pe);
     (pcre_free)(re_pcre);
@@ -497,13 +499,14 @@ SEXP attribute_hidden do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0 ; i < n ; i++) {
 	int rc, ovector[3];
-	char *s = CHAR(STRING_ELT(text, i));
+	char *s;
 	if (STRING_ELT(text,i) == NA_STRING){
 	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = R_NaInt;
 	    continue;
 	}
+	s = translateChar(STRING_ELT(text, i));
 #ifdef SUPPORT_UTF8
-	if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i)))) {
+	if(!useBytes && mbcslocale && !mbcsValid(s)) {
 	    warningcall(call, _("input string %d is invalid in this locale"),
 			i+1);
 	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
@@ -522,13 +525,13 @@ SEXP attribute_hidden do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		   use chars instead */
 		R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
 		if(st > 0) {
-		    memcpy(cbuff.data, CHAR(STRING_ELT(text, i)), st);
+		    memcpy(cbuff.data, s, st);
 		    cbuff.data[st] = '\0';
 		    INTEGER(ans)[i] = 1 + mbstowcs(NULL, cbuff.data, 0);
 		    if(INTEGER(ans)[i] <= 0) /* an invalid string */
 			INTEGER(ans)[i] = NA_INTEGER;
 		}
-		memcpy(cbuff.data, CHAR(STRING_ELT(text, i))+st, mlen);
+		memcpy(cbuff.data, s+st, mlen);
 		cbuff.data[mlen] = '\0';
 		INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
 		if(INTEGER(matchlen)[i] < 0) /* an invalid string */
@@ -592,7 +595,7 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     matchlenbuf = PROTECT(allocVector(INTSXP, bufsize));
 
     for (i = 0 ; i < n ; i++) {
-	char *s = CHAR(STRING_ELT(text, i));
+	char *s;
         int j, foundAll, foundAny, matchIndex, start;
         foundAll = foundAny = start = 0;
         matchIndex = -1;
@@ -605,8 +608,9 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
             UNPROTECT(2);
 	    continue;
 	}
+	s = translateChar(STRING_ELT(text, i));
 #ifdef SUPPORT_UTF8
-	if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i)))) {
+	if(!useBytes && mbcslocale && !mbcsValid(s)) {
 	    warningcall(call, _("input string %d is invalid in this locale"),
 			i+1);
             PROTECT(ans = allocVector(INTSXP, 1)); 
@@ -657,7 +661,7 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
                        use chars instead */
                     R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
                     if(st > 0) {
-                        memcpy(cbuff.data, CHAR(STRING_ELT(text, i)), st);
+                        memcpy(cbuff.data, s, st);
                         cbuff.data[st] = '\0';
                         INTEGER(matchbuf)[matchIndex] = 1 + mbstowcs(NULL, cbuff.data, 0);
                         if(INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
@@ -665,7 +669,7 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
                             foundAll = 1; /* if we get here, we are done */
                         }
                     }
-                    memcpy(cbuff.data, CHAR(STRING_ELT(text, i))+st, mlen);
+                    memcpy(cbuff.data, s+st, mlen);
                     cbuff.data[mlen] = '\0';
                     INTEGER(matchlenbuf)[matchIndex] = mbstowcs(NULL, cbuff.data, 0);
                     if(INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
