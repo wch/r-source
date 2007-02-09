@@ -5,7 +5,8 @@
   Read some or all text lines from a connection.
 }
 \usage{
-readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
+readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
+          encoding = "unknown")
 }
 \arguments{
   \item{con}{a connection object or a character string.}
@@ -15,6 +16,9 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE)
   \item{ok}{logical.  Is it OK to reach the end of the connection before
     \code{n > 0} lines are read?  If not, an error will be generated.}
   \item{warn}{logical.  Warn if a text file is missing a final EOL.}
+  \item{encoding}{encoding to be assumed for input strings.  It is
+    used to mark character strings as known to be in
+    Latin-1 or UTF-8: it is not used to re-encode the input.}
 }
 \details{
   If the \code{con} is a character string, the function calls
