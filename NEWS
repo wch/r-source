@@ -554,6 +554,9 @@ BUG FIXES
 	vector, which was not compatible with S: it now copies lists
 	element-by-element.
 
+    o	supsmu(periodic = TRUE) could segfault.  (PR#9502, detection
+	and patch by Bill Dunlap.)
+
 
 
 

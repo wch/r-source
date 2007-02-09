@@ -4575,3 +4575,17 @@ stopifnot(dim(z) == c(1, 3))
 (z <- rbind(x,x))
 stopifnot(dim(z) == c(0, 3))
 ## variously failed or gave zero-column data frame in 2.4.1
+
+
+## segfault in supsmu (PR#9502)
+set.seed(1)
+xx <- runif(29000)
+yy <- rnorm(29000)
+span <- 0.49
+i <- 1
+while(i < 200){
+   # cat(i,"\n")
+   int <- supsmu(xx,yy,periodic=TRUE,span=span)
+   i <-i+1
+}
+## segfaulted in 2.4.1
