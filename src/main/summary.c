@@ -938,3 +938,155 @@ SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
     errorcall(call, _("not all arguments have the same length"));
     return R_NilValue; /* -Wall */
 }
+
+/* op = 0 is pmin.int, op = 1 is pmax.int */
+SEXP attribute_hidden do_pmin(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP a, x, ans;
+    int i, n, len, narm;
+    SEXPTYPE type, anstype;
+    
+    narm = asLogical(CAR(args));
+    if(narm == NA_LOGICAL)
+	errorcall(call, _("invalid '%s' value"), "na.rm");
+    args = CDR(args);
+    x = CAR(args);
+    if(x == R_NilValue)
+	errorcall(call, _("no arguments"));
+    anstype = TYPEOF(x);
+    switch(anstype) {
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case STRSXP:
+	break;
+    default:
+	errorcall(call, _("invalid input type"));
+    }
+    len = LENGTH(x);
+    a = CDR(args);
+    if(CAR(a) == R_NilValue) return x;
+    
+    for(; a != R_NilValue; a = CDR(a)) {
+	x = CAR(a);
+	type = TYPEOF(x);
+	switch(type) {
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case STRSXP:
+	    break;
+	default:
+	    errorcall(call, _("invalid input type"));
+	}
+	if(type > anstype) anstype = type;
+	n = LENGTH(x);
+	if ((len > 0) ^ (n > 0))
+	    errorcall(call, _("cannot mix 0-length vectors with others"));
+	len = imax2(len, n);
+    }
+    if(anstype == LGLSXP) anstype = INTSXP;
+    if(len == 0) return allocVector(anstype, 0);
+
+    PROTECT(ans = allocVector(anstype, len));
+    switch(anstype) {
+    case INTSXP:
+    {
+	int *r,  *ra = INTEGER(ans), tmp;
+	PROTECT(x = coerceVector(CAR(args), anstype));
+	r = INTEGER(x);
+	n = LENGTH(x);
+	for(i = 0; i < len; i++) ra[i] = r[i % n];
+	UNPROTECT(1);
+	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	    x = CAR(a);
+	    PROTECT(x = coerceVector(CAR(a), anstype));
+	    n = length(x);
+	    r = INTEGER(x);
+	    for(i = 0; i < len; i++) {
+		tmp = r[i % n];
+		if(PRIMVAL(op) == 1) {
+		    if( (narm && ra[i] == NA_INTEGER) ||
+			(ra[i] != NA_INTEGER && tmp != NA_INTEGER 
+			 && tmp > ra[i]) ||
+			(!narm && tmp == NA_INTEGER) )
+			ra[i] = tmp;
+		} else {
+		    if( (narm && ra[i] == NA_INTEGER) ||
+			(ra[i] != NA_INTEGER && tmp != NA_INTEGER 
+			 && tmp < ra[i]) ||
+			(!narm && tmp == NA_INTEGER) )
+			ra[i] = tmp;
+		}
+	    }
+	    UNPROTECT(1);
+	}
+    }
+	break;
+    case REALSXP:
+    {
+	double *r, *ra = REAL(ans), tmp;
+	PROTECT(x = coerceVector(CAR(args), anstype));
+	r = REAL(x);
+	n = LENGTH(x);
+	for(i = 0; i < len; i++) ra[i] = r[i % n];
+	UNPROTECT(1);
+	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	    PROTECT(x = coerceVector(CAR(a), anstype));
+	    n = length(x);
+	    r = REAL(x);
+	    for(i = 0; i < len; i++) {
+		tmp = r[i % n];
+		if(PRIMVAL(op) == 1) {
+		    if( (narm && ISNAN(ra[i])) ||
+			(!ISNAN(ra[i]) && !ISNAN(tmp) && tmp > ra[i]) ||
+			(!narm && ISNAN(tmp)) )
+			ra[i] = tmp;
+		} else {
+		    if( (narm && ISNAN(ra[i])) ||
+			(!ISNAN(ra[i]) && !ISNAN(tmp) && tmp < ra[i]) ||
+			(!narm && ISNAN(tmp)) )
+			ra[i] = tmp;
+		}
+	    }
+	    UNPROTECT(1);
+	}
+    }
+	break;
+    case STRSXP:
+    {
+	PROTECT(x = coerceVector(CAR(args), anstype));
+	n = LENGTH(x);
+	for(i = 0; i < len; i++) SET_STRING_ELT(ans, i, STRING_ELT(x, i % n));
+	UNPROTECT(1);
+	for(a = CDR(args); a != R_NilValue; a = CDR(a)) {
+	    SEXP tmp, t2;
+	    PROTECT(x = coerceVector(CAR(a), anstype));
+	    n = length(x);
+	    for(i = 0; i < len; i++) {
+		tmp = STRING_ELT(x, i % n);
+		t2 = STRING_ELT(ans, i);
+		if(PRIMVAL(op) == 1) {
+		    if( (narm && t2 == NA_STRING) ||
+			(t2 != NA_STRING && tmp != NA_STRING 
+			 && STRCOLL(CHAR(tmp), CHAR(t2)) > 0) ||
+			(!narm && tmp == NA_STRING) )
+			SET_STRING_ELT(ans, i, tmp);
+		} else {
+		    if( (narm && t2 == NA_STRING) ||
+			(t2 != NA_STRING && tmp != NA_STRING 
+			 && STRCOLL(CHAR(tmp), CHAR(t2)) < 0) ||
+			(!narm && tmp == NA_STRING) )
+			SET_STRING_ELT(ans, i, tmp);
+		}
+	    }
+	    UNPROTECT(1);
+	}
+    }
+	break;
+    default:
+	break;
+    }
+    UNPROTECT(1);
+    return ans;
+}
