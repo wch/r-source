@@ -60,7 +60,7 @@ prop.test(x, n, p = NULL,
   underlying proportion with confidence level as specified by
   \code{conf.level} and clipped to \eqn{[0,1]} is returned.  Continuity
   correction is used only if it does not exceed the difference between
-  sample and null proportions in absolute value. The confidence interval 
+  sample and null proportions in absolute value. The confidence interval
   is computed by inverting the score test.
 
   Finally, if \code{p} is given and there are more than 2 groups, the
@@ -98,12 +98,12 @@ prop.test(x, n, p = NULL,
 
   Newcombe R.G. (1998) Two-Sided Confidence Intervals for the Single
   Proportion: Comparison of Seven Methods.
-  \emph{Statistics in Medicine}, \bold{17} 857--872.
+  \emph{Statistics in Medicine} \bold{17}, 857--872.
 
   Newcombe R.G. (1998) Interval Estimation for the Difference Between
   Independent Proportions: Comparison of Eleven Methods.
-  \emph{Statistics in Medicine}, \bold{17} 873--890.
-}  
+  \emph{Statistics in Medicine} \bold{17}, 873--890.
+}
 \seealso{\code{\link{binom.test}} for an \emph{exact} test of a binomial
   hypothesis.}
 \examples{
