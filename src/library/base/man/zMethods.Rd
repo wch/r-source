@@ -34,6 +34,8 @@
 
   \code{\link{c}},%           % do_c()               [bind.c]
   \code{\link{unlist}},%      % do_unlist()          [bind.c]
+  \code{\link{cbind}},%       not via DispatchOrEval [bind.c]
+  \code{\link{rbind}},
 
   \code{\link{as.character}},
   \code{\link{as.vector}},%   % do_asvector()        [coerce.c]
@@ -44,10 +46,10 @@
   \code{\link{is.numeric}},
   \code{\link{rep}} and%                             [seq.c]
   \code{\link{seq.int}}
-  (which dispatches methods for \code{"seq"}.%       [seq.c]
+  (which dispatches methods for \code{"seq"}).%      [seq.c]
 
   In addition, \code{is.name} is a synonym for \code{is.symbol} and
-  dispatches methods for the latter.  
+  dispatches methods for the latter.
 
   Note that most of the \link{group generic} functions are also
   internal/primitive and allow methods to be written for them.
