@@ -20,10 +20,6 @@ value is undefined.
 \code{is.null} returns \code{TRUE} if its argument
 is \code{NULL} and \code{FALSE} otherwise.
 }
-\details{
-  \code{is.null} is generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.
-}
 \arguments{
   \item{x}{an object to be tested or coerced.}
   \item{\dots}{ignored.}
