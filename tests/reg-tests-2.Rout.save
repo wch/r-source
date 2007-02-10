@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-01-24 r40564)
+R version 2.5.0 Under development (unstable) (2007-02-10 r40685)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -3173,13 +3173,13 @@ Error in `[.data.frame`(x, 1, c("a", "c")) :
 > meth2gen("data.frame")
  [1] $<-           Math          Ops           Summary       [            
  [6] [<-           [[            [[<-          aggregate     as.data.frame
-[11] as.list       as.matrix     by            dim           dimnames     
-[16] dimnames<-    duplicated    edit          format        formula      
-[21] head          is.na         mean          merge         na.exclude   
-[26] na.omit       plot          print         prompt        row.names    
-[31] row.names<-   rowsum        split         split<-       stack        
-[36] str           subset        summary       t             tail         
-[41] transform     unique        unstack      
+[11] as.list       as.matrix     by            cbind         dim          
+[16] dimnames      dimnames<-    duplicated    edit          format       
+[21] formula       head          is.na         mean          merge        
+[26] na.exclude    na.omit       plot          print         prompt       
+[31] rbind         row.names     row.names<-   rowsum        split        
+[36] split<-       stack         str           subset        summary      
+[41] t             tail          transform     unique        unstack      
 > meth2gen("dendrogram")
 [1] [[         cophenetic cut        labels     plot       print      reorder   
 [8] rev        str       

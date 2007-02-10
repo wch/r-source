@@ -339,7 +339,7 @@ NEW FEATURES
 
     o	R now attempts to keep track of character strings which are
 	known to be in Latin-1 or UTF-8 and print or plot them
-	appropriately in other locales.  This is principally intended
+	appropriately in other locales.  This is primarily intended
 	to make it possible to use data in Western European languages
 	in both Latin-1 and UTF-8 locales.  Currently scan(),
 	read.table(), readLines(), parse() and source() allow
@@ -525,7 +525,7 @@ BUG FIXES
 
     o	warning() was truncating messages at
 	getOption("warning.length") - 1 (not as documented), with no
-	indication.
+	indication.  It now appends '[... truncated]'.
 
     o	Stangle/Sweave were throwing spurious warnings if options
 	'result' or 'strip.white' were unset.
@@ -567,6 +567,9 @@ BUG FIXES
     o	pmax/pmin called with only logical arguments did not coerce to
 	numeric, although they were documented to do so (as max/min
 	do).
+
+    o	methods() did not know that cbind() and rbind() are internally
+	generic.
 
 
 
