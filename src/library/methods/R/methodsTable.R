@@ -503,18 +503,22 @@
 
 .UseMethodsTables <- TRUE
 
-.UsingMethodsTables <- function(onOff = .UseMethodsTables, where  = .methodsNamespace) {
-  prev <- .UseMethodsTables
-  if(nargs()) {
-    onOff <- as.logical(onOff)
-    if(identical(onOff, TRUE) || identical(onOff, FALSE))
-      .assignOverBinding(".UseMethodsTables",  onOff, where = where, FALSE)
-    else
-      stop(gettextf("Invalid argument to .UsingMethodsTables:  must be TRUE or FALSE %s", onOff))
-  }
-  prev
+.UsingMethodsTables <- function(onOff = .UseMethodsTables, where = .methodsNamespace)
+{
+    prev <- .UseMethodsTables
+    if(nargs()) {
+	onOff <- as.logical(onOff)	# TRUE, FALSE or NA
+	if(!is.na(onOff))
+	    .assignOverBinding(".UseMethodsTables", onOff, where = where, FALSE)
+	else
+	    stop(gettextf(".UsingMethodsTables: 'onOff' is not TRUE or FALSE"))
+    }
+    prev
 }
 
+## In the following, consider separate "compute" and "print" functions/methods:
+## Wish: alternative to 'classes' allow  "wild-card signature", e.g.,
+##       showMethods("coerce", signature = c("dgeMatrix", "*"))
 .showMethodsTable <- function(generic, includeDefs = FALSE, inherited = FALSE,
                               classes = NULL, showEmpty = TRUE, printTo = stdout())
 {
@@ -621,12 +625,10 @@ useMTable <- function(onOff = NA)
   methods
 }
 
-.getMethodsTable <- function(fdef, env = environment(fdef), check = TRUE,
-  inherited = FALSE) {
-    if(inherited)
-      name <- ".AllMTable"
-    else
-      name <- ".MTable"
+.getMethodsTable <- function(fdef, env = environment(fdef),
+                             check = TRUE, inherited = FALSE)
+{
+    name <- if(inherited) ".AllMTable" else ".MTable"
     if(check && !exists(name, envir = env, inherits = FALSE))
       .setupMethodsTables(fdef)
     get(name, envir = env)
@@ -686,7 +688,7 @@ useMTable <- function(onOff = NA)
     }
   }
   n <- max(sigs)
-    reset <-   sigs < n & sigs >0 # all the  sigs  for defined funs & less than max.
+    reset <- sigs < n & sigs > 0 # all the  sigs  for defined funs & less than max.
   if(any(reset)) {
     funs <- funs[reset]
     fdefs <- fdefs[reset]
@@ -786,10 +788,10 @@ outerLabels <- function(labels, new) {
 .assignMethodsMetaTable <- function(mlist, generic, where, overwrite = TRUE) {
     tname <- .TableMetaName(generic@generic, generic@package)
     if(overwrite || !exists(tname, envir = where, inherits = FALSE)) {
-      table <- .mlistAddToTable(generic, mlist)
-      assign(tname, table, envir = where)
+        table <- .mlistAddToTable(generic, mlist)
+        assign(tname, table, envir = where)
     }
-  }
+}
 
 .getGenericSigArgs <- function(fdef, env = environment(fdef), check = TRUE) {
     if(check && !exists(".SigLength", envir = env, inherits = FALSE))
@@ -803,13 +805,11 @@ outerLabels <- function(labels, new) {
 
 listFromMethods <- function(generic, where, table) {
     fdef <- getGeneric(generic)
-    if(missing(table)) {
-        if(missing(where))
-          table <- .getMethodsTable(fdef)
-        else
-          table <-  get(.TableMetaName(fdef@generic, fdef@package),
-                        envir = as.environment(where), inherits = FALSE)
-    }
+    if(missing(table))
+	table <-
+	    if(missing(where)) .getMethodsTable(fdef)
+	    else get(.TableMetaName(fdef@generic, fdef@package),
+		     envir = as.environment(where), inherits = FALSE)
     fev <- environment(fdef)
     nSigArgs <- .getGenericSigLength(fdef, fev)
     names <- objects(table, all=TRUE)

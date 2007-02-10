@@ -5,7 +5,7 @@
 \description{
   Class definitions are objects that contain the formal definition of a
   class of R objects, usually referred to as an S4 class, to
-  distinguish them from the informal S3 classes. 
+  distinguish them from the informal S3 classes.
   This document gives an overview of S4 classes; for
   details of the  class representation objects themselves, see
   \code{class?classRepresentation} (\code{\link{classRepresentation-class}}).
@@ -23,7 +23,7 @@
         Each slot in an object is a component of the object;
         like components (that is, elements) of a
       list, these may be extracted and set, using the
-      function \code{\link{slot}()} or more often the operator 
+      function \code{\link{slot}()} or more often the operator
         \code{"\link{@}"}.  However, they
       differ from list components in important ways.
       First, slots can only be referred to by name, not by position,
@@ -136,8 +136,9 @@
       for the class.  This must have values for all the slots defined by
       the class definition.
       By default, these are the prototypes of all
-      the slot classes, if those are not virtual classes.  However,  the definition of the
-      class can specify any valid object for any of the slots.
+      the slot classes, if those are not virtual classes.  However, the
+      definition of the class can specify any valid object for any of
+      the slots.
 
       There are a number of \dQuote{basic} classes, corresponding to the
       ordinary kinds of data occurring in R.  For example,

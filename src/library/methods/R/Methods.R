@@ -619,7 +619,7 @@ selectMethod <-
         if(length(signature) < nsig)
             signature[(length(signature)+1):nsig] <- "ANY"
         if(missing(useInherited))
-            useInherited <- is.na(match(signature, "ANY"))
+	    useInherited <- is.na(match(signature, "ANY"))# -> vector
         method <- .findMethodInTable(signature, mlist, fdef)
 	if(is.null(method)) {
 	    methods <-
