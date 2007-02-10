@@ -34,6 +34,8 @@
 ### Used by text, mtext, strwidth, strheight, title, axis,
 ### L_text and L_textBounds, all of which
 ### coerce SYMSXPs and LANGSXPs to EXPRSXPs
+### We don't want to use as.expression here as that is generic
+### even though is.language no longer is
 
 ### Possibly later have
 ### if (is.language(x)) x
@@ -42,7 +44,4 @@
 ### else x
 
 as.graphicsAnnot <- function(x)
-    ## avoid is.language as it is generic
-    if(typeof(x) %in% c("expression", "language", "symbol")
-       || !is.object(x)) x else as.character(x)
-
+    if(is.language(x) || !is.object(x)) x else as.character(x)
