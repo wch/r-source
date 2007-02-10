@@ -349,6 +349,10 @@ NEW FEATURES
 	New function Encoding() can read or set the declared encodings
 	for a character vector.
 
+    o	New faster internal functions pmax.int() and pmin.int() for
+	inputs which are atomic vectors without classes (called by
+	pmax/pmin where applicable).
+
 
 DEPRECATED & DEFUNCT
 
@@ -559,6 +563,10 @@ BUG FIXES
 
     o	supsmu(periodic = TRUE) could segfault.  (PR#9502, detection
 	and patch by Bill Dunlap.)
+
+    o	pmax/pmin called with only logical arguments did not coerce to
+	numeric, although they were documented to do so (as max/min
+	do).
 
 
 

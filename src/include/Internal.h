@@ -347,6 +347,7 @@ SEXP do_plot_new(SEXP, SEXP, SEXP, SEXP);
 SEXP do_plot_window(SEXP, SEXP, SEXP, SEXP);
 SEXP do_plot_xy(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pmatch(SEXP, SEXP, SEXP, SEXP);
+SEXP do_pmin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polygon(SEXP, SEXP, SEXP, SEXP);
 SEXP do_polyroot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pos2env(SEXP, SEXP, SEXP, SEXP);
