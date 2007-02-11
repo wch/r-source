@@ -139,4 +139,4 @@
 .Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
-message("Saving namespace image ...", domain = NA)
+## message("Saving namespace image ...", domain = NA)
