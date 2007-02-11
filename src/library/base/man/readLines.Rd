@@ -40,6 +40,9 @@ readLines(con = stdin(), n = -1, ok = TRUE, warn = TRUE,
 }
 \value{
   A character vector of length the number of lines read.
+
+  The elements of the result have a declared encoding if \code{encoding} is
+  \code{"latin1"} or \code{"UTF-8"},
 }
 \note{
   The default connection, \code{\link{stdin}}, may be different from

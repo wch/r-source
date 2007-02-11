@@ -72,6 +72,9 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   records corresponding to each element.
   
   A syntax error (including an incomplete expression) will throw an error.
+
+  Character strings in the result will have a declared encoding if
+  \code{encoding} is \code{"latin1"} or \code{"UTF-8"}.
 }
 \examples{
 cat("x <- c(1,4)\n  x ^ 3 -10 ; outer(1:7,5:9)\n", file="xyz.Rdmped")

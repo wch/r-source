@@ -196,6 +196,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   any) as \code{what}.
 
   Otherwise, a vector of the type of \code{what}.
+
+  Character strings in the result will have a declared encoding if
+  \code{encoding} is \code{"latin1"} or \code{"UTF-8"}.
 }
 \note{
   The default for \code{multi.line} differs from S.  To read one record

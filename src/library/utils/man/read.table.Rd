@@ -180,6 +180,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{header = TRUE} results in a 0-row data frame.  Note that
   in either case tthe columns will logical unless \code{colClasses} was
   supplied.
+
+  Character strings in the result (including factor levels) will have a
+  declared encoding if \code{encoding} is \code{"latin1"} or
+  \code{"UTF-8"}.
 }
 \details{
   This function is the principal means of reading tabular data into \R.

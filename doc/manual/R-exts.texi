@@ -2166,7 +2166,7 @@ encodings for French locales, the most common ones being @samp{CP1251}
 (Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-9} (latin-9
 which includes the Euro), and @samp{UTF-8}.  For characters in the
 French language the first three agree, but they do not agree with
-@samp{UTF-8}. Further, you (or different users) can run @R{} in
+@samp{UTF-8}.  Further, you (or different users) can run @R{} in
 different locales in different sessions, say @samp{fr_CA.utf8} one day
 and @samp{fr_CH.iso88591} the next.  In this scenario the safest thing
 to do is to keep the French text on a file in @samp{ISO
@@ -2180,9 +2180,12 @@ data is needed).  Then the @samp{encoding} argument to @samp{source},
 may not be valid if loaded into another with a different locale.
 
 As from @R{} 2.5.0, @R{} files will be re-encoded to the locale used at
-installation if the @file{DESCRIPTION} file specifies an encoding.
-This will enable e.g.@: packages with French messages to be used on
-either latin-1 or UTF-8 systems.
+installation if the @file{DESCRIPTION} file specifies an encoding.  This
+will enable e.g.@: packages with French messages to be used on either
+latin-1 or UTF-8 systems.  Also, if character data are marked as being in
+Latin-1 or UTF (see the help for @code{Encoding}) and then @code{save}d
+to a @file{.rda} file, @R{} 2.5.0 and later will convert the data when
+plotting or printing.
 
 @node Diagnostic messages, Localization, Writing portable packages, Creating R packages
 @section Diagnostic messages

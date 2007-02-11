@@ -22,6 +22,14 @@ Encoding(x) <- value
   \code{"latin1"}, \code{"UTF-8"} or \code{"unknown"}, or set, when
   \code{value} is recycled as needed and other values are silently
   treated as \code{"unknown"}.
+
+  There are other ways for character strings to acquire a declared
+  encoding apart from explicitly setting it.  Functions
+  \code{\link{scan}}, \code{\link{read.table}}, \code{\link{readLines}},
+  \code{\link{parse}} and  \code{\link{source}} have an \code{encoding}
+  argument that is used to declare encodings, \code{\link{iconv}}
+  declares encodings from its \code{from} argument, and console input in
+  suitable locales is also declared.
 }
 \value{
   A character vector.
