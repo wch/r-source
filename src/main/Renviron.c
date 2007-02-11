@@ -45,7 +45,7 @@
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h> /* for PATH_MAX */
 #include <Rinterface.h>
-#include <FileIO.h>
+#include <Fileio.h>
 
 /* remove leading and trailing space */
 static char *rmspace(char *s)

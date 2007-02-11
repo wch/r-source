@@ -267,7 +267,7 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
 
 SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    char *filename;
+    SEXP filename;
     int append_mode, mem_profiling;
     double dinterval;
 
