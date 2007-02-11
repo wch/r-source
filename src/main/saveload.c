@@ -1970,7 +1970,7 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     if (ep == NA_LOGICAL)
 	error(_("invalid value for '%s'"), "eval.promises");
 
-    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0))), "wb");
+    fp = RC_fopen(STRING_ELT(CADR(args), 0), "wb", TRUE);
     if (!fp)
 	errorcall(call, _("unable to open file"));
 
@@ -2077,7 +2077,7 @@ SEXP attribute_hidden do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "envir");
 
     /* Process the saved file to obtain a list of saved objects. */
-    fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(fname, 0))), "rb");
+    fp = RC_fopen(STRING_ELT(fname, 0), "rb", TRUE);
     if (!fp)
 	errorcall(call, _("unable to open file"));
 

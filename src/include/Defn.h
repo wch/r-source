@@ -1079,6 +1079,9 @@ size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
 size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #endif
 
+FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
+
+
 /* From localecharset.c */
 extern char * locale2charset(const char *);
 

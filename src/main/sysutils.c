@@ -101,6 +101,51 @@ FILE *R_fopen(const char *filename, const char *mode)
     return(filename ? fopen(filename, mode) : NULL );
 }
 
+/* The point of this function is to allow file names in foreign
+   character sets.  On Unix-alikes in a UTF-8 locale all that is
+   needed is to convert file names to UTF-8, since they will be stored
+   in UTF-8.  For other locales, it seems that there is no way to specify
+   a file name in UTF-8.
+
+   On NT-based versions of Windows, file names are stored in 'Unicode'
+   (UCS-2), and _wfopen is provided to access them by UCS-2 names.
+*/
+
+#if 0 && defined(Win32)
+FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
+{
+    wchar_t filename[MAX_PATH+1], wmode[10];
+    void *obj;
+    char *from = "", *inbuf, *outbuf;
+    size_t inb, outb, res;
+    
+    if(IS_LATIN1(fn)) from = "latin1";
+    if(IS_UTF8(fn)) from = "UTF=8";
+    obj = Riconv_open("UCS-2LE", from);
+    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+
+    if(expand) inbuf = R_ExpandFileName(CHAR(fn)); else inbuf = CHAR(fn);
+
+    inb = strlen(inbuf)+1; outb = 2*(MAX_PATH+1);
+    outbuf = (char *) filename;
+    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
+    Riconv_close(obj);
+    if(res == -1 || inb > 0) error(_("file name conversion problem"));
+
+    mbstowcs(wmode, mode, 10);
+    return _wfopen(filename, wmode);
+}
+
+#else
+FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand)
+{
+    char *filename = translateChar(fn);
+    if(!filename) return NULL;
+    if(expand) return fopen(R_ExpandFileName(filename), mode);
+    else return fopen(filename, mode);
+}
+#endif
+
 /*
  *  SYSTEM INFORMATION
  */

@@ -333,15 +333,15 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 # define APPENDBUFSIZE 512
 #endif
 
-static int R_AppendFile(char *file1, char *file2)
+static int R_AppendFile(SEXP file1, SEXP file2)
 {
     FILE *fp1, *fp2;
     char buf[APPENDBUFSIZE];
     int nchar, status = 0;
-    if((fp1 = R_fopen(R_ExpandFileName(file1), "ab")) == NULL) {
+    if((fp1 = RC_fopen(file1, "ab", TRUE)) == NULL) {
         return 0;
     }
-    if((fp2 = R_fopen(R_ExpandFileName(file2), "rb")) == NULL) {
+    if((fp2 = RC_fopen(file2, "rb", TRUE)) == NULL) {
         fclose(fp1);
         return 0;
     }
@@ -384,12 +384,11 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	FILE *fp1, *fp2;
 	char buf[APPENDBUFSIZE];
 	int nchar, status = 0;
-	if(!(fp1 = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(f1, 0))), "ab")))
+	if(!(fp1 = RC_fopen(STRING_ELT(f1, 0), "ab", TRUE)))
 	   goto done;
 	for(i = 0; i < n; i++) {
 	    status = 0;
-	    if(!(fp2 = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(f2, i))),
-			       "rb"))) continue;
+	    if(!(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
 	    while((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
 		if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
 		    goto append_error;
@@ -413,8 +412,7 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 		LOGICAL(ans)[i] = 0;
 	    else
 		LOGICAL(ans)[i] =
-		    R_AppendFile(CHAR(STRING_ELT(f1, i%n1)),
-				 CHAR(STRING_ELT(f2, i%n2)));
+		    R_AppendFile(STRING_ELT(f1, i%n1), STRING_ELT(f2, i%n2));
 	}
     }
 done:
@@ -436,7 +434,7 @@ SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	LOGICAL(ans)[i] = 0;
 	if (STRING_ELT(fn, i) != R_NilValue &&
-	    (fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), "w"))
+	    (fp = RC_fopen(STRING_ELT(fn, i), "w", TRUE))
 	    != NULL) {
 	    LOGICAL(ans)[i] = 1;
 	    fclose(fp);

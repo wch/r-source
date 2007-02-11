@@ -353,7 +353,7 @@ static void save(button b)
     p = buf + strlen(buf) - 2;
     if(!strncmp(p, ".*", 2)) *p = '\0';
 
-    fp = fopen(buf, "w");
+    fp = R_fopen(buf, "w");
     if(fp == NULL) {
 	MessageBox(0, "Cannot open file to fp",
 		   "Configuration Save Error",

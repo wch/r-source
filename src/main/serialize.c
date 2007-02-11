@@ -2048,10 +2048,10 @@ static SEXP appendRawToFile(SEXP file, SEXP bytes)
 	error(_("not a proper raw vector"));
 #ifdef HAVE_WORKING_FTELL
     /* Windows' ftell returns position 0 with "ab" */
-    if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "ab")) == NULL)
+    if ((fp = R_fopen(CHAR(STRING_ELT(file, 0)), "ab")) == NULL)
 	error(_("file open failed"));
 #else
-    if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "r+b")) == NULL)
+    if ((fp = R_fopen(CHAR(STRING_ELT(file, 0)), "r+b")) == NULL)
 	 error(_("file open failed"));
     fseek(fp, 0, SEEK_END);
 #endif
@@ -2070,7 +2070,7 @@ static SEXP appendRawToFile(SEXP file, SEXP bytes)
     return val;
 }
 
-/* Experimental interface to cache the pkg.rdb files */
+/* Interface to cache the pkg.rdb files */
 
 #define NC 100
 static int used = 0;
@@ -2129,7 +2129,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 
     if(icache >= 0) {
 	strcpy(names[icache], cfile);
-	if ((fp = fopen(cfile, "rb")) == NULL)
+	if ((fp = R_fopen(cfile, "rb")) == NULL)
 	    error(_("open failed on %s"), cfile);
 	if (fseek(fp, 0, SEEK_END) != 0) {
 	    fclose(fp);
@@ -2148,7 +2148,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 	if (filelen != in) error(_("read failed on %s"), cfile);
 	memcpy(RAW(val), ptr[icache]+offset, len);
     } else {
-	if ((fp = fopen(cfile, "rb")) == NULL)
+	if ((fp = R_fopen(cfile, "rb")) == NULL)
 	    error(_("open failed on %s"), cfile);
 	if (fseek(fp, offset, SEEK_SET) != 0) {
 	    fclose(fp);

@@ -483,7 +483,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		    newpager(wtitle, file[i], headers[i], del);
 		} else if (!strcmp(pager, "console")) {
 		    size_t len;
-		    FILE *f = fopen(file[i], "rt");
+		    FILE *f = R_fopen(file[i], "rt");
 		    if(f) {
 			while((len = fread(buf, 1, 1023, f))) {
 			    buf[len] = '\0';

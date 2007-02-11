@@ -45,6 +45,7 @@
 #include <stdlib.h> /* for setenv or putenv */
 #include <Defn.h> /* for PATH_MAX */
 #include <Rinterface.h>
+#include <FileIO.h>
 
 /* remove leading and trailing space */
 static char *rmspace(char *s)
@@ -192,7 +193,7 @@ static int process_Renviron(char *filename)
     char *s, *p, sm[BUF_SIZE], *lhs, *rhs, msg[MSG_SIZE+50];
     int errs = 0;
 
-    if (!filename || !(fp = fopen(filename, "r"))) return 0;
+    if (!filename || !(fp = R_fopen(filename, "r"))) return 0;
     snprintf(msg, MSG_SIZE+50,
 	     "\n   File %s contains invalid line(s)", filename);
 

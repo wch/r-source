@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <Fileio.h>
 
 static FILE *ff = NULL;
 static char optfl[MAX_PATH];
@@ -40,7 +41,7 @@ void optclosefile()
 int optopenfile(char *fname)
 {
     optclosefile();
-    if (!fname || !(ff=fopen(fname,"r"))) return 0;
+    if (!fname || !(ff = R_fopen(fname,"r"))) return 0;
     strcpy(optfl,fname);
     optln = 0;
     return 1;

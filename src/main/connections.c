@@ -1210,7 +1210,7 @@ static Rboolean bzfile_open(Rconnection con)
     /* regardless of the R view of the file, the file must be opened in
        binary mode where it matters */
     mode[0] = con->mode[0];
-    fp = fopen(R_ExpandFileName(con->description), mode);
+    fp = R_fopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning(_("cannot open bzip2-ed file '%s'"),
 		R_ExpandFileName(con->description));

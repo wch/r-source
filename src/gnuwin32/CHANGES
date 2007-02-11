@@ -79,6 +79,10 @@ file.access() would give an error if asking about execute permission
 on Vista: the underlying C function has been changed to be
 incompatible with POSIX and we now work around this.
 
+[Most functions which take file-name arguments now access files via
+their 'Unicode' names: this may mean that an NT-based version of Windows
+is required. Not yet active.]
+
 
 
 R 2.4.1 patched

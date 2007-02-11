@@ -27,7 +27,8 @@
 #define USE_MDI 1
 #endif
 
-#include "Defn.h"
+#include <Defn.h>
+#include <Fileio.h>
 #include <stdio.h>
 #include <Startup.h>
 extern UImode  CharacterMode;
@@ -99,7 +100,7 @@ static void editor_load_file(editor c, char *name)
     long num = 1, bufsize;
 
     /* we checked that file could be read in the caller */
-    f = fopen(name, "r");
+    f = R_fopen(name, "r");
     if (f == NULL) return;
     p->file = 1;
     strncpy(p->filename, name, MAX_PATH+1);
@@ -132,7 +133,7 @@ static void editor_save_file(editor c, char *name)
     if (name == NULL)
 	return;
     else {
-	f = fopen(name, "w");
+	f = R_fopen(name, "w");
 	if (f == NULL) {
 	    snprintf(buf, MAX_PATH+30, G_("Could not save file '%s'"), name);
 	    askok(buf);

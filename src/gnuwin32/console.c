@@ -1831,7 +1831,7 @@ void consolesavefile(console c, int pager)
         fn = askfilesave(G_("Save console contents to"), "lastsave.txt");
     show(c);
     if (fn) {
-	fp = fopen(fn, "wt");
+	fp = R_fopen(fn, "wt");
 	if (!fp) return;
 	cur = currentcursor();
 	setcursor(WatchCursor);
