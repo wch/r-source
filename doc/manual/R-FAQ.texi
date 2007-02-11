@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-02-01
+@set FAQ_DATE @value{FAQ_YEAR}-02-11
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -538,7 +538,7 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   edgy    i386   2.4.1  Vincent Goulet
 @c           
 @c vinelinux
-@c   3.2     i386   2.3.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c   3.2     i386   2.3.1  Susumu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains the following
 packages.
@@ -557,7 +557,7 @@ packages.
 @item          @tab i586   @tab 9.0/9.1/9.2/9.3/10.0/10.1 @tab Detlef Steuer
 @item          @tab x86_64 @tab 9.2/9.3/10.0/10.1 @tab Detlef Steuer
 @item Ubuntu   @tab i386   @tab dapper/edgy @tab Vincent Goulet
-@item VineLinux @tab i386 @tab 3.2 @tab Susunu Tanimura
+@item VineLinux @tab i386 @tab 3.2 @tab Susumu Tanimura
 @end multitable
 @end quotation
 
@@ -2377,6 +2377,8 @@ Johnson distributions, normal scores and generalized hypergeometric
 distributions).
 @item SwissAir
 Air quality data of Switzerland for one year in 30 min resolution.
+@item Synth
+Causal inference using the synthetic control group method.
 @item TRAMPR
 Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
 Matching Package for R.
@@ -2537,6 +2539,8 @@ Linear regression for data too large to fit in memory.
 @item bim
 Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
+@item binGroup
+Evaluation and experimental design for binomial group testing.
 @item bindata
 Generation of correlated artificial binary data.
 @item binom
@@ -3257,6 +3261,8 @@ Weighted @math{k}-nearest neighbors classification and regression.
 @item klaR
 Miscellaneous functions for classification and visualization developed
 at the Department of Statistics, University of Dortmund.
+@item klin
+Linear equations with Kronecker structure.
 @item km.ci
 Confidence intervals for the Kaplan-Meier estimator.
 @item knnFinder
@@ -3270,6 +3276,8 @@ classifier will consist of a classification tree with one such
 @math{k}-nn classifier in each leaf.
 @item knncat
 Nearest-neighbor classification with categorical variables.
+@item knnflex
+A more flexible @math{k}-NN.
 @item kohonen
 Supervised and unsupervised self-organising maps.
 @item ks
@@ -3766,6 +3774,9 @@ Regression (PCR).
 PLS analyses for genomics.
 @item pmg
 Poor Man's @acronym{GUI}.
+@item pmml
+Generate Predictive Modelling Markup Language (PMML) for various
+models.
 @item poLCA
 POlytomous variable Latent Class Analysis.
 @c <COMMENT>
