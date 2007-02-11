@@ -2125,3 +2125,66 @@ substr(x, NA, 3) <- "abc"; x
 substr(x, 1, NA) <- "AA"; x
 substr(x, 1, 2) <- NA_character_; x
 ## "" or no change in 2.4.1, except last
+
+
+## regression tests for pmin/pmax, rewritten in C for 2.5.0
+# NULL == integer(0)
+pmin(NULL, integer(0))
+pmin(integer(0), NULL)
+try(pmin(NULL, 1:3))
+
+x <- c(1, NA, NA, 4, 5)
+y <- c(2, NA, 4, NA, 3)
+pmin(x, y)
+stopifnot(identical(pmin(x, y), pmin(y, x)))
+pmin(x, y, na.rm=TRUE)
+stopifnot(identical(pmin(x, y, na.rm=TRUE), pmin(y, x, na.rm=TRUE)))
+pmax(x, y)
+stopifnot(identical(pmax(x, y), pmax(y, x)))
+pmax(x, y, na.rm=TRUE)
+stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
+
+x <- as.integer(x); y <- as.integer(y)
+pmin(x, y)
+stopifnot(identical(pmin(x, y), pmin(y, x)))
+pmin(x, y, na.rm=TRUE)
+stopifnot(identical(pmin(x, y, na.rm=TRUE), pmin(y, x, na.rm=TRUE)))
+pmax(x, y)
+stopifnot(identical(pmax(x, y), pmax(y, x)))
+pmax(x, y, na.rm=TRUE)
+stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
+
+x <- as.character(x); y <- as.character(y)
+pmin(x, y)
+stopifnot(identical(pmin(x, y), pmin(y, x)))
+pmin(x, y, na.rm=TRUE)
+stopifnot(identical(pmin(x, y, na.rm=TRUE), pmin(y, x, na.rm=TRUE)))
+pmax(x, y)
+stopifnot(identical(pmax(x, y), pmax(y, x)))
+pmax(x, y, na.rm=TRUE)
+stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
+
+# tests of classed quantities
+x <- .leap.seconds; y <- rev(x)
+x[2] <- y[2] <- x[3] <- y[4] <- NA
+format(pmin(x, y), tz="GMT")  # TZ names differ by platform
+class(pmin(x, y))
+stopifnot(identical(pmin(x, y), pmin(y, x)))
+format(pmin(x, y, na.rm=TRUE), tz="GMT")
+stopifnot(identical(pmin(x, y, na.rm=TRUE), pmin(y, x, na.rm=TRUE)))
+format(pmax(x, y), tz="GMT")
+stopifnot(identical(pmax(x, y), pmax(y, x)))
+format(pmax(x, y, na.rm=TRUE), tz="GMT")
+stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
+
+x <- as.POSIXlt(x, tz="GMT"); y <- as.POSIXlt(y, tz="GMT")
+format(pmin(x, y), tz="GMT")
+class(pmin(x, y))
+stopifnot(identical(pmin(x, y), pmin(y, x)))
+format(pmin(x, y, na.rm=TRUE), tz="GMT")
+stopifnot(identical(pmin(x, y, na.rm=TRUE), pmin(y, x, na.rm=TRUE)))
+format(pmax(x, y), tz="GMT")
+stopifnot(identical(pmax(x, y), pmax(y, x)))
+format(pmax(x, y, na.rm=TRUE), tz="GMT")
+stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
+## regresion tests
