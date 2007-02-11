@@ -571,6 +571,10 @@ BUG FIXES
     o	methods() did not know that cbind() and rbind() are internally
 	generic.
 
+    o	dim(x) <- NULL removed the names of x, but this was always
+	undocumented.  It is not clear that it is desirable but it is
+	S-compatible and relied on, so is now documented.
+
 
 
 

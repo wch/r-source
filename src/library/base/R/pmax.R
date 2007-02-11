@@ -10,8 +10,10 @@ pmax <- function (..., na.rm = FALSE)
         mmm <- .Internal(pmax(na.rm, ...))
     } else {
         mmm <- elts[[1]]
+        attr(mmm, "dim") <- NULL  # dim<- would drop names
         has.na <- FALSE
         for (each in elts[-1]) {
+            attr(each, "dim") <- NULL
             if(length(mmm) < (m <- length(each)))
                 mmm <- rep(mmm, length.out=m)
             else if(length(each) < (m <- length(mmm)))
@@ -39,8 +41,10 @@ pmin <- function (..., na.rm = FALSE)
         mmm <- .Internal(pmin(na.rm, ...))
     } else {
         mmm <- elts[[1]]
+        attr(mmm, "dim") <- NULL  # dim<- would drop names
         has.na <- FALSE
         for (each in elts[-1]) {
+            attr(each, "dim") <- NULL
             if(length(mmm) < (m <- length(each)))
                 mmm <- rep(mmm, length.out=m)
             else if(length(each) < (m <- length(mmm)))
