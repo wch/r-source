@@ -245,12 +245,12 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    f[i] = CHAR(R_BlankString);
 	if (!isNull(STRING_ELT(hd, i)))
-	    h[i] = CHAR(STRING_ELT(hd, i));
+	    h[i] = translateChar(STRING_ELT(hd, i));
 	else
 	    h[i] = CHAR(R_BlankString);
     }
     if (length(tl) >= 1 || !isNull(STRING_ELT(tl, 0)))
-	t = CHAR(STRING_ELT(tl, 0));
+	t = translateChar(STRING_ELT(tl, 0));
     else
 	t = CHAR(R_BlankString);
     if (length(pg) >= 1 || !isNull(STRING_ELT(pg, 0)))
@@ -297,7 +297,7 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		f[i] = CHAR(R_BlankString);
 	    if (!isNull(STRING_ELT(ti, i)))
-	    	title[i] = CHAR(STRING_ELT(ti, i));
+	    	title[i] = translateChar(STRING_ELT(ti, i));
 	    else
 	    	title[i] = CHAR(R_BlankString);
 	}
@@ -917,7 +917,7 @@ SEXP attribute_hidden do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isString(type) || length(type) < 1 || isNull(type))
 	error(_("invalid '%s' argument"), "type");
     strcpy(ctype, CHAR(STRING_ELT(type, 0)));
-    snprintf(topicbuf, 256, "%s\t", CHAR(STRING_ELT(topic, 0)));
+    snprintf(topicbuf, 256, "%s\t", translateChar(STRING_ELT(topic, 0)));
     ltopicbuf = strlen(topicbuf);
     npath = length(path);
     for (i = 0; i < npath; i++) {

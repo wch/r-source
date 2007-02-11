@@ -1164,6 +1164,10 @@ display bytes that are not valid in the current locale).  Many (but not
 all) of the character manipulation functions will either preserve the
 declaration or re-encode the character string.
 
+Currently quantities that refer to the OS such as file names are not
+re-encoded, as it will be necessary to use a wide-character interface to
+make this useful.
+
 When are character strings declared to be of known encoding?  One way is
 to do so directly via @code{Encoding}.  The parser declares the encoding
 if this is known, either via the @code{encoding} argument to
@@ -1174,7 +1178,8 @@ do not assume anything about files from the current locale.  Also,
 @code{iconv} marks character strings it converts to Latin-1 or UTF-8.
 
 It is not necessary to declare the encoding of ASCII strings as they
-will work in any locale, but the overhead in doing so is small.
+will work in any locale, but the overhead in doing so is small since
+they will never be passed to @command{iconv} for translation.
 
 The rationale behind considering only UTF-8 and Latin-1 is that most
 systems are capable of producing UTF-8 strings and this is the nearest
