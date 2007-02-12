@@ -44,7 +44,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x, tmpchar;
     int i, j, k, maxlen, nx, pwidth, sepw;
-    char *s, *buf;
+    char *s, *buf, *csep;
 
     checkArity(op, args);
 
@@ -63,7 +63,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(sep) || LENGTH(sep) <= 0)
 	errorcall(call, _("invalid separator"));
     sep = STRING_ELT(sep, 0);
-    sepw = strlen(CHAR(sep)); /* not LENGTH as might contain \0 */
+    csep = translateChar(sep);
+    sepw = strlen(csep); /* not LENGTH as might contain \0 */
 
     collapse = CADDR(args);
     if (!isNull(collapse))
@@ -91,7 +92,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0)
-		pwidth += strlen(CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k)));
+		pwidth += strlen(translateChar(STRING_ELT(VECTOR_ELT(x, j),
+							  i % k)));
 	}
 	pwidth += (nx - 1) * sepw;
 	tmpchar = allocString(pwidth);
@@ -99,12 +101,12 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
-		s = CHAR(STRING_ELT(VECTOR_ELT(x, j), i % k));
+		s = translateChar(STRING_ELT(VECTOR_ELT(x, j), i % k));
                 strcpy(buf, s);
 		buf += strlen(s);
 	    }
 	    if (j != nx - 1 && sepw != 0) {
-	        strcpy(buf, CHAR(sep));
+	        strcpy(buf, csep);
 		buf += sepw;
 	    }
 	}
@@ -113,10 +115,12 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Now collapse, if required. */
 
-    if(collapse != R_NilValue && (nx=LENGTH(ans)) != 0) {
+    if(collapse != R_NilValue && (nx = LENGTH(ans)) != 0) {
 	sep = STRING_ELT(collapse, 0);
-	sepw = strlen(CHAR(sep));
+	csep = translateChar(sep);
+	sepw = strlen(csep);
 	pwidth = 0;
+	/* 'ans' is already translated */
 	for (i = 0; i < nx; i++)
 	    pwidth += strlen(CHAR(STRING_ELT(ans, i)));
 	pwidth += (nx - 1) * sepw;
@@ -124,7 +128,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	buf = CHAR(tmpchar);
 	for (i = 0; i < nx; i++) {
 	    if(i > 0) {
-	        strcpy(buf, CHAR(sep));
+	        strcpy(buf, csep);
 		buf += sepw;
 	    }
 	    s = CHAR(STRING_ELT(ans, i));
@@ -137,6 +141,9 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
 	SET_STRING_ELT(ans, 0, tmpchar);
     }
+    /* We would only know the encoding of an element of the answer 
+       if we knew the encoding of all the components, so we don't
+       bother to mark it here */
     UNPROTECT(1);
     return ans;
 }
@@ -257,31 +264,40 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	       we don't actually want to encode here */
 	    char *s, *buff, *q;
 	    int b, b0, cnt = 0, j;
-	    SEXP s0;
-
+	    SEXP s0, xx;
+	    
+	    /* This is clumsy, but it saves rewriting and re-testing
+	       this complex code */
+	    PROTECT(xx = duplicate(x));
+	    for (i = 0; i < n; i++) {
+		SEXP tmp =  STRING_ELT(xx, i);
+		s = translateChar(tmp);
+		if(s != CHAR(tmp)) SET_STRING_ELT(xx, i, mkChar(s));
+	    }
+		
 	    w = wd; 
 	    if (adj != Rprt_adj_none) {
 		for (i = 0; i < n; i++)
-		    if (STRING_ELT(x, i) != NA_STRING)
-			w = imax2(w, Rstrlen(STRING_ELT(x, i), 0));
+		    if (STRING_ELT(xx, i) != NA_STRING)
+			w = imax2(w, Rstrlen(STRING_ELT(xx, i), 0));
 		    else if (na) w = imax2(w, R_print.na_width);
 	    } else w = 0;
 	    /* now calculate the buffer size needed, in bytes */
 	    for (i = 0; i < n; i++)
-		if (STRING_ELT(x, i) != NA_STRING) {
-		    il = Rstrlen(STRING_ELT(x, i), 0);
-		    cnt = imax2(cnt, LENGTH(STRING_ELT(x, i)) + imax2(0, w-il));
+		if (STRING_ELT(xx, i) != NA_STRING) {
+		    il = Rstrlen(STRING_ELT(xx, i), 0);
+		    cnt = imax2(cnt, LENGTH(STRING_ELT(xx, i)) + imax2(0, w-il));
 		} else if (na) cnt  = imax2(cnt, R_print.na_width);
 	    buff = (char *) alloca(cnt+1);
 	    R_CheckStack();
 	    PROTECT(y = allocVector(STRSXP, n));
 	    for (i = 0; i < n; i++) {
-		if(!na && STRING_ELT(x, i) == NA_STRING) {
+		if(!na && STRING_ELT(xx, i) == NA_STRING) {
 		    SET_STRING_ELT(y, i, NA_STRING);
 		} else {
 		    q = buff;
-		    if(STRING_ELT(x, i) == NA_STRING) s0 = R_print.na_string;
-		    else s0 = STRING_ELT(x, i) ;
+		    if(STRING_ELT(xx, i) == NA_STRING) s0 = R_print.na_string;
+		    else s0 = STRING_ELT(xx, i) ;
 		    s = CHAR(s0);
 		    il = Rstrlen(s0, 0);
 		    b = w - il;
@@ -298,6 +314,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	}
+	UNPROTECT(1);
 	break;
 	default:
 	    errorcall(call, _("Impossible mode ( x )")); y = R_NilValue;/* -Wall */

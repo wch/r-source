@@ -54,6 +54,7 @@ SEXP attribute_hidden do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
+    char *spat;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -101,21 +102,20 @@ SEXP attribute_hidden do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     /* end NA pattern handling */
 
+    spat = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_UTF8
     if(useBytes) ;
     else if(utf8locale) options = PCRE_UTF8;
     else if(mbcslocale)
 	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     if (igcase_opt) options |= PCRE_CASELESS;
 
     tables = pcre_maketables();
-    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr,
-			   &erroffset, tables);
-    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"),
-			    CHAR(STRING_ELT(pat, 0)));
+    re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
+    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"), spat);
 
     n = length(vec);
     ind = allocVector(LGLSXP, n);
@@ -298,6 +298,7 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     pcre *re_pcre;
     pcre_extra *re_pe;
     const unsigned char *tables;
+    char *spat, *srep;
 
     checkArity(op, args);
 
@@ -311,14 +312,16 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (useBytes == NA_INTEGER) useBytes = 0;
 
+    spat = translateChar(STRING_ELT(pat, 0));
+    srep = translateChar(STRING_ELT(rep, 0));
 #ifdef SUPPORT_UTF8
     if(useBytes) ;
     else if(utf8locale) options = PCRE_UTF8;
     else if(mbcslocale)
 	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("'pattern' is invalid in this locale"));
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(srep))
 	errorcall(call, _("'replacement' is invalid in this locale"));
 #endif
     if (length(pat) < 1 || length(rep) < 1)
@@ -328,10 +331,8 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (igcase_opt) options |= PCRE_CASELESS;
 
     tables = pcre_maketables();
-    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr,
-			   &erroffset, tables);
-    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"),
-			    CHAR(STRING_ELT(pat, 0)));
+    re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
+    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"), spat);
     re_nsub = pcre_info(re_pcre, NULL, NULL);
     re_pe = pcre_study(re_pcre, 0, &errorptr);
 
@@ -358,7 +359,7 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	/* end NA handling */
 	s = translateChar(STRING_ELT(vec, i));
-	t = CHAR(STRING_ELT(rep, 0));
+	t = srep;
 	nns = ns = strlen(s);
 
 #ifdef SUPPORT_UTF8
@@ -406,7 +407,7 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_STRING_ELT(ans, i, allocString(ns));
 	    offset = 0;
 	    s = translateChar(STRING_ELT(vec, i));
-	    t = CHAR(STRING_ELT(rep, 0));
+	    t = srep;
 	    uu = u = CHAR(STRING_ELT(ans, i));
 	    eflag = 0; last_end = -1;
 	    while (pcre_exec(re_pcre, re_pe, s, nns, offset, eflag,
@@ -464,6 +465,7 @@ SEXP attribute_hidden do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
+    char *spat;
     /* To make this thread-safe remove static here and remove
        test on R_FreeStringBuffer below */
     static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
@@ -477,6 +479,7 @@ SEXP attribute_hidden do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(pat) < 1 || length(text) < 1 ) errorcall(call, R_MSG_IA);
     if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
 
+    spat = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_UTF8
     if(useBytes) ;
     else if(utf8locale) options = PCRE_UTF8;
@@ -485,14 +488,12 @@ SEXP attribute_hidden do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 #ifdef SUPPORT_UTF8
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     tables = pcre_maketables();
-    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options,
-			   &errorptr, &erroffset, tables);
-    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"),
-			    CHAR(STRING_ELT(pat, 0)));
+    re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
+    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"), spat);
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
     PROTECT(matchlen = allocVector(INTSXP, n));
@@ -561,6 +562,7 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
+    char *spat;
     /* To make this thread-safe remove static here and remove
        test on R_FreeStringBuffer below */
     static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
@@ -580,15 +582,14 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
 #endif
 
+    spat = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_UTF8
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     tables = pcre_maketables();
-    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options,
-			   &errorptr, &erroffset, tables);
-    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"),
-			    CHAR(STRING_ELT(pat, 0)));
+    re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
+    if (!re_pcre) errorcall(call, _("invalid regular expression '%s'"), spat);
     n = length(text);
     PROTECT(ansList = allocVector(VECSXP, n));
     matchbuf = PROTECT(allocVector(INTSXP, bufsize));

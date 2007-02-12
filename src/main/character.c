@@ -886,6 +886,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     int i, j, n, nmatches;
     int igcase_opt, extended_opt, value_opt, fixed_opt, useBytes, cflags;
+    char *cpat;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -903,8 +904,9 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (length(pat) < 1) errorcall(call, R_MSG_IA);
 
+    cpat = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_MBCS
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(cpat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
     n = length(vec);
@@ -926,9 +928,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (extended_opt) cflags = cflags | REG_EXTENDED;
 	if (igcase_opt) cflags = cflags | REG_ICASE;
 
-	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
-	    errorcall(call, _("invalid regular expression '%s'"),
-		      CHAR(STRING_ELT(pat, 0)));
+	if (!fixed_opt && regcomp(&reg, cpat, cflags))
+	    errorcall(call, _("invalid regular expression '%s'"), cpat);
 
 	for (i = 0 ; i < n ; i++) {
 	    LOGICAL(ind)[i] = 0;
@@ -943,8 +944,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 #endif
 		if (fixed_opt) LOGICAL(ind)[i] =
-				   fgrep_one(CHAR(STRING_ELT(pat, 0)),
-					     s, useBytes) >= 0;
+				   fgrep_one(cpat, s, useBytes) >= 0;
 		else if(regexec(&reg, s, 0, NULL, 0) == 0)
 		    LOGICAL(ind)[i] = 1;
 	    }
@@ -1045,7 +1045,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     int global, igcase_opt, extended_opt, fixed_opt, useBytes,
 	cflags, eflags, last_end;
     char *s, *t, *u;
-    char *spat = NULL; /* -Wall */
+    char *spat, *srep;
     int patlen = 0, replen = 0, st, nr;
 
     checkArity(op, args);
@@ -1071,21 +1071,21 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt) cflags = cflags | REG_EXTENDED;
     if (igcase_opt) cflags = cflags | REG_ICASE;
 
+    spat = translateChar(STRING_ELT(pat, 0));
+    srep = translateChar(STRING_ELT(rep, 0));
 #ifdef SUPPORT_MBCS
-    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("'pattern' is invalid in this locale"));
-    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
+    if(mbcslocale && !mbcsValid(srep))
 	errorcall(call, _("'replacement' is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
-	errorcall(call, _("invalid regular expression '%s'"),
-		  CHAR(STRING_ELT(pat, 0)));
+    if (!fixed_opt && regcomp(&reg, spat, cflags))
+	errorcall(call, _("invalid regular expression '%s'"), spat);
     if (fixed_opt) {
-	spat = CHAR(STRING_ELT(pat, 0));
 	patlen = strlen(spat);
 	if(!patlen)
 	    errorcall(call, _("zero-length pattern"));
-	replen = strlen(CHAR(STRING_ELT(rep, 0)));
+	replen = strlen(srep);
     }
 
     n = length(vec);
@@ -1111,7 +1111,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	offset = 0;
 	nmatch = 0;
 	s = translateChar(STRING_ELT(vec, i));
-	t = CHAR(STRING_ELT(rep, 0));
+	t = srep;
 	ns = strlen(s);
 
 #ifdef SUPPORT_MBCS
@@ -1175,7 +1175,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		offset = 0;
 		nmatch = 0;
 		s = translateChar(STRING_ELT(vec, i));
-		t = CHAR(STRING_ELT(rep, 0));
+		t = srep;
 		u = CHAR(STRING_ELT(ans, i));
 		ns = strlen(s);
 		eflags = 0; last_end = -1;
@@ -1234,14 +1234,13 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     cflags = extended_opt ? REG_EXTENDED : 0;
 
+    spat = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_MBCS
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
-	errorcall(call, _("invalid regular expression '%s'"),
-		  CHAR(STRING_ELT(pat, 0)));
-    if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
+    if (!fixed_opt && regcomp(&reg, spat, cflags))
+	errorcall(call, _("invalid regular expression '%s'"), spat);
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
     PROTECT(matchlen = allocVector(INTSXP, n));
@@ -1504,7 +1503,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ansList, ans;
     regex_t reg;
     int i, n, extended_opt, fixed_opt, useBytes, cflags;
-    char *spat = NULL; /* -Wall */
+    char *spat;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -1522,15 +1521,14 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, R_MSG_IA);
 
     cflags = extended_opt ? REG_EXTENDED : 0;
+    spat = translateChar(STRING_ELT(pat, 0));
 
 #ifdef SUPPORT_MBCS
-    if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
+    if(!useBytes && mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
-	errorcall(call, _("invalid regular expression '%s'"),
-		  CHAR(STRING_ELT(pat, 0)));
-    if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
+    if (!fixed_opt && regcomp(&reg, spat, cflags))
+	errorcall(call, _("invalid regular expression '%s'"), spat);
     n = length(text);
     PROTECT(ansList = allocVector(VECSXP, n));
     for (i = 0 ; i < n ; i++) {
@@ -2038,7 +2036,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     /* Create search pattern object. */
-    str = CHAR(STRING_ELT(pat, 0));
+    str = translateChar(STRING_ELT(pat, 0));
     aps = apse_create((unsigned char *)str, (apse_size_t)strlen(str),
                       max_distance_opt);
     if(!aps)
