@@ -578,6 +578,9 @@ BUG FIXES
 	undocumented.  It is not clear that it is desirable but it is
 	S-compatible and relied on, so is now documented.
 
+    o	which(x, arr.ind = TRUE) did not return a matrix (as
+	documented) if c had length 0.
+
 
 
 
