@@ -257,7 +257,10 @@ function(dir, outDir)
                outFile)
     enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
-    if(need_enc && capabilities("iconv")) {
+    ## assume that is locale if 'C' we can used 8-bit encodings unchanged.
+    if(need_enc && capabilities("iconv") &&
+       !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))
+       ) {
         con <- file(outFile, "a")
         on.exit(close(con))  # Windows does not like files left open
         for(f in codeFiles) {
