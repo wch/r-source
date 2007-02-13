@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-02-11
+@set FAQ_DATE @value{FAQ_YEAR}-02-13
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2805,6 +2805,8 @@ regression, including pHd and inverse regression methods SIR and SAVE.
 @item drc
 Non-linear regression analysis for multiple curves with focus on
 concentration-response, dose-response and time-response curves.
+@item drm
+Regression and association models for clustered categorical responses.
 @item drfit
 Dose-response data evaluation.
 @item dse
