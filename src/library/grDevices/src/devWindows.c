@@ -31,6 +31,7 @@
 #include <Defn.h>
 #include <Graphics.h>
 #include <Rdevices.h>
+#include <Fileio.h>
 #include <stdio.h>
 #include "opt.h"
 #include "graphapp/ga.h"

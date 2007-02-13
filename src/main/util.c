@@ -856,7 +856,15 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
-
+void attribute_hidden markKnown(SEXP x, SEXP ref)
+{
+    if(TYPEOF(x) != CHARSXP)
+	error("invalid use of 'markKnown'");
+    if(IS_LATIN1(ref) || IS_UTF8(ref)) {
+	if(known_to_be_latin1) SET_LATIN1(x);
+	if(known_to_be_utf8) SET_UTF8(x);
+    }
+}
 
 /* Note: this is designed to be fast and valid only for UTF-8 strings.
    It is also correct in EUC-* locales. */
@@ -924,17 +932,6 @@ void mbcsToLatin1(char *in, char *out)
     }
     out[res] = '\0';
 }
-
-void attribute_hidden markKnown(SEXP x, SEXP ref)
-{
-    if(TYPEOF(x) != CHARSXP)
-	error("invalid use of 'markKnown'");
-    if(IS_LATIN1(ref) || IS_UTF8(ref)) {
-	if(known_to_be_latin1) SET_LATIN1(x);
-	if(known_to_be_utf8) SET_UTF8(x);
-    }
-}
-
 
 /* MBCS-aware versions of common comparisons.  Only used for ASCII c */
 char *Rf_strchr(const char *s, int c)
