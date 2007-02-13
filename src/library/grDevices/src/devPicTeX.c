@@ -759,7 +759,7 @@ SEXP PicTeX(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(asChar(CAR(args))); args = CDR(args);
+    file = translateChar(asChar(CAR(args))); args = CDR(args);
     bg = CHAR(asChar(CAR(args)));   args = CDR(args);
     fg = CHAR(asChar(CAR(args)));   args = CDR(args);
     width = asReal(CAR(args));	     args = CDR(args);

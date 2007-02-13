@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2003   The R Development Core Team.
+ *  Copyright (C) 2003-7   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ SEXP Rmd5(SEXP files)
     if(!isString(files)) error(_("argument 'files' must be character"));
     PROTECT(ans = allocVector(STRSXP, nfiles));
     for(i = 0; i < nfiles; i++) {
-	path = CHAR(STRING_ELT(files, i));
+	path = translateChar(STRING_ELT(files, i));
 #ifdef WIN32
 	fp = fopen(path, "rb");
 #else

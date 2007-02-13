@@ -6887,7 +6887,7 @@ SEXP PostScript(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(asChar(CAR(args)));  args = CDR(args);
+    file = translateChar(asChar(CAR(args)));  args = CDR(args);
     paper = CHAR(asChar(CAR(args))); args = CDR(args);
 
     /* 'family' can be either one string or a 5-vector of afmpaths. */
@@ -6914,7 +6914,7 @@ SEXP PostScript(SEXP args)
     pagecentre = asLogical(CAR(args));args = CDR(args);
     printit = asLogical(CAR(args));   args = CDR(args);
     cmd = CHAR(asChar(CAR(args)));    args = CDR(args);
-    title = CHAR(asChar(CAR(args)));  args = CDR(args);
+    title = translateChar(asChar(CAR(args)));  args = CDR(args);
     fonts = CAR(args);		      args = CDR(args);
     colormodel = CHAR(asChar(CAR(args)));
     if (!isNull(fonts) && !isString(fonts))
@@ -6975,7 +6975,7 @@ SEXP XFig(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(asChar(CAR(args)));  args = CDR(args);
+    file = translateChar(asChar(CAR(args)));  args = CDR(args);
     paper = CHAR(asChar(CAR(args))); args = CDR(args);
     family = CHAR(asChar(CAR(args)));  args = CDR(args);
     bg = CHAR(asChar(CAR(args)));    args = CDR(args);
@@ -7047,7 +7047,7 @@ SEXP PDF(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(asChar(CAR(args)));  args = CDR(args);
+    file = translateChar(asChar(CAR(args)));  args = CDR(args);
     paper = CHAR(asChar(CAR(args))); args = CDR(args);
     fam = CAR(args); args = CDR(args);
     if(length(fam) == 1)
@@ -7066,7 +7066,7 @@ SEXP PDF(SEXP args)
     ps = asReal(CAR(args));           args = CDR(args);
     onefile = asLogical(CAR(args)); args = CDR(args);
     pagecentre = asLogical(CAR(args));args = CDR(args);
-    title = CHAR(asChar(CAR(args))); args = CDR(args);
+    title = translateChar(asChar(CAR(args))); args = CDR(args);
     fonts = CAR(args); args = CDR(args);
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);

@@ -199,7 +199,7 @@ SEXP dotTcl(SEXP args)
     Tcl_Obj *val;
     if(!isValidString(CADR(args)))
 	error(_("invalid argument"));
-    cmd = CHAR(STRING_ELT(CADR(args), 0));
+    cmd = translateChar(STRING_ELT(CADR(args), 0));
     val = tk_eval(cmd);
     ans = makeRTclObject(val);
     return ans;
@@ -216,7 +216,7 @@ SEXP dotTclObjv(SEXP args)
     for (objc = 0, i = 0; i < length(avec); i++){
 	if (!isNull(VECTOR_ELT(avec, i)))
 	    objc++;
-	if (!isNull(nm) && strlen(CHAR(STRING_ELT(nm, i))))
+	if (!isNull(nm) && strlen(translateChar(STRING_ELT(nm, i))))
 	    objc++;
     }
 
@@ -224,7 +224,7 @@ SEXP dotTclObjv(SEXP args)
 
     for (objc = i = 0; i < length(avec); i++){
 	char *s, *tmp;
-	if (!isNull(nm) && strlen(s = CHAR(STRING_ELT(nm, i)))){
+	if (!isNull(nm) && strlen(s = translateChar(STRING_ELT(nm, i)))){
 	    tmp = calloc(strlen(s)+2, sizeof(char));
 	    *tmp = '-';
 	    strcpy(tmp+1, s);
@@ -273,13 +273,13 @@ SEXP RTcl_ObjFromVar(SEXP args)
 
 #ifndef TCL80
     tclobj = Tcl_GetVar2Ex(RTcl_interp,
-                           CHAR(STRING_ELT(CADR(args), 0)),
+                           translateChar(STRING_ELT(CADR(args), 0)),
                            NULL,
                            0);
 #else
     Tcl_Obj *tclname;
 
-    tclname = Tcl_NewStringObj(CHAR(STRING_ELT(CADR(args), 0)), -1);
+    tclname = Tcl_NewStringObj(translateChar(STRING_ELT(CADR(args), 0)), -1);
     tclobj = Tcl_ObjGetVar2(RTcl_interp,
                            tclname,
                            NULL,
@@ -295,14 +295,14 @@ SEXP RTcl_AssignObjToVar(SEXP args)
 
 #ifndef TCL80
     tclobj = Tcl_SetVar2Ex(RTcl_interp,
-                           CHAR(STRING_ELT(CADR(args), 0)),
+                           translateChar(STRING_ELT(CADR(args), 0)),
                            NULL,
                            (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
                            0);
 #else
     Tcl_Obj *tclname;
 
-    tclname = Tcl_NewStringObj(CHAR(STRING_ELT(CADR(args), 0)), -1);
+    tclname = Tcl_NewStringObj(translateChar(STRING_ELT(CADR(args), 0)), -1);
     tclobj = Tcl_ObjSetVar2(RTcl_interp,
                            tclname,
                            NULL,
@@ -393,24 +393,24 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
     {
 	Tcl_DStringInit(&s_ds);
 	s = Tcl_ExternalToUtfDString(NULL,
-				     CHAR(STRING_ELT(val, 0)), -1, &s_ds);
+				     translateChar(STRING_ELT(val, 0)), -1, &s_ds);
 	Tcl_SetStringObj(tclobj, s, -1);
 	Tcl_DStringFree(&s_ds);
     }
 #else
-	Tcl_SetStringObj(tclobj, CHAR(STRING_ELT(val, 0)), -1);
+	Tcl_SetStringObj(tclobj, translateChar(STRING_ELT(val, 0)), -1);
 #endif
     else
 	for ( i = 0 ; i < count ; i++) {
 	    elem = Tcl_NewObj();
 #ifdef SUPPORT_MBCS
 	    Tcl_DStringInit(&s_ds);
-	    s = Tcl_ExternalToUtfDString(NULL, CHAR(STRING_ELT(val, i)),
+	    s = Tcl_ExternalToUtfDString(NULL, translateChar(STRING_ELT(val, i)),
 					 -1, &s_ds);
 	    Tcl_SetStringObj(elem, s, -1);
 	    Tcl_DStringFree(&s_ds);
 #else
-	    Tcl_SetStringObj(elem, CHAR(STRING_ELT(val, i)), -1);
+	    Tcl_SetStringObj(elem, translateChar(STRING_ELT(val, i)), -1);
 #endif
 	    Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
 	}
@@ -550,8 +550,8 @@ SEXP RTcl_GetArrayElem(SEXP args)
     x = CADR(args);
     i = CADDR(args);
 
-    xstr = CHAR(STRING_ELT(x, 0));
-    istr = CHAR(STRING_ELT(i, 0));
+    xstr = translateChar(STRING_ELT(x, 0));
+    istr = translateChar(STRING_ELT(i, 0));
     tclobj = Tcl_GetVar2Ex(RTcl_interp, xstr, istr, 0);
 
     if (tclobj == NULL)
@@ -570,8 +570,8 @@ SEXP RTcl_SetArrayElem(SEXP args)
     i = CADDR(args);
     value = (Tcl_Obj *) R_ExternalPtrAddr(CADDDR(args));
 
-    xstr = CHAR(STRING_ELT(x, 0));
-    istr = CHAR(STRING_ELT(i, 0));
+    xstr = translateChar(STRING_ELT(x, 0));
+    istr = translateChar(STRING_ELT(i, 0));
     Tcl_SetVar2Ex(RTcl_interp, xstr, istr, value, 0);
 
     return R_NilValue;
@@ -585,8 +585,8 @@ SEXP RTcl_RemoveArrayElem(SEXP args)
     x = CADR(args);
     i = CADDR(args);
 
-    xstr = CHAR(STRING_ELT(x, 0));
-    istr = CHAR(STRING_ELT(i, 0));
+    xstr = translateChar(STRING_ELT(x, 0));
+    istr = translateChar(STRING_ELT(i, 0));
     Tcl_UnsetVar2(RTcl_interp, xstr, istr, 0);
 
     return R_NilValue;

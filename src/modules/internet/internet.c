@@ -267,7 +267,7 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "destfile");
     if(length(sfile) > 1)
 	warning(_("only first element of 'destfile' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     IDquiet = quiet = asLogical(CAR(args)); args = CDR(args);
     if(quiet == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "quiet");

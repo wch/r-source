@@ -1,3 +1,22 @@
+/*
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 2003-7   The R Development Core Team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
+ */
+
 /* <UTF8> OK, provided the delimiters are ASCII
    match length is in now in chars.
 */
@@ -46,8 +65,8 @@ delim_match(SEXP x, SEXP delims)
     if(!isString(x) || !isString(delims) || (length(delims) != 2))
 	error(_("invalid argument type"));
 
-    delim_start = CHAR(STRING_ELT(delims, 0));
-    delim_end = CHAR(STRING_ELT(delims, 1));
+    delim_start = translateChar(STRING_ELT(delims, 0));
+    delim_end = translateChar(STRING_ELT(delims, 1));
     lstart = strlen(delim_start); lend = strlen(delim_end);
     equal_start_and_end_delims = strcmp(delim_start, delim_end) == 0;
 
@@ -60,7 +79,7 @@ delim_match(SEXP x, SEXP delims)
 	memset(&mb_st, 0, sizeof(mbstate_t));
 #endif
 	start = end = -1;
-	s0 = s = CHAR(STRING_ELT(x, i));
+	s0 = s = translateChar(STRING_ELT(x, i));
 	pos = is_escaped = delim_depth = 0;
 	while((c = *s) != '\0') {
 	    if(c == '\n') {
@@ -143,7 +162,7 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
     if(ign == NA_LOGICAL) error("'ignore_quotes' must be TRUE or FALSE");
 
     for (i = 0; i < LENGTH(text); i++) {
-	p = CHAR(STRING_ELT(text, i));
+	p = CHAR(STRING_ELT(text, i)); /* ASCII or not not affected by charset */
 	inquote =FALSE; /* avoid runaway quotes */
 	for(; *p; p++) {
 	    if(!inquote && *p == '#') break;
