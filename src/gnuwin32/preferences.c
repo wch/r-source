@@ -38,6 +38,8 @@
 #include "consolestructs.h"
 #include "rui.h"
 #include "preferences.h"
+#include <Fileio.h>
+
 
 #define gettext GA_gettext
 

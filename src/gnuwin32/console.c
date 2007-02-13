@@ -50,6 +50,7 @@ extern void R_ProcessEvents(void);
 #include "rui.h"
 #include "getline/getline.h"
 #include "Startup.h" /* for UImode */
+#include <Fileio.h>
 
 extern char *alloca(size_t);
 
