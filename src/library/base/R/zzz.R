@@ -29,14 +29,17 @@
 .ArgsEnv <- new.env(hash = TRUE, parent = emptyenv())
 
 assign("%*%", function(a, b) NULL, envir = .ArgsEnv)
-assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) NULL,
-           envir = .ArgsEnv)
-assign(".Fortran", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE) NULL,
-           envir = .ArgsEnv)
+assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
+                      ENCODING) NULL,
+       envir = .ArgsEnv)
+assign(".Fortran", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
+                            ENCODING) NULL,
+       envir = .ArgsEnv)
 assign(".Call", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
 assign(".Call.graphics", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
 assign(".External", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
-assign(".External.graphics", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
+assign(".External.graphics", function(name, ..., PACKAGE) NULL,
+       envir = .ArgsEnv)
 assign(".Internal", function(call) NULL, envir = .ArgsEnv)
 assign(".Primitive", function(name) NULL, envir = .ArgsEnv)
 assign(".primTrace", function(obj) NULL, envir = .ArgsEnv)
