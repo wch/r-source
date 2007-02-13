@@ -266,7 +266,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SEXP tchar, rval;
 
 	PROTECT(tlist);
-	fp = R_popen(CHAR(STRING_ELT(CAR(args), 0)), x);
+	fp = R_popen(translateChar(STRING_ELT(CAR(args), 0)), x);
 	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
 	    read = strlen(buf);
 	    if (read > 0 && buf[read-1] == '\n') 
@@ -294,7 +294,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 	tlist = allocVector(INTSXP, 1);
 	fflush(stdout);
-	INTEGER(tlist)[0] = R_system(CHAR(STRING_ELT(CAR(args), 0)));
+	INTEGER(tlist)[0] = R_system(translateChar(STRING_ELT(CAR(args), 0)));
 #ifdef HAVE_AQUA
     	R_Busy(0);
 #endif
