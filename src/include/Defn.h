@@ -789,7 +789,6 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define StringFromReal		Rf_StringFromReal
 # define StrToInternal		Rf_StrToInternal
 # define substituteList		Rf_substituteList
-# define translateChar		Rf_translateChar
 # define tsConform		Rf_tsConform
 # define tspgets		Rf_tspgets
 # define type2symbol		Rf_type2symbol
@@ -983,7 +982,6 @@ SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
-char *translateChar(SEXP);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2symbol(SEXPTYPE);
