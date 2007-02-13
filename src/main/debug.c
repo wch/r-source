@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006   The R Development Core Team.
+ *  Copyright (C) 1998-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ SEXP attribute_hidden do_debug(SEXP call, SEXP op, SEXP args, SEXP rho)
 #define find_char_fun \
     if (isValidString(CAR(args))) {				\
 	SEXP s;							\
-	PROTECT(s = install(CHAR(STRING_ELT(CAR(args), 0))));	\
+	PROTECT(s = install(translateChar(STRING_ELT(CAR(args), 0))));	\
 	SETCAR(args, findFun(s, rho));				\
 	UNPROTECT(1);						\
     }
@@ -172,7 +172,7 @@ static void memtrace_stack_dump(void)
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
 	    Rprintf("%s ",
-		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
+		    TYPEOF(fun) == SYMSXP ? translateChar(PRINTNAME(fun)) :
 		    "<Anonymous>");
 	}
     }
@@ -219,7 +219,7 @@ SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_TRACE(object, 1);
 	if (R_current_trace_state()) {
 	    Rprintf("tracemem[%s -> %p]: ", 
-		    CHAR(STRING_ELT(origin, 0)), (void *) object);
+		    translateChar(STRING_ELT(origin, 0)), (void *) object);
 	    memtrace_stack_dump();
 	}
     }

@@ -174,10 +174,10 @@ LogicalFromString(SEXP x, int *warn)
     if (x != R_NaString) {
 	int i;
 	for (i = 0; truenames[i]; i++)
-	    if (!strcmp(CHAR(x), truenames[i]))
+	    if (!strcmp(CHAR(x), truenames[i])) /* ASCII */
 		return 1;
 	for (i = 0; falsenames[i]; i++)
-	    if (!strcmp(CHAR(x), falsenames[i]))
+	    if (!strcmp(CHAR(x), falsenames[i])) /* ASCII */
 		return 0;
     }
     return NA_LOGICAL;
@@ -222,8 +222,8 @@ IntegerFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString && !isBlankString(CHAR(x))) {
-	xdouble = R_strtod(CHAR(x), &endp);
+    if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
+	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
 	if (isBlankString(endp)) {
 	    if (xdouble > INT_MAX) {
 		*warn |= WARN_INACC;
@@ -272,8 +272,8 @@ RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString && !isBlankString(CHAR(x))) {
-	xdouble = R_strtod(CHAR(x), &endp);
+    if (x != R_NaString && !isBlankString(CHAR(x))) { /* ASCII */
+	xdouble = R_strtod(CHAR(x), &endp); /* ASCII */
 	if (isBlankString(endp))
 	    return xdouble;
 	else
@@ -332,7 +332,7 @@ ComplexFromString(SEXP x, int *warn)
 {
     double xr, xi;
     Rcomplex z;
-    char *endp = CHAR(x);
+    char *endp = CHAR(x); /* ASCII */
     z.r = z.i = NA_REAL;
     if (x != R_NaString && !isBlankString(endp)) {
 	xr = R_strtod(endp, &endp);
@@ -436,8 +436,8 @@ SEXP VectorToPairList(SEXP x)
     xptr = xnew;
     for (i = 0; i < len; i++) {
 	SETCAR(xptr, VECTOR_ELT(x, i));
-	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0')
-	    SET_TAG(xptr, install(CHAR(STRING_ELT(xnames, i))));
+	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0') /* ASCII */
+	    SET_TAG(xptr, install(translateChar(STRING_ELT(xnames, i))));
 	xptr = CDR(xptr);
     }
     if (len>0)       /* can't set attributes on NULL */
@@ -1223,7 +1223,7 @@ SEXP CreateTag(SEXP x)
     if (isString(x)
 	&& length(x) >= 1
 	&& length(STRING_ELT(x, 0)) >= 1)
-	x = install(CHAR(STRING_ELT(x, 0)));
+	x = install(translateChar(STRING_ELT(x, 0)));
     else
 	x = install(CHAR(STRING_ELT(deparse1(x, 1, SIMPLEDEPARSE), 0)));
     return x;
@@ -1344,10 +1344,10 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
 	errorcall_return(call, R_MSG_mode);
 
-    if (!strcmp("function", (CHAR(STRING_ELT(CADR(args), 0)))))
+    if (!strcmp("function", (CHAR(STRING_ELT(CADR(args), 0))))) /* ASCII */
 	type = CLOSXP;
     else
-	type = str2type(CHAR(STRING_ELT(CADR(args), 0)));
+	type = str2type(CHAR(STRING_ELT(CADR(args), 0))); /* ASCII */
 
     switch(type) {/* only those are valid : */
     case SYMSXP:
@@ -1411,8 +1411,8 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(pargs = args = allocList(n - 1));
     for (i = 0; i < n - 1; i++) {
 	SETCAR(pargs, VECTOR_ELT(arglist, i));
-	if (names != R_NilValue && *CHAR(STRING_ELT(names, i)) != '\0')
-	    SET_TAG(pargs, install(CHAR(STRING_ELT(names, i))));
+	if (names != R_NilValue && *CHAR(STRING_ELT(names, i)) != '\0') /* ASCII */
+	    SET_TAG(pargs, install(translateChar(STRING_ELT(names, i))));
 	else
 	    SET_TAG(pargs, R_NilValue);
 	pargs = CDR(pargs);
@@ -1456,7 +1456,7 @@ SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < n; i++) {
 	    SETCAR(ap, VECTOR_ELT(args, i));
 	    if (names != R_NilValue && !StringBlank(STRING_ELT(names, i)))
-		SET_TAG(ap, install(CHAR(STRING_ELT(names, i))));
+		SET_TAG(ap, install(translateChar(STRING_ELT(names, i))));
 	    ap = CDR(ap);
 	}
 	UNPROTECT(1);
@@ -1599,7 +1599,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
        evaluating arguments in DispatchOrEval */
     if(PRIMVAL(op) >= 100 && PRIMVAL(op) < 200 &&
        isObject(CAR(args)) &&
-       DispatchOrEval(call, op,CHAR(PRINTNAME(CAR(call))),
+       DispatchOrEval(call, op, CHAR(PRINTNAME(CAR(call))), /* ASCII */
 		      args, rho, &ans, 0,1))
 	return(ans);
 
@@ -1740,14 +1740,14 @@ SEXP attribute_hidden do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall_return(call, R_MSG_mode);
 
     PROTECT(ans = allocVector(LGLSXP, 1));
-    if (streql(CHAR(STRING_ELT(CADR(args), 0)), "any")) {
+    if (streql(CHAR(STRING_ELT(CADR(args), 0)), "any")) { /* ASCII */
 	LOGICAL(ans)[0] = isVector(CAR(args));/* from ./util.c */
     }
-    else if (streql(CHAR(STRING_ELT(CADR(args), 0)), "numeric")) {
+    else if (streql(CHAR(STRING_ELT(CADR(args), 0)), "numeric")) { /* ASCII */
 	LOGICAL(ans)[0] = (isNumeric(CAR(args)) &&
 			   !isLogical(CAR(args)));
     }
-    else if (streql(CHAR(STRING_ELT(CADR(args), 0)),
+    else if (streql(CHAR(STRING_ELT(CADR(args), 0)), /* ASCII */
 		    type2char(TYPEOF(CAR(args))))) {
 	LOGICAL(ans)[0] = 1;
     }
@@ -2087,9 +2087,9 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(rfun = eval(CAR(args), rho));
     if (!isString(rfun) || length(rfun) <= 0 ||
-	streql(CHAR(STRING_ELT(rfun, 0)), ""))
+	streql(CHAR(STRING_ELT(rfun, 0)), "")) /* ASCII */
 	errorcall_return(call, R_MSG_A1_char);
-    PROTECT(rfun = install(CHAR(STRING_ELT(rfun, 0))));
+    PROTECT(rfun = install(translateChar(STRING_ELT(rfun, 0))));
     PROTECT(evargs = duplicate(CDR(args)));
     for (rest = evargs; rest != R_NilValue; rest = CDR(rest))
 	SETCAR(rest, eval(CAR(rest), rho));
@@ -2112,7 +2112,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* must be a string or a function */
     if( isString(fun) ) {
-	if( length(fun) != 1 || CHAR(STRING_ELT(fun,0)) == '\0')
+	if( length(fun) != 1 || CHAR(STRING_ELT(fun,0)) == '\0') /* ASCII */
 	    errorcall_return(call, _("first argument must be a character string or a function"))
     } else if (!isFunction(fun) )
 	    errorcall_return(call, _("first argument must be a character string or a function"))
@@ -2129,7 +2129,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(c = call = allocList(n + 1));
     SET_TYPEOF(c, LANGSXP);
     if( isString(fun) )
-        SETCAR(c, install(CHAR(STRING_ELT(fun, 0))));
+        SETCAR(c, install(translateChar(STRING_ELT(fun, 0))));
     else
         SETCAR(c, fun);
     c = CDR(c);
@@ -2141,7 +2141,7 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
         SET_PRVALUE(CAR(c), VECTOR_ELT(args, i)); */
 #endif
         if (ItemName(names, i) != R_NilValue)
-            SET_TAG(c, install(CHAR(ItemName(names, i))));
+            SET_TAG(c, install(translateChar(ItemName(names, i))));
         c = CDR(c);
     }
     call = eval(call, envir);
@@ -2357,11 +2357,11 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
     else {
 	char *valueString, *classString; int whichType;
 	SEXP cur_class; SEXPTYPE valueType;
-	valueString = CHAR(asChar(value));
+	valueString = CHAR(asChar(value)); /* ASCII */
 	whichType = class2type(valueString);
 	valueType = (whichType == -1) ? -1 : classTable[whichType].sexp;
 	PROTECT(cur_class = R_data_class(obj, FALSE)); nProtect++;
-	classString = CHAR(asChar(cur_class));
+	classString = CHAR(asChar(cur_class)); /* ASCII */
 	/*  assigning type as a class deletes an explicit class attribute. */
 	if(valueType != -1) {
 	    setAttrib(obj, R_ClassSymbol, R_NilValue);

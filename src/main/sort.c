@@ -78,7 +78,7 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
     if (x == NA_STRING && y == NA_STRING) return 0;
     if (x == NA_STRING) return nalast?1:-1;
     if (y == NA_STRING) return nalast?-1:1;
-    return STRCOLL(CHAR(x), CHAR(y));
+    return STRCOLL(translateChar(x), translateChar(y));
 }
 
 Rboolean isUnsorted(SEXP x)
@@ -765,11 +765,11 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing)
 	break;
     case STRSXP:
 	if (decreasing)
-#define less(a, b) (c=STRCOLL(CHAR(sx[a]),CHAR(sx[b])), c < 0 || (c == 0 && a > b))
+#define less(a, b) (c=STRCOLL(translateChar(sx[a]),translateChar(sx[b])), c < 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less
         else
-#define less(a, b) (c=STRCOLL(CHAR(sx[a]),CHAR(sx[b])), c > 0 || (c == 0 && a > b))
+#define less(a, b) (c=STRCOLL(translateChar(sx[a]),translateChar(sx[b])), c > 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less
 	break;
@@ -841,7 +841,7 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(indx = allocVector(INTSXP, n));
     PROTECT(rank = allocVector(REALSXP, n));
     UNPROTECT(2);
-    ties_str = CHAR(STRING_ELT(coerceVector(CADR(args), STRSXP), 0));
+    ties_str = CHAR(STRING_ELT(coerceVector(CADR(args), STRSXP), 0)); /* ASCII */
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;
     else if(!strcmp(ties_str, "min"))	ties_kind = MIN;

@@ -581,6 +581,8 @@ BUG FIXES
     o	which(x, arr.ind = TRUE) did not return a matrix (as
 	documented) if c had length 0.
 
+    o	C-level duplicate() truncated CHARSXPs with embedded nuls.
+
 
 
 

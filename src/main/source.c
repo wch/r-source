@@ -48,7 +48,7 @@ SEXP attribute_hidden getParseContext()
 	    break;
 	}
     }
-    
+
     nn = 16; /* initially allocate space for 16 lines */
     nnn = nn;
     PROTECT(ans = allocVector(STRSXP, nn));
@@ -79,7 +79,7 @@ SEXP attribute_hidden getParseContext()
 	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
     UNPROTECT(2);
     return ans2;
-}    
+}
 
 void attribute_hidden getParseFilename(char* buffer, int buflen)
 {
@@ -87,8 +87,8 @@ void attribute_hidden getParseFilename(char* buffer, int buflen)
     if (R_ParseErrorFile && !isNull(R_ParseErrorFile)) {
 	SEXP filename;
 	PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
-	if (!isNull(filename)) 
-	    strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen-1);
+	if (!isNull(filename))
+	    strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen - 1);
 	UNPROTECT(1);
     }
 }
@@ -101,25 +101,39 @@ void attribute_hidden parseError(SEXP call, int linenum)
     if (linenum) {
     	getParseFilename(filename, sizeof(filename)-2);
     	if (strlen(filename)) strcpy(filename + strlen(filename), ": ");
-    	
+
 	switch (len) {
-	case 0: errorcall(call, _("%s%s on line %d"), 
-			    filename, R_ParseErrorMsg, linenum); break;
-	case 1: errorcall(call, _("%s%s at\n%d: %s"), 
-			    filename, R_ParseErrorMsg, linenum, CHAR(STRING_ELT(context, 0))); break;
-	default: errorcall(call, _("%s%s at\n%d: %s\n%d: %s"), 
-			    filename, R_ParseErrorMsg, linenum-1, CHAR(STRING_ELT(context, len-2)),
-			    linenum, CHAR(STRING_ELT(context, len-1))); break;
+	case 0:
+	    errorcall(call, _("%s%s on line %d"),
+		      filename, R_ParseErrorMsg, linenum);
+	    break;
+	case 1:
+	    errorcall(call, _("%s%s at\n%d: %s"),
+		      filename, R_ParseErrorMsg, linenum,
+		      CHAR(STRING_ELT(context, 0)));
+	    break;
+	default:
+	    errorcall(call, _("%s%s at\n%d: %s\n%d: %s"),
+		      filename, R_ParseErrorMsg, linenum-1,
+		      CHAR(STRING_ELT(context, len-2)),
+		      linenum, CHAR(STRING_ELT(context, len-1)));
+	    break;
 	}
     } else {
 	switch (len) {
-	case 0: errorcall(call, _("%s"), R_ParseErrorMsg); break;
-	case 1: errorcall(call, _("%s in \"%s\""), 
-			    R_ParseErrorMsg, CHAR(STRING_ELT(context, 0))); break;
-	default: errorcall(call, _("%s in:\n\"%s\n%s\""), 
-			    R_ParseErrorMsg, CHAR(STRING_ELT(context, len-2)),
-			    CHAR(STRING_ELT(context, len-1))); break;
-	}   
+	case 0:
+	    errorcall(call, _("%s"), R_ParseErrorMsg);
+	    break;
+	case 1:
+	    errorcall(call, _("%s in \"%s\""),
+		      R_ParseErrorMsg, CHAR(STRING_ELT(context, 0)));
+	    break;
+	default:
+	    errorcall(call, _("%s in:\n\"%s\n%s\""),
+		      R_ParseErrorMsg, CHAR(STRING_ELT(context, len-2)),
+		      CHAR(STRING_ELT(context, len-1)));
+	    break;
+	}
     }
 }
 
@@ -134,7 +148,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP text, prompt, s, source;
     Rconnection con;
-    Rboolean wasopen, old_latin1=known_to_be_latin1, 
+    Rboolean wasopen, old_latin1=known_to_be_latin1,
 	old_utf8=known_to_be_utf8;
     int ifile, num;
     char *encoding;
@@ -156,7 +170,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     source = CAR(args);					args = CDR(args);
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, _("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAR(args), 0));
+    encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
     known_to_be_latin1 = known_to_be_utf8 = FALSE;
     if(streql(encoding, "latin1")) known_to_be_latin1 = TRUE;
     if(streql(encoding, "UTF-8"))  known_to_be_utf8 = TRUE;

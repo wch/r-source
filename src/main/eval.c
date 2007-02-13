@@ -233,7 +233,8 @@ static void R_InitProfiling(SEXP filename, int append, double dinterval, int mem
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = RC_fopen(filename, append ? "a" : "w", TRUE);
     if (R_ProfileOutfile == NULL)
-	error(_("Rprof: cannot open profile file '%s'"), CHAR(filename));
+	error(_("Rprof: cannot open profile file '%s'"), 
+	      translateChar(filename));
     if(mem_profiling)
 	fprintf(R_ProfileOutfile, "memory profiling: sample.interval=%d\n", interval);
     else
@@ -1365,7 +1366,7 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(args) != 2)
 	WrongArgCount(asym[PRIMVAL(op)]);
     if (isString(CAR(args)))
-	SETCAR(args, install(CHAR(STRING_ELT(CAR(args), 0))));
+	SETCAR(args, install(translateChar(STRING_ELT(CAR(args), 0))));
 
     switch (PRIMVAL(op)) {
     case 1: case 3:					/* <-, = */
@@ -1944,20 +1945,19 @@ static void findmethod(SEXP Class, char *group, char *generic,
     /* eg if class(x) is "foo" "bar" then x>3 should invoke */
     /* "Ops.foo" rather than ">.bar" */
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
-	if(strlen(generic) +
-	   strlen(CHAR(STRING_ELT(Class, whichclass))) + 2 > 512)
+	char *ss = translateChar(STRING_ELT(Class, whichclass));
+	if(strlen(generic) + strlen(ss) + 2 > 512)
 	    error(_("class name too long in '%s'"), generic);
-	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(Class, whichclass)));
+	sprintf(buf, "%s.%s", generic, ss);
 	*meth = install(buf);
 	*sxp = R_LookupMethod(*meth, rho, rho, R_BaseEnv);
 	if (isFunction(*sxp)) {
 	    *gr = mkString("");
 	    break;
 	}
-	if(strlen(group) +
-	   strlen(CHAR(STRING_ELT(Class, whichclass))) + 2 > 512)
+	if(strlen(group) + strlen(ss) + 2 > 512)
 	    error(_("class name too long in '%s'"), group);
-	sprintf(buf, "%s.%s", group, CHAR(STRING_ELT(Class, whichclass)));
+	sprintf(buf, "%s.%s", group, ss);
 	*meth = install(buf);
 	*sxp = R_LookupMethod(*meth, rho, rho, R_BaseEnv);
 	if (isFunction(*sxp)) {
@@ -2078,8 +2078,8 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	set = 0;
 	if (isString(t)) {
 	    for (j = 0 ; j < length(t) ; j++) {
-		if (!strcmp(CHAR(STRING_ELT(t, j)),
-			    CHAR(STRING_ELT(lclass, lwhich)))) {
+		if (!strcmp(translateChar(STRING_ELT(t, j)),
+			    translateChar(STRING_ELT(lclass, lwhich)))) {
 		    SET_STRING_ELT(m, i, mkChar(lbuf));
 		    set = 1;
 		    break;

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-6     the R Development Core Team
+ *  Copyright (C) 2002-7     the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, nargs, cnt, v, thislen;
-    char *formatString, *starc;
+    char *formatString, *starc, *ss;
     char fmt[MAXLINE+1], fmt2[MAXLINE+1], *fmtp, bit[MAXLINE+1], 
 	outputString[MAXLINE+1];
     size_t n, cur, chunk;
@@ -70,7 +70,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     for(ns = 0; ns < maxlen; ns++) {
 	cnt = 0;
 	outputString[0] = '\0';
-	formatString = CHAR(STRING_ELT(format, ns % length(format)));
+	formatString = translateChar(STRING_ELT(format, ns % length(format)));
 	n = strlen(formatString);
 	if (n > MAXLINE)
 	    errorcall(call, _("'fmt' length exceeds maximal buffer length %d"),
@@ -281,11 +281,10 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    /* NA_STRING will be printed as `NA' */
 			    if (strcspn(fmtp, "s") >= strlen(fmtp))
 				error("%s", _("use format %s for character objects"));
-			    if(strlen(CHAR(STRING_ELT(_this, ns % thislen)))
-			       > MAXLINE)
+			    ss = translateChar(STRING_ELT(_this, ns % thislen));
+			    if(strlen(ss) > MAXLINE)
 				warning(_("Likely truncation of character string"));
-			    snprintf(bit, MAXLINE, fmtp, 
-				     CHAR(STRING_ELT(_this, ns % thislen)));
+			    snprintf(bit, MAXLINE, fmtp, ss);
 			    bit[MAXLINE] = '\0';
 			    break;
 			    

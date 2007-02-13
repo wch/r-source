@@ -2,7 +2,7 @@
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *            (C) 2004  The R Foundation
- *  Copyright (C) 1998-2006 the R Development Core Group.
+ *  Copyright (C) 1998-2007 the R Development Core Group.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -192,9 +192,10 @@ static SEXP duplicate1(SEXP s)
 	UNPROTECT(2);
 	break;
     case CHARSXP:
+	/* This was wrong, losing internal nuls before 2.5.0 */
 	PROTECT(s);
-	PROTECT(t = allocString(strlen(CHAR(s))));
-	strcpy(CHAR(t), CHAR(s));
+	PROTECT(t = allocString(LENGTH(s)));
+	memcpy(CHAR(t), CHAR(s), LENGTH(s)+1);
 	DUPLICATE_ATTRIB(t, s);
 	markKnown(t, s);
 	UNPROTECT(2);

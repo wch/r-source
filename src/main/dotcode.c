@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  The R Development Core Team
+ *  Copyright (C) 1997--2007  The R Development Core Team
  *  Copyright (C) 2003	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -201,7 +201,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
     /* Make up the load symbol and look it up. */
 
     if(TYPEOF(op) == STRSXP) {
-	p = CHAR(STRING_ELT(op, 0));
+	p = translateChar(STRING_ELT(op, 0));
 	q = buf;
 	while ((*q = *p) != '\0') {
 	    if(symbol->type == R_FORTRAN_SYM) *q = tolower(*q);
@@ -376,11 +376,12 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    error(_("character variables must be duplicated in .C/.Fortran"));
 	n = LENGTH(s);
 	if(Fort) {
+	    char *ss = translateChar(STRING_ELT(s, 0));
 	    if(n > 1)
 		warning(_("only first string in char vector used in .Fortran"));
-	    l = strlen(CHAR(STRING_ELT(s, 0)));
+	    l = strlen(ss);
 	    fptr = (char*)R_alloc(max(255, l) + 1, sizeof(char));
-	    strcpy(fptr, CHAR(STRING_ELT(s, 0)));
+	    strcpy(fptr, ss);
 	    return (void*)fptr;
 	} else {
 	    cptr = (char**)R_alloc(n, sizeof(char*));
@@ -392,7 +393,8 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		if(obj == (void *)-1)
 		    error(_("unsupported encoding '%s'"), encname);
 		for (i = 0 ; i < n ; i++) {
-		    inbuf = CHAR(STRING_ELT(s, i)); inb = strlen(inbuf);
+		    inbuf = translateChar(STRING_ELT(s, i));
+		    inb = strlen(inbuf);
 		    outb0 = 3*inb;
 		restart_in:
 		    cptr[i] = outbuf = (char*)R_alloc(outb0 + 1, sizeof(char));
@@ -416,9 +418,10 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 #endif
 	    {
 		for (i = 0 ; i < n ; i++) {
-		    l = strlen(CHAR(STRING_ELT(s, i)));
+		    char *ss = translateChar(STRING_ELT(s, i));
+		    l = strlen(ss);
 		    cptr[i] = (char*)R_alloc(l + 1, sizeof(char));
-		    strcpy(cptr[i], CHAR(STRING_ELT(s, i)));
+		    strcpy(cptr[i], ss);
 		}
 	    }
 	    return (void*)cptr;
@@ -615,7 +618,7 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 	} else if(TAG(s) == PkgSymbol) {
 	    dll->obj = CAR(s);
 	    if(TYPEOF(CAR(s)) == STRSXP) {
-		p = CHAR(STRING_ELT(CAR(s), 0));
+		p = translateChar(STRING_ELT(CAR(s), 0));
 		if(strlen(p) > PATH_MAX - 1)
 		    error(_("DLL name is too long"));
 		dll->type = FILENAME;
@@ -634,7 +637,7 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 		    dll->type = R_OBJECT;
 		    dll->obj = s;
 		    strcpy(dll->DLLname,
-			   CHAR(STRING_ELT(VECTOR_ELT(CAR(s), 1), 0)));
+			   translateChar(STRING_ELT(VECTOR_ELT(CAR(s), 1), 0)));
 		    dll->dll = (HINSTANCE) R_ExternalPtrAddr(VECTOR_ELT(s, 4));
 		}
 	    }
@@ -658,7 +661,7 @@ static void setDLLname(SEXP s, char *DLLname)
     SEXP ss = CAR(s); char *name;
     if(TYPEOF(ss) != STRSXP || length(ss) != 1)
 	error(_("PACKAGE argument must be a single character string"));
-    name = CHAR(STRING_ELT(ss, 0));
+    name = translateChar(STRING_ELT(ss, 0));
     /* allow the package: form of the name, as returned by find */
     if(strncmp(name, "package:", 8) == 0)
 	name += 8;
@@ -710,7 +713,7 @@ static SEXP enctrim(SEXP args, char *name, int len)
 	    if(pkgused++ == 1) warning(_("ENCODING used more than once"));
 	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
 		error(_("ENCODING argument must be a single character string"));
-	    strncpy(name, CHAR(STRING_ELT(sx, 0)), len);
+	    strncpy(name, translateChar(STRING_ELT(sx, 0)), len);
 	    return R_NilValue;
 	}
 	if(TAG(ss) == EncSymbol) {
@@ -718,7 +721,7 @@ static SEXP enctrim(SEXP args, char *name, int len)
 	    if(pkgused++ == 1) warning(_("ENCODING used more than once"));
 	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
 		error(_("ENCODING argument must be a single character string"));
-	    strncpy(name, CHAR(STRING_ELT(sx, 0)), len);
+	    strncpy(name, translateChar(STRING_ELT(sx, 0)), len);
 	    SETCDR(s, CDR(ss));
 	}
 	s = CDR(s);
@@ -738,7 +741,7 @@ SEXP attribute_hidden do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
 
     warningcall(call, _("'%s' is deprecated"), 
 		PRIMVAL(op) ? "symbol.For" : "symbol.C");
-    p = CHAR(STRING_ELT(CAR(args), 0));
+    p = translateChar(STRING_ELT(CAR(args), 0));
     q = buf;
     while ((*q = *p) != '\0') {
 	if(PRIMVAL(op)) *q = tolower(*q);
@@ -752,7 +755,7 @@ SEXP attribute_hidden do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 #endif
 #ifdef HAVE_F77_EXTRA_UNDERSCORE
-    p = CHAR(STRING_ELT(CAR(args), 0));
+    p = translateChar(STRING_ELT(CAR(args), 0));
     if(strchr(p, '_') && PRIMVAL(op)) {
 	*q++ = '_';
 	*q = '\0';
@@ -773,16 +776,16 @@ SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(!isValidString(CAR(args)))
 	errorcall(call, R_MSG_IA);
-    sym = CHAR(STRING_ELT(CAR(args), 0));
+    sym = translateChar(STRING_ELT(CAR(args), 0));
     if(nargs >= 2) {
 	if(!isValidString(CADR(args)))
 	    errorcall(call, R_MSG_IA);
-	pkg = CHAR(STRING_ELT(CADR(args), 0));
+	pkg = translateChar(STRING_ELT(CADR(args), 0));
     }
     if(nargs >= 3) {
 	if(!isValidString(CADDR(args)))
 	    errorcall(call, R_MSG_IA);
-	type = CHAR(STRING_ELT(CADDR(args), 0));
+	type = CHAR(STRING_ELT(CADDR(args), 0)); /* ASCII */
 	if(strcmp(type, "C") == 0) symbol.type = R_C_SYM;
 	else if(strcmp(type, "Fortran") == 0) symbol.type = R_FORTRAN_SYM;
 	else if(strcmp(type, "Call") == 0) symbol.type = R_CALL_SYM;
@@ -829,7 +832,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(symbol.symbol.external->numArgs != length(args))
 	    error(_("Incorrect number of arguments (%d), expecting %d for %s"),
 		  length(args), symbol.symbol.external->numArgs,
-		  CHAR(STRING_ELT(CAR(args), 0)));
+		  translateChar(STRING_ELT(CAR(args), 0)));
     }
 #endif
 
@@ -871,7 +874,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(symbol.symbol.call->numArgs != nargs)
 	    error(_("Incorrect number of arguments (%d), expecting %d for %s"),
 		  nargs, symbol.symbol.call->numArgs,
-		  CHAR(STRING_ELT(nm, 0)));
+		  translateChar(STRING_ELT(nm, 0)));
     }
 
     retval = R_NilValue;	/* -Wall */

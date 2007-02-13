@@ -950,7 +950,7 @@ SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(name) || length(name) < 1 ||
 	STRING_ELT(name, 0) == R_NilValue)
 	errorcall(call, _("string argument required"));
-    for (i = 0; R_FunTab[i].name; i++)
+    for (i = 0; R_FunTab[i].name; i++)  /* all names are ASCII */
 	if (strcmp(CHAR(STRING_ELT(name, 0)), R_FunTab[i].name) == 0) {
 	    if ((R_FunTab[i].eval % 100 )/10)
 		return mkPRIMSXP(i, R_FunTab[i].eval % 10);

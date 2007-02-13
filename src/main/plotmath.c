@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006	The R Development Core Team
+ *  Copyright (C) 1998-2007	The R Development Core Team
  *
  *  This source code module:
  *  Copyright (C) 1997, 1998 Paul Murrell and Ross Ihaka
@@ -626,7 +626,7 @@ static int NameMatch(SEXP expr, char *aString)
 
 static int StringMatch(SEXP expr, char *aString)
 {
-    return !strcmp(CHAR(STRING_ELT(expr, 0)), aString);
+    return !strcmp(translateChar(STRING_ELT(expr, 0)), aString);
 }
 /* Code to determine the ascii code corresponding */
 /* to an element of a mathematical expression. */

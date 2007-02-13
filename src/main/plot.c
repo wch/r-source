@@ -216,13 +216,13 @@ SEXP FixupPch(SEXP pch, int dflt)
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
 		    wchar_t wc;
-		    if(mbrtowc(&wc, CHAR(STRING_ELT(pch, i)), MB_CUR_MAX,
-			       NULL) > 0) INTEGER(ans)[i] = wc;
+		    if(mbrtowc(&wc, translateChar(STRING_ELT(pch, i)),
+			       MB_CUR_MAX, NULL) > 0) INTEGER(ans)[i] = wc;
 		    else
 			error(_("invalid multibyte char in pch=\"c\""));
 		} else
 #endif
-		    INTEGER(ans)[i] = CHAR(STRING_ELT(pch, i))[0];
+		    INTEGER(ans)[i] = translateChar(STRING_ELT(pch, i))[0];
 	    }
 	}
     }
@@ -1330,14 +1330,14 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else {
 			label = STRING_ELT(lab, ind[i]);
 			if(label != NA_STRING) {
-			    labw = GStrWidth(CHAR(label), NFC, dd);
+			    char *ss = translateChar(label);
+			    labw = GStrWidth(ss, NFC, dd);
 			    tnew = temp - 0.5 * labw;
 			    /* Check room for perpendicular labels. */
 			    if (Rf_gpptr(dd)->las == 2 ||
 				Rf_gpptr(dd)->las == 3 ||
 				tnew - tlast >= gap) {
-				GMtext(translateChar(label), 
-				       side, axis_lab, 0, x,
+				GMtext(ss, side, axis_lab, 0, x,
 				       Rf_gpptr(dd)->las, padjval, dd);
 				tlast = temp + 0.5 *labw;
 			    }
@@ -1461,15 +1461,15 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else {
 			label = STRING_ELT(lab, ind[i]);
 			if(label != NA_STRING) {
-			    labw = GStrWidth(CHAR(label), INCHES, dd);
+			    char *ss = translateChar(label);
+			    labw = GStrWidth(ss, INCHES, dd);
 			    labw = GConvertYUnits(labw, INCHES, NFC, dd);
 			    tnew = temp - 0.5 * labw;
 			    /* Check room for perpendicular labels. */
 			    if (Rf_gpptr(dd)->las == 1 ||
 				Rf_gpptr(dd)->las == 2 ||
 				tnew - tlast >= gap) {
-				GMtext(translateChar(label),
-				       side, axis_lab, 0, y,
+				GMtext(ss, side, axis_lab, 0, y,
 				       Rf_gpptr(dd)->las, padjval, dd);
 				tlast = temp + 0.5 *labw;
 			    }
@@ -3202,7 +3202,8 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		yi = REAL(y)[i];
 		GConvert(&xi, &yi, USER, INCHES, dd);
 		posi = INTEGER(pos)[i];
-		drawLabel(xi, yi, posi, offset, CHAR(STRING_ELT(l, i)), dd);
+		drawLabel(xi, yi, posi, offset,
+			  translateChar(STRING_ELT(l, i)), dd);
 	    }
 	}
 	return R_NilValue;
@@ -3323,7 +3324,7 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (plot)
 		    drawLabel(xi, yi, INTEGER(pos)[imin], offset,
-			      CHAR(STRING_ELT(l, imin)), dd);
+			      translateChar(STRING_ELT(l, imin)), dd);
 	    }
 	}
 	GMode(0, dd);
@@ -3594,7 +3595,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < n; i++) {
 	str = STRING_ELT(llabels, i);
 	ll[i] = (str == NA_STRING) ? 0.0 :
-	    GStrWidth(CHAR(str), INCHES, dd) + dnd_offset;
+	    GStrWidth(translateChar(str), INCHES, dd) + dnd_offset;
     }
 
     imax = -1; yval = -DBL_MAX;

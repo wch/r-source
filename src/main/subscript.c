@@ -69,17 +69,17 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos)
 	if (names != R_NilValue) {
 	    /* Try for exact match */
 	    for (i = 0; i < nx; i++)
-		if (streql(CHAR(STRING_ELT(names, i)),
-			   CHAR(STRING_ELT(s, pos)))) {
+		if (streql(translateChar(STRING_ELT(names, i)),
+			   translateChar(STRING_ELT(s, pos)))) {
 		    indx = i;
 		    break;
 		}
 	    /* Try for partial match */
 	    if (partial && indx < 0) {
-		len = strlen(CHAR(STRING_ELT(s, pos)));
+		len = strlen(translateChar(STRING_ELT(s, pos)));
 		for(i = 0; i < nx; i++) {
-		    if(!strncmp(CHAR(STRING_ELT(names, i)),
-				CHAR(STRING_ELT(s, pos)), len)) {
+		    if(!strncmp(translateChar(STRING_ELT(names, i)),
+				translateChar(STRING_ELT(s, pos)), len)) {
 			if(indx == -1 )
 			    indx = i;
 			else
@@ -97,8 +97,8 @@ OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname, int pos)
 	names = getAttrib(x, R_NamesSymbol);
 	if (names != R_NilValue) {
 	    for (i = 0; i < nx; i++)
-		if (streql(CHAR(STRING_ELT(names, i)),
-			   CHAR(PRINTNAME(s)))) {
+		if (streql(translateChar(STRING_ELT(names, i)),
+			   translateChar(PRINTNAME(s)))) {
 		    indx = i;
 		    break;
 		}
@@ -122,6 +122,7 @@ get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 */
     int indx, i;
     double dblind;
+    char *ss;
 
     if (pos < 0 && length(s) != 1) {
 	if (length(s) > 1)
@@ -146,28 +147,24 @@ get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 	    indx = integerOneIndex((int)dblind, len);
 	break;
     case STRSXP:
+	/* NA matches nothing */
+	if(STRING_ELT(s, pos) == NA_STRING) break;
+	
 	/* Try for exact match */
+	ss = translateChar(STRING_ELT(s, pos));
 	for (i = 0; i < length(names); i++) 
-	    if (STRING_ELT(names, i) == NA_STRING || 
-		STRING_ELT(s, pos) == NA_STRING) {
-		/* NA matches nothing */
-	    } else {
-		if (streql(CHAR(STRING_ELT(names, i)),
-			   CHAR(STRING_ELT(s, pos)))) {
+	    if (STRING_ELT(names, i) != NA_STRING) {
+		if (streql(translateChar(STRING_ELT(names, i)), ss)) {
 		    indx = i;
 		    break;
 		}
 	    }
 	/* Try for partial match */
 	if (pok && indx < 0) {
-	    len = strlen(CHAR(STRING_ELT(s, pos)));
+	    len = strlen(ss);
 	    for(i = 0; i < length(names); i++) {
-		if (STRING_ELT(names, i) == NA_STRING || 
-		    STRING_ELT(s, pos) == NA_STRING) {
-		    /* NA matches nothing */
-		} else {
-		    if(!strncmp(CHAR(STRING_ELT(names, i)),
-				CHAR(STRING_ELT(s, pos)), len)) {
+		if (STRING_ELT(names, i) != NA_STRING) {
+		    if(!strncmp(translateChar(STRING_ELT(names, i)), ss, len)) {
 			if(indx == -1)/* first one */
 			    indx = i;
 			else
@@ -180,7 +177,8 @@ get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
     case SYMSXP:
 	for (i = 0; i < length(names); i++)
 	    if (STRING_ELT(names, i) != NA_STRING &&
-		streql(CHAR(STRING_ELT(names, i)), CHAR(PRINTNAME(s)))) {
+		streql(translateChar(STRING_ELT(names, i)), 
+		       CHAR(PRINTNAME(s)))) {
 		indx = i;
 		break;
 	    }

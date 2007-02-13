@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -140,7 +140,7 @@ static int chash(SEXP x, int indx, HashData *d)
 static int shash(SEXP x, int indx, HashData *d)
 {
     unsigned int k;
-    char *p = CHAR(STRING_ELT(x, indx));
+    char *p = translateChar(STRING_ELT(x, indx));
     k = 0;
     while (*p++)
 	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
@@ -193,7 +193,8 @@ static int sequal(SEXP x, int i, SEXP y, int j)
     if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING) 
 	return 0;
     /* Finally look at the contents if necessary */
-    return !strcmp(CHAR(STRING_ELT(x, i)), CHAR(STRING_ELT(y, j)));
+    return !strcmp(translateChar(STRING_ELT(x, i)), 
+		   translateChar(STRING_ELT(y, j)));
 }
 
 static int rawhash(SEXP x, int indx, HashData *d)
@@ -593,12 +594,12 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* First pass, exact matching */
     for (i = 0; i < n_input; i++) {
-	temp = strlen(CHAR(STRING_ELT(input, i)));
+	char *ss = translateChar(STRING_ELT(input, i));
+	temp = strlen(ss);
 	if (temp == 0) continue;
 	for (j = 0; j < n_target; j++) {
 	    if (!dups_ok && used[j]) continue;
-	    k = strcmp(CHAR(STRING_ELT(input, i)),
-		       CHAR(STRING_ELT(target, j)));
+	    k = strcmp(ss, translateChar(STRING_ELT(target, j)));
 	    if (k == 0) {
 		used[j] = 1;
 		INTEGER(ans)[i] = j + 1;
@@ -608,15 +609,16 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     /* Second pass, partial matching */
     for (i = 0; i < n_input; i++) {
+	char *ss;
 	if (INTEGER(ans)[i]) continue;
-	temp = strlen(CHAR(STRING_ELT(input, i)));
+	ss = translateChar(STRING_ELT(input, i));
+	temp = strlen(ss);
 	if (temp == 0) continue;
 	mtch = 0;
 	mtch_count = 0;
 	for (j = 0; j < n_target; j++) {
 	    if (!dups_ok && used[j]) continue;
-	    k = strncmp(CHAR(STRING_ELT(input, i)),
-			CHAR(STRING_ELT(target, j)), temp);
+	    k = strncmp(ss, translateChar(STRING_ELT(target, j)), temp);
 	    if (k == 0) {
 		mtch = j + 1;
 		mtch_count++;
@@ -641,6 +643,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, input, target;
     Rboolean perfect;
     int i, j, k, imatch, n_input, n_target, temp;
+    char *ss, *st;
 
     checkArity(op, args);
 
@@ -655,14 +658,15 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     ans = allocVector(INTSXP, n_input);
 
     for (i = 0; i < n_input; i++) {
-	temp = strlen(CHAR(STRING_ELT(input, i)));
+	ss = translateChar(STRING_ELT(input, i));
+	temp = strlen(ss);
 	imatch = NA_INTEGER;
 	perfect = FALSE;
 	for (j = 0; j < n_target; j++) {
-	    k = strncmp(CHAR(STRING_ELT(input, i)),
-			CHAR(STRING_ELT(target, j)), temp);
+	    st = translateChar(STRING_ELT(target, j));
+	    k = strncmp(ss, st, temp);
 	    if (k == 0) {
-		if (strlen(CHAR(STRING_ELT(target, j))) == temp) {
+		if (strlen(st) == temp) {
 		    if (perfect)
 			imatch = 0;
 		    else {
@@ -1089,7 +1093,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP names, sep, ans, dup, newx;
     int i, n, cnt, len, maxlen = 0, *cnts, dp;
     HashData data;
-    char *csep, *buf;
+    char *csep, *buf, *ss;
     char *vmax;
 
     checkArity(op, args);
@@ -1101,11 +1105,11 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     sep = CADR(args);
     if(!isString(sep) || LENGTH(sep) != 1)
 	errorcall(call, _("'sep' must be a character string"));
-    csep = CHAR(STRING_ELT(sep, 0));
+    csep = translateChar(STRING_ELT(sep, 0));
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {
 	SET_STRING_ELT(ans, i, STRING_ELT(names, i));
-	len = strlen(CHAR(STRING_ELT(names, i)));
+	len = strlen(translateChar(STRING_ELT(names, i)));
 	if(len > maxlen) maxlen = len;
     }
     if(n > 1) {
@@ -1127,9 +1131,10 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	for(i = 1; i < n; i++) { /* first cannot be a duplicate */
 	    dp = INTEGER(dup)[i]; /* 1-based number of first occurrence */
 	    if(dp == 0) continue;
+	    ss = translateChar(STRING_ELT(names, i));
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
 	    for(cnt = cnts[dp-1]; cnt < n; cnt++) {
-		sprintf(buf, "%s%s%d", CHAR(STRING_ELT(names, i)), csep, cnt);
+		sprintf(buf, "%s%s%d", ss, csep, cnt);
 		SET_STRING_ELT(newx, 0, mkChar(buf));
 		if(Lookup(ans, newx, 0, &data) == data.nomatch) break;
 	    }

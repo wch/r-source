@@ -831,7 +831,7 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0)); /* for now, like fopen */
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
@@ -840,13 +840,13 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "block");
     enc = CADDDR(args);
     if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     ncon = NextConnection();
     con = Connections[ncon] = newfifo(file, strlen(open) ? open : "r");
     con->blocking = block;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
     if(strlen(open)) {
@@ -967,14 +967,14 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     if(length(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(scmd, 0));
+    file = translateChar(STRING_ELT(scmd, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     enc = CADDR(args);
     if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
 
     ncon = NextConnection();
@@ -987,7 +987,7 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     con = newpipe(file, strlen(open) ? open : "r");
 #endif
     Connections[ncon] = con;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
     if(strlen(open)) {
@@ -1157,22 +1157,22 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     enc = CADDR(args);
     if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
     compress = asInteger(CADDDR(args));
     if(compress == NA_LOGICAL || compress < 0 || compress > 9)
 	error(_("invalid '%s' argument"), "compress");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     ncon = NextConnection();
     con = Connections[ncon] = newgzfile(file, strlen(open) ? open : "r",
 					compress);
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
     if(strlen(open)) {
@@ -1339,18 +1339,18 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     enc = CADDR(args);
     if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     ncon = NextConnection();
     con = Connections[ncon] = newbzfile(file, strlen(open) ? open : "r");
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
     if(strlen(open)) {
@@ -2041,12 +2041,12 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if(!isString(sfile) || length(sfile) != 1)
 	error(_("invalid '%s' argument"), "description");
-    desc = CHAR(STRING_ELT(sfile, 0));
+    desc = translateChar(STRING_ELT(sfile, 0));
     stext = CADR(args);
     sopen = CADDR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     venv = CADDDR(args);
     if (isNull(venv))
 	error(_("use of NULL environment is defunct"));
@@ -2067,7 +2067,8 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	    con = Connections[ncon] = newouttext("NULL", stext, open, ncon);
 	else if(isString(stext) && length(stext) == 1)
 	    con = Connections[ncon] =
-		newouttext(CHAR(STRING_ELT(stext, 0)), stext, open, ncon);
+		newouttext(translateChar(STRING_ELT(stext, 0)), stext, 
+			   open, ncon);
 	else
 	    error(_("invalid '%s' argument"), "text");
     }
@@ -2118,7 +2119,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     scmd = CAR(args);
     if(!isString(scmd) || length(scmd) != 1)
 	error(_("invalid '%s' argument"), "host");
-    host = CHAR(STRING_ELT(scmd, 0));
+    host = translateChar(STRING_ELT(scmd, 0));
     args = CDR(args);
     port = asInteger(CAR(args));
     if(port == NA_INTEGER || port < 0)
@@ -2135,18 +2136,18 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     sopen = CAR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     args = CDR(args);
     enc = CAR(args);
     if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
 
     ncon = NextConnection();
     con = R_newsock(host, port, server, open);
     Connections[ncon] = con;
     con->blocking = blocking;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
     if(strlen(open)) {
@@ -2186,18 +2187,18 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
-    file = CHAR(STRING_ELT(sfile, 0));
+    file = translateChar(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
     enc = CADDR(args);
     if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     ncon = NextConnection();
     con = Connections[ncon] = R_newunz(file, strlen(open) ? open : "r");
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
     if(strlen(open)) {
@@ -2245,7 +2246,7 @@ SEXP attribute_hidden do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "blocking");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     if(strlen(open) > 0) strcpy(con->mode, open);
     con->blocking = block;
     success = con->open(con);
@@ -2521,7 +2522,7 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("cannot read from this connection"));
     if(!isString(CAD4R(args)) || LENGTH(CAD4R(args)) != 1)
 	errorcall(call, _("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAD4R(args), 0));
+    encoding = CHAR(STRING_ELT(CAD4R(args), 0)); /* ASCII */
     wasopen = con->isopen;
     if(!wasopen) {
 	if(!con->open(con)) error(_("cannot open the connection"));
@@ -2752,7 +2753,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     swhat = CAR(args); args = CDR(args);
     if(!isString(swhat) || length(swhat) != 1)
 	error(_("invalid value for '%s'"), "what");
-    what = CHAR(STRING_ELT(swhat, 0));
+    what = CHAR(STRING_ELT(swhat, 0)); /* ASCII */
     n = asInteger(CAR(args)); args = CDR(args);
     if(n == NA_INTEGER || n < 0) error(_("invalid value for '%s'"), "n");
     size = asInteger(CAR(args)); args = CDR(args);
@@ -2978,17 +2979,17 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    Rbyte *bytes;
 	    int np, outlen;
 	    for(i = 0, outlen = 0; i < len; i++) 
-		outlen += strlen(CHAR(STRING_ELT(object, i))) + 1;
+		outlen += strlen(translateChar(STRING_ELT(object, i))) + 1;
 	    PROTECT(ans = allocVector(RAWSXP, outlen));
 	    bytes = RAW(ans);
 	    for(i = 0, np = 0; i < len; i++) {
-		s = CHAR(STRING_ELT(object, i));
+		s = translateChar(STRING_ELT(object, i));
 		memcpy(bytes+np, s, strlen(s) + 1);
 		np +=  strlen(s) + 1;
 	    }
 	} else {
 	    for(i = 0; i < len; i++) {
-		s = CHAR(STRING_ELT(object, i));
+		s = translateChar(STRING_ELT(object, i));
 		n = con->write(s, sizeof(char), strlen(s) + 1, con);
 		if(!n) {
 		    warning(_("problem writing to connection"));
@@ -3288,7 +3289,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	usesep = TRUE;
 	if (!isString(sep) || length(sep) != 1)
 	    error(_("invalid value for '%s'"), "sep");
-	ssep = CHAR(STRING_ELT(sep, 0));
+	ssep = translateChar(STRING_ELT(sep, 0));
 	slen = strlen(ssep) + 1;
     }
     n = LENGTH(nchars);
@@ -3438,7 +3439,7 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!q) error(_("could not allocate space for pushBack"));
 	q += nexists;
 	for(i = 0; i < n; i++) {
-	    p = CHAR(STRING_ELT(stext, n - i - 1));
+	    p = translateChar(STRING_ELT(stext, n - i - 1));
 	    *q = (char *) malloc(strlen(p) + 1 + newLine);
 	    if(!(*q)) error(_("could not allocate space for pushBack"));
 	    strcpy(*q, p);
@@ -3677,7 +3678,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "description");
     if(length(scmd) > 1)
 	warning(_("only first element of 'description' argument used"));
-    url = CHAR(STRING_ELT(scmd, 0));
+    url = CHAR(STRING_ELT(scmd, 0)); /* ASCII */
 #ifdef HAVE_INTERNET
     if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
     else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
@@ -3687,13 +3688,13 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
 	error(_("invalid '%s' argument"), "open");
-    open = CHAR(STRING_ELT(sopen, 0));
+    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "block");
     enc = CADDDR(args);
     if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
 
     ncon = NextConnection();
@@ -3742,7 +3743,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     Connections[ncon] = con;
     con->blocking = block;
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
     if(strlen(open)) {

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-6  the R Development Core Team
+ *  Copyright (C) 2000-7  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -160,14 +160,15 @@ static SEXP do_one(SEXP X, SEXP FUN, SEXP classes, SEXP deflt,
 	UNPROTECT(1);
 	return ans;
     }
-    if(strcmp(CHAR(STRING_ELT(classes, 0)), "ANY") == 0)
+    if(strcmp(CHAR(STRING_ELT(classes, 0)), "ANY") == 0) /* ASCII */
 	matched = TRUE;
     else {
 	PROTECT(klass = R_data_class(X, FALSE));
 	for(i = 0; i < LENGTH(klass); i++)
 	    for(j = 0; j < length(classes); j++)
-		if(strcmp(CHAR(STRING_ELT(klass, i)),
-		      CHAR(STRING_ELT(classes, j))) == 0) matched = TRUE;
+		if(strcmp(translateChar(STRING_ELT(klass, i)),
+			  translateChar(STRING_ELT(classes, j))) == 0) 
+		    matched = TRUE;
 	UNPROTECT(1);
     }
     if(matched) {
@@ -196,7 +197,7 @@ SEXP attribute_hidden do_rapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     deflt = CAR(args); args = CDR(args);
     how = CAR(args);
     if(!isString(how)) errorcall(call, _("invalid '%s' argument"), "how");
-    replace = strcmp(CHAR(STRING_ELT(how, 0)), "replace") == 0;
+    replace = strcmp(CHAR(STRING_ELT(how, 0)), "replace") == 0; /* ASCII */
     n = length(X);
     PROTECT(ans = allocVector(VECSXP, n));
     names = getAttrib(X, R_NamesSymbol);

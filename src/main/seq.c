@@ -39,6 +39,7 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
     if (length(s) != length(t))
 	errorcall(call, _("unequal factor lengths"));
     n = length(s);
+    /* <FIXME> arrange to translate these */
     ls = getAttrib(s, R_LevelsSymbol);
     lt = getAttrib(t, R_LevelsSymbol);
     nls = LENGTH(ls);

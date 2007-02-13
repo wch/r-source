@@ -956,7 +956,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     escapes = asLogical(CAR(args));args = CDR(args);
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, _("invalid '%s' value"), "encoding");
-    encoding = CHAR(STRING_ELT(CAR(args), 0));
+    encoding = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
     if(streql(encoding, "latin1")) data.isLatin1 = TRUE;
     if(streql(encoding, "UTF-8"))  data.isUTF8 = TRUE;
 
@@ -979,7 +979,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
 	else {
-	    char *sc = CHAR(STRING_ELT(sep, 0));
+	    char *sc = translateChar(STRING_ELT(sep, 0));
 	    if(strlen(sc) > 1)
 		errorcall(call, _("invalid 'sep' value: must be one byte"));
 	    data.sepchar = (unsigned char) sc[0];
@@ -991,7 +991,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (length(dec) == 0)
 	    data.decchar = '.';
 	else {
-	    char *dc = CHAR(STRING_ELT(dec, 0));
+	    char *dc = translateChar(STRING_ELT(dec, 0));
 	    if(strlen(dc) != 1)
 		errorcall(call,
 			  _("invalid decimal separator: must be one byte"));
@@ -1003,7 +1003,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isString(quotes)) {
 	/* This appears to be necessary to protect quoteset against GC */
-	data.quoteset = CHAR(STRING_ELT(quotes, 0));
+	data.quoteset = translateChar(STRING_ELT(quotes, 0));
 	/* Protect against broken realloc */
 	if(data.quotesave)
 	    data.quotesave = realloc(data.quotesave,
@@ -1018,7 +1018,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	errorcall(call, _("invalid quote symbol set"));
 
-    p = CHAR(STRING_ELT(comstr, 0));
+    p = translateChar(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
@@ -1110,7 +1110,7 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     comstr = CAR(args);
     if (TYPEOF(comstr) != STRSXP || length(comstr) != 1)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
-    p = CHAR(STRING_ELT(comstr, 0));
+    p = translateChar(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
@@ -1121,13 +1121,13 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
-	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
+	else data.sepchar = (unsigned char) translateChar(STRING_ELT(sep, 0))[0];
 	/* gets compared to chars: bug prior to 1.7.0 */
     } else errorcall(call, _("invalid '%s' value"), "sep");
 
     if (isString(quotes)) {
 	/* This appears to be necessary to protect quoteset against GC */
-	data.quoteset = CHAR(STRING_ELT(quotes, 0));
+	data.quoteset = translateChar(STRING_ELT(quotes, 0));
 	/* Protect against broken realloc */
 	if(data.quotesave) data.quotesave = realloc(data.quotesave, strlen(data.quoteset) + 1);
 	else data.quotesave = malloc(strlen(data.quoteset) + 1);
@@ -1349,7 +1349,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (length(dec) == 0)
 	    data.decchar = '.';
 	else
-	    data.decchar = CHAR(STRING_ELT(dec, 0))[0];
+	    data.decchar = translateChar(STRING_ELT(dec, 0))[0];
     }
 
     cvec = CAR(args);
@@ -1526,7 +1526,7 @@ SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	PROTECT(prompt = coerceVector(prompt, STRSXP));
 	if(length(prompt) > 0)
-	    strncpy(ConsolePrompt, CHAR(STRING_ELT(prompt, 0)),
+	    strncpy(ConsolePrompt, translateChar(STRING_ELT(prompt, 0)),
 		    CONSOLE_PROMPT_SIZE - 1);
     }
 
@@ -1583,7 +1583,7 @@ SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 	first = Strtod(buffer, NULL, TRUE, &data);
     } else {
 	for (j = 0; j < LENGTH(CAR(args)); j++) {
-	    if (streql(CHAR(STRING_ELT(CAR(args), j)), buffer)) {
+	    if (streql(translateChar(STRING_ELT(CAR(args), j)), buffer)) {
 		first = j + 1;
 		break;
 	    }
@@ -1622,7 +1622,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (blskip == NA_LOGICAL) blskip = 1;
     if (isString(quotes)) {
 	/* This appears to be necessary to protect quoteset against GC */
-	data.quoteset = CHAR(STRING_ELT(quotes, 0));
+	data.quoteset = translateChar(STRING_ELT(quotes, 0));
 	/* Protect against broken realloc */
 	if(data.quotesave)
 	    data.quotesave = realloc(data.quotesave,
@@ -1639,14 +1639,14 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (TYPEOF(comstr) != STRSXP || length(comstr) != 1)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
-    p = CHAR(STRING_ELT(comstr, 0));
+    p = translateChar(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1)
 	errorcall(call, _("invalid '%s' value"), "comment.char");
     else if (strlen(p) == 1) data.comchar = (int)*p;
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
-	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
+	else data.sepchar = (unsigned char) translateChar(STRING_ELT(sep, 0))[0];
 	/* gets compared to chars: bug prior to 1.7.0 */
     } else errorcall(call, _("invalid '%s' value"), "sep");
 
@@ -1805,7 +1805,7 @@ static char *EncodeElement2(SEXP x, int indx, Rboolean quote,
     char *p, *p0, *q;
 
     if(TYPEOF(x) == STRSXP) {
-	p0 = CHAR(STRING_ELT(x, indx));
+	p0 = translateChar(STRING_ELT(x, indx));
 	if(!quote) return p0;
 	for(nbuf = 2, p = p0; *p; p++) /* find buffer length needed */
 	    nbuf += (*p == '"') ? 2 : 1;
@@ -1843,7 +1843,7 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nr, nc, i, j, qmethod;
     Rboolean wasopen, quote_rn = FALSE, *quote_col;
     Rconnection con;
-    char *csep, *ceol, *cna, cdec, *tmp=NULL /* -Wall */;
+    char *csep, *ceol, *cna, cdec, *sdec, *tmp=NULL /* -Wall */;
     SEXP *levels;
     R_StringBuffer strBuf = {NULL, 0, MAXELTSIZE};
     wt_info wi;
@@ -1882,13 +1882,13 @@ SEXP attribute_hidden do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isString(na)) errorcall(call, _("invalid '%s' value"), "na");
     if(!isString(dec)) errorcall(call, _("invalid '%s' value"), "dec");
     if(qmethod == NA_LOGICAL) errorcall(call, _("invalid '%s' value"), "qmethod");
-    csep = CHAR(STRING_ELT(sep, 0));
-    ceol = CHAR(STRING_ELT(eol, 0));
-    cna = CHAR(STRING_ELT(na, 0));
-    if(strlen(CHAR(STRING_ELT(dec, 0))) != 1)
+    csep = translateChar(STRING_ELT(sep, 0));
+    ceol = translateChar(STRING_ELT(eol, 0));
+    cna = translateChar(STRING_ELT(na, 0));
+    sdec = translateChar(STRING_ELT(dec, 0));
+    if(strlen(sdec) != 1)
 	errorcall(call, _("'dec' must be a single character"));
-    cdec = CHAR(STRING_ELT(dec, 0))[0];
-    /* cdec = (cdec == '.') ? '\0' : cdec; */
+    cdec = sdec[0];
     quote_col = (Rboolean *) R_alloc(nc, sizeof(Rboolean));
     for(j = 0; j < nc; j++) quote_col[j] = FALSE;
     for(i = 0; i < length(quote); i++) { /* NB, quote might be NULL */

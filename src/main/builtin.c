@@ -437,7 +437,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid '%s' specification"), "sep");
     nlsep = 0;
     for (i = 0; i < LENGTH(sepr); i++)
-	if (strstr(CHAR(STRING_ELT(sepr, i)), "\n")) nlsep = 1;
+	if (strstr(CHAR(STRING_ELT(sepr, i)), "\n")) nlsep = 1; /* ASCII */
     args = CDR(args);
 
     fill = CAR(args);
@@ -491,8 +491,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (n > 0) {
 	    if (labs != R_NilValue && (iobj == 0)
 		&& (asInteger(fill) > 0)) {
-		Rprintf("%s ", CHAR(STRING_ELT(labs, nlines)));
-		width += strlen(CHAR(STRING_ELT(labs, nlines % lablen))) + 1;
+		Rprintf("%s ", translateChar(STRING_ELT(labs, nlines)));
+		width += strlen(translateChar(STRING_ELT(labs, nlines % lablen))) + 1;
 		nlines++;
 	    }
 	    if (isString(s))
@@ -633,7 +633,7 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
     s = coerceVector(CAR(args), STRSXP);
     if (length(s) == 0)
 	error(_("vector: zero-length 'type' argument"));
-    mode = str2type(CHAR(STRING_ELT(s, 0)));
+    mode = str2type(CHAR(STRING_ELT(s, 0))); /* ASCII */
     if (mode == -1 && streql(CHAR(STRING_ELT(s, 0)), "double"))
 	mode = REALSXP;
     switch (mode) {
@@ -652,7 +652,7 @@ SEXP attribute_hidden do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     default:
 	error(_("vector: cannot make a vector of mode \"%s\"."),
-	      CHAR(STRING_ELT(s, 0)));
+	      translateChar(STRING_ELT(s, 0)));
     }
     if (mode == INTSXP || mode == LGLSXP)
 	memset(INTEGER(s), 0, len*sizeof(int));

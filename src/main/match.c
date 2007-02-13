@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,7 +55,8 @@ Rboolean NonNullStringMatch(SEXP s, SEXP t)
 {
     /* "" or NA string matches nothing */
     if (s == NA_STRING || t == NA_STRING) return FALSE;
-    if (CHAR(s)[0] && CHAR(t)[0] && strcmp(CHAR(s), CHAR(t)) == 0)
+    if (CHAR(s)[0] && CHAR(t)[0] && 
+	strcmp(translateChar(s), translateChar(t)) == 0)
 	return TRUE;
     else
 	return FALSE;
@@ -91,7 +92,7 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 	f = CHAR(formal);
 	break;
     case STRSXP:
-	f = CHAR(STRING_ELT(formal, 0));
+	f = translateChar(STRING_ELT(formal, 0));
 	break;
     default:
 	goto fail;
@@ -104,7 +105,7 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 	t = CHAR(tag);
 	break;
     case STRSXP:
-	t = CHAR(STRING_ELT(tag, 0));
+	t = translateChar(STRING_ELT(tag, 0));
 	break;
     default:
 	goto fail;

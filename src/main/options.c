@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2006   The R Development Core Team.
+ *  Copyright (C) 1998-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -373,7 +373,7 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 
 	if (*CHAR(namei)) { /* name = value  ---> assignment */
-	    tag = install(CHAR(namei));
+	    tag = install(translateChar(namei));
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
 		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
@@ -416,13 +416,17 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    errorcall(call, _("invalid continue parameter"));
-		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarString(s)));
+		/* We want to make sure these are in the native encoding */
+		SET_VECTOR_ELT(value, i, 
+			       SetOption(tag, mkString(translateChar(s))));
 	    }
 	    else if (streql(CHAR(namei), "prompt")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
 		    errorcall(call, _("prompt parameter invalid"));
-		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarString(s)));
+		/* We want to make sure these are in the native encoding */
+		SET_VECTOR_ELT(value, i, 
+			       SetOption(tag, mkString(translateChar(s))));
 	    }
 	    else if (streql(CHAR(namei), "contrasts")) {
 		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 2)

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2006   The R Development Core Team
+ *  Copyright (C) 1997-2007   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1495,7 +1495,7 @@ SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho
     if( TYPEOF(x) == ENVSXP) {
       if( nsubs!=1 || !isString(CAR(subs)) || length(CAR(subs)) != 1 )
 	error(_("wrong args for environment subassignment"));
-      defineVar(install(CHAR(STRING_ELT(CAR(subs),0))), y, x);
+      defineVar(install(translateChar(STRING_ELT(CAR(subs),0))), y, x);
       UNPROTECT(1);
       return(x);
     }
@@ -1787,7 +1787,7 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
       return(ans);
 
     if (! iS)
-	nlist = install(CHAR(STRING_ELT(input, 0)));
+	nlist = install(translateChar(STRING_ELT(input, 0)));
 
     return R_subassign3_dflt(call, CAR(ans), nlist, CADDR(ans));
 }

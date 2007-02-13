@@ -124,7 +124,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     stype = CADR(args);
     if(!isString(stype) || LENGTH(stype) != 1)
 	errorcall(call, _("invalid '%s' argument"), "type");
-    type = CHAR(STRING_ELT(stype, 0));
+    type = CHAR(STRING_ELT(stype, 0)); /* always ASCII */
     ntype = strlen(type);
     if(ntype == 0) errorcall(call, _("invalid '%s' argument"), "type");
     PROTECT(s = allocVector(INTSXP, len));
@@ -620,7 +620,7 @@ static void mystrcpy(char *dest, const char *src)
 
 
 /* abbreviate(inchar, minlen) */
-static SEXP stripchars(SEXP inchar, int minlen)
+static SEXP stripchars(char *inchar, int minlen)
 {
 /* This routine used to use strcpy with overlapping dest and src.
    That is not allowed by ISO C.
@@ -628,7 +628,7 @@ static SEXP stripchars(SEXP inchar, int minlen)
     int i, j, nspace = 0, upper;
     char *buff1 = cbuff.data;
 
-    mystrcpy(buff1, translateChar(inchar));
+    mystrcpy(buff1, inchar);
     upper = strlen(buff1)-1;
 
     /* remove leading blanks */
@@ -718,6 +718,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x, ans;
     int i, len, minlen, uclass;
     Rboolean warn = FALSE;
+    char *s;
 
     checkArity(op,args);
     x = CAR(args);
@@ -734,10 +735,10 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(x, i) == NA_STRING)
 	    SET_STRING_ELT(ans, i, NA_STRING);
 	else {
-	    warn = warn | !utf8strIsASCII(CHAR(STRING_ELT(x, i)));
-	    AllocBuffer(strlen(CHAR(STRING_ELT(x, i))) +1, &cbuff);
-	    SET_STRING_ELT(ans, i,
-			   stripchars(STRING_ELT(x, i), minlen));
+	    s = translateChar(STRING_ELT(x, i));
+	    warn = warn | !utf8strIsASCII(s);
+	    AllocBuffer(strlen(s) + 1, &cbuff);
+	    SET_STRING_ELT(ans, i, stripchars(s, minlen));
 	}
     }
     if(warn) warningcall(call, _("abbreviate used with non-ASCII chars"));
@@ -1824,7 +1825,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     if(mbcslocale) {
         int j, nb, nc;
         wchar_t xtable[65536 + 1], c_old, c_new, *wc;
-        char *xi;
+        char *xi, *s;
         struct wtr_spec *trs_old, **trs_old_ptr;
         struct wtr_spec *trs_new, **trs_new_ptr;
 
@@ -1838,18 +1839,20 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
         trs_new->type = WTR_INIT;
         trs_new->next = NULL;
         /* Build the old and new wtr_spec lists. */
-        nc = mbstowcs(NULL, CHAR(STRING_ELT(old, 0)), 0);
+	s = translateChar(STRING_ELT(old, 0));
+        nc = mbstowcs(NULL, s, 0);
         if(nc < 0) errorcall(call, _("invalid multibyte string 'old'"));
         AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
         wc = (wchar_t *) cbuff.data;
-        mbstowcs(wc, CHAR(STRING_ELT(old, 0)), nc + 1);
+        mbstowcs(wc, s, nc + 1);
         wtr_build_spec(wc, trs_old);
 
-        nc = mbstowcs(NULL, CHAR(STRING_ELT(_new, 0)), 0);
+	s = translateChar(STRING_ELT(_new, 0));
+        nc = mbstowcs(NULL, s, 0);
         if(nc < 0) errorcall(call, _("invalid multibyte string 'new'"));
         AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
         wc = (wchar_t *) cbuff.data;
-        mbstowcs(wc, CHAR(STRING_ELT(_new, 0)), nc + 1);
+        mbstowcs(wc, s, nc + 1);
         wtr_build_spec(wc, trs_new);
 
         /* Initialize the pointers for walking through the old and new
@@ -1913,8 +1916,8 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
             trs_new->type = TR_INIT;
             trs_new->next = NULL;
             /* Build the old and new tr_spec lists. */
-            tr_build_spec(CHAR(STRING_ELT(old, 0)), trs_old);
-            tr_build_spec(CHAR(STRING_ELT(_new, 0)), trs_new);
+            tr_build_spec(translateChar(STRING_ELT(old, 0)), trs_old);
+            tr_build_spec(translateChar(STRING_ELT(_new, 0)), trs_new);
             /* Initialize the pointers for walking through the old and new
                tr_spec lists and retrieving the next chars from the lists.
             */
@@ -1940,7 +1943,8 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
             n = LENGTH(x);
             PROTECT(y = allocVector(STRSXP, n));
             for(i = 0; i < n; i++) {
-                if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
+                if (STRING_ELT(x,i) == NA_STRING) 
+		    SET_STRING_ELT(y, i, NA_STRING);
                 else {
 		    char *xi = translateChar(STRING_ELT(x, i));
                     SET_STRING_ELT(y, i, allocString(strlen(xi)));
@@ -2108,7 +2112,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define isRaw(x) (TYPEOF(x) == RAWSXP)
 
-/* <UTF8>  charToRaw should work at byte level */
+/* <UTF8>  charToRaw should work at byte level, ignore encoding */
 SEXP attribute_hidden do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args);

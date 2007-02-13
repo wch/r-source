@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2004  The R Foundation
+ *  Copyright (C) 2004-7  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ SEXP attribute_hidden do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP en
     
     /* NB:  cleanup of event handlers must be done by driver in onExit handler */
     
-    return(nd->getEvent(env, CHAR(STRING_ELT(prompt,0))));
+    return(nd->getEvent(env, translateChar(STRING_ELT(prompt,0))));
 }
     
 #define leftButton   1

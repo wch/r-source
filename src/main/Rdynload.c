@@ -876,7 +876,7 @@ SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, _("character argument expected"));
-    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
     info = AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0]);
     if(!info)
@@ -892,7 +892,7 @@ SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
 	errorcall(call, _("character argument expected"));
-    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
+    GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
     if(!DeleteDLL(buf))
 	errorcall(call, _("dynamic/shared library '%s\' was not loaded"),
 		  buf);
@@ -1069,11 +1069,11 @@ R_getSymbolInfo(SEXP sname, SEXP spackage, SEXP withRegistrationInfo)
 
     package = "";
 
-    name = CHAR(STRING_ELT(sname, 0));
+    name = translateChar(STRING_ELT(sname, 0));
 
     if(length(spackage)) {
 	if(TYPEOF(spackage) == STRSXP) {
-	    package = CHAR(STRING_ELT(spackage, 0));
+	    package = translateChar(STRING_ELT(spackage, 0));
 	}
 	else if(TYPEOF(spackage) == EXTPTRSXP &&
 		R_ExternalPtrTag(spackage) == Rf_install("DLLInfo")) {

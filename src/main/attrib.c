@@ -281,7 +281,7 @@ void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
 	    int i;
 	    Rboolean ists = FALSE;
 	    for (i = 0; i < LENGTH(cl); i++)
-		if (strcmp(CHAR(STRING_ELT(cl, i)), "ts") == 0) {
+		if (strcmp(CHAR(STRING_ELT(cl, i)), "ts") == 0) { /* ASCII */
 		    ists = TRUE;
 		    break;
 		}
@@ -292,7 +292,7 @@ void attribute_hidden copyMostAttribNoTs(SEXP inp, SEXP ans)
 		int i, j, l = LENGTH(cl);
 		PROTECT(new_cl = allocVector(STRSXP, l - 1));
 		for (i = 0, j = 0; i < l; i++)
-		    if (strcmp(CHAR(STRING_ELT(cl, i)), "ts"))
+		    if (strcmp(CHAR(STRING_ELT(cl, i)), "ts")) /* ASCII */
 			SET_STRING_ELT(new_cl, j++, STRING_ELT(cl, i));
 		installAttrib(ans, TAG(s), new_cl);
 		UNPROTECT(1);
@@ -457,7 +457,7 @@ SEXP classgets(SEXP vec, SEXP klass)
 	    int i;
 	    Rboolean isfactor = FALSE;
 	    for(i = 0; i < length(klass); i++)
-		if(streql(CHAR(STRING_ELT(klass, i)), "factor")) {
+		if(streql(CHAR(STRING_ELT(klass, i)), "factor")) { /* ASCII */
 		    isfactor = TRUE;
 		    break;
 		}
@@ -719,7 +719,7 @@ SEXP namesgets(SEXP vec, SEXP val)
 	for (s = vec; s != R_NilValue; s = CDR(s), i++)
 	    if (STRING_ELT(val, i) != R_NilValue
 		&& STRING_ELT(val, i) != R_NaString
-		&& *CHAR(STRING_ELT(val, i)) != 0)
+		&& *CHAR(STRING_ELT(val, i)) != 0) /* test of length */
 		SET_TAG(s, install(translateChar(STRING_ELT(val, i))));
 	    else
 		SET_TAG(s, R_NilValue);
@@ -1024,7 +1024,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, _("attributes must be named"));
 	for (i = 0; i < nattrs; i++) {
 	    if (STRING_ELT(names, i) == R_NilValue ||
-		CHAR(STRING_ELT(names, i))[0] == '\0') {
+		CHAR(STRING_ELT(names, i))[0] == '\0') { /* all ASCII tests */
 		errorcall(call, _("all attributes must have names [%d does not]"), i+1);
 	    }
 	    if (!strcmp(CHAR(STRING_ELT(names, i)), "dim"))
@@ -1078,8 +1078,9 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     /* try to find a match among the attributes list */
     for (alist = ATTRIB(s); alist != R_NilValue; alist = CDR(alist)) {
 	SEXP tmp = TAG(alist);
-	if (! strncmp(CHAR(PRINTNAME(tmp)), str, n)) {
-	    if (strlen(CHAR(PRINTNAME(tmp))) == n) {
+	char *s = CHAR(PRINTNAME(tmp));
+	if (! strncmp(s, str, n)) {
+	    if (strlen(s) == n) {
 		tag = tmp;
 		match = FULL;
 		break;
@@ -1097,6 +1098,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (match == PARTIAL2) return R_NilValue;
 
     /* unless a full match has been found, check for a "names" attribute */
+    /* surely these are just "names"! */
     if (match != FULL && ! strncmp(CHAR(PRINTNAME(R_NamesSymbol)), str, n)) {
 	if (strlen(CHAR(PRINTNAME(R_NamesSymbol))) == n) {
 	    /* we have a full match on "names" */
@@ -1259,17 +1261,19 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
 		if(isNull(classString)) {
 		    UNPROTECT(1);
 		    error(_("cannot get a slot (\"%s\") from an object of type \"%s\""),
-			  CHAR(asChar(input)), CHAR(type2str(TYPEOF(obj))));
+			  translateChar(asChar(input)),
+			  CHAR(type2str(TYPEOF(obj))));
 		}
 	    }
 	    else classString = R_NilValue; /* make sure it is initialized */
 	    /* not there.  But since even NULL really does get stored, this
 	       implies that there is no slot of this name.  Or somebody
-	       screwed up by using atttr(..) <- NULL */
+	       screwed up by using attr(..) <- NULL */
 
 	    UNPROTECT(1);
 	    error(_("no slot of name \"%s\" for this object of class \"%s\""),
-		  CHAR(asChar(input)), CHAR(asChar(classString)));
+		  translateChar(asChar(input)),
+		  translateChar(asChar(classString)));
 	}
 	else if(value == pseudo_NULL)
 	    value = R_NilValue;
@@ -1380,20 +1384,22 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     if(isString(nlist)) nlist = install(translateChar(STRING_ELT(nlist, 0)));
     PROTECT(object = eval(CAR(args), env));
     if(can_test_S4Object && !IS_S4_OBJECT(object)) {
-      klass = getAttrib(object, R_ClassSymbol);
-      if(length(klass) == 0)
+	klass = getAttrib(object, R_ClassSymbol);
+	if(length(klass) == 0)
 	    error(_("trying to get slot \"%s\" from an object of a basic class (\"%s\") with no slots"),
-		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
-      else {
-	if(isString(klass) &&
-	   install(CHAR(STRING_ELT(klass, 0))) == install("classRepresentation")) {
-	  warning("Class representations out of date--package(s) need to be reinstalled");
-	  can_test_S4Object = FALSE; /* turn tests off to avoid repeated warnings */
+		  CHAR(PRINTNAME(nlist)),
+		  CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
+	else {
+	    if(isString(klass) &&
+	       streql(CHAR(STRING_ELT(klass, 0)), "classRepresentation")) {
+		warning("Class representations out of date--package(s) need to be reinstalled");
+		can_test_S4Object = FALSE; /* turn tests off to avoid repeated warnings */
+	    }
+	    else
+		error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
+		      CHAR(PRINTNAME(nlist)),
+		      translateChar(STRING_ELT(klass, 0)));
 	}
-	else
-	  error(_("trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 object "),
-	      CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(klass, 0)));
-      }
     }
     ans = R_do_slot(object, nlist);
     UNPROTECT(1);

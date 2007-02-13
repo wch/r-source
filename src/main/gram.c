@@ -3179,7 +3179,7 @@ static SEXP TagArg(SEXP arg, SEXP tag)
 {
     switch (TYPEOF(tag)) {
     case STRSXP:
-    	tag = install(CHAR(STRING_ELT(tag, 0)));
+    	tag = install(translateChar(STRING_ELT(tag, 0)));
     case NILSXP:
     case SYMSXP:
 	return lang2(arg, tag);

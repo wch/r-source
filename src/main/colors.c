@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2007  Robert Gentleman, Ross Ihaka and the
  *			     R Development Core Team
  *  Copyright (C) 2003	     The R Foundation
  *
@@ -83,7 +83,7 @@ SEXP attribute_hidden do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
     val = CAR(args);
     if (!isString(val)) errorcall(call, _("invalid argument type"));
     if ((n=length(val)) == 1) {
-	if (StrMatch("default", CHAR(STRING_ELT(val, 0))))
+	if (StrMatch("default", CHAR(STRING_ELT(val, 0)))) /* ASCII */
 	    setpalette(DefaultPalette);
 	else errorcall(call, _("unknown palette (need >= 2 colors)"));
     }

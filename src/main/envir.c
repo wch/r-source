@@ -1447,7 +1447,7 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
 	error(_("invalid first argument"));
     else
-	name = install(CHAR(STRING_ELT(CAR(args), 0)));
+	name = install(translateChar(STRING_ELT(CAR(args), 0)));
     PROTECT(val = CADR(args));
     aenv = CAR(CDDR(args));
     if (TYPEOF(aenv) == NILSXP)
@@ -1556,7 +1556,7 @@ SEXP attribute_hidden do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (i = 0; i < LENGTH(name); i++) {
 	done = 0;
-	tsym = install(CHAR(STRING_ELT(name, i)));
+	tsym = install(translateChar(STRING_ELT(name, i)));
 	if( !HASHASH(PRINTNAME(tsym)) )
 	    hashcode = R_Newhashpjw(CHAR(PRINTNAME(tsym)));
 	else
@@ -1603,7 +1603,7 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isValidStringF(CAR(args)))
 	errorcall(call, _("invalid first argument"));
     else
-	t1 = install(CHAR(STRING_ELT(CAR(args), 0)));
+	t1 = install(translateChar(STRING_ELT(CAR(args), 0)));
 
     /* envir :	originally, the "where=" argument */
 
@@ -1629,10 +1629,10 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     */
 
     if (isString(CAR(CDDR(args)))) {
-	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), 0)), "function"))
+	if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), 0)), "function")) /* ASCII */
 	    gmode = FUNSXP;
 	else
-	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), 0)));
+	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), 0))); /* ASCII */
     } else {
 	errorcall(call, _("invalid '%s' argument"), "mode");
 	gmode = FUNSXP;/* -Wall */
@@ -1655,7 +1655,7 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 		errorcall(call,
 			  _("variable \"%s\" of mode \"%s\" was not found"),
 			  CHAR(PRINTNAME(t1)),
-			  CHAR(STRING_ELT(CAR(CDDR(args)), 0)));
+			  CHAR(STRING_ELT(CAR(CDDR(args)), 0))); /* ASCII */
 	}
 
 	/* We need to evaluate if it is a promise */
@@ -1759,7 +1759,7 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
        etc */
 
     for(i = 0; i < nvals; i++) {
-	if (isString(mode)) {
+	if (isString(mode)) { /* ASCII */
 	    if (!strcmp(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )), "function"))
 		gmode = FUNSXP;
 	    else
@@ -1781,8 +1781,9 @@ SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    ifnfnd = VECTOR_ELT(ifnotfound, i);
 
-	SET_VECTOR_ELT(ans, i, gfind(CHAR(STRING_ELT(x,i % nvals)), env, gmode,
-				     ifnfnd, ginherits, rho));
+	SET_VECTOR_ELT(ans, i, 
+		       gfind(translateChar(STRING_ELT(x,i % nvals)), env,
+			     gmode, ifnfnd, ginherits, rho));
     }
 
     setAttrib(ans, R_NamesSymbol, duplicate(x));
@@ -1855,7 +1856,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     s = sym = CAR(args);
     if( isString(sym) && length(sym)==1 )
-        s = sym = install(CHAR(STRING_ELT(CAR(args), 0)));
+        s = sym = install(translateChar(STRING_ELT(CAR(args), 0)));
     if (!isSymbol(sym))
 	errorcall(call, _("invalid use of 'missing'"));
 
@@ -2634,7 +2635,7 @@ static SEXP matchEnvir(SEXP call, char *what)
     for (t = ENCLOS(R_GlobalEnv); t != R_EmptyEnv ; t = ENCLOS(t)) {
 	name = getAttrib(t, nameSymbol);
 	if(isString(name) && length(name) > 0 &&
-	   !strcmp(CHAR(STRING_ELT(name, 0)), what))
+	   !strcmp(translateChar(STRING_ELT(name, 0)), what))
 	    return t;
     }
     errorcall(call, _("no item called \"%s\" on the search list"), what);
@@ -2649,7 +2650,7 @@ SEXP attribute_hidden do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return arg;
     switch(TYPEOF(arg)) {
     case STRSXP:
-	return matchEnvir(call, CHAR(asChar(arg)));
+	return matchEnvir(call, translateChar(asChar(arg)));
     case REALSXP:
     case INTSXP:
 	return do_pos2env(call, op, args, rho);
@@ -2963,7 +2964,7 @@ Rboolean R_IsPackageEnv(SEXP rho)
 	char *packprefix = "package:";
 	int pplen = strlen(packprefix);
 	if(isString(name) && length(name) > 0 &&
-	   ! strncmp(packprefix, CHAR(STRING_ELT(name, 0)), pplen))
+	   ! strncmp(packprefix, CHAR(STRING_ELT(name, 0)), pplen)) /* ASCII */
 	    return TRUE;
 	else
 	    return FALSE;
@@ -2980,7 +2981,7 @@ SEXP R_PackageEnvName(SEXP rho)
 	char *packprefix = "package:";
 	int pplen = strlen(packprefix);
 	if(isString(name) && length(name) > 0 &&
-	   ! strncmp(packprefix, CHAR(STRING_ELT(name, 0)), pplen))
+	   ! strncmp(packprefix, CHAR(STRING_ELT(name, 0)), pplen)) /* ASCII */
 	    return name;
 	else
 	    return R_NilValue;
@@ -3064,7 +3065,7 @@ static SEXP checkNSname(SEXP call, SEXP name)
 	break;
     case STRSXP:
 	if (LENGTH(name) >= 1) {
-	    name = install(CHAR(STRING_ELT(name, 0)));
+	    name = install(translateChar(STRING_ELT(name, 0)));
 	    break;
 	}
 	/* else fall through */
@@ -3151,8 +3152,8 @@ SEXP attribute_hidden do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n = LENGTH(impnames);
     for (i = 0; i < n; i++) {
-	impsym = install(CHAR(STRING_ELT(impnames, i)));
-	expsym = install(CHAR(STRING_ELT(expnames, i)));
+	impsym = install(translateChar(STRING_ELT(impnames, i)));
+	expsym = install(translateChar(STRING_ELT(expnames, i)));
 
 	/* find the binding--may be a CONS cell or a symbol */
 	for (env = expenv, binding = R_NilValue;

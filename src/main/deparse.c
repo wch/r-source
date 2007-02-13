@@ -356,10 +356,11 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(o = objs = allocList(nobjs));
 
     for (j = 0, nout = 0; j < nobjs; j++, o = CDR(o)) {
-	SET_TAG(o, install(CHAR(STRING_ELT(names, j))));
+	SET_TAG(o, install(translateChar(STRING_ELT(names, j))));
 	SETCAR(o, findVar(TAG(o), source));
 	if (CAR(o) == R_UnboundValue)
-	    warning(_("Object \"%s\" not found"), CHAR(PRINTNAME(TAG(o))));
+	    warning(_("Object \"%s\" not found"), 
+		    CHAR(PRINTNAME(TAG(o))));
 	else nout++;
     }
     o = objs;
@@ -368,14 +369,14 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(INTEGER(file)[0] == 1) {
 	    for (i = 0, nout = 0; i < nobjs; i++) {
 		if (CAR(o) == R_UnboundValue) continue;
-		obj_name = CHAR(STRING_ELT(names, i));
+		obj_name = translateChar(STRING_ELT(names, i));
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
 		Rprintf(/* figure out if we need to quote the name */
 			isValidName(obj_name) ? "%s <-\n" : "`%s` <-\n",
 			obj_name);
 		tval = deparse1(CAR(o), 0, opts);
 		for (j = 0; j < LENGTH(tval); j++)
-		    Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));
+		    Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));/* translated */
 		o = CDR(o);
 	    }
 	}
@@ -385,12 +386,12 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (!wasopen)
 		if(!con->open(con)) error(_("cannot open the connection"));
 	    for (i = 0, nout = 0; i < nobjs; i++) {
+		char *s;
 		if (CAR(o) == R_UnboundValue) continue;
 		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
-		res = Rconn_printf(con, "`%s` <-\n",
-				   CHAR(STRING_ELT(names, i)));
-		if(!havewarned &&
-		   res < strlen(CHAR(STRING_ELT(names, i))) + 4)
+		s = translateChar(STRING_ELT(names, i));
+		res = Rconn_printf(con, "`%s` <-\n", s);
+		if(!havewarned && res < strlen(s) + 6)
 		    warningcall(call, _("wrote too few characters"));
 		tval = deparse1(CAR(o), 0, opts);
 		for (j = 0; j < LENGTH(tval); j++) {
@@ -576,7 +577,7 @@ static void printcomment(SEXP s, LocalParseData *d)
 
     if(isList(TAG(s)) && !isNull(TAG(s))) {
 	for (s = TAG(s); s != R_NilValue; s = CDR(s)) {
-	    print2buff(CHAR(STRING_ELT(CAR(s), 0)), d);
+	    print2buff(translateChar(STRING_ELT(CAR(s), 0)), d);
 	    writeline(d);
 	}
     }
@@ -584,7 +585,7 @@ static void printcomment(SEXP s, LocalParseData *d)
 	cmt = getAttrib(s, R_CommentSymbol);
 	ncmt = length(cmt);
 	for(i = 0 ; i < ncmt ; i++) {
-	    print2buff(CHAR(STRING_ELT(cmt, i)), d);
+	    print2buff(translateChar(STRING_ELT(cmt, i)), d);
 	    writeline(d);
 	}
     }
@@ -656,7 +657,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	}
 	break;
     case CHARSXP:
-	print2buff(CHAR(s), d);
+	print2buff(translateChar(s), d);
 	break;
     case SPECIALSXP:
     case BUILTINSXP:
@@ -682,7 +683,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
         if ((d->opts & USESOURCE) && 
 	    (n = length(t = getAttrib(s, R_SourceSymbol))) > 0) {
     	    for(i = 0 ; i < n ; i++) {
-	    	print2buff(CHAR(STRING_ELT(t, i)), d);
+	    	print2buff(translateChar(STRING_ELT(t, i)), d);
 	    	writeline(d);
 	    }
 	} else {
@@ -861,7 +862,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_FUNCALL:
 		case PP_RETURN:
-		    if (isValidName(CHAR(PRINTNAME(op))))
+		    if (isValidName(CHAR(PRINTNAME(op)))) /* ASCII */
 			print2buff(CHAR(PRINTNAME(op)), d);
 		    else {
 			print2buff("\"", d);
@@ -875,7 +876,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    print2buff(")", d);
 		    break;
 		case PP_FOREIGN:
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    print2buff("(", d);
 		    d->inlist++;
 		    args2buff(s, 1, 0, d);
@@ -885,7 +886,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		case PP_FUNCTION:
 		    printcomment(s, d);
 		    if (!(d->opts & USESOURCE) || isNull(CADDR(s))) {
-		    	print2buff(CHAR(PRINTNAME(op)), d);
+		    	print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    	print2buff("(", d);
 		    	args2buff(FORMALS(s), 0, 1, d);
 		    	print2buff(") ", d);
@@ -894,7 +895,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			s = CADDR(s);
 			n = length(s);
 	    	    	for(i = 0 ; i < n ; i++) {
-	    		    print2buff(CHAR(STRING_ELT(s, i)), d);
+	    		    print2buff(translateChar(STRING_ELT(s, i)), d);
 	    		    writeline(d);
 			}
 		    }
@@ -907,7 +908,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    if (parens)
 			print2buff(")", d);
 		    print2buff(" ", d);
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    print2buff(" ", d);
 		    if ((parens = needsparens(fop, CADR(s), 0)))
 			print2buff("(", d);
@@ -921,7 +922,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    /*temp fix to handle printing of x$a's */
 		    if( isString(CADR(s)) &&
 			isValidName(CHAR(STRING_ELT(CADR(s), 0))))
@@ -941,7 +942,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    if (parens)
 			print2buff(")", d);
 		    print2buff(" ", d);
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    print2buff(" ", d);
 		    linebreak(&lbreak, d);
 		    if ((parens = needsparens(fop, CADR(s), 0)))
@@ -960,7 +961,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    if ((parens = needsparens(fop, CADR(s), 0)))
 			print2buff("(", d);
 		    deparse2buff(CADR(s), d);
@@ -968,7 +969,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 			print2buff(")", d);
 		    break;
 		case PP_UNARY:
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    if ((parens = needsparens(fop, CAR(s), 0)))
 			print2buff("(", d);
 		    deparse2buff(CAR(s), d);
@@ -983,7 +984,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    break;
 		case PP_SUBASS:
 		    print2buff("`", d);
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(CHAR(PRINTNAME(op)), d); /* ASCII */
 		    print2buff("`(", d);
 		    args2buff(s, 0, 0, d);
 		    print2buff(")", d);
@@ -999,7 +1000,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    s = CDR(s);
 		    deparse2buff(CAR(s), d);
 		    print2buff(" ", d);
-		    print2buff(CHAR(PRINTNAME(op)), d);
+		    print2buff(translateChar(PRINTNAME(op)), d);
 		    print2buff(" ", d);
 		    linebreak(&lbreak, d);
 		    deparse2buff(CADR(s), d);
@@ -1032,13 +1033,14 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    }
 		    else {
 			if ( isSymbol(CAR(s)) ){
-			    if ( !isValidName(CHAR(PRINTNAME(CAR(s)))) ){
+			    char *ss = CHAR(PRINTNAME(CAR(s)));
+			    if ( !isValidName(ss) ){
 
 				print2buff("`", d);
-				print2buff(CHAR(PRINTNAME(CAR(s))), d);
+				print2buff(ss, d);
 				print2buff("`", d);
 			    } else
-				print2buff(CHAR(PRINTNAME(CAR(s))), d);
+				print2buff(ss, d);
 			}
 			else
 			    deparse2buff(CAR(s), d);
@@ -1290,7 +1292,7 @@ static Rboolean src2buff(SEXP sv, int k, LocalParseData *d)
 	PROTECT(t = eval(t, R_BaseEnv));
 	n = length(t);
 	for(i = 0 ; i < n ; i++) {
-	    print2buff(CHAR(STRING_ELT(t, i)), d);
+	    print2buff(translateChar(STRING_ELT(t, i)), d);
 	    if(i < n-1) writeline(d);
 	}
 	UNPROTECT(3);
@@ -1323,9 +1325,9 @@ static void vec2buff(SEXP v, LocalParseData *d)
 	    print2buff(", ", d);
 	linebreak(&lbreak, d);
 	if (!isNull(nv) && !isNull(STRING_ELT(nv, i))
-	    && *CHAR(STRING_ELT(nv, i))) {
+	    && *CHAR(STRING_ELT(nv, i))) { /* length test */
             /* d->opts = SIMPLEDEPARSE; This seems pointless */
-	    if( isValidName(CHAR(STRING_ELT(nv, i))) )
+	    if( isValidName(translateChar(STRING_ELT(nv, i))) )
 		deparse2buff(STRING_ELT(nv, i), d);
 	    else {
 		print2buff("\"", d);
@@ -1353,19 +1355,20 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 #if 0
 	    deparse2buff(TAG(arglist));
 #else
-	    char tpb[120];
+	    char tpb[120], *ss;
 	    SEXP s = TAG(arglist);
 
-	    if( s == R_DotsSymbol || isValidName(CHAR(PRINTNAME(s))) )
-		print2buff(CHAR(PRINTNAME(s)), d);
+	    ss = CHAR(PRINTNAME(s));
+	    if( s == R_DotsSymbol || isValidName(ss) )
+		print2buff(ss, d);
 	    else {
-		if( strlen(CHAR(PRINTNAME(s)))< 117 ) {
-		    snprintf(tpb, 120, "\"%s\"",CHAR(PRINTNAME(s)));
+		if( strlen(ss) < 117 ) {
+		    snprintf(tpb, 120, "\"%s\"", ss);
 		    print2buff(tpb, d);
 		}
 		else {
 		    sprintf(tpb,"\"");
-		    strncat(tpb, CHAR(PRINTNAME(s)), 117);
+		    strncat(tpb, ss, 117);
 		    strcat(tpb, "\"");
 		    print2buff(tpb, d);
 		}

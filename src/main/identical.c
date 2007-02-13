@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-6  R Development Core Team
+ *  Copyright (C) 2001-7  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -144,6 +144,7 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
     }
     case CHARSXP:
     {
+	/* NB: R strings can have embedded nuls */
 	int n1 = LENGTH(x), n2 = LENGTH(y);
 	if (n1 != n2) return FALSE;
 	if(memcmp(CHAR(x), CHAR(y), n1) != 0) return FALSE;

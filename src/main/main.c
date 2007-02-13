@@ -1137,7 +1137,7 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if( !isString(CAR(args)) )
 	errorcall(call, _("one of \"yes\", \"no\", \"ask\" or \"default\" expected."));
-    tmp = CHAR(STRING_ELT(CAR(args), 0));
+    tmp = CHAR(STRING_ELT(CAR(args), 0)); /* ASCII */
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
 	if(!R_Interactive)
