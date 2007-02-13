@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-02-10 r40690)
+R version 2.5.0 Under development (unstable) (2007-02-13 r40706)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5956,4 +5956,42 @@ Error in pmin(na.rm, ...) : cannot mix 0-length vectors with others
 [21] "1997-07-01" "1999-01-01" "2006-01-01"
 > stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
 > ## regresion tests
+> 
+> 
+> ## regression tests on names of 1D arrays
+> x <- as.array(1:3)
+> names(x) <- letters[x] # sets dimnames, really
+> names(x)
+[1] "a" "b" "c"
+> dimnames(x)
+[[1]]
+[1] "a" "b" "c"
+
+> attributes(x)
+$dim
+[1] 3
+
+$dimnames
+$dimnames[[1]]
+[1] "a" "b" "c"
+
+
+> names(x) <- NULL
+> attr(x, "names") <- LETTERS[x] # sets dimnames, really
+> names(x)
+[1] "A" "B" "C"
+> dimnames(x)
+[[1]]
+[1] "A" "B" "C"
+
+> attributes(x)
+$dim
+[1] 3
+
+$dimnames
+$dimnames[[1]]
+[1] "A" "B" "C"
+
+
+> ## regression tests
 > 

@@ -660,15 +660,15 @@ The other attributes which are given special treatment are
 @code{"names"}, @code{"class"}, @code{"tsp"}, @code{"comment"} and
 @code{"row.names"}.  For pairlist-like objects the names are not stored
 as an attribute but (as symbols) as the tags: however the @R{} interface
-makes them look like conventional attributes (one reason why the
-@code{"names"} attribute has to be treated specially).  The C code
-ensures that the @code{"tsp"} attribute is an @code{REALSXP}, the
-frequency is positive and the implied length agrees with the number of
-rows of the object being assigned to.  Classes and comments are
-restricted to character vectors, and assigning a zero-length comment or
-class removes the attribute.  Setting or removing a @code{"class"}
-attribute sets the object bit appropriately.  Integer row names are
-converted to and from the internal compact representation.
+makes them look like conventional attributes, and for one-dimensional
+arrays they are stored as the first element of the @code{"dimnames"}
+attribute.  The C code ensures that the @code{"tsp"} attribute is an
+@code{REALSXP}, the frequency is positive and the implied length agrees
+with the number of rows of the object being assigned to.  Classes and
+comments are restricted to character vectors, and assigning a
+zero-length comment or class removes the attribute.  Setting or removing
+a @code{"class"} attribute sets the object bit appropriately.  Integer
+row names are converted to and from the internal compact representation.
 
 @cindex copying semantics
 Care needs to be taken when adding attributes to objects of the types
@@ -1139,11 +1139,11 @@ enclosure, frame, tag and attributes.
 @node Encodings for CHARSXPs, Internal use of global and base environments, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
 
-Character data in @R{} is stored in the sexptype @code{CHARSXP}.  Until
+Character data in @R{} are stored in the sexptype @code{CHARSXP}.  Until
 @R{} 2.1.0 it was assumed that the data were in the platform's native
 8-bit encoding, and furthermore it was quite often assumed that the
-encoding was ISO Latin-1 or a compatible charset (such as Windows'
-CP1252 or Latin-9).
+encoding was ISO Latin-1 or a superset (such as Windows' CP1252 or
+Latin-9).
 
 As from @R{} 2.1.0 there was support for other encodings, in particular
 UTF-8 and the multi-byte encodings used on Windows for CJK languages.
@@ -1164,9 +1164,9 @@ display bytes that are not valid in the current locale).  Many (but not
 all) of the character manipulation functions will either preserve the
 declaration or re-encode the character string.
 
-Currently quantities that refer to the OS such as file names are not
-re-encoded, as it will be necessary to use a wide-character interface to
-make this useful.
+Eventually strings that refer to the OS such as file names will need to
+be passed through a wide-character interface on some OSes
+(e.g. Windows), but currently they are just recoded to the current locale.
 
 When are character strings declared to be of known encoding?  One way is
 to do so directly via @code{Encoding}.  The parser declares the encoding

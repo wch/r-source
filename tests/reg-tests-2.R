@@ -2188,3 +2188,17 @@ stopifnot(identical(pmax(x, y), pmax(y, x)))
 format(pmax(x, y, na.rm=TRUE), tz="GMT")
 stopifnot(identical(pmax(x, y, na.rm=TRUE), pmax(y, x, na.rm=TRUE)))
 ## regresion tests
+
+
+## regression tests on names of 1D arrays
+x <- as.array(1:3)
+names(x) <- letters[x] # sets dimnames, really
+names(x)
+dimnames(x)
+attributes(x)
+names(x) <- NULL
+attr(x, "names") <- LETTERS[x] # sets dimnames, really
+names(x)
+dimnames(x)
+attributes(x)
+## regression tests
