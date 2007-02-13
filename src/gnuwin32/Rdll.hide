@@ -416,7 +416,6 @@
  Rf_ssort
  Rf_stirlerr
  Rf_substituteList
- Rf_translateChar
  Rf_unbindVar
  Rf_vectorSubscript
  Rf_yychar

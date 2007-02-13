@@ -607,6 +607,7 @@ void Rf_setVar(SEXP, SEXP, SEXP);
 SEXPTYPE Rf_str2type(char*);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
+char * Rf_translateChar(SEXP);
 char * Rf_type2char(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
 void Rf_unprotect(int);
@@ -916,6 +917,7 @@ int R_system(char *);
 #define str2type		Rf_str2type
 #define StringBlank		Rf_StringBlank
 #define substitute		Rf_substitute
+#define translateChar		Rf_translateChar
 #define type2char		Rf_type2char
 #define type2str		Rf_type2str
 #define unprotect		Rf_unprotect

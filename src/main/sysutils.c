@@ -595,7 +595,9 @@ int Riconv_close (void *cd)
     return iconv_close((iconv_t) cd);
 }
 
-attribute_hidden char *translateChar(SEXP x)
+static void *latin1_obj = NULL, *utf8_obj=NULL;
+
+char *translateChar(SEXP x)
 {
     void * obj;
     char *inbuf, *outbuf, *ans = CHAR(x), *p;
@@ -607,8 +609,24 @@ attribute_hidden char *translateChar(SEXP x)
     if(latin1locale && IS_LATIN1(x)) return ans;
     if(utf8strIsASCII(CHAR(x))) return ans;
 
-    obj = Riconv_open("", IS_LATIN1(x) ? "latin1" : "UTF-8");
-    if(obj == (iconv_t)(-1)) error(_("unsupported conversion"));
+    if(IS_LATIN1(x)) {
+	if(!latin1_obj) {
+	    obj = Riconv_open("", "latin1");
+	    /* should never happen */
+	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+	    latin1_obj = obj;
+	}
+	obj = latin1_obj;
+    } else {
+	if(!utf8_obj) {
+	    obj = Riconv_open("", "UTF-8");
+	    /* should never happen */
+	    if(obj == (void *)(-1)) error(_("unsupported conversion"));
+	    utf8_obj = obj;
+	}
+	obj = utf8_obj;
+	
+    }
     R_AllocStringBuffer(0, &cbuff);
 top_of_loop:
     inbuf = ans; inb = strlen(inbuf);
@@ -631,7 +649,6 @@ next_char:
 	inbuf++; inb--;
 	goto next_char;
     }
-    Riconv_close(obj);
     *outbuf = '\0';
     res = strlen(cbuff.data) + 1;
     p = R_alloc(res, 1);
@@ -659,7 +676,7 @@ int Riconv_close (void * cd)
     return -1;
 }
 
-SEXP attribute_hidden translateChar(SEXP x)
+char *translateChar(SEXP x)
 {
     return x;
 }
