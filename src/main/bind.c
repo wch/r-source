@@ -1022,7 +1022,7 @@ SEXP attribute_hidden do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		classmethod = R_LookupMethod(install(buf), env, env, 
 					     R_BaseNamespace);
 		if (classmethod != R_UnboundValue) {
-		    if (klass == "") {
+		    if (klass[0] == '\0') {
 			/* There is no previous class */
 			/* We use this method. */
 			klass = s;
