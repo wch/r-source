@@ -4575,3 +4575,10 @@ stopifnot(dim(z) == c(1, 3))
 (z <- rbind(x,x))
 stopifnot(dim(z) == c(0, 3))
 ## variously failed or gave zero-column data frame in 2.4.1
+
+
+## which(arr.ind = TRUE) failed to give matrix on a 0-length input
+C <- matrix(1:16, 4)
+(ind <- which(C < 0, arr.ind = TRUE))
+stopifnot(is.matrix(ind))
+## gave integer(0) in 2.4.1
