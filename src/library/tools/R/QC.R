@@ -2901,7 +2901,7 @@ function(dfile)
     ## Determine encoding and re-encode if necessary and possible.
     if("Encoding" %in% names(db)) {
         encoding <- db["Encoding"]
-        if((Sys.getlocale("LC_CTYPE") != "C")
+        if((! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))
            && capabilities("iconv"))
             db <- iconv(db, encoding, "")
     }
@@ -3652,7 +3652,9 @@ function(dir) {
             if(is.recursive(e))
                 for(i in seq_along(e)) Recall(e[[i]])
         }
-        exprs <- if(!is.na(enc)) {
+        ## assume that if locale if 'C' we can read encodings unchanged.
+        exprs <- if(!is.na(enc) &&
+                    !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
 	    con <- file(file, encoding=enc)
 	    parse(con)
 	    close(con)

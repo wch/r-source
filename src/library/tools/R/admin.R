@@ -257,7 +257,7 @@ function(dir, outDir)
                outFile)
     enc <- as.vector(db["Encoding"])
     need_enc <- !is.na(enc) # Encoding was specified
-    ## assume that is locale if 'C' we can used 8-bit encodings unchanged.
+    ## assume that if locale if 'C' we can used 8-bit encodings unchanged.
     if(need_enc && capabilities("iconv") &&
        !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))
        ) {
