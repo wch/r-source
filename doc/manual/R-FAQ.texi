@@ -1962,6 +1962,11 @@ Generalized additive models by likelihood based boosting.
 @item GDD
 Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library.
+@item GenABEL
+Genome-wide SNP association analysis.
+@item GOSim
+Computation of functional similarities between GO terms and gene
+products.
 @item GPArotation
 Gradient Projection Algorithm rotation for factor analysis.
 @item GRASS
@@ -3296,6 +3301,10 @@ Laboratory for Dynamic Synthetic Vegephenomenology.
 Functions for the book ``Laboratorio di statistica con R'' by
 S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
 documentation in Italian.
+@item languageR
+Data sets and functions for the book ``Analyzing Linguistic Data: A
+practical introduction to statistics'' by R. H. Baayen, 2007, Cambridge:
+Cambridge University Press.
 @item lars
 Least Angle Regression, Lasso and Forward Stagewise: efficient
 procedures for fitting an entire lasso sequence with the cost of a
@@ -3455,6 +3464,9 @@ additive regression splines (MARS), adaptive back-fitting splines
 @c </COMMENT>
 @item meboot
 Maximum entropy bootstrap for time series.
+@item memisc
+Miscellaneous Tools for data management, simulation, and presentation of
+estimates.
 @item merror
 Accuracy and precision of measurements.
 @item meta
