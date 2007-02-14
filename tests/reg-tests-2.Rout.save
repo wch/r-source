@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-02-13 r40706)
+R version 2.5.0 Under development (unstable) (2007-02-13 r40710)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -5994,4 +5994,21 @@ $dimnames[[1]]
 
 
 > ## regression tests
+> 
+> 
+> ## regression tests on NA attribute names
+> x <- 1:3
+> attr(x, "NA") <- 4
+> attributes(x)
+$`NA`
+[1] 4
+
+> attr(x, "NA")
+[1] 4
+> attr(x, NA_character_)
+NULL
+> try(attr(x, NA_character_) <- 5)
+Error in "attr<-"(`*tmp*`, NA_character_, value = 5) : 
+	'name' must be non-null character string
+> ## prior to 2.5.0 NA was treated as "NA"
 > 

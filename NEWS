@@ -356,6 +356,9 @@ NEW FEATURES
 	pmin/pmax are now more likely to work with classed objects:
 	they work with POSIXlt datetimes, for example.
 
+    o	attr() no longer treats name = NA_character_ as meaning
+	name = "NA".
+
 
 DEPRECATED & DEFUNCT
 
@@ -582,6 +585,10 @@ BUG FIXES
 	documented) if 'x' had length 0.
 
     o	C-level duplicate() truncated CHARSXPs with embedded nuls.
+
+    o	Partial matching of attributes was not working as documented
+	in some cases if there were more than two partial matches or
+	if "names" was involved.
 
 
 

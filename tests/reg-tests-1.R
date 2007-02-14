@@ -4577,6 +4577,22 @@ stopifnot(dim(z) == c(0, 3))
 ## variously failed or gave zero-column data frame in 2.4.1
 
 
+## tests of partial matching of attributes
+x <- 1:4
+attr(x, "ab") <- 1
+for(y in c("abc", "abcd", "abcde")) {
+    attr(x, y) <- 1
+    stopifnot(is.null(attr(x, "a")))
+}
+# second was '1' on 2.4.1.
+x <- 1:4
+names(x) <- letters[x]
+stopifnot(identical(attr(x, "n"), names(x)))
+x <- as.pairlist(x)
+stopifnot(identical(attr(x, "n"), names(x)))
+## worked for pairlists but not vectors in 2.4.1
+
+
 ## which(arr.ind = TRUE) failed to give matrix on a 0-length input
 C <- matrix(1:16, 4)
 (ind <- which(C < 0, arr.ind = TRUE))

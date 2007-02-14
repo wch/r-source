@@ -207,7 +207,7 @@ SEXP R_copyDFattr(SEXP in, SEXP out)
     return out;
 }
 
-
+/* 'name' should be 1-element STRSXP or SYMSXP */ 
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 {
     if (isString(name))
@@ -1072,6 +1072,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(t) != 1)
 	error(_("exactly one attribute 'name' must be given"));
 
+    if(STRING_ELT(t, 0) == NA_STRING) return R_NilValue;
     str = translateChar(STRING_ELT(t, 0));
     n = strlen(str);
 
@@ -1085,9 +1086,11 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 		match = FULL;
 		break;
 	    }
-	    else if (match == PARTIAL) {
+	    else if (match == PARTIAL || match == PARTIAL2) {
 		/* this match is partial and we already have a partial match,
-		   so the query is ambiguous and we return R_NilValue */
+		   so the query is ambiguous and we will return R_NilValue
+		   unless a full match comes up.
+		*/
 		match = PARTIAL2;
 	    } else {
 		tag = tmp;
@@ -1097,10 +1100,11 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (match == PARTIAL2) return R_NilValue;
 
-    /* unless a full match has been found, check for a "names" attribute */
-    /* surely these are just "names"! */
-    if (match != FULL && ! strncmp(CHAR(PRINTNAME(R_NamesSymbol)), str, n)) {
-	if (strlen(CHAR(PRINTNAME(R_NamesSymbol))) == n) {
+    /* Unless a full match has been found, check for a "names" attribute.
+       This is stored via TAGs on pairlists, and via rownames on 1D arrays.
+    */
+    if (match != FULL && strncmp("names", str, n) == 0) {
+	if (strlen("names") == n) {
 	    /* we have a full match on "names" */
 	    tag = R_NamesSymbol;
 	    match = FULL;
@@ -1110,7 +1114,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tag = R_NamesSymbol;
 	    match = PARTIAL;
 	}
-	else if (match == PARTIAL) {
+	else if (match == PARTIAL && strcmp(CHAR(PRINTNAME(tag)), "names")) {
 	    /* There is a partial match on "names" and on another
 	       attribute. If there really is a "names" attribute, then the
 	       query is ambiguous and we return R_NilValue.  If there is no
@@ -1130,7 +1134,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /*  attr(obj, "<name>")  <-  value  */
-    SEXP obj, name, value;
+    SEXP obj, name;
 
     obj = CAR(args);
     if (NAMED(obj) == 2)
@@ -1139,10 +1143,9 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(obj);
 
     name = CADR(args);
-    if (!isValidString(name))
-	errorcall(call, _("'name' must be non-null character"));
-    value = CADDR(args);
-    setAttrib(obj, name, value);
+    if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
+	errorcall(call, _("'name' must be non-null character string"));
+    setAttrib(obj, name, CADDR(args));
     UNPROTECT(1);
     return obj;
 }

@@ -31,11 +31,11 @@ attr(x, which) <- value
   \code{\link{tsp}}) are treated specially and have restrictions on
   the values which can be set.
 
-  Specifying \code{which} as a character \code{NA} is interpreted as
-  \code{"NA"} and not as a missing value.
+  The extractor allows (and does not match) empty and missing values of
+  \code{which}: the replacement function does not.
 }
 \value{
-  For the first form, the value of the attribute matched, or \code{NULL}
+  For the extractor, the value of the attribute matched, or \code{NULL}
   if no exact match is found and no or more than one partial match is found.
 }
 \references{

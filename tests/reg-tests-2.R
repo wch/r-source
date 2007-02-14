@@ -2202,3 +2202,13 @@ names(x)
 dimnames(x)
 attributes(x)
 ## regression tests
+
+
+## regression tests on NA attribute names
+x <- 1:3
+attr(x, "NA") <- 4
+attributes(x)
+attr(x, "NA")
+attr(x, NA_character_)
+try(attr(x, NA_character_) <- 5)
+## prior to 2.5.0 NA was treated as "NA"
