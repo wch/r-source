@@ -2076,8 +2076,8 @@ Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @code{gcc} can be used
 with options @option{-Wall -pedantic} to alert you to potential
 problems.  Do not be tempted to assume that these are pure pedantry: for
-example @R{} is regularly used on platforms where the C compiler does
-not accept C++ comments.
+example @R{} is still used on platforms where the C compiler does not
+accept C++/C99 comments (starting @code{//}).
 
 @item
 Do be very careful with passing arguments between @R{}, C and
@@ -2130,11 +2130,13 @@ CMD check} checks for.
 @subsection Encoding issues
 
 Care is needed if your package contains non-ASCII text, and in
-particular if it is intended to be used in more than one locale.
-It is possible to mark the encoding used in the @file{DESCRIPTION}
-file and in @file{.Rd} files, as discussed elsewhere in this manual.
-What is not possible is to mark the encoding used by character strings
-in @R{}.
+particular if it is intended to be used in more than one locale.  It is
+possible to mark the encoding used in the @file{DESCRIPTION} file and in
+@file{.Rd} files, as discussed elsewhere in this manual.  What was not
+possible before @R{} 2.5.0 was to mark the encoding used by character
+strings in @R{}: if you want your package to work with earlier versions
+of @R{} please consult the advice in the @R{} 2.4.x version of this
+manual.
 
 First, consider carefully if you really need non-ASCII text.  Most
 users of @R{} will only be able to view correctly text in their native
@@ -2142,50 +2144,50 @@ language group (e.g.@: Western European, Eastern European, Simplified
 Chinese) and ASCII.  Other characters may not be rendered at all,
 rendered incorrectly, or cause your @R{} code to give an error.
 For documentation, marking the encoding and including ASCII
-transliterations is likely to do a reasonable job, but character data
-is a lot more problematic.
+transliterations is likely to do a reasonable job.
 
 The most favourable circumstance is using UTF-8-encoded text in a
-package that will only ever be used in a UTF-8 locale (and hence not
-on Windows, for example).  In that case it is likely that text will be
-rendered correctly in the terminal used to run @R{}, and files written
-will be readable by other UTF-8-aware applications.  However, plotting
-will be problematic.  On-screen plotting using the @samp{X11()} device
-will use a font that only covers a small proportion of UTF-8, and
-different fonts will likely need to be selected for Polish, Russian
-and Japanese (see @code{help("X11")}).  Using @samp{postscript} or
+package that will only ever be used in a UTF-8 locale (and hence not on
+Windows, for example).  In that case it is likely that text will be
+rendered correctly in the terminal/console used to run @R{}, and files
+written will be readable by other UTF-8-aware applications.  However,
+plotting will be problematic.  On-screen plotting using the @samp{X11()}
+device will use a font that only covers a small proportion of UTF-8, and
+different fonts will likely need to be selected for Polish, Russian and
+Japanese (see @code{help("X11")}).  Using @samp{postscript} or
 @samp{pdf} will choose a default 8-bit encoding depending on the
 language of the UTF-8 locale, and your users would need to be told how
 to select the @samp{encoding} argument.
 
 Another fairly common scenario is where a package will only be used in
 one language, e.g.@: French.  It is not very safe to assume that all
-such users would have their computers set to a French locale, but let
-us assume so.  The problem then is that there are several possible
-encodings for French locales, the most common ones being @samp{CP1251}
-(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-9} (latin-9
-which includes the Euro), and @samp{UTF-8}.  For characters in the
-French language the first three agree, but they do not agree with
-@samp{UTF-8}.  Further, you (or different users) can run @R{} in
-different locales in different sessions, say @samp{fr_CA.utf8} one day
-and @samp{fr_CH.iso88591} the next.  In this scenario the safest thing
-to do is to keep the French text on a file in @samp{ISO
-8859-1},@footnote{If all the systems to be used support @samp{iconv},
-the text could also be stored in UTF-8, but if they do not, they are
-most likely running a 8-bit encoding compatible with @samp{ISO
-8859-1}.} and load it into @R{} when the package is loaded (or the
-data is needed).  Then the @samp{encoding} argument to @samp{source},
-@samp{file} and so on can be used to tell @R{} that this is @samp{ISO
-8859-1} text.  Even in this scenario, a workspace saved in one session
-may not be valid if loaded into another with a different locale.
+such users would have their computers set to a French locale, but let us
+assume so.  The problem then is that there are several possible
+encodings for French locales, the most common ones being @samp{CP1252}
+(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-9} (latin-9 which
+includes the Euro), and @samp{UTF-8}.  For characters in the French
+language the first three agree, but they do not agree with @samp{UTF-8}.
+Further, you (or different users) can run @R{} in different locales in
+different sessions, say @samp{fr_CA.utf8} one day and
+@samp{fr_CH.iso88591} the next.  As from @R{} 2.5.0, declaring the
+encoding as either @samp{latin1} or @samp{UTF-8} in the
+@file{DESCRIPTION} file will enable this to work.  If you have character
+data in @file{.rda} files (for use by @code{data} or LazyData) these
+need to have been prepared and @code{save}d in @R{} 2.5.0 in an
+appropriate locale (or marked via @code{Encoding}).  For example (from
+package @pkg{FactoMineR} version @code{1.02}):
 
-As from @R{} 2.5.0, @R{} files will be re-encoded to the locale used at
-installation if the @file{DESCRIPTION} file specifies an encoding.  This
-will enable e.g.@: packages with French messages to be used on either
-latin-1 or UTF-8 systems.  Also, if character data are marked as being in
-Latin-1 or UTF (see the help for @code{Encoding}) and then @code{save}d
-to a @file{.rda} file, @R{} 2.5.0 and later will convert the data when
-plotting or printing.
+@example
+> library(FactoMineR)
+> data(wine)
+> Encoding(names(wine)) <- "latin1"
+> Encoding(levels(wine$Terroir)) <- "latin1"
+> save(wine, file="wine.rda")
+@end example
+
+@noindent
+was used to update a @file{.rda} file.
+
 
 @node Diagnostic messages, Localization, Writing portable packages, Creating R packages
 @section Diagnostic messages
@@ -3276,7 +3278,7 @@ verbatim-like command.
 
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
 currently must escape most @LaTeX{} special characters, i.e., besides
-@samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
+@samp{%}, @samp{@{}, and @samp{@}}, the specials @samp{$},
 @samp{#}, and @samp{_} are produced by preceding each with a @samp{\}.
 (@samp{&} can also be escaped, but need not be.) Further, enter @samp{^}
 as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
