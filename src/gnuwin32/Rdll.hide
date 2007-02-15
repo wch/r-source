@@ -259,6 +259,7 @@
  R_VSize
  R_Verbose
  R_Visible
+ R_WarnEscapes
  R_WarnLength
  R_Warnings
  R_XDRDecodeDouble
