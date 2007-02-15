@@ -3634,8 +3634,9 @@ function(dir) {
     ## We should really have a more general-purpose tree walker.
     ## </NOTE>
 
-    db <- .read_description(file.path(dir, "..", "DESCRIPTION"))
-    enc <-  db["Encoding"]
+    descfile <- file.path(dir, "..", "DESCRIPTION")
+    enc <- if(file.exists(descfile))
+        .read_description(descfile)["Encoding"] else NA
 
     ## Workhorse function.
     filter <- function(file) {
@@ -3656,8 +3657,8 @@ function(dir) {
         exprs <- if(!is.na(enc) &&
                     !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
 	    con <- file(file, encoding=enc)
+            on.exit(close(con))
 	    parse(con)
-	    close(con)
 	} else parse(file)
         for(i in seq_along(exprs)) walker(exprs[[i]])
         matches
@@ -3863,7 +3864,13 @@ function(package, dir, lib.loc = NULL)
         }
     }
     else {
-        exprs <- try(parse(file = file, n = -1))
+        enc <- db["Encoding"]
+        if(!is.na(enc) &&
+           !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+	    con <- file(file, encoding=enc)
+            on.exit(close(con))
+        } else con <- file
+        exprs <- try(parse(file = con, n = -1))
         if(inherits(exprs, "try-error"))
             stop(gettextf("parse error in file '%s'", file),
                  domain = NA)

@@ -389,11 +389,10 @@ foreach my $pkg (@ARGV) {
 	    ## package vignette must require its own package, which OTOH is
 	    ## not required in the package DESCRIPTION file.
 	    ## Namespace imports must really be in Depends.
-	    my $Rcmd = "options(warn=1);tools:::.check_package_depends(\"${pkgdir}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE); tools:::.check_package_depends(\"${pkgdir}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->error();
 		$log->print(join("\n", @out) . "\n");
@@ -672,6 +671,24 @@ foreach my $pkg (@ARGV) {
 
     if($is_bundle) {
 	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	if(! $opt_install) {
+	    ## Since we are not installing, we have to use the source
+	    ## directories.  Quite a bit of the R code needs to read the
+	    ## DESCRIPTION files for each package, so we do that bit
+	    ## of the install in Perl.
+	    my @lines0 = &read_lines(&file_path($pkgdir, "DESCRIPTION"));
+	    foreach my $ppkg (@bundlepkgs) {
+		$dfile = &file_path($pkgdir, $ppkg, "DESCRIPTION");
+		my $fh = new IO::File($dfile, "w")
+		    or die "Error: cannot open file '$dpath' for writing\n";
+		my @lines = (@lines0, 
+			     &read_lines(&file_path($pkgdir, $ppkg, 
+						    "DESCRIPTION.in")));
+		@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+		$fh->print(join("\n", @lines), "\n");
+		$fh->close();
+	    }
+	}
 	foreach my $ppkg (@bundlepkgs) {
 	    $log->message("checking '$ppkg' in bundle '$pkgname'");
 	    $log->setstars("**");
@@ -1268,11 +1285,10 @@ sub check_pkg {
     if(!$is_base_pkg && (-d "R")) {
 	if($opt_install) {
 	    $log->checking("for unstated dependencies in R code");
-	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(package=\"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE);tools:::.check_packages_used(package=\"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning();
 		$log->print(join("\n", @out) . "\n");
@@ -1284,11 +1300,10 @@ sub check_pkg {
 	    ## this needs to read the package code, and will fail on
 	    ## syntax errors such as non-ASCII code.
 	    $log->checking("for unstated dependencies in R code");
-	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE);tools:::.check_packages_used(dir=\"${pkgdir}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning();
 		$log->print(join("\n", @out) . "\n");
@@ -1310,7 +1325,7 @@ sub check_pkg {
 	  ("See section 'Generic functions and methods'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd = "options(warn=1)\n";
+	my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	$Rcmd .= "options(expressions=1000)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::checkS3methods(package = \"${pkgname}\")\n";
@@ -1343,7 +1358,7 @@ sub check_pkg {
 	   "which corresponds to the right hand side",
 	   "must be named 'value'.\n");
 
-	my $Rcmd = "options(warn=1)\n";
+	my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
@@ -1378,7 +1393,7 @@ sub check_pkg {
 	  ("See the chapter 'System and foreign language interfaces'",
 	   "of the 'Writing R Extensions' manual.\n");
 
-	my $Rcmd = "options(warn=1)\n";
+	my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::checkFF(package = \"${pkgname}\")\n";
 	}
@@ -1414,11 +1429,10 @@ sub check_pkg {
 	my $any;
 
 	if(!$is_base_pkg) {
-	    my $Rcmd = "options(warn=1);tools:::.check_package_code_shlib(\"R\")";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE);tools:::.check_package_code_shlib(\"R\")";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->error();
 		$log->print(wrap("", "",
@@ -1435,12 +1449,11 @@ sub check_pkg {
 	}
 
 	if($R_check_use_codetools && $opt_install) {
-	    my $Rcmd = "options(warn=1)\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	    $Rcmd .= "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless $any;
 		$any++;
@@ -1449,7 +1462,7 @@ sub check_pkg {
 	}
 
 	if($R_check_use_codetools) {
-	    my $Rcmd = "options(warn=1)\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	    if($opt_install) {
 		$Rcmd .= "tools:::.check_T_and_F(package = \"${pkgname}\")\n";
 	    }
@@ -1459,7 +1472,6 @@ sub check_pkg {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
-	    @out = grep(!/^Warning:.*unrecognized escape/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless $any;
 		$any++;
@@ -1546,7 +1558,7 @@ sub check_pkg {
     if(((-d "R") || (-d "data"))) {
 	$log->checking("for missing documentation entries");
 
-	my $Rcmd= "options(warn=1)\n";
+	my $Rcmd= "options(warn=1,warnEscapes=FALSE)\n";
 	if($opt_install) {
 	    $Rcmd .= "tools::undoc(package = \"${pkgname}\")\n";
 	}
@@ -1588,7 +1600,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in functions.
 	if(-d "R") {
-	    my $Rcmd = "options(warn=1)\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\n";
 	    if($opt_install) {
 		$Rcmd .= "tools::codoc(package = \"${pkgname}\")\n";
 	    }
@@ -1608,7 +1620,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    my $Rcmd = "options(warn=1)\ntools::codocData(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocData(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
@@ -1621,7 +1633,7 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
-	    my $Rcmd = "options(warn=1)\ntools::codocClasses(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1,warnEscapes=FALSE)\ntools::codocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);

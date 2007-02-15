@@ -906,8 +906,20 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
       }
 
     nsFile <- namespaceFilePath(package, package.lib)
+    descfile <- file.path(package.lib, package, "DESCRIPTION")
+    enc <- NA
+    if (file.exists(descfile)) {
+        dcf <- read.dcf(file = descfile)
+        if(NROW(dcf) >= 1) enc <- as.list(dcf[1, ])[["Encoding"]]
+        if(is.null(enc)) enc <- NA
+    }
     if (file.exists(nsFile))
-        directives <- parse(nsFile)
+        directives <- if (!is.na(enc) &&
+                          ! Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX")) {
+	    con <- file(nsFile, encoding=enc)
+            on.exit(close(con))
+	    parse(con)
+        } else parse(nsFile)
     else if (mustExist)
         stop(gettextf("package '%s' has no NAMESPACE file", package),
              domain = NA)

@@ -4191,13 +4191,13 @@ static int StringValue(int c)
 		case '\n':
 		    break;
 		case '%':
-		    if(GenerateCode) {
+		    if(GenerateCode && R_WarnEscapes) {
 			have_warned++;
 			warning(_("'\\%%%%' is an unrecognized escape in a character string"));
 		    }
 		    break;
 		default:
-		    if(GenerateCode) {
+		    if(GenerateCode && R_WarnEscapes) {
 			have_warned++;
 			warning(_("'\\%c' is an unrecognized escape in a character string"), c);
 		    }

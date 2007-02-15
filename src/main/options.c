@@ -496,6 +496,13 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		max_contour_segments = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
+	    else if (streql(CHAR(namei), "warnEscapes")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    errorcall(call, _("warnEscapes parameter invalid"));
+		k = asLogical(argi);
+		R_WarnEscapes = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
