@@ -1527,6 +1527,9 @@ can only be assumed to work provided that this naming scheme is
 respected.  Of course, @code{R CMD build} automatically creates valid
 file names.
 
+Note that @acronym{CRAN} generally does not accept submissions of
+precompiled binaries due to security reasons.
+
 
 @node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
 @section Package name spaces
