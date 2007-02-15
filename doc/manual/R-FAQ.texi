@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-02-13
+@set FAQ_DATE @value{FAQ_YEAR}-02-15
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -204,9 +204,9 @@ most welcome.
 In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
 described in the
-@url{http://cran.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
+@url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, ``R for
 Windows @acronym{FAQ}''} and the
-@url{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
+@url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
 OS X @acronym{FAQ}}.  If you have information on Macintosh or Windows
 systems that you think should be added to this document, please let me
 know.
@@ -489,7 +489,7 @@ corresponding to the ``@var{x}.@var{y}'' release of R. The installation
 of these packages is available through the ``Package'' menu of the R.app
 @acronym{GUI}.  This port of R for Mac OS X is maintained by
 @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
-@url{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
+@url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for Mac
 OS X @acronym{FAQ}} has more details.
 
 The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
@@ -572,14 +572,14 @@ packages for the @dfn{stable} distribution of Debian are provided by
 Johannes Ranke, and available from CRAN.  Simply add the line
 
 @example
-deb http://cran.R-project.org/bin/linux/debian stable/
+deb http://CRAN.R-project.org/bin/linux/debian stable/
 @end example
 
 @noindent
 (feel free to use a @CRAN{} mirror instead of the master) to the file
 @file{/etc/apt/sources.list}, and install as usual.  More details on
 installing and administering R on Debian Linux can be found at
-@url{http://cran.r-project.org/bin/linux/debian/README}.  These
+@url{http://CRAN.R-project.org/bin/linux/debian/README}.  These
 backports should also be suitable for other Debian derivatives.  Native
 backports for Ubuntu are provided by Vincent Goulet.
 
@@ -866,7 +866,7 @@ The @CRAN{} master site at TU Wien, Austria, can be found at the
 @quotation
 @c @multitable @columnfractions .45 .30
 @c @item
-@url{http://cran.R-project.org/}
+@url{http://CRAN.R-project.org/}
 @c @tab (Austria)
 @c @end multitable
 @end quotation
@@ -905,7 +905,7 @@ Daily mirrors are available at @acronym{URL}s including
 @end quotation
 
 @noindent
-See @url{http://cran.R-project.org/mirrors.html} for a complete list of
+See @url{http://CRAN.R-project.org/mirrors.html} for a complete list of
 mirrors.  Please use the @CRAN{} site closest to you to reduce network
 load.
 
@@ -918,8 +918,8 @@ documentation on R, existing mailing lists and the R Bug Tracking
 system.
 
 To ``submit'' to @CRAN{}, simply upload to
-@url{ftp://cran.R-project.org/incoming/} and send an email to
-@email{cran@@R-project.org}.  Note that @CRAN{} generally does not
+@url{ftp://CRAN.R-project.org/incoming/} and send an email to
+@email{CRAN@@R-project.org}.  Note that @CRAN{} generally does not
 accept submissions of precompiled binaries due to security reasons.  In
 particular, binary packages for Windows and Mac OS X are provided by the
 respective binary package maintainers.
@@ -2338,6 +2338,8 @@ Appendix A of the book ``Statistical Models'' by Anthony Davison, 2003,
 Cambridge University Press.
 @item SNPassoc
 SNP-based whole genome association studies.
+@item SNPmaxsel
+Maximally selected statistics for SNP data.
 @item SQLiteDF
 Stores data frames and matrices in SQLite tables.
 @item SciViews
@@ -2360,7 +2362,10 @@ Sensory data analysis.
 @item SeqKnn
 Sequential KNN imputation.
 @item SharedHT2
-Shared Hotelling @math{T^2} test for small sample microarray experiments.
+Shared Hotelling @math{T^2} test for small sample microarray
+experiments.
+@item Snowball
+Snowball stemmers.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
