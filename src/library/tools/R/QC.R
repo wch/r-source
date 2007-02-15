@@ -3615,6 +3615,33 @@ function(dir, respect_quotes = FALSE)
 .check_package_code_syntax <-
 function(dir)
 {
+    ## This was always run in the C locale < 2.5.0
+    ## However, what chars are alphabetic depends on the locale,
+    ## so as from R 2.5.0 we try to set a locale.
+    ## Any package with no declared encoding should have only ASCII
+    ## R code.
+    Sys.setlocale('LC_ALL', 'C')
+    descfile <- file.path(dir, "..", "DESCRIPTION")
+    enc <- if(file.exists(descfile))
+        .read_description(descfile)["Encoding"] else NA
+    if(!is.na(enc)) {  ## try to use the declared encoding
+        if(.Platform$OS.type == "windows") {
+            ## "C" is in fact "en", and there are no UTF-8 locales
+            switch(enc,
+                   "latin2" = Sys.setlocale('LC_CTYPE', 'polish')
+                   )
+        } else {
+            ## these are the POSIX forms, but of course not all Unixen
+            ## abide by POSIX.
+            switch(enc,
+                   "latin1" = Sys.setlocale("LC_CTYPE", "en_US"),
+                   "utf-8"  =,  # not valid, but used
+                   "UTF-8"  = Sys.setlocale("LC_CTYPE", "en_US.utf8"),
+                   "latin2" = Sys.setlocale("LC_CTYPE", "pl_PL"),
+                   "latin9" = Sys.setlocale("LC_CTYPE",  "fr_FR.iso885915@euro")
+                   )
+        }
+    }
     for(f in list_files_with_type(dir, "code",
                                   OS_subdirs = c("unix", "windows")))
         tryCatch(parse(f),
