@@ -878,7 +878,7 @@ function(expr)
                        close(outConn)
                    })
     if(inherits(yy, "error"))
-        stop(yy, call. = FALSE)
+        stop(yy)
     yy
 }
 
