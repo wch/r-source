@@ -388,7 +388,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (TYPEOF(generic) != STRSXP ||
 	LENGTH(generic) < 1 ||
-	strlen(CHAR(STRING_ELT(generic, 0))) == 0)
+	CHAR(STRING_ELT(generic, 0))[0] == '\0')
 	errorcall(call, _("first argument must be a generic name"));
 
     if (usemethod(translateChar(STRING_ELT(generic, 0)), obj, call, CDR(args),
@@ -589,7 +589,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(generic) || length(generic) > 1)
 	errorcall(call, _("invalid generic argument to NextMethod"));
 
-    if (strlen(CHAR(STRING_ELT(generic, 0))) == 0)
+    if (CHAR(STRING_ELT(generic, 0))[0] == '\0')
 	errorcall(call, _("generic function not specified"));
 
     /* determine whether we are in a Group dispatch */
@@ -604,7 +604,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* determine the root: either the group or the generic will be it */
 
-    if( strlen(CHAR(STRING_ELT(group, 0))) == 0 ) basename = generic;
+    if (CHAR(STRING_ELT(group, 0))[0] == '\0') basename = generic;
     else basename = group;
 
     nextfun = R_NilValue;
