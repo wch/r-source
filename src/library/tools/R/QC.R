@@ -3256,6 +3256,75 @@ function(x, ...)
     x
 }
 
+
+### * .check_package_datasets
+
+.check_package_datasets <-
+function(pkgDir)
+{
+    Sys.setlocale("LC_CTYPE", "C")
+    options(warn=-1)
+    check_charsxp <- function(txt)
+    {
+        if(any(charToRaw(txt) > as.raw(127)))
+            switch(Encoding(txt),
+                   "latin1" = {latin1 <<- c(latin1, txt)},
+                   "UTF-8" = {utf8 <<- c(utf8, txt)},
+                   {non_ASCII <<- c(non_ASCII, txt)})
+        invisible()
+    }
+    check_one <- function(x)
+    {
+        if(length(x) == 0) return()
+        ## avoid as.list methods
+        if(is.list(x)) lapply(unclass(x), check_one)
+        if(is.character(x)) lapply(unclass(x), check_charsxp)
+        a <- attributes(x)
+        if(!is.null(a)) {
+            lapply(a, check_one)
+            check_one(names(a))
+        }
+        invisible()
+    }
+
+    files <- list_files_with_type(file.path(pkgDir, "data"), "data")
+    files <- unique(basename(file_path_sans_ext(files)))
+    ans <- vector("list", length(files))
+    dataEnv <- new.env(hash=TRUE)
+    names(ans) <- files
+    old <- setwd(pkgDir)
+    for(f in files)
+        .try_quietly(utils::data(list = f, package = character(0), envir = dataEnv))
+    setwd(old)
+
+    non_ASCII <- latin1 <- utf8 <- character(0)
+    for(ds in ls(envir = dataEnv, all = TRUE))
+        check_one(get(ds, envir = dataEnv))
+    structure(list(latin1 = unique(latin1), utf8 = unique(utf8),
+                   unknown = unique(non_ASCII)),
+              class = "check_package_datasets")
+}
+
+print.check_package_datasets <- function(x, ...)
+{
+    iconv0 <- function(x, ...)
+        sQuote(if(capabilities("iconv")) iconv(x, ...) else x)
+
+    if(n <- length(x$latin1)) {
+        cat(sprintf("Note: found %d marked Latin-1 string(s)\n", n))
+        # cat(iconv0(x$latin1, "latin1", "ASCII", sub="byte"), sep="  ", fill=70)
+    }
+    if(n <- length(x$utf8)) {
+        cat(sprintf("Note: found %d marked UTF-8 string(s)\n", n))
+        # cat(iconv0(x$utf8, "UTF-8", "ASCII", sub="byte"), sep="  ", fill=70)
+    }
+    if(n <- length(x$unknown)) {
+        cat("Warning: found non-ASCII string(s)\n")
+        cat(iconv0(x$unknown, "", "ASCII", sub="byte"), sep="  ", fill=70)
+    }
+    x
+}
+
 ### * as.alist.call
 
 as.alist.call <-

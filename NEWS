@@ -469,6 +469,10 @@ UTILITIES
 	LazyData.  This will help if a package needs to be used in
 	(say) both latin1 and UTF-8 locales on different systems.
 
+    o	R CMD check now reports on non-ASCII strings in datasets.
+	(These are a portability issue, which can be alleviated by
+	marking their encoding: see 'Writing R Extensions'.)
+
 
 BUG FIXES
 
@@ -590,6 +594,10 @@ BUG FIXES
 	in some cases if there were more than two partial matches or
 	if "names" was involved.
 
+    o	Partial matching of attributes was not working as documented
+
+    o	data(package=character(0)) was not looking in ./data as
+	documented.
 
 
 

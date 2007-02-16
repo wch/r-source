@@ -1715,6 +1715,27 @@ sub check_pkg {
 	$log->result("OK") unless($any);
     }
 
+    if(!$is_base_pkg && (-d "data")) {
+	$log->checking("data for non-ASCII characters");
+	my @out = R_runR("tools:::.check_package_datasets('.')",
+			 "${R_opts} --slave");
+	@out = grep(!/Loading required package/, @out);
+	my @bad = grep(/^Warning:/, @out);
+	if(scalar(@out) > 0) {
+	    if(scalar(@bad)) {
+		$log->warning();
+	    } else {
+		$log->result("NOTE")
+	    }
+	    $log->print("  " . join("\n  ", @out) . "\n");
+	    $log->print(wrap("", "",
+			     ("Portable packages use only ASCII",
+			      "characters in their datasets.\n")));
+	} else {
+	    $log->result("OK");
+	}
+    }
+
     ## Check C/C++/Fortran sources/headers for CRLF line endings.
 
     ## <FIXME>
