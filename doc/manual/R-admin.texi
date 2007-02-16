@@ -1785,8 +1785,10 @@ to make this easier for users. See
 for how users can set their locales. As with Windows, end users will
 generally only see lists of languages/territories.
 
-Internally Mac OS X uses a form similar to Linux but without specifying
-the encoding (which is @code{UTF-8}).
+Internally Mac OS X uses a form similar to Linux but without
+specifying the encoding (which is @code{UTF-8}).  It is based on ICU
+locales (@url{http://icu.sourceforge.net/userguide/locale.html}) and
+not POSIX ones.
 
 
 @node Localization of messages,  , Locales, Internationalization

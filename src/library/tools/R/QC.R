@@ -3752,12 +3752,12 @@ function(dir)
     ## However, what chars are alphabetic depends on the locale,
     ## so as from R 2.5.0 we try to set a locale.
     ## Any package with no declared encoding should have only ASCII R code.
-    Sys.setlocale('LC_ALL', 'C')
     if(!is.na(enc)) {  ## try to use the declared encoding
         if(.Platform$OS.type == "windows") {
             ## "C" is in fact "en", and there are no UTF-8 locales
             switch(enc,
-                   "latin2" = Sys.setlocale('LC_CTYPE', 'polish')
+                   "latin2" = Sys.setlocale('LC_CTYPE', 'polish'),
+                   Sys.setlocale('LC_CTYPE', 'C')
                    )
         } else {
             loc <- Sys.getenv("R_ENCODING_LOCALES", NA)
@@ -3767,7 +3767,13 @@ function(dir)
                 loc <- lapply(loc, "[[", 2)
                 names(loc) <- nm
                 if(!is.null(l <- loc[[enc]]))
-                   Sys.setlocale("LC_CTYPE", l)
+                    Sys.setlocale("LC_CTYPE", l)
+                else
+                    Sys.setlocale('LC_CTYPE', 'C')
+
+            } else if(l10n_info()[["UTF-8"]] && capabilities("iconv")) {
+                ## the hope is that the conversion to UTF-8 works and
+                ## so we can validly test the code in the current locale.
             } else {
                 ## these are the POSIX forms, but of course not all Unixen
                 ## abide by POSIX.  These locales need not exist, but
@@ -3778,8 +3784,9 @@ function(dir)
                        "UTF-8"  = Sys.setlocale("LC_CTYPE", "en_US.utf8"),
                        "latin2" = Sys.setlocale("LC_CTYPE", "pl_PL"),
                        "latin9" = Sys.setlocale("LC_CTYPE",
-                       "fr_FR.iso885915@euro")
-                       )
+                       "fr_FR.iso885915@euro"),
+                       Sys.setlocale('LC_CTYPE', 'C')
+                      )
             }
         }
     }

@@ -391,7 +391,9 @@ is currently used as the encoding of the @file{DESCRIPTION} file
 itself and of the @file{R} and @file{NAMESPACE} files, and may in the
 future be taken as the encoding for other documentation in the
 package.  Only encoding names @code{latin1}, @code{latin2} and
-@code{UTF-8} are known to be portable.
+@code{UTF-8} are known to be portable.  (Do not specify an encoding
+unless one is actually needed: doing so makes the package @emph{less}
+portable.)
 
 
 The optional @samp{Type} field specifies the type of the package:
@@ -2192,13 +2194,18 @@ package @pkg{FactoMineR} version @code{1.02}):
 @noindent
 was used to update a @file{.rda} file.
 
-If you want to run @command{R CMD check} on a Unike-alike over a
+If you want to run @command{R CMD check} on a Unix-alike over a
 package that sets the encoding you may need to specify a suitable
 locale via an environment variable.  The default is equivalent to
 
 @example
-R_ENCODING_LOCALES="latin1=en_US:latin2=pl_PL:UTF-8=en_US.utf8:latin9=fr_FR.iso885915@euro"
+R_ENCODING_LOCALES="latin1=en_US:latin2=pl_PL:UTF-8=en_US.utf8:latin9=fr_FR.iso885915@@euro"
 @end example
+
+@noindent
+which is appropriate for a system based on @code{glibc}, except if the
+current locale in UTF-8 and @samp{iconv} is available, when the
+package code is translated to UTF-8 for syntax checking.
 
 
 @node Diagnostic messages, Localization, Writing portable packages, Creating R packages
