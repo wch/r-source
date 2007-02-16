@@ -508,12 +508,42 @@ function(package, dir, lib.loc = NULL,
             get_formals_from_method_definition <- function(m) {
                 ## Argh, see methods:::rematchDefinition().
                 ## We get the original definition in case it has the
-                ## same formals as the generic.  Otherwise, we get a
+                ## "same" formals as the generic.  Otherwise, we get a
                 ## redefition of the form
                 ## function(ARGLIST) {
                 ##   .local <- function(FORMALS) BODY
                 ##   .local(ARGLIST)
                 ## }
+                ## <NOTE>
+                ## Actually, it seems that one gets the formals of the
+                ## generic if this "extends" the formals of the method
+                ## in the sense that the latter have the formals with
+                ## "missing" signature, and possibly a '...' formal,
+                ## removed.  E.g.,
+                ##   setGeneric("foo",
+                ##     function(x, y, ...) standardGeneric("foo"))
+                ##   setMethod("foo",
+                ##     signature((x = "integer", y = "missing"),
+                ##     function(x) x)
+                ## is accepted and comes out with the formals of the
+                ## generic: (x, y, ...).
+                ## There seems to be no way of dealing with possibly
+                ## non-missing '...' formals based on the information in
+                ## the S4 registry.
+                ## One could consider to remove "missing" formals from
+                ## the the formals of the registered method, but note
+                ## that one can do
+                ##   setMethod("foo",
+                ##     signature(x = "integer", y = "missing"),
+                ##     function(x, y) x)
+                ## as well ...
+                ## So, to avoid false positives, one would need to run
+                ## the check_codoc() comparisons ignoring mismatches
+                ## possibly from the above.  Not easily possible in the
+                ## current layout, and it is also not clear whether we
+                ## should do this: formally, what we get is different
+                ## from what the authors thought and documented.
+                ## </NOTE>
                 fun <- methods::slot(m, ".Data")
                 bdy <- body(fun)
                 if((length(bdy) == 3)
@@ -3684,15 +3714,22 @@ function(dir, respect_quotes = FALSE)
 .check_package_code_syntax <-
 function(dir)
 {
+    if(!file_test("-d", dir))
+        stop(gettextf("directory '%s' does not exist", dir), domain = NA)
+    else
+        dir <- file_path_as_absolute(dir)
+    dir_name <- basename(dir)
+
+    descfile <- file.path(dirname(dir), "DESCRIPTION")
+    enc <- if(file.exists(descfile))
+        tools:::.read_description(descfile)["Encoding"] else NA
+    
     ## This was always run in the C locale < 2.5.0
     ## However, what chars are alphabetic depends on the locale,
     ## so as from R 2.5.0 we try to set a locale.
     ## Any package with no declared encoding should have only ASCII
     ## R code.
     Sys.setlocale('LC_ALL', 'C')
-    descfile <- file.path(dir, "..", "DESCRIPTION")
-    enc <- if(file.exists(descfile))
-        .read_description(descfile)["Encoding"] else NA
     if(!is.na(enc)) {  ## try to use the declared encoding
         if(.Platform$OS.type == "windows") {
             ## "C" is in fact "en", and there are no UTF-8 locales
@@ -3711,14 +3748,59 @@ function(dir)
                    )
         }
     }
-    for(f in list_files_with_type(dir, "code",
-                                  OS_subdirs = c("unix", "windows")))
-        tryCatch(parse(f),
-                 error = function(e)
-                 writeLines(c(sprintf("File '%s':", f),
-                              sprintf("  %s",
-                                      unlist(strsplit(conditionMessage(e),
-                                                      "\n"))))))
+
+    collect_parse_woes <- function(f) {
+        .error <- .warnings <- character()
+        file <- file.path(dir, f)
+        if(!is.na(enc) &&
+           !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+            con <- file(file, encoding = enc)
+            on.exit(close(con))
+        } else con <- file
+        suppressWarnings(withCallingHandlers(tryCatch(parse(con),
+                                                      error = function(e)
+                                                      .error <<- conditionMessage(e)),
+                                             warning = function(e)
+                                             .warnings <<- c(.warnings,
+                                                             conditionMessage(e))))
+        ## (We show offending file paths starting with the base of the
+        ## given directory as this provides "nicer" output ...)
+        if(length(.error) || length(.warnings))
+            list(File = file.path(dir_name, f),
+                 Error = .error, Warnings = .warnings)
+        else
+            NULL
+    }
+    
+    out <-
+        lapply(list_files_with_type(dir, "code", full.names = FALSE,
+                                    OS_subdirs = c("unix", "windows")),
+               collect_parse_woes)
+    structure(out[sapply(out, length) > 0],
+              class = "check_package_code_syntax")
+}
+
+print.check_package_code_syntax <-
+function(x, ...)
+{
+    first <- TRUE
+    for(i in seq_along(x)) {
+        if(!first) writeLines("")
+        first <- FALSE
+        xi <- x[[i]]
+        if(length(xi$Error)) {
+            msg <- gsub("\n", "\n  ", sub("[^:]*: *", "", xi$Error))
+            writeLines(c(sprintf("Error in file '%s':", xi$File),
+                         paste(" ", msg)))
+        }
+        if(len <- length(xi$Warnings))
+            writeLines(c(sprintf(ngettext(len,
+                                          "Warning in file '%s':",
+                                          "Warnings in file '%s':"),
+                                 xi$File),
+                         paste(" ", gsub("\n\n", "\n  ", xi$Warnings))))
+    }
+    invisible(x)
 }
 
 ### * .check_package_code_shlib

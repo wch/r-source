@@ -1209,8 +1209,7 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
-	my @out2 = grep(!/^Warning:.*unrecognized escape/, @out);
-	if(scalar(@out2) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->error();
 	    $log->print(join("\n", @out) . "\n");
 	    exit(1);
@@ -1219,9 +1218,8 @@ sub check_pkg {
 	    $log->print(join("\n", @out) . "\n");
 	} else {
 	    $log->result("OK");
-	}	
+	}
     }
-
     
     ## Check we can actually load the package
 
@@ -1230,7 +1228,7 @@ sub check_pkg {
 	my $Rcmd = "library(${pkgname})";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->error();
 	    $log->print(join("\n", @out) . "\n");
 	    $log->print(wrap("", "",
@@ -1246,7 +1244,7 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	    $log->print(wrap("", "",
@@ -1269,7 +1267,7 @@ sub check_pkg {
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out,)) > 0) {
+	if(scalar(grep(/^Error/, @out)) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
 	    $log->print(wrap("", "",
