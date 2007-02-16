@@ -377,9 +377,9 @@ errors to the normal output file on such systems.)
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
 @section Can I use @RWVER@ with ESS and (X)emacs?
 
-Yes.  Recent versions of ESS (e.g. 5.2.x) come with support for this
-version of R, and there is support for interrupting the R process from
-ESS (by @code{C-c C-c}).
+Yes.  All recent versions of ESS come with support for this version of
+R, and there is support for interrupting the R process from ESS (by
+@code{C-c C-c}).
 
 For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
@@ -474,9 +474,9 @@ Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but many people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @samp{PROGRA~1}; you can get it as the
-`MS-DOS name' from the Properties of the file on most versions of
+`MS-DOS name' from the Properties of the file on some versions of
 Windows, and from @command{dir /X} in a @samp{Command Prompt} window on
-2000/XP/2003).
+2000 and later).
 
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
@@ -566,18 +566,19 @@ password when HTTP downloads are first used.
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
-This used to happen occasionally, and all the occurrences we have solved
-have been traced to faulty versions of @samp{msvcrt.dll}.  We have
-installed a workaround that seems to avoid this.  A few other people
-have discovered this was caused by desktop switcher and keyboard macro
-programs, for example `Macro Magic' and `JS Pager'.
+This has not been reported for a couple of years, but used to happen
+regularly.  All the occurrences we have solved have been traced to
+faulty versions of @samp{msvcrt.dll}: we have installed a workaround
+that seems to avoid this.  A few other people have discovered this was
+caused by desktop switcher and keyboard macro programs, for example
+`Macro Magic' and `JS Pager'.
 
 If it still happens, try extracting the @samp{msvcrt.dll} to be found in
 the self-extracting archive
 @uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe} and put it in
 the @file{@RWVER@\bin} directory.  Removing @samp{msvcrt.dll} from that
 directory reverts to the standard behaviour.  It seems that on some
-versions of Windows (but not 2000/XP/2003) you also need to put the
+versions of Windows (but not 2000 or later) you also need to put the
 @file{@RWVER@\bin} directory early in your path.
 
 This fix has solved other problems too, for example incorrect results in
@@ -1458,7 +1459,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2006 April 03
+@set LASTEDIT 2007-02-16
 @ifhtml
 @html
 <hr WIDTH="100%">
