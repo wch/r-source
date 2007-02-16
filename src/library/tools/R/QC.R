@@ -3337,8 +3337,9 @@ function(pkgDir)
 
 print.check_package_datasets <- function(x, ...)
 {
+    ## not sQuote as we have mucked about with locales.
     iconv0 <- function(x, ...)
-        sQuote(if(capabilities("iconv")) iconv(x, ...) else x)
+        paste("'", if(capabilities("iconv")) iconv(x, ...) else x, "'", sep="")
 
     if(n <- length(x$latin1)) {
         cat(sprintf("Note: found %d marked Latin-1 string(s)\n", n))
