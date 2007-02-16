@@ -344,7 +344,7 @@ NEW FEATURES
 	in both Latin-1 and UTF-8 locales.  Currently scan(),
 	read.table(), readLines(), parse() and source() allow
 	encodings to be declared, and console input in suitable
-	locales is also recognized. [Work in progress]
+	locales is also recognized.
 
 	New function Encoding() can read or set the declared encodings
 	for a character vector.
@@ -358,6 +358,8 @@ NEW FEATURES
 
     o	attr() no longer treats name = NA_character_ as meaning
 	name = "NA".
+
+    o	l10n_info() also reports if the current locale is Latin-1.
 
 
 DEPRECATED & DEFUNCT

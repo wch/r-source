@@ -1160,8 +1160,8 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
 #ifdef HAVE_LANGINFO_CODESET
     p = nl_langinfo(CODESET);
-    if(streql(p, "UTF-8")) known_to_be_utf8 = utf8locale =TRUE;
-    if(streql(p, "ISO-8859-1")) known_to_be_latin1 = latin1locale =TRUE;
+    known_to_be_utf8 = utf8locale = streql(p, "UTF-8") ? TRUE : FALSE;
+    known_to_be_latin1 = latin1locale = streql(p, "ISO-8859-1") ? TRUE : FALSE;
 #endif
 #ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
@@ -1575,16 +1575,16 @@ end:
 
 SEXP attribute_hidden do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  ans, names, s;
+    SEXP  ans, names;
     checkArity(op, args);
-    PROTECT(ans = allocVector(VECSXP, 2));
-    PROTECT(names = allocVector(STRSXP, 2));
+    PROTECT(ans = allocVector(VECSXP, 3));
+    PROTECT(names = allocVector(STRSXP, 3));
     SET_STRING_ELT(names, 0, mkChar("MBCS"));
     SET_STRING_ELT(names, 1, mkChar("UTF-8"));
-    SET_VECTOR_ELT(ans, 0, s = allocVector(LGLSXP, 1));
-    LOGICAL(s)[0] = mbcslocale;
-    SET_VECTOR_ELT(ans, 1, s = allocVector(LGLSXP, 1));
-    LOGICAL(s)[0] = utf8locale;
+    SET_STRING_ELT(names, 2, mkChar("Latin-1"));
+    SET_VECTOR_ELT(ans, 0, ScalarLogical(mbcslocale));
+    SET_VECTOR_ELT(ans, 1, ScalarLogical(utf8locale));
+    SET_VECTOR_ELT(ans, 2, ScalarLogical(latin1locale));
     setAttrib(ans, R_NamesSymbol, names);
     UNPROTECT(2);
     return ans;
