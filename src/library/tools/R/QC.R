@@ -40,10 +40,13 @@ function(package, dir, lib.loc = NULL)
 
         all_doc_topics <- Rd_aliases(dir = dir)
 
+        descfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(descfile))
+            tools:::.read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
-            .source_assignments_in_code_dir(code_dir, code_env)
+            .source_assignments_in_code_dir(code_dir, code_env, enc)
             sys_data_file <- file.path(code_dir, "sysdata.rda")
             if(file_test("-f", sys_data_file))
                 load(sys_data_file, code_env)
@@ -388,8 +391,11 @@ function(package, dir, lib.loc = NULL,
         package_name <- basename(dir)
         is_base <- package_name == "base"
 
+        descfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(descfile))
+            tools:::.read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env)
+        .source_assignments_in_code_dir(code_dir, code_env, enc)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -1566,8 +1572,11 @@ function(package, dir, lib.loc = NULL)
         package_name <- basename(dir)
         is_base <- package_name == "base"
 
+        descfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(descfile))
+            tools:::.read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env)
+        .source_assignments_in_code_dir(code_dir, code_env, env)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -1778,6 +1787,9 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
+        descfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(descfile))
+            tools:::.read_description(descfile)["Encoding"] else NA
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nm <- parseNamespaceFile(basename(dir), dirname(dir))
             hasNamespace <- length(nm$dynlibs)
@@ -1906,7 +1918,12 @@ function(package, dir, file, lib.loc = NULL,
         }
     }
     else {
-        exprs <- try(parse(file = file, n = -1))
+        if(!is.na(enc) &&
+           !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+	    con <- file(file, encoding=enc)
+            on.exit(close(con))
+	} else con <- file
+        exprs <- try(parse(file = con, n = -1))
         if(inherits(exprs, "try-error"))
             stop(gettextf("parse error in file '%s'", file),
                  domain = NA)
@@ -1994,8 +2011,11 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         is_base <- basename(dir) == "base"
 
+        descfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(descfile))
+            tools:::.read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env)
+        .source_assignments_in_code_dir(code_dir, code_env, enc)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -2217,8 +2237,11 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         is_base <- basename(dir) == "base"
 
+        descfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(descfile))
+            tools:::.read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env)
+        .source_assignments_in_code_dir(code_dir, code_env, enc)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
@@ -3724,12 +3747,11 @@ function(dir)
     descfile <- file.path(dirname(dir), "DESCRIPTION")
     enc <- if(file.exists(descfile))
         tools:::.read_description(descfile)["Encoding"] else NA
-    
+
     ## This was always run in the C locale < 2.5.0
     ## However, what chars are alphabetic depends on the locale,
     ## so as from R 2.5.0 we try to set a locale.
-    ## Any package with no declared encoding should have only ASCII
-    ## R code.
+    ## Any package with no declared encoding should have only ASCII R code.
     Sys.setlocale('LC_ALL', 'C')
     if(!is.na(enc)) {  ## try to use the declared encoding
         if(.Platform$OS.type == "windows") {
@@ -3738,15 +3760,27 @@ function(dir)
                    "latin2" = Sys.setlocale('LC_CTYPE', 'polish')
                    )
         } else {
-            ## these are the POSIX forms, but of course not all Unixen
-            ## abide by POSIX.
-            switch(enc,
-                   "latin1" = Sys.setlocale("LC_CTYPE", "en_US"),
-                   "utf-8"  =,  # not valid, but used
-                   "UTF-8"  = Sys.setlocale("LC_CTYPE", "en_US.utf8"),
-                   "latin2" = Sys.setlocale("LC_CTYPE", "pl_PL"),
-                   "latin9" = Sys.setlocale("LC_CTYPE",  "fr_FR.iso885915@euro")
-                   )
+            loc <- Sys.getenv("R_ENCODING_LOCALES", NA)
+            if(!is.na(loc)) {
+                loc <- strsplit(strsplit(loc, ":")[[1]], "=")
+                nm <- lapply(loc, "[[", 1)
+                loc <- lapply(loc, "[[", 2)
+                names(loc) <- nm
+                if(!is.null(l <- loc[[enc]]))
+                   Sys.setlocale("LC_CTYPE", l)
+            } else {
+                ## these are the POSIX forms, but of course not all Unixen
+                ## abide by POSIX.  These locales need not exist, but
+                ## do in glibc.
+                switch(enc,
+                       "latin1" = Sys.setlocale("LC_CTYPE", "en_US"),
+                       "utf-8"  =,  # not valid, but used
+                       "UTF-8"  = Sys.setlocale("LC_CTYPE", "en_US.utf8"),
+                       "latin2" = Sys.setlocale("LC_CTYPE", "pl_PL"),
+                       "latin9" = Sys.setlocale("LC_CTYPE",
+                       "fr_FR.iso885915@euro")
+                       )
+            }
         }
     }
 
@@ -3772,7 +3806,7 @@ function(dir)
         else
             NULL
     }
-    
+
     out <-
         lapply(list_files_with_type(dir, "code", full.names = FALSE,
                                     OS_subdirs = c("unix", "windows")),
@@ -4183,11 +4217,14 @@ function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         dir <- file_path_as_absolute(dir)
+        descfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(descfile))
+            tools:::.read_description(descfile)["Encoding"] else NA
         code_dir <- file.path(dir, "R")
         if(!packageHasNamespace(basename(dir), dirname(dir))
            && file_test("-d", code_dir)) {
             code_env <- new.env()
-            .source_assignments_in_code_dir(code_dir, code_env)
+            .source_assignments_in_code_dir(code_dir, code_env, enc)
             bad_closures <- find_bad_closures(code_env)
         }
         if(check_examples)

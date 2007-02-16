@@ -759,7 +759,7 @@ function(dfile)
 ### ** .source_assignments
 
 .source_assignments <-
-function(file, envir)
+function(file, envir, enc = NA)
 {
     ## Read and parse expressions from @code{file}, and then
     ## successively evaluate the top-level assignments in @code{envir}.
@@ -769,7 +769,12 @@ function(file, envir)
     on.exit(options(oop))
     assignmentSymbolLM <- as.symbol("<-")
     assignmentSymbolEq <- as.symbol("=")
-    exprs <- parse(n = -1, file = file)
+    if(!is.na(enc) &&
+       !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+        con <- file(file, encoding = enc)
+        on.exit(close(con))
+    } else con <- file
+    exprs <- parse(n = -1, file = con)
     if(length(exprs) == 0)
         return(invisible())
     for(e in exprs) {
@@ -782,7 +787,7 @@ function(file, envir)
 ### .source_assignments_in_code_dir
 
 .source_assignments_in_code_dir <-
-function(dir, env)
+function(dir, env, enc = NA)
 {
     ## Combine all code files in @code{dir}, read and parse expressions,
     ## and successively evaluated the top-level assignments in
@@ -795,7 +800,7 @@ function(dir, env)
                                       list_files_with_type(dir,
                                                            "code"))))
         stop("unable to write code files")
-    tryCatch(.source_assignments(con, env),
+    tryCatch(.source_assignments(con, env, enc = enc),
              error =
              function(e)
              stop("cannot source package code\n",
