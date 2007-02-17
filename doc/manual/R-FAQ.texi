@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-02-16
+@set FAQ_DATE @value{FAQ_YEAR}-02-17
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2667,6 +2667,8 @@ Functions for cluster analysis.  @emph{Recommended}.
 Random cluster generation (with specified degree of separation).
 @item clusterRepro
 Reproducibility of gene expression clusters.
+@item clusterSim
+Searching for optimal clustering procedure for a data set.
 @item clustvarsel
 Variable selection for model-based clustering.
 @item cmprsk
