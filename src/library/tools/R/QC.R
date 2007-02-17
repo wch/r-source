@@ -42,7 +42,7 @@ function(package, dir, lib.loc = NULL)
 
         descfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(descfile))
-            tools:::.read_description(descfile)["Encoding"] else NA
+            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
         code_dir <- file.path(dir, "R")
         if(file_test("-d", code_dir)) {
@@ -393,7 +393,7 @@ function(package, dir, lib.loc = NULL,
 
         descfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(descfile))
-            tools:::.read_description(descfile)["Encoding"] else NA
+            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
         .source_assignments_in_code_dir(code_dir, code_env, enc)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
@@ -1574,7 +1574,7 @@ function(package, dir, lib.loc = NULL)
 
         descfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(descfile))
-            tools:::.read_description(descfile)["Encoding"] else NA
+            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
         .source_assignments_in_code_dir(code_dir, code_env, env)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
@@ -1789,7 +1789,7 @@ function(package, dir, file, lib.loc = NULL,
             dir <- file_path_as_absolute(dir)
         descfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(descfile))
-            tools:::.read_description(descfile)["Encoding"] else NA
+            .read_description(descfile)["Encoding"] else NA
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nm <- parseNamespaceFile(basename(dir), dirname(dir))
             hasNamespace <- length(nm$dynlibs)
@@ -2013,7 +2013,7 @@ function(package, dir, lib.loc = NULL)
 
         descfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(descfile))
-            tools:::.read_description(descfile)["Encoding"] else NA
+            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
         .source_assignments_in_code_dir(code_dir, code_env, enc)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
@@ -2239,7 +2239,7 @@ function(package, dir, lib.loc = NULL)
 
         descfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(descfile))
-            tools:::.read_description(descfile)["Encoding"] else NA
+            .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
         .source_assignments_in_code_dir(code_dir, code_env, enc)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
@@ -3746,7 +3746,7 @@ function(dir)
 
     descfile <- file.path(dirname(dir), "DESCRIPTION")
     enc <- if(file.exists(descfile))
-        tools:::.read_description(descfile)["Encoding"] else NA
+        .read_description(descfile)["Encoding"] else NA
 
     ## This was always run in the C locale < 2.5.0
     ## However, what chars are alphabetic depends on the locale,
@@ -3799,12 +3799,14 @@ function(dir)
             con <- file(file, encoding = enc)
             on.exit(close(con))
         } else con <- file
-        suppressWarnings(withCallingHandlers(tryCatch(parse(con),
-                                                      error = function(e)
-                                                      .error <<- conditionMessage(e)),
-                                             warning = function(e)
-                                             .warnings <<- c(.warnings,
-                                                             conditionMessage(e))))
+        withCallingHandlers(tryCatch(parse(con),
+                                     error = function(e)
+                                     .error <<- conditionMessage(e)),
+                            warning = function(e) {
+                                .warnings <<- c(.warnings,
+                                                conditionMessage(e))
+                                invokeRestart("muffleWarning")
+                            })
         ## (We show offending file paths starting with the base of the
         ## given directory as this provides "nicer" output ...)
         if(length(.error) || length(.warnings))
@@ -4226,7 +4228,7 @@ function(package, dir, lib.loc = NULL)
         dir <- file_path_as_absolute(dir)
         descfile <- file.path(dir, "DESCRIPTION")
         enc <- if(file.exists(descfile))
-            tools:::.read_description(descfile)["Encoding"] else NA
+            .read_description(descfile)["Encoding"] else NA
         code_dir <- file.path(dir, "R")
         if(!packageHasNamespace(basename(dir), dirname(dir))
            && file_test("-d", code_dir)) {
