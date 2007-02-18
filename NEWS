@@ -361,6 +361,9 @@ NEW FEATURES
 
     o	l10n_info() also reports if the current locale is Latin-1.
 
+    o	contour() now passes graphical parameters in '...' to axis()
+	and box().
+
 
 DEPRECATED & DEFUNCT
 
@@ -596,10 +599,12 @@ BUG FIXES
 	in some cases if there were more than two partial matches or
 	if "names" was involved.
 
-    o	Partial matching of attributes was not working as documented
-
     o	data(package=character(0)) was not looking in ./data as
 	documented.
+
+    o	summary.mlm() failed if some response names were "" (as can
+	easily happen if cbind() is used).
+
 
 
 

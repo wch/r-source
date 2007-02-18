@@ -11,8 +11,12 @@ summary.mlm <- function(object, ...)
 	lhs <- object$terms[[2]]
 	if(mode(lhs) == "call" && lhs[[1]] == "cbind")
 	    ynames <- as.character(lhs)[-1]
-	else ynames <- paste("Y", seq(ny), sep = "")
+	else ynames <- paste("Y", seq_len(ny), sep = "")
     }
+    ## we need to ensure that _all_ responses are named
+    ind <- ynames == ""
+    if(any(ind)) ynames[ind] <-  paste("Y", seq_len(ny), sep = "")[ind]
+
     value <- vector("list", ny)
     names(value) <- paste("Response", ynames)
     cl <- oldClass(object)

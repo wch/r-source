@@ -50,11 +50,15 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 		      labels, labcex, drawlabels, method, vfont,
 		      col = col, lty = lty, lwd = lwd))
     if(!add) {
+        ## at least col, lty, lwd are not needed,
+        ## but easiest to be consistent with plot.default
+        localAxis <- function(..., col, bg, pch, cex, lty, lwd) Axis(...)
+        localBox <- function(..., col, bg, pch, cex, lty, lwd) box(...)
         if(axes) {
-            Axis(x, side=1)
-            Axis(y, side=2)
+            localAxis(x, side = 1, ...)
+            localAxis(y, side = 2, ...)
         }
-        if(frame.plot) box()
+        if(frame.plot) localBox(...)
     }
     invisible()
 }
