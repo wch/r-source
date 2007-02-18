@@ -605,6 +605,11 @@ BUG FIXES
     o	summary.mlm() failed if some response names were "" (as can
 	easily happen if cbind() is used).
 
+    o	The postscript() and pdf() drivers shared an encoding list
+	but used slightly different formats.  This caused problems if
+	both were used with the same non-default encoding in the same
+	session.  (PR#9517)
+
 
 
 
