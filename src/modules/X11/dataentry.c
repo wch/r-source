@@ -142,7 +142,6 @@ static int last_wchar_bytes(char *);
 static SEXP work, names, lens;
 static PROTECT_INDEX wpi, npi, lpi;
 static SEXP ssNA_STRING;
-static double ssNA_REAL;
 
 /* Global variables needed for the graphics */
 
@@ -162,6 +161,7 @@ static int ndecimal;                    /* count decimal points */
 static int ne;                          /* count exponents */
 static int nneg;			/* indicate whether its a negative */
 static int clength;                     /* number of characters currently entered */
+static int inSpecial;
 
 #define BOOSTED_BUF_SIZE    201
 static char buf[BOOSTED_BUF_SIZE];	/* boosted to allow for MBCS */
@@ -174,12 +174,11 @@ static SEXP ssNewVector(SEXPTYPE, int);
 
 static Atom _XA_WM_PROTOCOLS, protocol;
 
-static Rboolean newcol, CellModified;
+static Rboolean CellModified;
 static int nboxchars;
 static int xmaxused, ymaxused;
 static int box_coords[6];
 static char copycontents[sizeof(buf)+1] ;
-static int labdigs=4;
 static char labform[6];
 
 
@@ -262,10 +261,8 @@ static XIC		ioic;
    The vectors are created too long and if they need to be increased
    this is done by using the next higher power of 2. They start 100
    long.  Vectors are initialized to NA when they are created so that
-   NA is returned for any cell that was not set by the user.  So that
-   coercion back and forth maintains values of ssNA_REAL and
-   ssNA_STRING I have set ssNA_STRING to be coerceVector(ssNA_REAL),
-   very weird but easy.
+   NA is returned for any cell that was not set by the user.  We use 
+   a special type of NA to distinguish this from user-supplied NAs.
 
    In Macintosh we needed to call the main event loop to get
    events. This ensures that the spreadsheet interacts well with the
@@ -285,7 +282,7 @@ static char *menu_label[] =
    ssNewVector is just an interface to allocVector but it lets us
    set the fields to NA. We need to have a special NA for reals and
    strings so that we can differentiate between uninitialized elements
-   in the vectors and user supplied NA's; hence ssNA_REAL and ssNA_STRING
+   in the vectors and user supplied NA's; hence ssNA_STRING
  */
 
 static SEXP ssNewVector(SEXPTYPE type, int vlen)
@@ -296,9 +293,9 @@ static SEXP ssNewVector(SEXPTYPE type, int vlen)
     tvec = allocVector(type, vlen);
     for (j = 0; j < vlen; j++)
 	if (type == REALSXP)
-	    REAL(tvec)[j] = ssNA_REAL;
+	    REAL(tvec)[j] = NA_REAL;
 	else if (type == STRSXP)
-	    SET_STRING_ELT(tvec, j, STRING_ELT(ssNA_STRING, 0));
+	    SET_STRING_ELT(tvec, j, ssNA_STRING);
     return (tvec);
 }
 
@@ -331,14 +328,13 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     nneg = 0;
     ndecimal = 0;
     clength = 0;
+    inSpecial = 0;
     ccol = 1;
     crow = 1;
     colmin = 1;
     rowmin = 1;
-    ssNA_REAL = -NA_REAL;
-    tvec = allocVector(REALSXP, 1);
-    REAL(tvec)[0] = ssNA_REAL;
-    PROTECT(ssNA_STRING = coerceVector(tvec, STRSXP)); nprotect++;
+    PROTECT(ssNA_STRING = duplicate(NA_STRING));
+    nprotect++;
     bwidth = 5;
     hwidth = 30;
 
@@ -419,13 +415,9 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    tvec2 = ssNewVector(TYPEOF(tvec), len);
 	    for (j = 0; j < len; j++) {
 		if (TYPEOF(tvec) == REALSXP) {
-		    if (REAL(tvec)[j] != ssNA_REAL)
 			REAL(tvec2)[j] = REAL(tvec)[j];
-		    else
-			REAL(tvec2)[j] = NA_REAL;
 		} else if (TYPEOF(tvec) == STRSXP) {
-		    if (!streql(CHAR(STRING_ELT(tvec, j)),
-				CHAR(STRING_ELT(ssNA_STRING, 0))))
+		    if (STRING_ELT(tvec, j) != ssNA_STRING)
 			SET_STRING_ELT(tvec2, j, STRING_ELT(tvec, j));
 		    else
 			SET_STRING_ELT(tvec2, j, NA_STRING);
@@ -648,12 +640,10 @@ static void cell_cursor_init(void)
 		(i = whichrow - 1) < LENGTH(tmp) ) {
 		PrintDefaults(R_NilValue);
 		if (TYPEOF(tmp) == REALSXP) {
-		    if (REAL(tmp)[i] != ssNA_REAL)
-			strncpy(buf, EncodeElement(tmp, i, 0, '.'),
-				BOOSTED_BUF_SIZE-1);
+		    strncpy(buf, EncodeElement(tmp, i, 0, '.'),
+			    BOOSTED_BUF_SIZE-1);
 		} else if (TYPEOF(tmp) == STRSXP) {
-		    if (!streql(CHAR(STRING_ELT(tmp, i)),
-				CHAR(STRING_ELT(ssNA_STRING, 0))))
+		    if (STRING_ELT(tmp, i) != ssNA_STRING)
 			strncpy(buf, EncodeElement(tmp, i, 0, '.'),
 				BOOSTED_BUF_SIZE-1);
 		}
@@ -789,14 +779,11 @@ static void printelt(SEXP invec, int vrow, int ssrow, int sscol)
     char *strp;
     PrintDefaults(R_NilValue);
     if (TYPEOF(invec) == REALSXP) {
-	if (REAL(invec)[vrow] != ssNA_REAL) {
-	    strp = EncodeElement(invec, vrow, 0, '.');
-	    printstring(strp, strlen(strp), ssrow, sscol, 0);
-	}
+	strp = EncodeElement(invec, vrow, 0, '.');
+	printstring(strp, strlen(strp), ssrow, sscol, 0);
     }
     else if (TYPEOF(invec) == STRSXP) {
-	if (!streql(CHAR(STRING_ELT(invec, vrow)),
-		    CHAR(STRING_ELT(ssNA_STRING, 0)))) {
+	if (STRING_ELT(invec, vrow) != ssNA_STRING) {
 	    strp = EncodeElement(invec, vrow, 0, '.');
 	    printstring(strp, strlen(strp), ssrow, sscol, 0);
 	}
@@ -891,12 +878,13 @@ static void highlightrect(void)
 }
 
 
-static void getccol()
+static Rboolean getccol()
 {
     SEXP tmp, tmp2;
     int i, len, newlen, wcol, wrow;
     SEXPTYPE type;
     char clab[25];
+    Rboolean newcol = FALSE;
 
     wcol = ccol + colmin - 1;
     wrow = crow + rowmin - 1;
@@ -911,7 +899,6 @@ static void getccol()
 	REPROTECT(lens = lengthgets(lens, wcol), lpi);
 	xmaxused = wcol;
     }
-    newcol = FALSE;
     if (isNull(VECTOR_ELT(work, wcol - 1))) {
 	newcol = TRUE;
 	SET_VECTOR_ELT(work, wcol - 1, ssNewVector(REALSXP, max(100, wrow)));
@@ -934,6 +921,7 @@ static void getccol()
 		error("internal type error in dataentry");
 	SET_VECTOR_ELT(work, wcol - 1, tmp2);
     }
+    return newcol;
 }
 
 /* close up the entry to a cell, put the value that has been entered
@@ -944,6 +932,7 @@ static void closerect(void)
     SEXP cvec;
     int i, wcol = ccol + colmin - 1, wrow = rowmin + crow - 1, wrow0;
     char clab[25];
+    Rboolean newcol;
 
     *bufp = '\0';
 
@@ -970,7 +959,7 @@ static void closerect(void)
 		printstring(buf, strlen(buf), 0, wcol, 0);
 	    }
 	} else {
-	    getccol();
+	    newcol = getccol();
 	    cvec = VECTOR_ELT(work, wcol - 1);
 	    wrow0 = INTEGER(lens)[wcol - 1];
 	    if (wrow > wrow0) INTEGER(lens)[wcol - 1] = wrow;
@@ -984,11 +973,11 @@ static void closerect(void)
 		    SET_STRING_ELT(cvec, wrow - 1, mkChar(buf));
 		else
 		    REAL(cvec)[wrow - 1] = new;
-		if (newcol & warn) {
+		if (newcol && warn) {
 		    /* change mode to character */
-		    SET_VECTOR_ELT(work, wcol - 1, coerceVector(cvec, STRSXP));
-		    SET_STRING_ELT(VECTOR_ELT(work, wcol - 1), wrow - 1,
-				   mkChar(buf));
+		    SEXP tmp = coerceVector(cvec, STRSXP);
+		    SET_STRING_ELT(tmp, wrow - 1, mkChar(buf));
+		    SET_VECTOR_ELT(work, wcol - 1, tmp);
 		}
 	    } else {
 		if (TYPEOF(cvec) == STRSXP)
@@ -1009,6 +998,7 @@ static void closerect(void)
     ne = 0;
     currentexp = 0;
     clength = 0;
+    inSpecial = 0;
     bufp = buf;
 }
 
@@ -1152,9 +1142,9 @@ static void handlechar(char *text)
     }
 
     /* NA number? */
-    if (1 == get_col_type(ccol + colmin - 1)) {
+    if (get_col_type(ccol + colmin - 1) == NUMERIC) {
 	/* input numeric for NA of buffer , suppress NA.*/
-	if(strcmp(buf, CHAR(STRING_ELT(ssNA_STRING, 0))) == 0) {
+	if(strcmp(buf, "NA") == 0) {
 	    buf[0] = '\0';
 	    clength = 0;
 	    bufp = buf;
@@ -1182,8 +1172,13 @@ static void handlechar(char *text)
 		  ne++;
 	      } else goto donehc;
 	      break;
+	case L'N':
+	    if(nneg) goto donehc;
+	case L'I':
+	    inSpecial++;
+	    break;
 	  default:
-	      if (!iswdigit(wcs[i])) goto donehc;
+	      if (!inSpecial && !iswdigit(wcs[i])) goto donehc;
 	      break;
 	  }
       }
@@ -1202,21 +1197,26 @@ static void handlechar(char *text)
 		ne++;
 	    } else goto donehc;
 	    break;
+	case 'N':
+	    if(nneg) goto donehc;
+	case 'I':
+	    inSpecial++;
+	    break;
 	default:
-	    if (!isdigit(c)) goto donehc;
+	    if (!inSpecial && !isdigit(c)) goto donehc;
 	    break;
 	}
 #endif
     }
     if (currentexp == 3) {
 #ifdef USE_FONTSET
-      char *mbs = text;
-      int cnt = mbsrtowcs(wcs, (const char **)&mbs, strlen(text)+1, NULL);
-      for(i = 0; i < cnt; i++) {
-	  if (iswspace(wcs[i])) goto donehc;
-	  if (clength == 0 && wcs[i] != L'.' && !iswalpha(wcs[i])) goto donehc;
-	  else if (wcs[i] != L'.' && !iswalnum(wcs[i])) goto donehc;
-      }
+	char *mbs = text;
+	int cnt = mbsrtowcs(wcs, (const char **)&mbs, strlen(text)+1, NULL);
+	for(i = 0; i < cnt; i++) {
+	    if (iswspace(wcs[i])) goto donehc;
+	    if (clength == 0 && wcs[i] != L'.' && !iswalpha(wcs[i])) goto donehc;
+	    else if (wcs[i] != L'.' && !iswalnum(wcs[i])) goto donehc;
+	}
 #else
 	if (isspace(c)) goto donehc;
 	if (clength == 0  && c != '.' && !isalpha(c)) goto donehc;
@@ -1386,7 +1386,7 @@ static void eventloop(void)
 	        if(crow == 0){
 		  drawwindow();
 		  printstring(buf, clength, crow, ccol, 1);
-		}else{
+		} else {
 		  closerect();
 	          drawwindow();
 		  cell_cursor_init();
@@ -1502,7 +1502,7 @@ static void doSpreadKey(int key, DEEvent * event)
     else if (IsModifierKey(iokey)) {
     } 
     else {
-      handlechar(text);
+	handlechar(text);
     }
 }
 
@@ -1677,7 +1677,7 @@ static int R_X11IOErr(Display *dsp)
 
 static Rboolean initwin(void) /* TRUE = Error */
 {
-    int i, twidth, w, minwidth;
+    int i, twidth, w, minwidth, labdigs;
     int ioscreen;
     unsigned long iowhite, ioblack;
     /* char ioname[] = "R DataEntryWindow"; */
@@ -2262,9 +2262,11 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
 		    if (isNull(tvec))
 			SET_VECTOR_ELT(work, popupcol - 1,
 				       ssNewVector(STRSXP, 100));
-		    else
-			SET_VECTOR_ELT(work, popupcol - 1,
+		    else {
+			SET_VECTOR_ELT(work, popupcol - 1, 
 				       coerceVector(tvec, STRSXP));
+		    }
+		    
 		    goto done;
 		case 3:
 		    closerect();
@@ -2317,14 +2319,11 @@ static void copycell(void)
 		(i = whichrow - 1) < LENGTH(tmp) ) {
 		PrintDefaults(R_NilValue);
                 if (TYPEOF(tmp) == REALSXP) {
-		    if (REAL(tmp)[i] != ssNA_REAL){
 			strncpy(copycontents, EncodeElement(tmp, i, 0, '.'),
 				BOOSTED_BUF_SIZE-1);
 			copycontents[BOOSTED_BUF_SIZE-1]='\0';
-		    }
                 } else if (TYPEOF(tmp) == STRSXP) {
-                    if (!streql(CHAR(STRING_ELT(tmp, i)),
-				CHAR(STRING_ELT(ssNA_STRING, 0)))){
+                    if (STRING_ELT(tmp, i) != ssNA_STRING) {
 			strncpy(copycontents, EncodeElement(tmp, i, 0, '.'),
 				BOOSTED_BUF_SIZE-1);
 			copycontents[BOOSTED_BUF_SIZE-1]='\0';

@@ -610,6 +610,11 @@ BUG FIXES
 	both were used with the same non-default encoding in the same
 	session.  (PR#9517)
 
+    o	The data editor was not allowing Inf, NA and NaN to be entered
+	in numerical columns.  It was intended to differentiate
+	between missing cells and NAs, but did not do so: it now does
+	so for strings.
+
 
 
 
