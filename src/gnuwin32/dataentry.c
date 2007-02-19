@@ -434,6 +434,12 @@ static void jumpwin(DEstruct DE, int wcol, int wrow)
 	DE->colmin = wcol;
 	DE->rowmin = wrow;
 	deredraw(DE);
+	gchangescrollbar(DE->de, VWINSB, (DE->rowmin - 1)/DE->yScrollbarScale,
+			 DE->ymaxused/DE->yScrollbarScale,
+			 max(DE->nhigh/DE->yScrollbarScale, 1), 0);
+	gchangescrollbar(DE->de, HWINSB, (DE->colmin - 1)/DE->xScrollbarScale,
+			 DE->xmaxused/DE->xScrollbarScale,
+			 max(DE->nwide/DE->xScrollbarScale, 1), 0);
     } else highlightrect(DE);
 }
 
@@ -1080,8 +1086,15 @@ static void de_ctrlkeyin(control c, int key)
 	i = DE->ymaxused - DE->nhigh + 2;
 	if(DE->isEditor)
 	    jumpwin(DE, DE->xmaxused, max(i, 1));
-	else
-	    jumpwin(DE, max(DE->xmaxused - DE->nwide, 1), max(i, 1));
+	else {
+	    /* Try to work out which cols we can fit in */
+	    int j, w = 0;
+	    for(j = DE->xmaxused;j >= 0; j--) {
+		w += BOXW(j);
+		if(w > DE->p->w) break;
+	    }
+	    jumpwin(DE, min(j+2, DE->xmaxused), max(i, 1));
+	}
 	downlightrect(DE);
 	DE->crow = DE->ymaxused - DE->rowmin + 1;
 	DE->ccol = 1;
@@ -1092,7 +1105,11 @@ static void de_ctrlkeyin(control c, int key)
 	jumpwin(DE, DE->colmin, max(i, 1));
 	break;
     case PGDN:
-	jumpwin(DE, DE->colmin, DE->rowmax);
+	i = DE->ymaxused - DE->nhigh + 2;
+	if(DE->isEditor)
+	    jumpwin(DE, DE->colmin, DE->rowmax);
+	else
+	    jumpwin(DE, DE->colmin, min(i, DE->rowmax));
 	break;
     case LEFT:
 	advancerect(DE, LEFT);
@@ -1738,26 +1755,28 @@ static dataeditor newdataeditor(DEstruct DE, char *title)
     return(c);
 }
 
-static void dv_closewin_cend(void *DE)
+static void dv_closewin_cend(void *data)
 {
-    de_closewin((DEstruct) DE);
+    DEstruct DE = (DEstruct) data;
+    R_ReleaseObject(DE->lens);
+    R_ReleaseObject(DE->work);
+    de_closewin(DE);
     free(DE);
 }
 
 SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP tnames, stitle;
+    SEXP stitle;
     SEXPTYPE type;
     int i, nprotect;
     RCNTXT cntxt;
-    char clab[25];
     DEstruct DE = (DEstruct) malloc(sizeof(destruct));
 
     checkArity(op, args);
     DE->isEditor = FALSE;
     nprotect = 0;/* count the PROTECT()s */
-    PROTECT_WITH_INDEX(DE->work = duplicate(CAR(args)), &DE->wpi); nprotect++;
-    tnames = getAttrib(DE->work, R_NamesSymbol);
+    DE->work = CAR(args);
+    DE->names = getAttrib(DE->work, R_NamesSymbol);
 
     if (TYPEOF(DE->work) != VECSXP)
 	errorcall(call, G_("invalid argument"));
@@ -1783,37 +1802,18 @@ SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
     DE->bwidth = 0;
     DE->hwidth = 5;
 
-    /* setup work, names, lens  */
+    /* setup lens  */
     DE->xmaxused = length(DE->work); DE->ymaxused = 0;
     PROTECT_WITH_INDEX(DE->lens = allocVector(INTSXP, DE->xmaxused), &DE->lpi);
     nprotect++;
 
-    if (isNull(tnames)) {
-	PROTECT_WITH_INDEX(DE->names = allocVector(STRSXP, DE->xmaxused), 
-			   &DE->npi);
-	for(i = 0; i < DE->xmaxused; i++) {
-	    sprintf(clab, "var%d", i);
-	    SET_STRING_ELT(DE->names, i, mkChar(clab));
-	}
-    } else
-	PROTECT_WITH_INDEX(DE->names = duplicate(tnames), &DE->npi);
-    nprotect++;
     for (i = 0; i < DE->xmaxused; i++) {
 	int len = LENGTH(VECTOR_ELT(DE->work, i));
 	INTEGER(DE->lens)[i] = len;
 	DE->ymaxused = max(len, DE->ymaxused);
 	type = TYPEOF(VECTOR_ELT(DE->work, i));
-	if (type != STRSXP) type = REALSXP;
-	if (isNull(VECTOR_ELT(DE->work, i))) {
-	    if (type == NILSXP) type = REALSXP;
-	    SET_VECTOR_ELT(DE->work, i, ssNewVector(DE, type, 100));
-	} else if (!isVector(VECTOR_ELT(DE->work, i)))
-	    errorcall(call, G_("invalid type for value"));
-	else {
-	    if (TYPEOF(VECTOR_ELT(DE->work, i)) != type)
-		SET_VECTOR_ELT(DE->work, i,
-			       coerceVector(VECTOR_ELT(DE->work, i), type));
-	}
+	if (type != STRSXP && type != REALSXP)
+	    errorcall(call, G_("invalid argument"));
     }
 
     /* scale scrollbars as needed */
@@ -1830,6 +1830,8 @@ SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
     cntxt.cend = &dv_closewin_cend;
     cntxt.cenddata = (void *)DE;
 
+    R_PreserveObject(DE->work); /* also preserves names */
+    R_PreserveObject(DE->lens);
     UNPROTECT(nprotect);
     return R_NilValue;
 }
