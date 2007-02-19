@@ -3820,6 +3820,7 @@ function(dir)
         lapply(list_files_with_type(dir, "code", full.names = FALSE,
                                     OS_subdirs = c("unix", "windows")),
                collect_parse_woes)
+    Sys.setlocale("LC_CTYPE", "C")
     structure(out[sapply(out, length) > 0],
               class = "check_package_code_syntax")
 }
@@ -3833,7 +3834,8 @@ function(x, ...)
         first <- FALSE
         xi <- x[[i]]
         if(length(xi$Error)) {
-            msg <- gsub("\n", "\n  ", sub("[^:]*: *", "", xi$Error))
+            msg <- gsub("\n", "\n  ", sub("[^:]*: *", "", xi$Error),
+			useBytes = TRUE)
             writeLines(c(sprintf("Error in file '%s':", xi$File),
                          paste(" ", msg)))
         }
@@ -3842,7 +3844,8 @@ function(x, ...)
                                           "Warning in file '%s':",
                                           "Warnings in file '%s':"),
                                  xi$File),
-                         paste(" ", gsub("\n\n", "\n  ", xi$Warnings))))
+                         paste(" ", gsub("\n\n", "\n  ", xi$Warnings,
+					 useBytes = TRUE))))
     }
     invisible(x)
 }
