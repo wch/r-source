@@ -118,7 +118,6 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn clpcon, char *type)
 }
 
 SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
-#endif
 {
     R_X11_Init();
     if(initialized > 0)
