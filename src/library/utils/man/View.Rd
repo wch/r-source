@@ -9,7 +9,7 @@ View(x, title)
 }
 \arguments{
   \item{x}{an \R object.}
-  \item{x}{title for viewer window.  Defaults to name of \code{x}.}
+  \item{title}{title for viewer window.  Defaults to name of \code{x}.}
 }
 \details{
   Object \code{x} is coerced (if possible) to a data frame, and all

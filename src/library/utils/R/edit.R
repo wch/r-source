@@ -8,7 +8,7 @@ dataentry <- function (data, modes)
     .Internal(dataentry(data, modes))
 }
 
-View <- function (data, title)
+View <- function (x, title)
 {
     if(missing(title)) title <- paste("Data:", deparse(substitute(x)))
     as.num.or.char <- function(x)
@@ -17,10 +17,10 @@ View <- function (data, title)
         else if(is.numeric(x)) {storage.mode(x) <- "double"; x}
         else as.character(x)
     }
-    data <- lapply(as.data.frame(data), as.num.or.char)
-    if(!is.list(data) || !length(data) || !all(sapply(data, is.vector)))
-        stop("invalid 'data' argument")
-    .Internal(dataviewer(data, title))
+    x <- lapply(as.data.frame(x), as.num.or.char)
+    if(!is.list(x) || !length(x) || !all(sapply(x, is.vector)))
+        stop("invalid 'x' argument")
+    .Internal(dataviewer(x, title))
 }
 
 edit <- function(name,...)UseMethod("edit")
