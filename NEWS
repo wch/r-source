@@ -364,6 +364,10 @@ NEW FEATURES
     o	contour() now passes graphical parameters in '...' to axis()
 	and box().
 
+    o	There is a new function View() for viewing matrix-like
+	objects in a spreadsheet, which can be left up whilst \R is
+	running.  [Currently Windows only, but coming for X11.]
+
 
 DEPRECATED & DEFUNCT
 

@@ -117,6 +117,17 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn clpcon, char *type)
     }
 }
 
+SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+#endif
+{
+    R_X11_Init();
+    if(initialized > 0)
+	/*return (*ptr->de)(call, op, args, rho)*/;
+    else {
+	error(_("X11 module cannot be loaded"));
+	return R_NilValue;
+    }
+}
 #else /* No HAVE_X11 */
 
 Rboolean attribute_hidden R_access_X11(void)
@@ -148,5 +159,11 @@ Rboolean attribute_hidden R_ReadClipboard(Rclpconn con, char *type)
 {
     error(_("X11 is not available"));
     return FALSE;
+}
+
+SEXP attribute_hidden do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    error(_("X11 is not available"));
+    return R_NilValue;
 }
 #endif

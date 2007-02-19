@@ -51,6 +51,7 @@ SEXP do_aqua_custom_print(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chooseFiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chooseDir(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dataviewer(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getClipboardFormats(SEXP, SEXP, SEXP, SEXP);
