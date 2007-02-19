@@ -17,8 +17,12 @@ View <- function (x, title)
         else if(is.numeric(x)) {storage.mode(x) <- "double"; x}
         else as.character(x)
     }
-    x <- lapply(as.data.frame(x), as.num.or.char)
-    if(!is.list(x) || !length(x) || !all(sapply(x, is.vector)))
+    x0 <- as.data.frame(x)
+    x <- lapply(x0, as.num.or.char)
+    rn <- row.names(x0)
+    if(any(rn != seq_along(rn))) x <- c(list(row.names = rn), x)
+    if(!is.list(x) || !length(x) || !all(sapply(x, is.atomic)) ||
+       !max(sapply(x, length)))
         stop("invalid 'x' argument")
     .Internal(dataviewer(x, title))
 }
