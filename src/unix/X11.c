@@ -121,7 +121,7 @@ SEXP do_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     R_X11_Init();
     if(initialized > 0)
-	/*return (*ptr->de)(call, op, args, rho)*/;
+	return (*ptr->dv)(call, op, args, rho);
     else {
 	error(_("X11 module cannot be loaded"));
 	return R_NilValue;

@@ -2610,6 +2610,8 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
     return res;
 }
 
+extern SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho);
+
 void R_init_R_X11(DllInfo *info)
 {
     R_X11Routines *tmp;
@@ -2623,5 +2625,6 @@ void R_init_R_X11(DllInfo *info)
     tmp->image = in_R_GetX11Image;
     tmp->access = in_R_X11_access;
     tmp->readclp = in_R_X11readclp;
-     R_setX11Routines(tmp);
+    tmp->dv = in_R_X11_dataviewer;
+    R_setX11Routines(tmp);
 }

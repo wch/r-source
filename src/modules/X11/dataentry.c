@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2005  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -100,7 +100,7 @@ static char *GetCharP(DEEvent*);
 static KeySym GetKey(DEEvent*);
 static void handlechar(char*);
 static void highlightrect(void);
-static Rboolean initwin(void);
+static Rboolean initwin(char *);
 static void jumppage(DE_DIRECTION);
 static void jumpwin(int, int);
 static void pastecell(int, int);
@@ -180,6 +180,7 @@ static int xmaxused, ymaxused;
 static int box_coords[6];
 static char copycontents[sizeof(buf)+1] ;
 static char labform[6];
+static Rboolean isEditor;
 
 
 /* Xwindows Globals */
@@ -311,6 +312,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, j, cnt, len, nprotect;
     RCNTXT cntxt;
     char clab[25];
+    char *title = "R Data Editor";
 
     nprotect = 0;/* count the PROTECT()s */
     PROTECT_WITH_INDEX(work = duplicate(CAR(args)), &wpi); nprotect++;
@@ -337,6 +339,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     nprotect++;
     bwidth = 5;
     hwidth = 30;
+    isEditor = TRUE;
 
     /* setup work, names, lens  */
     xmaxused = length(work); ymaxused = 0;
@@ -374,7 +377,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
     /* start up the window, more initializing in here */
-    if (initwin())
+    if (initwin(title))
 	errorcall(call, "invalid device");
 
     /* set up a context which will close the window if there is an error */
@@ -433,6 +436,97 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     return work2;
 }
 
+SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP tnames, stitle;
+    SEXPTYPE type;
+    int i, nprotect;
+    RCNTXT cntxt;
+    char clab[25];
+
+    nprotect = 0;/* count the PROTECT()s */
+    PROTECT_WITH_INDEX(work = duplicate(CAR(args)), &wpi); nprotect++;
+    tnames = getAttrib(work, R_NamesSymbol);
+
+    if (TYPEOF(work) != VECSXP)
+	errorcall(call, "invalid argument");
+    stitle = CADR(args);
+    if (!isString(stitle) || LENGTH(stitle) != 1)
+	errorcall(call, "invalid argument");
+
+    /* initialize the constants */
+
+    bufp = buf;
+    ne = 0;
+    currentexp = 0;
+    nneg = 0;
+    ndecimal = 0;
+    clength = 0;
+    inSpecial = 0;
+    ccol = 1;
+    crow = 1;
+    colmin = 1;
+    rowmin = 1;
+    PROTECT(ssNA_STRING = duplicate(NA_STRING));
+    nprotect++;
+    bwidth = 5;
+    hwidth = 30;
+    isEditor = FALSE;
+
+    /* setup work, names, lens  */
+    xmaxused = length(work); ymaxused = 0;
+    PROTECT_WITH_INDEX(lens = allocVector(INTSXP, xmaxused), &lpi);
+    nprotect++;
+
+    if (isNull(tnames)) {
+	PROTECT_WITH_INDEX(names = allocVector(STRSXP, xmaxused), &npi);
+	for(i = 0; i < xmaxused; i++) {
+	    sprintf(clab, "var%d", i);
+	    SET_STRING_ELT(names, i, mkChar(clab));
+	}
+    } else
+	PROTECT_WITH_INDEX(names = duplicate(tnames), &npi);
+    nprotect++;
+    for (i = 0; i < xmaxused; i++) {
+	int len = LENGTH(VECTOR_ELT(work, i));
+	INTEGER(lens)[i] = len;
+	ymaxused = max(len, ymaxused);
+	type = TYPEOF(VECTOR_ELT(work, i));
+	if (type != STRSXP) type = REALSXP;
+	if (isNull(VECTOR_ELT(work, i))) {
+	    if (type == NILSXP) type = REALSXP;
+	    SET_VECTOR_ELT(work, i, ssNewVector(type, 100));
+	} else if (!isVector(VECTOR_ELT(work, i)))
+	    errorcall(call, "invalid type for value");
+	else {
+	    if (TYPEOF(VECTOR_ELT(work, i)) != type)
+		SET_VECTOR_ELT(work, i,
+			       coerceVector(VECTOR_ELT(work, i), type));
+	}
+    }
+
+
+    /* start up the window, more initializing in here */
+    if (initwin(CHAR(STRING_ELT(stitle, 0))))
+	errorcall(call, "invalid device");
+
+    /* set up a context which will close the window if there is an error */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &closewin_cend;
+    cntxt.cenddata = NULL;
+
+    highlightrect();
+
+    cell_cursor_init();
+
+    eventloop();
+
+    endcontext(&cntxt);
+    closewin();
+    UNPROTECT(nprotect);
+    return R_NilValue;
+}
 
 /* Window Drawing Routines */
 
@@ -874,7 +968,10 @@ static void downlightrect(void)
 
 static void highlightrect(void)
 {
-    printrect(2, 1);
+    if(isEditor)
+	printrect(2, 1);
+    else
+	printrect(1, 1);
 }
 
 
@@ -1143,8 +1240,9 @@ static void handlechar(char *text)
 
     /* NA number? */
     if (get_col_type(ccol + colmin - 1) == NUMERIC) {
-	/* input numeric for NA of buffer , suppress NA.*/
-	if(strcmp(buf, "NA") == 0) {
+	/* input numeric for NA of buffer , suppress NA etc.*/
+	if(strcmp(buf, "NA") == 0 || strcmp(buf, "NaN") == 0 ||
+	   strcmp(buf, "Inf") == 0 || strcmp(buf, "-Inf") == 0) {
 	    buf[0] = '\0';
 	    clength = 0;
 	    bufp = buf;
@@ -1357,19 +1455,16 @@ static void eventloop(void)
 
     done = 0;
     while (done == 0) {
-        /*
-	if (NextEvent(&ioevent)) {
-        */
         XNextEvent(iodisplay, &ioevent);
         {
 #ifdef USE_FONTSET
             if (XFilterEvent(&ioevent, None)){
-	      if(ioic){
-		XSetICFocus(ioic);
-		if (ioim_style & XIMPreeditPosition)
-		  calc_pre_edit_pos();
-	      }
-	      continue;
+		if(ioic){
+		    XSetICFocus(ioic);
+		    if (ioim_style & XIMPreeditPosition)
+			calc_pre_edit_pos();
+		}
+		continue;
 	    }
 #endif
 
@@ -1378,18 +1473,18 @@ static void eventloop(void)
 		doSpreadKey(0, &ioevent);
 		break;
             case Expose:
-	      /*
-	       * XIM on  - KeyPress - Expose
-               * XIM off - KeyPress - KeyRelease
-	       * colname change XIM on mode. type Backspace.
-	       */
+		/*
+		 * XIM on  - KeyPress - Expose
+		 * XIM off - KeyPress - KeyRelease
+		 * colname change XIM on mode. type Backspace.
+		 */
 	        if(crow == 0){
-		  drawwindow();
-		  printstring(buf, clength, crow, ccol, 1);
+		    drawwindow();
+		    printstring(buf, clength, crow, ccol, 1);
 		} else {
-		  closerect();
-	          drawwindow();
-		  cell_cursor_init();
+		    closerect();
+		    drawwindow();
+		    cell_cursor_init();
 		}
 		break;
 	    case activateEvt:/* MapNotify */
@@ -1412,7 +1507,7 @@ static void eventloop(void)
 		if(ioevent.xclient.message_type == _XA_WM_PROTOCOLS
 		   && ioevent.xclient.data.l[0] == protocol) {
 		    /* user clicked on `close' aka `destroy' */
-		       done = 1;
+		    done = 1;
 		}
 		break;
 	    }
@@ -1501,18 +1596,11 @@ static void doSpreadKey(int key, DEEvent * event)
     }
     else if (IsModifierKey(iokey)) {
     } 
-    else {
+    else if(isEditor) {
 	handlechar(text);
     }
 }
 
-#if 0
-static int NextEvent(DEEvent * ioevent)
-{
-    XNextEvent(iodisplay, ioevent);
-    return 1;
-}
-#endif
 
 static int WhichEvent(DEEvent ioevent)
 {
@@ -1675,7 +1763,7 @@ static int R_X11IOErr(Display *dsp)
 
 /* set up the window, print the grid and column/row labels */
 
-static Rboolean initwin(void) /* TRUE = Error */
+static Rboolean initwin(char *title) /* TRUE = Error */
 {
     int i, twidth, w, minwidth, labdigs;
     int ioscreen;
@@ -1994,6 +2082,7 @@ static Rboolean initwin(void) /* TRUE = Error */
     /* XMapSubwindows(iodisplay, menuwindow); */
 
 
+    XStoreName(iodisplay, iowindow, title);
     winattr.override_redirect = True;
     XChangeWindowAttributes(iodisplay, menuwindow,
 			    CWBackingStore | CWOverrideRedirect, &winattr);

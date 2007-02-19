@@ -27,6 +27,7 @@
 
 typedef SEXP (*R_do_X11)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef SEXP (*R_X11DataEntryRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
+typedef SEXP (*R_X11DataViewer)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef Rboolean (*R_GetX11ImageRoutine)(int d, void *pximage, 
 					 int *pwidth, int *pheight);
 typedef int (*R_X11_access)();
@@ -40,6 +41,7 @@ typedef struct {
     R_GetX11ImageRoutine  image;
     R_X11_access access;
     R_X11clp readclp;
+    R_X11DataViewer dv;
 } R_X11Routines;
 
 #ifdef __cplusplus
