@@ -405,6 +405,13 @@ AC_ARG_WITH([recommended-packages],
 [R_ARG_USE(recommended_packages)],
 [use_recommended_packages=yes])
 
+## Iconv.
+AC_ARG_WITH([iconv],
+[AC_HELP_STRING([--with-iconv],
+                [use iconv library (if available) @<:@yes@:>@])],
+[R_ARG_USE(iconv)],
+[use_iconv=yes])
+
 ### ** Precious variables.
 
 AC_ARG_VAR([R_PRINTCMD],
@@ -1830,7 +1837,14 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 AC_SUBST(R_MODULES)
 
 ## iconv headers and function.
-R_ICONV
+if test "${use_iconv}" = yes; then
+  R_ICONV
+  if test "$r_cv_iconv_latin1" != yes; then
+    AC_MSG_ERROR([--with-iconv=yes (default) and suitable iconv is not available])
+  fi
+else
+    AC_MSG_WARN([--with-iconv=no is deprecated and will be withdrawn shortly])
+fi
 
 ## support for MBCS
 case "${host_os}" in
