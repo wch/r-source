@@ -4598,3 +4598,15 @@ C <- matrix(1:16, 4)
 (ind <- which(C < 0, arr.ind = TRUE))
 stopifnot(is.matrix(ind))
 ## gave integer(0) in 2.4.1
+
+
+## plnorm wrong for out-of-range values (PR#9520)
+stopifnot(plnorm(0, lower.tail=FALSE) == 1, plnorm(0, lower.tail=TRUE) == 0)
+## both lower tail in  R < 2.5.0
+
+
+## supsmu with all NA values (PR#9519)
+x <- seq(0, 1, len = 100)
+y <- x + NA
+try(supsmu(x,y))
+## segfaulted < 2.5.0

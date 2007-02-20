@@ -35,5 +35,5 @@ double plnorm(double x, double logmean, double logsd, int lower_tail, int log_p)
 
     if (x > 0)
 	return pnorm(log(x), logmean, logsd, lower_tail, log_p);
-    return 0;
+    return lower_tail ? 0 : 1;
 }

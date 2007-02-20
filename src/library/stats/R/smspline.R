@@ -294,6 +294,8 @@ supsmu <-
     ord <- cumsum(!okay)[okay][ord] + ord
     xo <- x[ord]
     leno <- length(ord)
+    if(leno == 0)
+        stop("no finite observations")
     if(diff <- n - leno)
 	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
     .Fortran(R_setsmu)
