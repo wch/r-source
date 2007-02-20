@@ -396,7 +396,6 @@ DEPRECATED & DEFUNCT
     o	Sys.putenv() is now deprecated in favour of Sys.setenv(),
 	following the POSIX recommendation.
 
-
     o	Buidling R with --without-iconv is deprecated.
 
 
@@ -492,6 +491,9 @@ UTILITIES
     o	R CMD check now reports on non-ASCII strings in datasets.
 	(These are a portability issue, which can be alleviated by
 	marking their encoding: see 'Writing R Extensions'.)
+
+    o	Rdiff now converts CRLF endings in the target file, and
+	converts UTF-8 single quotes in either to ASCII quotes.
 
 
 BUG FIXES
