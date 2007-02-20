@@ -623,6 +623,9 @@ BUG FIXES
 	between empty cells and NAs, but did not do so: it now does
 	so for strings.
 
+    o	supsmu() could segfault if all cases had non-finite values.
+	(PR#9519)
+
     o	plnorm(x, lower.tail=FALSE) was returning the wrong tail for
 	x <= 0.  (PR#9520)
 
