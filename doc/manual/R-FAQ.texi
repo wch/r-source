@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-02-17
+@set FAQ_DATE @value{FAQ_YEAR}-02-20
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2536,6 +2536,8 @@ Bayesian mixture models of univariate Gaussian distributions using JAGS.
 @c @item baymvb
 @c Bayesian analysis of multivariate binary data.
 @c </COMMENT>
+@item bbmle
+Modifications and extensions of @strong{stats4} MLE code.
 @item bcp
 Bayesian Change Point based on the Barry and Hartigan product partition
 model.
@@ -3022,7 +3024,9 @@ Inference in graphical gaussian models with edge and vertex symmetries.
 gWidgets API for building toolkit-independent, interactive
 @acronym{GUI}s.
 @item gWidgetsRGtk2
-Toolkit implementation of gWidgets for RGtk2.
+Toolkit implementation of @strong{gWidgets} for @strong{RGtk2}.
+@item gWidgetsrJava
+Toolkit implementation of @strong{gWidgets} for @strong{rJava}.
 @item gafit
 Genetic algorithm for curve fitting.
 @item gam
