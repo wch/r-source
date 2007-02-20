@@ -313,7 +313,7 @@ NEW FEATURES
     o	The 'internal' objects .helpForCall, .tryHelp and topicName are
 	no longer exported from 'utils'.
 
-    o	The internal regex code has been upgraded to glibc-2.5 (from 2.3.6).
+    o	The internal regex code has been upgraded to glibc 2.5 (from 2.3.6).
 
     o	file.show() gains an 'encoding' argument.
 
@@ -367,6 +367,10 @@ NEW FEATURES
     o	There is a new function View() for viewing matrix-like
 	objects in a spreadsheet, which can be left up whilst R is
 	running.
+
+    o	There have been numerous performance improvements to the data
+	editor on both Windows and X11.  In particular, resizing the
+	window works much better on X11.
 
 
 DEPRECATED & DEFUNCT
@@ -616,7 +620,7 @@ BUG FIXES
 
     o	The data editor was not allowing Inf, NA and NaN to be entered
 	in numerical columns.  It was intended to differentiate
-	between missing cells and NAs, but did not do so: it now does
+	between empty cells and NAs, but did not do so: it now does
 	so for strings.
 
 

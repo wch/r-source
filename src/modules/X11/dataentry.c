@@ -77,97 +77,103 @@ typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
 /* EXPORTS : */
 SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
 
+/* Global variables needed for the graphics */
+static Display *iodisplay = NULL;
+static XContext deContext;
+static int nView = 0; /* number of open data windows */
+static int fdView = -1;
+
+typedef struct {
+    Window iowindow;
+    GC iogc;
+    XFontStruct *font_info;
+    SEXP work, names, lens;
+    PROTECT_INDEX wpi, npi, lpi;
+    int box_w;                       /* width of a box */
+    int boxw[100];                   /* widths of cells */
+    int box_h;                       /* height of a box */
+    int windowWidth;                 /* current width of the window */
+    int fullwindowWidth;
+    int windowHeight;                /* current height of the window */
+    int fullwindowHeight;
+    int crow;                        /* current row */
+    int ccol;                        /* current column */
+    int nwide, nhigh;
+    int colmax, colmin, rowmax, rowmin;
+    int bwidth;			/* width of the border */
+    int hht;			/* height of header  */
+    int text_offset;
+    int nboxchars;
+    int xmaxused, ymaxused;
+    char labform[6];
+    Rboolean isEditor;
+    Atom prot;
+} destruct, *DEstruct;
+
 /* Local Function Definitions */
 
-static void advancerect(DE_DIRECTION);
-static int  CheckControl(DEEvent*);
-static int  CheckShift(DEEvent*);
+static void advancerect(DEstruct, DE_DIRECTION);
+static int  CheckControl(DEEvent *);
+static int  CheckShift(DEEvent *);
 static int  checkquit(int);
-static void clearrect(void);
-static void clearwindow(void);
-static void closerect(void);
-static void closewin(void);
-static void copycell(void);
-static void doControl(DEEvent*);
-static int  doMouseDown(DEEvent*);
-static void doSpreadKey(int, DEEvent*);
-static void downlightrect(void);
-static void drawwindow(void);
-static void drawcol(int);
-static void drawrow(int);
-static void eventloop(void);
-static void find_coords(int, int, int*, int*);
-static int  findcell(void);
+static void clearrect(DEstruct);
+static void closerect(DEstruct);
+static void clearwindow(DEstruct);
+static void closewin(DEstruct);
+static void copycell(DEstruct);
+static void doControl(DEstruct, DEEvent*);
+static int  doMouseDown(DEstruct, DEEvent*);
+static void doSpreadKey(DEstruct, int, DEEvent*);
+static void downlightrect(DEstruct);
+static void drawwindow(DEstruct);
+static void drawcol(DEstruct, int);
+static void drawrow(DEstruct, int);
+static void eventloop(DEstruct);
+static void find_coords(DEstruct, int, int, int*, int*);
+static int  findcell(DEstruct);
 static char *GetCharP(DEEvent*);
 static KeySym GetKey(DEEvent*);
-static void handlechar(char*);
-static void highlightrect(void);
-static Rboolean initwin(char *);
-static void jumppage(DE_DIRECTION);
-static void jumpwin(int, int);
-static void pastecell(int, int);
-static void popdownmenu(void);
-static void popupmenu(int, int, int, int);
-static void printlabs(void);
-static void printrect(int, int);
-static void printstring(char*, int, int, int, int);
-static void printelt(SEXP, int, int, int);
+static void handlechar(DEstruct, char*);
+static void highlightrect(DEstruct);
+static Rboolean initwin(DEstruct, char *);
+static void jumppage(DEstruct, DE_DIRECTION);
+static void jumpwin(DEstruct, int, int);
+static void pastecell(DEstruct, int, int);
+static void popdownmenu(DEstruct);
+static void popupmenu(DEstruct, int, int, int, int);
+static void printlabs(DEstruct);
+static void printrect(DEstruct, int, int);
+static void printstring(DEstruct, char*, int, int, int, int);
+static void printelt(DEstruct, SEXP, int, int, int);
 static void RefreshKeyboardMapping(DEEvent*);
-static void cell_cursor_init(void);
+static void cell_cursor_init(DEstruct);
 
 /* Functions to hide Xlib calls */
 static void bell(void);
-static void cleararea(int, int, int, int);
-static void copyH(int, int, int);
-static void copyarea(int, int, int, int);
-static void doConfigure(DEEvent *ioevent);
-static void drawrectangle(int, int, int, int, int, int);
-static void drawtext(int, int, char*, int);
+static void cleararea(DEstruct, int, int, int, int);
+static void copyH(DEstruct, int, int, int);
+static void copyarea(DEstruct, int, int, int, int);
+static void doConfigure(DEstruct, DEEvent *ioevent);
+static void drawrectangle(DEstruct, int, int, int, int, int, int);
+static void drawtext(DEstruct, int, int, char*, int);
 static void RefreshKeyboardMapping(DEEvent *ioevent);
-static void Rsync(void);
-static int textwidth(char*, int);
+static void Rsync(DEstruct);
+static int textwidth(DEstruct, char*, int);
 static int WhichEvent(DEEvent ioevent);
 
 static void R_ProcessX11Events(void *data);
 
 
-static char *get_col_name(int col);
-static int  get_col_width(int col);
-static CellType get_col_type(int col);
+static char *get_col_name(DEstruct, int col);
+static int  get_col_width(DEstruct, int col);
+static CellType get_col_type(DEstruct, int col);
 #ifdef USE_FONTSET
-static void calc_pre_edit_pos(void);
+static void calc_pre_edit_pos(DEstruct DE);
 #endif
 static int last_wchar_bytes(char *);
 static SEXP ssNewVector(SEXPTYPE, int);
 static SEXP ssNA_STRING;
 
-/* Global variables needed for the graphics */
-
-static Display *iodisplay;
-static Window iowindow;
-static GC iogc;
-static XFontStruct *font_info;
-static SEXP work, names, lens;
-static PROTECT_INDEX wpi, npi, lpi;
-static int box_w;                       /* width of a box */
-static int boxw[100];                   /* widths of cells */
-static int box_h;                       /* height of a box */
-static int windowWidth;                 /* current width of the window */
-static int fullwindowWidth;
-static int windowHeight;                /* current height of the window */
-static int fullwindowHeight;
-static int crow;                        /* current row */
-static int ccol;                        /* current column */
-static int nwide, nhigh;
-static int colmax, colmin, rowmax, rowmin;
-static int bwidth;			/* width of the border */
-static int hht;			/* height of header  */
-static int text_offset;
-static int nboxchars;
-static int xmaxused, ymaxused;
-static char labform[6];
-static Rboolean isEditor;
-static Atom protocol;
 
 /* only used in the editor */
 static Atom _XA_WM_PROTOCOLS = 0;
@@ -225,7 +231,7 @@ static XIC ioic;
 #ifndef min
 #define min(a, b) (((a)<(b))?(a):(b))
 #endif
-#define BOXW(x) (min(((x<100 && nboxchars==0)?boxw[x]:box_w), fullwindowWidth-boxw[0]-2*bwidth-2))
+#define BOXW(x) (min(((x<100 && DE->nboxchars==0)?DE->boxw[x]:DE->box_w), DE->fullwindowWidth-DE->boxw[0]-2*DE->bwidth-2))
 
 /*
   Underlying assumptions (for this version R >= 1.8.0)
@@ -254,7 +260,7 @@ static XIC ioic;
    The vectors are created too long and if they need to be increased
    this is done by using the next higher power of 2. They start 100
    long.  Vectors are initialized to NA when they are created so that
-   NA is returned for any cell that was not set by the user.  We use 
+   NA is returned for any cell that was not set by the user.  We use
    a special type of NA to distinguish this from user-supplied NAs.
 
    In Macintosh we needed to call the main event loop to get
@@ -294,7 +300,8 @@ static SEXP ssNewVector(SEXPTYPE type, int vlen)
 
 static void closewin_cend(void *data)
 {
-    closewin();
+    DEstruct DE = (DEstruct) data;
+    closewin(DE);
 }
 
 SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -305,13 +312,15 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT cntxt;
     char clab[25];
     char *title = "R Data Editor";
+    destruct DE1;
+    DEstruct DE = &DE1;
 
     nprotect = 0;/* count the PROTECT()s */
-    PROTECT_WITH_INDEX(work = duplicate(CAR(args)), &wpi); nprotect++;
+    PROTECT_WITH_INDEX(DE->work = duplicate(CAR(args)), &DE->wpi); nprotect++;
     colmodes = CADR(args);
-    tnames = getAttrib(work, R_NamesSymbol);
+    tnames = getAttrib(DE->work, R_NamesSymbol);
 
-    if (TYPEOF(work) != VECSXP || TYPEOF(colmodes) != VECSXP)
+    if (TYPEOF(DE->work) != VECSXP || TYPEOF(colmodes) != VECSXP)
 	errorcall(call, "invalid argument");
 
     /* initialize the constants */
@@ -323,88 +332,93 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     ndecimal = 0;
     clength = 0;
     inSpecial = 0;
-    ccol = 1;
-    crow = 1;
-    colmin = 1;
-    rowmin = 1;
+    DE->ccol = 1;
+    DE->crow = 1;
+    DE->colmin = 1;
+    DE->rowmin = 1;
     PROTECT(ssNA_STRING = duplicate(NA_STRING));
     nprotect++;
-    bwidth = 5;
-    hht = 30;
-    isEditor = TRUE;
+    DE->bwidth = 5;
+    DE->hht = 30;
+    DE->isEditor = TRUE;
 
     /* setup work, names, lens  */
-    xmaxused = length(work); ymaxused = 0;
-    PROTECT_WITH_INDEX(lens = allocVector(INTSXP, xmaxused), &lpi);
+    DE->xmaxused = length(DE->work); DE->ymaxused = 0;
+    PROTECT_WITH_INDEX(DE->lens = allocVector(INTSXP, DE->xmaxused), &DE->lpi);
     nprotect++;
 
     if (isNull(tnames)) {
-	PROTECT_WITH_INDEX(names = allocVector(STRSXP, xmaxused), &npi);
-	for(i = 0; i < xmaxused; i++) {
+	PROTECT_WITH_INDEX(DE->names = allocVector(STRSXP, DE->xmaxused),
+			   &DE->npi);
+	for(i = 0; i < DE->xmaxused; i++) {
 	    sprintf(clab, "var%d", i);
-	    SET_STRING_ELT(names, i, mkChar(clab));
+	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
     } else
-	PROTECT_WITH_INDEX(names = duplicate(tnames), &npi);
+	PROTECT_WITH_INDEX(DE->names = duplicate(tnames), &DE->npi);
     nprotect++;
-    for (i = 0; i < xmaxused; i++) {
-	int len = LENGTH(VECTOR_ELT(work, i));
-	INTEGER(lens)[i] = len;
-	ymaxused = max(len, ymaxused);
-	type = TYPEOF(VECTOR_ELT(work, i));
+    for (i = 0; i < DE->xmaxused; i++) {
+	int len = LENGTH(VECTOR_ELT(DE->work, i));
+	INTEGER(DE->lens)[i] = len;
+	DE->ymaxused = max(len, DE->ymaxused);
+	type = TYPEOF(VECTOR_ELT(DE->work, i));
 	if (LENGTH(colmodes) > 0 && !isNull(VECTOR_ELT(colmodes, i)))
 	    type = str2type(CHAR(STRING_ELT(VECTOR_ELT(colmodes, i), 0)));
 	if (type != STRSXP) type = REALSXP;
-	if (isNull(VECTOR_ELT(work, i))) {
+	if (isNull(VECTOR_ELT(DE->work, i))) {
 	    if (type == NILSXP) type = REALSXP;
-	    SET_VECTOR_ELT(work, i, ssNewVector(type, 100));
-	} else if (!isVector(VECTOR_ELT(work, i)))
+	    SET_VECTOR_ELT(DE->work, i, ssNewVector(type, 100));
+	} else if (!isVector(VECTOR_ELT(DE->work, i)))
 	    errorcall(call, "invalid type for value");
 	else {
-	    if (TYPEOF(VECTOR_ELT(work, i)) != type)
-		SET_VECTOR_ELT(work, i,
-			       coerceVector(VECTOR_ELT(work, i), type));
+	    if (TYPEOF(VECTOR_ELT(DE->work, i)) != type)
+		SET_VECTOR_ELT(DE->work, i,
+			       coerceVector(VECTOR_ELT(DE->work, i), type));
 	}
     }
 
 
     /* start up the window, more initializing in here */
-    if (initwin(title))
+    if (initwin(DE, title))
 	errorcall(call, "invalid device");
 
     /* set up a context which will close the window if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &closewin_cend;
-    cntxt.cenddata = NULL;
+    cntxt.cenddata = (void *) DE;
 
-    highlightrect();
+    highlightrect(DE);
 
-    cell_cursor_init();
+    cell_cursor_init(DE);
 
-    eventloop();
+    eventloop(DE);
 
     endcontext(&cntxt);
-    closewin();
+    closewin(DE);
+    if(nView == 0) {
+	XCloseDisplay(iodisplay);
+	iodisplay = NULL;
+    }
 
     /* drop out unused columns */
-    for(i = 0, cnt = 0; i < xmaxused; i++)
-	if(!isNull(VECTOR_ELT(work, i))) cnt++;
-    if (cnt < xmaxused) {
+    for(i = 0, cnt = 0; i < DE->xmaxused; i++)
+	if(!isNull(VECTOR_ELT(DE->work, i))) cnt++;
+    if (cnt < DE->xmaxused) {
 	PROTECT(work2 = allocVector(VECSXP, cnt)); nprotect++;
-	for(i = 0, j = 0; i < xmaxused; i++) {
-	    if(!isNull(VECTOR_ELT(work, i))) {
-		SET_VECTOR_ELT(work2, j, VECTOR_ELT(work, i));
-		INTEGER(lens)[j] = INTEGER(lens)[i];
-		SET_STRING_ELT(names, j, STRING_ELT(names, i));
+	for(i = 0, j = 0; i < DE->xmaxused; i++) {
+	    if(!isNull(VECTOR_ELT(DE->work, i))) {
+		SET_VECTOR_ELT(work2, j, VECTOR_ELT(DE->work, i));
+		INTEGER(DE->lens)[j] = INTEGER(DE->lens)[i];
+		SET_STRING_ELT(DE->names, j, STRING_ELT(DE->names, i));
 		j++;
 	    }
 	}
-	REPROTECT(names = lengthgets(names, cnt), npi);
-    } else work2 = work;
+	REPROTECT(DE->names = lengthgets(DE->names, cnt), DE->npi);
+    } else work2 = DE->work;
 
     for (i = 0; i < LENGTH(work2); i++) {
-	len = INTEGER(lens)[i];
+	len = INTEGER(DE->lens)[i];
 	tvec = VECTOR_ELT(work2, i);
 	if (LENGTH(tvec) != len) {
 	    tvec2 = ssNewVector(TYPEOF(tvec), len);
@@ -423,9 +437,19 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
-    setAttrib(work2, R_NamesSymbol, names);
+    setAttrib(work2, R_NamesSymbol, DE->names);
     UNPROTECT(nprotect);
     return work2;
+}
+
+static void dv_closewin_cend(void *data)
+{
+    DEstruct DE = (DEstruct) data;
+    R_ReleaseObject(DE->lens);
+    R_ReleaseObject(DE->work);
+    closewin(DE);
+    free(DE);
+    nView--;
 }
 
 SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -434,12 +458,15 @@ SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXPTYPE type;
     int i, nprotect;
     RCNTXT cntxt;
+    DEstruct DE = (DEstruct) malloc(sizeof(destruct));
+
+    nView++;
 
     nprotect = 0;/* count the PROTECT()s */
-    work = CAR(args);
-    names = getAttrib(work, R_NamesSymbol);
+    DE->work = CAR(args);
+    DE->names = getAttrib(DE->work, R_NamesSymbol);
 
-    if (TYPEOF(work) != VECSXP)
+    if (TYPEOF(DE->work) != VECSXP)
 	errorcall(call, "invalid argument");
     stitle = CADR(args);
     if (!isString(stitle) || LENGTH(stitle) != 1)
@@ -454,72 +481,77 @@ SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
     ndecimal = 0;
     clength = 0;
     inSpecial = 0;
-    ccol = 1;
-    crow = 1;
-    colmin = 1;
-    rowmin = 1;
-    bwidth = 5;
-    hht = 10;
-    isEditor = FALSE;
+    DE->ccol = 1;
+    DE->crow = 1;
+    DE->colmin = 1;
+    DE->rowmin = 1;
+    DE->bwidth = 5;
+    DE->hht = 10;
+    DE->isEditor = FALSE;
 
     /* setup work, names, lens  */
-    xmaxused = length(work); ymaxused = 0;
-    PROTECT_WITH_INDEX(lens = allocVector(INTSXP, xmaxused), &lpi);
+    DE->xmaxused = length(DE->work); DE->ymaxused = 0;
+    PROTECT_WITH_INDEX(DE->lens = allocVector(INTSXP, DE->xmaxused), &DE->lpi);
     nprotect++;
 
-    for (i = 0; i < xmaxused; i++) {
-	int len = LENGTH(VECTOR_ELT(work, i));
-	INTEGER(lens)[i] = len;
-	ymaxused = max(len, ymaxused);
-	type = TYPEOF(VECTOR_ELT(work, i));
+    for (i = 0; i < DE->xmaxused; i++) {
+	int len = LENGTH(VECTOR_ELT(DE->work, i));
+	INTEGER(DE->lens)[i] = len;
+	DE->ymaxused = max(len, DE->ymaxused);
+	type = TYPEOF(VECTOR_ELT(DE->work, i));
 	if (type != STRSXP && type != REALSXP)
 	    errorcall(call, "invalid argument");
     }
 
 
     /* start up the window, more initializing in here */
-    if (initwin(CHAR(STRING_ELT(stitle, 0))))
+    if (initwin(DE, CHAR(STRING_ELT(stitle, 0))))
 	errorcall(call, "invalid device");
 
     /* set up a context which will close the window if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
-    cntxt.cend = &closewin_cend;
-    cntxt.cenddata = NULL;
+    cntxt.cend = &dv_closewin_cend;
+    cntxt.cenddata = (void *) DE;
 
-    highlightrect();
+    highlightrect(DE);
 
-    cell_cursor_init();
+    cell_cursor_init(DE);
 
-    addInputHandler(R_InputHandlers, ConnectionNumber(iodisplay),
-		    R_ProcessX11Events, XActivity);
+    if(fdView < 0) {
+	fdView = ConnectionNumber(iodisplay);
+	addInputHandler(R_InputHandlers, fdView,
+			R_ProcessX11Events, XActivity);
+    }
 
-    drawwindow();
+    drawwindow(DE);
 
-    UNPROTECT(nprotect); /* FIXME, these include the data */
+    R_PreserveObject(DE->work); /* also preserves names */
+    R_PreserveObject(DE->lens);
+    UNPROTECT(nprotect);
     return R_NilValue;
 }
 
 /* Window Drawing Routines */
 
-static void setcellwidths(void)
+static void setcellwidths(DEstruct DE)
 {
     int i, w, dw;
 
-    windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
-    nwide = 2;
+    DE->windowWidth = w = 2*DE->bwidth + DE->boxw[0] + BOXW(DE->colmin);
+    DE->nwide = 2;
     for (i = 2; i < 100; i++) { /* 100 on-screen columns cannot occur */
-	dw = BOXW(i + colmin - 1);
-	if((w += dw) > fullwindowWidth ||
-	   (!isEditor && i > xmaxused - colmin + 1)) {
-	    nwide = i;
-	    windowWidth = w - dw;
+	dw = BOXW(i + DE->colmin - 1);
+	if((w += dw) > DE->fullwindowWidth ||
+	   (!DE->isEditor && i > DE->xmaxused - DE->colmin + 1)) {
+	    DE->nwide = i;
+	    DE->windowWidth = w - dw;
 	    break;
 	}
     }
 }
 
-static void drawwindow(void)
+static void drawwindow(DEstruct DE)
 {
     int i, st;
     XWindowAttributes attribs;
@@ -531,188 +563,193 @@ static void drawwindow(void)
      */
 
     /* now set up the window with the new dimensions */
-    XGetWindowAttributes(iodisplay, iowindow, &attribs);
-    bwidth = attribs.border_width;
-    fullwindowWidth = attribs.width;
-    fullwindowHeight = attribs.height;
-    setcellwidths();
-    nhigh = (fullwindowHeight - 2 * bwidth - hht) / box_h;
-    windowHeight = nhigh * box_h + 2 * bwidth;
+    XGetWindowAttributes(iodisplay, DE->iowindow, &attribs);
+    DE->bwidth = attribs.border_width;
+    DE->fullwindowWidth = attribs.width;
+    DE->fullwindowHeight = attribs.height;
+    setcellwidths(DE);
+    DE->nhigh = (DE->fullwindowHeight - 2 * DE->bwidth - DE->hht) / DE->box_h;
+    DE->windowHeight = DE->nhigh * DE->box_h + 2 * DE->bwidth;
 
-    clearwindow();
+    clearwindow(DE);
 
 
-    for (i = 1; i < nhigh; i++)
-	drawrectangle(0, hht + i * box_h, boxw[0], box_h, 1, 1);
+    for (i = 1; i < DE->nhigh; i++)
+	drawrectangle(DE, 0, DE->hht + i * DE->box_h, DE->boxw[0], DE->box_h,
+		      1, 1);
      /* so row 0 and col 0 are reserved for labels */
-    colmax = colmin + (nwide - 2);
-    rowmax = rowmin + (nhigh - 2);
-    printlabs();
-    for (i = colmin; i <= colmax; i++) drawcol(i);
+    DE->colmax = DE->colmin + (DE->nwide - 2);
+    DE->rowmax = DE->rowmin + (DE->nhigh - 2);
+    printlabs(DE);
+    for (i = DE->colmin; i <= DE->colmax; i++) drawcol(DE, i);
 
-    if(isEditor) {
+    if(DE->isEditor) {
 	/* draw the quit etc boxes */
 
-	i = textwidth("Quit", 4);
-	box_coords[0] = st = fullwindowWidth - 6 - bwidth;
+	i = textwidth(DE, "Quit", 4);
+	box_coords[0] = st = DE->fullwindowWidth - 6 - DE->bwidth;
 	box_coords[1] = st - i;
-	drawrectangle(st - i, 3, i + 4, hht - 6, 1, 1);
-	drawtext(st + 2 - i, hht - 7, "Quit", 4);
+	drawrectangle(DE, st - i, 3, i + 4, DE->hht - 6, 1, 1);
+	drawtext(DE, st + 2 - i, DE->hht - 7, "Quit", 4);
 
 	box_coords[4] = st = st - 5*i;
-	i = textwidth("Paste", 5);
+	i = textwidth(DE, "Paste", 5);
 	box_coords[5] = st - i;
-	drawrectangle(st - i, 3, i + 4, hht - 6, 1, 1);
-	drawtext(st + 2 - i, hht - 7, "Paste", 5);
+	drawrectangle(DE, st - i, 3, i + 4, DE->hht - 6, 1, 1);
+	drawtext(DE, st + 2 - i, DE->hht - 7, "Paste", 5);
 
 	box_coords[2] = st = st - 2*i;
-	i = textwidth("Copy", 4);
+	i = textwidth(DE, "Copy", 4);
 	box_coords[3] = st - i;
-	drawrectangle(st - i, 3, i + 4, hht - 6, 1, 1);
-	drawtext(st + 2 - i, hht - 7, "Copy", 4);
+	drawrectangle(DE, st - i, 3, i + 4, DE->hht - 6, 1, 1);
+	drawtext(DE, st + 2 - i, DE->hht - 7, "Copy", 4);
     }
-    
-    highlightrect();
 
-    Rsync();
+    highlightrect(DE);
+
+    Rsync(DE);
 
 }
 
-static void doHscroll(int oldcol)
+static void doHscroll(DEstruct DE, int oldcol)
 {
     int i, dw;
-    int oldnwide = nwide, oldwindowWidth = windowWidth;
+    int oldnwide = DE->nwide, oldwindowWidth = DE->windowWidth;
 
     /* horizontal re-position */
-    setcellwidths();
-    colmax = colmin + (nwide - 2);
-    if (oldcol < colmin) { /* drop oldcol...colmin - 1 */
-	dw = boxw[0];
-	for (i = oldcol; i < colmin; i++) dw += BOXW(i);
-	copyH(dw, boxw[0], oldwindowWidth - dw + 1);
+    setcellwidths(DE);
+    DE->colmax = DE->colmin + (DE->nwide - 2);
+    if (oldcol < DE->colmin) { /* drop oldcol...colmin - 1 */
+	dw = DE->boxw[0];
+	for (i = oldcol; i < DE->colmin; i++) dw += BOXW(i);
+	copyH(DE, dw, DE->boxw[0], oldwindowWidth - dw + 1);
 	dw = oldwindowWidth - BOXW(oldcol) + 1;
-	cleararea(dw, hht, fullwindowWidth-dw, fullwindowHeight);
+	cleararea(DE, dw, DE->hht, DE->fullwindowWidth-dw,
+		  DE->fullwindowHeight);
 	/* oldnwide includes the row labels */
-	for (i = oldcol+oldnwide-1; i <= colmax; i++) drawcol(i);
+	for (i = oldcol+oldnwide-1; i <= DE->colmax; i++) drawcol(DE, i);
     } else {
 	/* move one or more cols left */
-	dw = BOXW(colmin);
-	copyH(boxw[0], boxw[0] + dw, windowWidth - dw + 1);
-	dw = windowWidth + 1;
-	cleararea(dw, hht, fullwindowWidth-dw, fullwindowHeight);
-	drawcol(colmin);
+	dw = BOXW(DE->colmin);
+	copyH(DE, DE->boxw[0], DE->boxw[0] + dw, DE->windowWidth - dw + 1);
+	dw = DE->windowWidth + 1;
+	cleararea(DE, dw, DE->hht, DE->fullwindowWidth-dw,
+		  DE->fullwindowHeight);
+	drawcol(DE, DE->colmin);
     }
 
-    highlightrect();
-    cell_cursor_init();
+    highlightrect(DE);
+    cell_cursor_init(DE);
 
-    Rsync();
+    Rsync(DE);
 }
 
 /* find_coords finds the coordinates of the upper left corner of the
    given cell on the screen: row and col are on-screen coords */
 
-static void find_coords(int row, int col, int *xcoord, int *ycoord)
+static void find_coords(DEstruct DE,
+			int row, int col, int *xcoord, int *ycoord)
 {
     int i, w;
-    w = bwidth;
-    if (col > 0) w += boxw[0];
-    for(i = 1; i < col; i ++) w += BOXW(i + colmin - 1);
+    w = DE->bwidth;
+    if (col > 0) w += DE->boxw[0];
+    for(i = 1; i < col; i ++) w += BOXW(i + DE->colmin - 1);
     *xcoord = w;
-    *ycoord = bwidth + hht + box_h * row;
+    *ycoord = DE->bwidth + DE->hht + DE->box_h * row;
 }
 
 /* draw the window with the top left box at column wcol and row wrow */
 
-static void jumpwin(int wcol, int wrow)
+static void jumpwin(DEstruct DE, int wcol, int wrow)
 {
     if (wcol < 0 || wrow < 0) {
 	bell();
 	return;
     }
-    closerect();
-    if (colmin != wcol || rowmin != wrow) {
-	colmin = wcol;
-	rowmin = wrow;
-	closerect();
-	drawwindow();
-    } else highlightrect();
+    closerect(DE);
+    if (DE->colmin != wcol || DE->rowmin != wrow) {
+	DE->colmin = wcol;
+	DE->rowmin = wrow;
+	closerect(DE);
+	drawwindow(DE);
+    } else highlightrect(DE);
 }
 
-static void advancerect(DE_DIRECTION which)
+static void advancerect(DEstruct DE, DE_DIRECTION which)
 {
 
     /* if we are in the header, changing a name then only down is
        allowed */
-    if (crow < 1 && which != DOWN) {
+    if (DE->crow < 1 && which != DOWN) {
 	bell();
 	return;
     }
 
-    closerect();
+    closerect(DE);
 
     switch (which) {
     case UP:
-	if (crow == 1) {
-	    if (rowmin == 1)
+	if (DE->crow == 1) {
+	    if (DE->rowmin == 1)
 		bell();
 	    else
-		jumppage(UP);
+		jumppage(DE, UP);
 	} else
-	    crow--;
+	    DE->crow--;
 	break;
     case DOWN:
-	if (!isEditor && crow+rowmin > ymaxused) {
+	if (!DE->isEditor && DE->crow+DE->rowmin > DE->ymaxused) {
 	    bell();
 	    break;
 	}
-	if (crow == (nhigh - 1))
-	    jumppage(DOWN);
+	if (DE->crow == (DE->nhigh - 1))
+	    jumppage(DE, DOWN);
 	else
-	    crow++;
+	    DE->crow++;
 	break;
     case RIGHT:
-	if (!isEditor && ccol+colmin > xmaxused) {
+	if (!DE->isEditor && DE->ccol+DE->colmin > DE->xmaxused) {
 	    bell();
 	    break;
 	}
-	if (ccol == (nwide - 1))
-	    jumppage(RIGHT);
+	if (DE->ccol == (DE->nwide - 1))
+	    jumppage(DE, RIGHT);
 	else
-	    ccol++;
+	    DE->ccol++;
 	break;
     case LEFT:
-	if (ccol == 1) {
-	    if (colmin == 1)
+	if (DE->ccol == 1) {
+	    if (DE->colmin == 1)
 		bell();
 	    else
-		jumppage(LEFT);
+		jumppage(DE, LEFT);
 	} else
-	    ccol--;
+	    DE->ccol--;
 	break;
     default:
 	UNIMPLEMENTED("advancerect");
     }
 
-    highlightrect();
+    highlightrect(DE);
 
-    cell_cursor_init();
+    cell_cursor_init(DE);
 }
 
-static void cell_cursor_init(void)
+static void cell_cursor_init(DEstruct DE)
 {
-    int i, whichrow = crow + rowmin - 1, whichcol = ccol + colmin -1;
+    int i, whichrow = DE->crow + DE->rowmin - 1,
+	whichcol = DE->ccol + DE->colmin -1;
     SEXP tmp;
 
     memset(buf,0,sizeof(buf));
 
-    if (crow == 0 ){
+    if (DE->crow == 0 ){
 	strncpy(buf,
-		get_col_name(whichcol),
+		get_col_name(DE, whichcol),
 		BOOSTED_BUF_SIZE-1);
     } else {
-	if (length(work) >= whichcol) {
-	    tmp = VECTOR_ELT(work, whichcol - 1);
+	if (length(DE->work) >= whichcol) {
+	    tmp = VECTOR_ELT(DE->work, whichcol - 1);
 	    if (tmp != R_NilValue &&
 		(i = whichrow - 1) < LENGTH(tmp) ) {
 		PrintDefaults(R_NilValue);
@@ -732,54 +769,54 @@ static void cell_cursor_init(void)
     bufp = buf + clength;
 }
 
-static char *get_col_name(int col)
+static char *get_col_name(DEstruct DE, int col)
 {
     static char clab[25];
-    if (col <= xmaxused) {
+    if (col <= DE->xmaxused) {
 	/* don't use NA labels */
-	SEXP tmp = STRING_ELT(names, col - 1);
+	SEXP tmp = STRING_ELT(DE->names, col - 1);
 	if(tmp != NA_STRING) return(CHAR(tmp));
     }
     sprintf(clab, "var%d", col);
     return clab;
 }
 
-static int get_col_width(int col)
+static int get_col_width(DEstruct DE, int col)
 {
     int i, w = 0, w1;
     char *strp;
     SEXP tmp, lab;
 
-    if (nboxchars > 0) return box_w;
-    if (col <= xmaxused) {
-	tmp = VECTOR_ELT(work, col - 1);
-	if (isNull(tmp)) return box_w;
+    if (DE->nboxchars > 0) return DE->box_w;
+    if (col <= DE->xmaxused) {
+	tmp = VECTOR_ELT(DE->work, col - 1);
+	if (isNull(tmp)) return DE->box_w;
 	/* don't use NA labels */
-	lab = STRING_ELT(names, col - 1);
+	lab = STRING_ELT(DE->names, col - 1);
 	if(lab != NA_STRING) strp = CHAR(lab); else strp = "var12";
 	PrintDefaults(R_NilValue);
 
-	w = textwidth(strp, strlen(strp));
-	for (i = 0; i < INTEGER(lens)[col - 1]; i++) {
+	w = textwidth(DE, strp, strlen(strp));
+	for (i = 0; i < INTEGER(DE->lens)[col - 1]; i++) {
 	    strp = EncodeElement(tmp, i, 0, '.');
-	    w1 = textwidth(strp, strlen(strp));
+	    w1 = textwidth(DE, strp, strlen(strp));
 	    if (w1 > w) w = w1;
 	}
-	if(w < 0.5*box_w) w = 0.5*box_w;
-	if(w < 0.8*box_w) w+= 0.1*box_w;
+	if(w < 0.5*DE->box_w) w = 0.5*DE->box_w;
+	if(w < 0.8*DE->box_w) w+= 0.1*DE->box_w;
 	if(w > 600) w = 600;
 	return w+8;
     }
-    return box_w;
+    return DE->box_w;
 }
 
-static CellType get_col_type(int col)
+static CellType get_col_type(DEstruct DE, int col)
 {
     SEXP tmp;
     CellType res = UNKNOWNN;
 
-    if (col <= xmaxused) {
-	tmp = VECTOR_ELT(work, col - 1);
+    if (col <= DE->xmaxused) {
+	tmp = VECTOR_ELT(DE->work, col - 1);
 	if(TYPEOF(tmp) == REALSXP) res = NUMERIC;
 	if(TYPEOF(tmp) == STRSXP) res = CHARACTER;
     }
@@ -788,61 +825,62 @@ static CellType get_col_type(int col)
 
 
 /* whichcol is absolute col no, col is position on screen */
-static void drawcol(int whichcol)
+static void drawcol(DEstruct DE, int whichcol)
 {
-    int i, src_x, src_y, len, col = whichcol - colmin + 1, bw = BOXW(whichcol);
+    int i, src_x, src_y, len, col = whichcol - DE->colmin + 1,
+	bw = BOXW(whichcol);
     char *clab;
     SEXP tmp;
 
-    find_coords(0, col, &src_x, &src_y);
-    cleararea(src_x, src_y, bw, windowHeight);
-    for (i = 0; i < nhigh; i++)
-	drawrectangle(src_x, hht + i * box_h, bw, box_h, 1, 1);
+    find_coords(DE, 0, col, &src_x, &src_y);
+    cleararea(DE, src_x, src_y, bw, DE->windowHeight);
+    for (i = 0; i < DE->nhigh; i++)
+	drawrectangle(DE, src_x, DE->hht + i * DE->box_h, bw, DE->box_h, 1, 1);
 
     /* now fill it in if it is active */
-    clab = get_col_name(whichcol);
-    printstring(clab, strlen(clab), 0, col, 0);
+    clab = get_col_name(DE, whichcol);
+    printstring(DE ,clab, strlen(clab), 0, col, 0);
 
-   if (xmaxused >= whichcol) {
-	tmp = VECTOR_ELT(work, whichcol - 1);
+   if (DE->xmaxused >= whichcol) {
+	tmp = VECTOR_ELT(DE->work, whichcol - 1);
 	if (!isNull(tmp)) {
-	    len = min(rowmax, INTEGER(lens)[whichcol - 1]);
-	    for (i = (rowmin - 1); i < len; i++)
-		printelt(tmp, i, i - rowmin + 2, col);
+	    len = min(DE->rowmax, INTEGER(DE->lens)[whichcol - 1]);
+	    for (i = (DE->rowmin - 1); i < len; i++)
+		printelt(DE, tmp, i, i - DE->rowmin + 2, col);
 	}
     }
-    Rsync();
+    Rsync(DE);
 }
 
 
 /* whichrow is absolute row no */
-static void drawrow(int whichrow)
+static void drawrow(DEstruct DE, int whichrow)
 {
-    int i, src_x, src_y, row = whichrow - rowmin + 1, w;
+    int i, src_x, src_y, row = whichrow - DE->rowmin + 1, w;
     char rlab[15];
     SEXP tvec;
 
-    find_coords(row, 0, &src_x, &src_y);
-    cleararea(src_x, src_y, windowWidth, box_h);
-    drawrectangle(src_x, src_y, boxw[0], box_h, 1, 1);
+    find_coords(DE, row, 0, &src_x, &src_y);
+    cleararea(DE, src_x, src_y, DE->windowWidth, DE->box_h);
+    drawrectangle(DE, src_x, src_y, DE->boxw[0], DE->box_h, 1, 1);
 
-    sprintf(rlab, labform, whichrow);
-    printstring(rlab, strlen(rlab), row, 0, 0);
+    sprintf(rlab, DE->labform, whichrow);
+    printstring(DE, rlab, strlen(rlab), row, 0, 0);
 
-    w = bwidth + boxw[0];
-    for (i = colmin; i <= colmax; i++) {
-	drawrectangle(w, src_y, BOXW(i), box_h, 1, 1);
+    w = DE->bwidth + DE->boxw[0];
+    for (i = DE->colmin; i <= DE->colmax; i++) {
+	drawrectangle(DE, w, src_y, BOXW(i), DE->box_h, 1, 1);
 	w += BOXW(i);
     }
 
-    for (i = colmin; i <= colmax; i++) {
-	if (i > xmaxused) break;
-	if (!isNull(tvec = VECTOR_ELT(work, i - 1)))
-	    if (whichrow <= INTEGER(lens)[i - 1])
-		printelt(tvec, whichrow - 1, row, i - colmin + 1);
+    for (i = DE->colmin; i <= DE->colmax; i++) {
+	if (i > DE->xmaxused) break;
+	if (!isNull(tvec = VECTOR_ELT(DE->work, i - 1)))
+	    if (whichrow <= INTEGER(DE->lens)[i - 1])
+		printelt(DE, tvec, whichrow - 1, row, i - DE->colmin + 1);
     }
 
-    Rsync();
+    Rsync(DE);
 }
 
 /* printelt: print the correct value from vector[vrow] into the
@@ -851,18 +889,18 @@ static void drawrow(int whichrow)
 /* WARNING: This has no check that you're not beyond the end of the
    vector. Caller must check. */
 
-static void printelt(SEXP invec, int vrow, int ssrow, int sscol)
+static void printelt(DEstruct DE, SEXP invec, int vrow, int ssrow, int sscol)
 {
     char *strp;
     PrintDefaults(R_NilValue);
     if (TYPEOF(invec) == REALSXP) {
 	strp = EncodeElement(invec, vrow, 0, '.');
-	printstring(strp, strlen(strp), ssrow, sscol, 0);
+	printstring(DE ,strp, strlen(strp), ssrow, sscol, 0);
     }
     else if (TYPEOF(invec) == STRSXP) {
 	if (STRING_ELT(invec, vrow) != ssNA_STRING) {
 	    strp = EncodeElement(invec, vrow, 0, '.');
-	    printstring(strp, strlen(strp), ssrow, sscol, 0);
+	    printstring(DE ,strp, strlen(strp), ssrow, sscol, 0);
 	}
     }
     else
@@ -870,92 +908,92 @@ static void printelt(SEXP invec, int vrow, int ssrow, int sscol)
 }
 
 
-static void drawelt(int whichrow, int whichcol)
+static void drawelt(DEstruct DE, int whichrow, int whichcol)
 {
     int i;
     char *clab;
     SEXP tmp;
 
     if (whichrow == 0) {
-	clab = get_col_name(whichcol + colmin - 1);
-	printstring(clab, strlen(clab), 0, whichcol, 0);
+	clab = get_col_name(DE, whichcol + DE->colmin - 1);
+	printstring(DE ,clab, strlen(clab), 0, whichcol, 0);
     } else {
-	if (xmaxused >= whichcol + colmin - 1) {
-	    tmp = VECTOR_ELT(work, whichcol + colmin - 2);
-	    if (!isNull(tmp) && (i = rowmin + whichrow - 2) <
-		INTEGER(lens)[whichcol + colmin - 2] )
-		printelt(tmp, i, whichrow, whichcol);
+	if (DE->xmaxused >= whichcol + DE->colmin - 1) {
+	    tmp = VECTOR_ELT(DE->work, whichcol + DE->colmin - 2);
+	    if (!isNull(tmp) && (i = DE->rowmin + whichrow - 2) <
+		INTEGER(DE->lens)[whichcol + DE->colmin - 2] )
+		printelt(DE, tmp, i, whichrow, whichcol);
 	} else
-	    printstring("", 0, whichrow,  whichcol, 0);
+	    printstring(DE, "", 0, whichrow,  whichcol, 0);
     }
 
-    Rsync();
+    Rsync(DE);
 }
 
-static void jumppage(DE_DIRECTION dir)
+static void jumppage(DEstruct DE, DE_DIRECTION dir)
 {
     int i, w, oldcol, wcol;
 
     switch (dir) {
     case UP:
-	rowmin--;
-	rowmax--;
-	copyarea(0, hht + box_h, 0, hht + 2 * box_h);
-	drawrow(rowmin);
+	DE->rowmin--;
+	DE->rowmax--;
+	copyarea(DE, 0, DE->hht + DE->box_h, 0, DE->hht + 2 * DE->box_h);
+	drawrow(DE, DE->rowmin);
 	break;
     case DOWN:
-	if (rowmax >= 65535) return;
-	rowmin++;
-	rowmax++;
-	copyarea(0, hht + 2 * box_h, 0, hht + box_h);
-	drawrow(rowmax);
+	if (DE->rowmax >= 65535) return;
+	DE->rowmin++;
+	DE->rowmax++;
+	copyarea(DE, 0, DE->hht + 2 * DE->box_h, 0, DE->hht + DE->box_h);
+	drawrow(DE, DE->rowmax);
 	break;
     case LEFT:
-	colmin--;
-	doHscroll(colmin+1);
+	DE->colmin--;
+	doHscroll(DE, DE->colmin+1);
 	break;
     case RIGHT:
-	oldcol = colmin;
-	wcol = colmin + ccol + 1; /* column to be selected */
+	oldcol = DE->colmin;
+	wcol = DE->colmin + DE->ccol + 1; /* column to be selected */
         /* There may not be room to fit the next column in */
-	w = fullwindowWidth - boxw[0] - BOXW(colmax + 1);
-	for (i = colmax; i >= oldcol; i--) {
+	w = DE->fullwindowWidth - DE->boxw[0] - BOXW(DE->colmax + 1);
+	for (i = DE->colmax; i >= oldcol; i--) {
 	    w -= BOXW(i);
 	    if(w < 0) {
-		colmin = i + 1;
+		DE->colmin = i + 1;
 		break;
 	    }
 	}
-	ccol = wcol - colmin;
-	doHscroll(oldcol);
+	DE->ccol = wcol - DE->colmin;
+	doHscroll(DE, oldcol);
 	break;
     }
 }
 /* draw a rectangle, used to highlight/downlight the current box */
 
-static void printrect(int lwd, int fore)
+static void printrect(DEstruct DE, int lwd, int fore)
 {
     int x, y;
-    find_coords(crow, ccol, &x, &y);
-    drawrectangle(x + lwd - 1, y + lwd - 1,
-		  BOXW(ccol+colmin-1) - lwd + 1,
-		  box_h - lwd + 1, lwd, fore);
-    Rsync();
+    find_coords(DE, DE->crow, DE->ccol, &x, &y);
+    drawrectangle(DE, x + lwd - 1, y + lwd - 1,
+		  BOXW(DE->ccol+DE->colmin-1) - lwd + 1,
+		  DE->box_h - lwd + 1, lwd, fore);
+    Rsync(DE);
 }
 
-static void downlightrect(void)
+static void downlightrect(DEstruct DE)
 {
-    printrect(2, 0);
-    printrect(1, 1);
+    printrect(DE, 2, 0);
+    printrect(DE, 1, 1);
 }
 
-static void highlightrect(void)
+static void highlightrect(DEstruct DE)
 {
-	printrect(2, 1);
+    printrect(DE, 2, 1);
 }
 
 
-static Rboolean getccol()
+static Rboolean getccol(DEstruct DE)
 {
     SEXP tmp, tmp2;
     int i, len, newlen, wcol, wrow;
@@ -963,27 +1001,28 @@ static Rboolean getccol()
     char clab[25];
     Rboolean newcol = FALSE;
 
-    wcol = ccol + colmin - 1;
-    wrow = crow + rowmin - 1;
-    if (wcol > xmaxused) {
+    wcol = DE->ccol + DE->colmin - 1;
+    wrow = DE->crow + DE->rowmin - 1;
+    if (wcol > DE->xmaxused) {
 	/* extend work, names and lens */
-	REPROTECT(work = lengthgets(work, wcol), wpi);
-	REPROTECT(names = lengthgets(names, wcol), npi);
-	for (i = xmaxused; i < wcol; i++) {
+	REPROTECT(DE->work = lengthgets(DE->work, wcol), DE->wpi);
+	REPROTECT(DE->names = lengthgets(DE->names, wcol), DE->npi);
+	for (i = DE->xmaxused; i < wcol; i++) {
 	    sprintf(clab, "var%d", i + 1);
-	    SET_STRING_ELT(names, i, mkChar(clab));
+	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
-	REPROTECT(lens = lengthgets(lens, wcol), lpi);
-	xmaxused = wcol;
+	REPROTECT(DE->lens = lengthgets(DE->lens, wcol), DE->lpi);
+	DE->xmaxused = wcol;
     }
-    if (isNull(VECTOR_ELT(work, wcol - 1))) {
+    if (isNull(VECTOR_ELT(DE->work, wcol - 1))) {
 	newcol = TRUE;
-	SET_VECTOR_ELT(work, wcol - 1, ssNewVector(REALSXP, max(100, wrow)));
-	INTEGER(lens)[wcol - 1] = 0;
+	SET_VECTOR_ELT(DE->work, wcol - 1,
+		       ssNewVector(REALSXP, max(100, wrow)));
+	INTEGER(DE->lens)[wcol - 1] = 0;
     }
-    if (!isVector(tmp = VECTOR_ELT(work, wcol - 1)))
+    if (!isVector(tmp = VECTOR_ELT(DE->work, wcol - 1)))
 	error("internal type error in dataentry");
-    len = INTEGER(lens)[wcol - 1];
+    len = INTEGER(DE->lens)[wcol - 1];
     type = TYPEOF(tmp);
     if (len < wrow) {
 	for (newlen = max(len * 2, 10) ; newlen < wrow ; newlen *= 2)
@@ -996,7 +1035,7 @@ static Rboolean getccol()
 		SET_STRING_ELT(tmp2, i, STRING_ELT(tmp, i));
 	    else
 		error("internal type error in dataentry");
-	SET_VECTOR_ELT(work, wcol - 1, tmp2);
+	SET_VECTOR_ELT(DE->work, wcol - 1, tmp2);
     }
     return newcol;
 }
@@ -1004,10 +1043,11 @@ static Rboolean getccol()
 /* close up the entry to a cell, put the value that has been entered
    into the correct place and as the correct type */
 
-static void closerect(void)
+static void closerect(DEstruct DE)
 {
     SEXP cvec;
-    int i, wcol = ccol + colmin - 1, wrow = rowmin + crow - 1, wrow0;
+    int i, wcol = DE->ccol + DE->colmin - 1,
+	wrow = DE->rowmin + DE->crow - 1, wrow0;
     char clab[25];
     Rboolean newcol;
 
@@ -1015,32 +1055,33 @@ static void closerect(void)
 
     /* first check to see if anything has been entered */
     if (CellModified) {
-	if (crow == 0) {
+	if (DE->crow == 0) {
 	    if (clength != 0) {
 		/* then we are entering a new column name */
-		if (xmaxused < wcol) {
+		if (DE->xmaxused < wcol) {
 		    /* extend work, names and lens */
-		    REPROTECT(work = lengthgets(work, wcol), wpi);
-		    REPROTECT(names = lengthgets(names, wcol), npi);
-		    for (i = xmaxused; i < wcol - 1; i++) {
+		    REPROTECT(DE->work = lengthgets(DE->work, wcol), DE->wpi);
+		    REPROTECT(DE->names = lengthgets(DE->names, wcol),
+			      DE->npi);
+		    for (i = DE->xmaxused; i < wcol - 1; i++) {
 			sprintf(clab, "var%d", i + 1);
-			SET_STRING_ELT(names, i, mkChar(clab));
+			SET_STRING_ELT(DE->names, i, mkChar(clab));
 		    }
-		    REPROTECT(lens = lengthgets(lens, wcol), lpi);
-		    xmaxused = wcol;
+		    REPROTECT(DE->lens = lengthgets(DE->lens, wcol), DE->lpi);
+		    DE->xmaxused = wcol;
 		}
-		SET_STRING_ELT(names, wcol - 1, mkChar(buf));
-		printstring(buf, strlen(buf), 0, wcol, 0);
+		SET_STRING_ELT(DE->names, wcol - 1, mkChar(buf));
+		printstring(DE ,buf, strlen(buf), 0, wcol, 0);
 	    } else {
-		sprintf(buf, "var%d", ccol);
-		printstring(buf, strlen(buf), 0, wcol, 0);
+		sprintf(buf, "var%d", DE->ccol);
+		printstring(DE ,buf, strlen(buf), 0, wcol, 0);
 	    }
 	} else {
-	    newcol = getccol();
-	    cvec = VECTOR_ELT(work, wcol - 1);
-	    wrow0 = INTEGER(lens)[wcol - 1];
-	    if (wrow > wrow0) INTEGER(lens)[wcol - 1] = wrow;
-	    ymaxused = max(ymaxused, wrow);
+	    newcol = getccol(DE);
+	    cvec = VECTOR_ELT(DE->work, wcol - 1);
+	    wrow0 = INTEGER(DE->lens)[wcol - 1];
+	    if (wrow > wrow0) INTEGER(DE->lens)[wcol - 1] = wrow;
+	    DE->ymaxused = max(DE->ymaxused, wrow);
 	    if (clength != 0) {
 		/* do it this way to ensure NA, Inf, ...  can get set */
 		char *endp;
@@ -1054,7 +1095,7 @@ static void closerect(void)
 		    /* change mode to character */
 		    SEXP tmp = coerceVector(cvec, STRSXP);
 		    SET_STRING_ELT(tmp, wrow - 1, mkChar(buf));
-		    SET_VECTOR_ELT(work, wcol - 1, tmp);
+		    SET_VECTOR_ELT(DE->work, wcol - 1, tmp);
 		}
 	    } else {
 		if (TYPEOF(cvec) == STRSXP)
@@ -1062,13 +1103,13 @@ static void closerect(void)
 		else
 		    REAL(cvec)[wrow - 1] = NA_REAL;
 	    }
-	    drawelt(crow, ccol);  /* to get the cell scrolling right */
-	    if(wrow > wrow0) drawcol(wcol); /* to fill in NAs */
+	    drawelt(DE, DE->crow, DE->ccol); /* to get the cell scrolling right */
+	    if(wrow > wrow0) drawcol(DE, wcol); /* to fill in NAs */
 	}
     }
     CellModified = FALSE;
 
-    downlightrect();
+    downlightrect(DE);
 
     ndecimal = 0;
     nneg = 0;
@@ -1085,7 +1126,8 @@ static void closerect(void)
 
 /* This version will only display 200 chars, but the maximum col width
    will not allow that many */
-static void printstring(char *ibuf, int buflen, int row, int col, int left)
+static void printstring(DEstruct DE,
+			char *ibuf, int buflen, int row, int col, int left)
 {
     int i, x_pos, y_pos, bw, bufw;
     char pbuf[BOOSTED_BUF_SIZE];
@@ -1098,9 +1140,9 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
     char    *p;
     int cnt;
 
-    find_coords(row, col, &x_pos, &y_pos);
-    if (col == 0) bw = boxw[0]; else bw = BOXW(col+colmin-1);
-    cleararea(x_pos + 2, y_pos + 2, bw - 3, box_h - 3);
+    find_coords(DE, row, col, &x_pos, &y_pos);
+    if (col == 0) bw = DE->boxw[0]; else bw = BOXW(col+DE->colmin-1);
+    cleararea(DE, x_pos + 2, y_pos + 2, bw - 3, DE->box_h - 3);
     bufw = (buflen > BOOSTED_BUF_SIZE-1) ? BOOSTED_BUF_SIZE-1 : buflen;
     strncpy(pbuf, ibuf, bufw);
     pbuf[bufw] = '\0';
@@ -1115,7 +1157,7 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
 	    w_p=wcs;
 	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-            if (textwidth(s, strlen(s)) < (bw - text_offset)) break;
+            if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
             *(++wcspc) = L'<';
         }
     } else {
@@ -1125,7 +1167,7 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
 	    w_p=wcs;
 	    cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 	    s[cnt]='\0';
-            if (textwidth(s, strlen(s)) < (bw - text_offset)) break;
+            if (textwidth(DE, s, strlen(s)) < (bw - DE->text_offset)) break;
             *(wcspbuf + i - 2) = L'>';
             *(wcspbuf + i - 1) = L'\0';
         }
@@ -1135,39 +1177,41 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
     w_p=wcs;
     cnt=wcsrtombs(s,(const wchar_t **)&w_p,sizeof(s)-1,NULL);
 
-    drawtext(x_pos + text_offset, y_pos + box_h - text_offset, s, cnt);
+    drawtext(DE, x_pos + DE->text_offset, y_pos + DE->box_h - DE->text_offset,
+	     s, cnt);
 
 #else  /* USE_FONTSET */
     char *pc = pbuf;
-    find_coords(row, col, &x_pos, &y_pos);
-    if (col == 0) bw = boxw[0]; else bw = BOXW(col+colmin-1);
-    cleararea(x_pos + 2, y_pos + 2, bw - 3, box_h - 3);
+    find_coords(DE, row, col, &x_pos, &y_pos);
+    if (col == 0) bw = DE->boxw[0]; else bw = BOXW(col+DE->colmin-1);
+    cleararea(DE, x_pos + 2, y_pos + 2, bw - 3, DE->box_h - 3);
     bufw = (buflen > 200) ? 200 : buflen;
     strncpy(pbuf, ibuf, bufw);
     if(left) {
         for (i = bufw; i > 1; i--) {
-            if (textwidth(pc, i) < (bw - text_offset)) break;
+            if (textwidth(DE, pc, i) < (bw - DE->text_offset)) break;
             *(++pc) = '<';
         }
     } else {
         for (i = bufw; i > 1; i--) {
-            if (textwidth(pbuf, i) < (bw - text_offset)) break;
+            if (textwidth(DE, pbuf, i) < (bw - DE->text_offset)) break;
             *(pbuf + i - 2) = '>';
         }
     }
-    drawtext(x_pos + text_offset, y_pos + box_h - text_offset, pc, i);
+    drawtext(DE, x_pos + DE->text_offset, y_pos + DE->box_h - DE->text_offset,
+	     pc, i);
 #endif /* USE_FONTSET */
 
-    Rsync();
+    Rsync(DE);
 }
 
-static void clearrect(void)
+static void clearrect(DEstruct DE)
 {
     int x_pos, y_pos;
 
-    find_coords(crow, ccol, &x_pos, &y_pos);
-    cleararea(x_pos, y_pos, BOXW(ccol+colmin-1), box_h);
-    Rsync();
+    find_coords(DE, DE->crow, DE->ccol, &x_pos, &y_pos);
+    cleararea(DE, x_pos, y_pos, BOXW(DE->ccol+DE->colmin-1), DE->box_h);
+    Rsync(DE);
 }
 
 /* handlechar has to be able to parse decimal numbers and strings,
@@ -1183,7 +1227,7 @@ static void clearrect(void)
 
 /* <FIXME> This is not correct for stateful MBCSs, but that's hard to
    do as we get a char at a time */
-static void handlechar(char *text)
+static void handlechar(DEstruct DE, char *text)
 {
     int i, c = text[0];
 #ifdef USE_FONTSET
@@ -1196,30 +1240,30 @@ static void handlechar(char *text)
 	CellModified = FALSE;
 	clength = 0;
         bufp = buf;
-	drawelt(crow, ccol);
-	cell_cursor_init();
+	drawelt(DE, DE->crow, DE->ccol);
+	cell_cursor_init(DE);
 	return;
     } else
 	CellModified = TRUE;
 
     if (clength == 0) {
 
-	if (crow == 0)	                        /* variable name */
+	if (DE->crow == 0)	                        /* variable name */
 	    currentexp = 3;
 	else
-	    switch(get_col_type(ccol + colmin - 1)) {
+	    switch(get_col_type(DE, DE->ccol + DE->colmin - 1)) {
 	    case NUMERIC:
 		currentexp = 1;
 		break;
 	    default:
 		currentexp = 2;
 	    }
-	clearrect();
-	highlightrect();
+	clearrect(DE);
+	highlightrect(DE);
     }
 
     /* NA number? */
-    if (get_col_type(ccol + colmin - 1) == NUMERIC) {
+    if (get_col_type(DE, DE->ccol + DE->colmin - 1) == NUMERIC) {
 	/* input numeric for NA of buffer , suppress NA etc.*/
 	if(strcmp(buf, "NA") == 0 || strcmp(buf, "NaN") == 0 ||
 	   strcmp(buf, "Inf") == 0 || strcmp(buf, "-Inf") == 0) {
@@ -1292,7 +1336,8 @@ static void handlechar(char *text)
 	int cnt = mbsrtowcs(wcs, (const char **)&mbs, strlen(text)+1, NULL);
 	for(i = 0; i < cnt; i++) {
 	    if (iswspace(wcs[i])) goto donehc;
-	    if (clength == 0 && wcs[i] != L'.' && !iswalpha(wcs[i])) goto donehc;
+	    if (clength == 0 && wcs[i] != L'.' && !iswalpha(wcs[i]))
+		goto donehc;
 	    else if (wcs[i] != L'.' && !iswalnum(wcs[i])) goto donehc;
 	}
 #else
@@ -1310,25 +1355,25 @@ static void handlechar(char *text)
     for(i = 0; i < strlen(text); i++) *bufp++ = text[i];
     *(bufp+1) = '\0';
     clength += strlen(text);
-    printstring(buf, clength, crow, ccol, 1);
+    printstring(DE, buf, clength, DE->crow, DE->ccol, 1);
     return;
 
  donehc:
     bell();
 }
 
-static void printlabs(void)
+static void printlabs(DEstruct DE)
 {
     char clab[15], *p;
     int i;
 
-    for (i = colmin; i <= colmax; i++) {
-	p = get_col_name(i);
-	printstring(p, strlen(p), 0, i - colmin + 1, 0);
+    for (i = DE->colmin; i <= DE->colmax; i++) {
+	p = get_col_name(DE, i);
+	printstring(DE, p, strlen(p), 0, i - DE->colmin + 1, 0);
     }
-    for (i = rowmin; i <= rowmax; i++) {
-	sprintf(clab, labform, i);
-	printstring(clab, strlen(clab), i - rowmin + 1, 0, 0);
+    for (i = DE->rowmin; i <= DE->rowmax; i++) {
+	sprintf(clab, DE->labform, i);
+	printstring(DE, clab, strlen(clab), i - DE->rowmin + 1, 0, 0);
     }
 }
 
@@ -1349,79 +1394,80 @@ static int checkquit(int xw)
    findcell return an int which is one if we should quit and zero
    otherwise */
 
-static int findcell(void)
+static int findcell(DEstruct DE)
 {
 
     int xw, yw, xr, yr, wcol=0, wrow, i, w;
     unsigned int keys;
     Window root, child;
 
-    closerect();
-    XQueryPointer(iodisplay, iowindow, &root, &child,
+    closerect(DE);
+    XQueryPointer(iodisplay, DE->iowindow, &root, &child,
 		  &xr, &yr, &xw, &yw, &keys);
 
     if (keys & Button1Mask) { /* left click */
 
 	/* check to see if the click was in the header */
 
-	if (yw < hht + bwidth) {
+	if (yw < DE->hht + DE->bwidth) {
 	    i =  checkquit(xw);
 	    if (i == 1) return 1;
-	    else if (i == 2) copycell();
-	    else if (i == 3) pastecell(crow, ccol);
+	    else if (i == 2) copycell(DE);
+	    else if (i == 3) pastecell(DE, DE->crow, DE->ccol);
 	    return 0;
 	}
 
 
 	/* see if it is in the row labels */
-	if (xw < bwidth + boxw[0]) {
+	if (xw < DE->bwidth + DE->boxw[0]) {
 	    bell();
-	    highlightrect();
+	    highlightrect(DE);
 	    return 0;
 	}
 	/* translate to box coordinates */
-	wrow = (yw - bwidth - hht) / box_h;
-	w = bwidth + boxw[0];
-	for (i = 1; i <= nwide; i++)
-	    if((w += BOXW(i+colmin-1)) > xw) {
+	wrow = (yw - DE->bwidth - DE->hht) / DE->box_h;
+	w = DE->bwidth + DE->boxw[0];
+	for (i = 1; i <= DE->nwide; i++)
+	    if((w += BOXW(i+DE->colmin-1)) > xw) {
 		wcol = i;
 		break;
 	    }
 
 	/* next check to see if it is in the column labels */
 
-	if (yw < hht + bwidth + box_h) {
-	    if (xw > bwidth + boxw[0])
-		popupmenu(xr, yr, wcol, wrow);
+	if (yw < DE->hht + DE->bwidth + DE->box_h) {
+	    if (xw > DE->bwidth + DE->boxw[0])
+		popupmenu(DE, xr, yr, wcol, wrow);
 	    else {
-		highlightrect();
+		highlightrect(DE);
 		bell();
 	    }
-	} else if (wrow > nhigh - 1 || wcol > nwide -1) {
+	} else if (wrow > DE->nhigh - 1 || wcol > DE->nwide -1) {
 		/* off the grid */
-		highlightrect();
+		highlightrect(DE);
 		bell();
-	} else if (wcol != ccol || wrow != crow) {
-	    ccol = wcol;
-	    crow = wrow;
+	} else if (wcol != DE->ccol || wrow != DE->crow) {
+	    DE->ccol = wcol;
+	    DE->crow = wrow;
 	}
     }
     if (keys & Button2Mask) { /* Paste */
 	int row, col = 0;
 
-	if (yw < hht + bwidth || xw < bwidth + boxw[0]) return 0;
+	if (yw < DE->hht + DE->bwidth || xw < DE->bwidth + DE->boxw[0])
+	    return 0;
 
 	/* translate to box coordinates */
-	row = (yw - bwidth - hht) / box_h;
-	w = bwidth + boxw[0];
-	for (i = 1; i <= nwide; i++)
-	    if ((w += BOXW(i+colmin-1)) > xw) {
+	row = (yw - DE->bwidth - DE->hht) / DE->box_h;
+	w = DE->bwidth + DE->boxw[0];
+	for (i = 1; i <= DE->nwide; i++)
+	    if ((w += BOXW(i+DE->colmin-1)) > xw) {
 		col = i;
 		break;
 	    }
-	pastecell(row, col);
+	pastecell(DE, row, col);
     }
-    highlightrect();
+    highlightrect(DE);
     return 0;
 }
 
@@ -1432,7 +1478,7 @@ static int findcell(void)
 #define activateEvt	MapNotify
 #define updateEvt	Expose
 
-static void eventloop(void)
+static void eventloop(DEstruct DE)
 {
     int done;
     DEEvent ioevent;
@@ -1446,7 +1492,7 @@ static void eventloop(void)
 		if(ioic){
 		    XSetICFocus(ioic);
 		    if (ioim_style & XIMPreeditPosition)
-			calc_pre_edit_pos();
+			calc_pre_edit_pos(DE);
 		}
 		continue;
 	    }
@@ -1454,44 +1500,48 @@ static void eventloop(void)
 
 	    switch (WhichEvent(ioevent)) {
 	    case keyDown:/* KeyPress */
-		doSpreadKey(0, &ioevent);
+		doSpreadKey(DE, 0, &ioevent);
 		break;
             case Expose:
+		while(XCheckTypedEvent(iodisplay, Expose, &ioevent))
+		    ;
 		/*
 		 * XIM on  - KeyPress - Expose
 		 * XIM off - KeyPress - KeyRelease
 		 * colname change XIM on mode. type Backspace.
 		 */
-	        if(crow == 0){
-		    drawwindow();
-		    printstring(buf, clength, crow, ccol, 1);
+	        if(DE->crow == 0){
+		    drawwindow(DE);
+		    printstring(DE, buf, clength, DE->crow, DE->ccol, 1);
 		} else {
-		    closerect();
-		    drawwindow();
-		    cell_cursor_init();
+		    closerect(DE);
+		    drawwindow(DE);
+		    cell_cursor_init(DE);
 		}
 		break;
 	    case activateEvt:/* MapNotify */
-	      	closerect();
-		drawwindow();
-		cell_cursor_init();
+	      	closerect(DE);
+		drawwindow(DE);
+		cell_cursor_init(DE);
  		break;
 	    case mouseDown:/* ButtonPress */
-		if(isEditor) {
-		    done  = doMouseDown(&ioevent);
-		cell_cursor_init();
+		if(DE->isEditor) {
+		    done  = doMouseDown(DE, &ioevent);
+		    cell_cursor_init(DE);
 		}
 		break;
 	    case MappingNotify:
 		RefreshKeyboardMapping(&ioevent);
 		break;
 	    case ConfigureNotify:
-		doConfigure(&ioevent);
-		cell_cursor_init();
+		while(XCheckTypedEvent(iodisplay, ConfigureNotify, &ioevent))
+		    ;
+		doConfigure(DE, &ioevent);
+		cell_cursor_init(DE);
 		break;
 	    case ClientMessage:
 		if(ioevent.xclient.message_type == _XA_WM_PROTOCOLS
-		   && ioevent.xclient.data.l[0] == protocol) {
+		   && ioevent.xclient.data.l[0] == DE->prot) {
 		    /* user clicked on `close' aka `destroy' */
 		    done = 1;
 		}
@@ -1503,30 +1553,38 @@ static void eventloop(void)
 
 static void R_ProcessX11Events(void *data)
 {
+    caddr_t temp;
+    DEstruct DE = NULL;
     DEEvent ioevent;
     int done = 0;
 
     while (XPending(iodisplay)) {
         XNextEvent(iodisplay, &ioevent);
+	XFindContext(iodisplay, ioevent.xany.window, deContext, &temp);
+	DE = (DEstruct) temp;
 	switch (WhichEvent(ioevent)) {
 	case keyDown:/* KeyPress */
-	    doSpreadKey(0, &ioevent);
+	    doSpreadKey(DE, 0, &ioevent);
 	    break;
 	case Expose:
-	    drawwindow();
+	    while(XCheckTypedEvent(iodisplay, Expose, &ioevent))
+		;
+	    drawwindow(DE);
 	    break;
 	case MappingNotify:
 	    RefreshKeyboardMapping(&ioevent);
 	    break;
 	case ConfigureNotify:
-	    doConfigure(&ioevent);
-	    cell_cursor_init();
+	    while(XCheckTypedEvent(iodisplay, ConfigureNotify, &ioevent))
+		;
+	    doConfigure(DE, &ioevent);
+	    cell_cursor_init(DE);
 	    break;
 	case activateEvt:/* MapNotify */
 	    break;
 	case ClientMessage:
 	    if(ioevent.xclient.message_type == _XA_WM_PROTOCOLS
-	       && ioevent.xclient.data.l[0] == protocol) {
+	       && ioevent.xclient.data.l[0] == DE->prot) {
 		/* user clicked on `close' aka `destroy' */
 		done = 1;
 	    }
@@ -1534,19 +1592,28 @@ static void R_ProcessX11Events(void *data)
 	}
     }
     if(done) {
-	int fd = ConnectionNumber(iodisplay);
-	removeInputHandler(&R_InputHandlers,
-			   getInputHandler(R_InputHandlers,fd));
-	closewin();
+	R_ReleaseObject(DE->lens);
+	R_ReleaseObject(DE->work);
+	closewin(DE);
+	free(DE);
+	nView--;
+	if(nView == 0) {
+	    removeInputHandler(&R_InputHandlers,
+			       getInputHandler(R_InputHandlers,fdView));
+	    fdView = -1;
+	    XCloseDisplay(iodisplay);
+	    iodisplay = NULL;
+	}
+	
     }
 }
 
-static int doMouseDown(DEEvent * event)
+static int doMouseDown(DEstruct DE, DEEvent * event)
 {
-    return findcell();
+    return findcell(DE);
 }
 
-static void doSpreadKey(int key, DEEvent * event)
+static void doSpreadKey(DEstruct DE, int key, DEEvent * event)
 {
     KeySym iokey;
     char *text;
@@ -1555,46 +1622,46 @@ static void doSpreadKey(int key, DEEvent * event)
     text = GetCharP(event);
 
     if (CheckControl(event))
-	doControl(event);
+	doControl(DE, event);
     else if ((iokey == XK_Return)  || (iokey == XK_KP_Enter) ||
 	     (iokey == XK_Linefeed)|| (iokey == XK_Down))
-	advancerect(DOWN);
+	advancerect(DE, DOWN);
     else if (iokey == XK_Left)
-	advancerect(LEFT);
+	advancerect(DE, LEFT);
     else if (iokey == XK_Right)
-	advancerect(RIGHT);
+	advancerect(DE, RIGHT);
     else if (iokey == XK_Up)
-	advancerect(UP);
+	advancerect(DE, UP);
 #ifdef XK_Page_Up
     else if (iokey == XK_Page_Up) {
-	int i = rowmin - nhigh + 2;
-	jumpwin(colmin, max(1, i));
-	cell_cursor_init();
+	int i = DE->rowmin - DE->nhigh + 2;
+	jumpwin(DE, DE->colmin, max(1, i));
+	cell_cursor_init(DE);
     }
 #elif defined(XK_Prior)
     else if (iokey == XK_Prior) {
-	int i = rowmin - nhigh + 2;
-	jumpwin(colmin, max(1, i));
-	cell_cursor_init();
+	int i = DE->rowmin - DE->nhigh + 2;
+	jumpwin(DE, DE->colmin, max(1, i));
+	cell_cursor_init(DE);
     }
 #endif
 #ifdef XK_Page_Down
     else if (iokey == XK_Page_Down) {
-	if(isEditor)
-	   jumpwin(colmin, rowmax);
+	if(DE->isEditor)
+	   jumpwin(DE, DE->colmin, DE->rowmax);
 	else {
-	    int i = ymaxused - nhigh + 2;
-	    jumpwin(colmin, max(i, 1));
+	    int i = DE->ymaxused - DE->nhigh + 2;
+	    jumpwin(DE, DE->colmin, max(i, 1));
 	}
-	cell_cursor_init();
+	cell_cursor_init(DE);
     }
 #elif defined(XK_Next)
     else if (iokey == XK_Next) {
-	jumpwin(colmin, rowmax);
-	cell_cursor_init();
+	jumpwin(DE, DE->colmin, DE->rowmax);
+	cell_cursor_init(DE);
     }
 #endif
-    else if (isEditor && (iokey == XK_BackSpace || iokey == XK_Delete)) {
+    else if (DE->isEditor && (iokey == XK_BackSpace || iokey == XK_Delete)) {
 	if (clength > 0) {
 	    int last_w ;
 	    last_w = last_wchar_bytes(NULL);
@@ -1602,33 +1669,38 @@ static void doSpreadKey(int key, DEEvent * event)
 	    bufp -= last_w;
 	    *bufp = '\0';
 	    CellModified = TRUE;
-	    printstring(buf, clength, crow, ccol, 1);
+	    printstring(DE, buf, clength, DE->crow, DE->ccol, 1);
 	} else bell();
     }
     else if (iokey == XK_Tab) {
-	if(CheckShift(event)) advancerect(LEFT);
-	else advancerect(RIGHT);
+	if(CheckShift(event)) advancerect(DE, LEFT);
+	else advancerect(DE, RIGHT);
     }
     else if (iokey == XK_Home) {
-	jumpwin(1, 1);
-	downlightrect();
-	crow = ccol = 1;
-	highlightrect();
-	cell_cursor_init();
+	jumpwin(DE, 1, 1);
+	downlightrect(DE);
+	DE->crow = DE->ccol = 1;
+	highlightrect(DE);
+	cell_cursor_init(DE);
     }
     else if (iokey == XK_End) {
-	int i = ymaxused - nhigh + 2, j = xmaxused - nwide + 2;
-	jumpwin(max(j, 1), max(i, 1));
-	downlightrect();
-	crow = ymaxused - rowmin + 1;
-	ccol = xmaxused - colmin + 1;
-	highlightrect();
-	cell_cursor_init();
+	int i = DE->ymaxused - DE->nhigh + 2, j, w = 0 ;
+	/* Try to work out which cols we can fit in */
+	for(j = DE->xmaxused;j >= 0; j--) {
+	    w += BOXW(j);
+	    if(w > DE->fullwindowWidth) break;
+	}
+	jumpwin(DE, min(j+1, DE->xmaxused), max(i, 1));
+	downlightrect(DE);
+	DE->crow = DE->ymaxused - DE->rowmin + 1;
+	DE->ccol = DE->xmaxused - DE->colmin + 1;
+	highlightrect(DE);
+	cell_cursor_init(DE);
     }
     else if (IsModifierKey(iokey)) {
-    } 
-    else if(isEditor) {
-	handlechar(text);
+    }
+    else if(DE->isEditor) {
+	handlechar(DE, text);
     }
 }
 
@@ -1687,7 +1759,7 @@ static int CheckShift(DEEvent * event)
     return (*event).xkey.state & ShiftMask;
 }
 
-static void doControl(DEEvent * event)
+static void doControl(DEstruct DE, DEEvent * event)
 {
     int i;
     char text[1];
@@ -1698,30 +1770,30 @@ static void doControl(DEEvent * event)
     /* one row overlap when scrolling: top line <--> bottom line */
     switch (text[0]) {
 	case 'b':
-	    i = rowmin - nhigh + 2;
-	    jumpwin(colmin, max(1, i));
+	    i = DE->rowmin - DE->nhigh + 2;
+	    jumpwin(DE, DE->colmin, max(1, i));
 	    break;
 	case 'f':
-	    jumpwin(colmin, rowmax);
+	    jumpwin(DE, DE->colmin, DE->rowmax);
 	    break;
 	case 'l':
-	    closerect();
-	    for (i = 1 ; i <= min(100, xmaxused); i++)
-		boxw[i] = get_col_width(i);
-	    closerect();
-	    drawwindow();
+	    closerect(DE);
+	    for (i = 1 ; i <= min(100, DE->xmaxused); i++)
+		DE->boxw[i] = get_col_width(DE, i);
+	    closerect(DE);
+	    drawwindow(DE);
 	    break;
     }
-    cell_cursor_init();
+    cell_cursor_init(DE);
 }
 
 
-static void doConfigure(DEEvent * event)
+static void doConfigure(DEstruct DE, DEEvent * event)
 {
-    if ((fullwindowWidth != (*event).xconfigure.width) ||
-	(fullwindowHeight != (*event).xconfigure.height)) {
-	closerect();
-	drawwindow();
+    if ((DE->fullwindowWidth != (*event).xconfigure.width) ||
+	(DE->fullwindowHeight != (*event).xconfigure.height)) {
+	closerect(DE);
+	drawwindow(DE);
     }
 }
 
@@ -1732,17 +1804,17 @@ static void RefreshKeyboardMapping(DEEvent * event)
 
 /* Initialize/Close Windows */
 
-void closewin(void)
+void closewin(DEstruct DE)
 {
-    XFreeGC(iodisplay, iogc);
+    XFreeGC(iodisplay, DE->iogc);
 #ifdef USE_FONTSET
-    if(mbcslocale) {
+    if(mbcslocale  && DE->isEditor) {
 	XDestroyIC(ioic);
 	XCloseIM(ioim);
     }
 #endif
-    XDestroyWindow(iodisplay, iowindow);
-    XCloseDisplay(iodisplay);
+    XDestroyWindow(iodisplay, DE->iowindow);
+    // XCloseDisplay(iodisplay);
 }
 
 #define USE_Xt 1
@@ -1794,7 +1866,7 @@ static int R_X11IOErr(Display *dsp)
 
 /* set up the window, print the grid and column/row labels */
 
-static Rboolean initwin(char *title) /* TRUE = Error */
+static Rboolean initwin(DEstruct DE, char *title) /* TRUE = Error */
 {
     int i, twidth, w, minwidth, labdigs;
     int ioscreen;
@@ -1821,12 +1893,16 @@ static Rboolean initwin(char *title) /* TRUE = Error */
     if (!XSetLocaleModifiers ("")) warning("X cannot set locale modifiers");
 #endif
 
-    if ((iodisplay = XOpenDisplay(NULL)) == NULL) {
-	warning("unable to open display");
-	return TRUE;
+    if(!iodisplay) {
+	if ((iodisplay = XOpenDisplay(NULL)) == NULL) {
+	    warning("unable to open display");
+	    return TRUE;
+	}
+	deContext = XUniqueContext();
+	XSetErrorHandler(R_X11Err);
+	XSetIOErrorHandler(R_X11IOErr);
     }
-    XSetErrorHandler(R_X11Err);
-    XSetIOErrorHandler(R_X11IOErr);
+    
 
     /* Get Font Loaded if we can */
 
@@ -1861,8 +1937,8 @@ static Rboolean initwin(char *title) /* TRUE = Error */
     } else
 #endif
     {
-	font_info = XLoadQueryFont(iodisplay, font_name);
-	if (font_info == NULL) {
+	DE->font_info = XLoadQueryFont(iodisplay, font_name);
+	if (DE->font_info == NULL) {
 	    warning("unable to losd font %s", font_name);
 	    return TRUE; /* ERROR */
 	}
@@ -1871,50 +1947,51 @@ static Rboolean initwin(char *title) /* TRUE = Error */
     /* find out how wide the input boxes should be and set up the
        window size defaults */
 
-    nboxchars = asInteger(GetOption(install("de.cellwidth"), R_GlobalEnv));
-    if (nboxchars == NA_INTEGER || nboxchars < 0) nboxchars = 0;
+    DE->nboxchars = asInteger(GetOption(install("de.cellwidth"), R_GlobalEnv));
+    if (DE->nboxchars == NA_INTEGER || DE->nboxchars < 0) DE->nboxchars = 0;
 
-    twidth = textwidth(digits, strlen(digits));
+    twidth = textwidth(DE, digits, strlen(digits));
 
-    if (nboxchars > 0) twidth = (twidth * nboxchars)/10;
-    box_w = twidth + 4;
+    if (DE->nboxchars > 0) twidth = (twidth * DE->nboxchars)/10;
+    DE->box_w = twidth + 4;
 #ifdef USE_FONTSET
     if(mbcslocale) {
 	XFontSetExtents *extent = XExtentsOfFontSet(font_set);
 	char **ml;
-	box_h = (extent->max_logical_extent.height)
+	DE->box_h = (extent->max_logical_extent.height)
 	    + (extent->max_logical_extent.height / 5) + 4;
 	font_set_cnt = XFontsOfFontSet(font_set, &fs_list, &ml);
-	text_offset = 2 + fs_list[0]->max_bounds.descent;
+	DE->text_offset = 2 + fs_list[0]->max_bounds.descent;
     } else
 #endif
     {
-	box_h = font_info->max_bounds.ascent
-	    + font_info->max_bounds.descent + 4;
-	text_offset = 2 + font_info->max_bounds.descent;
+	DE->box_h = DE->font_info->max_bounds.ascent
+	    + DE->font_info->max_bounds.descent + 4;
+	DE->text_offset = 2 + DE->font_info->max_bounds.descent;
     }
-    windowHeight = 26 * box_h + hht + 2;
+    DE->windowHeight = 26 * DE->box_h + DE->hht + 2;
     /* this used to presume 4 chars sufficed for row numbering */
-    labdigs = max(3, 1+floor(log10((double)ymaxused)));
-    sprintf(labform, "%%%dd", labdigs);
-    boxw[0] = 0.1*labdigs*textwidth("0123456789", 10) + textwidth(" ", 1) + 8;
-    for(i = 1; i < 100; i++) boxw[i] = get_col_width(i);
+    labdigs = max(3, 1+floor(log10((double)DE->ymaxused)));
+    sprintf(DE->labform, "%%%dd", labdigs);
+    DE->boxw[0] = 0.1*labdigs*textwidth(DE, "0123456789", 10) +
+	textwidth(DE, " ", 1) + 8;
+    for(i = 1; i < 100; i++) DE->boxw[i] = get_col_width(DE, i);
 
     /* try for a window width that covers all the columns, or is around
        800 pixels */
-    w = windowWidth = 0;
-    for(i = 0; i <= xmaxused; i++) {
-	w += boxw[i];
+    w = DE->windowWidth = 0;
+    for(i = 0; i <= DE->xmaxused; i++) {
+	w += DE->boxw[i];
 	if(w > 800) {
-	    windowWidth = w - boxw[i];
+	    DE->windowWidth = w - DE->boxw[i];
 	    break;
 	}
     }
-    if(windowWidth == 0) windowWidth = w;
-    windowWidth += 2;
+    if(DE->windowWidth == 0) DE->windowWidth = w;
+    DE->windowWidth += 2;
     /* allow enough width for buttons */
-    minwidth = 7.5 * textwidth("Paste", 5);
-    if(windowWidth < minwidth) windowWidth = minwidth;
+    minwidth = 7.5 * textwidth(DE, "Paste", 5);
+    if(DE->windowWidth < minwidth) DE->windowWidth = minwidth;
 
     ioscreen = DefaultScreen(iodisplay);
     iowhite = WhitePixel(iodisplay, ioscreen);
@@ -1925,8 +2002,8 @@ static Rboolean initwin(char *title) /* TRUE = Error */
 
     hint->x = 0;
     hint->y = 0;
-    hint->width = windowWidth;
-    hint->height = windowHeight;
+    hint->width = DE->windowWidth;
+    hint->height = DE->windowHeight;
     hint->flags = PPosition | PSize;
     /*
      * not necessary?
@@ -1948,10 +2025,10 @@ static Rboolean initwin(char *title) /* TRUE = Error */
 	xtdpy = XtOpenDisplay(app_con, NULL, "r_dataentry", "R_dataentry",
 			      NULL, 0, &zero, NULL);
 	toplevel = XtAppCreateShell(NULL, "R_dataentry",
-				    applicationShellWidgetClass, 
+				    applicationShellWidgetClass,
 				    xtdpy, NULL, 0);
 	XtGetApplicationResources(toplevel, (XtPointer) &xdev,
-				  x_resources, 
+				  x_resources,
 				  x_resource_count,
 				  NULL, 0);
 	XtDestroyWidget(toplevel);
@@ -1960,34 +2037,34 @@ static Rboolean initwin(char *title) /* TRUE = Error */
 	if (xdev.geometry != NULL) {
 	    char gstr[40];
 	    int bitmask;
-	    
+
 	    sprintf(gstr, "%dx%d+%d+%d", hint->width,
 		    hint->height, hint->x, hint->y);
 	    bitmask = XWMGeometry(iodisplay, DefaultScreen(iodisplay),
-				  xdev.geometry, gstr, 
+				  xdev.geometry, gstr,
 				  1,
 				  hint,
 				  &hint->x, &hint->y,
 				  &hint->width, &hint->height,
 				  &hint->win_gravity);
-	    
+
 	    if (bitmask & (XValue | YValue))
 		hint->flags |= USPosition;
-	    if (bitmask & (WidthValue | HeightValue)) 
+	    if (bitmask & (WidthValue | HeightValue))
 		hint->flags |= USSize;
 	}
 	ioblack = xdev.foreground;
 	iowhite = xdev.background;
     }
 #endif
-    if ((iowindow = XCreateSimpleWindow(
+    if ((DE->iowindow = XCreateSimpleWindow(
 	     iodisplay,
 	     root,
 	     hint->x,
 	     hint->y,
 	     hint->width,
 	     hint->height,
-	     bwidth,
+	     DE->bwidth,
 	     ioblack,
 	     iowhite)) == 0) {
 	warning("unable to open window for data editor");
@@ -1995,34 +2072,35 @@ static Rboolean initwin(char *title) /* TRUE = Error */
     }
 
     /*
-    XSetStandardProperties(iodisplay, iowindow, ioname, ioname, None,
+    XSetStandardProperties(iodisplay, DE->iowindow, ioname, ioname, None,
 			   (char **)NULL, 0, iohint);
     */
-    XSetWMNormalHints(iodisplay, iowindow, hint);
+    XSetWMNormalHints(iodisplay, DE->iowindow, hint);
     XFree(hint);
 
 
     winattr.backing_store = WhenMapped;
-    XChangeWindowAttributes(iodisplay, iowindow, CWBackingStore, &winattr);
+    XChangeWindowAttributes(iodisplay, DE->iowindow, CWBackingStore,
+			    &winattr);
 
     /* set up protocols so that window manager sends */
     /* me an event when user "destroys" window */
     if(!_XA_WM_PROTOCOLS)
 	_XA_WM_PROTOCOLS = XInternAtom(iodisplay, "WM_PROTOCOLS", 0);
-    protocol = XInternAtom(iodisplay, "WM_DELETE_WINDOW", 0);
-    XSetWMProtocols(iodisplay, iowindow, &protocol, 1);
+    DE->prot = XInternAtom(iodisplay, "WM_DELETE_WINDOW", 0);
+    XSetWMProtocols(iodisplay, DE->iowindow, &DE->prot, 1);
     /*
      * not necessary
-    XSetWMHints(iodisplay, iowindow, &hints);
+    XSetWMHints(iodisplay, DE->iowindow, &hints);
      */
 
-    iogc = XCreateGC(iodisplay, iowindow, 0, 0);
+    DE->iogc = XCreateGC(iodisplay, DE->iowindow, 0, 0);
 
 #ifdef USE_FONTSET
     if(mbcslocale) {
 	ioim = XOpenIM(iodisplay, NULL, NULL, NULL);
 	if(!ioim) {
-	    XDestroyWindow(iodisplay, iowindow);
+	    XDestroyWindow(iodisplay, DE->iowindow);
 	    XCloseDisplay(iodisplay);
 	    warning("unable to open X Input Method");
 	    return TRUE;
@@ -2049,15 +2127,15 @@ static Rboolean initwin(char *title) /* TRUE = Error */
 
 	ioic = XCreateIC(ioim,
  			 XNInputStyle, ioim_style,
-			 XNClientWindow,iowindow,
-			 XNFocusWindow,iowindow,
+			 XNClientWindow,DE->iowindow,
+			 XNFocusWindow,DE->iowindow,
 			 XNPreeditAttributes, xva_nlist,
 			 XNStatusAttributes, xva_nlist,
 			 NULL);
 	XFree(xva_nlist);
 	if(!ioic) {
 	    XCloseIM(ioim);
-	    XDestroyWindow(iodisplay, iowindow);
+	    XDestroyWindow(iodisplay, DE->iowindow);
 	    XCloseDisplay(iodisplay);
 	    warning("unable to open X Input Context");
 	    return TRUE;
@@ -2071,18 +2149,19 @@ static Rboolean initwin(char *title) /* TRUE = Error */
 #ifdef USE_FONTSET
     if(!mbcslocale)
 #endif
-	XSetFont(iodisplay, iogc, font_info->fid);
-    XSetBackground(iodisplay, iogc, iowhite);
-    XSetForeground(iodisplay, iogc, ioblack);
-    XSetLineAttributes(iodisplay, iogc, 1, LineSolid, CapRound, JoinRound);
+	XSetFont(iodisplay, DE->iogc, DE->font_info->fid);
+    XSetBackground(iodisplay, DE->iogc, iowhite);
+    XSetForeground(iodisplay, DE->iogc, ioblack);
+    XSetLineAttributes(iodisplay, DE->iogc, 1, LineSolid, CapRound,
+		       JoinRound);
 
     /*
-    XSelectInput(iodisplay, iowindow,
+    XSelectInput(iodisplay, DE->iowindow,
 		 ButtonPressMask | KeyPressMask
 		 | ExposureMask | StructureNotifyMask | fevent);
     */
 
-    XSelectInput(iodisplay, iowindow,
+    XSelectInput(iodisplay, DE->iowindow,
 		 ButtonPressMask
 		 | KeyPressMask
 		 | StructureNotifyMask
@@ -2090,21 +2169,21 @@ static Rboolean initwin(char *title) /* TRUE = Error */
 		 | EnterWindowMask
 		 | LeaveWindowMask
 		 | fevent);
-    XMapRaised(iodisplay, iowindow);
+    XMapRaised(iodisplay, DE->iowindow);
 
     /* now set up the menu-window, for now use the same text
        dimensions as above */
 
     /* font size consideration */
     for(i = 0; i < (sizeof(menu_label)/sizeof(char *)); i++)
-	twidth = (twidth<textwidth(menu_label[i],strlen(menu_label[i]))) ?
-	    textwidth(menu_label[i],strlen(menu_label[i])) : twidth;
+	twidth = (twidth<textwidth(DE, menu_label[i],strlen(menu_label[i]))) ?
+	    textwidth(DE, menu_label[i],strlen(menu_label[i])) : twidth;
 
     menuwindow = XCreateSimpleWindow(iodisplay, root, 0, 0, twidth,
-				     4 * box_h, 2, ioblack, iowhite);
+				     4 * DE->box_h, 2, ioblack, iowhite);
     for (i = 0; i < 4; i++) {
 	menupanes[i] = XCreateSimpleWindow(iodisplay, menuwindow, 0,
-					   box_h * i, twidth, box_h,
+					   DE->box_h * i, twidth, DE->box_h,
 					   1, ioblack, iowhite);
 	XSelectInput(iodisplay, menupanes[i],
 		     ButtonPressMask | ButtonReleaseMask | ExposureMask
@@ -2114,11 +2193,11 @@ static Rboolean initwin(char *title) /* TRUE = Error */
     /* XMapSubwindows(iodisplay, menuwindow); */
 
 
-    XStoreName(iodisplay, iowindow, title);
+    XStoreName(iodisplay, DE->iowindow, title);
     winattr.override_redirect = True;
     XChangeWindowAttributes(iodisplay, menuwindow,
 			    CWBackingStore | CWOverrideRedirect, &winattr);
-    Rsync();
+    Rsync(DE);
 
     /* this next sequence makes sure the window is up and ready before
        you start drawing in it */
@@ -2128,95 +2207,102 @@ static Rboolean initwin(char *title) /* TRUE = Error */
 	while (ioevent.xexpose.count)
 	    XNextEvent(iodisplay, &ioevent);
     }
-    XGetWindowAttributes(iodisplay, iowindow, &attribs);
-    bwidth = attribs.border_width;
-    fullwindowWidth = attribs.width;
-    fullwindowHeight = attribs.height;
+    XGetWindowAttributes(iodisplay, DE->iowindow, &attribs);
+    DE->bwidth = attribs.border_width;
+    DE->fullwindowWidth = attribs.width;
+    DE->fullwindowHeight = attribs.height;
 
 
     /* set the active rectangle to be the upper left one */
-    crow = 1;
-    ccol = 1;
+    DE->crow = 1;
+    DE->ccol = 1;
     CellModified = FALSE;
+    XSaveContext(iodisplay, DE->iowindow, deContext, (caddr_t) DE);
     return FALSE;/* success */
 }
 
 /* MAC/X11 BASICS */
 
-static void bell(void)
+static void bell()
 {
     XBell(iodisplay, 20);
 }
 
-static void cleararea(int xpos, int ypos, int width, int height)
+static void cleararea(DEstruct DE, int xpos, int ypos, int width, int height)
 {
-    XClearArea(iodisplay, iowindow, xpos, ypos, width, height, 0);
+    XClearArea(iodisplay, DE->iowindow, xpos, ypos, width, height, 0);
 }
 
-static void clearwindow(void)
+static void clearwindow(DEstruct DE)
 {
-    XClearWindow(iodisplay, iowindow);
+    XClearWindow(iodisplay, DE->iowindow);
 }
 
-static void copyarea(int src_x, int src_y, int dest_x, int dest_y)
+static void copyarea(DEstruct DE, int src_x, int src_y, int dest_x, int dest_y)
 {
     int mx = max(src_x, dest_x), my = max(src_y, dest_y);
-    XCopyArea(iodisplay, iowindow, iowindow, iogc, src_x, src_y,
-	      fullwindowWidth - mx, fullwindowHeight - my,
+    XCopyArea(iodisplay, DE->iowindow, DE->iowindow, DE->iogc,
+	      src_x, src_y,
+	      DE->fullwindowWidth - mx, DE->fullwindowHeight - my,
 	      dest_x, dest_y);
-    Rsync();
+    Rsync(DE);
 }
 
-static void copyH(int src_x, int dest_x, int width)
+static void copyH(DEstruct DE, int src_x, int dest_x, int width)
 {
-    XCopyArea(iodisplay, iowindow, iowindow, iogc, src_x+bwidth, hht,
-	      width, windowHeight+1, dest_x+bwidth, hht);
+    XCopyArea(iodisplay, DE->iowindow, DE->iowindow, DE->iogc,
+	      src_x+DE->bwidth, DE->hht,
+	      width, DE->windowHeight+1, dest_x+DE->bwidth, DE->hht);
 }
 
-static void drawrectangle(int xpos, int ypos, int width, int height,
+static void drawrectangle(DEstruct DE,
+			  int xpos, int ypos, int width, int height,
 			  int lwd, int fore)
 {
 #ifdef USE_Xt
     if (fore == 0)
-	XSetForeground(iodisplay, iogc, xdev.background);
+	XSetForeground(iodisplay, DE->iogc, xdev.background);
     else
-	XSetForeground(iodisplay, iogc, xdev.foreground);
+	XSetForeground(iodisplay, DE->iogc, xdev.foreground);
 #else
     if (fore == 0)
-	XSetForeground(iodisplay, iogc, WhitePixel(iodisplay,
-						   DefaultScreen(iodisplay)));
+	XSetForeground(iodisplay, DE->iogc,
+		       WhitePixel(iodisplay, DefaultScreen(iodisplay)));
     else
-	XSetForeground(iodisplay, iogc, BlackPixel(iodisplay,
-						   DefaultScreen(iodisplay)));
+	XSetForeground(iodisplay, DE->iogc,
+		       BlackPixel(iodisplay, DefaultScreen(iodisplay)));
 #endif
-    XSetLineAttributes(iodisplay, iogc, lwd, LineSolid, CapRound, JoinRound);
-    XDrawRectangle(iodisplay, iowindow, iogc, xpos, ypos, width, height);
+    XSetLineAttributes(iodisplay, DE->iogc, lwd, LineSolid,
+		       CapRound, JoinRound);
+    XDrawRectangle(iodisplay, DE->iowindow, DE->iogc, xpos, ypos,
+		   width, height);
 }
 
-static void drawtext(int xpos, int ypos, char *text, int len)
+static void drawtext(DEstruct DE, int xpos, int ypos, char *text, int len)
 {
 #ifdef USE_FONTSET
     if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWIMAGESTRING
         if(utf8locale)
-	    Xutf8DrawImageString(iodisplay, iowindow, font_set,
-				 iogc, xpos, ypos,text, len);
+	    Xutf8DrawImageString(iodisplay, DE->iowindow, font_set,
+				 DE->iogc, xpos, ypos,text, len);
         else
 #endif
-	    XmbDrawImageString(iodisplay, iowindow, font_set,
-			       iogc, xpos, ypos,text, len);
+	    XmbDrawImageString(iodisplay, DE->iowindow, font_set,
+			       DE->iogc, xpos, ypos,text, len);
     else
 #endif
-	XDrawImageString(iodisplay, iowindow, iogc, xpos, ypos, text, len);
-    Rsync();
+	XDrawImageString(iodisplay, DE->iowindow, DE->iogc,
+			 xpos, ypos, text, len);
+    Rsync(DE);
 }
 
-static void Rsync()
+static void Rsync(DEstruct DE)
 {
     XSync(iodisplay, 0);
 }
 
-static int textwidth(char *text, int nchar)
+static int textwidth(DEstruct DE, char *text, int nchar)
 {
 
 #ifdef USE_FONTSET
@@ -2229,14 +2315,14 @@ static int textwidth(char *text, int nchar)
 	    return XmbTextEscapement(font_set, text, nchar);
     }
 #endif
-    return XTextWidth(font_info, text, nchar);
+    return XTextWidth(DE->font_info, text, nchar);
 }
 
 /* Menus */
 
-void popupmenu(int x_pos, int y_pos, int col, int row)
+void popupmenu(DEstruct DE, int x_pos, int y_pos, int col, int row)
 {
-    int i, button, popupcol = col + colmin - 1;
+    int i, button, popupcol = col + DE->colmin - 1;
     char *name, clab[20];
     XEvent event;
     Window selected_pane;
@@ -2248,35 +2334,38 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
 
     /* now fill in the menu panes with the correct information */
 
-    if (popupcol > xmaxused) {
+    if (popupcol > DE->xmaxused) {
 	/* extend work, names and lens */
-	REPROTECT(work = lengthgets(work, popupcol), wpi);
-	REPROTECT(names = lengthgets(names, popupcol), npi);
-	for (i = xmaxused+1; i < popupcol; i++) {
+	REPROTECT(DE->work = lengthgets(DE->work, popupcol), DE->wpi);
+	REPROTECT(DE->names = lengthgets(DE->names, popupcol), DE->npi);
+	for (i = DE->xmaxused+1; i < popupcol; i++) {
 	    sprintf(clab, "var%d", i + 1);
-	    SET_STRING_ELT(names, i, mkChar(clab));
+	    SET_STRING_ELT(DE->names, i, mkChar(clab));
 	}
-	REPROTECT(lens = lengthgets(lens, popupcol), lpi);
-	xmaxused = popupcol;
+	REPROTECT(DE->lens = lengthgets(DE->lens, popupcol), DE->lpi);
+	DE->xmaxused = popupcol;
     }
-    tvec = VECTOR_ELT(work, popupcol - 1);
-    name = CHAR(STRING_ELT(names, popupcol - 1));
+    tvec = VECTOR_ELT(DE->work, popupcol - 1);
+    name = CHAR(STRING_ELT(DE->names, popupcol - 1));
 #ifdef USE_FONTSET
     if(mbcslocale)
 #ifdef HAVE_XUTF8DRAWSTRING
         if(utf8locale)
 	    Xutf8DrawString(iodisplay,
 			    menupanes[0],
-			    font_set, iogc, 3, box_h - 3, name, strlen(name));
+			    font_set, DE->iogc, 3, DE->box_h - 3, name,
+			    strlen(name));
 	else
 #endif
 	    XmbDrawString(iodisplay,
 			  menupanes[0],
-			  font_set, iogc, 3, box_h - 3, name, strlen(name));
+			  font_set, DE->iogc, 3, DE->box_h - 3, name,
+			  strlen(name));
     else
 #endif
         XDrawString(iodisplay,
-		    menupanes[0], iogc, 3, box_h - 3, name, strlen(name));
+		    menupanes[0], DE->iogc, 3, DE->box_h - 3, name,
+		    strlen(name));
     for (i = 1; i < 4; i++)
 #ifdef USE_FONTSET
       if(mbcslocale)
@@ -2284,18 +2373,18 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
         if(utf8locale)
 	  Xutf8DrawString(iodisplay,
 			  menupanes[i],
-			  font_set, iogc, 3, box_h - 3,
+			  font_set, DE->iogc, 3, DE->box_h - 3,
 			  menu_label[i - 1], strlen(menu_label[i - 1]));
 	else
 #endif
 	  XmbDrawString(iodisplay,
 			menupanes[i],
-			font_set, iogc, 3, box_h - 3,
+			font_set, DE->iogc, 3, DE->box_h - 3,
 			menu_label[i - 1], strlen(menu_label[i - 1]));
       else
 #endif
 	XDrawString(iodisplay,
-		    menupanes[i], iogc, 3, box_h - 3,
+		    menupanes[i], DE->iogc, 3, DE->box_h - 3,
 		    menu_label[i - 1], strlen(menu_label[i - 1]));
 
     if (isNull(tvec) || TYPEOF(tvec) == REALSXP)
@@ -2305,17 +2394,17 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
         if(utf8locale)
 	  Xutf8DrawString(iodisplay,
 			  menupanes[1],
-			  font_set, iogc, 0, box_h - 3,
+			  font_set, DE->iogc, 0, DE->box_h - 3,
 			  "*", 1);
 	else
 #endif
 	  XmbDrawString(iodisplay,
 			menupanes[1],
-			font_set, iogc, 0, box_h - 3,
+			font_set, DE->iogc, 0, DE->box_h - 3,
 			"*", 1);
       else
 #endif
-	XDrawString(iodisplay, menupanes[1], iogc, 0, box_h - 3,
+	XDrawString(iodisplay, menupanes[1], DE->iogc, 0, DE->box_h - 3,
 		    "*", 1);
     else
 #ifdef USE_FONTSET
@@ -2324,17 +2413,17 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
         if(utf8locale)
 	  Xutf8DrawString(iodisplay,
 			  menupanes[2],
-			  font_set, iogc, 0, box_h - 3,
+			  font_set, DE->iogc, 0, DE->box_h - 3,
 			  "*", 1);
 	else
 #endif
 	  XmbDrawString(iodisplay,
 			menupanes[2],
-			font_set, iogc, 0, box_h - 3,
+			font_set, DE->iogc, 0, DE->box_h - 3,
 			"*", 1);
       else
 #endif
-	XDrawString(iodisplay, menupanes[2], iogc, 0, box_h - 3,
+	XDrawString(iodisplay, menupanes[2], DE->iogc, 0, DE->box_h - 3,
 		    "*", 1);
 
 /*
@@ -2366,27 +2455,27 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
 		    break;
 		case 1:
 		    if (isNull(tvec))
-			SET_VECTOR_ELT(work, popupcol - 1,
+			SET_VECTOR_ELT(DE->work, popupcol - 1,
 				       ssNewVector(REALSXP, 100));
 		    else
-			SET_VECTOR_ELT(work, popupcol - 1,
+			SET_VECTOR_ELT(DE->work, popupcol - 1,
 				       coerceVector(tvec, REALSXP));
 		    goto done;
 		case 2:
 		    if (isNull(tvec))
-			SET_VECTOR_ELT(work, popupcol - 1,
+			SET_VECTOR_ELT(DE->work, popupcol - 1,
 				       ssNewVector(STRSXP, 100));
 		    else {
-			SET_VECTOR_ELT(work, popupcol - 1, 
+			SET_VECTOR_ELT(DE->work, popupcol - 1,
 				       coerceVector(tvec, STRSXP));
 		    }
-		    
+
 		    goto done;
 		case 3:
-		    closerect();
-		    ccol = col;
-		    crow = 0;
-		    clearrect();
+		    closerect(DE);
+		    DE->ccol = col;
+		    DE->crow = 0;
+		    clearrect(DE);
 		    goto done;
 		}
 	    }
@@ -2395,40 +2484,42 @@ void popupmenu(int x_pos, int y_pos, int col, int row)
            main control loop */
 	else if (event.type == Expose) {
 	    if (event.xexpose.window == menuwindow) {
-		XDrawString(iodisplay, menupanes[0], iogc, 3, box_h - 3,
-			    name, strlen(name));
+		XDrawString(iodisplay, menupanes[0], DE->iogc, 3,
+			    DE->box_h - 3, name, strlen(name));
 		for (i = 1; i < 4; i++)
-		    XDrawString(iodisplay, menupanes[i], iogc, 3, box_h - 3,
+		    XDrawString(iodisplay, menupanes[i], DE->iogc, 3,
+				DE->box_h - 3,
 				menu_label[i - 1], strlen(menu_label[i - 1]));
 	    }
 	}
     }
  done:
-    popdownmenu();
-    highlightrect();
+    popdownmenu(DE);
+    highlightrect(DE);
 }
 
-void popdownmenu(void)
+void popdownmenu(DEstruct DE)
 {
     XUnmapWindow(iodisplay, menuwindow);
     XUnmapSubwindows(iodisplay, menuwindow);
 }
 
-static void copycell(void)
+static void copycell(DEstruct DE)
 {
   /*
    * whichrow = crow + colmin - 1 => whichrow = crow + rowmin - 1
    *                   ^^^                             ^^^
    */
-    int i, whichrow = crow + rowmin - 1, whichcol = ccol + colmin -1;
+    int i, whichrow = DE->crow + DE->rowmin - 1,
+	whichcol = DE->ccol + DE->colmin -1;
     SEXP tmp;
 
     if (whichrow == 0) {
 	/* won't have  cell here */
     } else {
 	strcpy(copycontents, "");
-	if (length(work) >= whichcol) {
-	    tmp = VECTOR_ELT(work, whichcol - 1);
+	if (length(DE->work) >= whichcol) {
+	    tmp = VECTOR_ELT(DE->work, whichcol - 1);
 	    if (tmp != R_NilValue &&
 		(i = whichrow - 1) < LENGTH(tmp) ) {
 		PrintDefaults(R_NilValue);
@@ -2446,43 +2537,44 @@ static void copycell(void)
 	    }
 	}
     }
-    highlightrect();
+    highlightrect(DE);
 }
 
-static void pastecell(int row, int col)
+static void pastecell(DEstruct DE, int row, int col)
 {
-    downlightrect();
-    crow = row; ccol = col;
+    downlightrect(DE);
+    DE->crow = row; DE->ccol = col;
     if (strlen(copycontents)) {
 	strcpy(buf, copycontents);
 	clength = strlen(copycontents);
 	bufp = buf + clength;
 	CellModified = TRUE;
     }
-    closerect();
-    highlightrect();
+    closerect(DE);
+    highlightrect(DE);
 }
 
 #ifdef USE_FONTSET
-static void calc_pre_edit_pos(void)
+static void calc_pre_edit_pos(DEstruct DE)
 {
     XVaNestedList   xva_nlist;
     XPoint          xpoint;
     int i;
     int w;
 
-    xpoint.x = boxw[0];
-    for (i = 1; i < ccol; i++)
-	xpoint.x += BOXW(colmin + i - 1);
+    xpoint.x = DE->boxw[0];
+    for (i = 1; i < DE->ccol; i++)
+	xpoint.x += BOXW(DE->colmin + i - 1);
 #ifdef HAVE_XUTF8TEXTESCAPEMENT
     if(utf8locale)
 	w = Xutf8TextEscapement(font_set, buf, clength);
     else
 #endif
 	w = XmbTextEscapement(font_set, buf, clength);
-    xpoint.x += (w > BOXW(colmin + ccol - 1)) ? BOXW(colmin + ccol - 1) : w;
-    xpoint.x += text_offset;
-    xpoint.y = hht + (crow+1) * box_h - text_offset ;
+    xpoint.x += (w > BOXW(DE->colmin + DE->ccol - 1)) ?
+	BOXW(DE->colmin + DE->ccol - 1) : w;
+    xpoint.x += DE->text_offset;
+    xpoint.y = DE->hht + (DE->crow+1) * DE->box_h - DE->text_offset;
 
     /*
       <FIXME>
