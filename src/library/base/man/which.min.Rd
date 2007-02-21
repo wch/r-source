@@ -15,10 +15,12 @@ which.min(x)
 which.max(x)
 }
 \arguments{
- \item{x}{numeric vector, whose \code{\link{min}} or \code{\link{max}}
-   is searched (\code{NA}s are allowed).}
+  \item{x}{numeric (integer or double) vector, whose
+    \code{\link{min}} or \code{\link{max}} is searched for.}
 }
 \value{
+  Missing and \code{NaN} values are discarded.
+  
   an \code{\link{integer}} of length 1 or 0 (iff \code{x} has no
   non-\code{NA}s), giving the index of the \emph{first} minimum or
   maximum respectively of \code{x}.
@@ -40,10 +42,10 @@ x <- c(1:4,0:5,11)
 which.min(x)
 which.max(x)
 
-## it *does* work with NA's present:
+## it *does* work with NA's present, by discarding them:
 presidents[1:30]
 range(presidents, na.rm = TRUE)
-which.min(presidents)# 28
-which.max(presidents)# 2
+which.min(presidents) # 28
+which.max(presidents) #  2
 }
 \keyword{utilities}
