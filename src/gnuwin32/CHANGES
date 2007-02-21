@@ -24,6 +24,11 @@ The 'Install packages ...' menu item now only installs essential
 dependencies ('Depends' and 'Imports' but not 'Suggests'), using
 install.packages(dependencies=NA).
 
+The 'save as' file dialogs from the 'File' menu in a graphics window
+now add an approrpiate extension to the file name.  (As requested in
+PR#9336, but not that this makes it impossible to specify a file name
+without an extension.)
+
 
 Function changes
 ----------------

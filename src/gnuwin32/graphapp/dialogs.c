@@ -282,9 +282,13 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
 {
 	int i;
 	OPENFILENAME ofn;
-        char *p, cwd[MAX_PATH];
+        char *p, cwd[MAX_PATH], *defext = NULL;
 
 	if (!default_name) default_name = "";
+	else if(default_name[0] == '|') {
+	    defext = default_name + 2;
+	    default_name = "";
+	}
 	strcpy(strbuf, default_name);
 
 	ofn.lStructSize     = sizeof(OPENFILENAME);
@@ -313,7 +317,7 @@ char *askfilesavewithdir(char *title, char *default_name, char *dir)
                               OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.nFileOffset     = 0;
 	ofn.nFileExtension  = 0;
-	ofn.lpstrDefExt     = NULL /* "*" */;
+	ofn.lpstrDefExt     = defext;
 	ofn.lCustData       = 0L;
 	ofn.lpfnHook        = NULL;
 	ofn.lpTemplateName  = NULL;
