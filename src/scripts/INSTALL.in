@@ -440,7 +440,7 @@ do_install_source () {
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
 
-  if test -n ${lib0} ; then
+  if test -n "${lib0}" ; then
     ## set R_LIBS to include the current installation directory
     if test -n "${R_LIBS}"; then
       R_LIBS="${lib}:${R_LIBS}"
