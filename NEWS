@@ -638,6 +638,9 @@ BUG FIXES
     o	plnorm(x, lower.tail=FALSE) was returning the wrong tail for
 	x <= 0.  (PR#9520)
 
+    o	which.min() would not report a minimum of +inf, and
+	analogously for which.max().  (PR#9522)
+
 
 
 

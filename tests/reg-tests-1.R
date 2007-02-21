@@ -4610,3 +4610,9 @@ x <- seq(0, 1, len = 100)
 y <- x + NA
 try(supsmu(x,y))
 ## segfaulted < 2.5.0
+
+
+## which.max when max is Inf (PR#9522)
+which.min(c(NA, NA, Inf))
+which.max(c(NA, NA, -Inf, -Inf))
+## were integer(0) in < 2.5.0

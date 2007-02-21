@@ -664,6 +664,7 @@
  do_cov
  do_cum
  do_dataentry
+ do_dataviewer
  do_date
  do_debug
  do_delay
@@ -705,11 +706,13 @@
  do_edit
  do_emptyenv
  do_encodeString
+ do_encoding
  do_env2list
  do_envIsLocked
  do_envir
  do_envirName
  do_envirgets
+ do_envprofile
  do_erase
  do_eval
  do_expression
@@ -727,7 +730,6 @@
  do_fileshow
  do_filesymlink
  do_filledcontour
- do_first_max
  do_first_min
  do_flush
  do_flushconsole
@@ -893,6 +895,7 @@
  do_plot_window
  do_plot_xy
  do_pmatch
+ do_pmin
  do_polygon
  do_polyroot
  do_pos2env
@@ -962,8 +965,11 @@
  do_serializeToConn
  do_set
  do_setGPar
+ do_setStatusBar
  do_setTitle
  do_setToCConverterActiveStatus
+ do_setencoding
+ do_setenv
  do_setlocale
  do_setseed
  do_setwd

@@ -212,7 +212,6 @@ SEXP do_fileshow(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileedit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filesymlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filledcontour(SEXP, SEXP, SEXP, SEXP);
-SEXP do_first_max(SEXP, SEXP, SEXP, SEXP);
 SEXP do_first_min(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fft(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
