@@ -7,6 +7,10 @@ Development Core Team.
 See the file COPYING for the exact conditions under which you may
 redistribute it.
 
+The status of files used only in the Windows port is in file
+src/gnuwin32/COPYRIGHTS.win, which is appended to this file in binary
+Wndows distributions.
+
 	---------------------------------------------------
 
 The some of the public header files are distributed under the more

@@ -22,11 +22,11 @@ returns to the command prompt.
 
 The 'Install packages ...' menu item now only installs essential
 dependencies ('Depends' and 'Imports' but not 'Suggests'), using
-install.packages(dependencies=NA).
+install.packages(dependencies = NA).
 
 The 'save as' file dialogs from the 'File' menu in a graphics window
 now add an approrpiate extension to the file name.  (As requested in
-PR#9336, but not that this makes it impossible to specify a file name
+PR#9336, but note that this makes it impossible to specify a file name
 without an extension.)
 
 
@@ -35,7 +35,7 @@ Function changes
 
 Sys.getenv() has been changed to use the C-level environment and not
 the Windows environment block for the process, for consistency with
-Sys.getenv("FOO"), Sys.setenv and Sys.unsetenv().  A few
+Sys.getenv("FOO"), Sys.setenv() and Sys.unsetenv().  A few
 Windows-specific environment variables (such as =C:) no longer appear.
 
 https:// URLs can be accessed by download.file() and url() if
