@@ -526,7 +526,7 @@ getGeneric <-
           return(remove(list = name, envir = .genericTable))
         else if(length(prev) == 1)
           prev <- prev[[1]]
-        assign(name, prev, envir  = .GenericTable)
+        assign(name, prev, envir  = .genericTable)
     }
 }
 
