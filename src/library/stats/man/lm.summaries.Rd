@@ -63,6 +63,10 @@ weights(object, \dots)
   \code{\link{weighted.residuals}},
   \code{\link{residuals}}, \code{\link{residuals.glm}},
   \code{\link{summary.lm}}.
+
+  \link{influence.measures} for deletion diagnostics, including
+  standardized (\code{\link{rstandard}})
+  and studentized (\code{\link{rstudent}}) residuals.
 }
 \references{
   Chambers, J. M. (1992)

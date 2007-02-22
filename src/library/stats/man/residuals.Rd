@@ -40,6 +40,9 @@ resid(object, \dots)
 \seealso{
   \code{\link{coefficients}}, \code{\link{fitted.values}},
   \code{\link{glm}}, \code{\link{lm}}.
+
+  \link{influence.measures} for standardized (\code{\link{rstandard}})
+  and studentized (\code{\link{rstudent}}) residuals.
 }
 \keyword{models}
 \keyword{regression}

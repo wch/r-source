@@ -604,7 +604,8 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 /*
   This is a simple interface for evaluating R expressions
   from C with a guarantee that one will return to the 
-  point in the code from which the call was made.
+  point in the code from which the call was made (if it does
+  return at all).
   This uses R_TopleveExec to do this.  It is important
   in applications that embed R or wish to make general 
   callbacks to R with error handling.
@@ -613,6 +614,8 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
   and C routine visible only here. The R_tryEval() is the
   only visible aspect. This can be lifted into the header
   files if necessary. (DTL)
+
+  R_tryEval is in Rinternals.h (so public), but not in the API.
  */
 typedef struct {
     SEXP expression;

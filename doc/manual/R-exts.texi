@@ -7246,7 +7246,7 @@ on all @R{} platforms but are not documented and subject to change
 without notice.
 
 @item @emph{private}
-Entry points that are use when building @R{} and exported on all @R{}
+Entry points that are used when building @R{} and exported on all @R{}
 platforms but are not declared in the installed header files.
 
 @item @emph{hidden}
