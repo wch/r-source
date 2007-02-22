@@ -8843,6 +8843,10 @@ way, @emph{unless} @code{R_TempDir} is set to a non-NULL value before
 contain an existing writable directory (no check is done), and it is not
 cleaned up when @R{} is shut down.
 
+@code{Rf_initEmbeddedR} sets @R{} to be in interactive mode: you can set
+@code{R_Interactive} (defined in @file{Rinterface.h}) subsequently to
+change this.
+
 @menu
 * Compiling against the R shared library::  
 * Setting R callbacks::         
@@ -9166,7 +9170,7 @@ You may also want to consider how signals are handled: @R{} sets signal
 handlers for several signals, including @code{SIGINT}, @code{SIGSEGV},
 @code{SIGPIPE}, @code{SIGUSR1} and @code{SIGUSR2}, but these can all be
 suppressed by setting the variable @code{R_SignalHandlers} (declared in
-declared in @file{Rinterface.h}) to @code{0}.
+@file{Rinterface.h}) to @code{0}.
 
 
 @node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R

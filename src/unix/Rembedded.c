@@ -61,6 +61,7 @@ extern void R_CleanTempDir();
 int Rf_initEmbeddedR(int argc, char **argv)
 {
     Rf_initialize_R(argc, argv);
+    R_Interactive = TRUE;  /* Rf_initialize_R set this based on isatty */
     setup_Rmainloop();
     return(1);
 }
