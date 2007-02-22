@@ -799,7 +799,10 @@ Windows systems (this seems normally to be the case for those generated
 by Autoconf, although simple shell scripts do work).  If your package is
 to be made publicly available, please give enough information for a user
 on a non-Unix platform to configure it manually, or provide a
-@file{configure.win} script to be used on that platform.
+@file{configure.win} script to be used on that platform.  (Optionally,
+there can be a @file{cleanup.win} script as well.  Both should be shell
+scripts, to be executed by @command{ash}, which is a minimal version of
+@command{sh}.)
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An

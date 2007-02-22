@@ -85,6 +85,7 @@ on Vista: the underlying C function has been changed to be
 incompatible with POSIX and we now work around this.
 
 Packages are now compiled with -O3.  (R itself has been since 2.3.0.)
+They can have a cleanup.win script to cleanup after configure etc.
 
 
 
