@@ -5542,8 +5542,9 @@ read-only.
 There are two approaches that can be taken to handling @R{} objects from
 within C code.  The first (historically) is to use the macros and
 functions that have been used to implement the core parts of @R{}
-through @code{.Internal} calls.  A public subset of these is defined in
-the header file @file{Rinternals.h} in the directory
+through @code{.Internal} calls.  A public@footnote{ @pxref{The R API}:
+note that these are not all part of the API.}  subset of these is
+defined in the header file @file{Rinternals.h} in the directory
 @file{@var{R_INCLUDE_DIR}} (default @file{@var{R_HOME}/include}) that
 should be available on any @R{} installation.
 
