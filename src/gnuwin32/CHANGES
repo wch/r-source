@@ -90,9 +90,7 @@ on Vista: the underlying C function has been changed to be
 incompatible with POSIX and we now work around this.
 
 Packages are now compiled with -O3.  (R itself has been since 2.3.0.)
-They can have a cleanup.win script to cleanup after configure etc.  If
-R.h or S.h is included, the [v]s[n]printf function is remapped to the
-trio equivalent as used to compile R.
+They can have a cleanup.win script to cleanup after configure etc.
 
 
 
