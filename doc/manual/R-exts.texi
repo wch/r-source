@@ -365,8 +365,9 @@ code files in the package (taking possible OS-specific subdirectories
 into account, see @ref{Package subdirectories}) as a whitespace
 separated list of file paths relative to the @file{R} subdirectory.
 @c % double quotes are not allowed in path names, for Windows
-Paths containing white space or quotes need to be
-quoted.  Applicable OS-specific collate specifications take precedence.
+Paths containing white space or quotes need to be quoted.  An applicable
+OS-specific collation field (@samp{Collate.unix} or
+@samp{Collate.windows}) will be used instead of @samp{Collate}.
 
 The optional @samp{LazyLoad} and @samp{LazyData} fields control whether
 the @R{} objects and the datasets (respectively) use lazy-loading: set
