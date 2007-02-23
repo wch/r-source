@@ -884,8 +884,17 @@ dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE)
 
 @noindent
 to do so.  If you use @code{install.packages} and do not have permission
-to write to the main library, it will offer to create a personal library
-for you and install the packages there.
+to write to the main or site library, it will offer to create a personal
+library for you and install the packages there.  This will also happen
+if @code{update.packages} offers to update packages for you in a library
+where you do not have write permission.
+
+It seems that under Windows Vista sometimes users will have
+administrative rights when installing R but not when running it.  Two
+suggestions are to 1) give the user `Full Control' privileges on the
+top-level R folder via the security tab on the @samp{Properties} of the
+folder, or 2) to right-click the R shortcut and `Run as Administrator'
+for the session in which packages are to be installed/updated.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
