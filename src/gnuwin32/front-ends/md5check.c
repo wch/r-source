@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-#include <R.h>
 #define ROL_UNUSED
 #include "md5.h"
 #include <stdlib.h>
