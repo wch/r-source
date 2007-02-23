@@ -2732,9 +2732,12 @@ function(db)
                       cbind(f, bad_keywords))
     }
 
-    db_aliases_by_db_names <-
-        split(rep(names(db_aliases), sapply(db_aliases, length)),
+    ## db_aliases could be length 0, or could contain nothing
+    lens <- sapply(db_aliases, length)
+    db_aliases_by_db_names <- if(sum(lens))
+        split(rep(names(db_aliases), lend),
               unlist(db_aliases, use.names = FALSE))
+    else list()
     files_with_duplicated_aliases <-
         db_aliases_by_db_names[sapply(db_aliases_by_db_names,
                                       length) > 1]
