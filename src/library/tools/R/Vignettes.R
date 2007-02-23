@@ -145,8 +145,12 @@ buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
         bft <- paste(bf, ".tex", sep="")
         pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
 
-        yy <- try(utils::Sweave(f, quiet=quiet))
-        if(inherits(yy, "try-error")) stop(yy)
+        tryCatch(utils::Sweave(f, quiet = quiet),
+                 error = function(e) {
+                     stop(gettextf("processing vignette '%s' failed with diagnostics:\n%s",
+                                   f, conditionMessage(e)),
+                          domain = NA, call. = FALSE)
+                 })
         if(!have.makefile){
             texi2dvi(file=bft, pdf=TRUE, clean=FALSE, quiet=quiet)
         }
