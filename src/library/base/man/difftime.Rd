@@ -80,8 +80,8 @@ as.difftime(tim, format = "\%X", units="auto")
   \code{units} function, which also has an assignment form. If the units
   are changed, the numerical value is scaled accordingly.
 
-  The \code{as.numeric} method returns the numeric value expressed in
-  the specified units. Using  \code{units="auto"} means the units of the
+  The \code{as.double} method returns the numeric value expressed in
+  the specified units.  Using  \code{units="auto"} means the units of the
   object.
   
   The \code{format} method simply formats the numeric value and appends

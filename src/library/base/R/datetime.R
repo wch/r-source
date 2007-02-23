@@ -363,7 +363,7 @@ as.difftime <- function(tim, format="%X", units="auto")
         difftime(strptime(tim, format=format),
              strptime("0:0:0", format="%X"), units=units)
     } else {
-        if (!is.numeric(tim)) stop("tim is not character or numeric")
+        if (!is.numeric(tim)) stop("'tim' is not character or numeric")
 	if (units=="auto") stop("need explicit units for numeric conversion")
         if (!(units %in% c("secs", "mins", "hours", "days", "weeks")))
 	    stop("invalid units specified")
@@ -373,15 +373,18 @@ as.difftime <- function(tim, format="%X", units="auto")
 
 ### For now, these have only difftime methods, but you never know...
 units <- function(x) UseMethod("units")
-"units<-" <- function(x,value) UseMethod("units<-")
+
+"units<-" <- function(x, value) UseMethod("units<-")
 
 units.difftime <- function(x) attr(x, "units")
-"units<-.difftime" <- function(x,value) {
+
+"units<-.difftime" <- function(x, value)
+{
     from <- units(x)
     if (from == value) return(x)
     if (!(value %in% c("secs", "mins", "hours", "days", "weeks")))
         stop("invalid units specified")
-    sc <- cumprod(c(sec=1, mins=60, hours=60, days=24, weeks=7))
+    sc <- cumprod(c(secs=1, mins=60, hours=60, days=24, weeks=7))
     newx <- as.vector(x)*sc[from]/sc[value]
     structure(newx, units=value, class="difftime")
 }
