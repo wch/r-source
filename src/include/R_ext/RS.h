@@ -80,18 +80,6 @@ extern void R_chk_free(void *);
 
 void	call_R(char*, long, void**, char**, long*, char**, long, char**);
 
-#ifdef WIN32
-#include <stdarg.h>
-int trio_sprintf (char *, const char *, ...);
-int trio_vsprintf (char *, const char *, va_list);
-int trio_snprintf (char *, size_t, const char *, ...);
-int trio_vsnprintf (char *, size_t,  const char *, va_list);
-#define sprintf trio_sprintf
-#define vsprintf trio_vsprintf
-#define snprintf trio_snprintf
-#define vsnprintf trio_vsnprintf
-#endif
-
 #ifdef  __cplusplus
 }
 #endif
