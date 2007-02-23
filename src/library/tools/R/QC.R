@@ -2735,7 +2735,7 @@ function(db)
     ## db_aliases could be length 0, or could contain nothing
     lens <- sapply(db_aliases, length)
     db_aliases_by_db_names <- if(sum(lens))
-        split(rep(names(db_aliases), lend),
+        split(rep(names(db_aliases), lens),
               unlist(db_aliases, use.names = FALSE))
     else list()
     files_with_duplicated_aliases <-
