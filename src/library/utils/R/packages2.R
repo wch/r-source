@@ -219,8 +219,8 @@ install.packages <-
 	}
         if(length(not_avail)) {
             cat(sprintf(ngettext(sum(miss),
-                                 "dependency '%s' is not available",
-                                 "dependencies '%s' are not available"),
+                                 "dependency %s is not available",
+                                 "dependencies %s are not available"),
                         paste(sQuote(not_avail), collapse=", ")),
                 "\n\n", sep ="")
             flush.console()
