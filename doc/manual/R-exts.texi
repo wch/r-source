@@ -4771,6 +4771,7 @@ $7 = 5
 * Parsing R code from C::       
 * External pointers and weak references::  
 * Vector accessor functions::   
+* Character encoding issues::   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -6908,9 +6909,10 @@ variables.  In the @code{for} loop, we first create a symbol
 corresponding to the @code{i}'th element of the @code{STRSXP}
 @code{theta}.  Here, @code{STRING_ELT(theta, i)} accesses the
 @code{i}'th element of the @code{STRSXP} @code{theta}.  Macro
-@code{CHAR()} extracts the actual character representation of it: it
-returns a pointer.  We then install the name and use @code{findVar} to
-find its value.
+@code{CHAR()} extracts the actual character
+representation@footnote{@pxref{Character encoding issues} for why this
+might not be what is required.} of it: it returns a pointer.  We then
+install the name and use @code{findVar} to find its value.
 
 @example
 @group
@@ -7143,7 +7145,7 @@ but that is used to add finalizers to external pointers which can now be
 done more directly.
 
 
-@node Vector accessor functions,  , External pointers and weak references, System and foreign language interfaces
+@node Vector accessor functions, Character encoding issues, External pointers and weak references, System and foreign language interfaces
 @section Vector accessor functions 
 
 The vector accessors like @code{REAL} and @code{INTEGER} and
@@ -7166,6 +7168,21 @@ obtained by defining @samp{USE_RINTERNALS} before including
 @file{Rinternals.h}.  If you find it necessary to do so, please do test
 that your code compiled without @samp{USE_RINTERNALS} defined as this
 provides a stricter test that the accessors have been used correctly.
+
+@node Character encoding issues,  , Vector accessor functions, System and foreign language interfaces
+@section Character encoding issues
+
+@findex translateChar
+As from @R{} 2.5.0 @code{CHARSXP}s can be marked as coming from a known
+encoding (Latin-1 or UTF-8).  This is mainly intended for human-readable
+output, and most packages can just treat such @code{CHARSXP}s as a
+whole.  However, if they need to be interpreted as characters or output
+at C level then it would normally be correct to ensure that they are
+converted to the encoding of the currrent locale: this can be done by
+accessing the data in the @code{CHARSXP} by @code{translateChar} rather
+than by @code{CHAR}.  If re-encoding is needed this allocates memory
+with @code{R_alloc} which thus persists to the end of the
+@code{.Call}/@code{.External} call unless @code{vmaxset} is used.
 
 @node The R API, Generic functions and methods, System and foreign language interfaces, Top
 @chapter The R @acronym{API}: entry points for C code
