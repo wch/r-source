@@ -372,6 +372,9 @@ NEW FEATURES
 	editor on both Windows and X11.  In particular, resizing the
 	window works much better on X11.
 
+    o	New function callCC() providing a downward-only version of
+	Scheme's call with rurrent continuation.
+
 
 DEPRECATED & DEFUNCT
 
