@@ -1565,3 +1565,15 @@ SEXP attribute_hidden do_addTryHandlers(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_InsertRestartHandlers(R_GlobalContext, FALSE);
     return R_NilValue;
 }
+
+SEXP attribute_hidden do_seterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP msg;
+
+    checkArity(op, args);
+    msg = CAR(args);
+    if(!isString(msg) || LENGTH(msg) != 1)
+	error(_("error message must be a character string"));
+    R_SetErrmessage(CHAR(STRING_ELT(msg, 0)));
+    return R_NilValue;
+}
