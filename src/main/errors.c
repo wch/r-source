@@ -44,7 +44,7 @@ extern void R_ProcessEvents(void);
 #endif
 
 /* limit on call length at which errorcall/warningcall is split over
-   two lines */
+   two lines -- this should match the value used in try(). */
 #define LONGCALL 30
 
 /*

@@ -652,6 +652,11 @@ BUG FIXES
 	Rd files for errors if there was only one file with a serious
 	error.  (PR#9459)
 
+    o	try() has been reimplemented using tryCatch() to solve two
+	problems with the original implementation: (i) try() would run
+	non-NULL options("error") expressions for errors within a try, and
+	(ii) try() would catch user interrupts.
+
 
 
 

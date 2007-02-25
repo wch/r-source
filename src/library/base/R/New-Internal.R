@@ -1,23 +1,32 @@
 geterrmessage <- function() .Internal(geterrmessage())
 
-try <- function(expr, silent = FALSE)
-{
-    if (! exists("first", inherits = FALSE)) {
-        first <- FALSE
-        # turn on the restart bit of the current context, push an
-        # error handler on the condition handler stack, and push
-        # a tryRestart restart on the restart stack
-        .Internal(.addTryHandlers())
-        if (silent) {
-            op <- options("show.error.messages")
-            on.exit(options(op))
-            options(show.error.messages = FALSE)
+try <- function(expr, silent = FALSE) {
+    tryCatch(expr, error = function(e) {
+        call <- conditionCall(e)
+        if (! is.null(call)) {
+            ## Patch up the call to produce nicer result for testing as
+            ## try(stop(...)).  This will need adjusting if the
+            ## implementation of tryCatch changes.
+            if (as.list(call)[[1]] == "doTryCatch")
+                call <- sys.call(-4)
+            dcall <- deparse(call)[1]
+            prefix <- paste("Error in", dcall, ": ")
+            LONGCALL <- 30 # to match value in errors.c
+            if (nchar(dcall) > LONGCALL)
+                prefix <- paste(prefix, "\n\t", sep = "")
         }
-        expr
-    }
-    else invisible(structure(.Internal(geterrmessage()), class = "try-error"))
+        else prefix <- "Error : "
+        msg <- paste(prefix, conditionMessage(e), "\n", sep="")
+        ## Store the error message for legacy uses of try() with
+        ## geterrmessage().
+        .Internal(seterrmessage(msg[1]))
+        if (! silent && identical(getOption("show.error.messages"), TRUE)) {
+            cat(msg, file = stderr())
+            .Internal(printDeferredWarnings())
+        }
+        invisible(structure(msg, class = "try-error"))
+    })
 }
-
 
 comment <- function(x).Internal(comment(x))
 "comment<-" <- function(x,value).Internal("comment<-"(x,value))
