@@ -182,7 +182,7 @@ install.packages <-
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+            stop(gettextf("unable to create temporary directory '%s'", tmpd),
                  domain = NA)
     }
 
@@ -200,8 +200,20 @@ install.packages <-
     bundles <- .find_bundles(available)
     for(bundle in names(bundles))
         pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
+    p0 <- unique(pkgs)
+    miss <-  !p0 %in% row.names(available)
+    if(sum(miss)) {
+        warning(sprintf(ngettext(sum(miss),
+                                 "package %s is not available",
+                                 "packages %s are not available"),
+                        paste(sQuote(p0[miss]), collapse=", ")),
+                domain = NA)
+        flush.console()
+    }
+    p0 <- p0[!miss]
+
     if(depends) { # check for dependencies, recursively
-        p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
+        p1 <- p0 # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
         not_avail <- character(0)
 	repeat {
@@ -218,11 +230,11 @@ install.packages <-
 	    p1 <- toadd
 	}
         if(length(not_avail)) {
-            cat(sprintf(ngettext(sum(miss),
-                                 "dependency %s is not available",
-                                 "dependencies %s are not available"),
-                        paste(sQuote(not_avail), collapse=", ")),
-                "\n\n", sep ="")
+            warning(sprintf(ngettext(length(not_avail),
+                                     "dependency %s is not available",
+                                     "dependencies %s are not available"),
+                            paste(sQuote(not_avail), collapse=", ")),
+                    domain = NA)
             flush.console()
         }
 
@@ -232,16 +244,17 @@ install.packages <-
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat(ngettext(length(added),
-                         "also installing the dependency ",
-                         "also installing the dependencies "),
-                paste(sQuote(added), collapse=", "), "\n\n", sep="")
+            message(sprintf(ngettext(length(added),
+                                     "also installing the dependency %s",
+                                     "also installing the dependencies %s"),
+                            paste(sQuote(added), collapse=", ")),
+                    "\n", domain = NA)
             flush.console()
         }
+        p0 <- pkgs
     }
 
-    foundpkgs <- download.packages(unique(pkgs), destdir = tmpd,
-                                   available = available,
+    foundpkgs <- download.packages(p0, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
                                    type = "source")
 

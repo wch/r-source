@@ -141,15 +141,14 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     meth <- paste(top, "/library/methods", sep="")
     for(f in files) {
         page <- readLines(f)
-        ## <FIXME> use useBytes=TRUE later
-        page <- gsub(olddoc, doc, page, fixed = TRUE)
-        page <- gsub(oldbase, base, page, fixed = TRUE)
-        page <- gsub(oldutils, utils, page, fixed = TRUE)
-        page <- gsub(oldgraphics, graphics, page, fixed = TRUE)
-        page <- gsub(oldstats, stats, page, fixed = TRUE)
-        page <- gsub(olddata, datasets, page, fixed = TRUE)
-        page <- gsub(oldgrD, grD, page, fixed = TRUE)
-        page <- gsub(oldmeth, meth, page, fixed = TRUE)
+        page <- gsub(olddoc, doc, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldbase, base, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldutils, utils, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldgraphics, graphics, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldstats, stats, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(olddata, datasets, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldgrD, grD, page, fixed = TRUE, useBytes=TRUE)
+        page <- gsub(oldmeth, meth, page, fixed = TRUE, useBytes=TRUE)
         ## only do this if the substitutions worked
         out <- try(file(f, open = "w"), silent = TRUE)
         if(inherits(out, "try-error")) {
@@ -167,6 +166,7 @@ fixup.libraries.URLs <- function(lib.loc = .libPaths())
     for (lib in lib.loc) {
         if(lib == .Library) next
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
-        for(pkg in pg) try(fixup.package.URLs(file.path(lib,pkg)))
+        for(pkg in pg)
+            try(fixup.package.URLs(file.path(lib,pkg)), silent = TRUE)
     }
 }
