@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-11 16:52\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1867,6 +1867,10 @@ msgstr "'span'必需在0和1之间。"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "做周期平滑时'x'必需在0和1之间"
+
+#, fuzzy
+msgid "no finite observations"
+msgstr "有限值的观察量不够"
 
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr "删除了含NA, NaN或Inf的观察量"

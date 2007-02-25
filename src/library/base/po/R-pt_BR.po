@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -480,8 +480,9 @@ msgstr "não definido para objetos \"POSIXct\""
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "não definido para objetos \"POSIXlt\""
 
-msgid "tim is not character or numeric"
-msgstr ""
+#, fuzzy
+msgid "'tim' is not character or numeric"
+msgstr "'%s' não é uma função, caracter ou símbolo"
 
 msgid "need explicit units for numeric conversion"
 msgstr ""
@@ -1124,6 +1125,13 @@ msgstr "argumento errado"
 
 msgid "not defined for package_version objects"
 msgstr "não definido para objetos package_version"
+
+#, fuzzy
+msgid "no arguments"
+msgstr "argumento errado"
+
+msgid "zero imputs"
+msgstr ""
 
 msgid "invalid 'n' value"
 msgstr "valor de 'n' inválido"

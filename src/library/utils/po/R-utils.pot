@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-25 10:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,6 +192,9 @@ msgid "invalid 'data' argument"
 msgstr ""
 
 msgid "invalid 'modes' argument"
+msgstr ""
+
+msgid "invalid 'x' argument"
 msgstr ""
 
 msgid "can only handle vector and factor elements"
@@ -512,7 +515,7 @@ msgstr ""
 msgid "installation of package '%s' had non-zero exit status"
 msgstr ""
 
-msgid "Unable to create temporary directory '%s'"
+msgid "unable to create temporary directory '%s'"
 msgstr ""
 
 msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
@@ -800,9 +803,6 @@ msgstr ""
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr ""
 
-msgid "unable to create temporary directory '%s'"
-msgstr ""
-
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr ""
 
@@ -855,13 +855,18 @@ msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "dependency '%s' is not available"
-msgid_plural "dependencies '%s' are not available"
+msgid        "package %s is not available"
+msgid_plural "packages %s are not available"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "also installing the dependency "
-msgid_plural "also installing the dependencies "
+msgid        "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
 msgstr[0]    ""
 msgstr[1]    ""
 

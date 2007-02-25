@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-25 10:19\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -215,6 +215,10 @@ msgstr "'data'变元不对"
 
 msgid "invalid 'modes' argument"
 msgstr "'modes'变元不对"
+
+#, fuzzy
+msgid "invalid 'x' argument"
+msgstr "'data'变元不对"
 
 msgid "can only handle vector and factor elements"
 msgstr "只能对向量和因子元素适用"
@@ -567,7 +571,7 @@ msgstr ""
 msgid "installation of package '%s' had non-zero exit status"
 msgstr "安装程序包'%s'时退出狀態的值不为0"
 
-msgid "Unable to create temporary directory '%s'"
+msgid "unable to create temporary directory '%s'"
 msgstr "无法建立临时目录'%s'"
 
 msgid ""
@@ -887,9 +891,6 @@ msgstr "修理非标准的图书馆里的URL"
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr "如果什么都不发生的话，你应该自己打开'%s'"
 
-msgid "unable to create temporary directory '%s'"
-msgstr "无法建立临时目录'%s'"
-
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "程序包'%s'打开成功，MD5和检查也通过"
 
@@ -942,13 +943,20 @@ msgid "'lib' element '%s'  is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] "'destdir'不是目录"
 
-msgid "dependency '%s' is not available"
-msgid_plural "dependencies '%s' are not available"
+#, fuzzy
+msgid "package %s is not available"
+msgid_plural "packages %s are not available"
+msgstr[0] "没有'%s'这种相依关系"
+
+#, fuzzy
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
 msgstr[0] "没有'%s'这种相依关系"
 msgstr[1] "没有'%s'这种相依关系"
 
-msgid "also installing the dependency "
-msgid_plural "also installing the dependencies "
+#, fuzzy
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
 msgstr[0] "还安装相依关系"
 msgstr[1] "还安装相依关系"
 
@@ -956,6 +964,14 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被重新安装"
 msgstr[1] "正在使用'%s'这个程序包，因此不会被重新安装"
+
+#~ msgid "Unable to create temporary directory '%s'"
+#~ msgstr "无法建立临时目录'%s'"
+
+#~ msgid "dependency '%s' is not available"
+#~ msgid_plural "dependencies '%s' are not available"
+#~ msgstr[0] "没有'%s'这种相依关系"
+#~ msgstr[1] "没有'%s'这种相依关系"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"

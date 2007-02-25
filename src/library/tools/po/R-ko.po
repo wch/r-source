@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-24 16:01\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -425,6 +425,11 @@ msgstr "Rd 파일에서 실패한 필드 또는 비어 있는 필드가 있습�
 msgid "unable to create temp directory"
 msgstr "temp 디렉토리를 작성할수가 없습니다"
 
+msgid ""
+"processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+
 msgid "running make failed"
 msgstr "유형의 실행은 실패했습니다"
 
@@ -461,6 +466,10 @@ msgid "files in '%s' missing from '%s' field:"
 msgstr ""
 
 msgid "unable to create '%s'"
+msgstr "'%s'를 작성할수가 없습니다"
+
+#, fuzzy
+msgid "unable to re-encode '%s'"
 msgstr "'%s'를 작성할수가 없습니다"
 
 #, fuzzy
@@ -579,6 +588,11 @@ msgstr "행해졌습니다"
 
 msgid "parsing '%s'"
 msgstr "분석 '%s'"
+
+#, fuzzy
+msgid "Warning in file '%s':"
+msgid_plural "Warnings in file '%s':"
+msgstr[0] "파일 '%s'에 있어서 에러를 해석합니다"
 
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"

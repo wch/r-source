@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-24 16:01\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -429,6 +429,11 @@ msgstr "campo \\name mancante/vuoto nei file Rd"
 msgid "unable to create temp directory"
 msgstr "impossibile creare directory temporanea"
 
+msgid ""
+"processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+
 msgid "running make failed"
 msgstr "esecuzione di make fallita"
 
@@ -463,6 +468,10 @@ msgid "files in '%s' missing from '%s' field:"
 msgstr ""
 
 msgid "unable to create '%s'"
+msgstr "impossibile creare '%s'"
+
+#, fuzzy
+msgid "unable to re-encode '%s'"
 msgstr "impossibile creare '%s'"
 
 #, fuzzy
@@ -580,6 +589,12 @@ msgstr "fatto"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
+
+#, fuzzy
+msgid "Warning in file '%s':"
+msgid_plural "Warnings in file '%s':"
+msgstr[0] "errore analisi file '%s'"
+msgstr[1] "errore analisi file '%s'"
 
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"

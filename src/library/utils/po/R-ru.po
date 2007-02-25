@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-25 10:19\n"
 "PO-Revision-Date: 2006-12-10 02:40-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -221,6 +221,10 @@ msgstr "неправильный аргумент 'data'"
 
 msgid "invalid 'modes' argument"
 msgstr "неправильный аргумент 'modes'"
+
+#, fuzzy
+msgid "invalid 'x' argument"
+msgstr "неправильный аргумент 'data'"
 
 msgid "can only handle vector and factor elements"
 msgstr "могу работать только с элементами векторов и факторов"
@@ -577,8 +581,8 @@ msgstr ""
 msgid "installation of package '%s' had non-zero exit status"
 msgstr "установка пакета '%s' имеет ненулевой статус выхода"
 
-msgid "Unable to create temporary directory '%s'"
-msgstr "Не могу создать временную папку '%s'"
+msgid "unable to create temporary directory '%s'"
+msgstr "не могу создать временную папку '%s'"
 
 msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
@@ -903,9 +907,6 @@ msgstr "исправляю URL'ы в нестандартных библиотеках"
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr "Если ничего не произойдет, надо самому открыть '%s'"
 
-msgid "unable to create temporary directory '%s'"
-msgstr "не могу создать временную папку '%s'"
-
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "пакет '%s' успешно распакован, MD5-суммы проверены"
 
@@ -961,14 +962,23 @@ msgstr[0] "'destdir' не является папкой"
 msgstr[1] "'destdir' не является папкой"
 msgstr[2] "'destdir' не является папкой"
 
-msgid "dependency '%s' is not available"
-msgid_plural "dependencies '%s' are not available"
+#, fuzzy
+msgid "package %s is not available"
+msgid_plural "packages %s are not available"
+msgstr[0] "зависимость '%s' недоступна"
+msgstr[1] "зависимость '%s' недоступна"
+msgstr[2] "зависимость '%s' недоступна"
+
+#, fuzzy
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
 msgstr[0] "зависимость '%s' недоступна"
 msgstr[1] "зависимости '%s' недоступны"
 msgstr[2] "зависимости '%s' недоступны"
 
-msgid "also installing the dependency "
-msgid_plural "also installing the dependencies "
+#, fuzzy
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
 msgstr[0] "устанавливаю также зависимость"
 msgstr[1] "устанавливаю также зависимости"
 msgstr[2] "устанавливаю также зависимости"
@@ -978,3 +988,12 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "Unable to create temporary directory '%s'"
+#~ msgstr "Не могу создать временную папку '%s'"
+
+#~ msgid "dependency '%s' is not available"
+#~ msgid_plural "dependencies '%s' are not available"
+#~ msgstr[0] "зависимость '%s' недоступна"
+#~ msgstr[1] "зависимости '%s' недоступны"
+#~ msgstr[2] "зависимости '%s' недоступны"

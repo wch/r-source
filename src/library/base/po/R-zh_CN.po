@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -462,8 +462,9 @@ msgstr "对\"POSIXct\"对象不适用"
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "对\"POSIXlt\"对象不适用"
 
-msgid "tim is not character or numeric"
-msgstr ""
+#, fuzzy
+msgid "'tim' is not character or numeric"
+msgstr "'%s'不是函数，也不是字符，也不是符號"
 
 msgid "need explicit units for numeric conversion"
 msgstr ""
@@ -1085,6 +1086,13 @@ msgstr "变元不对"
 
 msgid "not defined for package_version objects"
 msgstr "对package_version对象没有定义"
+
+#, fuzzy
+msgid "no arguments"
+msgstr "变元不对"
+
+msgid "zero imputs"
+msgstr ""
 
 msgid "invalid 'n' value"
 msgstr "'n'的值有错"

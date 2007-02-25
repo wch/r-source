@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-28 12:18\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
 "PO-Revision-Date: 2006-12-12 10:36+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -466,8 +466,9 @@ msgstr "\"POSIXct\" オブジェクトに対しては定義されていません
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "\"POSIXlt\" オブジェクトに対しては定義されていません"
 
-msgid "tim is not character or numeric"
-msgstr ""
+#, fuzzy
+msgid "'tim' is not character or numeric"
+msgstr "'%s' は関数、文字、またはシンボルではありません"
 
 msgid "need explicit units for numeric conversion"
 msgstr ""
@@ -1119,6 +1120,13 @@ msgstr "間違った引数です"
 
 msgid "not defined for package_version objects"
 msgstr "package_version オブジェクトに対しては定義されていません"
+
+#, fuzzy
+msgid "no arguments"
+msgstr "間違った引数です"
+
+msgid "zero imputs"
+msgstr ""
 
 msgid "invalid 'n' value"
 msgstr "無効な 'n' 値です"

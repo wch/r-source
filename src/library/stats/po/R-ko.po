@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-01-11 16:52\n"
+"POT-Creation-Date: 2007-02-24 16:00\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1963,6 +1963,10 @@ msgstr "'span'는 0 과 1의 사이에 없으면 되지 않습니다"
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
 msgstr "periodic smooth를 위해서 'x'는 0과 1사이에 있을 필요가 있습니다"
+
+#, fuzzy
+msgid "no finite observations"
+msgstr "유한한 관측값이 충분히 없습니다"
 
 msgid "observation(s) with NAs, NaNs and/or Infs deleted"
 msgstr "NA, NaN 및 Inf의 관측값은 삭제되었습니다"
