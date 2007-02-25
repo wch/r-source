@@ -1378,8 +1378,8 @@ provide a similar scheme for @code{R CMD build}.
 There are other internal settings that can be changed via environment
 variables @w{@code{_R_CHECK_*_}:} see the Perl source code.  One that
 may be interesting is @code{_R_CHECK_USE_CODETOOLS_} to make use of the
-@pkg{codetools} package available from
-@url{http://www.stat.uiowa.edu/~luke/R/codetools}.
+@pkg{codetools} package, which provides a detailed analysis of
+visibility of objects (but will give false positives).
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes

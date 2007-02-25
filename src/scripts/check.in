@@ -1416,9 +1416,6 @@ sub check_pkg {
     }
 
     ## Check R code for possible problems using LT's codetools package
-    ## available from http://www.stat.uiowa.edu/~luke/R/codetools, and
-    ## scheduled for integration into base R eventually).
-
     ## Activated only via setting the internal environment variable
     ## _R_CHECK_USE_CODETOOLS_ to something "true".
 

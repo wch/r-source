@@ -498,6 +498,10 @@ UTILITIES
     o	Rdiff now converts CRLF endings in the target file, and
 	converts UTF-8 single quotes in either to ASCII quotes.
 
+    o	New recommended package 'codetools' provides code-analysis
+	tools.  This can optionally be used by 'R CMD check' to detect
+	problems, especially symbols which are not visible.
+
 
 BUG FIXES
 
