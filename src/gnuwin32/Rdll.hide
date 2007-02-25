@@ -393,6 +393,7 @@
  Rf_lgammacor
  Rf_lookupCachedSymbol
  Rf_makeSubscript
+ Rf_markKnown
  Rf_mat2indsub
  Rf_matchArg
  Rf_matchArgExact
@@ -901,6 +902,7 @@
  do_pos2env
  do_pregexpr
  do_primitive
+ do_printDeferredWarnings
  do_printdefault
  do_prmatrix
  do_proctime
@@ -970,6 +972,7 @@
  do_setToCConverterActiveStatus
  do_setencoding
  do_setenv
+ do_seterrmessage
  do_setlocale
  do_setseed
  do_setwd
@@ -1175,6 +1178,8 @@
  localeCP
  locale_charset
  mallinfo
+ malloc_footprint
+ malloc_max_footprint
  malloc_stats
  malloc_trim
  malloc_usable_size
@@ -1182,6 +1187,7 @@
  max_contour_segments
  mb_char_len
  mbswidth
+ memalign
  memtrace_report
  menuclear
  menuconfig

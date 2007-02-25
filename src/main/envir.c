@@ -3190,7 +3190,7 @@ SEXP attribute_hidden do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     /* Return a list containing profiling information given a hashed
        environment.  For non-hashed environments, this function

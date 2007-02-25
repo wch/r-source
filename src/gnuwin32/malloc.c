@@ -2527,6 +2527,7 @@ static int init_mparams(void) {
   return 0;
 }
 
+#if 0
 /* support for mallopt */
 static int change_mparam(int param_number, int value) {
   size_t val = (size_t)value;
@@ -2549,6 +2550,7 @@ static int change_mparam(int param_number, int value) {
     return 0;
   }
 }
+#endif
 
 #if DEBUG
 /* ------------------------- Debugging Support --------------------------- */
@@ -2860,6 +2862,7 @@ static struct mallinfo internal_mallinfo(mstate m) {
 }
 #endif /* !NO_MALLINFO */
 
+#if 0
 static void internal_malloc_stats(mstate m) {
   if (!PREACTION(m)) {
     size_t maxfp = 0;
@@ -2891,6 +2894,7 @@ static void internal_malloc_stats(mstate m) {
     POSTACTION(m);
   }
 }
+#endif
 
 /* ----------------------- Operations on smallbins ----------------------- */
 
@@ -3843,6 +3847,7 @@ static void* internal_realloc(mstate m, void* oldmem, size_t bytes) {
 
 /* --------------------------- memalign support -------------------------- */
 
+#if 0
 static void* internal_memalign(mstate m, size_t alignment, size_t bytes) {
   if (alignment <= MALLOC_ALIGNMENT)    /* Can just use malloc */
     return internal_malloc(m, bytes);
@@ -4055,7 +4060,7 @@ static void** ialloc(mstate m,
   POSTACTION(m);
   return marray;
 }
-
+#endif
 
 /* -------------------------- public routines ---------------------------- */
 
@@ -4331,6 +4336,7 @@ void* dlrealloc(void* oldmem, size_t bytes) {
   }
 }
 
+#if 0
 void* dlmemalign(size_t alignment, size_t bytes) {
   return internal_memalign(gm, alignment, bytes);
 }
@@ -4376,6 +4382,7 @@ size_t dlmalloc_footprint(void) {
 size_t dlmalloc_max_footprint(void) {
   return gm->max_footprint;
 }
+#endif
 
 #if !NO_MALLINFO
 struct mallinfo dlmallinfo(void) {
@@ -4383,6 +4390,7 @@ struct mallinfo dlmallinfo(void) {
 }
 #endif /* NO_MALLINFO */
 
+#if 0
 void dlmalloc_stats() {
   internal_malloc_stats(gm);
 }
@@ -4399,6 +4407,7 @@ size_t dlmalloc_usable_size(void* mem) {
 int dlmallopt(int param_number, int value) {
   return change_mparam(param_number, value);
 }
+#endif
 
 #endif /* !ONLY_MSPACES */
 

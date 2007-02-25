@@ -1581,8 +1581,6 @@ SEXP attribute_hidden do_seterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden
 do_printDeferredWarnings(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP msg;
-
     checkArity(op, args);
     R_PrintDeferredWarnings();
     return R_NilValue;
