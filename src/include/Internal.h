@@ -355,6 +355,7 @@ SEXP do_POSIXlt2D(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pregexpr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printdefault(SEXP, SEXP, SEXP, SEXP);
+SEXP do_printDeferredWarnings(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printdf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_prmatrix(SEXP, SEXP, SEXP, SEXP);
 SEXP do_proctime(SEXP, SEXP, SEXP, SEXP);
