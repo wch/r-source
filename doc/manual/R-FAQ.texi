@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-02-23
+@set FAQ_DATE @value{FAQ_YEAR}-02-26
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -1994,7 +1994,7 @@ large sparse graphical Gaussian models.
 @item Geneland
 MCMC inference from individual genetic data based on a spatial
 statistical model.
-@item GeoXP
+@item GeoXp
 Interactive exploratory spatial data analysis.
 @item GroupSeq
 Computations related to group-seqential boundaries.
@@ -2665,6 +2665,8 @@ test their homogeneity, plus functions to draw wind-rose and
 Walter&Lieth diagrams. 
 @item clines
 Calculates Contour Lines.
+@item clinfun
+Utilities for clinical study design and data analyses.
 @item clue
 CLUster Ensembles.
 @item clustTool
@@ -2692,6 +2694,8 @@ Co-correspondence analysis ordination methods for community ecology.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
+@item codetools
+Code analysis tools.  @emph{Recommended} for R 2.5.0 or later.
 @item coin
 COnditional INference procedures for the general independence problem
 including two-sample, @math{K}-sample, correlation, censored, ordered
@@ -2837,6 +2841,8 @@ techniques, forecasting, and for evaluating forecasting model),
 @strong{tframe} (functions for writing code that is independent of the
 representation of time), and @strong{setRNG} (a mechanism for generating
 the same random numbers in S and R).
+@item dtt
+Discrete Trigonometric Transforms.
 @item dyn
 Time series regression.
 @item dynamicGraph
