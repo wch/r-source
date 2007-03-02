@@ -1,10 +1,13 @@
 formula <- function(x, ...) UseMethod("formula")
 formula.default <- function (x, env = parent.frame(), ...)
 {
-    if (!is.null(x$formula)) eval(x$formula)
-    else if (!is.null(x$terms))	{z <- x$terms; oldClass(z) <- "formula"; z}
-    else if (!is.null(x$call$formula))	eval(x$call$formula)
-    else if (!is.null(attr(x, "formula"))) attr(x, "formula")
+    notAtomic <- !is.atomic(x)
+    notnull <- function(z) notAtomic && !is.null(z)
+
+    if (notnull(x$formula)) eval(x$formula)
+    else if (notnull(x$terms)) {z <- x$terms; oldClass(z) <- "formula"; z}
+    else if (notnull(x$call$formula))	eval(x$call$formula)
+    else if (notnull(attr(x, "formula"))) attr(x, "formula")
     else {
         form <- switch(mode(x),
                        NULL = structure(NULL, class = "formula"),
@@ -39,6 +42,13 @@ formula.data.frame <- function (x, ...)
     ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"))
     ff<-eval(ff)
     environment(ff)<-parent.frame()
+    ff
+}
+
+formula.character <- function(x, ...)
+{
+    ff <- formula(eval(parse(text=x)[[1]]))
+    environment(ff) <- parent.frame()
     ff
 }
 

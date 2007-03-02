@@ -1048,6 +1048,9 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input)
 	}
       return R_NilValue;
     }
+    else if( isVectorAtomic(x) ){
+        warning("$ operator is not valid for atomic vectors, returning NULL");
+    }
     UNPROTECT(2);
     return R_NilValue;
 }
