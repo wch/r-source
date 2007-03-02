@@ -27,7 +27,7 @@ USER-VISIBLE CHANGES
 	names, and it may be beneficial to recreate such objects via
 	read.table() or data.frame().
 
-    o   $ on character vectors is now raises a warning
+    o   $ on atomic vectors is now raises a warning
 
 NEW FEATURES
 
