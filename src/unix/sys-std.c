@@ -690,11 +690,19 @@ Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 }
 
 	/* Write a text buffer to the console. */
-	/* All system output is filtered through this routine. */
+	/* All system output is filtered through this routine (unless R_Consolefile is used). */
 
 void attribute_hidden Rstd_WriteConsole(char *buf, int len)
 {
     printf("%s", buf);
+}
+
+void attribute_hidden Rstd_WriteConsoleEx(char *buf, int len, int otype)
+{
+   if (otype) /* print errors/warings in bold */
+        printf("\033[1m%s\033[0m");
+    else
+        printf("%s", buf);
 }
 
 

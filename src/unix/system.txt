@@ -35,10 +35,13 @@
  *  Note that this is one natural place from which to run an event loop.
  *
  *    void  R_WriteConsole(char *buf, int buflen)
+ *    void  R_WriteConsoleEx(char *buf, int buflen, int otype)
  *
- *  This function writes the given buffer out to the console.  No
+ *  Those functions write the given buffer out to the console.  No
  *  special actions are required.  Under Unix the characters are
- *  just appended to stdout.
+ *  just appended to stdout. otype determines whether the content is
+ *  regular output (0) or error/warning (1) and can be used by GUIs
+ *  to distinguish those.
  *
  *    void  R_ResetConsole(void)
  *

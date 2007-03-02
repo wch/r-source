@@ -159,6 +159,7 @@ void R_Suicide(char *s)
 static int (*TrueReadConsole) (char *, char *, int, int);
 static int (*InThreadReadConsole) (char *, char *, int, int);
 static void (*TrueWriteConsole) (char *, int);
+static void (*TrueWriteConsoleEx) (char *, int, int);
 HANDLE EhiWakeUp;
 static char *tprompt, *tbuf;
 static  int tlen, thist, lineavailable;
@@ -177,7 +178,16 @@ R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 void R_WriteConsole(char *buf, int len)
 {
     R_ProcessEvents();
-    TrueWriteConsole(buf, len);
+    if (TrueWriteConsole) TrueWriteConsole(buf, len);
+    else TrueWriteConsoleEx(buf, len, 0);
+}
+
+
+void R_WriteConsoleEx(char *buf, int len, int otype)
+{
+    R_ProcessEvents();
+    if (TrueWriteConsole) TrueWriteConsole(buf, len);
+    else TrueWriteConsoleEx(buf, len, otype);
 }
 
 
@@ -657,6 +667,7 @@ void R_SetWin32(Rstart Rp)
     }
     TrueReadConsole = Rp->ReadConsole;
     TrueWriteConsole = Rp->WriteConsole;
+    TrueWriteConsoleEx = Rp->WriteConsoleEx;
     R_CallBackHook = Rp->CallBack;
     pR_ShowMessage = Rp->ShowMessage;
     R_YesNoCancel = Rp->YesNoCancel;
@@ -843,6 +854,7 @@ int cmdlineoptions(int ac, char **av)
 
     pR_ShowMessage = Rp->ShowMessage; /* used here */
     TrueWriteConsole = Rp->WriteConsole;
+    /* Rp->WriteConsole is guaranteed to be set above, so we WriteConsoleEx is not used */
     R_CallBackHook = Rp->CallBack;
 
     /* process environment variables

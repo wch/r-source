@@ -8910,6 +8910,7 @@ extern void (*ptr_R_Suicide)(char *);
 extern void (*ptr_R_ShowMessage)(char *);
 extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
 extern void (*ptr_R_WriteConsole)(char *, int);
+extern void (*ptr_R_WriteConsoleEx)(char *, int, int);
 extern void (*ptr_R_ResetConsole)();
 extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();
@@ -8942,6 +8943,7 @@ a state terminates (@code{@var{which}=0}).
 @deftypefun int R_ReadConsole (char *@var{prompt}, char *@var{buf}, @
   int @var{buflen}, int @var{hist})
 @deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen})
+@deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen}, int @var{otype})
 @deftypefunx void R_ResetConsole ()
 @deftypefunx void R_FlushConsole ()
 @deftypefunx void R_ClearErrConsole ()
@@ -8955,7 +8957,7 @@ set to @samp{"\n\0"} to preserve sanity.  If @var{hist} is non-zero,
 then the line should be added to any command history which is being
 maintained.  The return value is 0 on success and >0 on failure.
 
-@code{R_WriteConsole} writes the given buffer to the console.
+@code{R_WriteConsoleEx} writes the given buffer to the console, @var{otype} specifies the output type (regular output or warning/error). Call to @code{R_WriteConsole(buf, buflen)} is equivalent to @code{R_WriteConsoleEx(buf, buflen, 0)}. To ensure backward compatibility of the callbacks, @code{ptr_R_WriteConsoleEx} is used only if @code{ptr_R_WriteConsole} is set to @code{NULL}.
 
 @code{R_ResetConsole} is called when the system is reset after an error.
 @code{R_FlushConsole} is called to flush any pending output to the

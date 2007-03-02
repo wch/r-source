@@ -812,7 +812,8 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 /* The maximum length of input line which will be asked for */
 #define CONSOLE_BUFFER_SIZE 1024
 int	R_ReadConsole(char*, unsigned char*, int, int);
-void	R_WriteConsole(char*, int);
+void	R_WriteConsole(char*, int); /* equivalent to R_WriteConsoleEx(a, b, 0) */
+void	R_WriteConsoleEx(char*, int, int);
 void	R_ResetConsole(void);
 void	R_FlushConsole(void);
 void	R_ClearerrConsole(void);

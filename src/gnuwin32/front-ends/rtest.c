@@ -45,8 +45,9 @@ int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
     else return 0;
 }
 
-void myWriteConsole(char *buf, int len)
+void myWriteConsoleEx(char *buf, int len, int otype)
 {
+    /* we could distinguish between ouput (type=0) and errors (otype=1) ... */
     printf("%s", buf);
 }
 
@@ -88,7 +89,8 @@ int main (int argc, char **argv)
     Rp->home = getRUser();
     Rp->CharacterMode = LinkDLL;
     Rp->ReadConsole = myReadConsole;
-    Rp->WriteConsole = myWriteConsole;
+    Rp->WriteConsole = NULL; /* for illustration purposes we use more flexibe WriteConsoleEx */
+    Rp->WriteConsoleEx = myWriteConsoleEx;
     Rp->CallBack = myCallBack;
     Rp->ShowMessage = askok;
     Rp->YesNoCancel = askyesnocancel;

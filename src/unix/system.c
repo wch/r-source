@@ -70,7 +70,8 @@ void R_Suicide(char *s) { ptr_R_Suicide(s); }
 void R_ShowMessage(char *s) { ptr_R_ShowMessage(s); }
 int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 { return ptr_R_ReadConsole(prompt, buf, len, addtohistory); }
-void R_WriteConsole(char *buf, int len) {ptr_R_WriteConsole(buf, len);}
+void R_WriteConsole(char *buf, int len) {if (ptr_R_WriteConsole) ptr_R_WriteConsole(buf, len); else ptr_R_WriteConsoleEx(buf, len, 0); }
+void R_WriteConsoleEx(char *buf, int len, int otype) {if (ptr_R_WriteConsole) ptr_R_WriteConsole(buf, len); else ptr_R_WriteConsoleEx(buf, len, otype); }
 void R_ResetConsole(void) { ptr_R_ResetConsole(); }
 void R_FlushConsole(void) { ptr_R_FlushConsole(); }
 void R_ClearerrConsole(void) { ptr_R_ClearerrConsole(); }
@@ -187,7 +188,8 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_Suicide = Rstd_Suicide;
     ptr_R_ShowMessage = Rstd_ShowMessage;
     ptr_R_ReadConsole = Rstd_ReadConsole;
-    ptr_R_WriteConsole = Rstd_WriteConsole;
+    ptr_R_WriteConsole = NULL; /* use WriteConsoleEx instead */
+    ptr_R_WriteConsoleEx = Rstd_WriteConsoleEx;
     ptr_R_ResetConsole = Rstd_ResetConsole;
     ptr_R_FlushConsole = Rstd_FlushConsole;
     ptr_R_ClearerrConsole = Rstd_ClearerrConsole;
@@ -371,7 +373,9 @@ int Rf_initialize_R(int ac, char **av)
 	R_Interactive = R_Interactive && isatty(0);
 
 #ifdef HAVE_AQUA
-    if(useaqua){
+    /* for Aqua and non-dumb terminal use callbacks instead of connections
+       (ESS = dumb terminal) */
+    if(useaqua || (R_Interactive && getenv("TERM") && strcmp(getenv("TERM"),"dumb"))) {
 	R_Outputfile = NULL;
 	R_Consolefile = NULL;
     } else {

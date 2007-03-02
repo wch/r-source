@@ -101,6 +101,7 @@ extern void (*ptr_R_Suicide)(char *);
 extern void (*ptr_R_ShowMessage)(char *);
 extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
 extern void (*ptr_R_WriteConsole)(char *, int);
+extern void (*ptr_R_WriteConsoleEx)(char *, int, int);
 extern void (*ptr_R_ResetConsole)();
 extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();

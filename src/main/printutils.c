@@ -755,7 +755,7 @@ void REvprintf(const char *format, va_list arg)
 
 	vsnprintf(buf, BUFSIZE, format, arg);
 	buf[BUFSIZE-1] = '\0';
-	R_WriteConsole(buf, strlen(buf));
+	R_WriteConsoleEx(buf, strlen(buf), 1);
     }
 }
 
