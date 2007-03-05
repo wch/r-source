@@ -295,8 +295,9 @@ while test -n "${1}"; do
 done
 
 if test -z "${lib}"; then
-  lib=`echo "cat(.libPaths()[1])" | \
-    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave`
+  lib=`echo "cat('~~~', .libPaths()[1], sep = '')" | \
+    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave | \
+    tr '\n' 'Z' | sed 's/.*~~~//'`
   message "Installing to library '$lib'"
 else
   lib0=${lib}
