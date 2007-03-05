@@ -2018,7 +2018,7 @@ superassignment.  As this case was handled incorrectly in versions
 @cindex name
 Almost every programming language has a set of scoping rules, allowing
 the same name to be used for different objects.  This allows, e.g., a
-local variable in a function to have the same name a global object.
+local variable in a function to have the same name as a global object.
 
 @R{} uses a @emph{lexical scoping} model, similar to languages like
 Pascal.  However, @R{} is a @emph{functional programming language} and
