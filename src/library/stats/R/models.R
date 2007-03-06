@@ -45,10 +45,10 @@ formula.data.frame <- function (x, ...)
     ff
 }
 
-formula.character <- function(x, ...)
+formula.character <- function(x, env = parent.frame(), ...)
 {
     ff <- formula(eval(parse(text=x)[[1]]))
-    environment(ff) <- parent.frame()
+    environment(ff) <- env
     ff
 }
 
