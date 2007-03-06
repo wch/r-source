@@ -376,6 +376,9 @@ NEW FEATURES
     o	New function callCC() providing a downward-only version of
 	Scheme's call with rurrent continuation.
 
+    o   capabilities() now has a "profmem" entry indicating whether
+        R has been compiled with memory profiling.
+
 
 DEPRECATED & DEFUNCT
 
@@ -1561,6 +1564,9 @@ INSTALLATION
 	binary.  If a repository supports architecture-specific Mac
 	binaries, they can be requested by using "mac.binary.xxx" in
 	contrib.url(), where xxx is the desired architecture.
+
+    o   There is a new configure option --enable-memory-profiling to 
+        enable memory profiling with tracemem, Rprof, Rprofmem.
 
 
 BUG FIXES
