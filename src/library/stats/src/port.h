@@ -90,4 +90,15 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 SEXP port_nlsb(SEXP m, SEXP d, SEXP gg, SEXP iv, SEXP v,
 	       SEXP lowerb, SEXP upperb);
 
+void Rf_divset(int alg, int iv[], int liv, int lv, double v[]);
+
+void
+nlminb_iterate(double b[], double d[], double fx, double g[], double h[],
+	       int iv[], int liv, int lv, int n, double v[], double x[]);
+
+void
+nlsb_iterate(double b[], double d[], double dr[], int iv[], int liv,
+	     int lv, int n, int nd, int p, double r[], double rd[],
+	     double v[], double x[]);
+
 #endif
