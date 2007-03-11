@@ -50,6 +50,12 @@ all: Makefile DESCRIPTION
 	    -exec rm -rf \{\} \; 2>/dev/null; \
 	  fi; \
 	fi
+	@if test -d $(srcdir)/inst/include; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/include; \
+	  cp -pr  $(srcdir)/inst/include/* $(top_builddir)/library/$(pkg)/include; \
+	  find "$(top_builddir)/library/$(pkg)/include" -name .svn -type d -prune \
+	    -exec rm -rf \{\} \; 2>/dev/null; \
+	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \
