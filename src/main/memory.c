@@ -1617,7 +1617,7 @@ void vmaxset(char *ovmax)
 char *R_alloc(long nelem, int eltsize)
 {
     R_size_t size = nelem * eltsize;
-    double dsize = nelem * eltsize;
+    double dsize = (double)nelem * eltsize;
     if (dsize > 0) { /* precaution against integer overflow */
 	SEXP s;
 #if SIZEOF_LONG > 4

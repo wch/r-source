@@ -49,6 +49,9 @@ BUG FIXES
 
     o	read.ftable() was not functional on non-seekable connections
 	such as URLs.
+	
+    o	Some large memory allocations could cause segfaults or 
+    	crashes (e.g. followup to PR#9557).
 
 
 
