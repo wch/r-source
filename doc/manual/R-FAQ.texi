@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-03-08
+@set FAQ_DATE @value{FAQ_YEAR}-03-09
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -3581,8 +3581,6 @@ Inferences for ratios of coefficients in the general linear model.
 @c @item mscalib
 @c Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
 @c </COMMENT>
-@item msgcop
-Semiparametric Bayesian Gaussian copula estimation.
 @item msm
 Functions for fitting continuous-time Markov multi-state models to
 categorical processes observed at arbitrary times, optionally with
@@ -4084,6 +4082,8 @@ Significance Analysis of Microarrays.
 @item sandwich
 Model-robust standard error estimators for time series and longitudinal
 data.
+@item sbgcop
+Semiparametric Bayesian Gaussian copula estimation.
 @item sca
 Simple Component Analysis.
 @item scaleboot
