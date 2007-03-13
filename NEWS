@@ -661,6 +661,8 @@ BUG FIXES
 	non-NULL options("error") expressions for errors within a try, and
 	(ii) try() would catch user interrupts.
 
+    o	str(obj) could fail when obj contained a dendrogram.
+
 
 
 
@@ -714,9 +716,9 @@ BUG FIXES
 
     o	read.ftable() was not functional on non-seekable connections
 	such as URLs.
-	
-    o	Some large memory allocations could cause segfaults or 
-    	crashes (e.g. followup to PR#9557).
+
+    o	Some large memory allocations could cause segfaults or
+	crashes (e.g. followup to PR#9557).
 
 
 

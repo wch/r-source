@@ -4616,3 +4616,10 @@ try(supsmu(x,y))
 which.min(c(NA, NA, Inf))
 which.max(c(NA, NA, -Inf, -Inf))
 ## were integer(0) in < 2.5.0
+
+## str.dendrogram did not work with 'max.level=NA'
+## which has become default when called from str.default():
+cm <- cor(USJudgeRatings)
+hm <- heatmap(cm, symm = TRUE, keep.dendro = TRUE)
+str(hm, max=2) # reasonable
+str(hm)        # gave error (less reasonable than above)

@@ -126,13 +126,14 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 }
 
 str.dendrogram <-
-function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
+function (object, max.level = NA, digits.d = 3, give.attr = FALSE,
           wid = getOption("width"), nest.lev = 0, indent.str = "",
           stem = "--", ...)
 {
-## MM: Maybe improve this :
-## -- e.g. when 'object' is part of a larger structure which *is* str()ed
-## with default max.level= 0,  the dendrogram shouldn't be str()ed to all levels
+## TO DO: when object is part of a larger structure which is str()ed
+##    with default max.level= NA, it should not be str()ed to all levels,
+##   but only to e.g. level 2
+## Implement via smarter default for 'max.level' (?)
 
     pasteLis <- function(lis, dropNam, sep = " = ") {
 	## drop uninteresting "attributes" here
@@ -155,8 +156,8 @@ function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
 	}
 	cat("[dendrogram w/ ", le, " branches and ", memb, " members at h = ",
             format(hgt, digits=digits.d), if(give.attr) at,
-            "]", if(max.level > 0 && nest.lev == max.level)" ..", "\n", sep="")
-	if (max.level==0 || nest.lev < max.level) {
+            "]", if(!is.na(max.level) && nest.lev == max.level)" ..", "\n", sep="")
+	if (is.na(max.level) || nest.lev < max.level) {
 	    for(i in 1L:le) {
 		##cat(indent.str, nam.ob[i], ":", sep="")
 		str(object[[i]], nest.lev = nest.lev + 1,
