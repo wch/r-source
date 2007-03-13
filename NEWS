@@ -27,7 +27,7 @@ USER-VISIBLE CHANGES
 	names, and it may be beneficial to recreate such objects via
 	read.table() or data.frame().
 
-    o   $ on atomic vectors is now raises a warning
+    o	$ on atomic vectors now raises a warning.
 
 NEW FEATURES
 
@@ -115,13 +115,13 @@ NEW FEATURES
 	.deparseOpts() includes "S_compatible".
 
     o	options(device = ) now accepts a function object as well as
-        the name of a function.
+	the name of a function.
 
     o	uniroot() now works if the zero occurs at one of the ends of
 	the interval (suggestion of Tamas Papp).
 
     o	rgb() now accepts the red, green and blue components in a
-    	single matrix or data frame.
+	single matrix or data frame.
 
     o	New utility function RShowDoc() in package 'utils' to find and
 	display manuals and other documentation files.
@@ -131,7 +131,7 @@ NEW FEATURES
 	than deparsing).  This affects example() and Sweave() as well.
 
     o	Set the parser to give verbose error messages in case of
-    	syntax errors.
+	syntax errors.
 
     o	New function environmentName() to give the print name of
 	environments such as "namespace:base".
@@ -212,7 +212,7 @@ NEW FEATURES
 	  generating long dummy row names and then discarding them.
 
 	- expand.grid() and merge() generate compact 'automatic' row
-          names.
+	  names.
 
 	- data.matrix() and as.matrix.data.frame() have a new argument
 	  'rownames.force' that by default drops 'automatic' row names.
@@ -226,12 +226,12 @@ NEW FEATURES
 	when (part of) a single column is selected.
 
     o	Objects of class "difftime" are now handled more flexibly. The
-        units of such objects can now be accessed via a units()
-        function, which also has a replacement form, and there are
-        conversion methods to and from numeric, which also allow the
-        specification of units.  Objects of this class can also be
-        stored in data frames now.  A format() method has been added,
-        and the print method was revised.
+	units of such objects can now be accessed via a units()
+	function, which also has a replacement form, and there are
+	conversion methods to and from numeric, which also allow the
+	specification of units.	 Objects of this class can also be
+	stored in data frames now.  A format() method has been added,
+	and the print method was revised.
 
     o	args(), str() and print() now give the argument lists of primitive
 	functions.
@@ -307,7 +307,7 @@ NEW FEATURES
 	environment.
 
     o	rbind.data.frame() now ignores all zero-row inputs, as well as
-	zero-column inputs (which it used to do, undocumented).  This
+	zero-column inputs (which it used to do, undocumented).	 This
 	is because read.table() can create zero-row data frames with
 	NULL columns, and those cannot be extended.
 
@@ -322,7 +322,7 @@ NEW FEATURES
 	section in the specified encoding via file.show().
 
     o	text(), mtext(), strheight(), strwidth(), legend(), axis(),
-        title(), pie(), grid.text() and textGrob() all attempt to
+	title(), pie(), grid.text() and textGrob() all attempt to
 	coerce non-language annotation objects (in the sense of is.object)
 	to character vectors.  This is principally intended to cover
 	factors and POSIXt and Date objects, and is done via the
@@ -340,7 +340,7 @@ NEW FEATURES
 
     o	R now attempts to keep track of character strings which are
 	known to be in Latin-1 or UTF-8 and print or plot them
-	appropriately in other locales.  This is primarily intended
+	appropriately in other locales.	 This is primarily intended
 	to make it possible to use data in Western European languages
 	in both Latin-1 and UTF-8 locales.  Currently scan(),
 	read.table(), readLines(), parse() and source() allow
@@ -370,14 +370,14 @@ NEW FEATURES
 	running.
 
     o	There have been numerous performance improvements to the data
-	editor on both Windows and X11.  In particular, resizing the
+	editor on both Windows and X11.	 In particular, resizing the
 	window works much better on X11.
 
     o	New function callCC() providing a downward-only version of
 	Scheme's call with rurrent continuation.
 
-    o   capabilities() now has a "profmem" entry indicating whether
-        R has been compiled with memory profiling.
+    o	capabilities() now has a "profmem" entry indicating whether
+	R has been compiled with memory profiling.
 
 
 DEPRECATED & DEFUNCT
@@ -444,7 +444,7 @@ C-LEVEL FACILITIES
 
     o	R_ParseVector() has a new 4th argument 'SEXP srcfile' allowing
 	source references to be attached to the returned expression list.
-	
+
 
 UTILITIES
 
@@ -701,7 +701,7 @@ BUG FIXES
 	with exact symmetry about the midpoint of the interval
 	supplied.  (PR#9438)
 
-    o	The residuals from an lm() fit with no coefficients but an 
+    o	The residuals from an lm() fit with no coefficients but an
 	offset were incorrect.
 
     o	oneway.test() was expecting a literal formula and did not
@@ -1568,7 +1568,7 @@ INSTALLATION
 	binaries, they can be requested by using "mac.binary.xxx" in
 	contrib.url(), where xxx is the desired architecture.
 
-    o   There is a new configure option --enable-memory-profiling to 
+    o   There is a new configure option --enable-memory-profiling to
         enable memory profiling with tracemem, Rprof, Rprofmem.
 
 
