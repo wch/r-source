@@ -446,6 +446,11 @@ C-LEVEL FACILITIES
     o	R_ParseVector() has a new 4th argument 'SEXP srcfile' allowing
 	source references to be attached to the returned expression list.
 
+    o	Added ptr_R_WriteConsoleEx callback which allows consoles to
+	distinguish between regular output and errors/warnings.
+	To ensure backward compatibility it is only used if
+	ptr_R_WriteConsole is set to NULL.
+
 
 UTILITIES
 
@@ -476,7 +481,7 @@ UTILITIES
 	scripts and similar tasks.  See help("Rscript") and 'An
 	Introduction to R' for further details.
 
-    o	R CMD BATCH (not WIndows) no longer prepends
+    o	R CMD BATCH (not Windows) no longer prepends
 	'invisible(options(echo = TRUE))' to the input script.  This
 	was the default unless --slave is specified and the latter is
 	no longer overridden.
