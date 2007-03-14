@@ -67,8 +67,8 @@ x$name
   The default methods work somewhat differently for atomic vectors,
   matrices/arrays and for recursive (list-like, see
   \code{\link{is.recursive}}) objects.  \code{$} returns \code{NULL}
-  except for recursive objects, and is only discussed in the section
-  below on recursive objects.
+  (with a warning) except for recursive objects, and is only discussed
+  in the section below on recursive objects.
 
   Subsetting (except by an empty index) will drop all attributes except
   \code{names}, \code{dim} and \code{dimnames}.

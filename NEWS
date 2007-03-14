@@ -29,6 +29,7 @@ USER-VISIBLE CHANGES
 
     o	$ on atomic vectors now raises a warning.
 
+
 NEW FEATURES
 
     o	nls.control(* , printEval = FALSE, warnOnly = FALSE) are two new
