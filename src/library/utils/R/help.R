@@ -111,14 +111,15 @@ function(x, ...)
                             indent = 22)
             writeLines(c(strwrap(msg), "", paste(" ", txt), ""))
             if(interactive()) {
-                fp <- file.path(paths, "Meta", "hsearch.rds")
+                fp <- file.path(paths, "Meta", "Rd.rds")
                 tp <- basename(p)
                 titles <- tp
+                if(type == "html") tp <- tools::file_path_sans_ext(tp)
                 for (i in seq(along = fp)) {
-                    tmp <- try(.readRDS(fp[i])[[1]])
+                    tmp <- try(.readRDS(fp[i]))
                     titles[i] <- if(inherits(tmp, "try-error"))
                         "unknown title" else
-                    tmp[tmp[,"name"] == tp[i], "title"]
+                    tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]
                 }
                 txt <- paste(titles, " {", basename(paths), "}", sep="")
                 ## FIXME: use html page for HTML help.
