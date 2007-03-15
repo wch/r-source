@@ -669,6 +669,8 @@ BUG FIXES
 
     o	str(obj) could fail when obj contained a dendrogram.
 
+    o	Using <data frame>[, ,last column>] <- NULL failed (PR#9565)
+
 
 
 

@@ -799,8 +799,9 @@ data.frame <-
 	}
     else if(p > 0L) for(jjj in p:1L) { # we might delete columns with NULL
 	jj <- jseq[jjj]
-	x[[jj]] <- value[[ jvseq[[jjj]] ]]
-        if(is.atomic(x[[jj]])) names(x[[jj]]) <- NULL
+        v <- value[[ jvseq[[jjj]] ]]
+	x[[jj]] <- v
+        if(!is.null(v) && is.atomic(x[[jj]])) names(x[[jj]]) <- NULL
     }
     if(length(new.cols) > 0L) {
         new.cols <- names(x) # we might delete columns with NULL

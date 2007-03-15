@@ -4617,9 +4617,17 @@ which.min(c(NA, NA, Inf))
 which.max(c(NA, NA, -Inf, -Inf))
 ## were integer(0) in < 2.5.0
 
+
 ## str.dendrogram did not work with 'max.level=NA'
 ## which has become default when called from str.default():
 cm <- cor(USJudgeRatings)
 hm <- heatmap(cm, symm = TRUE, keep.dendro = TRUE)
 str(hm, max=2) # reasonable
 str(hm)        # gave error (less reasonable than above)
+
+
+## [<-.data.frame did not allow deleting the last column (PR#9565)
+DF <- data.frame(x = 1:3, y = 4:6, z = 7:9)
+DF[, "z"] <- NULL
+stopifnot(identical(dim(DF), c(3L, 2L)))
+## 'subscript out of bounds' in 2.4.1.
