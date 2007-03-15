@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-03-13
+@set FAQ_DATE @value{FAQ_YEAR}-03-15
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -4162,6 +4162,8 @@ Test of hypothesis about sigma2.
 @item signal
 A set of generally Matlab/Octave-compatible signal processing
 functions.
+@item signalextraction
+Real-time signal extraction (Direct Filter Approach).
 @item simecol
 SIMulation of ECOLogical (and other) dynamic systems.
 @item simex
