@@ -277,7 +277,7 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
         options[[ x[[k]][1] ]] <- x[[k]][2]
 
     if(!is.null(options[["label"]]) && !is.null(options[["engine"]]))
-        options[["label"]] <- sub(paste(".", options[["engine"]], "$",
+        options[["label"]] <- sub(paste("\\.", options[["engine"]], "$",
                                         sep=""),
                                   "", options[["label"]])
 
