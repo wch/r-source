@@ -107,6 +107,10 @@ persp(x, \dots)
   number and the y axis to column number, with column 1 at the bottom,
   so that with the standard rotation angles, the top left corner of the
   matrix is displayed at the left hand side, closest to the user.
+
+  The size of the axis labels and the annotations for
+  \code{ticktype="detailed"} are controlled by graphics parameter
+  \code{"cex"}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
