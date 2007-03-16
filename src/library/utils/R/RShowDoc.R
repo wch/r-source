@@ -1,6 +1,6 @@
 RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
 {
-    paste0 <- function(x, ext) paste(x, ext, sep=".")
+    paste. <- function(x, ext) paste(x, ext, sep=".")
     pdf_viewer <- function(path) {
         if(.Platform$OS.type == "windows") shell.exec(path)
         else system(paste(shQuote(getOption("pdfviewer")), shQuote(path)),
@@ -22,12 +22,12 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     if(!missing(package)) {
         pkgpath <- .find.package(package)
         if(type == "pdf") {
-            path <- file.path(pkgpath, "doc", paste(what, "pdf", sep="."))
+            path <- file.path(pkgpath, "doc", paste.(what, "pdf"))
             if(file.exists(path)) {
                 pdf_viewer(path)
                 return(invisible(path))
             }
-            path <- file.path(pkgpath, paste(what, "pdf", sep="."))
+            path <- file.path(pkgpath, paste.(what, "pdf"))
             if(file.exists(path)) {
                 pdf_viewer(path)
                 return(invisible(path))
@@ -35,12 +35,12 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
             type <- "html"
         }
         if(type == "html") {
-            path <- file.path(pkgpath, "doc", paste(what, "html", sep="."))
+            path <- file.path(pkgpath, "doc", paste.(what, "html"))
             if(file.exists(path)) {
                 html_viewer(path)
                 return(invisible(path))
             }
-            path <- file.path(pkgpath, paste(what, "html", sep="."))
+            path <- file.path(pkgpath, paste.(what, "html"))
             if(file.exists(path)) {
                 html_viewer(path)
                 return(invisible(path))
@@ -67,7 +67,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     } else if(what %in% c("R-admin", "R-data", "R-exts", "R-FAQ", "R-intro",
                           "R-ints", "R-lang")) {
         if(type == "pdf") {
-            path <- file.path(R.home("doc"), "manual", paste0(what, "pdf"))
+            path <- file.path(R.home("doc"), "manual", paste.(what, "pdf"))
             if(file.exists(path)) {
                 pdf_viewer(path)
                 return(invisible(path))
@@ -75,7 +75,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
             type <- "html"
         }
         if(type == "html") {
-            path <- file.path(R.home("doc"), "manual", paste0(what, "html"))
+            path <- file.path(R.home("doc"), "manual", paste.(what, "html"))
             if(file.exists(path)) {
                 html_viewer(path)
                 return(invisible(path))
@@ -89,7 +89,7 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     } else if(.Platform$OS.type == "windows" && what %in% "rw-FAQ") {
         if(type == "pdf") type <- "html"
         if(type == "html") {
-            path <- file.path(R.home("doc"), "html", paste0(what, "html"))
+            path <- file.path(R.home("doc"), "html", paste.(what, "html"))
             if(file.exists(path)) {
                 shell.exec(chartr("/", "\\", path))
                 return(invisible(path))
