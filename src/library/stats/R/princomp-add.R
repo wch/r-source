@@ -46,9 +46,11 @@ print.summary.princomp <-
 }
 
 plot.princomp <- function(x, main = deparse(substitute(x)), ...)
-    screeplot(x, main = main, ...)
+  screeplot.default(x, main = main, ...)
 
-screeplot <-
+screeplot <- function(x, ...) UseMethod("screeplot")
+
+screeplot.default <-
 function(x, npcs = min(10, length(x$sdev)),
          type = c("barplot", "lines"),
          main = deparse(substitute(x)), ...)

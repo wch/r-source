@@ -60,7 +60,7 @@ prcomp.formula <- function (formula, data = NULL, subset, na.action, ...)
 }
 
 plot.prcomp <- function(x, main = deparse(substitute(x)), ...)
-    screeplot(x, main = main, ...)
+    screeplot.default(x, main = main, ...)
 
 print.prcomp <- function(x, print.x = FALSE, ...) {
     cat("Standard deviations:\n")

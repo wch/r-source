@@ -114,7 +114,7 @@ prcomp(x, \dots)
   \emph{Modern Applied Statistics with S}, Springer-Verlag.
 }
 \seealso{
-  \code{\link{biplot.prcomp}},
+  \code{\link{biplot.prcomp}}, \code{\link{screeplot}},
   \code{\link{princomp}}, \code{\link{cor}}, \code{\link{cov}},
   \code{\link{svd}}, \code{\link{eigen}}.
 }

@@ -380,6 +380,9 @@ NEW FEATURES
     o	capabilities() now has a "profmem" entry indicating whether
 	R has been compiled with memory profiling.
 
+    o	screeplot() is now (S3) generic with a default method, thanks
+	to a patch from Gavin Simpson.
+
 
 DEPRECATED & DEFUNCT
 
@@ -727,7 +730,7 @@ BUG FIXES
 
     o	Some large memory allocations could cause segfaults or
 	crashes (e.g. followup to PR#9557).
-	
+
     o	Sweave() would drop characters from the end of chunk names
     	ending in "R".  (PR#9567)
 
