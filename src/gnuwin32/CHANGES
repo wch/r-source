@@ -81,7 +81,7 @@ isblank that was previously missing.)
 src/extra/trio has been updated to 1.12.
 
 malloc.c has been updated to version 2.8.3.  This version has a
-slightly different allocation strateg, and is likely to work a little
+slightly different allocation strategy, and is likely to work a little
 better close to address space limits but may give more warnings about
 reaching the total allocation before successfully allocating.
 
@@ -406,7 +406,7 @@ languages.
 Installing packages
 -------------------
 
-R CMD INSTALL will now clean up after interruption (by ctrl-C, at
+R CMD INSTALL will now clean up after interruption (by Ctrl-C, at
 least where supported by the shell).
 
 R CMD INSTALL --docs now has more options.
@@ -421,7 +421,7 @@ There is now support for compiling Fortran 90/95 code in packages: see
 Packages can now supply export files pkgname/src/pkgname-win.def:
 package 'stats' does so.
 
-The restriction on the numnber of dots in a package name (which
+The restriction on the number of dots in a package name (which
 stemmed from an undocumented restriction in ld.exe) has been worked
 around.
 
