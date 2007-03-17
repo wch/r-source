@@ -427,13 +427,8 @@ Internationalization
 
 Installing packages
 
-<<<<<<< .mine
-    o	R CMD INSTALL will now clean up after interruption (by ctrl-C, at
+    o	R CMD INSTALL will now clean up after interruption (by Ctrl-C, at
 	least where supported by the shell).
-=======
-R CMD INSTALL will now clean up after interruption (by Ctrl-C, at
-least where supported by the shell).
->>>>>>> .r40848
 
     o	R CMD INSTALL --docs now has more options.
 
@@ -447,15 +442,9 @@ least where supported by the shell).
     o	Packages can now supply export files pkgname/src/pkgname-win.def:
 	package 'stats' does so.
 
-<<<<<<< .mine
-    o	The restriction on the numnber of dots in a package name (which
+    o	The restriction on the number of dots in a package name (which
 	stemmed from an undocumented restriction in ld.exe) has been worked
 	around.
-=======
-The restriction on the number of dots in a package name (which
-stemmed from an undocumented restriction in ld.exe) has been worked
-around.
->>>>>>> .r40848
 
 
 C-level changes
