@@ -7,7 +7,8 @@ try <- function(expr, silent = FALSE) {
             ## Patch up the call to produce nicer result for testing as
             ## try(stop(...)).  This will need adjusting if the
             ## implementation of tryCatch changes.
-            if (as.list(call)[[1]] == "doTryCatch")
+            ## Use identical() since call[[1]] can be non-atomic.
+            if (identical(call[[1]], quote(doTryCatch)))
                 call <- sys.call(-4)
             dcall <- deparse(call)[1]
             prefix <- paste("Error in", dcall, ": ")
