@@ -3176,6 +3176,22 @@ compliance to IEC60659.  Also,
 @url{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
 suggests that @option{-pc64} may be desirable.
 
+To build a 64-bit version of @R{} on @cputype{powerpc64} with
+@command{gcc 4.1.1}, Ei-Ji Nakama used
+
+@example
+CC="gcc -m64"
+CXX="gxx -m64"
+F77="gfortran -m64"
+FC="gfortran -m64"
+CFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
+FFLAGS="-mminimal-toc -fno-optimize-sibling-calls -g -O2"
+@end example
+
+@noindent
+the additional flags being needed to problems linking against
+@file{libnmath.a}.
+
 
 @node Mac OS X, Solaris, Linux, Platform notes
 @section Mac OS X
