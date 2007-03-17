@@ -4631,3 +4631,8 @@ DF <- data.frame(x = 1:3, y = 4:6, z = 7:9)
 DF[, "z"] <- NULL
 stopifnot(identical(dim(DF), c(3L, 2L)))
 ## 'subscript out of bounds' in 2.4.1.
+
+## new tryCatch() based try()  with anonymous function
+v <- try(do.call(function(x) stop("died"), list(1)), silent=TRUE)
+stopifnot(inherits(v, "try-error"))
+## failed in some version of R-devel (2.5.0)
