@@ -584,6 +584,6 @@ get_all_vars <- function(formula, data = NULL, ...)
     extras <- eval(extras, data, env)
     x <- as.data.frame(c(variables, extras), optional=TRUE)
     names(x) <- c(varnames, extranames)
-    row.names(x) <- rownames
+    attr(x, "row.names") <- rownames # might be short form
     x
 }
