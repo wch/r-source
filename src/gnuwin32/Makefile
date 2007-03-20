@@ -32,7 +32,8 @@ DATE = $(shell date +%F)
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
-OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
+C99FLAG=-std=gnu99
+OPTFLAGS=-O3 -Wall -pedantic $(C99FLAG)
 FOPTFLAGS=-O3 -Wall
 ifdef DEBUG
  OPTFLAGS+=$(G_FLAG)
