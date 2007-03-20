@@ -22,7 +22,7 @@
    It is only called if COMPILING_R is defined (in util.c) or
    from GNU C systems.
 
-   There are different comventions for inlining across compilation units.
+   There are different conventions for inlining across compilation units.
    We pro tem only use the GCC one.  See
    http://www.greenend.org.uk/rjk/2003/03/inline.html
  */
