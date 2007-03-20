@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-03-15
+@set FAQ_DATE @value{FAQ_YEAR}-03-20
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -3080,6 +3080,8 @@ and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
 machine.  Includes regression methods for least squares, absolute loss,
 logistic, Poisson, Cox proportional hazards partial likelihood, and
 AdaBoost exponential loss.
+@item gcl
+Compute a fuzzy rules or tree classifier from data.
 @item gclus
 Clustering Graphics.  Orders panels in scatterplot matrices and parallel
 coordinate displays by some merit index.
@@ -4205,6 +4207,8 @@ R.
 Fault Tolerant Simple Network of Workstations.
 @item snp.plotter
 Plots of @math{p}-values using single SNP and/or haplotype data.
+@item snpXpert
+Tools to analyze SNP data.
 @item som
 Self-Organizing Maps (with application in gene clustering).
 @item sound
