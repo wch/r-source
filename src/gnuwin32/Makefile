@@ -32,7 +32,6 @@ DATE = $(shell date +%F)
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
-C99FLAG=-std=gnu99
 OPTFLAGS=-O3 -Wall -pedantic $(C99FLAG)
 FOPTFLAGS=-O3 -Wall
 ifdef DEBUG
@@ -161,10 +160,10 @@ endif
 
 
 rlibs:
-	$(MAKE) --no-print-directory -C ../extra/intl -f Makefile.win
-	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../extra/intl OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../appl OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../main OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./graphapp OPTFLAGS='$(OPTFLAGS)'
 	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
 	@for ex in pcre bzip2 zlib xdr trio; do \
