@@ -124,7 +124,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     }
                     message(paste("\n\tThe following object(s) are masked",
                                   if (i < lib.pos) "_by_" else "from", sp[i],
-                                  ":\n\n\t", same, "\n"))
+				  ":\n\n\t", paste(same, collapse=",\n\t "), "\n"))
                 }
             }
         }
