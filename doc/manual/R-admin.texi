@@ -1978,11 +1978,16 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.  Your C
 compiler should be @acronym{IEC}@tie{}60059@footnote{also known as
 @acronym{IEEE}@tie{}754}, POSIX 1003.1 and C99-compliant if at all
 possible.  @R{} tries to choose suitable flags for the C compilers it
-knows about, but you may have to set @code{CC} or @code{CFLAGS} suitably.
-For recent versions of @command{gcc} with @code{glibc} this means including
-@option{-std=gnu99} (@option{-std=c99} excludes POSIX functionality).
-If the compiler is detected as @command{gcc},  @code{-std=gnu99} will be
-appended to @code{CC} unless it conflicts with a setting of @code{CFLAGS}.
+knows about, but you may have to set @code{CC} or @code{CFLAGS}
+suitably.  For recent versions of @command{gcc} with @code{glibc} this
+means including @option{-std=gnu99} (@option{-std=c99} excludes POSIX
+functionality).  If the compiler is detected as @command{gcc},
+@code{-std=gnu99} will be appended to @code{CC} unless it conflicts
+with a setting of @code{CFLAGS}.  (For future versions of
+@command{gcc} this causes problems with the semantics of @code{inline}
+both for @R{} and various OSes: these are fixed by using in
+@code{CFLAGS} the flag @option{-fgnu89-inline} which will be available
+as from @command{gcc 4.1.3}.)
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora
