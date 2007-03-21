@@ -672,7 +672,10 @@ BUG FIXES
 
     o	str(obj) could fail when obj contained a dendrogram.
 
-    o	Using <data frame>[, ,last column>] <- NULL failed (PR#9565)
+    o	Using <data frame>[, <last column>] <- NULL failed (PR#9565)
+
+    o	choose(n, k) could return non-integer values for integer n and
+	small k on some platforms.
 
 
 

@@ -4636,3 +4636,8 @@ stopifnot(identical(dim(DF), c(3L, 2L)))
 v <- try(do.call(function(x) stop("died"), list(1)), silent=TRUE)
 stopifnot(inherits(v, "try-error"))
 ## failed in some version of R-devel (2.5.0)
+
+
+## choose(n,k) should be integer if n is
+stopifnot(choose(11,6) == 462)
+## was < 462 on some AMD64 Linux
