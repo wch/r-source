@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-10-18 r39668)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.5.0 Under development (unstable) (2007-03-21 r40860)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -288,4 +288,13 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
  in: .findInheritedMethods(classes, fdef, mtable) 
 > assertError(b | 1)
 > assertError(TRUE & b)
+> 
+> ## methods' hidden cbind() / rbind:
+> cBind <- methods:::cbind
+> setClass("myMat", representation(x = "numeric"))
+[1] "myMat"
+> setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
+[1] "cbind2"
+> m <- new("myMat", x = c(1, pi))
+> stopifnot(identical(m, cBind(m)))
 > 
