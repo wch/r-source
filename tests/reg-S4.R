@@ -180,3 +180,10 @@ assertError <- function(expr)
 assertError(b & b)
 assertError(b | 1)
 assertError(TRUE & b)
+
+## methods' hidden cbind() / rbind:
+cBind <- methods:::cbind
+setClass("myMat", representation(x = "numeric"))
+setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
+m <- new("myMat", x = c(1, pi))
+stopifnot(identical(m, cBind(m)))
