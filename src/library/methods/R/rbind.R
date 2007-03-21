@@ -13,10 +13,11 @@ rbind <- function(..., deparse.level = 1)
     ## remove trailing 'NULL's:
     while(na > 0 && is.null(argl[[na]])) { argl <- argl[-na]; na <- na - 1 }
     if(na == 0) return(NULL)
-    if(na <= 1)
-	## FIXME(?) if	..1  is an ``object'', {once we can test this reliably!}
-	## -------  call  rbind2(..1, NULL) ?
-	return(.Internal(rbind(deparse.level, ...)))
+    if(na == 1) {
+	if(isS4(..1))
+	    return(rbind2(..1))
+	else return(.Internal(rbind(deparse.level, ...)))
+    }
 
     ## else :  na >= 2
 

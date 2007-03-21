@@ -59,6 +59,9 @@ BUG FIXES
     o	library(), i.e. its internal checkConflicts(), now (again) prints
 	"The following object(s) are masked .." only once per masked package.
 
+    o	methods:::cbind(x) {one argument} now works,  calling cbind2(x)
+	when 'x' is an S4 object.
+
 
 
 		CHANGES IN R VERSION 2.4.1
