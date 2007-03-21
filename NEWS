@@ -740,6 +740,9 @@ BUG FIXES
     o	Sweave() would drop characters from the end of chunk names
     	ending in "R".  (PR#9567)
 
+    o	library(), i.e. its internal checkConflicts(), now (again) prints
+	"The following object(s) are masked .." only once per masked package.
+
 
 
 		CHANGES IN R VERSION 2.4.1

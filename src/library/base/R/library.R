@@ -18,6 +18,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"), version)
 {
+    paste0 <- function(...) paste(..., sep="")
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
         current <- getRversion()
@@ -98,7 +99,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
-        ipos <- seq_along(sp)[-c(lib.pos, match(c("Autoloads", "CheckExEnv"), sp, 0))]
+	ipos <- seq_along(sp)[-c(lib.pos,
+				 match(c("Autoloads", "CheckExEnv"), sp, 0))]
         for (i in ipos) {
             obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
             if (any(obj.same > 0)) {
@@ -108,13 +110,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if(length(Classobjs)) same <- same[-Classobjs]
                 ## report only objects which are both functions or
                 ## both non-functions.
-                is_fn1 <- sapply(same, function(x)
-                                 exists(x, where = i, mode = "function",
-                                        inherits = FALSE))
-                is_fn2 <- sapply(same, function(x)
-                                 exists(x, where = lib.pos, mode = "function",
-                                        inherits = FALSE))
-                same <- same[is_fn1 == is_fn2]
+		same.isFn <- function(where)
+		    sapply(same, exists,
+                           where = where, mode = "function", inherits = FALSE)
+		same <- same[same.isFn(i) == same.isFn(lib.pos)]
                 if(length(same)) {
                     if (fst) {
                         fst <- FALSE
@@ -122,9 +121,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                                        package),
                                               domain = NA)
                     }
-                    packageStartupMessage(paste("\n\tThe following object(s) are masked",
-                                  if (i < lib.pos) "_by_" else "from", sp[i],
-                                  ":\n\n\t", same, "\n"))
+		    packageStartupMessage(paste(
+				"\n\tThe following object(s) are masked",
+				if (i < lib.pos) "_by_" else "from", sp[i],
+				":\n\n\t", paste(same, collapse=",\n\t "), "\n"))
                 }
             }
         }
@@ -209,8 +209,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	     package <- manglePackageName(package, version)
         } else { # Need to find the package version to install
             ## this throws a warning if lib.loc has not been cleaned.
-            pkgDirs <- list.files(lib.loc,
-                                  pattern = paste("^", package, sep=""))
+            pkgDirs <- list.files(lib.loc, pattern = paste0("^", package))
             ## See if any directories in lib.loc match the pattern of
             ## 'package', if none do, just continue as it will get caught
             ## below.  Otherwise, if there is actually a 'package', use
@@ -332,11 +331,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                  libraryPkgName(package)), domain = NA)
             ## lazy-load data sets if required
             dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
-            if(file.exists(paste(dbbase, ".rdb", sep="")))
+            if(file.exists(paste0(dbbase, ".rdb")))
                 lazyLoad(dbbase, loadenv)
             ## lazy-load a sysdata database if present
             dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
-            if(file.exists(paste(dbbase, ".rdb", sep="")))
+            if(file.exists(paste0(dbbase, ".rdb")))
                 lazyLoad(dbbase, loadenv)
             ## now transfer contents of loadenv to an attached frame
             env <- attach(NULL, pos = pos, name = pkgname)
@@ -406,7 +405,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     else
                         warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible", call.=FALSE)
                 }
-                nm <- paste(names(txt), ":", sep="")
+                nm <- paste0(names(txt), ":")
                 formatDL(nm, txt, indent = max(nchar(nm, type="w")) + 3)
             } else if(basename(f) %in% "vignette.rds") {
                 txt <- .readRDS(f)
@@ -420,11 +419,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     cbind(basename(gsub("\\.[[:alpha:]]+$", "",
                                         txt$File)),
                           paste(txt$Title,
-                                paste(rep.int("(source", NROW(txt)),
-                                      ifelse(txt$PDF != "",
-                                             ", pdf",
-                                             ""),
-                                      ")", sep = "")))
+                                paste0(rep.int("(source", NROW(txt)),
+                                       ifelse(txt$PDF != "",
+                                              ", pdf",
+                                              ""),
+                                       ")")))
                 else NULL
             } else
                 readLines(f)
