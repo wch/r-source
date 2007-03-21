@@ -677,6 +677,9 @@ BUG FIXES
     o	choose(n, k) could return non-integer values for integer n and
 	small k on some platforms.
 
+    o	nclass.scott(x) and nclass.FD(x) no longer return NaN when var(x)
+	or IQR(x) is zero.
+
 
 
 
