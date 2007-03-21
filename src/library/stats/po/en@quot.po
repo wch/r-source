@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2006-09-21 15:21+0100\n"
-"PO-Revision-Date: 2006-09-21 15:21+0100\n"
+"POT-Creation-Date: 2007-03-21 16:08+0000\n"
+"PO-Revision-Date: 2007-03-21 16:08+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -141,7 +141,7 @@ msgstr "converged"
 msgid "'theta' should be of type character"
 msgstr "‘theta’ should be of type character"
 
-#: nls.c:297 port.c:379
+#: nls.c:297 port.c:380
 msgid "use of NULL environment is defunct"
 msgstr "use of NULL environment is defunct"
 
@@ -190,65 +190,65 @@ msgstr "invalid value of lag.max"
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 
-#: port.c:323
+#: port.c:324
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "gradient function must return a numeric vector of length %d"
 
-#: port.c:333
+#: port.c:334
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "Hessian function must return a square numeric matrix of order %d"
 
-#: port.c:383
+#: port.c:384
 msgid "'rho' must be an environment"
 msgstr "‘rho’ must be an environment"
 
-#: port.c:385 port.c:533
+#: port.c:386 port.c:534
 msgid "'d' must be a nonempty numeric vector"
 msgstr "‘d’ must be a nonempty numeric vector"
 
-#: port.c:387
+#: port.c:388
 msgid "When Hessian defined must also have gradient defined"
 msgstr "When Hessian defined must also have gradient defined"
 
-#: port.c:390
+#: port.c:391
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "environment ‘rho’ must contain a numeric vector ‘.par’ of length %d"
 
-#: port.c:401
+#: port.c:402
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "‘lower’ and ‘upper’ must be numeric vectors"
 
-#: port.c:447
+#: port.c:448
 msgid "'getElement' applies only to named lists"
 msgstr "‘getElement’ applies only to named lists"
 
-#: port.c:468
+#: port.c:469
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() not found"
 
-#: port.c:481
+#: port.c:482
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "‘gradient’ must be a numeric matrix of dimension (%d,%d)"
 
-#: port.c:502
+#: port.c:503
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn produced mode %d, length %d - wanted mode %d, length %d"
 
-#: port.c:515
+#: port.c:516
 msgid "invalid type for eval_check_store"
 msgstr "invalid type for eval_check_store"
 
-#: port.c:534
+#: port.c:535
 msgid "m must be a list"
 msgstr "m must be a list"
 
-#: port.c:554
+#: port.c:555
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "‘lowerb’ and ‘upperb’ must be numeric vectors"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-02-25 10:18+0000\n"
+"POT-Creation-Date: 2007-03-21 16:07+0000\n"
 "PO-Revision-Date: 2006-12-10 00:33-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -129,8 +129,8 @@ msgstr "неправильные 'names' в R_unlink"
 #: src/main/platform.c:907 src/main/platform.c:910 src/main/platform.c:913
 #: src/main/platform.c:916 src/main/platform.c:919 src/main/platform.c:998
 #: src/main/platform.c:1042 src/main/platform.c:1083 src/main/platform.c:1085
-#: src/main/platform.c:1152 src/main/platform.c:1260 src/main/platform.c:1505
-#: src/main/platform.c:1543 src/main/plot3d.c:2460 src/main/plot3d.c:2464
+#: src/main/platform.c:1152 src/main/platform.c:1260 src/main/platform.c:1512
+#: src/main/platform.c:1550 src/main/plot3d.c:2460 src/main/plot3d.c:2464
 #: src/main/plot3d.c:2469 src/main/plot3d.c:2473 src/main/plot3d.c:2477
 #: src/main/plot3d.c:2481 src/main/print.c:178 src/main/print.c:184
 #: src/main/print.c:206 src/main/print.c:212 src/main/print.c:218
@@ -143,8 +143,8 @@ msgstr "неправильные 'names' в R_unlink"
 #: src/main/unique.c:844 src/main/util.c:546 src/main/util.c:549
 #: src/modules/internet/internet.c:261 src/modules/internet/internet.c:267
 #: src/modules/internet/internet.c:273 src/modules/internet/internet.c:276
-#: src/modules/internet/internet.c:280 src/unix/sys-std.c:936
-#: src/unix/sys-std.c:958
+#: src/modules/internet/internet.c:280 src/unix/sys-std.c:946
+#: src/unix/sys-std.c:968
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "неправильный аргумент '%s'"
@@ -214,7 +214,7 @@ msgstr "'savehistory' можно использовать только в Rgui и в Rterm"
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 
-#: src/gnuwin32/extra.c:508 src/unix/sys-std.c:984
+#: src/gnuwin32/extra.c:508 src/unix/sys-std.c:994
 msgid "invalid timestamp"
 msgstr "неправильная временная метка"
 
@@ -245,7 +245,7 @@ msgstr "'loadhistory' можно использовать только в Rgui и в Rterm"
 #: src/main/util.c:770 src/main/util.c:775 src/main/util.c:783
 #: src/main/util.c:786 src/modules/X11/devX11.c:2469
 #: src/modules/X11/devX11.c:2496 src/modules/X11/devX11.c:2501
-#: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1031
+#: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1041
 #, c-format
 msgid "invalid '%s' value"
 msgstr "неправильное значение '%s'"
@@ -416,81 +416,81 @@ msgstr "первый аргумент должен быть текстовой строкой"
 msgid "Fatal error: %s\n"
 msgstr "Фатальная ошибка: %s\n"
 
-#: src/gnuwin32/system.c:287 src/unix/sys-std.c:607
+#: src/gnuwin32/system.c:297 src/unix/sys-std.c:607
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "кодировка '%s' не распознана"
 
-#: src/gnuwin32/system.c:293
+#: src/gnuwin32/system.c:303
 msgid "<ERROR: invalid input in encoding>\n"
 msgstr "<ОШИБКА: неправильный ввод для кодировки>\n"
 
-#: src/gnuwin32/system.c:496
+#: src/gnuwin32/system.c:506
 #, c-format
 msgid "Unable to open file '%s'"
 msgstr "Не могу открыть файл '%s'"
 
-#: src/gnuwin32/system.c:510
+#: src/gnuwin32/system.c:520
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "файл.show(): файл '%s' не существует\n"
 
-#: src/gnuwin32/system.c:887
+#: src/gnuwin32/system.c:899
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ВНИМАНИЕ: не дан max-mem-size\n"
 
-#: src/gnuwin32/system.c:893
+#: src/gnuwin32/system.c:905
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ВНИМАНИЕ: значение --max-mem-size неверное: пропущено\n"
 
-#: src/gnuwin32/system.c:895
+#: src/gnuwin32/system.c:907
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgstr "ВНИМАНИЕ: --max-mem-size=%lu'%c': слишком велик и пропущен\n"
 
-#: src/gnuwin32/system.c:900
+#: src/gnuwin32/system.c:912
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "ВНИМАНИЕ: max-mem-size =%4.1fM слишком мал и пропущен\n"
 
-#: src/gnuwin32/system.c:903
+#: src/gnuwin32/system.c:915
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "ВНИМАНИЕ: max-mem-size =%4.1fM слишком мал, используется 3Gb\n"
 
-#: src/gnuwin32/system.c:919 src/gnuwin32/system.c:929
-#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:307
-#: src/unix/system.c:316
+#: src/gnuwin32/system.c:931 src/gnuwin32/system.c:941
+#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:309
+#: src/unix/system.c:318
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "не могу открыть файл '%s'"
 
-#: src/gnuwin32/system.c:939 src/unix/system.c:327
+#: src/gnuwin32/system.c:951 src/unix/system.c:329
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:943 src/unix/system.c:338
+#: src/gnuwin32/system.c:955 src/unix/system.c:340
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ВНИМАНИЕ: неизвестный параметр '%s'\n"
 
-#: src/gnuwin32/system.c:968 src/unix/system.c:342
+#: src/gnuwin32/system.c:980 src/unix/system.c:344
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "АРГУМЕНТ '%s' __пропущен__\n"
 
-#: src/gnuwin32/system.c:975 src/unix/system.c:348
+#: src/gnuwin32/system.c:987 src/unix/system.c:350
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "установить длину для не-вектора"
 
-#: src/gnuwin32/system.c:996 src/unix/system.c:392
+#: src/gnuwin32/system.c:1008 src/unix/system.c:396
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "Вы должны задать '--save', '--no-save' или '--vanilla'"
 
-#: src/gnuwin32/system.c:1001
+#: src/gnuwin32/system.c:1013
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
@@ -4760,24 +4760,24 @@ msgstr "запрос на отчеты ОС не уважается"
 msgid "invalid value of 'what' argument"
 msgstr "неправильное значение what-аргумента"
 
-#: src/main/platform.c:1454
+#: src/main/platform.c:1461
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' должен быть единичным текстовым вектором"
 
-#: src/main/platform.c:1460
+#: src/main/platform.c:1467
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() не способна разрешить хост '%s'"
 
-#: src/main/platform.c:1467
+#: src/main/platform.c:1474
 msgid "unknown format returned by gethostbyname"
 msgstr "'gethostbyname' вернул неизвестный формат"
 
-#: src/main/platform.c:1478
+#: src/main/platform.c:1485
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() не поддерживается на этой платформе"
 
-#: src/main/platform.c:1525 src/main/platform.c:1567
+#: src/main/platform.c:1532 src/main/platform.c:1574
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' уже существует"
@@ -7281,7 +7281,7 @@ msgstr "<ОШИБКА: неправильный ввод для кодировки> "
 msgid "re-encoding is not available on this system"
 msgstr "перекодировка в этой системе недоступна"
 
-#: src/unix/sys-std.c:873
+#: src/unix/sys-std.c:883
 #, c-format
 msgid ""
 "Cannot open file '%s', reason '%s'\n"
@@ -7290,7 +7290,7 @@ msgstr ""
 "Не могу открыть файл '%s' по причине '%s'\n"
 "\n"
 
-#: src/unix/sys-std.c:876
+#: src/unix/sys-std.c:886
 #, c-format
 msgid ""
 "Cannot open file '%s'\n"
@@ -7299,19 +7299,19 @@ msgstr ""
 "Не могу открыть файл '%s'\n"
 "\n"
 
-#: src/unix/sys-std.c:939 src/unix/sys-std.c:961
+#: src/unix/sys-std.c:949 src/unix/sys-std.c:971
 msgid "'file' argument is too long"
 msgstr "аргумент 'file' слишком длинный"
 
-#: src/unix/sys-std.c:945 src/unix/sys-std.c:947
+#: src/unix/sys-std.c:955 src/unix/sys-std.c:957
 msgid "no history mechanism available"
 msgstr "механизм истории недоступен"
 
-#: src/unix/sys-std.c:970 src/unix/sys-std.c:972
+#: src/unix/sys-std.c:980 src/unix/sys-std.c:982
 msgid "no history available to save"
 msgstr "нет истории, чтобы сохранить"
 
-#: src/unix/sys-std.c:1076
+#: src/unix/sys-std.c:1086
 msgid "Sys.sleep is not implemented on this system"
 msgstr "'Sys.sleep' в этой системе не разработан"
 
@@ -7331,22 +7331,22 @@ msgstr "'intern=TRUE' не разработан для этой платформы"
 msgid "Sys.info() is not implemented on this system"
 msgstr "'Sys.info()' в этой системе не разработан"
 
-#: src/unix/system.c:246
+#: src/unix/system.c:248
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: --gui или -g без значения пропущен"
 
-#: src/unix/system.c:268
+#: src/unix/system.c:270
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: неизвестный gui '%s', использую X11\n"
 
-#: src/unix/system.c:271
+#: src/unix/system.c:273
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: неизвестный gui '%s', не использую никакого\n"
 
-#: src/unix/system.c:430
+#: src/unix/system.c:434
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: Только редактирование первого файла из списка"
 
