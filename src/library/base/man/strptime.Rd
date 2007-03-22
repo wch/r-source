@@ -239,7 +239,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   (On some systems \code{strptime} is replaced by corrected code from
   \samp{glibc}, when all the conversion specifications described here
   are supported, but with no alternative number representation nor era
-  available in any locale.
+  available in any locale.)
 #endif
 #ifdef windows
   Windows users will find no help page for \code{strptime}: code based

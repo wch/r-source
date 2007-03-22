@@ -796,7 +796,7 @@ static void glibc_fix(struct tm *tm, int *invalid)
     if(tm->tm_yday != NA_INTEGER) {
 	/* since we have yday, let that take precedence over mon/mday */
 	int yday = tm->tm_yday, mon = 0;
-	while(yday > (tmp = days_in_month[mon] +
+	while(yday >= (tmp = days_in_month[mon] +
 		      ((mon==1 && isleap(1900+tm->tm_year))? 1 : 0))) {
 	    yday -= tmp;
 	    mon++;

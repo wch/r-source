@@ -680,6 +680,9 @@ BUG FIXES
     o	nclass.scott(x) and nclass.FD(x) no longer return NaN when var(x)
 	or IQR(x) is zero.
 
+    o	strptime("%j") now also works for the first days of Feb-Dec.
+	(PR#9577)
+
 
 
 

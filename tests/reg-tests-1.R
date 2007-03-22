@@ -4641,3 +4641,11 @@ stopifnot(inherits(v, "try-error"))
 ## choose(n,k) should be integer if n is
 stopifnot(choose(11,6) == 462)
 ## was < 462 on some AMD64 Linux
+
+
+## fix up use of %j" format in strptime (PR#9577)
+x <- strptime(31:33, "%j")
+x
+stopifnot(!is.na(x))
+## day 32 was NA in R < 2.5.0
+
