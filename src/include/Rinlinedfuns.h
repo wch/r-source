@@ -30,7 +30,14 @@
 #define R_INLINES_H_
 
 #ifndef COMPILING_R /* defined only in util.c */
-# define INLINE_FUN extern R_INLINE
+/* The following was added in gcc 4.1.3.  It is defined if
+   GCC is following C99 inline semantics by default: we
+   switch R's usage to the older GNU semantics via attributes. */
+# ifdef __GNUC_STDC_INLINE__
+#  define INLINE_FUN extern __attribute__((gnu_inline)) inline
+# else
+#  define INLINE_FUN extern R_INLINE
+# endif
 #else
 # define INLINE_FUN
 #endif
