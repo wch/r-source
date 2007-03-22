@@ -2782,7 +2782,7 @@ TRIO_ARGS6((self, number, flags, width, precision, base),
   trio_long_double_t dblBase;
   trio_long_double_t dblFractionBase;
   trio_long_double_t integerAdjust;
-  trio_long_double_t fractionAdjust;
+  trio_long_double_t fractionAdjust, fAdjust = 0.5;
   trio_long_double_t workFractionNumber;
   trio_long_double_t workFractionAdjust;
   int fractionDigitsInspect;
@@ -2998,12 +2998,10 @@ TRIO_ARGS6((self, number, flags, width, precision, base),
   /* This where rounding up occurs */
   if(base == 10.0) {
       workNumber = trio_fmodl(number * dblFractionBase, 10.0);
-      if((int) workNumber % 2 == 0) {
-	  workNumber = number + 0.5 * (1 - 1e-14) / dblFractionBase;
-      } else
-	  workNumber = number + 0.5 / dblFractionBase;
-  } else
-      workNumber = number + 0.5 / dblFractionBase;
+      if((int) workNumber % 2 == 0) fAdjust = 0.5 * (1 - 5*epsilon);
+  }
+  workNumber = number + fAdjust / dblFractionBase;
+  /* end of R modification */
 
   if (trio_floorl(number) != trio_floorl(workNumber))
     {
@@ -3058,7 +3056,8 @@ TRIO_ARGS6((self, number, flags, width, precision, base),
     }
 
   /* Estimate accuracy */
-  integerAdjust = fractionAdjust = 0.5;
+  integerAdjust = 0.5;
+  fractionAdjust = fAdjust;
 # if TRIO_FEATURE_ROUNDING
   if (flags & FLAGS_ROUNDING)
     {
@@ -3238,6 +3237,8 @@ TRIO_ARGS6((self, number, flags, width, precision, base),
       } else
         workNumber = trio_floorl(((integerNumber + integerAdjust)
 				/ TrioPower(base, integerDigits - i - 1)));
+      /* end of R modification */
+
       if (i > integerThreshold)
 	{
 	  /* Beyond accuracy */
