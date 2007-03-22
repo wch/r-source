@@ -1494,7 +1494,7 @@ static void de_delete(control c)
     DEstruct DE = getdata(c);
     DE->CellModified = TRUE;
     DE->buf[0] = '\0';
-    DE->clength = -1;
+    DE->clength = 0;
     DE->bufp = DE->buf + DE->clength;
     closerect(DE);
     highlightrect(DE);
