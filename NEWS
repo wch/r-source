@@ -383,6 +383,10 @@ NEW FEATURES
     o	screeplot() is now (S3) generic with a default method, thanks
 	to a patch from Gavin Simpson.
 
+    o   detach now takes another argument, unload, which indicates
+        whether or not to unload the package and then only cleans
+        up the methods if the package successfully unloads.
+
 
 DEPRECATED & DEFUNCT
 

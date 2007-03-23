@@ -1,7 +1,7 @@
 \name{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, version)
+detach(name, pos = 2, version, unload = FALSE)
 }
 \alias{detach}
 \arguments{
@@ -17,7 +17,16 @@ detach(name, pos = 2, version)
   }
   \item{version}{A character string denoting a version number of the
     package to be removed.  This should be used only with a versioned
-    installation of the package: see \code{\link{library}}.}
+    installation of the package: see \code{\link{library}}.
+  }
+  \item{unload}{A logical value indicating whether or not to attempt to
+    unload the namespace and S4 methods when a package is being
+    detached.  If the package has a namespace and \code{unload} is
+    \code{TRUE}, then \code{detach} will attempt to unload the
+    namespace and remove any S4 methods defined by the package.  If
+    the namespace is in use or \code{unload} is \code{FALSE}, no
+    unloading will occur.
+  }
 }
 \description{
   Detach a database, i.e., remove it from the \code{\link{search}()} path

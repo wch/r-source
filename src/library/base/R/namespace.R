@@ -531,9 +531,8 @@ unloadNamespace <- function(ns) {
     pos <- match(paste("package", nsname, sep = ":"), search())
     if (! is.na(pos)) detach(pos = pos)
     users <- getNamespaceUsers(ns)
-    print(ns)
     if (length(users) != 0)
-        stop(gettextf("name space '%s' is still used by: '%s'",
+        stop(gettextf("name space '%s' is still used by: %s",
                       getNamespaceName(ns),
                       paste(sQuote(users), collapse = ", ")),
              domain = NA)

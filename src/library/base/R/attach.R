@@ -74,7 +74,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     invisible(value)
 }
 
-detach <- function(name, pos=2, version)
+detach <- function(name, pos=2, version, unload=FALSE)
 {
     if(!missing(name)) {
         name <- substitute(name)# when a name..
@@ -119,8 +119,13 @@ detach <- function(name, pos=2, version)
            packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
             warning(packageName, " is required by ", pkgs, " (still attached)")
     }
-    if(.isMethodsDispatchOn())
-            methods:::cacheMetaData(env, FALSE)
+    if(unload)
+      tryCatch(unloadNamespace(pkgname),
+               error=function(e)
+               warning(pkgname, " namespace cannot be unloaded\n",
+                       conditionMessage(e), call. = FALSE))
+    if(unload && .isMethodsDispatchOn() && !(pkgname %in% loadedNamespaces()))
+        methods:::cacheMetaData(env, FALSE)
 }
 
 ls <- objects <-
