@@ -43,7 +43,7 @@ href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
   </tr>
   <tr>
     <td width="19%" valign="top"><a href="old/">old</a></td>
-    <td width="81%">The previous release.</td>
+    <td width="81%">Previous releases.</td>
   </tr>
   <tr>
     <td width="19%" valign="top"><a href="md5sum.txt">md5sum.txt</a></td>
