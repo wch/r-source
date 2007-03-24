@@ -386,6 +386,11 @@ NEW FEATURES
     o   detach now takes another argument, unload, which indicates
         whether or not to unload the package and then only cleans
         up the methods if the package successfully unloads.
+        
+    o	The RweaveLatex driver for Sweave() now supports two new
+	options: expand=FALSE, to show chunk references in the output,
+	and concordance=TRUE, to output the concordance between input
+	and output lines.
 
     o   initialize (in methods) now tries to be smarter about
         updating the new instance in place, thereby reducing
