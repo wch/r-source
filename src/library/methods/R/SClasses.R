@@ -581,6 +581,7 @@ initialize <- function(.Object, ...) {
                               Class,
                               paste(snames[is.na(which)], collapse=", ")),
                      domain = NA)
+            firstTime <- TRUE
             for(i in seq_along(snames)) {
                 slotName <- el(snames, i)
                 slotClass <- elNamed(slotDefs, slotName)
@@ -597,7 +598,14 @@ initialize <- function(.Object, ...) {
                                          valClassDef, slotClassDef), FALSE))
                         slotVal <- as(slotVal, slotClass, strict = FALSE)
                 }
-                slot(.Object, slotName, check = FALSE) <- slotVal
+                if (firstTime) {
+                    ## force a copy of .Object
+                    slot(.Object, slotName, check = FALSE) <- slotVal
+                    firstTime <- FALSE
+                } else {
+                    ## XXX: do the assignment in-place
+                    "slot<-"(.Object, slotName, check = FALSE, slotVal)
+                }
             }
         }
         validObject(.Object)

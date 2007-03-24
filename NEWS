@@ -387,6 +387,10 @@ NEW FEATURES
         whether or not to unload the package and then only cleans
         up the methods if the package successfully unloads.
 
+    o   initialize (in methods) now tries to be smarter about
+        updating the new instance in place, thereby reducing
+        copying
+
 
 DEPRECATED & DEFUNCT
 
