@@ -47,11 +47,15 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   Note that setting \code{"LC_ALL"} sets only \code{"LC_COLLATE"},
   \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and \code{"LC_TIME"}.
+
+  Attempts to set an invalid locale are (silently) ignored.  (Most OSes
+  give no indication if the request succeeded, and the name of the
+  locale set need bear little resemblance to that asked for.)
 }
 \value{
   A character string of length one describing the locale in use (after
   setting for \code{Sys.setlocale}), or an empty character string if the
-  locale is invalid (with a warning) or \code{NULL} if locale
+  current locale settings are invalid or \code{NULL} if locale
   information is unavailable.
 
   For \code{category = "LC_ALL"} the details of the string are
@@ -65,14 +69,21 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 \section{Warning}{
 #ifdef windows
   Setting \code{"LC_CTYPE"} to \code{"C"} causes problems in the C
-  code, so it is interpreted as an English locale in CP1252.
+  runtime support code, so it is interpreted as an English locale in CP1252.
   
 #endif
   Setting \code{"LC_NUMERIC"} may cause \R to function
   anomalously, so gives a warning.  (The known problems are with
   input conversion in locales with \code{,} as the decimal point.)
+#ifdef unix
   Setting it temporarily to produce graphical or text output may work
   well enough, but \code{\link{options}(OutDec)} is often preferable.
+#endif
+#ifdef windows
+  (Almost all the output routines used by \R itself ignore the setting of
+  \code{"LC_NUMERIC"} since they make use of the Trio library which is
+  not internationalized.)
+#endif
 }
 \seealso{
   \code{\link{strptime}} for uses of \code{category = "LC_TIME"}.
@@ -83,7 +94,8 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 Sys.getlocale()
 Sys.getlocale("LC_TIME")
 \dontrun{
-Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
+Sys.setlocale("LC_TIME", "de")     # Solaris 7: details are OS-dependent
+Sys.setlocale("LC_TIME", "de_DE.utf8")  # Modern Linux etc.
 Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set

@@ -48,7 +48,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   (not \code{strftime}) to character vectors.
   
   \code{strptime} converts character strings to class \code{"POSIXlt"}:
-  its input \code{x} is first coerced to character if necessary.
+  its input \code{x} is first coerced to character if necessary.  Each
+  string is processed as far as necessary for the format specified: any
+  trailing characters are ignored.
 
   \code{strftime} is an alias for \code{format.POSIXlt}, and
   \code{format.POSIXct} first converts to class \code{"POSIXlt"} by

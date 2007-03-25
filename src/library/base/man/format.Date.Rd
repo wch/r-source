@@ -47,7 +47,9 @@ as.Date(x, \ldots)
   representation of the time in UTC.)  Also objects of class
   \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
   \pkg{\link[survival:as.date]{survival}}) and
-  \code{"dates"} (from package \pkg{\link[chron]{chron}}).
+  \code{"dates"} (from package \pkg{\link[chron]{chron}}).  Character
+  strings are processed as far as necessary for the format specified: any
+  trailing characters are ignored.
 
   See the examples for how to convert a day given as the number of days
   since an epoch.
