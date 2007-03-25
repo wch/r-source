@@ -218,13 +218,13 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                      as.numeric(cut(residuals, breaks)))
     }
 
-   ##############################################################
-   ## The next four may all be NULL: ### MOVED by JWE to below.
-   ## label <- dimnames(x)
-   ## nam.dn <- names(label)
-   ## if(is.null(xlab)) xlab <- nam.dn[1]
-   ## if(is.null(ylab)) ylab <- nam.dn[2]
-   ##############################################################
+    label <- dimnames(x) # this is needed here.
+    ##############################################################
+    ### MOVED by JWE to below.
+    ## nam.dn <- names(label)
+    ## if(is.null(xlab)) xlab <- nam.dn[1]
+    ## if(is.null(ylab)) ylab <- nam.dn[2]
+    ##############################################################
 
     ## Initialize spacing.
     if(is.null(off))
@@ -251,12 +251,10 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     ## MOVED and modified by JWE, from above, 10/16/2006 to fix dir= and
     ## sort= bug with respect to xlab= and ylab= options.
 
-    ## The next four may all be NULL:
-    label <- dimnames(x)
-    nam.dn <- names(label)
     ## Here, we need to identify the first "h" and first "v" splits, and
     ## use their names for xlab= and ylab=, if they are NULL.
 
+    nam.dn <- names(label)
     if(is.null(xlab) && any(dir == "v"))
         xlab <- nam.dn[min(which(dir == "v"))]
     if(is.null(ylab) && any(dir == "h"))

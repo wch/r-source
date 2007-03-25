@@ -700,6 +700,13 @@ BUG FIXES
     o	strptime("%j") now also works for the first days of Feb-Dec.
 	(PR#9577)
 
+    o	write.table() now recovers better if 'file' is an unopened
+	connection.  (It used to open it for both the column names and
+	the data.)
+
+    o	Fixed bug in mosaicplot(sort=) introduced by undocumented
+	change in R 2.4.1 (changeset r39655).
+
 
 
 

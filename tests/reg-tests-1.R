@@ -4649,3 +4649,8 @@ x
 stopifnot(!is.na(x))
 ## day 32 was NA in R < 2.5.0
 
+
+## mosaicplot() broken by undocumented 'bug fix' r39655
+x <- matrix(1:4,2,2)
+mosaicplot(x, sort = seq_len(dim(x)))
+## failed in 2.4.1, fixed in 2.5.0

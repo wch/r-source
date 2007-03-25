@@ -80,6 +80,9 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     else if(is.character(file)) {
         file <- file(file, ifelse(append, "a", "w"))
         on.exit(close(file))
+    } else if(!isOpen(file, "w")) {
+        open(file, "w")
+        on.exit(close(file))
     }
     if(!inherits(file, "connection"))
         stop("'file' must be a character string or connection")
