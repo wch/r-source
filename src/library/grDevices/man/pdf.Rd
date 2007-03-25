@@ -31,9 +31,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{version}{a string describing the PDF version that will be
     required to view the output.  This is a minimum, and will be
     increased (with a warning) if necessary.}
-  \item{paper}{the size of paper in the printer.  The choices are
-    \code{"a4"}, \code{"letter"}, \code{"legal"} and
-    \code{"executive"} (and these can be capitalized).
+  \item{paper}{the target paper size.  The choices are
+    \code{"a4"}, \code{"letter"}, \code{"legal"} (or \code{"us"}) and
+    \code{"executive"} (and these can be capitalized), or \code{"a4r"}
+    and \code{"USr"} for rotated (\sQuote{landscape}).
     The default is \code{"special"}, which means that the \code{width}
     and \code{height} specify the paper size.  A further choice is
     \code{"default"}; if this is selected, the

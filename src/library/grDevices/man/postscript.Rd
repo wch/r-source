@@ -68,7 +68,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \item{pointsize}{the default point size to be used.  Strictly
     speaking, in bp, that is 1/72 of an inch, but approximately in points.}
   \item{paper}{the size of paper in the printer.  The choices are
-    \code{"a4"}, \code{"letter"}, \code{"legal"} and
+    \code{"a4"}, \code{"letter"} (or \code{"us"}), \code{"legal"} and
     \code{"executive"} (and these can be capitalized).
     Also, \code{"special"} can be used, when the \code{width}
     and \code{height} specify the paper size.  A further choice is
