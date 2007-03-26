@@ -141,8 +141,13 @@ static void printStringVector(SEXP * x, int n, int quote, int indx)
 	if (i > 0 && width + w + R_print.gap > R_print.width) {
 	    DO_newline;
 	}
+#ifdef BUGGY
 	Rprintf("%*s%s", R_print.gap, "",
 		EncodeString(x[i], w, quote, Rprt_adj_left));
+#else
+	Rprintf("%*s%s", R_print.gap, "",
+		EncodeString(x[i], w, quote, R_print.right));
+#endif
 	width += w + R_print.gap;
     }
     Rprintf("\n");
