@@ -1093,7 +1093,7 @@ Serialization in @R{} needs to take into account that objects may
 contain references to environments, which then have enclosing
 environments and so on.  (Environments recognized as package or name
 space environments are saved by name.)  Further, there are `reference
-objects' which are not duplicated on copy and should should remain
+objects' which are not duplicated on copy and should remain
 shared on unserialization.  These are weak references, external pointers
 and environments other than those associated with packages, name spaces
 and the global environment.  These are handled via a hash table, and
