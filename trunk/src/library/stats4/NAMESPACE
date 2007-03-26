@@ -1,7 +1,0 @@
-export(mle)
-importFrom(graphics, plot)
-importFrom(stats, AIC, coef, confint, logLik, optim, profile, 
-	   qchisq, update, vcov)
-exportClasses(mle, profile.mle, summary.mle)
-exportMethods(AIC, BIC, coef, confint, logLik, plot, profile, 
-              summary, show, update, vcov)

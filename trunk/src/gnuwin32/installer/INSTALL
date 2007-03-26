@@ -1,7 +1,0 @@
-Making the installer
-===================
-
-Details on building the installer are now given in the `R Installation
-and Administration Manual' in the doc/manual directory.  An HTML
-version is at doc/html/R-admin.html, unless you obtained R using
-Subversion.

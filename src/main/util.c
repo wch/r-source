@@ -694,8 +694,10 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	R_fixslash(buf);
 #endif
 	/* remove trailing file separator(s) */
-	if (strlen(buf)) 
-	    while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
+	if (*buf) {
+	    p = buf + strlen(buf) - 1;
+	    while (p >= buf && *p == fsp) *(p--) = '\0';
+	}
 	if ((p = Rf_strrchr(buf, fsp)))
 	    p++;
 	else
