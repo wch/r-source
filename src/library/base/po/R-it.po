@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-03-26 13:13\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -114,6 +114,10 @@ msgstr "richiesto da"
 
 msgid "(still attached)"
 msgstr "(ancora attaccato)"
+
+#, fuzzy
+msgid "namespace cannot be unloaded"
+msgstr "namespace '%s' caricato"
 
 #, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1034,7 +1038,7 @@ msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s non riuscito in unloadNamespace(%s)"
 
 #, fuzzy
-msgid "name space '%s' is still used by: '%s'"
+msgid "name space '%s' is still used by: %s"
 msgstr "name space '%s' ancora in uso da:"
 
 msgid "imperative name space directives are disabled"

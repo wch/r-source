@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-21 16:07+0000\n"
+"POT-Creation-Date: 2007-03-26 13:13+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -242,8 +242,8 @@ msgstr "loadhistory은 Rgui과 Rterm에서만 사용할수 있습니다"
 #: src/main/scan.c:1881 src/main/scan.c:1882 src/main/scan.c:1883
 #: src/main/scan.c:1884 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/source.c:172 src/main/summary.c:942 src/main/sysutils.c:193
-#: src/main/util.c:770 src/main/util.c:775 src/main/util.c:783
-#: src/main/util.c:786 src/modules/X11/devX11.c:2469
+#: src/main/util.c:771 src/main/util.c:776 src/main/util.c:784
+#: src/main/util.c:787 src/modules/X11/devX11.c:2469
 #: src/modules/X11/devX11.c:2496 src/modules/X11/devX11.c:2501
 #: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1041
 #, c-format
@@ -6589,47 +6589,47 @@ msgstr "'all.y' TRUE 또는 FALSE가 나오지 않으면 되지 않습니다"
 msgid "cannot change working directory"
 msgstr "작업 디렉토리를 변경할수가 없습니다"
 
-#: src/main/util.c:686 src/main/util.c:720 src/main/util.c:765
-#: src/main/util.c:816 src/main/util.c:837 src/main/util.c:839
+#: src/main/util.c:686 src/main/util.c:721 src/main/util.c:766
+#: src/main/util.c:817 src/main/util.c:838 src/main/util.c:840
 msgid "a character vector argument expected"
 msgstr "문자 벡터의 인수가 예측되어 있습니다"
 
-#: src/main/util.c:691 src/main/util.c:725
+#: src/main/util.c:691 src/main/util.c:726
 msgid "path too long"
 msgstr "패스가 너무 깁니다"
 
-#: src/main/util.c:780
+#: src/main/util.c:781
 msgid "only the first character of 'quote' will be used"
 msgstr "'quote'의 최초 문자만이 사용되었습니다"
 
-#: src/main/util.c:842
+#: src/main/util.c:843
 #, fuzzy
 msgid "'value must be of positive length"
 msgstr "인수는 정확한 길이를 가져야 합니다"
 
-#: src/main/util.c:901
+#: src/main/util.c:902
 msgid "invalid multibyte string"
 msgstr "multibyte 문자열이 부적절합니다"
 
-#: src/main/util.c:918
+#: src/main/util.c:919
 msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1에의 입력이 부적절합니다"
 
-#: src/main/util.c:924
+#: src/main/util.c:925
 #, fuzzy
 msgid "allocation failure in 'mbcsToLatin1'"
 msgstr "mbcsToLatin1로 할당에 실패했습니다"
 
-#: src/main/util.c:927
+#: src/main/util.c:928
 #, fuzzy
 msgid "invalid input in 'mbcsToLatin1'"
 msgstr "mbcsToLatin1에의 입력이 부적절합니다"
 
-#: src/main/util.c:1028
+#: src/main/util.c:1029
 msgid "error message truncated to 255 chars"
 msgstr "에러 메시지는 255문자에 초과에서 절단되었습니다"
 
-#: src/main/util.c:1041
+#: src/main/util.c:1042
 msgid "warning message truncated to 255 chars"
 msgstr "경고 메세지는 255문자에 초과해서 절된되었습니다"
 

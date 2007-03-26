@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-03-26 13:13\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -106,6 +106,10 @@ msgstr "이하에 의해 요구되었습니다 :"
 
 msgid "(still attached)"
 msgstr "(아직 attached되어 있습니다)"
+
+#, fuzzy
+msgid "namespace cannot be unloaded"
+msgstr "name space '%s'가 적재 되었습니다"
 
 #, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1027,7 +1031,7 @@ msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s는 unloadNamespace(%s)에 실패했습니다"
 
 #, fuzzy
-msgid "name space '%s' is still used by: '%s'"
+msgid "name space '%s' is still used by: %s"
 msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
 
 msgid "imperative name space directives are disabled"

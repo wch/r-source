@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-21 16:07+0000\n"
+"POT-Creation-Date: 2007-03-26 13:13+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -239,8 +239,8 @@ msgstr "'loadRconsole' 只能在 Rgui 中使用"
 #: src/main/scan.c:1881 src/main/scan.c:1882 src/main/scan.c:1883
 #: src/main/scan.c:1884 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/source.c:172 src/main/summary.c:942 src/main/sysutils.c:193
-#: src/main/util.c:770 src/main/util.c:775 src/main/util.c:783
-#: src/main/util.c:786 src/modules/X11/devX11.c:2469
+#: src/main/util.c:771 src/main/util.c:776 src/main/util.c:784
+#: src/main/util.c:787 src/modules/X11/devX11.c:2469
 #: src/modules/X11/devX11.c:2496 src/modules/X11/devX11.c:2501
 #: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1041
 #, c-format
@@ -6482,45 +6482,45 @@ msgstr "'all.y' 必須是 TRUE 或 FALSE"
 msgid "cannot change working directory"
 msgstr "無法變更工作目錄"
 
-#: src/main/util.c:686 src/main/util.c:720 src/main/util.c:765
-#: src/main/util.c:816 src/main/util.c:837 src/main/util.c:839
+#: src/main/util.c:686 src/main/util.c:721 src/main/util.c:766
+#: src/main/util.c:817 src/main/util.c:838 src/main/util.c:840
 msgid "a character vector argument expected"
 msgstr "需要字元向量引數"
 
-#: src/main/util.c:691 src/main/util.c:725
+#: src/main/util.c:691 src/main/util.c:726
 msgid "path too long"
 msgstr "路徑太長"
 
-#: src/main/util.c:780
+#: src/main/util.c:781
 msgid "only the first character of 'quote' will be used"
 msgstr "只用了 'quote' 的第一個字元"
 
-#: src/main/util.c:842
+#: src/main/util.c:843
 #, fuzzy
 msgid "'value must be of positive length"
 msgstr "引數的長度必須是正數"
 
-#: src/main/util.c:901
+#: src/main/util.c:902
 msgid "invalid multibyte string"
 msgstr "多位元組字串不正確"
 
-#: src/main/util.c:918
+#: src/main/util.c:919
 msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1 輸入不正確"
 
-#: src/main/util.c:924
+#: src/main/util.c:925
 msgid "allocation failure in 'mbcsToLatin1'"
 msgstr "指派 'mbcsToLatin1' 失敗"
 
-#: src/main/util.c:927
+#: src/main/util.c:928
 msgid "invalid input in 'mbcsToLatin1'"
 msgstr "'mbcsToLatin1' 輸入不正確"
 
-#: src/main/util.c:1028
+#: src/main/util.c:1029
 msgid "error message truncated to 255 chars"
 msgstr "錯誤訊息截短到 255 個位元組"
 
-#: src/main/util.c:1041
+#: src/main/util.c:1042
 msgid "warning message truncated to 255 chars"
 msgstr "警告訊息截短到 255 個位元組"
 

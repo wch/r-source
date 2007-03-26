@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-03-26 13:13\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -111,6 +111,10 @@ msgstr "wird benötigt von"
 
 msgid "(still attached)"
 msgstr "(noch eingebunden)"
+
+#, fuzzy
+msgid "namespace cannot be unloaded"
+msgstr "Namensraum '%s' ist geladen"
 
 #, fuzzy
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1026,7 +1030,7 @@ msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s in unloadNamespace(%s) fehlgeschlagen"
 
 #, fuzzy
-msgid "name space '%s' is still used by: '%s'"
+msgid "name space '%s' is still used by: %s"
 msgstr "Namensraum '%s' wird noch benutzt durch:"
 
 msgid "imperative name space directives are disabled"

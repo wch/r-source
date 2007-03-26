@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-21 16:07+0000\n"
+"POT-Creation-Date: 2007-03-26 13:13+0100\n"
 "PO-Revision-Date: 2006-12-12 09:33+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -240,8 +240,8 @@ msgstr "'loadRconsole' はRgui でしか使用することができない"
 #: src/main/scan.c:1881 src/main/scan.c:1882 src/main/scan.c:1883
 #: src/main/scan.c:1884 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/source.c:172 src/main/summary.c:942 src/main/sysutils.c:193
-#: src/main/util.c:770 src/main/util.c:775 src/main/util.c:783
-#: src/main/util.c:786 src/modules/X11/devX11.c:2469
+#: src/main/util.c:771 src/main/util.c:776 src/main/util.c:784
+#: src/main/util.c:787 src/modules/X11/devX11.c:2469
 #: src/modules/X11/devX11.c:2496 src/modules/X11/devX11.c:2501
 #: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1041
 #, c-format
@@ -6532,45 +6532,45 @@ msgstr "'all.y' は TRUEまたは FALSE でなければなりません"
 msgid "cannot change working directory"
 msgstr "作業ディレクトリを変更できません"
 
-#: src/main/util.c:686 src/main/util.c:720 src/main/util.c:765
-#: src/main/util.c:816 src/main/util.c:837 src/main/util.c:839
+#: src/main/util.c:686 src/main/util.c:721 src/main/util.c:766
+#: src/main/util.c:817 src/main/util.c:838 src/main/util.c:840
 msgid "a character vector argument expected"
 msgstr "文字ベクトルの引数が期待されています"
 
-#: src/main/util.c:691 src/main/util.c:725
+#: src/main/util.c:691 src/main/util.c:726
 msgid "path too long"
 msgstr "パスが長すぎます"
 
-#: src/main/util.c:780
+#: src/main/util.c:781
 msgid "only the first character of 'quote' will be used"
 msgstr "'quote' の最初の文字だけが使われました"
 
-#: src/main/util.c:842
+#: src/main/util.c:843
 #, fuzzy
 msgid "'value must be of positive length"
 msgstr "引数は正の長さを持たないといけません"
 
-#: src/main/util.c:901
+#: src/main/util.c:902
 msgid "invalid multibyte string"
 msgstr "マルチバイト文字列が不正です"
 
-#: src/main/util.c:918
+#: src/main/util.c:919
 msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1  への入力が不正です"
 
-#: src/main/util.c:924
+#: src/main/util.c:925
 msgid "allocation failure in 'mbcsToLatin1'"
 msgstr "'mbcsToLatin1' で割り当てに失敗しました"
 
-#: src/main/util.c:927
+#: src/main/util.c:928
 msgid "invalid input in 'mbcsToLatin1'"
 msgstr "'mbcsToLatin1'  への入力が不正です"
 
-#: src/main/util.c:1028
+#: src/main/util.c:1029
 msgid "error message truncated to 255 chars"
 msgstr "エラーメッセージは255文字に切りつめられました"
 
-#: src/main/util.c:1041
+#: src/main/util.c:1042
 msgid "warning message truncated to 255 chars"
 msgstr "警告メッセージは255文字に切り詰められました"
 
