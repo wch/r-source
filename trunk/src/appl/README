@@ -1,8 +1,0 @@
-NOTE:
-----	Adding new functionality here usually needs an entry in each of
-	       	Makefile.in
-		../main/registration.c (in the appropriate array)
-		../include/R_ext/Applic.h
-	and usually as well in
-		NEWS
-		../../doc/manual/R-exts.texi

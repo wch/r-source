@@ -1,2 +1,0 @@
-export(Rapp.updates, browse.pkgs,
-       data.manager, package.manager, main.help.url)

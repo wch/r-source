@@ -1,9 +1,0 @@
-Package: graphics
-Version: @VERSION@
-Priority: base
-Title: The R Graphics Package
-Author: R Development Core Team and contributors worldwide
-Maintainer: R Core Team <R-core@r-project.org>
-Description: R functions for base graphics
-Imports: grDevices
-License: GPL Version 2 or later.
