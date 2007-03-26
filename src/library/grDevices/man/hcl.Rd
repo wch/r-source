@@ -17,7 +17,7 @@ hcl(h = 0, c = 35, l = 85, alpha, fixup = TRUE)
   \item{l}{A value in the range [0,100] giving the luminance of the
         colour.  For a given combination of hue and chroma, only
         a subset of this range is possible.}
-  \item{alpha}{numeric value in the range \code{[0,1]} for
+  \item{alpha}{numeric vector of values in the range \code{[0,1]} for
     alpha transparency channel (0 means transparent and 1 means opaque).}
   \item{fixup}{a logical value which indicates whether the resulting
     RGB values should be corrected to ensure that a real color results.
@@ -45,6 +45,10 @@ pastel appearance.
 The RGB values produced by this function correspond to the sRGB
 color space used on most PC computer displays.  There are other
 packages which provide more general color space facilities.
+
+  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on a
+  few devices: at the time of writing only on the \code{\link{pdf}} and
+  (on MacOS X) \code{quartz} devices.
 }
 \value{
 A vector of character strings which can be used as color

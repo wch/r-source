@@ -20,8 +20,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   \code{col=} specification in graphics functions or in \code{\link{par}}.
 }
 \arguments{
-  \item{red, blue, green, alpha}{vectors of same length
-    with values in \eqn{[0, M]}
+  \item{red, blue, green, alpha}{numeric vectors with values in \eqn{[0, M]}
     where \eqn{M} is \code{maxColorValue}. When this is \code{255}, the
     \code{red}, \code{blue}, \code{green}, and \code{alpha}
     values are coerced to
@@ -36,9 +35,9 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   In this case the first three columns of \code{red} are taken to be
   the \code{red}, \code{green} and \code{blue} values.
 
-  Semi-transparent colors are supported only on a few devices: at the
-  time of writing only on the \code{\link{pdf}} and (on MacOS X)
-  \code{quartz} devices.
+  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on a
+  few devices: at the time of writing only on the \code{\link{pdf}} and
+  (on MacOS X) \code{quartz} devices.
 }
 \value{
   A character vector with elements of 7 or 9 characters, \code{"#"}
