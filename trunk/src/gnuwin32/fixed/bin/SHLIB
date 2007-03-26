@@ -1,0 +1,118 @@
+#-*- perl -*-
+# Copyright (C) 2000-2006 R Development Core Team
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# writing to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301  USA.
+
+# Send any bug reports to r-bugs@r-project.org
+
+use Cwd;
+use File::Basename;
+use File::Path;
+use R::Utils;
+
+
+my $revision = ' $Rev$ ';
+my $version;
+my $name;
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+			
+my $R_HOME = $ENV{'R_HOME'} ||
+    die "Error: Environment variable R_HOME not found\n";
+
+my $debug, $dllname="", $first="";
+
+my @cfsrcs, @csrcs, @cxxsrcs, @libs, $item;
+while(@ARGV > 0) {
+    $item = shift (@ARGV);
+    usage() if $item eq "--help";
+    R_version($name, $version) if $item eq "-v" || $item eq "--version";
+    if ($item eq "-d" || $item eq "--debug") {
+	$debug = "DEBUG=T"; 
+    } elsif ($item eq "-o") {
+	$dllname = shift (@ARGV);
+	$dllname  =~ s/\.dll$//;
+    } elsif ($item eq "--output") {
+	$dllname = shift (@ARGV);
+	$dllname  =~ s/\.dll$//;
+    } elsif ($item =~ /^--output=/) {
+	$dllname = $item;
+	$dllname =~ s/^--output=//;
+	$dllname =~ s/\.dll$//;
+    } elsif ($item =~ /\.(cc|cpp|C)$/) {
+	push @cxxsrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.c$/) {
+	push @csrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.f/) {
+	push @fsrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.(f90|f95)$/) {
+	push @fcsrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.m$/) {
+	push @msrcs, $item;
+	$first = $item if $first eq "";
+    } elsif ($item =~ /\.o/) {
+	push @libs, $item;
+	$first = $item if $first eq "";
+    } else {
+	push @libs, $item;
+    }
+}
+if($dllname eq "") {
+    $dllname = $first;
+    $dllname  =~ s/\..*$//;
+}
+
+my $csrcs=join(" ", @csrcs);
+my $fsrcs=join(" ", @fsrcs);
+my $cxx=join(" ", @cxxsrcs);
+my $fcsrcs=join(" ", @fcsrcs);
+my $msrcs=join(" ", @msrcs);
+my $pkg_libs=join(" ", @libs);
+my $makefiles = "-f $R_HOME/src/gnuwin32/MakeDll";
+## Rcmd.exe ensures HOME is set
+if (-r "$HOME/.R/Makevars.win32") {
+    $makefiles="$makefiles -f \"$HOME/.R/Makevars.win\"";
+} elsif (-r "$HOME/.R/Makevars") {
+    $makefiles="$makefiles -f \"$HOME/.R/Makevars\"";
+}
+
+system("make $makefiles RHOME=$R_HOME $debug DLLNAME=$dllname CSOURCES='$csrcs' FSOURCES='$fsrcs' CXXSOURCES='$cxx' FCSOURCES='$fcsrcs' MSOURCES='$msrcs' OBJ= PKG_LIBS2='$pkg_libs'");
+
+
+sub usage {
+    print STDERR <<END;
+Usage: R CMD $name [options] files|linker options
+
+Build a DLL (shared library) for dynamic loading from the specified source 
+or object files (which are automagically made from their sources) or 
+linker options.  If not \ given via \`--output\', the name for the DLL
+is determined from the first source or object file.
+
+Options:
+  -d, --debug           build a debug DLL
+  -h, --help		print short help message and exit
+  -o, --output=LIB	use LIB as the name for the DLL
+  -v, --version		print version info and exit
+
+Report bugs to <r-bugs\@r-project.org>.
+END
+    exit 0;
+}

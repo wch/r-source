@@ -1,0 +1,8 @@
+The Fortran routines here are extracted from LAPACK 3.1.0
+(http://www.netlib.org/lapack and mirrors).
+
+dlapack?.f are support routines for `real' LAPACK calls
+cmplx.f are support routines for LAPACK calls from complex arithmetic
+routines, that are only used if COMPLEX*16 is supported by the Fortran
+compiler and compatible with the Rcomplex type (guaranteed for f2c users).
+Neither will not be compiled if an external LAPACK is used.

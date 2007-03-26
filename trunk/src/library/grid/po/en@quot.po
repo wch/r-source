@@ -1,0 +1,115 @@
+# English translations for R package.
+# Copyright (C) 2007 The R Foundation
+# This file is distributed under the same license as the R package.
+# Automatically generated, 2007.
+#
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.5.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2006-09-22 09:25+0100\n"
+"PO-Revision-Date: 2006-09-22 09:25+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: grid.c:209
+msgid "Cannot clip to rotated viewport"
+msgstr "Cannot clip to rotated viewport"
+
+#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
+msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+msgstr "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+
+#: grid.c:938
+msgid "attempt to plot on null device"
+msgstr "attempt to plot on null device"
+
+#: grid.c:1218
+msgid "There is no layout defined"
+msgstr "There is no layout defined"
+
+#: grid.c:1438
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr "Polygon edge not found (zero-width or zero-height?)"
+
+#: grid.c:1447
+msgid "Polygon edge not found"
+msgstr "Polygon edge not found"
+
+#: grid.c:1587
+msgid "Require at least two points to draw arrow"
+msgstr "Require at least two points to draw arrow"
+
+#: grid.c:1901
+msgid "Non-finite control point in Xspline"
+msgstr "Non-finite control point in Xspline"
+
+#: grid.c:3072
+msgid "Unable to clip to rotated rectangle"
+msgstr "Unable to clip to rotated rectangle"
+
+#: layout.c:520
+msgid "invalid layout.pos.row"
+msgstr "invalid layout.pos.row"
+
+#: layout.c:524
+msgid "invalid layout.pos.col"
+msgstr "invalid layout.pos.col"
+
+#: matrix.c:50
+msgid "singular transformation matrix"
+msgstr "singular transformation matrix"
+
+#: state.c:178
+msgid "Unable to store grid state.  Too many devices open?"
+msgstr "Unable to store grid state.  Too many devices open?"
+
+#: unit.c:261 unit.c:411 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
+msgid "Unimplemented unit function"
+msgstr "Unimplemented unit function"
+
+#: unit.c:830 unit.c:1576
+msgid "Illegal unit or unit not yet implemented"
+msgstr "Illegal unit or unit not yet implemented"
+
+#: unit.c:1709
+msgid "Invalid unit"
+msgstr "Invalid unit"
+
+#: unit.c:1725
+msgid "Units must be character"
+msgstr "Units must be character"
+
+#: unit.c:1728
+msgid "Units must be of length > 0"
+msgstr "Units must be of length > 0"
+
+#: viewport.c:317
+msgid "Non-finite location and/or size for viewport"
+msgstr "Non-finite location and/or size for viewport"

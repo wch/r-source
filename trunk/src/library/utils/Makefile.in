@@ -1,0 +1,119 @@
+#
+# ${R_HOME}/src/library/utils/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/library/utils
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = DESCRIPTION.in Makefile.in \
+  NAMESPACE NAMESPACE.aqua
+
+pkg = utils
+
+R_EXE = $(top_builddir)/bin/R --vanilla
+
+RSRC0 = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
+RSRC = $(RSRC0) @BUILD_AQUA_TRUE@ `LC_COLLATE=C ls $(srcdir)/R/aqua/*.R`
+RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd @BUILD_AQUA_TRUE@ $(srcdir)/man/aqua/*.Rd
+NSFILES = $(srcdir)/NAMESPACE @BUILD_AQUA_TRUE@ $(srcdir)/NAMESPACE.aqua
+
+all: Makefile DESCRIPTION most $(top_builddir)/library/$(pkg)/iconvlist
+
+most: DESCRIPTION
+	@echo "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  cat $(RSRC) > $${f}; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
+	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
+	@cat $(NSFILES) > $(top_builddir)/library/$(pkg)/NAMESPACE
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+	@for f in COPYRIGHTS INDEX SOURCES; do \
+	  if test -f $(srcdir)/$${f}; then \
+	    $(INSTALL_DATA) $(srcdir)/$${f} \
+	      $(top_builddir)/library/$(pkg); \
+	  fi; \
+	done
+	@if test -f DESCRIPTION; then \
+	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
+	fi
+	@if test -d $(srcdir)/data; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
+	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
+	  done; \
+	fi
+	@if test -d $(srcdir)/inst/po; then \
+	  if test "@USE_NLS@" = "yes"; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
+	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
+	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
+	    -exec rm -rf \{\} \; 2>/dev/null; \
+	  fi; \
+	fi
+	@if test -d $(srcdir)/inst/Sweave; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/Sweave; \
+	  for f in `ls -d $(srcdir)/inst/Sweave/* | sed '/CVS/d'`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/Sweave; \
+	  done; \
+	fi
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  (f=$${TMPDIR:-/tmp}/R$$$$; \
+	    for rdfile in $(RdSRC); do \
+	      echo "% --- Source file: $${rdfile} ---"; \
+	      cat $${rdfile}; echo '\eof'; \
+	    done >> $${f}; \
+            $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
+              $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
+            rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
+            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
+	fi
+	@if test -d src; then \
+	  (cd src && $(MAKE)) || exit 1; \
+	fi
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
+	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+$(top_builddir)/library/$(pkg)/iconvlist: most
+	@iconv -l > $@ 2> /dev/null || touch $@
+
+
+mostlyclean: clean
+clean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R 
+distclean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f Makefile DESCRIPTION
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in R data demo exec inst man po src; do \
+	  if test -d $(srcdir)/$${d}; then \
+	    ((cd $(srcdir); \
+	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
+	        | (cd $(distdir); $(TAR) -x -f -)) \
+	      || exit 1; \
+	  fi; \
+	done

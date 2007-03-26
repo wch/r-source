@@ -1,0 +1,1086 @@
+#! /bin/sh
+#
+# ${R_HOME}/bin/INSTALL for installing add-on packages
+
+# @configure_input@
+
+## Trap interrupts, most importantly 2 (^C from keyboard)
+trap do_exit_on_error 1 2 15
+
+revision='$Rev$'
+version=`set - ${revision}; echo ${2}`
+version="R add-on package installer ${version}
+
+Copyright (C) 2000-2006 The R Core Development Team.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty."
+
+usage="Usage: R CMD INSTALL [options] pkgs
+
+Install the add-on packages specified by pkgs.  The elements of pkgs can
+be relative or absolute paths to directories with the package (bundle)
+sources, or to gzipped package 'tar' archives.  The library tree to
+install to can be specified via '--library'.  By default, packages are
+installed in the library tree rooted at the first directory in
+.libPaths() for an R session run in the current environment
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print INSTALL version info and exit
+      --configure-args=ARGS
+                        set arguments for the package's configure script
+			(if any)
+      --configure-vars=VARS
+                        set variables for the configure script (if any)
+  -c, --clean		remove all files created during installation
+  -d, --debug		turn on shell and build-help debugging
+  -l, --library=LIB	install packages to library tree LIB
+      --no-configure    do not use the package's configure script
+      --no-docs		do not build and install documentation
+      --with-package-versions
+                        allow for multiple versions of the same package
+      --use-zip-data	collect data files in zip archive
+      --use-zip-help	collect help and examples into zip archives
+      --use-zip		combine '--use-zip-data' and '--use-zip-help'
+      --fake		do minimal install for testing purposes
+      --no-lock		install on top of any existing installation
+                        without using a lock directory
+      --libs-only      	only install the libs directory
+      --build           build binary tarball(s) of the installed package(s)
+
+Report bugs to <r-bugs@r-project.org>."
+
+## <NOTE>
+## This is a *shell* script.
+## According to the R Coding Standards (see R-exts), Perl can be assumed
+## for *source*, but not for *binary* installations.
+## </NOTE>
+
+## <NOTE>
+## We try to be defensive about possible white space in file names,
+## hence all the strange quoting ...
+## </NOTE>
+
+umask 022
+
+R_VERSION='@VERSION@'
+GETWD='@GETWD@'
+R_GZIPCMD='@R_GZIPCMD@'
+NO_PERL5=@NO_PERL5@
+NO_PERL5_MSG="\
+*** Formatting and installing R help pages needs Perl version 5, which
+*** does not seem to be installed on your system or is not in your path.
+*** Please install either Perl 5 on your system and re-configure R or
+*** get the PDF reference manual from the nearest CRAN server.
+*** The CRAN master site can be found at
+***    http://cran.r-project.org/"
+
+: ${R_ARCH=@R_ARCH@}
+SED=@SED@
+
+if mkdir -p . 2>/dev/null; then
+  MKDIR_P="mkdir -p"
+else
+  MKDIR_P="${R_HOME}/bin/mkinstalldirs"
+fi
+
+warning () { echo "WARNING: $*" >&2 ; }
+error ()   { echo "ERROR: $*" >&2 ; }
+
+startdir=`${GETWD}`
+: ${TMPDIR=/tmp}
+{ tmpdir=`(mktemp -d -q "${TMPDIR}/R.INSTALL.XXXXXX") 2>/dev/null` \
+    && test -n "${tmpdir}" && test -d "${tmpdir}" ; } ||
+  { test -n "${RANDOM}" && tmpdir=${TMPDIR}/R.INSTALL$$-${RANDOM} \
+      && (${MKDIR_P} "${tmpdir}") ; } ||
+  { tmpdir=${TMPDIR}/R.INSTALL.$$-`date +%m%d%H%M%S` && (${MKDIR_P} "${tmpdir}") ; } ||
+  { tmpdir=${TMPDIR}/R.INSTALL.$$ && (${MKDIR_P} "${tmpdir}") ; } ||
+  (error "cannot create temporary directory" && exit 1)
+tmpdir=`cd "${tmpdir}" && ${GETWD}`
+
+: ${R_OSTYPE=unix}
+## <NOTE>
+## Unix only ... but Windows has INSTALL as a Perl script.
+R_EXE="${R_HOME}/bin/R"
+## </NOTE>
+
+## record R_LIBS at this point
+R_LIBS0=${R_LIBS}
+
+## <NOTE>
+## This could be made a bit more general: if R CMD INSTALL is run by
+## another tool (e.g., when building or checking a package, its messages
+## should be a section level deeper (at least).  So we could have an
+## argument to set the initial secnumdepth (0 by default), and work
+## against this ...
+message () { echo "${stars} $*"; }
+stars="*"
+## </NOTE>
+
+. "${R_SHARE_DIR}/sh/dcf.sh"	# get_dcf_field()
+
+tilde_expand () {
+    h=`echo "${HOME}" | ${SED} 's,/,\\\/,g'`
+    ## (Need to escape whatever we use as sed delimiter.)
+    echo "$1" | ${SED} "s/^~/${h}/"
+}
+
+get_packages () {
+  ## get the full path names to all packages contained in $1.
+  ## NOTE: modifies pkgs!
+  if grep "^Contains:" "${1}/DESCRIPTION" >/dev/null; then
+    bundlepkg=`get_dcf_field Contains "${1}/DESCRIPTION"`
+    for p in ${bundlepkg}; do
+      pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
+      if test -f "${1}/${p}/DESCRIPTION.in"; then
+        ## Try being defensive about missing final newlines, or extra
+	## empty lines.
+        (cat "${1}/${p}/DESCRIPTION.in" "${1}/DESCRIPTION"
+	 echo) | tr '\r' ' ' | ${SED} '/^ *$/d' > "${1}/${p}/DESCRIPTION"
+      fi
+    done
+  else
+    pkgs="${pkgs} \"`cd "${1}" && ${GETWD}`\""
+  fi
+}
+
+parse_description_field () { # fieldname
+  tmp=`get_dcf_field ${1} DESCRIPTION`
+  if test "x$tmp" != "x" ; then
+    case "$tmp" in
+      yes|Yes|true|True|TRUE)
+      value=true
+      ;;
+      no|No|false|False|FALSE)
+      value=false
+      ;;
+      *)
+      error "invalid value of ${1} field in DESCRIPTION"
+      do_exit_on_error
+      ;;
+    esac
+  else
+    value="missing"
+  fi
+}
+
+do_cleanup_tmpdir () {
+  ## Solaris will not remove any directory in the current path
+  cd "${startdir}"
+  if test -d "${tmpdir}"; then
+    rm -rf "${tmpdir}"
+  fi
+}
+
+### 
+### Setup and command line processing.
+
+pkgs=
+lib=
+clean=false
+debug=false
+build_text=true
+build_html=true
+build_latex=true
+build_example=true
+build_help=true
+build_help_opts=
+use_configure=true
+use_zip_data=
+use_zip_help=
+configure_args=
+configure_vars=
+with_package_versions=false
+save=false
+save_args=
+fake=false
+lazy="auto"
+lazy_data=false
+lock=true
+libs_only=false
+tar_up=false
+
+while test -n "${1}"; do
+  ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
+  case ${1} in
+    -h|--help)
+      echo "${usage}"; do_cleanup_tmpdir; exit 0 ;;
+    -v|--version)
+      echo "${version}"; do_cleanup_tmpdir; exit 0 ;;
+    -c|--clean)
+      clean=true ;;
+    -d|--debug)
+      debug=true ;;
+    --with-package-versions)
+      with_package_versions=true ;;
+    --no-configure)
+      use_configure=false ;;
+    --no-docs)
+      build_text=false
+      build_html=false
+      build_latex=false
+      build_example=false ;;
+    --no-text)
+      build_text=false ;;
+    --no-html)
+      build_html=false ;;
+    --no-latex)
+      build_latex=false ;;
+    --no-example)
+      build_example=false ;;
+    --use-zip)
+      use_zip_data=true
+      use_zip_help=true ;;
+    --use-zip-data)
+      use_zip_data=true ;;
+    --use-zip-help)
+      use_zip_help=true ;;
+    -l|--library)
+      lib="${2}"; shift ;;
+    --library=*)
+      lib=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
+    --configure-args=*)
+      configure_args=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
+    --configure-vars=*)
+      configure_vars=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
+    --fake)
+      fake=true ;;
+    --no-lock)
+      lock=false ;;
+    --libs-only)
+      libs_only=true ;;
+    --build)
+      tar_up=true ;;
+    *)
+      if test -f "${1}"; then
+	##DBG echo "  in 'R INSTALL' --arg checking-- FILE '${1}'"
+	pkgname=`basename "${1}"`
+	## Also allow for 'package.tgz' ...
+	pkgname=`basename "${pkgname}" .tgz`
+	pkgname=`echo "${pkgname}" | ${SED} 's/_.*//'`
+	## Note that we use '-m' so that modification dates are *not*
+	## preserved when untarring the sources.  This is necessary to
+	## ensure that the preformatted help pages are always rebuilt.
+	## Otherwise, the build date for an older version may be newer
+	## than the modification date for the new sources as recorded in
+	## the tarball ...
+	${R_GZIPCMD} -dc "${1}" | (cd "${tmpdir}" && ${TAR} -mxf -)
+	## If we have a binary bundle distribution, the DESCRIPTION file
+	## is at top level.
+	if test -f "${tmpdir}/DESCRIPTION"; then
+	  if grep "^Contains:" "${tmpdir}/DESCRIPTION" >/dev/null; then
+	     message "Looks like a binary bundle"
+	     get_packages "${tmpdir}"
+	  else
+	    error "unknown package layout"
+	    do_cleanup_tmpdir;
+	    exit 1
+	  fi
+	elif test -f "${tmpdir}/${pkgname}/DESCRIPTION"; then
+	  get_packages "${tmpdir}/${pkgname}"
+	else
+	  error "cannot extract package from '${1}'"
+	  do_cleanup_tmpdir;
+	  exit 1
+	fi
+      elif test -f "${1}/DESCRIPTION"; then
+	##DBG echo " in 'R INSTALL' -f DESCRIPTION --> 'get_packages ${1}'"
+        get_packages "${1}"
+      else
+	warning "invalid package '${1}'"
+      fi
+      ;;
+  esac
+  shift
+done
+
+if test -z "${lib}"; then
+  lib=`echo "cat('~~~', .libPaths()[1], sep = '')" | \
+    R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave | \
+    tr '\n' 'Z' | sed 's/.*~~~//'`
+  message "Installing to library '$lib'"
+else
+  lib0=${lib}
+  cd ${lib}
+  lib=`${GETWD}`
+  cd ${startdir}
+fi
+
+
+if (${tar_up} && ${fake}); then
+  error "building a fake installation is disallowed"
+  do_cleanup_tmpdir;
+  exit 1
+fi
+
+if ${libs_only} ; then
+  lock=false
+  tar_up=false
+  more_than_libs=false
+else
+  more_than_libs=true
+fi
+
+if ${debug} ; then
+  echo "'Rcmd INSTALL': in startdir= $startdir with tmpdir= $tmpdir"
+  echo "   lib= '$lib', pkgs= '$pkgs'"
+fi
+
+if test -z "${pkgs}"; then
+  error "no packages specified"
+  do_cleanup_tmpdir;
+  exit 1
+fi
+
+lib=`tilde_expand "${lib}"`
+if (test -d "${lib}" && test -w "${lib}") || \
+    ${MKDIR_P} "${lib}" 2> /dev/null; then
+  lib=`cd "${lib}" && ${GETWD}`
+else
+  error "cannot write to or create directory '${lib}'"
+  do_cleanup_tmpdir;
+  exit 2
+fi
+if ${lock} ; then
+  lockdir="${lib}/00LOCK"
+  if ${debug} ; then  echo "   before checking lockdir= '${lockdir}'" ; fi
+  if test -d "${lockdir}" || test -f "${lockdir}"; then
+    error "failed to lock directory '${lib}' for modifying"
+    echo "Try removing '${lockdir}'" >&2
+    do_cleanup_tmpdir;
+    exit 3
+  else
+    ${MKDIR_P} "${lockdir}"
+    if test ${?} -ne 0; then
+      ## This should not really happen ...
+      error "failed to lock directory '${lib}' for modifying"
+      do_cleanup_tmpdir;
+      exit 3
+    fi
+  fi
+  if ${debug} ; then  echo '   after checking lockdir' ; fi
+fi
+
+if ${fake}; then
+  use_configure=false
+  build_text=true
+  build_html=false
+  build_latex=true
+  build_example=false
+fi
+
+if ${build_text}; then
+  build_help_opts="${build_help_opts} --txt"
+fi
+if ${build_html}; then
+  build_help_opts="${build_help_opts} --html"
+fi
+if ${build_latex}; then
+  build_help_opts="${build_help_opts} --latex"
+fi
+if ${build_example}; then
+  build_help_opts="${build_help_opts} --example"
+fi
+if test -z "${build_help_opts}"; then
+  build_help=false
+elif ${debug}; then
+  build_help_opts="--debug ${build_help_opts}"
+fi
+
+if ${debug} ; then echo "   build_help_opts= '${build_help_opts}'" ; fi
+
+is_first_package=yes
+
+### 
+### Install a *binary* package (not bundle) from the current directory.
+
+do_install_binary () {
+  pkg="${1}"
+  R_PACKAGE_DIR="${2}"
+  R_PACKAGE_NAME="${3}"
+
+  if test "${pkg}" = "${R_PACKAGE_NAME}"; then
+    message "Installing *binary* package '${pkg}' ..."
+  else
+    message "Installing *binary* package '${pkg}' as '${R_PACKAGE_NAME}' ..."
+  fi
+
+  if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
+    ## Back up previous version.
+    if ${lock}; then mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}" ; fi
+    ${MKDIR_P} "${R_PACKAGE_DIR}"
+  fi
+
+  cp -r . "${R_PACKAGE_DIR}" || \
+    (${TAR} cf - . | (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
+
+  if test ${?} -ne 0; then
+    error "installing binary package failed"
+    do_exit_on_error
+  fi
+  if ${tar_up} ; then
+    echo "${pkg} was already a binary package and will not be rebuilt"
+  fi
+}
+
+### 
+### Install a *source* package from the current directory.
+
+do_install_source () {
+  pkg_name="${1}"
+  pkg_dir="${4}"
+  ## (The basename of ${pkg_dir} might be different from ${pkg_name},
+  ## e.g., when building Debian packages from R packages.)
+
+  ## Make the destination directories available to the developer's
+  ## installation scripts (e.g. configure, etc.)
+  R_PACKAGE_DIR="${2}"
+  R_PACKAGE_NAME="${3}"
+  R_LIBRARY_DIR="${lib}"
+  export R_LIBRARY_DIR
+  export R_PACKAGE_DIR
+  export R_PACKAGE_NAME
+
+  if test -n "${lib0}" ; then
+    ## set R_LIBS to include the current installation directory
+    if test -n "${R_LIBS}"; then
+      R_LIBS="${lib}:${R_LIBS}"
+    else
+      R_LIBS="${lib}"
+    fi
+    export R_LIBS
+  fi
+  
+
+  Type=`get_dcf_field Type DESCRIPTION`
+  if test "$Type" = "Frontend" ; then
+    message "Installing *Frontend* package '${pkg_name}' ..."
+    if ${use_configure} && test -x ./configure ; then
+      eval ${configure_vars} ./configure ${configure_args}
+      if test ${?} -ne 0; then
+	error "configuration failed for package '${pkg_name}'"
+	do_exit_on_error
+      fi
+    fi
+    if test -f ./Makefile ; then
+	${MAKE}
+      if test ${?} -ne 0; then
+	error "make failed for package '${pkg_name}'"
+	do_exit_on_error
+      fi
+      if ${clean}; then
+	${MAKE} clean
+      fi
+      return
+    fi
+  fi
+  if test "$Type" = "Translation" ; then
+    message "Installing *Translation* package '${pkg_name}' ..."
+    if test -d "share"; then
+      cp -r ./share/* ${R_SHARE_DIR}
+    fi
+    if test -d "library"; then
+      cp -r ./library ${R_HOME}
+    fi
+    return
+  fi
+
+  if test "${pkg_name}" = "${R_PACKAGE_NAME}"; then
+    message "Installing *source* package '${pkg_name}' ..."
+  else
+    message "Installing *source* package '${pkg_name}' as '${R_PACKAGE_NAME}' ..."
+  fi
+
+  stars="**"
+
+  if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
+    ## Back up previous version.
+    if ${lock} ; then
+      mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+    else
+      if ${more_than_libs}; then
+        ## this is only used for recommended packages installed from .tgz
+        rm -rf "${R_PACKAGE_DIR}"
+      fi
+    fi
+    ${MKDIR_P} "${R_PACKAGE_DIR}"
+    ## Preserve man pages to speed up installation?  Only makes sense
+    ## if we install from a non-temporary directory.
+    if ${lock} && test "`cd .. && ${GETWD}`" != \
+            "`cd \"${tmpdir}\" && ${GETWD}`"; then
+      (cd "${lockdir}/${R_PACKAGE_NAME}" \
+          && ${TAR} cf - R-ex help html latex 2>/dev/null) | \
+	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
+    fi
+    ## check if we are in a bundle so we can back out the whole bundle
+    if grep "^Bundle:" DESCRIPTION >/dev/null; then
+      if ${tar_up} ; then
+        error "cannot build (nor INSTALL) binary versions of bundles"
+        do_exit_on_error
+      fi
+      bundlepkg=`get_dcf_field Contains ../DESCRIPTION`
+    else
+      bundlepkg=${pkg_name}
+    fi
+  fi
+
+  if ${use_configure} && test -x ./configure ; then
+    eval ${configure_vars} ./configure ${configure_args}
+    if test ${?} -ne 0; then
+      error "configuration failed for package '${pkg_name}'"
+      do_exit_on_error
+    fi
+  fi
+
+
+  if ${more_than_libs}; then
+    for f in COPYING NAMESPACE; do
+      if test -f "${f}"; then
+	cp "${f}" "${R_PACKAGE_DIR}"
+	chmod 644 "${R_PACKAGE_DIR}/${f}"
+      fi
+    done
+
+    ## Install DESCRIPTION file with build information.
+    echo "tools:::.install_package_description(\".\", \"${R_PACKAGE_DIR}\")" | \
+      R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+    if test ${?} -ne 0; then
+      error "installing package DESCRIPTION failed"
+      do_exit_on_error
+    fi
+  fi
+
+  if test -d src && test "${fake}" != "true"; then
+    message "libs"
+    has_error=false
+    CLINK_CPPFLAGS=`echo "tools:::.find_cinclude_paths(file='DESCRIPTION')" | \
+      "${R_EXE}" --vanilla --slave`
+    export CLINK_CPPFLAGS
+    if ${debug}; then set -x; fi
+    ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
+    if test -f src/Makefile; then
+      arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
+      message "arch - ${arch}"
+      cd src;
+      makefiles="-f \"${R_SHARE_DIR}\"/make/shlib.mk -f Makefile"
+      if test -r "${HOME}/.R/Makevars-${R_PLATFORM}"; then
+	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars-${R_PLATFORM}\""
+      elif test -r "${HOME}/.R/Makevars"; then
+	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars\""
+      fi
+      if test -r Makevars; then
+	makefiles="-f Makevars ${makefiles}"
+      fi
+      eval ${MAKE} ${makefiles} \
+	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
+        || has_error=true; \
+      cd ..
+    else
+      cd src;
+      srcs=`ls *.[cfmCM] *.cc *.cpp *.f90 *.f95 *.mm 2>/dev/null`
+      archs=`(cd ${R_HOME}/bin/exec; ls)`
+      R_ARCH_keep=${R_ARCH}
+      if test -n "${srcs}"; then
+	## if there is a configure script we install only the main
+	## sub-architecture
+	if test -x ../configure; then
+	  if test -n "${R_ARCH}"; then
+	    arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
+	    message "arch - ${arch}"
+	  fi
+	  sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+	    && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
+	    || has_error=true;
+	  chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
+        else
+	  for arch in ${archs}; do
+	    rm -f *.o *.so *.sl *.dylib
+	    if test "${arch}" = "R"; then
+	      R_ARCH=${R_ARCH_keep}
+	      export R_ARCH
+	      sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+		&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
+		|| has_error=true;
+	    elif test "${arch}" = "Rgnome"; then
+		R_ARCH=${R_ARCH_keep}
+	    else
+	      message "arch - ${arch}"
+	      R_ARCH="/${arch}"
+	      export R_ARCH
+	      ${MKDIR_P} "${R_PACKAGE_DIR}/libs${R_ARCH}"
+	      sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+		&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
+		|| has_error=true;
+	      chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
+	    fi
+	  done
+	  R_ARCH=${R_ARCH_keep}
+        fi
+      else
+	warning "no source files found"
+      fi
+      cd ..
+    fi
+    if ${has_error}; then
+      error "compilation failed for package '${pkg_name}'"
+      do_exit_on_error
+    fi
+    chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
+    if ${debug}; then set +x; fi
+  fi
+
+  if ${more_than_libs}; then
+  if test -d R; then
+    message "R"
+      ${MKDIR_P} "${R_PACKAGE_DIR}/R"
+      rm -f "${R_PACKAGE_DIR}/R/"*
+      ## this uses the locale to find a suitable charset
+      echo "tools:::.install_package_code_files(\".\", \"${R_PACKAGE_DIR}\")" | \
+        R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla >/dev/null
+      if test ${?} -ne 0; then
+        error "unable to collate files for package '${pkg_name}'"
+        do_exit_on_error
+      fi
+    if test -f "R/sysdata.rda"; then
+      echo "tools:::sysdata2LazyLoadDB(\"R/sysdata.rda\", \"${R_PACKAGE_DIR}/R\")" | \
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla > /dev/null ; \
+      if test ${?} -ne 0; then \
+        error "unable to build sysdata DB for package '${pkg_name}'" ; \
+        do_exit_on_error ; \
+      fi ; \
+    fi
+    if ${fake}; then
+      if test -f NAMESPACE; then
+        (echo; echo ".onLoad <- .onAttach <- function(lib, pkg) NULL") >> \
+	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+	## <NOTE>
+	## Tweak fake installation to provide an 'empty' useDynLib() for
+	## the time being.  Completely removing the directive results in
+	## checkFF() being too aggresive in the case where the presence
+	## of the directive enables unambiguous symbol resolution w/out
+	## 'PACKAGE' arguments.  However, empty directives are not
+	## really meant to work ...
+	${SED} -e 's/useDynLib.*/useDynLib("")/' NAMESPACE > \
+	  "${R_PACKAGE_DIR}/NAMESPACE"
+        ## </NOTE>
+      else
+        (echo; echo ".First.lib <- function(lib, pkg) NULL") >> \
+          "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+      fi
+    fi
+  fi
+  if test -d data; then
+    message "data"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/data"
+    rm -f "${R_PACKAGE_DIR}/data/"*
+    cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
+    chmod 644 "${R_PACKAGE_DIR}/data/"*
+    parse_description_field LazyData
+    if test "$value" = "missing" ; then
+      thislazy=${lazy_data}
+    else
+      thislazy=${value}
+    fi
+    if ${thislazy}; then
+      message " moving datasets to lazyload DB"
+      ## it is possible that data in a package will make use of the
+      ## code in the package, so ensure the package we have just
+      ## installed is on the library path.
+      echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::data2LazyLoadDB(\"${R_PACKAGE_NAME}\", \"${lib}\")" | \
+        R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla > /dev/null
+    if test ${?} -ne 0; then
+      error "lazydata failed for package '${pkg_name}'"
+      do_exit_on_error
+    fi
+    else
+      if test -n "${use_zip_data}" \
+	  && test -n "${R_UNZIPCMD}" \
+	  && test -n "${R_ZIPCMD}"; then
+	(cd "${R_PACKAGE_DIR}/data";
+	  find . -type f -print > filelist
+	  ${R_ZIPCMD} -q -m Rdata * -x filelist 00Index)
+      fi
+    fi
+  fi
+
+  if test -d demo && test "${fake}" != "true"; then
+    message "demo"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/demo"
+    rm -f "${R_PACKAGE_DIR}/demo/"*
+    echo "tools:::.install_package_demos('.', '${R_PACKAGE_DIR}')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla --slave > /dev/null
+    if test ${?} -ne 0; then
+      error "installing demos failed"
+      do_exit_on_error
+    fi
+    chmod 644 "${R_PACKAGE_DIR}/demo/"*
+  fi
+
+  if test -d exec && test "${fake}" != "true"; then
+    message "exec"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/exec"
+    rm -f "${R_PACKAGE_DIR}/exec/"*
+    cp exec/* "${R_PACKAGE_DIR}/exec" 2>/dev/null
+    chmod 755 "${R_PACKAGE_DIR}/exec/"*
+  fi
+
+  if test -d inst && test "${fake}" != "true"; then
+    message "inst"
+    cp -r inst/* "${R_PACKAGE_DIR}" || \
+      (cd inst && ${TAR} cf - . | \
+        (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
+  fi
+
+  if test -r install.R; then 
+      warning "use of install.R is no longer supported"
+  fi
+  if test -r R_PROFILE.R; then 
+      warning "use of R_PROFILE.R is no longer supported"
+  fi
+  parse_description_field SaveImage
+  if test "$value" != "missing" ; then
+    save=${value}
+  fi
+  ## sanity check
+  if test ! -d R ; then
+    R_SAVE_IMAGE=false
+  else
+    R_SAVE_IMAGE=${save}
+  fi
+  export R_SAVE_IMAGE
+
+  if ${R_SAVE_IMAGE}; then
+    message "save image"
+    ## <NOTE>
+    ## We want R to run as quietly as possible when creating the save
+    ## image.  But this is tricky: sending options(echo=FALSE) to R via
+    ## stdin (as opposed to writing to a file and reading from it)
+    ## echoes what we sent before shutting up R, which is not what we
+    ## want.  Option '--slave' gets around this but also turns off
+    ## saving ... hence we call R with '--slave --save' (in case there
+    ## is no namespace).  Argh.
+    ## </NOTE>
+    save_image_defaults="list(compress=TRUE, safe=FALSE)"
+    code_file="${R_PACKAGE_DIR}/R/${pkg_name}"
+    rda_file="${R_PACKAGE_DIR}/R/all.rda"
+    if test -f NAMESPACE; then
+      code_cmd="echo invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); saveNamespaceImage(\"${R_PACKAGE_NAME}\", \"${rda_file}\", \"${lib}\")"
+      loader_file=nsrdaload.R
+      R_save_args="--vanilla --slave"
+    else
+      code_cmd="eval cat \"${code_file}\""
+      loader_file=firstlib.R
+      R_save_args="--vanilla --slave --save"
+    fi
+    (echo "options(save.image.defaults=${save_image_defaults})"; \
+      echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages()"; \
+      ${code_cmd}) | \
+        R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" ${R_save_args} ${save_args}
+    if test ${?} -ne 0; then
+      error "execution of package source for '${pkg_name}' failed"
+      do_exit_on_error
+    fi
+    test -f NAMESPACE || mv .RData "${rda_file}"
+    ## we used to install the dumped code but this seems a waste of space
+    rm "${code_file}"
+    # mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg_name}.R"
+    cat "${R_SHARE_DIR}/R/${loader_file}" > "${code_file}"
+  fi
+
+  parse_description_field LazyLoad
+  if test "$value" = "missing" ; then
+    thislazy=${lazy}
+  else
+    thislazy=${value}
+  fi
+  if test ! -d R ; then
+    thislazy=false
+  fi
+  ## This test is designed to fail if a loader is used.
+  ## Beware: the wc format is not portable -- some systems give
+  ## size in a left-space-padded first field, and some do not pad.
+  if test "x$thislazy" = "xauto" ; then
+    Rcodesize=`cat ${R_PACKAGE_DIR}/R/${pkg_name} | wc -c`
+    if test ${Rcodesize} -gt 25000 ; then
+      thislazy=true
+    else
+      thislazy=false
+    fi
+  fi
+  if ${thislazy}; then
+    message "preparing package for lazy loading"
+    (echo "options(warn=1); invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); tools:::makeLazyLoading(\"${R_PACKAGE_NAME}\", \"${lib}\")") | \
+      R_DEFAULT_PACKAGES= LC_ALL=C "${R_EXE}" --vanilla --slave
+    if test ${?} -ne 0; then
+      error "lazy loading failed for package '${pkg_name}'"
+      do_exit_on_error
+    fi
+    rm -f ${R_PACKAGE_DIR}/R/all.rda
+  fi
+
+  if test -d man; then
+    message "help"
+    ## Install man sources ...
+    echo "tools:::.install_package_man_sources('.', '${R_PACKAGE_DIR}')" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla --slave > /dev/null
+    if test ${?} -ne 0; then
+      error "installing man sources failed"
+      do_exit_on_error
+    fi
+    chmod 644 "${R_PACKAGE_DIR}/man/${pkg_name}.Rd.gz"
+    ## Maybe build preformatted help pages ...
+    if ${build_help}; then
+      if ${NO_PERL5}; then
+	echo "${NO_PERL5_MSG}"
+      else
+	if ${debug}; then
+	  echo "DEBUG: build-help ${build_help_opts} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
+	fi
+	"${R_CMD}" perl "${R_SHARE_DIR}/perl/build-help.pl" \
+	  ${build_help_opts} \
+	  "${pkg_dir}" "${lib}" "${R_PACKAGE_DIR}" "${pkg_name}"
+	if test ${?} -ne 0; then
+	  error "building help failed for package '${pkg_name}'"
+	  do_exit_on_error
+        fi
+      fi
+      if test -n "${use_zip_help}" \
+	  && test -n "${R_UNZIPCMD}" \
+	  && test -n "${R_ZIPCMD}"; then
+	(cd "${R_PACKAGE_DIR}"
+	  if test -d R-ex; then
+	    (cd R-ex; ${R_ZIPCMD} -q -m Rex *.R)
+	  fi
+          if test -d help; then
+	    (cd help; ${R_ZIPCMD} -q -m Rhelp * -x AnIndex);
+	  fi
+	  if test -d latex; then
+            (cd latex; ${R_ZIPCMD} -q -m Rhelp *.tex)
+          fi)
+      fi
+    fi
+  else
+    echo "No man pages found in package '${pkg_name}'"
+  fi
+
+  message "building package indices ..."
+  echo "invisible(.libPaths(c(\"${lib}\", .libPaths()))); tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
+    R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+  if test ${?} -ne 0; then
+    error "installing package indices failed"
+    do_exit_on_error
+  fi
+
+  ## Install a dump of the parsed NAMESPACE file
+  if test -f NAMESPACE && test "${fake}" != "true"; then
+      echo "tools:::.install_package_namespace_info(\".\", \"${R_PACKAGE_DIR}\")" | \
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
+    if test ${?} -ne 0; then
+      error "installing namespace metadata failed"
+      do_exit_on_error
+    fi
+  fi
+
+  fi ## ${more_than_libs}
+
+  ## <NOTE>
+  ## Remove stuff we should not have installed in the first place.
+  ## When installing from a source directory under version control, we
+  ## should really exclude the subdirs CVS, .svn (Subversion) and
+  ## .arch-ids (arch).
+  for d in CVS .svn .arch-ids .git; do
+    find "${R_PACKAGE_DIR}" -name ${d} -type d -prune \
+      -exec rm -rf \{\} \; 2>/dev/null
+  done
+  ## </NOTE>
+
+  if ${clean}; then
+    if test -d src; then
+      cd src
+      if test -f Makefile; then
+        ${MAKE} clean
+      else
+        rm -rf .libs _libs
+        rm -f *.o *@SHLIB_EXT@
+      fi
+      cd ..
+    fi
+    if test -x ./cleanup ; then
+      ./cleanup
+    fi
+  fi
+
+  ## now repackage as a tarball if requested
+  if ${tar_up} ; then
+    version=`get_dcf_field Version DESCRIPTION`
+    ## R_PLATFORM is set by R CMD
+    filename="${R_PACKAGE_NAME}_${version}_R_${R_PLATFORM}.tar"
+    filepath="${startdir}/$filename"
+    ${TAR} -chf "$filepath" -C "${R_LIBRARY_DIR}" ${R_PACKAGE_NAME}
+    ${R_GZIPCMD} -9f "$filepath"
+    echo "packaged installation of '${R_PACKAGE_NAME}' as ${filename}.gz"
+  fi
+
+  stars="*"
+}
+
+### 
+### Install a package.
+
+do_install () {
+  cd "${1}"
+  pkg_dir="${1}"
+  pkg_name=`get_dcf_field Package DESCRIPTION`
+  ## (The basename of ${pkg_dir} might be different from ${pkg_name},
+  ## e.g., when building Debian packages from R packages.)
+  if test -z "${pkg_name}"; then
+    error "no 'Package' field in 'DESCRIPTION'"
+    do_exit_on_error no
+  fi
+
+  ## Set R_PACKAGE_DIR here at the top level.  If a version is being
+  ## specified, tack that on.
+  version=""
+  if ${with_package_versions}; then
+    version=`get_dcf_field Version DESCRIPTION`
+    if test -z "${version}"; then
+      error "no 'Version' field in 'DESCRIPTION'"
+      do_exit_on_error no
+    fi
+    R_PACKAGE_NAME="${pkg_name}_${version}"
+    R_PACKAGE_DIR="${lib}/${pkg_name}_${version}"
+  else
+    R_PACKAGE_NAME="${pkg_name}"
+    R_PACKAGE_DIR="${lib}/${pkg_name}"
+  fi
+  export R_PACKAGE_DIR
+  export R_PACKAGE_NAME
+
+  depends=`get_dcf_field Depends DESCRIPTION`
+  depends=`echo "${depends}" | grep 'R *('`
+  if test "${depends}"; then
+    depends=`echo "${depends}" | ${SED} 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
+    dep_operator=`set - ${depends}; echo ${1}`
+    dep_version=`set - ${depends}; echo ${2}`
+    ## Currently, only operators '<=' and '>=' are supported.  Hence we
+    ## check this, and also whether we found a version string.
+    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
+    if (test "${dep_operator}" = "<=" \
+           || test "${dep_operator}" = ">=") \
+         && test -n "${dep_version}"; then
+      dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
+      if test ${dep_ok} -eq 0; then
+        error "This R is version ${R_VERSION}"
+        echo "       package '${pkg_name}' needs R ${dep_operator} ${dep_version}" >&2
+        do_exit_on_error
+      fi
+    else
+      warning "malformed 'Depends' field in 'DESCRIPTION'"
+    fi
+  fi
+
+  ${MKDIR_P} "${R_PACKAGE_DIR}" || do_exit_on_error no
+
+  ## Make sure we do not attempt installing to srcdir.
+  if test "`cd \"${R_PACKAGE_DIR}\" && ${GETWD}`" = "`${GETWD}`"; then
+    error "cannot install to srcdir"
+    do_exit_on_error no
+  fi
+
+  ## Figure out whether this is a source or binary package.
+  if grep "^Built:" DESCRIPTION >/dev/null ; then
+    ## If DESCRIPTION has a @samp{Built:} entry this is a binary
+    ## package.  This is the right test, but not available for packages
+    ## installed prior to 1.4.0 -- but 2.0.0 requires packages to be
+    ## reinstalled.
+    is_source_package=false
+  else
+    is_source_package=true
+  fi
+
+  test "${is_first_package}" = no && echo
+
+  if ${is_source_package}; then
+    ## This is a source package ... hopefully.
+    do_install_source \
+      "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}" "${pkg_dir}"
+  else
+    ## This is a binary package ... hopefully.
+    do_install_binary \
+      "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
+  fi
+
+  find "${R_PACKAGE_DIR}" -exec chmod a+r \{\} \;
+
+  message "DONE (${pkg_name})"
+  is_first_package=no
+}
+
+### 
+### Exit and cleanup.
+
+do_exit_on_error () {
+  remove_R_package_dir=${1-yes}
+  ## If we are not yet processing a package, we will not have
+  ## set pkg_dir.  It's the first thing in do_install.
+  if test -n "${pkg_dir}"; then
+    ## Find out if this is a bundle.  If we are installing multiple
+    ## 'packages' the existing bundlepkg is unreliable.
+    bundlepkg=`get_dcf_field Contains "${pkg_dir}/DESCRIPTION"`
+    if test -z "${bundlepkg}"; then
+      bundlepkg=${pkg_name}
+    fi
+    for p in ${bundlepkg}; do
+      if ${with_package_versions}; then
+	p=${p}_${version}
+      fi
+      pkgdir="${lib}/$p"
+      if test "${remove_R_package_dir}" = yes && test -n "${pkgdir}"; then
+	message "Removing '${pkgdir}'"
+	rm -rf "${pkgdir}"
+      fi
+      if test -n "$p" \
+	  && test -d "${lockdir}/$p"; then
+	message "Restoring previous '${pkgdir}'"
+	mv "${lockdir}/$p" "${pkgdir}"
+      fi
+    done
+  fi
+  do_cleanup
+  exit 1
+}
+
+do_cleanup () {
+  do_cleanup_tmpdir
+
+  if test "${is_first_package}" = no; then
+    ## Only need to do this in case we successfully installed at least
+    ## *one* package ... well not so sure for bundles.
+    cp "${R_DOC_DIR}/html/R.css" "${lib}"
+    chmod 644 "${lib}/R.css" 2>/dev/null
+    if test "${lib}" = "`cd \"${R_HOME}/library\" && ${GETWD}`"; then
+      cat "${R_HOME}"/library/*/CONTENTS \
+        > "${R_DOC_DIR}"/html/search/index.txt
+      if ${build_help} && test "${NO_PERL5}" = "false"; then
+        echo "tools:::unix.packages.html(.Library, docdir=\"${R_DOC_DIR}\")" | \
+          R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla >/dev/null
+      fi
+    fi
+  fi
+  if ${lock}; then
+    rm -rf "${lockdir}"
+  fi
+}
+
+### 
+### Main loop.
+if ${debug} ; then
+    echo "'Rcmd INSTALL': now doing 'eval ... do_install':"
+fi
+eval "for pkg in ${pkgs}; do do_install \"\${pkg}\"; done"
+do_cleanup
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

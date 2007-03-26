@@ -1,0 +1,980 @@
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.5.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-02-25 10:19\n"
+"PO-Revision-Date: 2007-02-25 10:19\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+msgstr ""
+"RShowDoc() should be used with a character string argument specifying\n"
+"   a documentation file"
+
+msgid "no documentation for '%s' found in package '%s'"
+msgstr "no documentation for ‘%s’ found in package ‘%s’"
+
+msgid "document not found"
+msgstr "document not found"
+
+msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+msgstr "‘format’ must be “normal” or “short”. Using “normal”"
+
+msgid "wrong 'sortby' specified. Using sortby=\"score\""
+msgstr "wrong ‘sortby’ specified. Using sortby=“score”"
+
+msgid ""
+"wrong restriction specified.\n"
+"Using '%s'"
+msgstr ""
+"wrong restriction specified.\n"
+"Using ‘%s’"
+
+msgid "A search query has been submitted to %s"
+msgstr "A search query has been submitted to %s"
+
+msgid "The results page should open in your browser shortly"
+msgstr "The results page should open in your browser shortly"
+
+msgid "reference to unknown chunk '%s'"
+msgstr "reference to unknown chunk ‘%s’"
+
+msgid "no Sweave file with name '%s' found"
+msgstr "no Sweave file with name ‘%s’ found"
+
+msgid "%d Sweave files for basename '%s' found:"
+msgstr "%d Sweave files for basename ‘%s’ found:"
+
+msgid "Found invalid multi-byte character data."
+msgstr "Found invalid multi-byte character data."
+
+msgid "Cannot re-encode because 'iconv' is not available."
+msgstr "Cannot re-encode because ‘iconv’ is not available."
+
+msgid "Try running R in a single-byte locale."
+msgstr "Try running R in a single-byte locale."
+
+msgid "more than one syntax specification found, using the first one"
+msgstr "more than one syntax specification found, using the first one"
+
+msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr "object ‘%s’ does not have class “SweaveSyntax”"
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr "recursive Sweave input ‘%s’ in stack"
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr "target syntax not of class “SweaveSyntax”"
+
+msgid "target syntax contains no translation table"
+msgstr "target syntax contains no translation table"
+
+msgid ""
+"parse error or empty option in\n"
+"%s"
+msgstr ""
+"parse error or empty option in\n"
+"%s"
+
+msgid "path to '%s' contains spaces,"
+msgstr "path to ‘%s’ contains spaces,"
+
+msgid "this may cause problems when running LaTeX"
+msgstr "this may cause problems when running LaTeX"
+
+msgid "You can now run LaTeX on '%s'"
+msgstr "You can now run LaTeX on ‘%s’"
+
+msgid "invalid value for '%s' : %s"
+msgstr "invalid value for ‘%s’ : %s"
+
+msgid "elements of 'what' after the first will be ignored"
+msgstr "elements of ‘what’ after the first will be ignored"
+
+msgid "%d occurrences in %s"
+msgstr "%d occurrences in %s"
+
+msgid "bad argument"
+msgstr "bad argument"
+
+msgid "all arguments must be of class \"person\""
+msgstr "all arguments must be of class “person”"
+
+msgid "broken installation, no CITATION file in the base package."
+msgstr "broken installation, no CITATION file in the base package."
+
+msgid "package '%s' not found"
+msgstr "package ‘%s’ not found"
+
+msgid "no date field in DESCRIPTION file of package '%s'"
+msgstr "no date field in DESCRIPTION file of package ‘%s’"
+
+msgid "could not determine year for '%s' from package DESCRIPTION file"
+msgstr "could not determine year for ‘%s’ from package DESCRIPTION file"
+
+msgid "m < 0"
+msgstr "m < 0"
+
+msgid "n < m"
+msgstr "n < m"
+
+msgid "'FUN' must be a function or NULL"
+msgstr "‘FUN’ must be a function or NULL"
+
+msgid "'package' must be a character string or NULL"
+msgstr "‘package’ must be a character string or NULL"
+
+msgid "datasets have been moved from package 'base' to package 'datasets'"
+msgstr "datasets have been moved from package ‘base’ to package ‘datasets’"
+
+msgid "datasets have been moved from package 'stats' to package 'datasets'"
+msgstr "datasets have been moved from package ‘stats’ to package ‘datasets’"
+
+msgid "data index for package '%s' is invalid and will be ignored"
+msgstr "data index for package ‘%s’ is invalid and will be ignored"
+
+msgid "file 'filelist' is missing for directory '%s'"
+msgstr "file ‘filelist’ is missing for directory ‘%s’"
+
+msgid "data set '%s' not found"
+msgstr "data set ‘%s’ not found"
+
+msgid "kind '%s' not yet implemented"
+msgstr "kind ‘%s’ not yet implemented"
+
+msgid "wrong number of table row entries"
+msgstr "wrong number of table row entries"
+
+msgid "wrong argument to 'dataentry'"
+msgstr "wrong argument to ‘dataentry’"
+
+msgid "could not restore type information"
+msgstr "could not restore type information"
+
+msgid "modes argument ignored"
+msgstr "modes argument ignored"
+
+msgid "'names' argument ignored"
+msgstr "‘names’ argument ignored"
+
+msgid "'modes' argument ignored"
+msgstr "‘modes’ argument ignored"
+
+msgid "could not restore variables properly"
+msgstr "could not restore variables properly"
+
+msgid "did not assign() anything"
+msgstr "did not assign() anything"
+
+msgid "Browsing in the environment with call:"
+msgstr "Browsing in the environment with call:"
+
+msgid "'dump' is not an object of class 'dump.frames'"
+msgstr "‘dump’ is not an object of class ‘dump.frames’"
+
+msgid "Message:"
+msgstr "Message:"
+
+msgid "Available environments had calls:"
+msgstr "Available environments had calls:"
+
+msgid "Enter an environment number, or 0 to exit"
+msgstr "Enter an environment number, or 0 to exit"
+
+msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr ""
+"recover called non-interactively; frames dumped, use debugger() to view"
+
+msgid "No suitable frames for recover()"
+msgstr "No suitable frames for recover()"
+
+msgid "No demo found for topic '%s'"
+msgstr "No demo found for topic ‘%s’"
+
+msgid ""
+"Demo for topic '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+"Demo for topic ‘%s’ found more than once,\n"
+"using the one found in ‘%s’"
+
+msgid "invalid 'data' argument"
+msgstr "invalid ‘data’ argument"
+
+msgid "invalid 'modes' argument"
+msgstr "invalid ‘modes’ argument"
+
+msgid "invalid 'x' argument"
+msgstr "invalid ‘x’ argument"
+
+msgid "can only handle vector and factor elements"
+msgstr "can only handle vector and factor elements"
+
+msgid "invalid factor levels in '%s'"
+msgstr "invalid factor levels in ‘%s’"
+
+msgid "added factor levels in '%s'"
+msgstr "added factor levels in ‘%s’"
+
+msgid "edited row names contain duplicates and will be ignored"
+msgstr "edited row names contain duplicates and will be ignored"
+
+msgid "invalid input matrix"
+msgstr "invalid input matrix"
+
+msgid "no help file found for '%s'"
+msgstr "no help file found for ‘%s’"
+
+msgid "more than one help file found: using package '%s'"
+msgstr "more than one help file found: using package ‘%s’"
+
+msgid "'%s' has a help file but no examples file"
+msgstr "‘%s’ has a help file but no examples file"
+
+msgid "test '%s' is not available"
+msgstr "test ‘%s’ is not available"
+
+msgid "'fix' requires a name"
+msgstr "‘fix’ requires a name"
+
+msgid "too many list items (at most up to number 26)"
+msgstr "too many list items (at most up to number 26)"
+
+msgid "too many list items (at most up to number 3899)"
+msgstr "too many list items (at most up to number 3899)"
+
+msgid "'form' must be a two-sided formula"
+msgstr "‘form’ must be a two-sided formula"
+
+msgid "No documentation for '%s' in specified packages and libraries:"
+msgstr "No documentation for ‘%s’ in specified packages and libraries:"
+
+msgid "you could try 'help.search(\"%s\")'"
+msgstr "you could try ‘help.search(“%s”)’"
+
+msgid ""
+"Help for topic '%s' is not in any loaded package but can be found in the "
+"following packages:"
+msgstr ""
+"Help for topic ‘%s’ is not in any loaded package but can be found in the "
+"following packages:"
+
+msgid "Package"
+msgstr "Package"
+
+msgid "Library"
+msgstr "Library"
+
+msgid "Help on topic '%s' was found in the following packages:"
+msgstr "Help on topic ‘%s’ was found in the following packages:"
+
+msgid "Choose one"
+msgstr "Choose one"
+
+msgid "Using the first match ..."
+msgstr "Using the first match ..."
+
+msgid ""
+"No HTML help for '%s' is available:\n"
+"corresponding file is missing"
+msgstr ""
+"No HTML help for ‘%s’ is available:\n"
+"corresponding file is missing"
+
+msgid "Compiled HTML is not installed"
+msgstr "Compiled HTML is not installed"
+
+msgid "CHM file could not be displayed"
+msgstr "CHM file could not be displayed"
+
+msgid ""
+"No CHM help for '%s' in package '%s' is available:\n"
+"the CHM file for the package is missing"
+msgstr ""
+"No CHM help for ‘%s’ in package ‘%s’ is available:\n"
+"the CHM file for the package is missing"
+
+msgid "R Help on '%s'"
+msgstr "R Help on ‘%s’"
+
+msgid ""
+"No text help for '%s' is available:\n"
+"corresponding file is missing"
+msgstr ""
+"No text help for ‘%s’ is available:\n"
+"corresponding file is missing"
+
+msgid "problems running R CMD Rdconv"
+msgstr "problems running R CMD Rdconv"
+
+msgid ""
+"No offline help for '%s' is available:\n"
+"corresponding file is missing"
+msgstr ""
+"No offline help for ‘%s’ is available:\n"
+"corresponding file is missing"
+
+msgid "argument '%s' must be a single character string"
+msgstr "argument ‘%s’ must be a single character string"
+
+msgid "incorrect field specification"
+msgstr "incorrect field specification"
+
+msgid "do not know what to search"
+msgstr "do not know what to search"
+
+msgid "argument 'help.db' is deprecated"
+msgstr "argument ‘help.db’ is deprecated"
+
+msgid "Rebuilding the data base ..."
+msgstr "Rebuilding the data base ..."
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr "Packages {.readRDS() sequentially}:"
+
+msgid "could not find package '%s'"
+msgstr "could not find package ‘%s’"
+
+msgid "package '%s' has empty hsearch data - strangely"
+msgstr "package ‘%s’ has empty hsearch data - strangely"
+
+msgid "no hsearch.rds meta data for package"
+msgstr "no hsearch.rds meta data for package"
+
+msgid "reencoding ..."
+msgstr "reencoding ..."
+
+msgid "done"
+msgstr "done"
+
+msgid "removing all entries with invalid multi-byte character data"
+msgstr "removing all entries with invalid multi-byte character data"
+
+msgid "saving the database ..."
+msgstr "saving the database ..."
+
+msgid ""
+"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgstr ""
+"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+
+msgid "incorrect 'agrep' specification"
+msgstr "incorrect ‘agrep’ specification"
+
+msgid "matched %d objects."
+msgstr "matched %d objects."
+
+msgid "no package '%s' was found"
+msgstr "no package ‘%s’ was found"
+
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr "DESCRIPTION file of package ‘%s’ is corrupt"
+
+msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+"‘DESCRIPTION’ file has ‘Encoding’ field and re-encoding is not possible"
+
+msgid "DESCRIPTION file of package '%s' is missing or broken"
+msgstr "DESCRIPTION file of package ‘%s’ is missing or broken"
+
+msgid "menu() cannot be used non-interactively"
+msgstr "menu() cannot be used non-interactively"
+
+msgid "Enter an item from the menu, or 0 to exit"
+msgstr "Enter an item from the menu, or 0 to exit"
+
+msgid "'%s' is a formal generic function; S3 methods will not likely be found"
+msgstr "‘%s’ is a formal generic function; S3 methods will not likely be found"
+
+msgid "no function '%s' is visible"
+msgstr "no function ‘%s’ is visible"
+
+msgid "function '%s' appears not to be generic"
+msgstr "function ‘%s’ appears not to be generic"
+
+msgid "generic function '%s' dispatches methods for generic '%s'"
+msgstr "generic function ‘%s’ dispatches methods for generic ‘%s’"
+
+msgid "must supply 'generic.function' or 'class'"
+msgstr "must supply ‘generic.function’ or ‘class’"
+
+msgid "no function '%s' could be found"
+msgstr "no function ‘%s’ could be found"
+
+msgid "S3 method '%s' not found"
+msgstr "S3 method ‘%s’ not found"
+
+msgid "environment specified is not a package"
+msgstr "environment specified is not a package"
+
+msgid "'fixInNamespace' requires a name"
+msgstr "‘fixInNamespace’ requires a name"
+
+msgid "only numeric indices can be used"
+msgstr "only numeric indices can be used"
+
+msgid "cannot create directory '%s'"
+msgstr "cannot create directory ‘%s’"
+
+msgid "'code_files' should be a character vector"
+msgstr "‘code_files’ should be a character vector"
+
+msgid "'list' should be a character vector naming R objects"
+msgstr "‘list’ should be a character vector naming R objects"
+
+msgid "'namespace' should be a single logical"
+msgstr "‘namespace’ should be a single logical"
+
+msgid "cannot turn off locale-specific chars via LC_CTYPE"
+msgstr "cannot turn off locale-specific chars via LC_CTYPE"
+
+msgid "no R objects specified or available"
+msgstr "no R objects specified or available"
+
+msgid "Creating directories ..."
+msgstr "Creating directories ..."
+
+msgid "directory '%s' already exists"
+msgstr "directory ‘%s’ already exists"
+
+msgid "Creating DESCRIPTION ..."
+msgstr "Creating DESCRIPTION ..."
+
+msgid "Creating NAMESPACE ..."
+msgstr "Creating NAMESPACE ..."
+
+msgid "Creating Read-and-delete-me ..."
+msgstr "Creating Read-and-delete-me ..."
+
+msgid "Saving functions and data ..."
+msgstr "Saving functions and data ..."
+
+msgid "Copying code files ..."
+msgstr "Copying code files ..."
+
+msgid "Making help files ..."
+msgstr "Making help files ..."
+
+msgid "Done."
+msgstr "Done."
+
+msgid "Further steps are described in '%s'."
+msgstr "Further steps are described in '%s'."
+
+msgid "unable to access index for repository %s"
+msgstr "unable to access index for repository %s"
+
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr "no installed packages for (invalid?) ‘lib.loc=%s’"
+
+msgid "bundle '%s' is incompletely installed"
+msgstr "bundle ‘%s’ is incompletely installed"
+
+msgid "bundle '%s' has extra contents %s"
+msgstr "bundle ‘%s’ has extra contents %s"
+
+msgid "'priority' must be character or NULL"
+msgstr "‘priority’ must be character or NULL"
+
+msgid "argument 'lib' is missing: using %s"
+msgstr "argument ‘lib’ is missing: using %s"
+
+msgid "'destdir' is not a directory"
+msgstr "‘destdir’ is not a directory"
+
+msgid "no package '%s' at the repositories"
+msgstr "no package ‘%s’ at the repositories"
+
+msgid "download of package '%s' failed"
+msgstr "download of package ‘%s’ failed"
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr "--- Please select a CRAN mirror for use in this session ---"
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr "trying to use CRAN without setting a mirror"
+
+msgid "cannot choose a CRAN mirror non-interactively"
+msgstr "cannot choose a CRAN mirror non-interactively"
+
+msgid "cannot set repositories non-interactively"
+msgstr "cannot set repositories non-interactively"
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr "--- Please select repositories for use in this session ---"
+
+msgid "Enter one or more numbers separated by spaces"
+msgstr "Enter one or more numbers separated by spaces"
+
+msgid "'%s' must be supplied"
+msgstr "‘%s’ must be supplied"
+
+msgid "every package depends on at least one other"
+msgstr "every package depends on at least one other"
+
+msgid "packages %s are mutually dependent"
+msgstr "packages %s are mutually dependent"
+
+msgid "no packages were specified"
+msgstr "no packages were specified"
+
+msgid "argument 'lib' is missing: using '%s'"
+msgstr "argument ‘lib’ is missing: using ‘%s’"
+
+msgid "'lib' is not writable"
+msgstr "‘lib’ is not writable"
+
+msgid ""
+"Would you like to create a personal library\n"
+"'%s'\n"
+"to install packages into?"
+msgstr ""
+"Would you like to create a personal library\n"
+"'%s'\n"
+"to install packages into?"
+
+msgid "unable to install packages"
+msgstr "unable to install packages"
+
+msgid "unable to create"
+msgstr "unable to create"
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr "cannot install MacOS X binary packages on Windows"
+
+msgid "cannot install MacOS X binary packages on this plaform"
+msgstr "cannot install MacOS X binary packages on this plaform"
+
+msgid "cannot install Windows binary packages on this plaform"
+msgstr "cannot install Windows binary packages on this plaform"
+
+msgid ""
+"This version of R is not set up to install source packages\n"
+"If it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+"This version of R is not set up to install source packages\n"
+"If it was installed from an RPM, you may need the R-devel RPM"
+
+msgid "installation of package '%s' had non-zero exit status"
+msgstr "installation of package ‘%s’ had non-zero exit status"
+
+msgid "unable to create temporary directory '%s'"
+msgstr "unable to create temporary directory ‘%s’"
+
+msgid ""
+"Do not know which element of 'lib' to install dependencies into\n"
+"skipping dependencies"
+msgstr ""
+"Do not know which element of ‘lib’ to install dependencies into\n"
+"skipping dependencies"
+
+msgid ""
+"The downloaded packages are in\n"
+"\t%s"
+msgstr ""
+"The downloaded packages are in\n"
+"\t%s"
+
+msgid "no object named '%s' to show"
+msgstr "no object named ‘%s’ to show"
+
+msgid "cannot determine a usable name"
+msgstr "cannot determine a usable name"
+
+msgid "Created file named '%s'."
+msgstr "Created file named '%s'."
+
+msgid "Edit the file and move it to the appropriate directory."
+msgstr "Edit the file and move it to the appropriate directory."
+
+msgid "Maintainer:"
+msgstr "Maintainer:"
+
+msgid "Index:"
+msgstr "Index:"
+
+msgid "Further information is available in the following vignettes:"
+msgstr "Further information is available in the following vignettes:"
+
+msgid "package title"
+msgstr "package title"
+
+msgid "A concise (1-5 lines) description of the package"
+msgstr "A concise (1-5 lines) description of the package"
+
+msgid ""
+"An overview of how to use the package, including the most important functions"
+msgstr ""
+"An overview of how to use the package, including the most important functions"
+
+msgid "The author and/or maintainer of the package"
+msgstr "The author and/or maintainer of the package"
+
+msgid "Literature or other references for background information"
+msgstr "Literature or other references for background information"
+
+msgid "Optional links to other man pages, e.g."
+msgstr "Optional links to other man pages, e.g."
+
+msgid "simple examples of the most important functions"
+msgstr "simple examples of the most important functions"
+
+msgid ""
+"Optionally other standard keywords, one per line, from file KEYWORDS in the "
+"R documentation directory"
+msgstr ""
+"Optionally other standard keywords, one per line, from file KEYWORDS in the "
+"R documentation directory"
+
+msgid ""
+"no documentation of type '%s' and topic '%s' (or error in processing help)"
+msgstr ""
+"no documentation of type ‘%s’ and topic ‘%s’ (or error in processing help)"
+
+msgid ""
+"the object of class \"%s\" in the function call '%s' could not be used as a "
+"documentation topic"
+msgstr ""
+"the object of class “%s” in the function call ‘%s’ could not be used as a "
+"documentation topic"
+
+msgid "no methods for '%s' and no documentation for it as a function"
+msgstr "no methods for ‘%s’ and no documentation for it as a function"
+
+msgid "error in trying to evaluate the expression for argument '%s' (%s)"
+msgstr "error in trying to evaluate the expression for argument ‘%s’ (%s)"
+
+msgid "no method defined for function '%s' and signature '%s'"
+msgstr "no method defined for function ‘%s’ and signature ‘%s’"
+
+msgid "no documentation for function '%s' and signature '%s'"
+msgstr "no documentation for function ‘%s’ and signature ‘%s’"
+
+msgid "No DIF data on clipboard"
+msgstr "No DIF data on clipboard"
+
+msgid "row and column counts not found"
+msgstr "row and column counts not found"
+
+msgid "Unrecognized special data value"
+msgstr "Unrecognized special data value"
+
+msgid "Unrecognized value indicator"
+msgstr "Unrecognized value indicator"
+
+msgid "no lines available in input"
+msgstr "no lines available in input"
+
+msgid "header and 'col.names' are of different lengths"
+msgstr "header and ‘col.names’ are of different lengths"
+
+msgid "more columns than column names"
+msgstr "more columns than column names"
+
+msgid "more column names than columns"
+msgstr "more column names than columns"
+
+msgid "rows are empty: giving up"
+msgstr "rows are empty: giving up"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr "not all columns named in ‘colClasses’ exist"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr "invalid numeric ‘as.is’ expression"
+
+msgid "not all columns named in 'as.is' exist"
+msgstr "not all columns named in ‘as.is’ exist"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "‘as.is’ has the wrong length %d  != cols = %d"
+
+msgid "invalid 'row.names' specification"
+msgstr "invalid ‘row.names’ specification"
+
+msgid "invalid 'row.names' length"
+msgstr "invalid ‘row.names’ length"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "duplicate ‘row.names’ are not allowed"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "missing values in ‘row.names’ are not allowed"
+
+msgid "missing lengths for some fields"
+msgstr "missing lengths for some fields"
+
+msgid "invalid format"
+msgstr "invalid format"
+
+msgid "last record incomplete, %d lines discarded"
+msgstr "last record incomplete, %d lines discarded"
+
+msgid "'file' must be a character string or connection"
+msgstr "‘file’ must be a character string or connection"
+
+msgid "transfer failure"
+msgstr "transfer failure"
+
+msgid "HTTPUserAgent"
+msgstr "HTTPUserAgent"
+
+msgid "option must be a length one character vector or NULL"
+msgstr "option must be a length one character vector or NULL"
+
+msgid "empty beginning of file"
+msgstr "empty beginning of file"
+
+msgid "first five rows are empty: giving up"
+msgstr "first five rows are empty: giving up"
+
+msgid "cannot coerce 'x' to roman"
+msgstr "cannot coerce ‘x’ to roman"
+
+msgid "Invalid roman numeral(s): %s"
+msgstr "Invalid roman numeral(s): %s"
+
+msgid "invalid 'socket' argument"
+msgstr "invalid ‘socket’ argument"
+
+msgid "'port' must be integer of length 1"
+msgstr "‘port’ must be integer of length 1"
+
+msgid "'host' must be character of length 1"
+msgstr "‘host’ must be character of length 1"
+
+msgid "can only receive calls on local machine"
+msgstr "can only receive calls on local machine"
+
+msgid "socket not established"
+msgstr "socket not established"
+
+msgid "str.data.frame() called with non-data.frame -- coercing to one."
+msgstr "str.data.frame() called with non-data.frame -- coercing to one."
+
+msgid "invalid options('str') -- using defaults instead"
+msgstr "invalid options('str') -- using defaults instead"
+
+msgid "'object' does not have valid levels()"
+msgstr "‘object’ does not have valid levels()"
+
+msgid "'str.default': 'le' is NA"
+msgstr "'str.default': ‘le’ is NA"
+
+msgid "profile does not contain memory information"
+msgstr "profile does not contain memory information"
+
+msgid "no events were recorded"
+msgstr "no events were recorded"
+
+msgid ""
+"vignette '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+"vignette ‘%s’ found more than once,\n"
+"using the one found in ‘%s’"
+
+msgid "vignette '%s' *not* found"
+msgstr "vignette ‘%s’ *not* found"
+
+msgid "vignette '%s' has no PDF"
+msgstr "vignette ‘%s’ has no PDF"
+
+msgid "select.list() cannot be used non-interactively"
+msgstr "select.list() cannot be used non-interactively"
+
+msgid "Enter zero or more numbers separated by space"
+msgstr "Enter zero or more numbers separated by space"
+
+msgid "Invalid input, please try again"
+msgstr "Invalid input, please try again"
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr "‘quote’ must be 'TRUE', ‘FALSE’ or numeric"
+
+msgid "invalid numbers in 'quote'"
+msgstr "invalid numbers in ‘quote’"
+
+msgid "invalid 'quote' specification"
+msgstr "invalid ‘quote’ specification"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "col.names = NA makes no sense when row.names = FALSE"
+
+msgid "invalid 'col.names' specification"
+msgstr "invalid ‘col.names’ specification"
+
+msgid "appending column names to file"
+msgstr "appending column names to file"
+
+msgid "attempt to change '%s' ignored"
+msgstr "attempt to change ‘%s’ ignored"
+
+msgid "'unzip' must be a single character string"
+msgstr "‘unzip’ must be a single character string"
+
+msgid "'subject' missing"
+msgstr "‘subject’ missing"
+
+msgid "no download method found"
+msgstr "no download method found"
+
+msgid "download had nonzero exit status"
+msgstr "download had nonzero exit status"
+
+msgid "options(\"browser\") not set"
+msgstr "options(“browser”) not set"
+
+msgid "invalid browser name, check options(\"browser\")."
+msgstr "invalid browser name, check options(“browser”)."
+
+msgid ""
+"Changing the default browser (as specified by the 'browser' option) to the "
+"given browser so that it gets used for all future help requests."
+msgstr ""
+"Changing the default browser (as specified by the ‘browser’ option) to the "
+"given browser so that it gets used for all future help requests."
+
+msgid "Making links in per-session dir ..."
+msgstr "Making links in per-session dir ..."
+
+msgid ""
+"If '%s' is already running, it is *not* restarted, and you must switch to "
+"its window."
+msgstr ""
+"If ‘%s’ is already running, it is *not* restarted, and you must switch to "
+"its window."
+
+msgid "Otherwise, be patient ..."
+msgstr "Otherwise, be patient ..."
+
+msgid "'url' must be a non-empty character string"
+msgstr "‘url’ must be a non-empty character string"
+
+msgid "'browser' must be a non-empty character string"
+msgstr "‘browser’ must be a non-empty character string"
+
+msgid "cannot create HTML package index"
+msgstr "cannot create HTML package index"
+
+msgid "cannot create HTML search index"
+msgstr "cannot create HTML search index"
+
+msgid "'memory.size()' is Windows-specific"
+msgstr "‘memory.size()’ is Windows-specific"
+
+msgid "'memory.limit()' is Windows-specific"
+msgstr "‘memory.limit()’ is Windows-specific"
+
+msgid "unable to find the HTML help"
+msgstr "unable to find the HTML help"
+
+msgid "updating HTML package listing"
+msgstr "updating HTML package listing"
+
+msgid "fixing URLs in non-standard libraries"
+msgstr "fixing URLs in non-standard libraries"
+
+msgid "If nothing happens, you should open '%s' yourself"
+msgstr "If nothing happens, you should open ‘%s’ yourself"
+
+msgid "package '%s' successfully unpacked and MD5 sums checked"
+msgstr "package ‘%s’ successfully unpacked and MD5 sums checked"
+
+msgid "malformed bundle DESCRIPTION file, no Contains field"
+msgstr "malformed bundle DESCRIPTION file, no Contains field"
+
+msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+msgstr "bundle ‘%s’ successfully unpacked and MD5 sums checked"
+
+msgid "failed to create '%s'"
+msgstr "failed to create ‘%s’"
+
+msgid "unable to move temporary installation '%s' to '%s'"
+msgstr "unable to move temporary installation ‘%s’ to ‘%s’"
+
+msgid "cannot remove prior installation of package '%s'"
+msgstr "cannot remove prior installation of package ‘%s’"
+
+msgid "zipfile '%s' not found"
+msgstr "zipfile ‘%s’ not found"
+
+msgid "updating HTML package descriptions"
+msgstr "updating HTML package descriptions"
+
+msgid "cannot update HTML package index"
+msgstr "cannot update HTML package index"
+
+msgid "cannot update HTML search index"
+msgstr "cannot update HTML search index"
+
+msgid "cannot update '%s'"
+msgstr "cannot update ‘%s’"
+
+msgid "this function is intended to work with the Aqua GUI"
+msgstr "this function is intended to work with the Aqua GUI"
+
+msgid "'tar' returned non-zero exit code %d"
+msgstr "‘tar’ returned non-zero exit code %d"
+
+msgid "cannot remove prior installation of package"
+msgstr "cannot remove prior installation of package"
+
+msgid "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0] "object ‘%s’ not found"
+msgstr[1] "objects ‘%s’ not found"
+
+msgid "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0] "‘lib’ element ‘%s’  is not a writable directory"
+msgstr[1] "‘lib’ elements ‘%s’ are not writable directories"
+
+msgid "package %s is not available"
+msgid_plural "packages %s are not available"
+msgstr[0] "package %s is not available"
+msgstr[1] "packages %s are not available"
+
+msgid "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0] "dependency %s is not available"
+msgstr[1] "dependencies %s are not available"
+
+msgid "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0] "also installing the dependency %s"
+msgstr[1] "also installing the dependencies %s"
+
+msgid "package '%s' is in use and will not be installed"
+msgid_plural "packages '%s' are in use and will not be installed"
+msgstr[0] "package ‘%s’ is in use and will not be installed"
+msgstr[1] "packages ‘%s’ are in use and will not be installed"

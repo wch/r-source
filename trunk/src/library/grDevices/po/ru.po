@@ -1,0 +1,588 @@
+# Russian translations for R
+# Русский перевод для R
+#
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# Alexey Shipunov <iit512@yandex.ru> 2006
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2007-03-26 13:13+0100\n"
+"PO-Revision-Date: 2006-12-10 00:35-0800\n"
+"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: devNull.c:41 devNull.c:45
+msgid "unable to start NULL device"
+msgstr "не могу запустить NULL-устройство"
+
+#: devPS.c:553
+#, c-format
+msgid "afm file '%s' could not be opened"
+msgstr "afm-файл '%s' не открывается"
+
+#: devPS.c:582
+msgid "FontBBox could not be parsed"
+msgstr "FontBBox не разбирается"
+
+#: devPS.c:590
+msgid "CharInfo could not be parsed"
+msgstr "CharInfo не разбирается"
+
+#: devPS.c:620
+msgid "unknown AFM entity encountered"
+msgstr "встречен неизвестный раздел AFM"
+
+#: devPS.c:735 devPS.c:738 devPS.c:4009 devPS.c:6662 devPicTeX.c:501
+#: devPicTeX.c:503
+#, c-format
+msgid "invalid string in '%s'"
+msgstr "неправильная строка в '%s'"
+
+#: devPS.c:766
+#, c-format
+msgid "font width unknown for character 0x%x"
+msgstr "неизвестна ширина символа 0x%x"
+
+#: devPS.c:820
+#, c-format
+msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
+msgstr "неизвестная кодировка '%s' в 'PostScriptMetricInfo'"
+
+#: devPS.c:836 devPS.c:848
+#, c-format
+msgid "font metrics unknown for Unicode character U+%04x"
+msgstr "неизвестны шрифтовые метрики для символа Юникода U+%04x"
+
+#: devPS.c:856
+#, c-format
+msgid "font metrics unknown for character 0x%x"
+msgstr "неизвестны шрифтовые метрики для символа 0x%x"
+
+#: devPS.c:871 devPS.c:878
+msgid ""
+"invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
+msgstr ""
+"неправильный символ послан в 'PostScriptCIDMetricInfo' на однобайтной локали"
+
+#: devPS.c:992
+msgid "failed to allocate CID font info"
+msgstr "не могу разместить информацию CID-шрифта"
+
+#: devPS.c:1007
+msgid "failed to allocate Type 1 font info"
+msgstr "не могу разместить информацию шрифта Type 1"
+
+#: devPS.c:1027
+msgid "failed to allocate encoding info"
+msgstr "не могу разместить информацию о кодировке"
+
+#: devPS.c:1045
+msgid "failed to allocate CID font family"
+msgstr "не могу разместить семейство CID-шрифтов"
+
+#: devPS.c:1058
+msgid "failed to allocate Type 1 font family"
+msgstr "не могу разместить семейство шрифтов Type 1"
+
+#: devPS.c:1097 devPS.c:1108
+msgid "failed to allocate font list"
+msgstr "не могу разместить список шрифтов"
+
+#: devPS.c:1159
+msgid "failed to allocated encoding list"
+msgstr "не могу разместить список кодировок"
+
+#: devPS.c:1307
+msgid "truncated string which was too long for copy"
+msgstr "обрезана строка, слишком длинная для копирования"
+
+#: devPS.c:1348
+#, c-format
+msgid "failed to load encoding file '%s'"
+msgstr "не могу загрузить файл кодировки '%s'"
+
+#: devPS.c:1443 devPS.c:1481
+msgid "Invalid font name or more than one font name"
+msgstr "Неправильное имя шрифта или больше одного имени шрифта"
+
+#: devPS.c:1605 devPS.c:1638
+msgid "font family not found in PostScript font database"
+msgstr "семейство шрифтов не найдено в базе данных PostScript"
+
+#: devPS.c:1707 devPS.c:1782 devPS.c:1807
+msgid "font encoding not found in font database"
+msgstr "кодировка шрифта не найдена в базе данных"
+
+#: devPS.c:1732 devPS.c:1757
+msgid "font CMap not found in font database"
+msgstr "шрифтовая CMap не найдена в базе данных шрифтов"
+
+#: devPS.c:1945 devPS.c:2024 devPS.c:2091
+#, c-format
+msgid "cannot load afm file '%s'"
+msgstr "не могу загрузить afm-файл '%s'"
+
+#: devPS.c:2380
+msgid "Corrupt loaded encodings;  encoding not recorded"
+msgstr "Повреждены загруженные кодировки; кодировка не записана"
+
+#: devPS.c:2391
+msgid "Failed to record device encoding"
+msgstr "Не вышло записать кодировку устройства"
+
+#: devPS.c:2561
+msgid "Object .ps.prolog is not a character vector"
+msgstr "Объект .ps.prolog не является символьным вектором"
+
+#: devPS.c:2615 devPS.c:5650 devQuartz.c:1394 devWindows.c:698
+msgid "Invalid line end"
+msgstr "Неправильный конец строки"
+
+#: devPS.c:2634 devPS.c:5669 devQuartz.c:1414 devWindows.c:711
+msgid "Invalid line join"
+msgstr "Неправильное соединение линий"
+
+#: devPS.c:2642 devQuartz.c:1424
+msgid "Invalid line mitre"
+msgstr "Неправильный конец линии"
+
+#: devPS.c:2852
+msgid "only gray colors are allowed in this color model"
+msgstr ""
+
+#: devPS.c:2932
+msgid "filename too long in postscript"
+msgstr "имя файла слишком длинно для postscript"
+
+#: devPS.c:2951 devPS.c:5177
+msgid "encoding path is too long"
+msgstr "путь к кодировке слишком длинный"
+
+#: devPS.c:2966 devPS.c:4333
+msgid "failed to load encoding"
+msgstr "не удалось загрузить кодировку"
+
+#: devPS.c:3009 devPS.c:3072 devPS.c:5236 devPS.c:5291 devPS.c:6462
+msgid "Invalid font type"
+msgstr "Неправильный тип шрифта"
+
+#: devPS.c:3034 devPS.c:5259
+msgid "Failed to initialise default PostScript font"
+msgstr "Не удалось инициализировать шрифт PostScript по умолчанию"
+
+#: devPS.c:3104 devPS.c:5318
+msgid "Failed to initialise additional PostScript fonts"
+msgstr "Не удалось инициализировать дополнительные шрифты PostScript"
+
+#: devPS.c:3125
+msgid "invalid foreground/background color (postscript)"
+msgstr "неправильный цвет переднего/заднего плана (postscript)"
+
+#: devPS.c:3135
+msgid "'command' is too long"
+msgstr "'command' слишком длинная"
+
+#: devPS.c:3139
+msgid "postscript(print.it=TRUE) used with an empty print command"
+msgstr "postscript(print.it=TRUE) использован с пустой командой печати"
+
+#: devPS.c:3192
+#, c-format
+msgid "invalid page type '%s' (postscript)"
+msgstr "неправильный тип страницы '%s' (postscript)"
+
+#: devPS.c:3397
+msgid "printing via file = \"\" is not implemented in this version"
+msgstr "печать через file = \"\" недоступна в этой версии"
+
+#: devPS.c:3405 devPS.c:3418
+#, c-format
+msgid "cannot open 'postscript' pipe to '%s'"
+msgstr "не могу открыть канал 'postscript' в '%s'"
+
+#: devPS.c:3411
+msgid "file = \"|cmd\" is not implemented in this version"
+msgstr "file = \"|cmd\" недоступен в этой версии"
+
+#: devPS.c:3429
+#, c-format
+msgid "cannot open 'postscript' file argument '%s'"
+msgstr "не могу открыть 'postscript'-файл аргумента '%s'"
+
+#: devPS.c:3561
+#, c-format
+msgid ""
+"error from postscript() in running:\n"
+"    %s"
+msgstr ""
+"ошибка postscript(), выполняющего:\n"
+"    %s"
+
+#: devPS.c:3595
+#, c-format
+msgid "CID family '%s' not included in PostScript device"
+msgstr "CID-семейство '%s' не включено в PostScript-устройство"
+
+#: devPS.c:3608 devPS.c:3619 devPS.c:3827 devPS.c:3858
+#, c-format
+msgid "family '%s' not included in PostScript device"
+msgstr "семейство '%s' не включено в PostScript-устройство"
+
+#: devPS.c:3820 devPS.c:3848 devPS.c:4805 devPS.c:6512 devPS.c:6560
+#, c-format
+msgid "attempt to use invalid font %d replaced by font 1"
+msgstr "попытка использования неправильного шрифта %d; заменил шрифтом 1"
+
+#: devPS.c:3907
+#, c-format
+msgid "unknown encoding '%s' in 'mbcsToSbcs'"
+msgstr "неизвестная кодировка '%s' в 'mbcsToSbcs'"
+
+#: devPS.c:3917
+msgid "conversion failure in 'mbcsToSbcs'"
+msgstr "ошибка конвертации в 'mbcsToSbcs'"
+
+#: devPS.c:3996 devPS.c:4860 devPS.c:6648
+#, c-format
+msgid "failed in text conversion to encoding '%s'"
+msgstr "не удалась конверсия текста в кодировку '%s'"
+
+#: devPS.c:4155
+msgid "run out of colors in xfig()"
+msgstr "не хватило цветов в xfig()"
+
+#: devPS.c:4184
+#, c-format
+msgid "unimplemented line texture %08x: using Dash-double-dotted"
+msgstr "не разработанная текстура линии %08x: использую Dash-double-dotted"
+
+#: devPS.c:4255
+#, c-format
+msgid "unknown postscript font family '%s', using Helvetica"
+msgstr "неизвестное семейство postscript-шрифтов '%s', использую Helvetica"
+
+#: devPS.c:4293
+msgid "filename too long in xfig"
+msgstr "имя файла слишком длинное для xfig"
+
+#: devPS.c:4319
+msgid "invalid foreground/background color (xfig)"
+msgstr "неправильный цвет переднего/заднего плана (xfig)"
+
+#: devPS.c:4351
+msgid "Only Type 1 fonts supported for XFig"
+msgstr "Только шрифты Type 1 поддерживаются в XFig"
+
+#: devPS.c:4364
+msgid "Failed to initialise default XFig font"
+msgstr "Не удалось инициализировать шрифт XFig по умолчанию"
+
+#: devPS.c:4401
+#, c-format
+msgid "invalid page type '%s' (xfig)"
+msgstr "неправильный тип страницы '%s' (xfig)"
+
+#: devPS.c:4409
+#, c-format
+msgid "xfig(%s, onefile=FALSE) will only return the last plot"
+msgstr "xfig(%s, onefile=FALSE) вернет только последний график"
+
+#: devPS.c:4528
+msgid "empty file name"
+msgstr "пустое имя файла"
+
+#: devPS.c:4587 devPS.c:4637
+msgid "write failed"
+msgstr "запись не удалась"
+
+#: devPS.c:4849
+#, c-format
+msgid "unable to use encoding '%s'"
+msgstr "не могу использовать кодировку '%s'"
+
+#: devPS.c:4865
+msgid "re-encoding is not possible on this system"
+msgstr "в этой системе перекодировка невозможна"
+
+#: devPS.c:5098
+msgid "Corrupt loaded encodings;  font not added"
+msgstr "Повреждены загруженные кодировки; шрифт не добавлен"
+
+#: devPS.c:5107
+msgid "Failed to record device encoding; font not added"
+msgstr "Не могу записать кодировку устройства; шрифт не добавлен"
+
+#: devPS.c:5139
+msgid "filename too long in pdf"
+msgstr "слишком длинное имя файла для pdf"
+
+#: devPS.c:5154
+msgid "cannot allocate pd->pos"
+msgstr "не могу разместить pd->pos"
+
+#: devPS.c:5159
+msgid "cannot allocate pd->pageobj"
+msgstr "не могу разместить pd->pageobj"
+
+#: devPS.c:5193
+msgid "failed to load default encoding"
+msgstr "не могу загрузить кодировку по умолчанию"
+
+#: devPS.c:5389
+#, c-format
+msgid "invalid paper type '%s' (pdf)"
+msgstr "неправильный тип бумаги '%s' (pdf)"
+
+#: devPS.c:5419
+msgid "invalid foreground/background color (pdf)"
+msgstr "неправильный цвет переднего/заднего плана (pdf)"
+
+#: devPS.c:5555
+msgid "Invalid alpha value in PDF"
+msgstr "Неправильное alpha-значение в PDF"
+
+#: devPS.c:5580
+msgid "increasing the PDF version to 1.4"
+msgstr "увеличиваю версию PDF до 1.4"
+
+#: devPS.c:5971
+msgid "Corrupt encodings in PDF device"
+msgstr "Поврежденные кодировки в устройстве PDF"
+
+#: devPS.c:6052
+msgid "increasing the PDF version to 1.3"
+msgstr "увеличиваю версию PDF до 1.3"
+
+#: devPS.c:6150
+#, c-format
+msgid "cannot open 'pdf' file argument '%s'"
+msgstr "не могу открыть 'pdf'-файл в аргументе '%s'"
+
+#: devPS.c:6206
+msgid "unable to increase page limit: please shutdown the pdf device"
+msgstr "не могу увеличить лимит страниц: пожалуйста, выключите устройство PDF"
+
+#: devPS.c:6219
+#, c-format
+msgid ""
+"cannot open 'pdf' file argument '%s'\n"
+"  please shut down the PDF device"
+msgstr ""
+"не могу открыть 'pdf'-файл аргумента '%s'\n"
+"  пожалуйста, выключите PDFdevice"
+
+#: devPS.c:6487 devPS.c:6766 devPS.c:6809
+msgid "Failed to find or load PDF font"
+msgstr "Не удалось найти или загрузить шрифт PDF"
+
+#: devPS.c:6603 devPS.c:6723
+msgid "Failed to find or load PDF CID font"
+msgstr "Не удалось найти или загрузить CID-шрифт PDF"
+
+#: devPS.c:6915 devPS.c:6919 devPS.c:7073 devPS.c:7077
+#, c-format
+msgid "invalid 'family' parameter in %s"
+msgstr "неправильный параметр 'family' в %s"
+
+#: devPS.c:6938 devPS.c:7089
+#, c-format
+msgid "invalid 'fonts' parameter in %s"
+msgstr "неправильный параметр 'fonts' в %s"
+
+#: devPS.c:6955
+msgid "unable to start device PostScript"
+msgstr "не могу запустить устройство PostScript"
+
+#: devPS.c:7024
+msgid "unable to start device xfig"
+msgstr "не могу запустить устройство xfig"
+
+#: devPS.c:7107
+msgid "unable to start device pdf"
+msgstr "не могу запустить устройство pdf"
+
+#: devPicTeX.c:782
+msgid "unable to start device PicTeX"
+msgstr "не могу запустить устройство PicTeX"
+
+#: devQuartz.c:454
+msgid "invalid string argument"
+msgstr "неправильный строковый аргумент"
+
+#: devQuartz.c:492
+msgid "invalid width or height in quartz"
+msgstr "неправильная ширина или высота в quartz"
+
+#: devQuartz.c:526
+msgid "unable to start device Quartz"
+msgstr "не могу запустить устройство Quartz"
+
+#: devQuartz.c:1016 devWindows.c:531
+msgid "Invalid font specification"
+msgstr "Неправильное указание шрифта"
+
+#: devQuartz.c:1061
+msgid "Font family not found in Quartz font database"
+msgstr "Семейство шрифтов не найдено в базе данных Quartz"
+
+#: devQuartz.c:1695
+msgid "Quartz device not available on this platform"
+msgstr "Устройство Quartz на этой платформе недоступно"
+
+#: devWindows.c:264 devWindows.c:296 devWindows.c:360
+msgid "Not enough memory to copy graphics window"
+msgstr "Не хватает памяти, чтобы скопировать окно графики"
+
+#: devWindows.c:269 devWindows.c:301 devWindows.c:365
+msgid "No device available to copy graphics window"
+msgstr "Нет устройства, чтобы скопировать окно графики"
+
+#: devWindows.c:570
+msgid "Font family not found in Windows font database"
+msgstr "Семейство шрифтов не найдено в базе данных шрифтов Windows"
+
+#: devWindows.c:987
+msgid "plot history seems corrupted"
+msgstr "история графиков, похоже, повреждена"
+
+#: devWindows.c:994
+msgid "no plot history!"
+msgstr "нет истории графиков!"
+
+#: devWindows.c:1703
+#, c-format
+msgid "filename too long in %s() call"
+msgstr "слишком длинное имя файла в вызове %s()"
+
+#: devWindows.c:1707 devWindows.c:1736
+msgid "Unable to load Rbitmap.dll"
+msgstr "Не могу загрузить Rbitmap.dll"
+
+#: devWindows.c:1712 devWindows.c:1745
+#, c-format
+msgid "'width=%d, height=%d' are unlikely values in pixels"
+msgstr "не похоже, что 'width=%d, height=%d' в пикселях"
+
+#: devWindows.c:1720 devWindows.c:1748
+msgid "Unable to allocate bitmap"
+msgstr "Не могу разместить bitmap"
+
+#: devWindows.c:1726 devWindows.c:1754 devWindows.c:2033
+#, c-format
+msgid "Unable to open file '%s' for writing"
+msgstr "Не могу открыть файл '%s' для записи"
+
+#: devWindows.c:1742
+msgid "filename too long in jpeg() call"
+msgstr "слишком длинное имя файла в вызове jpeg()"
+
+#: devWindows.c:1772
+msgid "filename too long in win.metafile() call"
+msgstr "слишком длинное имя файла в вызове win.metafile()"
+
+#: devWindows.c:1782
+#, c-format
+msgid "Unable to open metafile '%s' for writing"
+msgstr "Не могу открыть метафайл '%s' для записи"
+
+#: devWindows.c:1784
+msgid "Unable to open clipboard to write metafile"
+msgstr "Не могу открыть буфер обмена для записи метафайла"
+
+#: devWindows.c:1794
+msgid "can't find any fonts"
+msgstr "не могу найти никаких шрифтов"
+
+#: devWindows.c:1990
+msgid "Insufficient memory for resize. Killing device"
+msgstr "Не хватает памяти для масштабирования. Убиваю устройство"
+
+#: devWindows.c:2018
+msgid "A clipboard metafile can store only one figure."
+msgstr "Метафайл в буфере обмена может хранить только одну фигуру."
+
+#: devWindows.c:2024
+#, c-format
+msgid "metafile '%s' could not be created"
+msgstr "метафайл '%s' не получается создать"
+
+#: devWindows.c:2438 devWindows.c:3024
+msgid "R Graphics"
+msgstr "R-графика"
+
+#: devWindows.c:2682
+msgid "option 'windowsTimeouts' should be integer"
+msgstr "опция 'windowsTimeouts' должна быть целым числом"
+
+#: devWindows.c:2704
+msgid "invalid device number in savePlot"
+msgstr "неправильный номер устройства в savePlot"
+
+#: devWindows.c:2706
+msgid "invalid device in savePlot"
+msgstr "неправильное устройство в savePlot"
+
+#: devWindows.c:2709
+msgid "invalid filename argument in savePlot"
+msgstr "неправильный аргумент имени файла в savePlot"
+
+#: devWindows.c:2713
+msgid "invalid type argument in savePlot"
+msgstr "неправильный тип аргумента в savePlot"
+
+#: devWindows.c:2736
+msgid "unknown type in savePlot"
+msgstr "неизвестный тип в savePlot"
+
+#: devWindows.c:2811 devWindows.c:2847 devWindows.c:2879 devWindows.c:2914
+msgid "processing of the plot ran out of memory"
+msgstr "обработка графика исчерпала память"
+
+#: devWindows.c:2827 devWindows.c:2860 devWindows.c:2893
+msgid "Impossible to load Rbitmap.dll"
+msgstr "Невозможно загрузить Rbitmap.dll"
+
+#: devWindows.c:2899
+msgid "Impossible to open "
+msgstr "Нельзя открыть "
+
+#: devWindows.c:2940
+msgid "invalid width or height in devWindows"
+msgstr "неправильная ширина или длина в devWindows"
+
+#: devWindows.c:2945
+msgid "invalid value of 'recording' in devWindows"
+msgstr "неправильное значение 'recording' в devWindows"
+
+#: devWindows.c:2949
+msgid "invalid value of 'resize' in devWindows"
+msgstr "неправильное значение 'resize' в devWindows"
+
+#: devWindows.c:2957
+msgid "invalid value of 'canvas' in devWindows"
+msgstr "неправильное значение 'canvas' в devWindows"
+
+#: devWindows.c:2968
+msgid "invalid value of 'buffered' in devWindows"
+msgstr "неправильное значение 'buffered' в devWindows"
+
+#: devWindows.c:2974
+msgid "invalid value of 'bg' in devWindows"
+msgstr "неправильное значение 'bg' в devWindows"
+
+#: devWindows.c:2996
+msgid "unable to start device devWindows"
+msgstr "не могу запустить устройство devWindows"
+
+#: devWindows.c:3069
+msgid "recursive use of getGraphicsEvent not supported"
+msgstr "рекурсивное использование getGraphicsEvent не поддерживается"

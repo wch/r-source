@@ -1,0 +1,67 @@
+@documentlanguage en
+@documentencoding ISO-8859-1
+
+@macro R{}
+R
+@end macro
+
+@macro Sl{}
+S
+@end macro
+
+@macro SPLUS{}
+@sc{S-Plus}
+@end macro
+
+@macro HTML{}
+@acronym{HTML}
+@end macro
+
+@macro eqn {t, a}
+@iftex
+@tex
+$\t\$%
+@end tex
+@end iftex
+@ifnottex
+\a\@c
+@end ifnottex
+@end macro
+
+@macro pkg {p}
+@strong{\p\}
+@end macro
+
+@macro cputype {c}
+@samp{\c\}
+@end macro
+
+@c -- edit these here alone -- in order keep consistency
+@macro Rcopyright{year}
+Copyright @copyright{} \year\--2006 R Development Core Team
+@end macro
+
+@macro permission{}
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the
+entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation
+approved by the R Development Core Team.
+@end macro
+
+@set ISBN-FAQ ISBN 3-900051-08-9
+@set ISBN-admin ISBN 3-900051-09-7
+@set ISBN-data ISBN 3-900051-10-0
+@set ISBN-exts ISBN 3-900051-11-9
+@set ISBN-intro ISBN 3-900051-12-7
+@set ISBN-lang ISBN 3-900051-13-5
+@set ISBN-ints ISBN 3-900051-14-3
+

@@ -1,0 +1,11 @@
+## The fields here are tab-delimited: there is a row name
+## menu_name 	is the name to be used in setRepositories()
+## URL 		is the base URL (see R-admin.texi)
+## default 	is whether this should be a default choice
+## source, win.binary, mac.binary   indicate if the corresponding type is present
+##
+menu_name	URL	default	source	win.binary	mac.binary
+CRAN	CRAN	@CRAN@	TRUE	TRUE	TRUE	TRUE
+CRANextra	CRAN (extras)	"http://www.stats.ox.ac.uk/pub/RWin"	TRUE	FALSE	TRUE	FALSE
+BioCsoft	"BioC software"	http://www.bioconductor.org	FALSE	TRUE	TRUE	TRUE
+Omegahat	Omegahat	http://www.omegahat.org/R	FALSE	TRUE	TRUE	FALSE

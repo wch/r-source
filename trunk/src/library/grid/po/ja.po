@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.1\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2006-09-22 09:08+0100\n"
+"PO-Revision-Date: 2005-06-02 16:09+0900\n"
+"Last-Translator: Nobuo Funao\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: grid.c:209
+msgid "Cannot clip to rotated viewport"
+msgstr "rotated viewport は省略することが出来ません"
+
+#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
+msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+msgstr ""
+"トップレベルの viewport は pop することが出来ません（grid と グラフィックス出"
+"力を混同していませんか？）"
+
+#: grid.c:938
+msgid "attempt to plot on null device"
+msgstr "ヌルデバイスに作図を試みる"
+
+#: grid.c:1218
+msgid "There is no layout defined"
+msgstr "layout が定義されていません"
+
+#: grid.c:1438
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr "多角形頂点が見付かりません(幅もしくは高さがゼロ？)"
+
+#: grid.c:1447
+msgid "Polygon edge not found"
+msgstr "多角形の頂点が見付かりません"
+
+#: grid.c:1587
+msgid "Require at least two points to draw arrow"
+msgstr "矢印を書くためには少なくとも二つの点が必要です"
+
+#: grid.c:1901
+msgid "Non-finite control point in Xspline"
+msgstr "Xspline 中に有限でない制御点"
+
+#: grid.c:3072
+msgid "Unable to clip to rotated rectangle"
+msgstr "回転矩形へクリップ出来ません"
+
+#: layout.c:520
+msgid "invalid layout.pos.row"
+msgstr "不正な layout.pos.row です"
+
+#: layout.c:524
+msgid "invalid layout.pos.col"
+msgstr "不正な layout.pos.col です"
+
+#: matrix.c:50
+msgid "singular transformation matrix"
+msgstr "特異な変換行列です"
+
+#: state.c:178
+msgid "Unable to store grid state.  Too many devices open?"
+msgstr ""
+"現在の grid の状態を保持することが出来ません．デバイスを開きすぎていません"
+"か？"
+
+#: unit.c:261 unit.c:411 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
+msgid "Unimplemented unit function"
+msgstr "単位(unit)関数は推奨されていません"
+
+#: unit.c:830 unit.c:1576
+msgid "Illegal unit or unit not yet implemented"
+msgstr "不正な単位(unit)か，まだ推奨されていない単位(unit)です"
+
+#: unit.c:1709
+msgid "Invalid unit"
+msgstr "不正な単位(unit) です"
+
+#: unit.c:1725
+msgid "Units must be character"
+msgstr "単位(Units)は文字型である必要があります"
+
+#: unit.c:1728
+msgid "Units must be of length > 0"
+msgstr "単位(Units)の長さは 0 より大きい必要があります"
+
+#: viewport.c:317
+msgid "Non-finite location and/or size for viewport"
+msgstr "有限でない location かつ/または 有限でない viewport です"
+
+#~ msgid "Invalid circle radius (must be non-negative)"
+#~ msgstr "不正な円の半径です（非負でなければなりません）"

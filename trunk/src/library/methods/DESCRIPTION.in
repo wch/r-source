@@ -1,0 +1,12 @@
+Package: methods
+Version: @VERSION@
+Priority: base
+Imports: utils
+Title:  Formal Methods and Classes
+Author: R Development Core Team
+Maintainer: R Core Team <R-core@r-project.org>
+Description: Formally defined methods and classes for R objects, 
+  plus other programming tools, as described in the reference
+References: ``Programming with Data'' (1998), John M. Chambers, Springer NY.
+  http://www.omegahat.org/RSMethods/Intro.ps and .../Intro.pdf
+License: GPL Version 2 or later.

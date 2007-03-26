@@ -1,0 +1,522 @@
+#-*- perl -*-
+# Copyright (C) 2000-6  R Development Core Team
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# writing to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301  USA.
+
+# Send any bug reports to r-bugs@r-project.org
+
+use Cwd;
+use File::Basename;
+use File::Path;
+use Getopt::Long;
+use R::Dcf;
+use R::Utils;
+
+my $revision = ' $Rev$ ';
+my $version;
+my $name;
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+
+my $startdir = cwd();
+my $lockdir;
+my @bundlepkgs;
+my $library;
+
+$SIG{'INT'} = 'Cleanup';
+
+sub Cleanup {
+    print "*** user interrupt ***\n";
+    if(defined @bundlepkgs) {
+	if($is_bundle) { # back out the whole bundle
+	    for $pkgname (@bundlepkgs) {
+		$pkgname .= "_" . $description->{"Version"}
+		if $opt_with_package_versions;
+		rmtree($library . "/" . $pkgname);
+		$dppkg = $lockdir . "/" . $pkgname;
+		system("mv $dppkg $library") if ($safe && -d $dppkg);
+	    }
+	} else {
+	    print "Removing '$dpkg'\n";
+	    rmtree($dpkg);
+	    # move back any previously installed package
+	    $dppkg = $lockdir . "/" . $decpkgname;
+	    if ($safe && -d $dppkg) {
+		print "Restoring previous '$dpkg'\n";
+		system("mv $dppkg $library");
+	    }
+	}
+    }
+    if (defined $lockdir) {
+	print "Removing lock directory\n";
+	rmtree($lockdir);
+    }
+    chdir($startdir);
+    if (defined $tardir) {
+	print "Removing untar-ed package sources\n";
+	rmtree($tardir);
+    }
+    die "*** exiting after cleanup ***\n";
+}
+
+my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
+		    "clean|c", "docs:s",
+		    "with-package-versions",
+		    "use-zip", "use-zip-data", "use-zip-help",
+		    "auto-zip", "build", "fake", "unsafe");
+
+##   	topLevelFiles will be files that sit in the top level of a
+##      zip/tarball along with any included directories.
+##	This needs to be fixed: this file shouldn't do binary builds,
+##	that's what build.in is for - DJM
+##      No, that is what INSTALL --build is for, pace DJM
+
+my $topLevelFiles = "DESCRIPTION";
+
+GetOptions (@knownoptions) || usage();
+R_version($name, $version) if $opt_version;
+
+my $R_HOME = $ENV{'R_HOME'} ||
+    die "Error: Environment variable R_HOME not found\n";
+
+usage() if $opt_help;
+
+## ===== to allow to be converted for use when cross-compiling =====
+my $BUILD = "MINGW";
+my $Rversion;
+if($BUILD eq "CROSS") {
+    my $startdir = cwd();
+    chdir("../..");
+    $R_HOME = cwd();
+    chdir($startdir);
+    open FILE, "< $R_HOME/VERSION";
+    $Rversion = <FILE>;
+    close FILE;
+    $Rversion =~ s/ .*\n$//;
+} else {
+    $Rversion = $ENV{'R_VERSION'} ||
+    die "Error: Environment variable R_VERSION not found\n";
+}
+## ===== end =====
+
+if($opt_debug) {
+    print "\nOption -d or --debug is accepted for compatibility with Unix.\n";
+    print "However, it does less.\n\n";
+}
+
+if($opt_library){
+    # remove quotes around the library path
+    $opt_library =~ s/^['"]//; $opt_library =~ s/['"]$//; #'"
+    chdir($opt_library) ||
+	die "Error: cannot change to directory \`$opt_library'\n";
+    $library = cwd();
+    $library = Win32::GetShortPathName($library) if $library =~ / /;
+    my $R_LIBS = $ENV{'R_LIBS'};
+    $ENV{'R_LIBS'} = join(";", $library, $R_LIBS);
+    chdir($startdir);
+} else {
+    my @out = R_runR("cat(.libPaths()[1])", "--slave");
+    $library = @out[0];
+    $library = Win32::GetShortPathName($library) if $library =~ / /;
+    print "installing to '$library'\n";
+}
+
+my $helpflags = "HELP=YES WINHELP=CHM";
+if($opt_docs) {
+    my $tmp, $chm, @l;
+    if ($opt_docs eq "none") {
+	$helpflags = "HELP=NO";
+    } elsif ($opt_docs eq "normal") {
+	$helpflags = "HELP=YES WINHELP=NO";
+    } elsif ($opt_docs eq "chm"|| ($opt_docs eq "all")) {
+	$helpflags = "HELP=YES WINHELP=CHM";
+    } elsif ($opt_docs =~ /,/) {
+	@l = split /, */, $opt_docs;
+	$tmp = ""; $chm = "NO";
+	foreach $f (@l) {
+	    if ($f eq "chm") {
+		$chm = "CHM";
+		next;
+	    }
+	    $tmp .= " -$f";
+	}
+	$helpflags = "HELP=YES WINHELP=$chm HELPTYPES='$tmp'";
+    } else {
+	die "ERROR: invalid --docs value `$opt_docs'\n";
+    }
+}
+
+$safe = 1;
+$safe = 0 if $opt_unsafe;
+    print " *** safe is $safe ***\n" if $opt_debug;
+
+if((-e "$R_HOME/doc/html/R.css") && !(-e "$library/R.css")) {
+    printf "installing R.css in $library\n";
+    system("cp $R_HOME/doc/html/R.css $library/R.css");
+}
+
+my $istar = 0; # any tar in the args
+
+## this is the main loop over all packages/bundles to be installed
+my $pkg;
+foreach $pkg (@ARGV){
+    # remove misguided trailing separator (/ or \)
+    $pkg =~ s/\/$//; $pkg =~ s/\\$//;
+    my $pkgname = basename($pkg);
+    $is_bundle = 0;
+
+    if (!(-e $pkg)) {
+	warn "`$pkg' does not exist: skipping\n";
+	next;
+    }
+
+## is this a tar archive?
+    if($pkgname =~ /\.tar\.gz$/ || $pkgname =~ /\.tgz$/) {
+	$pkgname =~ s/\.tar\.gz$//;
+	$pkgname =~ s/\.tgz$//;
+	$pkgname =~ s/_[0-9\.-]*$//;
+	my $dir = "R.INSTALL.$$";
+	rmtree($dir);  # zap in the likely event it is already there
+	if(! -d $dir) {  # reuse if we failed to zap
+	    mkdir($dir, 0755) or die "Error: cannot create $dir\n";
+	}
+	$tardir = $dir;
+	## workaround for paths in Cygwin tar
+	$pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
+	if(system("tar -zxf '$pkg' -C $dir")) {
+	    die "Error: cannot untar the package\n";}
+	$pkg = $dir."/".$pkgname;
+	$istar = 1;
+    }
+
+    chdir($pkg) || die "Error: cannot change to directory \`$pkg'\n";;
+    my $canonpkg = cwd();
+    $pkgname = basename($canonpkg);
+    chdir("..");
+    my $pkgdir = cwd();
+    chdir($startdir);
+
+    $description = new R::Dcf("$pkg/DESCRIPTION");
+    my $intname = $description->{"Package"};
+    my $Type = $description->{"Type"};
+
+    if($Type && $Type ne "Package") {
+	if($Type eq "Translation") {
+	    chdir($pkg);
+	    system("cp -r ./share $R_HOME") if -d "share";
+	    system("cp -r ./library $R_HOME") if -d "library";
+	    if($opt_build) {
+		my $filename = "${pkgname}_" . $description->{"Version"};
+		$startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
+		chdir($pkgdir);
+		system("rm -f  $startdir/$filename.zip");
+		system("zip -r9Xq $startdir/$filename.zip $pkgname");
+	    }
+	    next;
+	}
+	if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
+	die "cannot install package '${pkgname}' of type '$Type'\n"
+    }
+ 
+    die "no valid package name found\n" unless length($pkgname) > 0;
+    my $pkgoutdir = "$library/$pkgname";
+    die "  *** can't install into source directory ***\n"
+	if $canonpkg eq $pkgoutdir;
+    $pkgdir = Win32::GetShortPathName($pkgdir) if $pkgdir =~ / /;
+
+    my $makecmd = "pkg";
+    $makecmd = "pkgfake" if $opt_fake;
+
+    ## do we have a package bundle?
+    my $zippkgs = $pkgname;
+    @bundlepkgs = ($pkgname);
+    if($description->{"Contains"}) {
+	print "\nLooks like \`${pkg}' is a package bundle\n";
+	$is_bundle = 1;
+	@bundlepkgs = split(/\s+/, $description->{"Contains"});
+	$zippkgs = join(" ", @bundlepkgs);
+	## join up description files
+	foreach $ppkg (@bundlepkgs) {
+	    open pkgdesc, "> $pkg/$ppkg/DESCRIPTION"
+		|| die "cannot write $ppkg/DESCRIPTION";
+	    if (open pkgdescin, "< $pkg/$ppkg/DESCRIPTION.in") {
+		## the Unix version of INSTALL does discard blank lines,
+		## although ?read.dcf does not allow them. 
+		while(<pkgdescin>) {
+		    ## this is to cope with possibly missing final NL
+		    chomp;
+		    print pkgdesc "$_\n" if $_ =~ /\S/; 
+		}
+		close pkgdescin;
+	    } else {
+		print "no DESCRIPTION.in found for package $ppkg\n";
+		print pkgdesc "Package: $ppkg\n";
+	    }
+	    open bundledesc, "< $pkg/DESCRIPTION"
+		|| die "no DESCRIPTION found for bundle";
+	    while(<bundledesc>) {print pkgdesc $_;}
+	    close bundledesc;
+	    close pkgdesc;
+	}
+	$pkgdir .= "/$pkgname";
+	$intname = $description->{"Bundle"};
+    }
+    print "\n";
+
+    if($description->{"Depends"}) {
+	my $depends = $description->{"Depends"};
+	if($depends =~ /\bR *\(([^\) ]+) *([^\) ]+)\)/) { # regexp from check
+            my $op = $1;
+            my $ver = $2;
+	    ## <FIXME> This thinks 1.9.1 > 1.10.0 </FIXME>
+	    if ($op eq ">=" && $ver) {
+		die "This R is version $Rversion\n".
+		    "    package \`$pkgname' requires R $ver or later\n"
+			unless $Rversion ge $ver;
+	    } elsif ($op eq "<=" && $ver) {
+		die "This R is version $Rversion\n".
+		    "     package \`$pkgname' requires R $ver or earlier\n"
+			unless $Rversion le $ver;
+	    } else {
+		printf "unsupported operator in dependence \"$depends\"\n";
+	    }
+        }
+    }
+    ## Now we are ready to install
+    if($safe) {
+	$lockdir = $library . "/" . "00LOCK";
+	if(-d $lockdir || -f $lockdir) {
+	    print "Failed to lock directory '${library}' for modifying\n";
+	    print "Try removing '${lockdir}'\n";
+	    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
+	    exit 3;
+	}
+	mkpath($lockdir);
+	if(! -d $lockdir) {
+	    print "Failed to lock directory '${library}' for modifying\n";
+	    print "Permission problem?\n";
+	    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
+	    exit 3;
+	}
+    }
+
+    my $res;
+    ## loop over pkgs in the bundle
+    for $pkgname (@bundlepkgs) {
+	if($opt_with_package_versions) {
+	    $decpkgname = $pkgname . "_" . $description->{"Version"};
+	} else {
+	    $decpkgname = $pkgname;
+	}
+	$dpkg = $library. "/" . $decpkgname;
+	# if exists, move existing installation to $lockdir
+	system("mv $dpkg $lockdir") if ($safe && -d $dpkg);
+
+	$description = new R::Dcf("$pkgdir/$pkgname/DESCRIPTION");
+
+	my $save = "false";
+	my $tmp = parse_description_field("SaveImage");
+	$save = "false" if($tmp == 0);
+	$save = "true" if($tmp == 1);
+	print "*** save is $save ***\n" if($opt_debug);
+
+	my $lazyload = -1;
+	my $tmp = parse_description_field("LazyLoad");
+	$lazyload = $tmp if($tmp >= 0);
+
+	my $lazydata = 0;
+	my $tmp = parse_description_field("LazyData");
+	$lazydata = $tmp if($tmp >= 0);
+	print "*** lazydata is $lazydata ***\n" if($opt_debug);
+
+	my $opt = "";
+	if($opt_auto_zip || $opt_build) {
+	    my $dir = $pkgdir. "/" . $pkgname . "/data";
+	    my $tmp = parse_description_field("ZipData");
+	    if(-d $dir && $tmp != 0) {
+		my $Rout = "datacnt";
+		my @tmp = `ls.exe -s1 $dir`;  # system > no longer works
+		my $out = 0, $nodups=1, $prev="", $this;
+		foreach $line (@tmp) {
+		    chomp $line;
+		    if($line =~ /^total/) {
+			$line =~ s/^total //;
+			$out = $line;
+		    } else {
+			## if there is only one file there will not be a total
+			$this = $line;
+			$this =~ s/([ 0-9]*)(.*)/$1/;
+			$out = $this unless $out > 0;
+			$line =~ s/\s*[0-9]+\ //;
+			$line =~ s/\.[a-zA-Z]+$//;
+			$nodups = 0 if $line eq $prev;
+			$prev = $_;
+		    }
+		}
+		# print ("out was $out, nodups was $nodups\n");
+		$opt = "$pkgname-ZIPDATA=zip"
+		    if ($tmp == 1) || ($out > 100 && $nodups);
+	    }
+	    $dir = $pkgdir. "/" . $pkgname . "/man";
+	    if(-d $dir) {
+		opendir(DIR, $dir) or die "cannot opendir $dir: $!";
+		@files = grep{ /\.Rd$/ } readdir(DIR);
+		closedir(DIR);
+		$opt = $opt . " $pkgname-HELP=ziponly" if @files > 20;
+	    }
+	    print "Using auto-selected zip options '$opt'\n";
+	} else {
+	    $opt = "$pkgname-ZIPDATA=zip"
+		if ($opt_use_zip || $opt_use_zip_data);
+	    $opt = $opt . " $pkgname-HELP=ziponly"
+		if ($opt_use_zip || $opt_use_zip_help);
+	}
+	$opt = $opt . " DPKG=$dpkg";
+	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
+#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
+    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname");
+	if($res == 0) {
+	    if(! -f "$library/$decpkgname/R/$pkgname") {$lazyload = 0;}
+	    if($lazyload == -1) { # choose based on code size
+		my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
+		$codesize =~ / *([0-9]+)/;
+		$codesize = $1;
+		print "*** codesize is $codesize ***\n" if $opt_debug;
+		if($codesize > 25000) {$lazyload = 1;} else {$lazyload = 0;}
+	    }
+	    print "*** lazyload is $lazyload ***\n" if $opt_debug;
+	    if($lazyload) {
+		my $spkg = $pkg;
+		$spkg = Win32::GetShortPathName($spkg) if $spkg =~ / /;
+		$spkg =~ s+\\+/+g; # seems some systems need this
+		my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
+		$cmd .= "RHOME=$R_HOME SPKG=$spkg BUILD=$BUILD" .
+		    " DPKG=$library/$decpkgname PKG=$decpkgname" .
+		    " RLIB=$library lazyload";
+#		print "$cmd\n";
+		$res = system($cmd);
+	    }
+	    ## add MD5 sums last of all
+	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
+	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
+#	    print "$cmd\n";
+	    $res = system($cmd) if($res == 0);
+
+	} # end of if($res)
+	if($res) {
+	    printf "*** Installation of $pkgname failed ***\n";
+	}
+	system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean);
+
+	print("\n");
+	if($res) {
+	    if($is_bundle) { # back out the whole bundle
+		for $pkgname (@bundlepkgs) {
+		    $pkgname .= "_" . $description->{"Version"}
+		    if $opt_with_package_versions;
+		    rmtree($library . "/" . $pkgname);
+		    $dppkg = $lockdir . "/" . $pkgname;
+		    system("mv $dppkg $library") if ($safe && -d $dppkg);
+		}
+	    } else {
+		print "Removing '$dpkg'\n";
+		rmtree($dpkg);
+		# move back any previously installed package
+		$dppkg = $lockdir . "/" . $decpkgname;
+		if ($safe && -d $dppkg) {
+		    print "Restoring previous '$dpkg'\n";
+		    system("mv $dppkg $library");
+		}
+	    }
+	    last;
+	}
+    } # end of loop over bundle
+
+    if(!$res && $opt_build) {
+	my $filename = "${pkgname}_" . $description->{"Version"};
+	chdir($library);
+	$startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
+	system("rm -f  $startdir/$filename.zip");
+	system("zip -r9Xq $startdir/$filename.zip $zippkgs");
+	if ($is_bundle) {
+	    ## Need to get the toplevel files in there
+	    $currentDir = cwd();
+	    chdir($canonpkg);
+	    system("zip $startdir/$filename.zip $topLevelFiles");
+	    chdir($currentDir);
+	}
+	chdir($startdir);
+	print "packaged installation of ";
+	if ($is_bundle) {print "bundle";} else {print "package";};
+	print " '$pkgname' as $filename.zip\n";
+    }
+    # wipe out lockdir
+    rmtree($lockdir) if $safe;
+    if (defined($tardir)) { chdir($startdir); rmtree($tardir); }
+    exit $res if $res;
+    print("\* DONE ($intname)\n");
+}
+
+sub parse_description_field { # fieldname
+    my ($field) = @_;
+    my $tmp = $description->{$field}, $res = -1;
+    if($tmp ne "") {
+	$tmp = lc $tmp;
+	$res = 1 if ($tmp eq "yes") || ($tmp eq "true");
+	$res = 0 if ($tmp eq "no") || ($tmp eq "false");
+	# or throw an error, but then we need to recover
+    }
+    return $res;
+}
+
+sub usage {
+    print STDERR <<END;
+Usage: R CMD $name [options] pkgs
+
+Install the add-on packages specified by pkgs into the default R library
+tree ($R_HOME/library) or the tree specified via '--library'.  The
+elements of pkgs can be relative or absolute paths to directories with
+the package (bundle) sources, or to gzipped package 'tar' archives.
+Then optionally pack the installed package into a zip file.
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print version info and exit
+  -c, --clean		remove all files created during installation
+
+  --fake		do minimal install for testing purposes
+  --unsafe		install on top of any existing installation
+  -d, --debug		[x] turn on shell and build-help debugging
+  -l, --library=LIB	install packages to library tree LIB
+  --docs=TYPE	        type(s) of documentation to build and install
+  --with-package-versions
+			allow for multiple versions of the same package
+  --use-zip-data	collect data files in zip archive
+  --use-zip-help	collect help and examples into zip archives
+  --use-zip		combine \'--use-zip-data\' and \'--use-zip-help\'
+  --auto-zip	        select whether to zip automatically
+  --build		zip-up the installation.  Implies --auto-zip
+
+
+TYPE can be "none" or "normal" or "chm" (the default) or "all", or
+  a comma-separated list of one or more of 
+  'txt', 'html', 'latex', "example' and 'chm'.
+
+Report bugs to <r-bugs\@r-project.org>.
+END
+    exit 0;
+}

@@ -1,0 +1,432 @@
+#
+# ${R_HOME}/tests/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+subdir = tests
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+test-src-gct = \
+	eval-etc.R \
+	simple-true.R \
+	arith-true.R \
+	arith.R \
+	lm-tests.R \
+	ok-errors.R \
+	method-dispatch.R
+test-src-strict-1 = \
+	$(test-src-gct) \
+	d-p-q-r-tests.R
+test-src-strict-auto =
+test-src-sloppy-1 = \
+	complex.R \
+	print-tests.R \
+	datasets.R
+test-src-sloppy-auto =
+
+test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
+test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto) \
+  ${test-src-isas} ${test-src-segfault}
+test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
+test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
+test-src = $(test-src-strict) $(test-src-sloppy)
+
+test-src-demo = demos.R demos2.R
+test-src-internet = internet.R
+test-src-isas = isas-tests.R
+test-src-lapack = lapack.R
+test-src-primitive = primitives.R
+test-src-random = p-r-random-tests.R
+test-src-segfault = no-segfault.R
+
+test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
+  reg-plot.R reg-S4.R
+test-src-reg-auto =
+test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
+test-src-reg3 = reg-tests-3.R
+
+DISTFILES = Makefile.in Makefile.win README \
+	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
+	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
+	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
+	$(test-src-demo) demos.Rout.save \
+	$(test-src-internet) internet.Rout.save \
+	$(test-src-lapack) $(test-src-primitive) \
+	$(test-src-random) p-r-random-tests.Rout.save \
+	$(test-src-reg) $(test-src-reg3) \
+	  reg-S4.Rout.save \
+	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
+	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
+	  reg-win.R encodings.R \
+	gct-foot.R \
+	nanbug.rda \
+	WinUnicode.dat \
+	R-intro.Rout.save
+SUBDIRS = Embedding Examples Native
+
+R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
+RDIFF = $(top_builddir)/bin/R CMD Rdiff
+
+test-out-strict = $(test-src-strict:.R=.Rout)
+test-out-sloppy = $(test-src-sloppy:.R=.Rout)
+
+test-out-gct = $(test-src-gct:.R=.Rout-gct)
+test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
+
+test-out-demo = $(test-src-demo:.R=.Rout)
+test-out-internet = $(test-src-internet:.R=.Rout)
+test-out-isas = $(test-src-isas:.R=.Rout)
+test-out-lapack = $(test-src-lapack:.R=.Rout)
+test-out-primitive = $(test-src-primitive:.R=.Rout)
+test-out-random = $(test-src-random:.R=.Rout)
+test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-reg3 = $(test-src-reg3:.R=.Rout)
+test-out-segfault = $(test-src-segfault:.R=.Rout)
+
+## This macro is used only for dependencies
+test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
+	$(test-out-internet) $(test-out-lapack) \
+	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
+	$(test-out-segfault) $(test-out-isas)
+
+.SUFFIXES:
+.SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
+
+all-basic-tests = Examples Specific Reg Internet
+all-devel-tests = Docs IsAs Lapack Random Demo Primitive Segfault \
+   Standalone Packages
+
+all check: Makefile test-all-basics
+check-devel: check test-all-devel
+check-all: check-devel test-Packages-Recommended
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+$(test-out): Makefile stamp-R
+
+stamp-R: $(top_builddir)/bin/exec@R_ARCH@/R \
+	$(top_builddir)/library/base/R/base \
+	$(top_builddir)/src/library/base/all.R \
+	$(top_builddir)/src/library/graphics/all.R \
+	$(top_builddir)/src/library/methods/all.R \
+	$(top_builddir)/src/library/stats/all.R \
+	$(top_builddir)/src/library/utils/all.R \
+	$(top_builddir)/modules@R_ARCH@/lapack$(SHLIB_EXT) \
+	@WANT_R_SHLIB_TRUE@ $(top_builddir)/lib@R_ARCH@/libR$(DYLIB_EXT)
+	@touch $@
+
+Makedeps: Makefile
+	@(for f in $(test-src) $(test-src-reg) $(test-src-demo); do \
+	    if test -f $(srcdir)/$${f}out.save ; then \
+	      echo "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
+	    else \
+	      echo "$${f}out: $${f} \$$(FORCE)"; \
+	    fi; \
+	    if test -f $(srcdir)/$${f}in; then \
+	      echo "$${f}: \$$(srcdir)/$${f}in stamp-R"; \
+	    fi; \
+	  done) >> Makefile
+	@touch $@
+FORCE:
+
+.Rin.R:
+	@echo "creating '$@'"
+	@$(R) < $< > /dev/null
+
+.R.Rout:
+	@rm -f $@ $@.fail
+	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@echo "$(ECHO_T) OK"
+	@if test -f $(srcdir)/$@.save ; then \
+	  mv $@ $@.fail; \
+	  echo $(ECHO_N) \
+	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "$(ECHO_T) OK"; \
+	fi
+
+reg-plot.Rout: reg-plot.R
+	@rm -f $@ $@.fail
+	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@echo "$(ECHO_T) OK"
+	@if test -f $(srcdir)/$@.save ; then \
+	  mv $@ $@.fail; \
+	  echo $(ECHO_N) \
+	    "comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)"; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "$(ECHO_T) OK"; \
+	fi
+	@echo $(ECHO_N) \
+	  "comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ...$(ECHO_C)"
+	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	@echo "$(ECHO_T) OK"
+
+.R.Rout-gct:
+	@echo "running gctorture() + '$<'"
+	@(echo '.ptime <- proc.time(); gctorture()' ; \
+	  cat $< $(srcdir)/gct-foot.R) | $(R) > $@ 2>&1
+	@mv $@ $@.fail; Ro=`basename $@ .Rout-gct`.Rout; \
+	  if test ! -r $${Ro}; then $(MAKE) $${Ro}; fi; \
+	  echo $(ECHO_N) "comparing '$@' to '$${Ro}' ...$(ECHO_C)"; \
+	  grep -v 'gctorture()' $@.fail | $(RDIFF) - $${Ro} 1 || exit 1; \
+	  mv $@.fail $@; \
+	  echo "$(ECHO_T) OK"
+
+R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
+
+.R.Rout-valgct:
+	@echo "running gctorture() + valgrind + '$<'"
+	@(echo '.ptime <- proc.time(); gctorture()' ; \
+	  cat $< $(srcdir)/gct-foot.R) | $(R-valgrind) > $@ 2>&1
+	grep "==[0-9]*==" $@
+
+
+
+test-all-basics: Makefile
+	@for name in $(all-basic-tests); do \
+	  $(MAKE) test-$${name} || exit 1; \
+	done
+
+test-all-devel: Makefile
+	@for name in $(all-devel-tests); do \
+	  $(MAKE) test-$${name} || exit 1; \
+	done
+
+test-Examples:
+	@(cd Examples && $(MAKE) $@)
+test-Examples-Recommended:
+	@(cd Examples && $(MAKE) $@)
+
+test-Specific-strict: $(test-out-strict)
+test-Specific-sloppy: $(test-out-sloppy)
+test-Specific:
+	@echo "updating test dependencies"
+	@$(MAKE) Makedeps
+	@echo "running strict specific tests"
+	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
+	@echo "running sloppy specific tests"
+	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
+
+test-Packages:
+	@for p in $(R_PKGS_BASE); do \
+	  echo "checking package '$${p}'"; \
+	  $(top_builddir)/bin/R CMD check --install=skip \
+	    $(top_srcdir)/src/library/$${p} || echo; \
+	done
+
+test-Gct: $(test-out-gct)
+
+test-Vgct: $(test-out-valgct)
+
+test-Docs:
+	@echo "running tests of documentation examples"
+	@cp ${top_srcdir}/doc/manual/*.R .
+	@$(MAKE) R-intro.Rout RVAL_IF_DIFF=1
+	@cp ${top_srcdir}/doc/manual/R-exts.c .
+	@$(top_builddir)/bin/R CMD SHLIB R-exts.c
+	@$(MAKE) R-exts.Rout
+	@rm R-exts.*
+
+test-Demo:
+	@echo "running demos from base and stats"
+	@$(MAKE) $(test-out-demo) RVAL_IF_DIFF=0
+
+## <NOTE>
+## These depend on an internet connection, and the sites being up.
+## So allow this to fail: it may be slow doing so.
+test-Internet:
+	@echo "running tests of Internet and socket functions"
+	@echo "  expect some differences"
+	-@$(MAKE) $(test-out-internet) RVAL_IF_DIFF=0
+## </NOTE>
+
+test-IsAs:
+	@echo "running tests of consistency of as/is.*"
+	@$(MAKE) $(test-out-isas) RVAL_IF_DIFF=1
+
+test-Lapack:
+	@echo "running tests of LAPACK-based functions"
+	@$(MAKE) $(test-out-lapack) RVAL_IF_DIFF=0
+
+test-Primitive:
+	@echo "running tests of primitives"
+	@$(MAKE) $(test-out-primitive) RVAL_IF_DIFF=0
+
+test-Random:
+	@echo "running tests of random deviate generation"
+	@$(MAKE) $(test-out-random) RVAL_IF_DIFF=1
+
+test-Reg:
+	@echo "running regression tests"
+	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=1
+	@$(MAKE) $(test-out-reg3) RVAL_IF_DIFF=0
+
+test-Segfault:
+	@echo "running tests to possibly trigger segfaults"
+	@$(MAKE) $(test-out-segfault) RVAL_IF_DIFF=0
+	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
+
+## <NOTE>
+## Not all platforms can build standalone.
+## So allow this to fail.
+test-Standalone:
+	@echo "testing building standalone Rmath"
+	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
+## </NOTE>
+
+test-DocFiles:
+	@echo "checking Rd usage sections"
+	@for p in $(R_PKGS_BASE); do \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkDocFiles(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
+	  if test -n "$${out}"; then \
+	    echo "$(ECHO_T) WARNING"; \
+	    echo; \
+	    echo "$${out}"; \
+	    echo; \
+	  else \
+	    echo "$(ECHO_T) OK"; \
+	  fi; \
+	done
+test-DocStyle:
+	@echo "checking S3 method documentation style"
+	@for p in $(R_PKGS_BASE); do \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkDocStyle(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
+	  if test -n "$${out}"; then \
+	    echo "$(ECHO_T) WARNING"; \
+	    echo; \
+	    echo "$${out}"; \
+	    echo; \
+	  else \
+	    echo "$(ECHO_T) OK"; \
+	  fi; \
+	done
+test-FF:
+	@echo "checking foreign function calls"
+	@for p in $(R_PKGS_BASE); do \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkFF(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
+	  if test -n "$${out}"; then \
+	    echo "$(ECHO_T) WARNING"; \
+	    echo "$${out}"; \
+	  else \
+	    echo "$(ECHO_T) OK"; \
+	  fi; \
+	done
+test-S3methods:
+	@echo "checking for S3 generic/method consistency"
+	@for p in $(R_PKGS_BASE); do \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "checkS3methods(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
+	  if test -n "$${out}"; then \
+	    echo "$(ECHO_T) WARNING"; \
+	    echo; \
+	    echo "$${out}"; \
+	    echo; \
+	  else \
+	    echo "$(ECHO_T) OK"; \
+	  fi; \
+	done
+test-codoc:
+	@echo "checking for code/documentation mismatches in functions"
+	@for p in $(R_PKGS_BASE); do \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "codoc(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
+	  if test -n "$${out}"; then \
+	    echo "$(ECHO_T) WARNING"; \
+	    echo; \
+	    echo "$${out}"; \
+	    echo; \
+	  else \
+	    echo "$(ECHO_T) OK"; \
+	  fi; \
+	done
+test-undoc:
+	@echo "checking for missing documentation entries"
+	@for p in $(R_PKGS_BASE); do \
+	  echo $(ECHO_N) "package '$${p}' ...$(ECHO_C)"; \
+	  out=`(echo "library(\"tools\")"; \
+	         echo "undoc(package = \"$${p}\")") | \
+	       $(R) -q | sed '/^>/d'`; \
+	  if test -n "$${out}"; then \
+	    echo "$(ECHO_T) WARNING"; \
+	    echo "$${out}"; \
+	  else \
+	    echo "$(ECHO_T) OK"; \
+	  fi; \
+	done
+
+test-Packages-Recommended:
+	@test -d Packages || mkdir Packages
+	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
+	  gzip -dc "$(top_srcdir)/src/library/Recommended/$${p}.tgz" | \
+	    (cd Packages && $(TAR) xf -) ; \
+	  if grep "^Contains:" "Packages/$${p}/DESCRIPTION" >/dev/null; \
+	  then \
+	    echo "checking bundle '$${p}'"; \
+	  else \
+	    echo "checking package '$${p}'"; \
+	  fi; \
+	  R_LIBS="$(top_builddir)/library:$${R_LIBS}" \
+            $(top_builddir)/bin/R CMD check --install=skip \
+	    --library="$(top_builddir)/library" Packages/$${p} || echo; \
+	done
+
+mostlyclean: clean
+clean:
+	-@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@); \
+	done
+	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
+	  reg-plot.ps reg-tests-?.ps R-exts.* R-intro.R R-intro.Rout \
+	  FALSE.R FALSE.tex mirrors.html
+	-@rm -rf anRpackage
+distclean: clean
+	-@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@); \
+	done
+	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
+	-@rm -rf *.Rcheck Packages
+maintainer-clean: distclean
+
+R install install-strip uninstall TAGS info dvi:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in $(SUBDIRS); do \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+	done
+
+## Automagically generated dependencies:
+

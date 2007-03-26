@@ -1,0 +1,30 @@
+# Italian translations for R package.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# stefano iacus <>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2007-02-24 16:01+0000\n"
+"PO-Revision-Date: 2005-04-17 16:57+0200\n"
+"Last-Translator: stefano iacus <>\n"
+"Language-Team: Italian <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Rmd5.c:35
+msgid "argument 'files' must be character"
+msgstr "argomento 'files' deve essere di tipo chararcter"
+
+#: Rmd5.c:49
+#, c-format
+msgid "md5 failed on file '%s'"
+msgstr "md5 fallito sul file '%s'"
+
+#: text.c:66
+msgid "invalid argument type"
+msgstr "tipo argomento non valido"

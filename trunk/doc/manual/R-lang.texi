@@ -1,0 +1,4754 @@
+\input texinfo
+@c %**start of header
+@setfilename R-lang.info
+@settitle R Language Definition
+@setchapternewpage on
+@c %**end of header
+
+@syncodeindex fn vr
+
+@dircategory Programming
+@direntry
+* R Language: (R-lang).      The R Language Definition.
+@end direntry
+
+@finalout
+
+@include R-defs.texi
+@include version.texi
+
+@macro C {}
+@strong{C}
+@end macro
+
+@ifinfo
+This is the R language definition.
+
+@Rcopyright{2000}
+
+@ignore
+Permission is granted to process this file through TeX and print the
+results, provided the printed document carries a copying permission
+notice identical to this one except for the removal of this paragraph
+(this paragraph not being relevant to the printed manual).
+
+@end ignore
+
+@permission{}
+@end ifinfo
+
+@titlepage
+@title R Language Definition
+@subtitle Version @value{VERSION} @b{DRAFT}
+@author R Development Core Team
+@page
+@vskip 0pt plus 1filll
+@Rcopyright{2000}
+
+@permission{}
+
+@value{ISBN-lang}
+@end titlepage
+
+@ifnothtml
+@contents
+@end ifnothtml
+
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top R Language Definition
+
+This is an introduction to the @R{} language, explaining evaluation,
+parsing, object oriented programming, computing on the language, and so
+forth.
+
+The current version of this document is @value{VERSION} @b{DRAFT}.
+
+@value{ISBN-lang}
+@end ifnottex
+
+@menu
+* Introduction::                
+* Objects::                     
+* Evaluation of expressions::   
+* Functions::                   
+* Object-oriented programming::  
+* Computing on the language::   
+* System and foreign language interfaces::  
+* Exception handling::          
+* Debugging::                   
+* Parser::                      
+* Function and Variable Index::  
+* Concept Index::               
+* References::                  
+@end menu
+
+@node Introduction, Objects, Top, Top
+@comment  node-name,  next,  previous,  up
+@chapter Introduction
+
+@R{} is a system for statistical computation and graphics. It
+provides, among other things, a programming language, high level
+graphics, interfaces to other languages and debugging facilities.  This
+manual details and defines the @R{} language.
+
+The @R{} language is a dialect of @Sl{} which was designed in the 1980s
+and has been in widespread use in the statistical community since.
+Its principal designer, John M. Chambers, was awarded the 1998 ACM
+Software Systems Award for @Sl{}.
+
+The language syntax has a superficial similarity with C, but the
+semantics are of the FPL (functional programming language) variety with
+stronger affinities with Lisp and @acronym{APL}.  In particular, it
+allows ``computing on the language'', which in turn makes it possible to
+write functions that take expressions as input, something that is often
+useful for statistical modeling and graphics.
+
+It is possible to get quite far using @R{} interactively, executing
+@cindex expression
+simple expressions from the command line.  Some users may never need to
+go beyond that level, others will want to write their own functions
+either in an ad hoc fashion to systematize repetitive work or with the
+perspective of writing add-on packages for new functionality.
+
+The purpose of this manual is to document the language @emph{per se}.
+That is, the objects that it works on, and the details of the expression
+evaluation process, which are useful to know when programming @R{}
+functions.  Major subsystems for specific tasks, such as graphics, are
+only briefly described in this manual and will be documented separately.
+
+Although much of the text will equally apply to @Sl{}, there are also
+some substantial differences, and in order not to confuse the issue we
+shall concentrate on describing @R{}.
+
+The design of the language contains a number of fine points and
+common pitfalls which may surprise the user.  Most of these are due to
+consistency considerations at a deeper level, as we shall explain.
+There are also a number of useful shortcuts and idioms, which allow the
+user to express quite complicated operations succinctly.  Many of these
+become natural once one is familiar with the underlying concepts.  In
+some cases, there are multiple ways of performing a task, but some of
+the techniques will rely on the language implementation, and others work
+at a higher level of abstraction.  In such cases we shall indicate the
+preferred usage.
+
+Some familiarity with @R{} is assumed.  This is not an introduction to
+@R{} but rather a programmers' reference manual.  Other manuals provide
+complementary information: in particular @ref{Preface, , , R-intro, R
+Introduction} provides an introduction to @R{} and @ref{System and
+foreign language interfaces, , , R-exts, Writing R Extensions} details
+how to extend @R{} using compiled code.
+
+
+
+@node Objects, Evaluation of expressions, Introduction, Top
+@chapter Objects
+
+@c needs to be clarified. What is a pointer, what is the pointed object,
+@c what is the context of the pointed object?
+In every computer language
+@cindex variable
+variables provide a means of accessing the data stored in memory.  @R{}
+does not provide direct access to the computer's memory but rather
+provides a number of specialized data structures we will refer to as
+@cindex object
+objects.  These objects
+are referred to through symbols or variables.  In @R{}, however, the
+symbols are themselves objects and can be manipulated in the same way as
+any other object.  This is different from many other languages and has
+wide ranging effects.
+
+In this chapter we provide preliminary descriptions of the various data
+structures provided in @R{}.  More detailed discussions of many of them
+will be found in the subsequent chapters.  The @R{} specific function
+@code{typeof}
+@findex typeof
+@cindex type
+returns the @dfn{type} of an @R{} object.  Note that in the C code
+underlying @R{}, all objects are pointers to a structure with typedef
+@code{SEXPREC}; the different @R{} data types are represented in C by
+@code{SEXPTYPE}, which determines how the information in the various
+parts of the structure is used.
+
+The following table describes the possible values returned by
+@code{typeof} and what they are.
+
+@quotation
+@multitable @columnfractions 0.2 0.7
+@item @code{"NULL"} @tab NULL
+@item @code{"symbol"} @tab a variable name
+@item @code{"pairlist"}@tab a pairlist object (mainly internal)
+@item @code{"closure"} @tab a function
+@item @code{"environment"} @tab an environment
+@cindex evaluation, lazy
+@item @code{"promise"}  @tab an object used to implement lazy evaluation 
+@item @code{"language"} @tab an @R{} language construct
+@item @code{"special"}  @tab an internal function that does not evaluate its arguments
+@item @code{"builtin"} @tab an internal function that evaluates its arguments
+@item @code{"char"} @tab a `scalar' string object (internal only) ***
+@item @code{"logical"} @tab a vector containing logical values
+@item @code{"integer"} @tab a vector containing integer values
+@item @code{"double"}  @tab a vector containing real values
+@item @code{"complex"} @tab a vector containing complex values
+@item @code{"character"} @tab a vector containing character values
+@item @code{"..."} @tab the special variable length argument ***
+@item @code{"any"} @tab a special type that matches all types: there are no objects of this type
+@item @code{"expression"} @tab an expression object
+@item @code{"list"} @tab a list
+@item @code{"bytecode"} @tab byte code (internal only) ***
+@item @code{"externalptr"} @tab an external pointer object
+@item @code{"weakref"} @tab a weak reference object
+@item @code{"raw"} @tab a vector containing bytes
+@item @code{"S4"} @tab an S4 object which is not a simple object
+@end multitable
+@end quotation
+
+@noindent
+Users cannot easily get hold of objects of types marked with a `***'.
+
+
+@findex mode
+@cindex mode
+Function @code{mode} gives information about the @dfn{mode} of an object
+in the sense of Becker, Chambers & Wilks (1988), and is more compatible
+with other implementations of the @Sl{} language.
+@c FIXME:
+@c Should say that many R functions, such as vector(), actually have an
+@c argument `mode' rather than `type'.  E.g., vector(mode = "double")
+@c actually creates an object of *type* "double" but *mode* "numeric".
+@c </FIXME>
+@findex storage.mode
+Finally, the function @code{storage.mode} returns the @dfn{storage mode}
+of its argument in the sense of Becker et al.@: (1988).  It is generally
+used when calling functions written in another language, such as C or
+FORTRAN, to ensure that @R{} objects have the data type expected by the
+routine being called.  (In the @Sl{} language, vectors with integer or
+real values are both of mode @code{"numeric"}, so their storage modes
+need to be distinguished.)
+
+@example
+> x <- 1:3
+> typeof(x)
+[1] "integer"
+> mode(x)
+[1] "numeric"
+> storage.mode(x)
+[1] "integer"
+@end example
+
+@R{}
+@cindex object
+objects are often coerced to different
+@cindex type
+types during computations.
+There are also many functions available to perform explicit
+@cindex coercion
+coercion.
+When programming in the @R{} language the type of an object generally
+doesn't affect the computations, however, when dealing with foreign
+languages or the operating system it is often necessary to ensure that
+an object is of the correct type.
+
+@menu
+* Basic types::                 
+* Attributes::                  
+* Special compound objects::    
+@end menu
+
+@node Basic types, Attributes, Objects, Objects
+@cindex type
+@section Basic types
+
+
+@menu
+* Vector objects::              
+* List objects::                
+* Language objects::            
+* Expression objects::          
+* Function objects::            
+* NULL object::                 
+* Builtin objects and special forms::  
+* Promise objects::             
+* Dot-dot-dot::                 
+* Environment objects::         
+* Pairlist objects::            
+* Any-type::                    
+@end menu
+
+@node Vector objects, List objects, Basic types, Basic types
+@subsection Vectors
+
+@cindex vector
+Vectors can be thought of as contiguous cells containing data.  Cells
+are accessed through
+@cindex index
+indexing operations such as
+@code{x[5]}.  More details are given in @ref{Indexing}.
+@c @ref{Data structures}
+
+@cindex type
+@cindex mode
+@cindex atomic
+@R{} has six basic (`atomic') vector types: logical, integer, real,
+complex, string (or character) and raw.  The modes and storage modes for
+the different vector types are listed in the following table.
+
+@quotation
+@multitable {@code{character}} {@code{character}} {@code{character}}
+@headitem typeof       @tab mode             @tab storage.mode
+@item @code{logical}   @tab @code{logical}   @tab @code{logical}
+@item @code{integer}   @tab @code{numeric}   @tab @code{integer}
+@item @code{double}    @tab @code{numeric}   @tab @code{double}
+@item @code{complex}   @tab @code{complex}   @tab @code{complex}
+@item @code{character} @tab @code{character} @tab @code{character}
+@item @code{raw}       @tab @code{raw}       @tab @code{raw}
+@end multitable
+@end quotation
+
+Single numbers, such as @code{4.2}, and strings, such as @code{"four
+point two"} are still vectors, of length 1; there are no more basic
+types.  Vectors with length zero are possible (and useful).
+
+String vectors have mode and storage mode @code{"character"}. A single
+element of a character vector is often referred to as a @emph{character
+string}.
+
+
+@node List objects, Language objects, Vector objects, Basic types
+@subsection Lists
+
+Lists (``generic vectors'') are another kind of data storage.  Lists
+have elements, each of which can contain any type of @R{} object, i.e.@:
+the elements of a list do not have to be of the same type.  List
+elements are accessed through three different
+@cindex index
+indexing operations.
+These are explained in detail in @ref{Indexing}.
+@c @ref{Data structures}.
+
+Lists are vectors, and the basic vector types are referred to as
+@emph{atomic vectors} where it is necessary to exclude lists.
+
+@node Language objects, Expression objects, List objects, Basic types
+@subsection Language objects
+
+There are three types of objects that constitute the @R{} language.
+They are @emph{calls}, @emph{expressions}, and @emph{names}.
+@cindex call
+@cindex expression
+@cindex name
+@c FIXME:
+@c Better consistently refer to objects of type "expression" as
+@c ``expression objects'' ...
+Since @R{} has objects of type @code{"expression"} we will try to avoid
+the use of the word expression in other contexts.  In particular
+syntactically correct expressions will be referred to as
+@emph{statements}.
+@c </FIXME>
+@cindex statement
+
+These objects have modes @code{"call"}, @code{"expression"}, and
+@code{"name"}, respectively.
+@c FIXME: Shouldn't we explain their types?
+
+They can be created directly from expressions using the @code{quote}
+mechanism and converted to and from lists by the @code{as.list} and
+@code{as.call} functions.
+@findex quote
+@findex as.list
+@findex as.call
+Components of the
+@cindex parsing
+parse tree can be extracted using the standard
+indexing operations.
+
+@menu
+* Symbol objects::              
+@end menu
+
+@node Symbol objects,  , Language objects, Language objects
+@subsubsection Symbol objects
+
+
+@cindex symbol
+Symbols refer to @R{}
+@cindex object
+objects.  The
+@cindex name
+name of any @R{} object is usually a
+symbol.  Symbols can be created through the functions @code{as.name} and
+@code{quote}.
+
+@cindex symbol
+@cindex mode
+Symbol have mode @code{"name"}, storage mode @code{"symbol"}, and type
+@code{"symbol"}.  They can be
+@cindex coercion
+coerced to and from character strings
+using @code{as.character} and @code{as.name}.
+@findex as.character
+@findex as.name
+@cindex parsing
+They naturally appear as atoms of parsed expressions, try e.g.@:
+@code{as.list(quote(x + y))}.
+
+@node Expression objects, Function objects, Language objects, Basic types
+@subsection Expression objects
+
+In @R{} one can have objects of type @code{"expression"}.  An
+@emph{expression} contains one or more statements.  A statement is a
+syntactically correct collection of
+@cindex token
+tokens.
+@cindex expression object
+Expression objects are special language objects which contain parsed but
+unevaluated @R{} statements.  The main difference is that an expression
+object can contain several such expressions.  Another more subtle
+difference is that objects of type @code{"expression"} are only
+@cindex evaluation, expression
+evaluated when
+explicitly passed to @code{eval}, whereas other language objects may get
+evaluated in some unexpected cases.
+
+An
+@cindex expression object
+expression object behaves much like a list and its components should
+be accessed in the same way as the components of a list.
+
+@node Function objects, NULL object, Expression objects, Basic types
+@subsection Function objects
+
+@cindex function
+In @R{} functions are objects and can be manipulated in much the same
+way as any other object.  Functions (or more precisely, function
+closures) have three basic components:  a formal argument list, a body
+and an
+@cindex environment
+environment.  The argument list is a comma-separated list of
+arguments.  An
+@cindex argument
+argument can be a symbol, or a @samp{@var{symbol} =
+@var{default}} construct, or the special argument @samp{...}.  The
+second form of argument is used to specify a default value for an
+argument.  This value will be used if the function is called without any
+value specified for that argument.  The @samp{...}  argument is special
+and can contain any number of arguments.  It is generally used if the
+number of arguments is unknown or in cases where the arguments will be
+passed on to another function.
+
+The body is a parsed @R{} statement.  It is usually a collection of
+statements in braces but it can be a single statement, a symbol or even
+a constant.
+
+A function's
+@cindex function
+@cindex environment
+environment is the environment that was active at the time
+that the function was created.  Any symbols bound in that environment
+are @emph{captured} and available to the function. This combination of
+the code of the function and the bindings in its environment is called a
+`function closure', a term from functional programming theory. In this
+document we generally use the term `function', but use `closure' to
+emphasize the importance of the attached environment.
+
+It is possible to extract and manipulate the three parts of a closure
+object using @code{formals}, @code{body}, and @code{environment}
+constructs (all three can also be used on the left hand side of
+@cindex assignment
+assignments).
+@findex formals
+@findex body
+@findex environment
+The last of these can be used to remove unwanted environment capture.
+
+When a function is called, a new environment (called the
+@emph{evaluation environment}) is created, whose enclosure (see
+@ref{Environment objects}) is the environment from the function closure.
+This new environment is initially populated with the unevaluated
+arguments to the function; as evaluation proceeds, local variables are
+created within it.
+
+@cindex function
+There is also a facility for converting functions to and from list
+structures using @code{as.list} and @code{as.function}.
+@findex as.function
+These have been included to provide compatibility with @Sl{} and their
+use is discouraged.
+
+@node NULL object, Builtin objects and special forms, Function objects, Basic types
+@subsection NULL
+
+There is a special object called @code{NULL}.  It is used whenever there
+is a need to indicate or specify that an object is absent.  It should not be
+confused with a vector or list of zero length.
+@findex NULL
+
+The @code{NULL} object has no type and no modifiable properties.  There
+is only one @code{NULL} object in @R{}, to which all instances refer. To
+test for @code{NULL} use @code{is.null}.  You cannot set attributes on
+@code{NULL}.
+
+
+@node Builtin objects and special forms, Promise objects, NULL object, Basic types
+@subsection Builtin objects and  special forms
+
+These two kinds of object contain the builtin
+@cindex function
+@cindex .Primitive
+@cindex .Internal
+functions of @R{}, i.e., those that are displayed as @code{.Primitive}
+in code listings (as well as those accessed via the @code{.Internal}
+function and hence not user-visible as objects).  The difference between
+the two lies in the argument handling.  Builtin functions have all
+their arguments evaluated and passed to the internal function, in
+accordance with @emph{call-by-value}, whereas special functions pass the
+unevaluated arguments to the internal function.
+
+From the @R{} language, these objects are just another kind of function,
+except that their definition cannot be listed.  The @code{typeof}
+function can distinguish them from interpreted
+@cindex function
+functions.
+
+@node Promise objects, Dot-dot-dot, Builtin objects and special forms, Basic types
+@subsection Promise objects
+
+@cindex promise
+Promise objects are part of @R{}'s lazy evaluation mechanism.  They
+contain three slots: a value, an expression, and an
+@cindex environment
+environment.  When a
+@cindex function
+@cindex function argument
+function is called the arguments are matched and then each of the formal
+arguments is bound to a promise.  The expression that was given for that
+formal argument and a pointer to the environment the function was called
+from are stored in the promise.
+
+Until that argument is accessed there is no @emph{value} associated with
+the promise.  When the argument is accessed, the stored expression is
+@cindex evaluation, expression
+evaluated in the stored environment, and the result is returned.  The
+result is also saved by
+the promise.  The @code{substitute} function will extract the content
+of the expression slot.  This allows the programmer to
+access either the value or the expression associated with the promise.
+
+Within the @R{} language, promise objects are almost only seen
+implicitly.  (In an upcoming release they will never be visible to
+@R{} code, as they will always be evaluated when accessed.) 
+Actual function arguments are of this type.
+There is also a @code{delayedAssign} function
+that will make a promise out of an expression.  There is generally no 
+way in @R{} code to check whether an object is a promise or not, nor is there a
+way to use @R{} code to determine the environment of a promise.
+
+@node Dot-dot-dot, Environment objects, Promise objects, Basic types
+@subsection Dot-dot-dot
+
+The @samp{...} object type is stored as a type of pairlist.  The
+components of @samp{...} can be accessed in the usual pairlist manner
+from C code, but is not easily accessed as an object in interpreted
+code.  The object can be captured as a list, so for example in
+@code{table} one sees
+
+@example
+    args <- list(...)
+## ....
+    for (a in args) @{
+## ....
+@end example
+
+@cindex function
+@cindex function argument
+If a function has @samp{...} as a formal argument then any actual
+arguments that do not match a formal argument are matched with
+@samp{...}.
+
+@node Environment objects, Pairlist objects, Dot-dot-dot, Basic types
+@subsection Environments
+
+@cindex environment
+Environments can be thought of as consisting of two things.  A
+@emph{frame}, consisting of a set of symbol-value pairs, and an
+@emph{enclosure}, a pointer to an enclosing environment. When @R{}
+looks up the value for a symbol the frame is examined and if a
+matching symbol is found its value will be returned.  If not, the
+enclosing environment is then accessed and the process repeated.
+Environments form a tree structure in which the enclosures play the
+role of parents.  The tree of environments is rooted in an empty
+@findex emptyenv 
+environment, available through @code{emptyenv()}, which has no parent.
+It is the direct parent of the environment of the base package
+@findex baseenv 
+(available through the @code{baseenv()} function). Formerly
+@code{baseenv()} had the special value @code{NULL}, but as from
+version 2.4.0, the use of @code{NULL} as an environment is defunct.
+
+Environments are created implicitly by function calls, as described in
+@ref{Function objects} and @ref{Lexical environment}.  In this case the
+environment contains the variables local to the function (including the
+arguments), and its enclosure is the environment of the currently called
+function.  Environments may also be created directly by @code{new.env}.
+@findex new.env
+The frame content of an environment can be accessed and manipulated by
+use of @code{ls}, @code{get} and @code{assign} as well as @code{eval} and
+@code{evalq}.
+
+The @code{parent.env} function may be used to access the enclosure of
+an environment.
+
+Unlike most other @R{} objects, environments are not copied when passed
+to functions or used in assignments.  Thus, if you assign the same
+environment to several symbols and change one, the others will change
+too.  In particular, assigning attributes to an environment can lead to
+surprises.
+
+@node Pairlist objects, Any-type, Environment objects, Basic types
+@subsection Pairlist objects
+
+Pairlist objects are similar to Lisp's dotted-pair lists.  They are used
+extensively in the internals of @R{}, but are rarely visible in
+interpreted code, although they are returned by @code{formals}, and can
+be created by (e.g.) the @code{pairlist} function. A zero-length
+pairlist is @code{NULL}, as would be expected in Lisp but in contrast to
+a zero-length list.
+@findex pairlist
+Each such object has three slots, a CAR value, a CDR value and a TAG
+value.  The TAG value is a text string and CAR and CDR usually
+represent, respectively, a list item (head) and the remainder (tail) of
+the list with a NULL object as terminator (the CAR/CDR terminology is
+traditional Lisp and originally referred to the address and decrement
+registers on an early 60's IBM computer).
+@c FIXME: Check: Is it *required* that TAG is a STRSXP and CDR is a
+@c LISTSXP?? (or NULL of course).
+@c Well, it is CHARSXP.
+
+Pairlists are handled in the @R{} language in exactly the same way as
+generic vectors (``lists'').  In particular, elements are accessed using
+the same @code{[[]]} syntax.  The use of pairlists is deprecated since
+generic vectors are usually more efficient to use.  When an internal
+pairlist is accessed from @R{} it is generally (including when
+subsetted) converted to a generic vector.
+@c FIXME: There are still exceptions.  Change code or docs?
+
+In a very few cases pairlists are user-visible: one is @code{.Options}.
+
+@node Any-type,  , Pairlist objects, Basic types
+@subsection The ``Any'' type
+
+It is not really possible for an object to be of ``Any'' type, but it is
+nevertheless a valid type value.  It gets used in certain (rather rare)
+circumstances, e.g.@: @code{as.vector(x, "any")}, indicating that type
+@cindex coercion
+coercion should not be done.
+
+@c @node External pointer objects
+@c @subsection External pointer objects
+
+@node Attributes, Special compound objects, Basic types, Objects
+@section Attributes
+@cindex attributes
+
+@cindex object
+All objects except @code{NULL} can have one or more attributes attached
+to them.  Attributes are stored as a pairlist where all elements are
+named, but should be thought of as a set of name=value pairs.  A listing
+of the attributes can be obtained using @code{attributes} and set by
+@code{attributes<-},
+@findex attributes
+@findex attributes<-
+individual components are accessed using @code{attr} and @code{attr<-}.
+@findex attr
+@findex attr<-
+@c Shouldn't we discuss replacement functions before this?
+
+@c This is a bad example: levels<- is generic.
+Some attributes have special accessor
+@cindex function, accessor
+functions (e.g.@: @code{levels<-}
+for factors) and these should be used when available. In addition to
+hiding details of implementation they may perform additional operations.
+@R{} attempts to intercept calls to @code{attr<-} and to
+@code{attributes<-} that involve the special attributes and enforces
+the consistency checks.
+
+Matrices and arrays are simply vectors with the attribute @code{dim} and
+optionally @code{dimnames} attached to the vector.
+
+Attributes are used to implement the class structure used in @R{}.  If an
+object has a @code{class} attribute then that attribute will be examined
+during
+@cindex evaluation, symbol
+evaluation.  The class structure in @R{} is described in detail
+in @ref{Object-oriented programming}.
+
+@menu
+* Names::                       
+* Dimensions::                  
+* Dimnames::                    
+* Classes::                     
+* Time series attributes::      
+* Copying of attributes::       
+@end menu
+
+@node Names, Dimensions, Attributes, Attributes
+@subsection Names
+
+A @code{names} attribute, when present, labels the individual elements of
+a vector or list.  When an object is printed the @code{names} attribute,
+when present, is used to label the elements.  The @code{names} attribute
+can also be used for indexing purposes, for example,
+@code{quantile(x)["25%"]}.
+
+One may get and set the names using @code{names} and @code{names<-}
+constructions.
+@findex names
+@findex names<-
+@cindex type
+The latter will perform the necessary consistency checks to ensure that
+the names attribute has the proper type and length.
+
+Pairlists and one-dimensional arrays are treated specially. For pairlist
+objects, a virtual @code{names} attribute is used; the @code{names}
+attribute is really constructed from the tags of the list components.
+For one-dimensional arrays the @code{names} attribute really accesses
+@code{dimnames[[1]]}.
+
+@node Dimensions, Dimnames, Names, Attributes
+@subsection Dimensions
+
+The @code{dim} attribute is used to implement arrays.  The content of
+the array is stored in a vector in column-major order and the @code{dim}
+attribute is a vector of integers specifying the respective extents of
+the array.  @R{} ensures that the length of the vector is the product of
+the lengths of the dimensions. The length of one or more dimensions may
+be zero.
+
+@cindex vector
+A vector is not the same as a one-dimensional array since the latter has
+a @code{dim} attribute of length one, whereas the former has no
+@code{dim} attribute.
+
+@node Dimnames, Classes, Dimensions, Attributes
+@subsection Dimnames
+
+Arrays may name each dimension separately using the @code{dimnames}
+attribute which is a list of character vectors.  The @code{dimnames}
+list may itself have names which are then used for extent headings when
+printing arrays.
+
+@node Classes, Time series attributes, Dimnames, Attributes
+@subsection Classes
+
+@R{} has an elaborate class system, controlled via the @code{class}
+attribute.  This attribute is a character vector containing the list of
+classes that an object inherits from.  This forms the basis of the
+``generic methods'' functionality in @R{}.
+
+This attribute can be accessed and manipulated virtually without
+restriction by users.  There is no checking that an object actually
+contains the components that class methods expect.  Thus, altering the
+@code{class} attribute should be done with caution, and when they are
+available specific creation and
+@cindex coercion
+coercion functions should be preferred.
+
+@node Time series attributes, Copying of attributes, Classes, Attributes
+@subsection Time series attributes
+
+The @code{tsp} attribute is used to hold parameters of time series,
+start, end, and frequency.  This construction is mainly used to handle
+series with periodic substructure such as monthly or quarterly data.
+
+@node Copying of attributes,  , Time series attributes, Attributes
+@subsection Copying of attributes
+
+Whether attributes should be copied when an object is altered is a
+complex area, but there are some general rules (Becker, Chambers &
+Wilks, 1988, pp. 144--6).
+
+Scalar functions (those which operate element-by-element on a vector and
+whose output is similar to the input) should preserve attributes (except
+perhaps class).
+
+Binary operations normally copy most attributes from the longer argument
+(and if they are of the same length from both, preferring the values on
+the first).  Here `most' means all except the @code{names}, @code{dim}
+and @code{dimnames} which are set appropriately by the code for the
+operator.
+
+Subsetting (other than by an empty index) generally drops all attributes
+except @code{names}, @code{dim} and @code{dimnames} which are reset as
+appropriate.  On the other hand, subassignment generally preserves
+attributes even if the length is changed.  Coercion drops all
+attributes.
+
+The default method for sorting drops all attributes except names, which
+are sorted along with the object.
+
+
+@node Special compound objects,  , Attributes, Objects
+@section Special compound objects
+
+@menu
+* Factors::                     
+* Data frame objects::          
+@end menu
+
+@node Factors, Data frame objects, Special compound objects, Special compound objects
+@subsection Factors
+
+Factors are used to describe items that can have a finite number of
+values (gender, social class, etc.).  A factor has a @code{levels}
+attribute and class @code{"factor"}.  Optionally, it may also contain a
+@code{contrasts} attribute which controls the parametrisation used when
+the factor is used in a
+@cindex function, modeling
+@cindex modeling function
+modeling functions.
+
+A factor may be purely nominal or may have ordered categories.  In the
+latter case, it should be defined as such and have a @code{class} vector
+@code{c("ordered"," factor")}.
+
+Factors are currently implemented using an integer array to specify the
+actual levels and a second array of names that are mapped to the
+integers.  Rather unfortunately users often make use of the
+implementation in order to make some calculations easier.  This,
+however, is an implementation issue and is not guaranteed to hold in all
+implementations of @R{}.
+
+@node Data frame objects,  , Factors, Special compound objects
+@subsection Data frame objects
+
+Data frames are the @R{} structures which most closely mimic the SAS or
+SPSS data set, i.e.@: a ``cases by variables'' matrix of data.
+
+A data frame is a list of vectors, factors, and/or matrices all having
+the same length (number of rows in the case of matrices).  In addition,
+a data frame generally has a @code{names} attribute labeling the
+variables and a @code{row.names} attribute for labeling the cases.
+
+A data frame can contain a list that is the same length as the other
+components.  The list can contain elements of differing lengths thereby
+providing a data structure for ragged arrays.  However, as of this
+writing such arrays are not generally handled correctly.
+
+@c FIXME: these details really need to be filled in
+
+@c  @node Type checking and coercion,  , Special compound objects, Objects
+@c  @section Type checking and coercion
+
+@c  For most of the basic data types we can check the type and coerce
+@c  objects of one type to another type.  Should we have a table???
+
+@c  @menu
+@c  * mode/typeof::
+@c  * Specific types::
+@c  * Metatypes::
+@c  @end menu
+
+@c  @node mode/typeof, Specific types, Type checking and coercion, Type checking and coercion
+@c  @subsection mode/typeof
+
+@c  @node Specific types, Metatypes, mode/typeof, Type checking and coercion
+@c  @subsection Specific types
+
+@c  @node Metatypes,  , Specific types, Type checking and coercion
+@c  @subsection Metatypes
+
+@c  @findex is.numeric
+@c  @findex is.finite
+
+@c ------------------------------
+@c  @node Data structures, Evaluation of expressions, Objects, Top
+@c  @chapter Data structures
+
+@c  @menu
+@c  * Vectors::
+@c  * Lists::
+@c  * Arrays::
+@c  * Matrices::
+@c  * Assignment::
+@c  * Matrix operations::
+@c  * Data Frames::
+@c  @end menu
+
+@c  @node Vectors, Lists, Data structures, Data structures
+@c  @section Vectors
+
+@c  @node Lists, Arrays, Vectors, Data structures
+@c  @section Lists
+
+@c  @node Arrays, Matrices, Lists, Data structures
+@c  @section Arrays
+
+@c  @node Matrices, Assignment, Arrays, Data structures
+@c  @section Matrices
+
+@c  @node Assignment, Matrix operations, Matrices, Data structures
+@c  @section Assignment
+
+@c  @menu
+@c  * simple::
+@c  * indexed::
+@c  * function::
+@c  @end menu
+
+@c  @node simple, indexed, Assignment, Assignment
+@c  @subsection simple
+
+@c  @node indexed, function, simple, Assignment
+@c  @subsection indexed
+
+@c  @node function,  , indexed, Assignment
+@c  @subsection function
+
+@c  @node Matrix operations, Data Frames, Assignment, Data structures
+@c  @section Matrix operations
+
+@c  @node Data Frames,  , Matrix operations, Data structures
+@c  @section Data Frames
+
+@node Evaluation of expressions, Functions, Objects, Top
+@comment  node-name,  next,  previous,  up
+@chapter Evaluation of expressions
+
+When a user types a command at the prompt (or when an expression is read
+from a file) the first thing that happens to it is that the command is
+transformed by the
+@cindex parsing
+parser into an internal representation.  The
+evaluator executes parsed @R{} expressions and returns the value of the
+expression.  All expressions have a value.  This is the core of the
+language.
+
+This chapter describes the basic mechanisms of the evaluator, but avoids
+discussion of specific functions or groups of functions which are
+described in separate chapters later on or where the help pages should
+be sufficient documentation.
+
+Users can construct expressions and invoke the evaluator on them.
+
+@menu
+* Simple evaluation::           
+* Control structures::          
+* Elementary arithmetic operations::  
+* Indexing::                    
+* Scope of variables::          
+@end menu
+
+@node Simple evaluation, Control structures, Evaluation of expressions, Evaluation of expressions
+@section Simple evaluation
+
+@menu
+* Constants::                   
+* Symbol lookup::               
+* Function calls::              
+* Operators::                   
+@end menu
+
+@node Constants, Symbol lookup, Simple evaluation, Simple evaluation
+@subsection Constants
+
+Any number typed directly at the prompt is a constant and is evaluated.
+
+@example
+> 1
+[1] 1
+@end example
+
+@noindent
+Perhaps unexpectedly, the number returned from the expression @code{1}
+is a numeric.  In most cases, the difference between an integer and a
+numeric value will be unimportant as R will do the right thing when
+using the numbers.  There are, however, times when we would like to
+explicitly create an integer value for a constant.  We can do this by
+calling the function @code{as.integer} or using various other
+techniques. But perhaps the simplest approach is to qualify our 
+constant with the suffix character `L'.
+For example, to create the integer value 1, we might use
+
+@example
+> 1L
+[1]
+@end example
+
+We can use the `L' suffix to qualify any number with the intent of
+making it an explicit integer.  So `0x10L' creates the integer value
+16 from the hexadecimal representation.  The constant @code{1e3L} gives 1000
+as an integer rather than a numeric value and is equivalent to @code{1000L}.
+(Note that the `L' is treated as qualifying the term @code{1e3} and not the
+@code{3}.)  If we qualify a value with `L' that is not an integer value,
+e.g. @code{1e-3L}, we get a warning and the numeric value is created.
+A warning is also created if there is an unnecessary decimal point
+in the number, e.g. @code{1.L}.
+
+We get a syntax error when using `L' with complex numbers,
+e.g. @code{12iL} gives an error.
+
+Constants are fairly boring and to do more we need symbols.
+
+@node Symbol lookup, Function calls, Constants, Simple evaluation
+@subsection Symbol lookup
+
+When a new variable is created it must have a
+@cindex name
+name so it can be referenced and it usually has a value.  The name itself is a
+@cindex symbol
+symbol.
+When a symbol is
+@cindex evaluation, symbol
+evaluated its
+@cindex value
+value is returned.  Later we shall
+explain in detail how to determine the value associated with a symbol.
+
+In this small example @code{y} is a symbol and its value is 4.  A symbol
+is an @R{} object too, but one rarely needs to deal with symbols
+directly, except when doing ``programming on the language''
+(@ref{Computing on the language}).
+
+@example
+> y <- 4
+> y
+[1] 4
+@end example
+
+@c FIXME: Probably needs to go somewhere, but not here (parser section?)
+@c FIXME: Up to date info is in the subsection 'Reserved words'.
+
+@c  @node Key words, Calling functions, Symbol lookup, Simple evaluation
+@c  @subsection Key words
+
+@c  @R{} contains a number of key words.  These are symbols that the parser
+@c  treats in a special fashion.  They are,
+
+@c  @quotation
+@c  @multitable @columnfractions 0.2 0.7
+@c  @item @code{NULL}  @tab the null object
+@c  @item @code{NA}    @tab missing value
+@c  @item @code{TRUE}  @tab logical true
+@c  @item @code{FALSE} @tab logical false
+@c  @item @code{Inf}   @tab infinity
+@c  @item @code{NaN}   @tab not a number
+@c  @item @code{function} @tab a special form for creating functions
+@c  @item @code{while} @tab while flow control
+@c  @item @code{repeat} @tab repeat flow control
+@c  @item @code{for}   @tab for flow control
+@c  @item @code{if}    @tab if--then--else statements
+@c  @item @code{in}    @tab used in flow control
+@c  @item @code{else}  @tab part of the if--then--else construct
+@c  @item @code{next}  @tab flow control
+@c  @item @code{break} @tab flow control
+@c  @item @code{...}   @tab special argument for functions
+@c  @end multitable
+
+@c  @end quotation
+
+@node Function calls, Operators, Symbol lookup, Simple evaluation
+@subsection Function calls
+
+Most of the computations carried out in @R{} involve the evaluation of
+functions.  We will also refer to this as
+@cindex function invocation
+function @emph{invocation}.
+Functions are invoked by name with a list of arguments separated by
+commas.
+
+@example
+> mean(1:10)
+[1] 5.5
+@end example
+
+@noindent
+In this example the function @code{mean} was called with one argument,
+the vector of integers from 1 to 10.
+
+@R{} contains a huge number of functions with different purposes.  Most
+are used for producing a result which is an @R{} object, but others are
+used for their side effects, e.g., printing and plotting functions.
+
+@cindex function
+@cindex function arguments
+Function calls can have @emph{tagged} (or @emph{named}) arguments, as in
+@code{plot(x, y, pch = 3)} arguments without tags are known as
+@emph{positional} since the function must distinguish their meaning from
+their sequential positions among the arguments of the call, e.g., that
+@code{x} denotes the abscissa variable and @code{y} the ordinate.  The
+use of tags/names is an obvious convenience for functions with a large
+number of optional arguments.
+
+@cindex function, assignment
+A special type of function calls can appear on the left hand side of
+the
+@cindex assignment
+assignment operator as in
+
+@example
+> class(x) <- "foo"
+@end example
+
+@noindent
+What this construction really does is to call the function
+@code{class<-} with the original object and the right hand side.  This
+function performs the modification of the object and returns the result
+which is then stored back into the original variable.  (At least
+conceptually, this is what happens.  Some additional effort is made to
+avoid unnecessary data duplication.)
+
+@c FIXME something about common constructor functions: c,
+@c array, matrix, list, structure (with a warning to use the
+@c latter with discretion),
+
+@node Operators,  , Function calls, Simple evaluation
+@subsection Operators
+
+@R{} allows the use of arithmetic expressions using operators similar to
+those of the C programming language, for instance
+
+@example
+> 1 + 2
+[1] 3
+@end example
+
+Expressions can be grouped using parentheses, mixed with function calls,
+and assigned to variables in a straightforward manner
+
+@example
+> y <- 2 * (a + log(x))
+@end example
+
+@R{} contains a number of operators.  They are listed in the table
+below.
+
+@quotation
+@multitable @columnfractions 0.1 0.7
+@item @code{-}
+@tab Minus, can be unary or binary
+@item @code{+}
+@tab Plus, can be unary or binary
+@item @code{!}
+@tab Unary not
+@item @code{~}
+@tab Tilde, used for model formulae, can be either unary or binary
+@item @code{?}
+@tab Help
+@item @code{:}
+@tab Sequence, binary (in model formulae: interaction)
+@item @code{*}
+@tab Multiplication, binary
+@item @code{/}
+@tab Division, binary
+@item @code{^}
+@tab Exponentiation, binary
+@item @code{%@var{x}%}
+@tab Special binary operators, @var{x} can be replaced by any valid name
+@item @code{%%}
+@tab Modulus, binary
+@item @code{%/%}
+@tab Integer divide, binary
+@item @code{%*%}
+@tab Matrix product, binary
+@item @code{%o%}
+@tab Outer product, binary
+@item @code{%x%}
+@tab Kronecker product, binary
+@item @code{%in%}
+@tab Matching operator, binary (in model formulae: nesting)
+@item @code{<}
+@tab Less than, binary
+@item @code{>}
+@tab Greater than, binary
+@item @code{==}
+@tab Equal to, binary
+@item @code{>=}
+@tab Greater than or equal to, binary
+@item @code{<=}
+@tab Less than or equal to, binary
+@item @code{&}
+@tab And, binary, vectorized
+@item @code{&&}
+@tab And, binary, not vectorized
+@item @code{|}
+@tab Or, binary, vectorized
+@item @code{||}
+@tab Or, binary, not vectorized
+@item @code{<-}
+@tab Left assignment, binary
+@item @code{->}
+@tab Right assignment, binary
+@item @code{$}
+@tab List subset, binary
+@end multitable
+@end quotation
+
+Except for the syntax, there is no difference between applying an
+operator and calling a function.  In fact, @code{x + y} can equivalently
+be written @code{`+`(x, y)}.  Notice that since @samp{+} is a
+non-standard function name, it needs to be quoted.
+
+@cindex vector
+@R{} deals with entire vectors of data at a time, and most of the
+elementary operators and basic mathematical functions like @code{log}
+are vectorized (as indicated in the table above).  This means that
+e.g.@: adding two vectors of the same length will create a vector
+containing the element-wise sums, implicitly looping over the vector
+index.  This applies also to other operators like @code{-}, @code{*},
+and @code{/} as well as to higher dimensional structures.  Notice in
+particular that multiplying two matrices does not produce the usual
+matrix product (the @code{%*%} operator exists for that purpose).  Some
+finer points relating to vectorized operations will be discussed in
+@ref{Elementary arithmetic operations}.
+@c FIXME insert reference
+
+To access individual elements of an atomic vector, one generally uses
+the @code{x[i]} construction.
+
+@example
+> x <- rnorm(5)
+> x
+[1] -0.12526937 -0.27961154 -1.03718717 -0.08156527  1.37167090
+> x[2]
+[1] -0.2796115
+@end example
+
+List components are more commonly accessed using @code{x$a} or
+@code{x[[i]]}.
+
+@example
+> x <- options()
+> x$prompt
+[1] "> "
+@end example
+
+Indexing constructs can also appear on the right hand side of an
+@cindex assignment
+assignment.
+
+Like the other operators, indexing is really done by functions, and one
+could have used  @code{`[`(x, 2)} instead of @code{x[2]}.
+
+@R{}'s indexing operations contain many advanced features which are
+further described in @ref{Indexing}.
+
+@node Control structures, Elementary arithmetic operations, Simple evaluation, Evaluation of expressions
+@section Control structures
+
+Computation in @R{} consists of sequentially evaluating
+@emph{statements}.  Statements, such as @code{x<-1:10} or
+@code{mean(y)}, can be separated by either a semi-colon or a new line.
+Whenever the
+@cindex evaluation, statement
+evaluator is presented with a syntactically complete
+statement that statement is evaluated and the @emph{value} returned.
+The result of evaluating a statement can be referred to as the value of
+the statement@footnote{Evaluation always takes place in an
+@cindex environment
+environment.
+See @ref{Scope of variables} for more details.}  The value can
+always be assigned to a symbol.
+
+Both semicolons and new lines can be used to separate statements.  A
+semicolon always indicates the end of a statement while a new line
+@emph{may} indicate the end of a statement.  If the current statement is
+not syntactically complete new lines are simply ignored by the
+evaluator.  If the session is interactive the prompt changes from
+@samp{>} to @samp{+}.
+
+@example
+> x <- 0; x + 5
+[1] 5
+> y <- 1:10
+> 1; 2
+[1] 1
+[1] 2
+@end example
+
+Statements can be grouped together using braces @samp{@{} and @samp{@}}.
+A group of statements is sometimes called a @emph{block}.  Single
+statements are evaluated when a new line is typed at the end of the
+syntactically complete statement.  Blocks are not evaluated until a new
+line is entered after the closing brace.  In the remainder of this
+section, @emph{statement} refers to either a single statement or a
+block.
+
+@example
+> @{ x <- 0
++ x + 5
++ @}
+[1] 5
+@end example
+
+@menu
+* if::                          
+* Looping::                     
+* repeat::                      
+* while::                       
+* for::                         
+* switch::                      
+@end menu
+
+@node if, Looping, Control structures, Control structures
+@subsection if
+
+The @code{if}/@code{else} statement conditionally evaluates two
+statements.  There is a @emph{condition} which is evaluated and if the
+@emph{value} is @code{TRUE} then the first statement is evaluated;
+otherwise the second statement will be evaluated.  The
+@code{if}/@code{else} statement returns, as its value, the value of the
+statement that was selected.  The formal syntax is
+
+@example
+if ( @var{statement1} )
+    @var{statement2}
+else
+    @var{statement3}
+@end example
+
+First, @var{statement1} is evaluated to yield @var{value1}.  If
+@var{value1} is a logical vector with first element @code{TRUE} then
+@var{statement2} is evaluated.  If the first element of @var{value1} is
+@code{FALSE} then @var{statement3} is evaluated.  If @var{value1} is a
+numeric vector then @var{statement3} is evaluated when the first element
+of @var{value1} is zero and otherwise @var{statement2} is evaluated.
+Only the first element of @var{value1} is used.  All other elements are
+ignored.  If @var{value1} has any type other than a logical or a numeric
+vector an error is signalled.
+
+If/else statements can be used to avoid numeric problems such as taking
+the logarithm of a negative number.  Because if/else statements are the
+same as other statements you can assign the value of them.  The two
+examples below are equivalent.
+
+@example
+> if( any(x <= 0) ) y <- log(1+x) else y <- log(x)
+> y <- if( any(x <= 0) ) log(1+x) else log(x)
+@end example
+
+The @code{else} clause is optional.  The statement @code{if(any(x <= 0))
+x <- x[x <= 0]} is valid.  When the @code{if} statement is not in a
+block the @code{else}, if present, must appear on the same line as
+@var{statement1}.  Otherwise the new line at the end of @var{statement1}
+yields a syntactically complete statement that is evaluated.
+
+If/else statements can be nested.
+
+@example
+if ( @var{statement1} )
+    @var{statement2}
+else if ( @var{statement3} )
+    @var{statement4}
+else if ( @var{statement5} )
+    @var{statement6}
+else
+    @var{statement8}
+@end example
+
+One of the even numbered statements will be evaluated and the resulting
+value returned.  If the optional @code{else} clause is omitted and all
+the odd numbered @var{statement}'s evaluate to @code{FALSE} no statement
+will be evaluated and @code{NULL} is returned.
+
+The odd numbered @var{statement}s are evaluated, in order, until one
+evaluates to @code{TRUE} and then the associated even numbered
+@var{statement} is evaluated.  In this example, @var{statement6} will
+only be evaluated if @var{statement1} is @code{FALSE} and
+@var{statement3} is @code{FALSE} and @var{statement5} is @code{TRUE}.
+There is no limit to the number of @code{else if} clauses that are
+permitted.
+
+@node Looping, repeat, if, Control structures
+@subsection Looping
+
+@R{} has three statements that provide explicit
+looping.@footnote{Looping is the repeated evaluation of a statement or
+block of statements.}  They are @code{for}, @code{while} and
+@code{repeat}.  The two built-in constructs, @code{next} and
+@code{break}, provide additional control over the evaluation.  Each of
+the three statements returns the value of the last statement that was
+evaluated.  It is possible, although uncommon, to assign the result of
+one of these statements to a symbol.  @R{} provides other functions for
+implicit looping such as @code{tapply}, @code{apply}, and @code{lapply}.
+In addition many operations, especially arithmetic ones, are vectorized
+so you may not need to use a loop.
+
+There are two statements that can be used to explicitly control looping.
+They are @code{break} and @code{next}.
+@findex break
+@findex next
+The @code{break} statement causes an exit from the innermost loop that
+is currently being executed.  The @code{next} statement immediately
+causes control to return to the start of the loop.  The next iteration
+of the loop (if there is one) is then executed.  No statement below
+@code{next} in the current loop is evaluated.
+
+
+@node repeat, while, Looping, Control structures
+@subsection repeat
+@findex repeat
+
+The @code{repeat} statement causes repeated evaluation of the body until
+a break is specifically requested.  This means that you need to be
+careful when using @code{repeat} because of the danger of an infinite
+loop.  The syntax of the @code{repeat} loop is
+
+@example
+repeat @var{statement}
+@end example
+
+When using @code{repeat}, @var{statement} must be a block statement.
+You need to both perform some computation and test whether or not to
+break from the loop and usually this requires two statements.
+
+@node while, for, repeat, Control structures
+@subsection while
+@findex while
+
+The @code{while} statement is very similar to the @code{repeat}
+statement.  The syntax of the @code{while} loop is
+
+@example
+while ( @var{statement1} ) @var{statement2}
+@end example
+
+@noindent
+where @var{statement1} is evaluated and if its value is @code{TRUE} then
+@var{statement2} is evaluated.  This process continues until
+@var{statement1} evaluates to @code{FALSE}.  If @var{statement2} is
+never evaluated then @code{while} returns @code{NULL} and otherwise it
+returns the value of the last evaluation of @var{statement2}.
+
+@node for, switch, while, Control structures
+@subsection for
+@findex for
+
+The syntax of the @code{for} loop is
+
+@example
+for ( @var{name} in @var{vector} )
+   @var{statement1}
+@end example
+
+@noindent
+where @var{vector} can be either a vector or a list.  For each element
+in @var{vector} the variable @var{name} is set to the value of that
+element and @var{statement1} is evaluated.  A side effect is that the
+variable @var{name} still exists after the loop has concluded and it has
+the value of the last element of @var{vector} that the loop was
+evaluated for.
+
+@node switch,  , for, Control structures
+@subsection switch
+@findex switch
+
+Technically speaking, @code{switch} is just another function, but its
+semantics are close to those of control structures of other programming
+languages.
+
+The syntax is
+
+@example
+switch (@var{statement}, @var{list})
+@end example
+
+@noindent
+where the elements of @var{list} may be named.  First, @var{statement}
+is evaluated and the result, @var{value}, obtained.  If @var{value} is a
+number between 1 and the length of @var{list} then the corresponding
+element @var{list} is evaluated and the result returned.  If @var{value}
+is too large or too small @code{NULL} is returned.
+
+@example
+> x <- 3
+> switch(x, 2+2, mean(1:10), rnorm(5))
+[1]  2.2903605  2.3271663 -0.7060073  1.3622045 -0.2892720
+> switch(2, 2+2, mean(1:10), rnorm(5))
+[1] 5.5
+> switch(6, 2+2, mean(1:10), rnorm(5))
+NULL
+@end example
+
+If @var{value} is a character vector then the element of @samp{...} with
+a name that exactly matches @var{value} is evaluated.  If there is no
+match @code{NULL} is returned.
+
+@example
+> y <- "fruit"
+> switch(y, fruit = "banana", vegetable = "broccoli", meat = "beef")
+[1] "banana"
+@end example
+
+A common use of @code{switch} is to branch according to the character
+value of one of the arguments to a function.
+
+@example
+> centre <- function(x, type) @{
++ switch(type,
++        mean = mean(x),
++        median = median(x),
++        trimmed = mean(x, trim = .1))
++ @}
+> x <- rcauchy(10)
+> centre(x, "mean")
+[1] 0.8760325
+> centre(x, "median")
+[1] 0.5360891
+> centre(x, "trimmed")
+[1] 0.6086504
+@end example
+
+@code{switch} returns either the value of the statement that was
+evaluated or @code{NULL} if no statement was evaluated.
+
+To choose from a list of alternatives that already exists @code{switch}
+may not be the best way to select one for evaluation.  It is often
+better to use @code{eval} and the subset operator, @code{[[}, directly
+via @code{eval(x[[condition]])}.
+
+@node Elementary arithmetic operations, Indexing, Control structures, Evaluation of expressions
+@section Elementary arithmetic operations
+
+@menu
+* Recycling rules::             
+* Propagation of names::        
+* Dimensional attributes::      
+* NA handling::                 
+@end menu
+
+In this section, we discuss the finer points of the rules that apply to
+basic operation like addition or multiplication of two vectors or
+matrices.
+
+@node Recycling rules, Propagation of names, Elementary arithmetic operations, Elementary arithmetic operations
+@subsection Recycling rules
+If one tries to add two structures with a different number of elements,
+then the shortest is recycled to length of longest.  That is, if for
+instance you add @code{c(1, 2, 3)} to a six-element vector then you will
+really add @code{c(1, 2, 3, 1, 2, 3)}.  If the length of the longer
+vector is not a multiple of the shorter one, a warning is given.
+
+As from @R{} 1.4.0, any arithmetic operation involving a zero-length
+vector has a zero-length result.
+
+One exception is that when adding vectors to matrices, a warning is not
+given if the lengths are incompatible.
+@c Is that a bug?
+
+@node Propagation of names, Dimensional attributes, Recycling rules, Elementary arithmetic operations
+@subsection Propagation of names
+@cindex name
+propagation of names (first one wins, I think - also if it has no
+names?? ---- first one *with names* wins, recycling causes shortest to
+lose names)
+
+
+@node Dimensional attributes, NA handling, Propagation of names, Elementary arithmetic operations
+@subsection Dimensional attributes
+
+(matrix+matrix, dimensions must match. vector+matrix: first recycle,
+then check if dims fit, error if not)
+
+@node NA handling,  , Dimensional attributes, Elementary arithmetic operations
+@subsection NA handling
+
+Missing values in the statistical sense, that is, variables whose value
+is not known, have the value @code{NA}. This should not be confused with
+the @code{missing} property for a function argument that has not been
+supplied (see @ref{Arguments}).
+@findex missing
+@findex NA
+@findex NaN
+
+@cindex type
+As the elements of an atomic vector must be of the same type there are
+multiple types of @code{NA} values.  There is one case where this is
+particularly important to the user.  The default type of @code{NA} is
+@code{logical}, unless coerced to some other type, so the appearance of
+a missing value may trigger logical rather than numeric indexing (see
+@ref{Indexing} for details).
+
+Numeric and logical calculations with @code{NA} generally return
+@code{NA}. In cases where the result of the operation would be the same
+for all possible values the @code{NA} could take, the operation may
+return this value. In particular, @samp{FALSE & NA} is @code{FALSE},
+@samp{TRUE | NA} is @code{TRUE}.  @code{NA} is not equal to any other
+value or to itself; testing for @code{NA} is done using @code{is.na}.
+@findex is.na
+However, an @code{NA} value will match another @code{NA} value in
+@code{match}.
+
+Numeric calculations whose result is undefined, such as @samp{0/0},
+produce the value @code{NaN}.  This exists only in the @code{double}
+type and for real or imaginary components of the complex type.  The
+function @code{is.nan} is provided to check specifically for
+@findex is.nan
+@code{NaN}, @code{is.na} also returns @code{TRUE} for @code{NaN}.
+@cindex coercion
+Coercing @code{NaN} to logical or integer type gives an @code{NA} of the
+appropriate type, but coercion to character gives the string
+@code{"NaN"}.  @code{NaN} values are incomparable so tests of equality
+or collation involving @code{NaN} will result in @code{NA}.  They are
+regarded as matching any @code{NaN} value (and no other value, not even
+@code{NA}) by @code{match}.
+
+The @code{NA} of character type is as from R 1.5.0 distinct from the
+string @code{"NA"}.  Programmers who need to specify an explicit string
+@code{NA} should use @samp{as.character(NA)} rather than @code{"NA"}, or
+set elements to @code{NA} using @code{is.na<-}.
+
+As from @R{} 2.5.0 there are constants @code{NA_integer_},
+@code{NA_real_}, @code{NA_complex_} and @code{NA_character_} which will
+generate (in the parser) an @code{NA} value of the appropriate type,
+and will be used in deparsing when it is not otherwise possible to
+identify the type of an @code{NA} (and the @code{control} options ask
+for this to be done).
+
+There is no @code{NA} value for raw vectors.
+
+
+@node Indexing, Scope of variables, Elementary arithmetic operations, Evaluation of expressions
+@section Indexing
+
+@R{} contains several constructs which allow access to individual
+elements or subsets through indexing operations.  In the case of the
+basic vector types one can access the i-th element using @code{x[i]},
+but there is also indexing of lists, matrices, and multi-dimensional
+arrays.  There are several forms of indexing in addition to indexing
+with a single integer.  Indexing can be used both to extract part of an
+object and to replace parts of an object (or to add parts).
+
+@R{} has three basic indexing operators, with syntax displayed by the
+following examples
+
+@example
+x[i]
+x[i, j]
+x[[i]]
+x[[i, j]]
+x$a
+x$"a"
+@end example
+@findex [
+@findex [[
+@findex $
+@cindex index
+
+For vectors and matrices the @code{[[} forms are rarely used, although
+they have some slight semantic differences from the @code{[} form (e.g.
+it drops any @code{names} or @code{dimnames} attribute, and that partial
+matching is used for character indices).  When indexing
+multi-dimensional structures with a single index, @code{x[[i]]} or
+@code{x[i]} will return the @code{i}th sequential element of @code{x}.
+
+For lists, one generally uses @code{[[} to select any single element,
+whereas @code{[} returns a list of the selected elements.
+
+The @code{[[} form allows only a single element to be selected using
+integer or character indices, whereas @code{[} allows indexing by
+vectors.  Note though that for a list, the index can be a vector and
+each element of the vector is applied in turn to the list, the
+selected component, the selected component of that component, and so on.
+The result is still a single element.
+
+The form using @code{$} applies to recursive objects such as lists and
+pairlists.  It allows only a literal character string or a symbol as the
+index.  That is, the index is not computable: for cases where you need
+to evaluate an expression to find the index, use @code{x[[expr]]}.  When
+@code{$} is applied to a non-recursive object the result is always
+@code{NULL}.
+
+@menu
+* Indexing by vectors::         
+* Indexing matrices and arrays::  
+* Indexing other structures::   
+* Subset assignment::           
+@end menu
+
+@node Indexing by vectors, Indexing matrices and arrays, Indexing, Indexing
+@subsection Indexing by vectors
+
+@R{} allows some powerful constructions using vectors as indices.  We
+shall discuss indexing of simple vectors first.  For simplicity, assume
+that the expression is @code{x[i]}.  Then the following possibilities
+exist according to the type of @code{i}.
+
+@itemize @bullet
+@item
+@cindex index
+@strong{Integer}.  All elements of @code{i} must have the same sign.  If
+they are positive, the elements of @code{x} with those index numbers are
+selected.  If @code{i} contains negative elements, all elements except
+those indicated are selected.
+
+If @code{i} is positive and exceeds @code{length(x)} then the
+corresponding selection is @code{NA}.  A negative out of bounds value
+for @code{i} causes an error.
+
+A special case is the zero index, which has null effects: @code{x[0]} is
+an empty vector and otherwise including zeros among positive or negative
+indices has the same effect as if they were omitted.
+@c Are there any useful uses of zero indices??
+
+@item
+@strong{Other numeric}.  Non-integer values are converted to integer
+(by truncation towards zero) before use.
+
+@item
+@strong{Logical}.  The indexing @code{i} should generally have the same
+length as @code{x}.  If it is shorter, then its elements will be
+recycled as discussed in @ref{Elementary arithmetic operations}.  If it
+is longer, then @code{x} is conceptually extended with @code{NA}s. The
+selected values of @code{x} are those for which @code{i} is @code{TRUE}.
+@c @findex TRUE
+@c @findex FALSE
+
+@cindex partial matching
+@item
+@strong{Character}.  The strings in @code{i} are matched against the
+names attribute of @code{x} and the resulting integers are used.  For
+@code{[[} and @code{$} partial matching is used if exact matching fails,
+so @code{x$aa} will match @code{x$aabb} if @code{x} does not a component
+named @code{"aa"} and @code{"aabb"} is the first name which has prefix
+@code{"aa"}.  However, @code{[} requires an exact match.  The string
+@code{""} is treated specially: it indicates `no name' and matches no
+element (not even those without a name).  Note that partial matching is
+only used when extracting and not when replacing.
+
+@item
+@strong{Factor}.  The result is identical to @code{x[as.integer(i)]}.
+The factor levels are never used.  If so desired, use
+@code{x[as.character(i)]} or a similar construction.
+
+@item
+@strong{Empty}.  The expression @code{x[]} returns @code{x}, but drops
+``irrelevant'' attributes from the result.  Only @code{names} and in
+multi-dimensional arrays @code{dim} and @code{dimnames} attributes are
+retained.
+
+@item
+@strong{NULL}.  This is treated as if it were @code{integer(0)}.
+
+@end itemize
+
+Indexing with a missing (i.e.@: @code{NA}) value gives an @code{NA}
+result.  This rule applies also to the case of logical indexing,
+i.e.@: the elements of @code{x} that have an @code{NA} selector in
+@code{i} get included in the result, but their value will be @code{NA}.
+@findex NA
+
+Notice however, that there are different modes of @code{NA}---the
+literal constant is of mode @code{"logical"}, but it is frequently
+automatically coerced to other types.  One effect of this is that
+@code{x[NA]} has the length of @code{x}, but @code{x[c(1, NA)]} has
+length 2.  That is because the rules for logical indices apply in the
+former case, but those for integer indices in the latter.
+
+Indexing with @code{[} will also carry out the relevant subsetting of
+any names attributes.
+
+@node Indexing matrices and arrays, Indexing other structures, Indexing by vectors, Indexing
+@subsection Indexing matrices and arrays
+
+@cindex index
+Subsetting multi-dimensional structures generally follows the same rules
+as single-dimensional indexing for each index variable, with the
+relevant component of @code{dimnames} taking the place of @code{names}.
+A couple of special rules apply, though:
+
+Normally, a structure is accessed using the number of indices
+corresponding to its dimension.  It is however also possible to use a
+single index in which case the @code{dim} and @code{dimnames} attributes
+are disregarded and the result is effectively that of @code{c(m)[i]}.
+Notice that @code{m[1]} is usually very different from @code{m[1, ]} or
+@code{m[, 1]}.
+
+It is possible to use a matrix of integers as an index.  In this case,
+the number of columns of the matrix should match the number of
+dimensions of the structure, and the result will be a vector with length
+as the number of rows of the matrix.  The following example shows how
+to extract the elements @code{m[1, 1]} and @code{m[2, 2]} in one
+operation.
+
+@example
+> m <- matrix(1:4, 2)
+> m
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+> i <- matrix(c(1, 1, 2, 2), 2, byrow = TRUE)
+> i
+     [,1] [,2]
+[1,]    1    1
+[2,]    2    2
+> m[i]
+[1] 1 4
+@end example
+
+@noindent
+Negative indices are not allowed in indexing matrices.  @code{NA} and
+zero values are allowed: rows in an index matrix containing a zero are
+ignored, whereas rows containing an @code{NA} produce an @code{NA} in
+the result.
+
+Both in the case of using a single
+@cindex index
+index and in matrix indexing, a @code{names} attribute is used if
+present, as had the structure been one-dimensional.
+
+If an indexing operation causes the result to have one of its extents of
+length one, as in selecting a single slice of a three-dimensional matrix
+with (say) @code{m[2, , ]}, the corresponding dimension is generally
+dropped from the result.  If a single-dimensional structure results, a
+vector is obtained.  This is occasionally undesirable and can be turned
+off by adding the @samp{drop = FALSE} to the indexing operation.  Notice
+that this is an additional argument to the @code{[} function and doesn't
+add to the index count.  Hence the correct way of selecting the first
+row of a matrix as a @math{1} by @math{n} matrix is @code{m[1, , drop =
+FALSE]}.  Forgetting to disable the dropping feature is a common cause
+of failure in general subroutines where an index occasionally, but not
+usually has length one.  This rule still applies to a one-dimensional
+array, where any subsetting will give a vector result unless @samp{drop
+= FALSE} is used.
+
+Notice that vectors are distinct from one-dimensional arrays in that the
+latter have @code{dim} and @code{dimnames} attributes (both of length
+one).  One-dimensional arrays are not easily obtained from subsetting
+operations but they can be constructed explicitly and are returned by
+@code{table}.  This is sometimes useful because the elements of the
+@code{dimnames} list may themselves be named, which is not the case for
+the @code{names} attribute.
+
+Some operations such as @code{m[FALSE, ]} result in structures in which
+a dimension has zero extent.  @R{} generally tries to handle these
+structures sensibly.
+
+@node Indexing other structures, Subset assignment, Indexing matrices and arrays, Indexing
+@subsection Indexing other structures
+
+The operator @code{[} is a generic function which allows class methods
+to be added, and the @code{$} and @code{[[} operators likewise.  Thus,
+it is possible to have user-defined indexing operations for any
+structure.  Such a function, say @code{[.foo} is called with a set of
+arguments of which the first is the structure being indexed and the rest
+are the indices.  In the case of @code{$}, the index argument is of mode
+@code{"symbol"} even when using the @code{x$"abc"} form.  It is
+important to be aware that class methods do not necessarily behave in
+the same way as the basic methods, for example with respect to partial
+matching.
+
+The most important example of a class method for @code{[} is that used
+for data frames.  It is not be described in detail here (see the help
+page for @code{[.data.frame}, but in broad terms, if two indices are
+supplied (even if one is empty) it creates matrix-like indexing for a
+structure that is basically a list of vectors of the same length.  If a
+single index is supplied, it is interpreted as indexing the list of
+columns---in that case the @code{drop} argument is ignored, with a
+warning.
+
+The basic operators @code{$} and @code{[[} can be applied to
+environments.  Only character indices are allowed and no partial
+matching is done.
+
+
+@node Subset assignment,  , Indexing other structures, Indexing
+@subsection Subset assignment
+@cindex assignment
+@cindex complex assignment
+
+Assignment to subsets of a structure is a special case of a general
+mechanism for complex assignment:
+@example
+x[3:5] <- 13:15
+@end example
+The result of this commands is as if the following had been executed
+@example
+`*tmp*` <- x
+x <- "[<-"(`*tmp*`,3:5, value=13:15)
+@end example
+
+The same mechanism can be applied to other functions than @code{[}.  The
+assignment function has the same name with @code{<-} pasted on. Its last
+argument, which must be called @code{value}, is the new value to be
+assigned.
+@example
+names(x) <- c("a","b")
+@end example
+is equivalent to
+@example
+`*tmp*` <- x
+x <- "names<-"(`*tmp*`, value=c("a","b"))
+@end example
+
+Nesting of complex assignments is evaluated recursively
+@example
+names(x)[3] <- "Three"
+@end example
+is equivalent to
+@example
+`*tmp*` <- x
+x <- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
+@end example
+
+
+
+Complex assignments in the enclosing environment (using @code{<<-}) are
+also permitted:
+@example
+names(x)[3] <<- "Three"
+@end example
+is equivalent to 
+@example
+`*tmp*` <<- get(x, envir=parent.env(), inherits=TRUE)
+names(`*tmp*`)[3] <- "Three"
+x <<- `*tmp*`
+@end example
+and also to
+@example
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+x <<- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
+@end example
+
+Only the target variable is evaluated in the enclosing environment, so 
+@example
+e<-c(a=1,b=2)
+i<-1
+local(@{
+   e <- c(A=10,B=11)
+   i <-2
+   e[i] <<- e[i]+1
+@})
+@end example
+uses the local value of @code{i} on both the LHS and RHS, and the local
+value of @code{e} on the RHS of the superassignment statement.  It sets
+@code{e} in the outer environment to
+@example
+ a  b 
+ 1 12
+@end example
+That is, the superassignment is equivalent to the three lines
+@example
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*`[i] <- e[i]+1
+x <<- `*tmp*`
+@end example
+
+Similarly
+@example
+x[is.na(x)] <<- 0
+@end example
+is equivalent to 
+@example
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*`[is.na(x)] <- 0
+x <<- `*tmp*`
+@end example
+and not to
+@example
+`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*`[is.na(`*tmp*`)] <- 0
+x <<- `*tmp*`
+@end example
+These two candidate interpretations differ only if there is also a
+local variable @code{x}.  It is a good idea to avoid having a local
+variable with the same name as the target variable of a
+superassignment.  As this case was handled incorrectly in versions
+1.9.1 and earlier there must not be a serious need for such code.
+
+
+
+@c  Example session sketch
+@c  @example
+
+@c  Make some data
+@c  > x <- rbinom(10,5,.5)
+@c  > x
+@c   [1] 3 2 3 0 1 1 0 4 3 1
+
+@c  Select one element
+@c  > x[6]
+@c  [1] 1
+
+@c  Select several
+@c  > x[6:10]
+@c  [1] 1 0 4 3 1
+
+@c  Select by condition
+@c  > x[x>=3]
+@c  [1] 3 3 4 3
+
+@c  ..by name (add element names first)
+@c  > names(x)<-letters[1:10]
+@c  > x
+@c  a b c d e f g h i j
+@c  3 2 3 0 1 1 0 4 3 1
+@c  > x["e"]
+@c  e
+@c  1
+
+@c  Notice that names vector is subsetted as well:
+@c  > names(x[x>=3])
+@c  [1] "a" "c" "h" "i"
+
+@c  Indexing with [[ drops names attrib. whereas [ keeps (and subsets) it.
+@c  > x[[4]]
+@c  [1] 0
+@c  > x[4]
+@c  d
+@c  0
+
+@c  [[ also works on matrices
+@c  > a<-matrix(1:4,2)
+@c  > a[[2,2]]
+@c  [1] 4
+
+@c  However, one can not use fancy indexes:
+@c  > x[[1:4]]
+@c  Error: attempt to select more than one element
+
+@c  [need examples of basic matrix operations, empty indexes, drop=TRUE/FALSE]
+@c  @end example
+
+
+@node Scope of variables,  , Indexing, Evaluation of expressions
+@section Scope of variables
+@cindex scope
+
+@cindex name
+Almost every programming language has a set of scoping rules, allowing
+the same name to be used for different objects.  This allows, e.g., a
+local variable in a function to have the same name as a global object.
+
+@R{} uses a @emph{lexical scoping} model, similar to languages like
+Pascal.  However, @R{} is a @emph{functional programming language} and
+allows dynamic creation and manipulation of functions and language
+objects, and has additional features reflecting this fact.
+
+@menu
+* Global environment::          
+* Lexical environment::         
+* Stacks::                      
+* Search path::                 
+@end menu
+
+@node Global environment, Lexical environment, Scope of variables, Scope of variables
+@subsection Global environment
+
+The global
+@cindex environment
+environment is the root of the user workspace.  An
+@cindex assignment
+assignment operation from the command line will cause the relevant
+object to belong to the global environment.  Its enclosing environment
+is the next environment on the search path, and so on back to the
+empty environment that is the enclosure of the base environment.
+
+@node Lexical environment, Stacks, Global environment, Scope of variables
+@subsection Lexical environment
+
+Every call to a
+@cindex function
+function creates a
+@cindex frame
+@cindex environment
+@emph{frame} which contains the local
+variables created in the function, and is evaluated in an environment,
+which in combination creates a new environment.
+
+Notice the terminology: A frame is a set of variables, an environment is
+a nesting of frames (or equivalently: the innermost frame plus the
+enclosing environment).
+
+Environments may be assigned to variables or be contained in other
+objects.  However, notice that they are not standard objects---in
+particular, they are not copied on assignment.
+
+A closure (mode @code{"function"}) object will contain the environment
+in which it is created as part of its definition (By default.  The
+environment can be manipulated using @code{environment<-}).  When the
+function is subsequently called, its 
+@cindex environment, evaluation
+evaluation environment is created with the closure's environment as
+enclosure.  Notice that this is not
+necessarily the environment of the caller!
+
+Thus, when a variable is requested inside a
+@cindex function
+function, it is first sought
+in the 
+@cindex environment, evaluation
+evaluation environment, then in the enclosure, the enclosure of
+the enclosure, etc.; once the global environment or the environment of
+a package is reached, the
+search continues up the search path
+to the environment of the base package.  If the variable is not
+found there, the search will proceed next to the empty environment, and
+will fail.
+
+@node Stacks, Search path, Lexical environment, Scope of variables
+@subsection The call stack
+
+Every time a
+@cindex function
+function is invoked a new evaluation frame is created.  At
+any point in time during the computation the currently active
+environments are accessible through the @emph{call stack}.  Each time a
+function is invoked a special construct called a context is created
+internally and is placed on a list of contexts.  When a function has
+finished evaluating its context is removed from the call stack.
+
+Making variables defined higher up the call stack available is called
+@cindex scope
+dynamic scope. The binding for a variable is then determined by the most
+recent (in time) definition of the variable.  This contradicts the
+default scoping rules in @R{}, which use the bindings in the
+@cindex environment
+environment
+in which the function was defined (lexical scope). Some functions,
+particularly those that use and manipulate model formulas, need to
+simulate dynamic scope by directly accessing the call stack.
+
+Access to the
+@cindex call stack
+call stack is provided through a family of functions which
+have names that start with @samp{sys.}.  They are listed briefly below.
+
+@cindex evaluation
+@table @code
+@item sys.call
+Get the call for the specified context.
+@item sys.frame
+Get the evaluation frame for the specified context.
+@item sys.nframe
+Get the environment frame for all active contexts.
+@item sys.function
+Get the function being invoked in the specified context.
+@item sys.parent
+Get the parent of the current function invocation.
+@item sys.calls
+Get the calls for all the active contexts.
+@item sys.frames
+Get the evaluation frames for all the active contexts.
+@item sys.parents
+Get the numeric labels for all active contexts.
+@item sys.on.exit
+Set a function to be executed when the specified context is exited.
+@item sys.status
+Calls @code{sys.frames}, @code{sys.parents} and @code{sys.calls}.
+@item parent.frame
+Get the evaluation frame for the specified parent context.
+@end table
+
+@node Search path,  , Stacks, Scope of variables
+@subsection Search path
+
+In addition to the evaluation
+@cindex environment
+@cindex search path
+environment structure, @R{} has a search
+path of environments which are searched for variables not found
+elsewhere.  This is used for two things: packages of functions and
+attached user data.
+
+The first element of the search path is the global environment and the
+last is the base package.  An @code{Autoloads} environment is used for
+holding proxy objects that may be loaded on demand.  Other environments
+are inserted in the path using @code{attach} or @code{library}.
+
+@cindex namespace
+Packages which have a @emph{namespace} have a different search path.
+When a search for an @R{} object is started from an object in such a
+package, the package itself is searched first, then its imports, then
+the base namespace and finally the global environment and the rest of the
+regular search path.  The effect is that references to other objects in
+the same package will be resolved to the package, and objects cannot be
+masked by objects of the same name in the global environment or in other
+packages.
+
+
+@node Functions, Object-oriented programming, Evaluation of expressions, Top
+@chapter Functions
+
+@menu
+* Writing functions::           
+* Functions as objects::        
+* Evaluation::                  
+@end menu
+
+@node Writing functions, Functions as objects, Functions, Functions
+@section Writing functions
+
+While @R{} can be very useful as a data analysis tool most users very
+quickly find themselves wanting to write their own
+@cindex function
+functions.  This is
+one of the real advantages of @R{}.  Users can program it and they can,
+if they want to, change the system level functions to functions that
+they find more appropriate.
+
+@R{} also provides facilities that make it easy to document any
+functions that you have created.  @xref{Writing R documentation, , ,
+R-exts, Writing R Extensions}.
+
+@menu
+* Syntax and examples::         
+* Arguments::                   
+@end menu
+
+@node Syntax and examples, Arguments, Writing functions, Writing functions
+@subsection Syntax and examples
+
+The syntax for writing a
+@cindex function
+function is
+
+@example
+function ( @var{arglist} ) @var{body}
+@end example
+
+The first component of the function declaration is the keyword
+@code{function} which indicates to @R{} that you want to create a
+function.
+
+An
+@cindex argument
+argument list is a comma separated list of formal arguments.  A
+formal argument can be a symbol, a statement of the form
+@samp{@var{symbol} = @var{expression}}, or the special formal argument
+@samp{...}.
+
+The @emph{body} can be any valid @R{} expression.  Generally, the body
+is a group of expressions contained in curly braces (@samp{@{} and
+@samp{@}}).
+
+Generally
+@cindex function
+functions are assigned to symbols but they don't need to be.
+The value returned by the call to @code{function} is a function.  If
+this is not given a name it is referred to as an
+@cindex function, anonymous
+anonymous
+function. Anonymous functions are most frequently used as arguments
+other functions such as the @code{apply} family or @code{outer}.
+
+Here is a simple function: @code{echo <- function(x) print(x)}.  So
+@code{echo} is a function that takes a single argument and when
+@code{echo} is invoked it prints its argument.
+
+@node Arguments,  , Syntax and examples, Writing functions
+@subsection Arguments
+
+The formal arguments to the function define the variables whose values
+will be supplied at the time the function is invoked.  The names of
+these arguments can be used within the function body where they obtain
+the value supplied at the time of function invocation.
+
+@cindex argument, default values
+Default values for arguments can be specified using the special form
+@samp{@var{name} = @var{expression}}.  In this case, if the user does
+not specify a value for the argument when the function is invoked the
+expression will be associated with the corresponding symbol.  When a
+value is needed the @var{expression} is
+@cindex evaluation, expression
+evaluated in the evaluation
+frame of the function.
+
+Default behaviours can also be specified by using the function
+@code{missing}.  When @code{missing} is called with the
+@cindex name
+name of a formal
+argument it returns @code{TRUE} if the formal argument was not matched
+with any actual argument and has not been subsequently modified in the
+body of the function.  An argument that is @code{missing} will thus
+have its default value, if any. The @code{missing} function does not
+force evaluation of the argument.
+
+The special type of argument @samp{...} can contain any number of
+supplied arguments.  It is used for a variety of purposes.  It allows
+you to write a
+@cindex function
+function that takes an arbitrary number of arguments.  It
+can be used to absorb some arguments into an intermediate function which
+can then be extracted by functions called subsequently.
+
+@node Functions as objects, Evaluation, Writing functions, Functions
+@section Functions as objects
+
+Functions are first class objects in @R{}.  They can be used anywhere
+that an @R{} object is required.  In particular they can be passed as
+arguments to functions and returned as values from functions.  See 
+@ref{Function objects} for the details.
+
+@node Evaluation,  , Functions as objects, Functions
+@section Evaluation
+
+@menu
+* Evaluation environment::      
+* Argument matching::           
+* Argument evaluation::         
+* Scope::                       
+@end menu
+
+@node Evaluation environment, Argument matching, Evaluation, Evaluation
+@subsection Evaluation environment
+
+When a
+@cindex function
+function is called or invoked a new
+@cindex evaluation
+evaluation frame is created.
+In this frame the formal arguments are matched with the supplied
+arguments according to the rules given in @ref{Argument matching}.  The
+statements in the body of the function are evaluated sequentially in
+this
+@cindex environment
+environment frame.
+
+The enclosing frame of the evaluation frame is the environment frame
+associated with the function being invoked.  This may be different from
+@Sl{}.  While many functions have @code{.GlobalEnv} as their environment
+this does not have to be true and functions defined in packages with
+namespaces (normally) have the package namespace as their environment.
+
+@node Argument matching, Argument evaluation, Evaluation environment, Evaluation
+@subsection Argument matching
+
+The first thing that occurs in a
+@cindex function
+function evaluation is the matching of
+formal to the actual or supplied arguments.
+This is done by a three-pass process:
+
+@enumerate
+
+@item @strong{Exact matching on tags}.
+@cindex name
+For each named supplied argument the list of formal arguments is
+searched for an item whose name matches exactly.  It is an error to have
+the same formal argument match several actuals or vice versa.
+
+@item @strong{Partial matching on tags}.
+Each remaining named supplied argument is compared to the remaining formal
+arguments using partial matching.  If the name of the supplied argument
+matches exactly with the first part of a formal argument then the two
+arguments are considered to be matched.  It is an error to have multiple
+partial matches.  Notice that if @code{f <- function(fumble,
+fooey) fbody}, then @code{f(f = 1, fo = 2)} is illegal, even though the
+2nd actual argument only matches @code{fooey}.  @code{f(f = 1, fooey =
+2)} @emph{is} legal though since the second argument matches exactly and
+is removed from consideration for partial matching.  If the formal
+arguments contain @samp{...} then partial matching is only applied to
+arguments that precede it.
+
+@item @strong{Positional matching}.
+Any unmatched formal arguments are bound to @emph{unnamed} supplied
+arguments, in order.  If there is a @samp{...} argument, it will take up
+the remaining arguments, tagged or not.
+
+@end enumerate
+
+If any arguments remain unmatched an error is declared.
+
+Argument matching is augmented by the functions @code{match.arg},
+@code{match.call} and @code{match.fun}.
+@findex match.arg
+@findex match.call
+@findex match.fun
+Access to the partial matching algorithm used by @R{} is via
+@code{pmatch}.
+
+@node Argument evaluation, Scope, Argument matching, Evaluation
+@subsection Argument evaluation
+
+One of the most important things to know about the
+@cindex evaluation, argument
+evaluation of
+arguments to a
+@cindex function
+function is that supplied arguments and default arguments
+are treated differently.  The supplied arguments to a function are
+evaluated in the evaluation frame of the calling function.  The default
+arguments to a function are evaluated in the evaluation frame of the
+function.
+
+The semantics of invoking a function in @R{} argument are
+@emph{call-by-value}.  In general, supplied arguments behave as if they
+are local variables initialized with the value supplied and the
+@cindex name
+name of
+the corresponding formal argument.  Changing the value of a supplied
+argument within a function will not affect the value of the variable in
+the calling frame.
+
+@R{} has a form of lazy evaluation of function arguments.  Arguments are
+not evaluated until needed.  It is important to realize that in some
+cases the argument will never be evaluated.  Thus, it is bad style to
+use arguments to functions to cause side-effects.  While in @C{} it is
+common to use the form, @code{foo(x = y)} to invoke @code{foo} with the
+value of @code{y} and simultaneously to assign the value of @code{y} to
+@code{x} this same style should not be used in @R{}. There is no
+guarantee that the argument will ever be evaluated and hence the
+@cindex assignment
+assignment may not take place.
+
+It is also worth noting that the effect of @code{foo(x <- y)} if the
+argument is evaluated is to change the value of @code{x} in the calling
+@cindex environment
+environment and not in the 
+@cindex environment, evaluation
+evaluation environment of @code{foo}.
+
+It is possible to access the actual (not default) expressions used as
+arguments inside the function.  The mechanism is implemented via
+promises.  When a
+@cindex function
+function is being evaluated the actual expression used as an argument is
+stored in the promise together with a pointer to the environment the
+function was called from.  When (if) the argument is evaluated the
+stored expression is evaluated in the environment that the function was
+called from.  Since only a pointer to the environment is used any
+changes made to that environment will be in effect during this
+evaluation.  The resulting value is then also stored in a separate spot
+in the promise.  Subsequent evaluations retrieve this stored value (a
+second evaluation is not carried out).  Access to the unevaluated
+expression is also available using @code{substitute}.
+@c Because @R{} is a very
+@c flexible program it is possible to encounter promises in the interpreted
+@c language, however, users are advised not to rely on them in their own
+@c programs.
+
+When a
+@cindex function
+function is called, each formal argument is assigned a promise in the
+local environment of the call with the expression slot containing the
+actual argument (if it exists) and the environment slot containing the
+environment of the caller.  If no actual argument for a formal argument
+is given in the call and there is a default expression, it is similarly
+assigned to the expression slot of the formal argument, but with the
+@cindex environment
+environment set
+to the local environment.
+
+The process of filling the value slot of a promise by
+@cindex evaluation
+evaluating the
+contents of the expression slot in the promises environment is called
+@emph{forcing} the promise.  A promise will only be forced once, the
+value slot content being used directly later on.
+
+A promise is forced when its value is needed.  This usually happens
+inside internal
+@cindex function
+@cindex function, internal
+functions, but a promise can also be forced by direct evaluation of the
+promise itself.  This is occasionally useful when a default expression
+depends on the value of another formal argument or other variable in the
+local environment.  This is seen in the following example where the lone
+@code{label} ensures that the label is based on the value of @code{x}
+before it is changed in the next line.
+
+@example
+function(x, label = deparse(x)) @{
+    label
+    x <- x + 1
+    print(label)
+@}
+@end example
+
+The expression slot of a promise can itself involve other promises.
+This happens whenever an unevaluated argument is passed as an argument
+to another function.  When forcing a promise, other promises in its
+expression will also be forced recursively as they are evaluated.
+
+@node Scope,  , Argument evaluation, Evaluation
+@subsection Scope
+
+@cindex scope
+Scope or the scoping rules are simply the set of rules used by the
+@cindex evaluation, symbol
+evaluator to find a value for a
+@cindex symbol
+symbol.  Every computer language has a
+set of such rules.  In @R{} the rules are fairly simple but there do
+exist mechanisms for subverting the usual, or default rules.
+
+@R{} adheres to a set of rules that are called @emph{lexical scope}.
+This means the variable
+@cindex binding
+bindings in effect at the time the expression
+was created are used to provide values for any unbound symbols in the
+expression.
+
+Most of the interesting properties of
+@cindex scope
+scope are involved with evaluating
+@cindex function
+functions and we concentrate on this issue.  A symbol can be either
+@cindex binding
+bound or unbound.  All of the formal arguments to a function provide
+bound symbols in the body of the function.  Any other symbols in the
+body of the function are either local variables or unbound variables.  A
+local variable is one that is defined within the function.  Because @R{}
+has no formal definition of variables, they are simply used as needed,
+it can be difficult to determine whether a variable is local or not.
+Local variables must first be defined, this is typically done by having
+them on the left-hand side of an
+@cindex assignment
+assignment.
+
+During the evaluation process if an unbound symbol is detected then @R{}
+attempts to find a value for it.  The scoping rules determine how this
+process proceeds.  In @R{} the
+@cindex environment
+environment of the function is searched
+first, then its enclosure and so on until the global environment is reached.
+
+The global environment heads a search list of environments that are searched
+sequentially for a matching symbol.  The value of the first match is then used.
+
+When this set of rules is combined with the fact that
+@cindex function
+functions can be
+returned as values from other functions then some rather nice, but at
+first glance peculiar, properties obtain.
+
+A simple example,
+
+@example
+f <- function(x) @{
+    y <- 10
+    g <- function(x) x + y
+    return(g)
+@}
+h <- f()
+h(3)
+@end example
+
+@cindex evaluation
+A rather interesting question is what happens when @code{h} is
+evaluated.  To describe this we need a bit more notation.  Within a
+@cindex function
+function body variables can be bound, local or unbound.  The bound
+variables are those that match the formal arguments to the function.
+The local variables are those that were created or defined within the
+function body.  The unbound variables are those that are neither local
+or bound.  When a function body is evaluated there is no problem
+determining values for local variables or for bound variables.  Scoping
+rules determine how the language will find values for the unbound
+variables.
+
+When @code{h(3)} is evaluated we see that its body is that of @code{g}.
+Within that body @code{x} and @code{y} are unbound.  In a language with
+@cindex scope
+lexical scope @code{x} will be associated with the value 3 and @code{y}
+with the value 10 so @code{h()} should return the value 13.  In @R{}
+this is indeed what happens.
+
+In @Sl{}, because of the different scoping rules one will get an error
+indicating that @code{y} is not found, unless there is a variable
+@code{y} in your workspace in which case its value will be used.
+
+@c This is not correct!
+@c The scoping rules in @Sl{} are to look in the current frame and then in
+@c the global
+@c @cindex environment
+@c environment or workspace.  These rules are very similar to
+@c the scoping rules used in the @code{C} language.
+
+@c @node Closures,  , Evaluation, Functions
+@c section Closures
+
+@c A @emph{closure} is a
+@c @cindex function
+@c function together with an environment that
+@c provides bindings for any free variables in the closure.  Since many
+@c @R{} functions are bound to environments they are often referred to as
+@c closures.
+
+@c FIXME dot-dot-dot semantics definitely needs somewhere to go
+
+@c  @node Miscellanea,  , Closures, Functions
+@c  @section Miscellanea
+
+@c  - g(...), ..1,
+
+@c  - Recall()
+
+@node Object-oriented programming, Computing on the language, Functions, Top
+@chapter Object-oriented programming
+
+@cindex object-oriented
+Object-oriented programming is a style of programming that has become
+popular in recent years.  Much of the popularity comes from the fact
+that it makes it easier to write and maintain complicated systems.  It
+does this through several different mechanisms.
+
+Central to any object-oriented language are the concepts of class and of
+methods.  A @emph{class} is a definition of an object.  Typically a
+class contains several @emph{slots} that are used to hold class-specific
+information.  An object in the language must be an instance of some
+class.  Programming is based on objects or instances of classes.
+
+Computations are carried out via @emph{methods}.  Methods are basically
+@cindex function
+functions that are specialized to carry out specific calculations on
+objects, usually of a specific class.  This is what makes the language
+object oriented.  In @R{}, @emph{generic functions} are used to
+determine the appropriate method.  The generic function is responsible
+for determining the class of its argument(s) and uses that information
+to select the appropriate method.
+
+Another feature of most object-oriented languages is the concept of
+inheritance.  In most programming problems there are usually many
+objects that are related to one another.  The programming is
+considerably simplified if some components can be reused.
+
+If a class inherits from another class then generally it gets all the
+slots in the parent class and can extend it by adding new slots.  On
+method dispatching (via the generic functions) if a method for the class
+does not exist then a method for the parent is sought.
+
+In this chapter we discuss how this general strategy has been
+implemented in @R{} and discuss some of the limitations within the
+current design.  One of the advantages that most object systems impart
+is greater consistency.  This is achieved via the rules that are checked
+by the compiler or interpretor.  Unfortunately because of the way that
+the object system is incorporated into @R{} this advantage does not
+obtain.  Users are cautioned to use the object system in a
+straightforward manner.  While it is possible to perform some rather
+interesting feats these tend to lead to obfuscated code and may depend
+on implementation details that will not be carried forward.
+
+The greatest use of object oriented programming in @R{} is through
+@code{print} methods, @code{summary} methods and @code{plot} methods.
+These methods allow us to have one generic
+@cindex function, generic
+function call, @code{plot}
+say, that dispatches on the type of its argument and calls a plotting
+function that is specific to the data supplied.
+
+In order to make the concepts clear we will consider the implementation
+of a small system designed to teach students about probability.  In this
+system the objects are probability functions and the methods we will
+consider are methods for finding moments and for plotting.
+Probabilities can always be represented in terms of the cumulative
+distribution function but can often be represented in other ways.  For
+example as a density, when it exists or as a moment generating function
+when it exists.
+
+@c FIXME
+@c This example needs help.  MGFs are not used at all, and neither are
+@c the generic functions.  Also, note that the terminology `pdf' and
+@c `cdf' may be confusing given the S use of `density' and `probability'
+@c functions.
+@c
+@c  So we can begin by considering a system with three classes,
+@c  @code{"cdf"}, @code{"pdf"} and @code{"mgf"} and three generic functions,
+@c  @code{print}, @code{plot}, and @code{moment}.  Each of the classes can
+@c  be extended in numerous ways; for example we might want a parametric
+@c  representation for some of the more common distributions.
+@c </FIXME>
+
+@menu
+* Definition::                  
+* Inheritance::                 
+* Method dispatching::          
+* UseMethod::                   
+* NextMethod::                  
+* Group methods::               
+* Writing methods::             
+@end menu
+
+@node Definition, Inheritance, Object-oriented programming, Object-oriented programming
+@section Definition
+
+Rather than having a full-fledged
+@cindex object-oriented
+object-oriented system @R{} has a
+class system and a mechanism for dispatching based on the class of an
+object.  The dispatch mechanism for interpreted code relies on four
+special objects that are stored in the evaluation frame.  These special
+objects are @code{.Generic}, @code{.Class}, @code{.Method} and
+@code{.Group}.  There is a separate dispatch mechanism used for internal
+functions and types that will be discussed elsewhere.
+
+The class system is facilitated through the @code{class} attribute.
+This attribute is a list of class names.  So to create an object of
+class @code{"foo"} one simply attaches a class attribute with the string
+@samp{"foo"} in it.  Thus, virtually anything can be turned in to an
+object of class @code{"foo"}.
+
+The object system makes use of
+@cindex function, generic
+@emph{generic functions} via two
+dispatching functions, @code{UseMethod} and @code{NextMethod}.  The
+typical use of the object system is to begin by calling a generic
+function.  This is typically a function is very simple and consists of a
+single line of code.  The system function @code{mean} is just such a
+function,
+
+@example
+> mean
+function (x, ...)
+UseMethod("mean")
+@end example
+
+When @code{mean} is called it can have any number of arguments but its
+first argument is special and the class of that first argument is used
+to determine which method should be called.  The variable @code{.Class}
+is set to the class attribute of @code{x}, @code{.Generic} is set to the
+string @code{"mean"} and a search is made for the correct method to
+invoke.  The class attributes of any other arguments to @code{mean} are
+ignored.
+
+Suppose that @code{x} had a class attribute that contained @code{"foo"}
+and @code{"bar"}, in that order.  Then @R{} would first search for a
+function called @code{mean.foo} and if it did not find one it would then
+search for a function @code{mean.bar} and if that search was also
+unsuccessful then a final search for @code{mean.default} would be made.
+If the last search is unsuccessful @R{} reports an error.  It is a good
+idea to always write a default method.  Note that the functions
+@code{mean.foo} etc.@: are referred to, in this context, as methods.
+
+@code{NextMethod} provides another mechanism for dispatching.  A
+@cindex function
+function may have a call to @code{NextMethod} anywhere in it.  The
+determination of which method should then be invoked is based primarily
+on the current values of @code{.Class} and @code{.Generic}.  This is
+somewhat problematic since the method is really an ordinary function and
+users may call it directly.  If they do so then there will be no values
+for @code{.Generic} or @code{.Class}.
+
+If a method is invoked directly and it contains a call to
+@code{NextMethod} then the first argument to @code{NextMethod} is used
+to determine the
+@cindex function, generic
+generic function.  An error is signalled if this
+argument has not been supplied; it is therefore a good idea to always
+supply this argument.
+
+In the case that a method is invoked directly the class attribute of the
+first argument to the method is used as the value of @code{.Class}.
+
+Methods themselves employ @code{NextMethod} to provide a form of
+inheritance.  Commonly a specific method performs a few operations to
+set up the data and then it calls the next appropriate method through a
+call to @code{NextMethod}.
+
+@c FIXME
+@c See also further above.
+@c We say that CDFs have three slots (perhaps should not used that
+@c terminology), but in the example we simply add a class attribute to a
+@c function, so where are the range and parameters?
+@c
+@c  Now let's consider the distribution function example.  We will assume
+@c  that all objects of class @code{"cdf"} have three slots.  They will have
+@c  a @emph{range} slot that specifies the range or support of the
+@c  distribution, a @emph{parameters} slot that contains a tagged list of
+@c  the parameters and finally a @emph{fun} slot that contains the actual
+@c  cdf.  The @code{"pdf"} class will have the same three slots, however the
+@c  function will be different.
+
+@c  Suppose that we have the unit Exponential distribution.  The following
+@c  code segment defines objects of class @code{"cdf"} and @code{"pdf"} that
+@c  represent the cdf and pdf or the unit Exponential.
+
+@c  @example
+@c  > ucexp <- function(x) 1 - exp(-x)
+@c  > class(ucexp) <- "cdf"
+@c  > udexp <- function(x) exp(-x)
+@c  > class(udexp) <- "pdf"
+@c  @end example
+
+@c  @noindent
+@c  Note that the corresponding classes have no slots and that there was
+@c  nothing, apart from common sense, that prevented us from making
+@c  @code{udexp} have class @code{"cdf"}.
+@c </FIXME>
+
+Consider the following simple example.  A point in two-dimensional
+Euclidean space can be specified by its Cartesian (x-y) or polar
+(r-theta) coordinates.  Hence, to store information about the location
+of the point, we could define two classes, @code{"xypoint"} and
+@code{"rthetapoint"}.  All the `xypoint' data structures are lists with
+an x-component and a y-component.  All `rthetapoint' objects are lists
+with an r-component and a theta-component.
+
+Now, suppose we want to get the x-position from either type of object.
+This can easily be achieved through
+@cindex function, generic
+generic functions.  We define the
+generic function @code{xpos} as follows.
+
+@example
+xpos <- function(x, ...)
+    UseMethod("xpos")
+@end example
+
+@noindent
+Now we can define methods:
+
+@example
+xpos.xypoint <- function(x) x$x
+xpos.rthetapoint <- function(x) x$r * cos(x$theta)
+@end example
+
+The user simply calls the function @code{xpos} with either
+representation as the argument.  The internal dispatching method finds
+the class of the object and calls the appropriate methods.
+
+It is pretty easy to add other representations.  One need not write a
+new generic function only the methods.  This makes it easy to add to
+existing systems since the user is only responsible for dealing with the
+new representation and not with any of the existing representations.
+
+The bulk of the uses of this methodology are to provided specialized
+printing for objects of different types; there are about 40 methods for
+@code{print}.
+
+@node Inheritance, Method dispatching, Definition, Object-oriented programming
+@section Inheritance
+
+@cindex evaluation
+The class attribute of an object can have several elements.  When a
+@cindex function, generic
+generic function is called the first inheritance is mainly handled
+through @code{NextMethod}.  @code{NextMethod} determines the method
+currently being evaluated, finds the next class from th
+
+FIXME: something is missing here
+
+@node Method dispatching, UseMethod, Inheritance, Object-oriented programming
+@section Method dispatching
+
+@cindex function, generic
+Generic functions should consist of a single statement.  They should
+always be of the form @code{foo <- function(x, ...) UseMethod("foo",
+x)}.  The semantics of @code{UseMethod} are an appropriate method is
+determined and then that method is invoked with the same arguments, in
+the same order as the call to the generic as if the call had been made
+directly to the method.
+
+In order to determine the correct method the class attribute of the
+first argument to the generic is obtained and used to find the correct
+method.  The
+@cindex name
+name of the generic function is combined with the first element of the
+class attribute into the form, @code{@var{generic}.@var{class}} and a
+function with that name is sought.  If the function is found then it is
+used.  If no such function is found then the second element of the class
+attribute is used, and so on until all the elements of the class
+attribute have been exhausted.  If no method has been found at that
+point then the method @code{@var{generic}.@var{default}} is used.  If
+the first argument to the generic function has no class attribute then
+@code{@var{generic}.@var{default}} is used.  Since the introduction of
+namespaces the methods may not be accessible by their names
+(i.e. @code{get("@var{generic}.@var{class}")} may fail), but they will
+be accessible by @code{getS3method("@var{generic}","@var{class}")}.
+
+@cindex object
+Any object can have a @code{class} attribute.  This attribute can have
+any number of elements.  Each of these is a string that defines a class.
+When a generic function is invoked the class of its first argument is
+examined.
+
+@node UseMethod, NextMethod, Method dispatching, Object-oriented programming
+@section UseMethod
+@findex UseMethod
+
+@code{UseMethod} is a special function and it behaves differently from
+other function calls.  The syntax of a call to it is
+@code{UseMethod(@var{generic}, @var{object})}, where @var{generic} is
+the name of the generic function, @var{object} is the object used to
+determine which method should be chosen.  @code{UseMethod} can only be
+called from inside a function.  The @Sl{} definition of @code{UseMethod}
+contains an additional argument of @samp{...} that can affect the
+default values for subsequent methods.  @R{} produces a warning if there
+are more than two arguments to @code{UseMethod} and ignores these
+additional arguments.
+
+@cindex evaluation
+@code{UseMethod} changes the evaluation model in two ways.  First, when
+it is invoked it determines the next method (function) to be called.  It
+then invokes that function using the current evaluation
+@cindex environment
+environment;
+this process will be described shortly.  The second way in which
+@code{UseMethod} changes the evaluation environment is that it does not
+return control to the calling function.  This means, that any statements
+after a call to @code{UseMethod} are guaranteed not to be executed.
+
+When @code{UseMethod} is invoked the generic function is the specified
+value in the call to @code{UseMethod}.  The object to dispatch on is
+either the supplied second argument or the first argument to the current
+function.  The class of the argument is determined and the first element
+of it is combined with the name of the generic to determine the
+appropriate method.  So, if the generic had name @code{foo} and the
+class of the object is @code{"bar"}, then @R{} will search for a method
+named @code{foo.bar}.  If no such method exists then the inheritance
+mechanism described above is used to locate an appropriate method.
+
+Once a method has been determined @R{} invokes it in a special way.
+Rather than creating a new evaluation
+@cindex environment
+environment @R{} uses the
+environment of the current function call (the call to the generic).  Any
+@cindex assignment
+assignments or evaluations that were made before the call to
+@code{UseMethod} will be in effect.  The arguments that were used in the
+call to the generic are rematched to the formal arguments of the
+selected method.
+
+When the method is invoked it is called with arguments that are the same
+in number and have the same names as in the call to the generic.  They
+are matched to the arguments of the method according to the standard
+@R{} rules for argument matching.  However the object, i.e.@: the first
+argument has been evaluated.
+
+The call to @code{UseMethod} has the effect of placing some special
+objects in the evaluation frame.  They are @code{.Class},
+@code{.Generic} and @code{.Method}.  These special objects are used to
+by @R{} to handle the method dispatch and inheritance.  @code{.Class} is
+the class of the object, @code{.Generic} is the name of the generic
+function and @code{.Method} is the name of the method currently being
+invoked.  If the method was invoked through one of the internal
+interfaces then there may also be an object called @code{.Group}.  This
+will be described in Section @ref{Group methods}.  After the initial
+call to @code{UseMethod} these special variables, not the object itself,
+control the selection of subsequent methods.
+
+The body of the method is then evaluated in the standard fashion.  In
+particular variable look-up in the body follows the rules for the
+method.  So if the method has an associated environment then that is
+used.  In effect we have replaced the call to the generic by a call to
+the method.  Any local
+@cindex assignment
+assignments in the frame of the generic will be
+carried forward into the call to the method.  Use of this @emph{feature}
+is discouraged.  It is important to realize that control will never
+return to the generic and hence any expressions after a call to
+@code{UseMethod} will never be executed.
+
+Any arguments to the generic that were evaluated prior to the call to
+@code{UseMethod} remain evaluated.
+
+The arguments in the call to the generic are rematched with the
+arguments for the method using the standard argument matching mechanism.
+The first argument, i.e.@: the object, will have been evaluated.
+
+If the first argument to @code{UseMethod} is not supplied it is assumed
+to be the name of the current function.  If two arguments are supplied
+to @code{UseMethod} then the first is the name of the method and the
+second is assumed to be the object that will be dispatched on.  It is
+evaluated so that the required method can be determined.  In this case
+the first argument in the call to the generic is not evaluated and is
+discarded.  There is no way to change the other arguments in the call to
+the method these remain as they were in the call to the generic.  This
+is in contrast to @code{NextMethod} where the arguments in the call to
+the next method can be altered.
+
+@node NextMethod, Group methods, UseMethod, Object-oriented programming
+@section NextMethod
+@findex NextMethod
+
+@code{NextMethod} is used to provide a simple inheritance mechanism.
+
+Methods invoked as a result of a call to @code{NextMethod} behave as if
+they had been invoked from the previous method.  The arguments to the
+inherited method are in the same order and have the same names as the
+call to the current method.  This means that they are the same as for
+the call to the generic.  However, the expressions for the arguments are
+the names of the corresponding formal arguments of the current method.
+Thus the arguments will have values that correspond to their value at
+the time NextMethod was invoked.
+
+Unevaluated arguments remain unevaluated.  Missing arguments remain
+missing.
+
+The syntax for a call to @code{NextMethod} is @code{NextMethod(generic,
+object, ...)}.  If the @code{generic} is not supplied the value of
+@code{.Generic} is used.  If the @code{object} is not supplied the first
+argument in the call to the current method is used.  Values in the
+@samp{...} argument are used to modify the arguments of the next method.
+
+It is important to realize that the choice of the next method depends on
+the current values of @code{.Generic} and @code{.Class} and not on the
+object.  So changing the object in a call to @code{NextMethod} affects
+the arguments received by the next method but does not affect the choice
+of the next method.
+
+Methods can be called directly.  If they are then there will be no
+@code{.Generic}, @code{.Class} or @code{.Method}.  In this case the
+@code{generic} argument of @code{NextMethod} must be specified.  The
+value of @code{.Class} is taken to be the class attribute of the object
+which is the first argument to the current function.  The value of
+@code{.Method} is the name of the current function.  These choices for
+default values ensure that the behaviour of a method doesn't change
+depending on whether it is called directly or via a call to a generic.
+
+@c FIXME
+
+An issue for discussion is the behaviour of the @samp{...} argument to
+@code{NextMethod}.  The White Book describes the behaviour as follows:
+
+@cindex name
+- named arguments replace the corresponding arguments in the call to
+  the current method.  Unnamed arguments go at the start of the argument
+  list.
+
+What I would like to do is:
+
+-first do the argument matching for NextMethod;
+  -if the object or generic are changed fine
+  -first if a named list element matches an argument (named or not) the
+  list value replaces the argument value.
+  - the first unnamed list element
+
+Values for lookup:
+ Class: comes first from .Class, second from the first argument to the
+ method and last from the object specified in the call to NextMethod
+
+ Generic: comes first from .Generic, if nothing then from the first
+ argument to the method and if it's still missing from the call to
+ NextMethod
+
+ Method: this should just be the current function name.
+
+@c   I don't know
+@c   what its used for but I don't currently think it's involved in the
+@c   dispatch.
+
+@c  @node Implicit dispatching, Group methods, NextMethod, Object-oriented programming
+@c  @section Implicit dispatching
+
+@c  What is implicit dispatching????
+
+@node Group methods, Writing methods, NextMethod, Object-oriented programming
+@section Group methods
+
+For several types of
+@cindex function, internal
+internal functions @R{} provides a dispatching
+mechanism for operators.  This means that operators such as @code{==} or
+@code{<} can have their behaviour modified for members of special
+classes.  The functions and operators have been grouped into three
+categories and group methods can be written for each of these
+categories.  There is currently no mechanism to add groups.  It is
+possible to write methods specific to any function within a group.
+
+The following table lists the functions for the different Groups.
+
+@table @samp
+@item Math
+abs, acos, acosh, asin, asinh, atan, atanh, ceiling, cos, cosh, cumsum,
+exp, floor, gamma, lgamma, log, log10, round, signif, sin, sinh, tan,
+tanh, trunc
+
+@item Summary
+all, any, max, min, prod, range, sum
+
+@item Ops
+@code{+}, @code{-}, @code{*}, @code{/}, @code{^}, @code{<} , @code{>},
+@code{<=}, @code{>=}, @code{!=}, @code{==}, @code{%%}, @code{%/%},
+@code{&}, @code{|}, @code{!}
+@end table
+
+For operators in the Ops group a special method is invoked if the two
+operands taken together suggest a single method.  Specifically, if both
+operands correspond to the same method or if one operand corresponds to
+a method that takes precedence over that of the other operand.  If they
+do not suggest a single method then the default method is used.  Either
+a group method or a class method dominates if the other operand has no
+corresponding method.  A class method dominates a group method.
+
+When the group is Ops the special variable @code{.Method} is a string
+vector with two elements.  The elements of @code{.Method} are set to the
+name of the method if the corresponding argument is a member of the
+class that was used to determine the method.  Otherwise the
+corresponding element of @code{.Method} is set to the zero length
+string, @code{""}.
+
+@node Writing methods,  , Group methods, Object-oriented programming
+@section Writing methods
+
+Users can easily write their own methods and generic functions.  A
+@cindex function, generic
+generic function is simply a function with a call to @code{UseMethod}.
+A method is simply a function that has been invoked via method dispatch.
+This can be as a result of a call to either @code{UseMethod} or
+@code{NextMethod}.
+
+It is worth remembering that methods can be called directly.  That means
+that they can be entered without a call to @code{UseMethod} having been
+made and hence the special variables @code{.Generic}, @code{.Class} and
+@code{.Method} will not have been instantiated.  In that case the
+default rules detailed above will be used to determine these.
+
+The most common use of
+@cindex function, generic
+generic functions is to provide @code{print} and
+@code{summary} methods for statistical objects, generally the output of
+some model fitting process.  To do this, each model attaches a class
+attribute to its output and then provides a special method that takes
+that output and provides a nice readable version of it.  The user then
+needs only remember that @code{print} or @code{summary} will provide
+nice output for the results of any analysis.
+
+@c  @node Modeling functions, Graphics model, Object-oriented programming, Top
+@c  @chapter Modeling functions
+
+@c  @node Graphics model, Computing on the language, Modeling functions, Top
+@c  @chapter Graphics model
+
+@c  @menu
+@c  * Math expressions in text::
+@c  @end menu
+
+@c  @node Math expressions in text,  , Graphics model, Graphics model
+@c  @section Math expressions in text
+
+@node Computing on the language, System and foreign language interfaces, Object-oriented programming, Top
+@chapter Computing on the language
+
+@R{} belongs to a class of programming languages in which subroutines
+have the ability to modify or construct other subroutines and evaluate
+the result as an integral part of the language itself.  This is similar
+to Lisp and Scheme and other languages of the ``functional programming''
+variety, but in contrast to FORTRAN and the ALGOL family.  The Lisp
+family takes this feature to the extreme by the ``everything is a list''
+paradigm in which there is no distinction between programs and data.
+
+@R{} presents a friendlier interface to programming than Lisp does, at
+least to someone used to mathematical formulas and C-like control
+structures, but the engine is really very Lisp-like.  @R{} allows direct
+access to
+@cindex parsing
+parsed expressions and functions and allows you to alter and
+subsequently execute them, or create entirely new functions from
+scratch.
+
+There is a number of standard applications of this facility, such as
+calculation of analytical derivatives of expressions, or the generation
+of polynomial functions from a vector of coefficients.  However, there
+are also uses that are much more fundamental to the workings of the
+interpreted part of @R{}.  Some of these are essential to the reuse of
+functions as components in other functions, as the (admittedly not very
+pretty) calls to @code{model.frame} that are constructed in several
+modeling and plotting routines.  Other uses simply allow elegant
+interfaces to useful functionality.  As an example, consider the
+@code{curve} function, which allows you to draw the graph of a function
+given as an expression like @code{sin(x)} or the facilities for plotting
+mathematical expressions.
+
+In this chapter, we give an introduction to the set of facilities that
+are available for computing on the language.
+
+@menu
+* Direct manipulation of language objects::  
+* Substitutions::               
+* More on evaluation::          
+* Evaluation of expression objects::  
+* Manipulation of function calls::  
+* Manipulation of functions::   
+@end menu
+
+@node Direct manipulation of language objects, Substitutions, Computing on the language, Computing on the language
+@section Direct manipulation of language objects
+
+There are three kinds of language objects that are available for
+modification, calls, expressions, and functions.  At this point, we
+shall concentrate on the call objects.  These are sometimes referred to
+as ``unevaluated expressions'', although this terminology is somewhat
+confusing.  The most direct method of obtaining a call object is to use
+@code{quote} with an expression argument, e.g.,
+
+@example
+> e1 <- quote(2 + 2)
+> e2 <- quote(plot(x, y))
+@end example
+
+The arguments are not evaluated, the result is simply the parsed
+argument.  The objects @code{e1} and @code{e2} may be evaluated later
+using @code{eval}, or simply manipulated as data.  It is perhaps most
+immediately obvious why the @code{e2} object has mode @code{"call"},
+since it involves a call to the @code{plot} function with some
+arguments.  However, @code{e1} actually has exactly the same structure
+as a call to the binary operator @code{+} with two arguments, a fact
+that gets clearly displayed by the following
+
+@example
+> quote("+"(2, 2))
+2 + 2
+@end example
+
+The components of a call object are accessed using a list-like syntax,
+and may in fact be converted to and from lists using @code{as.list} and
+@code{as.call}
+@c FIXME man page for as.call says that this doesn't work, but it
+@c does...
+
+@example
+> e2[[1]]
+plot
+> e2[[2]]
+x
+> e2[[3]]
+y
+@end example
+
+When keyword argument matching is used, the keywords can be used as list
+tags:
+
+@example
+> e3 <- quote(plot(x = age, y = weight))
+> e3$x
+age
+> e3$y
+weight
+@end example
+
+All the components of the call object have mode @code{"name"} in the
+preceding examples.  This is true for identifiers in calls, but the
+components of a call can also be constants---which can be of any type,
+although the first component had better be a function if the call is to
+be evaluated successfully---or other call objects, corresponding to
+subexpressions.  Objects of mode
+@cindex name
+name can be constructed from character
+strings using @code{as.name}, so one might modify the @code{e2} object
+as follows
+
+@example
+> e2[[1]] <- as.name("+")
+> e2
+x + y
+@end example
+
+To illustrate the fact that subexpressions are simply components that
+are themselves calls, consider
+
+@example
+> e1[[2]] <- e2
+> e1
+x + y + 2
+@end example
+
+
+All grouping parentheses in input are preserved in parsed expressions.
+They are represented as a function call with one argument, so that
+@code{4 - (2 - 2)} becomes @code{"-"(4, "(" ("-"(2, 2)))} in prefix
+notation.  In evaluations, the @samp{(} operator just returns its
+argument.
+
+This is a bit unfortunate, but it is not easy to write a
+@cindex parsing
+parser/deparser
+combination that both preserves user input, stores it in minimal form
+and ensures that parsing a deparsed expression gives the same expression
+back.
+
+As it happens, @R{}'s parser is not perfectly invertible, nor is its
+deparser, as the following examples show
+
+@example
+> deparse(quote(c(1, 2)))
+[1] "c(1, 2)"
+> deparse(1:2)
+[1] "c(1, 2)"
+> quote("-"(2, 2))
+2 - 2
+> quote(2 - 2)
+2 - 2
+@end example
+
+@noindent
+Deparsed expressions should, however, evaluate to an equivalent value
+to the original expression (up to rounding error).
+
+...internal storage of flow control constructs...note Splus
+incompatibility...
+
+@node Substitutions, More on evaluation, Direct manipulation of language objects, Computing on the language
+@section Substitutions
+
+It is in fact not often that one wants to modify the innards of an
+expression like in the previous section.  More frequently, one wants to
+simply get at an expression in order to deparse it and use it for
+labeling plots, for instance.  An example of this is seen at the
+beginning of @code{plot.default}:
+@findex substitute
+
+@example
+xlabel <- if (!missing(x))
+    deparse(substitute(x))
+@end example
+
+@noindent
+This causes the variable or expression given as the @code{x} argument to
+@code{plot} to be used for labeling the x-axis later on.
+
+The function used to achieve this is @code{substitute} which takes the
+expression @code{x} and substitutes the expression that was passed
+through the formal argument @code{x}.  Notice that for this to happen,
+@code{x} must carry information about the expression that creates its
+value.  This is related to the
+@cindex evaluation, lazy
+lazy evaluation scheme of @R{}
+(@pxref{Promise objects}).  A formal argument is really a
+@emph{promise}, an object with three slots, one for the expression that
+defines it, one for the environment in which to evaluate that expression,
+and one for the value of that expression once evaluated. @code{substitute}
+will recognize a promise variable and substitute the value of its
+expression slot.  If @code{substitute} is invoked inside a function, the
+local variables of the function are also subject to substitution.
+
+The argument to @code{substitute} does not have to be a simple
+identifier, it can be an expression involving several variables and
+substitution will occur for each of these.  Also, @code{substitute} has
+an additional argument which can be an environment or a list in which
+the variables are looked up.  For example:
+
+@example
+> substitute(a + b, list(a = 1, b = quote(x)))
+1 + x
+@end example
+
+Notice that quoting was necessary to substitute the @code{x}.  This kind
+of construction comes in handy in connection with the facilities for
+putting math expression in graphs, as the following case shows
+
+@example
+> plot(0)
+> for (i in 1:4)
++   text(1, 0.2 * i,
++        substitute(x[ix] == y, list(ix = i, y = pnorm(i))))
+@end example
+
+It is important to realize that the substitutions are purely lexical;
+there is no checking that the resulting call objects make sense if they
+are evaluated.  @code{substitute(x <- x + 1, list(x = 2))} will happily
+return @code{2 <- 2 + 1}.  However, some parts of @R{} make up their own
+rules for what makes sense and what does not and might actually have a
+use for such ill-formed expressions.  For example, using the ``math in
+graphs'' feature often involves constructions that are syntactically
+correct, but which would be meaningless to evaluate, like
+@samp{@{@}>=40*" years"}.
+
+Substitute will not evaluate its first argument.  This leads to the
+puzzle of how to do substitutions on an object that is contained in a
+variable.  The solution is to use @code{substitute} once more, like this
+
+@example
+> expr <- quote(x + y)
+> substitute(substitute(e, list(x = 3)), list(e = expr))
+substitute(x + y, list(x = 3))
+> eval(substitute(substitute(e, list(x = 3)), list(e = expr)))
+3 + y
+@end example
+
+The exact rules for substitutions are as follows:  Each
+@cindex symbol
+symbol in the
+@cindex parsing
+parse tree for the first is matched against the second argument, which
+can be a tagged list or an environment frame.  If it is a simple local
+object, its value is inserted, @emph{except} if matching against the
+global environment.  If it is a promise (usually a function argument),
+the promise expression is substituted.  If the symbol is not matched, it
+is left untouched.  The special exception for substituting at the top
+level is admittedly peculiar.  It has been inherited from @Sl{} and the
+rationale is most likely that there is no control over which variables
+might be bound at that level so that it would be better to just make
+substitute act as @code{quote}.
+
+The rule of promise substitution is slightly different from that of
+@Sl{} if the local variable is modified before @code{substitute} is
+used.  @R{} will then use the new value of the variable, whereas @Sl{}
+will unconditionally use the argument expression---unless it was a
+constant, which has the curious consequence that @code{f((1))} may be
+very different from @code{f(1)} in @Sl{}.  The @R{} rule is considerably
+cleaner, although it does have consequences in connection with
+@cindex evaluation, lazy
+lazy
+evaluation that comes as a surprise to some.  Consider
+
+@example
+logplot <- function(y, ylab = deparse(substitute(y))) @{
+    y <- log(y)
+    plot(y, ylab = ylab)
+@}
+@end example
+
+This looks straightforward, but one will discover that the y label
+becomes an ugly @code{c(...)} expression.  It happens because the rules
+of lazy evaluation causes the evaluation of the @code{ylab} expression
+to happen @emph{after} @code{y} has been modified.  The solution is to
+force @code{ylab} to be evaluated first, i.e.,
+
+@example
+logplot <- function(y, ylab = deparse(substitute(y))) @{
+    ylab
+    y <- log(y)
+    plot(y, ylab = ylab)
+@}
+@end example
+
+Notice that one should not use @code{eval(ylab)} in this situation.  If
+@code{ylab} is a language or expression object, then that would cause
+the object to be evaluated as well, which would not at all be desirable
+if a math expression like @code{quote(log[e](y))} was being passed.
+
+
+A variant on @code{substitute} is @code{bquote}, which is used to replace some subexpressions with their values.  The example from above
+@example
+> plot(0)
+> for (i in 1:4)
++   text(1, 0.2 * i,
++        substitute(x[ix] == y, list(ix = i, y = pnorm(i))))
+@end example
+could be written more compactly as
+@example
+plot(0)
+for(i in 1:4)
+   text(1, 0.2*i, bquote( x[.(i)] == .(pnorm(i)) ))
+@end example
+
+The expression is quoted except for the contents of @code{.()}
+subexpressions, which are replaced with their values. There is an
+optional argument to compute the values in a different
+environment. The syntax for @code{bquote} is borrowed from the LISP
+backquote macro.
+
+@node More on evaluation, Evaluation of expression objects, Substitutions, Computing on the language
+@section More on evaluation
+
+@cindex evaluation
+The @code{eval} function was introduced earlier in this chapter as a
+means of evaluating call objects.  However, this is not the full story.
+It is also possible to specify the
+@cindex environment
+environment in which the evaluation
+is to take place. By default this is the evaluation frame from which
+@code{eval} is called, but quite frequently it needs to be set to
+something else.
+@findex eval
+
+Very often, the relevant evaluation frame is that of the parent of the
+current frame (cf.@: ???).  In particular, when the object to evaluate
+is the result of a @code{substitute} operation of the function
+arguments, it will contain variables that make sense to the caller only
+(notice that there is no reason to expect that the variables of the
+caller are in the
+@cindex scope
+lexical scope of the callee).  Since evaluation in the
+parent frame occurs frequently, an @code{eval.parent} function exists as
+a shorthand for @code{eval(expr, sys.frame(sys.parent()))}.
+
+Another case that occurs frequently is evaluation in a list or a data
+frame.  For instance, this happens in connection with the
+@code{model.frame} function when a @code{data} argument is given.
+Generally, the terms of the model formula need to be evaluated in
+@code{data}, but they may occasionally also contain references to items
+in the caller of @code{model.frame}.  This is sometimes useful in
+connection with simulation studies.  So for this purpose one needs not
+only to evaluate an expression in a list, but also to specify an
+enclosure into which the search continues if the variable is not in the
+list.  Hence, the call has the form
+
+@example
+eval(expr, data, sys.frame(sys.parent()))
+@end example
+
+Notice that evaluation in a given environment may actually change that
+environment, most obviously in cases involving the
+@cindex assignment
+assignment operator,
+such as
+
+@example
+eval(quote(total <- 0), environment(robert$balance)) # @r{rob Rob}
+@end example
+
+@noindent
+This is also true when evaluating in lists, but the original list does
+not change because one is really working on a copy.
+
+
+@node Evaluation of expression objects, Manipulation of function calls, More on evaluation, Computing on the language
+@section Evaluation of expression objects
+
+Objects of mode @code{"expression"} are defined in @ref{Expression
+objects}.  They are very similar to lists of call objects.
+
+@example
+> ex <- expression(2 + 2, 3 + 4)
+> ex[[1]]
+2 + 2
+> ex[[2]]
+3 + 4
+> eval(ex)
+[1] 7
+@end example
+
+Notice that evaluating an expression object evaluates each call in turn,
+but the final value is that of the last call.  In this respect it
+behaves almost identically to the compound language object
+@code{quote(@{2 + 2; 3 + 4@})}.  However, there is a subtle difference:
+Call objects are indistinguishable from subexpressions in a parse tree.
+This means that they are automatically evaluated in the same way a
+subexpression would be.  Expression objects can be recognized during
+evaluation and in a sense retain their quotedness.  The evaluator will
+not evaluate an expression object recursively, only when it is passed
+directly to @code{eval} function as above.  The difference can be seen
+like this:
+
+@example
+> eval(substitute(mode(x), list(x = quote(2 + 2))))
+[1] "numeric"
+> eval(substitute(mode(x), list(x = expression(2 + 2))))
+[1] "expression"
+@end example
+
+The deparser represents an expression object by the call
+that creates it.  This is similar to the way it handles numerical
+vectors and several other objects that do not have a specific external
+representation.  However, it does lead to the following bit of
+confusion:
+
+@example
+> e <- quote(expression(2 + 2))
+> e
+expression(2 + 2)
+> mode(e)
+[1] "call"
+> ee <- expression(2 + 2)
+> ee
+expression(2 + 2)
+> mode(ee)
+[1] "expression"
+@end example
+
+@noindent
+I.e., @code{e} and @code{ee} look identical when printed, but one is a
+call that generates an expression object and the other is the object
+itself.
+
+@node Manipulation of function calls, Manipulation of functions, Evaluation of expression objects, Computing on the language
+@section Manipulation of function calls
+
+It is possible for a
+@cindex function
+function to find out how it has been called by
+looking at the result of @code{sys.call} as in the following example of
+a function that simply returns its own call:
+
+@example
+> f <- function(x, y, ...) sys.call()
+> f(y = 1, 2, z = 3, 4)
+f(y = 1, 2, z = 3, 4)
+@end example
+
+However, this is not really useful except for debugging because it
+requires the function to keep track of argument matching in order to
+interpret the call.  For instance, it must be able to see that the 2nd
+actual argument gets matched to the first formal one (@code{x} in the
+above example).
+
+More often one requires the call with all actual arguments bound to the
+corresponding formals.  To this end, the function @code{match.call} is
+used.  Here's a variant of the preceding example, a function that
+returns its own call with arguments matched
+
+@example
+> f <- function(x, y, ...) match.call()
+> f(y = 1, 2, z = 3, 4)
+f(x = 2, y = 1, z = 3, 4)
+@end example
+
+Notice that the second argument now gets matched to @code{x} and appears
+in the corresponding position in the result.
+
+The primary use of this technique is to call another function with the
+same arguments, possibly deleting some and adding others.  A typical
+application is seen at the start of the @code{lm} function:
+
+@example
+    mf <- cl <- match.call()
+    mf$singular.ok <- mf$model <- mf$method <- NULL
+    mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
+    mf$drop.unused.levels <- TRUE
+    mf[[1]] <- as.name("model.frame")
+    mf <- eval(mf, sys.frame(sys.parent()))
+@end example
+
+Notice that the resulting call is
+@cindex evaluation
+evaluated in the parent frame, in
+which one can be certain that the involved expressions make sense.  The
+call can be treated as a list object where the first element is the name
+of the function and the remaining elements are the actual argument
+expressions, with the corresponding formal argument names as tags.
+Thus, the technique to eliminate undesired arguments is to assign
+@code{NULL}, as seen in lines 2 and 3, and to add an argument one uses
+tagged list
+@cindex assignment
+assignment (here to pass @code{drop.unused.levels = TRUE})
+as in line 4.  To change the name of the function called, assign to the
+first element of the list and make sure that the value is a name, either
+using the @code{as.name("model.frame")} construction here or
+@code{quote(model.frame)}.
+
+The @code{match.call} function has an @code{expand.dots} argument which
+is a switch which if set to @code{FALSE} lets all @samp{...} arguments
+be collected as a single argument with the tag @samp{...}.
+@findex match.call
+
+@example
+> f <- function(x, y, ...) match.call(expand.dots = FALSE)
+> f(y = 1, 2, z = 3, 4)
+f(x = 2, y = 1, ... = list(z = 3, 4))
+@end example
+
+The @samp{...} argument is a list (a pairlist to be precise), not a call
+to @code{list} like it is in @Sl{}:
+
+@example
+> e1 <- f(y = 1, 2, z = 3, 4)$...
+> e1
+$z
+[1] 3
+
+[[2]]
+[1] 4
+@end example
+
+One reason for using this form of @code{match.call} is simply to get rid
+of any @samp{...} arguments in order not to be passing unspecified
+arguments on to functions that may not know them.  Here's an example
+paraphrased from @code{plot.formula}:
+
+@example
+m <- match.call(expand.dots = FALSE)
+m$... <- NULL
+m[[1]] <- "model.frame"
+@end example
+
+A more elaborate application is in @code{update.default} where a set of
+optional extra arguments can add to, replace, or cancel those of the
+original call:
+
+@example
+extras <- match.call(expand.dots = FALSE)$...
+if (length(extras) > 0) @{
+    existing <- !is.na(match(names(extras), names(call)))
+    for (a in names(extras)[existing]) call[[a]] <- extras[[a]]
+    if (any(!existing)) @{
+        call <- c(as.list(call), extras[!existing])
+        call <- as.call(call)
+    @}
+@}
+@end example
+
+Notice that care is taken to modify existing arguments individually in
+case @code{extras[[a]] == NULL}.  Concatenation does not work on call
+objects without the coercion as shown; this is arguably a bug.
+
+Two further functions exist for the construction of function calls,
+namely @code{call} and @code{do.call}.
+
+The function @code{call} allows creation of a call object from the
+function name and the list of arguments
+
+@example
+> x <- 10.5
+> call("round", x)
+round(10.5)
+@end example
+
+As seen, the value of @code{x} rather than the
+@cindex symbol
+symbol is inserted in the
+call, so it is distinctly different from @code{round(x)}.  The form is
+used rather rarely, but is occasionally useful where the name of a
+function is available as a character variable.
+
+The function @code{do.call} is related, but evaluates the call immediate
+and takes the arguments from an object of mode @code{"list"} containing
+all the arguments.  A natural use of this is when one wants to apply a
+function like @code{cbind} to all elements of a list or data frame.
+@findex do.call
+
+@example
+is.na.data.frame <- function (x) @{
+    y <- do.call("cbind", lapply(x, "is.na"))
+    rownames(y) <- row.names(x)
+    y
+@}
+@end example
+
+Other uses include variations over constructions like @code{do.call("f",
+list(...))}.  However, one should be aware that this involves evaluation
+of the arguments before the actual function call, which may defeat
+aspects of lazy evaluation and argument substitution in the function
+itself.  A similar remark applies to the @code{call} function.
+
+
+@node Manipulation of functions,  , Manipulation of function calls, Computing on the language
+@section Manipulation of functions
+
+It is often useful to be able to manipulate the components of a
+@cindex function
+function
+or closure.  @R{} provides a set of interface functions for this
+purpose.
+
+@ftable @code
+@item body
+Returns the expression that is the body of the function.
+@item formals
+Returns a list of the formal arguments to the function.  This is a
+@code{pairlist}.
+@item environment
+@cindex environment
+Returns the environment associated with the function.
+@item body<-
+This sets the body of the function to the supplied expression.
+@item formals<-
+Sets the formal arguments of the function to the supplied list.
+@item environment<-
+Sets the environment of the function to the specified environment.
+@end ftable
+
+It is also possible to alter the bindings of different variables in the
+environment of the function, using code along the lines of @code{evalq(x
+<- 5, environment(f))}.
+
+It is also possible to convert a
+@cindex function
+function to a list using
+@code{as.list}.  The result is the concatenation of the list of formal
+arguments with the function body.  Conversely such a list can be
+converted to a function using @code{as.function}.  This functionality is
+mainly included for @Sl{} compatibility.  Notice that environment
+information is lost when @code{as.list} is used, whereas
+@code{as.function} has an argument that allows the environment to be
+set.
+
+@node System and foreign language interfaces, Exception handling, Computing on the language, Top
+@chapter System and foreign language interfaces
+
+@menu
+* Operating system access::     
+* Foreign language interfaces::  
+* .Internal and .Primitive::    
+@end menu
+
+@node Operating system access, Foreign language interfaces, System and foreign language interfaces, System and foreign language interfaces
+@section Operating system access
+
+Access to the operating system shell is via the @R{} function
+@code{system}.
+@findex system
+The details will differ by platform (see the on-line help), and about
+all that can safely be assumed is that the first argument will be a
+string @code{command} that will be passed for execution (not necessarily
+by a shell) and the second argument will be @code{internal} which if
+true will collect the output of the command into an @R{} character
+vector.
+
+The functions @code{system.time}
+@findex system.time
+and @code{proc.time}
+@findex proc.time
+are available for timing (although the information available may be
+limited on non-Unix-like platforms).
+
+Information from the operating system
+@cindex environment
+environment can be accessed and manipulated with
+@quotation
+@multitable @columnfractions 0.3 0.7
+@item @code{Sys.getenv} @tab OS environment variables @findex Sys.getenv
+@item @code{Sys.putenv}                               @findex Sys.putenv
+@item @code{Sys.getlocale} @tab System locale         @findex Sys.getlocale
+@item @code{Sys.putlocale}                            @findex Sys.putlocale
+@item @code{Sys.localeconv}                           @findex Sys.localeconv
+@item @code{Sys.time} @tab Current time               @findex Sys.time
+@item @code{Sys.timezone} @tab Time zone              @findex Sys.timezone
+@end multitable
+@end quotation
+
+
+A uniform set of file access functions is provided on all platforms:
+@quotation
+@multitable @columnfractions 0.3 0.7
+@item @code{file.access} @tab Ascertain File Accessibility @findex file.access
+@item @code{file.append} @tab Concatenate files            @findex file.append
+@item @code{file.choose} @tab Prompt user for file name    @findex file.choose
+@item @code{file.copy}  @tab Copy files                    @findex file.copy
+@item @code{file.create} @tab Create or truncate a files   @findex file.create
+@item @code{file.exists} @tab Test for existence           @findex file.exists
+@item @code{file.info} @tab Miscellaneous file information @findex file.info
+@item @code{file.remove} @tab remove files                 @findex file.remove
+@item @code{file.rename} @tab rename files                 @findex file.rename
+@item @code{file.show} @tab Display a text file            @findex file.show
+@item @code{unlink} @tab Remove files or directories.      @findex unlink
+@end multitable
+@end quotation
+
+There are also functions for manipulating file names and paths in a
+platform-independent way.
+@quotation
+@multitable @columnfractions 0.3 0.7
+@item @code{basename} @tab File name without directory     @findex basename
+@item @code{dirname} @tab Directory name                   @findex dirname
+@item @code{file.path} @tab Construct path to file         @findex file.path
+@item @code{path.expand} @tab Expand @code{~} in Unix path @findex path.expand
+@end multitable
+@end quotation
+
+@node Foreign language interfaces, .Internal and .Primitive, Operating system access, System and foreign language interfaces
+@section Foreign language interfaces
+@findex .C
+@findex .Fortran
+@findex .Call
+@findex .External
+
+See @ref{System and foreign language interfaces, , , R-exts, Writing R
+Extensions} for the details of adding functionality to @R{} via compiled
+code.
+
+Functions @code{.C} and @code{.Fortran} provide a standard interface to
+compiled code that has been linked into @R{}, either at build time or
+via @code{dyn.load}.  They are primarily intended for compiled @C{} and
+FORTRAN code respectively, but the @code{.C} function can be used with
+other languages which can generate C interfaces, for example C++.
+
+Functions @code{.Call} and @code{.External} provide interfaces which allow
+compiled code (primarily compiled @C{} code) to manipulate @R{} objects.
+
+@node .Internal and .Primitive,  , Foreign language interfaces, System and foreign language interfaces
+@section .Internal and .Primitive
+@findex .Internal
+@findex .Primitive
+
+The @code{.Internal} and @code{.Primitive} interfaces are used to call
+@C{} code compiled into @R{} at build time.
+@xref{.Internal and .Primitive, , , R-exts, Writing R Extensions}.
+
+
+@node Exception handling, Debugging, System and foreign language interfaces, Top
+@chapter Exception handling
+
+The exception handling facilities in @R{} are provided through two
+mechanisms.  Functions such as @code{stop} or @code{warning} can be
+called directly or options such as @code{"warn"} can be used to control
+the handling of problems.
+
+@menu
+* stop::                        
+* warning::                     
+* on.exit::                     
+* Error options::               
+@end menu
+
+@node stop, warning, Exception handling, Exception handling
+@section stop
+@findex stop
+
+A call to @code{stop} halts the evaluation of the current expression,
+prints the message argument and returns execution to top-level.
+
+@node warning, on.exit, stop, Exception handling
+@section warning
+@findex warning
+@findex warnings
+
+The function @code{warning} takes a single argument that is a character
+string.  The behaviour of a call to @code{warning} depends on the value
+of the option @code{"warn"}.  If @code{"warn"} is negative warnings are
+ignored.  If it is zero, they are stored and printed after the top-level
+function has completed.  If it is one, they are printed as they occur
+and if it is 2 (or larger) warnings are turned into errors.
+
+If @code{"warn"} is zero (the default), a variable @code{last.warning}
+is created and the messages associated with each call to @code{warning}
+are stored, sequentially, in this vector.  If there are fewer than 10
+warnings they are printed after the function has finished evaluating.
+If there are more than 10 then a message indicating how many warnings
+occurred is printed.  In either case @code{last.warning} contains the
+vector of messages, and @code{warnings} provides a way to access and
+print it.
+
+@node on.exit, Error options, warning, Exception handling
+@section on.exit
+@findex on.exit
+
+A function can insert a call to @code{on.exit} at any point in the body
+of a function.  The effect of a call to @code{on.exit} is to store the
+value of the body so that it will be executed when the function exits.
+This allows the function to change some system parameters and to ensure
+that they are reset to appropriate values when the function is finished.
+The @code{on.exit} is guaranteed to be executed when the function exits
+either directly or as the result of a warning.
+
+An error in the evaluation of the @code{on.exit} code causes an
+immediate jump to top-level without further processing of the
+@code{on.exit} code.
+
+@code{on.exit} takes a single argument which is an expression to be
+evaluated when the function is exited.
+
+@c @node restart, Error options, on.exit, Exception handling
+@c @section restart
+@c @findex restart
+
+@c A call to @code{restart} effectively makes the function a possible point
+@c of return if an error occurs during the evaluation of that function (or
+@c one of the functions it calls).
+
+@c @code{restart} takes a single argument which is a logical variable.  If
+@c the value of the logical is @code{TRUE} then a jump-point is
+@c established.  If the value is @code{FALSE} then the jump-point is
+@c removed.
+
+@c When a jump is executed the jump-point is removed.
+
+@c When an error occurs and one or more jump points are active then control
+@c is returned to the innermost function that has a jump-point established.
+@c Execution begins with the first statement in the body of the selected
+@c function.  The
+@c @cindex environment
+@c environment for subsequent
+@c @cindex evaluation
+@c evaluation is the environment
+@c that was in effect at the time that the error that triggered the jump
+@c was signalled.
+
+@node Error options,  , on.exit, Exception handling
+@section Error options
+
+There are a number of @code{options} variables that can be used to
+control how @R{} handles errors and warnings.  The are listed in the
+table below.
+
+@table @samp
+@item warn
+Controls the printing of warnings.
+@item warning.expression
+Sets an expression that is to be evaluated when a warning occurs.  The
+normal printing of warnings is suppressed if this option is set.
+@item error
+Installs an expression that will be evaluated when an error occurs.
+The normal printing of error messages and warning messages precedes the
+evaluation of the expression.
+@end table
+
+Expressions installed by @code{options("error")} are evaluated before
+calls to @code{on.exit} are carried out.
+
+One can use @code{options(error = expression(q("yes")))} to get @R{} to
+quit when an error has been signalled.  In this case an error will cause
+@R{} to shut down and the global environment will be saved.
+
+@node Debugging, Parser, Exception handling, Top
+@chapter Debugging
+
+Debugging code has always been a bit of an art.  @R{} provides several
+tools that help users find problems in their code.  These tools halt
+execution at particular points in the code and the current state of the
+computation can be inspected.
+
+Most debugging takes place either through calls to @code{browser} or
+@code{debug}.  Both of these functions rely on the same internal
+mechanism and both provide the user with a special prompt.  Any command
+can be typed at the prompt.  The evaluation
+@cindex environment
+environment for the command
+is the currently active environment.  This allows you to examine the
+current state of any variables etc.
+
+There are five special commands that @R{} interprets differently.  They
+are,
+
+@table @samp
+@item @key{RET}
+Go to the next statement if the function is being debugged.  Continue
+execution if the browser was invoked.
+@item c
+@itemx cont
+Continue the execution.
+@item n
+Execute the next statement in the function.  This works from the browser
+as well.
+@item where
+Show the call stack
+@item Q
+Halt execution and jump to the top-level immediately.
+@end table
+
+@cindex name
+If there is a local variable with the same name as one of the special
+commands listed above then its value can be accessed by using
+@code{get}.  A call to @code{get} with the name in quotes will retrieve
+the value in the current
+@cindex environment
+environment.
+
+The debugger provides access only to interpreted expressions.  If a
+function calls a foreign language (such as @C{}) then no access to the
+statements in that language is provided.  Execution will halt on the
+next statement that is evaluated in @R{}. A symbolic debugger such as
+@code{gdb} can be used to debug compiled code.
+
+@menu
+* browser::                     
+* debug/undebug::               
+* trace/untrace::               
+* traceback::                   
+@end menu
+
+@node browser, debug/undebug, Debugging, Debugging
+@section browser
+@findex browser
+
+A call to the function @code{browser} causes @R{} to halt execution at
+that point and to provide the user with a special prompt.  Arguments to
+@code{browser} are ignored.
+
+@example
+> foo <- function(s) @{
++ c <- 3
++ browser()
++ @}
+> foo(4)
+Called from: foo(4)
+Browse[1]> s
+[1] 4
+Browse[1]> get("c")
+[1] 3
+Browse[1]>
+@end example
+
+@node debug/undebug, trace/untrace, browser, Debugging
+@section debug/undebug
+@findex debug
+@findex undebug
+
+The debugger can be invoked on any function by using the command
+@code{debug(@var{fun})}.  Subsequently, each time that function is
+evaluated the debugger is invoked.  The debugger allows you to control
+the evaluation of the statements in the body of the function.  Before
+each statement is executed the statement is printed out and a special
+prompt provided.  Any command can be given, those in the table above
+have special meaning.
+
+Debugging is turned off by a call to @code{undebug} with the function as
+an argument.
+
+@example
+> debug(mean.default)
+> mean(1:10)
+debugging in: mean.default(1:10)
+debug: @{
+    if (na.rm)
+        x <- x[!is.na(x)]
+    trim <- trim[1]
+    n <- length(c(x, recursive = TRUE))
+    if (trim > 0) @{
+        if (trim >= 0.5)
+            return(median(x, na.rm = FALSE))
+        lo <- floor(n * trim) + 1
+        hi <- n + 1 - lo
+        x <- sort(x, partial = unique(c(lo, hi)))[lo:hi]
+        n <- hi - lo + 1
+    @}
+    sum(x)/n
+@}
+Browse[1]>
+debug: if (na.rm) x <- x[!is.na(x)]
+Browse[1]>
+debug: trim <- trim[1]
+Browse[1]>
+debug: n <- length(c(x, recursive = TRUE))
+Browse[1]> c
+exiting from: mean.default(1:10)
+[1] 5.5
+@end example
+
+@node trace/untrace, traceback, debug/undebug, Debugging
+@section trace/untrace
+@findex trace
+@findex untrace
+
+Another way of monitoring the behaviour of @R{} is through the
+@code{trace} mechanism.  @code{trace} is called with a single argument
+that is the name of the function you want to trace.  The name does not
+need to be quoted but for some functions you will need to quote the name
+in order to avoid a syntax error.
+
+When @code{trace} has been invoked on a function then every time that
+function is evaluated the call to it is printed out.  This mechanism is
+removed by calling @code{untrace} with the function as an argument.
+
+@example
+> get("[<-")
+.Primitive("[<-")
+> trace("[<-")
+> x <- 1:10
+> x[3] <- 4
+trace: "[<-"(*tmp*, 3, value = 4)
+@end example
+
+@node traceback,  , trace/untrace, Debugging
+@section traceback
+@findex traceback
+
+When an error has caused a jump to top-level a special variable called
+@code{.Traceback} is placed into the base environment.
+@code{.Traceback} is a character vector with one entry for each function
+call that was active at the time the error occurred.  An examination of
+@code{.Traceback} can be carried out by a call to @code{traceback}.
+
+@node Parser, Function and Variable Index, Debugging, Top
+@chapter Parser
+@cindex parsing
+
+The parser is what converts the textual representation of @R{} code into
+an internal form which may then be passed to the @R{} evaluator which
+causes the specified instructions to be carried out.  The internal form
+is itself an @R{} object and can be saved and otherwise manipulated
+within the @R{} system.
+
+@menu
+* The parsing process::         
+* Comments::                    
+* Tokens::                      
+* Expressions::                 
+@end menu
+
+@node The parsing process, Comments, Parser, Parser
+@comment  node-name,  next,  previous,  up
+@section The parsing process
+
+@menu
+* Modes of parsing::            
+* Internal representation::     
+* Deparsing::                   
+@end menu
+
+@node Modes of parsing, Internal representation, The parsing process, The parsing process
+@comment  node-name,  next,  previous,  up
+@subsection Modes of parsing
+
+Parsing in @R{} occurs in three different variants:
+
+@itemize @bullet
+@item The read-eval-print loop
+@item Parsing of text files
+@item Parsing of character strings
+@end itemize
+
+The read-eval-print loop forms the basic command line interface to @R{}.
+Textual input is read until a complete @R{} expression is available.
+Expressions may be split over several input lines.  The primary prompt
+(by default @samp{> }) indicates that the parser is ready for a new
+expression, and a continuation prompt (by default @samp{+ }) indicates
+that the parser expects the remainder of an incomplete expression.  The
+expression is converted to internal form during input and the parsed
+expression is passed to the evaluator and the result is printed (unless
+specifically made invisible).  If the parser finds itself in a state
+which is incompatible with the language syntax, a ``Syntax Error'' is
+flagged and the parser resets itself and resumes input at the beginning
+of the next input line.
+
+Text files can be parsed using the @code{parse} function.  In
+particular, this is done during execution of the @code{source}
+function, which allows commands to be stored in an external file and
+executed as if they had been typed at the keyboard.  Note, though, that
+the entire file is parsed and syntax checked before any evaluation takes
+place.
+
+Character strings, or vectors thereof, can be parsed using the
+@code{text=} argument to @code{parse}.  The strings are treated exactly
+as if they were the lines of an input file.
+
+@node Internal representation, Deparsing, Modes of parsing, The parsing process
+@comment  node-name,  next,  previous,  up
+@subsection Internal representation
+
+@cindex parsing
+Parsed expressions are stored in an @R{} object containing the parse
+tree.  A fuller description of such objects can be found in
+@ref{Language objects} and @ref{Expression objects}.  Briefly, every
+elementary @R{} expression is stored in
+@cindex function
+function call form, as a list
+with the first element containing the function name and the remainder
+containing the arguments, which may in turn be further @R{} expressions.
+The list elements can be named, corresponding to tagged matching of
+formal and actual arguments.  Note that @emph{all} @R{} syntax elements
+are treated in this way, e.g.@: the assignment @code{x <- 1} is encoded
+as @code{"<-"(x, 1)}.
+
+@node Deparsing,  , Internal representation, The parsing process
+@comment  node-name,  next,  previous,  up
+@subsection Deparsing
+
+Any @R{} object can be converted to an @R{} expression using
+@code{deparse}.  This is frequently used in connection with output of
+results, e.g.@: for labeling plots.  Notice that only objects of mode
+@code{"expression"} can be expected to be unchanged by reparsing the
+output of deparsing.  For instance, the numeric vector @code{1:5} will
+deparse as @code{"c(1, 2, 3, 4, 5)"}, which will reparse as a call to
+the function @code{c}.  As far as possible, evaluating the deparsed and
+reparsed expression gives the same result as evaluating the original,
+but there are a couple of awkward exceptions, mostly involving
+expressions that weren't generated from a textual representation in the
+first place.
+
+@node Comments, Tokens, The parsing process, Parser
+@comment  node-name,  next,  previous,  up
+@section Comments
+
+@cindex comments
+Comments in @R{} are ignored by the parser.  Any text from a
+@findex @code{#}
+@code{#} character
+to the end of the line is taken to be a comment, unless
+the @code{#} character is inside a quoted string. For example,
+
+@example
+> x <- 1  # This is a comment...
+> y <- "  #... but this is not."
+@end example
+
+@node Tokens, Expressions, Comments, Parser
+@comment  node-name,  next,  previous,  up
+@section Tokens
+
+Tokens are the elementary building blocks of a programming language.
+They are recognised during @emph{lexical analysis} which (conceptually,
+at least) takes place prior to the syntactic analysis performed by the
+parser itself.
+
+@menu
+* Literal constants::           
+* Identifiers::                 
+* Reserved words::              
+* Special operators::           
+* Separators::                  
+* Operator tokens::             
+* Grouping::                    
+* Indexing tokens::             
+@end menu
+
+@node Literal constants, Identifiers, Tokens, Tokens
+@comment  node-name,  next,  previous,  up
+@subsection Constants
+
+There are five types of constants: integer, logical, numeric, complex and string.
+
+In addition, there are four special constants, @code{NULL}, @code{NA},
+@code{Inf}, and @code{NaN}.
+
+@code{NULL} is used to indicate the empty object.  @code{NA} is used for
+absent (``Not Available'') data values.  @code{Inf} denotes infinity and
+@code{NaN} is not-a-number in the @acronym{IEEE} floating point calculus
+(results of the operations respectively @math{1/0} and @math{0/0}, for
+instance).
+
+Logical constants are either @code{TRUE} or @code{FALSE}.
+
+Numeric constants follow a similar syntax to that of the @C{} language.
+They consist of an integer part consisting of zero or more digits,
+followed optionally by @samp{.} and a fractional part of zero or more
+digits optionally followed by an exponent part consisting of an @samp{E}
+or an @samp{e}, an optional sign and a string of zero or more digits.
+Either the fractional or the decimal part can be empty, but not both at
+once.
+
+@example
+@r{Valid numeric constants:} 1 10 0.1 .2 1e-7 1.2e+7 2e 3e+
+@end example
+
+@noindent
+The two latter examples are hardly useful in practice, but they are
+accepted and treated as @samp{2} and @samp{3}, respectively.
+
+Numeric constants can also be hexadecimal, starting with @samp{0x} or
+@samp{0x} followed by zero or more digits, @samp{a-f} or @samp{A-F}.
+
+There is now a separate class of integer constants.  They are created
+by using the qualifier @code{L} at the end of the number.  For
+example, @code{123L} gives an integer value rather than a numeric
+value.  The suffix @code{L} can be used to qualify any non-complex
+number with the intent of creating an integer.  So it can be used with
+numbers given by hexadecimal or scientific notation. However, if the
+value is not a valid integer, a warning is emitted and the numeric
+value created.  The following shows examples of valid integer
+constants, values which will generate a warning and give numeric
+constants and syntax errors.
+
+@example
+@r{Valid integer constants:}  1L, 0x10L, 1000000L, 1e6L
+@r{Valid numeric constants:}  1.1L, 1e-3L 
+@r{Syntax error:}  12iL
+@end example
+
+A warning is emitted for values that contain an unnecessary
+decimal point, e.g. @code{1.L}.
+
+Note also that a preceding sign (@code{+} or @code{-}) is treated as a
+unary operator, not as part of the constant.
+
+Complex constants have the form of a decimal numeric constant followed
+by @samp{i}.  Notice that only purely imaginary numbers are actual
+constants, other complex numbers are parsed a unary or binary operations
+on numeric and imaginary numbers.
+
+@example
+@r{Valid complex constants:} 2i 4.1i 1e-2i
+@end example
+
+String constants are delimited by a pair of single (@samp{'}) or double
+(@samp{"}) quotes and can contain all other printable characters.
+Quotes and other special characters within strings are specified using
+@emph{escape sequences}:
+
+@table @code
+@item \'
+single quote
+@item \"
+double quote
+@item \n
+newline
+@item \r
+carriage return
+@item \t
+tab character
+@item \b
+backspace
+@item \a
+bell
+@item \f
+form feed
+@item \v
+vertical tab
+@item \\
+backslash itself
+@item \@var{nnn}
+character with given octal code -- sequences of one, two or three digits
+in the range @code{0 ... 8} are accepted.
+@item \x@var{nn}
+character with given hex code -- sequences of one or two hex digits
+(with entries @code{0 ... 9 A ... F a ... f}).
+@item \u@var{nnnn} \u@{@var{nnnn}@}
+(where multibyte locales are supported, otherwise an error).
+Unicode character with given hex code -- sequences of up to four hex
+digits. The character needs to be valid in the current locale.
+@item \U@var{nnnnnnnn} \U@{@var{nnnnnnnn}@}
+(where multibyte locales are supported and not on Windows, otherwise an
+error).  Unicode character with given hex code -- sequences of up to
+eight hex digits.
+@end table
+
+@noindent
+A single quote may also be embedded directly in a double-quote delimited
+string and vice versa.
+
+@node Identifiers, Reserved words, Literal constants, Tokens
+@subsection Identifiers
+
+@cindex identifier
+Identifiers consist of a sequence of letters, digits, the period
+(@samp{.}) and the underscore.  They must not start with a digit nor
+underscore, nor with a period followed by a digit.
+
+The definition of a letter depends on the current locale: the precise
+set of characters allowed is given by the C expression @code{(isalnum(c)
+|| c == '.' || c == '_')} and will include accented letters in many
+Western European locales.
+
+Notice that identifiers starting with a period are not by default listed
+by the @code{ls} function and that @samp{...} and @samp{..1},
+@samp{..2}, etc.@: are special.
+
+Notice also that objects can have names that are not identifiers.  These
+are generally accessed via @code{get} and @code{assign}, although they
+can also be represented by text strings in some limited circumstances
+when there is no ambiguity (e.g.@: @code{"x" <- 1}). As @code{get} and
+@code{assign} are not restricted to names that are identifiers they do
+not recognise subscripting operators or assignment functions. The
+following pairs are @emph{not} equivalent
+@findex get
+@findex assign
+
+@quotation
+@multitable {@code{names(x)<-nm}} {@code{assign("names(x)",nm)}}
+@item @code{x$a<-1} @tab @code{assign("x$a",1)}
+@item @code{x[[1]]} @tab @code{get("x[[1]]")}
+@item @code{names(x)<-nm} @tab @code{assign("names(x)",nm)}
+@end multitable
+@end quotation
+
+@node Reserved words, Special operators, Identifiers, Tokens
+@subsection Reserved words
+
+The following identifiers have a special meaning and cannot be used
+for object names
+
+@example
+if else repeat while function for in next break
+TRUE FALSE NULL Inf NaN
+NA NA_integer_ NA_real_ NA_complex_ NA_character_
+... ..1 ..2 @r{etc.}
+@end example
+
+@node Special operators, Separators, Reserved words, Tokens
+@subsection Special operators
+
+@R{} allows user-defined infix operators.  These have the form of a
+string of characters delimited by the @samp{%} character.  The string
+can contain any printable character except @samp{%}.  The escape sequences
+for strings do not apply here.
+
+Note that the following operators are predefined
+
+@example
+%% %*% %/% %in% %o% %x%
+@end example
+
+@c  @node Special symbols, Separators, Special operators, Tokens
+@c  @subsection Special symbols
+
+@c  @c (I can't for the life of me remember what I intended here... -pd)
+@c  .....possibly  "..." and friends which are currently "reserved
+@c  words"
+@c FIXME: get this clarified
+
+@node Separators, Operator tokens, Special operators, Tokens
+@subsection Separators
+
+Although not strictly tokens, stretches of whitespace characters (spaces
+and tabs) serve to delimit tokens in case of ambiguity, (compare
+@code{x<-5} and @code{x < -5}).
+
+
+Newlines have a function which is a combination of token separator and
+expression terminator.  If an expression can terminate at the end of
+the line the parser will assume it does so, otherwise the newline is
+treated as whitespace.  Semicolons (@samp{;}) may be used to separate
+elementary @cindex expression
+expressions on the same line.
+
+
+Special rules apply to the @code{else} keyword: inside a compound
+expression, a newline before @code{else} is discarded, whereas at the
+outermost level, the newline terminates the @code{if} construction and a
+subsequent @code{else} causes a syntax error.  This somewhat anomalous
+behaviour occurs because @R{} should be usable in interactive mode and
+then it must decide whether the input expression is complete,
+incomplete, or invalid as soon as the user presses @key{RET}.
+
+The comma (@samp{,}) is used to separate function arguments and multiple
+indices.
+
+@node Operator tokens, Grouping, Separators, Tokens
+@subsection Operator tokens
+
+@R{} uses the following operator tokens
+
+@quotation
+@multitable @columnfractions 0.3 0.6
+@item @code{+ - * / %% ^} @tab arithmetic
+@item @code{> >= < <= == !=} @tab relational
+@item @code{! & |} @tab logical
+@item @code{~} @tab model formulae
+@item @code{-> <-} @tab assignment
+@item @code{$} @tab list indexing
+@item @code{:} @tab sequence
+@end multitable
+@end quotation
+
+@noindent
+(Several of the operators have different meaning inside model formulas)
+
+@node Grouping, Indexing tokens, Operator tokens, Tokens
+@subsection Grouping
+
+Ordinary parentheses---@samp{(} and @samp{)}---are used for explicit
+grouping within expressions and to delimit the argument lists for
+function definitions and function calls.
+
+Braces---@samp{@{} and @samp{@}}---delimit blocks of expressions in
+function definitions, conditional expressions, and iterative constructs.
+
+@node Indexing tokens,  , Grouping, Tokens
+@subsection Indexing tokens
+
+Indexing of arrays and vectors performed using the single and double
+brackets, @samp{[]} and @samp{[[]]}.  Also, indexing tagged lists
+may be done using the @samp{$} operator.
+
+@c ------end of  @section Tokens ------------
+
+@node Expressions,  , Tokens, Parser
+@section Expressions
+
+An @R{} program consists of a sequence of @R{} expressions.  An
+expression can be a simple expression consisting of only a constant or
+an identifier, or it can be a compound expression constructed from other
+parts (which may themselves be expressions).
+
+The following sections detail the various syntactical constructs that
+are available.
+
+@menu
+* Function calls (expressions)::  
+* Infix and prefix operators::  
+* Index constructions::         
+* Compound expressions::        
+* Flow control elements::       
+* Function definitions::        
+@end menu
+
+@c  need "(expressions)" or something to differentiate from node
+@c  "Function calls" (way) above :
+
+@node Function calls (expressions), Infix and prefix operators, Expressions, Expressions
+@subsection Function calls
+
+@cindex function
+A function call takes the form of a function reference followed by a
+comma-separated list of arguments within a set of parentheses.
+
+@example
+@var{function_reference} ( @var{arg1}, @var{arg2}, ...... , @var{argn} )
+@end example
+
+The function reference can be either
+@itemize @bullet
+@item
+an identifier (the name of the function)
+@item
+a text string (ditto, but handy if the function has a name which is not
+a valid identifier)
+@item
+an expression (which should evaluate to a function object)
+@end itemize
+
+Each argument can be tagged (@code{@var{tag}=@var{expr}}), or just be a
+simple expression.  It can also be empty or it can be one of the special
+tokens @samp{...}, @samp{..2}, etc.
+
+A tag can be an identifier or a text string.
+
+Examples:
+
+@example
+f(x)
+g(tag = value, , 5)
+"odd name"("strange tag" = 5, y)
+(function(x) x^2)(5)
+@end example
+
+@node Infix and prefix operators, Index constructions, Function calls (expressions), Expressions
+@subsection Infix and prefix operators
+
+The order of precedence (highest first) of the operators are
+
+@example
+::
+$ @@
+^
+- +                @r{(unary)}
+:
+%@var{xyz}%
+* /
++ -                @r{(binary)}
+> >= < <= == !=
+!
+& &&
+| ||
+~                  @r{(unary and binary)}
+-> ->>
+=                  @r{(as assignment)}
+<- <<-
+@end example
+
+The exponentiation operator @samp{^} and the
+@cindex assignment
+left assignment operators
+@samp{<- - = <<-} group right to left, all other operators group left to
+right.  That is, @code{2 ^ 2 ^ 3} is @math{2 ^ 8}, not @math{4 ^ 3},
+whereas @code{1 - 1 - 1} is @math{-1}, not 1.
+
+Notice that the operators @code{%%} and @code{%/%} for integer
+remainder and divide have higher precedence than multiply and divide.
+
+Although it is not strictly an operator, it also needs mentioning that
+the @samp{=} sign is used for tagging arguments in
+function calls and
+for assigning default values in function definitions.
+
+The @samp{$} sign is in some sense an operator, but does not allow
+arbitrary right hand sides and is discussed under @ref{Index
+constructions}.  It has higher precedence than any of the other
+operators.
+
+The parsed form of a unary or binary operation is completely equivalent
+to a function call with the operator as the function name and the
+operands as the function arguments.
+
+Parentheses are recorded as equivalent to a unary operator, with name
+@code{"("}, even in cases where the parentheses could be inferred from
+operator precedence (e.g., @code{a * (b + c)}).
+@c FIXME: Will this get changed?
+
+Notice that the
+@cindex assignment
+assignment symbols are operators just like the arithmetic, relational,
+and logical ones.  Any expressions is allowed also on the target side of
+an assignment, as far as the parser is concerned (@code{2 + 2 <- 5} is a
+valid expression as far as the parser is concerned.  The evaluator will
+object, though).  Similar comments apply to the model formula operator.
+
+@node Index constructions, Compound expressions, Infix and prefix operators, Expressions
+@subsection Index constructions
+
+@R{} has three indexing constructs, two of which are syntactically
+similar although with somewhat different semantics:
+
+@example
+@var{object} [ @var{arg1}, ...... , @var{argn} ]
+@var{object} [[ @var{arg1}, ...... , @var{argn} ]]
+@end example
+@findex [
+@findex [[
+
+The @var{object} can formally be any valid expression, but it is
+understood to denote or evaluate to a subsettable object.  The arguments
+generally evaluate to numerical or character indices, but other kinds of
+arguments are possible (notably @code{drop = FALSE}).
+
+Internally, these index constructs are stored as function calls with
+function name @code{"["} respectively @code{"[["}.
+
+The third index construction is
+
+@example
+@var{object} $ @var{tag}
+@end example
+@findex $
+
+Here, @var{object} is as above, whereas @var{tag} is an identifier or a
+text string.  Internally, it is stored as a function call with name
+@code{"$"}
+
+@c  @node Assignments, Model formulae, Index constructions, Expressions
+@c  @subsection Assignments
+
+@c  @node Model formulae, Flow control elements, Assignments, Expressions
+@c  @subsection Model formulae
+
+@node Compound expressions, Flow control elements, Index constructions, Expressions
+@subsection Compound expressions
+
+A compound expression is of the form
+
+@example
+@{ @var{expr1} ; @var{expr2} ; ...... ; @var{exprn} @}
+@end example
+
+The semicolons may be replaced by newlines.  Internally, this is stored
+as a function call with @code{"@{"} as the function name and the
+expressions as arguments.
+
+@node Flow control elements, Function definitions, Compound expressions, Expressions
+@subsection Flow control elements
+
+@R{} contains the following control structures as special syntactic
+constructs
+
+@example
+if ( @var{cond} ) @var{expr}
+if ( @var{cond} ) @var{expr1} else @var{expr2}
+while ( @var{cond} ) @var{expr}
+repeat @var{expr}
+for ( @var{var} in @var{list} ) @var{expr}
+@end example
+
+The expressions in these constructs will typically be compound
+expressions.
+
+Within the loop constructs (@code{while}, @code{repeat}, @code{for}),
+one may use @code{break} (to terminate the loop) and @code{next} (to
+skip to the next iteration).
+
+Internally, the constructs are stored as function calls:
+
+@example
+"if"(@var{cond}, @var{expr})
+"if"(@var{cond}, @var{expr1}, @var{expr2})
+"while"(@var{cond}, @var{expr})
+"repeat"(@var{expr})
+"for"(@var{var}, @var{list}, @var{expr})
+"break"()
+"next"()
+@end example
+
+@node Function definitions,  , Flow control elements, Expressions
+@subsection Function definitions
+
+A
+@cindex function
+function definition is of the form
+
+@example
+function ( @var{arglist} ) @var{body}
+@end example
+
+The function body is an expression, often a compound expression.  The
+@var{arglist} is a comma-separated list of items each of which can be an
+identifier, or of the form @samp{@var{identifier} = @var{default}}, or
+the special token @samp{...}.  The @var{default} can be any valid
+expression.
+
+Notice that function arguments unlike list tags, etc., cannot have
+``strange names'' given as text strings.
+@c FIXME: is there a good reason for this?
+
+Internally, a function definition is stored as a function call with
+function name @code{function} and two arguments, the @var{arglist} and
+the @var{body}.  The @var{arglist} is stored as a tagged pairlist where
+the tags are the argument names and the values are the default
+expressions.
+
+@c -- We can probably lose this given the brevity of the section
+@c  @node Summary ,  , Syntactic elements, Parser
+@c  @section Summary of language
+
+@node Function and Variable Index, Concept Index, Parser, Top
+@unnumbered Function and Variable Index
+
+@printindex vr
+
+@node Concept Index, References, Function and Variable Index, Top
+@unnumbered Concept Index
+
+@printindex cp
+
+@node References,  , Concept Index, Top
+@appendix References
+
+Richard A.@: Becker, John M.@: Chambers and Allan R.@: Wilks (1988),
+@emph{The New S Language.} Chapman & Hall, New York.
+This book is often called the ``@emph{Blue Book}''.
+
+@bye
+
+@c Local Variables: ***
+@c mode: TeXinfo ***
+@c End: ***

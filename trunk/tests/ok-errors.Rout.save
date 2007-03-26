@@ -1,0 +1,39 @@
+
+R version 2.5.0 Under development (unstable) (2006-11-07 r39824)
+Copyright (C) 2006 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #### STRICT test suite in the spirit of no-segfaults,
+> #### but with explicit statements.
+> 
+> options(error=expression(NULL))
+> stop("test of `options(error=expression(NULL))'")
+Error: test of `options(error=expression(NULL))'
+> 
+> if(FALSE) {
++ ## these ought to work on machines with enough memory
++ ## These segfaulted in 1.3.x ,  give "could not allocate" errors now
++   integer(2^30+1)
++    double(2^30+1)
++   complex(2^30+1)
++ character(2^30+1)
++ vector("list", 2^30+2)
++ }
+> 
+> getenv("USER") # should produce correct error message.
+Error: 'getenv' is defunct.
+Use 'Sys.getenv' instead.
+See help("Defunct")
+> 

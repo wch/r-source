@@ -1,0 +1,75 @@
+# Chinese translations for R package
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2007.
+# 
+
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2006-12-01 10:45\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "must have at least 'ord' knots"
+msgstr "至少需要有'ord'个结"
+
+msgid "length of 'derivs' must match length of 'x'"
+msgstr "'derivs'和'x'的长度必需匹配"
+
+msgid "'ord' must be positive integer, at most the number of knots"
+msgstr "'ord'必需为正整数，最多不能超过结的数目"
+
+msgid "need at least 2*ord -1 (=%d) knots"
+msgstr "至少需要2*ord-1(=%d) 个结"
+
+msgid "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
+msgstr "除非你设定'outer.ok = TRUE'，'x'数据值必需在%g到%g范围之间"
+
+msgid "values of 'x' must be distinct"
+msgstr "'x'的值不能有重复"
+
+msgid "'formula' must be of the form \"y ~ x\""
+msgstr "'formula'的格式必需为\"y ~ x\""
+
+msgid "lengths of 'x' and 'y' must match"
+msgstr "'x'和'y'的长度必需相匹配"
+
+msgid "values of 'x' must be strictly increasing"
+msgstr "'x'的值必需严格递增"
+
+msgid "'ord' must be >= 2"
+msgstr "'ord'的值必需大于等于二"
+
+msgid "the range of 'x' values exceeds one period"
+msgstr "'x'值的范围超过了一个周期"
+
+msgid "knot positions must be non-decreasing"
+msgstr "结的位置值必需为非递减"
+
+msgid "lengths of 'x' and 'y' must be the same"
+msgstr "'x'和'y'的长度必需一样"
+
+msgid "'deriv' must be between 0 and %d"
+msgstr "'deriv'的值必需在零和%d之间"
+
+msgid "knot positions must be strictly increasing"
+msgstr "结的位置值必需严格递增"
+
+msgid "spline must be monotone"
+msgstr "样条必需是单凋的"
+
+msgid "'degree' must be integer >= 1"
+msgstr "'degree'必需大于等于一的整数"
+
+msgid "'df' was too small; have used"
+msgstr "'df'太小了；用过了的值为"
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr "一些在结值界外的'x'数据有可能会引起病态底数"

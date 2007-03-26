@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Testing the Embeddable R library</title>
+<link rel=stylesheet href="../../doc/R.css">
+</head>
+
+<body>
+<h1>Test the Embeddable R Library</h1>
+
+This a collection of tests for verifying that using R as a library
+within another application (i.e. embedded R) works for this
+installation. This is only relevant if one has configured R with the
+<code>--enable-R-shlib </code> argument for the top-level
+<code>configure</code>.  Currently, this only works for Unix,
+and not Windows.
+
+<p>
+
+More information can be found at the 
+<a href="http://developer.r-project.org/embedded.html">R Developer's site</a>
+
+<h3>Test Applications</h3>
+<dl>
+  <dt>
+  <li> <a href="Rtest.c">Rtest</a>
+  <dd>
+      Just prints the vector <code>c(1, 2, ..., 10)</code>
+  <dt>
+  <li> <a href="Rplot.c">Rplot</a>
+  <dd> Creates a basic plot of  <code>c(1,2,..., 10)</code>
+        in the default device and then quits immediately.
+  <dt>
+  <li> <a href="Rpostscript.c">Rpostscript</a>
+  <dd>
+        Produces a plot of <code>1:100</code> using the Postscript
+       graphics device. This creates a file named <code>Rplots.ps</code>
+
+  <dt>
+  <li><a href="Rerror.c"> Rerror</a>
+  <dd> Reads a function definition from an external file (<a
+      href="code.R"><code>code.R</code></a>) and calls it
+        which in turn generates an "error" via <code>stop()</code>.
+      The local error handler defined for this application
+      catches this error and recovers.
+
+  <dt>
+  <li> <a href="RNamedCall.c">RNamedCall</a>
+  <dd> Calls a function with some named arguments.
+
+  <dt>
+  <li> <a href="RParseEval.c">RParseEval</a>
+  <dd>  Parses a string and evaluates the resulting expression(s).
+
+     
+  <dt>
+  <li> <a href="Rpackage.c">Rpackage</a>
+  <dd> Invokes <code>example()</code>
+       for functions in ctest and mva
+        to ensure that packages can be loaded
+      into R in an embedded context. These
+      packages must be linked against libR.so.
+
+  <dt>
+  <li> <a href="embeddedRCall.c">embeddedRCall.c</a>
+  <dd> Collection of routines used in the different
+      tests.
+  <dt>
+  <li> Other Tests
+  <dd>
+      This has been tested in many  other situations
+       including the some of the Omegahat packages:
+<ul>
+  <li> As a procedural language within <a href="http://www.postgresql.org">Postsgres</a>.
+       See <a href="http://www.omegahat.org/DBMS/Postgres/R/RPostgres.pdf">R in Postgres</a>
+  <li> <a href="http://www.omegahat.org/RSJava">SJava</a>
+  <li> <a href="http://www.omegahat.org/SNetscape">SNetscape</a>
+  <li> <a href="http://www.omegahat.org/SXalan">SXalan</a>
+  <li> <a href="http://www.omegahat.org/SXalan">SXalan</a>
+  <li> <a href="http://www.omegahat.org/RSPython">RSPython</a>
+  <li> <a href="http://www.omegahat.org/RSPerl">RSPerl</a>      
+</ul>
+ These can be used as example code for embedding R within other applications.
+</dl>
+
+<hr>
+<address></address>
+<a href="http://cm.bell-labs.com/stat/duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@research.bell-labs.com>&lt;duncan@research.bell-labs.com&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Mon Jul  9 15:23:43 EDT 2001
+<!-- hhmts end -->
+</body> </html>

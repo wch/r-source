@@ -1,0 +1,13 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+CFLAGS=-I. -DWIN32 -D_X86_ $(OPTFLAGS)
+
+all: libxdr.a
+
+libxdr.a: xdr.o xdr_float.o xdr_stdio.o xdr_mem.o
+
+clean:
+	$(RM) *.o *~
+distclean: clean
+	$(RM) libxdr.a

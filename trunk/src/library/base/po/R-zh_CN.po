@@ -1,0 +1,1510 @@
+# Chinese translations for R package
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2006.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.3.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-03-26 13:13\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s'已无用。"
+
+msgid "Use '%s' instead."
+msgstr "请用'%s'。"
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "见help(\"Defunct\"))和help(\"%s-defunct\")。"
+
+msgid "See help(\"Defunct\")"
+msgstr "见help(\"Defunct\"))"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr ""
+
+msgid "'%s' is deprecated."
+msgstr "%s不再有用。"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "见help(\"Deprecated\")和help(\"%s-deprecated\")。"
+
+msgid "See help(\"Deprecated\")"
+msgstr "见help(\"Deprecated\")"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "'La.svd'的变元必需是数值或是复数"
+
+msgid "infinite or missing values in 'x'"
+msgstr "'x'里有无穷大值或遗漏值"
+
+msgid "0 extent dimensions"
+msgstr "0扩充维度"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu'的值必需是0，nrow(x) 或ncol(x)"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv'的值必需是0，nrow(x)或ncol(x)"
+
+msgid "second argument must be a list"
+msgstr "第二个变元必需为串列"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "本系统不支持'iconvlist'"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind' 必需是字符，而且其长度只能为1(用RNG) 。"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s'不是正当的RNG缩写"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "'normal.kind'必需是字符，而且其长度只能为1。"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "使用的Kinderman-Ramage任意数产生器可能有虫。"
+
+msgid "'%s' is not a valid choice"
+msgstr "%s'不是正当的选择"
+
+msgid "malformed version string"
+msgstr "版本字串格式有错"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X)的值必需是正数"
+
+msgid "'dim' specifies too large an array"
+msgstr "'dim'的值太大"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "'MARGIN'的值有错"
+
+msgid "you cannot be serious"
+msgstr "你是不是在耍我？"
+
+msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+msgstr "*** 'pos=1'不可能对；以'pos=2'代而用之。"
+
+msgid "*** Note that 'pos=1' will give an error in the future"
+msgstr "*** 请注意将来再用'pos=1'的话会引起错误信条"
+
+msgid "file '%s' not found"
+msgstr "没有'%s'文件"
+
+msgid "invalid name"
+msgstr "名字不对"
+
+msgid "is required by"
+msgstr "需要"
+
+msgid "(still attached)"
+msgstr "(仍连接着)"
+
+#, fuzzy
+msgid "namespace cannot be unloaded"
+msgstr "名字空间'%s'没有载入"
+
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "正规表现'['被换成'\\\\['"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "正规表现'[<-'被换成'\\\\[<-'"
+
+msgid "RHS must be list"
+msgstr "等式右边必需是串列"
+
+msgid "an object with that name already exists"
+msgstr "对象的名字已经存在"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "自动载入器在'%2$s'找不到'%1$s' "
+
+msgid "invalid argument values in 'backsolve'"
+msgstr "'backsolve'的变元有错"
+
+msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+msgstr "'backsolve'的矩阵奇异。第一个零点对角[%d]"
+
+msgid "complex matrices not permitted at present"
+msgstr "复数矩阵现在不能用"
+
+msgid "non-numeric argument to 'chol'"
+msgstr "'chol'的变元不是数值"
+
+msgid "non-square matrix in 'chol'"
+msgstr "'chol'的矩阵不是正方形的"
+
+msgid "non-matrix argument to 'chol'"
+msgstr "'chol'的变元不是矩阵"
+
+msgid "matrix not positive definite"
+msgstr "非正定矩阵"
+
+msgid "non-positive definite matrix in 'chol'"
+msgstr "'chol'里的矩阵为非正定"
+
+msgid "non-numeric argument to 'chol2inv'"
+msgstr "'chol2inv'的变元不是数值"
+
+msgid "invalid 'size' argument in 'chol2inv'"
+msgstr "'chol2inv'的'size'变元不对"
+
+msgid "singular matrix in 'chol2inv'"
+msgstr "'chol2inv'里有奇异矩阵"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "'x'必需是阵列，而且至少得有两个维度"
+
+msgid "invalid 'dims'"
+msgstr "'dims' 有错"
+
+msgid "bad handler specification"
+msgstr "处置器柄规格不对"
+
+msgid "no 'restart' '%s' found"
+msgstr "没有找到'restart''%s'"
+
+msgid "not an interactive session"
+msgstr "非交互运行式"
+
+msgid "not a valid restart specification"
+msgstr "重新开始的规格不对"
+
+msgid "argument 'where' of length 0"
+msgstr "变元长度为0"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr "'origin'变元的值必需是'start'或是'current'或是'end'"
+
+msgid "can only truncate an open connection"
+msgstr "只能截断已经打开了的链结"
+
+msgid "can only write vector objects"
+msgstr "只能写相量对象"
+
+msgid "can only write character objects"
+msgstr "只能写字符对象"
+
+msgid "supplied timeout must be NULL or a non-negative number"
+msgstr "给的timeout的值要么是NULL，要么是非负数"
+
+msgid "'x' must be numeric"
+msgstr "'x' 必需是数值"
+
+msgid "invalid number of intervals"
+msgstr "间隔数目不对"
+
+msgid "'breaks' are not unique"
+msgstr "'breaks' 的值有重复"
+
+msgid "labels/breaks length conflict"
+msgstr "label/breaks两个变元的长度不一样"
+
+msgid "non-numeric data type in frame"
+msgstr "框里有非数值的数据类"
+
+msgid "class information lost from one or more columns"
+msgstr "一个或多个行的类别信息丢失了"
+
+msgid "invalid 'row.names' length"
+msgstr "'row.names'的长度不对"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "不允许有重复的'row.names'"
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr "'row.names'里不允许有遗漏值"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "数据框的'dimnames'给得不对"
+
+msgid "cannot coerce class \"%s\" into a data.frame"
+msgstr "不能强迫\"%s\"类别变成数据框"
+
+msgid "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr "'row.names'不对，长度%d与数据框的%d行不相配"
+
+msgid "supplied %d row names for %d rows"
+msgstr "%d行名与%d行不相配"
+
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr "options('stringsAsFactors') 只能取TRUE或FALSE值"
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "'data.frame'变元里%d单元中行名不匹配"
+
+msgid "some row.names duplicated:"
+msgstr "某些row.names有重复："
+
+msgid ","
+msgstr "，"
+
+msgid "--> row.names NOT used"
+msgstr "--> row.names不再有用"
+
+msgid "row names contain missing values"
+msgstr "行名里有遗漏值"
+
+msgid "duplicate row.names:"
+msgstr "row.names有重复:"
+
+msgid "arguments imply differing number of rows:"
+msgstr "变元值意味着不同的行数"
+
+msgid "row.names should specify one of the variables"
+msgstr "row.names必需指定某一个变数"
+
+msgid "row names supplied are of the wrong length"
+msgstr "行名长度不对"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr "短变数里找到了行名，因此不用"
+
+msgid "drop argument will be ignored"
+msgstr "忽略drop变元"
+
+msgid "undefined columns selected"
+msgstr "选择了未定义的列"
+
+msgid "rhs is the wrong length for indexing by a logical matrix"
+msgstr "用逻辑矩阵做指标的话等式右手的长度不对"
+
+msgid "only logical matrix subscripts are allowed in replacement"
+msgstr "替换时只能用逻辑矩阵下标"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "需要0，1或2下标"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr "执行数据框下标赋值时是不允许遗漏值的"
+
+msgid "non-existent rows not allowed"
+msgstr "不允许不存在的行"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "新的列会在旧的列里留下洞"
+
+msgid "duplicate subscripts for columns"
+msgstr "列里有重复的下标"
+
+msgid "replacement has %d rows, data has %d"
+msgstr "替换数据里有%d行，但数据有%d"
+
+msgid "replacement has %d items, need %d"
+msgstr "替换值里有%d单元，需要%d"
+
+msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr "替换单元%d是有%d行的矩阵/数据框，需要%d"
+
+msgid "replacement element %d has %d rows, need %d"
+msgstr "替换单元%d有%d行，需要%d"
+
+msgid "replacement element %d has %d rows to replace %d rows"
+msgstr "替换单元%d有%d行来替换%d行"
+
+msgid "%d rows in value to replace %d rows"
+msgstr "值里有%d行替换%d行"
+
+msgid "replacement data has %d rows to replace %d rows"
+msgstr "替换数据里有%d行来替换%d行"
+
+msgid "provided %d variables to replace %d variables"
+msgstr "%d变数用来替换%d变数"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr "正确调用的写法是x[[j]] <- value或x[[i,j]] <- value "
+
+msgid "replacing element in non-existent column:"
+msgstr "替换不存在列里的单元："
+
+msgid "only a single element should be replaced"
+msgstr "只能替换一个单元"
+
+msgid "names do not match previous names"
+msgstr "名字同原来已有的名字不相对"
+
+msgid "names do not match previous names:"
+msgstr "名字同原来已有的名字不相对:"
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr "串列变元有错：所有变数的长度都应一致"
+
+msgid "non-numeric variable in data frame:"
+msgstr "数据框里有非数值的变元"
+
+msgid "only defined for equally-sized data frames"
+msgstr "只适用于大小相同的数据框"
+
+msgid "list of length %d not meaningful"
+msgstr "%d长度的串列没有意义"
+
+msgid "only defined on a data frame with all numeric or complex variables"
+msgstr "只适用于全数值或全复数的数据框"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "字符串的格式不够标准明确"
+
+msgid "do not know how to convert '%s' to class \"Date\""
+msgstr "不知如何将'%s'转换成\"Date\""
+
+msgid "'%s' is not a \"date\" object"
+msgstr "'%s'不是\"dates\"目标对象"
+
+msgid "'%s' is not a \"dates\" object"
+msgstr "'%s'不是\"dates\"目标对象"
+
+msgid "binary + is not defined for Date objects"
+msgstr "二进列的+法对Date对象不适用"
+
+msgid "Can only subtract from Date objects"
+msgstr "只能从Date对象那儿减"
+
+msgid "unary - is not defined for Date objects"
+msgstr "一进列的-法对Date对象不适用"
+
+msgid "can only subtract numbers from Date objects"
+msgstr "只能从Date对象那儿减数值"
+
+msgid "unary"
+msgstr "一进列"
+
+msgid "not defined for Date objects"
+msgstr "对Date对象不适用"
+
+msgid "'from' must be specified"
+msgstr "'from'一定得给值"
+
+msgid "'from' must be a Date object"
+msgstr "'from'一定得是Date对象"
+
+msgid "'from' must be of length 1"
+msgstr "'from'的长度必需为1"
+
+msgid "'to' must be a Date object"
+msgstr "'to'一定得是Date对象"
+
+msgid "'to' must be of length 1"
+msgstr "'to'的长度必需为1"
+
+msgid "'length.out' must be of length 1"
+msgstr "'length.out'的长度必需为1"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr " 'to'，'by'，'length.out'/'along.with'中四个只能同时选两个"
+
+msgid "'by' must be of length 1"
+msgstr "'by'的长度必需为1"
+
+msgid "invalid 'by' string"
+msgstr "'by'字符串有错"
+
+msgid "invalid string for 'by'"
+msgstr "'by'的字符串有错"
+
+msgid "invalid mode for 'by'"
+msgstr "'by'的模式不对"
+
+msgid "'by' is NA"
+msgstr "'by'是NA"
+
+msgid "'x' must be a date-time object"
+msgstr "'x'必需是date-time对象"
+
+msgid "invalid specification of 'breaks'"
+msgstr "'breaks'的值有错"
+
+msgid "'origin' must be of length one"
+msgstr "'origin'的长度必需为1"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "'lag'和'differences'的值必需为大于等于1的整数"
+
+msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr "不知如何将'%s'转换成\"POSIXlt\"类别"
+
+msgid "wrong class"
+msgstr "类别不对"
+
+msgid "binary + is not defined for \"POSIXt\" objects"
+msgstr "二进列+法不适用于\"POSIXt\" 的对象"
+
+msgid "Can only subtract from POSIXt objects"
+msgstr "只能从POSIXt对象那儿减"
+
+msgid "unary - is not defined for \"POSIXt\" objects"
+msgstr "一进列的-法对\"POSIXt\"对象不适用"
+
+msgid "can only subtract numbers from POSIXt objects"
+msgstr "只能从POSIXt对象那儿减数值"
+
+msgid "not defined for \"POSIXt\" objects"
+msgstr "对\"POSIXt\"对象不适用"
+
+msgid "not defined for POSIXt objects"
+msgstr "对\"POSIXt\"对象不适用"
+
+msgid "'tzone' attributes are inconsistent"
+msgstr "'tzone'的屬性相互有矛盾"
+
+msgid "not defined for \"POSIXct\" objects"
+msgstr "对\"POSIXct\"对象不适用"
+
+msgid "not defined for \"POSIXlt\" objects"
+msgstr "对\"POSIXlt\"对象不适用"
+
+#, fuzzy
+msgid "'tim' is not character or numeric"
+msgstr "'%s'不是函数，也不是字符，也不是符號"
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+#, fuzzy
+msgid "invalid units specified"
+msgstr "'quote'的设定不对"
+
+msgid "not defined for \"difftime\" objects"
+msgstr "对\"difftime\"对象不适用"
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr "*法的两个变元不能同时都是\"difftime\" 对象"
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "/法的第二个变元不能是\"difftime\" 对象"
+
+msgid "'from' must be a POSIXt object"
+msgstr "'from'一定得是POSIXt对象"
+
+msgid "'to' must be a POSIXt object"
+msgstr "'to'一定得是POSIXt对象"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file'要么是字符串，要么是连接"
+
+msgid "'x' must be a square matrix"
+msgstr "'x'必需是正方形矩阵"
+
+msgid "determinant not currently defined for complex matrices"
+msgstr "目前还不能算复数矩阵的行列式"
+
+msgid "first argument is array, but not matrix."
+msgstr "第一个变元是阵列，但不是矩阵"
+
+msgid "only matrix diagonals can be replaced"
+msgstr "只能替换矩阵的对角"
+
+msgid "replacement diagonal has wrong length"
+msgstr "对角替换值的长度不对"
+
+msgid "MARGIN ="
+msgstr "MARGIN ="
+
+msgid "is invalid for dim ="
+msgstr "不能适用于dim="
+
+msgid "must pass a package name, DLLInfo or DllInfoReference object"
+msgstr "必需提供程辑名，DLLInfo或DllInfoReference对象"
+
+msgid "No DLL currently loaded with name or path"
+msgstr "此名称或多路的DLL目前并没有被载入"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "多个DLL有相同的'%s'名字。用%s"
+
+msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+msgstr "必需通过DllInfo对象来设定DLL的名字。见getLoadedDLLs()"
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr "函数在名字空间里并不存在，因此无法找到与其对应的DLL"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr "寻找含本机協力子程式的DLL，但调用的名字空间里没有DLL"
+
+msgid "0 x 0 matrix"
+msgstr "0乘0的矩阵"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "eigen里的矩阵不是正方形的"
+
+msgid "numeric or complex values required in 'eigen'"
+msgstr "'eigen'必需用数值或复数值"
+
+msgid "'ch' returned code %d in 'eigen'"
+msgstr "'eigen'里'ch'回覆了代码%d"
+
+msgid "'rs' returned code %d in 'eigen'"
+msgstr "'eigen'里'rs'回覆了代码%d"
+
+msgid "'cg' returned code %d in 'eigen'"
+msgstr "'eigen'里'cg'回覆了代码%d"
+
+msgid "'rg' returned code %d in 'eigen'"
+msgstr "'eigen'里'rg'回覆了代码%d"
+
+msgid "invalid labels; length %d should be 1 or %d"
+msgstr "标记不对；长度%d应该是1或%d"
+
+msgid "number of levels differs"
+msgstr "层次数目不同"
+
+msgid "not meaningful for factors"
+msgstr "对因子没有意义"
+
+msgid "level sets of factors are different"
+msgstr "因子的层次集不同"
+
+msgid "invalid factor level, NAs generated"
+msgstr "因子层次有错，产生NA"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "'%s'对順序化的因子没有意义"
+
+msgid "no files to copy from"
+msgstr "拷贝时没有可以读的文件"
+
+msgid "no files to copy to"
+msgstr "拷贝时没有可以写的文件"
+
+msgid "more 'from' files than 'to' files"
+msgstr " 'from'的文件比'to'的文件要多"
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "不能同时又读又写同一个文件"
+
+msgid "no files to link from"
+msgstr "鏈結时没有可以读的文件"
+
+msgid "no files/directory to link to"
+msgstr "鏈結时没有可以写的文件/目錄"
+
+msgid "'package' must be of length 1"
+msgstr "'package'的长度必需为1"
+
+msgid "'vec' contains NAs"
+msgstr "'vec'内有NA值"
+
+msgid "'vec' must be sorted non-decreasingly"
+msgstr "'vec'的顺序一定得从小到大"
+
+msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+msgstr "'mode'的值必需是\"double\" (\"real\")或者 \"integer\"中的一个"
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "用format=\"s\"时变元被强迫转变成\"character\" "
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr ""
+"'format'的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
+
+msgid "'flag' can contain only '0+- #'"
+msgstr "'flag'只能含'0+- #'"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr "破损的数据框：縮短列的长度或用NA来填充空白"
+
+msgid "'zero.print' has length > 1"
+msgstr "'zero.print'的长度一定得为> 1"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr "'zero.print'只能取字符，逻辑或NULL值"
+
+msgid "'subset' must evaluate to logical"
+msgstr "'subset'必需可以被评估成为逻辑值"
+
+msgid "'subset' must be logical"
+msgstr "'subset'必需是逻辑值"
+
+msgid "value for '"
+msgstr "这个符号的值'"
+
+msgid "' not found"
+msgstr "'不存在"
+
+#, fuzzy
+msgid "all arguments must be named"
+msgstr "所有变元的长度都应一致"
+
+msgid "'pattern' must be a non-empty character string"
+msgstr "'pattern'必需为非空字符串"
+
+msgid "'max.distance' must be non-negative"
+msgstr "'max.distance'不能有负值"
+
+msgid "unknown match distance components ignored"
+msgstr "匹配位距的組成部分不存在，因此忽略不计"
+
+msgid "'max.distance' components must be non-negative"
+msgstr "'max.distance'的组成部分不能有负值"
+
+msgid "matrix should be square"
+msgstr "矩阵必需的正方形的"
+
+msgid "'object' must be a list"
+msgstr "'object'必需是串列"
+
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr "这是R%s，程辑包'%s'需要%s %s "
+
+msgid "package '%s' was built before R 2.0.0: please re-install it"
+msgstr "程辑包'%s'是在R版本2.0.0之前建的：你得重新组装"
+
+msgid "package '%s' was built under R version %s"
+msgstr "程辑包'%s'是用R版本%s 来建造的"
+
+msgid "package '%s' was built for %s"
+msgstr "程辑包'%s'是为%s建造的"
+
+msgid "package '%s' is not installed for 'arch=%s'"
+msgstr "程辑包'%s'没有安装在'arch=%s'中"
+
+msgid "package '%s' has not been installed properly"
+msgstr "程辑包'%s'没有正确地被建造"
+
+msgid "See the Note in ?library"
+msgstr "见?library 的Note部分"
+
+msgid "Attaching package: '%s'"
+msgstr "载入需要的程辑包：'%s'"
+
+msgid "The following object(s) are masked"
+msgstr "以下的目标对象被遮蔽"
+
+msgid "_by_"
+msgstr "_by_"
+
+msgid "from"
+msgstr "从"
+
+msgid ":"
+msgstr ":"
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "程辑包'%s'已经被合并到'%s'"
+
+msgid "package 'lqs' has been moved back to package 'MASS'"
+msgstr "程辑包'lqs'已经被合并到程辑包'MASS'里去了"
+
+msgid "package 'MASS' has now been loaded"
+msgstr "程辑包'MASS'已成功载入"
+
+msgid "package 'MASS' seems to be missing from this R installation"
+msgstr "本R安装本里好象没有程辑包'MASS'"
+
+msgid "there is no package called '%s', version %s"
+msgstr "不存在名称为'%s'，版本为%s的程辑包"
+
+msgid "there is no package called '%s'"
+msgstr "不存在叫'%s'这个名称的程辑包"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr "在'lib.loc'里找不到常式庫\t树"
+
+msgid "'%s' is not a valid package -- installed < 2.0.0?"
+msgstr "'%s'不是正当的程辑包--是不是在R版本2.0.0之前装的？"
+
+msgid "'%s' not found on search path, using pos = 2"
+msgstr "'%s'在搜索路径上不存在，用pos=2"
+
+msgid "package/namespace load failed for '%s'"
+msgstr "'%s'程辑包/名字空间载入失败，"
+
+msgid "unable to load R code in package '%s'"
+msgstr "程辑包'%s'R的写碼载入失败"
+
+msgid "package '%s' contains no R code"
+msgstr "程辑包'%s'里没有R写码"
+
+msgid ".First.lib failed for '%s'"
+msgstr ".First.lib载入失败，原因为'%s'"
+
+msgid "package '%s' already present in search()"
+msgstr "程辑包'%s'已存在于search()"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr "'DESCRIPTION'有'Encoding'一域，但重新編碼是不可能的"
+
+msgid "%sPackages in library '%s':"
+msgstr "图书馆'%2$s'有%s程辑包："
+
+msgid "no packages found"
+msgstr "找不到程辑包"
+
+msgid "R packages available"
+msgstr "无输入R程辑包"
+
+msgid "shared library '%s' not found"
+msgstr "找不到共享图书馆'%s'"
+
+msgid "shared library '%s' already loaded"
+msgstr "共享图书馆'%s'已经载入了"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "现在dyn.load(\"%s\") ..."
+
+msgid "no shared library was specified"
+msgstr "没有指定共享图书馆"
+
+msgid "shared library '%s' was not loaded"
+msgstr "共享图书馆'%s'没有载入"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "现在dyn.unload(\"%s\") ..."
+
+msgid "Loading required package: %s"
+msgstr "载入需要的程辑包：%s"
+
+msgid "none of the packages are loaded"
+msgstr "所有的程辑包都没有载入"
+
+msgid ""
+"package '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+"找到多个叫'%s'的程辑包，\n"
+"用在'%s'里找到的那一个"
+
+msgid ""
+"Further information is available in the following vignettes in directory '%"
+"s':"
+msgstr "可以在目录'%s'中的小文品内找到更多的信息"
+
+msgid "doc"
+msgstr "文件"
+
+msgid "Description:"
+msgstr "描述："
+
+msgid "Index:"
+msgstr "索引："
+
+msgid "Information on package '%s'"
+msgstr "善于程辑包'%s'的信息"
+
+msgid "Documentation for package '%s'"
+msgstr "没有这个程辑包的说明书"
+
+msgid "package '%s' required by '%s' could not be found"
+msgstr "找不到'%2$s'所需要的程辑包'%1$s'"
+
+msgid "package '%s' %s was found, but %s %s is required by '%s'"
+msgstr "找到了程辑包'%1$s' %2$s，但'%5$s'需要%3$s %4$s"
+
+msgid "package '%s' could not be loaded"
+msgstr "无法载入程辑包'%s'"
+
+msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+msgstr "载入了程辑包'%1$s' %2$s，但'%5$s'需要%3$s %4$s "
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "输入有破损，LF被CR取代"
+
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+"'%s'文件的魔号是'%s'\n"
+"   在R版本2号之前的保存功能不再有用"
+
+msgid "bad 'file' argument"
+msgstr "'file'变元不对"
+
+msgid "'file' must be specified"
+msgstr "必需设定'file'的值"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr "在R版本2号之前的保存功能不再有用"
+
+msgid "'file' must be non-empty string"
+msgstr "'file'的值必需是长度大于0的字符串"
+
+msgid "bad file argument"
+msgstr "文件变元值不对"
+
+msgid "can only save to a binary connection"
+msgstr "只能保存到二进列链结"
+
+msgid "image could not be renamed and is left in"
+msgstr "映像无法被重新命名，因此被留在"
+
+msgid "[Previously saved workspace restored]"
+msgstr "[原来保存的工作空间已还原]"
+
+msgid "invalid 'category' argument"
+msgstr "'category'变元有错"
+
+msgid "must specify formal argument names to vectorize"
+msgstr "向量化之前必需设定正式变元"
+
+#, fuzzy
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'normal.kind'必需是字符，而且其长度只能为1。"
+
+msgid "'arg' should be one of"
+msgstr "'arg'应当是这些其中的一个"
+
+msgid "there is more than one match in 'match.arg'"
+msgstr "'match.arg'里有重复的匹配"
+
+msgid "no match"
+msgstr "找不到匹配"
+
+msgid "'input' must have length 1"
+msgstr "'input'的长度一定得为1"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "'input'和'target'一定都得是字符串"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s'不是函数，也不是字符，也不是符號"
+
+msgid "found non-function '%s'"
+msgstr "找到个非函数'%s'"
+
+msgid "attempt to set rownames on object with no dimensions"
+msgstr "不能给没有维度的对象设行名"
+
+msgid "attempt to set colnames on object with less than two dimensions"
+msgstr "不能给维度小于二的对名设列名"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr "变元不是数值也不是逻辑值：回覆NA"
+
+#, fuzzy
+msgid "'trim' must be numeric of length one"
+msgstr "'origin'的长度必需为1"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "复数数据不能有切尾平均值"
+
+msgid "'by' must match numbers of columns"
+msgstr "'by'的长度一定得和列的长度相同"
+
+msgid "'by' must match number of columns"
+msgstr "'by'的长度一定得和列的长度相同"
+
+msgid "'by' must specify column(s) as numbers, names or logical"
+msgstr "'by'一定得用数字，名字或逻辑值来指定列"
+
+msgid "'by' must specify valid column(s)"
+msgstr "'by'所指定的那些列有错"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "'by.x'和'by.y'设定了不同数目的列"
+
+msgid "additional arguments ignored in message()"
+msgstr ""
+
+msgid "(loaded the methods namespace)"
+msgstr "(载入了methods名字空间)"
+
+msgid ""
+"Tracing functions requires the methods package, but unable to load methods "
+"namespace"
+msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时候出了错"
+
+msgid "Expected a single logical value for the S4 object state"
+msgstr "需要的是一个单独的S4目标对象逻辑值"
+
+msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
+msgid "'%s' is not an exported object from 'namespace:%s'"
+msgstr "'%s'不是'namespace:%s'内的出口对象："
+
+msgid "package '%s' has no name space and"
+msgstr "程辑包'%s'没有名字空间"
+
+msgid "is not on the search path"
+msgstr "'%s'在搜索路径上不存在"
+
+msgid "%s failed in 'attachNamespace'"
+msgstr "'attachNamespace'里%s出错"
+
+msgid "name space is already attached"
+msgstr "名字空间已经连接上了"
+
+msgid "%s not found"
+msgstr "%s不存在"
+
+msgid "cyclic name space dependencies are not supported"
+msgstr "不支持互相从属的循環名字空间"
+
+msgid "%s failed in 'loadNamespace' for '%s'"
+msgstr "'%2$s'的'loadNamespace'出了错：%1$s "
+
+msgid "namespace '%s' is already sealed in loadNamespace"
+msgstr "名字空间'%s'已经在loadNamespace封條了"
+
+msgid "failed to assign RegisteredNativeSymbol for"
+msgstr "不能分配RegisteredNativeSymbol的值给"
+
+msgid "to"
+msgstr "到"
+
+msgid "since"
+msgstr "从"
+
+msgid "is already defined in the"
+msgstr "已经定义于"
+
+msgid "namespace"
+msgstr "名字空间"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr "不能分配NativeSymbolInfo给"
+
+msgid "package '%s' does not have a name space"
+msgstr "程辑包'%s'没有名字空间"
+
+msgid "in '%s' classes for export not defined: %s"
+msgstr "用于出口的'%s'类别不存在：%s"
+
+msgid "in '%s' methods for export not found: %s"
+msgstr "用于出口的'%s'方法不存在：%s "
+
+msgid "No methods table for \""
+msgstr "没有方法列表给于"
+
+msgid "\""
+msgstr "\""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr "找不到关于\"%s\"的隐喻数据对象"
+
+msgid "in '%s' methods specified for export, but none defined: %s"
+msgstr "用于出口的'%s'方法有设定，但没有定義：%s "
+
+msgid "not found"
+msgstr "不存在"
+
+msgid "not loading a name space"
+msgstr "不载入名字空间"
+
+msgid "name space '%s' is loaded"
+msgstr "名字空间'%s'没有载入"
+
+msgid "%s failed in unloadNamespace(%s)"
+msgstr "%s出错：unloadNamespace(%s)"
+
+#, fuzzy
+msgid "name space '%s' is still used by: %s"
+msgstr "名字空间'%s'仍用于：'%s'"
+
+msgid "imperative name space directives are disabled"
+msgstr "強制名字指令功能被关闭"
+
+msgid "all objects in base name space are currently exported."
+msgstr "基本名字空间里的所有对象现在都已被出口"
+
+msgid "can only export from a name space"
+msgstr "只能从名字空间里出口"
+
+msgid "not a name space"
+msgstr "不是名字空间"
+
+msgid "operation not allowed on base name space"
+msgstr "命令不能在基本名字空间上使用"
+
+msgid "duplicate import names"
+msgstr "重复进口名字"
+
+msgid "cannot import into a sealed name space"
+msgstr "不能进口到已经封闭了的名字空间"
+
+msgid "invalid import target"
+msgstr "进口目标有错"
+
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr "\"%s\"函数有可进口方法，但找不到函数用的方法"
+
+msgid "requested 'methods' objects not found in environment/package '%s': %s"
+msgstr "没有在环境/程辑包'%s': %s里找到所要求的'methods'对象"
+
+msgid "cannot add to exports of a sealed name space"
+msgstr "不能在封闭名字空间里的出口加入"
+
+msgid "undefined exports :"
+msgstr "出口不存在："
+
+msgid "package '%s' has no NAMESPACE file"
+msgstr "程辑包'%s' 没有NAMESPACE这一文件"
+
+msgid "empty name in directive '%s' in NAMESPACE file"
+msgstr "NAMESPACE文件里'%s'指示中有空的名字"
+
+msgid "duplicated symbol names"
+msgstr "重复字符名字"
+
+msgid "in useDynLib("
+msgstr "在useDynLib("
+
+msgid ")"
+msgstr ")"
+
+msgid "bad 'S3method' directive: %s"
+msgstr "不是'S3method'指令：%s"
+
+msgid "too many 'S3method' directives"
+msgstr "'S3method'指令过多"
+
+msgid "unknown namespace directive: %s"
+msgstr "未知名字空间指令：%s"
+
+msgid "S3 method '%s' was declared in NAMESPACE but not found"
+msgstr "S3方法'%s'在NAMESPACE里有声明但不存在"
+
+msgid "bad method"
+msgstr "方法有错"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr "在载入名字空间的时候没有找到'%s'对象"
+
+msgid "found an S4 version of '%s' so it has not been imported correctly"
+msgstr "找到了'%s' 的S4版本，因此它没有被正确地被进口"
+
+msgid "'%s' is not implemented yet"
+msgstr "'%s'还没有编程实现"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "'%s' 变元现在还没有用"
+
+msgid "invalid version specification"
+msgstr "版本设定不对"
+
+msgid "wrong argument"
+msgstr "变元不对"
+
+msgid "not defined for package_version objects"
+msgstr "对package_version对象没有定义"
+
+#, fuzzy
+msgid "no arguments"
+msgstr "变元不对"
+
+msgid "zero imputs"
+msgstr ""
+
+msgid "invalid 'n' value"
+msgstr "'n'的值有错"
+
+msgid "'shrink.sml' must be numeric > 0"
+msgstr "'shrink.sml'必需为大于0的数值"
+
+msgid "'min.n' must be non-negative integer <= n"
+msgstr "'min.n'必需为非负的整数，而且得小于n"
+
+msgid "'high.u.bias' must be non-negative numeric"
+msgstr "'high.u.bias' 必需为非负的数值"
+
+msgid "'u5.bias' must be non-negative numeric"
+msgstr "'u5.bias'必需为非负的数值"
+
+msgid "'eps.correct' must be 0, 1, or 2"
+msgstr "'eps.correct'的值只能为0，1，或2"
+
+msgid "first argument must be a QR decomposition"
+msgstr "每一个变元必需是QR分解"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "'qr'和'y'必需有相同的行数"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "'qr.coef'里精确奇异"
+
+msgid "argument is not a QR decomposition"
+msgstr "变元不是QR分解"
+
+msgid "not implemented for complex 'qr'"
+msgstr "没有在复数'qr'内实现"
+
+msgid "not supported for LAPACK QR"
+msgstr "不支持LAPACK QR"
+
+msgid "'k' is too large"
+msgstr "'k'值太大"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "需要大一点的'ncol'值，因为有主轴"
+
+msgid "'x' must be a vector"
+msgstr "'x'必需为向量"
+
+msgid "invalid 'rle' structure"
+msgstr "'rle'结构有错"
+
+#, fuzzy
+msgid "... must contain names or character strings"
+msgstr "'file'要么是NULL要么是是链结要么是字符串"
+
+msgid "incorrect length for 'group'"
+msgstr "‘ group’的长度不对"
+
+msgid "missing values for 'group'"
+msgstr "'group'里有遗漏值"
+
+msgid "not a data frame"
+msgstr "不是数据框"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "'center'的长度必需和'x'列的数目相同"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "'scale'的长度必需和'x'列的数目相同"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "'nmax'和'n'两者只能有一个设定"
+
+msgid "invalid (to - from)/by in seq(.)"
+msgstr "seq(.)里的(to - from)/by 有错"
+
+msgid "wrong sign in 'by' argument"
+msgstr "'by'变元的正負號不对"
+
+msgid "'by' argument is much too small"
+msgstr "'by'变元太小"
+
+msgid "length must be non-negative number"
+msgstr "length必需为非负数"
+
+msgid "too many arguments"
+msgstr "太多变元"
+
+msgid "'connection' must be a connection"
+msgstr "'connection'必需是个链结"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "'file'要么是NULL要么是已经打开了的链结"
+
+msgid "cannot split the message connection"
+msgstr "无法将消息链结分割"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "'file'要么是NULL要么是是链结要么是字符串"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "同屬函数solve()有\"qr\" 方法"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "'solve'里的'a'是奇异矩阵"
+
+msgid "only square matrices can be inverted"
+msgstr "只有正方形的矩阵才能求逆"
+
+msgid "'b' must be compatible with 'a'"
+msgstr "‘b’必需同‘a’相容"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr "调用solve.default于\"qr\"对象：用'qr.solve'"
+
+msgid "singular matrix 'a' in solve"
+msgstr "solve里的'a'是奇异矩阵"
+
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr "'decreasing'必需是长度为一的向量，你是不是想设'partial'的值？"
+
+msgid "'index.return' only for non-factors"
+msgstr "'index.return'只能适用于非因子"
+
+msgid "'x' must be atomic"
+msgstr "'x'必需为基元"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "只有'na.last = NA'才能用'index.return' "
+
+msgid "unsupported options for partial sorting"
+msgstr "不支持这一部分排序选项"
+
+msgid "non-finite 'partial'"
+msgstr "'partial'非有限"
+
+msgid "argument lengths differ"
+msgstr "变元的长度不一样"
+
+msgid ""
+"'x' must be atomic for 'sort.list'\n"
+"Have you called 'sort' on a list?"
+msgstr ""
+"'sort.list'用的'x'必需为原子值\n"
+"你是不是在串列上调用了'sort'函数？"
+
+msgid "method=\"quick\" is only for numeric 'x'"
+msgstr "method=\"quick\"只适用于数值的'x'"
+
+msgid "method=\"radix\" is only for integer 'x'"
+msgstr " method=\"radix\"只适用于整数的'x'"
+
+msgid "'echo' must be logical"
+msgstr "'echo'必需为逻辑值"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr "'verbose'是TRUE，但'echo'不是；... 强迫'echo <- TRUE'"
+
+msgid "unable to find a plausible encoding"
+msgstr "找不到合理的编码"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr "'chdir = TRUE'对URL来说没有任何意义"
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr "'chdir'没有作用，因为不知道目前的目录在哪里"
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr "'chdir = TRUE'对联结来说没有任何意义"
+
+msgid "'%s' is not an existing file"
+msgstr "'%s'不是已经存在的文件"
+
+msgid "Timestamp of '"
+msgstr ""
+
+msgid "' has changed"
+msgstr ""
+
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
+msgid "is not"
+msgstr "不是"
+
+msgid "all"
+msgstr "所有"
+
+msgid "TRUE"
+msgstr "TRUE"
+
+msgid "additional arguments ignored in warning()"
+msgstr ""
+
+msgid "incorrect value for 'x'"
+msgstr "'x'的值不对"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "'x'和'y'的长度必需一致"
+
+msgid "incorrect values of 'indent' and 'width'"
+msgstr "'indent'和'width'的值有错"
+
+msgid "argument to 'svd' must be numeric"
+msgstr "'svd'的变元必需是数值"
+
+msgid "'nv' must be 0 or ncol(x)"
+msgstr "'nv'的值必需为0或为ncol(x)"
+
+msgid "error %d in 'dsvdc'"
+msgstr "'dsvdc'里的%d有错"
+
+msgid "nothing to tabulate"
+msgstr "没有可列表的东西"
+
+msgid "all arguments must have the same length"
+msgstr "所有变元的长度都应一致"
+
+msgid "'object' must inherit from class \"table\""
+msgstr "'object'必需从\"table\"繼承类别"
+
+msgid "'x' must inherit from class \"summary.table\""
+msgstr "'x'必需从\"summary.table\"繼承类别"
+
+msgid "cannot coerce into a table"
+msgstr "不能强迫变表"
+
+msgid "'x' is not an array"
+msgstr "'x'不是陈列"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "'bin'必需是数值或是因子"
+
+msgid "arguments must have same length"
+msgstr "变元的长度必需相同"
+
+msgid "handler must be a function"
+msgstr "處置程式必需是函数"
+
+msgid "no such element '%s'"
+msgstr "没有这样的单元'%s'"
+
+msgid "Removing"
+msgstr "删除"
+
+msgid "Registering evaluate as low-level callback"
+msgstr "把评估登记为低阶回叫"
+
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
+msgstr ""
+
+msgid "'width' must be positive"
+msgstr "'width'必需为正数"
+
+msgid "No traceback available"
+msgstr "无traceback"
+
+msgid "argument to 'which' is not logical"
+msgstr "'which'的变元不是逻辑值"
+
+msgid "invalid 'digits'"
+msgstr "'digits'的值不对"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'zero.print'只能取字符，逻辑或NULL值"
+
+msgid "argument must be character"
+msgstr "变元必需为字符"
+
+msgid "'cmd' could not be run"
+msgstr "无法運行'cmd'"
+
+msgid "'cmd' execution failed with error code %d"
+msgstr "'cmd'运行失败，错误码为%d"
+
+msgid "package '%s' has a non-function '.First.lib'"
+msgstr "程辑包'%s'有一个非函数的'.First.lib'"
+
+msgid "cannot find name space environment"
+msgstr "找不到名字空间环境"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "没有%s这个deparse选项"
+msgstr[1] "没有%s这个deparse选项"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] "图书馆%s里没有程辑包"
+msgstr[1] "图书馆%s里没有程辑包"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] "程辑包%s没有载入"
+msgstr[1] "程辑包%s没有载入"
+
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "不存在叫这个名称的程辑包"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] "'namespace:%2$s'没有出口%1$s这个对象"
+msgstr[1] "'namespace:%2$s'没有出口%1$s这个对象"
+
+msgid "previous export %s is being replaced"
+msgid_plural "previous exports %s are being replaced"
+msgstr[0] "现在正在替换原来出口对象%s"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "警告信息：\n"
+msgstr[1] "警告信息：\n"
+
+#~ msgid "'all' can not be used with other deparse options"
+#~ msgstr "'all'不能和deparse的其他选项同时共存"
+
+#~ msgid "'form' must be a two-sided formula"
+#~ msgstr "'form'必需是双边公式"
+
+#~ msgid "no lines available in input"
+#~ msgstr "输入里内容"
+
+#~ msgid "empty beginning of file"
+#~ msgstr "文件开头是空白的"
+
+#~ msgid "header and 'col.names' are of different lengths"
+#~ msgstr "'header'和'col.names'的长度应当一致"
+
+#~ msgid "more columns than column names"
+#~ msgstr "列数比列名多"
+
+#~ msgid "more column names than columns"
+#~ msgstr "列名比列数多"
+
+#~ msgid "first five rows are empty: giving up"
+#~ msgstr "最先的五行都是空白的：停止工作"
+
+#~ msgid "not all columns named in 'colClasses' exist"
+#~ msgstr "'colClasses'里有些列不存在"
+
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "数值'as.is'表式有错"
+
+#~ msgid "not all columns named in 'as.is' exist"
+#~ msgstr "as.is里有些列名不存在"
+
+#~ msgid "'as.is' has the wrong length %d  != cols = %d"
+#~ msgstr "'as.is'的长度不对%d  != cols = %d "
+
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "'row.names'的设定不对"
+
+#~ msgid "adding class \"ts\": this is deprecated"
+#~ msgstr "加入\"ts\"类别这一功能不再有用"
+
+#~ msgid "conversion to factor is deprecated"
+#~ msgstr "因子转换功能不再有用"
+
+#~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+#~ msgstr "'quote'的值必需是'TRUE', 'FALSE'或数字这三种之一"
+
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "'quote'里的数不对"
+
+#~ msgid "col.names = NA makes no sense when row.names = FALSE"
+#~ msgstr "当row.names = FALSE时col.names = NA是没有意义的"
+
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "'col.names'的设定不对"
+
+#~ msgid "appending column names to file"
+#~ msgstr "把列名附加到文件上"
+
+#~ msgid "attempt to change '%s' ignored"
+#~ msgstr "改变'%s'没有起作用"
+
+#~ msgid "no rows to match"
+#~ msgstr "找不到匹配的行"
+
+#~ msgid "rows are empty: giving up"
+#~ msgstr "所有行都是空白的：停止工作"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "'n'变元有错"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "'r'变元有错"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "'c'变元有错"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "变元'r'和'c'各自的和必需相等"

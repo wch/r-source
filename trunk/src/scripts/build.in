@@ -1,0 +1,705 @@
+#! @PERL@
+#-*- perl -*-
+# Copyright (C) 2000-2006 R Development Core Team
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+## writing to the Free Software Foundation, Inc., 51 Franklin Street,
+## Fifth Floor, Boston, MA 02110-1301  USA.
+
+# Send any bug reports to r-bugs@r-project.org
+
+use Cwd;
+use File::Basename;
+use File::Compare;
+use File::Find;
+use File::Path;
+use File::Copy;
+use Getopt::Long;
+use IO::File;
+use R::Dcf;
+use R::Logfile;
+use R::Rd;
+use R::Utils;
+use R::Vars;
+use Text::DelimMatch;
+use Text::Wrap;
+
+## Don't buffer output.
+$| = 1;
+
+my $revision = ' $Rev$ ';
+my $version;
+my $name;
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+
+R::Vars::error("R_HOME", "R_EXE");
+
+my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
+
+my @exclude_patterns = R::Utils::get_exclude_patterns();
+
+my @known_options = ("help|h", "version|v", "binary", "no-docs",
+		     "use-zip", "use-zip-help", "use-zip-data",
+		     "force", "no-vignettes");
+
+if($WINDOWS) {
+    die "Please set TMPDIR to a valid temporary directory\n"
+	unless (-d ${R::Vars::TMPDIR});
+    @known_options = ("help|h", "version|v", "binary", "docs:s",
+		      "auto-zip",
+		      "use-zip", "use-zip-help", "use-zip-data",
+		      "force", "no-vignettes");
+}
+
+GetOptions(@known_options) or usage();
+
+R_version("R add-on package builder", $version) if $opt_version;
+usage() if $opt_help;
+
+## Use system default unless explicitly specified otherwise.
+$ENV{"R_DEFAULT_PACKAGES"} = "";
+
+my $startdir = R_cwd();
+my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
+my $gzip = R_getenv("R_GZIPCMD", "gzip");
+my $tar = R_getenv("TAR", "tar");
+my $libdir = R_tempfile("Rinst");
+
+my $INSTALL_opts = "";
+$INSTALL_opts .= " --use-zip" if $opt_use_zip;
+$INSTALL_opts .= " --use-zip-data" if $opt_use_zip_data;
+$INSTALL_opts .= " --use-zip-help" if $opt_use_zip_help;
+if($WINDOWS) {
+    $INSTALL_opts .= " --docs=$opt_docs" if $opt_docs;
+    $INSTALL_opts .= " --auto-zip" if $opt_auto_zip;
+} else {
+    $INSTALL_opts .= " --no-docs" if $opt_no_docs;
+}
+## <FIXME>
+## Once we have a 'global' log file, use $log->warning() instead of just
+## print().
+if(!$opt_binary && $INSTALL_opts ne "") {
+    print "** Options '$INSTALL_opts' only for '--binary' ignored\n";
+}
+## </FIXME>
+
+## This is the main loop over all packages to be packaged.
+foreach my $pkg (@ARGV) {
+    my $is_bundle = 0;
+    $pkg =~ s/\/$//;
+    my $pkgname = basename($pkg);
+    my $intname;
+    chdir($startdir);
+
+    my $log = new R::Logfile();
+
+    my $description;
+    $log->checking("for file '$pkg/DESCRIPTION'");
+    if(-r &file_path($pkg, "DESCRIPTION")) {
+	$description = new R::Dcf(&file_path($pkg, "DESCRIPTION"));
+	$log->result("OK");
+    }
+    else {
+	$log->result("NO");
+	exit(1);
+    }
+
+    my @bundlepkgs;
+    if($description->{"Contains"}) {
+	$log->message("looks like '${pkg}' is a package bundle");
+	$is_bundle = 1;
+	$intname = $description->{"Bundle"};
+	@bundlepkgs = split(/\s+/, $description->{"Contains"});
+	foreach my $ppkg (@bundlepkgs) {
+	    $log->message("cleaning '$ppkg' in bundle '$pkg'");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    cleanup_pkg(&file_path("$pkg", "$ppkg"), $log);
+	    $log->setstars("*");
+	}
+	foreach my $ppkg (@bundlepkgs) {
+	    $log->message("preparing '$ppkg' in bundle '$pkg':");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    prepare_pkg(&file_path("$pkg", "$ppkg"), $is_bundle,
+			$description, $log);
+	    $log->setstars("*");
+	}
+	foreach my $ppkg (@bundlepkgs) {
+	    $log->message("cleaning '$ppkg' in bundle '$pkg'");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    cleanup_pkg(&file_path("$pkg", "$ppkg"), $log);
+	    $log->setstars("*");
+	}
+	rmtree("$libdir") if (-d "$libdir");
+    } else {
+	$is_bundle = 0;
+	chdir($startdir);
+	$log->message("preparing '$pkg':");
+	$intname = $description->{"Package"};
+	prepare_pkg("$pkg", $is_bundle, $description, $log);
+    }
+
+    chdir($startdir);
+
+    $log->message("removing junk files");
+    find(\&unlink_junk_files, $pkg);
+
+    my $exclude = R_tempfile("Rbuild-exclude");
+    open(EXCLUDE, "> $exclude")
+	or die "Error: cannot open file '$exclude' for writing\n";
+    binmode EXCLUDE if $WINDOWS;
+    ## <NOTE>
+    ## For bundles, the .Rbuildignore mechanism is not consistent
+    ## between build and check: the latter always works on a per
+    ## package basis.
+    if(-f &file_path($pkg, ".Rbuildignore")) {
+	open(RBUILDIGNORE, &file_path($pkg, ".Rbuildignore"));
+	while(<RBUILDIGNORE>) {
+	    chop;
+	    push(@exclude_patterns, $_) if $_;
+	}
+	close(RBUILDIGNORE);
+    }
+    ## </NOTE>
+    sub find_exclude_files {
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^check$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^chm$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /[Oo]ld$/);
+	print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.arch-ids$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.git$/);
+	## Windows DLL resource file
+	push(@exclude_patterns, "^src/" . $pkgname . "_res\\.rc");
+	my $filename = $File::Find::name;
+	$filename =~ s/^[^\/]*\///;
+	foreach my $p (@exclude_patterns) {
+	    if($WINDOWS) {
+		## Argh: Windows is case-honoring but not
+		## case-insensitive ...
+		print EXCLUDE "$File::Find::name\n"
+		    if($filename =~ /$p/i);
+	    }
+	    else {
+		if($filename =~ /$p/) {
+		    ## Seems that the Tar '-X' option uses exclude
+		    ## *shell* patterns, where '*', '?', and '[...]'
+		    ## are the usual shell wildcards and '\' escapes
+		    ## them.  Hence we need to escape the wildcard
+		    ## characters in file names.  On Windows, the
+		    ## first two are invalid (and hence rejected by
+		    ## R CMD check), and the last two do not need
+		    ## escaping.
+		    $filename = "$File::Find::name";
+		    $filename =~ s/\[/\\\[/g;
+		    $filename =~ s/\]/\\\]/g;
+		    print EXCLUDE "$filename\n";
+		}
+	    }
+	}
+    }
+    chdir(&file_path("$pkg", ".."));
+    find(\&find_exclude_files, "$pkgname");
+    close(EXCLUDE);
+
+    my $filename = "${intname}_" . $description->{"Version"} . ".tar";
+    my $filepath = &file_path($startdir, $filename);
+    ## under Windows, need separate Cygwin and Windows versions of path.
+    my $origfilepath = $filepath;
+    if($WINDOWS) {
+	## workaround for paths in Cygwin tar
+	$filepath =~ s+^([A-Za-z]):+/cygdrive/\1+;
+    }
+    R_system(join(" ",
+		  ("$tar chf",
+		   &shell_quote_file_path($filepath),
+		   "$pkgname")));
+    my $tmpdir = R_tempfile("Rbuild");
+    rmtree($tmpdir) if(-d $tmpdir);
+    mkdir("$tmpdir", 0755)
+	or die "Error: cannot create directory '$tmpdir'\n";
+    chdir($tmpdir);
+    ## was xhf, but there are no symbolic links here and that is invalid
+    ## on FreeBSD, see http://www.freebsd.org/cgi/man.cgi?query=tar&apropos=0&sektion=0&manpath=FreeBSD+5.4-RELEASE+and+Ports&format=html
+    R_system(join(" ",
+		  ("$tar xf",
+		   &shell_quote_file_path($filepath))));
+
+    ## Remove exclude files.
+    open(EXCLUDE, "< $exclude");
+    while(<EXCLUDE>) {
+	rmtree(glob($_));
+    }
+    close(EXCLUDE);
+    unlink($exclude);
+    unlink($origfilepath);
+    ## Now correct the package name (PR#9266)
+    if($pkgname ne $intname) {
+	rename $pkgname, $intname 
+	    or die "Error: cannot rename directory to '$intname'\n";
+	$pkgname = $intname;
+    }
+    ## Fix up man, R and demo directories (in each package for a bundle)
+    sub find_invalid_files {
+	my ($dpath) = @_;
+	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\", TRUE)\n";
+	my @out = R_runR($Rcmd, "--vanilla --slave",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->message("excluding invalid files from '$dpath'");
+	    $log->print(join("\n", @out) . "\n");
+	}
+    }
+    if($is_bundle) {
+	foreach $ppkg (@bundlepkgs) {
+	    &find_invalid_files("$pkgname/$ppkg");
+	    chdir($tmpdir);
+	}
+    } else {
+	&find_invalid_files($pkgname);
+	chdir($tmpdir);
+    }
+    ## Fix permissions.
+    sub fix_permissions {
+	## Note that when called via File::Find::find, $_ holds the
+	## file name within the current directory.
+	if(-d $_) {
+	    ## Directories should really be mode 00755 if possible.
+	    chmod(00755, $_);
+	}
+	elsif(-f $_) {
+	    ## Files should be readable by everyone, and writable
+	    ## only for user.  This leaves a bit of uncertainty
+	    ## about the execute bits.
+	    chmod(((stat $_)[2] | 00644) & 00755, $_);
+	}
+    }
+    find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
+    ## Add build stamp to the DESCRIPTION file.
+    &add_build_stamp_to_description_file(&file_path($pkgname,
+						    "DESCRIPTION"));
+    $log->message("checking for LF line-endings in source files");
+    if($is_bundle) {
+	foreach my $ppkg (@bundlepkgs) {
+	    &fix_CRLF_in_source_files(&file_path($pkgname, $ppkg), $log);
+	}
+    } else {
+	&fix_CRLF_in_source_files($pkgname, $log);
+    }
+
+    sub empty_dir_check {
+	if(-d $_) {
+	    opendir(DIR, $_) or die "cannot open dir $File::Find::name: $!";
+	    my @files = readdir(DIR);
+	    closedir(DIR);
+	    if (@files <= 2) {
+		$log->print("WARNING: directory '$File::Find::name' is empty\n");
+	    }
+	}
+    }
+
+    $log->message("checking for empty or unneeded directories");
+    find(\&empty_dir_check, "${pkgname}");
+
+    sub fix_unneeded_dirs {
+	my ($path) = @_;
+	my $dir;
+	foreach my $system_dir ("Meta", "R-ex", "chtml",
+		       "help", "html", "latex") {
+	    $dir = &file_path($path, $system_dir);
+	    if(-d "$dir") {
+		$log->print(wrap("", "  ",
+				 ("WARNING: Removing directory '$dir'",
+				  "which should only occur",
+				  "in an installed package\n")
+				 ));
+		rmtree("$dir");
+	    }
+	}
+    }
+
+    if($is_bundle) {
+	foreach my $ppkg (@bundlepkgs) {
+	    &fix_unneeded_dirs(&file_path($pkgname, $ppkg));
+	}
+    } else {
+	&fix_unneeded_dirs($pkgname);
+    }
+
+    ## Finalize.
+    if($opt_binary) {
+	$log->message("building binary distribution");
+	chdir($startdir);
+	if (!-d "$libdir") {
+	    mkdir("$libdir", 0755)
+		or die "Error: cannot create directory '$libdir'\n";
+	}
+	my $srcdir = &file_path($tmpdir, $pkgname);
+	my $cmd;
+	if($WINDOWS) {
+	    $log->warning("some HTML links may not be found");
+	    $cmd = join(" ",
+			("Rcmd.exe INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "--build $INSTALL_opts",
+			 &shell_quote_file_path($srcdir)));
+	    if(R_system($cmd)) { $log->error("installation failed"); }
+	} elsif($is_bundle) {
+	    $binfilename = "${pkgname}_" . $description->{"Version"} .
+		"_R_${R_platform}.tar";
+	    my $filepath = &file_path($startdir, $binfilename);
+	    $cmd = join(" ",
+			(&shell_quote_file_path(${R::Vars::R_EXE}),
+			 "CMD INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "$INSTALL_opts",
+			 &shell_quote_file_path($srcdir)));
+	    if(R_system($cmd)) { $log->error("installation failed"); }
+	    chdir("$libdir");
+	    copy(&file_path($startdir, $pkg, "DESCRIPTION"),
+		 "DESCRIPTION");
+	    R_system(join(" ",
+			  ("$tar chf ",
+			   &shell_quote_file_path($filepath),
+			   @bundlepkgs, "DESCRIPTION")));
+	    R_system(join(" ",
+			  ("$gzip -9f ",
+			   &shell_quote_file_path($filepath))));
+	    chdir($startdir);
+	    $log->message("packaged bundle '$pkgname' as '$binfilename.gz'");
+	} else {
+	    $cmd = join(" ",
+			(&shell_quote_file_path(${R::Vars::R_EXE}),
+			 "CMD INSTALL -l",
+			 &shell_quote_file_path($libdir),
+			 "--build $INSTALL_opts",
+			 &shell_quote_file_path($srcdir)));
+	    if(R_system($cmd)) { $log->error("installation failed"); }
+	}
+    } else {
+	$log->message("building '$filename.gz'");
+	R_system(join(" ",
+		      ("$tar chf",
+		       &shell_quote_file_path($filepath),
+		       "$pkgname")));
+	R_system(join(" ",
+		      ("$gzip -9f",
+		       &shell_quote_file_path($origfilepath))));
+    }
+    chdir($startdir);
+    rmtree($tmpdir);
+    $log->close();
+    print("\n");
+}
+
+
+sub add_build_stamp_to_description_file {
+    my ($dpath) = @_;
+
+    my @lines = &read_lines($dpath);
+    @lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+    my $user_name;
+    if($WINDOWS) {
+	$user_name = Win32::LoginName();
+    }
+    else {
+	$user_name = (getpwuid($<))[0];
+    }
+    my $fh = new IO::File($dpath, "w")
+	or die "Error: cannot open file '$dpath' for writing\n";
+    ## Do not keep previous build stamps.
+    @lines = grep(!/^Packaged:/, @lines);
+    $fh->print(join("\n", @lines), "\n");
+    $fh->print("Packaged: ",
+	       scalar(localtime()), "; ",
+	       $user_name, "\n");
+    $fh->close();
+}
+
+
+sub prepare_pkg {
+    my ($pkg, $in_bundle, $description, $log) = @_;
+
+    chdir($pkg);
+    my $pkgdir = R_cwd();
+    my $pkgname = basename($pkgdir);
+
+    &R::Utils::check_package_description($pkgdir, $pkgname, $log,
+					 $in_bundle, 0, 1);
+
+    &cleanup_pkg($pkgdir, $log) if(!$in_bundle);
+
+    ## Only update existing INDEX files.
+    &update_Rd_index("INDEX", "man", $log) if(-f "INDEX");
+
+    if((-d &file_path("inst", "doc"))
+       && &list_files_with_type(&file_path("inst", "doc"),
+				"vignette")) {
+	if(!$opt_no_vignettes) {
+	    my $doit = 1;
+	    ## if we are in a bundle, need to install the whole bundle
+	    ## once.
+	    my $pkg_or_bundle_dir;
+	    if ($in_bundle) {
+		$pkg_or_bundle_dir = dirname($pkgdir);
+		if(-d "$libdir") {
+		    $doit = 0;
+		} else {
+		    $log->message("installing the *bundle* to re-build vignettes");
+		mkdir("$libdir", 0755)
+		    or die "Error: cannot create directory '$libdir'\n";
+		}
+	    } else {
+		$pkg_or_bundle_dir = $pkgdir;
+		$log->message("installing the package to re-build vignettes");
+		mkdir("$libdir", 0755)
+		    or die "Error: cannot create directory '$libdir'\n";
+	    }
+	    my $cmd;
+	    if($WINDOWS) {
+		$cmd = join(" ",
+			    ("Rcmd.exe INSTALL -l",
+			     &shell_quote_file_path($libdir),
+			     &shell_quote_file_path($pkg_or_bundle_dir)));
+	    } else {
+		$cmd = join(" ",
+			    (&shell_quote_file_path(${R::Vars::R_EXE}),
+			     "CMD INSTALL -l",
+			     &shell_quote_file_path($libdir),
+			     &shell_quote_file_path($pkg_or_bundle_dir)));
+	    }
+	    if($doit && R_system($cmd)) {
+		$log->error();
+		$log->print("Installation failed.\n");
+		$log->print("Removing '$libdir'\n");
+		rmtree($libdir);
+		exit(1);
+	    }
+	    my $R_LIBS = $ENV{'R_LIBS'};
+	    $ENV{'R_LIBS'} = env_path("$libdir", $R_LIBS);
+
+	    $log->creating("vignettes");
+	    my $Rcmd = "library(tools)\n";
+	    $Rcmd .= "buildVignettes(dir = '.')\n";
+	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
+	    rmtree("$libdir") unless $in_bundle;
+	    $ENV{'R_LIBS'} = $R_LIBS;
+	    my @err = grep(/^Error/, @out);
+	    if(scalar(@err) > 0) {
+		@out = grep(!/^\>/, @out);
+		$log->error();
+		$log->print(join("\n", @out) . "\n");
+		exit(1);
+	    }
+	    else {
+		$log->result("OK");
+	    }
+
+	    ## And finally, clean up again (if not in a bundle).
+	    &cleanup_pkg($pkgdir, $log) if(!$in_bundle);
+	}
+    }
+
+    1;
+}
+
+sub cleanup_pkg {
+    my ($pkg, $log) = @_;
+
+    chdir($pkg);
+    my $pkgdir = R_cwd();
+    my $pkgname = basename($pkgdir);
+
+    if(-d "src") {
+	chdir("src");
+	$log->message("cleaning src");
+	if($WINDOWS) {
+	    ## A Windows Makefile.win might use
+	    ## $(RHOME)/src/gnuwin32/MkRules.
+	    $ENV{RHOME} = $ENV{R_HOME};
+	    if(-r "Makefile.win") {
+		R_system("${R::Vars::MAKE} -f Makefile.win clean");
+	    } else {
+		foreach my $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>) {
+		    unlink($file);
+		}
+		rmtree("_libs") if (-d "_libs");
+	    }
+	} else {
+	    if(-r "Makefile") {
+		my $makefiles = "-f " .
+		    &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+						      "etc", "Makeconf"));
+		$makefiles .= " -f Makefile";
+		R_system("${R::Vars::MAKE} $makefiles clean");
+	    } else {
+		## Also cleanup possible Windows leftovers ...
+		unlink((<*.o *.s[lo] *.dylib>,
+			"$pkgname.a", "$pkgname.dll", "$pkgname.def"));
+		rmtree(".libs") if (-d ".libs");
+		rmtree("_libs") if (-d "_libs");
+	    }
+	}
+    }
+
+    chdir($pkgdir);
+    if(!$WINDOWS && -x "./cleanup") {
+	$log->message("running cleanup");
+	R_system("./cleanup");
+    }
+
+    1;
+}
+
+
+sub unlink_junk_files {
+    unlink($_) if /^(\.RData|\.Rhistory)$/;
+    if(/^DESCRIPTION$/) {
+	unlink($_) if (-f "DESCRIPTION.in");
+    }
+}
+
+
+sub update_index {
+    my ($oldindex, $newindex, $log) = @_;
+
+    $log->checking("whether '$oldindex' is up-to-date");
+    if(-r $oldindex) {
+	if(compare($oldindex, $newindex) != 0) {
+	    $log->result("NO");
+	    if($opt_force) {
+		$log->message("overwriting '${oldindex}' as " .
+			      "'--force' was given");
+		unlink($oldindex);
+		rename($newindex, $oldindex);
+	    }
+	    else {
+		$log->message("use '--force' to overwrite " .
+			      "the existing '${oldindex}'");
+		unlink($newindex);
+	    }
+	}
+	else {
+	    $log->result("OK");
+	    unlink($newindex);
+	}
+    }
+    else {
+	$log->result("NO");
+	$log->message("creating new '$oldindex'");
+	unlink($oldindex);
+	rename($newindex, $oldindex);
+    }
+
+    1;
+}
+
+sub update_Rd_index {
+    my ($oldindex, $Rd_files, $log) = @_;
+
+    my $newindex = ".Rbuildindex.$$";
+
+    my $Rcmd = "Rdindex(\"${Rd_files}\", \"${newindex}\")\n";
+
+    my %result =
+	R_run_R($Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=tools");
+    if($result{"status"}) {
+	## This is a bit silly ... but just in case this fails, we want
+	## a decent error message.
+	my @out = grep(!/^\>/, @{$result{"out"}});
+	$log->message("computing Rd index");
+	$log->error();
+	$log->print(join("\n", @out) . "\n");
+	exit(1);
+    }
+
+    update_index($oldindex, $newindex, $log);
+    1;
+}
+
+sub fix_CRLF_in_source_files {
+    my ($pkgname, $log) = @_;
+
+    if(-d "$pkgname/src") {
+	my @src_files = &list_files_with_type("$pkgname/src",
+					      "src_no_CRLF");
+	foreach my $file (@src_files) {
+	    my $has_CRLF = 0;
+	    open(FILE, "< $file")
+		or die "Error: cannot open '$file' for reading\n";
+	    open(TFILE, "> $file.tmp")
+		or die "Error: cannot open '$file.tmp' for writing\n";
+            binmode(FILE); binmode(TFILE);	# for Windows
+	    while(<FILE>) {
+		chop;
+		$has_CRLF = 1 if $_ =~ /\r$/;
+		$_ =~ s/\r$//;
+		print TFILE "$_\n";
+	    }
+	    close(TFILE); close(FILE);
+	    if ($has_CRLF) {
+		$log->print("    file '$file' had CRLF line endings\n");
+		unlink($file); # should not be necessary, but is on Windows
+		rename("$file.tmp", $file)
+		    or die "Error: cannot rename '$file.tmp'\n";
+	    } else {
+		unlink("$file.tmp");
+	    }
+	}
+    }
+}
+
+
+sub usage {
+    print STDERR <<END;
+Usage: R CMD $name [options] pkgdirs
+
+Build R packages from package sources in the directories specified by
+pkgdirs.
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print 'build' version info and exit
+
+  --force               force overwriting of INDEX file
+  --no-vignettes        do not rebuild package vignettes
+
+  --binary              build pre-compiled binary packages, with options:
+END
+    if($WINDOWS) {
+	print STDERR "  --docs=TYPE           " .
+	    "type(s) of documentation to build and INSTALL\n";
+	print STDERR "                        " .
+	    "See Rcmd INSTALL --help for possible values of TYPE\n";
+	print STDERR "  --auto-zip            " .
+	    "select zipping of data and help based on size\n";
+    } else {
+	print STDERR "  --no-docs             " .
+	    "do not build and install documentation\n";
+    }
+    print STDERR <<END;
+  --use-zip-data        collect data files in zip archive
+  --use-zip-help        collect help and examples into zip archives
+  --use-zip             combine '--use-zip-data' and '--use-zip-help'
+
+Email bug reports to <r-bugs\@r-project.org>.
+END
+    exit 0;
+}

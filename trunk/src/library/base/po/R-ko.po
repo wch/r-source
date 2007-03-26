@@ -1,0 +1,1544 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.3.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-03-26 13:13\n"
+"PO-Revision-Date: 2005-05-31 09:39+0900\n"
+"Last-Translator: Korean <uiami@hanmail.com>\n"
+"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s'는 없어져 버렸습니다"
+
+msgid "Use '%s' instead."
+msgstr "'%s'를 대신에 사용해주십시오"
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "lp(\"Defunct\")와 help(\"%s-defunct\")를 보아 주십시오"
+
+msgid "See help(\"Defunct\")"
+msgstr "help(\\\"Defunct\\\")를 보아 주십시오"
+
+msgid "'symbol.C' is not needed: please remove it"
+msgstr ""
+
+msgid "'symbol.For' is not needed: please remove it"
+msgstr ""
+
+msgid "'%s' is deprecated."
+msgstr "'%s'는 없어져 버릴 예정입니다"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "help(\\\"Deprecated\\\")와 help(\\\"%s-deprecate\\\")를 보아 주십시오"
+
+msgid "See help(\"Deprecated\")"
+msgstr "help(\\\"Deprecated\\\")를 보아 주십시오"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "'La.svd'의 인수는 수치나 복소수가 아니면 안됩니다"
+
+msgid "infinite or missing values in 'x'"
+msgstr "'x'의 무한값 또는 결과값이 있습니다"
+
+msgid "0 extent dimensions"
+msgstr "범위가 0의 차원입니다"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu'는 0, nrow(x) 또는 ncol(x)가 아니면 안됩니다"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv'는 0, nrow(x) 또는 nod(x)가 아니면 안됩니다"
+
+msgid "second argument must be a list"
+msgstr "제 2 인수는 리스트가 아니면 안됩니다"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "'iconvlist'는 이 시스템으로 이용 가능하지는 않습니다"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind'는 길이 1의 문자열(사용되어야할 RNG명)가 아니면 안됩니다"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' RNG의 유효한 생략명이 아닙니다"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Kinderman-Ramage의 유사 Buggy 버전의 생성원(generator)을 사용합니다"
+
+msgid "'%s' is not a valid choice"
+msgstr "'%s'는 유효한 선택이 아닙니다"
+
+msgid "malformed version string"
+msgstr "'%s'는 유효한 선택이 아닙니다"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(x)은 positive 길이를 가지지 않으면 되지 않습니다"
+
+msgid "'dim' specifies too large an array"
+msgstr "너무 큰 배열을 지정해 있습니다"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "'MARGIN'에 대한 정확하지 않는 값입니다"
+
+msgid "you cannot be serious"
+msgstr "사실일수가 없습니다"
+
+msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+msgstr "*** 'pos=1'는 불가능합니다. 현재는 'pos=2'와 설정합니다"
+
+msgid "*** Note that 'pos=1' will give an error in the future"
+msgstr "*** 'pos=1'는 결국 에러를 제공하는것을 주의해주십시오"
+
+msgid "file '%s' not found"
+msgstr "파일 '%s'가 검색되지 않습니다"
+
+msgid "invalid name"
+msgstr "부적절한 이름입니다"
+
+msgid "is required by"
+msgstr "이하에 의해 요구되었습니다 :"
+
+msgid "(still attached)"
+msgstr "(아직 attached되어 있습니다)"
+
+#, fuzzy
+msgid "namespace cannot be unloaded"
+msgstr "name space '%s'가 적재 되었습니다"
+
+#, fuzzy
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "정규 표현 패턴'['를 '\\\\['로 옮겨놓았습니다"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "정규 표현 패턴 '[<-'를 ' \\\\[<-'로 옮겨놓았습니다"
+
+msgid "RHS must be list"
+msgstr "우변은 리스트가 아니면 안됩니다"
+
+msgid "an object with that name already exists"
+msgstr "그 이름의 오브젝트는 이미 존재합니다"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "autoloader는 '%s'를 '%s'에 검색할수가 없었습니다"
+
+msgid "invalid argument values in 'backsolve'"
+msgstr "'backsolve'에 무효인 인수값이 주어졌습니다"
+
+msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+msgstr "'backsolve'에 특이 행렬 대각선[%d]의 최초 요소가 0 입니다"
+
+msgid "complex matrices not permitted at present"
+msgstr "복소행렬은 현재 허용되어있지 않습니다"
+
+msgid "non-numeric argument to 'chol'"
+msgstr "'chol'에 수치가 아닌 인수입니다"
+
+msgid "non-square matrix in 'chol'"
+msgstr "'chol'에 비정방 행렬입니다"
+
+msgid "non-matrix argument to 'chol'"
+msgstr "'chol'에 행렬이 아닌 인수입니다"
+
+msgid "matrix not positive definite"
+msgstr "행렬은 poitive가 아닙니다"
+
+msgid "non-positive definite matrix in 'chol'"
+msgstr "'chol'에 non-positive 행렬입니다"
+
+msgid "non-numeric argument to 'chol2inv'"
+msgstr "'chol2inv'에서 수치가 아닌 인수입니다"
+
+msgid "invalid 'size' argument in 'chol2inv'"
+msgstr "'chol2inv'에서 무효인 'size'인수"
+
+msgid "singular matrix in 'chol2inv'"
+msgstr "'chol2inv'에서 특이 행렬입니다"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "'x'는 적어도 2차원의 배열이 아니면 되지 않습니다"
+
+msgid "invalid 'dims'"
+msgstr "무효인 'dms' 입니다"
+
+msgid "bad handler specification"
+msgstr "잘못한 handler의 지정입니다"
+
+msgid "no 'restart' '%s' found"
+msgstr "'restart' '%s'가 검색되지 않습니다"
+
+msgid "not an interactive session"
+msgstr "대화적인 session이 아닙니다"
+
+msgid "not a valid restart specification"
+msgstr "유효한 재기동 지정이 아닙니다"
+
+msgid "argument 'where' of length 0"
+msgstr "길이 0의 인수"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr ""
+"'origin'는 'start', current' 또는 'end'의 어느것중 하나가 나오지 않으면 되지 "
+"않습니다"
+
+msgid "can only truncate an open connection"
+msgstr "열린 connection만 잘릴수가 없습니다"
+
+msgid "can only write vector objects"
+msgstr "벡터 오브젝트만 기입할수가 없습니다"
+
+msgid "can only write character objects"
+msgstr "문자 오브젝트만을 기입할수가 없습니다"
+
+msgid "supplied timeout must be NULL or a non-negative number"
+msgstr "timeout은 NUL이거나 non-negative number가 아니면 되지 않습니다"
+
+msgid "'x' must be numeric"
+msgstr "'x'는 수치가 아니면 되지 않습니다"
+
+msgid "invalid number of intervals"
+msgstr "잘못된 구간수입니다"
+
+msgid "'breaks' are not unique"
+msgstr "'breaks'가 일의적이지는 않습니다"
+
+msgid "labels/breaks length conflict"
+msgstr "labels/breaks의 길이가 모순되어져 있습니다"
+
+msgid "non-numeric data type in frame"
+msgstr "프레임중에 수치가 아닌 데이터 유형이 있습니다"
+
+msgid "class information lost from one or more columns"
+msgstr "class 정보가 하나 이상의 열로부터 잃게 되었습니다"
+
+msgid "invalid 'row.names' length"
+msgstr "무효인 'row.names' 길이입니다"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "중복한 'row.names'는 허용되지 않습니다"
+
+#, fuzzy
+msgid "missing values in 'row.names' are not allowed"
+msgstr "'row.names'가 빠져 있어 되지 않습니다"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "데이터 프레임에 무효인 'dmnames'가 주어졌습니다"
+
+msgid "cannot coerce class \"%s\" into a data.frame"
+msgstr "class \\\"%s\\\"는 데이터 프레임에 강제 변환할수가 없습니다"
+
+msgid "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr ""
+"무효인 'row.names'입니다, 길이가 &d 입니다만, 데이터 프레임의 행수는 %d입니다"
+
+msgid "supplied %d row names for %d rows"
+msgstr "%d개의 행명이 %d개의 행에 제공되었습니다"
+
+msgid "options('stringsAsFactors') not set to TRUE or FALSE"
+msgstr ""
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "'data.frame'의 인수에 행명(항목 &d)가 적당하지 않습니다"
+
+msgid "some row.names duplicated:"
+msgstr "row.names가 중복하고 있습니다"
+
+msgid ","
+msgstr ","
+
+msgid "--> row.names NOT used"
+msgstr "사용되어 않는 row.names"
+
+msgid "row names contain missing values"
+msgstr "이름은 결측값를 포함하고 있습니다"
+
+msgid "duplicate row.names:"
+msgstr "row.names가 중복하고 있습니다"
+
+msgid "arguments imply differing number of rows:"
+msgstr "인수는 다른 열수를 의미합니다"
+
+msgid "row.names should specify one of the variables"
+msgstr "row.names는 변수의 하나를 지정해야만 합니다"
+
+msgid "row names supplied are of the wrong length"
+msgstr "주어진 열명은 잘못한 길이입니다"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr "열명은 짧은 변수로부터 검색할수 있어 버리고 갔습니다"
+
+msgid "drop argument will be ignored"
+msgstr "drop인수는 무시됩니다"
+
+msgid "undefined columns selected"
+msgstr "정의하지 않는 열이 선택되었습니다"
+
+msgid "rhs is the wrong length for indexing by a logical matrix"
+msgstr "우변은 논리값 행렬에 의해 첨자 조작하기에는 잘못된 길이입니다"
+
+msgid "only logical matrix subscripts are allowed in replacement"
+msgstr "치환에서 논리값의 행렬첨자만이 허용됩니다"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "0, 1 또는 2개의 첨자가 필요합니다"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr "데이터 프레임의 첨자에 의한 대입에서는 결손값은 허용되지 않습니다"
+
+msgid "non-existent rows not allowed"
+msgstr "존재하지 않는 행은 허용되지 않습니다"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "새로운 열은 기존의 열에서 holes이 있을지도 모릅니다"
+
+msgid "duplicate subscripts for columns"
+msgstr "열에 대한 중복한 첨자입니다"
+
+msgid "replacement has %d rows, data has %d"
+msgstr "치환은 %d열입니다만, 데이터는 %d열입니다"
+
+msgid "replacement has %d items, need %d"
+msgstr "치환은 %d개의 항목을 가집니다만, %d개 필요합니다"
+
+msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr ""
+"치환 요소%d는 %d행의 행렬 또는 데이터 프레임입니다만, %d행이 필요합니다"
+
+msgid "replacement element %d has %d rows, need %d"
+msgstr "치환 요소%d는 %d행을 가집니다만, %d행이 필요합니다"
+
+msgid "replacement element %d has %d rows to replace %d rows"
+msgstr "치환 요소%d는 %d행을 가집니만, %d개의 행을 옮겨놓으려고 합니다"
+
+msgid "%d rows in value to replace %d rows"
+msgstr "value중의 %d행으로 %d행을 옮겨놓으려고 합니다"
+
+msgid "replacement data has %d rows to replace %d rows"
+msgstr "치환 데이터는 %d행을 가집니다만, %d개의 행을 옮겨놓으려고 합니다"
+
+msgid "provided %d variables to replace %d variables"
+msgstr "%d개의 변수를 주어, %d개의 변수를 옮겨놓으려고 합니다"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr "효과인 소환은 x[[j]] <- value 또는 x[i,j]] <- value만입니다"
+
+msgid "replacing element in non-existent column:"
+msgstr "이하의 존재하지 않는 열중의 요소치환입니다"
+
+msgid "only a single element should be replaced"
+msgstr "다만 하나의 요소만에 옮겨놓을수 있어야 할것이 아닙니다"
+
+#, fuzzy
+msgid "names do not match previous names"
+msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
+
+#, fuzzy
+msgid "names do not match previous names:"
+msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr "무효인 리스트의 인수입니다. 모든 변수는 동일길이를 가져야 합니다"
+
+msgid "non-numeric variable in data frame:"
+msgstr "아래의 데이터 프레임중에 수치가 아닌 변수가 있습니다"
+
+msgid "only defined for equally-sized data frames"
+msgstr "(은)는 동일한 size의 데이터 프레임에 대해서만 정의 됩니다"
+
+msgid "list of length %d not meaningful"
+msgstr "길이 %d 의 리스트는 의미가 없습니다"
+
+msgid "only defined on a data frame with all numeric or complex variables"
+msgstr "모든 수치 또는 복소수값의 변수는 데이터 프레임에 대해서만 정의 됩니다"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "문자열은 표준적인 애매함이 없는 서식으로 되고있지 않습니다"
+
+msgid "do not know how to convert '%s' to class \"Date\""
+msgstr "%s를 class \"Date\"에 변환하는 방법을 모릅니다"
+
+msgid "'%s' is not a \"date\" object"
+msgstr "'%s'는 \"date\" 오브젝트가 아닙니다"
+
+msgid "'%s' is not a \"dates\" object"
+msgstr "'%s'는 \"dates\" 오브젝트가 아닙니다"
+
+msgid "binary + is not defined for Date objects"
+msgstr "Date 오브젝트에 대해서는 2항연산 + 은 정의 되어있지 않습니다"
+
+msgid "Can only subtract from Date objects"
+msgstr "Date 오브젝트로부터 나눌수가 없습니다"
+
+msgid "unary - is not defined for Date objects"
+msgstr "항연산 -은 Date 오브젝트에 대해서는 정의 되어있지 않습니다"
+
+msgid "can only subtract numbers from Date objects"
+msgstr "Date 오브젝트로부터는 수치만 나눌수가 없습니다"
+
+msgid "unary"
+msgstr "단항인수"
+
+msgid "not defined for Date objects"
+msgstr "(은)는 Date 오브젝트에 대해서는 정의 되어있지 않습니다"
+
+msgid "'from' must be specified"
+msgstr "'from'를 지정하지 않으면 되지 않습니다"
+
+msgid "'from' must be a Date object"
+msgstr "'from'는 Date 오브젝트가 아니면 되지 않습니다"
+
+msgid "'from' must be of length 1"
+msgstr "'from'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "'to' must be a Date object"
+msgstr "'to' Date 오브젝트가 아니면 되지 않습니다"
+
+msgid "'to' must be of length 1"
+msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "'length.out' must be of length 1"
+msgstr "'length.out'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr ""
+"'to', 'by','length.out' 또는 'along.with'중에 꼭 2개를 지정하지 않으면 되지 "
+"않습니다"
+
+msgid "'by' must be of length 1"
+msgstr "'by'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "invalid 'by' string"
+msgstr "무효인 문자열 'by'입니다"
+
+msgid "invalid string for 'by'"
+msgstr "'by'에 대한 무효인 문자열입니다"
+
+msgid "invalid mode for 'by'"
+msgstr "'by'에 대한 무효인 mode입니다"
+
+msgid "'by' is NA"
+msgstr "'by'가 NA입니다"
+
+msgid "'x' must be a date-time object"
+msgstr "'x'는 date-time 오브젝트가 아니면 되지 않습니다"
+
+msgid "invalid specification of 'breaks'"
+msgstr "'breaks'의 무효인 지정입니다"
+
+msgid "'origin' must be of length one"
+msgstr "'origin'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "'lag' 그리고 'differences'는 1 이상의 정수가 아니면 되지 않습니다"
+
+msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr "'%s'를 class\"POSIXlt\"에 변경하는 방법을 모릅니다"
+
+msgid "wrong class"
+msgstr "잘못된 class입니다"
+
+msgid "binary + is not defined for \"POSIXt\" objects"
+msgstr "\"POSIXt\" 오브젝트에는 2항연산 + 는 정의되어 있지 않습니다"
+
+msgid "Can only subtract from POSIXt objects"
+msgstr "POSIXt 오브젝트로부터 나눌수가 없습니다"
+
+msgid "unary - is not defined for \"POSIXt\" objects"
+msgstr "단항연산 - 는 \"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+msgid "can only subtract numbers from POSIXt objects"
+msgstr "POSIXt 오브젝트로부터 나눌수가 없습니다"
+
+msgid "not defined for \"POSIXt\" objects"
+msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+msgid "not defined for POSIXt objects"
+msgstr "POSIXt 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+msgid "'tzone' attributes are inconsistent"
+msgstr ""
+
+msgid "not defined for \"POSIXct\" objects"
+msgstr "\"POSTIXct\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+msgid "not defined for \"POSIXlt\" objects"
+msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+#, fuzzy
+msgid "'tim' is not character or numeric"
+msgstr "'%s'는 함수, 문자, 또는 심벌이 아닙니다"
+
+msgid "need explicit units for numeric conversion"
+msgstr ""
+
+#, fuzzy
+msgid "invalid units specified"
+msgstr "무효인 'quote' 지정입니다"
+
+msgid "not defined for \"difftime\" objects"
+msgstr "\"difftime\"오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr "곱셈 * 의 인수는 양쪽 모두 \"difftime\" 오브젝트일 수가 없습니다"
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "나눗셈 / 의 제 2 인수는 \"difftime\" 오브젝트일 수가 없습니다"
+
+msgid "'from' must be a POSIXt object"
+msgstr "'from'는 POSIXt 오브젝트가 아니면 되지 않습니다"
+
+msgid "'to' must be a POSIXt object"
+msgstr "'to'는  POSIXt 오브젝트가 아니면 되지 않습니다"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
+
+msgid "'x' must be a square matrix"
+msgstr "'x' 정방 행렬이 아니면 되지 않습니다"
+
+msgid "determinant not currently defined for complex matrices"
+msgstr "행렬식은 현재 복소행열에는 정의 되어있지 않습니다"
+
+msgid "first argument is array, but not matrix."
+msgstr "1 인수는 배열입니다만, 행렬이 아닙니다"
+
+msgid "only matrix diagonals can be replaced"
+msgstr "행렬의 대각성분만을 옮겨놓을수가 있습니다"
+
+msgid "replacement diagonal has wrong length"
+msgstr "치환대각 성분의 길이가 잘못되어 있습니다"
+
+msgid "MARGIN ="
+msgstr "MARGIN ="
+
+msgid "is invalid for dim ="
+msgstr "(은)는 이하의 차원에는 무효입니다"
+
+msgid "must pass a package name, DLLInfo or DllInfoReference object"
+msgstr "패키지명, DLLInfpReferenec 오브젝트를 건네주지 않으면 안됩니다"
+
+msgid "No DLL currently loaded with name or path"
+msgstr "이름 또는 패스를 가지는 Dll는 현재 아무것도 적재되어있지 않습니다"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "에 match 하는 복수의 DLL가 있습니다. '%s'를 사용합니다"
+
+msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+msgstr ""
+"DllInfo 또는 DllInfoReference object에 의해 DLL를 지정하지 않으면 되지 않습니"
+"다.GetLoadedDLLs()를 \n"
+"보아 주십시오"
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr "함수는 이름공간에 없기 때문에 관련있는 DLL를 특정할수가 없습니다"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr ""
+"namespace call에 위한 DLL를 검색했습니만, 호출용의 namespace에는 DLL가 아무것"
+"도 없습니다"
+
+msgid "0 x 0 matrix"
+msgstr "0 x 0 행렬입니다"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "'eigen'에 non-sqare 행렬이 주어졌습니다"
+
+msgid "numeric or complex values required in 'eigen'"
+msgstr "'eigen'에 수치 또는 복소수값이 필요합니다"
+
+msgid "'ch' returned code %d in 'eigen'"
+msgstr "'eigen'로 'ch'가 부호 %d를 돌려주었습니다"
+
+msgid "'rs' returned code %d in 'eigen'"
+msgstr "'eigen'로 'rs'가 부호 %d를 돌려주었습니다"
+
+msgid "'cg' returned code %d in 'eigen'"
+msgstr "'eigen'로 'cg'가 부호 %d를 돌려주었습니다"
+
+msgid "'rg' returned code %d in 'eigen'"
+msgstr "'eigen'로 'rg'가 부호 %d를 돌려주었습니다"
+
+msgid "invalid labels; length %d should be 1 or %d"
+msgstr "무효인 레벨입니다. 길이 %d는 1 또는 %d이어야 합니다"
+
+msgid "number of levels differs"
+msgstr "수준의 수가 다릅니다"
+
+msgid "not meaningful for factors"
+msgstr "인자에 대해서 무의미합니다"
+
+msgid "level sets of factors are different"
+msgstr "인자의 수준 세트 차이가 납니다"
+
+msgid "invalid factor level, NAs generated"
+msgstr "효과인 인자 수준입니다. NAs가 발생했습니다"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "'%s'는 순서 인자에 대해서 무의미합니다"
+
+msgid "no files to copy from"
+msgstr "복사한부터 파일이 없습니다"
+
+msgid "no files to copy to"
+msgstr "복사한것에서 파일이 없습니다"
+
+msgid "more 'from' files than 'to' files"
+msgstr "복사하는 파일보다 많은 복사 전 파일이 있습니다"
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "동일 파일에 복사할수가 없습니다"
+
+msgid "no files to link from"
+msgstr "link 해야할 파일이 없습니다"
+
+msgid "no files/directory to link to"
+msgstr "link 해야할 파일 또는 디렉토리가 없습니다"
+
+msgid "'package' must be of length 1"
+msgstr "'package'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "'vec' contains NAs"
+msgstr "'vec'는 NA값을 포함하고 있습니다"
+
+msgid "'vec' must be sorted non-decreasingly"
+msgstr "'vec'는 비감소순서에 소트되어 있지 않으면 안됩니다"
+
+msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+msgstr ""
+"'mode'는 \"double\" (\"real\") 또는 \"integer\"가 나오지 않으면 되지 않습니다"
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "인수를 \"format=\"s\"에 대한 \"character\"에 강제 변환입니다"
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr ""
+"'format'는 {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\"}의 중에서만 되지 않습"
+"니다"
+
+msgid "'flag' can contain only '0+- #'"
+msgstr "'flag'는 '0+- #'만을 포함합니다"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr ""
+"파손되어진 데이터 프레임입니다.열은 잘릴수 있습니다, 또는 NA값으로 가득채워질"
+"수가 있습니다"
+
+#, fuzzy
+msgid "'zero.print' has length > 1"
+msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
+
+msgid "'zero.print' must be character, logical or NULL"
+msgstr ""
+
+msgid "'subset' must evaluate to logical"
+msgstr "'subset'는 논리값으로서 평가되지 않으면 안됩니다"
+
+msgid "'subset' must be logical"
+msgstr "'subset'는 논리값이 아니면 되지 않습니다"
+
+msgid "value for '"
+msgstr "이하에 대한 값 :"
+
+msgid "' not found"
+msgstr "(을)를 찾아낼수가 없습니다"
+
+#, fuzzy
+msgid "all arguments must be named"
+msgstr "모든 인수는 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "'pattern' must be a non-empty character string"
+msgstr "'pattern'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
+
+msgid "'max.distance' must be non-negative"
+msgstr "'max.distance'는 non-negative이 나오지 않으면 되지 않습니다"
+
+msgid "unknown match distance components ignored"
+msgstr "알수 없는 일치거리요소는 무시되었습니다"
+
+msgid "'max.distance' components must be non-negative"
+msgstr "'max.distance'요소는 non-negative가 나오지 않으면 되지 않습니다"
+
+msgid "matrix should be square"
+msgstr "정방 행렬이어야 합니다"
+
+#, fuzzy
+msgid "'object' must be a list"
+msgstr "'subset'는 논리값이 아니면 되지 않습니다"
+
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr "이것은 R %s입니다.패키지 '%s'는 %s %s를 필요로 합니다"
+
+msgid "package '%s' was built before R 2.0.0: please re-install it"
+msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
+
+msgid "package '%s' was built under R version %s"
+msgstr "패키지 '%s'는 버전 %s의 R미만에서 작성되어졌습니다"
+
+msgid "package '%s' was built for %s"
+msgstr "패키지 '%s'는 %s에 대해서 작성되었습니다"
+
+#, fuzzy
+msgid "package '%s' is not installed for 'arch=%s'"
+msgstr "패키지 '%s'는 올바르고 인스톨 되지 않았습니다"
+
+msgid "package '%s' has not been installed properly"
+msgstr "패키지 '%s'는 올바르고 인스톨 되지 않았습니다"
+
+msgid "See the Note in ?library"
+msgstr "라이브러리?의 노트를 보아주십시오"
+
+msgid "Attaching package: '%s'"
+msgstr "다음의 패키지를 첨가합니다: '%s'"
+
+msgid "The following object(s) are masked"
+msgstr ""
+
+msgid "_by_"
+msgstr ""
+
+msgid "from"
+msgstr ""
+
+msgid ":"
+msgstr ""
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "패케지'%s'는 '%s'에 병합되었습니다"
+
+msgid "package 'lqs' has been moved back to package 'MASS'"
+msgstr "패키지 'lqs'는  패키지 'MASS'으로 재귀했습니다"
+
+msgid "package 'MASS' has now been loaded"
+msgstr "패키지 'MASS'는 적재되었습니다"
+
+msgid "package 'MASS' seems to be missing from this R installation"
+msgstr "패키지 'MASS'는 이 R의 인스톨에서 존재하지 않는것 같습니다"
+
+msgid "there is no package called '%s', version %s"
+msgstr "'%s'와 이름의 패키지(%s 버전)가 없습니다"
+
+msgid "there is no package called '%s'"
+msgstr "'%s'라는 이름의 패키지는 없습니다"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr ""
+
+msgid "'%s' is not a valid package -- installed < 2.0.0?"
+msgstr ""
+"'%s'는 유효한 패키지가 아닙니다. 버전 < 2.0.0으로 인스톨 되어있을지도 모릅니"
+"다"
+
+msgid "'%s' not found on search path, using pos = 2"
+msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
+
+msgid "package/namespace load failed for '%s'"
+msgstr "'%s'에 대한 패키지 또는 이름 공간의 적재가 실패했습니다"
+
+msgid "unable to load R code in package '%s'"
+msgstr "패키지 '%s'에서의 R 코드를 적재할수가 없습니다"
+
+msgid "package '%s' contains no R code"
+msgstr "패키지 '%s'는 R코드를 포함하고 있지 않습니다"
+
+msgid ".First.lib failed for '%s'"
+msgstr "First.lib는 '%s'에 대해서 실패했습니다"
+
+msgid "package '%s' already present in search()"
+msgstr "패키지'%s'는  이미 search()에 존재합니다"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+"'DESCRIPTION' 는 'Encoding' 필드를 가지고 있습니다. 그리고 re-encoding는 가능"
+"하지는 않습니다"
+
+msgid "%sPackages in library '%s':"
+msgstr "라이브러리 '%s'에서의 %s패키지:"
+
+msgid "no packages found"
+msgstr "어떠한 패키지도 검색되지 않았습니다"
+
+msgid "R packages available"
+msgstr "이용 가능한 R 패키지"
+
+msgid "shared library '%s' not found"
+msgstr "공용 라이브러리 '%s'가 검색되지 않습니다"
+
+msgid "shared library '%s' already loaded"
+msgstr "공용 라이브러리 '%s'는 적재되지 않았습니다"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "dyn.load(\"%s\") 중입니다..."
+
+msgid "no shared library was specified"
+msgstr "공용 라이브러리가 아무것도 지정되지 않았습니다"
+
+msgid "shared library '%s' was not loaded"
+msgstr "공용 라이브러리'%s'는 로드 되지 않았습니다"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "dyn.unload(\"%s\")중입니다..."
+
+msgid "Loading required package: %s"
+msgstr "요구된 패키지 %s를 로드중입니다"
+
+msgid "none of the packages are loaded"
+msgstr "어느 패키지도 로드 되지 않습니다"
+
+msgid ""
+"package '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+"패키지 '%s'가 복수(여러개) 검색되었습니다.\n"
+"'%s'에 검색된 것을 사용합니다"
+
+msgid ""
+"Further information is available in the following vignettes in directory '%"
+"s':"
+msgstr "이상의 정보는 디렉토리'%s'에 있는 이하의 vignettes에 있습니다"
+
+msgid "doc"
+msgstr "doc"
+
+msgid "Description:"
+msgstr "기술 :"
+
+msgid "Index:"
+msgstr "색인: "
+
+msgid "Information on package '%s'"
+msgstr "패키지 '%s'의 정보"
+
+msgid "Documentation for package '%s'"
+msgstr "패키지 '%s'를 위한 문서"
+
+msgid "package '%s' required by '%s' could not be found"
+msgstr "'%s'가 요구한 패키지 '%s'는 검색해낼수 없었습니다"
+
+msgid "package '%s' %s was found, but %s %s is required by '%s'"
+msgstr "패키지 '%s' %s는 검색되었지만, %s %s가 '%s'에 의해 요구되어 있습니다"
+
+msgid "package '%s' could not be loaded"
+msgstr "패키지 '%s'를 적재할수가 없었습니다"
+
+msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+msgstr ""
+"패키지 '%s' %s는 적재 되었습니다만, %s %s 가 '%s'에 의해 요구되어 있습니다"
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "입력 오류가 발생되어지고 있습니다. LF가 CR로 옮겨 놓을 수가 있습니다"
+
+msgid ""
+"file '%s' has magic number '%s'\n"
+"   Use of save versions prior to 2 is deprecated"
+msgstr ""
+
+msgid "bad 'file' argument"
+msgstr "잘못한 'file' 인수입니다"
+
+msgid "'file' must be specified"
+msgstr "'file'가 지정되지 않으면 안됩니다"
+
+msgid "Use of save versions prior to 2 is deprecated"
+msgstr ""
+
+msgid "'file' must be non-empty string"
+msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
+
+msgid "bad file argument"
+msgstr "잘못된 파일 인수입니다"
+
+msgid "can only save to a binary connection"
+msgstr "binary connection만 저장할수가 없습니다"
+
+msgid "image could not be renamed and is left in"
+msgstr ""
+
+msgid "[Previously saved workspace restored]"
+msgstr "[이전에 저장된 workspace를 복귀합니다]"
+
+msgid "invalid 'category' argument"
+msgstr "무효인 'category' 인수입니다"
+
+msgid "must specify formal argument names to vectorize"
+msgstr ""
+
+#, fuzzy
+msgid "'arg' must be NULL or a character vector of length >= 1"
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
+
+msgid "'arg' should be one of"
+msgstr "'arg'는 이하의 하나가 아니면 되지 않습니다"
+
+msgid "there is more than one match in 'match.arg'"
+msgstr "'match.arg'에 복수의 match가 있습니다"
+
+msgid "no match"
+msgstr "match 하지 않습니다"
+
+msgid "'input' must have length 1"
+msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s'는 함수, 문자, 또는 심벌이 아닙니다"
+
+msgid "found non-function '%s'"
+msgstr "함수가 아닌 '%s'가 검색되었습니다"
+
+msgid "attempt to set rownames on object with no dimensions"
+msgstr "차원 없음에 오브젝트의 행명을 설정 하려고 했습니다"
+
+msgid "attempt to set colnames on object with less than two dimensions"
+msgstr "차원이 2 미만의 오브젝트의 열명을 설정 하려고 했습니다"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr "인수가 수치이거나 논리값이 아닙니다. NA값을 돌려줍니다"
+
+#, fuzzy
+msgid "'trim' must be numeric of length one"
+msgstr "'origin'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "복소수 데이터에 대해서 절사 평균은 정의 되지 않았습니다"
+
+msgid "'by' must match numbers of columns"
+msgstr "'by'에 열수가 일치하지 않으면 되지 않습니다"
+
+msgid "'by' must match number of columns"
+msgstr "'by'에 열수가 일치하지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'by' must specify column(s) as numbers, names or logical"
+msgstr "'by'는 column(s)를 지정하지 않으면 되지 않습니다"
+
+msgid "'by' must specify valid column(s)"
+msgstr "'by'는 유효한 colums(s)를 지정하지 않으면 되지 않습니다"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "'by.x' 그리고 'by.y'는 다른 열수를 지정하고 있습니다"
+
+msgid "additional arguments ignored in message()"
+msgstr ""
+
+msgid "(loaded the methods namespace)"
+msgstr ""
+
+msgid ""
+"Tracing functions requires the methods package, but unable to load methods "
+"namespace"
+msgstr ""
+"tracing 함수는 메소드 패키지를 필요로 하고 있습니다만, 메소드의 name space를 "
+"적재할수가\n"
+"없습니다"
+
+msgid "Expected a single logical value for the S4 object state"
+msgstr ""
+
+msgid "invalid to change the storage mode of a factor"
+msgstr ""
+
+msgid "'%s' is not an exported object from 'namespace:%s'"
+msgstr "'%s'는 'namespace:%s' 로부터  export된 오브젝트가 아닙니다"
+
+#, fuzzy
+msgid "package '%s' has no name space and"
+msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "is not on the search path"
+msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
+
+msgid "%s failed in 'attachNamespace'"
+msgstr "%s는 'attachNamespace'에 실패했습니다"
+
+msgid "name space is already attached"
+msgstr "name space는 이미 부가되어 있습니다"
+
+msgid "%s not found"
+msgstr "%s를 검색해낼수가 없습니다"
+
+msgid "cyclic name space dependencies are not supported"
+msgstr "cyclic name space의 종속성은 서포트되어 있지 않습니다"
+
+msgid "%s failed in 'loadNamespace' for '%s'"
+msgstr "%s는 '%s'때문에 'loadNamespace'에 실패했습니다"
+
+msgid "namespace '%s' is already sealed in loadNamespace"
+msgstr "%s는 '%s'때문에 'loadNamespace'에 이미 밀폐되었습니다"
+
+msgid "failed to assign RegisteredNativeSymbol for"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "since"
+msgstr ""
+
+msgid "is already defined in the"
+msgstr ""
+
+#, fuzzy
+msgid "namespace"
+msgstr "이름 공간이 아닙니다"
+
+msgid "failed to assign NativeSymbolInfo for"
+msgstr ""
+
+msgid "package '%s' does not have a name space"
+msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
+
+msgid "in '%s' classes for export not defined: %s"
+msgstr "'%s'에는 export를 위한 클래스는 검색되지 않습니다"
+
+msgid "in '%s' methods for export not found: %s"
+msgstr "'%s'에는 export를 위한 메소드는 검색되지 않습니다"
+
+msgid "No methods table for \""
+msgstr ""
+
+msgid "\""
+msgstr ""
+
+msgid "Failed to find metadata object for \"%s\""
+msgstr ""
+
+msgid "in '%s' methods specified for export, but none defined: %s"
+msgstr ""
+"'%s'에 export를 위한 메소드가 지정되어 있습니다만, 어느것도 정의되지 않았습니"
+"다:%s"
+
+msgid "not found"
+msgstr "검색되지 않습니다"
+
+msgid "not loading a name space"
+msgstr "이름 공간을 적재하지 않습니다"
+
+msgid "name space '%s' is loaded"
+msgstr "name space '%s'가 적재 되었습니다"
+
+msgid "%s failed in unloadNamespace(%s)"
+msgstr "%s는 unloadNamespace(%s)에 실패했습니다"
+
+#, fuzzy
+msgid "name space '%s' is still used by: %s"
+msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
+
+msgid "imperative name space directives are disabled"
+msgstr "명령적인 이름공간의 지령은 사용 불가능합니다"
+
+msgid "all objects in base name space are currently exported."
+msgstr "base 이름 공간의 모드 오브젝트는 현재 export되어 있습니다"
+
+msgid "can only export from a name space"
+msgstr "name space으로부터만 export할수가 있습니다"
+
+msgid "not a name space"
+msgstr "이름 공간이 아닙니다"
+
+msgid "operation not allowed on base name space"
+msgstr "base 이름 공간에서 허용되지 않는 operation입니다"
+
+msgid "duplicate import names"
+msgstr "중복한 import명입니다"
+
+msgid "cannot import into a sealed name space"
+msgstr "밀폐된 name 공간에는 import할수가 없지 않습니다"
+
+msgid "invalid import target"
+msgstr "무효인 import target입니다"
+
+msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgstr ""
+
+msgid "requested 'methods' objects not found in environment/package '%s': %s"
+msgstr "요구된 'methods' 오브젝트는 환경/패키지 '%s'에 검색되지 않습니다 :%s"
+
+msgid "cannot add to exports of a sealed name space"
+msgstr "밀폐된 이름 공간의 export에 추가할수가 없습니다"
+
+msgid "undefined exports :"
+msgstr "정의하지 않는 export입니다 :"
+
+msgid "package '%s' has no NAMESPACE file"
+msgstr "패키지 '%s'는 NAMESPACE 파일을 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "empty name in directive '%s' in NAMESPACE file"
+msgstr "패키지 '%s'는 NAMESPACE 파일을 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "duplicated symbol names"
+msgstr "중복한 import명입니다"
+
+msgid "in useDynLib("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "bad 'S3method' directive: %s"
+msgstr "잘못한 'S3method' 지령입니다: %s"
+
+msgid "too many 'S3method' directives"
+msgstr "너무 많는 'S3method' 지령입니다"
+
+msgid "unknown namespace directive: %s"
+msgstr "알수 없는 namespace 지령입니다: %s"
+
+msgid "S3 method '%s' was declared in NAMESPACE but not found"
+msgstr "S3 메소드 '%s'가 NAMESPACE안으로 정의되었습니다만, 검색되지 않습니다"
+
+msgid "bad method"
+msgstr "잘못한 메소드입니다"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr "namespace '%s'를 적대할 때에, 오브젝트 '%s'를 검색해낼수가 없었습니다"
+
+msgid "found an S4 version of '%s' so it has not been imported correctly"
+msgstr ""
+"'%s'의 S4 버전이 검색되었습니다.그래서 그것이 올바르고 import되어 있지 않습니"
+"다"
+
+msgid "'%s' is not implemented yet"
+msgstr "'%s'는 아직 실제로 적용되지 않습니다"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "인수'%s'는 사용되어 있지 않습니다"
+
+msgid "invalid version specification"
+msgstr "무효 버전의 지정입니다"
+
+msgid "wrong argument"
+msgstr "잘못된 인수입니다"
+
+msgid "not defined for package_version objects"
+msgstr "(은)는 package_version 오브젝트에 대해서는 정의 되어 있지 않습니다"
+
+#, fuzzy
+msgid "no arguments"
+msgstr "잘못된 인수입니다"
+
+msgid "zero imputs"
+msgstr ""
+
+msgid "invalid 'n' value"
+msgstr "무효인 'n'값입니다"
+
+msgid "'shrink.sml' must be numeric > 0"
+msgstr "'shrink.sml'는 numberic > 0 수치가 아니면 되지 않습니다"
+
+msgid "'min.n' must be non-negative integer <= n"
+msgstr "'min.n'는 non-negative 정수 <= n 가 나오지 않으면 되지 않습니다"
+
+msgid "'high.u.bias' must be non-negative numeric"
+msgstr "'high.bias'는 non-negative 수치가 아니면 되지 않습니다"
+
+msgid "'u5.bias' must be non-negative numeric"
+msgstr "'u5.bias'는 non-negative 수치가 아니면 되지 않습니다"
+
+msgid "'eps.correct' must be 0, 1, or 2"
+msgstr "'eps.corect'는 0,1 또는 2가 나오지 않으면 되지 않습니다"
+
+msgid "first argument must be a QR decomposition"
+msgstr "최초의 인수는 QR 분해가 아니면 되지 않습니다"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "'qr' 그리고 'y'는 동일 행수를 가지지 않으면 안됩니다"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "'qr.coef'는 정확하게 특이합니다"
+
+msgid "argument is not a QR decomposition"
+msgstr "인수는 QR 분해가 아닙니다"
+
+msgid "not implemented for complex 'qr'"
+msgstr "복소수의 'qr'에 대해서는 실제 적용되지 않습니다"
+
+msgid "not supported for LAPACK QR"
+msgstr "LAPACK QR에 대해서는 실제 적용되지 않습니다"
+
+msgid "'k' is too large"
+msgstr "'k'는 너무 큽니다"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "pivoting 조작이 발생하도록 큰'ncol'이 필요합니다"
+
+msgid "'x' must be a vector"
+msgstr "'x'는 벡터가 아니면 되지 않습니다"
+
+msgid "invalid 'rle' structure"
+msgstr "무효인 'rle' 구조입니다"
+
+#, fuzzy
+msgid "... must contain names or character strings"
+msgstr "'file' NULL, connection, 또는 문자열이 아니면 되지 않습니다"
+
+msgid "incorrect length for 'group'"
+msgstr "'group'에 대한 정확하지 않는 길이입니다"
+
+msgid "missing values for 'group'"
+msgstr "'group'를 위한 값이 없습니다"
+
+msgid "not a data frame"
+msgstr "데이터 프레임이 아닙니다"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "'center'의 길이는 'x'의 열수에 동일하지 않으면 되지 않습니다"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "'scale'의 길이는 'x'의 열수에 동일하지 않으면 되지 않습니다"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "'nmax' 또는 'n'를 지정해 주십시오. 그러나 양쪽 모두는 안됩니다"
+
+msgid "invalid (to - from)/by in seq(.)"
+msgstr "seq(.)안의 (to - from)/by가 부적절합니다"
+
+msgid "wrong sign in 'by' argument"
+msgstr "'by' 인수에서 잘못한 부호가 있습니다"
+
+msgid "'by' argument is much too small"
+msgstr "'by' 인수가 너무 작습니다"
+
+msgid "length must be non-negative number"
+msgstr "길이의 non-negative 수치가 아니면 되지 않습니다"
+
+msgid "too many arguments"
+msgstr "인수의 수가 너무 많습니다"
+
+msgid "'connection' must be a connection"
+msgstr "'connection'는 connection가 아니면 되지 않습니다"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "'file'는 NULL 또는 이미 열린 connection가 아니면 되지 않습니다"
+
+msgid "cannot split the message connection"
+msgstr "메세지 connection를 분할 할수가 없습니다"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "'file' NULL, connection, 또는 문자열이 아니면 되지 않습니다"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "이것은 총칭적 함수 solve()를 위한 \"qr\"메소드입니다"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "'slove'안에 특이 행렬 'a'가 있습니다"
+
+msgid "only square matrices can be inverted"
+msgstr "역행렬은 정방 행렬만 정의 할수가 없습니다"
+
+#, fuzzy
+msgid "'b' must be compatible with 'a'"
+msgstr "'by'는 길이 1이 나오지 않으면 되지 않습니다"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr ""
+"solve.default가 \"qr\"오브젝트에 대해서 호출되었습니다\n"
+"'qr.solve'를 사용해주십시오"
+
+msgid "singular matrix 'a' in solve"
+msgstr "solve에서 특이 행렬 'a'가 있었습니다"
+
+msgid ""
+"'decreasing' must be a length-1 logical vector.\n"
+"Did you intend to set 'partial'?"
+msgstr ""
+
+msgid "'index.return' only for non-factors"
+msgstr "'index.return'는 단지 non-factors입니다"
+
+msgid "'x' must be atomic"
+msgstr "'x'는 atomic이 아니면 되지 않습니다"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "'index.return'는 'na.last =NA'전용입니다"
+
+msgid "unsupported options for partial sorting"
+msgstr "부분적 소트에 대한 서포트되어 있지 않은 옵션입니다"
+
+msgid "non-finite 'partial'"
+msgstr "유한하지 않는 'partial' 입니다"
+
+msgid "argument lengths differ"
+msgstr "인수의 길이가 다릅니다"
+
+msgid ""
+"'x' must be atomic for 'sort.list'\n"
+"Have you called 'sort' on a list?"
+msgstr ""
+
+msgid "method=\"quick\" is only for numeric 'x'"
+msgstr "method=\"quick\"는 수치의 'x'입니다"
+
+msgid "method=\"radix\" is only for integer 'x'"
+msgstr "method=\"radix\"는 정수값의 'x'전용입니다"
+
+msgid "'echo' must be logical"
+msgstr "'echo'는 논리값이 아니면 되지 않습니다"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr ""
+"'verbose'가 TRUE로 'echo'는 그렇지는 않습니다. 'echo <- TRUE'라고 합니다"
+
+msgid "unable to find a plausible encoding"
+msgstr "그럴듯한 인코딩을 검색할수가 없습니다"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "cannot 'chdir' as current directory is unknown"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
+
+msgid "'%s' is not an existing file"
+msgstr "'%s'는 기존의 파일이 아닙니다"
+
+msgid "Timestamp of '"
+msgstr ""
+
+msgid "' has changed"
+msgstr ""
+
+msgid "additional arguments ignored in stop()"
+msgstr ""
+
+#, fuzzy
+msgid "is not"
+msgstr "(은)는 TRUE가 아닙니다"
+
+msgid "all"
+msgstr ""
+
+msgid "TRUE"
+msgstr ""
+
+msgid "additional arguments ignored in warning()"
+msgstr ""
+
+msgid "incorrect value for 'x'"
+msgstr "'x'에 대한 정확하지 않는 값입니다"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "'x' 그리고 'y'는 동일 길이를 가지지 않으면 안됩니다"
+
+msgid "incorrect values of 'indent' and 'width'"
+msgstr "'indent'와 'width'에 대한 부정확한 값입니다"
+
+msgid "argument to 'svd' must be numeric"
+msgstr "'svd'에의 인수는 수치가 아니면 되지 않습니다"
+
+msgid "'nv' must be 0 or ncol(x)"
+msgstr "'nv'는 0 또는 ncol(x)가 나오지 않으면 되지 않습니다"
+
+msgid "error %d in 'dsvdc'"
+msgstr "'dsvdc'에서 에러 %d가 있습니다"
+
+msgid "nothing to tabulate"
+msgstr "외부에서 하는것이 아무것도 없습니다"
+
+msgid "all arguments must have the same length"
+msgstr "모든 인수는 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "'object' must inherit from class \"table\""
+msgstr "'object'는 class \"table\"를 계승하지 않으면 되지 않습니다"
+
+msgid "'x' must inherit from class \"summary.table\""
+msgstr "'x'는 class \"summary.table\"를 계승하지 않으면 되지 않습니다"
+
+msgid "cannot coerce into a table"
+msgstr "테이블에 강제 변환 할수 없습니다"
+
+msgid "'x' is not an array"
+msgstr "'x'는 배열이 아닙니다"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "'bin'는 수치 또는 인자가 아니면 되지 않습니다"
+
+msgid "arguments must have same length"
+msgstr "인수는 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "handler must be a function"
+msgstr "handler는 함수가 아니면 되지 않습니다"
+
+msgid "no such element '%s'"
+msgstr "그러한 요소 '%s'는 없습니다"
+
+msgid "Removing"
+msgstr "이하를 제거합니다"
+
+msgid "Registering evaluate as low-level callback"
+msgstr "Registering는 low-level의 callback으로 평가됩니다"
+
+msgid "user"
+msgstr ""
+
+msgid "system"
+msgstr ""
+
+msgid "elapsed"
+msgstr ""
+
+msgid "'width' must be positive"
+msgstr "'width'는 positive이 아니면 되지 않습니다"
+
+msgid "No traceback available"
+msgstr "이용 할수 있는 traceback가 없습니다"
+
+msgid "argument to 'which' is not logical"
+msgstr "'which'에서 인수는 논리값이 아닙니다"
+
+msgid "invalid 'digits'"
+msgstr "무효인 'digits'입니다"
+
+msgid ""
+"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
+"Windows only"
+msgstr ""
+
+#, fuzzy
+msgid "'input' must be a character vector or 'NULL'"
+msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
+
+msgid "argument must be character"
+msgstr "인수는 문자가 아니면 되지 않습니다"
+
+msgid "'cmd' could not be run"
+msgstr "'cmd'는 실행할수가 없었습니다"
+
+msgid "'cmd' execution failed with error code %d"
+msgstr "'cmd'의 실행은 에러부호 %d로 실패했습니다"
+
+#, fuzzy
+msgid "package '%s' has a non-function '.First.lib'"
+msgstr "패케지'%s'는 '%s'에 병합되었습니다"
+
+#, fuzzy
+msgid "cannot find name space environment"
+msgstr "이름 공간이 아닙니다"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] ""
+"deparse 옵션%s는 인식 할수 없습니다 \n"
+"deparse 옵션(복수)%s는 인식 할수 없습니다"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] ""
+"라이브러리%s는 패키지를 포함하고 있지 않습니다\n"
+"라이비러리(복수)%s는 패키지를 포함하고 있지 않습니다"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] ""
+"패키지 %s는 적재되지 않습니다\n"
+"패키지(복수)%s는 적재되지 않습니다"
+
+#, fuzzy
+msgid "there is no package called"
+msgid_plural "there are no packages called"
+msgstr[0] "'%s'라는 이름의 패키지는 없습니다"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] ""
+"오브젝트%s는 'namespace:%s'에 의해 export되지 않습니다 \n"
+"오브젝트(복수)%s는 'namespace:%s'에 의해 export되지 않습니다"
+
+msgid "previous export %s is being replaced"
+msgid_plural "previous exports %s are being replaced"
+msgstr[0] ""
+"이전의 export %s는 옮겨 놓을수 있습니다 \n"
+"이전의 exports %s는 옮겨 놓을수 있습니다"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] ""
+"S3 메소드 %s는 NAMESPACE로 정의되었습니다만, 검색되지 않았습니다\n"
+"S3 메소드(복수) %s는 NAMESPACE로 정의되었습니만, 검색되지 않았습니다"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] ""
+"경고 메세지:\n"
+"경고 메세지(복수)\n"
+
+#~ msgid "'all' can not be used with other deparse options"
+#~ msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
+
+#~ msgid "no rows to match"
+#~ msgstr "match 해야 할 행이 없습니다"
+
+#~ msgid "'form' must be a two-sided formula"
+#~ msgstr "'form'는  two-sided를 가지는 모델식이 아니면 되지 않습니다"
+
+#~ msgid "no lines available in input"
+#~ msgstr "입력에 이용 가능한 행이 없습니다"
+
+#~ msgid "empty beginning of file"
+#~ msgstr "파일의 개시 부분이 비어 있습니다"
+
+#~ msgid "header and 'col.names' are of different lengths"
+#~ msgstr "header 그리고 'col.names'가 다른 길이입니다"
+
+#~ msgid "more columns than column names"
+#~ msgstr "열명보다 많은 열이 있습니다"
+
+#~ msgid "more column names than columns"
+#~ msgstr "열보다 많은 열명이 있습니다"
+
+#~ msgid "first five rows are empty: giving up"
+#~ msgstr "최초의 5행이 비어 있습니다: 그만둡니다"
+
+#~ msgid "not all columns named in 'colClasses' exist"
+#~ msgstr "'colClasses'에 이름을 들수 있던 열안에 존재하지 않는 것이 있습니다"
+
+#~ msgid "invalid numeric 'as.is' expression"
+#~ msgstr "무효인 수치 'as.is' 표현식"
+
+#~ msgid "not all columns named in 'as.is' exist"
+#~ msgstr "'as.is'에 이름을 들 수 있던 열에 존재하지 않는 것이 있습니다"
+
+#~ msgid "'as.is' has the wrong length %d  != cols = %d"
+#~ msgstr "'as.is'는 잘못된 길이 %d !=cols = %d를 가집니다"
+
+#~ msgid "invalid 'row.names' specification"
+#~ msgstr "무효인 'row.names'의 지정입니다"
+
+#~ msgid "invalid numbers in 'quote'"
+#~ msgstr "'quote'에서 무효인 수치가 있습니다"
+
+#~ msgid "invalid 'col.names' specification"
+#~ msgstr "무효인 'col.names' 지정입니다"
+
+#~ msgid "appending column names to file"
+#~ msgstr "파일에서 열명을 추가합니다"
+
+#, fuzzy
+#~ msgid "rows are empty: giving up"
+#~ msgstr "최초의 5행이 비어 있습니다: 그만둡니다"
+
+#~ msgid "invalid argument 'n'"
+#~ msgstr "무효인 인수'n' 입니다"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "무효인 인수'r' 입니다"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "무효인 인수 'c' 입니다"
+
+#~ msgid "arguments 'r' and 'c' must have the same sums"
+#~ msgstr "인수 'r' 그리고 'c'는 동일 합계를 가지지 않으면 안됩니다"

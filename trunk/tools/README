@@ -1,0 +1,81 @@
+These files are shell and perl scripts used for configuring/building R.
+They are not required at run time, and hence not installed.
+
+The files are as follows.
+
+  config.guess
+  config.sub
+  install-sh
+  mdate-sh
+  missing
+	standard tools from GNU autoconf.  Taken from the autoconf CVS
+	(pserver:anoncvs@subversions.gnu.org:/cvsroot/autoconf, module 
+	'autoconf').
+
+  GETCONFIG
+	create API 'Rconfig.h' from the configure information in
+	'config.h'.
+  GETDISTNAME
+	get the name of the distribution tarball.
+  GETMAKEVAL
+	get the value of a Make variable from a Makefile [this needs to
+	be improved].
+  GETVERSION
+	create API 'Rversion.h' from 'VERSION' and 'SVN-REVISION'.
+  
+  Rdnewer.pl
+	determine whether any Rd file in an Rd tree is newer than a
+	given file.
+  
+  copy-if-change
+	copy a file if changed; otherwise, do nothing.
+
+  getsp.class
+  getsp.java
+	Java class (source and compiled bytecode) used for extracting
+	system properties when detecting Java support in configure.
+	We don't require the existence of a Java compiler, so we need
+	to supply the compiled version as well.
+
+  help2man.pl
+	generate simple manual pages from program output.  Taken from
+	the GNU help2man package (ftp://ftp.gnu.org/gnu/help2man/).
+	
+  install-info.pl
+	create or update entry in Info directory.  Taken from the Debian
+	GNU/Linux stable distribution.
+
+  keywords2html.pl
+	convert 'KEYWORDS.db' to HTML.
+	
+  ldAIX4
+	writes an export file, assembling the exported symbols by
+	reading the output of nm.  This file is needed on AIX (4.2 and
+	later) to compile shared libs.
+
+  link-recommended
+	create links with simplified names to the recommended packages.
+  
+  linkcheck.pl
+	comment out links that are not available.
+
+  ltmain.sh
+	provide generalized library-building support services.  Taken
+	from Libtool 1.5; older versions taken from the Libtool CVS
+	(:pserver:anoncvs@subversions.gnu.org:/cvsroot/libtool, module
+	'libtool').
+
+  move-if-change
+	move a file if changed; otherwise, remove.
+
+  pkg2tex.pl
+	create a single 'PKGNAME-pkg.tex' file from the package docs in
+	LaTeX format.
+
+  rsync-recommended
+	obtain sources for the recommended packages using rsync, and then
+	create links with simplified names to these.
+
+  updatefat
+	updates a fat file by adding a new architecture (Mac OS X only)
+	it is essentially a smart wrapper for "lipo".

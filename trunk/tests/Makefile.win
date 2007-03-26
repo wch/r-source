@@ -1,0 +1,209 @@
+#-*- Makefile -*-
+#
+# ${RHOME}/tests/Makefile.win
+
+# for R_PKGS_BASE
+include ../src/gnuwin32/MkRules
+include ../share/make/vars.mk
+
+srcdir = .
+
+## Can't test when cross-building
+RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
+R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
+RDIFF = $(RHOME)/bin/R CMD Rdiff.sh
+RVAL_IF_DIFF=0
+
+test-src-gct = \
+	eval-etc.R \
+	simple-true.R \
+	arith-true.R \
+	arith.R \
+	lm-tests.R \
+	ok-errors.R \
+	method-dispatch.R
+test-src-strict-1 = \
+	$(test-src-gct) \
+	d-p-q-r-tests.R
+test-src-strict-auto =
+test-src-sloppy-1 = \
+	complex.R \
+	print-tests.R \
+	datasets.R
+test-src-sloppy-auto =
+
+test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
+test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto) \
+  ${test-src-isas} ${test-src-segfault}
+test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
+test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
+test-src = $(test-src-strict) $(test-src-sloppy)
+
+test-src-demo = demos.R demos2.R
+test-src-internet = internet.R
+test-src-isas = isas-tests.R
+test-src-lapack = lapack.R
+test-src-primitive = primitives.R
+test-src-random = p-r-random-tests.R
+test-src-segfault = no-segfault.R
+
+test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
+  reg-plot.R reg-S4.R reg-win.R
+test-src-reg-auto =
+test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
+test-src-reg3 = reg-tests-3.R
+
+test-out-strict = $(test-src-strict:.R=.Rout)
+test-out-sloppy = $(test-src-sloppy:.R=.Rout)
+
+test-out-demo = $(test-src-demo:.R=.Rout)
+test-out-internet = $(test-src-internet:.R=.Rout)
+test-out-isas = $(test-src-isas:.R=.Rout)
+test-out-lapack = $(test-src-lapack:.R=.Rout)
+test-out-primitive = $(test-src-primitive:.R=.Rout)
+test-out-random = $(test-src-random:.R=.Rout)
+test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-reg3 = $(test-src-reg3:.R=.Rout)
+test-out-segfault = $(test-src-segfault:.R=.Rout)
+
+## This macro is used only for dependencies
+test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
+	$(test-out-internet) $(test-out-lapack) \
+	$(test-out-random) $(test-out-reg) $(test-out-reg3) \
+	$(test-out-segfault) $(test-out-isas)
+
+.SUFFIXES:
+.SUFFIXES: .R .Rin .Rout
+
+all-basic-tests = Specific Reg Internet
+all-devel-tests = Docs IsAs Lapack Random Demo Primitive Segfault \
+   Standalone Packages
+
+all check: test-all-basics
+check-devel: check test-all-devel
+check-all: check-devel
+
+
+.Rin.R:
+	@echo "creating '$@'"
+	@$(R) < $< > /dev/null
+
+.R.Rout:
+	@rm -f $@ $@.fail
+	@echo -n "running code in '$<' ..."
+	@$(R) < $< > $@  2>&1 || (mv $@ $@.fail && exit 1)
+	@echo "OK"
+	@if test -f $(srcdir)/$@.save  ; then \
+	  mv $@ $@.fail; \
+	  echo -n "  comparing '$@' to '$(srcdir)/$@.save' ..."; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "OK"; \
+	fi
+
+reg-plot.Rout: reg-plot.R
+	@rm -f $@ $@.fail
+	@echo -n "running code in '$<' ..."
+	@$(R) < $< > $@ 2>&1 || (mv $@ $@.fail && exit 1)
+	@echo "OK"
+	@if test -f $(srcdir)/$@.save ; then \
+	  mv $@ $@.fail; \
+	  echo -n "  comparing '$@' to '$(srcdir)/$@.save' ..."; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "OK"; \
+	fi
+	@echo -n "  comparing 'reg-plot.ps' to '$(srcdir)/reg-plot.ps.save' ..."
+	@$(RDIFF) reg-plot.ps $(srcdir)/reg-plot.ps.save $(RVAL_IF_DIFF)
+	@echo "OK"
+
+test-all-basics:
+	@for name in $(all-basic-tests); do \
+	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	done
+
+test-all-devel:
+	@for name in $(all-devel-tests); do \
+	  $(MAKE)  -f Makefile.win test-$${name} || exit 1; \
+	done
+
+test-Specific-strict: $(test-out-strict)
+test-Specific-sloppy: $(test-out-sloppy)
+test-Specific:
+	@echo "running strict specific tests ..."
+	@$(MAKE) -f Makefile.win test-Specific-strict RVAL_IF_DIFF=1
+	@echo "running sloppy specific tests ..."
+	@$(MAKE) -f Makefile.win test-Specific-sloppy RVAL_IF_DIFF=0
+
+test-Packages:
+	@echo
+	@echo "---- checking base packages ----"
+	@for p in $(R_PKGS_BASE); do \
+	  echo ; \
+	  echo "* checking package '$${p}'"; \
+	  $(RHOME)/bin/R CMD check ../src/library/$${p} || echo; \
+	done
+
+test-Docs:
+	@echo "running tests of documentation examples"
+	@cp ../doc/manual/*.R .
+	@$(MAKE) -f Makefile.win R-intro.Rout RVAL_IF_DIFF=1
+	@cp ../doc/manual/R-exts.c .
+	@$(RHOME)/bin/rcmd SHLIB R-exts.c
+	@$(MAKE) -f Makefile.win R-exts.Rout
+	@rm R-exts.*
+
+test-Demo:
+	@echo "running demos from base and stats"
+	@$(MAKE) -f Makefile.win $(test-out-demo) RVAL_IF_DIFF=0
+
+internet.Rout2:
+	-@$(R) --internet2 < internet.R > internet.Rout2 2>&1 || \
+	  echo " testing --internet2 failed"
+
+## These depend on an internet connection, and the sites being up
+test-Internet:
+	@echo "running tests of Internet and socket functions ..."
+	@echo "  expect some differences"
+	-@$(MAKE) -f Makefile.win $(test-out-internet) RVAL_IF_DIFF=0 || \
+	  echo " testing standard internet connectivity failed"
+	@$(MAKE) -f Makefile.win internet.Rout2 RVAL_IF_DIFF=0
+	-@diff internet.Rout internet.Rout2
+
+test-IsAs:
+	@echo "running tests of consistency of as/is.*"
+	@$(MAKE) -f Makefile.win $(test-out-isas) RVAL_IF_DIFF=1
+
+test-Lapack:
+	@echo "running tests of LAPACK-based functions"
+	@$(MAKE) -f Makefile.win $(test-out-lapack) RVAL_IF_DIFF=0
+
+test-Primitive:
+	@echo "running tests of primitives"
+	@$(MAKE) -f Makefile.win $(test-out-primitive) RVAL_IF_DIFF=0
+
+test-Random:
+	@echo "running tests of random deviate generation"
+	@$(MAKE) -f Makefile.win $(test-out-random) RVAL_IF_DIFF=1
+
+test-Reg:
+	@echo "running regression tests ..."
+	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=1
+	@$(MAKE) -f Makefile.win $(test-out-reg3) RVAL_IF_DIFF=0
+
+test-Segfault:
+	@echo "running tests to possibly trigger segfaults"
+	@$(MAKE) -f Makefile.win $(test-out-segfault) RVAL_IF_DIFF=0
+	@rm -f data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
+
+test-Standalone:
+	@echo "testing building standalone Rmath"
+	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
+	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
+
+clean:
+	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
+	  reg-tests-?.ps $(test-src-auto) R-exts.* R-exts_res.rc R-intro.R Makedeps
+	@rm -rf *.Rcheck
+	@rm -f FALSE* .R .tex mirrors.html
+	@$(MAKE) -C Embedding -f Makefile.win clean

@@ -1,0 +1,876 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.3.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-02-25 10:19\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "RShowDoc() should be used with a character string argument specifying\n   a documentation file"
+msgstr ""
+
+msgid "no documentation for '%s' found in package '%s'"
+msgstr ""
+
+msgid "document not found"
+msgstr ""
+
+msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+msgstr ""
+
+msgid "wrong 'sortby' specified. Using sortby=\"score\""
+msgstr ""
+
+msgid "wrong restriction specified.\nUsing '%s'"
+msgstr ""
+
+msgid "A search query has been submitted to %s"
+msgstr ""
+
+msgid "The results page should open in your browser shortly"
+msgstr ""
+
+msgid "reference to unknown chunk '%s'"
+msgstr ""
+
+msgid "no Sweave file with name '%s' found"
+msgstr ""
+
+msgid "%d Sweave files for basename '%s' found:"
+msgstr ""
+
+msgid "Found invalid multi-byte character data."
+msgstr ""
+
+msgid "Cannot re-encode because 'iconv' is not available."
+msgstr ""
+
+msgid "Try running R in a single-byte locale."
+msgstr ""
+
+msgid "more than one syntax specification found, using the first one"
+msgstr ""
+
+msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr ""
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr ""
+
+msgid "target syntax not of class \"SweaveSyntax\""
+msgstr ""
+
+msgid "target syntax contains no translation table"
+msgstr ""
+
+msgid "parse error or empty option in\n%s"
+msgstr ""
+
+msgid "path to '%s' contains spaces,"
+msgstr ""
+
+msgid "this may cause problems when running LaTeX"
+msgstr ""
+
+msgid "You can now run LaTeX on '%s'"
+msgstr ""
+
+msgid "invalid value for '%s' : %s"
+msgstr ""
+
+msgid "elements of 'what' after the first will be ignored"
+msgstr ""
+
+msgid "%d occurrences in %s"
+msgstr ""
+
+msgid "bad argument"
+msgstr ""
+
+msgid "all arguments must be of class \"person\""
+msgstr ""
+
+msgid "broken installation, no CITATION file in the base package."
+msgstr ""
+
+msgid "package '%s' not found"
+msgstr ""
+
+msgid "no date field in DESCRIPTION file of package '%s'"
+msgstr ""
+
+msgid "could not determine year for '%s' from package DESCRIPTION file"
+msgstr ""
+
+msgid "m < 0"
+msgstr ""
+
+msgid "n < m"
+msgstr ""
+
+msgid "'FUN' must be a function or NULL"
+msgstr ""
+
+msgid "'package' must be a character string or NULL"
+msgstr ""
+
+msgid "datasets have been moved from package 'base' to package 'datasets'"
+msgstr ""
+
+msgid "datasets have been moved from package 'stats' to package 'datasets'"
+msgstr ""
+
+msgid "data index for package '%s' is invalid and will be ignored"
+msgstr ""
+
+msgid "file 'filelist' is missing for directory '%s'"
+msgstr ""
+
+msgid "data set '%s' not found"
+msgstr ""
+
+msgid "kind '%s' not yet implemented"
+msgstr ""
+
+msgid "wrong number of table row entries"
+msgstr ""
+
+msgid "wrong argument to 'dataentry'"
+msgstr ""
+
+msgid "could not restore type information"
+msgstr ""
+
+msgid "modes argument ignored"
+msgstr ""
+
+msgid "'names' argument ignored"
+msgstr ""
+
+msgid "'modes' argument ignored"
+msgstr ""
+
+msgid "could not restore variables properly"
+msgstr ""
+
+msgid "did not assign() anything"
+msgstr ""
+
+msgid "Browsing in the environment with call:"
+msgstr ""
+
+msgid "'dump' is not an object of class 'dump.frames'"
+msgstr ""
+
+msgid "Message:"
+msgstr ""
+
+msgid "Available environments had calls:"
+msgstr ""
+
+msgid "Enter an environment number, or 0 to exit"
+msgstr ""
+
+msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr ""
+
+msgid "No suitable frames for recover()"
+msgstr ""
+
+msgid "No demo found for topic '%s'"
+msgstr ""
+
+msgid "Demo for topic '%s' found more than once,\nusing the one found in '%s'"
+msgstr ""
+
+msgid "invalid 'data' argument"
+msgstr ""
+
+msgid "invalid 'modes' argument"
+msgstr ""
+
+msgid "invalid 'x' argument"
+msgstr ""
+
+msgid "can only handle vector and factor elements"
+msgstr ""
+
+msgid "invalid factor levels in '%s'"
+msgstr ""
+
+msgid "added factor levels in '%s'"
+msgstr ""
+
+msgid "edited row names contain duplicates and will be ignored"
+msgstr ""
+
+msgid "invalid input matrix"
+msgstr ""
+
+msgid "no help file found for '%s'"
+msgstr ""
+
+msgid "more than one help file found: using package '%s'"
+msgstr ""
+
+msgid "'%s' has a help file but no examples file"
+msgstr ""
+
+msgid "test '%s' is not available"
+msgstr ""
+
+msgid "'fix' requires a name"
+msgstr ""
+
+msgid "too many list items (at most up to number 26)"
+msgstr ""
+
+msgid "too many list items (at most up to number 3899)"
+msgstr ""
+
+msgid "'form' must be a two-sided formula"
+msgstr ""
+
+msgid "No documentation for '%s' in specified packages and libraries:"
+msgstr ""
+
+msgid "you could try 'help.search(\"%s\")'"
+msgstr ""
+
+msgid "Help for topic '%s' is not in any loaded package but can be found in the following packages:"
+msgstr ""
+
+msgid "Package"
+msgstr ""
+
+msgid "Library"
+msgstr ""
+
+msgid "Help on topic '%s' was found in the following packages:"
+msgstr ""
+
+msgid "Choose one"
+msgstr ""
+
+msgid "Using the first match ..."
+msgstr ""
+
+msgid "No HTML help for '%s' is available:\ncorresponding file is missing"
+msgstr ""
+
+msgid "Compiled HTML is not installed"
+msgstr ""
+
+msgid "CHM file could not be displayed"
+msgstr ""
+
+msgid "No CHM help for '%s' in package '%s' is available:\nthe CHM file for the package is missing"
+msgstr ""
+
+msgid "R Help on '%s'"
+msgstr ""
+
+msgid "No text help for '%s' is available:\ncorresponding file is missing"
+msgstr ""
+
+msgid "problems running R CMD Rdconv"
+msgstr ""
+
+msgid "No offline help for '%s' is available:\ncorresponding file is missing"
+msgstr ""
+
+msgid "argument '%s' must be a single character string"
+msgstr ""
+
+msgid "incorrect field specification"
+msgstr ""
+
+msgid "do not know what to search"
+msgstr ""
+
+msgid "argument 'help.db' is deprecated"
+msgstr ""
+
+msgid "Rebuilding the data base ..."
+msgstr ""
+
+msgid "Packages {.readRDS() sequentially}:"
+msgstr ""
+
+msgid "could not find package '%s'"
+msgstr ""
+
+msgid "package '%s' has empty hsearch data - strangely"
+msgstr ""
+
+msgid "no hsearch.rds meta data for package"
+msgstr ""
+
+msgid "reencoding ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
+
+msgid "removing all entries with invalid multi-byte character data"
+msgstr ""
+
+msgid "saving the database ..."
+msgstr ""
+
+msgid "no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgstr ""
+
+msgid "incorrect 'agrep' specification"
+msgstr ""
+
+msgid "matched %d objects."
+msgstr ""
+
+msgid "no package '%s' was found"
+msgstr ""
+
+msgid "DESCRIPTION file of package '%s' is corrupt"
+msgstr ""
+
+msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+
+msgid "DESCRIPTION file of package '%s' is missing or broken"
+msgstr ""
+
+msgid "menu() cannot be used non-interactively"
+msgstr ""
+
+msgid "Enter an item from the menu, or 0 to exit"
+msgstr ""
+
+msgid "'%s' is a formal generic function; S3 methods will not likely be found"
+msgstr ""
+
+msgid "no function '%s' is visible"
+msgstr ""
+
+msgid "function '%s' appears not to be generic"
+msgstr ""
+
+msgid "generic function '%s' dispatches methods for generic '%s'"
+msgstr ""
+
+msgid "must supply 'generic.function' or 'class'"
+msgstr ""
+
+msgid "no function '%s' could be found"
+msgstr ""
+
+msgid "S3 method '%s' not found"
+msgstr ""
+
+msgid "environment specified is not a package"
+msgstr ""
+
+msgid "'fixInNamespace' requires a name"
+msgstr ""
+
+msgid "only numeric indices can be used"
+msgstr ""
+
+msgid "cannot create directory '%s'"
+msgstr ""
+
+msgid "'code_files' should be a character vector"
+msgstr ""
+
+msgid "'list' should be a character vector naming R objects"
+msgstr ""
+
+msgid "'namespace' should be a single logical"
+msgstr ""
+
+msgid "cannot turn off locale-specific chars via LC_CTYPE"
+msgstr ""
+
+msgid "no R objects specified or available"
+msgstr ""
+
+msgid "Creating directories ..."
+msgstr ""
+
+msgid "directory '%s' already exists"
+msgstr ""
+
+msgid "Creating DESCRIPTION ..."
+msgstr ""
+
+msgid "Creating NAMESPACE ..."
+msgstr ""
+
+msgid "Creating Read-and-delete-me ..."
+msgstr ""
+
+msgid "Saving functions and data ..."
+msgstr ""
+
+msgid "Copying code files ..."
+msgstr ""
+
+msgid "Making help files ..."
+msgstr ""
+
+msgid "Done."
+msgstr ""
+
+msgid "Further steps are described in '%s'."
+msgstr ""
+
+msgid "unable to access index for repository %s"
+msgstr ""
+
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
+msgstr ""
+
+msgid "bundle '%s' is incompletely installed"
+msgstr ""
+
+msgid "bundle '%s' has extra contents %s"
+msgstr ""
+
+msgid "'priority' must be character or NULL"
+msgstr ""
+
+msgid "argument 'lib' is missing: using %s"
+msgstr ""
+
+msgid "'destdir' is not a directory"
+msgstr ""
+
+msgid "no package '%s' at the repositories"
+msgstr ""
+
+msgid "download of package '%s' failed"
+msgstr ""
+
+msgid "--- Please select a CRAN mirror for use in this session ---"
+msgstr ""
+
+msgid "trying to use CRAN without setting a mirror"
+msgstr ""
+
+msgid "cannot choose a CRAN mirror non-interactively"
+msgstr ""
+
+msgid "cannot set repositories non-interactively"
+msgstr ""
+
+msgid "--- Please select repositories for use in this session ---"
+msgstr ""
+
+msgid "Enter one or more numbers separated by spaces"
+msgstr ""
+
+msgid "'%s' must be supplied"
+msgstr ""
+
+msgid "every package depends on at least one other"
+msgstr ""
+
+msgid "packages %s are mutually dependent"
+msgstr ""
+
+msgid "no packages were specified"
+msgstr ""
+
+msgid "argument 'lib' is missing: using '%s'"
+msgstr ""
+
+msgid "'lib' is not writable"
+msgstr ""
+
+msgid "Would you like to create a personal library\n'%s'\nto install packages into?"
+msgstr ""
+
+msgid "unable to install packages"
+msgstr ""
+
+msgid "unable to create"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on Windows"
+msgstr ""
+
+msgid "cannot install MacOS X binary packages on this plaform"
+msgstr ""
+
+msgid "cannot install Windows binary packages on this plaform"
+msgstr ""
+
+msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+
+msgid "installation of package '%s' had non-zero exit status"
+msgstr ""
+
+msgid "unable to create temporary directory '%s'"
+msgstr ""
+
+msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
+msgstr ""
+
+msgid "The downloaded packages are in\n\t%s"
+msgstr ""
+
+msgid "no object named '%s' to show"
+msgstr ""
+
+msgid "cannot determine a usable name"
+msgstr ""
+
+msgid "Created file named '%s'."
+msgstr ""
+
+msgid "Edit the file and move it to the appropriate directory."
+msgstr ""
+
+msgid "Maintainer:"
+msgstr ""
+
+msgid "Index:"
+msgstr ""
+
+msgid "Further information is available in the following vignettes:"
+msgstr ""
+
+msgid "package title"
+msgstr ""
+
+msgid "A concise (1-5 lines) description of the package"
+msgstr ""
+
+msgid "An overview of how to use the package, including the most important functions"
+msgstr ""
+
+msgid "The author and/or maintainer of the package"
+msgstr ""
+
+msgid "Literature or other references for background information"
+msgstr ""
+
+msgid "Optional links to other man pages, e.g."
+msgstr ""
+
+msgid "simple examples of the most important functions"
+msgstr ""
+
+msgid "Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory"
+msgstr ""
+
+msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"
+msgstr ""
+
+msgid "the object of class \"%s\" in the function call '%s' could not be used as a documentation topic"
+msgstr ""
+
+msgid "no methods for '%s' and no documentation for it as a function"
+msgstr ""
+
+msgid "error in trying to evaluate the expression for argument '%s' (%s)"
+msgstr ""
+
+msgid "no method defined for function '%s' and signature '%s'"
+msgstr ""
+
+msgid "no documentation for function '%s' and signature '%s'"
+msgstr ""
+
+msgid "No DIF data on clipboard"
+msgstr ""
+
+msgid "row and column counts not found"
+msgstr ""
+
+msgid "Unrecognized special data value"
+msgstr ""
+
+msgid "Unrecognized value indicator"
+msgstr ""
+
+msgid "no lines available in input"
+msgstr ""
+
+msgid "header and 'col.names' are of different lengths"
+msgstr ""
+
+msgid "more columns than column names"
+msgstr ""
+
+msgid "more column names than columns"
+msgstr ""
+
+msgid "rows are empty: giving up"
+msgstr ""
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr ""
+
+msgid "invalid numeric 'as.is' expression"
+msgstr ""
+
+msgid "not all columns named in 'as.is' exist"
+msgstr ""
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr ""
+
+msgid "invalid 'row.names' specification"
+msgstr ""
+
+msgid "invalid 'row.names' length"
+msgstr ""
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr ""
+
+msgid "missing values in 'row.names' are not allowed"
+msgstr ""
+
+msgid "missing lengths for some fields"
+msgstr ""
+
+msgid "invalid format"
+msgstr ""
+
+msgid "last record incomplete, %d lines discarded"
+msgstr ""
+
+msgid "'file' must be a character string or connection"
+msgstr ""
+
+msgid "transfer failure"
+msgstr ""
+
+msgid "HTTPUserAgent"
+msgstr ""
+
+msgid "option must be a length one character vector or NULL"
+msgstr ""
+
+msgid "empty beginning of file"
+msgstr ""
+
+msgid "first five rows are empty: giving up"
+msgstr ""
+
+msgid "cannot coerce 'x' to roman"
+msgstr ""
+
+msgid "Invalid roman numeral(s): %s"
+msgstr ""
+
+msgid "invalid 'socket' argument"
+msgstr ""
+
+msgid "'port' must be integer of length 1"
+msgstr ""
+
+msgid "'host' must be character of length 1"
+msgstr ""
+
+msgid "can only receive calls on local machine"
+msgstr ""
+
+msgid "socket not established"
+msgstr ""
+
+msgid "str.data.frame() called with non-data.frame -- coercing to one."
+msgstr ""
+
+msgid "invalid options('str') -- using defaults instead"
+msgstr ""
+
+msgid "'object' does not have valid levels()"
+msgstr ""
+
+msgid "'str.default': 'le' is NA"
+msgstr ""
+
+msgid "profile does not contain memory information"
+msgstr ""
+
+msgid "no events were recorded"
+msgstr ""
+
+msgid "vignette '%s' found more than once,\nusing the one found in '%s'"
+msgstr ""
+
+msgid "vignette '%s' *not* found"
+msgstr ""
+
+msgid "vignette '%s' has no PDF"
+msgstr ""
+
+msgid "select.list() cannot be used non-interactively"
+msgstr ""
+
+msgid "Enter zero or more numbers separated by space"
+msgstr ""
+
+msgid "Invalid input, please try again"
+msgstr ""
+
+msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
+msgstr ""
+
+msgid "invalid numbers in 'quote'"
+msgstr ""
+
+msgid "invalid 'quote' specification"
+msgstr ""
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+msgid "invalid 'col.names' specification"
+msgstr ""
+
+msgid "appending column names to file"
+msgstr ""
+
+msgid "attempt to change '%s' ignored"
+msgstr ""
+
+msgid "'unzip' must be a single character string"
+msgstr ""
+
+msgid "'subject' missing"
+msgstr ""
+
+msgid "no download method found"
+msgstr ""
+
+msgid "download had nonzero exit status"
+msgstr ""
+
+msgid "options(\"browser\") not set"
+msgstr ""
+
+msgid "invalid browser name, check options(\"browser\")."
+msgstr ""
+
+msgid "Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests."
+msgstr ""
+
+msgid "Making links in per-session dir ..."
+msgstr ""
+
+msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
+msgstr ""
+
+msgid "Otherwise, be patient ..."
+msgstr ""
+
+msgid "'url' must be a non-empty character string"
+msgstr ""
+
+msgid "'browser' must be a non-empty character string"
+msgstr ""
+
+msgid "cannot create HTML package index"
+msgstr ""
+
+msgid "cannot create HTML search index"
+msgstr ""
+
+msgid "'memory.size()' is Windows-specific"
+msgstr ""
+
+msgid "'memory.limit()' is Windows-specific"
+msgstr ""
+
+msgid "unable to find the HTML help"
+msgstr ""
+
+msgid "updating HTML package listing"
+msgstr ""
+
+msgid "fixing URLs in non-standard libraries"
+msgstr ""
+
+msgid "If nothing happens, you should open '%s' yourself"
+msgstr ""
+
+msgid "package '%s' successfully unpacked and MD5 sums checked"
+msgstr ""
+
+msgid "malformed bundle DESCRIPTION file, no Contains field"
+msgstr ""
+
+msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+msgstr ""
+
+msgid "failed to create '%s'"
+msgstr ""
+
+msgid "unable to move temporary installation '%s' to '%s'"
+msgstr ""
+
+msgid "cannot remove prior installation of package '%s'"
+msgstr ""
+
+msgid "zipfile '%s' not found"
+msgstr ""
+
+msgid "updating HTML package descriptions"
+msgstr ""
+
+msgid "cannot update HTML package index"
+msgstr ""
+
+msgid "cannot update HTML search index"
+msgstr ""
+
+msgid "cannot update '%s'"
+msgstr ""
+
+msgid "this function is intended to work with the Aqua GUI"
+msgstr ""
+
+msgid "'tar' returned non-zero exit code %d"
+msgstr ""
+
+msgid "cannot remove prior installation of package"
+msgstr ""
+
+msgid        "object '%s' not found"
+msgid_plural "objects '%s' not found"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "'lib' element '%s'  is not a writable directory"
+msgid_plural "'lib' elements '%s' are not writable directories"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "package %s is not available"
+msgid_plural "packages %s are not available"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "dependency %s is not available"
+msgid_plural "dependencies %s are not available"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "also installing the dependency %s"
+msgid_plural "also installing the dependencies %s"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "package '%s' is in use and will not be installed"
+msgid_plural "packages '%s' are in use and will not be installed"
+msgstr[0]    ""
+msgstr[1]    ""

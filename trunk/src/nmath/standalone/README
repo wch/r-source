@@ -1,0 +1,107 @@
+If you have not yet made R, under Unix you must first configure R, and
+under Windows you need to set up almost all the tools to make R and
+then run 
+
+(cd ../../include; make -f Makefile.win config.h Rconfig.h Rmath.h)
+
+Under Unix, making in this directory will make standalone libraries
+libRmath.a and libRmath.so.  `make static' and `make shared' make
+just one of them.
+
+NB: certain compilers are unable to do compile-time IEEE-754
+arithmetic and so cannot compile mlutils.c.  The known example is
+Sun's cc.  Use gcc for mlutils.c (or the whole library).
+
+Under Windows, use 'make -f Makefile.win', which makes Rmath.dll and
+libRmath.a.  'make -f Makefile.win static' makes just libRmath.a.  If
+you want an import library libRmath.dll.a for Rmath.dll use 'make -f
+Makefile.win shared implib'.
+
+To use the routines in your own C or C++ programs, include
+
+#define MATHLIB_STANDALONE
+#include <Rmath.h>
+
+and link against -lRmath (and -lm if needed on your OS).  The example
+file test.c does nothing useful, but is provided to test the process.
+Note that you will probably not be able to run it unless you add the
+directory containing libRmath.so to the LD_LIBRARY_PATH.
+
+Under Windows you can link statically against libRmath.a or
+dynamically against Rmath.dll or its import library libRmath.dll.a.
+If you just use -lRmath it will use the first found of libRmath.dll.a,
+libRmath.a and Rmath.dll in that order, so the result depends on which
+files are present.  You should be able to force things via
+
+-Wl,-Bstatic -lRmath -Wl,dynamic
+-Wl,-Bdynamic -lRmath
+
+or by linking to explicit files (as in the 'test' target in Makefile.win).
+
+
+
+Rmath.h contains R_VERSION_STRING, which is a character string containing
+the current R version, for example "2.2.0".
+
+
+A little care is needed to use the random-number routines. You will
+need to supply the uniform random number generator 
+
+    double unif_rand(void)
+
+or use the one supplied (and with a shared library or DLL you will
+have to use the one supplied, which is the Marsaglia-multicarry with
+an entry point
+
+    set_seed(unsigned int, unsigned int)
+
+to set its seeds).
+
+The facilties to change the normal random number generator are
+available through the constant N01_kind. This takes values
+from the enumeration type
+
+typedef enum {
+    KINDERMAN_RAMAGE,
+    AHRENS_DIETER,
+    BOX_MULLER
+} N01type;
+
+(and USER_NORM is not available).
+
+
+There is full access to R's handling of NaNs, Inf and -Inf via special
+versions of the macros and functions
+
+    ISNAN, R_FINITE, R_log, R_pow and R_pow_di
+
+and (extern) constants R_PosInf, R_NegInf and NA_REAL.
+
+There is no support for R's notion of missing values, in particular
+not for NA_INTEGER nor the distinction between NA and NaN for doubles.
+
+
+Installation (not Windows)
+==========================
+
+The targets
+
+make install
+make uninstall
+
+will (un)install the header Rmath.h and shared and static libraries
+(if built) under ${prefix} (default /usr/local).  Add
+prefix=/path/to/here to the command line to change the installation
+directory (at least under GNU make).
+
+More precise control on where things are installed is available at 
+configure time: the location for the header files can be specified by
+--includedir= (or includedir= on the make command line) and that for the
+libraries by --libdir= (or libdir= on the make command line).
+
+'make install' installs a file for pkg-config to use by e.g.
+
+$(CC) `pkg-config --cflags libRmath` -c test.c
+$(CC) `pkg-config --libs libRmath` test.o -o test
+
+On some systems 'make install-strip' will install a stripped shared library.

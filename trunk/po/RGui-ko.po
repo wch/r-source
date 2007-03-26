@@ -1,0 +1,1217 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2007-03-22 16:57+0000\n"
+"PO-Revision-Date: 2005-05-31 10:39+0900\n"
+"Last-Translator: park ui il <uiami@hanmail.com>\n"
+"Language-Team: South Korea\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CP949\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: console.c:880 console.c:920
+msgid "Not enough memory"
+msgstr "메모리가 충분하지 않습니다"
+
+#: console.c:976 console.c:980
+msgid "Insufficient memory: text not copied to the clipboard"
+msgstr "메모리가 부족합니다:text를 clipboard으로부터 복사를 할수가 없습니다"
+
+#: console.c:1019 graphapp/clipboard.c:54 graphapp/clipboard.c:80
+msgid "Unable to open the clipboard"
+msgstr "clipborad를 열수 없습니다"
+
+#: console.c:1621
+msgid "Insufficient memory. Please close the console"
+msgstr "메모리가 부족합니다.console를 닫아주십시오"
+
+#: console.c:1675 console.c:1728 preferences.c:276
+#, c-format
+msgid ""
+"Font %s-%d-%d  not found.\n"
+"Using system fixed font"
+msgstr ""
+"font %s-%d-%d 가 발견되지않습니다. \n"
+"시스템에 제공 되어져 있는 font를 사용하십시오"
+
+#: console.c:1830
+msgid "Save selection to"
+msgstr "선택한것을 저장하다"
+
+#: console.c:1832
+msgid "Save console contents to"
+msgstr "console에 있는 내용을 저장합니다"
+
+#: console.c:1930
+msgid "Scrolling.\n"
+msgstr "스크롤링.\n"
+
+#: console.c:1931
+msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
+msgstr "Keyboard:  PgUp, PgDown, Ctrl+(Arrows)화살표, Ctrl+Home, Ctrl+End\n"
+
+#: console.c:1932
+msgid ""
+"  Mouse: use the scrollbar(s).\n"
+"\n"
+msgstr ""
+"마우스: 스크롤바를 사용하십시오\n"
+"\n"
+
+#: console.c:1933
+msgid "Editing.\n"
+msgstr "편집.\n"
+
+#: console.c:1934
+msgid "  Moving the cursor: \n"
+msgstr "cursor를 이동 시키는 것:\n"
+
+#: console.c:1935
+msgid "     Left arrow or Ctrl+B: move backward one character;\n"
+msgstr "좌측 화살표 또는 Ctrl+B: 한 문자씩 뒤으로 이동합니다\n"
+
+#: console.c:1936
+msgid "     Right arrow or Ctrl+F: move forward one character;\n"
+msgstr "우측 화살표 또는 Ctrl+F: 한 문자씩 앞으로 이동합니다;\n"
+
+#: console.c:1937
+msgid "     Home or Ctrl+A: go to beginning of line;\n"
+msgstr "Home 또는 Ctrl+A: 맨 처음 라인으로 이동합니다;\n"
+
+#: console.c:1938
+msgid "     End or Ctrl+E: go to end of line;\n"
+msgstr "End  또는 Ctrl+E:  맨 마지막 라인으로 이동하다;\n"
+
+#: console.c:1939
+msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
+msgstr "History: 위 그리고 아래 화살표, Ctrl+P,   Ctrl+N\n"
+
+#: console.c:1940
+msgid "  Deleting:\n"
+msgstr "Deleting:\n"
+
+#: console.c:1941
+msgid "     Del or Ctrl+D: delete current character;\n"
+msgstr "Del 또는 Ctrl+D: 현재 사용하고 있는 문자를 지웁니다;\n"
+
+#: console.c:1942
+msgid "     Backspace: delete preceding character;\n"
+msgstr "Backspace:  우선순위문자를 지웁니다;\n"
+
+#: console.c:1943
+msgid ""
+"     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
+msgstr "Ctrl+Del 또는 Ctrl+ K:  현재 사용하고 있는 문자라인끝까지 지웁니다.\n"
+
+#: console.c:1944
+msgid "     Ctrl+U: delete all text from current line.\n"
+msgstr "Ctrl+U:  현재라인의 모든문자를 지웁니다.\n"
+
+#: console.c:1945
+msgid "  Copy and paste.\n"
+msgstr "복사 그리고 붙여넣기.\n"
+
+#: console.c:1946
+msgid ""
+"     Use the mouse (with the left button held down) to mark (select) text.\n"
+msgstr ""
+"(선택한)text를 마크(mark)하기 위하여 마우스(mouse)(제한적인 좌측버튼)을 사용"
+"하십시오.\n"
+
+#: console.c:1947
+msgid ""
+"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
+msgstr ""
+"clipboard에 있는 마크한 text를 복사하기 위하여 Shitf+Del(또는 Ctrl+C)를 사용"
+"하십시오\n"
+
+#: console.c:1948
+msgid ""
+"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
+"(if any)  \n"
+msgstr ""
+"Shitf+Ins (또는 Ctrl+V 또는 Ctrl+Y)으로 clipboard의 내용을 붙여넣기를 합니다"
+"(만약 있으면)\n"
+
+#: console.c:1949
+msgid "     to the console, Ctrl+X first copy then paste\n"
+msgstr ""
+"consloe에 출력합니다,또 Ctrl+X으로 복사한 후에 붙여넣기 해도 상관없습니다\n"
+
+#: console.c:1950
+msgid "  Misc:\n"
+msgstr "기타:\n"
+
+#: console.c:1951
+msgid "     Ctrl+L: Clear the console.\n"
+msgstr "Ctrl+L:  console을 전부 지웁니다.\n"
+
+#: console.c:1952
+msgid "     Ctrl+O: Toggle overwrite mode: initially off.\n"
+msgstr "Ctrl+O: 저장 Toggle 모드: 처음에 오프(off) 입니다.\n"
+
+#: console.c:1953
+msgid "     Ctrl+T: Interchange current char with one to the left.\n"
+msgstr "Ctrl+T: 현재의 문자 또는 한 문자전의 문자를 교체할수 있습니다.\n"
+
+#: console.c:1954
+msgid ""
+"\n"
+"Note: Console is updated only when some input is required.\n"
+msgstr ""
+"\n"
+"주의(Note): 어떠한 입력이 요구될 경우에만,console이 갱신되어집니다.\n"
+
+#: console.c:1955
+msgid ""
+"  Use Ctrl+W to toggle this feature off/on.\n"
+"\n"
+msgstr "Ctrl+W 으로 현재기능의 off/on를 바꿉니다.\n"
+
+#: console.c:1956
+msgid ""
+"Use ESC to stop the interpreter.\n"
+"\n"
+msgstr "ESC 으로 인터프리터(interpreter)를 중단됩니다.\n"
+
+#: console.c:1957
+msgid "Standard Windows hotkeys can be used to switch to the\n"
+msgstr ""
+"표준 윈도우즈의 핫키(hotkey)는 이하를 변경하기위해 사용할수 있습니다.\n"
+
+#: console.c:1958
+msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
+msgstr "도표 장치 (SDI에 Alt+Tab, MDI에 Ctrl+Tab 또는 Ctrl+F6)"
+
+#: dataentry.c:215 dataentry.c:1782 dataentry.c:1785 dataentry.c:1816
+msgid "invalid argument"
+msgstr "부적절한 인수입니다"
+
+#: dataentry.c:262
+msgid "invalid type for value"
+msgstr "부적절한 값의 유형입니다"
+
+#: dataentry.c:275
+msgid "Data Editor"
+msgstr "자료 에디터"
+
+#: dataentry.c:276 dataentry.c:1825
+msgid "invalid device"
+msgstr "부적절한 디바이스입니다"
+
+#: dataentry.c:325
+msgid "dataentry: internal memory problem"
+msgstr "dataentry: 내부 메모리의 문제입니다"
+
+#: dataentry.c:628 dataentry.c:1154
+msgid "dataentry: internal memory error"
+msgstr "dataentry:  내부 메모리의 에러입니다"
+
+#: dataentry.c:751 dataentry.c:764
+msgid "internal type error in dataentry"
+msgstr "dataentry에 내부 유형의 에러입니다"
+
+#: dataentry.c:942
+msgid "dataentry: expression too long"
+msgstr "dataentry: 입력된 식(expression)이 너무 큽니다"
+
+#: dataentry.c:1405
+msgid "column names cannot be blank"
+msgstr "열 이름은 공백으로 지정할수 없습니다"
+
+#: dataentry.c:1451
+msgid "Variable editor"
+msgstr "변수 에디터"
+
+#: dataentry.c:1456
+msgid "variable name"
+msgstr "변수 이름"
+
+#: dataentry.c:1458
+msgid "type"
+msgstr "유형"
+
+#: dataentry.c:1571
+msgid "Cell width(s)"
+msgstr "셀의 width(s)"
+
+#: dataentry.c:1577
+msgid "Cell width"
+msgstr "셀의 폭(width)"
+
+#: dataentry.c:1580
+msgid "variable"
+msgstr "변수"
+
+#: dataentry.c:1623
+msgid ""
+"Navigation.\n"
+"  Keyboard: cursor keys move selection\n"
+"\tTab move right, Shift+Tab moves left\n"
+"\tPgDn or Ctrl+F: move down one screenful\n"
+"\tPgUp or Ctrl+B: move up one screenful\n"
+"\tHome: move to (1,1) cell\n"
+"\tEnd: show last rows of last column.\n"
+"   Mouse: left-click in a cell, use the scrollbar(s).\n"
+"\n"
+"Editing.\n"
+"  Type in the currently hightlighted cell\n"
+"  Double-click in a cell for an editable field\n"
+"\n"
+"Misc.\n"
+"  Ctrl-L redraws the screen, auto-resizing the columns\n"
+"  Ctrl-C copies selected cell\n"
+"  Ctrl-V pastes to selected cell\n"
+"  Right-click menu for copy, paste, autosize currently selected column\n"
+"\n"
+msgstr ""
+"조작법.\n"
+"키보드(keyboard): 커서(cursor) 키를 사용하여 선택을 하십시오\n"
+"탭(Tab) 키로 우측으로 이동, Shift+Tab로 좌측으로 이동합니다\n"
+"PgDn 또는 Ctrl+F: 한 화면 아래로 이동합니다\n"
+"PgUp 또는 Ctrl+B: 한 화면 위로 이동합니다\n"
+"Home: 좌측위의 (1,1) 셀으로 이동합니다\n"
+"End:  마지막 열의 마지막 행으로 이동합니다.\n"
+"Mouse: 셀을 좌측으로 클릭(click)하거나, 스크롤바(scrollbars)를 사용합니다.\n"
+"\n"
+"편집.\n"
+"현재 활성화 되어 있는 셀(유형)에 입력해주십시오\n"
+"셀을 Double-click하여 셀 데이타를 편집 할수 있습니다\n"
+"\n"
+"기타.\n"
+"Ctrl-L으로 스크린(screen)의 재묘사하여서 셀의 size를 자동 조절이 됩니다\n"
+"Ctrl-C으로 선택한 셀을 복사가 됩니다\n"
+"Ctrl-V으로 선택한 셀에 붙여넣기가 됩니다\n"
+"우측을 클릭(click)하면 메뉴가 표시 되어지고,복사,붙여넣기,셀 size의 자동조절"
+"을 할수 있습니다\n"
+"\n"
+
+#: dataentry.c:1629 dataentry.c:1739 editor.c:743 rui.c:1110
+msgid "Help"
+msgstr "도움"
+
+#: dataentry.c:1631
+msgid "Copy selected cell"
+msgstr "선택한 셀을 복사합니다"
+
+#: dataentry.c:1632
+msgid "Paste to selected cell"
+msgstr "선택한 셀을 붇여넣기"
+
+#: dataentry.c:1633
+msgid "Autosize column"
+msgstr "셀 사이즈의 자동조절"
+
+#: dataentry.c:1635 pager.c:295 rui.c:822
+#: ../library/grDevices/src/devWindows.c:1600
+msgid "Stay on top"
+msgstr "윈도우즈를 항상 맨 앞에 툽니다"
+
+#: dataentry.c:1637 dataentry.c:1724 pager.c:297 pager.c:460
+msgid "Close"
+msgstr "닫는다"
+
+#: dataentry.c:1722 editor.c:689 pager.c:452 rui.c:1050
+#: ../library/grDevices/src/devWindows.c:1541
+msgid "File"
+msgstr "파일"
+
+#: dataentry.c:1728 editor.c:707 pager.c:462 rui.c:1071
+msgid "Edit"
+msgstr "편집"
+
+#: dataentry.c:1729
+msgid "Copy  \tCTRL+C"
+msgstr "복사 \\tCTRL+C"
+
+#: dataentry.c:1731
+msgid "Paste \tCTRL+V"
+msgstr "붇여넣기 CTRL+V"
+
+#: dataentry.c:1733
+msgid "Delete\tDEL"
+msgstr "삭제\\tDEL"
+
+#: dataentry.c:1736
+msgid "Cell widths ..."
+msgstr "셀 폭..."
+
+#: dataentry.c:1740
+msgid "Data editor"
+msgstr "자료 에디터"
+
+#: editor.c:116
+#, c-format
+msgid "Could not read from file '%s'"
+msgstr ""
+
+#: editor.c:138
+#, c-format
+msgid "Could not save file '%s'"
+msgstr ""
+
+#: editor.c:153
+#, fuzzy
+msgid "Save script as"
+msgstr "스크립트(script)를 저장하다"
+
+#: editor.c:462 pager.c:172 pager.c:192
+msgid "No RGui console to paste to"
+msgstr "RGui 콘솔화면에 붇이기를 할수없다"
+
+#: editor.c:564
+msgid "R EDITOR\n"
+msgstr "R 에디터\n"
+
+#: editor.c:566
+msgid "A standard text editor for editing and running R code.\n"
+msgstr "R 코드의 편집,실행용의 표준텍스트 에디터.\n"
+
+#: editor.c:568
+msgid "RUNNING COMMANDS\n"
+msgstr "명령실행중입니다\n"
+
+#: editor.c:569
+msgid "To run a line or section of R code, select the code and either\n"
+msgstr ""
+"커서행 또는 선택한 R 코드를 실행하기위해서 코드 및 어느쪽인지를 선택해주십시"
+"오\n"
+
+#: editor.c:570
+msgid "     Press Ctrl-R\n"
+msgstr "Ctrl-R 을 눌러 주십시오\n"
+
+#: editor.c:571
+msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
+msgstr ""
+"\"편집\" 메뉴에서 \"커서행 또는 선택중의 R 코드를 실행\"을 선택해주십시오.\n"
+
+#: editor.c:572
+msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
+msgstr "툴바(toolbar)에서 \"커서행 또는 선택\" 아이콘을 눌러주십시오\n"
+
+#: editor.c:573
+msgid ""
+"This will copy the selected commands to the console and evaluate them.\n"
+msgstr "이것은 선택되어진 명령어를 console에 복사하여,그 명령어를 평가합니다\n"
+
+#: editor.c:574
+msgid ""
+"If there is no selection, this will just run the current line and advance\n"
+msgstr ""
+"명령어의 선택이 없으면, 현재의 라인을 실행하고 커서를 앞으로 전진합니다.\n"
+
+#: editor.c:575
+msgid "the cursor by one line.\n"
+msgstr "커서를 한 라인 전진합니다.\n"
+
+#: editor.c:587 editor.c:662 editor.c:723
+msgid "Run line or selection"
+msgstr "라인 건너뛰기 또는 선택합니다"
+
+#: editor.c:589 editor.c:708
+msgid "Undo"
+msgstr "재시도 합니다"
+
+#: editor.c:591 editor.c:711
+msgid "Cut"
+msgstr "잘림(cut)"
+
+#: editor.c:592 editor.c:713 pager.c:290 pager.c:463 rui.c:812 rui.c:1015
+#: rui.c:1072
+msgid "Copy"
+msgstr "복사"
+
+#: editor.c:593 editor.c:715 rui.c:813 rui.c:1019 rui.c:1073
+msgid "Paste"
+msgstr "붙여넣기"
+
+#: editor.c:594 editor.c:717
+msgid "Delete"
+msgstr "삭제"
+
+#: editor.c:596 editor.c:719 pager.c:293 pager.c:469 rui.c:819 rui.c:1077
+msgid "Select all"
+msgstr "전부 선택합니다"
+
+#: editor.c:654 pager.c:416 rui.c:1003
+msgid "Open script"
+msgstr "스크립트(script)를 열기"
+
+#: editor.c:658
+msgid "Save script"
+msgstr "스크립트(script)를 저장하다"
+
+#: editor.c:666 pager.c:436 ../library/grDevices/src/devWindows.c:1509
+msgid "Return focus to Console"
+msgstr "Console으로 돌아가다"
+
+#: editor.c:669
+msgid "Print script"
+msgstr "스크립트(script)를 인쇄하다"
+
+#: editor.c:671 pager.c:431 rui.c:1031
+#: ../library/grDevices/src/devWindows.c:1503
+msgid "Print"
+msgstr "인쇄"
+
+#: editor.c:690 pager.c:453 rui.c:1052
+msgid "New script"
+msgstr "새로운 스크립트"
+
+#: editor.c:692 pager.c:454 rui.c:1053
+msgid "Open script..."
+msgstr "스크립트를... 열다"
+
+#: editor.c:694
+msgid "Save"
+msgstr "저장"
+
+#: editor.c:696
+msgid "Save as..."
+msgstr "다른 이름으로 저장..."
+
+#: editor.c:699 pager.c:455 rui.c:1066
+#: ../library/grDevices/src/devWindows.c:1603
+msgid "Print..."
+msgstr "인쇄..."
+
+#: editor.c:702
+msgid "Close script"
+msgstr "스크립트를 닫다"
+
+#: editor.c:721 rui.c:1078
+msgid "Clear console"
+msgstr "console를 소거"
+
+#: editor.c:725
+msgid "Run all"
+msgstr "전부를 실행"
+
+#: editor.c:728
+msgid "Find..."
+msgstr "검색..."
+
+#: editor.c:730
+msgid "Replace..."
+msgstr "치환..."
+
+#: editor.c:733 rui.c:1082
+msgid "GUI preferences..."
+msgstr "GUI 선택..."
+
+#: editor.c:744
+msgid "Editor"
+msgstr "에디터"
+
+#: editor.c:801
+msgid "Maximum number of editors reached"
+msgstr "에디터 범위의 최대수에 도달하였습니다"
+
+#: editor.c:806
+msgid "Unable to create editor window"
+msgstr "에디터 윈도우를 작성 할수가 없습니다"
+
+#: editor.c:813
+#, fuzzy
+msgid "Unable to open file for reading"
+msgstr "clipborad를 열수 없습니다"
+
+#: editor.c:817
+msgid "Untitled"
+msgstr "제목이 없음"
+
+#: extra.c:807 preferences.c:792 graphapp/dialogs.c:509 graphapp/dialogs.c:604
+msgid "OK"
+msgstr "OK"
+
+#: extra.c:808 preferences.c:793 graphapp/dialogs.c:483 graphapp/dialogs.c:507
+#: graphapp/dialogs.c:513 graphapp/dialogs.c:588 graphapp/dialogs.c:602
+#: graphapp/dialogs.c:608
+msgid "Cancel"
+msgstr "취소"
+
+#: pager.c:78
+msgid "Error opening file"
+msgstr "파일을 여는순간에 에러가 발생했습니다"
+
+#: pager.c:85
+msgid "Insufficient memory to display file in internal pager"
+msgstr "내부 페이지에 파일을 표시하기위한 메모리가 부족합니다"
+
+#: pager.c:164 pager.c:176 pager.c:196 rui.c:226 rui.c:253
+msgid "No selection"
+msgstr "선택되어져 있지 않습니다"
+
+#: pager.c:291 pager.c:421 pager.c:465
+msgid "Paste to console"
+msgstr "console에 붇여넣기"
+
+#: pager.c:292 pager.c:426 pager.c:467
+msgid "Paste commands to console"
+msgstr "명령어를 console에 붙여넣기"
+
+#: pager.c:457 rui.c:1067
+msgid "Save to File..."
+msgstr "파일을 저장..."
+
+#: pager.c:472 rui.c:1085
+msgid "View"
+msgstr "열람"
+
+#: pager.c:502
+msgid "Unable to create pager window"
+msgstr "페이지용 윈도우를 작성 할수가 없습니다"
+
+#: preferences.c:245
+msgid ""
+"The overall console properties cannot be changed\n"
+"on a running console.\n"
+"\n"
+"Save the preferences and restart Rgui to apply them.\n"
+msgstr ""
+"전반적인 console properties은 실행중 console으로\n"
+"변할수 있습니다\n"
+"\n"
+"우선순위를 저장하고 그것들을 적용하기 위해서 Rgui를 다시 해주십시오\n"
+
+#: preferences.c:249
+#, fuzzy
+msgid ""
+"The language for menus cannot be changed on a\n"
+" running console.\n"
+"\n"
+"Save the preferences and restart Rgui to apply to menus.\n"
+msgstr ""
+"전반적인 console properties은 실행중 console으로\n"
+"변할수 있습니다\n"
+"\n"
+"우선순위를 저장하고 그것들을 적용하기 위해서 Rgui를 다시 해주십시오\n"
+
+#: preferences.c:318
+msgid "Changes in pager size will not apply to any open pagers"
+msgstr "pager size의 변화는 조금 열릴 pagers에도 적용되지 않습니다"
+
+#: preferences.c:324
+msgid ""
+"Do not change pager type if any pager is open\n"
+"Proceed?"
+msgstr "pager가 열린 Procedd있다면, pager유형을 변경하지 말아 주십시오"
+
+#: preferences.c:351
+msgid "Select directory for file 'Rconsole'"
+msgstr "파일 'R console'를 위해서 선택된 디렉토리"
+
+#: preferences.c:442
+#, fuzzy
+msgid "Select 'Rconsole' file"
+msgstr "파일을 선택"
+
+#: preferences.c:637
+#, c-format
+msgid "Error at line %d of file %s"
+msgstr "파일 %2$s의 %1$d 항목에 에러가 발생했습니다"
+
+#: preferences.c:680
+msgid "Rgui Configuration Editor"
+msgstr "RGui 구성Editor"
+
+#: preferences.c:789
+msgid "Apply"
+msgstr "적용"
+
+#: preferences.c:790
+#, fuzzy
+msgid "Save..."
+msgstr "다른 이름으로 저장..."
+
+#: preferences.c:791
+#, fuzzy
+msgid "Load..."
+msgstr "패키지 불러오기..."
+
+#: rui.c:125
+msgid "Select file to source"
+msgstr "소스 파일의 선택"
+
+#: rui.c:146
+msgid "Select image to load"
+msgstr "적재한 이미지를 선택"
+
+#: rui.c:161
+msgid "Save image in"
+msgstr "이미지의 보존"
+
+#: rui.c:176
+msgid "Load history from"
+msgstr "히스토리를 불러오기"
+
+#: rui.c:185
+msgid "Save history in"
+msgstr "히스토리에 저장해주시십오"
+
+#: rui.c:235 rui.c:244
+msgid "No text available"
+msgstr "이용 가능한 text가 없습니다"
+
+#: rui.c:293
+msgid "Name of data frame or matrix"
+msgstr "데이타 프레임 또는 행열의 이름"
+
+#: rui.c:300
+#, c-format
+msgid "'%s' cannot be found"
+msgstr "'%s'는 검색되지 않았습니다"
+
+#: rui.c:398
+msgid "Are you sure?"
+msgstr "당연합니까?"
+
+#: rui.c:479
+msgid "Help on"
+msgstr "도움"
+
+#: rui.c:530
+msgid "Search help"
+msgstr "탐색 도움"
+
+#: rui.c:545
+msgid "Search for words in help list archives and documentation"
+msgstr "단어를 탐색하는 보관와 문서 리스트 하는것을 지원합니다"
+
+#: rui.c:560
+msgid "Apropos"
+msgstr "오브젝트의 검색"
+
+#: rui.c:808
+msgid "Can only drag-and-drop .R, .RData and .rda files"
+msgstr ".R, RData 그리고 rda 파일만 drag-and-drop를 할수 있습니다"
+
+#: rui.c:814 rui.c:1074
+msgid "Paste commands only"
+msgstr "명령어만 붙여넣기"
+
+#: rui.c:815 rui.c:1023
+msgid "Copy and paste"
+msgstr "복사 그리고  붙여넣기"
+
+#: rui.c:817
+msgid "Clear window"
+msgstr "윈도우의 삭제"
+
+#: rui.c:821 rui.c:1099
+msgid "Buffered output"
+msgstr "버퍼에 출력"
+
+#: rui.c:861
+msgid "Packages"
+msgstr "패키지"
+
+#: rui.c:862
+msgid "Load package..."
+msgstr "패키지 불러오기..."
+
+#: rui.c:864
+msgid "Set CRAN mirror..."
+msgstr "CRAN 밀러 사이트의 설정..."
+
+#: rui.c:866
+msgid "Select repositories..."
+msgstr "다운로드 사이트의 선택..."
+
+#: rui.c:868
+msgid "Install package(s)..."
+msgstr "package(s) 인스톨..."
+
+#: rui.c:870
+msgid "Update packages..."
+msgstr "패키지 갱신"
+
+#: rui.c:873
+msgid "Install package(s) from local zip files..."
+msgstr "로컬(local)에 있는 zip 파일부터 package(s)를 인스톨..."
+
+#: rui.c:901
+msgid "FAQ on R"
+msgstr "R의  FAQ"
+
+#: rui.c:903
+msgid "FAQ on R for &Windows"
+msgstr "\"&윈도우즈판 R의 FAQ"
+
+#: rui.c:909 rui.c:912
+msgid "Manuals (in PDF)"
+msgstr "메뉴얼 (PDF)"
+
+#: rui.c:939
+msgid "R functions (text)..."
+msgstr "R의 함수 (텍스트)..."
+
+#: rui.c:941
+msgid "Html help"
+msgstr "Html 도움"
+
+#: rui.c:943
+msgid "Search help..."
+msgstr "검색 도움..."
+
+#: rui.c:948
+msgid "Apropos..."
+msgstr "오브젝트의 검색..."
+
+#: rui.c:950
+msgid "R Project home page"
+msgstr "R 프로젝트 홈페이지"
+
+#: rui.c:951
+msgid "CRAN home page"
+msgstr "CRAN 홈페이지"
+
+#: rui.c:953
+msgid "About"
+msgstr "R에 대해서"
+
+#: rui.c:1007
+msgid "Load image"
+msgstr "이미지의 불러오기"
+
+#: rui.c:1011
+msgid "Save image"
+msgstr "이미지의 보존"
+
+#: rui.c:1027
+msgid "Stop current computation"
+msgstr "현재의 계산을 중단"
+
+#: rui.c:1051
+msgid "Source R code..."
+msgstr "R 코드의 Source..."
+
+#: rui.c:1054
+msgid "Display file(s)..."
+msgstr "파일files(s)의 표시..."
+
+#: rui.c:1056
+msgid "Load Workspace..."
+msgstr "Workspace의 로드..."
+
+#: rui.c:1057
+msgid "Save Workspace..."
+msgstr "Workspace의 저장..."
+
+#: rui.c:1059
+msgid "Load History..."
+msgstr "이력의  불러오기..."
+
+#: rui.c:1061
+msgid "Save History..."
+msgstr "이력을 보존..."
+
+#: rui.c:1064
+msgid "Change dir..."
+msgstr "디렉토리 변경..."
+
+#: rui.c:1069
+msgid "Exit"
+msgstr "종료"
+
+#: rui.c:1076
+msgid "Copy and Paste"
+msgstr "복사 그리고 붙여넣기"
+
+#: rui.c:1080
+msgid "Data editor..."
+msgstr "자료 에디터..."
+
+#: rui.c:1086
+msgid "Toolbar"
+msgstr ""
+
+#: rui.c:1087
+msgid "Statusbar"
+msgstr ""
+
+#: rui.c:1092
+msgid "Misc"
+msgstr "기타"
+
+#: rui.c:1093
+msgid "Stop current computation           \tESC"
+msgstr "현재의 계산을 중단 \\tESC"
+
+#: rui.c:1095
+#, fuzzy
+msgid "Stop all computations"
+msgstr "현재의 계산을 중단"
+
+#: rui.c:1097
+msgid "Break to debugger"
+msgstr "실행을 중단하고 디버거를 기동"
+
+#: rui.c:1101
+msgid "List objects"
+msgstr "오브젝트의 일람"
+
+#: rui.c:1102
+msgid "Remove all objects"
+msgstr "모든 오브젝트의 삭제"
+
+#: rui.c:1103
+msgid "List &search path"
+msgstr "\"&검색 경로의 일람"
+
+#: rui.c:1111
+msgid "Console"
+msgstr "콘솔화면"
+
+#: rui.c:1149
+msgid "Select file"
+msgstr "파일을 선택"
+
+#: rui.c:1192
+msgid "'mname' is limited to 1000 bytes"
+msgstr "'nname'은 반각영숫자으로 1000문자까지 제한되어지고 있습니다"
+
+#: rui.c:1234
+#, c-format
+msgid "menu %s does not exist"
+msgstr "메뉴 %s는 존재하지 않는다"
+
+#: rui.c:1288
+msgid "'menu' is limited to 500 bytes"
+msgstr " '메뉴'이(가) 500문자만 제한됩니다"
+
+#: rui.c:1298
+msgid "base menu does not exist"
+msgstr "메뉴는 존재하지 않는다"
+
+#: rui.c:1313
+msgid "failed to allocate menu"
+msgstr "메뉴의 할당한것에 실패했습니다"
+
+#: rui.c:1329 rui.c:1450
+msgid "menu + item is limited to 1000 bytes"
+msgstr "menu + item이(가) 반각영숫자으로 1000문자까지 제한되어져 있습니다"
+
+#: rui.c:1337 rui.c:1419
+msgid "menu does not exist"
+msgstr "메뉴는 존재하지 않는다"
+
+#: rui.c:1355 rui.c:1378 rui.c:1383
+msgid "failed to allocate char storage"
+msgstr "문자 저장의 할당에 실패했습니다"
+
+#: rui.c:1391
+msgid "failed to allocate menuitem"
+msgstr "menuitem의 할당한것에 실패했습니다"
+
+#: rui.c:1440
+msgid "menu not found"
+msgstr "메뉴가 검색되지 못했습니다"
+
+#: rui.c:1458
+msgid "menu or item does not exist"
+msgstr "menu 또는 item는 존재하지 않습니다"
+
+#: system.c:411
+msgid "Save workspace image?"
+msgstr "workspace(imaga)를 보존하겠습니까?"
+
+#: graphapp/clipboard.c:70 graphapp/clipboard.c:74
+msgid "Insufficient memory: cell not copied to the clipboard"
+msgstr "메모리 부족: 셀을 clipboard에 복사할수가 없습니다"
+
+#: graphapp/dialogs.c:135 graphapp/dialogs.c:152 graphapp/dialogs.c:169
+msgid "Question"
+msgstr "질문"
+
+#: graphapp/dialogs.c:189
+msgid " Change working directory to:"
+msgstr "작업디렉토리의 변경:"
+
+#: graphapp/dialogs.c:192
+#, c-format
+msgid "Unable to set '%s' as working directory"
+msgstr "작업 디렉토리경우 '%s'를 지정할수가 없습니다  "
+
+#: graphapp/dialogs.c:404
+msgid "Choose a folder"
+msgstr ""
+
+#: graphapp/dialogs.c:496 graphapp/dialogs.c:498
+msgid "Browse"
+msgstr ""
+
+#: graphapp/dialogs.c:596
+msgid "User"
+msgstr "사용자"
+
+#: graphapp/dialogs.c:597
+msgid "Password"
+msgstr "암호"
+
+#: graphapp/dialogs.c:758 graphapp/dialogs.c:764
+#, c-format
+msgid "\"%s\" not found"
+msgstr "\"%s\"가 검색되지 않습니다"
+
+#: graphapp/gmenus.c:48
+msgid "Windows"
+msgstr "윈도우즈"
+
+#: graphapp/gmenus.c:49
+msgid "Cascade"
+msgstr "계단식 패턴"
+
+#: graphapp/gmenus.c:50
+msgid "Tile"
+msgstr "타이틀 패턴"
+
+#: graphapp/gmenus.c:51
+msgid "Arrange Icons"
+msgstr "아이콘의 배열"
+
+#: ../library/grDevices/src/devWindows.c:848
+msgid "Png files (*.png)"
+msgstr "Png 파일(*.png)"
+
+#: ../library/grDevices/src/devWindows.c:849
+msgid "Portable network graphics file"
+msgstr "휴대용, 네트워크 도표 파일"
+
+#: ../library/grDevices/src/devWindows.c:851
+msgid "Windows bitmap files (*.bmp)"
+msgstr "윈도우즈는 bitmap 파일 (*.bmp)"
+
+#: ../library/grDevices/src/devWindows.c:852
+msgid "Windows bitmap file"
+msgstr "윈도우즈는 bitmap 파일"
+
+#: ../library/grDevices/src/devWindows.c:854
+msgid "Jpeg files (*.jpeg,*jpg)"
+msgstr "Jpeg 파일 (*.jpeg,*jpg)"
+
+#: ../library/grDevices/src/devWindows.c:855
+msgid "Jpeg file"
+msgstr "Jpeg 파일"
+
+#: ../library/grDevices/src/devWindows.c:875
+msgid "Postscript files (*.ps)"
+msgstr "Postscript 파일 (*.ps)"
+
+#: ../library/grDevices/src/devWindows.c:876
+msgid "Postscript file"
+msgstr "Postscript 파일"
+
+#: ../library/grDevices/src/devWindows.c:887
+msgid "PDF files (*.pdf)"
+msgstr "PDF 파일(*.pdf)"
+
+#: ../library/grDevices/src/devWindows.c:888
+msgid "PDF file"
+msgstr "PDF 파일"
+
+#: ../library/grDevices/src/devWindows.c:899
+msgid "Enhanced metafiles (*.emf)"
+msgstr "강화된 metafiles(*.emf)"
+
+#: ../library/grDevices/src/devWindows.c:900
+msgid "Enhanced metafiles"
+msgstr "강화된 metafiles"
+
+#: ../library/grDevices/src/devWindows.c:903
+#: ../library/grDevices/src/devWindows.c:2726
+msgid "file path selected is too long: only 512 bytes are allowed"
+msgstr "선택되어져 있는 파일경로는 너무 큽니다: 512의 바이트만 허용됩니다"
+
+#: ../library/grDevices/src/devWindows.c:1119
+msgid "No plot to replace!"
+msgstr "치환할 plot가 없습니다!"
+
+#: ../library/grDevices/src/devWindows.c:1165
+msgid "Variable name"
+msgstr "변수 이름"
+
+#: ../library/grDevices/src/devWindows.c:1172
+msgid "Variable doesn't exist or doesn't contain any plots!"
+msgstr "변수에 저장하지않거나, plot에 포함되어져 있지 않습니다!"
+
+#: ../library/grDevices/src/devWindows.c:1188
+msgid "Name of variable to save to"
+msgstr "변수 이름에 저장"
+
+#: ../library/grDevices/src/devWindows.c:1497
+msgid "Copy to the clipboard as a metafile"
+msgstr "metafile경우 clipboard에 복사합니다"
+
+#: ../library/grDevices/src/devWindows.c:1515
+#: ../library/grDevices/src/devWindows.c:1526
+msgid "Stop locator"
+msgstr "locator를 정지시켜주십시오"
+
+#: ../library/grDevices/src/devWindows.c:1525
+#: ../library/grDevices/src/devWindows.c:1529
+msgid "Stop"
+msgstr "정지"
+
+#: ../library/grDevices/src/devWindows.c:1531
+msgid "Continue"
+msgstr "계속"
+
+#: ../library/grDevices/src/devWindows.c:1535
+msgid "Next"
+msgstr "다음"
+
+#: ../library/grDevices/src/devWindows.c:1536
+msgid "Next plot"
+msgstr "다음 plot"
+
+#: ../library/grDevices/src/devWindows.c:1542
+msgid "Save as"
+msgstr "다른 이를으로 저장"
+
+#: ../library/grDevices/src/devWindows.c:1543
+msgid "Metafile..."
+msgstr "Metafile..."
+
+#: ../library/grDevices/src/devWindows.c:1544
+msgid "Postscript..."
+msgstr "Postscript..."
+
+#: ../library/grDevices/src/devWindows.c:1545
+msgid "PDF..."
+msgstr "PDF..."
+
+#: ../library/grDevices/src/devWindows.c:1546
+msgid "Png..."
+msgstr "Png..."
+
+#: ../library/grDevices/src/devWindows.c:1547
+msgid "Bmp..."
+msgstr "Bmp..."
+
+#: ../library/grDevices/src/devWindows.c:1548
+msgid "Jpeg"
+msgstr "Jpeg"
+
+#: ../library/grDevices/src/devWindows.c:1550
+#: ../library/grDevices/src/devWindows.c:1552
+#: ../library/grDevices/src/devWindows.c:1554
+#, fuzzy, c-format
+msgid "%s quality..."
+msgstr "50퍼센트 품질..."
+
+#: ../library/grDevices/src/devWindows.c:1556
+msgid "Copy to the clipboard"
+msgstr "clipboard에 복사"
+
+#: ../library/grDevices/src/devWindows.c:1557
+msgid "as a Bitmap\tCTRL+C"
+msgstr "Bitmap\\CTRL+C"
+
+#: ../library/grDevices/src/devWindows.c:1558
+msgid "as a Metafile\tCTRL+W"
+msgstr "Metafile\\CTRL+W"
+
+#: ../library/grDevices/src/devWindows.c:1561
+msgid "Print...\tCTRL+P"
+msgstr "인쇄... CTRL+P"
+
+#: ../library/grDevices/src/devWindows.c:1563
+msgid "close Device"
+msgstr "디바이스를 닫는다"
+
+#: ../library/grDevices/src/devWindows.c:1564
+msgid "History"
+msgstr "이력"
+
+#: ../library/grDevices/src/devWindows.c:1565
+msgid "Recording"
+msgstr "기록"
+
+#: ../library/grDevices/src/devWindows.c:1568
+msgid "Add\tINS"
+msgstr "추가\\tINS"
+
+#: ../library/grDevices/src/devWindows.c:1569
+msgid "Replace"
+msgstr "변경"
+
+#: ../library/grDevices/src/devWindows.c:1571
+msgid "Previous\tPgUp"
+msgstr "되돌아가다\\PgUp"
+
+#: ../library/grDevices/src/devWindows.c:1572
+msgid "Next\tPgDown"
+msgstr "앞으로\\tPgDown"
+
+#: ../library/grDevices/src/devWindows.c:1574
+msgid "Save to variable..."
+msgstr "변수의 저장..."
+
+#: ../library/grDevices/src/devWindows.c:1575
+msgid "Get from variable..."
+msgstr "변수에서... 얻습니다"
+
+#: ../library/grDevices/src/devWindows.c:1577
+msgid "Clear history"
+msgstr "이력을 소거"
+
+#: ../library/grDevices/src/devWindows.c:1578
+msgid "Resize"
+msgstr "사이즈 변경"
+
+#: ../library/grDevices/src/devWindows.c:1579
+msgid "R mode"
+msgstr "R 모드"
+
+#: ../library/grDevices/src/devWindows.c:1581
+msgid "Fit to window"
+msgstr "윈도우에 고정시키다"
+
+#: ../library/grDevices/src/devWindows.c:1583
+msgid "Fixed size"
+msgstr "고정 사이즈"
+
+#: ../library/grDevices/src/devWindows.c:1590
+msgid "Copy as metafile"
+msgstr "metafile에 복사"
+
+#: ../library/grDevices/src/devWindows.c:1592
+msgid "Copy as bitmap"
+msgstr "bitmap에 복사"
+
+#: ../library/grDevices/src/devWindows.c:1595
+msgid "Save as metafile..."
+msgstr "metafile에 저장..."
+
+#: ../library/grDevices/src/devWindows.c:1597
+msgid "Save as postscript..."
+msgstr "postscript에 저장..."
+
+#: ../library/grDevices/src/devWindows.c:2462
+msgid "Locator is active"
+msgstr "전파이(가) 활발합니다"
+
+#: ../library/grDevices/src/devWindows.c:3037
+msgid "Waiting to confirm page change..."
+msgstr "페이지 변경을 확인하는까지 기다리는 중..."
+
+#: ../library/grDevices/src/devWindows.c:3049
+msgid "Click or hit ENTER for next page"
+msgstr "click 또는 ENTER 키를 누르는 것으로 다음 페이지로 이동됩니다"
+
+#~ msgid "75% quality..."
+#~ msgstr "75퍼센트 품질..."
+
+#~ msgid "100% quality..."
+#~ msgstr "100퍼센트 품질..."
+
+#~ msgid "Select working directory"
+#~ msgstr "작업디렉토리의 선택"

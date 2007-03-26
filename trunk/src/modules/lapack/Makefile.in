@@ -1,0 +1,125 @@
+#
+# ${R_HOME}/src/modules/lapack/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/modules/lapack
+R_HOME = $(top_builddir)
+
+include $(top_builddir)/Makeconf
+
+SOURCES_C = Lapack.c @USE_VECLIB_G95FIX_TRUE@ vecLibg95c.c
+SOURCES_F = @USE_VECLIB_G95FIX_TRUE@ vecLibg95f.f
+
+DEPENDS = $(SOURCES_C:.c=.d)
+SOURCES = $(SOURCES_C) $(SOURCES_F)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
+HEADERS = Lapack.h
+
+LIBSOURCES = dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f \
+  @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f
+LIBOBJECTS = $(LIBSOURCES:.f=.o)
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = \
+	README Makefile.in Makefile.win \
+	Rlapackrc.rc dllversion.rc \
+	$(HEADERS) Lapack.c \
+	vecLibg95c.c vecLibg95f.f \
+	cmplx.f \
+	dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f
+
+lapack_la = lapack$(SHLIB_EXT)
+Rlapack_la = libRlapack$(DYLIB_EXT)
+lapack_la_OBJECTS = $(OBJECTS)
+## Used for passing '+s' to SHLIB_LINK on HP-UX.
+lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
+lapack_la_LIBADD = $(LIBR)
+
+Rlapack_la_OBJECTS = $(LIBOBJECTS)
+Rlapack_la_LIBADD = @DYLIB_UNDEFINED_ALLOWED_FALSE@ $(FLIBS) $(LIBR)
+
+ALL_CFLAGS = $(ALL_CFLAGS_LO)
+ALL_FFLAGS = $(ALL_FFLAGS_LO)
+
+
+all: Makefile Makedeps R
+
+Makefile: $(srcdir)/Makefile.in \
+  $(top_builddir)/config.status \
+  $(SOURCES)
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+## treated separately: e.g. we need to force stores with 
+## gcc >= 3.4.0 at least on i686
+DLAMC_FFLAGS=$(FPICFLAGS) $(SHLIB_FFLAGS) @SAFE_FFLAGS@
+dlamch.o: dlamch.f
+	$(F77) $(DLAMC_FFLAGS) -c $< -o $@
+
+R: Makefile
+	@$(MAKE) Makedeps
+@USE_EXTERNAL_LAPACK_FALSE@	@$(MAKE) rhome="$(abs_top_builddir)" $(Rlapack_la) Rlapack_install
+	@$(MAKE) $(lapack_la)
+
+$(lapack_la): $(lapack_la_OBJECTS)
+	$(SHLIB_LINK) -o $@ $(lapack_la_LDFLAGS) $(lapack_la_OBJECTS) $(lapack_la_LIBADD) @LAPACK_LIBS@ @BLAS_LIBS@ $(FLIBS)
+## <FIXME>
+## Not sure if we want to do this ...
+	@$(MAKE) rhome="$(abs_top_builddir)" install
+## </FIXME>
+
+## Include BLAS here, as with (static) ATLAS that pulls all the
+## BLAS routines into one place.
+$(Rlapack_la): $(LIBOBJECTS)
+	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @BLAS_LIBS@ $(Rlapack_la_LIBADD)
+
+Rlapack_install: $(Rlapack_la) 
+	@$(MKINSTALLDIRS) $(Rexeclibdir)
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
+	  $(Rexeclibdir)/$(Rlapack_la)
+
+install: installdirs
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
+@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
+installdirs:
+	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
+install-strip-Rlapack:
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(Rexeclibdir)/$(Rlapack_la)"; \
+	fi
+install-strip: @USE_EXTERNAL_LAPACK_FALSE@ install-strip-Rlapack
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(Rexecmodulesdir)/$(lapack_la)"; \
+	fi
+uninstall:
+	@rm -f "$(Rexecmodulesdir)/$(lapack_la)"
+
+mostlyclean: clean
+clean:
+	@-rm -rf .libs _libs
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la \
+	  lapack$(SHLIB_EXT) @USE_EXTERNAL_LAPACK_FALSE@ libRlapack$(DYLIB_EXT)
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+
+## Automagically generated dependencies:
+

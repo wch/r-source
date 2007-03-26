@@ -1,0 +1,51 @@
+#-*- Makefile -*-
+# avoid a .y.c rule that some makes have internally
+.SUFFIXES:
+include ../../gnuwin32/MkRules
+
+all: libintl.a header-install
+
+header-install: libintl.h
+	@cp -p $< ../../include
+	@cp -p $< ../../../include
+
+DEFS=-DIN_LIBINTL -DHAVE_CONFIG_H
+CFLAGS=$(DEFS) -I. -I../../include $(OPTFLAGS)
+dcigettext-CFLAGS=-DLOCALEDIR=\"\"
+
+SOURCES = \
+ bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
+ textdomain.c l10nflist.c explodename.c dcigettext.c \
+ dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
+ localcharset.c localename.c log.c printf.c osdep.c
+
+OBJECTS = $(SOURCES:.c=.o)
+
+libintl.a: $(OBJECTS)
+
+libgnuintl.h: libgnuintl.h.in
+	sed -e 's,@''HAVE_POSIX_PRINTF''@,1,g' \
+	    -e 's,@''HAVE_ASPRINTF''@,0,g' \
+	    -e 's,@''HAVE_SNPRINTF''@,1,g' \
+	    -e 's,@''HAVE_WPRINTF''@,0,g' \
+	  < libgnuintl.h.in > libgnuintl.h
+
+libintl.h: libgnuintl.h
+	cp libgnuintl.h libintl.h
+
+$(OBJECTS): ../../include/config.h libgnuintl.h
+bindtextdom.o dcgettext.o dcigettext.o dcngettext.o dgettext.o dngettext.o \
+finddomain.o gettext.o intl-compat.o loadmsgcat.o localealias.o ngettext.o \
+textdomain.o: gettextP.h gmo.h loadinfo.h
+dcigettext.o loadmsgcat.o: hash-string.h
+explodename.o l10nflist.o: loadinfo.h
+dcigettext.o loadmsgcat.o plural.o plural-exp.o: plural-exp.h
+dcigettext.o: eval-plural.h
+localcharset.o: localcharset.h
+printf.o: printf-args.h printf-args.c printf-parse.h wprintf-parse.h xsize.h \
+   printf-parse.c vasnprintf.h vasnwprintf.h vasnprintf.c
+
+clean:
+	@$(RM) *.o libgnuintl.h libintl.h
+distclean: clean
+	@$(RM) *.a

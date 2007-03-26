@@ -1,0 +1,7 @@
+Package: windlgs
+Version: 1.1.0
+Title: Examples of Windows Dialogs
+Author: R Development Core Team
+Maintainer: R Core Team <R-core@r-project.org>
+Description: Examples of Windows Dialogs
+License: GPL Version 2 or later.

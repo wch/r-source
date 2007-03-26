@@ -1,0 +1,612 @@
+# All this catalog "translates" are quotation characters.
+# The msgids must be ASCII and therefore cannot contain real quotation
+# characters, only substitutes like grave accent (0x60), apostrophe (0x27)
+# and double quote (0x22). These substitutes look strange; see
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html
+#
+# This catalog translates grave accent (0x60) and apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019).
+# It also translates pairs of apostrophe (0x27) to
+# left single quotation mark (U+2018) and right single quotation mark (U+2019)
+# and pairs of quotation mark (0x22) to
+# left double quotation mark (U+201C) and right double quotation mark (U+201D).
+#
+# When output to an UTF-8 terminal, the quotation characters appear perfectly.
+# When output to an ISO-8859-1 terminal, the single quotation marks are
+# transliterated to apostrophes (by iconv in glibc 2.2 or newer) or to
+# grave/acute accent (by libiconv), and the double quotation marks are
+# transliterated to 0x22.
+# When output to an ASCII terminal, the single quotation marks are
+# transliterated to apostrophes, and the double quotation marks are
+# transliterated to 0x22.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.5.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-02-24 16:01\n"
+"PO-Revision-Date: 2007-02-24 16:01\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "argument 'package' must be of length 1"
+msgstr "argument ‘package’ must be of length 1"
+
+msgid "you must specify 'package' or 'dir'"
+msgstr "you must specify ‘package’ or ‘dir’"
+
+msgid "directory '%s' does not exist"
+msgstr "directory ‘%s’ does not exist"
+
+msgid "neither code nor data objects found"
+msgstr "neither code nor data objects found"
+
+msgid "Undocumented code objects:"
+msgstr "Undocumented code objects:"
+
+msgid "Undocumented data sets:"
+msgstr "Undocumented data sets:"
+
+msgid "Undocumented S4 classes:"
+msgstr "Undocumented S4 classes:"
+
+msgid "Undocumented S4 methods:"
+msgstr "Undocumented S4 methods:"
+
+msgid "Prototyped non-primitives:"
+msgstr "Prototyped non-primitives:"
+
+msgid "Undocumented %s:"
+msgstr "Undocumented %s:"
+
+msgid "directory '%s' does not contain R code"
+msgstr "directory ‘%s’ does not contain R code"
+
+msgid "directory '%s' does not contain Rd sources"
+msgstr "directory ‘%s’ does not contain Rd sources"
+
+msgid ""
+"Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr ""
+"Functions/methods with usage in documentation object ‘%s’ but not in code:"
+
+msgid "Data sets with usage in documentation object '%s' but not in code:"
+msgstr "Data sets with usage in documentation object ‘%s’ but not in code:"
+
+msgid "Argument names in code not in docs:"
+msgstr "Argument names in code not in docs:"
+
+msgid "Argument names in docs not in code:"
+msgstr "Argument names in docs not in code:"
+
+msgid "Mismatches in argument names (first 3):"
+msgstr "Mismatches in argument names (first 3):"
+
+msgid "Mismatches in argument names:"
+msgstr "Mismatches in argument names:"
+
+msgid "Mismatches in argument default values (first 3):"
+msgstr "Mismatches in argument default values (first 3):"
+
+msgid "Mismatches in argument default values:"
+msgstr "Mismatches in argument default values:"
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr "Codoc mismatches from documentation object '%s':"
+
+msgid "Code: %s"
+msgstr "Code: %s"
+
+msgid "Docs: %s"
+msgstr "Docs: %s"
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr "S4 class codoc mismatches from documentation object '%s':"
+
+msgid "Slots for class '%s'"
+msgstr "Slots for class ‘%s’"
+
+msgid "name"
+msgstr "name"
+
+msgid "code"
+msgstr "code"
+
+msgid "docs"
+msgstr "docs"
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr "Data codoc mismatches from documentation object '%s':"
+
+msgid "Variables in data frame '%s'"
+msgstr "Variables in data frame ‘%s’"
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr "Undocumented arguments in documentation object ‘%s’"
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr "Duplicated \\argument entries in documentation object '%s':"
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr "Documented arguments not in \\usage in documentation object '%s':"
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr "Objects in \\usage without \\alias in documentation object '%s':"
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr "Bad \\usage lines found in documentation object '%s':"
+
+msgid "S3 methods shown with full name in documentation object '%s':"
+msgstr "S3 methods shown with full name in documentation object '%s':"
+
+msgid "unable to create"
+msgstr "unable to create"
+
+msgid "unable to write code files"
+msgstr "unable to write code files"
+
+msgid "you must specify 'package', 'dir' or 'file'"
+msgstr "you must specify 'package', ‘dir’ or ‘file’"
+
+msgid "file '%s' does not exist"
+msgstr "file ‘%s’ does not exist"
+
+msgid "parse error in file '%s'"
+msgstr "parse error in file ‘%s’"
+
+msgid "Foreign function calls without 'R' argument:"
+msgstr "Foreign function calls without ‘R’ argument:"
+
+msgid "declared S3 method '%s' not found"
+msgstr "declared S3 method ‘%s’ not found"
+
+msgid "cannot check R code installed as image"
+msgstr "cannot check R code installed as image"
+
+msgid "parse error in examples from file '%s'"
+msgstr "parse error in examples from file ‘%s’"
+
+msgid "File '%s':"
+msgstr "File '%s':"
+
+msgid "found T/F in %s"
+msgstr "found T/F in %s"
+
+msgid "Packages required but not available:"
+msgstr "Packages required but not available:"
+
+msgid "Former standard packages required but now defunct:"
+msgstr "Former standard packages required but now defunct:"
+
+msgid "Vignette dependencies not required:"
+msgstr "Vignette dependencies not required:"
+
+msgid ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+
+msgid "Namespace dependencies not required:"
+msgstr "Namespace dependencies not required:"
+
+msgid "Package Rd sources were installed without preserving Rd file names."
+msgstr "Package Rd sources were installed without preserving Rd file names."
+
+msgid "Please reinstall using a current version of R."
+msgstr "Please reinstall using a current version of R."
+
+msgid "Rd files with syntax errors:"
+msgstr "Rd files with syntax errors:"
+
+msgid "Rd files with likely Rd problems:"
+msgstr "Rd files with likely Rd problems:"
+
+msgid "Unaccounted top-level text in file '%s':"
+msgstr "Unaccounted top-level text in file '%s':"
+
+msgid "Following section '%s'"
+msgstr "Following section ‘%s’"
+
+msgid "Rd files with unknown encoding:"
+msgstr "Rd files with unknown encoding:"
+
+msgid "Rd files with invalid non-ASCII metadata:"
+msgstr "Rd files with invalid non-ASCII metadata:"
+
+msgid "Rd files with non-ASCII section titles:"
+msgstr "Rd files with non-ASCII section titles:"
+
+msgid "Rd files with missing or empty '\\name':"
+msgstr "Rd files with missing or empty '\\name':"
+
+msgid "Rd files with missing or empty '\\title':"
+msgstr "Rd files with missing or empty '\\title':"
+
+msgid "Rd files without '%s':"
+msgstr "Rd files without '%s':"
+
+msgid "These entries are required in an Rd file."
+msgstr "These entries are required in an Rd file."
+
+msgid "Rd files with duplicate '%s':"
+msgstr "Rd files with duplicate '%s':"
+
+msgid "These entries must be unique in an Rd file."
+msgstr "These entries must be unique in an Rd file."
+
+msgid "Rd files with unknown sections:"
+msgstr "Rd files with unknown sections:"
+
+msgid "Rd files with non-standard keywords:"
+msgstr "Rd files with non-standard keywords:"
+
+msgid ""
+"Each '\\keyword' entry should specify one of the standard keywords (as "
+"listed in file 'KEYWORDS' in the R documentation directory)."
+msgstr ""
+"Each ‘\\keyword’ entry should specify one of the standard keywords (as "
+"listed in file ‘KEYWORDS’ in the R documentation directory)."
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "Rd files with duplicated alias '%s':"
+
+msgid "Found invalid multi-byte character data."
+msgstr "Found invalid multi-byte character data."
+
+msgid "Cannot re-encode because iconv is not available."
+msgstr "Cannot re-encode because iconv is not available."
+
+msgid "Try running R in a single-byte locale."
+msgstr "Try running R in a single-byte locale."
+
+msgid "Malformed package name"
+msgstr "Malformed package name"
+
+msgid "Invalid package name."
+msgstr "Invalid package name."
+
+msgid "This is the name of a base package."
+msgstr "This is the name of a base package."
+
+msgid "This name was used for a base package and is remapped by library()."
+msgstr "This name was used for a base package and is remapped by library()."
+
+msgid "Unknown encoding"
+msgstr "Unknown encoding"
+
+msgid "Fields with non-ASCII tags:"
+msgstr "Fields with non-ASCII tags:"
+
+msgid "All field tags must be ASCII."
+msgstr "All field tags must be ASCII."
+
+msgid "Fields with non-ASCII values:"
+msgstr "Fields with non-ASCII values:"
+
+msgid "These fields must have ASCII values."
+msgstr "These fields must have ASCII values."
+
+msgid "Required fields missing:"
+msgstr "Required fields missing:"
+
+msgid "Malformed package version."
+msgstr "Malformed package version."
+
+msgid "Malformed maintainer field."
+msgstr "Malformed maintainer field."
+
+msgid "Malformed Depends or Suggests or Imports or Enhances field."
+msgstr "Malformed Depends or Suggests or Imports or Enhances field."
+
+msgid "Offending entries:"
+msgstr "Offending entries:"
+
+msgid ""
+"Entries must be names of packages optionally followed by '<=' or '>=', white "
+"space, and a valid version number in parentheses."
+msgstr ""
+"Entries must be names of packages optionally followed by ‘<=’ or '>=', white "
+"space, and a valid version number in parentheses."
+
+msgid "Entries with infeasible comparison operator:"
+msgstr "Entries with infeasible comparison operator:"
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr "Only operators ‘<=’ and ‘>=’ are possible."
+
+msgid "Entries with infeasible version number:"
+msgstr "Entries with infeasible version number:"
+
+msgid ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single '.' or '-'."
+msgstr ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single ‘.’ or '-'."
+
+msgid "Package name and namespace differ."
+msgstr "Package name and namespace differ."
+
+msgid "Invalid Priority field."
+msgstr "Invalid Priority field."
+
+msgid ""
+"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
+"already be known to R."
+msgstr ""
+"Packages with priorities ‘base’ or ‘recommended’ or ‘defunct-base’ must "
+"already be known to R."
+
+msgid ""
+"See the information on DESCRIPTION files in section 'Creating R packages' of "
+"the 'Writing R Extensions' manual."
+msgstr ""
+"See the information on DESCRIPTION files in section ‘Creating R packages’ of "
+"the ‘Writing R Extensions’ manual."
+
+msgid "Non-portable flags in variable '%s':"
+msgstr "Non-portable flags in variable '%s':"
+
+msgid "Missing link(s) in documentation object '%s':"
+msgstr "Missing link(s) in documentation object '%s':"
+
+msgid "found %s"
+msgstr "found %s"
+
+msgid "package 'methods' is used but not declared"
+msgstr "package ‘methods’ is used but not declared"
+
+msgid "'::' or ':::' imports not declared from:"
+msgstr "‘::’ or ‘:::’ imports not declared from:"
+
+msgid "'library' or 'require' calls not declared from:"
+msgstr "‘library’ or ‘require’ calls not declared from:"
+
+msgid "argument 'lines' must be a character vector"
+msgstr "argument ‘lines’ must be a character vector"
+
+msgid "argument 'file' must be a character string or connection"
+msgstr "argument ‘file’ must be a character string or connection"
+
+msgid "missing/empty \\name field in '%s'"
+msgstr "missing/empty \\name field in ‘%s’"
+
+msgid "Rd files must have a non-empty \\name."
+msgstr "Rd files must have a non-empty \\name."
+
+msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
+msgstr ""
+"See chapter ‘Writing R documentation’ in manual 'Writing R Extensions'."
+
+msgid "missing/empty \\title field in '%s'"
+msgstr "missing/empty \\title field in ‘%s’"
+
+msgid "Rd files must have a non-empty \\title."
+msgstr "Rd files must have a non-empty \\title."
+
+msgid "argument 'outFile' must be a character string or connection"
+msgstr "argument ‘outFile’ must be a character string or connection"
+
+msgid "directory '%s' does not contain Rd objects"
+msgstr "directory ‘%s’ does not contain Rd objects"
+
+msgid "unterminated section '%s'"
+msgstr "unterminated section ‘%s’"
+
+msgid "incomplete section 'section{%s}'"
+msgstr "incomplete section ‘section{%s}’"
+
+msgid "unterminated section 'section{%s}'"
+msgstr "unterminated section ‘section{%s}’"
+
+msgid "argument 'txt' must be a character string"
+msgstr "argument ‘txt’ must be a character string"
+
+msgid "unmatched \\item name in '\\item{%s'"
+msgstr "unmatched \\item name in ‘\\item{%s’"
+
+msgid "no \\item description for item '%s'"
+msgstr "no \\item description for item ‘%s’"
+
+msgid "unmatched \\item description for item '%s'"
+msgstr "unmatched \\item description for item ‘%s’"
+
+msgid "unclosed \\link"
+msgstr "unclosed \\link"
+
+msgid "unclosed \\%s"
+msgstr "unclosed \\%s"
+
+msgid "Rd syntax errors found"
+msgstr "Rd syntax errors found"
+
+msgid "Syntax error in documentation object '%s':"
+msgstr "Syntax error in documentation object '%s':"
+
+msgid "cannot deal with Rd objects with missing/empty names"
+msgstr "cannot deal with Rd objects with missing/empty names"
+
+msgid "missing/empty \\name field in Rd file(s)"
+msgstr "missing/empty \\name field in Rd file(s)"
+
+msgid "unable to create temp directory"
+msgstr "unable to create temp directory"
+
+msgid ""
+"processing vignette '%s' failed with diagnostics:\n"
+"%s"
+msgstr ""
+"processing vignette ‘%s’ failed with diagnostics:\n"
+"%s"
+
+msgid "running make failed"
+msgstr "running make failed"
+
+msgid "cannot read index information in file '%s'"
+msgstr "cannot read index information in file ‘%s’"
+
+msgid "argument 'vignette' must be of length 1"
+msgstr "argument ‘vignette’ must be of length 1"
+
+msgid "file '%s' not found"
+msgstr "file ‘%s’ not found"
+
+msgid "Invalid DESCRIPTION file"
+msgstr "Invalid DESCRIPTION file"
+
+msgid "*** someone has corrupted the Built field in package '%s' ***"
+msgstr "*** someone has corrupted the Built field in package ‘%s’ ***"
+
+msgid "cannot open directory '%s'"
+msgstr "cannot open directory ‘%s’"
+
+msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgstr "cannot turn off locale-specific sorting via LC_COLLATE"
+
+msgid "duplicated files in '%s' field:"
+msgstr "duplicated files in ‘%s’ field:"
+
+msgid "files in '%s' field missing from '%s':"
+msgstr "files in ‘%s’ field missing from '%s':"
+
+msgid "files in '%s' missing from '%s' field:"
+msgstr "files in ‘%s’ missing from ‘%s’ field:"
+
+msgid "unable to create '%s'"
+msgstr "unable to create ‘%s’"
+
+msgid "unable to re-encode '%s'"
+msgstr "unable to re-encode ‘%s’"
+
+msgid "unable to copy INDEX to '%s'"
+msgstr "unable to copy INDEX to ‘%s’"
+
+msgid "cannot create directory '%s'"
+msgstr "cannot create directory ‘%s’"
+
+msgid "unable to run pdflatex on '%s'"
+msgstr "unable to run pdflatex on ‘%s’"
+
+msgid "unable to run bibtex on '%s'"
+msgstr "unable to run bibtex on ‘%s’"
+
+msgid "file '%s' was not created"
+msgstr "file ‘%s’ was not created"
+
+msgid "cannot copy '%s' to '%s'"
+msgstr "cannot copy ‘%s’ to ‘%s’"
+
+msgid "there is no package called '%s'"
+msgstr "there is no package called ‘%s’"
+
+msgid "name space must not be loaded."
+msgstr "name space must not be loaded."
+
+msgid "package '%s' has no .rda file"
+msgstr "package ‘%s’ has no .rda file"
+
+msgid "package seems to be using lazy loading for data already"
+msgstr "package seems to be using lazy loading for data already"
+
+msgid "object(s) %s are created by more than one data call"
+msgstr "object(s) %s are created by more than one data call"
+
+msgid "source list must have names for all elements"
+msgstr "source list must have names for all elements"
+
+msgid "source must be an environment or a list"
+msgstr "source must be an environment or a list"
+
+msgid "this cannot be used for package 'base'"
+msgstr "this cannot be used for package ‘base’"
+
+msgid "package contains no R code"
+msgstr "package contains no R code"
+
+msgid "package seems to be using lazy loading already"
+msgstr "package seems to be using lazy loading already"
+
+msgid "cannot update HTML package index"
+msgstr "cannot update HTML package index"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr "‘DESCRIPTION’ has ‘Encoding’ field and re-encoding is not possible"
+
+msgid "cannot create HTML package index"
+msgstr "cannot create HTML package index"
+
+msgid "argument 'pkg' must be of length 1"
+msgstr "argument ‘pkg’ must be of length 1"
+
+msgid "package '%s' was not found"
+msgstr "package ‘%s’ was not found"
+
+msgid "bad operand"
+msgstr "bad operand"
+
+msgid "Package '%s' had its dependencies reduced to a minimal set."
+msgstr "Package ‘%s’ had its dependencies reduced to a minimal set."
+
+msgid "argument '%s' must be a character string or connection"
+msgstr "argument ‘%s’ must be a character string or connection"
+
+msgid "unimplemented encoding"
+msgstr "unimplemented encoding"
+
+msgid "test '%s' is not available"
+msgstr "test ‘%s’ is not available"
+
+msgid "no or more than one match"
+msgstr "no or more than one match"
+
+msgid "argument 'x' must be a character vector"
+msgstr "argument ‘x’ must be a character vector"
+
+msgid "argument 'delim' must specify two characters"
+msgstr "argument ‘delim’ must specify two characters"
+
+msgid "only Rd syntax is currently supported"
+msgstr "only Rd syntax is currently supported"
+
+msgid "running texi2dvi on '%s' failed"
+msgstr "running texi2dvi on ‘%s’ failed"
+
+msgid "file '%s' is not in valid DCF format"
+msgstr "file ‘%s’ is not in valid DCF format"
+
+msgid "cannot source package code"
+msgstr "cannot source package code"
+
+msgid "Call sequence:"
+msgstr "Call sequence:"
+
+msgid "Processing packages:"
+msgstr "Processing packages:"
+
+msgid "done"
+msgstr "done"
+
+msgid "parsing '%s'"
+msgstr "parsing ‘%s’"
+
+msgid "Warning in file '%s':"
+msgid_plural "Warnings in file '%s':"
+msgstr[0] "Warning in file '%s':"
+msgstr[1] "Warnings in file '%s':"
+
+msgid "Found possibly global 'T' or 'F' in the following function:"
+msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
+msgstr[0] "Found possibly global ‘T’ or ‘F’ in the following function:"
+msgstr[1] "Found possibly global ‘T’ or ‘F’ in the following functions:"
+
+msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] "Found possibly global ‘T’ or ‘F’ in the following Rd example file:"
+msgstr[1] "Found possibly global ‘T’ or ‘F’ in the following Rd example files:"

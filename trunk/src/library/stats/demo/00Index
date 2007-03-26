@@ -1,0 +1,6 @@
+glm.vr			Some glm() examples from V&R with several predictors
+lm.glm			Some linear and generalized linear modelling
+			examples from `An Introduction to Statistical
+			Modelling' by Annette Dobson
+nlm			Nonlinear least-squares using nlm()
+smooth			`Visualize' steps in Tukey's smoothers
