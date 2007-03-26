@@ -1,0 +1,138 @@
+#
+# ${R_HOME}/src/scripts/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+subdir = src/scripts
+
+include $(top_builddir)/Makeconf
+
+SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt Sweave Stangle \
+  config f77_f2c javareconf mkinstalldirs pager texi2dvi
+## <NOTE>
+## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
+SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rprof.in \
+  SHLIB.in Sd2Rd.in build.in check.in
+SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
+## </NOTE>
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in Makefile.win $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
+
+CLEANFILES =
+DISTCLEANFILES = Makefile R.fe R.sh $(SCRIPTS_B)
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+R: $(SCRIPTS_B) R.fe
+	@$(MAKE) rhome=$(top_builddir) install-cmds
+	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
+
+## <NOTE>
+## Seems we need target rules for creating FOO from FOO.in: pattern
+## rules ('%:%.in') are not portable, and some versions of Make do not
+## allow separated dependencies for single suffix rules.
+COMPILE: $(srcdir)/COMPILE.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+INSTALL: $(srcdir)/INSTALL.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+REMOVE: $(srcdir)/REMOVE.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Rdconv: $(srcdir)/Rdconv.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Rprof: $(srcdir)/Rprof.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+SHLIB: $(srcdir)/SHLIB.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Sd2Rd: $(srcdir)/Sd2Rd.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+build: $(srcdir)/build.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+check: $(srcdir)/check.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+## The following target helps in automatically generating the above
+## target rules (provided that echo understands backslash escapes).
+Makerules:
+	@(dep="\$$(top_builddir)/config.status"; \
+	  cmd="@cd \$$(top_builddir)"; \
+	  cmd="$${cmd} && \$$(SHELL) ./config.status \$$(subdir)/\$$@"; \
+	  for f in $(SCRIPTS_B); do \
+	    echo "$${f}: \$$(srcdir)/$${f}.in $${dep}"; \
+	    echo "	$${cmd}"; \
+	  done)
+## </NOTE>
+
+## <NOTE>
+## The front-end shell script now (2000-08-02) also contains the version
+## information.  As we keep this information outside configure (as
+## otherwise developers would have to reconfigure and hence rebuild
+## every day), we now first create 'R.sh' from 'R.sh.in' via configure,
+## and then use sed to create the front end ('R.fe') which gets
+## installed as 'R'.
+R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+R.fe: R.sh $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
+	@echo "creating $(subdir)/$@"
+	@(v=`cat $(top_srcdir)/VERSION`; \
+	  dat=`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`; \
+	  v="$${v} ($${dat})"; \
+	  y=`echo $${dat} | cut -d- -f1`; \
+	  d=`echo "$(abs_top_builddir)" | sed 's,/,\\\/,g'`; \
+	  sed "s/\\(R_HOME_DIR=\\).*/\\1\"$${d}\"/; \
+	       s@REPLACE_BY_VERSION@$${v}@; \
+	       s@REPLACE_BY_YEAR@$${y}@" < R.sh > $@)
+	@chmod +x $@
+## </NOTE>
+
+$(top_builddir)/libtool:
+	@(cd $(@D); $(MAKE) $(@F))
+
+install: installdirs install-cmds
+	@rm -f $(bindir)/R
+	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
+	  sed -e "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s+\\(R_SHARE_DIR=\\).*+\\1$(rsharedir)+;" -e  "s+\\(R_INCLUDE_DIR=\\).*+\\1$(rincludedir)+;" -e "s+\\(R_DOC_DIR=\\).*+\\1$(rdocdir)+;"\
+	  < R.fe > "$(Rexecbindir)/R")
+	@$(INSTALL_SCRIPT)  "$(Rexecbindir)/R" "$(bindir)/R"
+	@chmod 755 "$(bindir)/R" "$(Rexecbindir)/R"
+## why of all the scriots does this alone chmod just one copy?
+installdirs:
+	@$(MKINSTALLDIRS) $(bindir)
+install-cmds:
+	@$(MKINSTALLDIRS) "$(Rexecbindir)"
+	@for f in $(SCRIPTS_S); do \
+	  $(INSTALL_SCRIPT) $(srcdir)/$${f} "$(Rexecbindir)"; \
+	done
+	@for f in $(SCRIPTS_B); do \
+	  $(INSTALL_SCRIPT) $${f} "$(Rexecbindir)"; \
+	done
+	@$(INSTALL_SCRIPT) $(top_builddir)/libtool "$(Rexecbindir)"
+## there are no programs to install in this dir
+install-strip:
+	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@for f in $(SCRIPTS_S) $(SCRIPTS_B) libtool R; do \
+	  rm -f "$(Rexecbindir)/$${f}"; \
+	done
+	@rm -f $(bindir)/R
+
+mostlyclean: clean
+clean:
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+distclean: clean
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+maintainer-clean: distclean
+
+TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

@@ -1,0 +1,94 @@
+#
+# ${R_HOME}/etc/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+subdir = etc
+
+include $(top_builddir)/Makeconf
+
+## <NOTE>
+## Need target rules for all elements of SOURCES/OBJECTS.
+SOURCES = Makeconf.in Renviron.in ldpaths.in
+OBJECTS = $(SOURCES:.in=)
+## </NOTE>
+INSTFILES = repositories
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in $(INSTFILES) $(SOURCES)
+
+CLEANFILES =
+DISTCLEANFILES = $(OBJECTS) Makefile
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+## <NOTE>
+## Seems we need target rules for creating FOO from FOO.in: pattern
+## rules ('%:%.in') are not portable, and some versions of Make do not
+## allow separated dependencies for single suffix rules.
+Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Renviron: $(srcdir)/Renviron.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+ldpaths: $(srcdir)/ldpaths.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+## </NOTE>
+
+R: $(OBJECTS)
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  for f in $(INSTFILES); do \
+	    $(INSTALL_DATA) $(srcdir)/$${f} .; \
+	  done \
+	fi
+	@if test -n "$(R_ARCH)" ; then \
+	  $(MKINSTALLDIRS) .$(R_ARCH); \
+	  for f in $(OBJECTS); do \
+	    $(INSTALL_DATA) $${f} .$(R_ARCH); \
+	  done \
+	fi
+
+install: installdirs
+	@echo "installing $(subdir) ..."
+	@$(INSTALL_DATA) $(srcdir)/repositories "$(rhome)/$(subdir)"
+	@for f in $(OBJECTS); do \
+	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)$(R_ARCH)"; \
+	done
+installdirs:
+	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)$(R_ARCH)"
+install-strip: install
+
+uninstall:
+	@echo "uninstalling $(subdir) ..."
+	@if test -d "$(rhome)/$(subdir)" \
+	  && test "`cd \"$(rhome)\"; $(GETWD)`" \
+	       != "`cd $(top_builddir); $(GETWD)`"; then \
+	  (cd "$(rhome)/$(subdir)" && rm -f $(INSTFILES)); \
+	  (cd "$(rhome)/$(subdir)$(R_ARCH)" && rm -f $(OBJECTS)); \
+	  if test -n "$(R_ARCH)"; then \
+	    rmdir "$(rhome)/$(subdir)$(R_ARCH)" 2> /dev/null ; \
+	  fi ; \
+	  rmdir "$(rhome)/$(subdir)" 2> /dev/null \
+	    || echo "  subdir $(subdir) not removed"; \
+	fi
+
+mostlyclean: clean
+clean:
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -f $(INSTFILES) ; \
+	fi
+distclean: clean
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done

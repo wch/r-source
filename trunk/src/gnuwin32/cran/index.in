@@ -1,0 +1,71 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
+<title>R-@RVER@ for Windows</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<h1>R-@RVER@ for Windows</h1>
+
+<p>This directory contains a Windows binary distribution of R-@RVER@.</p>
+
+<p>Patches to this release are incorporated in the <a
+href="rpatched.html">r-patched snapshot build</a>.</p>
+
+<p>A build of the development version (which will eventually become
+the next major release of R) is available in the <a
+href="rdevel.html">r-devel snapshot build</a>.</p>
+
+<p>In this directory:</p>
+
+<table width="90%" border="0">
+<TBODY>
+  <tr>
+    <td width="19%" valign="top"><a href="README.@RWVER@">README.@RWVER@</a></td>
+    <td width="81%">Installation and other instructions.</td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a href="CHANGES.@RWVER@">CHANGES</a></td>
+    <td width="81%">New features of this Windows version.</td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a href="NEWS.@RWVER@">NEWS</a></td>
+    <td width="81%">New features of all versions.</td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a
+href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
+    <td width="81%">Setup program (about 28 megabytes). Please download this
+    from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. 
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a href="old/">old</a></td>
+    <td width="81%">Previous releases.</td>
+  </tr>
+  <tr>
+    <td width="19%" valign="top"><a href="md5sum.txt">md5sum.txt</a></td>
+    <td width="81%">md5sum output for the setup program.&nbsp; A Windows GUI version of md5sum
+    is available at <a href="http://www.md5summer.org/">http://www.md5summer.org/</a>; a
+    Windows command line version is available at <a href="http://www.etree.org/md5com.html">http://www.etree.org/md5com.html</a>.</td>
+  </tr>
+</TBODY>
+</table>
+
+<p> Please see the <a
+href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
+general information about R and the <a href="rw-FAQ.html">R Windows
+FAQ</a> for Windows-specific information, including upgrade
+advice.</p>
+
+<p> Note to webmasters: A stable link which will redirect to the
+current Windows binary release is<br>
+<a href="release.htm">&lt;CRAN MIRROR&gt/bin/windows/base/release.htm</a>.</p>
+
+<hr>
+
+<p>Last change: @DATE@, by Duncan Murdoch</p>
+</body>
+</html>

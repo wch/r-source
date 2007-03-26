@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>R: Search Engine</title>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../R.css">
+<script language="JavaScript">
+<!--
+function searchObject ()
+{
+  searchstring = location.search.substring(1);
+
+  line =        '<html><head>\n';
+  line = line + '<title>Search Results</title>\n';
+  line = line + '<link rel=stylesheet type="text/css" href="../R.css">';
+  line = line + '\n';
+
+  line = line + '<body>\n';
+
+  line = line + '<h1>Search Result</h1>\n';
+
+  // call the applet code!
+  searchstring = " " + searchstring + " ";
+  line = line + document.SearchEngine.search (searchstring,false,false,true);
+
+  line = line + '</body>\n';
+
+  document.write (line);
+
+  // this makes it all work as expected, stops loading and after following
+  // a link the search results will be displayed again.
+  document.close ();
+  return "";
+}
+
+//-->
+</script>
+
+
+</head>
+
+<body onLoad='searchObject();'>
+
+Searching, please wait ...
+
+<applet
+    code=SearchEngine.class
+    name=SearchEngine
+    width=0
+    height=0 >
+    <param name="INDEXFILE" value="index.txt">
+</applet>
+
+</body>
+</html>
+

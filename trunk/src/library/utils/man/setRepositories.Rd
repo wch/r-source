@@ -1,0 +1,40 @@
+\name{setRepositories}
+\alias{setRepositories}
+\title{Select Package Repositories}
+\description{
+  Interact with the user to choose the package repositories to be used.
+}
+\usage{
+setRepositories(graphics = getOption("menu.graphics"))
+}
+\arguments{
+  \item{graphics}{Logical.
+#ifdef windows
+    If true use a listbox,
+#endif
+#ifdef unix
+    If true and \pkg{tcltk} and an X server are available, use a Tk
+    widget, or if under the AQUA interface use a MacOS X widget,
+#endif
+    otherwise use a text list in the console.}
+}
+\details{
+  The default list of known repositories is stored in the file
+  \file{R\_HOME/etc/repositories}.
+  That file can be edited for a site, or a user can have a personal copy
+  in \file{HOME/.R/repositories} which will take precedence.
+
+  The items that are preselected are those that are currently in
+  \code{options("repos")} plus those marked as default in the
+  list of known repositories.
+}
+\value{
+  This function is invoked mainly for its side effect of updating
+  \code{options("repos")}.  It returns (invisibly) the previous
+  \code{repos} options setting (as a \code{\link{list}} with component
+  \code{repos}) or \code{\link{NULL}} if no changes were applied.
+}
+\seealso{
+  \code{\link{chooseCRANmirror}}, \code{\link{install.packages}}.
+}
+\keyword{ utilities }

@@ -1,0 +1,61 @@
+#-*- Makefile -*-
+## remove any .y.c rule
+.SUFFIXES:
+include ../gnuwin32/MkRules
+
+all: makeMakedeps libmain.a
+
+CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
+ifdef SUPPORT_UTF8
+CFLAGS += -DSUPPORT_UTF8
+endif
+FFLAGS=-O2
+CSOURCES=\
+	CConverters.c CommandLineArgs.c \
+	Rdynload.c Renviron.c RNG.c \
+	apply.c arithmetic.c apse.c array.c attrib.c \
+	base.c bind.c builtin.c \
+	character.c coerce.c colors.c complex.c connections.c context.c \
+	cov.c cum.c \
+	dcf.c datetime.c debug.c deparse.c deriv.c \
+	dotcode.c dounzip.c dstruct.c duplicate.c \
+	engine.c envir.c errors.c eval.c \
+	format.c fourier.c \
+	gevents.c gram.c gram-ex.c graphics.c \
+	identical.c internet.c iosupport.c \
+	lapack.c list.c localecharset.c logic.c \
+	main.c mapply.c match.c memory.c mkdtemp.c model.c \
+	names.c \
+	objects.c optim.c optimize.c options.c \
+	par.c paste.c pcre.c platform.c \
+	plot.c plot3d.c plotmath.c \
+	print.c printarray.c printvector.c printutils.c qsort.c \
+	random.c regex.c registration.c relop.c rlocale.c \
+	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
+	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
+	unique.c util.c \
+	version.c vfonts.c
+
+FSOURCES=xxxpr.f
+OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
+
+gram.c: gram.y
+	bison gram.y
+	mv gram.tab.c gram.c
+
+saveload-CFLAGS=-I../extra/xdr
+connections-CFLAGS=-I../extra/zlib -I../extra/bzip2
+dounzip-CFLAGS=-I../extra/zlib
+character-CFLAGS=-I../extra/pcre -I../gnuwin32 -DSTATIC
+pcre-CFLAGS=-I../extra/pcre -DSTATIC
+
+libmain.a: $(OBJS)
+
+# Dependencies
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

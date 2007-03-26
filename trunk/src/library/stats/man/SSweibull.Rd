@@ -1,0 +1,53 @@
+% $Id: SSweibull.Rd,v 1.1 2003/12/11 07:16:06 ripley Exp $
+\name{SSweibull}
+\title{Weibull growth curve model}
+\usage{
+SSweibull(x, Asym, Drop, lrc, pwr)
+}
+\alias{SSweibull}
+\arguments{
+ \item{x}{a numeric vector of values at which to evaluate the model.}
+ \item{Asym}{a numeric parameter representing the horizontal asymptote on
+   the right side (very small values of \code{x}).}
+ \item{Drop}{a numeric parameter representing the change from
+   \code{Asym} to the \code{y} intercept.}
+ \item{lrc}{a numeric parameter representing the natural logarithm of
+   the rate constant.}
+ \item{pwr}{a numeric parameter representing the power to which \code{x}
+   is raised.}
+}
+\description{
+  This \code{selfStart} model evaluates the Weibull model for growth
+  curve data and its gradient.  It has an \code{initial} attribute that
+  will evaluate initial estimates of the parameters \code{Asym}, \code{Drop},
+  \code{lrc}, and \code{pwr} for a given set of data.
+}
+\value{
+  a numeric vector of the same length as \code{x}.  It is the value of
+  the expression \code{Asym-Drop*exp(-exp(lrc)*x^pwr)}.  If all of
+  the arguments \code{Asym}, \code{Drop}, \code{lrc}, and \code{pwr} are
+  names of objects, the gradient matrix with respect to these names is
+  attached as an attribute named \code{gradient}.
+}
+\details{
+  This model is a generalization of the \code{\link{SSasymp}} model in
+  that it reduces to \code{SSasymp} when \code{pwr} is unity.
+  }
+\author{Douglas Bates}
+\references{
+  Ratkowsky, David A. (1983), \emph{Nonlinear Regression Modeling},
+  Dekker. (section 4.4.5)
+}
+\seealso{\code{\link{nls}}, \code{\link{selfStart}}, \code{\link{SSasymp}}
+}
+\examples{
+Chick.6 <- subset(ChickWeight, (Chick == 6) & (Time > 0))
+SSweibull(Chick.6$Time, 160, 115, -5.5, 2.5 )  # response only
+Asym <- 160; Drop <- 115; lrc <- -5.5; pwr <- 2.5
+SSweibull(Chick.6$Time, Asym, Drop, lrc, pwr)  # response and gradient
+getInitial(weight ~ SSweibull(Time, Asym, Drop, lrc, pwr), data = Chick.6)
+## Initial values are in fact the converged values
+fm1 <- nls(weight ~ SSweibull(Time, Asym, Drop, lrc, pwr), data = Chick.6)
+summary(fm1)
+}
+\keyword{models}

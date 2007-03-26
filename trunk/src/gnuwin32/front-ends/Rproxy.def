@@ -1,0 +1,16 @@
+EXPORTS
+ ANSI2BSTR
+ BDX2SEXP
+ BDX2Variant@8
+ BSTR2ANSI
+ R_Proxy_printf
+ SEXP2BDX
+ Variant2BDX@20
+ bdx_free@4
+ com_addObject
+ com_createSEXP
+ com_getHandle
+ com_getOLECHAR
+ com_getObject
+ BDX_get_vtbl@8
+ SC_Proxy_get_object@8

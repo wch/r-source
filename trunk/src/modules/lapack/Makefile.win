@@ -1,0 +1,55 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+MODULE=lapack
+all: 
+	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
+ifneq ($(strip $(USE_ACML)),YES)
+	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
+endif
+	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll
+
+CSOURCES = Lapack.c
+OBJS=$(CSOURCES:.c=.o) dllversion.o
+LIBSOURCES = dlamch.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f dlapack4.f cmplx.f
+LIBOBJECTS = $(LIBSOURCES:.f=.o) Rlapackrc.o
+
+# will be overridden on call from src/gnuwin32/Makefile
+OPTFLAGS=-O3 -Wall -pedantic -std=gnu99
+FOPTFLAGS=-O3
+
+CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
+FFLAGS=$(FOPTFLAGS)
+dlamch-FFLAGS=-ffloat-store
+
+../../../modules/$(MODULE).dll: $(MODULE).dll
+	$(MKDIR) -p ../../../modules
+	$(CP) $< $@
+
+ifeq ($(strip $(USE_ACML_LAPACK)),YES)
+lapack-DLLLIBS=-L../../../bin -lRblas -L"$(ACML_PATH)" -lacml $(FLIBS) -lR
+else
+lapack-DLLLIBS=-L../../../bin -lRlapack -lRblas -lR
+endif
+
+$(MODULE).dll: $(OBJS)
+
+../../../bin/Rlapack.dll: $(LIBOBJECTS)
+	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR -lRblas $(FLIBS)
+
+clean:
+	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
+	  Rlapack.dll *.a
+
+
+# Dependencies
+dllversion.o: ../../include/Rversion.h
+Rlapackrc.o: ../../include/Rversion.h
+
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

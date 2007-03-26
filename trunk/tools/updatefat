@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# creates or updates a fat binary by replacing or adding a new architecture.
+# the target file doesn't need to exist - it will be created if not
+# already present
+
+if [ -z "$1" -o -z "$2" ]; then
+    echo ""
+    echo " Usage: updatefat <target> <new-file>"
+    echo ""
+    echo "  Works even if <target> doesn't exist or is not fat."
+    echo ""
+    exit 1
+fi
+
+thisarch=`lipo -detailed_info "$2"|sed -n 's/.\{0,\}architecture:* \(.\{1,\}\)/\1/p'`
+if [ -z "$thisarch" ]; then
+    echo "Cannot find out architecture of $2" >&2
+    exit 2
+fi
+
+#echo "architecture: $thisarch";
+if [ -e "$1" ]; then \
+    if lipo -detailed_info "$1"|grep "architecture:* $thisarch\$" > /dev/null; then
+	if lipo -info "$1"|grep ^Non-fat > /dev/null; then
+	    lipo -create "$2" -o "$1"
+	else
+	    lipo -replace "$thisarch" "$2" "$1" -o "$1"
+	fi
+    else
+	lipo -create "$1" "$2" -o "$1"
+    fi
+else
+    lipo -create "$2" -o "$1"
+fi

@@ -1,0 +1,112 @@
+Notes for Windows Maintainers
+=============================
+
+1) fixed/h/config.h can be made automatically.  Some of this is
+achieved by overrides in the configure script.
+
+You will need a copy of sh.exe in /bin.  Then with the R sources in
+/R/R-2.3.0, I used in /TEMP/R (any other directory will do, except the
+sources)
+
+sh /R/R-2.3.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no
+
+This ran fairly slowly, currently producing a src/include/config.h
+that differs only in that
+
+ - it does not find the declarations of siglongjmp/sigsetjmp (in
+   psignal.h)
+
+ - SUPPORT_UTF8 is defined, but that is not true on Windows.
+
+ - HAVE_VASPRINTF is true thanks to the trio library.
+
+ - In mingw-runtime >= 3.10 it finds gettimeofday, but that is
+   less accurate than the GetSystemTime used already.
+
+Also, watch out for versions of the header files.  For example,
+<strings.h> was in mingw-runtime-1.2 and later, but not in the
+Mingw-1.1 bundle.  These days we tend to insist on a current MinGW.
+
+BDR 2002-04-15, 2003-02-10, 2004-06-28, 2005-11-25, 2006-07-06
+
+
+2) The Makefiles for building a distribution have been reorganized.  Now
+all of the decisions about what files go into the distributables are made
+in installer/Makefile; the decisions about which component of the setup
+program each file goes into are made in installer/JRins.pl.
+
+DJM 2003-02-25
+
+
+3) Making Tcl/Tk.
+
+Get the Tcl/Tk sources (I used 8.4.13 when testing this).
+You need VC++6 and a Windows command-line window.
+
+Run "\Program Files\Microsoft Visual Studio\VC98\Bin\VCVARS32.BAT"
+
+cd tcl8.4.x\win
+nmake -nologo -f makefile.vc release winhelp
+nmake -f makefile.vc install
+cd ..\..\tk8.4.x\win
+nmake -nologo -f makefile.vc TCLDIR=..\..\tcl8.4.x release winhelp
+nmake -f makefile.vc install
+
+Now copy /Program Files/Tcl to say /R/Tcl and (in any reasonable shell)
+cd /R/Tcl
+rm bin/tclpip84.dll bin/tclsh84.exe bin/wish84.exe
+rm -rf lib/*.lib lib/tk8.4/demos lib/tk8.4/images
+cp .../tcl8.4.x/license.terms .
+
+BDR 2004-01-09
+
+
+4) Linking to DLLs.
+
+Mingw's ld.exe takes the internal name of the DLL as the object to
+link to, and hence for DLLs which are to be linked to (rather than
+loaded), the internal names need to be dllname.dll.  This was not being
+done by the %.dll rule used in 2.2.1, which builds via a .def file
+with first line
+
+LIBRARY $*
+
+[The example in ld.info is
+
+LIBRARY "xyz.dll"
+
+whereas that in the MSDN documentation
+(http://msdn2.microsoft.com/en-us/library/d91k01sh.aspx) is
+
+LIBRARY BTREE
+
+so MinGW is inconsistent with MSDN here.]
+
+It would seem that this should just be replaced by $*.dll, but there
+is another problem: ld.exe rejects .def files whose LIBRARY name
+contains more than one dot, and so this is unable to cope with
+packages with a dot in their name.  (We already document that two or
+more dots are not allowed.)  So we have had to treat separately the
+DLLs which are designed to be linked to.  These are
+
+R.dll : is special-cased, and as it wants to export entry points from
+static libraries and exports variables, nothing else we tried worked.
+
+Rblas.dll : has a .def file, and the name was changed to Rblas.dll
+there.
+
+Rlapack.dll : is simple, so gcc -shared with no .def file works.
+
+Rproxy.dll : is special-cased.  (Linked against by rcom package.)
+
+The other DLLs which were in R_HOME/bin, Rbitmap.dll and Rchtml.dll,
+have been moved to R_HOME/modules.  They are now made directly with
+gcc -shared.  Rchtml.dll needs an import library as you cannot link
+directly to a .ocx.
+
+However, whereas MSDN says there must be a LIBRARY statement, it seems
+not to be required for ld.exe.  So the %.dll rule in MkRules as from
+2.3.0 does not have a LIBRARY statement, which circumvents the 'at
+most one dot' rule.
+
+BDR 2006-02-15, 2006-02-24

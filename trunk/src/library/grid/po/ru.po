@@ -1,0 +1,101 @@
+# Russian translations for R
+# Русский перевод для R
+#
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the R package.
+# Alexey Shipunov <iit512@yandex.ru> 2006
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2006-09-22 09:08+0100\n"
+"PO-Revision-Date: 2006-04-16 21:42-0800\n"
+"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: grid.c:209
+msgid "Cannot clip to rotated viewport"
+msgstr "Не могу обрезать для повернутой оконницы"
+
+#: grid.c:648 grid.c:653 grid.c:742 grid.c:747
+msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+msgstr ""
+"Не могу извлечь оконницу верхнего уровня (выводы grid и graphics смешались?)"
+
+#: grid.c:938
+msgid "attempt to plot on null device"
+msgstr "попытка чертить на нулевом устройстве"
+
+#: grid.c:1218
+msgid "There is no layout defined"
+msgstr "Нет заданного эскиза"
+
+#: grid.c:1438
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr "Край многоугольника не найден (нулевая ширина или высота?)"
+
+#: grid.c:1447
+msgid "Polygon edge not found"
+msgstr "Край многоугольника не найден"
+
+#: grid.c:1587
+msgid "Require at least two points to draw arrow"
+msgstr "Надо как минимум две точки, чтобы нарисовать стрелку"
+
+#: grid.c:1901
+msgid "Non-finite control point in Xspline"
+msgstr "Не-конечная контрольная точка в Xspline"
+
+#: grid.c:3072
+msgid "Unable to clip to rotated rectangle"
+msgstr "Не могу обрезать повернутый четырехугольник"
+
+#: layout.c:520
+msgid "invalid layout.pos.row"
+msgstr "неправильный layout.pos.row"
+
+#: layout.c:524
+msgid "invalid layout.pos.col"
+msgstr "неправильный layout.pos.col"
+
+#: matrix.c:50
+msgid "singular transformation matrix"
+msgstr "сингулярная трансформационная матрица"
+
+#: state.c:178
+msgid "Unable to store grid state.  Too many devices open?"
+msgstr "Не могу сохранить состояние grid. Открыто слишком много устройств?"
+
+#: unit.c:261 unit.c:411 unit.c:1141 unit.c:1221 unit.c:1301 unit.c:1381
+msgid "Unimplemented unit function"
+msgstr "Не разработанная единичная функция"
+
+#: unit.c:830 unit.c:1576
+msgid "Illegal unit or unit not yet implemented"
+msgstr "Неправильная или не разработанная единица"
+
+#: unit.c:1709
+msgid "Invalid unit"
+msgstr "Неправильная единица"
+
+#: unit.c:1725
+msgid "Units must be character"
+msgstr "Единицы должен быть буквами"
+
+#: unit.c:1728
+msgid "Units must be of length > 0"
+msgstr "Единицы должны быть длиной > 0"
+
+#: viewport.c:317
+msgid "Non-finite location and/or size for viewport"
+msgstr "Не-конечное положение и/или размер оконницы"
+
+#~ msgid "Invalid circle radius (must be non-negative)"
+#~ msgstr "Неправильный радиус круга (должен быть неотрицательным)"

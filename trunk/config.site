@@ -1,0 +1,230 @@
+#! /bin/sh
+
+### This file is part of R.
+###
+### R is free software; you can redistribute it and/or modify it under
+### the terms of the GNU General Public License as published by the Free
+### Software Foundation; either version 2 of the License, or (at your
+### option) any later version.
+###
+### R is distributed in the hope that it will be useful, but WITHOUT ANY
+### WARRANTY; without even the implied warranty of MERCHANTABILITY or
+### FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+### License for more details.
+###
+### You should have received a copy of the GNU General Public License
+### along with R; if not, you can obtain it via the World Wide Web at
+### 'http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
+### Software Foundation,
+### 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA.
+
+## By means of this file you can (also) provide default values for the
+## configuration process.  To set variables, uncomment the VAR=DEFAULT 
+## lines and set DEFAULT according to your needs.
+
+## The command used to spool PostScript files to the printer.
+## If unspecified, the system will look for either 'lpr' or 'lp'.
+## R_PRINTCMD=lpr
+
+## The paper size for the local (PostScript) printer.
+## It must either be left blank or set to one of 'a4' or 'letter'.
+## If left blank the system will use 'a4'.
+## R_PAPERSIZE=a4
+
+## Set the default behavior of R when ending a session
+## Set this to one of '--save' or '--no-save' depending whether you
+## want automatic saving of '.RData' or not.
+## Note that this applies to interactive and batch use, 
+## but NOT to the utility R CMD BATCH 
+## (which defaults to --save irrespective of this setting)
+## R_BATCHSAVE=
+
+## The command which runs the C compiler.
+## If unspecified, a search is made for gcc and cc (in that order).
+## To override this choice, specify the name of the command which runs
+## the compiler here, for example 'c89'.
+## It is also convenient to set the architecture here, e.g. 'gcc -m32'.
+## NB, as from R 2.5.0 configure will append flags for C99 compliance,
+## e.g. CC=gcc -std=gnu99
+## To avoid this, set contradictory flags (such as -ansi) as part of CFLAGS.
+## CC=
+
+## Debugging and optimization options for the C compiler.
+## Use this to specify CFLAGS for the version of the C compiler
+## specified above.
+## If unspecified, defaults to '-g -O2' for gcc, 
+## and '-g' in all other cases except icc (for which see R-admin.html).
+## CFLAGS=
+
+## Defines for C compilation.
+## Use this to specify defines to be used in the compilation of R,
+## e.g. -DUSE_TYPE_CHECKING_STRICT
+## DEFS=
+
+## The following additional CFLAGS to be used only in the main
+## compilation and only in building shared libraries respectively.
+## For example, on some systems one needs 'MAIN_CFLAGS=-pg' when
+## profiling.
+## MAIN_CFLAGS=
+## SHLIB_CFLAGS=
+
+## Header file search directory ('-IDIR') and any other miscellaneous
+## options (such as defines) for the C preprocessor and compiler.
+## If unset defaults to '-I/usr/local/include', with '-I/sw/include'
+## prepended on systems using Fink with root '/sw'.
+## CPPFLAGS=
+
+## The command which runs the FORTRAN 77 compiler.
+## If this is not specified, a search is made for
+## f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95
+## f90 xlf90 pgf90 pghpf epcf90
+## g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
+## On HPUX fort77 is the POSIX compliant FORTRAN compiler, and replaces
+## f77 in the search list.
+## If CC is gcc, first preference is given to the matching FORTRAN
+## compiler (g77 or gfortran).
+## If none of these is found, R cannot be compiled.
+## F77=
+
+## Options for the FORTRAN 77 compiler.
+## Use this to specify FFLAGS for the version of the compiler specified
+## above.  If unspecified, defaults to '-g -O2' for g77, and '-g' if
+## this is accepted, otherwise ''.
+## FFLAGS=
+
+## Options for safe compilation under the FORTRAN 77 compiler.
+## Use this to specify FFLAGS for the version of the compiler specified
+## above, using as accurate a result as possible, e.g. no optimization
+## or using -ffloat-store.
+## SAFE_FFLAGS=
+
+## The following additional FFLAGS to be used only in the main
+## compilation and only in building shared libraries respectively.
+## For example, on some systems one needs 'MAIN_FFLAGS=-pg' when
+## profiling.
+## MAIN_FFLAGS=
+## SHLIB_FFLAGS=
+
+## The command to be used to load the main R binary.
+## This is usually the FORTRAN 77 or C compiler, but the automatic
+## choice can be overriden by means of this variable.
+## MAIN_LD=
+
+## The flags which are necessary for loading main program which will
+## load DLLs at runtime.  HP-UX and Linux-elf are examples of platforms
+## which use this.  These platforms are already taken care of by
+## configure, and anything set here will be in addition unless MAIN_LD
+## is given.
+## For example, one can set flags for profiling here.
+## MAIN_LDFLAGS=
+
+## Any special flags which must be used when compiling C code to be
+## turned into a shared library.  This is typically something like
+## '-fpic' or '-fPIC'.  If this variable is left unspecified an attempt
+## is made to automatically detect the correct value by configure.
+## CPICFLAGS=
+
+## The following variable can be used to provide any PIC flags for the
+## FORTRAN 77 compiler.  If this variable is left
+## unspecified an attempt is made to automatically detect the correct
+## value by configure.
+## FPICFLAGS=
+
+## The command to be used to create shared objects which contain object
+## files from a C or FORTRAN 77 compiler only.  This is usually the C
+## compiler or 'ld', but the automatic choice can be overridden by means
+## of this variable.
+## SHLIB_LD=
+
+## Any special flags which are required by the linker when creating
+## shared objects containing object files from a C or FORTRAN 77
+## compiler only.  This is usually automatically detected by configure,
+## and anything set here will be in addition unless SHLIB_LD is given.
+## SHLIB_LDFLAGS=
+
+## ditto for a dynamic library: DYLIB_LDFLAGS defaults to SHLIB_LDFLAGS
+## DYLIB_LD=
+## DYLIB_LDFLAGS=
+
+## The appropriate 'lib' dir, normally 'lib', but 'lib64' on Linux on
+## x86_64, mips64, ppc64, sparc64, s390x but not ia64.
+## LIBnn=
+
+## Stripping ('-s'), path ('-L'), and any other miscellaneous options
+## for the linker.
+## '-L' options set here will be prepended to LD_LIBRARY_PATH (or its
+## system equivalent) at run time.
+## If unset defaults to '-L/usr/local/lib', with '-L/sw/lib' prepended
+## on systems using Fink with root '/sw'.
+## On some Linux 64-bit systems its default is -L/usr/local/lib64.
+## If LIBnn is set it defaults to -L/usr/local/$LIBnn.
+## LDFLAGS=
+
+
+## The command which runs the C++ compiler.  It not specified, configure
+## uses the values of the environment variables 'CXX' or 'CCC' if set,
+## and then looks under the names 'c++', 'g++', 'gcc', 'CC', 'cxx', and
+## 'cc++' (in that order).
+## CXX=
+
+## Options for the C++ compiler.
+## CXXFLAGS=
+
+## Any special flags which must be used when compiling C++ code to be
+## turned into a shared library.  If this variable is left unspecified
+## an attempt is made to automatically detect the correct value by
+## configure.
+## CXXPICFLAGS=
+
+## The command to be used to load shared libraries which contain object
+## files from a C++ compiler.  This is usually the C++ compiler/linker,
+## but the automatic choice can be overridden by means of this
+## variable.
+## SHLIB_CXXLD=
+
+## Any special flags which are required when creating shared libraries
+## containing object files from a C++ compiler.  This is usually
+## automatically detected by configure, and anything set here will be in
+## addition unless SHLIB_CXXLD is given.
+## SHLIB_CXXLDFLAGS=
+
+
+## FORTRAN 95 compiler: optional for use in packages.
+## Analogous to the F77 and CXX settings.
+## FC=
+## FCFLAGS=
+## FCPICFLAGS=
+## SHLIB_FCLD=$(FC)
+## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
+## SHLIB_FCLDFLAGS=$(SHLIB_LDFLAGS)
+
+## Tcl/Tk settings.
+## Use TCLTK_LIBS for all '-L' and '-l' options needed for linking
+## against the Tcl and Tk library.
+## TCLTK_LIBS=
+## Use TCLTK_CPPFLAGS for all '-I' options needed for finding the tcl.h
+## and tk.h headers.
+## TCLTK_CPPFLAGS=
+
+## Browser default
+## Default setting for the R_BROWSER env variable
+## If unset configure searches in turn for (currently)
+## firefox mozilla netscape galeon kfmclient opera gnome-moz-remote open
+## and uses the full path.
+## R_BROWSER=
+
+## BLAS and LAPACK settings
+## Use BLAS_LIBS for all '-L' and '-l' options needed for linking
+## against an external BLAS implementation.
+## BLAS_LIBS=
+## Use LAPACK_LIBS for all '-L' and '-l' options needed for linking
+## against an external LAPACK implementation.  
+## Note that (see R-admin) that our main intention is to allow a
+## LAPACK-containing BLAS to be used, so this is rarely needed, and
+## it is not used if the BLAS already contains LAPACK.
+## LAPACK_LIBS=
+
+## Make name.
+## Set this if you want to use a make by another name.
+## For example, if your GNU make is called 'gmake', use 'MAKE=gmake'.
+## MAKE=

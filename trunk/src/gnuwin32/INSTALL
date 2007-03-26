@@ -1,0 +1,24 @@
+R for Windows
+=============
+
+This distribution contains the sources to build a port of R to run on
+(32-bit) Windows 95, 98, ME, NT4, 2000, XP and 2003 on Intel/clone
+chips. See the file `README.rw2xxx' for fuller details, including how
+to install the binary versions.
+
+
+Building From Source on Windows
+===============================
+
+Details on building R are given in the `R Installation and
+Administration Manual' in the doc/manual directory.  An HTML version
+is at doc/html/R-admin.html, unless you obtained R using Subversion.
+
+
+Feedback
+========
+
+Please send comments and bug reports to
+
+	R-windows@r-project.org
+

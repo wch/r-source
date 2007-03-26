@@ -1,0 +1,104 @@
+# Translation of R-tcltk.pot to French
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the tcltk R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.5.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-01-10 22:38\n"
+"PO-Revision-Date: 2007-01-03 23:21+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "cannot handle object of mode '%s'"
+msgstr "impossible de manipuler un objet de mode '%s'"
+
+msgid "cannot change names on Tcl array"
+msgstr "impossible de changer les noms dans un tableau Tcl"
+
+msgid "cannot set length of Tcl array"
+msgstr "impossible d'imposer la taille d'un tableau Tcl"
+
+msgid "Tcl package '%s' not found"
+msgstr "le package Tcl '%s' est introuvable"
+
+msgid "The tkGUI is not available under Windows"
+msgstr "L'interface utilisateur tkGUI n'est pas disponible sous Windows"
+
+msgid "File"
+msgstr "Fichier"
+
+msgid "Demos"
+msgstr "Démos"
+
+msgid "Packages"
+msgstr "Packages"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Source R code"
+msgstr "Sourcer du code R"
+
+msgid "Quit"
+msgstr "Quitter"
+
+msgid "Save workspace"
+msgstr "Sauver l'environnement"
+
+msgid "Don't save workspace"
+msgstr "Ne pas sauver l'environnement"
+
+msgid "t test"
+msgstr "Test t"
+
+msgid "Density"
+msgstr "Densité"
+
+msgid "R FAQ"
+msgstr "FAQ R"
+
+msgid "Load"
+msgstr "Charger"
+
+msgid "Go get them!"
+msgstr "Les récupérer !"
+
+msgid "Load packages"
+msgstr "Charger des packages"
+
+msgid "Install packages from CRAN"
+msgstr "Installer des packages depuis CRAN"
+
+msgid "Help topic:"
+msgstr "Aide sur :"
+
+msgid "Manuals in PDF format"
+msgstr "Manuels au format PDF"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Loading Tcl/Tk interface ..."
+msgstr "Chargement de Tcl/Tk..."
+
+msgid "done"
+msgstr "terminé"
+
+msgid "Tcl/Tk support is not available on this system"
+msgstr "Tcl/Tk n'est pas supporté sur ce système"
+
+msgid "Tcl/Tk support files were not installed"
+msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
+
+#~ msgid "R-tcltk"
+#~ msgstr "R-tcltk"

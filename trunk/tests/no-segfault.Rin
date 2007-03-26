@@ -1,0 +1,110 @@
+###-*- R -*-
+###--- This "foo.Rin" script is only used to create the real script "foo.R" :
+
+###--- We need to use such a long "real script" instead of a for loop,
+###--- because "error --> jump_to_toplevel", i.e., outside any loop.
+
+core.pkgs <-
+{x <- installed.packages(file.path(R.home(), "library"));
+    x[x[,"Priority"] %in% "base", "Package"]}
+core.pkgs <-
+    core.pkgs[- match(c("methods", "tcltk", "stats4"), core.pkgs, 0)]
+## move methods to the end because it has side effects (overrides primitives)
+## stats4 requires methods
+core.pkgs <- c(core.pkgs, "methods", "stats4")
+
+stop.list <- vector("list", length(core.pkgs))
+names(stop.list) <- core.pkgs
+
+## -- Stop List for base/graphics/utils:
+edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
+              "edit.default", "vi", "file.edit",
+              "emacs", "pico", "xemacs", "xedit", "RSiteSearch")
+
+## warning: readLines will work, but read all the rest of the script
+## warning: trace will load methods.
+## warning: rm and remove zap c0, l0, m0, df0
+## warning: parent.env(NULL) <- NULL creates a loop
+misc.int <- c("browser", "bug.report", "checkCRAN",
+              "menu", "repeat", "readLines",
+              "package.skeleton", "trace", "recover", "rm", "remove",
+              "parent.env<-")
+inet.list <- c(apropos("download\\."),
+               apropos("^url\\."), apropos("\\.url"),
+               apropos("packageStatus"),
+               paste(c("CRAN", "install", "update", "old"),
+                     "packages",sep="."))
+socket.fun <- apropos("socket")
+## "Interactive" ones:
+dev.int <- c("X11", "x11", "pdf", "postscript",
+             "xfig", "jpeg", "png", "pictex", "quartz")
+misc.2 <- c("asS4", "help.start", "browseEnv",
+            "gctorture", "q", "quit", "restart", "try",
+            "read.fwf", "source",## << MM thinks "FIXME"
+            "data.entry", "dataentry", "de", apropos("^de\\."),
+            "chooseCRANmirror", "setRepositories", "select.list", "View")
+if(.Platform$OS.type == "windows") {
+    dev.int <- c(dev.int, "bmp", "windows", "win.graph", "win.print",
+                "win.metafile")
+    misc.2 <- c(misc.2, "file.choose", "choose.files", "choose.dir",
+    		"setWindowTitle", "loadRconsole")
+}
+
+stop.list[["base"]] <-
+    if(nchar(Sys.getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
+	c(edit.int, misc.int)
+    } else {
+	c(inet.list, socket.fun, edit.int, misc.int, misc.2)
+    }
+## warning: browseAll will tend to read all the script and/or loop forever
+stop.list[["methods"]] <- c("browseAll", "recover")
+stop.list[["ts"]] <- c("arma0f", "KalmanLike")
+stop.list[["grDevices"]] <- dev.int
+stop.list[["utils"]] <- c(inet.list, socket.fun, edit.int, misc.int, misc.2)
+
+sink("no-segfault.R")
+
+if(.Platform$OS.type == "unix") cat('options(pager = "cat")\n')
+if(.Platform$OS.type == "windows") cat('options(pager = "console")\n')
+cat('options(error=expression(NULL))',
+    "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
+
+cat(".proctime00 <- proc.time()\n",
+    "c0 <- character(0)\n",
+    "l0 <- logical(0)\n",
+    "m0 <- matrix(1,0,0)\n",
+    "df0 <- as.data.frame(c0)\n", sep="")
+
+for (pkg in core.pkgs) {
+  cat("### Package ", pkg, "\n",
+      "###         ", rep("~",nchar(pkg)), "\n", collapse="", sep="")
+  pkgname <- paste("package", pkg, sep=":")
+  this.pos <- match(paste("package", pkg, sep=":"), search())
+  lib.not.loaded <- is.na(this.pos)
+  if(lib.not.loaded) {
+      library(pkg, character = TRUE, warn.conflicts = FALSE)
+      cat("library(", pkg, ")\n")
+  }
+  this.pos <- match(paste("package", pkg, sep=":"), search())
+
+  for(nm in ls(pkgname)) {
+      if(!(nm %in% stop.list[[pkg]]) &&
+	 is.function(f <- get(nm, pos = pkgname))) {
+	  cat("\n## ", nm, " :\n")
+	  cat("f <- get(\"",nm,"\", pos = '", pkgname, "')\n", sep="")
+	  cat("f()\nf(NULL)\nf(,NULL)\nf(NULL,NULL)\n",
+	      "f(list())\nf(l0)\nf(c0)\nf(m0)\nf(df0)\nf(FALSE)\n",
+	      "f(list(),list())\nf(l0,l0)\nf(c0,c0)\n",
+              "f(df0,df0)\nf(FALSE,FALSE)\n",
+	      sep="")
+      }
+  }
+  if(lib.not.loaded) {
+      detach(pos=this.pos)
+      cat("detach(pos=", this.pos, ")\n", sep="")
+  }
+
+  cat("\n##__________\n\n")
+}
+
+cat("proc.time() - .proctime00\n")

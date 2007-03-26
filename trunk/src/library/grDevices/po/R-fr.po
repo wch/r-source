@@ -1,0 +1,292 @@
+# Translation of R-grDevices.pot to French
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the grDevices R package.
+# Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.2.1\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2006-11-25 12:18\n"
+"PO-Revision-Date: 2006-12-05 20:26+0100\n"
+"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"Language-Team: French <R-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "'coef' must not be negative"
+msgstr "'coef' ne peut pas être négatif"
+
+msgid "no 'z' matrix specified"
+msgstr "aucune matrice 'z' n'est spécifiée"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "valeurs croissantes de 'x' et 'y' attendues"
+
+msgid "no proper 'z' matrix specified"
+msgstr "la matrice 'z' spécifiée est incorrecte"
+
+msgid "'bias' must be positive"
+msgstr "'bias' doit être positif"
+
+#, fuzzy
+msgid "at least 3 columns needed"
+msgstr "il faut au moins 2 colonnes"
+
+msgid "rgb matrix must be numeric"
+msgstr "la matrice 'rgb' doit être numérique"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "la matrice 'rgb' doit avoir 3 lignes"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "les valeurs de 'rgb' doivent être dans [0, maxColorValue]"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "'start' et 'end' doivent être différents et dans [0, 1]."
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma' doit être une valeur simple ou 'sRGB'"
+
+msgid "Color space converter:"
+msgstr "Convertisseur de l'espace des couleurs :"
+
+msgid "Reference white:"
+msgstr "Blanc de référence :"
+
+msgid "display gamma"
+msgstr "gamma d'affichage"
+
+msgid "'from' must be a colorConverter or string"
+msgstr "'from' doit être un colorConverter ou une chaîne de caractères"
+
+msgid "'to' must be a colorConverter or string"
+msgstr "'to' doit être un colorConverter ou une chaîne de caractères"
+
+msgid "'from.ref.white' disagrees with definition of"
+msgstr "'from.ref.white' en désaccord avec la définition de"
+
+msgid "'to.ref.white' disagrees with definition of"
+msgstr "'to.ref.white' en désaccord avec la définition de"
+
+msgid "color spaces use different reference whites."
+msgstr "les espaces de couleurs utilisent différents blancs de référence."
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "impossible de fermer le périphérique 1 (périphérique null)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "fixer 'which' et 'device' en même temps n'est pas autorisé"
+
+msgid "cannot copy from the null device"
+msgstr "impossible de copier du périphérique null"
+
+msgid "cannot copy to the null device"
+msgstr "impossible de copier vers le périphérique null"
+
+msgid "cannot copy device to itself"
+msgstr "impossible de copier le périphérique vers lui-même"
+
+msgid "'device' should be a function"
+msgstr "'device' doit être une fonction"
+
+msgid "no device to print from"
+msgstr "aucun périphérique d'où imprimer"
+
+msgid "can only print from screen device"
+msgstr "seul un périphérique écran peut être imprimé"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "il faut spécifier 'width' ou 'height'"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "dev.control() appelé sans périphérique graphique ouvert"
+
+msgid "argument is missing with no default"
+msgstr "argument manquant sans valeur par défaut"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr ""
+"'name.opt' doit être une chaîne de caractère ou le nom d'une liste existante"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "impossible de réinitialiser '%s' car il n'existe pas"
+
+msgid "invalid options in '%s'"
+msgstr "options incorrectes dans '%s'"
+
+msgid "NOT changing"
+msgstr "NE change(nt) PAS"
+
+msgid "unknown family '%s'"
+msgstr "famille inconnue '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "argument 'family' incorrect"
+
+msgid "invalid PDF version"
+msgstr "version de PDF incorrecte"
+
+msgid "Invalid font type"
+msgstr "Type de police incorrect"
+
+msgid "invalid family name in font specification"
+msgstr "nom de famille incorrect dans la spécification de la police"
+
+msgid "invalid metric information in font specification"
+msgstr "information de métrique incorrecte dans la spécification de police"
+
+msgid "invalid encoding in font specification"
+msgstr "encodage incorrect dans la spécification de police"
+
+msgid "Not a CID font"
+msgstr "Ce n'est pas une police CID"
+
+msgid "invalid CMap name in font specification"
+msgstr "nom CMap incorrect dans la spécification de police"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "'cmapEncoding' incorrect dans la spécification de police"
+
+msgid "invalid PDF resource in font specification"
+msgstr "ressource PDF incorrecte dans la spécification de police"
+
+msgid "Invalid font database name"
+msgstr "Nom de base de données de polices incorrect"
+
+msgid "font %s already in use"
+msgstr "police %s déjà utilisée"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "arguments incorrects dans '%s' (il faut des noms de police)"
+
+msgid "unknown font"
+msgstr "fonte inconnue"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "incohérence d'encodage pour la police '%s/%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file' doit être une chaîne de caractère non vide"
+
+msgid "Invalid output format"
+msgstr "Format de sortie incorrect"
+
+msgid "status %d in running command '%s'"
+msgstr "statut %d dans la commande en cours d'exécution '%s'"
+
+msgid "no current device to record from"
+msgstr "aucun périphérique à partir duquel enregistrer"
+
+msgid "argument is not of class \"recordedplot\""
+msgstr "l'argument n'est pas de classe \"recordedplot\""
+
+msgid "loading snapshot from pre-2.0.0 R version"
+msgstr ""
+"chargement d'un instantané graphique à partir d'une version de R pre-2.0.0"
+
+msgid "loading snapshot from different R version"
+msgstr ""
+"chargement d'un instantané graphique à partir d'une version de R différente"
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r' doit indiquer une étendue des valeurs, donc être de longueur 2"
+
+msgid "invalid first argument"
+msgstr "premier argument incorrect"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "les longueurs de 'x' et 'y' diffèrent"
+
+msgid "invalid first argument [bad language object]"
+msgstr "premier argument incorrect \"[bad language object]\""
+
+msgid "at least 2 columns needed"
+msgstr "il faut au moins 2 colonnes"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "les longueurs de 'x', 'y' et 'z' diffèrent"
+
+msgid "'file' is missing with no default"
+msgstr "'file' est manquant sans valeur par défaut"
+
+msgid "sorry, 'gs' cannot be found"
+msgstr "désolé, 'gs' est introuvable"
+
+msgid "device '%s' is not available"
+msgstr "le périphérique '%s' n'est pas disponible"
+
+msgid "Available devices are %s"
+msgstr "Les périphériques disponibles sont %s"
+
+msgid "quartz() device interactivity reduced without an event loop manager"
+msgstr ""
+"interactivité réduite (sans gestion des événements) dans les périphériques "
+"quartz()"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "police Quartz incorrecte : doit être 4 chaînes de caractères"
+
+msgid "invalid arguments in quartzFonts (must be font names)"
+msgstr "arguments incorrects dans quartzFonts (il faut des noms de police)"
+
+msgid "invalid arguments in quartzFonts (need named args)"
+msgstr ""
+"arguments incorrects dans quartzFonts (les arguments doivent être nommés)"
+
+msgid "invalid X11 font specification:"
+msgstr "spécification de police X11 incorrecte :"
+
+msgid "can only bring windows devices to the front"
+msgstr ""
+"seules les fenêtres des périphériques graphiques peuvent être amenées au "
+"premier plan"
+
+msgid "no such device"
+msgstr "aucun périphérique ne correspond"
+
+msgid "can only copy from 'windows' devices"
+msgstr "il n'est possible de copier qu'à partir d'un périphérique 'windows'"
+
+msgid "subscript out of range"
+msgstr "indice hors plage"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "police Windows incorrecte : il faut un seul nom de famille de police"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "arguments incorrects dans 'windowsFonts' (il faut des noms de police)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr ""
+"arguments incorrects dans 'windowsFonts' (les arguments doivent être nommés)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "nom d'argument %s incorrect dans '%s'"
+msgstr[1] "noms d'arguments %s incorrects dans '%s'"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "diffère entre le nouveau et le précédent"
+msgstr[1] "diffèrent entre le nouveau et le précédent"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d valeur x <= 0 est ignorée pour le graphe logarithmique"
+msgstr[1] "%d valeurs x <= 0 sont ignorées pour le graphe logarithmique"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d valeur y <= 0 est ignorée pour le graphe logarithmique"
+msgstr[1] "%d valeurs y <= 0 sont ignorées pour le graphe logarithmique"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d valeur z <= 0 est ignorée pour le graphe logarithmique"
+msgstr[1] "%d valeurs z <= 0 sont ignorées pour le graphe logarithmique"

@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# ${RHOME}/tools/GETCONFIG
+
+echo "/* Rconfig.h.  Generated automatically */"
+echo "#ifndef R_RCONFIG_H"
+echo "#define R_RCONFIG_H"
+echo
+echo "#ifndef R_CONFIG_H"
+echo
+line=`grep "HAVE_F77_UNDERSCORE" config.h`
+echo "${line}"
+line=`grep "IEEE_754" config.h`
+echo "${line}"
+line=`grep "WORDS_BIGENDIAN" config.h`
+echo "${line}"
+line=`grep "HAVE_WORKING_ISFINITE" config.h`
+echo "${line}"
+line=`grep "R_INLINE" config.h`
+echo "${line}"
+line=`grep "HAVE_VISIBILITY_ATTRIBUTE" config.h`
+echo "${line}"
+## temporary
+line=`grep "SUPPORT_UTF8" config.h`
+echo "${line}"
+line=`grep "SUPPORT_MBCS" config.h`
+echo "${line}"
+line=`grep "ENABLE_NLS" config.h`
+echo "${line}"
+echo
+echo "#endif /* not R_CONFIG_H */"
+echo
+echo "#endif /* not R_RCONFIG_H */"

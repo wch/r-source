@@ -1,0 +1,58 @@
+
+			INSTALLING R UNDER UNIX
+
+
+This document concerns building and installing R from sources.  Pre-made
+binaries are made available for some systems with varying regularity and
+can be obtained from CRAN (see the RESOURCES file).
+
+The main source of information on installation is the `R Installation
+and Administration Manual', an HTML copy of which is available as file
+`doc/html/R-admin.html'.  Please read that before installing R.  But
+if you are impatient, read on but please refer to the manual to
+resolve any problems.  (If you obtained R using Subversion, the manual
+is at doc/manual/R-admin.texi.)
+
+
+SIMPLE COMPILATION
+
+As you are reading this file, you have unpacked the R sources and are
+presumably in the top directory.  Issue the following commands:
+
+	./configure
+	make
+
+(If your make is not called `make', set the environment variable MAKE to
+its name, and use that name throughout these instructions.)
+This will take a while, giving you time to read `R-admin.html'.
+
+Then check the built system worked correctly, by
+
+	make check
+
+and make the manuals by (as many options as preferred from)
+
+	make dvi	to create DVI versions
+	make pdf	to create PDF versions
+	make info	to create info files
+
+However, please read the notes in `R-admin.html' about making the
+reference manual.
+
+
+INSTALLATION
+
+You do not need to install R to run it: you can run R by the script
+`bin/R' which you can link or copy to any convenient place in your path.
+
+For a site-wide installation, use
+
+	make install
+	make install-dvi
+	make install-info
+	make install-pdf
+
+choosing to install the manuals that you made.
+
+This installs to the default location (typically `/usr/local') for your
+platform: see the Installation and Administration Manual for other options.

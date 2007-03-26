@@ -1,0 +1,101 @@
+# Chinese translations for R package
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2007.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-01-10 22:38\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "cannot handle object of mode '%s'"
+msgstr "无法处理'%s'模式的目标对象"
+
+msgid "cannot change names on Tcl array"
+msgstr "无法在Tcl排列上改名"
+
+msgid "cannot set length of Tcl array"
+msgstr "无法为Tcl排列设定长度"
+
+msgid "Tcl package '%s' not found"
+msgstr "没有'%s'这个Tcl程序包"
+
+msgid "The tkGUI is not available under Windows"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Demos"
+msgstr ""
+
+msgid "Packages"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Source R code"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "Save workspace"
+msgstr ""
+
+msgid "Don't save workspace"
+msgstr ""
+
+msgid "t test"
+msgstr ""
+
+msgid "Density"
+msgstr ""
+
+msgid "R FAQ"
+msgstr ""
+
+msgid "Load"
+msgstr ""
+
+msgid "Go get them!"
+msgstr ""
+
+msgid "Load packages"
+msgstr ""
+
+msgid "Install packages from CRAN"
+msgstr ""
+
+msgid "Help topic:"
+msgstr ""
+
+msgid "Manuals in PDF format"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Loading Tcl/Tk interface ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
+
+msgid "Tcl/Tk support is not available on this system"
+msgstr "这个系统不支持Tcl/Tk"
+
+msgid "Tcl/Tk support files were not installed"
+msgstr "没有安装Tcl/Tk支持文件"

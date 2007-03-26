@@ -1,0 +1,637 @@
+#! @PERL@
+#
+# ${R_HOME}/bin/Sd2Rd for converting S documentation to Rd format
+
+# Copyright (C) 1997-2001 The R Core Development Team
+#
+# This document is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+## writing to the Free Software Foundation, Inc., 51 Franklin Street,
+## Fifth Floor, Boston, MA 02110-1301  USA.
+
+use Getopt::Long;
+use R::Utils;
+
+my $revision = ' $Rev$ ';
+my $version;
+my $name;
+
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+
+sub usage {
+  print STDERR <<END;
+Usage: R CMD Sd2Rd [options] FILE
+
+Convert S documentation in FILE to R documentation format.
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print Sd2Rd version info and exit
+  -n			render examples non-executable by wrapping them
+			into a \\dontrun{} environment
+  -x			(S3 docs) interpret all single-quoted names 
+                        as code names
+
+Email bug reports to <r-bugs\@r-project.org>.
+END
+  exit 0; 
+}
+
+@knownoptions = ("v|version", "h|help", "n", "x");
+GetOptions(@knownoptions) || &usage();
+&R_version($name, $version) if $opt_v;
+&usage() if $opt_h;
+
+@lines = <>;
+## peek at the first line of the file, then dispatch to
+## S3-style (nroff) or S4-style (SGML spec).
+if(@lines[0] =~ /^<!doctype/) { doS4(); } else { doS3(); }
+exit 0;
+ 
+sub doS3 {
+  $braceLevel = 0;
+  $inReferences = 0;
+  $inVerbatim = 0;
+  $inSeeAlso = 0;
+  $inCode = 0;
+  $isDataSet = 0;
+  $doprint = 1;
+  $needArg = 1;
+  $needVal = 0;
+  $underlineNext = 0;
+  $output = "";
+
+  foreach $_ (@lines) {
+    chop;
+    &substitute unless /^\./;
+    my @word = split;
+
+    if (/^\s*$/) { &output("\n"); }
+    if (/^[^.]/) { 
+      if ($underlineNext) {
+	$_ = "\\emph{" . $_ ."}";
+	$underlineNext = 0;
+      }
+      &output($_);
+    }
+
+    ## Added by BDR 1998-08-27
+    if (/^\.\\\"/o) {
+      s/^\.\\\"/%/;
+      &output($_);
+    }
+    ## End
+
+    if (/^\.BG D/) {
+      $isDataSet = 1;
+    }
+    if (/^\.AG/) {
+      if ($isDataSet) {
+	if ($needArg) {
+	  &section(1, "\\describe\{");
+	  $needArg = 0;
+	}
+	$arg = $_;
+	$arg =~ s/^\.AG\s//;
+	&section(2, "\\item\{\\code\{$arg\}\}\{");
+      } else {
+	if ($needArg) {
+	  &section(0, "\\arguments\{");
+	  $needArg = 0;
+	}
+	$arg = $_;
+	$arg =~ s/^\.AG\s//;
+	&section(1, "\\item\{$arg\}\{");
+      }
+    }
+    if (/^\.CS/) {
+      &section(0, "\\usage\{");
+      $inVerbatim = 1;
+    }
+    if (/^\.DN/) { &section(0, "\\description\{"); }
+    if (/^\.DT/) { &section(0, "\\details\{"); }
+    if (/^\.EX/) {
+      if ($opt_n) {
+	&section(1, "\\examples\{\\dontrun\{");
+      } else {
+	&section(0, "\\examples\{");
+      }
+      $inVerbatim = 1;
+    }
+    if (/^\.FN/) {
+      unless($fun) { $fun = $word[1]; }
+      push(@aliases, $word[1]);
+    }
+    if (/^\.(IP|PP)/) { &output("\n"); }
+    if (/^\.KW/) { 
+      if ($braceLevel > 0) {
+	&section(0, "");
+	$braceLevel = 0;
+      }
+      if ($word[1] =~ /sysdata/) {
+	&output("\\keyword\{datasets\}");
+      } else {
+	&output("\\keyword\{$word[1]\}");
+      }
+    }
+    if (/^\.RC/) {
+      if ($needVal) {
+	$needVal = 0;	    
+	&section(0, "\\value\{\n$output\n");
+	$doprint = 1;
+      }
+      &section(1, "\\item\{" . join(" ", @word[1..$#word]) . "\}\{");
+    }
+    if (/^\.RT/) {
+      $needVal = 1;
+      $doprint = 0;
+      $output = "";
+    }
+    if (/^\.SA/) {
+      &section(0, "\\seealso\{");
+      $inSeeAlso = 1;
+    }
+    if (/^\.SE/) { &section(0, "\\section\{Side Effects\}\{"); }
+    if (/^\.SH/) {
+      if ($word[1] =~ /REFERENCE/) {
+	&section(0, "\\references\{");
+	$inReferences = 1;
+      } elsif ($word[1] =~ /AUTHOR/) {
+	&section(0, "\\author\{");
+      } elsif ($word[1] =~ /NOTE/) {
+	&section(0, "\\note\{");
+      } elsif ($word[1] =~ /SOURCE/) {
+	&section(0, "\\source\{");
+	$inReferences = 1;
+      } elsif ($word[1] =~ /SUMMARY/) {
+	&section(0, "\\description\{");
+      } elsif ($word[1] =~ /WARNINGS/) {
+	&section(0, "\\section{Warnings}\{");
+      } elsif ($word[1] =~ /WARNING/) {
+	&section(0, "\\section{Warning}\{");
+      } elsif (join(" ", @word[1..2]) =~ /DATA DESCRIPTION/) {
+	&section(0, "\\usage\{\ndata($fun)");
+	&section(0, "\\format\{");
+      } else {
+	# This line may be of the form .SH "A B C"
+	($tmp = join(" ", @word[1..$#word])) =~ s/\"(.*)\"/$1/;
+	&section(0, "\\section\{$tmp\}\{");
+      }
+    }
+    if (/^\.sp/) {
+      if($word[1] == 0) {
+	output("\\cr")
+      } else {
+	output("\n")
+      }
+    }
+    if (/^\.TL/) {
+      print("\\name\{$fun\}\n");
+      print("\\alias\{", join("\}\n\\alias\{", @aliases), "\}\n");
+      &section(0, "\\title\{");
+      $inVerbatim = 1;
+    }
+    if (/^\.WR/) {
+      &section(0, "");
+      print("% Converted by $name version $version.\n");
+    }
+    if (/^\.AO/) {
+      output("Arguments for function \\code\{$word[1]()\} can also be");
+      output("supplied to this function.");
+    }
+    if (/^\.GE/) {
+      output("This is a generic function.");
+      output("Functions with names beginning in \\code\{$fun.\} will be");
+      output("methods for this function.");
+      output("Classes with methods for this function include:");
+    }
+    if (/^\.GR/) {
+      output("Graphical parameters (see \\code\{\\link\{par\}\}) may also");
+      output("be supplied as arguments to this function.");
+    }
+    if (/^\.ME/) {
+      output("This function is a method for the generic function");
+      output("\\code\{$word[1]()\} for class \\code\{\"$word[2]\"\}.");
+      output("It can be invoked by calling \\code\{$word[1](x)\} for an");
+      output("object \\code\{x\} of the appropriate class, or directly by");
+      output("calling \\code\{$word[1].$word[2](x)\} regardless of the");
+      output("class of the object.");
+    }
+    if (/^\.NA/) { output("Missing values (\\code\{NA\}s) are allowed."); }
+    if (/^\.Tl/) {
+      output("In addition, the high-level graphics control arguments");
+      output("described under \\code\{\\link\{par\}\} and the arguments to");
+      output("\\code\{\\link\{title\}\} may be supplied to this function.");
+    }
+    if (/^\.ul/) { $underlineNext = 1; }
+    ## End
+  }
+}
+
+sub substitute {
+  if (!$inVerbatim) {
+    s/\{/\\\{/g;
+    s/\}/\\\}/g;
+#    s/&/\\&/g; removed BDR 2000-02-10
+    ## Added by BDR 1998-06-20
+    s/\\\(aa/'/g;		# extra ' for highlight matching
+    s/\\\(em/--/g;		# em dash
+    s/\\\(tm/ (TM) /g;		# Trademark
+    s/\\\(mu/ x /g;		# multiply sign
+    s/\\\(\*a/\alpha/g;		# greek
+    s/\\\(\*b/\beta/g;
+    s/\\\(\*e/\epsilon/g;
+    s/\\\(\*l/\lambda/g;
+    s/\\\(\*m/\mu/g;
+    s/\\\(\*p/\pi/g;
+    s/\\\(\*s/\sigma/g;
+    ## End
+  }
+  s/\.\.\./\\dots/g;
+  s/\\fB/\\bold\{/g;
+  s/\\fR/\}/g;
+  ## Added by BDR 1998-06-20
+  s/\\fI/\\emph\{/g;
+  s/\\fP/\}/g;
+  ## End
+  s/\%/\\%/g;
+  s/\\\.(.*)$/# $1)/g;
+  if($inCode && s/\'/\}/) {
+    $inCode = 0;
+  }
+  if ($inSeeAlso) {
+    if ($opt_x) {
+      s/\`?([\.\w]*\w+)\'?/\\code{\\link{$1}}/g;
+    } else {
+      s/\`([^\']*)\'/\\code{\\link{$1}}/g;
+    }
+  } elsif (!$inVerbatim) {
+    if(s/\`([^\']*)$/\\code\{$1/) {
+      $inCode = 1;
+    }
+    s/\`([^\']*)\'$/\\code{$1}/g;
+    s/\`([^\']*)\'([^\'])/\\code{$1}$2/g;  
+  }
+  if ($inReferences) {
+    s/([0-9])-([0-9])/$1--$2/g;
+  }
+}
+
+sub section {
+  my($level, $text) = @_;
+  $n = $braceLevel - $level;
+  print "\}" x $n, "\n" if ($n > 0);
+  if ($needVal) {
+    print("\\value\{\n$output\n\}\n");
+    $needVal = 0;
+  }
+  print("$text\n") if $text;    
+  $braceLevel = $level + 1;
+  $inReferences = 0;
+  $inVerbatim = 0;
+  $inSeeAlso = 0;
+  $doprint = 1;    
+}
+
+sub paragraph {
+  my($name) = @_;
+  &output("\n\\bold\{$name.\} ");
+}
+    
+sub output {
+  my($text) = @_;
+  if ($doprint) {
+    print("$text\n");
+  } elsif ($output) {
+    $output .= "\n$text";
+  } else {
+    $output = $text;
+  }
+}
+
+
+## ---------------------------- S4 section -------------------------
+
+my $skipping = 0;
+my $nextskipping = 0;
+my $text = "";
+my $fun;
+my $InArgs = 0;
+
+my $nalias = 0;
+my $nexamples = 0;
+
+sub doS4 {
+  foreach $_ (@lines) {
+    # skip header
+    if (/^<!doctype/) {
+      $skipping = 1;
+      $nextskipping = 1 unless />\s*$/s;
+    }
+    if($skipping && /^>/) { $nextskipping = 0;}
+    # skip comments
+    $skipping = $nextskipping = 1 if (/^\s*<\!-- /);
+    if($skipping && /-->\s*$/) { $nextskipping = 0;}
+    if(!$skipping) {
+      $text = $text . $_;
+    }
+    $skipping = $nextskipping;
+  }
+
+  ($type, $text, $rest) = get_group($text); # s-function-doc or whatever
+  if($type ne "function-doc" && $type ne "method-doc") {
+    die "Document class 's-$type' is not supported";
+  }
+
+  chomp $text;
+
+  while(length($text) > 0) {
+    ($type, $body, $text) = get_group($text);
+    process_group($type, $body);
+  }
+  print "% Converted by $name version $version.\n";
+  ## End
+}
+
+sub get_group
+{
+    my $text = $_[0];
+    my $body;
+    my $rest;
+
+    die "not at beginning of a group in |$text|" unless 
+	$text =~ /^\s*<s-(.+?)>/s;
+    my $type = $1;
+    my $tt = $type;
+    $tt =~ s/([a-zA-Z-]+).*/$1/;
+    if($text =~ /^\s*<s-\Q$type\E>(.*?)<\/s-$tt>(.*)/s) {
+	$body = $1;
+	$rest = $2;
+    } else { 
+	warn "no match for 's-$tt'";
+	$text =~ /^\s*<s-\Q$type\E>\s*(.*)/s;
+	$body = $1;
+	$rest = "";
+    }
+    ($type, $body, $rest);
+}
+
+sub process_group {
+    my $type = $_[0];
+    my $text = $_[1];
+
+    if($InArgs && ($type =~ /^args/) != 1) {
+	print "}\n";
+	$InArgs = 0;
+    }
+
+    $text =~ s/^\n*//;
+    $text =~ s/\n*$//;
+
+    if ($type eq "topics") {
+	process_sub_groups($text, "topic");
+
+    } elsif ($type eq "title") {
+	print "\\title{\n  $text\n}\n";
+
+    } elsif ($type eq "description") {
+	print "\\description{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "usage") {
+	## new-style usage is not catered for here: no examples seen
+	## it will be passed through verbatim.
+	if ($text =~ /^\s*<s-old-style-usage>\s*(.*?)\s*<\/s-old-style-usage>/s) {
+	    $text = $1;
+	}
+	print "\\usage{\n$text\n}\n";	
+
+    } elsif ($type eq "args" || $type eq "args-optional" 
+	     || $type eq "args-required" ) {
+	if(!$InArgs) {
+	    print "\\arguments{\n";
+	    $InArgs = 1;
+	}
+	## some files seem to have text before args
+	my $pre = $text =~ /^\s*<s-arg/;
+	if($pre != 1) {
+	    my $pre;
+	    if($text =~ s/^\s*(.*?)(<s-arg)/$2/s) {
+		$pre = $1;
+	    } else {
+		## There are no <s-arg> groups!
+		$pre = $text;
+		$text = "";
+	    }
+	    print sub4($pre), "\n";
+	}
+	process_sub_groups($text, "arg");
+
+    } elsif ($type eq "value") {
+	print "\\value{\n";
+	my $t;
+	my @groups = split /<s-return-component /, $text;
+	foreach $t (@groups) {
+	    if ($t =~ /name=\"(.*?)\">\s*(.*)<\/s-return-component>/s) {
+		my $name=$1;
+		$t = $2;
+		print "\\item{$1}{\n", sub4($t), "}\n";
+	    } else {
+		print sub4($t), "\n";
+	    }
+	}
+	print "}\n";
+
+    } elsif ($type eq "details") {
+	print "\\details{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "see") {
+ 	print "\\seealso{\n", makelinks($text), "\n}\n";	
+
+    } elsif ($type eq "examples") {
+	print "\\examples{\n";
+	print "\\dontrun{\n" if $opt_n;
+	process_sub_groups($text, "example");
+	print "}\n" if $opt_n;
+	print "}\n";
+
+    } elsif ($type eq "note" || $type eq "notes") {
+	print "\\note{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "bugs") {
+ 	print "\\section{Bugs}{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "references") {
+	print "\\references{\n", inref(sub4($text)), "\n}\n";	
+
+    } elsif ($type =~ /^section\s+name\s*=\s*(.*)/) {
+	my $name = $1;
+	$name =~ s/\s*\"(.*?)\"/$1/o;
+	$name =~ s/^\s*//o;
+	if ($name =~ /^reference$/io) {
+	    print "\\references{\n", inref(sub4($text)), "\n}\n";	
+	} elsif ($name =~ /^source$/io) {
+	    print "\\source{\n", inref(sub4($text)), "\n}\n";	
+	} elsif ($name =~ /^note$/io) {
+	    print "\\note{\n", sub4($text), "\n}\n";	
+	} elsif ($name =~ /^summary$/io) {
+	    print "\\description{\n", sub4($text), "\n}\n";	
+	} elsif ($name =~ /^data description$/io) {
+	    print "\\usage{\ndata($fun)\n}\n";
+	    print "\\format{\n", sub4($text), "\n}\n";	
+	} else {
+	    $name = lc($name);
+	    $name =~ s/^([a-z])/\U$1/;
+	    print "\\section{$name}{\n", sub4($text), "\n}\n";	
+	}
+
+    } elsif ($type eq "docclass") {
+	print "% docclass is $text\n";
+
+    } elsif ($type eq "warnings") {
+	process_sub_groups($text, "warning");
+
+    } elsif ($type eq "warning") {
+	print "\\section{Warning}{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "background") {
+	print "\\section{Background}{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "side-effects") {
+	print "\\section{Side Effects}{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "author") {
+	print "\\author{\n", sub4($text), "\n}\n";	
+
+    } elsif ($type eq "keywords") {
+	process_sub_groups($text, "keyword");
+
+    } else {
+	warn "unknown SGML entity '$type'";
+	print "%type:\n%$text\n";
+    }
+}
+
+sub process_sub_groups {
+  
+    my $text = $_[0];
+    my $topic = $_[1];
+
+    while(length($text) > 0) {
+	($type, $body, $text) = get_group($text);
+	die "invalid subgroup" unless $type =~ /^$topic/;
+	process_sub_group($type, $body);
+    }
+}
+
+sub process_sub_group {
+  
+    my $topic = $_[0];
+    my $text = $_[1];
+
+    $text =~ s/^\n*//;
+    $text =~ s/\n*$//;
+    if ($type eq "topic") {
+	 $text =~ s/^\s*//; $text =~ s/\s*$//;
+	if(!$nalias) {
+	    print "\\name{$text}\n";
+	    $nalias = 1;
+	    $fun = $text;
+	}
+	print "\\alias{$text}\n";
+    } elsif ($type eq "warning") {
+	print "\\section{Warning}{\n", sub4($text), "\n}\n";	
+    } elsif ($type eq "keyword") {
+	print "\\keyword{$text}\n";
+    } elsif ($type =~ /^example/) {
+	if ($nexample++ > 0) { print "\n"; }
+	print verbsub($text), "\n";
+    } elsif ($type =~ /^arg/) {
+	$type =~ /^arg\s+name\s*=\s*(.*)/;
+	my $name = $1;
+	$name =~ s/\s*\"(.*?)\"/$1/o;
+	$name =~ s/\s*(\w*)\s*/$1/o;
+	$name =~ s/\.\.\./\\dots/;
+	print "\\item{$name}{\n", sub4($text), "\n}\n";	
+    } else {
+	warn "unknown SGML entity '$type'";
+	print "%type:\n%$text\n";
+    }
+}
+
+sub inref {
+    my $text = $_[0];
+    $text =~ s/([0-9])-([0-9])/$1--$2/go;
+    $text;
+}
+
+sub verbsub {
+    my $text = $_[0];
+    $text =~ s/&gt;/>/go;
+    $text =~ s/&lt;/</go;
+    $text =~ s/&#38;/&/go;
+    $text =~ s/\%/\\%/go;
+    $text;
+}
+
+sub sub4 {
+    my $text = $_[0];
+    $text =~ s/\{/\\\{/go;
+    $text =~ s/\}/\\\}/go;
+
+    ## These tags can have id's
+    $text =~ s+<s-expression(.*?)>(.*?)</s-expression>+\\code{$2}+go;
+    $text =~ s+<s-object(.*?)>(.*?)</s-object>+\\code{$2}+go;
+    $text =~ s+<s-function(.*?)>(.*?)</s-function>+\\code{$2}+go;
+    $text =~ s+<s-class(.*?)>(.*?)</s-class>+\\code{$2}+go;
+    $text =~ s+<s-method(.*?)>(.*?)</s-method>+\\code{$2}+go;
+    $text =~ s+<s-dataset(.*?)>(.*?)</s-dataset>+\\code{$2}+go;
+    ## I have never seen these used
+    $text =~ s+<s-expref(.*?)>(.*?)</s-expref>+\\code{$2}+go;
+    $text =~ s+<s-objref(.*?)>(.*?)</s-objref>+\\code{$2}+go;
+    $text =~ s+<s-function-ref(.*?)>(.*?)</s-function-ref>+\\code{$2}+go;
+    $text =~ s+<s-clsref(.*?)>(.*?)</s-clsref>+\\code{$2}+go;
+    $text =~ s+<s-mthref(.*?)>(.*?)</s-mthref>+\\code{$2}+go;
+    $text =~ s+<s-datref(.*?)>(.*?)</s-datref>+\\code{$2}+go;
+    $text =~ s+<s-chpref(.*?)>(.*?)</s-chpref>+\\code{$2}+go;
+
+    $text =~ s+<it>(.*?)</it>+\\emph{$1}+go;
+    $text =~ s+<sl>(.*?)</sl>+\\emph{$1}+go;
+    $text =~ s+<em>(.*?)</em>+\\emph{$1}+go;
+    # not clear what to do with <sf>
+    $text =~ s+<sf>(.*?)</sf>+\\bold{$1}+go;
+    $text =~ s+<bf>(.*?)</bf>+\\bold{$1}+go;
+    $text =~ s+<tt>(.*?)</tt>+\\code{$1}+go;
+    $text =~ s+<url>(.*?)</url>+\\url{$1}+go;
+    $text =~ s+<code>(.*?)</code>+\\code{$1}+go;
+    $text =~ s/\n*<p>\n*/\n\n/go;
+    $text =~ s/(<br>\n*)+/\n/go;
+    $text =~ s/\$/\\\$/go;
+    $text =~ s/@/\\@/go;
+
+    verbsub($text);
+}
+
+sub makelinks {
+    my $text = $_[0];
+
+    $text =~ s+<s-function name="(.*?)">(.*?)</s-function>+\\code{\\link{$2}}+go;
+    $text;
+}
+
+
+### Local Variables: ***
+### mode: perl ***
+### perl-indent-level: 2 ***
+### End: ***

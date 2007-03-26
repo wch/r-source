@@ -1,0 +1,166 @@
+*** further changes made in November 2006 ***
+
+The changes for R are all to do with portability:
+
+__inline__ is not portable.
+fdopen is POSIX but not C89
+Solaris' cc objects to inlining functions with names starting with 'main'.
+C character strings are limited for ca 500 chars.
+
+diff -u ./blocksort.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocksort.c
+--- ./blocksort.c	2005-02-15 16:19:38.000000000 +0000
++++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/blocksort.c	2006-09-04 15:41:36.488779000 +0100
+@@ -75,7 +75,7 @@
+ 
+ /*---------------------------------------------*/
+ static 
+-__inline__
++R_INLINE
+ void fallbackSimpleSort ( UInt32* fmap, 
+                           UInt32* eclass, 
+                           Int32   lo, 
+@@ -389,9 +389,10 @@
+ /*---------------------------------------------*/
+ 
+ /*---------------------------------------------*/
++/* Solaris cc objects to inlining functions whose names start with `main' */
+ static
+-__inline__
+-Bool mainGtU ( UInt32  i1, 
++R_INLINE
++Bool BZmainGtU ( UInt32  i1, 
+                UInt32  i2,
+                UChar*  block, 
+                UInt16* quadrant,
+@@ -402,7 +403,7 @@
+    UChar  c1, c2;
+    UInt16 s1, s2;
+ 
+-   AssertD ( i1 != i2, "mainGtU" );
++   AssertD ( i1 != i2, "BZmainGtU" );
+    /* 1 */
+    c1 = block[i1]; c2 = block[i2];
+    if (c1 != c2) return (c1 > c2);
+@@ -558,7 +559,7 @@
+          if (i > hi) break;
+          v = ptr[i];
+          j = i;
+-         while ( mainGtU ( 
++         while ( BZmainGtU ( 
+                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
+                  ) ) {
+             ptr[j] = ptr[j-h];
+@@ -572,7 +573,7 @@
+          if (i > hi) break;
+          v = ptr[i];
+          j = i;
+-         while ( mainGtU ( 
++         while ( BZmainGtU ( 
+                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
+                  ) ) {
+             ptr[j] = ptr[j-h];
+@@ -586,7 +587,7 @@
+          if (i > hi) break;
+          v = ptr[i];
+          j = i;
+-         while ( mainGtU ( 
++         while ( BZmainGtU ( 
+                     ptr[j-h]+d, v+d, block, quadrant, nblock, budget 
+                  ) ) {
+             ptr[j] = ptr[j-h];
+@@ -626,7 +627,7 @@
+ }
+ 
+ static 
+-__inline__
++R_INLINE
+ UChar mmed3 ( UChar a, UChar b, UChar c )
+ {
+    UChar t;
+diff -u ./bzlib.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c
+--- ./bzlib.c	2005-02-15 16:24:58.000000000 +0000
++++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib.c	2006-09-04 15:41:36.538746000 +0100
+@@ -98,8 +98,9 @@
+       BZ2_bzlibVersion()
+    );
+ 
++   /* split up over-long message */
+    if (errcode == 1007) {
+-   fprintf(stderr,
++       fprintf(stderr, "%s%s%s",
+       "\n*** A special note about internal error number 1007 ***\n"
+       "\n"
+       "Experience suggests that a common cause of i.e. 1007\n"
+@@ -107,7 +108,7 @@
+       "just happens to cross-check the results of huge numbers of\n"
+       "memory reads/writes, and so acts (unintendedly) as a stress\n"
+       "test of your memory system.\n"
+-      "\n"
++       "\n",
+       "I suggest the following: try compressing the file again,\n"
+       "possibly monitoring progress in detail with the -vv flag.\n"
+       "\n"
+@@ -117,7 +118,7 @@
+       "  (www.memtest86.com).  At the time of writing it is free (GPLd).\n"
+       "  Memtest86 tests memory much more thorougly than your BIOSs\n"
+       "  power-on test, and may find failures that the BIOS doesn't.\n"
+-      "\n"
++      "\n",
+       "* If the error can be repeatably reproduced, this is a bug in\n"
+       "  bzip2, and I would very much like to hear about it.  Please\n"
+       "  let me know, and, ideally, save a copy of the file causing the\n"
+@@ -728,7 +729,7 @@
+ 
+ 
+ /*---------------------------------------------------*/
+-__inline__ Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
++R_INLINE Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
+ {
+    Int32 nb, na, mid;
+    nb = 0;
+@@ -1424,6 +1425,11 @@
+ #else
+ #   define SET_BINARY_MODE(file)
+ #endif
++
++#if !defined(fdopen) && defined(HAVE_FDOPEN)
++  FILE *fdopen(int fildes, const char *mode);
++#endif
++
+ static
+ BZFILE * bzopen_or_bzdopen
+                ( const char *path,   /* no use when bzdopen */
+@@ -1470,7 +1476,7 @@
+         fp = fopen(path,mode2);
+       }
+    } else {
+-#ifdef BZ_STRICT_ANSI
++#ifndef HAVE_FDOPEN
+       fp = NULL;
+ #else
+       fp = fdopen(fd,mode2);
+diff -u ./bzlib_private.h /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib_private.h
+--- ./bzlib_private.h	2005-02-15 16:24:27.000000000 +0000
++++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/bzlib_private.h	2006-09-04 15:41:36.438748000 +0100
+@@ -62,6 +62,7 @@
+ #ifndef _BZLIB_PRIVATE_H
+ #define _BZLIB_PRIVATE_H
+ 
++#include <config.h> /* for R_INLINE */
+ #include <stdlib.h>
+ 
+ #ifndef BZ_NO_STDIO
+Only in .: bzmore
+Only in .: bzmore.1
+diff -u ./compress.c /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/compress.c
+--- ./compress.c	2005-02-15 16:23:23.000000000 +0000
++++ /data/gannet/ripley/R/svn/R-patched/src/extra/bzip2/compress.c	2006-09-04 15:41:36.768745000 +0100
+@@ -113,7 +113,7 @@
+ 
+ /*---------------------------------------------------*/
+ static
+-__inline__
++R_INLINE
+ void bsW ( EState* s, Int32 n, UInt32 v )
+ {
+    bsNEEDW ( n );

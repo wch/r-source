@@ -1,0 +1,176 @@
+source <-
+function(file, local = FALSE, echo = verbose, print.eval = echo,
+	 verbose = getOption("verbose"),
+	 prompt.echo = getOption("prompt"),
+	 max.deparse.length = 150, chdir = FALSE,
+         encoding = getOption("encoding"),
+         continue.echo = getOption("continue"),
+         skip.echo = 0)
+{
+    eval.with.vis <-
+	function (expr, envir = parent.frame(),
+		  enclos = if (is.list(envir) || is.pairlist(envir))
+		  parent.frame() else baseenv())
+	.Internal(eval.with.vis(expr, envir, enclos))
+
+    envir <- if (local) parent.frame() else .GlobalEnv
+    if (!missing(echo)) {
+	if (!is.logical(echo))
+	    stop("'echo' must be logical")
+	if (!echo && verbose) {
+	    warning("'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'")
+	    echo <- TRUE
+	}
+    }
+    if (verbose) {
+	cat("'envir' chosen:")
+	print(envir)
+    }
+    ofile <- file # for use with chdir = TRUE
+    from_file <- FALSE
+    srcfile <- NULL
+    if(is.character(file)) {
+        if(capabilities("iconv")) {
+            if(identical(encoding, "unknown")) {
+                enc <- utils::localeToCharset()
+                encoding <- enc[length(enc)]
+            } else enc <- encoding
+            if(length(enc) > 1) {
+                encoding <- NA
+                owarn <- options("warn"); options(warn = 2)
+                for(e in enc) {
+                    if(is.na(e)) next
+                    zz <- file(file, encoding = e)
+                    res <- try(readLines(zz), silent = TRUE)
+                    close(zz)
+                    if(!inherits(res, "try-error")) { encoding <- e; break }
+                }
+                options(owarn)
+            }
+            if(is.na(encoding))
+                stop("unable to find a plausible encoding")
+            if(verbose) cat("encoding =", dQuote(encoding), "chosen\n")
+        }
+        if(file == "") file <- stdin()
+        else {
+            srcfile <- srcfile(file, encoding = encoding)
+	    file <- file(file, "r", encoding = encoding)
+	    on.exit(close(file))
+            from_file <- TRUE
+	}
+    }
+    exprs <- .Internal(parse(file, n = -1, NULL, "?", srcfile, encoding))
+    Ne <- length(exprs)
+    if (from_file) { # we are done with the file now
+        close(file)
+        on.exit()
+    }
+    if (verbose)
+	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
+    if (Ne == 0)
+	return(invisible())
+    if (chdir){
+        if(is.character(ofile)) {
+            isURL <- length(grep("^(ftp|http|file)://", ofile)) > 0
+            if(isURL)
+                warning("'chdir = TRUE' makes no sense for a URL")
+            if(!isURL && (path <- dirname(ofile)) != ".") {
+                owd <- getwd()
+                if(is.null(owd))
+                    warning("cannot 'chdir' as current directory is unknown")
+                else on.exit(setwd(owd), add=TRUE)
+                setwd(path)
+            }
+        } else {
+            warning("'chdir = TRUE' makes no sense for a connection")
+        }
+    }
+
+    if (echo) {
+	## Reg.exps for string delimiter/ NO-string-del /
+	## odd-number-of-str.del needed, when truncating below
+	sd <- "\""
+	nos <- "[^\"]*"
+	oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
+		       nos, "$", sep = "")
+    }
+    srcrefs <- attr(exprs, "srcref")
+    for (i in 1:Ne) {
+	if (verbose)
+	    cat("\n>>>> eval(expression_nr.", i, ")\n\t	 =================\n")
+	ei <- exprs[i]
+	if (echo) {
+	    if (i > length(srcrefs) || is.null(srcref <- srcrefs[[i]])) {
+	        # Deparse.  Must drop "expression(...)"
+		dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
+	    		  collapse = "\n"), 12, 1e+06)
+            	## We really do want chars here as \n\t may be embedded.
+            	dep <- paste(prompt.echo,
+            		     gsub("\n", paste("\n", continue.echo, sep=""), dep),
+            		     sep="")
+		nd <- nchar(dep, "chars") - 1
+	    } else {
+	    	if (i == 1) lastshown <- min(skip.echo, srcref[3]-1)
+	    	dep <- getSrcLines(srcfile, lastshown+1, srcref[3])
+	    	leading <- srcref[1]-lastshown
+	    	lastshown <- srcref[3]
+	    	while (length(dep) && length(grep("^[ \\t]*$", dep[1]))) {
+	    	    dep <- dep[-1]
+	    	    leading <- leading - 1
+	    	}
+	    	dep <- paste(rep.int(c(prompt.echo, continue.echo), c(leading, length(dep)-leading)),
+	    		     dep, sep="", collapse="\n")
+	    	nd <- nchar(dep, "chars")
+	    }
+	    if (nd) {
+		do.trunc <- nd > max.deparse.length
+		dep <- substr(dep, 1, if (do.trunc) max.deparse.length else nd)
+		cat("\n", dep, if (do.trunc)
+		    paste(if (length(grep(sd, dep)) && length(grep(oddsd, dep)))
+		      " ...\" ..."
+		      else " ....", "[TRUNCATED] "), "\n", sep = "")
+	    }
+	}
+	yy <- eval.with.vis(ei, envir)
+	i.symbol <- mode(ei[[1]]) == "name"
+	if (!i.symbol) {
+	    ## ei[[1]] : the function "<-" or other
+	    curr.fun <- ei[[1]][[1]]
+	    if (verbose) {
+		cat("curr.fun:")
+		utils::str(curr.fun)
+	    }
+	}
+	if (verbose >= 2) {
+	    cat(".... mode(ei[[1]])=", mode(ei[[1]]), "; paste(curr.fun)=")
+	    utils::str(paste(curr.fun))
+	}
+	if (print.eval && yy$visible)
+	    print(yy$value)
+	if (verbose)
+	    cat(" .. after ", sQuote(deparse(ei,
+	    	control = c("showAttributes","useSource"))), "\n", sep = "")
+    }
+    invisible(yy)
+}
+
+sys.source <-
+function(file, envir = baseenv(), chdir = FALSE,
+	 keep.source = getOption("keep.source.pkgs"))
+{
+    if(!(is.character(file) && file.exists(file)))
+	stop(gettextf("'%s' is not an existing file", file))
+    oop <- options(keep.source = as.logical(keep.source),
+		   topLevelEnvironment = as.environment(envir))
+    on.exit(options(oop))
+    exprs <- parse(n = -1, file = file)
+    if (length(exprs) == 0)
+	return(invisible())
+    if (chdir && (path <- dirname(file)) != ".") {
+	owd <- getwd()
+	on.exit(setwd(owd), add = TRUE)
+	setwd(path)
+    }
+    for (i in exprs) eval(i, envir)
+    invisible()
+}

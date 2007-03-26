@@ -1,0 +1,35 @@
+# Portuguese translations for R package.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.3.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-10-16 21:56\n"
+"PO-Revision-Date: 2005-11-05 16:49-0200\n"
+"Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
+"Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "some named arguments in 'fixed' are not arguments to the supplied log-likelihood"
+msgstr "alguns argumentos nomeados em 'fixed' não são argumentos a serem passados para a log-verossimilhança"
+
+msgid "'start' must be a named list"
+msgstr "'start' deve ser uma lista nomeada"
+
+msgid "some named arguments in 'start' are not arguments to the supplied log-likelihood"
+msgstr "arguns argumentos nomeados em 'start' não são argumentos da log-verossimilhança especificada"
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr "traçamento do perfil não encontrou uma solução melhor, então o ajuste original não convergiu"
+
+msgid "levels truncated to positive values only"
+msgstr "níveis truncados para somente valores positivos"
+
+msgid "extra arguments discarded"
+msgstr "argumentos extra descartados"

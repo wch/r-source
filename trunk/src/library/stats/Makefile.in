@@ -1,0 +1,102 @@
+#
+# ${R_HOME}/src/library/stats/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/library/stats
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = COPYRIGHTS.modreg COPYRIGHTS.portsrc DESCRIPTION.in Makefile.in \
+  NAMESPACE SOURCES.ts loess-README splines-README
+
+pkg = stats
+
+R_EXE = $(top_builddir)/bin/R --vanilla
+
+all: Makefile DESCRIPTION
+	@echo "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@(f=$${TMPDIR:-/tmp}/R$$$$; \
+	  echo ".packageName <- \"$(pkg)\"" >  $${f}; \
+	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> $${f}; \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+	@for f in COPYRIGHTS.modreg SOURCES.ts NAMESPACE; do \
+	  if test -f $(srcdir)/$${f}; then \
+	    $(INSTALL_DATA) $(srcdir)/$${f} \
+	      $(top_builddir)/library/$(pkg); \
+	  fi; \
+	done
+	@if test -f DESCRIPTION; then \
+	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
+	fi
+	@if test -d $(srcdir)/demo; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
+	  for f in `ls -d $(srcdir)/demo/* | sed -e '/CVS/d' -e '/00Index/d'`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
+	  done; \
+	fi
+	@if test -d $(srcdir)/inst/po; then \
+	  if test "@USE_NLS@" = "yes"; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
+	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
+	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
+	    -exec rm -rf \{\} \; 2>/dev/null; \
+	  fi; \
+	fi
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  (f=$${TMPDIR:-/tmp}/R$$$$; \
+	    for rdfile in $(srcdir)/man/*.Rd; do \
+	      echo "% --- Source file: $${rdfile} ---"; \
+	      cat $${rdfile}; echo '\eof'; \
+	    done >> $${f}; \
+	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
+	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
+	    rm -f $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz; \
+            $(R_GZIPCMD) $(top_builddir)/library/$(pkg)/man/$(pkg).Rd; \
+	fi
+	@if test -d src; then \
+	  (cd src && $(MAKE)) || exit 1; \
+	fi
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+#	had all.rda in earlier versions 
+	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
+	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --slave > /dev/null
+
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+mostlyclean: clean
+clean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R .RData
+distclean:
+	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f Makefile DESCRIPTION
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in R data demo exec inst man src po tests; do \
+	  if test -d $(srcdir)/$${d}; then \
+	    ((cd $(srcdir); \
+	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
+	        | (cd $(distdir); $(TAR) -x -f -)) \
+	      || exit 1; \
+	  fi; \
+	done

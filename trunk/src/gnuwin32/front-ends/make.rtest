@@ -1,0 +1,29 @@
+#-*- Makefile -*-
+include ../MkRules
+
+ifdef DEBUG
+  DEBUGFLAG=$(G_FLAG)
+  LINKFLAGS=
+else
+  DEBUGFLAG=
+  LINKFLAGS=-s
+endif
+
+CFLAGS=-Wall -O2 -pedantic
+
+rtest-CFLAGS=-I.. -I../../include $(DEBUGFLAG)
+Rtest.exe: rtest.o R.dll Rblas.dll
+	$(CC) $(LINKFLAGS) -o $@ rtest.o R.dll
+
+rtest.c: ../../include/Rversion.h
+
+R.dll: ../R.dll
+	$(CP) -p $^ $@
+
+Rblas.dll: ../../../bin/Rblas.dll
+	$(CP) -p $^ $@
+
+clean:
+	$(RM) rtest.o Rtest.exe *~ R.dll Rblas.dll
+
+

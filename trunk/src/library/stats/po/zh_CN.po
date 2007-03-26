@@ -1,0 +1,253 @@
+# Chinese translations for R package
+# Copyright (C) 2006 The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# 陈斐 <feic@avaya.com>, 2007.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.4.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2007-03-21 16:08+0000\n"
+"PO-Revision-Date: 2005-02-04 08:37+0000\n"
+"Last-Translator: 陈斐 <feic@avaya.com>\n"
+"Language-Team: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "移动中位数的帶寬/跨距的值不能大于n"
+
+#: ansari.c:129
+msgid "probabilities outside [0,1] in qansari()"
+msgstr "qansari()里的概率值在[0,1]范围外"
+
+#: arima.c:69 arima.c:183 arima.c:359
+msgid "invalid argument type"
+msgstr "变元种类不对"
+
+#: arima.c:418 arima.c:502 pacf.c:314 pacf.c:354
+msgid "can only transform 100 pars in arima0"
+msgstr "arima0里只能转换100个参数"
+
+#: distance.c:151
+msgid "dist(.,\"binary\"): treating non-finite values as NA"
+msgstr "dist(.,\"binary\")：所有无限值都作为NA来处理"
+
+#: distance.c:220
+msgid "distance(): invalid p"
+msgstr "distance(): p值不对"
+
+#: distance.c:223
+msgid "distance(): invalid distance"
+msgstr "distance()：距离值不对"
+
+#: family.c:20
+#, c-format
+msgid "Value %d out of range (0, 1)"
+msgstr "%d个值出界在(0, 1) 外"
+
+#: family.c:41 family.c:55 family.c:73
+#, c-format
+msgid "Argument %s must be a nonempty numeric vector"
+msgstr "变元%s必需为非空数字矢量"
+
+#: family.c:106 family.c:109
+#, c-format
+msgid "argument %s must be a numeric vector of length 1 or length %d"
+msgstr "变元%s必需为长度为一或长度为%d的数字矢量"
+
+#: ksmooth.c:66
+msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr "sm.method=\"spline\"最多只能算2500行"
+
+#: loessc.c:226
+msgid "span is too small"
+msgstr "跨距太小"
+
+#: mAR.c:467
+msgid "Singular matrix in qr_solve"
+msgstr "gr_solve里出现了奇异矩阵"
+
+#: mAR.c:510
+msgid "Singular matrix in ldet"
+msgstr "ldet里出现了奇异矩阵"
+
+#: mAR.c:697
+msgid "Invalid vmethod"
+msgstr "vmethod不对"
+
+#: mAR.c:833
+msgid "Burg's algorithm failed to find partial correlation"
+msgstr "Burg的算法没有能够找到偏相关数"
+
+#: nls.c:104
+msgid "'control' must be a list"
+msgstr "'control'的值必需为串列"
+
+#: nls.c:106
+msgid "'m' must be a list"
+msgstr "'m'的值必需是串列"
+
+#: nls.c:112 nls.c:117 nls.c:122 nls.c:127 nls.c:132 nls.c:173 nls.c:178
+#: nls.c:183 nls.c:188 nls.c:193 nls.c:198
+#, c-format
+msgid "'%s' absent"
+msgstr "需要设定'%s'"
+
+#: nls.c:239
+msgid "singular gradient"
+msgstr "奇异梯度"
+
+#: nls.c:260
+#, c-format
+msgid "step factor %g reduced below 'minFactor' of %g"
+msgstr "算法的步因素%g的大小被减少到小于%g的'minFactor'值"
+
+#: nls.c:269
+#, c-format
+msgid "number of iterations exceeded maximum of %d"
+msgstr "循环次数超过了%d这个最大值"
+
+#: nls.c:274
+msgid "converged"
+msgstr ""
+
+#: nls.c:295
+msgid "'theta' should be of type character"
+msgstr "'theta'的种类必需是字符"
+
+#: nls.c:297 port.c:380
+msgid "use of NULL environment is defunct"
+msgstr "NULL环境不再有用了"
+
+#: nls.c:301
+msgid "'rho' should be an environment"
+msgstr "'rho'必需为环境"
+
+#: nls.c:303
+msgid "'dir' is not a numeric vector of the correct length"
+msgstr "'dir'这个数字矢量的长度不对"
+
+#: nls.c:320 nls.c:348
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr "在计算模型的时候产生了缺省值或无限值"
+
+#: nls.c:326
+#, c-format
+msgid "variable '%s' is integer, not numeric"
+msgstr "变量'%s'应该为整数，不能是数值"
+
+#: nls.c:328
+#, c-format
+msgid "variable '%s' is not numeric"
+msgstr "变量'%s'不是数值"
+
+#: pacf.c:81
+msgid "bad Starma struct"
+msgstr "Starma结构不对"
+
+#: pacf.c:228
+#, c-format
+msgid "starma error code %d"
+msgstr "starma出错编号%d"
+
+#: pacf.c:293
+#, c-format
+msgid "forkal error code %d"
+msgstr "forkal出错编号%d"
+
+#: pacf.c:457
+msgid "invalid value of lag.max"
+msgstr "lag.max的值不对"
+
+#: port.c:130
+#, c-format
+msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
+msgstr "Rf_divset: alg = %d其值应该是1, 2, 3, 或4"
+
+#: port.c:324
+#, c-format
+msgid "gradient function must return a numeric vector of length %d"
+msgstr "梯度函数必需回覆长度为%d的数字矢量"
+
+#: port.c:334
+#, c-format
+msgid "Hessian function must return a square numeric matrix of order %d"
+msgstr "Hessian函数必需回覆一个度数为%d的正方形数值矩阵"
+
+#: port.c:384
+msgid "'rho' must be an environment"
+msgstr "'rho'必需是环境"
+
+#: port.c:386 port.c:534
+msgid "'d' must be a nonempty numeric vector"
+msgstr "'d'必需是非空数字矢量"
+
+#: port.c:388
+msgid "When Hessian defined must also have gradient defined"
+msgstr "如果Hessian有定义的话梯度也必需有定义"
+
+#: port.c:391
+#, c-format
+msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
+msgstr "'rho'环境必包含长度为%d的数字矢量'.par'"
+
+#: port.c:402
+msgid "'lower' and 'upper' must be numeric vectors"
+msgstr "'lower'和'upper'必需为数字矢量"
+
+#: port.c:448
+msgid "'getElement' applies only to named lists"
+msgstr "'getElement'只适用于带名串列"
+
+#: port.c:469
+#, c-format
+msgid "%s$%s() not found"
+msgstr "%s$%s()不存在"
+
+#: port.c:482
+#, c-format
+msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
+msgstr "'gradient'必需是一个维数为(%d,%d)的数值矩阵"
+
+#: port.c:503
+#, c-format
+msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
+msgstr "fcn运行结果的模式为%d , 长度为%d - 但正确的模式应该是%d，长度为%d"
+
+#: port.c:516
+msgid "invalid type for eval_check_store"
+msgstr "eval_check_store的种类不对"
+
+#: port.c:535
+msgid "m must be a list"
+msgstr "m必需为串列"
+
+#: port.c:555
+msgid "'lowerb' and 'upperb' must be numeric vectors"
+msgstr "'lowerb'和'upperb'必需为数字矢量"
+
+#: smooth.c:79
+#, c-format
+msgid "invalid end-rule for running median of 3: %d"
+msgstr "三移动中位数的结尾规则出了错: %d"
+
+#: smooth.c:231
+msgid "allocation error in smooth(*, '3RSR')."
+msgstr "smooth(*, '3RSR') 中分配出错。"
+
+#: smooth.c:242 smooth.c:252
+msgid "allocation error in smooth(*, '3RSS')."
+msgstr "smooth(*, '3RSS') 中分配出错。"
+
+#: smooth.c:262
+msgid "allocation error in smooth(*, '3R')."
+msgstr "smooth(*, '3R') 中分配出错。"
+
+#: starma.c:366
+#, c-format
+msgid "missing value in last %d observations"
+msgstr "最后%d个观测值里出现了缺省值"
