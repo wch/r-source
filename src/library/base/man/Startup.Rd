@@ -38,7 +38,13 @@
   is taken from the value of the \env{R\_PROFILE} environment variable.
   If this variable is unset, the default is
   \file{\$R\_HOME/etc/Rprofile.site}, which is used if it exists
+#ifdef unix
   (which it does not in a \dQuote{factory-fresh} installation).
+#endif
+#ifdef windows
+  (it contains settings from the installer in a \dQuote{factory-fresh}
+  installation).
+#endif
   This code is loaded into package \pkg{base}.  Users need to be
   careful not to unintentionally overwrite objects in base, and it
   is normally advisable to use \code{\link{local}} if code needs to be
@@ -59,7 +65,7 @@
   This calls \code{\link{require}} to attach the default packages
   specified by \code{\link{options}("defaultPackages")}.  If the
   \pkg{methods} package is included, this will have been attached
-  earlier, by function \code{.OptRequireMethods()}, so that
+  earlier (by function \code{.OptRequireMethods()}) so that
   name space initializations such as those from the user workspace will
   proceed correctly.
 
@@ -69,9 +75,9 @@
   than the default ones when you start, insert a call to
   \code{\link{options}} in the \file{.Rprofile} or \file{Rprofile.site}
   file.  For example, \code{options(defaultPackages = character())} will
-  attach no extra packages on startup.  Alternatively, set
-  \code{R_DEFAULT_PACKAGES=NULL} as an environment variable before
-  running \R.  Using \code{options(defaultPackages = "")} or
+  attach no extra packages on startup (only the \code{base} package) (or
+  set \code{R_DEFAULT_PACKAGES=NULL} as an environment variable before
+  running \R).  Using \code{options(defaultPackages = "")} or
   \code{R_DEFAULT_PACKAGES=""} enforces the R \emph{system} default.
 
   The commands history is read from the file specified by the
@@ -150,6 +156,11 @@ PAGER=/usr/local/bin/less
 R_LIBS=C:/R/library
 MY_TCLTK=yes
 TCL_LIBRARY=c:/packages/Tcl/lib/tcl8.4
+
+# Example of setting R_DEFAULT_PACKAGES (from R CMD check)
+R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'
+# this loads the packages in the order given, so they appear on
+# the search path in reverse order.
 
 # Example of .Rprofile
 options(width=65, digits=5)
