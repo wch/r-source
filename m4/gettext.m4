@@ -297,6 +297,12 @@ return * gettext ("")]ifelse([$2], [need-ngettext], [ + * ngettext ("", "", 0)],
         AC_MSG_CHECKING([how to link with libintl])
         AC_MSG_RESULT([$LIBINTL])
         AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCINTL])
+	case "${host_os}" in
+          aix*)
+            LIBS="$LIBS $LIBINTL"
+            AC_SUBST(LIBS)
+            ;;
+        esac
       fi
 
       dnl For backward compatibility. Some packages may be using this.

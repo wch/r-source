@@ -149,11 +149,14 @@ R: Makefile
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
 
-$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
+$(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES) @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 	$(MAIN_LINK) -o $@ $(R_bin_OBJECTS) $(R_bin_LDADD)
 
 install-bin-local: $(R_binary)
 	@$(MAKE) rhome="$(abs_top_builddir)" install-bin
+
+$(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
+	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
 
 ## is this portable?  Documented as GNU extension.
 $(RLIBS):
@@ -201,6 +204,7 @@ uninstall:
 
 mostlyclean: clean
 clean:
+	@-rm -f $(top_builddir)/etc/R.exp
 	@-rm -rf .libs _libs
 	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(DYLIB_EXT) \
 	  $(R_binary)

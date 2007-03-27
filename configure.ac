@@ -617,11 +617,12 @@ fi
 eval "export ${shlibpath_var}"
 
 ## Yes, we already need this at configure time ...
-case "${host_os}" in
-  aix*)
-    LIBS="-lc ${LIBS}"
-    ;;
-esac
+#case "${host_os}" in
+#  aix*)
+#    #LIBS="-lc ${LIBS}"
+#    LIBR="-lc ${LIBR}"
+#    ;;
+#esac
 
 ## record how to strip shared/dynamic libraries.
 ltout=`./libtool --config | grep '^striplib='`
@@ -839,15 +840,21 @@ case "${host_os}" in
   aix*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     if test "${GCC}" = yes; then
-      R_PROG_CC_FLAG([-mno-fp-in-toc],
-                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
+      if test "x${OBJECT_MODE}" = "x64"; then
+        R_PROG_CC_FLAG([-mminimal-toc],
+                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mminimal-toc]))
+      else
+        R_PROG_CC_FLAG([-mno-fp-in-toc],
+                       R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
+      fi
     fi
     ## need /lib/crt0_64.o on 64-bit AIX: see comments in R-admin.
-    if test "x${OBJECT_MODE}" = "x64"; then
-       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0_64.o])
-    else
-       R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
-    fi
+    ## !!COMMENT!! If MAIN_LD is ld, it is necessary.
+    #if test "x${OBJECT_MODE}" = "x64"; then
+    #   R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0_64.o])
+    #else
+    #   R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
+    #fi
     ;;
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
@@ -1157,7 +1164,9 @@ case "${host_os}" in
     ;;
   aix*)
     ## now use run-time linking
-    # use_exportfiles=yes
+    if test "${want_R_shlib}" != yes; then
+      use_exportfiles=yes
+    fi
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
@@ -1166,11 +1175,28 @@ case "${host_os}" in
     wl="-Wl,"
     ## libtool suggests that ia64 needs -Bexport and not -brtl
     ## but we have no confirmation.
-    main_ldflags="${wl}-brtl ${wl}-bexpall"
-    shlib_ldflags="${wl}-G ${wl}-bexpall ${wl}-bnoentry"
+    dylib_undefined_allowed=no
+    ##ADD: A symbol of memcpy,memset is exported in libR by expall.
+    ##ADD: However, for example, symbol in libc of memcpy is __memmove,__memmove64.
+    ##ADD: This black magic puts lc before lR and pockets this.
+    if test "x${OBJECT_MODE}" = "x64"; then
+      main_ldflags="${wl}-brtl ${wl}-bexpall ${wl}-bpT:0x100000000 ${wl}-bpD:0x110000000 -lc"
+    else
+      main_ldflags="${wl}-brtl ${wl}-bexpall -lc"
+    fi
+    shlib_ldflags="${wl}-brtl ${wl}-G ${wl}-bexpall ${wl}-bnoentry -lc"
+    if test "${want_R_shlib}" != yes; then
+      ## symbol of an archive(RLIBS and EXTRA_LIBS) is thrown away
+      ## unless export it in a main link when unused.
+      R_SH_VAR_ADD(main_ldflags, [-Wl,-bE:\$(top_builddir)/etc/R.exp])
+      ## Import symbol is IMPid = '.'
+      ## no import symbol is IMPid = '..' (run-time link style)
+      ## R_SH_VAR_ADD(LIBR, [-Wl,-bI:\$(R_HOME)/etc/R.exp])
+    fi
 #    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
 #    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
+    shlib_cxxldflags="${shlib_ldflags}"
     ;;
   darwin*)
     darwin_pic="-fPIC"
