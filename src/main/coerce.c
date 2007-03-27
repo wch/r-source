@@ -2335,9 +2335,8 @@ static int class2type(char *s)
 
 /* set the class to value, and return the modified object.  This is
    NOT a primitive assignment operator , because there is no code in R
-   that changes type in place. See the definition of "class<-" in the methods
-   package for the use of this code. */
-SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
+   that changes type in place. */
+static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 {
     int nProtect = 0;
     if(isNull(value)) {
@@ -2403,3 +2402,10 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
     UNPROTECT(nProtect);
     return obj;
 }
+
+SEXP attribute_hidden R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  checkArity(op, args);
+  return R_set_class(CAR(args), CADR(args), call);
+}
+
