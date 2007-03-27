@@ -695,7 +695,10 @@ BUG FIXES
 	small k on some platforms.
 
     o	nclass.scott(x) and nclass.FD(x) no longer return NaN when var(x)
-	or IQR(x) is zero.
+	or IQR(x) (respectively) is zero.
+
+	hist() now allows breaks = 1 (which the above patch will
+	return), but not breaks = Inf (which gave an obscure error).
 
     o	strptime("%j") now also works for the first days of Feb-Dec.
 	(PR#9577)
