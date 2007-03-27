@@ -271,9 +271,12 @@
  R_binary
  R_compress1
  R_current_trace_state
+ R_data_class2
  R_dec_min_exponent
  R_decompress1
  R_dlsym
+ R_do_data_class
+ R_do_set_class
  R_fixbackslash
  R_fixslash
  R_getClockIncrement

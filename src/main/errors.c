@@ -1389,7 +1389,7 @@ static SEXP getInterruptCondition()
     PROTECT(klass = allocVector(STRSXP, 2));
     SET_STRING_ELT(klass, 0, mkChar("interrupt"));
     SET_STRING_ELT(klass, 1, mkChar("condition"));
-    R_set_class(cond, klass, R_NilValue);
+    classgets(cond, klass);
     UNPROTECT(2);
     return cond;
 }
