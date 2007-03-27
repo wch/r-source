@@ -616,14 +616,6 @@ else
 fi
 eval "export ${shlibpath_var}"
 
-## Yes, we already need this at configure time ...
-#case "${host_os}" in
-#  aix*)
-#    #LIBS="-lc ${LIBS}"
-#    LIBR="-lc ${LIBR}"
-#    ;;
-#esac
-
 ## record how to strip shared/dynamic libraries.
 ltout=`./libtool --config | grep '^striplib='`
 eval "${ltout}"
@@ -848,13 +840,6 @@ case "${host_os}" in
                        R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mno-fp-in-toc]))
       fi
     fi
-    ## need /lib/crt0_64.o on 64-bit AIX: see comments in R-admin.
-    ## !!COMMENT!! If MAIN_LD is ld, it is necessary.
-    #if test "x${OBJECT_MODE}" = "x64"; then
-    #   R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0_64.o])
-    #else
-    #   R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
-    #fi
     ;;
   cygwin*|mingw*|windows*|winnt)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)

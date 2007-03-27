@@ -3577,10 +3577,10 @@ throw an error on such systems.  The only recent testing has been under
 AIX 5.2 on @cputype{powerpc}, where Ei-ji Nakama was able to build
 pre-2.5.0 with @command{gcc 4.0.3} in several configurations.
 
-He found 32-bit versions of @R{} could be built with the default
-@command{configure} as well as @command{comfigure --enable-R-shlib} and
-@command{comfigure --enable-R-shlib --enable-BLAS-shlib}.  For 64-bit
-versions he used
+Mr Nakama found 32-bit versions of @R{} could be built with
+@command{configure --without-iconv} as well as @option{--enable-R-shlib}
+and @option{--enable-R-shlib --enable-BLAS-shlib}.  For 64-bit versions
+he used
 
 @example
 OBJECT_MODE=64
@@ -3602,6 +3602,10 @@ F77="f90 -cpu=pwr4 -hf77 -parallel=0 -i,L -O3 -64"
 FC="f90 -cpu=pwr4 -hf77 -parallel=0 -i,L -O3 -64"
 FLIBS="-L/opt/ofort90/lib -lhf90vecmath -lhf90math -lf90"
 @end example
+
+The AIX native @code{iconv} does not support encodings @samp{latin1} nor
+@samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
+could be installed.)
 
 @node New platforms,  , AIX, Platform notes
 @section New platforms
