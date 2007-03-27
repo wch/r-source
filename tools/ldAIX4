@@ -1,0 +1,63 @@
+#! /bin/sh
+
+# This script writes an export file, assembling the exported symbols
+# by reading the output of nm.  This file is needed on AIX (4.2 and
+# later) to compile shared libs.
+#
+# For the (main) executable add "-bE:lib.exp" to the linker options
+# and for the shared libs add "-bI:lib.exp" (maybe with a path) if
+# you call the export file "lib.exp".
+
+#set -x
+
+usage="Usage: `basename $0` [-o <expfile>] <object files and libs>"
+
+if [ ${1-"-h"} = "-h" ]; then
+	echo 1>&2 "$usage"
+	exit 1
+fi
+
+# Check for name of export file
+case $1 in
+    -o)
+	mainexp=${2?$usage}
+	shift 2
+	;;
+    -o*)
+	mainexp=$1
+	mainexp=${mainexp#-o}
+	shift
+	;;
+    *)
+	mainexp="lib.exp"
+	;;
+esac
+
+# Check for object or archive files
+ofiles=""
+for arg; do
+    case $arg in *.o | *.lo | *.a) ofiles="$ofiles $arg";; esac
+done
+
+# Call nm so that it prints only global symbols (unsorted, w/o header)
+nm=nm
+nmopts="-p -g -h"
+
+# Replace "varname B adr1 adr2" with "varname bss"
+regex1='s,^\([a-zA-Z][a-zA-Z0-9_]*\)  *B .*$,\1 bss,p'
+
+# Replace "varname D adr1 adr2" with "varname"
+regex2='s,^\([a-zA-Z][a-zA-Z0-9_]*\)  *D .*$,\1,p'
+
+# Note that functions appear as ".funname T" for the text section
+# and as "funname D" for the initialized data section (the function
+# name is a pointer).
+
+## # Replace ".funname T adr1 adr2" with "funname"
+## regex1='s,^\.\([a-zA-Z][a-zA-Z0-9_]*\)  *T .*$,\1,p'
+
+echo "#! ." > $mainexp
+$nm $nmopts $ofiles | sed -n -e "$regex1" -e "$regex2" | \
+    sort | uniq >> $mainexp
+
+exit $?

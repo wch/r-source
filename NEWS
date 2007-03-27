@@ -433,6 +433,9 @@ INSTALLATION
 	required.  For 2.5.x only you can build R without it by
 	configuring using --without-iconv.
 
+    o	There is support again for building on AIX (tested on 5.2)
+	thanks to Ei-ji Nakama.
+
     o	Autoconf 2.60 or later is used to create 'configure'.  This
 	makes a number of small changes, and incorporates the changes
 	to the detection of a C99-compliant C compiler backported for

@@ -3573,90 +3573,39 @@ port would be greatly appreciated.
 @cindex AIX
 
 We no longer support AIX prior to 4.2, and @command{configure} will
-throw an error on such systems.  On later systems, ``run time linking''
-linking is used, and this corresponds to setting (when using @code{gcc}:
-omit @samp{-Wl,} for the native compilers).
+throw an error on such systems.  The only recent testing has been under
+AIX 5.2 on @cputype{powerpc}, where Ei-ji Nakama was able to build
+pre-2.5.0 with @command{gcc 4.0.3} in several configurations.
 
-@example
-MAIN_LDFLAGS="-Wl,-brtl -Wl,-bexpall"
-SHLIB_LDFLAGS="-Wl,-G -Wl,-bexpall -Wl,-bnoentry"
-@end example
-
-@noindent
-(which @command{configure} does for you by default).  (There is some
-suggestion (e.g.@: by @command{libtool}) that for an @cputype{ia64}
-AIX@tie{}5.x system these may not be the appropriate flags but such a
-system is untested.)
-
-
-The rest of this section is historical, as the default @code{*_LDFLAGS}
-were changed in @R{}@tie{}2.4.0.
-
-On AIX@tie{}4.3.3 and AIX@tie{}5.[123], it was found that the use of
-``run time linking'' (as opposed to normal AIX style linking) was
-required.  For this, the @R{} main program must be linked to the runtime
-linker with the @option{-brtl} linker option, and shareable objects must
-be enabled for runtime linking with the @option{-G} linker option.
-Without these options, the AIX linker would not automatically link to
-any shared object with a @file{.so} extension.  Also, the @R{} main
-program would be unable to dynamically load modules (such as X11) with
-the @code{dlopen} call.
-
-When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
-note that linker flags must be escaped using @samp{-Wl,} if
-@command{gcc} is used for linking: use @samp{MAIN_LDFLAGS="-Wl,brtl"}
-and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
-
-We understand that @option{--enable-R-shlib} does not work under AIX.
-
-Tim Hoar <thoar at cgd dot ucar dot edu> reported success building
-@R{} 1.9.0 under AIX 5.1 in 64-bit mode with
+Mr Nakama found 32-bit versions of @R{} could be built with
+@command{configure --without-iconv} as well as @option{--enable-R-shlib}
+and @option{--enable-R-shlib --enable-BLAS-shlib}.  For 64-bit versions
+he used
 
 @example
 OBJECT_MODE=64
-CC=/usr/bin/xlc_r
-F77=/usr/bin/xlf_r
-CXX=/usr/bin/xlC_r
-LDFLAGS='-brtl'
-CFLAGS='-O -qstrict'
-FFLAGS='-O -qstrict'
-CXXFLAGS='-O -qstrict'
+CC="gcc -maix64"
+CXX="g++ -maix64"
+F77="gfortran -maix64"
+FC="gfortran -maix64"
 @end example
 
 @noindent
-and the @code{X11()} device worked.  [His system required the
-@file{Makeconf} file to be edited to replace @file{/lib/crt0.o} by
-@file{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, but @command{configure} now
-tries to detect this.  There are no recent reports of building @R{} with
-the AIX compilers, only @command{gcc}.]
-
-Ei-ji Nakama has reported that @file{src/main/regex.c} in
-@R{}@tie{}2.2.0 has to be compiled with @option{-D_LINUX_SOURCE_COMPAT}
-in @code{CFLAGS} in AIX@tie{}5.x (and does not work correctly with
-AIX@tie{}4.x).  We believe that the patch applied since obviates the
-need for this.  He tested @R{}@tie{}2.2.1@tie{}beta on AIX@tie{}5.2.
-
-Jagat Sheth reported being able to build @R{} 2.3.0 patched on AIX@tie{}5.2
-using @command{gcc}@tie{}4.1.0 and
+and was also able to build with the IBM @code{xlc} and Hitachi
+@code{f90} compilers by
 
 @example
-CC=/usr/local/bin/gcc
-F77=/usr/local/bin/gfortran
-CXX=/usr/local/bin/g++
-MAIN_LDFLAGS=-Wl,-brtl
-SHLIB_LDFLAGS=-Wl,-G
-CFLAGS='-g -O'
-FFLAGS='-O'
-CXXFLAGS='-g -O'
-./configure --disable-nls
+OBJECT_MODE=64
+CC="xlc -q64"
+CXX="g++ -maix64"
+F77="f90 -cpu=pwr4 -hf77 -parallel=0 -i,L -O3 -64"
+FC="f90 -cpu=pwr4 -hf77 -parallel=0 -i,L -O3 -64"
+FLIBS="-L/opt/ofort90/lib -lhf90vecmath -lhf90math -lf90"
 @end example
-@noindent
-(note it is @samp{Wl} (W ell) not @samp{W1} (W one)).
 
-Pre-release versions of @R{} 2.3.0 have been built on AIX@tie{}5.3.
-(This defines the macro @samp{SOCKLEN_T} and so earlier versions of @R{}
-cannot be compiled on that version of AIX.)
-
+The AIX native @code{iconv} does not support encodings @samp{latin1} nor
+@samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
+could be installed.)
 
 @node New platforms,  , AIX, Platform notes
 @section New platforms
