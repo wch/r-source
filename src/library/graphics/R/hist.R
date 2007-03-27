@@ -42,7 +42,7 @@ hist.default <-
 	} else if(is.function(breaks)) {
 	    breaks <- breaks(x)
 	}
-	if(!is.numeric(breaks) || is.na(breaks) || breaks < 2)
+	if(!is.numeric(breaks) || !is.finite(breaks) || breaks < 1)
 	    stop("invalid number of 'breaks'")
 	breaks <- pretty (range(x), n = breaks, min.n = 1)
 	nB <- length(breaks)
