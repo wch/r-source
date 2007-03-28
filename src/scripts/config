@@ -76,6 +76,7 @@ Variables:
   JAVA_HOME     path to the root of Java distribution
   JAVA_LIBS     flags needed for linking against Java libraries
   LAPACK_LIBS   flags needed for linking against external LAPACK libraries
+  LIBnn         location for libraries, e.g. 'lib' or 'lib64' on this platform
   LDFLAGS       linker flags, e.g. -L<dir> if you have libraries in a
                 nonstandard directory <dir> 
   OBJC          Objective C compiler command
@@ -169,7 +170,7 @@ ok_f77_vars="F77 FFLAGS FPICFLAGS FLIBS SAFE_FFLAGS"
 ok_ld_vars="LDFLAGS"
 ok_shlib_vars="SHLIB_CFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS SHLIB_FFLAGS SHLIB_LD SHLIB_LDFLAGS"
 ok_tcltk_vars="TCLTK_CPPFLAGS TCLTK_LIBS"
-ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE"
+ok_other_vars="BLAS_LIBS LAPACK_LIBS MAKE LIBnn"
 
 ## Can we do this elegantly using case?
 
