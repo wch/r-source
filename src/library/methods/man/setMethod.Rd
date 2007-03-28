@@ -394,8 +394,10 @@ removeGeneric("doubleAnything")
 }
 }
 
-\seealso{ \link{Methods}, \code{\link{MethodsList}} for details of the
-  implementation}
+\seealso{ \link{method.skeleton}, which is the recommended way to generate a skeleton of the call to \code{setMethod}, with the correct formal arguments and other details.
+
+\link{Methods}, \code{\link{MethodsList}} for details of the
+  implementation}}
 
 \keyword{programming}
 \keyword{classes}
