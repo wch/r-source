@@ -41,6 +41,8 @@ LAPACK_LIBS = @LAPACK_LIBS@
 LIBM = @LIBM@
 LIBR = @LIBR@
 LIBS = @LIBS@
+## needed by R CMD config
+LIBnn = @LIBnn@
 LIBTOOL = $(SHELL) $(R_HOME)/bin/libtool
 LDFLAGS = @LDFLAGS@
 OBJC = @OBJC@

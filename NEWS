@@ -535,6 +535,8 @@ UTILITIES
 	tools.  This can optionally be used by 'R CMD check' to detect
 	problems, especially symbols which are not visible.
 
+    o	R CMD config now knows about LIBnn .
+
 
 BUG FIXES
 
