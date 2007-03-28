@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-03-25
+@set FAQ_DATE @value{FAQ_YEAR}-03-28
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -3730,6 +3730,8 @@ Non-supervised Regional Frequency Analysis.
 Accurate numerical derivatives.
 @item nws
 Functions for NetWorkSpaces and Sleigh.
+@item oc
+Optimal Classification roll call analysis.
 @item odesolve
 An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
@@ -4064,6 +4066,8 @@ Functions for robust location and scatter estimation and robust
 regression with high breakdown point.
 @item rrp
 Random Recursive Partitioning.
+@item rsbml
+R support for SBML (Systems Biology Markup Language), using libsbml.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
@@ -4407,6 +4411,9 @@ Standard distribution functions for the triangle distribution.
 Cluster analysis with trimming.
 @item trip
 Spatial analysis of animal track data.
+@item tripEstimation
+Metropolis sampler and supporting functions for estimating animal
+movement from archival tags and satellite fixes.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
 @item truncgof
