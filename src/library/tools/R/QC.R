@@ -1576,7 +1576,7 @@ function(package, dir, lib.loc = NULL)
         enc <- if(file.exists(descfile))
             .read_description(descfile)["Encoding"] else NA
         code_env <- new.env()
-        .source_assignments_in_code_dir(code_dir, code_env, env)
+        .source_assignments_in_code_dir(code_dir, code_env, enc)
         sys_data_file <- file.path(code_dir, "sysdata.rda")
         if(file_test("-f", sys_data_file)) load(sys_data_file, code_env)
 
