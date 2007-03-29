@@ -55,6 +55,7 @@ void rcmdusage (char *RCMD)
 	    "  Rprof    Post process R profiling files.\n",
 	    "  Rdconv   Convert Rd format to various other formats, including html, Nroff,\n",
 	    "           LaTeX, plain text, and S documentation format.\n",
+	    "  Rdiff    difference R output files.\n",
 	    "  Rd2dvi   Convert Rd format to DVI/PDF.\n",
 	    "  Rd2txt   Convert Rd format to text.\n",
 	    "  Sd2Rd    Convert S documentation to Rd format.\n",
@@ -283,6 +284,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    if (strcmp(p, "Rd2dvi") == 0) {
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh");
+	    } else if (strcmp(p, "Rdiff") == 0) {
+		strcpy(cmd, "sh ");
+		strcat(cmd, RHome); strcat(cmd, "/bin/Rdiff.sh");
 	    } else if (strcmp(p, "Sweave") == 0) {
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Sweave.sh");

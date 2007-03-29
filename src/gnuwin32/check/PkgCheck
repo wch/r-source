@@ -14,7 +14,7 @@ all:
 endif
 
 R = $(RHOME)/bin/Rterm --vanilla LC_ALL=C
-RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
+RDIFF = $(RHOME)/bin/Rcmd Rdiff
 
 run: $(PKG)-Ex.R
 	@if test -f $(PKG)-Ex.Rout ; then \
