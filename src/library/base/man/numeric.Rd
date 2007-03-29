@@ -27,8 +27,8 @@ is.numeric(x)
   \code{numeric} creates a real vector of the specified length.  The
   elements of the vector are all equal to \code{0}.
 
-  \code{as.numeric} attempts to coerce its argument to a numeric \link{type}
-  (either \code{"integer"} or \code{"double"}).
+  \code{as.numeric} attempts to coerce its argument to \code{"double"}
+  (even if it is already \code{"integer"}).
   \code{as.numeric} for factors yields the codes underlying the factor
   levels, not the numeric representation of the labels, see also
   \code{\link{factor}}.
@@ -46,7 +46,7 @@ is.numeric(x)
     stored in double precision format}.
 }
 \seealso{
-  \code{\link{double}}, \code{\link{integer}}.
+  \code{\link{double}}, \code{\link{integer}}, \code{\link{storage.mode}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

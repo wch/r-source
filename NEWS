@@ -737,6 +737,9 @@ BUG FIXES
     o	contr.treatment(n=0) failed with a spurious error message.
 	(It remains an error.)
 
+    o	as.numeric() was incorrectly documented: it is identical to
+	as.double.
+
 
 
 
