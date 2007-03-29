@@ -4654,3 +4654,19 @@ stopifnot(!is.na(x))
 x <- matrix(1:4,2,2)
 mosaicplot(x, sort = seq_len(dim(x)))
 ## failed in 2.4.1, fixed in 2.5.0
+
+
+## jitter failed in wierd case (PR#9580)
+stopifnot(is.finite( jitter(c(-1, 3)) ))
+## was repeated NaN in 2.4.1
+
+
+## max.col() problems (PR#9542)
+x <- rep(0, 10)
+dim(x) <- c(1, 10)
+# max.col(x) should be random.
+ans <- numeric(100)
+for(i in 1:100) ans[i] <- max.col(x)
+table(ans)
+stopifnot(any(ans != 10))
+## always gave last in 2.4.1
