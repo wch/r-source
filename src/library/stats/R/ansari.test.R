@@ -197,7 +197,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     }
                     u <- uniroot(ab2, srange, tol=1e-4,
                                  zq=qnorm(alpha/2))$root
-                    l <- uniroot(ab, srange, tol=1e-4,
+                    l <- uniroot(ab2, srange, tol=1e-4,
                                  zq=qnorm(alpha/2, lower=FALSE))$root
                     ## The process of the statistics does not need to be
                     ## monotone: sort is ok here.

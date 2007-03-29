@@ -735,6 +735,8 @@ BUG FIXES
 
     o	max.col() was not random for a row of zeroes. (PR#9542)
 
+    o	ansari.test(conf.int=TRUE, exact=FALSE) failed.
+
 
 
 
