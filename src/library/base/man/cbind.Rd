@@ -69,7 +69,8 @@ rbind(\dots, deparse.level = 1)
   position).  Factors have their levels expanded as necessary (in the
   order of the levels of the levelsets of the factors encountered) and
   the result is an ordered factor if and only if all the components were
-  ordered factors.  (The last point differs from S-PLUS.)
+  ordered factors.  (The last point differs from S-PLUS.)  Categories
+  (integer vectors with levels) are promoted to factors.
 }
 \value{
   A matrix or data frame combining the \code{\dots} arguments

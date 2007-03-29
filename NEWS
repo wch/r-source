@@ -402,6 +402,10 @@ NEW FEATURES
 
     o	Added is.raw() for completeness.
 
+    o	union(), interect(), setdiff() and setequal() now coerce their
+	arguments to be vectors (and they were documented only to
+	apply to vectors).
+
 
 DEPRECATED & DEFUNCT
 
