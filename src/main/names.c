@@ -524,6 +524,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"is.list",	do_is,		VECSXP,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.pairlist",	do_is,		LISTSXP,1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.expression",do_is,		EXPRSXP,1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"is.raw",	do_is,		RAWSXP, 1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"is.object",	do_is,		50,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 

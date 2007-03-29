@@ -1668,6 +1668,9 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
     case EXPRSXP:	/* is.expression */
 	LOGICAL(ans)[0] = TYPEOF(CAR(args)) == EXPRSXP;
 	break;
+    case RAWSXP:	/* is.raw */
+	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == RAWSXP);
+	break;
 
     case 50:		/* is.object */
 	LOGICAL(ans)[0] = OBJECT(CAR(args));

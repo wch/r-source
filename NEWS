@@ -420,6 +420,8 @@ NEW FEATURES
         a call to setMethod() to a file, with correct arguments and
         format, given the name of the function and the method signature.
 
+    o	Added is.raw() for completeness.
+
 
 DEPRECATED & DEFUNCT
 
