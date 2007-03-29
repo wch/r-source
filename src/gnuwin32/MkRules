@@ -3,7 +3,7 @@
 
 ## ===== configuration macros for building packages or R  ===============
 
-# Alternatives MINGW (mingw), CROSS (Linux) GFORTRAN (experimental gcc 4.2.0)
+# Alternatives MINGW (MinGW gcc3), CROSS (e.g. Linux) GFORTRAN (MinGW gcc4)
 BUILD=MINGW
 
 HELP = YES

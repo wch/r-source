@@ -3922,10 +3922,11 @@ build of @R{} itself.  (The `Snapshot'
 During the lifetime of this release of @R{} it is likely that
 @command{gcc 4.2.0} and an official MinGW build will be released.
 Unofficial builds from the @code{gcc} trunk were working in April 2007,
-provided @code{mingw-runtime-3.12.tar.gz} was used.  One such build is
-available from @url{http://gcc.gnu.org/wiki/GFortranBinaries}, and can
-be used when a Fortran 90 compiler is required.  (Another
-MinGW-compatible Fortran 90 compiler is available via  @url{http://www.g95.org,
+provided @code{mingw-runtime-3.12.tar.gz} was used (and
+@code{BUILD=GFORTRAN} in @file{MkRules}).  One such build is available
+from @url{http://gcc.gnu.org/wiki/GFortranBinaries}, and can be used
+when a Fortran 90 compiler is required.  (Another MinGW-compatible
+Fortran 90 compiler is available via @url{http://www.g95.org,
 @code{www.g95.org}}.)
 
 
