@@ -107,6 +107,8 @@ BUG FIXES
 
     o	md5check.exe works again (it was throwing spurious differences
 	after a compiler update).
+	
+    o	Some links in .chm help files were not working.  (PR#9586)
 
 
 
