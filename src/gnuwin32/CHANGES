@@ -115,6 +115,10 @@ BUG FIXES
     o	Some links in .chm help files were not working.  (PR#9586)
 	
     o	rcmd Rdiff was not working (used by R CMD check).
+	
+    o	Workaround a Windows' mktime bug that affected the POSIXct to
+	POSIXlt conversion during leap days in leap years prior to
+	1970 in timezones which were on DST at the time. (PR#9572)
 
 
 

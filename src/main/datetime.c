@@ -250,8 +250,8 @@ static double mktime00 (struct tm *tm)
 static double guess_offset (struct tm *tm)
 {
     double offset, offset1, offset2;
-    int i, wday, year, oldmonth, oldyear, olddst, oldwday, oldyday, oldmday;
-
+    int i, wday, year, oldmonth, oldisdst, oldmday;
+    struct tm oldtm;
     /*
        Adjust as best we can for timezones: if isdst is unknown, use
        the smaller offset at same day in Jan or July of a valid year.
@@ -259,12 +259,11 @@ static double guess_offset (struct tm *tm)
        July 1 on the same day of the week we will likely get guess
        right (since they are usually on Sunday mornings).
     */
+
+    memcpy(&oldtm, tm, sizeof(struct tm));
     oldmonth = tm->tm_mon;
-    oldyear = tm->tm_year;
-    olddst = tm->tm_isdst;
-    oldwday = tm->tm_wday;
-    oldyday = tm->tm_yday;
     oldmday = tm->tm_mday;
+    oldisdst = tm->tm_isdst;
 
     /* so now look for a suitable year */
     tm->tm_mon = 6;
@@ -292,7 +291,7 @@ static double guess_offset (struct tm *tm)
     tm->tm_mon = 6;
     tm->tm_isdst = -1;
     offset2 = (double) mktime(tm) - mktime00(tm);
-    if(olddst > 0) {
+    if(oldisdst > 0) {
 	offset = (offset1 > offset2) ? offset2 : offset1;
     } else {
 	offset = (offset1 > offset2) ? offset1 : offset2;
@@ -300,15 +299,15 @@ static double guess_offset (struct tm *tm)
     /* now try to guess dst if unknown */
     tm->tm_mon = oldmonth;
     tm->tm_isdst = -1;
-    if(olddst < 0) {
+    if(oldisdst < 0) {
 	offset1 = (double) mktime(tm) - mktime00(tm);
-	olddst = (offset1 < offset) ? 1:0;
-	if(olddst) offset = offset1;
+	oldisdst = (offset1 < offset) ? 1:0;
+	if(oldisdst) offset = offset1;
     }
-    tm->tm_year = oldyear;
-    tm->tm_isdst = olddst;
-    tm->tm_wday = oldwday;
-    tm->tm_yday = oldyday;
+    /* restore all as mktime might alter it */
+    memcpy(tm, &oldtm, sizeof(struct tm));
+    /* and then set isdst */
+    tm->tm_isdst = oldisdst;
     return offset;
 }
 
