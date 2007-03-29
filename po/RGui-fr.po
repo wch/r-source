@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-22 16:57+0000\n"
+"POT-Creation-Date: 2007-03-29 08:54+0100\n"
 "PO-Revision-Date: 2006-12-05 21:09+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -16,23 +16,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: console.c:880 console.c:920
+#: console.c:984 console.c:1024
 msgid "Not enough memory"
 msgstr "Pas assez de mémoire"
 
-#: console.c:976 console.c:980
+#: console.c:1080 console.c:1084
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Mémoire insuffisante : le texte n'est pas copié dans le presse-papier"
 
-#: console.c:1019 graphapp/clipboard.c:54 graphapp/clipboard.c:80
+#: console.c:1123 graphapp/clipboard.c:54 graphapp/clipboard.c:80
 msgid "Unable to open the clipboard"
 msgstr "Impossible d'ouvrir le presse-papier"
 
-#: console.c:1621
+#: console.c:1725
 msgid "Insufficient memory. Please close the console"
 msgstr "Mémoire insuffisante. Veuillez refermer la console, s'il-vous-plait"
 
-#: console.c:1675 console.c:1728 preferences.c:276
+#: console.c:1779 console.c:1832 preferences.c:276
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -41,23 +41,23 @@ msgstr ""
 "La police %s-%d-%d est introuvable.\n"
 "La police système non proportionnelle est utilisée"
 
-#: console.c:1830
+#: console.c:1934
 msgid "Save selection to"
 msgstr "Sauver la sélection dans"
 
-#: console.c:1832
+#: console.c:1936
 msgid "Save console contents to"
 msgstr "Sauver le contenu de la console dans"
 
-#: console.c:1930
+#: console.c:2034
 msgid "Scrolling.\n"
 msgstr "Défilement.\n"
 
-#: console.c:1931
+#: console.c:2035
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  Clavier : PageHaut, PageBas, Ctrl+Flèches, Ctrl+Début, Ctrl+Fin,\n"
 
-#: console.c:1932
+#: console.c:2036
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -65,78 +65,78 @@ msgstr ""
 "  Souris : utilisez les barres de défilement.\n"
 "\n"
 
-#: console.c:1933
+#: console.c:2037
 msgid "Editing.\n"
 msgstr "Edition.\n"
 
-#: console.c:1934
+#: console.c:2038
 msgid "  Moving the cursor: \n"
 msgstr "  Déplacement du curseur : \n"
 
-#: console.c:1935
+#: console.c:2039
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr ""
 "     Flèche gauche ou Ctrl+B : se déplacer d'un caractère vers la gauche ;\n"
 
-#: console.c:1936
+#: console.c:2040
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr ""
 "     Flèche droite ou Ctrl+F : se déplacer d'un caractère vers la droite ;\n"
 
-#: console.c:1937
+#: console.c:2041
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Début ou Ctrl+A : aller au début de la ligne ;\n"
 
-#: console.c:1938
+#: console.c:2042
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     Fin ou Ctrl+E : aller à la fin de la ligne ;\n"
 
-#: console.c:1939
+#: console.c:2043
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  Historique : flèches haut et bas, Ctrl+P, Ctrl+N\n"
 
-#: console.c:1940
+#: console.c:2044
 msgid "  Deleting:\n"
 msgstr "  Effacement :\n"
 
-#: console.c:1941
+#: console.c:2045
 msgid "     Del or Ctrl+D: delete current character;\n"
 msgstr "     Del ou Ctrl+D : effacer le caractère sous le curseur ;\n"
 
-#: console.c:1942
+#: console.c:2046
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Suppr. arrière: effacer le caractère précédent ;\n"
 
-#: console.c:1943
+#: console.c:2047
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     Ctrl+Suppr ou Ctrl+K : effacer le texte du caractère sous le curseur "
 "jusqu'à la fin.\n"
 
-#: console.c:1944
+#: console.c:2048
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U : effacer tout le texte de la ligne courante.\n"
 
-#: console.c:1945
+#: console.c:2049
 msgid "  Copy and paste.\n"
 msgstr "  Copier et coller.\n"
 
-#: console.c:1946
+#: console.c:2050
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "     Utilisez la souris (bouton gauche enfoncé) pour marquer (sélectionner) "
 "du texte.\n"
 
-#: console.c:1947
+#: console.c:2051
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Utilisez Shift+Suppr (ou Ctrl+C) pour copier le texte marqué dans le "
 "presse-papier et\n"
 
-#: console.c:1948
+#: console.c:2052
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -144,27 +144,27 @@ msgstr ""
 "     Shift+Ins (ou Ctrl+V ou Ctrl+Y) pour coller le contenu du presse-"
 "papier\n"
 
-#: console.c:1949
+#: console.c:2053
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     dans la console, Ctrl+X copie et colle en une fois\n"
 
-#: console.c:1950
+#: console.c:2054
 msgid "  Misc:\n"
 msgstr "  Divers :\n"
 
-#: console.c:1951
+#: console.c:2055
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L : Effacer la console.\n"
 
-#: console.c:1952
+#: console.c:2056
 msgid "     Ctrl+O: Toggle overwrite mode: initially off.\n"
 msgstr "     Ctrl+O : Bascule le mode surimpression : désactivé au départ.\n"
 
-#: console.c:1953
+#: console.c:2057
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T : Echange le caractère courant avec le précédent.\n"
 
-#: console.c:1954
+#: console.c:2058
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -173,7 +173,7 @@ msgstr ""
 "Note: la console est mise-à-jour quand elle est prête à recevoir une "
 "commande.\n"
 
-#: console.c:1955
+#: console.c:2059
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -181,7 +181,7 @@ msgstr ""
 "  Utilisez Ctrl+W pour (dés)activer ce comportement.\n"
 "\n"
 
-#: console.c:1956
+#: console.c:2060
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -189,11 +189,17 @@ msgstr ""
 "Utilisez ECHAPPE pour arrêter le calcul.\n"
 "\n"
 
-#: console.c:1957
+#: console.c:2061
+msgid ""
+"TAB starts completion if package 'rcompgen' is installed.\n"
+"\n"
+msgstr ""
+
+#: console.c:2062
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Les raccourcis Windows standard sont utilisables pour activer\n"
 
-#: console.c:1958
+#: console.c:2063
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
 "les périphériques graphiques (Ctrl+Tab ou Ctrl+F6 en MDI, Alt+Tab en SDI)"
