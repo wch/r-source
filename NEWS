@@ -400,6 +400,8 @@ NEW FEATURES
 	"letter"), "a4r" and "USr" (the latter two meaning rotated to
 	landscape).  postscript() also accepts paper = "US".
 
+    o	Added is.raw() for completeness.
+
 
 DEPRECATED & DEFUNCT
 

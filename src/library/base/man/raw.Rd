@@ -8,6 +8,7 @@
 \usage{
 raw(length = 0)
 as.raw(x)
+is.raw(x)
 }
 \arguments{
   \item{length}{desired length.}
@@ -21,6 +22,8 @@ as.raw(x)
   \code{as.raw} attempts to coerce its argument to be of raw
   type.  The (elementwise) answer will be \code{0} unless the
   coercion succeeds.
+
+  \code{is.raw} returns true if and only if \code{typeof(x) == "raw"}.
 }
 \details{
   The raw type is intended to hold raw bytes.  It is possible to extract
@@ -52,6 +55,8 @@ x <- "A test string"
 (y <- charToRaw(x))
 is.vector(y) # TRUE
 rawToChar(y)
+is.raw(x)
+is.raw(y)
 
 isASCII <-  function(txt) all(charToRaw(txt) <= as.raw(127))
 isASCII(x)  # true
