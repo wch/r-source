@@ -11,7 +11,7 @@ srcdir = .
 ## Can't test when cross-building
 RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
 R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
-RDIFF = $(RHOME)/bin/R CMD Rdiff.sh
+RDIFF = $(RHOME)/bin/R CMD Rdiff
 RVAL_IF_DIFF=0
 
 test-src-gct = \
