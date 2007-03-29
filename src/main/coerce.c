@@ -1309,7 +1309,7 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     return u;/* -Wall */
 }
 
-#define PRETEST_FOR_UNCHANGED 1
+/* #define PRETEST_FOR_UNCHANGED 1 */
 
 SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
