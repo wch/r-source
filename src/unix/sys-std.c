@@ -697,14 +697,14 @@ void attribute_hidden Rstd_WriteConsole(char *buf, int len)
     printf("%s", buf);
 }
 
+/* The extended version allows the distinction of errors and warnings.
+   It is not enabled by default unless pretty-printing is desired. */
 void attribute_hidden Rstd_WriteConsoleEx(char *buf, int len, int otype)
 {
-  /* bold errors/warnings disabled for now, because ShowMessage uses REprintf and
-     is in turn used by R --version which we should not touch .. 
     if (otype)
-        printf("\033[1m%s\033[0m");
-    else */
-    printf("%s", buf);
+      printf("\033[1m%s\033[0m", buf);
+    else
+      printf("%s", buf);
 }
 
 
