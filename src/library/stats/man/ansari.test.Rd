@@ -128,6 +128,6 @@ ansari.test(ramsay, jung.parekh)
 ansari.test(rnorm(10), rnorm(10, 0, 2), conf.int = TRUE)
 
 ## try more points - failed in 2.4.1
-ansari.test(rnorm(10), rnorm(10, 0, 2), conf.int = TRUE)
+ansari.test(rnorm(100), rnorm(100, 0, 2), conf.int = TRUE)
 }
 \keyword{htest}
