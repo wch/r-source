@@ -10,6 +10,7 @@ union(x, y)
 intersect(x, y)
 setdiff(x, y)
 setequal(x, y)
+
 is.element(el, set)
 }
 \arguments{
@@ -21,8 +22,10 @@ is.element(el, set)
   equality and membership on two vectors.
 }
 \details{
-  Each of \code{union}, \code{intersect} and \code{setdiff} will remove
-  any duplicated values in the arguments.
+  Each of \code{union}, \code{intersect}, \code{setdiff} and
+  \code{setequal} will discard any duplicated values in the arguments,
+  and they apply \code{\link{as.vector}} to their arguments (and so
+  in particular coerce factors to character vectors).
 
   \code{is.element(x, y)} is identical to \code{x \%in\% y}.
 }

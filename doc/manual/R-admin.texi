@@ -1810,9 +1810,10 @@ correspond to XPG language names and so @env{LANGUAGE} may need to be
 set.  (One example is @samp{LC_ALL=es} on Windows which sets the locale
 to Estonian and the language to Spanish.)
 
-It is usually possible (not Windows) to change the language once @R{} is
-running @emph{via} @code{Sys.setlocale("LC_MESSAGES", "new_locale")},
-but not by setting environment variables such as @env{LANGUAGE}.
+It is usually possible to change the language once @R{} is running
+@emph{via} (not Windows) @code{Sys.setlocale("LC_MESSAGES",
+"new_locale")}, or by setting environment variables such as
+@env{LANGUAGE}.
 
 Messages are divided into @emph{domains}, and translations may be
 available for some or all messages in a domain.  @R{} makes use of the
