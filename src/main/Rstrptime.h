@@ -198,7 +198,7 @@ static wchar_t w_ab_month_name[][10] =
 static wchar_t w_am_pm[][4] = {L"AM", L"PM"};
 
 /* Need case-insensitive version */
-static int wcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
+static int Rwcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
 {
     size_t i, n = wcslen(cs1);
     const wchar_t *a = cs1, *b = s2;
@@ -209,7 +209,7 @@ static int wcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
 }
 
 #define w_match_string(cs1, s2) \
-  (wcsncasecmp ((cs1), (s2)) ? 0 : ((s2) += wcslen (cs1), 1))
+  (Rwcsncasecmp ((cs1), (s2)) ? 0 : ((s2) += wcslen (cs1), 1))
 
 #define w_recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
