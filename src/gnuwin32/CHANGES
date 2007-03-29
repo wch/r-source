@@ -32,6 +32,10 @@ GUI CHANGES
 	specify a file name without an extension, put the name in
 	quotes, e.g.  "foo".  (As requested in PR#9336.)
 
+    o	There is support for function name completion via the TAB key
+	using package rcompgen >= 0.1-7.  This is automatically
+	enabled if that package is installed.
+
 
 FUNCTION CHANGES
 
