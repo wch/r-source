@@ -57,7 +57,7 @@ contr.helmert <-
 {
     if (length(n) <= 1) {
 	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1:n
-	else stop("contrasts not defined for 0 degrees of freedom")
+	else stop("not enough degrees of freedom to define contrasts")
     } else levels <- n
     lenglev <- length(levels)
     if (contrasts) {
@@ -74,9 +74,10 @@ contr.helmert <-
 contr.treatment <-
     function(n, base = 1, contrasts = TRUE)
 {
-    if(is.numeric(n) && length(n) == 1)
-	levs <- 1:n
-    else {
+    if(is.numeric(n) && length(n) == 1) {
+	if(n > 1) levs <- 1:n
+	else stop("not enough degrees of freedom to define contrasts")
+    } else {
 	levs <- n
 	n <- length(n)
     }

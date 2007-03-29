@@ -415,8 +415,8 @@ NEW FEATURES
 	"letter"), "a4r" and "USr" (the latter two meaning rotated to
 	landscape).  postscript() also accepts paper = "US".
 
-    o  A new function, method.skeleton() writes a skeleton version of
-        call to setMethod() to a file, with correct arguments and
+    o	A new function, method.skeleton() writes a skeleton version of
+        a call to setMethod() to a file, with correct arguments and
         format, given the name of the function and the method signature.
 
 
@@ -733,6 +733,9 @@ BUG FIXES
 
     o	Fixed bug in mosaicplot(sort=) introduced by undocumented
 	change in R 2.4.1 (changeset r39655).
+
+    o	contr.treatment(n=0) failed with a spurious error message.
+	(It remains an error.)
 
 
 
