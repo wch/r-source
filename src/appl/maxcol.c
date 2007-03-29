@@ -44,7 +44,7 @@ void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth)
 	    int ntie = 1;
 	    for (c = 1; c < *nc; c++) {
 		b = matrix[r + c * n_r];
-		if (b >= a + tol) {
+		if (b > a + tol) { /* tol could be zero */
 		    a = b; m = c;
 		    ntie = 1;
 		} else if (b >= a - tol) { /* b ~= current max. a */

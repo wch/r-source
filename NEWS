@@ -721,6 +721,10 @@ BUG FIXES
     o	as.numeric() was incorrectly documented: it is identical to
 	as.double.
 
+    o	jitter(rep(-1, 3)) gave NaNs. (PR#9580)
+
+    o	max.col() was not random for a row of zeroes. (PR#9542)
+
 
 
 
