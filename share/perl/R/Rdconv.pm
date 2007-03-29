@@ -894,7 +894,7 @@ sub text2html {
 		    if($pkg ne $pkgname) {
 			$htmlfile = mklink($opt, $topic . $HTML);
 		    } else {
-			$htmlfile = $topic . $HTML;
+			$htmlfile = "href=\"" . $topic . $HTML . "\"";
 		    }
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
@@ -1051,7 +1051,7 @@ sub code2html {
 		    if($pkg ne $pkgname) {
 			$htmlfile = mklink($opt, $topic . $HTML);
 		    } else {
-			$htmlfile = $topic . $HTML;
+			$htmlfile = "href=\"" . $topic . $HTML . "\"";
 		    }
        		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
