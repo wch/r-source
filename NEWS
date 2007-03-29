@@ -715,6 +715,12 @@ BUG FIXES
     o	Fixed bug in mosaicplot(sort=) introduced by undocumented
 	change in R 2.4.1 (changeset r39655).
 
+    o	contr.treatment(n=0) failed with a spurious error message.
+	(It remains an error.)
+
+    o	as.numeric() was incorrectly documented: it is identical to
+	as.double.
+
 
 
 

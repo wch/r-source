@@ -42,6 +42,8 @@ is.integer(x)
   hexadecimal representation (starting with \code{0x} or \code{0X}) can
   be converted, as well as any allowed by the platform for real numbers.
   Like \code{\link{as.vector}} it strips attributes including names.
+  (To ensure that an object is of integer type without stripping
+  attributes, use \code{\link{storage.mode}}.)
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of integer \link{type} or not, unless it is a
@@ -53,6 +55,8 @@ is.integer(x)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{numeric}}, \code{\link{storage.mode}}.
+
   \code{\link{round}} (and \code{ceiling} and \code{floor} on that help
   page) to convert to integral values.
 }

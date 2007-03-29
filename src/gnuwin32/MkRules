@@ -99,6 +99,7 @@ endif
 
 DEPARG=-MM
 MINGW32LDFLAG=
+C99FLAG=-std=gnu99
 
 ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=
@@ -106,7 +107,6 @@ MINGW32CFLAG=
 F77=g77
 FLIBS=-lg2c
 AWK=gawk
-C99FLAG=-std=gnu99
 endif
 
 ifeq ($(strip $(BUILD)),GFORTRAN)
@@ -115,8 +115,8 @@ MINGW32CFLAG=
 F77=gfortran
 FLIBS=-lgfortran
 AWK=gawk
-## this is nowadays based on GCC pre-4.3.0, but MinGW headers use extern inline
-C99FLAG=-std=gnu99 -fgnu89-inline
+## for mingw-runtime <= 3.11
+# C99FLAG=-std=gnu99 -fgnu89-inline
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
@@ -124,7 +124,6 @@ MINGW32CFLAG=-isystem $(HEADER)
 F77=$(BINPREF)g77
 FLIBS=-lg2c
 AWK=awk
-C99FLAG=-std=gnu99
 endif
 
 

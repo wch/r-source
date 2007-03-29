@@ -2811,29 +2811,17 @@ appropriately.
 @subsection Using gfortran
 
 @command{gfortran} is the F95 compiler that is part of
-@command{gcc}@tie{}4.@var{x}.@var{y}.
-
-There was a problem with the version in the @command{gcc}@tie{}4.0.0
-release and most pre-releases.  At least on @cputype{ix86} and
-@cputype{x86_64} Linux and MacOS X the dynamic version of the FORTRAN
-runtime @code{libgfortran} could not be used: if this is loaded
-redirection of C @file{stdin} (which @R{} uses in many of its scripts)
-becomes non-functional.  A workaround is to set the environment variable
-@env{GFORTRAN_STDIN_UNIT} to @code{-1}, but versions before 10 April
-2005 had another bug causing the setting to be ignored.  Both problems
-have been fixed for @command{gcc}@tie{}4.0.1.  The version of
-@command{gfortran} shipping with Fedora Core 4 seems to have the fixes
-in place.
-
-Some versions of @command{g95} (from @url{http://www.g95.org,
-@code{www.g95.org}}) have the same problem.
+@command{gcc}@tie{}4.@var{x}.@var{y}.  There were problems compiling
+@R{} with the first release (@command{gcc}@tie{}4.0.0) and more
+pre-releases, but these are resolved in later versions.
 
 On Linux @cputype{x86_64} systems there is an incompatibility in the
 return conventions for double-complex functions between
 @command{gfortran} and @command{g77} which results in the final example
 in @code{example(eigen)} hanging or segfaulting under external BLASs
-built under @command{g77}, as well as with earlier binary versions of Dr
-Goto's BLAS.  This should be detected by a @command{configure} test.
+built under @command{g77}.  This should be detected by a
+@command{configure} test.
+
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
 @section Compile and load flags
@@ -3898,7 +3886,9 @@ this is available from
 @section The MinGW compilers
 
 You need a recent version of the MinGW port of @command{gcc} from
-@url{http://www.mingw.org, @code{www.mingw.org}}.  See the notes on
+@url{http://sourceforge.net/project/showfiles.php?group_id=2435} (the
+download links from @url{www.mingw.org} currently lead to obsolete
+versions).  See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
@@ -3911,9 +3901,9 @@ be downloaded from Sourceforge and unpacked.)
 An alternative is to download the components individually, currently
 
 @example
-mingw-runtime-3.11.tar.gz
-w32api-3.8.tar.gz
-binutils-2.16.91-20060119-1.tar.gz
+mingw-runtime-3.12.tar.gz
+w32api-3.9.tar.gz
+binutils-2.17.50-20060824-1.tar.gz  
 gcc-core-3.4.5-20060117-1.tar.gz
 gcc-g++-3.4.5-20060117-1.tar.gz
 gcc-g77-3.4.5-20060117-1.tar.gz
@@ -3925,7 +3915,18 @@ and unpack these into the same directory (using @command{tar zxf
 tarball_name}).  Note that @code{mingw-runtime-3.11.tar.gz} or later is
 required to build @R{}, @code{gcc-g77-3.4.4} or later to build some
 contributed packages, and @code{gcc-3.4.5} is needed to get a correct
-build of @R{} itself.
+build of @R{} itself.  (The `Snapshot'
+@code{binutils-2.17.50-20070129-1.tar.gz} has also be used.)
+
+During the lifetime of this release of @R{} it is likely that
+@command{gcc 4.2.0} and an official MinGW build will be released.
+Unofficial builds from the @code{gcc} trunk were working in April 2007,
+provided @code{mingw-runtime-3.12.tar.gz} was used.  One such build is
+available from @url{http://gcc.gnu.org/wiki/GFortranBinaries}, and can
+be used when a Fortran 90 compiler is required.  (Another
+MinGW-compatible Fortran 90 compiler is available via  @url{http://www.g95.org,
+@code{www.g95.org}}.)
+
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
