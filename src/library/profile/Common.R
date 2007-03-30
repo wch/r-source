@@ -73,4 +73,6 @@ if(Sys.getenv("R_BATCH") != "") {
         cat("> proc.time()\n")
         print(proc.time())
     }
+    ## avoid passing on to spawned R processes
+    Sys.unsetenv("R_BATCH")
 }
