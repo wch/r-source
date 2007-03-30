@@ -336,7 +336,8 @@ my %develfiles=("doc\\html\\logo.jpg" => 1,
 		"bin\\Rd2txt" => 1,
 		"bin\\Rdconv" => 1,
 		"bin\\Rdiff.sh" => 1,
-		"bin\\Sd2Rd" => 1);
+		"bin\\Sd2Rd" => 1,
+		"etc\\Makeconf" => 1);
 		
 $path="${SRCDIR}";chdir($path);
 find(\&listFiles, ".");

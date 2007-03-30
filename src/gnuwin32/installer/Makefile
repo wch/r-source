@@ -24,7 +24,7 @@ INFO_FILES = COPYING NEWS README
 DOC_INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ RESOURCES THANKS
 GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
-ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories
+ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf
 
 GW32_FILES = MkRules MakePkg MakeDll Rpwd.exe pwd.pl makeDllRes.pl install-save.sh
 
