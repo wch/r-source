@@ -25,8 +25,6 @@ typedef window dataeditor;
 typedef window editor;
 
 
-void performCompletion(control c);
-
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
