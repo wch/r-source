@@ -1680,7 +1680,7 @@ Optional Features:
   --enable-R-profiling    attempt to compile support for Rprof() [yes]
   --enable-memory-profiling
                           attempt to compile support for Rmemprof(),
-                          tracemem() [yes]
+                          tracemem() [no]
   --enable-R-framework[=DIR]
                           MacOS X only: build R framework (if possible), and
                           specify its installation prefix [yes,
