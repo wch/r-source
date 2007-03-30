@@ -1309,11 +1309,9 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     return u;/* -Wall */
 }
 
-/* #define PRETEST_FOR_UNCHANGED 1 */
-
 SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, ans;
+    SEXP ans;
 
     if (DispatchOrEval(call, op, "as.character", args, rho, &ans, 0, 1))
 	return(ans);
@@ -1321,20 +1319,18 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Method dispatch has failed, we now just */
     /* run the generic internal code */
 
-    checkArity(op, args); /* <FIXME> should this not be before dispatch? */
-    x = CAR(args);
-#ifdef PRETEST_FOR_UNCHANGED
-    if(TYPEOF(x) == STRSXP && ATTRIB(x) == R_NilValue) return x;
-#endif
-    ans = ascommon(call, x, STRSXP);
+    PROTECT(args = ans);
+    checkArity(op, args);
+    ans = ascommon(call, CAR(args), STRSXP);
     CLEAR_ATTRIB(ans);
+    UNPROTECT(1);
     return ans;
 }
 
 
 SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, ans;
+    SEXP ans;
     int type;
 
     if (DispatchOrEval(call, op, "as.vector", args, rho, &ans, 0, 1))
@@ -1343,7 +1339,8 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Method dispatch has failed, we now just */
     /* run the generic internal code */
 
-    checkArity(op, args); /* <FIXME> should this not be before dispatch? */
+    PROTECT(args = ans);
+    checkArity(op, args);
     if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
 	errorcall_return(call, R_MSG_mode);
 
@@ -1369,33 +1366,8 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	errorcall_return(call, R_MSG_mode);
     }
-    x = CAR(args);
-#ifdef PRETEST_FOR_UNCHANGED
-    /* avoid copying in most cases where the answer is unchanged */
-    if(TYPEOF(x) == type || type == ANYSXP) {
-	switch(type) {
-	    /* keep attributes for these:*/
-	case NILSXP:
-	case VECSXP:
-	case EXPRSXP:
-	    return x;
-	    break;
-	case LGLSXP:
-	case INTSXP:
-	case REALSXP:
-	case CPLXSXP:
-	case STRSXP:
-	case RAWSXP:
-	    if(ATTRIB(x) == R_NilValue) return x;
-	default:
-	    break;
-	}
-    }
-#endif
-    ans = ascommon(call, x, type);
-    switch(TYPEOF(ans)) {
-	/* keep attributes for these, but note that ascommon may already
-	   have removed them for LISTSXPs */
+    ans = ascommon(call, CAR(args), type);
+    switch(TYPEOF(ans)) {/* keep attributes for these:*/
     case NILSXP:
     case VECSXP:
     case EXPRSXP:
@@ -1406,6 +1378,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	CLEAR_ATTRIB(ans);
 	break;
     }
+    UNPROTECT(1);
     return ans;
 }
 

@@ -10,8 +10,7 @@
 
 NEW FEATURES
 
-    o	[Experimental] as.character and as.vector avoid copying where
-	the result will be unchanged, at the expense of pre-tests.
+    o	<None as yet>
 
 
 
