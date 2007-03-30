@@ -91,8 +91,7 @@ install install-strip: installdirs svnonly
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/R > \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
 @WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RR $(R_FRAMEWORK_DIR)/Resources/bin/R)
-@WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/R)
-@WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
+@WANT_R_FRAMEWORK_TRUE@		@(chmod a+x $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(chmod -R g+w $(R_FRAMEWORK_DIR))
 
 svnonly:
@@ -258,6 +257,10 @@ install-R-framework:
 	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
 	    $(Rexecbindir2)/R)
 	@(if [ -n "${R_ARCH}" ]; then \
+	  sed -e "s|R_ARCH=${R_ARCH}|R_ARCH=/\`arch\`|" "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R" \
+	  > "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
+	  chmod a+x "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" && \
+	  mv "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/.tmp.R" "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/bin/R"; \
 	  if [ "${R_ARCH}" != /ppc -a "${R_ARCH}" != /i386 -a "${R_ARCH}" != /ppc64 -a "${R_ARCH}" != /x86_64 ]; then \
 	    echo "\
 	*** WARNING: The architecture name is incompatible with Apple's naming~              convention. This may prevent applications from using the R~              framework. Please use i386, x86_64, ppc or ppc64 as architecture~              names to allow universal builds."|sed 'y/~/\n/' >&2; \
@@ -267,6 +270,8 @@ install-R-framework:
 	    done; \
 	  fi; \
 	fi )
+	@( rm -f "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" && \
+	   ln -s bin/R "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/R" )
 	@( echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>~<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">~<plist version=\"1.0\">~<dict>~ <key>CFBundleIdentifier</key>~ <string>org.r-project.R-framework</string>~ <key>CFBundleInfoDictionaryVersion</key>~ <string>6.0</string>~ <key>CFBundleName</key>~ <string>R</string>~ <key>CFBundlePackageType</key>~ <string>FMWK</string>~ <key>CFBundleVersion</key>~ <string>$(VERSION)</string>~</dict>~</plist>" |sed -e 'y/~/\n/' > $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/Info.plist)
 
 TAGS:
