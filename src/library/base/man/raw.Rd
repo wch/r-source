@@ -1,6 +1,7 @@
 \name{raw}
 \alias{raw}
 \alias{as.raw}
+\alias{is.raw}
 \title{Raw Vectors}
 \description{
   Creates or tests for objects of type \code{"raw"}.
