@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-03-28
+@set FAQ_DATE @value{FAQ_YEAR}-03-30
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -1888,6 +1888,8 @@ Functions for calculating the CreditMetrics risk model.
 @item DAAG
 Various data sets used in examples and exercises in ``Data Analysis and
 Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
+@item DAAGbio
+Data sets and functions, for demonstrations with expression arrays.
 @item DAAGxtras
 Data sets and functions additional to @strong{DAAG}.
 @item DBI
@@ -2479,6 +2481,8 @@ A collection of tools for the analysis of habitat selection by animals.
 Adaptive smoothing of digital images.
 @item adlift
 Adaptive Wavelet transforms for signal denoising.
+@item ads
+Spatial point patterns analysis.
 @item agce
 Analysis of growth curve experiments.
 @item agricolae
@@ -2540,6 +2544,9 @@ history trait modeling).
 @item asypow
 A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
+@item asuR
+Functions and data sets for a lecture in ``Advanced Statistics using
+R''.
 @item aws
 Functions to perform adaptive weights smoothing.
 @item backtest
@@ -3215,6 +3222,8 @@ Use known groups in high-dimensional data to derive scores for plots.
 Interface to the @acronym{NCSA} HDF5 library.
 @item hdrcde
 Highest Density Regions and Conditional Density Estimation.
+@item heatmap.plus
+Heatmap with sensible behavior.
 @item heplots
 Visualizing tests in multivariate linear models.
 @item hett
@@ -3259,6 +3268,8 @@ independence between loci.
 Hybrid hierarchical clustering via mutual clusters.
 @item ibdreg
 Regression methods for IBD linkage with covariates.
+@item identity
+Jacquard condensed coefficients of identity.
 @item ifa
 Independent Factor Analysis.
 @item ifs
@@ -3570,6 +3581,8 @@ The multivariate normal and @math{t} distributions.
 @item moc
 Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
+@item modeest
+Mode estimation and Chernoff distribution.
 @item modeltools
 A collection of tools to deal with statistical models.
 @item moments
@@ -4481,6 +4494,8 @@ Construction of test suites using verify objects.
 @item vioplot
 Violin plots, which are a combination of a box plot and a kernel density
 plot.
+@item waved
+WaveD transform in R.
 @item wavelets
 Functions for computing wavelet filters, wavelet transforms and
 multiresolution analyses.
