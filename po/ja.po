@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-26 13:13+0100\n"
+"POT-Creation-Date: 2007-03-30 11:00+0100\n"
 "PO-Revision-Date: 2006-12-12 09:33+0900\n"
 "Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -108,9 +108,9 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/connections.c:3420 src/main/connections.c:3426
 #: src/main/connections.c:3678 src/main/connections.c:3690
 #: src/main/connections.c:3694 src/main/connections.c:3698
-#: src/main/datetime.c:622 src/main/datetime.c:691 src/main/datetime.c:693
-#: src/main/datetime.c:697 src/main/datetime.c:828 src/main/datetime.c:830
-#: src/main/datetime.c:977 src/main/debug.c:210 src/main/dounzip.c:182
+#: src/main/datetime.c:621 src/main/datetime.c:690 src/main/datetime.c:692
+#: src/main/datetime.c:696 src/main/datetime.c:827 src/main/datetime.c:829
+#: src/main/datetime.c:976 src/main/debug.c:210 src/main/dounzip.c:182
 #: src/main/dounzip.c:188 src/main/envir.c:1456 src/main/envir.c:1460
 #: src/main/envir.c:1549 src/main/envir.c:1555 src/main/envir.c:1621
 #: src/main/envir.c:1637 src/main/envir.c:1644 src/main/envir.c:1738
@@ -221,7 +221,7 @@ msgid "'loadRconsole' can only be used in Rgui"
 msgstr "'loadRconsole' はRgui でしか使用することができない"
 
 #: src/gnuwin32/extra.c:598 src/main/connections.c:2524
-#: src/main/datetime.c:558 src/main/datetime.c:624 src/main/datetime.c:832
+#: src/main/datetime.c:557 src/main/datetime.c:623 src/main/datetime.c:831
 #: src/main/dotcode.c:191 src/main/errors.c:746 src/main/errors.c:774
 #: src/main/errors.c:873 src/main/errors.c:898 src/main/errors.c:903
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
@@ -240,8 +240,8 @@ msgstr "'loadRconsole' はRgui でしか使用することができない"
 #: src/main/scan.c:1881 src/main/scan.c:1882 src/main/scan.c:1883
 #: src/main/scan.c:1884 src/main/sort.c:793 src/main/sort.c:893
 #: src/main/source.c:172 src/main/summary.c:942 src/main/sysutils.c:193
-#: src/main/util.c:771 src/main/util.c:776 src/main/util.c:784
-#: src/main/util.c:787 src/modules/X11/devX11.c:2469
+#: src/main/util.c:773 src/main/util.c:778 src/main/util.c:786
+#: src/main/util.c:789 src/modules/X11/devX11.c:2469
 #: src/modules/X11/devX11.c:2496 src/modules/X11/devX11.c:2501
 #: src/modules/X11/devX11.c:2506 src/unix/sys-std.c:1041
 #, c-format
@@ -458,33 +458,33 @@ msgid "WARNING: max-mem-size =%4.1fM is too large and taken as 3Gb\n"
 msgstr "警告: max-mem-size =%4.1fM は大きすぎるので、3Gbとされました\n"
 
 #: src/gnuwin32/system.c:931 src/gnuwin32/system.c:941
-#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:309
-#: src/unix/system.c:318
+#: src/main/connections.c:449 src/main/dounzip.c:102 src/unix/system.c:308
+#: src/unix/system.c:317
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "ファイル '%s' を開くことができません"
 
-#: src/gnuwin32/system.c:951 src/unix/system.c:329
+#: src/gnuwin32/system.c:951 src/unix/system.c:328
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:955 src/unix/system.c:340
+#: src/gnuwin32/system.c:955 src/unix/system.c:339
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 未知の '%s' オプション\n"
 
-#: src/gnuwin32/system.c:980 src/unix/system.c:344
+#: src/gnuwin32/system.c:980 src/unix/system.c:343
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引数 '%s' は無視されました\n"
 
-#: src/gnuwin32/system.c:987 src/unix/system.c:350
+#: src/gnuwin32/system.c:987 src/unix/system.c:349
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "ベクトルでないものの長さは設定できません"
 
-#: src/gnuwin32/system.c:1008 src/unix/system.c:396
+#: src/gnuwin32/system.c:1008 src/unix/system.c:397
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save' ,  '--no-save',  '--vanilla' のいずれかを指定してください"
 
@@ -522,7 +522,7 @@ msgstr "二番目の引数は文字列でなければなりません"
 msgid "second argument must be a list"
 msgstr "二番目の引数はリストでなければなりません"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2718 src/main/subscript.c:226
+#: src/include/Errormsg.h:42 src/main/eval.c:2714 src/main/subscript.c:226
 #: src/main/subscript.c:331 src/main/subscript.c:334 src/main/subscript.c:435
 msgid "subscript out of bounds"
 msgstr "添え字が許される範囲外です"
@@ -996,103 +996,103 @@ msgstr ""
 msgid "attempt to set invalid 'class' attribute"
 msgstr "不正な 'class' 属性を設定しようとしました"
 
-#: src/main/attrib.c:678
+#: src/main/attrib.c:673
 msgid "incompatible 'names' argument"
 msgstr "'names' 引数に互換性がありません"
 
-#: src/main/attrib.c:730
+#: src/main/attrib.c:725
 #, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "'names' 属性として設定するには不正な型(%s)です"
 
-#: src/main/attrib.c:802
+#: src/main/attrib.c:797
 msgid "'dimnames' applied to non-array"
 msgstr "'dimnames' が配列以外に適用されました"
 
-#: src/main/attrib.c:806
+#: src/main/attrib.c:801
 msgid "'dimnames' must be a list"
 msgstr "'dimnames' はリストでなくてはなりません"
 
-#: src/main/attrib.c:809
+#: src/main/attrib.c:804
 #, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr ""
 "'dimnames' の長さ [%d] は 'dims' の長さ [%d] と同じでなくてはなりません"
 
-#: src/main/attrib.c:826
+#: src/main/attrib.c:821
 #, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "'dimnames' の型(%s)が不正です（ベクトルでなければなりません）"
 
-#: src/main/attrib.c:829
+#: src/main/attrib.c:824
 #, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "'dimnames' の長さ [%d] が配列の大きさと違っています"
 
-#: src/main/attrib.c:889
+#: src/main/attrib.c:884
 msgid "dim<- : invalid first argument"
 msgstr "dim <- : 最初の引数が不正です"
 
-#: src/main/attrib.c:892
+#: src/main/attrib.c:887
 msgid "dim<- : invalid second argument"
 msgstr "dim <- : 二番目の引数が不正です"
 
-#: src/main/attrib.c:900
+#: src/main/attrib.c:895
 msgid "dim: length-0 dimension vector is invalid"
 msgstr "dim:  長さ 0 の次元のベクトルは無効です"
 
-#: src/main/attrib.c:905
+#: src/main/attrib.c:900
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
 msgstr "dim<- : dims [product %d] は object [%d] の長さに整合しません"
 
-#: src/main/attrib.c:1000
+#: src/main/attrib.c:995
 msgid "attributes must be in a list"
 msgstr "属性はリストの中になければなりません"
 
-#: src/main/attrib.c:1024
+#: src/main/attrib.c:1019
 msgid "attributes must be named"
 msgstr "属性は名前が付けられていなければなりません"
 
-#: src/main/attrib.c:1028
+#: src/main/attrib.c:1023
 #, c-format
 msgid "all attributes must have names [%d does not]"
 msgstr "全ての属性は名前を持っていなければなりません[%d が持っていません]"
 
-#: src/main/attrib.c:1071
+#: src/main/attrib.c:1066
 msgid "attribute 'name' must be of mode character"
 msgstr "'name' 属性はモードを表す文字でなくてはなりません"
 
-#: src/main/attrib.c:1073
+#: src/main/attrib.c:1068
 msgid "exactly one attribute 'name' must be given"
 msgstr "ちょうど一つの属性 'name' が与えられるべきです"
 
-#: src/main/attrib.c:1147
+#: src/main/attrib.c:1142
 #, fuzzy
 msgid "'name' must be non-null character string"
 msgstr "'name' は NULL でない文字列でなければなりません"
 
-#: src/main/attrib.c:1250 src/main/attrib.c:1295 src/main/attrib.c:1386
+#: src/main/attrib.c:1245 src/main/attrib.c:1290 src/main/attrib.c:1381
 msgid "invalid type or length for slot name"
 msgstr "スロット名の型または長さが不正です"
 
-#: src/main/attrib.c:1266
+#: src/main/attrib.c:1261
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "型 \"%s\" のオブジェクトからはスロット (\"%s\") を得ることは出来ません"
 
-#: src/main/attrib.c:1277
+#: src/main/attrib.c:1272
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在しませ"
 "ん"
 
-#: src/main/attrib.c:1381
+#: src/main/attrib.c:1376
 msgid "formal classes cannot be used without the methods package"
 msgstr "メソッドパッケージなしにフォーマルクラス（formal class）は使えません"
 
-#: src/main/attrib.c:1392
+#: src/main/attrib.c:1387
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1101,7 +1101,7 @@ msgstr ""
 "スロット \"%s\"を、スロットを持たない基本クラス(\"%s\")のオブジェクトから得よ"
 "うとしました"
 
-#: src/main/attrib.c:1402
+#: src/main/attrib.c:1397
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1110,7 +1110,7 @@ msgstr ""
 "スロット \"%s\" を S4オブジェクトでは無い(クラス\"%s\")のオブジェクトから得よ"
 "うとしました"
 
-#: src/main/attrib.c:1422
+#: src/main/attrib.c:1417
 msgid "invalid slot type"
 msgstr "スロット型が不正です"
 
@@ -1177,7 +1177,7 @@ msgstr "指定されたベクトルのサイズが長すぎます"
 #: src/main/envir.c:1731 src/main/envir.c:2374 src/main/envir.c:2427
 #: src/main/envir.c:2710 src/main/envir.c:2738 src/main/envir.c:2758
 #: src/main/envir.c:2780 src/main/envir.c:2814 src/main/envir.c:2834
-#: src/main/envir.c:3141 src/main/envir.c:3145 src/main/eval.c:3512
+#: src/main/envir.c:3141 src/main/envir.c:3145 src/main/eval.c:3508
 #: src/main/objects.c:177 src/main/objects.c:183 src/main/saveload.c:2073
 #: src/main/saveload.c:2339 src/main/saveload.c:2389 src/main/serialize.c:2176
 msgid "use of NULL environment is defunct"
@@ -1263,7 +1263,7 @@ msgstr "length <- で，二番目の引数が不正です"
 msgid "length<- missing value for 'length'"
 msgstr "length <- で，'length' の値がありません"
 
-#: src/main/builtin.c:817 src/main/coerce.c:2197 src/main/coerce.c:2238
+#: src/main/builtin.c:817 src/main/coerce.c:2200 src/main/coerce.c:2241
 msgid "... used in an incorrect context"
 msgstr "... が不適切な文脈で使われました"
 
@@ -1535,7 +1535,7 @@ msgstr "ベクトルに変換できません"
 msgid "list argument expected"
 msgstr "リスト引数が期待されています"
 
-#: src/main/coerce.c:1405 src/main/eval.c:3509 src/main/eval.c:3516
+#: src/main/coerce.c:1405 src/main/eval.c:3505 src/main/eval.c:3512
 msgid "invalid environment"
 msgstr "不正な環境です"
 
@@ -1555,36 +1555,36 @@ msgstr "長さが0の引数は不正です"
 msgid "invalid argument list"
 msgstr "引数リストが不正です"
 
-#: src/main/coerce.c:1722
+#: src/main/coerce.c:1725
 msgid "type \"single\" unimplemented in R"
 msgstr "\"single\" 型は R には実装されていません"
 
-#: src/main/coerce.c:1724
+#: src/main/coerce.c:1727
 msgid "unimplemented predicate"
 msgstr "未実装の「述語」です"
 
-#: src/main/coerce.c:1863 src/main/coerce.c:1960
+#: src/main/coerce.c:1866 src/main/coerce.c:1963
 #, c-format
 msgid "%s() applied to non-(list or vector)"
 msgstr "%s() はベクトル、リスト以外にのみ使用できます。"
 
-#: src/main/coerce.c:2116 src/main/coerce.c:2118
+#: src/main/coerce.c:2119 src/main/coerce.c:2121
 msgid "first argument must be a character string or a function"
 msgstr "最初の引数は、文字列または関数でなければならない"
 
-#: src/main/coerce.c:2124
+#: src/main/coerce.c:2127
 msgid "'envir' must be an environment"
 msgstr "'envir' は環境でなくてはなりません"
 
-#: src/main/coerce.c:2277
+#: src/main/coerce.c:2280
 msgid "invalid environment specified"
 msgstr "不正な環境指定です"
 
-#: src/main/coerce.c:2355
+#: src/main/coerce.c:2357
 msgid "invalid replacement object to be a class string"
 msgstr "クラス文字列とするには不正な置き換えオブジェクトです"
 
-#: src/main/coerce.c:2373
+#: src/main/coerce.c:2375
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1592,7 +1592,7 @@ msgstr ""
 "\"%s\" はオブジェクトがこの型を持つ時だけクラスとして設定できます。\"%s\" が"
 "見つかりました"
 
-#: src/main/coerce.c:2389
+#: src/main/coerce.c:2391
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1600,7 +1600,7 @@ msgid ""
 msgstr ""
 "次元属性が長さ 2 でないかぎり(%d でした)、行列にクラスを設定するのは不正です"
 
-#: src/main/coerce.c:2395
+#: src/main/coerce.c:2397
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr "次元属性が長さ > 0 でないかぎり、配列にクラスを設定できません "
@@ -2281,23 +2281,23 @@ msgstr "複素数に対しては min/max は定義されていません"
 msgid "unknown cumxxx function"
 msgstr "未知の cumxxx 関数です"
 
-#: src/main/datetime.c:481 src/main/datetime.c:487 src/main/datetime.c:501
-#: src/main/datetime.c:506
+#: src/main/datetime.c:480 src/main/datetime.c:486 src/main/datetime.c:500
+#: src/main/datetime.c:505
 #, fuzzy
 msgid "problem with setting timezone"
 msgstr "コネクションへの書き込みに問題があります"
 
-#: src/main/datetime.c:491
+#: src/main/datetime.c:490
 msgid "cannot set timezones on this system"
 msgstr "このシステムではタイムゾーンは設定できません"
 
-#: src/main/datetime.c:513 src/main/datetime.c:515
+#: src/main/datetime.c:512 src/main/datetime.c:514
 #, fuzzy
 msgid "problem with unsetting timezone"
 msgstr "エディタ %s の実行に関し問題がおきました"
 
-#: src/main/datetime.c:642 src/main/datetime.c:644 src/main/datetime.c:985
-#: src/main/datetime.c:987
+#: src/main/datetime.c:641 src/main/datetime.c:643 src/main/datetime.c:984
+#: src/main/datetime.c:986
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "空ではない POSIXlt 構造の中に長さゼロの成分があります"
 
@@ -2373,7 +2373,7 @@ msgstr "不正な環境です"
 msgid "'opts' should be small non-negative integer"
 msgstr "'gap' は，非負の整数でなくてはなりません"
 
-#: src/main/deparse.c:362 src/main/eval.c:2587
+#: src/main/deparse.c:362 src/main/eval.c:2583
 #, c-format
 msgid "Object \"%s\" not found"
 msgstr "オブジェクト \"%s\" は存在しません"
@@ -2789,7 +2789,7 @@ msgstr "... リストは %d 個の要素を含んでいません"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d は正しくない文脈で使われています，参照すべき ... がありません"
 
-#: src/main/envir.c:1239 src/main/eval.c:391 src/main/eval.c:2590
+#: src/main/envir.c:1239 src/main/eval.c:391 src/main/eval.c:2586
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "引数 \"%s\" がありませんし、省略時既定値もありません"
@@ -3141,7 +3141,7 @@ msgstr ""
 
 #: src/main/eval.c:381 src/main/eval.c:483 src/main/eval.c:1476
 #: src/main/eval.c:1528 src/main/eval.c:1582 src/main/eval.c:1817
-#: src/main/eval.c:3152 src/main/eval.c:3255
+#: src/main/eval.c:3148 src/main/eval.c:3251
 msgid "'...' used in an incorrect context"
 msgstr "'...' が不適切な文脈で使われました"
 
@@ -3150,15 +3150,15 @@ msgstr "'...' が不適切な文脈で使われました"
 msgid "object \"%s\" not found"
 msgstr "オブジェクト \"%s\" は存在しません"
 
-#: src/main/eval.c:393 src/main/eval.c:2591
+#: src/main/eval.c:393 src/main/eval.c:2587
 msgid "argument is missing, with no default"
 msgstr "引数がありませんし、省略時既定値もありません"
 
-#: src/main/eval.c:408 src/main/eval.c:2535
+#: src/main/eval.c:408 src/main/eval.c:2531
 msgid "recursive default argument reference"
 msgstr "既定引数の再帰的な参照です"
 
-#: src/main/eval.c:479 src/main/eval.c:3100
+#: src/main/eval.c:479 src/main/eval.c:3096
 msgid "attempt to apply non-function"
 msgstr "関数でないものを適用しようとしました"
 
@@ -3285,132 +3285,132 @@ msgstr "メソッド (\"%s\", \"%s\") は \"%s\" に対しては矛盾してい�
 msgid "dispatch error"
 msgstr "メソッド割り当てのエラーです"
 
-#: src/main/eval.c:2499
+#: src/main/eval.c:2495
 msgid "node stack overflow"
 msgstr "ノードスタックが溢れました"
 
-#: src/main/eval.c:2505
+#: src/main/eval.c:2501
 msgid "integer stack overflow"
 msgstr "整数スタックが溢れました"
 
-#: src/main/eval.c:2573
+#: src/main/eval.c:2569
 msgid "Bad opcode"
 msgstr "opcode が不適当です"
 
-#: src/main/eval.c:2720
+#: src/main/eval.c:2716
 msgid "not a vector object"
 msgstr "ベクトルオブジェクトではありません"
 
-#: src/main/eval.c:2728 src/main/eval.c:2750 src/main/eval.c:2774
-#: src/main/eval.c:2798
+#: src/main/eval.c:2724 src/main/eval.c:2746 src/main/eval.c:2770
+#: src/main/eval.c:2794
 msgid "can only handle simple real vectors"
 msgstr "単純な実数ベクトルだけを扱えます"
 
-#: src/main/eval.c:2737 src/main/eval.c:2784
+#: src/main/eval.c:2733 src/main/eval.c:2780
 msgid "not a simple vector"
 msgstr "単一のベクトルではありません"
 
-#: src/main/eval.c:2754 src/main/eval.c:2802 src/main/subassign.c:952
+#: src/main/eval.c:2750 src/main/eval.c:2798 src/main/subassign.c:952
 #: src/main/subset.c:756
 msgid "incorrect number of subscripts"
 msgstr "添え字の数が正しくありません"
 
-#: src/main/eval.c:2765 src/main/eval.c:2816
+#: src/main/eval.c:2761 src/main/eval.c:2812
 msgid "not a simple matrix"
 msgstr "単一の行列ではありません"
 
-#: src/main/eval.c:2850
+#: src/main/eval.c:2846
 msgid "bytecode version mismatch; using eval"
 msgstr "バイトコードのバージョンが不一致です; eval を使います"
 
-#: src/main/eval.c:2855
+#: src/main/eval.c:2851
 msgid "bytecode version is too old"
 msgstr "バイトコードのバージョンが古すぎます"
 
-#: src/main/eval.c:2856
+#: src/main/eval.c:2852
 msgid "bytecode version is too new"
 msgstr "バイトコードのバージョンが新しすぎます"
 
-#: src/main/eval.c:2861
+#: src/main/eval.c:2857
 msgid "byte code version mismatch"
 msgstr "バイトコードのバージョンが不一致です"
 
-#: src/main/eval.c:2877
+#: src/main/eval.c:2873
 msgid "missing value where logical needed"
 msgstr "論理値が必要なところが欠損値です"
 
-#: src/main/eval.c:2878
+#: src/main/eval.c:2874
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "if 文の条件部分が論理値として解釈できません"
 
-#: src/main/eval.c:2912
+#: src/main/eval.c:2908
 msgid "invalid sequence argument in for loop"
 msgstr "for ループの範囲引数が不正です"
 
-#: src/main/eval.c:3062 src/main/eval.c:3083 src/main/eval.c:3196
+#: src/main/eval.c:3058 src/main/eval.c:3079 src/main/eval.c:3192
 msgid "not a BUILTIN function"
 msgstr "BUILTIN 関数ではありません"
 
-#: src/main/eval.c:3183
+#: src/main/eval.c:3179
 msgid "bad function"
 msgstr "不正な関数です"
 
-#: src/main/eval.c:3220
+#: src/main/eval.c:3216
 msgid "not a SPECIAL function"
 msgstr "SPECIAL 関数ではありません"
 
-#: src/main/eval.c:3451
+#: src/main/eval.c:3447
 msgid "cannot find index for threaded code address"
 msgstr ""
 "スレッデッド・コード・アドレス（threaded code address）のインデックスを見つけ"
 "ることができません"
 
-#: src/main/eval.c:3529
+#: src/main/eval.c:3525
 msgid "invalid symbol"
 msgstr "シンボル記号が不正です"
 
-#: src/main/eval.c:3573
+#: src/main/eval.c:3569
 msgid "argument is not a byte code object"
 msgstr "引数がバイトコードオブジェクトではありません"
 
-#: src/main/eval.c:3594
+#: src/main/eval.c:3590
 msgid "bad file name"
 msgstr "不正なファイル名です"
 
-#: src/main/eval.c:3598 src/main/eval.c:3619
+#: src/main/eval.c:3594 src/main/eval.c:3615
 msgid "unable to open 'file'"
 msgstr "'file' を開くことができません"
 
-#: src/main/eval.c:3613 src/main/saveload.c:1957
+#: src/main/eval.c:3609 src/main/saveload.c:1957
 msgid "'file' must be non-empty string"
 msgstr "'file' は空でない文字列でなければいけません"
 
-#: src/main/eval.c:3615 src/main/saveload.c:1959 src/main/saveload.c:2235
+#: src/main/eval.c:3611 src/main/saveload.c:1959 src/main/saveload.c:2235
 #: src/main/serialize.c:1743
 msgid "'ascii' must be logical"
 msgstr "'ascii' は論理値でなければなりません"
 
-#: src/main/eval.c:3644 src/main/eval.c:3651
+#: src/main/eval.c:3640 src/main/eval.c:3647
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: バッファが小さすぎます"
 
-#: src/main/eval.c:3684
+#: src/main/eval.c:3680
 msgid "code must be a generic vector"
 msgstr "コードはジェネリックなベクトルでなければなりません"
 
-#: src/main/eval.c:3723
+#: src/main/eval.c:3719
 msgid "profile timer in use"
 msgstr "プロファイルタイマーは使用中です"
 
-#: src/main/eval.c:3725
+#: src/main/eval.c:3721
 msgid "already byte code profiling"
 msgstr "既にバイトコードは分析されています"
 
-#: src/main/eval.c:3743
+#: src/main/eval.c:3739
 msgid "setting profile timer failed"
 msgstr "プロファイルタイマーの設定に失敗しました"
 
-#: src/main/eval.c:3760
+#: src/main/eval.c:3756
 msgid "not byte code profiling"
 msgstr "バイトコードのプロファイリングではありません"
 
@@ -4086,31 +4086,31 @@ msgstr "モデル行列中では複素数は現在許されていません"
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "タイプ '%s' の変数はモデル行列中では許されません"
 
-#: src/main/names.c:955
+#: src/main/names.c:956
 msgid "string argument required"
 msgstr "文字列引数が要求されています"
 
-#: src/main/names.c:963
+#: src/main/names.c:964
 msgid "no such primitive function"
 msgstr "そのようなプリミティブ関数はありません"
 
-#: src/main/names.c:1076
+#: src/main/names.c:1077
 msgid "attempt to use zero-length variable name"
 msgstr "長さ0の変数名を使おうとしました"
 
-#: src/main/names.c:1078
+#: src/main/names.c:1079
 msgid "symbol print-name too long"
 msgstr "シンボルの表示名が長すぎます"
 
-#: src/main/names.c:1105
+#: src/main/names.c:1106
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 引数が不正です"
 
-#: src/main/names.c:1108
+#: src/main/names.c:1109
 msgid "invalid internal function"
 msgstr "内部関数が不正です"
 
-#: src/main/names.c:1110
+#: src/main/names.c:1111
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "内部関数 \"%s\" がありません"
@@ -6532,45 +6532,45 @@ msgstr "'all.y' は TRUEまたは FALSE でなければなりません"
 msgid "cannot change working directory"
 msgstr "作業ディレクトリを変更できません"
 
-#: src/main/util.c:686 src/main/util.c:721 src/main/util.c:766
-#: src/main/util.c:817 src/main/util.c:838 src/main/util.c:840
+#: src/main/util.c:686 src/main/util.c:723 src/main/util.c:768
+#: src/main/util.c:819 src/main/util.c:840 src/main/util.c:842
 msgid "a character vector argument expected"
 msgstr "文字ベクトルの引数が期待されています"
 
-#: src/main/util.c:691 src/main/util.c:726
+#: src/main/util.c:691 src/main/util.c:728
 msgid "path too long"
 msgstr "パスが長すぎます"
 
-#: src/main/util.c:781
+#: src/main/util.c:783
 msgid "only the first character of 'quote' will be used"
 msgstr "'quote' の最初の文字だけが使われました"
 
-#: src/main/util.c:843
+#: src/main/util.c:845
 #, fuzzy
 msgid "'value must be of positive length"
 msgstr "引数は正の長さを持たないといけません"
 
-#: src/main/util.c:902
+#: src/main/util.c:904
 msgid "invalid multibyte string"
 msgstr "マルチバイト文字列が不正です"
 
-#: src/main/util.c:919
+#: src/main/util.c:921
 msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1  への入力が不正です"
 
-#: src/main/util.c:925
+#: src/main/util.c:927
 msgid "allocation failure in 'mbcsToLatin1'"
 msgstr "'mbcsToLatin1' で割り当てに失敗しました"
 
-#: src/main/util.c:928
+#: src/main/util.c:930
 msgid "invalid input in 'mbcsToLatin1'"
 msgstr "'mbcsToLatin1'  への入力が不正です"
 
-#: src/main/util.c:1029
+#: src/main/util.c:1031
 msgid "error message truncated to 255 chars"
 msgstr "エラーメッセージは255文字に切りつめられました"
 
-#: src/main/util.c:1042
+#: src/main/util.c:1044
 msgid "warning message truncated to 255 chars"
 msgstr "警告メッセージは255文字に切り詰められました"
 
@@ -7326,22 +7326,22 @@ msgstr "このプラットフォームでは 'intern=TRUE' は実装されてい
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() はこのシステムでは実装されていません"
 
-#: src/unix/system.c:248
+#: src/unix/system.c:247
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui または -g で，値が指定されていないので無視されました"
 
-#: src/unix/system.c:270
+#: src/unix/system.c:269
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: \"%s\" は未知の gui です。X11 を使います\n"
 
-#: src/unix/system.c:273
+#: src/unix/system.c:272
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: \"%s\" は未知の gui です。何も使いません\n"
 
-#: src/unix/system.c:434
+#: src/unix/system.c:435
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: ファイルリストの最初のみを編集します"
 
