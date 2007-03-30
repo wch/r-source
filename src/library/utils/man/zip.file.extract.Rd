@@ -5,7 +5,7 @@
 zip.file.extract(file, zipname = "R.zip", unzip = getOption("unzip"))
 }
 \arguments{
- \item{file}{A file name. (If a path is given, see \sQuote{Note}.}
+ \item{file}{A file name. (If a path is given, see \sQuote{Note}.)}
  \item{zipname}{The file name (not path) of a \code{zip} archive,
    including the \code{".zip"} extension if required.}
  \item{unzip}{character string: the method to be used, an empty string
