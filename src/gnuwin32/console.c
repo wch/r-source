@@ -56,6 +56,8 @@ extern char *alloca(size_t);
 
 extern UImode  CharacterMode;
 
+static void performCompletion(control c);
+
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 
 static mbstate_t mb_st; /* use for char transpose as well */
@@ -784,13 +786,13 @@ static void storekey(control c,int k)
 
 static int rcompgen_available = -1;
 
-void performCompletion(control c)
+static void performCompletion(control c)
 {
     ConsoleData p = getdata(c);
     int i, alen, max_show = 10, cursor_position = p->c - prompt_wid;
     char *partial_line = LINE(NUMLINES - 1) + prompt_wid;
     char *additional_text;
-    char pline[924], cmd[1024]; /* FIXME: what's a good upper bound? use malloc? */
+    char *pline, *cmd;
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;
 
@@ -818,15 +820,17 @@ void performCompletion(control c)
 	}
     }
 
-    /* FIXME: need to escape quotes properly and check for overflow
-       (or implement this differently, maybe use install() ) */
-    strncpy(pline, partial_line, 923);
+    /* FIXME: need to escape quotes properly */
+    pline = alloca(strlen(partial_line) + 1);
+    strcpy(pline, partial_line);
     /* poor attempt at escaping quotes that sort of works */
     alen = strlen(pline);
     for (i = 0; i < alen; i++)
-        if (pline[i] == '\"') pline[i] = '\'';
-    snprintf(cmd, 1024, "rcompgen:::.win32consoleCompletion(\"%s\", %d)",
-	     pline, cursor_position);
+        if (pline[i] == '"') pline[i] = '\'';
+
+    cmd = alloca(strlen(pline) + 100);
+    sprintf(cmd, "rcompgen:::.win32consoleCompletion(\"%s\", %d)",
+	    pline, cursor_position);
     PROTECT(cmdSexp = mkString(cmd));
     cmdexpr = PROTECT(R_ParseVector(cmdSexp, -1, &status, R_NilValue));
     if (status != PARSE_OK) {
@@ -854,10 +858,12 @@ void performCompletion(control c)
 
     alen = length(VECTOR_ELT(ans, POSSIBLE));
     if (alen) {
-        /* make a copy of the current string first?
-	consolewrites(c, LINE(NUMLINES - 1));
-	consolewrites(c, "\n");
-	*/
+        /* make a copy of the current string first */
+	char *buf1, *p1 = LINE(NUMLINES - 1);
+	buf1 = alloca(strlen(p1) + 1);
+	sprintf(buf1,"%s\n", p1);
+	consolewrites(c, buf1);
+
 	for (i = 0; i < min(alen, max_show); i++) {
 	    consolewrites(c, CHAR(STRING_ELT(VECTOR_ELT(ans, POSSIBLE), i)));
 	    consolewrites(c, "\n");
