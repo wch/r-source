@@ -240,6 +240,7 @@ list("!" = function(e1)
 }
 , "is.object" = FALSE
 , "is.pairlist" = FALSE
+, "is.raw" = FALSE
 , "is.real" = FALSE
 , "is.recursive" = FALSE
 , "is.single" = FALSE
