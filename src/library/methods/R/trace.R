@@ -178,6 +178,16 @@
             .assignOverBinding(what, newFun, whereF, global)
         else
             assign(what, newFun, whereF)
+        if(length(grep("[^.]+[.][^.]+", what)) > 0) { #possible S3 method
+            ## check for a registered version of the object
+            S3MTableName <- ".__S3MethodsTable__."
+            tracedFun <- get(what, envir = whereF, inherits = TRUE)
+            if(exists(S3MTableName, envir = whereF, inherits = FALSE)) {
+                tbl <- get(S3MTableName, envir = whereF, inherits = FALSE)
+                if(exists(what, envir = tbl, inherits = FALSE))
+                  assign(what, tracedFun, envir = tbl)
+            }
+        }
     }
     else {
         if(untrace && is(newFun, "MethodDefinition") &&
