@@ -950,11 +950,11 @@ SEXP attribute_hidden do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     UNPROTECT(2);
-    return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0));
+    return R_subset3_dflt(CAR(ans), STRING_ELT(input, 0), call);
 }
 
 /* used in eval.c */
-SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input)
+SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 {
     SEXP y, nlist;
     int slen;
@@ -1049,10 +1049,10 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input)
       return R_NilValue;
     }
     else if( isVectorAtomic(x) ){
-        warning("$ operator is not valid for atomic vectors, returning NULL");
+        warningcall(call, "$ operator is not valid for atomic vectors, returning NULL");
     }
     else if( IS_S4_OBJECT(x) ){
-        warning("$ operator not defined for this S4 class, returning NULL");
+        warningcall(call, "$ operator not defined for this S4 class, returning NULL");
     }
     UNPROTECT(2);
     return R_NilValue;
