@@ -152,6 +152,8 @@ BUG FIXES
     o	menu.ttest2() in example package 'windlgs' was broken.
 
     o	CHM help is now converted with support for the \encoding{} section.
+    
+    o	etc/Makeconf was being left out of builds of the installer.
 
 
 
