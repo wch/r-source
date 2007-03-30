@@ -228,7 +228,7 @@ function(package, dir, lib.loc = NULL)
                 penv <- parent.env(penv)
             else
                 penv <- parent.env(code_env)
-            if((f %in% methods::getGenerics(penv))
+            if((f %in% .get_S4_generics_really_in_env(penv))
                && !is.null(mlist_from_penv <-
                            methods::getMethodsMetaData(f, penv))) {
                 classes_from_penv <-
@@ -245,10 +245,10 @@ function(package, dir, lib.loc = NULL)
             else
                 character()
         }
-        S4_methods <-
-            sapply(methods::getGenerics(code_env), methodsSignatures)
-        S4_methods <-
-            as.character(unlist(S4_methods, use.names = FALSE))
+        S4_methods <- sapply(.get_S4_generics_really_in_env(code_env),
+                             methodsSignatures)
+        S4_methods <- as.character(unlist(S4_methods, use.names = FALSE))
+        
         ## The bad ones:
         S4_methods <-
             S4_methods[!sapply(S4_methods,
@@ -563,10 +563,9 @@ function(package, dir, lib.loc = NULL,
                 } else
                     formals(fun)
             }
-            lapply(methods::getGenerics(code_env),
+            lapply(.get_S4_generics_really_in_env(code_env),
                    function(f) {
-                       meths <-
-                           methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
+                       meths <- .get_S4_methods_list(f, code_env)
                        sigs <- sapply(methods::slot(meths, "classes"),
                                       paste, collapse = ",")
                        if(!length(sigs)) return()
@@ -1884,9 +1883,8 @@ function(package, dir, file, lib.loc = NULL,
             ## Also check the code in S4 methods.
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
-            for(f in methods::getGenerics(code_env)) {
-                meths <-
-                    methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
+            for(f in .get_S4_generics_really_in_env(code_env)) {
+                meths <- .get_S4_methods_list(f, code_env)
                 bodies <- lapply(methods::slot(meths, "methods"), body)
                 ## Exclude methods inherited from the 'appropriate'
                 ## parent environment.
@@ -1900,7 +1898,7 @@ function(package, dir, file, lib.loc = NULL,
                     penv <- parent.env(penv)
                 else
                     penv <- parent.env(code_env)
-                if((f %in% methods::getGenerics(penv))
+                if((f %in% .get_S4_generics_really_in_env(penv))
                     && !is.null(mlist_from_penv <-
                                 methods::getMethodsMetaData(f, penv))) {
                     classes_from_cenv <-
@@ -2293,14 +2291,14 @@ function(package, dir, lib.loc = NULL)
     } else character(0)
 
     if(.isMethodsDispatchOn()) {
-        S4_generics <- methods::getGenerics(code_env)
+        S4_generics <- .get_S4_generics_really_in_env(code_env)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
         S4_generics <- grep("<-$", S4_generics, value = TRUE)
         bad_S4_replace_methods <-
             sapply(S4_generics,
                    function(f) {
-                       meths <- methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
+                       meths <- .get_S4_methods_list(f, code_env)
                        ind <- !as.logical(sapply(methods::slot(meths,
                                                                "methods"),
                                                  .check_last_formal_arg))
@@ -4058,9 +4056,8 @@ function(package, dir, lib.loc = NULL)
         if(.isMethodsDispatchOn()) {
             ## Also check the code in S4 methods.
             ## This may find things twice.
-            for(f in methods::getGenerics(code_env)) {
-                meths <-
-                    methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
+            for(f in .get_S4_generics_really_in_env(code_env)) {
+                meths <- .get_S4_methods_list(f, code_env)
                 bodies <- lapply(methods::slot(meths, "methods"), body)
                 ## Exclude methods inherited from the 'appropriate'
                 ## parent environment.
@@ -4074,7 +4071,7 @@ function(package, dir, lib.loc = NULL)
                     penv <- parent.env(penv)
                 else
                     penv <- parent.env(code_env)
-                if((f %in% methods::getGenerics(penv))
+                if((f %in% .get_S4_generics_really_in_env(penv))
                     && !is.null(mlist_from_penv <-
                                 methods::getMethodsMetaData(f, penv))) {
                     classes_from_cenv <-
@@ -4297,6 +4294,25 @@ print.check_T_and_F <- function(x, ...) {
     invisible(x)
 }
 
+### .get_S4_generics_really_in_env
+
+.get_S4_generics_really_in_env <-
+function(env)
+    .filter(methods::getGenerics(env),
+            function(g) !is.null(methods::getGeneric(g, where = env)))
+
+.get_S4_methods_list <-
+function(g, env)
+{
+    ## Encapsulate what we used to do:
+    methods::linearizeMlist(methods::getMethodsMetaData(g, env),
+                            FALSE)
+    ## <FIXME>
+    ## Seems that from 2.5.0 on, we could also do
+    ##   methods::listFromMethods(g, env)
+    ## Maybe try this in 2.6.0?
+    ## </FIXME>
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***
