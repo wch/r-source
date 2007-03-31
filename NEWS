@@ -737,6 +737,8 @@ BUG FIXES
 
     o	ansari.test(conf.int=TRUE, exact=FALSE) failed.
 
+    o	rep(length=1, each=0) segfaulted.
+
 
 
 

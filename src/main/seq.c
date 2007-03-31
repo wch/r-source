@@ -385,6 +385,8 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 	len = sum * each;
     }
     PROTECT(ind = allocVector(INTSXP, len));
+    if(len > 0 && each == 0)
+	errorcall(call, _("invalid '%s' argument"), "each");
     if(nt == 1)
 	for(i = 0; i < len; i++) INTEGER(ind)[i] = 1 + ((i/each) % lx);
     else {

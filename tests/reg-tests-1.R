@@ -4670,3 +4670,8 @@ for(i in 1:100) ans[i] <- max.col(x)
 table(ans)
 stopifnot(any(ans != 10))
 ## always gave last in 2.4.1
+
+
+## reg could segfault: Hiroyuki Kawakatsu, R-help, 2007-03-30
+try(rep(each = 0, length.out = 1))
+# segfaulted in 2.4.1
