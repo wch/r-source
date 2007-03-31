@@ -25,6 +25,8 @@ menu.ttest2() in example package 'windlgs' was broken.
 
 CHM help is now converted with support for the \encoding{} section.
 
+etc/Makeconf was being left out of builds of the installer.
+
 
 
 R 2.4.1
@@ -129,8 +131,6 @@ It is possible to select (in MkRules) the type of debug symbol used,
 and this now defaults to 'dwarf-2' (which is more efficient than the
 previous default of 'stabs').  More parts of R are now built with debug
 symbols when DEBUG=T.
-    
-etc/Makeconf was being left out of builds of the installer.
 
 The symbols in graphapp are now remapped to start with GA_, so any
 code making use of graphapp will need to be recompiled.
