@@ -38,9 +38,8 @@ static char RunError[256] = "";
 static char * expandcmd(char *cmd)
 {
     char  c;
-    char *s, *p, *q, *f, *dest, *src;
-    char  fl[MAX_PATH], fn[MAX_PATH];
-    int   d , ext;
+    char *s, *p, *q, *f, *dest, *src, *fl, *fn;
+    int   d , ext, len = strlen(cmd)+1;
 
     if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
 	strcpy(RunError, _("Insufficient memory (expandcmd)"));
@@ -65,7 +64,9 @@ static char * expandcmd(char *cmd)
      if ((*f == '\\') || (*f == '/')) ext = 0;
      else if (*f == '.') ext = 1;
    }
-   /* SearchFile doesn't like \" */
+   /* SearchPath doesn't like \" */
+   fl = alloca(len);
+   fn = alloca(len);
    for ( dest = fl , src = p; *src ; src++)
        if (*src != '\"') *dest++ = *src;
    *dest = '\0';

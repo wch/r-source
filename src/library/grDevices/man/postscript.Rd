@@ -81,7 +81,14 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     closed?  (This only applies if \code{file} is a real file name.)}
   \item{command}{the command to be used for \dQuote{printing}.  Defaults to
     option \code{"printcmd"}; this can also be selected as
-    \code{"default"}.}
+    \code{"default"}. The length limit is \code{2*PATH_MAX},
+#ifdef unix
+    typically 8096 bytes.
+#endif
+#ifdef windows
+    520 bytes.
+#endif
+  }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"rgb"} (the default and the only
     model prior to \R 2.5.0), \code{"rgb-nogray"}, \code{"gray"}
