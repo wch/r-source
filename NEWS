@@ -739,6 +739,9 @@ BUG FIXES
 
     o	rep(length=1, each=0) segfaulted.
 
+    o	postscript() could overflow a buffer if used with a long
+	'command' argument.
+
 
 
 

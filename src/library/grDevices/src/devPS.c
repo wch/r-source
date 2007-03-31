@@ -2184,7 +2184,7 @@ typedef struct {
     double pageheight;	/* page height in inches */
     Rboolean pagecentre;/* centre image on page? */
     Rboolean printit;	/* print page at close? */
-    char command[PATH_MAX];
+    char command[2*PATH_MAX];
     char title[1024];
     char colormodel[30];
 
@@ -3125,7 +3125,7 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 	error(_("invalid foreground/background color (postscript)"));
     }
     pd->printit = printit;
-    if(strlen(cmd) > PATH_MAX - 1) {
+    if(strlen(cmd) > 2*PATH_MAX - 1) {
 	freeDeviceFontList(pd->fonts);
 	freeDeviceCIDFontList(pd->cidfonts);
 	pd->fonts = NULL;
@@ -3536,9 +3536,6 @@ int   Rf_runcmd(char *cmd, int wait, int visible, char *finput);
 #endif
 static void PostScriptClose(NewDevDesc *dd)
 {
-    char buff[PATH_MAX];
-    int err = 0;
-
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptFileTrailer(pd->psfp, pd->pageno);
@@ -3547,6 +3544,15 @@ static void PostScriptClose(NewDevDesc *dd)
     else {
 	fclose(pd->psfp);
 	if (pd->printit) {
+	    char buff[3*PATH_MAX+ 10];
+	    int err = 0;
+	    /* This should not be possible: the command is limited
+	       to 2*PATH_MAX */
+	    if(strlen(pd->command) + strlen(pd->filename) > 3*PATH_MAX) {
+		warning(_("error from postscript() in running:\n    %s"),
+			pd->command);
+		return;
+	    }
 	    strcpy(buff, pd->command);
 	    strcat(buff, " ");
 	    strcat(buff, pd->filename);

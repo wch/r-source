@@ -118,7 +118,10 @@ BUG FIXES
 	
     o	Workaround a Windows' mktime bug that affected the POSIXct to
 	POSIXlt conversion during leap days in leap years prior to
-	1970 in timezones which were on DST at the time. (PR#9572)
+	1970 in timezones which were on DST at the time.  (PR#9572)
+	
+    o	system() could have overflowed a buffer with a very long
+	command line that contained quotes.
 
 
 
