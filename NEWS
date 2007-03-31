@@ -752,10 +752,10 @@ BUG FIXES
 
     o	ansari.test(conf.int=TRUE, exact=FALSE) failed.
 
-    o	trace() now works on S3 registered methods, by modifiying the
-	version in the S3 methds table.
+    o	trace() now works on S3 registered methods, by modifying the
+	version in the S3 methods table.
 
-   o   rep(length=1, each=0) segfaulted.
+    o	rep(length=1, each=0) segfaulted.
 
 
 
