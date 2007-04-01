@@ -27,7 +27,8 @@ USER-VISIBLE CHANGES
 	names, and it may be beneficial to recreate such objects via
 	read.table() or data.frame().
 
-    o	Using $ on an atomic vector now raises a warning.
+    o	Using $ on an atomic vector now raises a warning, as does use
+	on an S4 class for which a method has not been defined.
 
 
 NEW FEATURES
@@ -434,7 +435,10 @@ DEPRECATED & DEFUNCT
     o	Sys.putenv() is now deprecated in favour of Sys.setenv(),
 	following the POSIX recommendation.
 
-    o	Buidling R with --without-iconv is deprecated.
+    o	Building R with --without-iconv is deprecated.
+
+    o	Using $ on an atomic vector is deprecated (it was previously
+	valid and documented to return NULL).
 
 
 INSTALLATION
