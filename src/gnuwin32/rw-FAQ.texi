@@ -1468,19 +1468,19 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2007-02-16
+@set LASTEDIT 2007-04-01
 @ifhtml
 @html
 <hr WIDTH="100%">
 <address>
 Last edited @value{LASTEDIT}: comments to
-<code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
+<code><a href="mailto:R-windows@@R-project.org">R-windows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited @value{LASTEDIT}: comments to <Rwindows@@r-project.org>
+Last edited @value{LASTEDIT}: comments to <R-windows@@r-project.org>
 @end ifinfo
 
 @bye
