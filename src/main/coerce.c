@@ -65,8 +65,7 @@ const static char * const falsenames[] = {
   SEXP __from__ = (from); \
   if (ATTRIB(__from__) != R_NilValue) { \
     SEXP __to__ = (to); \
-    SET_ATTRIB(__to__, duplicate(ATTRIB(__from__))); \
-    if (OBJECT(__from__)) SET_OBJECT(__to__, 1); \
+    (DUPLICATE_ATTRIB)(__to__, __from__);	\
   } \
 } while (0)
 

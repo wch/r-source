@@ -2499,6 +2499,11 @@ void (SET_TYPEOF)(SEXP x, int v) { SET_TYPEOF(x, v); }
 void (SET_NAMED)(SEXP x, int v) { SET_NAMED(x, v); }
 void (SET_TRACE)(SEXP x, int v) { SET_TRACE(x, v); }
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(x, v); }
+void DUPLICATE_ATTRIB(SEXP to, SEXP from) {
+    SET_ATTRIB(to, duplicate(ATTRIB(from)));
+    SET_OBJECT(to, OBJECT(from));
+    IS_S4_OBJECT(from) ?  SET_S4_OBJECT(to) : UNSET_S4_OBJECT(to);
+}
 
 /* S4 object testing */
 int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(x); }
