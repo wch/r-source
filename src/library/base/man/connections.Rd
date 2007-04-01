@@ -259,7 +259,7 @@ isIncomplete(con)
   for no response at all, not for the whole operation.
 }
 \section{Fifos}{
-  Fifos default to non-blocking.  That follows Svr4 and it probably most
+  Fifos default to non-blocking.  That follows Svr4 and is probably most
   natural, but it does have some implications.
   In particular, opening a non-blocking fifo connection for writing
   (only) will fail unless some other process is reading on the fifo.
@@ -324,7 +324,7 @@ isIncomplete(con)
 }
 \references{
   Chambers, J. M. (1998)
-  \emph{Programming with Data. A Guide to the S Language.} Springer.
+  \emph{Programming with Data.  A Guide to the S Language.} Springer.
 }
 
 \seealso{
