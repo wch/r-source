@@ -2363,8 +2363,7 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 			SET_TRACE(s, 1);
 		}
 #endif		
-		SET_ATTRIB(s, duplicate(ATTRIB(CAR(pargs))));
-		SET_OBJECT(s, OBJECT(CAR(pargs)));
+		DUPLICATE_ATTRIB(s, CAR(pargs));
 	    }
 	    if (TAG(pargs) != R_NilValue)
 		havenames = 1;

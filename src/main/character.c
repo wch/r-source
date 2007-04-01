@@ -253,9 +253,8 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	Free(buff);
     }
-    SET_ATTRIB(s, duplicate(ATTRIB(x)));
+    DUPLICATE_ATTRIB(s, x);
     /* This copied the class, if any */
-    SET_OBJECT(s, OBJECT(x));
     UNPROTECT(1);
     return s;
 }
@@ -742,9 +741,8 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if(warn) warningcall(call, _("abbreviate used with non-ASCII chars"));
-    SET_ATTRIB(ans, duplicate(ATTRIB(x)));
+    DUPLICATE_ATTRIB(ans, x);
     /* This copied the class, if any */
-    SET_OBJECT(ans, OBJECT(x));
     DeallocBuffer(&cbuff);
     UNPROTECT(1);
     return(ans);
@@ -1203,9 +1201,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (!fixed_opt) regfree(&reg);
-    SET_ATTRIB(ans, duplicate(ATTRIB(vec)));
+    DUPLICATE_ATTRIB(ans, vec);
     /* This copied the class, if any */
-    SET_OBJECT(ans, OBJECT(vec));
     UNPROTECT(1);
     return ans;
 }
@@ -1621,9 +1618,8 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
                 }
             }
         }
-    SET_ATTRIB(y, duplicate(ATTRIB(x)));
+    DUPLICATE_ATTRIB(y, x);
     /* This copied the class, if any */
-    SET_OBJECT(y, OBJECT(x));
     UNPROTECT(1);
     return(y);
 }
@@ -1956,9 +1952,8 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
             }
         }
 
-    SET_ATTRIB(y, duplicate(ATTRIB(x)));
+    DUPLICATE_ATTRIB(y, x);
     /* This copied the class, if any */
-    SET_OBJECT(y, OBJECT(x));
     UNPROTECT(1);
     return(y);
 }
@@ -2494,9 +2489,8 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
         SET_STRING_ELT(s, i, mkChar2(cbuff.data, STRING_ELT(x, i)));
     }
     if(len > 0) DeallocBuffer(&cbuff);
-    SET_ATTRIB(s, duplicate(ATTRIB(x)));
+    DUPLICATE_ATTRIB(s, x);
     /* This copied the class, if any */
-    SET_OBJECT(s, OBJECT(x));
     UNPROTECT(2);
     return s;
 }

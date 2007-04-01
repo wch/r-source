@@ -54,7 +54,7 @@
     for (__i__ = 0; __i__ < __n__; __i__++) \
       __tp__[__i__] = __fp__[__i__]; \
   } \
-  DUPLICATE_ATTRIB(to, from); \
+  (DUPLICATE_ATTRIB)(to, from);		\
   SET_TRUELENGTH(to, TRUELENGTH(from)); \
   UNPROTECT(2); \
 } while (0)
@@ -65,7 +65,11 @@
    will have been set to by the allocation function */
 #define DUPLICATE_ATTRIB(to, from) do {\
   SEXP __a__ = ATTRIB(from); \
-  if (__a__ != R_NilValue) SET_ATTRIB(to, duplicate1(__a__)); \
+  if (__a__ != R_NilValue) { \
+    SET_ATTRIB(to, duplicate1(__a__)); \
+    SET_OBJECT(to, OBJECT(from)); \
+    IS_S4_OBJECT(from) ? SET_S4_OBJECT(to) : UNSET_S4_OBJECT(to);  \
+  } \
 } while (0)
 
 #define COPY_TAG(to, from) do { \

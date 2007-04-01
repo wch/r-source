@@ -1227,6 +1227,7 @@ static SEXP listRemove(SEXP x, SEXP s)
 	}
     }
     SET_ATTRIB(CDR(a), ATTRIB(x));
+    IS_S4_OBJECT(x) ?  SET_S4_OBJECT(CDR(a)) : UNSET_S4_OBJECT(CDR(a));
     SET_OBJECT(CDR(a), OBJECT(x));
     SET_NAMED(CDR(a), NAMED(x));
     UNPROTECT(2);
@@ -1821,6 +1822,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	if (TAG(x) == nlist) {
 	    if (val == R_NilValue) {
 		SET_ATTRIB(CDR(x), ATTRIB(x));
+		IS_S4_OBJECT(x) ?  SET_S4_OBJECT(CDR(x)) : UNSET_S4_OBJECT(CDR(x));
 		SET_OBJECT(CDR(x), OBJECT(x));
 		SET_NAMED(CDR(x), NAMED(x));
 		x = CDR(x);

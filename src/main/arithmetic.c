@@ -990,8 +990,7 @@ static SEXP math1(SEXP sa, double(*f)(double), SEXP lcall)
     if(naflag)
 	warningcall(lcall, R_MSG_NA);
 
-    SET_ATTRIB(sy, duplicate(ATTRIB(sa)));
-    SET_OBJECT(sy, sao);
+    DUPLICATE_ATTRIB(sy, sa);
     UNPROTECT(2);
     return sy;
 }
@@ -1068,8 +1067,7 @@ SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Note: relying on INTEGER(.) === LOGICAL(.) : */
 	for(i = 0 ; i < n ; i++)
 	    INTEGER(s)[i] = abs(INTEGER(x)[i]);
-	SET_ATTRIB(s, duplicate(ATTRIB(x)));
-	SET_OBJECT(s, OBJECT(x));
+	DUPLICATE_ATTRIB(s, x);
 	UNPROTECT(1);
 	return s;
     }
@@ -1100,7 +1098,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
     if ((na == 0) || (nb == 0))	{		\
         PROTECT(sy = allocVector(REALSXP, 0));	\
         if (na == 0) {				\
-	    SET_ATTRIB(sy, duplicate(ATTRIB(sa)));\
+	    DUPLICATE_ATTRIB(sy, sa);\
 	    SET_OBJECT(sy, sao);		\
         }					\
         UNPROTECT(1);				\
@@ -1147,12 +1145,10 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     UNPROTECT(3)
 
@@ -1442,16 +1438,13 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc,
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     else if (n == nc) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, sco);		\
+	DUPLICATE_ATTRIB(sy, sc);	\
     }						\
     UNPROTECT(4)
 
@@ -1686,20 +1679,16 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd,
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     else if (n == nc) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, sco);		\
+	DUPLICATE_ATTRIB(sy, sc);	\
     }						\
     else if (n == nd) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
-	SET_OBJECT(sy, sdo);		\
+	DUPLICATE_ATTRIB(sy, sd);	\
     }						\
     UNPROTECT(5)
 
@@ -1888,24 +1877,19 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sa)));	\
-	SET_OBJECT(sy, sao);		\
+	DUPLICATE_ATTRIB(sy, sa);	\
     }						\
     else if (n == nb) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sb)));	\
-	SET_OBJECT(sy, sbo);		\
+	DUPLICATE_ATTRIB(sy, sb);	\
     }						\
     else if (n == nc) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sc)));	\
-	SET_OBJECT(sy, sco);		\
+	DUPLICATE_ATTRIB(sy, sc);	\
     }						\
     else if (n == nd) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(sd)));	\
-	SET_OBJECT(sy, sdo);		\
+	DUPLICATE_ATTRIB(sy, sd);	\
     }						\
     else if (n == ne) {				\
-	SET_ATTRIB(sy, duplicate(ATTRIB(se)));	\
-	SET_OBJECT(sy, seo);		\
+	DUPLICATE_ATTRIB(sy, se);	\
     }						\
     UNPROTECT(6)
 
