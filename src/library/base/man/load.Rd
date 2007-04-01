@@ -60,9 +60,9 @@ load("all.Rdata", .GlobalEnv)
 unlink("all.Rdata")
 
 \dontrun{
-con <- url("http://some.where.net/R/data/kprats.rda")
+con <- url("http://some.where.net/R/data/example.rda")
 ## print the value to see what objects were created.
 print(load(con))
-close(con)
+close(con) # url() always opens the connection
 }}
 \keyword{file}
