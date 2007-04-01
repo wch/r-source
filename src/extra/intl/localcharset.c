@@ -61,6 +61,7 @@
 #elif defined WIN32
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+# include <ctype.h> /* for isdigit */
 #endif
 #if defined OS2
 # define INCL_DOS
