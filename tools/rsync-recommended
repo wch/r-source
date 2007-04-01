@@ -49,3 +49,4 @@ fi
     ln -s $i*.tar.gz ${i}.tgz
   done
 )
+exit 0
