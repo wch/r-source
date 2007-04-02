@@ -714,11 +714,17 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 
 If you want to build @R{} from the sources, you will first need to
 collect, install and test an extensive set of tools.  See @ref{The
-Windows toolset} (and perhaps updates in
-@url{http://www.murdoch-sutherland.com/Rtools/,
-@code{www.murdoch-sutherland.com/Rtools}}) for details.
+Windows toolset} (and perhaps updates in @url{http://www.murdoch-
+sutherland.com/Rtools/, @code{www.murdoch-sutherland.com/Rtools}}) for
+details.  
 
-Be sure to set your path in the order given in the appendix.
+The @file{Rtools.exe} executable installer described in @ref{The
+Windows toolset} also includes some additions to the @R{} source as
+noted below. You should run it first, to obtain a working @code{tar}
+and other necessities.  Choose a ``Full installation'', and install
+the extra files into your intended @R{} source directory, e.g.
+@file{C:/R}. The directory name @emph{should not contain spaces}. We
+will call this directory @var{R_HOME} below.
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -728,9 +734,8 @@ You need to collect the following sets of files:
 
 @item
 Get the @R{} source code @file{R-@value{VERSIONno}.tar.gz} from
-@acronym{CRAN}.  Open a command window (or another shell) at a
-directory @emph{whose path does not contain spaces}.  We will call this
-directory @var{R_HOME} below.  Run
+@acronym{CRAN}.  Open a command window (or another shell) at 
+directory @var{R_HOME}, and run
 
 @example
 tar zxvf R-@value{VERSIONno}.tar.gz
@@ -744,30 +749,12 @@ that do not understand about symbolic links.
 It is also possible to obtain the source code using Subversion; see 
 @ref{Obtaining R} for details.
 
-@item
-Extract the international character support file @file{iconv.dll} from
-@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip,
-@code{www.@/murdoch-@/sutherland.com/@/Rtools/@/iconv.zip}} and put it in
-@file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
-
-@item
-The TclTk support files are in
-@url{http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip,
-@code{www.murdoch-sutherland.com/@/Rtools/@/R_Tcl.zip}}: unzip this in
-@var{R_HOME}, and it will add directories @file{@var{R_HOME}/Tcl},
-@file{@var{R_HOME}/Tcl/bin}, etc.
-
-@item
-You need @code{libpng} and @code{jpeg} sources (available, e.g., from
-@url{http://www.libpng.org, @code{www.libpng.org}},
-@url{ftp://ftp.uu.net/graphics/}[png,jpeg].  You will need files
-@file{libpng-1.2.8.tar.gz} and @file{jpegsrc.v6b.tar.gz} or later.
 
 @item
 If you are not using a tarball you need to obtain copies of the
 recommended packages from @acronym{CRAN}.  Put the @file{.tar.gz} files
 in @file{@var{R_HOME}/src/library/Recommended} and run @code{make
-link-recommended}.  If you have @command{rsync} and an Internet
+link-recommended}.  If you have an Internet
 connection, you can do this automatically using
 
 @example
@@ -806,6 +793,48 @@ using @code{LAPACK_LIBS} built under that setting.
 There used to be support for Kazushige Goto's BLAS, but this is no
 longer available in binary form for Windows, and it seems that it will
 in future only to be offered via a source-code licence.
+
+@end itemize
+
+The following additional items are normally installed by @file{Rtools.exe}.
+If instead you choose to do a completely manual build, you will also need
+
+@itemize
+
+@item
+Extract the international character support file @file{iconv.dll} from
+@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip,
+@code{www.@/murdoch-@/sutherland.com/@/Rtools/@/iconv.zip}} and put it in
+@file{@var{R_HOME}/@/src/@/gnuwin32/@/unicode}.
+
+@item
+The Tcl/Tk support files are in
+@url{http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip,
+@code{www.murdoch-sutherland.com/@/Rtools/@/R_Tcl.zip}}: unzip this in
+@var{R_HOME}, and it will add directories @file{@var{R_HOME}/Tcl},
+@file{@var{R_HOME}/Tcl/bin}, etc.
+
+@item
+You need @code{libpng} and @code{jpeg} sources (available, e.g., from
+@url{http://www.libpng.org, @code{www.libpng.org}},
+@url{ftp://ftp.uu.net/graphics/}[png,jpeg].  You will need files
+@file{libpng-1.2.8.tar.gz} and @file{jpegsrc.v6b.tar.gz} or later.
+
+Working in the directory @file{@var{R_HOME}
+/src/gnuwin32/bitmap}, install the @code{libpng} and
+@code{jpeg} sources in sub-directories.  The @code{libpng} sub-directory must
+be named @file{libpng} (as required by the @code{libpng}
+documentation).  The @code{jpeg} sub-directory for version 6b is named
+@file{jpeg-6b}; if you use a different version, edit @file{Makefile}
+and change the definition of @code{JPEGDIR}.
+
+Example:
+
+@example
+> tar xzvf libpng-1.2.8.tar.gz
+> mv libpng-1.2.8 libpng
+> tar xzvf jpegsrc.v6b.tar.gz
+@end example
 
 @end itemize
 
@@ -871,24 +900,11 @@ and have to be restarted.
 @subsection Building the bitmap files
 @cindex Rbitmap.dll
 
-The file @file{@var{R_HOME}/bin/Rbitmap.dll} is not built automatically.
-Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
-install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{libpng} sub-directory must be named @file{libpng} (as required
-by the @code{libpng} documentation).  The @code{jpeg} sub-directory for
-version 6b is named @file{jpeg-6b}; if you use a different version, edit
-@file{Makefile} and change the definition of @code{JPEGDIR}.
+The file @file{@var{R_HOME}/bin/Rbitmap.dll} is not built
+automatically.  
 
-Example:
-
-@example
-> tar xzvf libpng-1.2.8.tar.gz
-> mv libpng-1.2.8 libpng
-> tar xzvf jpegsrc.v6b.tar.gz
-@end example
-
-Once everything is set up in directory @file{bitmap}, @code{make}
-in that directory or @code{make bitmapdll} in the parent directory
+Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap}
+or @code{make bitmapdll} in @file{@var{R_HOME}/src/gnuwin32}
 should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 
 @node Checking the build, Building the manuals, Building the bitmap files, Building from source
@@ -3773,15 +3789,14 @@ substitute for the Java search.
 @node The Windows toolset, Function and variable index, Enabling search in HTML help, Top
 @appendix The Windows toolset
 
-If you want to build @R{} from the sources in Windows, you will need to
-collect, install and test an extensive set of tools.  See
-@url{http://www.murdoch-sutherland.com/Rtools/,
-@code{www.murdoch-sutherland.com/Rtools}} for the current locations and
-other updates to these instructions.
+If you want to build @R{} or add-on packages from source in Windows,
+you will need to collect, install and test an extensive set of tools.
+See @url{http://www.murdoch-sutherland.com/Rtools/, @code{www.murdoch-
+sutherland.com/Rtools}} for the current locations and other updates to
+these instructions.  (Most Windows users will not need to build add-on
+packages from source; see @ref{Add-on packages} for details.)
 
-Some of these tools are also necessary for building add-on packages from
-source.  (Most Windows users will not need to do that; see @ref{Add-on
-packages} for details.)  We have found that the build process for @R{}
+We have found that the build process for @R{}
 is quite sensitive to the choice of tools: please follow our
 instructions @strong{exactly}, even to the choice of particular versions
 of the tools.  The build process for add-on packages is somewhat more
@@ -3792,15 +3807,22 @@ substituting other tools once you are familiar with the process.
 here as a result of bitter experience.  Please do not report problems
 to R-help unless you have followed all the prescriptions.}
 
-You will certainly need the following items to produce a working copy
-of @R{}.  See the subsections below for detailed descriptions.
+We have collected some of the necessary tools (unfortunately not all,
+due to license or size limitations) into an executable installer named
+@file{Rtools.exe}, available from @url{http://www.murdoch-
+sutherland.com/Rtools}. You should download and run it, choosing the
+default ``Package authoring installation'' to build add-on packages,
+or the ``full installation'' if you intend to build @R{}.
+
+You will need the following items to build @R{} and packages.
+See the subsections below for detailed descriptions.
 @itemize
-@item
-The command line tools
 @item
 Perl
 @item
-The MinGW compilers
+The command line tools (in @file{Rtools.exe})
+@item
+The MinGW compilers (in @file{Rtools.exe})
 @end itemize
 For building simple packages containing data or @R{} source
 but no compiled code, only the first two of these are needed.
@@ -3817,15 +3839,23 @@ The Microsoft @HTML{} Help Workshop
 The Inno Setup installer
 @end itemize
 
-Your path should include @file{.} first, then the @file{bin} directories
-of the tools, Perl, MinGW, and @LaTeX{}, as well as the Help Workshop
+It is important to set your @env{PATH} properly.
+Your @env{PATH} may include @file{.} first, then the @file{bin} directories
+of the tools, Perl, MinGW and @LaTeX{}, as well as the Help Workshop
 directory.  Do not use filepaths containing spaces or on network shares
 (starting @code{\\}): you can always use the short forms (found by
-@code{dir /x} at the Windows command line).  It is essential that the
-directory containing the command line tools comes first or second in the
-path: there are typically like-named tools in other directories, and
-they will @strong{not} work.  The ordering of the other directories is
-less important, but if in doubt, use the order above.
+@code{dir /x} at the Windows command line).  For example, all on one line,
+
+@example
+PATH=c:\Rtools\bin;c:\perl\bin;c:\Rtools\MinGW\bin;c:\texmf\miktex\bin;
+     c:\progra~1\htmhe~1;c:\R\bin;c:\windows;c:\windows\system32
+@end example
+
+It is essential that the directory containing the command line tools
+comes first or second in the path: there are typically like-named
+tools in other directories, and they will @strong{not} work.  The
+ordering of the other directories is less important, but if in doubt,
+use the order above.
 
 Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate
 paths as needed and to set the type(s) of help that you want built.
@@ -3838,32 +3868,97 @@ Our toolset contains copies of Cygwin DLLs that may conflict with other
 ones on your system if both are in the path at once.  The normal
 recommendation is to delete the older ones; however, at one time we
 found our tools did not work with a newer version of the Cygwin DLLs, so
-it is safest not to have any other version of the Cygwin DLLs in your
+it may be safest not to have any other version of the Cygwin DLLs in your
 path.
 
 @menu
-* The command line tools::      
 * Perl::                        
-* The MinGW compilers::         
 * The Microsoft HTML Help Workshop::  
 * LaTeX::                       
-* The Inno Setup installer::    
+* The Inno Setup installer:: 
+* The command line tools::
+* The MinGW compilers::    
 @end menu
 
-@node The command line tools, Perl, The Windows toolset, The Windows toolset
+@node Perl, The Microsoft HTML Help Workshop, The Windows toolset, The Windows toolset
+@section Perl
+
+You will need the Windows port of @code{perl5}.  A package containing
+this is available from
+@url{http://www.activestate.com/Products/ActivePerl/,
+@code{www.activestate.com/@/Products/@/ActivePerl}}.  Perl is @emph{not}
+included in @file{Rtools.exe}.
+
+@strong{Beware}: you do need the @emph{Windows} port and not the Cygwin one.
+
+@node The Microsoft HTML Help Workshop, LaTeX, Perl, The Windows toolset
+@section The Microsoft @HTML{} Help Workshop
+
+To make compiled html (@file{.chm}) files you will need the Microsoft
+@HTML{} Help Workshop, currently available for download at
+@url{http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp,
+@code{msdn.microsoft.com/@/library/@/en-us/@/htmlhelp/@/html/@/hwmicrosofthtmlhelpdownloads.asp}}
+and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm,
+@code{www.microsoft.com/@/office/@/ork/@/xp/@/appndx/@/appa06.htm}}.  
+This is @emph{not} included in @file{Rtools.exe}.
+
+You may need this on the same drive as the other tools.  (Although we
+regularly use it on a different, problems have been reported in the
+past.)
+
+To skip building compiled html help, set @code{WINHELP=NO} in @file{MkRules}.
+In this case the Help Workshop will not be needed.
+
+@node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
+@section @LaTeX{}
+
+The @samp{MiKTeX} (@url{http://www.miktex.org, @code{www.miktex.org}})
+distribution of @LaTeX{} includes a suitable port of @code{pdftex}, as
+does the @samp{ProText} (@url{http://www.tug.org/protext/,
+@code{www.tug.org/@/protext}}) enhanced version.  We have also used the
+@samp{fptex} distribution (available from any CTAN node such as
+@url{http://www.ctan.org/tex-archive/systems/windows/fptex/,
+@code{www.ctan.org/@/tex-archive/@/systems/@/windows/@/fptex}} and as part of
+TexLive 2005 (@url{http://www.tug.org/texlive/,
+@code{www.tug.org/@/texlive}})).  Another actively-maintained version is
+available from @url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/,
+@code{www.fsci.fuk.kindai.ac.jp/@/kakuto/@/win32-ptex}}.  The @file{Rtools.exe}
+installer does @emph{not} include either version of @LaTeX{}.
+
+@enindex R_RD4DVI
+@enindex R_RD4PDF
+Please read @ref{Making the manuals} about how to make @file{refman.pdf}
+and set the environment variables @env{R_RD4DVI} and @env{R_RD4PDF}
+suitably; ensure you have the required fonts installed.
+
+@node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
+@section The Inno Setup installer
+
+To make the installer package (@file{@value{RWVERSION}.exe}) we require
+Inno Setup 5.1.7 or later from @url{http://jrsoftware.org,
+@code{jrsoftware.org}}.  This is @emph{not} included in @file{Rtools.exe}.
+
+Edit file @file{src/gnuwin32/MkRules} and change @code{ISDIR} to the
+location where Inno Setup was installed.
+
+@node The command line tools, The MinGW compilers, The Inno Setup installer, The Windows toolset
 @section The command line tools
 
-You will need suitable versions of at least @code{basename}, @code{cat},
-@code{cmp}, @code{comm}, @code{cp}, @code{cut}, @code{diff}, @code{echo},
+This item and the next are installed by the @file{Rtools.exe} installer.
+
+If you choose to install these yourself, you will need suitable
+versions of at least @code{basename}, @code{cat}, @code{cmp},
+@code{comm}, @code{cp}, @code{cut}, @code{diff}, @code{echo},
 @code{egrep}, @code{expr}, @code{find}, @code{gawk}, @code{grep},
 @code{gzip}, @code{head}, @code{ls}, @code{make}, @code{makeinfo},
-@code{mkdir}, @code{mv}, @code{rm}, @code{sed}, @code{sh}, @code{sort},
-@code{texindex} and @code{touch}; we use those from the Cygwin
-distribution (@url{http://www.cygwin.com, @code{www.cygwin.com}}) or
-compiled from the sources.  You will also need @code{zip} and
-@code{unzip} from the Info-ZIP project (@url{http://www.info-zip.org,
-@code{www.info-zip.org}}).  We have packaged a set of all of these tools
-at @url{http://www.murdoch-sutherland.com/Rtools/tools.zip,
+@code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed},
+@code{sh}, @code{sort}, @code{texindex} and @code{touch}; we use those
+from the Cygwin distribution (@url{http://www.cygwin.com,
+@code{www.cygwin.com}}) or compiled from the sources.  You will also
+need @code{zip} and @code{unzip} from the Info-ZIP project
+(@url{http://www.info-zip.org, @code{www.info-zip.org}}).  All of
+these tools are in @file{Rtools.exe}; they are also available at
+@url{http://www.murdoch-sutherland.com/Rtools/tools.zip,
 @code{www.murdoch-sutherland.com/@/Rtools/@/tools.zip}}.
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
@@ -3873,23 +3968,17 @@ frustration, please use our tool set, and make sure it is at the front
 of your path (including before the Windows system directories).  If you
 are using a Windows shell, type @code{PATH} at the prompt to find out.
 
-@node Perl, The MinGW compilers, The command line tools, The Windows toolset
-@section Perl
-
-You will need the Windows port of @code{perl5}.  A package containing
-this is available from
-@url{http://www.activestate.com/Products/ActivePerl/,
-@code{www.activestate.com/@/Products/@/ActivePerl}}.
-
-@strong{Beware}: you do need the @emph{Windows} port and not the Cygwin one.
-
-@node The MinGW compilers, The Microsoft HTML Help Workshop, Perl, The Windows toolset
+@node The MinGW compilers, , The command line tools, The Windows toolset
 @section The MinGW compilers
 
-You need a recent version of the MinGW port of @command{gcc} from
-@url{http://sourceforge.net/project/showfiles.php?group_id=2435} (the
+The @file{Rtools.exe} installer includes the currently used version of
+the MinGW port of @command{gcc} from
+@url{http://sourceforge.net/project/showfiles.php?group_id=2435}.  
+
+If you would like to install your own copy, we recommed downloading
+from the URL above, as the
 download links from @url{www.mingw.org} currently lead to obsolete
-versions).  See the notes on
+versions. See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
@@ -3930,53 +4019,6 @@ Fortran 90 compiler is available via @url{http://www.g95.org,
 @code{www.g95.org}}.)
 
 
-@node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
-@section The Microsoft @HTML{} Help Workshop
-
-To make compiled html (@file{.chm}) files you will need the Microsoft
-@HTML{} Help Workshop, currently available for download at
-@url{http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp,
-@code{msdn.microsoft.com/@/library/@/en-us/@/htmlhelp/@/html/@/hwmicrosofthtmlhelpdownloads.asp}}
-and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm,
-@code{www.microsoft.com/@/office/@/ork/@/xp/@/appndx/@/appa06.htm}}.
-
-You may need this on the same drive as the other tools.  (Although we
-regularly use it on a different, problems have been reported in the
-past.)
-
-To skip building compiled html help, set @code{WINHELP=NO} in @file{MkRules}.
-In this case the Help Workshop will not be needed.
-
-@node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
-@section @LaTeX{}
-
-The @samp{MiKTeX} (@url{http://www.miktex.org, @code{www.miktex.org}})
-distribution of @LaTeX{} includes a suitable port of @code{pdftex}, as
-does the @samp{ProText} (@url{http://www.tug.org/protext/,
-@code{www.tug.org/@/protext}}) enhanced version.  We have also used the
-@samp{fptex} distribution (available from any CTAN node such as
-@url{http://www.ctan.org/tex-archive/systems/windows/fptex/,
-@code{www.ctan.org/@/tex-archive/@/systems/@/windows/@/fptex}} and as part of
-TexLive 2005 (@url{http://www.tug.org/texlive/,
-@code{www.tug.org/@/texlive}})).  Another actively-maintained version is
-available from @url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/,
-@code{www.fsci.fuk.kindai.ac.jp/@/kakuto/@/win32-ptex}}.
-
-@enindex R_RD4DVI
-@enindex R_RD4PDF
-Please read @ref{Making the manuals} about how to make @file{refman.pdf}
-and set the environment variables @env{R_RD4DVI} and @env{R_RD4PDF}
-suitably; ensure you have the required fonts installed.
-
-@node The Inno Setup installer,  , LaTeX, The Windows toolset
-@section The Inno Setup installer
-
-To make the installer package (@file{@value{RWVERSION}.exe}) we require
-Inno Setup 5.1.7 or later from @url{http://jrsoftware.org,
-@code{jrsoftware.org}}.
-
-Edit file @file{src/gnuwin32/MkRules} and change @code{ISDIR} to the
-location where Inno Setup was installed.
 
 
 @node Function and variable index, Concept index, The Windows toolset, Top

@@ -106,6 +106,10 @@ OTHERS
     o	Packages can have a 'cleanup.win' script to cleanup after
 	configure etc.
 
+    o	The toolset described in the R Installation and Administration
+	manual for building on Windows is now partially available in
+	an executable installer.
+
 
 BUG FIXES
 
