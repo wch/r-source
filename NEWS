@@ -16,9 +16,8 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	$ on an atomic vector now gives a warning that it is
-	'not valid'.
-
+    o	$ on an atomic vector now gives a warning that it is 'invalid'.
+	It remains deprecated, but may be removed in 2.7.0.
 
 
 

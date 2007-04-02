@@ -1657,7 +1657,7 @@ pairlists.  It allows only a literal character string or a symbol as the
 index.  That is, the index is not computable: for cases where you need
 to evaluate an expression to find the index, use @code{x[[expr]]}.  When
 @code{$} is applied to a non-recursive object the result is always
-@code{NULL}.
+@code{NULL}: as from @R{} 2.5.0 this is deprecated and will give a warning.
 
 @menu
 * Indexing by vectors::         
