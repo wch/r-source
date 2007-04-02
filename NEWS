@@ -749,9 +749,11 @@ BUG FIXES
     o	postscript() could overflow a buffer if used with a long
 	'command' argument.
 
-    o  The internal computations to copy complete attribute lists did
-        not copy the flag marking S4 objects, so the copies no longer
-        behaved like S4 objects.
+    o	The internal computations to copy complete attribute lists did
+	not copy the flag marking S4 objects, so the copies no longer
+	behaved like S4 objects.
+
+
 
 
 	**************************************************
