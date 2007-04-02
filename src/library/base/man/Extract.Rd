@@ -68,7 +68,8 @@ x$name
   matrices/arrays and for recursive (list-like, see
   \code{\link{is.recursive}}) objects.  \code{$} returns \code{NULL}
   (with a warning) except for recursive objects, and is only discussed
-  in the section below on recursive objects.
+  in the section below on recursive objects.  Its use on non-recursive
+  objects was deprecated in \R 2.5.0.
 
   Subsetting (except by an empty index) will drop all attributes except
   \code{names}, \code{dim} and \code{dimnames}.
