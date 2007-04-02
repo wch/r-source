@@ -2547,7 +2547,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     n = globbuf.gl_pathc;
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
-	SET_STRING_ELT(ans, i, mkChar2(globbuf.gl_pathv[i], STRING_ELT(x, i)));
+	SET_STRING_ELT(ans, i, mkChar(globbuf.gl_pathv[i]));
     UNPROTECT(1);
     globfree(&globbuf);
     return ans;
