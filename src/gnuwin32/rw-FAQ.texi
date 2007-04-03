@@ -1225,12 +1225,12 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 
 See the `R Installation and Administration' manual.
 
-Note that building under Windows 64 is not supported as no suitable
+Note that building for Windows 64 is not supported as no suitable
 non-commercial compiler is yet available.  There is a glimmer of hope
 that this will change in the not too far distance future: see
-@url{http://sourceforge.net/mailarchive/forum.php?thread_id=30624855&forum_id=5119}.
+@url{http://sourceforge.net/mailarchive/forum.php?thread_name=460D8FC1.64E689DB%40dessent.net&forum_name=mingw-users}
 You are of course welcome to try a commercial compiler, but we will not
-be distributing a port for which users cannot easily add packages.
+be distributing a port to which users cannot easily add packages.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
