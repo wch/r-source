@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-04-03 11:43\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1156,6 +1156,15 @@ msgstr ""
 
 msgid "invalid index for function argument"
 msgstr "함수 인수를 위한 무효의 인덱스"
+
+msgid "Need a definition for the method here"
+msgstr ""
+
+msgid "Skeleton of method written to"
+msgstr ""
+
+msgid "connection"
+msgstr ""
 
 msgid ""
 "Invalid object in meta table of methods for \"%s\", label \"%s\", had class "

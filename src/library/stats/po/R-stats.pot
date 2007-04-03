@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-04-03 11:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -494,13 +494,10 @@ msgstr ""
 msgid "numeric contrasts or contrast name expected"
 msgstr ""
 
-msgid "contrasts not defined for 0 degrees of freedom"
+msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
 
 msgid "baseline group number out of range"
-msgstr ""
-
-msgid "not enough degrees of freedom to define contrasts"
 msgstr ""
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"

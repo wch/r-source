@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:00\n"
+"POT-Creation-Date: 2007-04-03 11:43\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -939,6 +939,15 @@ msgstr "类别\"%s\"里的槽必需擴充类别\"%s\"中相应的槽：%s出了�
 
 msgid "invalid index for function argument"
 msgstr "函数变元的索引不对"
+
+msgid "Need a definition for the method here"
+msgstr ""
+
+msgid "Skeleton of method written to"
+msgstr ""
+
+msgid "connection"
+msgstr ""
 
 msgid ""
 "Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
