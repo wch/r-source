@@ -4008,6 +4008,11 @@ contributed packages, and @code{gcc-3.4.5} is needed to get a correct
 build of @R{} itself.  (The `Snapshot'
 @code{binutils-2.17.50-20070129-1.tar.gz} has also be used.)
 
+Note that there are known problems with using this compiler set (and all
+others available at the time of writing) on Windows Vista
+(@url{http://www.nabble.com/environment-hosed-during-upgrade-tf3305745.html#a9195667}
+and that some updates are needed (see the URL above).
+
 During the lifetime of this release of @R{} it is likely that
 @command{gcc 4.2.0} and an official MinGW build will be released.
 Unofficial builds from the @code{gcc} trunk were working in April 2007,
