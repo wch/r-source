@@ -32,7 +32,7 @@ fi
   ## exclude patterns from .cvsignore without a way to override, so we
   ## try using an exclude pattern.
 
-  rsync -rcIz --verbose --delete --include="*.tar.gz" \
+  rsync -rcIz --timeout=60 --verbose --delete --include="*.tar.gz" \
     --exclude=Makefile.in --exclude=Makefile --exclude=".svn" \
     --exclude="CVS*" --exclude=.cvsignore --exclude="*.tgz" \
     "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ . || \
@@ -49,3 +49,4 @@ fi
     ln -s $i*.tar.gz ${i}.tgz
   done
 )
+exit 0
