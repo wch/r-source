@@ -11,13 +11,16 @@
 
 NEW FEATURES
 
-    o	<None as yet>
+    o	The Unix-alike readline terminal interface now does
+	command-completion for R objects if package 'rcompgen' is
+	installed, based on the former package 'rcompletion'.
+	[This may be moved to R 2.5.0 prior to its feature freeze.]
 
 
 DEPRECATED & DEFUNCT
 
     o	$ on an atomic vector now gives a warning that it is 'invalid'.
-	It remains deprecated, but may be removed in 2.7.0.
+	It remains deprecated, but may be removed in R >= 2.7.0.
 
 
 
