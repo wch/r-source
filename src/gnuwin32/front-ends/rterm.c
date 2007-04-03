@@ -40,6 +40,7 @@ __declspec(dllimport) extern char *R_HistoryFile;
 
 extern char *getDLLVersion();
 extern void saveConsoleTitle();
+extern void R_gl_tab_set(void);
 
 static char Rversion[25];
 char *getRVersion()
@@ -71,6 +72,7 @@ int AppMain (int argc, char **argv)
     GA_initapp(0, NULL);
     readconsolecfg();
     if(R_Interactive) {
+	R_gl_tab_set();
 	gl_hist_init(R_HistorySize, 1);
 	if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
 	saveConsoleTitle();

@@ -618,7 +618,7 @@ getline(char *prompt, char *buf, int buflen)
                 if (gl_tab_hook) {
 		    tmp = gl_pos;
 	            loc = gl_tab_hook(gl_buf, gl_strlen(gl_prompt), &tmp);
-	            if (loc >= 0 || tmp != gl_pos)
+	            if (loc != -1 || tmp != gl_pos)
 	                gl_fixup(gl_prompt, loc, tmp);
                 }
 		break;
