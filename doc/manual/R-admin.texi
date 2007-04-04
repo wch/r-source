@@ -2016,9 +2016,9 @@ Core 3 and SuSE 9.x Linux this meant the @samp{xorg-x11-devel} and
 explicitly configure @R{} without X11, using @option{--with-x=no}.
 
 The command-line editing depends on the @code{readline} library
-available from any @acronym{GNU} mirror: you will need a fairly recent
-version.  Otherwise you will need to configure with
-@option{--with-readline=no} (or equivalent).
+available from any @acronym{GNU} mirror: version 4.2 or later is
+needed for all the features to be enabled.  Otherwise you will need to
+configure with @option{--with-readline=no} (or equivalent).
 
 The use of multi-byte characters, conversion between encodings
 (including for translated messages) and the @R{} @code{iconv} function
