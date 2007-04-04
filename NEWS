@@ -106,10 +106,10 @@ NEW FEATURES
     o	deparse() and dput() now include "keepInteger" and "keepNA" in
 	their defaults for the 'control' argument.
 
-    o   detach() now takes another argument, unload, which indicates
-        whether or not to unload the package and then only cleans
-        up the S4 methods if the package successfully unloads.
-        
+    o	detach() now takes another argument, unload, which indicates
+	whether or not to unload the package and then only cleans
+	up the S4 methods if the package successfully unloads.
+
     o	There are new constants NA_integer_, NA_real_, NA_complex_ and
 	NA_character_ to denote NAs of those types, and they will be
 	used in deparsing in place of as.integer(NA) etc unless
