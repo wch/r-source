@@ -493,6 +493,9 @@
 /* Define to 1 if you have the `rint' function. */
 #define HAVE_RINT 1
 
+/* Define to 1 if you have the `rl_completion_matches' function. */
+/* #undef HAVE_RL_COMPLETION_MATCHES */
+
 /* Define to 1 if you have the `setenv' function. */
 /* #undef HAVE_SETENV */
 

@@ -22325,14 +22325,6 @@ else
 fi
 eval "export ${shlibpath_var}"
 
-## Yes, we already need this at configure time ...
-#case "${host_os}" in
-#  aix*)
-#    #LIBS="-lc ${LIBS}"
-#    LIBR="-lc ${LIBR}"
-#    ;;
-#esac
-
 ## record how to strip shared/dynamic libraries.
 ltout=`./libtool --config | grep '^striplib='`
 eval "${ltout}"
@@ -23460,6 +23452,77 @@ done
     { { echo "$as_me:$LINENO: error: --with-readline=yes (default) and headers/libs are not available" >&5
 echo "$as_me: error: --with-readline=yes (default) and headers/libs are not available" >&2;}
    { (exit 1); exit 1; }; }
+  else
+
+for ac_func in rl_completion_matches
+do
+as_ac_Symbol=`echo "ac_cv_have_decl_$ac_func" | $as_tr_sh`
+{ echo "$as_me:$LINENO: checking whether $ac_func exists and is declared" >&5
+echo $ECHO_N "checking whether $ac_func exists and is declared... $ECHO_C" >&6; }
+if { as_var=$as_ac_Symbol; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <stdio.h>
+#include <readline/readline.h>
+
+
+int
+main ()
+{
+#ifndef $ac_func
+  char *p = (char *) $ac_func;
+#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && {
+	 test -z "$ac_c_werror_flag" ||
+	 test ! -s conftest.err
+       } && test -s conftest$ac_exeext &&
+       $as_test_x conftest$ac_exeext; then
+  eval "$as_ac_Symbol=yes"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	eval "$as_ac_Symbol=no"
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+      conftest$ac_exeext conftest.$ac_ext
+fi
+ac_res=`eval echo '${'$as_ac_Symbol'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+if test `eval echo '${'$as_ac_Symbol'}'` = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_func" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+done
+
   fi
 fi
 
@@ -28492,7 +28555,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:28495: \"$ac_link\") >&5
+(eval echo $as_me:28558: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28575,7 +28638,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:28578: \"$ac_link\") >&5
+(eval echo $as_me:28641: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -31095,13 +31158,6 @@ fi
 
       fi
     fi
-    ## need /lib/crt0_64.o on 64-bit AIX: see comments in R-admin.
-    ## !!COMMENT!! If MAIN_LD is ld, it is necessary.
-    #if test "x${OBJECT_MODE}" = "x64"; then
-    #   R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0_64.o])
-    #else
-    #   R_SH_VAR_ADD(R_XTRA_LIBS, [/lib/crt0.o])
-    #fi
     ;;
   cygwin*|mingw*|windows*|winnt)
     cat >>confdefs.h <<\_ACEOF
