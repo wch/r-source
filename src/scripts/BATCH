@@ -27,7 +27,7 @@ Options:
 Further arguments starting with a '-' are considered as options as long
 as '--' was not encountered, and are passed on to the R process, which
 by default is started with '$opts'.
-See also help(BATCH) inside R.
+See also help('BATCH') inside R.
 
 Report bugs to <r-bugs@r-project.org>."
 
