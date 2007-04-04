@@ -28,6 +28,13 @@ USER-VISIBLE CHANGES
     o	Using $ on an atomic vector now raises a warning, as does use
 	on an S4 class for which a method has not been defined.
 
+    o	The Unix-alike readline terminal interface now does
+	command-completion for R objects, incorporating the
+	functionality formerly in package 'rcompletion' by Deepayan
+	Sarkar.  This can be disabled by setting the environment
+	variable R_COMPLETION=FALSE when starting R (e.g. in
+	~/.Renviron).
+
 
 NEW FEATURES
 
@@ -545,11 +552,17 @@ UTILITIES
     o	Rdiff now converts CRLF endings in the target file, and
 	converts UTF-8 single quotes in either to ASCII quotes.
 
-    o	New recommended package 'codetools' provides code-analysis
-	tools.  This can optionally be used by 'R CMD check' to detect
-	problems, especially symbols which are not visible.
+    o	New recommended package 'codetools' by Luke Tierney provides
+	code-analysis tools.  This can optionally be used by 'R CMD
+	check' to detect problems, especially symbols which are not
+	visible.
 
     o	R CMD config now knows about LIBnn .
+
+    o	New recommended package 'rcompgen' by Deepayan Sarkar
+	provides support for command-line completion under the Unix
+	terminal interface (provided readline is enabled) and the
+	Windows Rgui and Rterm front ends.
 
 
 BUG FIXES
