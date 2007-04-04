@@ -3609,8 +3609,9 @@ FLIBS="-L/opt/ofort90/lib -lhf90vecmath -lhf90math -lf90"
 @end example
 
 The AIX native @code{iconv} does not support encodings @samp{latin1} nor
-@samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
-could be installed.)
+@samp{""} and so cannot be used.  (GNU @code{libiconv} appears to
+conflict with the native iconv which is used by X11.)
+
 
 @node New platforms,  , AIX, Platform notes
 @section New platforms

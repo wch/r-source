@@ -34,6 +34,8 @@ USER-VISIBLE CHANGES
 	Sarkar.  This can be disabled by setting the environment
 	variable R_COMPLETION=FALSE when starting R (e.g. in
 	~/.Renviron).
+	[This needs package 'rcompgen' to be installed: it will
+	shortly become a recommended package.]
 
 
 NEW FEATURES
@@ -563,6 +565,7 @@ UTILITIES
 	provides support for command-line completion under the Unix
 	terminal interface (provided readline is enabled) and the
 	Windows Rgui and Rterm front ends.
+	[Awaiting installation on CRAN.]
 
 
 BUG FIXES
