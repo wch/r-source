@@ -8957,7 +8957,18 @@ set to @samp{"\n\0"} to preserve sanity.  If @var{hist} is non-zero,
 then the line should be added to any command history which is being
 maintained.  The return value is 0 on success and >0 on failure.
 
-@code{R_WriteConsoleEx} writes the given buffer to the console, @var{otype} specifies the output type (regular output or warning/error). Call to @code{R_WriteConsole(buf, buflen)} is equivalent to @code{R_WriteConsoleEx(buf, buflen, 0)}. To ensure backward compatibility of the callbacks, @code{ptr_R_WriteConsoleEx} is used only if @code{ptr_R_WriteConsole} is set to @code{NULL}.
+@code{R_WriteConsoleEx} writes the given buffer to the console,
+@var{otype} specifies the output type (regular output or
+warning/error). Call to @code{R_WriteConsole(buf, buflen)} is equivalent
+to @code{R_WriteConsoleEx(buf, buflen, 0)}. To ensure backward
+compatibility of the callbacks, @code{ptr_R_WriteConsoleEx} is used only
+if @code{ptr_R_WriteConsole} is set to @code{NULL}.  To ensure that
+@code{stdout()} and @code{stderr()} connections point to the console,
+set the corresponding files to @code{NULL} @emph{via}
+@example
+      R_Outputfile = NULL;
+      R_Consolefile = NULL;
+@end example
 
 @code{R_ResetConsole} is called when the system is reset after an error.
 @code{R_FlushConsole} is called to flush any pending output to the
