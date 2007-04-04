@@ -45,6 +45,11 @@ static int rt_completion(char *buf, int offset, int *loc)
     if(!rcompgen_available) return *loc;
     
     if(rcompgen_available < 0) {
+	char *p = getenv("R_COMPLETION");
+	if(p && strcmp(p, "FALSE") == 0) {
+	    rcompgen_available = 0;
+	    return -1; /* no change */	    
+	}
 	/* First check if namespace is loaded */
 	if(findVarInFrame(R_NamespaceRegistry, install("rcompgen"))
 	   != R_UnboundValue) rcompgen_available = 1;

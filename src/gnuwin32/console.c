@@ -29,10 +29,8 @@ extern Rboolean mbcslocale;
 
 /* Use of strchr here is MBCS-safe */
 
-#ifdef Win32
 #define USE_MDI 1
 extern void R_ProcessEvents(void);
-#endif
 
 #define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
@@ -799,6 +797,11 @@ static void performCompletion(control c)
     if(!rcompgen_available) return;
     
     if(rcompgen_available < 0) {
+	char *p = getenv("R_COMPLETION");
+	if(p && strcmp(p, "FALSE") == 0) {
+	    rcompgen_available = 0;
+	    return;	    
+	}
 	/* First check if namespace is loaded */
 	if(findVarInFrame(R_NamespaceRegistry, install("rcompgen"))
 	   != R_UnboundValue) rcompgen_available = 1;
