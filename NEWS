@@ -130,7 +130,7 @@ NEW FEATURES
     o   detach() now takes another argument, unload, which indicates
         whether or not to unload the package and then only cleans
         up the S4 methods if the package successfully unloads.
-        
+
     o	There are new constants NA_integer_, NA_real_, NA_complex_ and
 	NA_character_ to denote NAs of those types, and they will be
 	used in deparsing in place of as.integer(NA) etc unless
@@ -443,6 +443,9 @@ NEW FEATURES
     o	There have been numerous performance improvements to the data
 	editor on both Windows and X11.	 In particular, resizing the
 	window works much better on X11.
+
+    o	RSiteSearch() now also allows to search postings of the 'R-devel'
+	mailing list.
 
 
 DEPRECATED & DEFUNCT
