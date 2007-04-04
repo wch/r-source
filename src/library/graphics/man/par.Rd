@@ -203,12 +203,9 @@ par(\dots, no.readonly = FALSE)
       annotation relative to the current setting of \code{cex}.
       (Some functions such as \code{\link{points}} accept a vector of values
       which are recycled.  Other uses will take just the first value if
-      a vector of length greater than one is supplied.)  Does not apply
-      to \code{\link{persp}}, where \code{cex} is used.
-    }
+      a vector of length greater than one is supplied.)}
     \item{\code{cex.lab}}{The magnification to be used for x and y
-      labels relative to the current setting of \code{cex}.  Does not apply
-      to \code{\link{persp}}, where \code{cex} is used.}
+      labels relative to the current setting of \code{cex}.}
     \item{\code{cex.main}}{The magnification to be used for main titles
       relative to the current setting of \code{cex}.}
     \item{\code{cex.sub}}{The magnification to be used for sub-titles
