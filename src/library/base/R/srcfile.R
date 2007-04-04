@@ -7,6 +7,8 @@ srcfile <- function(filename, encoding = getOption("encoding")) {
 
     e$wd <- getwd()
     e$filename <- filename
+    
+    # If filename is a URL, this will return NA
     e$timestamp <- file.info(filename)[1,"mtime"]
     e$encoding <- encoding
 
@@ -31,7 +33,8 @@ open.srcfile <- function(con, line, ...) {
 	olddir <- setwd(srcfile$wd)
 	on.exit(setwd(olddir))
 	timestamp <- file.info(srcfile$filename)[1,"mtime"]
-	if (timestamp != srcfile$timestamp) warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
+	if (!is.na(srcfile$timestamp) && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
+	    warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
 	srcfile$conn <- conn <- file(srcfile$filename, open="rt", encoding=srcfile$encoding)
 	srcfile$line <- 1
 	oldline <- 1
