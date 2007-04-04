@@ -108,9 +108,11 @@ persp(x, \dots)
   so that with the standard rotation angles, the top left corner of the
   matrix is displayed at the left hand side, closest to the user.
 
-  The size of the axis labels and the annotations for
-  \code{ticktype="detailed"} are controlled by graphics parameter
-  \code{"cex"}.
+  The sizes and fonts of the axis labels and the annotations for
+  \code{ticktype="detailed"} are controlled by graphics parameters
+  \code{"cex.lab"}/\code{"font.lab"} and
+  \code{"cex.axis"}/\code{"font.axis"} respectively.  (This changed in
+  \R 2.5.0.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

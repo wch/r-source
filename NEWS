@@ -222,6 +222,9 @@ NEW FEATURES
 	"letter"), "a4r" and "USr" (the latter two meaning rotated to
 	landscape).  postscript() also accepts paper = "US".
 
+    o	persp() now respects the graphical pars 'cex.axis', 'cex.lab',
+	'font.axis' and 'font.lab'.
+
     o	New faster internal functions pmax.int() and pmin.int() for
 	inputs which are atomic vectors without classes (called by
 	pmax/pmin where applicable).
