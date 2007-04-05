@@ -15,8 +15,8 @@ storage.mode(x) <- value
 }
 \arguments{
   \item{x}{any \R object.}
-  \item{value}{a character string giving the desired (storage) mode of
-    the object.}
+  \item{value}{a character string giving the desired mode or
+    \sQuote{storage mode} (type) of the object.}
 }
 \details{
   Both \code{mode} and \code{storage.mode} return a character string
@@ -24,21 +24,27 @@ storage.mode(x) <- value
   relying on the output of \code{\link{typeof}(x)}, see the example
   below.
 
-  The two replacement versions are currently identical.  Both
-  \code{mode(x) <- "newmode"} and \code{storage.mode(x) <- "newmode"} change
-  the \code{mode} or \code{storage.mode} of object \code{x} to
+  \code{mode(x) <- "newmode"} changes the \code{mode} of object \code{x} to
   \code{newmode}.  This is only supported if there is an appropriate
   \code{as.newmode} function, for example
   \code{"logical"}, \code{"integer"}, \code{"double"}, \code{"complex"},
   \code{"raw"}, \code{"character"}, \code{"list"}, \code{"expression"},
-  \code{"name"}, \code{"symbol"} and \code{"function"}.
+  \code{"name"}, \code{"symbol"} and \code{"function"}.  Attributes are
+  preserved (but see below).
+
+  \code{storage.mode(x) <- "newmode"} is a more efficient internal
+  version of \code{mode<-}, which works for \code{"newmode"} which is
+  one of the internal types (see \code{\link{typeof}}).  Attributes are
+  preserved.  (Prior to \R 2.6.0 this was identical to the \code{mode}
+  assignment function.  Setting modes \code{"real"} and \code{"single"} is
+  deprecated and will be removed shortly.)
 
   As storage mode \code{"single"} is only a pseudo-mode in \R, it will
   not be reported by \code{mode} or \code{storage.mode}: use
-  \code{attr(object, "Csingle")} to examine this.  However, the
-  replacement versions can be used to set the mode to \code{"single"},
+  \code{attr(object, "Csingle")} to examine this.  However,
+  \code{mode<-} can be used to set the mode to \code{"single"},
   which sets the real mode to \code{"double"} and the \code{"Csingle"}
-  attribute to \code{TRUE}. Setting any other mode will remove this
+  attribute to \code{TRUE}.  Setting any other mode will remove this
   attribute.
 
   Note (in the examples below) that some \code{\link{call}}s have mode

@@ -307,6 +307,7 @@ list("!" = function(e1)
 , "seq_along" = FALSE
 , "seq_len" = FALSE
 , "standardGeneric" = FALSE
+, "storage.mode<-" = FALSE
 , "tracemem" = FALSE
 , "untracemem" = FALSE
 )

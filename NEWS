@@ -13,7 +13,15 @@ NEW FEATURES
 
     o	storage.mode<- is now primitive, and hence makes fewer copies
 	of an object (none if the mode is unchanged).  It is a little
-	less general than mode<-, which remains available.
+	less general than mode<-, which remains available.  (See also
+	the entry under DEPRECATED below.)
+
+    o	as.vector() and the default methods of as.character, as.complex,
+	as.double, as.expression, as.integer, as.logical and as.raw.
+	no longer duplicate in most cases where the object is
+	unchanged.  (Beware: some code has been written that invalidly
+	assumes that they do duplicate, often when using
+	.C/.Fortran(DUP=FALSE).)
 
     o	new function sunflowerTable() [name subject to be changed]
 	does the 2D gridding "computations" used by sunflowerplot().
@@ -23,6 +31,10 @@ DEPRECATED & DEFUNCT
 
     o	$ on an atomic vector now gives a warning that it is 'invalid'.
 	It remains deprecated, but may be removed in R >= 2.7.0.
+
+    o	storage.mode(x) <- "real" and storage.mode(x) <- "single" are
+	deprecated in favour of storage.mode(x) <- "double" and
+	mode(x) <- "single"
 
 
 
@@ -482,6 +494,10 @@ DEPRECATED & DEFUNCT
 
     o	Using $ on an atomic vector is deprecated (it was previously
 	valid and documented to return NULL).
+
+    o	The use of storage.mode<- for other than standard types (and
+        in particular for value "single") is deprecated: use mode<-
+	instead.
 
 
 INSTALLATION

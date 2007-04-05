@@ -1274,9 +1274,9 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     }
     else if (isVector(u) || isList(u) || isLanguage(u)
 	     || (isSymbol(u) && type == EXPRSXP)) {
-	if (NAMED(u))
-	    v = duplicate(u);
-	else v = u;
+	/* this duplication appears not to be needed in all cases,
+	   but beware that other code relies on it */
+	v = NAMED(u) ? duplicate(u) : u;
 	if (type != ANYSXP) {
 	    PROTECT(v);
 	    v = coerceVector(v, type);
@@ -1311,7 +1311,7 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 
 SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
+    SEXP ans, x;
 
     if (DispatchOrEval(call, op, "as.character", args, rho, &ans, 0, 1))
 	return(ans);
@@ -1319,18 +1319,18 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Method dispatch has failed, we now just */
     /* run the generic internal code */
 
-    PROTECT(args = ans);
     checkArity(op, args);
+    x = CAR(args);
+    if(TYPEOF(x) == STRSXP && ATTRIB(x) == R_NilValue) return x;
     ans = ascommon(call, CAR(args), STRSXP);
     CLEAR_ATTRIB(ans);
-    UNPROTECT(1);
     return ans;
 }
 
 
 SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
+    SEXP x, ans;
     int type;
 
     if (DispatchOrEval(call, op, "as.vector", args, rho, &ans, 0, 1))
@@ -1339,7 +1339,6 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Method dispatch has failed, we now just */
     /* run the generic internal code */
 
-    PROTECT(args = ans);
     checkArity(op, args);
     if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
 	errorcall_return(call, R_MSG_mode);
@@ -1348,6 +1347,24 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	type = CLOSXP;
     else
 	type = str2type(CHAR(STRING_ELT(CADR(args), 0))); /* ASCII */
+
+    x = CAR(args);
+    if(TYPEOF(x) == type) {
+	switch(type) {
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case CPLXSXP:
+	case STRSXP:
+	case RAWSXP:
+	    if(ATTRIB(x) != R_NilValue) break;
+	case EXPRSXP:
+	case VECSXP:
+	    return x;
+	default:
+	    ;
+	}
+    }
 
     switch(type) {/* only those are valid : */
     case SYMSXP:
@@ -1366,7 +1383,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	errorcall_return(call, R_MSG_mode);
     }
-    ans = ascommon(call, CAR(args), type);
+    ans = ascommon(call, x, type);
     switch(TYPEOF(ans)) {/* keep attributes for these:*/
     case NILSXP:
     case VECSXP:
@@ -1378,7 +1395,6 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	CLEAR_ATTRIB(ans);
 	break;
     }
-    UNPROTECT(1);
     return ans;
 }
 
@@ -2408,7 +2424,70 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 
 SEXP attribute_hidden R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  checkArity(op, args);
-  return R_set_class(CAR(args), CADR(args), call);
+    checkArity(op, args);
+    return R_set_class(CAR(args), CADR(args), call);
 }
 
+#if NOT_YET
+SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP obj, value, ans;
+    SEXPTYPE type;
+    
+    checkArity(op, args);
+    obj = CAR(args);
+
+    value = CADR(args);
+    if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
+	errorcall(call, _("'value' must be non-null character string"));
+    type = str2type(CHAR(STRING_ELT(value, 0)));
+    if(type == (SEXPTYPE) -1)
+	errorcall(call, _("invalid value"));
+    if(TYPEOF(obj) == type) return obj;
+    if(isFactor(obj))
+	errorcall(call, _("invalid to change the storage mode of a factor"));
+    ans = coerceVector(obj, type);
+    DUPLICATE_ATTRIB(ans, obj);
+    return ans;
+}
+#else
+SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP obj, value, ans;
+    SEXPTYPE type;
+    Rboolean isSingle = FALSE, setSingle = FALSE;
+    
+    checkArity(op, args);
+    obj = CAR(args);
+
+    value = CADR(args);
+    if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
+	errorcall(call, _("'value' must be non-null character string"));
+    if(getAttrib(obj, install("Csingle")) != R_NilValue) isSingle = TRUE;
+    type = str2type(CHAR(STRING_ELT(value, 0)));
+    if(type == (SEXPTYPE) -1) {
+	/* For backwards compatibility we allow "real" and "single" */
+	if(streql(CHAR(STRING_ELT(value, 0)), "real")) {
+	    warningcall(call, 
+			"use of 'real' is deprecated: use 'double' instead");
+	    type = REALSXP;
+	} else if(streql(CHAR(STRING_ELT(value, 0)), "single")) {
+	    warningcall(call, 
+			"use of 'single' is deprecated: use mode<- instead");
+	    type = REALSXP;
+	    setSingle = TRUE;
+	} else
+	    errorcall(call, _("invalid value"));
+    }
+    if(TYPEOF(obj) == type && isSingle == setSingle) return obj;
+    if(isFactor(obj))
+	errorcall(call, _("invalid to change the storage mode of a factor"));
+    PROTECT(obj = duplicate(obj));
+    ans = coerceVector(obj, type);
+    DUPLICATE_ATTRIB(ans, obj);
+    setAttrib(ans, install("Csingle"),
+	      setSingle ? ScalarLogical(TRUE) : R_NilValue);
+    UNPROTECT(1);
+    return ans;
+}
+#endif

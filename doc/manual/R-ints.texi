@@ -1465,6 +1465,7 @@ dim         dim<-
 dimnames    dimnames<-
             environment<-
             levels<-
+            storage.mode<-
 @end group
 @end example
 

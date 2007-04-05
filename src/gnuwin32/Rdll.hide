@@ -994,6 +994,7 @@
  do_stdin
  do_stdout
  do_stop
+ do_storage_mode
  do_strheight
  do_strptime
  do_strsplit
