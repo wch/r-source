@@ -294,6 +294,7 @@ while test -n "${1}"; do
   shift
 done
 
+lib=`tilde_expand "${lib}"`
 if test -z "${lib}"; then
   lib=`echo "cat('~~~', .libPaths()[1], sep = '')" | \
     R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave | \
@@ -332,7 +333,6 @@ if test -z "${pkgs}"; then
   exit 1
 fi
 
-lib=`tilde_expand "${lib}"`
 if (test -d "${lib}" && test -w "${lib}") || \
     ${MKDIR_P} "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
