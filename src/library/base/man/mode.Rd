@@ -38,8 +38,9 @@ storage.mode(x) <- value
   \code{attr(object, "Csingle")} to examine this.  However, the
   replacement versions can be used to set the mode to \code{"single"},
   which sets the real mode to \code{"double"} and the \code{"Csingle"}
-  attribute to \code{TRUE}. Setting any other mode will remove this
-  attribute.
+  attribute to \code{TRUE}.  Setting any other mode will remove this
+  attribute.  (Use of \code{storage.mode<-} for setting or unsetting
+  this attribute is deprecated as from \R 2.5.0.)
 
   Note (in the examples below) that some \code{\link{call}}s have mode
   \code{"("} which is S compatible.

@@ -12,7 +12,21 @@ mode <- function(x) {
 	   ## otherwise
 	   tx)
 }
-"storage.mode<-" <-
+
+"storage.mode<-" <-function(x, value)
+{
+    if (storage.mode(x)==value) return(x)
+    if(is.factor(x)) stop("invalid to change the storage mode of a factor")
+    if(value == "single")
+        warning('use of storage.mode(x) <- "single" is depecated: use mode<- instead', domain=NA, call.=FALSE)
+    mde <- paste("as.",value,sep="")
+    atr <- attributes(x)
+    x <- eval(call(mde,x), parent.frame())
+    attributes(x) <- atr
+    attr(x, "Csingle") <- if(value == "single") TRUE # else NULL
+    x
+}
+
 "mode<-" <- function(x, value)
 {
     if (storage.mode(x)==value) return(x)
