@@ -194,6 +194,11 @@
   work if the Fortran 9x compiler used differs from the Fortran compiler
   used when configuring \R, especially if the subroutine name is not
   lower-case or includes an underscore.
+#ifdef windows
+  This \emph{is} the case under Windows, where \code{gfortran} and
+  \code{g95} treat underscores differently from \code{g77} with which \R
+  is compiled. 
+#endif
 }
 
 \section{Header files for external code}{
