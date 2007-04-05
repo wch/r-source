@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-28 r40045)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.5.0 alpha (2007-04-05 r41057)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -138,10 +138,10 @@ Achieved convergence tolerance: 2.74e-06
 > cf1 <- coef(summary(fit))[, 1:2]
 > fit2 <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +             weights = wts, trace = TRUE, algorithm = "port")
-  0      56.0706: 0.123450 0.543210
-  1      6.39646:  1.34546 0.700840
-  2  0.000606391: 0.00517053 0.999153
-  3  0.000606391: 0.00517052 0.999153
+  0:     56.070572: 0.123450 0.543210
+  1:     6.3964587:  1.34546 0.700840
+  2: 0.00060639084: 0.00517053 0.999153
+  3: 0.00060639084: 0.00517052 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -426,7 +426,7 @@ Nonlinear regression model
  residual sum-of-squares: 2.44
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 2.97e-06 
+Achieved convergence tolerance: 3.43e-06 
 Waiting for profiling to be done...
          2.5%   97.5%
 a     0.35005 0.66045
@@ -453,7 +453,7 @@ logc -0.64620 0.40950
 > fm <- nls(y3 ~ (x+exp(logc))^b, start=c(b=1, logc=0), algorithm="plinear")
 > confint(profile(fm))
          2.5%   97.5%
-b     0.45121 0.91488
+b     0.45121 0.91489
 logc -0.64628 0.40953
 > 
 > 
@@ -613,5 +613,5 @@ Achieved convergence tolerance: 7.45e-07
 > ## finally worked in 2.4.0
 > 
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  7.25 0.05 7.34 NA NA 
+Time elapsed:  7.543 0.045 7.633 0 0 
 > 
