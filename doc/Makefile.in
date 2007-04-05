@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS CRAN_mirrors.csv \
 	KEYWORDS KEYWORDS.db THANKS
-DISTFILES = Makefile.in $(INSTFILES) R.aux
+DISTFILES = Makefile.in $(INSTFILES) R.aux Rscript.1
 NON_SVN_INSTFILES = FAQ RESOURCES
 SUBDIRS = html manual
 
@@ -46,9 +46,11 @@ install: install-message installdirs install-sources install-sources2 install-ma
 installdirs:
 	@$(MKINSTALLDIRS) "$(rdocdir)"
 	@$(MKINSTALLDIRS) $(mandir)/man1
-install-man: R.1
+install-man: R.1 Rscript.1
 	@rm -f $(mandir)/man1/R.1
 	@$(INSTALL_DATA) R.1 $(mandir)/man1
+	@rm -f $(mandir)/man1/Rscript.1
+	@@$(INSTALL_DATA) ${srcdir}/Rscript.1 $(mandir)/man1
 install-message:
 	@echo "installing $(subdir) ..."
 install-sources:
@@ -76,7 +78,7 @@ uninstall:
 	  rmdir "$(rdocdir)" 2>/dev/null \
 	    || echo "  subdir $(subdir) not removed"; \
 	fi
-	@rm -f $(mandir)/man1/R.1
+	@rm -f $(mandir)/man1/R.1 $(mandir)/man1/Rscript.1
 
 dvi info pdf::
 	@(cd manual && $(MAKE) $@)
