@@ -208,6 +208,8 @@ NEW FEATURES
         a call to setMethod() to a file, with correct arguments and
         format, given the name of the function and the method signature.
 
+    o	mode<- and storage.mode<- do slightly less copying.
+
     o	nls.control(* , printEval = FALSE, warnOnly = FALSE) are two new
 	options to help better analyze (non-)convergence of nls(),
 	thanks to Kate Mullen.
