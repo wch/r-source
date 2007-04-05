@@ -5354,7 +5354,7 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
 	pd->pagewidth  = 21.0 / 2.54;
 	pd->pageheight = 29.7  /2.54;
     }
-    if(!strcmp(pd->papername, "A4r") ||
+    else if(!strcmp(pd->papername, "A4r") ||
        !strcmp(pd->papername, "a4r")) {
 	pd->pageheight = 21.0 / 2.54;
 	pd->pagewidth  = 29.7  /2.54;
