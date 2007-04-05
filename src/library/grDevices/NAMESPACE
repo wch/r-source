@@ -21,7 +21,8 @@ export(Hershey, as.graphicsAnnot, boxplot.stats, check.options, chull,
        nclass.Sturges, nclass.FD, nclass.scott, palette, pdf,
        pdfFonts, pictex, postscript, postscriptFont, postscriptFonts,
        ps.options, rainbow, recordGraphics, recordPlot, replayPlot,
-       rgb, rgb2hsv, terrain.colors, topo.colors, trans3d, Type1Font,
+       rgb, rgb2hsv, sunflowerTable,
+       terrain.colors, topo.colors, trans3d, Type1Font,
        xfig, xy.coords, xyz.coords)
 
 export(X11, x11, bitmap, dev2bitmap, jpeg, png)

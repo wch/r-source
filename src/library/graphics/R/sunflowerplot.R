@@ -6,6 +6,9 @@ sunflowerplot <-
              size = 1/8, seg.col = 2, seg.lwd = 1.5, ...)
 {
     ## Argument "checking" as plot.default:
+
+### TODO: also allow 'x' to be the result of sunflowerTable() !
+
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
     xy <- xy.coords(x, y, xlabel, ylabel, log)
@@ -16,17 +19,11 @@ sunflowerplot <-
         ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
     }
     n <- length(xy$x)
-    if(missing(number)) { # Compute number := multiplicities
-        ## must get rid of rounding fuzz
-        x <- signif(xy$x,digits=digits)
-        y <- signif(xy$y,digits=digits)
-        orderxy <- order(x, y)
-        x <- x[orderxy]
-        y <- y[orderxy]
-        first <- c(TRUE, (x[-1] != x[-n]) | (y[-1] != y[-n]))
-        x <- x[first]
-        y <- y[first]
-        number <- diff(c((1:n)[first], n + 1))
+    if(missing(number)) {
+	tt <- sunflowerTable(xy, digits = digits)## in ../../grDevices/R/calc.R
+	x <- tt$x
+	y <- tt$y
+	number <- tt$number
     } else {
         if(length(number) != n)
             stop("'number' must have same length as 'x' and 'y'")

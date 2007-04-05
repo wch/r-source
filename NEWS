@@ -15,6 +15,9 @@ NEW FEATURES
 	of an object (none if the mode is unchanged).  It is a little
 	less general than mode<-, which remains available.
 
+    o	new function sunflowerTable() [name subject to be changed]
+	does the 2D gridding "computations" used by sunflowerplot().
+
 
 DEPRECATED & DEFUNCT
 
