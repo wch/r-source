@@ -24,7 +24,7 @@ smooth <- function(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
               y = double(n),
               n, iend,
               iter = integer(1),
-              # DUP=FALSE,
+              DUP=FALSE,
 	      PACKAGE = "stats")[c("y","iter")]
 
     if(any(kind == c("R", "S"))) { # `iter' really was `changed'

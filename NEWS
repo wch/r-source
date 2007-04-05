@@ -822,6 +822,10 @@ BUG FIXES
 	duplicating it.  (This did not affect nlminb() but would have
 	if the code was called from a different wrapper.)
 
+    o	smooth(kind = "3RS3R") (the current default) used .C(DUP =
+	FALSE) but altered its input argument.  (This was masked by
+	duplication in as.double.)
+
 
 
 
