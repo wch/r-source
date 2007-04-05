@@ -18,7 +18,7 @@ mode <- function(x) {
     if (storage.mode(x) == value) return(x)
     if(is.factor(x)) stop("invalid to change the storage mode of a factor")
     if(value == "single")
-        warning('use of storage.mode(x) <- "single" is depecated: use mode<- instead', domain=NA, call.=FALSE)
+        warning('use of storage.mode(x) <- "single" is deprecated: use mode<- instead', domain=NA, call.=FALSE)
     mde <- paste("as.",value,sep="")
     atr <- attributes(x)
     isSingle <- !is.null(attr(x, "Csingle"))
