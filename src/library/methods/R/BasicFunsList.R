@@ -150,7 +150,7 @@ list("!" = function(e1)
 {
     standardGeneric("as.call")
 }
-, "as.character" = function(x)
+, "as.character" = function(x, ...)
 {
     standardGeneric("as.character")
 }
