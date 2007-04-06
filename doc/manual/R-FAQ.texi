@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-03-30
+@set FAQ_DATE @value{FAQ_YEAR}-04-06
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2166,6 +2166,8 @@ maps and implements other GIS procedures.
 @item PBSmodelling
 Software to facilitate the design, testing, and operation of computer
 models.
+@item PET
+Simulation and reconstruction of PET images.
 @item PHYLOGR
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
@@ -2721,6 +2723,8 @@ Code analysis tools.  @emph{Recommended} for R 2.5.0 or later.
 COnditional INference procedures for the general independence problem
 including two-sample, @math{K}-sample, correlation, censored, ordered
 and multivariate problems.
+@item colorRamp
+Builds single and double gradient color maps.
 @item colorspace
 Mapping between assorted color spaces.
 @item combinat
@@ -3989,7 +3993,7 @@ Interface to the CDK libraries, a Java framework for cheminformatics.
 @item rcom
 R COM Client Interface and internal COM Server.
 @item rcomgen
-Completion generator for R.
+Completion generator for R.  @emph{Recommended} for R 2.5.0 or later.
 @item rcompletion
 TAB completion for R using Readline.
 @item rda
@@ -4036,6 +4040,8 @@ Robustified methods for Gaussian Graphical Models.
 Interface between R and GGobi.
 @item rgl
 3D visualization device system (OpenGL).
+@item rgr
+The GSC (Geological Survey of Canada) applied geochemistry EDA package.
 @item rhosp
 Side effect risks in hospital: simulation and estimation.
 @item rimage
@@ -4187,6 +4193,8 @@ A set of generally Matlab/Octave-compatible signal processing
 functions.
 @item signalextraction
 Real-time signal extraction (Direct Filter Approach).
+@item simco
+Import Structure files and deduce similarity coefficients from them.
 @item simecol
 SIMulation of ECOLogical (and other) dynamic systems.
 @item simex
@@ -4507,10 +4515,13 @@ Software to perform 1-d and 2-d wavelet statistics and transforms.
 SOM networks for comparing patterns with peak shifts.
 @item wle
 Robust statistical inference via a weighted likelihood approach.
-@item wombsoft
-Wombling computation.
 @item wnominate
 WNOMINATE roll call analysis software.
+@item wombsoft
+Wombling computation.
+@item write.snns
+Function for exporting data to SNNS (Stuttgart Neural Network Simulator)
+pattern files.
 @item xgobi
 Interface to the XGobi and XGvis programs for graphical data analysis.
 @item xlsReadWrite
