@@ -6,7 +6,7 @@
 \alias{as.POSIXct.dates}
 \alias{as.POSIXct.Date}
 \alias{as.POSIXlt}
-\alias{as.numeric.POSIXlt}
+\alias{as.double.POSIXlt}
 
 \title{Date-time Conversion Functions}
 \description{
@@ -17,7 +17,7 @@
 as.POSIXct(x, tz = "")
 as.POSIXlt(x, tz = "")
 
-\method{as.numeric}{POSIXlt}(x)
+\method{as.double}{POSIXlt}(x, \dots)
 }
 \arguments{
   \item{x}{An object to be converted.}
@@ -25,6 +25,7 @@ as.POSIXlt(x, tz = "")
     \emph{if one is required}.  System-specific, but \code{""}
     is the current timezone, and \code{"GMT"} is UTC
     (Coordinated Universal Time, in French).}
+  \item{\dots}{further arguments to be passed to or from other methods.}
 }
 \details{
   The \code{as.POSIX*} functions convert an object to one of the two
