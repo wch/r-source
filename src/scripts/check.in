@@ -1065,8 +1065,14 @@ sub check_pkg {
     my $any;
     if($R_check_subdirs_nocase) {
 	## Argh.  We often get submissions where 'R' comes out as 'r',
-	## or 'man' comes out as 'MAN'.  Maybe we should warn about this
-	## unconditionally ...
+	## or 'man' comes out as 'MAN', and we've just ran into 'DATA'
+	## instead of 'data' (2007-03-31).  Maybe we should warn about
+	## this unconditionally ...
+	## <FIXME>
+	## Actually, what we should really do is check whether there is
+	## any directory with lower-cased name matching a lower-cased
+	## name of a standard directory, while differing in name.
+	## </FIXME>
 	if((-d "r")) {
 	    $log->warning() unless $any;
 	    $any++;
@@ -1078,6 +1084,12 @@ sub check_pkg {
 	    $any++;
 	    $log->print("Found subdirectory 'MAN'.\n");
 	    $log->print("Most likely, this should be 'man'.\n")
+	}
+	if((-d "DATA")) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Found subdirectory 'DATA'.\n");
+	    $log->print("Most likely, this should be 'data'.\n")
 	}
     }
     sub check_subdirs {
