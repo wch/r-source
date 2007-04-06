@@ -518,7 +518,7 @@ CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER-PAT)/Recommended
 
 ## Use -c here to avoid re-downloading the same versions of files
 rsync-recommended:
-	@(cd ../library; \
+	(cd ../library; \
 	rsync --timeout=60 -rcvC --delete --exclude=Makefile.in --exclude=.cvsignore \
 	  --include=*.tar.gz --exclude=*.tgz --exclude=".svn" $(CRANREC) . ); \
 	$(RM) ../library/Recommended/*.tgz; \
