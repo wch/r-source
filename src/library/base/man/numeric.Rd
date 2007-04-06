@@ -44,6 +44,9 @@ is.numeric(x)
 \note{
   \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}.
+
+  \code{numeric} and \code{as.numeric} are the identical to \code{double} and
+  \code{as.double} (unless someone defines S4 methods on one of them).
 }
 \seealso{
   \code{\link{double}}, \code{\link{integer}}, \code{\link{storage.mode}}.
