@@ -16,14 +16,24 @@ NEW FEATURES
 	less general than mode<-, which remains available.  (See also
 	the entry under DEPRECATED below.)
 
-    o	as.vector() and the default methods of as.character, as.complex,
-	as.double, as.expression, as.integer, as.logical and as.raw.
-	no longer duplicate in most cases where the object is
-	unchanged.  (Beware: some code has been written that invalidly
-	assumes that they do duplicate, often when using
-	.C/.Fortran(DUP=FALSE).)
+    o	as.vector() and the default methods of as.character(),
+	as.complex(), as.double(), as.expression(), as.integer(),
+	as.logical() and as.raw() no longer duplicate in most cases
+	where the object is unchanged.  (Beware: some code has been
+	written that invalidly assumes that they do duplicate, often
+	when using .C/.Fortran(DUP=FALSE).)
 
-    o	new function sunflowerTable() [name subject to be changed]
+	as.complex(), as.double(), as.integer(), as.logical() and
+	as.raw() are now .Internal and internally generic for
+	efficiency.  (As are as.numeric() and as.real(), which are
+	identical to as.double() and dispatch S3 methods for it.)  They
+	no longer dispatch on methods for as.vector() (which was never
+	documented). Further, they have predefined S4 methods to make
+	use of internal dispatch.
+	[This requires any package defining S4 methods on them to be
+	reinstalled, e.g. Matrix.]
+
+    o	New function sunflowerTable() [name subject to be changed]
 	does the 2D gridding "computations" used by sunflowerplot().
 
 
@@ -34,7 +44,7 @@ DEPRECATED & DEFUNCT
 
     o	storage.mode(x) <- "real" and storage.mode(x) <- "single" are
 	deprecated in favour of storage.mode(x) <- "double" and
-	mode(x) <- "single"
+	mode(x) <- "single".
 
 
 
@@ -825,6 +835,9 @@ BUG FIXES
     o	smooth(kind = "3RS3R") (the current default) used .C(DUP =
 	FALSE) but altered its input argument.  (This was masked by
 	duplication in as.double.)
+
+    o	The signature for the predefined S4 method for as.character()
+	was missing '...' .
 
 
 

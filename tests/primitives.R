@@ -53,5 +53,8 @@ stopifnot(S4generic)
 # functions which are listed but not primitive
 extraS4 <- c('all', 'any', 'gamma', 'lgamma', 'log', 'log10', 'max',
              'min', 'prod', 'range', 'round', 'signif', 'sum',
-             'trace', 'untrace')
+             'trace', 'untrace',
+             'as.complex', 'as.double', 'as.integer', 'as.logical',
+             'as.raw', 'as.numeric', 'as.real')
+ff4[!ff4 %in% c(ff, extraS4)]
 stopifnot(ff4 %in% c(ff, extraS4))

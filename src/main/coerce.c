@@ -1309,11 +1309,29 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     return u;/* -Wall */
 }
 
+/* A historical anomaly: as.character is primitive, the other ops are not */
 SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x;
 
-    if (DispatchOrEval(call, op, "as.character", args, rho, &ans, 0, 1))
+    int type = STRSXP, op0 = PRIMVAL(op);
+    char *name = NULL /* -Wall */;
+    
+    switch(op0) {
+	case 0: 
+	    name = "as.character"; break;
+	case 1: 
+	    name = "as.integer"; type = INTSXP; break;
+	case 2: 
+	    name = "as.double"; type = REALSXP; break;
+	case 3: 
+	    name = "as.complex"; type = CPLXSXP; break;
+	case 4: 
+	    name = "as.logical"; type = LGLSXP; break;
+	case 5: 
+	    name = "as.raw"; type = RAWSXP; break;
+    }
+    if (DispatchOrEval(call, op, name, args, rho, &ans, 0, 1))
 	return(ans);
 
     /* Method dispatch has failed, we now just */
@@ -1321,8 +1339,8 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     x = CAR(args);
-    if(TYPEOF(x) == STRSXP && ATTRIB(x) == R_NilValue) return x;
-    ans = ascommon(call, CAR(args), STRSXP);
+    if(TYPEOF(x) == type && ATTRIB(x) == R_NilValue) return x;
+    ans = ascommon(call, CAR(args), type);
     CLEAR_ATTRIB(ans);
     return ans;
 }
@@ -1340,15 +1358,15 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* run the generic internal code */
 
     checkArity(op, args);
+    x = CAR(args);
+
     if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
 	errorcall_return(call, R_MSG_mode);
-
     if (!strcmp("function", (CHAR(STRING_ELT(CADR(args), 0))))) /* ASCII */
 	type = CLOSXP;
     else
 	type = str2type(CHAR(STRING_ELT(CADR(args), 0))); /* ASCII */
 
-    x = CAR(args);
     if(TYPEOF(x) == type) {
 	switch(type) {
 	case LGLSXP:

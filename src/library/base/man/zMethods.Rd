@@ -38,6 +38,11 @@
   \code{\link{rbind}},
 
   \code{\link{as.character}},
+  \code{\link{as.complex}},
+  \code{\link{as.double}},
+  \code{\link{as.integer}},
+  \code{\link{as.logical}},
+  \code{\link{as.raw}},
   \code{\link{as.vector}},%   % do_asvector()        [coerce.c]
   \code{\link{is.array}},
   \code{\link{is.matrix}},
