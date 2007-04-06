@@ -71,7 +71,8 @@ oldClass(x) <- value
   \code{\link{UseMethod}} dispatches on the class as returned by
   \code{class} (with some interpolated classes: see the link) rather
   than \code{oldClass}.  \emph{However}, \link{group generic}s dispatch
-  on the \code{oldClass} for efficiency.
+  on the \code{oldClass} for efficiency, and \link{internal generic}s
+  only dispatch on objects for which \code{\link{is.object}} is true.
 }
 
 \section{Formal classes}{

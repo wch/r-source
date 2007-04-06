@@ -56,6 +56,9 @@
 
   \code{.S3PrimitiveGenerics} is a character vector listing the
   primitives which are internal generic and not \link{group generic}.
+
+  For efficiency, internal dispatch only occurs on \emph{objects}, that
+  is those for which \code{\link{is.object}} returns true.
 }
 \seealso{
   \code{\link{methods}} for the methods which are available.
