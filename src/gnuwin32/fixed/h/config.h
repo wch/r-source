@@ -768,6 +768,12 @@
 /* Define to disable Valgrind instrumentation */
 #define NVALGRIND 1
 
+/* Define if using GNU-style Objective C runtime. */
+/* #undef OBJC_GNU_RUNTIME */
+
+/* Define if using NeXT/Apple-style Objective C runtime. */
+/* #undef OBJC_NEXT_RUNTIME */
+
 /* Name of package */
 #define PACKAGE "R"
 

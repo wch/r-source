@@ -5,10 +5,10 @@ Notes for Windows Maintainers
 achieved by overrides in the configure script.
 
 You will need a copy of sh.exe in /bin.  Then with the R sources in
-/R/R-2.3.0, I used in /TEMP/R (any other directory will do, except the
+/R/R-2.5.0, I used in /TEMP/R (any other directory will do, except the
 sources)
 
-sh /R/R-2.3.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no
+sh /R/R-2.5.0/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no --without-iconv
 
 This ran fairly slowly, currently producing a src/include/config.h
 that differs only in that
@@ -110,3 +110,18 @@ not to be required for ld.exe.  So the %.dll rule in MkRules as from
 most one dot' rule.
 
 BDR 2006-02-15, 2006-02-24
+
+
+5) Moving to gcc 4.x
+
+It looks like just two things are needed:
+
+- change to BUILD=GFORTRAN in MkRules.
+
+- in fixed/h/config.h, comment out
+#define HAVE_F77_EXTRA_UNDERSCORE 1
+and change to one underscore in
+#define F77_FUNC_(name,NAME) name ## __
+
+
+BDR 2007-04-06
