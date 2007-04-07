@@ -91,7 +91,7 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 	    y[ii] <- NA
 	}
     }
-    return(list(x=as.real(x), y=as.real(y), xlab=xlab, ylab=ylab))
+    return(list(x=as.double(x), y=as.double(y), xlab=xlab, ylab=ylab))
 }
 
 xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
@@ -215,6 +215,6 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 	    z[ii] <- NA
 	}
     }
-    list(x=as.real(x), y=as.real(y), z=as.real(z),
+    list(x=as.double(x), y=as.double(y), z=as.double(z),
 	 xlab=xlab, ylab=ylab, zlab=zlab)
 }
