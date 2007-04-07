@@ -175,7 +175,7 @@ list("!" = function(e1)
 }
 , "as.raw" = function(x)
 {
-    standardGeneric("as.character")
+    standardGeneric("as.raw")
 }
 , "as.numeric" = function(x, ...)
 {

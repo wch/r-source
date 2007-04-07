@@ -26,10 +26,9 @@ NEW FEATURES
 	as.complex(), as.double(), as.integer(), as.logical() and
 	as.raw() are now .Internal and internally generic for
 	efficiency.  (As are as.numeric() and as.real(), which are
-	identical to as.double() and dispatch S3 methods for it.)  They
-	no longer dispatch on methods for as.vector() (which was never
-	documented). Further, they have predefined S4 methods to make
-	use of internal dispatch.
+	identical to as.double() and dispatch S3 methods for it.)
+	They no longer dispatch on methods for as.vector() (which was
+	never documented).
 	[This requires any package defining S4 methods on them to be
 	reinstalled, e.g. Matrix.]
 

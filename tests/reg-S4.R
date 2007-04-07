@@ -164,6 +164,7 @@ setClass("C", contains = c("A", "B"), representation(z = "logical"),
 (cc <- new("C"))
 ## failed reconcilePropertiesAndPrototype(..) after svn r37018
 
+
 ## "Logic" group -- was missing in R <= 2.4.0
 stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
 	  any(getGroupMembers("Ops") == "Logic"))
@@ -181,9 +182,48 @@ assertError(b & b)
 assertError(b | 1)
 assertError(TRUE & b)
 
+
 ## methods' hidden cbind() / rbind:
 cBind <- methods:::cbind
 setClass("myMat", representation(x = "numeric"))
 setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
 m <- new("myMat", x = c(1, pi))
 stopifnot(identical(m, cBind(m)))
+
+
+## regression tests of dispatch: most of these became internal in 2.6.0
+setClass("c1", "numeric")
+x_c1 <- new("c1")
+x_f <- function(x) x
+# the next failed < 2.5.0 as the signature was wrong
+setMethod("as.character", "c1", function(x, ...) "fn test")
+as.character(x_c1)
+# not allowed to define a "function" method, and existing one fails.
+
+setMethod("as.integer", "c1", function(x, ...) 42)
+as.integer(x_c1)
+setMethod("as.integer", "function", function(x, ...) 43)
+as.integer(x_f)
+
+setMethod("as.numeric", "c1", function(x, ...) 42+pi)
+as.numeric(x_c1)
+as.double(x_c1) # default method
+as.real(x_c1) # default method
+setMethod("as.numeric", "function", function(x, ...) 43+pi)
+as.numeric(x_f)
+try(as.double(x_f)) # default method, fails
+
+setMethod("as.logical", "c1", function(x, ...) NA)
+as.logical(x_c1)
+setMethod("as.logical", "function", function(x, ...) FALSE)
+as.logical(x_f)
+
+setMethod("as.complex", "c1", function(x, ...) pi+0i)
+as.complex(x_c1)
+setMethod("as.complex", "function", function(x, ...) 0+1i)
+as.complex(x_f)
+
+setMethod("as.raw", "c1", function(x) as.raw(10))
+as.raw(x_c1)
+setMethod("as.raw", "function", function(x) as.raw(11))
+as.raw(x_f)

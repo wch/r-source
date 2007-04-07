@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-03-21 r40860)
+R version 2.6.0 Under development (unstable) (2007-04-06 r41080)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -264,6 +264,7 @@ Slot "y":
 
 > ## failed reconcilePropertiesAndPrototype(..) after svn r37018
 > 
+> 
 > ## "Logic" group -- was missing in R <= 2.4.0
 > stopifnot(all(getGroupMembers("Logic") %in% c("&", "|")),
 + 	  any(getGroupMembers("Ops") == "Logic"))
@@ -289,6 +290,7 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
 > assertError(b | 1)
 > assertError(TRUE & b)
 > 
+> 
 > ## methods' hidden cbind() / rbind:
 > cBind <- methods:::cbind
 > setClass("myMat", representation(x = "numeric"))
@@ -297,4 +299,73 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
 [1] "cbind2"
 > m <- new("myMat", x = c(1, pi))
 > stopifnot(identical(m, cBind(m)))
+> 
+> 
+> ## regression tests of dispatch: most of these became internal in 2.6.0
+> setClass("c1", "numeric")
+[1] "c1"
+> x_c1 <- new("c1")
+> x_f <- function(x) x
+> # the next failed < 2.5.0 as the signature was wrong
+> setMethod("as.character", "c1", function(x, ...) "fn test")
+[1] "as.character"
+> as.character(x_c1)
+[1] "fn test"
+> # not allowed to define a "function" method, and existing one fails.
+> 
+> setMethod("as.integer", "c1", function(x, ...) 42)
+Creating a new generic function for "as.integer" in ".GlobalEnv"
+[1] "as.integer"
+> as.integer(x_c1)
+[1] 42
+> setMethod("as.integer", "function", function(x, ...) 43)
+[1] "as.integer"
+> as.integer(x_f)
+[1] 43
+> 
+> setMethod("as.numeric", "c1", function(x, ...) 42+pi)
+Creating a new generic function for "as.numeric" in ".GlobalEnv"
+[1] "as.numeric"
+> as.numeric(x_c1)
+[1] 45.14159
+> as.double(x_c1) # default method
+numeric(0)
+> as.real(x_c1) # default method
+numeric(0)
+> setMethod("as.numeric", "function", function(x, ...) 43+pi)
+[1] "as.numeric"
+> as.numeric(x_f)
+[1] 46.14159
+> try(as.double(x_f)) # default method, fails
+Error in as.double(x, ...) : cannot coerce to vector
+> 
+> setMethod("as.logical", "c1", function(x, ...) NA)
+Creating a new generic function for "as.logical" in ".GlobalEnv"
+[1] "as.logical"
+> as.logical(x_c1)
+[1] NA
+> setMethod("as.logical", "function", function(x, ...) FALSE)
+[1] "as.logical"
+> as.logical(x_f)
+[1] FALSE
+> 
+> setMethod("as.complex", "c1", function(x, ...) pi+0i)
+Creating a new generic function for "as.complex" in ".GlobalEnv"
+[1] "as.complex"
+> as.complex(x_c1)
+[1] 3.141593+0i
+> setMethod("as.complex", "function", function(x, ...) 0+1i)
+[1] "as.complex"
+> as.complex(x_f)
+[1] 0+1i
+> 
+> setMethod("as.raw", "c1", function(x) as.raw(10))
+Creating a new generic function for "as.raw" in ".GlobalEnv"
+[1] "as.raw"
+> as.raw(x_c1)
+[1] 0a
+> setMethod("as.raw", "function", function(x) as.raw(11))
+[1] "as.raw"
+> as.raw(x_f)
+[1] 0b
 > 
