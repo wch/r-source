@@ -1782,8 +1782,6 @@ attribute_hidden
 int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 		   SEXP *ans, int dropmissing, int argsevald)
 {
-#define AVOID_PROMISES_IN_DISPATCH_OR_EVAL
-#ifdef AVOID_PROMISES_IN_DISPATCH_OR_EVAL
 /* DispatchOrEval is called very frequently, most often in cases where
    no dispatching is needed and the isObject or the string-based
    pre-test fail.  To avoid degrading performance it is therefore
@@ -1827,17 +1825,19 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	/* try to dispatch on the object */
     if( isObject(x) ) {
 	char *pt;
-	/* try for formal method */
+	/* Try for formal method.
+	   It should be possible eventually to test by IS_S4_OBJECT
+	   here, but currently fails in limma's tests.
+	 */
 	if(R_has_methods(op)) {
 	    SEXP value, argValue;
 	    /* create a promise to pass down to applyClosure  */
 	    if(!argsevald) {
 		argValue = promiseArgs(args, rho);
 		SET_PRVALUE(CAR(argValue), x);
-	    }
-	    else
-		argValue = args;
+	    } else argValue = args;
 	    PROTECT(argValue); nprotect++;
+	    /* This means S4 dispatch */
 	    value = R_possible_dispatch(call, op, argValue, rho);
 	    if(value) {
 		*ans = value;
@@ -1895,38 +1895,6 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	}
     }
     else *ans = args;
-#else
-    SEXP x;
-    RCNTXT cntxt;
-
-    /* NEW */
-    PROTECT(args = promiseArgs(args, rho)); nprotect++;
-    PROTECT(x = eval(CAR(args),rho)); nprotect++;
-
-    if( isObject(x)) {
-	char *pt;
-	if (TYPEOF(CAR(call)) == SYMSXP)
-	    pt = Rf_strrchr(CHAR(PRINTNAME(CAR(call))), '.');
-	else
-	    pt = NULL;
-
-	if (pt == NULL || strcmp(pt,".default")) {
-	    /* PROTECT(args = promiseArgs(args, rho)); */
-	    SET_PRVALUE(CAR(args), x);
-	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args, op);
-	    if(usemethod(generic, x, call, args, rho, rho, R_BaseEnv, ans)) {
-		endcontext(&cntxt);
-		UNPROTECT(nprotect);
-		return 1;
-	    }
-	    endcontext(&cntxt);
-	}
-    }
-    /* else PROTECT(args); */
-    PROTECT(*ans = CONS(x, evalArgs(CDR(args), rho, op, dropmissing)));
-    SET_TAG(*ans, CreateTag(TAG(args)));
-    UNPROTECT(1);
-#endif
     UNPROTECT(nprotect);
     return 0;
 }
