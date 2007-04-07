@@ -8940,7 +8940,7 @@ embarks on an extended computation (@code{@var{which}=1}) and when such
 a state terminates (@code{@var{which}=0}).
 @end deftypefun
 
-@deftypefun int R_ReadConsole (char *@var{prompt}, char *@var{buf}, @
+@deftypefun int R_ReadConsole (char *@var{prompt}, unsigned char *@var{buf}, @
   int @var{buflen}, int @var{hist})
 @deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen})
 @deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen}, int @var{otype})
@@ -8952,10 +8952,11 @@ These functions interact with a console.
 
 @code{R_ReadConsole} prints the given prompt at the console and then
 does a @code{gets(3)}--like operation, transferring up to @var{buflen}
-characters into the buffer @var{buf}. The last two characters should be
+characters into the buffer @var{buf}. The last two bytes should be
 set to @samp{"\n\0"} to preserve sanity.  If @var{hist} is non-zero,
 then the line should be added to any command history which is being
-maintained.  The return value is 0 on success and >0 on failure.
+maintained.  The return value is 0 is no input is available and >0
+otherwise.
 
 @code{R_WriteConsoleEx} writes the given buffer to the console,
 @var{otype} specifies the output type (regular output or
@@ -8976,7 +8977,7 @@ system console.  @code{R_ClearerrConsole} clears any errors associated
 with reading from the console.
 @end deftypefun
 
-@deftypefun void R_ShowFiles (int @var{nfile}, char **@var{file}, @
+@deftypefun int R_ShowFiles (int @var{nfile}, char **@var{file}, @
   char **@var{headers}, char *@var{wtitle}, Rboolean @var{del}, @
   char *@var{pager})
 
