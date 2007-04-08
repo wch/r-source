@@ -95,7 +95,7 @@ dev.print <- function(device = postscript, ...)
     current.device <- dev.cur()
     nm <- names(current.device)[1]
     if(nm == "null device") stop("no device to print from")
-    if(!(nm %in% c("X11", "GTK", "gnome", "windows","quartz")))
+    if(!dev.displaylist())
         stop("can only print from screen device")
     oc <- match.call()
     oc[[1]] <- as.name("dev.copy")
@@ -182,6 +182,13 @@ dev.control <- function(displaylist = c("inhibit", "enable"))
 	.Internal(dev.control(displaylist == "enable"))
     } else stop("argument is missing with no default")
     invisible()
+}
+
+dev.displaylist <- function()
+{
+    if(dev.cur() <= 1)
+        stop("dev.displaylist() called without an open graphics device")
+    .Internal(dev.displaylist())
 }
 
 recordGraphics <- function(expr, list, env) {
