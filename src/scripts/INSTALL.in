@@ -11,7 +11,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2006 The R Core Development Team.
+Copyright (C) 2000-2007 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -296,9 +296,9 @@ done
 
 lib=`tilde_expand "${lib}"`
 if test -z "${lib}"; then
-  lib=`echo "cat('~~~', .libPaths()[1], sep = '')" | \
+  lib=`echo "cat('\n~~~', .libPaths()[1], '\n', sep = '')" | \
     R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave | \
-    tr '\n' 'Z' | sed 's/.*~~~//'`
+    grep '^~~~' | sed 's/.*~~~//'`
   message "Installing to library '$lib'"
 else
   lib0=${lib}
