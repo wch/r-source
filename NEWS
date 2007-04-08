@@ -789,6 +789,9 @@ BUG FIXES
     o	The signature for the predefined S4 method for as.character()
 	was missing '...' .
 
+    o	readBin(<raw vector>) could read beyond the end of the vector
+	when size-changing was involved.
+
 
 
 

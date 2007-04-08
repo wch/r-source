@@ -4672,6 +4672,22 @@ stopifnot(any(ans != 10))
 ## always gave last in 2.4.1
 
 
-## reg could segfault: Hiroyuki Kawakatsu, R-help, 2007-03-30
+## rep could segfault: Hiroyuki Kawakatsu, R-help, 2007-03-30
 try(rep(each = 0, length.out = 1))
 # segfaulted in 2.4.1
+
+
+## readBin could read beyond the end of a raw vector.
+# Henrik Bengtsson, Rdevel, 2007-04-07
+bfr <- as.raw(1:12)
+(x <- readBin(con=bfr, what="raw", n=20))
+stopifnot(length(x) == 12)
+(x <- readBin(con=bfr, what="integer", n=20))
+stopifnot(length(x) == 3)
+(x <- readBin(con=bfr, what="integer", size=4, n=20))
+stopifnot(length(x) == 3)
+(x <- readBin(con=bfr, what="integer", size=2, n=20))
+stopifnot(length(x) == 6)
+(x <- readBin(con=bfr, what="integer", size=1, n=20))
+stopifnot(length(x) == 12)
+## read too far where size-changing was involved in 2.4.x
