@@ -129,8 +129,13 @@ if($opt_library){
     $ENV{'R_LIBS'} = join(";", $library, $R_LIBS);
     chdir($startdir);
 } else {
-    my @out = R_runR("cat(.libPaths()[1])", "--slave");
-    $library = @out[0];
+    my @out = R_runR("cat('~~~', .libPaths()[1], '\n', sep = '')", "--slave");
+    foreach $f (@out) {
+	if($f =~ /^~~~/) {
+	    $library = $f;
+	    $library =~ s/^~~~//;
+	}
+    }
     $library = Win32::GetShortPathName($library) if $library =~ / /;
     print "installing to '$library'\n";
 }
