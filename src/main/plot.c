@@ -77,12 +77,17 @@ SEXP attribute_hidden do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
     int listFlag;
 
     checkArity(op, args);
-    listFlag = asLogical(CAR(args));
-    if(listFlag == NA_LOGICAL) errorcall(call, _("invalid argument"));
-    if(listFlag)
-	enableDisplayList(CurrentDevice());
-    else
-	inhibitDisplayList(CurrentDevice());
+    if(PRIMVAL(op) == 0) { /* dev.control */
+	listFlag = asLogical(CAR(args));
+	if(listFlag == NA_LOGICAL) errorcall(call, _("invalid argument"));
+	if(listFlag)
+	    enableDisplayList(CurrentDevice());
+	else
+	    inhibitDisplayList(CurrentDevice());
+    } else { /* dev.displaylist */
+	GEDevDesc *dd = (GEDevDesc*)CurrentDevice();
+	listFlag = dd->dev->displayListOn;
+    }
     return ScalarLogical(listFlag);
 }
 

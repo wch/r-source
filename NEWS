@@ -113,6 +113,9 @@ NEW FEATURES
 	used in deparsing in place of as.integer(NA) etc unless
 	.deparseOpts() includes "S_compatible".
 
+    o	dev.print() now recognizes 'screen devices' as all those with
+	an enabled display list, rather than a hard-coded set.
+
     o	Objects of class "difftime" are now handled more flexibly. The
 	units of such objects can now be accessed via a units()
 	function, which also has a replacement form, and there are
