@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000-6  R Development Core Team
+# Copyright (C) 2000-7  R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ if($opt_library){
     $ENV{'R_LIBS'} = join(";", $library, $R_LIBS);
     chdir($startdir);
 } else {
-    my @out = R_runR("cat('~~~', .libPaths()[1], '\n', sep = '')", "--slave");
+    my @out = R_runR("cat('\n~~~', .libPaths()[1], '\n', sep = '')", "--slave");
     foreach $f (@out) {
 	if($f =~ /^~~~/) {
 	    $library = $f;
