@@ -2067,7 +2067,7 @@ void  consolehelp()
     strcat(s,G_("\nNote: Console is updated only when some input is required.\n"));
     strcat(s,G_("  Use Ctrl+W to toggle this feature off/on.\n\n"));
     strcat(s,G_("Use ESC to stop the interpreter.\n\n"));
-    strcat(s,G_("TAB starts completion if package 'rcompgen' is installed.\n\n"));
+    strcat(s,G_("TAB starts completion of the current word.\n\n"));
     strcat(s,G_("Standard Windows hotkeys can be used to switch to the\n"));
     strcat(s,G_("graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"));
     askok(s);

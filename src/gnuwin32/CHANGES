@@ -32,10 +32,12 @@ GUI CHANGES
 	specify a file name without an extension, put the name in
 	quotes, e.g.  "foo".  (As requested in PR#9336.)
 
-    o	There is support in both Rgui and Rterm for function name
+    o	There is support in both Rgui and Rterm for function/file name
 	completion via the TAB key using package rcompgen.  This can
 	be disabled by setting the environment variable
 	R_COMPLETION=FALSE when starting R (e.g. in ~/.Renviron).
+	(Words within quotes are interpreted as file names, others as
+	R function names.)
 
 
 FUNCTION CHANGES
@@ -50,18 +52,20 @@ FUNCTION CHANGES
 	--internet2 is used (and provided the certificate is accepted as
 	valid).
 
-    o	bitmap() and dev2bitmap() will now accept paths in 'GS_CMD' and 'file'
-	which contain spaces (by converting to short path names inside the
-	functions).
+    o	bitmap() and dev2bitmap() will now accept paths in 'GS_CMD' and
+	'file' which contain spaces (by converting to short path names
+	inside the functions).
 
-    o	system() gains an 'ignore.stderr' argument for consistency with Unix.
-	(This changes the order of arguments.)  The defaults have been changed
-	to 'show.output.on.console=TRUE, invisible=TRUE' which make system()
-	in Rgui more consistent with Rterm and with other ports of R.
+    o	system() gains an 'ignore.stderr' argument for consistency with
+	Unix.  (This changes the order of arguments.)  The defaults
+	have been changed to 'show.output.on.console=TRUE,
+	invisible=TRUE' which make system() in Rgui more consistent
+	with Rterm and with other ports of R.
 
     o	For consistency with Unix, system(intern=TRUE) and pipe(, "r")
-	connections no longer capture stderr, only stdout (except on Rgui if
-	ignore.stderr = FALSE, since there is no separate stderr).
+	connections no longer capture stderr, only stdout (except on
+	Rgui if ignore.stderr = FALSE, since Rgui has no separate
+	stderr).
 
 
 OTHERS
@@ -69,8 +73,8 @@ OTHERS
     o	This file (CHANGES) has been reformatted to be readable by the
     	readNEWS() function.
 
-    o	The printf function used for printing has been altered to
-	implement a round-to-even rule.  This means that output is
+    o	The C-level printf function used for printing has been altered
+	to implement a round-to-even rule.  This means that output is
 	more likely to be identical to that on Unix-alikes.
 
     o	R CMD INSTALL now installs by default into the first library on
@@ -97,15 +101,15 @@ OTHERS
 	more warnings about reaching the total allocation before
 	successfully allocating.
 
-    o	file.access() would give an error if asking about execute permission
-	on Vista: the underlying C function has been changed to be
-	incompatible with POSIX and we now work around this.
+    o	file.access() would give an error if asking about execute
+	permission on Vista: the underlying C function has been
+	changed to be incompatible with POSIX and we now work around this.
 
     o	Packages are now compiled with -O3.  (R itself has been since
 	2.3.0.)
 
     o	Packages can have a 'cleanup.win' script to cleanup after
-	configure etc.
+	configure.win etc.
 
     o	The toolset described in the R Installation and Administration
 	manual for building on Windows is now partially available in
@@ -124,7 +128,7 @@ BUG FIXES
     o	Workaround a Windows' mktime bug that affected the POSIXct to
 	POSIXlt conversion during leap days in leap years prior to
 	1970 in timezones which were on DST at the time.  (PR#9572)
-	
+
     o	system() could have overflowed a buffer with a very long
 	command line that contained quotes.
 
