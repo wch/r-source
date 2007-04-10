@@ -803,6 +803,10 @@ BUG FIXES
 	loaded but the package was not attached (or otherwise not in
 	the search path).
 
+    o	print() (and auto-printing) now recognize S4 objects even when
+	'methods' is not loaded, and print a short summary rather than
+	dump the internal structure.
+
 
 
 
