@@ -795,10 +795,10 @@ BUG FIXES
     o	readBin(<raw vector>) could read beyond the end of the vector
 	when size-changing was involved.
 
-    o	The C entry point PrintValue (designed to emulate
-	auto-printing) would not find show() for use on S4 objects,
-	and did not have the same search path (for show(), print() and
-	print() methods) as auto-printing.  Also, auto-printing S4
+    o	The C entry point PrintValue (designed to emulate auto-printing)
+	would not find show() for use on S4 objects, and did not have
+	the same search path (for show(), print() and print() methods)
+	as auto-printing.  Also, auto-printing and print() of S4
 	objects would fail to find 'show' if the methods namespace was
 	loaded but the package was not attached (or otherwise not in
 	the search path).
