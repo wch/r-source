@@ -202,8 +202,6 @@ as.character(x_c1)
 
 setMethod("as.integer", "c1", function(x, ...) 42)
 as.integer(x_c1)
-setMethod("as.integer", "function", function(x, ...) 43)
-as.integer(x_f)
 
 setMethod("as.numeric", "c1", function(x, ...) 42+pi)
 as.numeric(x_c1)
@@ -215,15 +213,9 @@ try(as.double(x_f)) # default method, fails
 
 setMethod("as.logical", "c1", function(x, ...) NA)
 as.logical(x_c1)
-setMethod("as.logical", "function", function(x, ...) FALSE)
-as.logical(x_f)
 
 setMethod("as.complex", "c1", function(x, ...) pi+0i)
 as.complex(x_c1)
-setMethod("as.complex", "function", function(x, ...) 0+1i)
-as.complex(x_f)
 
 setMethod("as.raw", "c1", function(x) as.raw(10))
 as.raw(x_c1)
-setMethod("as.raw", "function", function(x) as.raw(11))
-as.raw(x_f)

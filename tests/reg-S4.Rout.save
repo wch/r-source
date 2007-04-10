@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-04-06 r41080)
+R version 2.6.0 Under development (unstable) (2007-04-07 r41087)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -314,14 +314,9 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
 > # not allowed to define a "function" method, and existing one fails.
 > 
 > setMethod("as.integer", "c1", function(x, ...) 42)
-Creating a new generic function for "as.integer" in ".GlobalEnv"
 [1] "as.integer"
 > as.integer(x_c1)
 [1] 42
-> setMethod("as.integer", "function", function(x, ...) 43)
-[1] "as.integer"
-> as.integer(x_f)
-[1] 43
 > 
 > setMethod("as.numeric", "c1", function(x, ...) 42+pi)
 Creating a new generic function for "as.numeric" in ".GlobalEnv"
@@ -340,32 +335,17 @@ numeric(0)
 Error in as.double(x, ...) : cannot coerce to vector
 > 
 > setMethod("as.logical", "c1", function(x, ...) NA)
-Creating a new generic function for "as.logical" in ".GlobalEnv"
 [1] "as.logical"
 > as.logical(x_c1)
 [1] NA
-> setMethod("as.logical", "function", function(x, ...) FALSE)
-[1] "as.logical"
-> as.logical(x_f)
-[1] FALSE
 > 
 > setMethod("as.complex", "c1", function(x, ...) pi+0i)
-Creating a new generic function for "as.complex" in ".GlobalEnv"
 [1] "as.complex"
 > as.complex(x_c1)
 [1] 3.141593+0i
-> setMethod("as.complex", "function", function(x, ...) 0+1i)
-[1] "as.complex"
-> as.complex(x_f)
-[1] 0+1i
 > 
 > setMethod("as.raw", "c1", function(x) as.raw(10))
-Creating a new generic function for "as.raw" in ".GlobalEnv"
 [1] "as.raw"
 > as.raw(x_c1)
 [1] 0a
-> setMethod("as.raw", "function", function(x) as.raw(11))
-[1] "as.raw"
-> as.raw(x_f)
-[1] 0b
 > 
