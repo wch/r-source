@@ -1006,6 +1006,7 @@ static SEXP *prim_generics;
 static SEXP *prim_mlist;
 #define DEFAULT_N_PRIM_METHODS 100
 
+/* This is used in the methods package, in src/methods_list_dispatch.c */
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 		       SEXP mlist)
 {
@@ -1039,7 +1040,7 @@ SEXP R_primitive_generic(SEXP op)
     }
 }
 
-/* This is used in the methods package */
+/* This is used in the methods package, in src/methods_list_dispatch.c */
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {
     int offset = 0;
@@ -1122,15 +1123,14 @@ SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 	R_PreserveObject(fundef);
 	prim_generics[offset] = fundef;
     }
-    if(code==HAS_METHODS) {
+    if(code == HAS_METHODS) {
 	if(!mlist  || isNull(mlist)) {
-		/* turning methods back on after a SUPPRESSED */
-	}
-	else {
-	  if(prim_mlist[offset])
-	    R_ReleaseObject(prim_mlist[offset]);
-	  R_PreserveObject(mlist);
-	  prim_mlist[offset] = mlist;
+	    /* turning methods back on after a SUPPRESSED */
+	} else {
+	    if(prim_mlist[offset])
+		R_ReleaseObject(prim_mlist[offset]);
+	    R_PreserveObject(mlist);
+	    prim_mlist[offset] = mlist;
 	}
     }
     return value;
@@ -1299,7 +1299,7 @@ SEXP R_do_new_object(SEXP class_def)
 	s_prototype = Rf_install("prototype");
 	s_className = Rf_install("className");
         R_packageSymbol = install("package");
-   }
+    }
     if(!class_def)
 	error(_("C level NEW macro called with null class definition pointer"));
     e = R_do_slot(class_def, s_virtual);
@@ -1311,38 +1311,41 @@ SEXP R_do_new_object(SEXP class_def)
     e = R_do_slot(class_def, s_className);
     value = duplicate(R_do_slot(class_def, s_prototype));
     if(TYPEOF(value) == S4SXP || getAttrib(e, R_packageSymbol) != R_NilValue)
-      { /* Anything but an object from a base "class" (numeric, matrix,..) */
-	  setAttrib(value, R_ClassSymbol, e);
-	  SET_S4_OBJECT(value);
-      }
+    { /* Anything but an object from a base "class" (numeric, matrix,..) */
+	setAttrib(value, R_ClassSymbol, e);
+	SET_S4_OBJECT(value);
+    }
     return value;
 }
 
-Rboolean R_seemsS4Object(SEXP object)  {
-  static SEXP R_packageSymbol = NULL;
-  SEXP klass;
-  if(!isObject(object))
-    return FALSE;
-  if(TYPEOF(object) == S4SXP)
-    return TRUE;
-  if(!R_packageSymbol)
-    R_packageSymbol = install("package");
-  klass = getAttrib(object, R_ClassSymbol);
-  return (klass != R_NilValue &&
-	  getAttrib(klass, R_packageSymbol) != R_NilValue) ?
-    TRUE: FALSE;
+Rboolean R_seemsS4Object(SEXP object)
+{
+    static SEXP R_packageSymbol = NULL;
+    SEXP klass;
+    if(!isObject(object))
+	return FALSE;
+    if(TYPEOF(object) == S4SXP)
+	return TRUE;
+    if(!R_packageSymbol)
+	R_packageSymbol = install("package");
+    klass = getAttrib(object, R_ClassSymbol);
+    return (klass != R_NilValue &&
+	    getAttrib(klass, R_packageSymbol) != R_NilValue) ?
+	TRUE: FALSE;
 }
 
 
-SEXP R_isS4Object(SEXP object) {
-  /* wanted: return isS4(object) ? mkTrue() : mkFalse(); */
-  return IS_S4_OBJECT(object) ? mkTrue() : mkFalse(); ;
+SEXP R_isS4Object(SEXP object)
+{
+    /* wanted: return isS4(object) ? mkTrue() : mkFalse(); */
+    return IS_S4_OBJECT(object) ? mkTrue() : mkFalse(); ;
 }
 
-SEXP R_setS4Object(SEXP object, SEXP onOff) {
+SEXP R_setS4Object(SEXP object, SEXP onOff) 
+{
     Rboolean flag = asLogical(onOff);
     /* wanted     return asS4(object, flag); */
-   if(flag == IS_S4_OBJECT(object))
+    if(flag == IS_S4_OBJECT(object))
         return object;
     if(NAMED(object) == 2)
         object = duplicate(object);
