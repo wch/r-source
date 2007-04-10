@@ -32,12 +32,13 @@ GUI CHANGES
 	specify a file name without an extension, put the name in
 	quotes, e.g.  "foo".  (As requested in PR#9336.)
 
-    o	There is support in both Rgui and Rterm for function/file name
+    o	There is support in both Rgui and Rterm for object/file name
 	completion via the TAB key using package rcompgen.  This can
 	be disabled by setting the environment variable
 	R_COMPLETION=FALSE when starting R (e.g. in ~/.Renviron).
 	(Words within quotes are interpreted as file names, others as
-	R function names.)
+	R object names.  Use library(rcompgen); ?rc.options for more
+	details, including tuning the behaviour.)
 
 
 FUNCTION CHANGES
