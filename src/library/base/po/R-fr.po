@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-03-26 13:13\n"
+"POT-Creation-Date: 2007-04-10 07:41\n"
 "PO-Revision-Date: 2006-12-05 20:21+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1152,9 +1152,6 @@ msgstr "non défini pour des objets package_version"
 #, fuzzy
 msgid "no arguments"
 msgstr "mauvais argument"
-
-msgid "zero imputs"
-msgstr ""
 
 msgid "invalid 'n' value"
 msgstr "valeur 'n' incorrecte"

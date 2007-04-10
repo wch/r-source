@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-03-26 13:13\n"
+"POT-Creation-Date: 2007-04-10 07:41\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1128,9 +1128,6 @@ msgstr "(은)는 package_version 오브젝트에 대해서는 정의 되어 있�
 #, fuzzy
 msgid "no arguments"
 msgstr "잘못된 인수입니다"
-
-msgid "zero imputs"
-msgstr ""
 
 msgid "invalid 'n' value"
 msgstr "무효인 'n'값입니다"

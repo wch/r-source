@@ -152,7 +152,7 @@ msgstr "行斜接出错"
 
 #: devPS.c:2852
 msgid "only gray colors are allowed in this color model"
-msgstr ""
+msgstr "这个颜色模型只能用灰色"
 
 #: devPS.c:2932
 msgid "filename too long in postscript"

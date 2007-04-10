@@ -26,7 +26,7 @@ msgid "'labels' and 'at' locations must have same length"
 msgstr "'labels'和'at'的位置量必需有相同的长度"
 
 msgid "logical 'label' supplied on length 0"
-msgstr ""
+msgstr "提供的逻辑'label'的长度为零"
 
 msgid "End points must not be identical"
 msgstr "端点两头的值是不能相等的"
@@ -41,13 +41,13 @@ msgid "'squareShape' must be between -1 and 1"
 msgstr "'squareShape'的值必需在-1和1之间"
 
 msgid "'arrow' must be an arrow object or NULL"
-msgstr "'arrow' 要么是箭头目标对象，要么是NULL值"
+msgstr "'arrow' 要么是箭头对象，要么是NULL值"
 
 msgid "Invalid 'edit' information"
 msgstr "'edit'信息不对"
 
 msgid "'gEditList' can only contain 'gEdit' objects"
-msgstr "'gEditList'只能包含'gEdit'目标对象"
+msgstr "'gEditList'只能包含'gEdit'对象"
 
 msgid "Invalid 'frame'"
 msgstr "'frame'的值不对"
@@ -103,7 +103,7 @@ msgid "Invalid font face"
 msgstr "字体面设定不对"
 
 msgid "Argument must be a 'gpar' object"
-msgstr "变元必需是'gpar'目标对象"
+msgstr "变元必需是'gpar'对象"
 
 msgid "Must specify only valid 'gpar' names"
 msgstr "只能用正确的'gpar'名字"
@@ -143,7 +143,7 @@ msgid "Invalid 'ask' value"
 msgstr "'ask'的值不对"
 
 msgid "Invalid object inserted on the display list"
-msgstr "显示列里所插入的目标对象不对"
+msgstr "显示列里所插入的对象不对"
 
 msgid "Invalid 'grob' argument"
 msgstr "'grob'变元值不对"
@@ -179,7 +179,7 @@ msgid "Can only set 'children' for a 'gTree'"
 msgstr "'gTree'只能给'children'设定值"
 
 msgid "'children' must be a 'gList'"
-msgstr "'children'必需是'gList'这种目标对象"
+msgstr "'children'必需是'gList'这种对象"
 
 msgid "It is only valid to get 'children' from a 'gTree'"
 msgstr "只能从'gTree'那儿得到'children'的值"
@@ -278,7 +278,7 @@ msgid "Invalid 'origin'"
 msgstr "'origin'的值不对"
 
 msgid "'length' must be a unit object"
-msgstr "'length'的值必需是单元目标对象"
+msgstr "'length'的值必需是单元对象"
 
 msgid "Invalid 'ends' or 'type' argument"
 msgstr "'ends'或'type'变元的值不对"
@@ -311,7 +311,7 @@ msgid "'x' and 'y' must be units or NULL"
 msgstr "'x'和'y'要么是单元值，要么是NULL"
 
 msgid "Corrupt 'arrows' object"
-msgstr "'arrows'目标对象出了错"
+msgstr "'arrows'对象出了错"
 
 msgid ""
 "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
@@ -343,7 +343,7 @@ msgid "'x', 'y' and 'size' must be units"
 msgstr "'x', 'y'和'size'必需为单元值"
 
 msgid "'x' and 'y' must be unit objects and have the same length"
-msgstr "'x'和'y'必需为单元目标对象，而且它们的长度必需相同"
+msgstr "'x'和'y'必需为单元对象，而且它们的长度必需相同"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
 msgstr "'x', 'y', 'width'和'height'都应该是长度为一的单元值"
@@ -352,7 +352,7 @@ msgid "'x' and 'units' must have length > 0"
 msgstr "'x'和'unit'的长度必需大于零"
 
 msgid "'x' argument must be a unit object"
-msgstr "'x'变元必需是单元目标对象"
+msgstr "'x'变元必需是单元对象"
 
 msgid "Invalid 'axis' or 'type'"
 msgstr "'axis'或'type'的值不对"
@@ -397,7 +397,7 @@ msgid "Index out of bounds (unit list subsetting)"
 msgstr "索引值出界(取单元串子集时)"
 
 msgid "It is invalid to combine unit objects with other types"
-msgstr "不能将单元目标对象同其它类别的目标对象相结合"
+msgstr "不能将单元对象同其它类别的对象相结合"
 
 msgid ""
 "unit.rep has been deprecated in favour of a unit method for the generic rep "
@@ -466,3 +466,4 @@ msgstr "至少要设定'y'或'yscale'两个中的一个"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
+

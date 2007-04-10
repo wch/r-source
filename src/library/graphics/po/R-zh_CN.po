@@ -17,16 +17,16 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "'a' is overridden by 'reg'"
-msgstr ""
+msgstr "'a'被'reg'覆盖"
 
 msgid "only using the first two of"
-msgstr ""
+msgstr "只用第一和第二个"
 
 msgid "regression coefficients"
-msgstr ""
+msgstr "回归系数"
 
 msgid "'a' and 'b' are overridden by 'coef'"
-msgstr ""
+msgstr "'a'和'b'被' coef'覆盖"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x'必需是2-维列联表"
@@ -86,7 +86,7 @@ msgid "invalid boxplot widths"
 msgstr "boxplot宽度不对"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
-msgstr ""
+msgstr "一些槽在折叶点外('box'): 可能是因为notch=FALSE"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula'只能设定两个变量"
@@ -396,3 +396,4 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "没有用%s这个变元"
 msgstr[1] "没有用%s这个变元"
+

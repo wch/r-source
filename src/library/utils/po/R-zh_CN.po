@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-25 10:19\n"
+"POT-Creation-Date: 2007-04-10 07:42\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -19,32 +19,16 @@ msgstr ""
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
 "   a documentation file"
-msgstr ""
+msgstr "RShowDoc()应该和指定说明书文件的字符串一起使用"
 
-#, fuzzy
 msgid "no documentation for '%s' found in package '%s'"
-msgstr "函数'%s'和簽署'%s'没有帮助文件"
+msgstr "程序包'%2$s'里没有'%1$s'这样一本说明书"
 
-#, fuzzy
 msgid "document not found"
-msgstr "找不到'%s'这个目标对象"
+msgstr "找不到这个说明书"
 
-msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
-msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""
-
-msgid "wrong 'sortby' specified. Using sortby=\"score\""
-msgstr "'sortby'的值不对。用sortby=\"score\""
-
-msgid ""
-"wrong restriction specified.\n"
-"Using '%s'"
-msgstr ""
-"限制设定得不对。\n"
-"用'%s'"
-
-#, fuzzy
-msgid "A search query has been submitted to %s"
-msgstr "檢索查詢疑問已被提出于"
+msgid "A search query has been submitted to"
+msgstr "檢索查詢疑問%s已被提出于"
 
 msgid "The results page should open in your browser shortly"
 msgstr "计算结果应很快就在瀏覽器里打开"
@@ -126,10 +110,10 @@ msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "没有从程序包的DESCRIPTION文件中为'%s'确定年份"
 
 msgid "m < 0"
-msgstr ""
+msgstr "m < 0"
 
 msgid "n < m"
-msgstr ""
+msgstr "n < m"
 
 msgid "'FUN' must be a function or NULL"
 msgstr "'FUN'的值必需是函数或NULL"
@@ -216,9 +200,8 @@ msgstr "'data'变元不对"
 msgid "invalid 'modes' argument"
 msgstr "'modes'变元不对"
 
-#, fuzzy
 msgid "invalid 'x' argument"
-msgstr "'data'变元不对"
+msgstr "'x'变元不对"
 
 msgid "can only handle vector and factor elements"
 msgstr "只能对向量和因子元素适用"
@@ -244,21 +227,20 @@ msgstr "找到了多个帮助文件：用程序包'%s'"
 msgid "'%s' has a help file but no examples file"
 msgstr "'%s'含帮助文件但没有示范文件"
 
-#, fuzzy
 msgid "test '%s' is not available"
-msgstr "没有'%s'这种相依关系"
+msgstr "没有'%s'这种测试"
 
 msgid "'fix' requires a name"
 msgstr "'fix'需要名字值"
 
 msgid "too many list items (at most up to number 26)"
-msgstr ""
+msgstr "串列项太多(最多只能有26项)"
 
 msgid "too many list items (at most up to number 3899)"
-msgstr ""
+msgstr "串列项太多(最多只能有3899项("
 
 msgid "'form' must be a two-sided formula"
-msgstr ""
+msgstr "'form'必需是双边公式"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
@@ -340,33 +322,31 @@ msgid "argument 'help.db' is deprecated"
 msgstr "变元'help.db'已经不再用了"
 
 msgid "Rebuilding the data base ..."
-msgstr ""
+msgstr "重建数据库"
 
 msgid "Packages {.readRDS() sequentially}:"
-msgstr ""
+msgstr "程序包{顺序.readRDS()}:"
 
 msgid "could not find package '%s'"
 msgstr "找不到程序包'%s'"
 
 msgid "package '%s' has empty hsearch data - strangely"
-msgstr ""
+msgstr "程序包'%s'的hsearch数据是空的-很奇怪"
 
 msgid "no hsearch.rds meta data for package"
 msgstr "程序包里没有hsearch.rds样的隐喻数据"
 
 msgid "reencoding ..."
-msgstr ""
+msgstr "重新编码"
 
-#, fuzzy
 msgid "done"
 msgstr "做完了。"
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "删除所有多字節字符数据出错的分錄"
 
-#, fuzzy
 msgid "saving the database ..."
-msgstr "用第一个相配…"
+msgstr "保存到数据库…"
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
@@ -376,7 +356,7 @@ msgid "incorrect 'agrep' specification"
 msgstr "'agrep'设定得不对"
 
 msgid "matched %d objects."
-msgstr ""
+msgstr "%d个匹配对象"
 
 msgid "no package '%s' was found"
 msgstr "找不到'%s'这样一个程序包"
@@ -531,26 +511,26 @@ msgstr "程序包%s相互依赖"
 msgid "no packages were specified"
 msgstr "没有设定程序包"
 
-#, fuzzy
 msgid "argument 'lib' is missing: using '%s'"
 msgstr "没有'lib'这个变元：改用%s"
 
 msgid "'lib' is not writable"
-msgstr ""
+msgstr "'lib'不可写"
 
 msgid ""
 "Would you like to create a personal library\n"
 "'%s'\n"
 "to install packages into?"
 msgstr ""
+"你是不是想建立一个用户定义库\n"
+"'%s'\n"
+"用来安装程序包?"
 
-#, fuzzy
 msgid "unable to install packages"
-msgstr "找不到程序包'%s'"
+msgstr "无法安装程序包"
 
-#, fuzzy
 msgid "unable to create"
-msgstr "无法建立'%s'"
+msgstr "无法建立"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
@@ -699,15 +679,14 @@ msgstr "'as.is' 的长度不对%d  != cols = %d "
 msgid "invalid 'row.names' specification"
 msgstr "'row.names'设定得不对"
 
-#, fuzzy
 msgid "invalid 'row.names' length"
-msgstr "'row.names'设定得不对"
+msgstr "'row.names'的长度设定得不对"
 
 msgid "duplicate 'row.names' are not allowed"
-msgstr ""
+msgstr "'row.names'里不能有重复的名字"
 
 msgid "missing values in 'row.names' are not allowed"
-msgstr ""
+msgstr "'row.names'里不能有遗漏值"
 
 msgid "missing lengths for some fields"
 msgstr "某些域缺少长度值"
@@ -725,32 +704,31 @@ msgid "transfer failure"
 msgstr "转移时出了错"
 
 msgid "HTTPUserAgent"
-msgstr ""
+msgstr "HTTPUserAgent"
 
 msgid "option must be a length one character vector or NULL"
 msgstr "选项的值必需是字符串或NULL"
 
 msgid "empty beginning of file"
-msgstr ""
+msgstr "空白的文件开头"
 
-#, fuzzy
 msgid "first five rows are empty: giving up"
-msgstr "空白的行：停止运行"
+msgstr "开头五行都是空白的：停止运行"
 
 msgid "cannot coerce 'x' to roman"
-msgstr ""
+msgstr "无法将'x'转变成罗马数"
 
 msgid "Invalid roman numeral(s): %s"
-msgstr ""
+msgstr "罗马数字不对：%S"
 
 msgid "invalid 'socket' argument"
-msgstr "'套介面'变元不对"
+msgstr "'socket'变元不对"
 
 msgid "'port' must be integer of length 1"
-msgstr "'port'必需是长度为1的整数"
+msgstr "'port'必需是长度为一的整数"
 
 msgid "'host' must be character of length 1"
-msgstr "'host'必需是长度为1的字符"
+msgstr "'host'必需是长度为一的字符"
 
 msgid "can only receive calls on local machine"
 msgstr "只能在局部电脑上接收調用"
@@ -799,31 +777,28 @@ msgid "Invalid input, please try again"
 msgstr "输入不对，请再试一试"
 
 msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
+msgstr "'quote'的值必需是'TRUE', 'FALSE' 或数值中的一个"
 
 msgid "invalid numbers in 'quote'"
-msgstr ""
+msgstr "'quote'里有不适当的数字"
 
-#, fuzzy
 msgid "invalid 'quote' specification"
-msgstr "'row.names'设定得不对"
+msgstr "'quote'设定得不对"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
+msgstr "row.names=FALSE时col.name=NA没有意义"
 
-#, fuzzy
 msgid "invalid 'col.names' specification"
-msgstr "'row.names'设定得不对"
+msgstr "'col.names'设定得不对"
 
 msgid "appending column names to file"
-msgstr ""
+msgstr "给文件加列名"
 
 msgid "attempt to change '%s' ignored"
-msgstr ""
+msgstr "不能修改'%s'"
 
-#, fuzzy
 msgid "'unzip' must be a single character string"
-msgstr "变元'%s'必需是单字符串"
+msgstr "'unzip'必需是单字符串"
 
 msgid "'subject' missing"
 msgstr "缺少'subject'值"
@@ -859,13 +834,11 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr "否则的话请耐心等待…"
 
-#, fuzzy
 msgid "'url' must be a non-empty character string"
 msgstr "url必需的非空字符串"
 
-#, fuzzy
 msgid "'browser' must be a non-empty character string"
-msgstr "浏览器名必需为非空字符串"
+msgstr "'browser'必需为非空字符串"
 
 msgid "cannot create HTML package index"
 msgstr "无法建立HTML程序包索引"
@@ -938,32 +911,41 @@ msgid_plural "objects '%s' not found"
 msgstr[0] "找不到'%s'这个目标对象"
 msgstr[1] "找不到'%s'这个目标对象"
 
-#, fuzzy
 msgid "'lib' element '%s'  is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0] "'destdir'不是目录"
+msgstr[0] "'lib'元素'%s'不是可写的目录"
 
-#, fuzzy
 msgid "package %s is not available"
 msgid_plural "packages %s are not available"
-msgstr[0] "没有'%s'这种相依关系"
+msgstr[0] "没有'%s'这个程序包"
 
-#, fuzzy
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] "没有'%s'这种相依关系"
 msgstr[1] "没有'%s'这种相依关系"
 
-#, fuzzy
 msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
-msgstr[0] "还安装相依关系"
-msgstr[1] "还安装相依关系"
+msgstr[0] "还安装相依关系%s"
+msgstr[1] "还安装相依关系%s"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
-msgstr[0] "正在使用'%s'这个程序包，因此不会被重新安装"
-msgstr[1] "正在使用'%s'这个程序包，因此不会被重新安装"
+msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+msgstr[1] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
+#~ msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""
+
+#~ msgid "wrong 'sortby' specified. Using sortby=\"score\""
+#~ msgstr "'sortby'的值不对。用sortby=\"score\""
+
+#~ msgid ""
+#~ "wrong restriction specified.\n"
+#~ "Using '%s'"
+#~ msgstr ""
+#~ "限制设定得不对。\n"
+#~ "用'%s'"
 
 #~ msgid "Unable to create temporary directory '%s'"
 #~ msgstr "无法建立临时目录'%s'"

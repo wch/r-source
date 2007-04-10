@@ -1,0 +1,55 @@
+# Japanese translations for R package
+# R パッケージに対する英訳.
+# Copyright (C) 2007 The R Foundation
+# This file is distributed under the same license as the R package.
+#  <pootle@unico.okada.jp.org>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.5.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2007-01-05 12:15+0000\n"
+"PO-Revision-Date: 2007-04-03 01:06+0900\n"
+"Last-Translator: Ei-ji Nakama <nakama@ki.rim.or.jp>\n"
+"Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1\n"
+
+#: tcltk.c:65
+msgid "parse error in R expression"
+msgstr " R expression 内に構文エラー"
+
+#: tcltk.c:165 tcltk.c:246
+msgid "tcl error.\n"
+msgstr " tcl エラー\n"
+
+#: tcltk.c:201 tcltk.c:838
+msgid "invalid argument"
+msgstr " 不正な引数"
+
+#: tcltk.c:611
+msgid "argument list is too long in tcltk internal function 'callback_closure'"
+msgstr " 引数リストはtcltkの内部関数 `callback_closure' において長過ぎます"
+
+#: tcltk.c:642
+msgid "argument is not of correct type"
+msgstr " 引数は正しいタイプではありません"
+
+#: tcltk.c:689
+msgid "Tcl already loaded"
+msgstr " 既にTclはロード済です"
+
+#: tcltk.c:707
+msgid "Tcl is not loaded"
+msgstr " Tclはロード出来ません"
+
+#: tcltk.c:713
+msgid "Tcl is not last loaded handler"
+msgstr " Tclはロードした最後のハンドラーではありません"
+
+#: tcltk.c:792
+msgid "no DISPLAY variable so Tk is not available"
+msgstr " DISPLAY環境変数が無いのでTkは利用出来ません"

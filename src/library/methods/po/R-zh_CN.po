@@ -330,7 +330,7 @@ msgid "An object of class \""
 msgstr "目标对象为类别"
 
 msgid "\""
-msgstr ""
+msgstr "\""
 
 msgid ""
 "the names in signature for method (%s) do not match function's arguments (%s)"
@@ -776,7 +776,7 @@ msgid "\") has defined subclasses that should also be removed: ("
 msgstr "\")带定义了的子类别，这些子类别也应该被删除：("
 
 msgid ")"
-msgstr ""
+msgstr ")"
 
 msgid "invalid class \"%s\" object:"
 msgstr "类别为\"%s\"的目标对象不对:"
@@ -964,7 +964,7 @@ msgid "( should be methods list or method, had class \""
 msgstr "(应该是list或method方法，但其类别却是\""
 
 msgid "\")"
-msgstr ""
+msgstr "\")"
 
 msgid "Invalid object in methods table (\""
 msgstr "列表方法的目标对象出错"
@@ -978,18 +978,14 @@ msgstr "同属函数的方法表不对，或还没有设制"
 msgid "Trying to find a methods table in a non-generic function"
 msgstr "在非同属函数里是找不到方法列表的"
 
-#, fuzzy
 msgid "Ambiguous method selection for \"%s\", target \"%s\""
-msgstr ""
-"\"%s\"的方法选择不明确，目标\"%s\" (将使用所显示的第一个标记)\n"
-"%s"
+msgstr "\"%s\"的方法选择不明确，目标\"%s\""
 
-#, fuzzy
 msgid ""
 "(the first of the signatures shown will be used)\n"
 "%s"
 msgstr ""
-"\"%s\"的方法选择不明确，目标\"%s\" (将使用所显示的第一个标记)\n"
+"(使用显示的第一个标记)\n"
 "%s"
 
 msgid "found"
@@ -1018,9 +1014,8 @@ msgstr "方法串列于同屬"
 msgid "\" not found"
 msgstr "\"找不到"
 
-#, fuzzy
 msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-msgstr ".UsingMethodsTables的变元不对：其值只能是TRUE或FALSE %s"
+msgstr ".UsingMethodsTables: 'onOff'的值只能是TRUE或FALSE"
 
 msgid "Failed to find expected group generic function:"
 msgstr "找不到团体同属函数："
@@ -1041,10 +1036,10 @@ msgid "\", but it is not a  generic function: i ="
 msgstr "\",但不是同屬函数：i ="
 
 msgid ", funs ="
-msgstr ""
+msgstr ", funs ="
 
 msgid "; gnames ="
-msgstr ""
+msgstr "; gnames ="
 
 msgid "Could not find generic function \"%s\" to initialize cached methods"
 msgstr "找不到用于初始贮藏方法的同属函数\"%s\" "
@@ -1089,7 +1084,7 @@ msgid "argument 'what' should be the name of a function"
 msgstr "变元'what'必需是一个函数名字"
 
 msgid "Tracing the internal function \"%s\" is not allowed"
-msgstr ""
+msgstr "不可以对内部函数\"%s\"进行跟踪"
 
 msgid ".TraceWithMethods: after computing what, whereF"
 msgstr ".TraceWithMethods: 在计算什么后，whereF"
@@ -1157,6 +1152,7 @@ msgid ""
 "apparently bad method or class metadata in saved environment; move the file "
 "or remove the class/method"
 msgstr ""
+"保存了的环境中出现了不良方法或类别元数据；请移动文件或删除这些类别/方法"
 
 msgid "in the method signature for function \"%s\" no definition for class: %s"
 msgid_plural ""

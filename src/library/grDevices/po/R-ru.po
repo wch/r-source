@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-04-10 07:41\n"
 "PO-Revision-Date: 2006-09-25 04:30-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -110,6 +110,10 @@ msgstr "dev.control() вызван без открытия графического устройства"
 
 msgid "argument is missing with no default"
 msgstr "аргумент пропущен, умолчания нет"
+
+#, fuzzy
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.control() вызван без открытия графического устройства"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "неправильные аргументы в '%s' (нужны именованные аргументы)"
