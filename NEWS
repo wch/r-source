@@ -596,7 +596,7 @@ BUG FIXES
 	now have an empty environment and not the environment used to
 	dump the datasets in the package.
 
-    o	Dataset Seatbelts now correctly has class c("mts", "ts").
+    o	Dataset 'Seatbelts' now correctly has class c("mts", "ts").
 
     o	str() now labels classes on data frames more coherently.
 
@@ -692,7 +692,7 @@ BUG FIXES
 	S-compatible and relied on, so is now documented.
 
     o	which(x, arr.ind = TRUE) did not return a matrix (as
-	documented) if 'x' had length 0.
+	documented) if 'x' was an array of length 0.
 
     o	C-level duplicate() truncated CHARSXPs with embedded nuls.
 
@@ -794,6 +794,15 @@ BUG FIXES
 
     o	readBin(<raw vector>) could read beyond the end of the vector
 	when size-changing was involved.
+
+    o	The C entry point PrintValue (designed to emulate
+	auto-printing) would not find show() for use on S4 objects,
+	and did not have the same search path (for show(), print() and
+	print() methods) as auto-printing.  Also, auto-printing S4
+	objects would fail to find 'show' if the methods namespace was
+	loaded but the package was not attached (or otherwise not in
+	the search path).
+
 
 
 

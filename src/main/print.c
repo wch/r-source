@@ -841,32 +841,44 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 
 
 /* Print an S-expression using (possibly) local options.
-   This is used for auto-printing */
+   This is used for auto-printing from main.c */
 
 void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 {
-    SEXP call;
-    char *autoprint = "print";
-
     PrintDefaults(env);
     tagbuf[0] = '\0';
     PROTECT(s);
     if(isObject(s)) {
-	/* The intention here is to call show() on S4 objects, otherwise
+	/* 
+	   The intention here is to call show() on S4 objects, otherwise
 	   print(), so S4 methods for show() have precedence over those for
-	   print(), to conform with the "green book", p. 332
+	   print() to conform with the "green book", p. 332
 	*/
-        if(isMethodsDispatchOn()) {
-	  if(IS_S4_OBJECT(s))
-		    autoprint = "show";
-	}
-	PROTECT(call = lang2(install(autoprint), s));
+	SEXP call, showS;
+        if(isMethodsDispatchOn() && IS_S4_OBJECT(s)) {
+	    /*
+	      Note that we cannot assume that show() is visible from
+	      'env', but we can assume there is a loaded "methods"
+	      namespace.  It is tempting to cache the value of show in
+	      the namespace, but the latter could be unloaded and
+	      reloaded in a session.
+	    */
+	    showS = findVar(install("show"), env);
+	    if(showS == R_UnboundValue) {
+		printf("looking for show in methods NS\n");
+		SEXP methodsNS = R_FindNamespace(mkString("methods"));
+		if(methodsNS == R_UnboundValue)
+		    error("missing methods namespace: this should not happen");
+		showS = findVarInFrame3(methodsNS, install("show"), TRUE);
+		if(showS == R_UnboundValue)
+		    error("missing show() in methods namespace: this should not happen");
+	    }
+	    PROTECT(call = lang2(showS, s));
+	} else
+	    PROTECT(call = lang2(install("print"), s));
 	eval(call, env);
 	UNPROTECT(1);
-    }
-    else {
-	PrintValueRec(s, env);
-    }
+    } else PrintValueRec(s, env);
     UNPROTECT(1);
 }
 
@@ -875,7 +887,7 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 
 void PrintValue(SEXP s)
 {
-    PrintValueEnv(s, R_BaseEnv);
+    PrintValueEnv(s, R_GlobalEnv);
 }
 
 
@@ -883,7 +895,7 @@ void PrintValue(SEXP s)
 
 void R_PV(SEXP s)
 {
-    if(isObject(s)) PrintValueEnv(s, R_BaseEnv);
+    if(isObject(s)) PrintValueEnv(s, R_GlobalEnv);
 }
 
 
