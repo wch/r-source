@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-21 16:08+0000\n"
+"POT-Creation-Date: 2007-04-10 07:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,7 +182,7 @@ msgstr ""
 msgid "'rho' must be an environment"
 msgstr ""
 
-#: port.c:386 port.c:534
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
@@ -195,38 +195,38 @@ msgstr ""
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:402
+#: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:448
+#: port.c:451
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:469
+#: port.c:472
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:482
+#: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:503
+#: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:516
+#: port.c:519
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:535
+#: port.c:538
 msgid "m must be a list"
 msgstr ""
 
-#: port.c:555
+#: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
@@ -239,11 +239,11 @@ msgstr ""
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr ""
 
-#: smooth.c:242 smooth.c:252
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr ""
 
-#: smooth.c:262
+#: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
 msgstr ""
 

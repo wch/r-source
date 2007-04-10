@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-21 16:08+0000\n"
+"POT-Creation-Date: 2007-04-10 07:42+0100\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -183,7 +183,7 @@ msgstr ""
 msgid "'rho' must be an environment"
 msgstr "'rho'는 환경이 나오지 않으면 되지 않습니다"
 
-#: port.c:386 port.c:534
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
@@ -196,38 +196,38 @@ msgstr ""
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:402
+#: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:448
+#: port.c:451
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:469
+#: port.c:472
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:482
+#: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:503
+#: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:516
+#: port.c:519
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:535
+#: port.c:538
 msgid "m must be a list"
 msgstr "m는 리스트가 아니면 되지 않습니다"
 
-#: port.c:555
+#: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 
@@ -240,11 +240,11 @@ msgstr "3점 이동의 중앙치 계산으로 end-rule이 부적절합니다: %d
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "smooth(*, '3RSR')에서의 할당 에러입니다"
 
-#: smooth.c:242 smooth.c:252
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "smooth(*,'3RSS')에서의 할당 에러입니다"
 
-#: smooth.c:262
+#: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
 msgstr "smooth(*,'3R')에서의 할당 에러입니다"
 

@@ -18,13 +18,13 @@ msgstr ""
 
 #: Rmd5.c:35
 msgid "argument 'files' must be character"
-msgstr "引数 'files' は文字型でなければなりません"
+msgstr " 引数 'files' は文字型でなければなりません"
 
 #: Rmd5.c:49
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr "md5 はファイル '%s' で失敗しました"
+msgstr " md5 はファイル '%s' で失敗しました"
 
 #: text.c:66
 msgid "invalid argument type"
-msgstr "不正な引数の型です"
+msgstr " 不正な引数の型です"

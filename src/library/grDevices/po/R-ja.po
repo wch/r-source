@@ -2,259 +2,263 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
-"PO-Revision-Date: 2006-12-06 16:27+0900\n"
-"Last-Translator: Minato Nakazawa <nminato@med.gunma-u.ac.jp>\n"
+"POT-Creation-Date: 2007-04-10 07:41\n"
+"PO-Revision-Date: 2007-04-02 18:43+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootle 0.10.1rc1\n"
+"X-Generator: Pootle 0.10.1\n"
 
 msgid "'coef' must not be negative"
-msgstr "'coef' は負にはなれません"
+msgstr " 'coef' は負にはなれません"
 
 msgid "no 'z' matrix specified"
-msgstr "'z' 行列が指定されていません"
+msgstr " 'z' 行列が指定されていません"
 
 msgid "increasing 'x' and 'y' values expected"
-msgstr "'x' と 'y' の値は昇順でなければなりません"
+msgstr " 'x' と 'y' の値は昇順でなければなりません"
 
 msgid "no proper 'z' matrix specified"
-msgstr "適切な 'z' 行列が指定されていません"
+msgstr " 適切な 'z' 行列が指定されていません"
 
 msgid "'bias' must be positive"
-msgstr "'bias' は正の値でなければなりません"
+msgstr " 'bias' は正の値でなければなりません"
 
-#, fuzzy
 msgid "at least 3 columns needed"
-msgstr "少なくとも二つの列が必要です"
+msgstr " 少なくとも三つ列が必要です"
 
 msgid "rgb matrix must be numeric"
-msgstr "rgb 行列は数値でなければなりません"
+msgstr " rgb 行列は数値でなければなりません"
 
 msgid "rgb matrix must have 3 rows"
-msgstr "rgb 行列の行数は 3 行でなければなりません"
+msgstr " rgb 行列の行数は 3 行でなければなりません"
 
 msgid "rgb values must be in [0, maxColorValue]"
-msgstr "rgb 値の範囲は [0, maxColorValue] でなければなりません"
+msgstr " rgb 値の範囲は [0, maxColorValue] でなければなりません"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr ""
-"'start' と 'end' の値は異なり，どちらも範囲 [0, 1] 内になければなりません"
+" 'start' と 'end' の値は異なり，どちらも範囲 [0, 1] 内になければなりません"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
-msgstr "'gamma' はスカラーまたは 'sRGB' でなければなりません"
+msgstr " 'gamma' はスカラーまたは 'sRGB' でなければなりません"
 
 msgid "Color space converter:"
-msgstr "Color スペース変換器:"
+msgstr " 色空間変換器:"
 
 msgid "Reference white:"
-msgstr "基準白色:"
+msgstr " 基準白色:"
 
 msgid "display gamma"
-msgstr "ガンマ補正"
+msgstr " ガンマ補正"
 
 msgid "'from' must be a colorConverter or string"
-msgstr "'from' は colorConverter または string でなければなりません"
+msgstr " 'from' は colorConverter または文字列でなければなりません"
 
 msgid "'to' must be a colorConverter or string"
-msgstr "'to' は colorConverter または string でなければなりません"
+msgstr " 'to' は colorConverter または文字列でなければなりません"
 
 msgid "'from.ref.white' disagrees with definition of"
-msgstr "'from.ref.white' が以下の定義と一致しません: "
+msgstr " 'from.ref.white' が以下の定義と一致しません: "
 
 msgid "'to.ref.white' disagrees with definition of"
-msgstr "'to.ref.white' が以下の定義と一致しません："
+msgstr " 'to.ref.white' が以下の定義と一致しません："
 
 msgid "color spaces use different reference whites."
-msgstr "色空間(color spaces)は異なった基準白色を使っています"
+msgstr " 色空間(color spaces)は異なった基準白色を使っています"
 
 msgid "cannot shut down device 1 (the null device)"
-msgstr "デバイス 1 をシャットダウンすることが出来ません（NULL デバイスです）"
+msgstr " デバイス 1 をシャットダウンすることが出来ません（NULL デバイスです）"
 
 msgid "cannot supply 'which' and 'device' at the same time"
-msgstr "同時に 'which' と 'device' を与えることは出来ません"
+msgstr " 同時に 'which' と 'device' を与えることは出来ません"
 
 msgid "cannot copy from the null device"
-msgstr "nullデバイスからコピーすることは出来ません"
+msgstr " nullデバイスからコピーすることは出来ません"
 
 msgid "cannot copy to the null device"
-msgstr "NULL デバイスにコピーすることは出来ません"
+msgstr " NULL デバイスにコピーすることは出来ません"
 
 msgid "cannot copy device to itself"
-msgstr "デバイスを同じデバイスにコピーすることは出来ません"
+msgstr " デバイスを同じデバイスにコピーすることは出来ません"
 
 msgid "'device' should be a function"
-msgstr "'device' は関数でなければなりません"
+msgstr " 'device' は関数でなければなりません"
 
 msgid "no device to print from"
-msgstr "以下からプリントするためのデバイスがありません: "
+msgstr " 以下からプリントするためのデバイスがありません: "
 
 msgid "can only print from screen device"
-msgstr "スクリーンデバイスからしかプリントすることが出来ません"
+msgstr " スクリーンデバイスからしかプリントすることが出来ません"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr "'width' と 'height' のどちらか一つを指定する必要があります"
+msgstr " 'width' と 'height' のどちらか一つを指定する必要があります"
 
 msgid "dev.control() called without an open graphics device"
 msgstr ""
-"dev.control() が，開かれたグラフィックスデバイスがないのに呼び出されました"
+" dev.control() が，開かれたグラフィックスデバイスがないのに呼び出されました"
 
 msgid "argument is missing with no default"
-msgstr "引数がありませんが、省略時既定値もありません"
+msgstr " 引数がありませんが、省略時既定値もありません"
+
+#, fuzzy
+msgid "dev.displaylist() called without an open graphics device"
+msgstr ""
+" dev.control() が，開かれたグラフィックスデバイスがないのに呼び出されました"
 
 msgid "invalid arguments in '%s' (need named args)"
-msgstr "'%s' 中に不正な引数があります（名前付き引数が必要です）"
+msgstr " '%s' 中に不正な引数があります（名前付き引数が必要です）"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr "'name.opt' は既存のリストの名前である文字列でなければなりません"
+msgstr " 'name.opt' は既存のリストの名前である文字列でなければなりません"
 
 msgid "cannot reset non-existent '%s'"
-msgstr "存在しない '%s' をリセットすることは出来ません"
+msgstr " 存在しない '%s' をリセットすることは出来ません"
 
 msgid "invalid options in '%s'"
-msgstr "'%s' 中に不正なオプションがあります "
+msgstr " '%s' 中に不正なオプションがあります "
 
 msgid "NOT changing"
-msgstr "変更しません"
+msgstr " 変更しません"
 
 msgid "unknown family '%s'"
-msgstr "フォントファミリー'%s'は未知です"
+msgstr " フォントファミリー'%s'は未知です"
 
 msgid "invalid 'family' argument"
-msgstr "不正な 'family' 引数です"
+msgstr " 不正な 'family' 引数です"
 
 msgid "invalid PDF version"
-msgstr "不正な PDF のバージョンです"
+msgstr " 不正な PDF のバージョンです"
 
 msgid "Invalid font type"
-msgstr "不正なフォント型です"
+msgstr " 不正なフォント型です"
 
 msgid "invalid family name in font specification"
-msgstr "フォント指定中に不正なファミリ名があります"
+msgstr " フォント指定中に不正なファミリ名があります"
 
 msgid "invalid metric information in font specification"
-msgstr "フォント指定中に不正なメトリック指定があります"
+msgstr " フォント指定中に不正なメトリック指定があります"
 
 msgid "invalid encoding in font specification"
-msgstr "フォント指定中に不正なエンコーディングがあります"
+msgstr " フォント指定中に不正なエンコーディングがあります"
 
 msgid "Not a CID font"
-msgstr " CID フォントではありません"
+msgstr "  CID フォントではありません"
 
 msgid "invalid CMap name in font specification"
-msgstr "フォント指定中に不正な CMap 名があります"
+msgstr " フォント指定中に不正な CMap 名があります"
 
 msgid "invalid 'cmapEncoding' in font specification"
-msgstr "フォント指定中に不正な 'cmapEncoding' があります"
+msgstr " フォント指定中に不正な 'cmapEncoding' があります"
 
 msgid "invalid PDF resource in font specification"
-msgstr "フォント指定中に不正な PDF resource があります"
+msgstr " フォント指定中に不正な PDF resource があります"
 
 msgid "Invalid font database name"
-msgstr "不正なフォントデータベース名です"
+msgstr " 不正なフォントデータベース名です"
 
 msgid "font %s already in use"
-msgstr "フォント %s は既に使われています"
+msgstr " フォント %s は既に使われています"
 
 msgid "invalid arguments in '%s' (must be font names)"
-msgstr "'%s' 中の不正な引数です（フォント名が必要です）"
+msgstr " '%s' 中の不正な引数です（フォント名が必要です）"
 
 msgid "unknown font"
-msgstr "未知のフォントです"
+msgstr " 未知のフォントです"
 
 msgid "font encoding mismatch '%s'/'%s'"
-msgstr "フォントエンコーディングがミスマッチです '%s'/'%s'"
+msgstr " フォントエンコーディングがミスマッチです '%s'/'%s'"
 
 msgid "'file' must be a non-empty character string"
-msgstr "'file' は空でない文字列でなければなりません"
+msgstr " 'file' は空でない文字列でなければなりません"
 
 msgid "Invalid output format"
-msgstr "不正な出力書式です"
+msgstr " 不正な出力書式です"
 
 msgid "status %d in running command '%s'"
-msgstr "状態 %d が命令 '%s' 実行中に起きました"
+msgstr " 状態 %d が命令 '%s' 実行中に起きました"
 
 msgid "no current device to record from"
-msgstr "現在，以下のものから記録することが出来るデバイスはありません: "
+msgstr " 現在，以下のものから記録することが出来るデバイスはありません: "
 
 msgid "argument is not of class \"recordedplot\""
-msgstr "引数はクラス \"recordedplot\" ではありません"
+msgstr " 引数はクラス \"recordedplot\" ではありません"
 
 msgid "loading snapshot from pre-2.0.0 R version"
-msgstr "pre-2.0.0 R バージョンからのスナップショットが読み込まれています"
+msgstr " R2.0.0以前のバージョンからのスナップショットが読み込まれています"
 
 msgid "loading snapshot from different R version"
-msgstr "異なった R バージョンからのスナップショットが読み込まれています"
+msgstr " 異なった R バージョンからのスナップショットが読み込まれています"
 
 msgid "'r' must be a \"range\", hence of length 2"
-msgstr "'r' は範囲でなければなりません. 従って長さは2です"
+msgstr " 'r' は範囲でなければなりません. 従って長さは2です"
 
 msgid "invalid first argument"
-msgstr "最初の引数が無効です"
+msgstr " 最初の引数が無効です"
 
 msgid "'x' and 'y' lengths differ"
-msgstr "'x' と 'y' の長さが異なります"
+msgstr " 'x' と 'y' の長さが異なります"
 
 msgid "invalid first argument [bad language object]"
-msgstr "最初の引数が無効です [誤った言語オブジェクトです]"
+msgstr " 最初の引数が無効です [誤った言語オブジェクトです]"
 
 msgid "at least 2 columns needed"
-msgstr "少なくとも二つの列が必要です"
+msgstr " 少なくとも二つの列が必要です"
 
 msgid "'x', 'y' and 'z' lengths differ"
-msgstr "'x','y' そして 'z' の長さが異なります"
+msgstr " 'x','y' そして 'z' の長さが異なります"
 
 msgid "'file' is missing with no default"
-msgstr "'file' はデフォルトなしで欠損となっています"
+msgstr " 'file' はデフォルトなしで欠損となっています"
 
 msgid "sorry, 'gs' cannot be found"
-msgstr "すみません，'gs' が見つかりません"
+msgstr " すみません，'gs' が見つかりません"
 
 msgid "device '%s' is not available"
-msgstr "デバイス '%s' は有効ではありません"
+msgstr " デバイス '%s' は有効ではありません"
 
 msgid "Available devices are %s"
-msgstr "利用可能なデバイスは %s です"
+msgstr " 利用可能なデバイスは %s です"
 
 msgid "quartz() device interactivity reduced without an event loop manager"
-msgstr "quartz() デバイスは event loop manager なしに対話的に減らされました"
+msgstr " quartz() デバイスは event loop manager なしに対話的に減らされました"
 
 msgid "invalid Quartz font:  must be 4 strings"
-msgstr "不正な Quartz font です: 4 つの文字列でなければなりません"
+msgstr " 不正な Quartz font です: 4 つの文字列でなければなりません"
 
 msgid "invalid arguments in quartzFonts (must be font names)"
-msgstr "quartzFonts 中の不正な引数です（フォント名が必要です）"
+msgstr " quartzFonts 中の不正な引数です（フォント名が必要です）"
 
 msgid "invalid arguments in quartzFonts (need named args)"
-msgstr "quartzFonts 中の不正な引数です（名前がついた引数が必要です）"
+msgstr " quartzFonts 中の不正な引数です（名前がついた引数が必要です）"
 
 msgid "invalid X11 font specification:"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr " 不正な X11 フォントの指定方法です"
 
 msgid "can only bring windows devices to the front"
-msgstr "windows デバイスしか正面にもってくることが出来ません"
+msgstr " windows デバイスしか正面にもってくることが出来ません"
 
 msgid "no such device"
-msgstr "そのようなデバイスはありません"
+msgstr " そのようなデバイスはありません"
 
 msgid "can only copy from 'windows' devices"
-msgstr "'windows' デバイスからしかコピーできません"
+msgstr " 'windows' デバイスからしかコピーできません"
 
 msgid "subscript out of range"
-msgstr "添え字が範囲外です"
+msgstr " 添え字が範囲外です"
 
 msgid "invalid Windows font:  must be a single font family name"
 msgstr ""
-"不正な Windows フォントです: 単一のフォントファミリー名でなければなりません"
+" 不正な Windows フォントです: 単一のフォントファミリー名でなければなりません"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr "'windowsFonts' 中の引数が不正です（フォント名が必要です）"
+msgstr " 'windowsFonts' 中の引数が不正です（フォント名が必要です）"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr "'windowsFonts' 中の不正な引数です（名前がついた引数が必要です）"
+msgstr " 'windowsFonts' 中の不正な引数です（名前がついた引数が必要です）"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"

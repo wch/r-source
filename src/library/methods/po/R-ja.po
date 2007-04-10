@@ -1,0 +1,1354 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.5.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-04-03 11:43\n"
+"PO-Revision-Date: 2007-04-04 13:05+0900\n"
+"Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 0.10.1\n"
+
+msgid "replacement value is not a matrix"
+msgstr " 置き換え値は行列ではありません"
+
+msgid "OOPS: something wrong with line"
+msgstr " おやまあ: 行が何か変です"
+
+msgid "in .OldClassesPrototypes"
+msgstr " .OldClassesPrototypes 内"
+
+msgid ""
+"methods may not be defined for primitive function \"%s\" in this version of R"
+msgstr ""
+" 現在のRのバージョンでは，メソッドをプリミティブ関数 \"%s\" として定義するこ"
+"とが出来ません．"
+
+msgid "\"%s\" is not one of the basic functions"
+msgstr " \"%s\" は基本関数ではありません．"
+
+msgid ""
+"no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
+msgstr ""
+" as(x, \"%s\") <- value (クラス \"%s\" に対する) には 'replace' メソッドは定"
+"義されていません"
+
+msgid ""
+"the 'coerce' argument to 'setIs' should be a function of one argument, got "
+"an object of class \"%s\""
+msgstr ""
+" 'setIs' に対する 'coerce' 引数は１つの引数を持つ関数であるべきですが、クラ"
+"ス \"%s\" のオブジェクトを受け取りました"
+
+msgid ""
+"there is no automatic definition for as(object, \"%s\") <- value when object "
+"has class \"%s\" and no 'replace' argument was supplied; replacement will be "
+"an error"
+msgstr ""
+" as(object, \"%s\") <- value には、オブジェクトがクラス \"%s\" で 'replace' "
+"引数が与えられていないときには、自動的な定義はありません；置き換えはエラーに"
+"なるでしょう"
+
+msgid ""
+"the 'replace' argument to setIs() should be a function of 2 or 3 arguments, "
+"got an object of class \"%s\""
+msgstr ""
+" selts() への 'replace' 2 もしくは 3 つの引数を持つ関数であるべきですが、クラ"
+"ス \"%s\" のオブジェクトを得ました"
+
+msgid "the member classes must be defined: not true of %s"
+msgstr ""
+" メンバークラスが定義されている必要があります：%s についてはそうでありません"
+
+msgid "unable to create union class:  could not set members %s"
+msgstr " union クラスを生成できません : メンバー %s を設定できませんでした"
+
+msgid ""
+"\"%s\" is a primitive function;  methods can be defined, but the generic "
+"function is implicit, and cannot be changed."
+msgstr ""
+" \"%s\" はプリミティブな関数です；メソッドを定義できますが、総称的関数は隠匿"
+"されており、変更できません"
+
+msgid ""
+"if the `def' argument is supplied, it must be a function that calls "
+"standardGeneric(\"%s\") to dispatch methods"
+msgstr ""
+" もし `def' 引数が与えられるなら、それはメソッドを割り当てる standardGeneric"
+"(\"%s\") を呼び出す関数である必要があります"
+
+msgid "must supply a function skeleton, explicitly or via an existing function"
+msgstr ""
+" 明示的もしくは既存の関数経由で関数の骨格(skelton) を与える必要があります"
+
+msgid ""
+"function \"%s\" appears to be a generic function, but with generic name \"%s"
+"\""
+msgstr ""
+" 関数 \"%s\" は総称的関数と思われますが、総称的な名前 \"%s\" を持ちます"
+
+msgid "generic function \"%s\" not found for removal"
+msgstr " 除去のための総称的関数 \"%s\" が見付かりません "
+
+msgid ""
+"invalid argument \"f\", expected a function or its name, got an object of "
+"class \"%s\""
+msgstr ""
+" 不正な引数 \"f\" です。関数かその名前が期待されていますが、クラス \"%s\" の"
+"オブジェクトが得られました"
+
+msgid ""
+"internal error: did not get a valid generic function object for function \"%s"
+"\""
+msgstr ""
+" 内部エラー：関数 \"%s\" に対する適正な総称的関数オブジェクトを得ることができ"
+"ませんでした"
+
+msgid "A function for argument \"f\" must be a generic function"
+msgstr " 引数 \"f\" に対する関数は総称的でなければなりません"
+
+msgid ""
+"the environment \"%s\" is locked; cannot assign methods for function \"%s\""
+msgstr ""
+" 環境 '%s' がロックされています；関数 '%s' に対するメソッドを割り当てられませ"
+"ん"
+
+msgid ""
+"the 'where' environment (%s) is a locked namespace; cannot assign methods "
+"there"
+msgstr ""
+" 'where' 環境 (%s) はロックされた名前空間です； そこへはメソッドを割り当てら"
+"れません"
+
+msgid ""
+"copying the generic function \"%s\" to environment \"%s\", because the "
+"previous version was in a sealed namespace (%s)"
+msgstr ""
+" 総称的関数 \"%s\" を環境 \"%s\" にコピーしています、なぜなら前のバージョンは"
+"封印された名前空間 (%s) にあったからです"
+
+msgid "no existing definition for function \"%s\""
+msgstr " 関数 \"%s\" に対する既存の定義はありません"
+
+msgid "Creating a new generic function for \"%s\" in \"%s\""
+msgstr " 新しいジェネリック関数 \"%s\" を \"%s\" 中に生成します"
+
+msgid ""
+"apparent internal error: a generic function was found for \"%s\", but no "
+"corresponding object was found searching from \"%s\""
+msgstr ""
+" 恐らく内部エラー： \"%s\" に対する総称的関数が見付かりましたが、\"%s\" から"
+"の検索では対応するオブジェクトが見付かりませんでした"
+
+msgid ""
+"the method for function \"%s\" and signature %s is sealed and cannot be re-"
+"defined"
+msgstr ""
+" 関数 \"%s\" とシグネチァ(signature) %s に対するメソッドは封印(sealed)されて"
+"おり、再定義出来ません"
+
+msgid ""
+"primitive functions cannot be methods; they must be enclosed in a regular "
+"function"
+msgstr ""
+" プリミティブな関数はメソッドにはなれません；普通の関数中に含める必要がありま"
+"す"
+
+msgid ""
+"invalid method definition: expected a function, got an object of class \"%s\""
+msgstr ""
+" 不正なメソッド定義です：関数が期待されますが、クラス \"%s\" のオブジェクトが"
+"得られました"
+
+msgid "Function supplied as argument \"f\" must be a generic"
+msgstr " 引数 'f' として提供された関数は総称的である必要があります"
+
+msgid "no generic function \"'%s\" found"
+msgstr " 総称的関数 '%s' が見つかりません"
+
+msgid "no method found for function \"%s\" and signature %s"
+msgstr " 関数 \"%s\" とシグネチャ(signature) %s に対するメソッドがありません"
+
+msgid "no generic function \"%s\" found"
+msgstr " 総称的関数 \"%s\" が見つかりません"
+
+msgid "No method found for function \"%s\" and signature %s"
+msgstr " 関数 \"%s\" とシグネチャ(signature) %s に対するメソッドがありません"
+
+msgid ""
+"apparent inconsistency in the methods for function \"%s\"; argument \"%s\" "
+"in the signature corresponds to \"%s\" in the methods list object"
+msgstr ""
+" 関数 \"%s\" に対するメソッド中の恐らく非整合性；シグネチャ(signature)中の引"
+"数 \"%s\" はメソッドリストオブジェクト中の \"%s\" に対応します"
+
+msgid ""
+"no S4 method for function \"%s\" and signature %s; consider getS3method() if "
+"you wanted the S3 method"
+msgstr ""
+" 関数 \"%s\" とシグネチャ(signature) %s に対する S4 メソッドはありません；も"
+"し S3 メソッドが必要なら getS3method() の使用を検討して下さい"
+
+msgid "no method defined for function \"%s\" and signature %s"
+msgstr ""
+" 関数 \"%s\" とシグネチャ(signature) %s に対して定義されたメソッドはありませ"
+"ん"
+
+msgid "No method found for signature %s"
+msgstr " シグネチャ(signature) %s に対するメソッドが見付かりませんでした"
+
+msgid "\"%s\" has no methods defined"
+msgstr " \"%s\" は定義されたメソッドを持ちません"
+
+msgid "signature must be a vector of classes or an environment"
+msgstr " シグネチャ(signature)はクラスのベクトルか環境でなければなりません"
+
+msgid "no unique method corresponding to this signature"
+msgstr " このシグネチャ(signature)に対応するユニークなメソッドはありません"
+
+msgid "unable to match signature to methods"
+msgstr " シグネチャ(signature)をメソッドにマッチさせられません"
+
+msgid ""
+"bad class specified for element %d (should be a single character string)"
+msgstr ""
+" 要素 %d に対して間違ったクラスが指定されました(単一の文字列である必要があり"
+"ます)"
+
+msgid ""
+"first argument should be the name(s) of generic functions (got object of "
+"class \"%s\")"
+msgstr ""
+" 最初の引数は総称的関数の名前であるべきです(クラス \"%s\" のオブジェクトを得"
+"ました)"
+
+msgid ""
+"No generic function found for \"%s\"; no action taken in removeMethodsObject"
+msgstr ""
+" \"%s\" に対する総称的関数が見付かりません；　removeMethodsObject　中で如何な"
+"るアクションも行われません"
+
+msgid ""
+"the environment/package \"%s\" is locked; cannot remove methods data for \"%s"
+"\""
+msgstr ""
+" 環境/パッケージ \"%s\" はロックされています； \"%s\" に対するメソッドデータ"
+"を取り除けません"
+
+msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
+msgstr ""
+" 総称的関数でない \"%s\" が \"%s\" 中にあります；メソッドは取り除かれません"
+
+msgid ""
+"cannot restore previous version of \"%s\" in locked environment/package \"%s"
+"\""
+msgstr ""
+" \"%s\" (ロックされた環境/パッケージ \"%s\" 中の)の以前のバージョンを回復でき"
+"ません"
+
+msgid "restoring default function definition of \"%s\""
+msgstr " \"%s\" の既定の関数定義を回復しています"
+
+msgid "cannot reset \"%s\", the definition is not a generic function object"
+msgstr ""
+" \"%s\" をリセット出来ません、この定義は総称的関数オブジェクトではありません"
+
+msgid ""
+"error in updating generic function \"%s\"; the function definition is not a "
+"generic function (class \"%s\")"
+msgstr ""
+" 総称的関数 \"%s\" の更新にエラー； 関数定義は総称的ではありません(クラス \"%"
+"s\" です)"
+
+msgid "function \"%s\" is already a group generic; no change"
+msgstr " 関数 \"%s\" は既にグループ総称的です；変更しません "
+
+msgid "function \"%s\" is a group generic; do not call it directly"
+msgstr " 関数 \"%s\" はグループ総称的です；直接呼び出さないで下さい"
+
+msgid ""
+"'callGeneric' with a primitive needs explicit arguments (no formal args "
+"defined)"
+msgstr ""
+" プリミティブを伴う 'callGeneric' は明示的な引数(形式的引数が定義されていな"
+"い)を必要とします"
+
+msgid "'callGeneric' must be called from a generic function or method"
+msgstr " 'callGeneric' は総称的関数かメソッドから呼び出されなくてはなりません"
+
+msgid ""
+"invalid first argument: should be the name of the first argument in the "
+"dispatch"
+msgstr ""
+" 最初の引数が不正です；割り当て(dispatch)における最初の引数の名前でなければな"
+"りません"
+
+msgid "duplicate element names in 'MethodsList' at level %d: %s"
+msgstr " 'MethodsList' のレベル %d に重複した要素名： %s"
+
+msgid ""
+"element %d at level %d (class \"%s\") cannot be interpreted as a function or "
+"named list"
+msgstr ""
+" 要素 %d (レベル %d、クラス \"%s\") は、関数もしくは名前付きリストとして解釈"
+"出来ません"
+
+msgid "arguments 'names' and 'signature' must have the same length"
+msgstr " 引数 'names' と 'signature' は同じ長さを持たなければなりません"
+
+msgid ""
+"inserting method with invalid signature matching argument '...' to class \"%s"
+"\""
+msgstr ""
+" クラス \"%s\" への不正なシグネチャマッチング引数 '...' を持つメソッドを挿入"
+
+msgid "inserting method corresponding to empty signature"
+msgstr " 空のシグナチャ(signature)に対応するメソッドを挿入"
+
+msgid "inserting method into non-methods-list object (class \"%s\")"
+msgstr " メソッドをメソッドリストでないオブジェクト(クラス \"%s\")に挿入"
+
+msgid "invalid method sublist"
+msgstr " 不正なメソッドサブリスト"
+
+msgid ""
+"'%f' is not a valid generic function: methods list was an object of class \"%"
+"s\""
+msgstr ""
+" '%f'は適切な総称的関数ではありません：メソッドリストはクラス \"%s\" のオブ"
+"ジェクトでした"
+
+msgid ""
+"'useInherited' must be TRUE, FALSE, or a named logical vector of those "
+"values; got an object of class \"%s\""
+msgstr ""
+" 'useInherited' は TRUE, FALSE, もしくはこれらの値の名前付き論理値ベクトルで"
+"なければなりません；クラス \"%s\" のオブジェクトでした"
+
+msgid ""
+"trying to match a method signature to an object (of class \"%s\") that is "
+"not a generic function"
+msgstr ""
+" メソッドシグナチャを総称的関数でない(クラス \"%s”の)オブジェクトにマッチしよ"
+"うとしています"
+
+msgid ""
+"trying to match a method signature of class \"%s\"; expects a list or a "
+"character vector"
+msgstr ""
+" クラス \"%s\" のメソッドシグナチャをマッチしようとしています；リストか文字ベ"
+"クトルが期待されています"
+
+msgid ""
+"object to use as a method signature for function \"%s\" does not look like a "
+"legitimate signature (a vector of single class names): there were %d class "
+"names, but %d elements in the signature object"
+msgstr ""
+" 関数 \"%s\" に対するメソッドシグナチャとして使用しようとしているオブジェクト"
+"は正しいシグナチャ(単一のクラス名のリスト)のようには見えません：%d 個のクラス"
+"名がありましたが、シグナチャリストには %d 個の要素があります"
+
+msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
+msgstr ""
+" メソッドシグナチャ (%s) 中に総称的な %s(%s) 中よりも多くの要素があります"
+
+msgid ""
+"in the method signature for function \"%s\" invalid argument names in the "
+"signature: %s"
+msgstr ""
+" 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：%s"
+
+msgid "no methods found for generic \"%s\""
+msgstr " 総称的な \"%s\" に対するメソッドが見付かりませんでした"
+
+msgid "skipping methods list element %s of unexpected class \"%s\""
+msgstr ""
+" メソッドリスト要素 %s をスキップします(予期しないクラス \"%s\" でした)"
+
+msgid "invalid object for formal method definition: type \"%s\""
+msgstr " 形式的なメソッド定義に対する不正なオブジェクト：タイプ \"%s\""
+
+msgid ""
+"missing package slot (%s) in object of class \"%s\" (package info added)"
+msgstr ""
+" 欠損したパッケージスロット (%s) がクラス \"%s\" のオブジェクト中にあります"
+"(パッケージの情報を付け加えました)"
+
+msgid ""
+"initialize method returned an object of class \"%s\" instead of the required "
+"class \"%s\""
+msgstr ""
+" クラス \"%s\" のオブジェクト(要求されたクラス \"%s\" ではなく)を初期化"
+
+msgid "An object of class \""
+msgstr " オブジェクトのクラスは \""
+
+msgid "\""
+msgstr " \""
+
+msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+" メソッド (%s) に対するシグナチャ中の名前が関数の引数 (%s) にマッチしません"
+
+msgid ""
+"'NextMethod' not defined because the current method is not a "
+"'MethodDefinition' object"
+msgstr ""
+" 現在のメソッドは 'MethodDefinition' オブジェクトではないので 'NextMethod' は"
+"定義されません"
+
+msgid "expected a list of signature objects, got \"%s\""
+msgstr " シグナチャリストを期待しましたが、\"%s\" でした"
+
+msgid ""
+"a call to callNextMethod() appears in a call to \"%s\", but the call does "
+"not seem to come from either a generic function or another 'callNextMethod'"
+msgstr ""
+" callNextMethod() の呼び出しが  \"%s\" への呼び出しに現れました．しかしこの呼"
+"び出しは総称的関数や別の 'callNextMethod' から来たものには見えません"
+
+msgid ""
+"call to 'callNextMethod' does not appear to be in a 'method' or "
+"'callNextMethod' context"
+msgstr ""
+" 'callNextMethod' への呼び出しは 'method' または 'callNextMethod' 文脈中にあ"
+"るとは見えません"
+
+msgid "bad object found as method (class \"%s\")"
+msgstr " 間違ったオブジェクトがメソッド(クラス \"%s\")として見付かりました"
+
+msgid ""
+"in constructing the prototype for class \"%s\": prototype has class \"%s\", "
+"but the data part specifies class \"%s\""
+msgstr ""
+" クラス \"%s\" に対するプロトタイプの構築時：プロトタイプはクラス \"%s\" です"
+"が，データ部分はクラス \"%s\" を指定しています"
+
+msgid ""
+"in constructing the prototype for class \"%s\", slots in prototype and not "
+"in class: %s"
+msgstr ""
+" クラス \"%s\" に対するプロトタイプの構築時，スロットはプロトタイプ中にありま"
+"すがクラス中にはありません：%s"
+
+msgid ""
+"in making the prototype for class \"%s\" elements of the prototype failed to "
+"match the corresponding slot class: %s"
+msgstr ""
+" クラス \"%s\" に対するプロトタイプの構築時，プロトタイプの要素は対応するス"
+"ロットクラスとマッチしませんでした：%s"
+
+msgid ""
+"potential cycle in class inheritance: \"%s\" has duplicates in superclasses "
+"and subclasses (%s)"
+msgstr ""
+" クラス継承中に循環がある可能性：\"%s\" は上位クラスと下位クラス (%s) 中に重"
+"複しています"
+
+msgid "undefined slot classes in definition of \"%s\": %s"
+msgstr " \"%s\" の定義中に未定義のスロットクラス: %s"
+
+msgid ""
+"in definition of class \"%s\", information for superclass \"%s\" is of class "
+"\"%s\" (expected \"SClassExtension\")"
+msgstr ""
+" クラス \"%s\" の定義中，上位クラス \"%s\" がクラス \"%s\" です"
+"(\"SClassExtension\" が期待されます)"
+
+msgid "class \"%s\" extends an undefined class, \"%s\""
+msgstr " クラス \"%s\" は未定義のクラスに拡張されます，\"%s\""
+
+msgid ""
+"trying to assign an object of class \"%s\" as the definition of class \"%s"
+"\": must supply a \"classRepresentation\" object"
+msgstr ""
+" クラス \"%s\" のオブジェクトをクラス \"%s\" の定義として与えようとしていま"
+"す: \"classRepresentation\" オブジェクトを与える必要があります"
+
+msgid "assigning as \"%s\" a class representation with internal name \"%s\""
+msgstr " \"%s\" として内部名 \"%s\" を持つクラス表現を割り当て中"
+
+msgid "Class \"%s\" has a locked definition in package \"%s\""
+msgstr " クラス \"%s\" はパッケージ \"%s\" 中にロックされた定義を持ちます"
+
+msgid "'externalptr' objects cannot be initialized from new()"
+msgstr " 'externalptr' オブジェクトは new() からは初期化出来ません"
+
+msgid ""
+"initializing objects from class \"%s\" with these arguments is not supported"
+msgstr ""
+" これらの引数を持つクラス \"%s\" からのオブジェクトの初期化はサポートされてい"
+"ません"
+
+msgid ""
+"in defining class \"%s\", the supplied data part class, \"%s\" is not valid "
+"(must be a basic class or a virtual class combining basic classes)"
+msgstr ""
+" クラス \"%s\"、与えられたデータパートクラス, の定義において \"%s\" が不正で"
+"す(基本クラスか、ベーシッククラスを結合した仮想的クラスである必要があります)"
+
+msgid "class \"%s\" cannot be used as the data part of another class"
+msgstr " クラス \"%s\" は他のクラスのデータ部分として使うことは出来ません"
+
+msgid ""
+"more than one possible class for the data part: using \"%s\" rather than \"%s"
+"\""
+msgstr ""
+" データ部分に複数の可能なクラスがあります：\"%s\" (\"%s\" ではなく)を使います"
+
+msgid ""
+"conflicting definition of data part: .Data = \"%s\", superclass implies \"%s"
+"\""
+msgstr ""
+" データパートの相克する定義：.Data = \"%s\", 上位クラスは \"%s\" を含意します"
+
+msgid ""
+"a prototype object was supplied with object slot of class \"%s\", but the "
+"class definition requires an object that is class \"%s\""
+msgstr ""
+" プロトタイプオブジェクトがクラス \"%s\" のオブジェクトスロットを伴い与えられ"
+"ましたが、クラス定義はクラス \"%s\" であるオブジェクトを必要とします"
+
+msgid ""
+"a prototype was supplied of class \"%s\", but the class definition requires "
+"an object that is class \"%s\""
+msgstr ""
+" クラス \"%s\" のプロトタイプが与えられましたが、クラス定義はクラス \"%s\" で"
+"あるオブジェクトを必要とします"
+
+msgid ""
+"slot \"%s\" in class \"%s\" currently defined (or inherited) as \"%s\", "
+"conflicts with an inherited definition in class \"%s\""
+msgstr ""
+" スロット \"%s\" (クラス \"%s\" 中の)は現在  \"%s\" として定義(もしくは継承)"
+"されていますが, クラス \"%s\" 中の継承された定義と相克します"
+
+msgid "class \"%s\" extends an undefined class (\"%s\")"
+msgstr " クラス \"%s\" は未定義のクラス (\"%s\") に拡張されます"
+
+msgid ""
+"\"%s\" is not eligible to be the data part of another class (must be a basic "
+"class or a virtual class with no slots)"
+msgstr ""
+" \"%s\" は別のクラスのデータパートとして適正ではありません (基本クラスか、ス"
+"ロットを持たない仮想クラスで無ければなりません)"
+
+msgid ""
+"prototype is a list with named elements (could be ambiguous):  better to use "
+"function prototype() to avoid trouble."
+msgstr ""
+" プロトタイプは名前付き要素のリストです(曖昧かも知れません)：面倒をさけるため"
+"には関数 prototype() を使う方が良いでしょう"
+
+msgid "named elements of prototype do not correspond to slot names: %s"
+msgstr " プロトタイプの名前つきの要素はスロット名に対応しません：%s"
+
+msgid "the \"%s\" list for class \"%s\", includes an undefined class \"%s\""
+msgstr ""
+" \"%s\" リスト(クラス \"%s\" に対する)は未定義のクラス \"%s\" を含みます"
+
+msgid "\"class\" is a reserved slot name and cannot be redefined"
+msgstr " \"class\" は予約済みのスロット名であり、再定義出来ません"
+
+msgid "no '.Data' slot defined for class \"%s\""
+msgstr " クラス \"%s\" に対して定義された '.Data' スロットはありません"
+
+msgid "class \"%s\" does not have a data part (a .Data slot) defined"
+msgstr " クラス \"%s\" はデータパート(.Data スロット)が定義されていません"
+
+msgid ""
+"trying to change the argument list of a function with %d arguments to have "
+"arguments (%s)"
+msgstr ""
+" %d 個の引数を持つ関数の引数リストを、引数  (%s) を持つように変更を試みます"
+
+msgid ""
+"get rid of variables in definition (%s); they conflict with the needed "
+"change to argument names (%s)"
+msgstr ""
+" 定義中の変数 (%s) をとりのぞきます；これらは引数名 (%s) への必要な変換と相克"
+"します"
+
+msgid "arguments in definition changed from (%s) to (%s)"
+msgstr " 定義中の引数を (%s) から (%s) へ変換します"
+
+msgid ","
+msgstr " ,"
+
+msgid ""
+"a validity method must be a function of one argument, got an object of class "
+"\"%s\""
+msgstr ""
+" validity メソッドは一つの変数を持つ関数でなければなりません、クラス \"%s\" "
+"のオブジェクトを得ました"
+
+msgid "unable to find required package \"%s\""
+msgstr " 必要とされるパッケージ \"%s\" を見付けることが出来ません"
+
+msgid "Package \"%s\" is not loaded"
+msgstr " パッケージ \"%s\" はロードされていません"
+
+msgid "unable to find an environment containing class \"%s\""
+msgstr " クラス \"%s\" を含む環境を見付けることが出来ません"
+
+msgid "Undefined subclass, \"%s\", of class \"%s\"; definition not updated"
+msgstr ""
+" 未定義のサブクラス \"%s\" (クラスは \"%s\")です； 定義は更新されません"
+
+msgid ""
+"Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new "
+"inheritance information; consider setClassUnion()"
+msgstr ""
+" サブクラス \"%s\" (クラスは \"%s\") は局所的でなく、新しい継承情報のために更"
+"新できません; setClassUnion() を考えてください"
+
+msgid ""
+"No definition of inheritance from \"%s\" to \"%s\", though the relation was "
+"implied by the setIs() from \"%s\""
+msgstr ""
+" \"%s\" から \"%s\" への継承定義がありません。しかし関係は \"%s\" からの "
+"setIs() によって含意されています。"
+
+msgid ""
+"Couldn't find superclass \"%s\" to clean up when removing subclass "
+"references to class \"%s\""
+msgstr ""
+" クリーンアップのために上位クラス \"%s\" をみつけられませんでした(クラス \"%s"
+"\" への下位クラス参照を除去するさい)"
+
+msgid "No class \"%s\" found as expected in removing subclass \"%s\""
+msgstr " 期待されるクラス \"%s\" は見付かりません(下位クラスを除去中の際）"
+
+msgid ""
+"the function being used as %s in making a generic function for \"%s\" is "
+"currently traced; the function used will have tracing removed"
+msgstr ""
+" %s として使われている関数(\"%s\" に対する総称的関数の作成時)は現在トレースさ"
+"れています；使われた関数は tracing を取り除かれるでしょう"
+
+msgid ""
+"the 'genericFunction' argument must be NULL or a generic function object; "
+"got an object of class \"%s\""
+msgstr ""
+" 引数 'genericFunction' は NULL か総称的関数オブジェクトでなければなりませ"
+"ん；クラス\"%s\" のオブジェクトを得ました"
+
+msgid "non-arguments found in the signature: %s"
+msgstr " シグナチャ中に引数でないものがあります: %s"
+
+msgid "no suitable arguments to dispatch methods in this function"
+msgstr " この関数中にはメソッドを割り当てるための適切な引数がありません"
+
+msgid ""
+"the formal arguments of the generic function for \"%s\" (%s) differ from "
+"those of the non-generic to be used as the default (%s)"
+msgstr ""
+" \"%s\" (%s) に対する総称的関数の形式的引数は、既定 (%s) として使われる非総称"
+"的なそれの引数と異なります"
+
+msgid "special function \"%s\" is not permitted to have methods"
+msgstr " 特殊関数 \"%s\" はメソッドを持つことが出来ません"
+
+msgid ""
+"special function \"%s\" has no known argument list; will assume '(x, ...)'"
+msgstr ""
+" 特殊関数 \"%s\" は引数リストを持っていません； '(x, ...)' と仮定します"
+
+msgid "making a generic for special function \"%s\""
+msgstr " 特殊関数 \"%s\" に対する総称的なものを作ります"
+
+msgid "invalid call in method dispatch to \"%s\" (no default method)"
+msgstr ""
+" メソッド割り当て \"%s\" において不正な呼び出し(既定メソッドがありません)"
+
+msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
+msgstr ""
+" \"%s\" (\"%s\" から) は総称的関数ではありません；使えるメソッドがありません"
+
+msgid ""
+"invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
+"'genericFunction object' or a primitive function, got an object of class \"%s"
+"\""
+msgstr ""
+" 'getAllMethods' 中に \"%s\" に対する不正な 'fdef'；'genericFunction object' "
+"か プリミティブな関数が期待されますが、クラス \"%s\" のオブジェクトです"
+
+msgid "formal arguments in method and function do not appear in the same order"
+msgstr " メソッドと関数の形式的引数が同じ順序で現れていません"
+
+msgid ""
+"formal arguments omitted in the method definition cannot be in the signature "
+"(%s)"
+msgstr ""
+" メソッド定義中で使われなかった形式的引数はシグナチャ (%s) 中にあってはいけま"
+"せん"
+
+msgid "expanding the signature to include omitted arguments in definition: %s"
+msgstr " シグナチャを定義中で使われなかった引数を含むように拡張中：%s\t"
+
+msgid "= \"missing\""
+msgstr " = \"missing\""
+
+msgid ""
+"methods can add arguments to the generic only if '...' is an argument to the "
+"generic"
+msgstr ""
+" メソッドは総称的関数に、 '...' がそれへの引数である時に限り、引数を追加でき"
+"ます"
+
+msgid ""
+"arguments after '...' in the generic (%s) must appear in the method, in the "
+"same place at the end of the argument list"
+msgstr ""
+" 総称的関数 (%s) 中の '...' 以降の引数はメソッド中の、引数リストの最後の同じ"
+"場所に登場しなければなりません"
+
+msgid ""
+"Argument f must be a string, generic function, or primitive: got an ordinary "
+"function"
+msgstr ""
+" 引数 f は文字列、総称的関数またはプリミティブである必要がありまが、通常の関"
+"数が得られました"
+
+msgid "methods cannot be defined for the primitive function \"%s\""
+msgstr " プリミティブ関数 \"%s\" に対してはメソッドを定義できません"
+
+msgid "no generic function found for \"%s\""
+msgstr " \"%s\" に対する総称的関数は見付かりません"
+
+msgid ""
+"the methods object name for \"%s\" must include the name of the package that "
+"contains the generic function, but no generic function of this name was found"
+msgstr ""
+" \"%s\" に対するメソッドオブジェクト名は総称的関数を含むパッケージ名を含まね"
+"ばなりません、しかしこの名前の総称的関数はありません"
+
+msgid "no way to associate a generic function with an object of class \"%s\""
+msgstr " 総称的関数をクラス \"%s\" のオブジェクトに関連付ける方法はありません"
+
+msgid ""
+"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
+"source"
+msgstr ""
+" パッケージ \"%s\" は時代遅れのメソッドを持つようです； ソースから再インス"
+"トールする必要があります"
+
+msgid ""
+"no methods found for \"%s\"; cacheGenericsMetaData() will have no effect"
+msgstr ""
+" \"%s\" に対するメソッドはありません；cacheGenericsMetaData() は効果を持ちま"
+"せん"
+
+msgid "internal error: bad code for 'setPrimitiveMethods': %s"
+msgstr " 内部エラー：'setPrimitiveMethods' に対する間違ったコード: %s"
+
+msgid "invalid value from generic function \"%s\", class \"%s\", expected %s"
+msgstr ""
+" 総称的関数 \"%s\" からの不正な値,クラス \"%s\" ですが %s が期待されます"
+
+msgid ""
+"the body of the generic function for \"%s\" calls 'standardGeneric' to "
+"dispatch on a different name (\"%s\")!"
+msgstr ""
+" \"%s\" に対する総称的関数の本体は異なった名前 ('%s') を割り当てるため "
+"'standardGeneric' を呼び出しています!"
+
+msgid ""
+"the supplied generic function definition does not seem to call "
+"'standardGeneric'; no methods will be dispatched!"
+msgstr ""
+" 与えられた総称的関数定義は  'standardGeneric' を呼び出すようには見えません；"
+"如何なるメソッドも割り当てられません！"
+
+msgid ""
+"internal error: Bad methods list object in fixing methods for primitive "
+"function \"%s\""
+msgstr ""
+" 内部エラー：プリミティブ関数 \"%s\" に対するメソッドを修正する際に誤ったメ"
+"ソッドリストオブジェクト"
+
+msgid ""
+"trying to change the formal arguments in %s, in an object of class \"%s\"; "
+"expected a function definition"
+msgstr ""
+" %s 中の形式的引数(クラス \"%s\" のオブジェクト中)を変更しようとしています；"
+"関数定義が期待されています"
+
+msgid ""
+"trying to change the formal arguments in %s, but getting the new formals "
+"from an object of class \"%s\"; expected a function definition"
+msgstr ""
+" %s 中の形式的引数を変更しようとしましたが、クラス \"%s\" のオブジェクトから"
+"新しい形式的引数を受け取りました；関数定義が期待されていました"
+
+msgid ""
+"trying to change the formal arguments in %s, but the number of existing "
+"arguments is less than the number of new arguments: (%s) vs (%s)"
+msgstr ""
+" %s 中の形式的引数を変更しようとしましたが、既存の引数の数は新しい引数の数未"
+"満です： (%s) 対 (%s)"
+
+msgid ""
+"trying to change the formal arguments in %s, but the number of existing "
+"arguments is greater than the number of new arguments (the extra arguments "
+"won't be used): (%s) vs (%s)"
+msgstr ""
+" %s 中の形式的引数を変更しようとしましたが、既存の引数の数は新しい引数の数よ"
+"り大です(余分な引数は使われないでしょう)： (%s) 対 (%s) "
+
+msgid ""
+"in changing formal arguments in %s, some of the old names are not in fact "
+"arguments: %s"
+msgstr ""
+" %s 中の形式的引数を変更しようとしましたが、古い名前の幾つかは実際は引数では"
+"ありません：%s"
+
+msgid "botched namespace: failed to find 'base' namespace in its parents"
+msgstr " へまな名前空間：その親中に 'base' 名前空間が見付かりません"
+
+msgid "got a negative maximum number of frames to look at"
+msgstr " 見るべきフレームの最大数が負でした"
+
+msgid "\"%s\" is not a generic function (or not visible here)"
+msgstr " \"%s\" は総称的関数ではありません(またはここでは可視ではありません)"
+
+msgid "invalid element in the groupMembers slot (class \"%s\")"
+msgstr " groupMembers スロット中に不正な要素 (クラス \"%s\")"
+
+msgid "\"%s\" has a sealed class definition and cannot be redefined"
+msgstr " \"%s\" は封印されたクラス定義を持ち、再定義は出来ません"
+
+msgid ""
+"only arguments 'Class' and 'where' can be supplied when argument "
+"'representation' is a 'classRepresentation' object"
+msgstr ""
+" 'representation' が 'classRepresentation' オブジェクトのときは、引数 "
+"'Class' と 'where' だけを与えられます"
+
+msgid ""
+"error in contained classes (%s) for class \"%s\" and unable to remove "
+"definition from \"%s\""
+msgstr ""
+" 含まれるクラス (%s) (\"%s\" に対する)中にエラーがあり、\"%s\" から定義を取り"
+"去れません"
+
+msgid ""
+"error in contained classes (%s) for class \"%s\"; class definition removed "
+"from \"%s\""
+msgstr ""
+" 含まれるクラス (%s) (\"%s\" に対する)中にエラーがありました； \"%s\" からク"
+"ラス定義を取り去りました"
+
+msgid ""
+"error in contained classes (%s) for class \"%s\" and unable to restore "
+"previous definition from \"%s\""
+msgstr ""
+" 含まれるクラス (%s) (\"%s\" に対する)中にエラーがあり、そして \"%s\" から以"
+"前の定義を再生出来ませんでした"
+
+msgid ""
+"error in contained classes (%s) for class \"%s\"; previous definition "
+"restored to \"%s\""
+msgstr ""
+" 含まれるクラス (%s) (クラス \"%s\" に対する)中にエラーがありました； \"%s\" "
+"から以前の定義を再生しました"
+
+msgid "element %d of the representation was not a single character string"
+msgstr " representation の要素 %d は単一の文字列ではありません"
+
+msgid "duplicate class names among superclasses: %s"
+msgstr " 上位クラス中に重複したクラス名があります: %s"
+
+msgid "duplicated slot names: %s"
+msgstr " 重複したスロット名：%s"
+
+msgid "only one data object (unnamed argument to prototype) allowed"
+msgstr ""
+" 一つのデータオブジェクト(プロトタイプへの名前の無い引数)だけが許されます"
+
+msgid "\"%s\" is not a defined class"
+msgstr " \"%s\" は定義されたクラスではありません"
+
+msgid "\"%s\" is not a slot in class \"%s\""
+msgstr " \"%s\" はクラス \"%s\" 中のスロットではありません"
+
+msgid ""
+"assignment of an object of class \"%s\" is not valid for slot \"%s\" in an "
+"object of class \"%s\"; is(value, \"%s\") is not TRUE"
+msgstr ""
+" クラス \"%s\" のオブジェクトの代入はスロット \"%s\" (クラス \"%s\" のオブ"
+"ジェクト中)に対しては不正です； is(value, \"%s\") が TRUE ではありません"
+
+msgid "Class definition for \"%s\" not found  (no action taken)"
+msgstr " \"%s\" に対するクラス定義が見付かりません(何も行いません)"
+
+msgid "class \"%s\" has multiple definitions visible; only the first removed"
+msgstr ""
+" クラス \"%s\" は複数の可視な定義を持ちます；最初のものだけが取り除かれます"
+
+msgid "The class to be removed  (\""
+msgstr " 取り除かれるべきクラス (\""
+
+msgid "\") has defined subclasses that should also be removed: ("
+msgstr " \") は同様に取り除かれるべきサブクラスを定義しました： ("
+
+msgid ")"
+msgstr " )"
+
+msgid "invalid class \"%s\" object:"
+msgstr " 不正なクラス \"%s\" オブジェクト："
+
+msgid "validity method must be NULL or a function of one argument"
+msgstr " validity メソッドは NULL かまたは引数一つの関数でなければなりません"
+
+msgid "class \"%s\" not found on \"%s\"; 'resetClass' will have no effect"
+msgstr ""
+" クラス \"%s\" は \"%s\" には見付かりません；'resetClass' は無効でしょう"
+
+msgid ""
+"argument 'classDef' must be a string or a class representation; got an "
+"object of class \"%s\""
+msgstr ""
+" 引数 'classDef' は文字列かクラス表現でなければなりません；クラス \"%s\" のオ"
+"ブジェクトでした"
+
+msgid "class \"%s\" is sealed; 'resetClass' will have no effect"
+msgstr " クラス \"%s\" は封印されています；'resetClass' は無効でしょう"
+
+msgid ""
+"cannot use object of class \"%s\" in new():  class \"%s\" does not extend "
+"that class"
+msgstr ""
+" クラス \"%s\" のオブジェクトを new() の中では使えません：クラス \"%s\" はそ"
+"のクラスには拡張されません"
+
+msgid "invalid names for slots of class \"%s\": %s"
+msgstr " クラス \"%s\" のスロットに対しては不正な名前です: %s"
+
+msgid "no definition of \"%s\" to use for %s"
+msgstr " \"%s\" (%s に対して使用する)の定義がありません"
+
+msgid ""
+"'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
+"instead"
+msgstr ""
+" 'traceOn' は廃止されました：'methods' パッケージ中では代わりに関数 'trace' "
+"を使って下さい"
+
+msgid ""
+"'traceOff' is deprecated: use the function 'untrace' in the 'methods' "
+"package instead"
+msgstr ""
+" 'traceOff' は廃止されました：'methods' パッケージ中では代わりに関数 "
+"'untrace' を使って下さい"
+
+msgid "no function \"%s\" found"
+msgstr " 関数 \"%s\" が見付かりません"
+
+msgid "no non-generic function \"%s\" found"
+msgstr " 総称的でない関数 \"%s\" が見付かりません"
+
+msgid "\"%s\" is not one of the element names"
+msgstr " \"%s\" は要素名中にありません"
+
+msgid ""
+"internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the "
+"metadata asserts that the 'is' relation is FALSE"
+msgstr ""
+" as() 中に内部問題： \"%s\" is(object, \"%s\") は TRUE ですが、メタデータは "
+"'is' 関係 FALSE と主張しています"
+
+msgid "no method or default for coercing \"%s\" to \"%s\""
+msgstr " \"%s\" を \"%s\" へ強制変換するためのメソッドや既定動作はありません"
+
+msgid "no method or default for as() replacement of \"%s\" with Class=\"%s\""
+msgstr ""
+" \"%s\" (Class=\"%s\" を持つ)の as() 変換のためのメソッドや既定動作はありませ"
+"ん"
+
+msgid "trying to set an 'as' relation from \"%s\" to itself"
+msgstr " \"%s\" からそれ自体への 'as' 関係を設定しようとしています"
+
+msgid "class \"%s\" is not defined in this environment"
+msgstr " この環境ではクラス \"%s\" は定義されていません"
+
+msgid ""
+"class \"%s\" is a class union: 'coerce' relations to a class union are not "
+"meaningful"
+msgstr ""
+" クラス \"%s\" はクラスのユニオンです：クラスユニオンに対する 'coerce' 関係は"
+"無意味です"
+
+msgid ""
+"'as' method must have one or two arguments, plus optional 'strict'; got (%s)"
+msgstr ""
+" 'as' メソッドは一つか二つの引数と、加えてオプションの 'strict'、を持たなけれ"
+"ばなりません； (%s) でした"
+
+msgid ""
+"a 'replace' method definition in 'setAs' must be a function of two "
+"arguments, got %d"
+msgstr ""
+" 'setAs' 中の 'replace' メソッド定義は二つの引数を持つ関数でなければなりませ"
+"ん； (%d) でした"
+
+msgid ""
+"argument names in replace changed to agree with 'coerce<-' generic:\n"
+"%s"
+msgstr ""
+" replace 中の引数名は総称的な 'coerce<-' に一致するように変更されました：\n"
+"%s "
+
+msgid "ambiguous object (length!=1) to coerce to \"name\""
+msgstr " \"name\" に強制変更するには曖昧なオブジェクトです (length!=1) "
+
+msgid "undefined coerce method"
+msgstr " 未定義の強制変換メソッド"
+
+msgid ""
+"methods currently exist for coercing from \"%s\" to \"%s\"; they will be "
+"replaced."
+msgstr ""
+" \"%s\" から \"%s\" への強制変換のためのメソッドが現在存在します；これらを交"
+"換します"
+
+msgid "object \"%s\" not found"
+msgstr " オブジェクト \"%s\" は存在しません"
+
+msgid ""
+"object \"%s\" not changed (it is not consistent with the current definition "
+"of class \"%s\" from \"%s\")"
+msgstr ""
+" オブジェクト \"%s\" は変更されません(これは クラス \"%s\" (\"%s\" からの)の"
+"現在の定義と両立しません)\t"
+
+msgid "no definition for the class of \"%s\" (class \"%s\") found"
+msgstr " \"%s\" のクラス(クラス \"%s\") に対する定義はありません"
+
+msgid ""
+"object \"%s\" not changed (it does not appear to be from a version of R "
+"earlier than 1.8.0)"
+msgstr ""
+" オブジェクト \"%s\" は変更されません(これはバージョン 1.8.0 以前の R では存"
+"在するようには見えません)しないようです"
+
+msgid "'class1' must be the name of a class or a class definition"
+msgstr " 'class1' はクラス名かクラス定義でなければなりません"
+
+msgid "'class2' must be the name of a class or a class definition"
+msgstr " 'class2' はクラス名かクラス定義でなければなりません "
+
+msgid ""
+"class \"%s\" has no visible definition from package or environment \"%s\""
+msgstr ""
+" クラス \"%s\" はパッケージもしくは環境 \"%s\" から可視な定義を持ちません"
+
+msgid ""
+"cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s"
+"\") is local and modifiable in this package"
+msgstr ""
+" クラス (\"%s\" と \"%s\") のどちらもこのパッケージでローカルか変更可能なとき"
+"は 'setIs' 関係を生成できません"
+
+msgid ""
+"class \"%s\" is sealed; new superclasses can not be defined, except by "
+"'setClassUnion'"
+msgstr ""
+" クラス \"%s\" は封印されています；新しい上位クラスは、'setClassUnion' を使わ"
+"ない限り、定義できません"
+
+msgid ""
+"Unable to find package environment for class \"%s\" to revise subclass "
+"information"
+msgstr ""
+" 下位クラス情報を改訂するためのクラス \"%s\" に対するパッケージ情報を見付ける"
+"ことが出来ません"
+
+msgid "class \"%s\" cannot extend class \"%s\""
+msgstr " クラス \"%s\" はクラス \"%s\" に拡張できません"
+
+msgid "Both classes must be defined"
+msgstr " どちらのクラスも定義されなければなりません"
+
+msgid ""
+"class \"%s\" is missing slots from class \"%s\" (%s), and no coerce method "
+"was supplied"
+msgstr ""
+" クラス \"%s\" はクラス \"%s\" (%s) からのスロットを欠いています、そして強制"
+"変換メソッドは与えられていませ,"
+
+msgid ""
+"slots in class \"%s\" must extend corresponding slots in class \"%s\": fails "
+"for %s"
+msgstr ""
+" クラス \"%s\" のスロット \"%s\" 中のスロットに拡張されなければなりません： %"
+"s に対して失敗しました"
+
+msgid "invalid index for function argument"
+msgstr " 関数引数に対する不正なインデックスです"
+
+msgid "Need a definition for the method here"
+msgstr ""
+
+msgid "Skeleton of method written to"
+msgstr ""
+
+msgid "connection"
+msgstr ""
+
+msgid ""
+"Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
+"\"%s\""
+msgstr ""
+" メソッド \"%s\"、ラベル \"%s\"、 に対するメソッドのメタテーブル中に不正なオ"
+"ブジェクトがあります。クラス \"%s\" です"
+
+msgid "Invalid mlist element  for signature \""
+msgstr " 以下のシグネチャに対する不正な mlist 要素 \""
+
+msgid "\" at level"
+msgstr " \"、レベルは"
+
+msgid "( should be methods list or method, had class \""
+msgstr ""
+" ( メソッドリストかメソッドでなければなりませんが、以下のクラスを持ちます \""
+
+msgid "\")"
+msgstr " \")"
+
+msgid "Invalid object in methods table (\""
+msgstr " 不正なオブジェクトが以下のメソッドテーブル中にありました (\""
+
+msgid "\"), expected a method, got an object of class \""
+msgstr ""
+" \")、メソッドが期待されますが、以下のクラスのオブジェクトが得られました \""
+
+msgid "Invalid or unset methods table in generic function \""
+msgstr " 以下の総称的関数中に不正か未設定のメソッドテーブルがあります \""
+
+msgid "Trying to find a methods table in a non-generic function"
+msgstr " 総称的でない関数中にメソッドテーブルを探しています"
+
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr " \"%s\" に対する曖昧なメソッド選択、 ターゲットは \"%s\" でした"
+
+msgid ""
+"(the first of the signatures shown will be used)\n"
+"%s"
+msgstr ""
+" (最初に示されたシグネチャが使われます)\n"
+"%s"
+
+msgid "found"
+msgstr " が見付かりました"
+
+msgid "equally good next methods"
+msgstr " 同じぐらい良いネクストメソッド"
+
+msgid "unable to find an inherited method for function \""
+msgstr " 以下の関数に対する継承メソッドを見付けることができません \""
+
+msgid "\", for signature"
+msgstr " \", 以下のシグネチャに対する"
+
+msgid ""
+"Internal error in finding inherited methods; didn't return a unique method"
+msgstr ""
+" 継承メソッドを探索中に内部エラーがありました; ユニークなメソッドを返すことが"
+"できません"
+
+msgid ""
+"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
+msgstr ""
+" \"%s\" に対するメソッドテーブルを見付けられませんでした。パッケージ \"%s\" "
+"は時代遅れかもしれません"
+
+msgid "Methods list for generic \""
+msgstr " 以下の総称(generic)に対するメソッドが見付かりません \""
+
+msgid "\" not found"
+msgstr " \""
+
+msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
+msgstr " .UsingMethodsTables: 'onOff' は TRUE でも FALSE でもありません"
+
+msgid "Failed to find expected group generic function:"
+msgstr " 期待されたグループ総称的関数を見付けることができませんでした:"
+
+msgid "Invalid group generic function in search for inherited method (class \""
+msgstr ""
+" 継承メソッドを探索中に不正なグループ総称関数が見付かりました(クラスは \""
+
+msgid "Trying to check signature length of group generic \""
+msgstr " 以下のグループ総称関数のシグネチャの長さをチェックしようとしています"
+
+msgid "\", but it is not a group generic"
+msgstr " \", しかしそれはグループ総称的関数ではありません"
+
+msgid "Trying to check signature length of generic \""
+msgstr " 以下の総称的関数のシグネチャの長さをチェックすることを試みています \""
+
+msgid "\", but it is not a  generic function: i ="
+msgstr " \", しかしながらこれは総称的関数ではありません: i ="
+
+msgid ", funs ="
+msgstr " , funs ="
+
+msgid "; gnames ="
+msgstr " ; gnames ="
+
+msgid "Could not find generic function \"%s\" to initialize cached methods"
+msgstr ""
+" キャッシュされたメソッドを初期化するための総称的関数 \"%s\" を見付けることが"
+"できませんでした"
+
+msgid ""
+"inconsistent old-style class information for \"%s\" (maybe mixing old and "
+"new classes?)"
+msgstr ""
+" \"%s\" に対する不整合な旧式の情報(恐らく古いクラスと新しいクラスが混ざってい"
+"る？)"
+
+msgid "explicit coercion of old-style class (%s) is not defined"
+msgstr " 旧式のクラス (%s) の明示的な強制変換は定義されていません"
+
+msgid ""
+"explicit replacement not defined for as(x, \"%s\") <- value for old-style "
+"class \"%s\""
+msgstr ""
+" 旧式のクラス %s への as(x, \"%s\") <- value に対する明示的な置き換えは定義さ"
+"れていません"
+
+msgid ""
+"argument 'Classes' must be a vector of two classes; got an argument of "
+"length %d"
+msgstr ""
+" 引数 'Classes' は二つのクラスのベクトルでなければなりません；長さ %d の引数"
+"でした"
+
+msgid "no definition of class \"%s\" found"
+msgstr " クラス \"%s\" の定義はありません"
+
+msgid "multiple definitions of \"%s\" found; using the one on %s"
+msgstr " \"%s\" の多重定義が見付かりました；%s に関するものを使います"
+
+msgid ""
+"no definition of class \"%s\" in the specified position, %s, definition(s) "
+"on : %s"
+msgstr ""
+" クラス \"%s\" の定義は指定された位置 %s にありません、%s に関する定義です"
+
+msgid ""
+"invalid call to 'classLabel': expected a name or a class definition, got an "
+"object of class \"%s\""
+msgstr ""
+" 不正な 'classLabel' への呼び出し：名前かクラス定義を期待しましたが、クラス "
+"\"%s\" のオブジェクトでした"
+
+msgid "argument 'what' should be the name of a function"
+msgstr " 引数 'what' は関数名でなければなりません"
+
+msgid "Tracing the internal function \"%s\" is not allowed"
+msgstr " 内部関数 \"%s\" のトレースは許されていません"
+
+msgid ".TraceWithMethods: after computing what, whereF"
+msgstr " .TraceWithMethods: what, whereF の計算後に"
+
+msgid "no function definition for \"%s\" found"
+msgstr " \"%s\" に対する関数定義はありません"
+
+msgid ""
+"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+msgstr ""
+" メソッド \"%s\" に対するメソッドをトレースできません；　以下のシグネチャに対"
+"するメソッドはありません： %s"
+
+msgid ".TraceWithMethods: untrace case"
+msgstr " .TraceWithMethods: トレースされないケース"
+
+msgid "the method for \"%s\" for this signature was not being traced"
+msgstr ""
+" このシグナチャの \"%s\" に対するメソッドはトレースされていませんでした"
+
+msgid ".TraceWithMethods: about to assign or setMethod"
+msgstr " .TraceWithMethods: 付値もしくは setMethod しようとしています"
+
+msgid ""
+"making a traced version of a primitive; arguments will be treated as '...'"
+msgstr ""
+" プリミティブの traced バージョンを作っています；引数は '...' として扱われま"
+"す"
+
+msgid ""
+"the editing in trace() can only change the body of the function; got an "
+"object of class \"%s\""
+msgstr ""
+" trace() 中での編集は関数の本体のみを変更します； クラス \"%s\" のオブジェク"
+"トでした"
+
+msgid ""
+"the editing in trace() can only change the body of the function, not the "
+"arguments or defaults"
+msgstr ""
+" trace() 中での編集は関数の本体のみを変更します,引数や既定動作は変更しません"
+
+msgid "cannot use 'at' argument without a trace expression"
+msgstr " trace 表現無しの 'at' 引数は使えません"
+
+msgid ""
+"cannot use 'at' argument unless the function body has the form '{ ... }'"
+msgstr " 関数本体が '{ ... }' の形でない限り、'at' 引数は使えません"
+
+msgid ""
+"assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+msgstr ""
+" シンボル \"%s\" の拘束を跨いで付値しています(環境/パッケージ \"%s\" 中)"
+
+msgid ""
+"setting a method over the binding of symbol \"%s\" in environment/package \"%"
+"s\""
+msgstr ""
+" シンボル \"%s\" の binding を跨ぐメソッドを設定しています(環境/パッケージ "
+"\"%s\" 中)"
+
+msgid "Constructing traceable class \""
+msgstr " トレース可能な以下のクラスを作成中 \""
+
+msgid "Environment of class \""
+msgstr " 以下のクラスの環境 \""
+
+msgid "\" is locked; using base environment for new class"
+msgstr " \" はロックされています； base 環境を新しいクラスのために使います"
+
+msgid "not a package name: \"%s\""
+msgstr " パッケージ名ではありません: '%s'"
+
+msgid ""
+"apparently bad method or class metadata in saved environment; move the file "
+"or remove the class/method"
+msgstr ""
+" 保存された環境中に誤ったメソッドもしくはクラスメタデータがあるようです； "
+"ファイルを移動するかクラス/メソッドを取り除いてください"
+
+msgid "in the method signature for function \"%s\" no definition for class: %s"
+msgid_plural ""
+"in the method signature for function \"%s\" no definition for classes: %s"
+msgstr[0] ""
+" 関数 \"%s\" に対するメソッドシグネチャ中に、シグネチャ中の不正な引数名：%"
+
+#~ msgid ""
+#~ "old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no "
+#~ "automatic conversion will be peformed for S3 classes"
+#~ msgstr ""
+#~ "古いスタイルの ('S3') クラス \"%s\" が \"%s\" の上位クラスとして与えられま"
+#~ "したが、S3 クラスに対しては自動的な強制変換は実行されません"
+
+#~ msgid "'%s' is not a function visible from '%s'"
+#~ msgstr "'%s' は '%s' から可視な関数ではありません"
+
+#~ msgid "trying to use new() on a virtual class"
+#~ msgstr "仮想クラスに対して new() を用いています"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-21 16:08+0000\n"
+"POT-Creation-Date: 2007-04-10 07:42+0100\n"
 "PO-Revision-Date: 2006-09-26 01:05-0800\n"
 "Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -188,7 +188,7 @@ msgstr ""
 msgid "'rho' must be an environment"
 msgstr "'rho' должно быть окружением"
 
-#: port.c:386 port.c:534
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' должен быть непустым числовым вектором"
 
@@ -201,39 +201,39 @@ msgstr "Когда определяется Hessian-функция, должен быть определен и градиент"
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "окружение 'rho' должно содержать числовой вектор '.par' длины %d"
 
-#: port.c:402
+#: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' и 'upper' должны быть числовыми векторами"
 
-#: port.c:448
+#: port.c:451
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' применяется лишь к именованным спискам"
 
-#: port.c:469
+#: port.c:472
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() не найден"
 
-#: port.c:482
+#: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 "'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
 
-#: port.c:503
+#: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn выдала моду %d, длину %d - нужна мода %d, длина %d"
 
-#: port.c:516
+#: port.c:519
 msgid "invalid type for eval_check_store"
 msgstr "неправильный тип 'eval_check_store'"
 
-#: port.c:535
+#: port.c:538
 msgid "m must be a list"
 msgstr "m должен быть списком"
 
-#: port.c:555
+#: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' и 'upperb' должны быть числовыми векторами"
 
@@ -246,11 +246,11 @@ msgstr "неправильное конечное правило для бегущей медианы 3: %d"
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "ошибка размещения в smooth(*, '3RSR')."
 
-#: smooth.c:242 smooth.c:252
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "ошибка размещения в smooth(*, '3RSS')."
 
-#: smooth.c:262
+#: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
 msgstr "ошибка размещения в smooth(*, '3R')."
 

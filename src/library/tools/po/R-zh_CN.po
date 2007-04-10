@@ -26,10 +26,10 @@ msgid "directory '%s' does not exist"
 msgstr "不存在'%s'这个文件目录"
 
 msgid "neither code nor data objects found"
-msgstr "找不到编码也找不到数据目标对象"
+msgstr "找不到编码也找不到数据对象"
 
 msgid "Undocumented code objects:"
-msgstr "没有说明的编码目标对象:"
+msgstr "没有说明的编码对象:"
 
 msgid "Undocumented data sets:"
 msgstr "没有说明的数据集:"
@@ -41,7 +41,7 @@ msgid "Undocumented S4 methods:"
 msgstr "没有说明的S4方法:"
 
 msgid "Prototyped non-primitives:"
-msgstr ""
+msgstr "非原始函数做样机"
 
 msgid "Undocumented %s:"
 msgstr "没有说明的%s:"
@@ -54,11 +54,10 @@ msgstr "文件目录'%s'不含Rd源编码"
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
-msgstr "函数/文件的使用方法在使用手冊目标对象'%s'里有记录但不在编码里:"
+msgstr "函数/文件的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
-#, fuzzy
 msgid "Data sets with usage in documentation object '%s' but not in code:"
-msgstr "函数/文件的使用方法在使用手冊目标对象'%s'里有记录但不在编码里:"
+msgstr "数据集的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
 msgstr "变元名字在编码里有记录但不在文件里:"
@@ -79,7 +78,7 @@ msgid "Mismatches in argument default values:"
 msgstr "变元默认配合错误:"
 
 msgid "Codoc mismatches from documentation object '%s':"
-msgstr "使用手冊目标对象'%s'里的Codoc配合错误:"
+msgstr "使用手冊对象'%s'里的Codoc配合错误:"
 
 msgid "Code: %s"
 msgstr "编码: %s"
@@ -88,7 +87,7 @@ msgid "Docs: %s"
 msgstr "文件: %s"
 
 msgid "S4 class codoc mismatches from documentation object '%s':"
-msgstr "使用手冊目标对象'%s'里的S4类别codoc配合有错误:"
+msgstr "使用手冊对象'%s'里的S4类别codoc配合有错误:"
 
 msgid "Slots for class '%s'"
 msgstr "'%s'类别的槽"
@@ -103,28 +102,28 @@ msgid "docs"
 msgstr "文件"
 
 msgid "Data codoc mismatches from documentation object '%s':"
-msgstr "使用手冊目标对象'%s'里的数据codoc配合错误:"
+msgstr "使用手冊对象'%s'里的数据codoc配合错误:"
 
 msgid "Variables in data frame '%s'"
 msgstr "数据框'%s'里的变量"
 
 msgid "Undocumented arguments in documentation object '%s'"
-msgstr "使用手冊目标对象'%s'有没有说明的变元"
+msgstr "使用手冊对象'%s'有没有说明的变元"
 
 msgid "Duplicated \\argument entries in documentation object '%s':"
-msgstr "使用手冊目标对象'%s'里有重复的\\argument条目:"
+msgstr "使用手冊对象'%s'里有重复的\\argument条目:"
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
-msgstr "使用手冊目标对象'%s'里入档的文件变元没有在\\usage里提到:"
+msgstr "使用手冊对象'%s'里入档的文件变元没有在\\usage里提到:"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
-msgstr "使用手冊目标对象'%s'里的\\usage目标对象没有\\alias这条目:"
+msgstr "使用手冊对象'%s'里的\\usage对象没有\\alias这条目:"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr "使用手冊目标对象'%s'有些\\usage不对:"
+msgstr "使用手冊对象'%s'有些\\usage不对:"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
-msgstr "使用手冊目标对象'%s'里S3方法不应用全名显示出来:"
+msgstr "使用手冊对象'%s'里S3方法不应用全名显示出来:"
 
 msgid "unable to create"
 msgstr "无法建立"
@@ -168,13 +167,12 @@ msgstr "原来需要的标准程辑包现在不要了:"
 msgid "Vignette dependencies not required:"
 msgstr "不需要标头从属:"
 
-#, fuzzy
 msgid ""
 "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
 "DESCRIPTION Depends/Suggests/Imports entries."
 msgstr ""
-"标头从属(\\VignetteDepends{}条目)必需包含在DESCRIPTION文件里的 Depends/"
-"Suggests条目中."
+"标头从属(\\VignetteDepends{}条目)必需包含在DESCRIPTION文件里的"
+"Depends/Suggests/Imports条目中."
 
 msgid "Namespace dependencies not required:"
 msgstr "不需要名字空间从属:"
@@ -332,7 +330,7 @@ msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
 
 msgid "Missing link(s) in documentation object '%s':"
-msgstr "使用手冊目标对象'%s'缺少联结:"
+msgstr "使用手冊对象'%s'缺少联结:"
 
 msgid "found %s"
 msgstr "找到了%s"
@@ -371,7 +369,7 @@ msgid "argument 'outFile' must be a character string or connection"
 msgstr "变元'outfile'必需是字符串或联结"
 
 msgid "directory '%s' does not contain Rd objects"
-msgstr "目录'%s'没有Rd目标对象"
+msgstr "目录'%s'没有Rd对象"
 
 msgid "unterminated section '%s'"
 msgstr "'%s'这一段没有结局"
@@ -404,10 +402,10 @@ msgid "Rd syntax errors found"
 msgstr "Rd语法错误于"
 
 msgid "Syntax error in documentation object '%s':"
-msgstr "语法错误在使用手冊目标对象'%s':"
+msgstr "语法错误在使用手冊对象'%s':"
 
 msgid "cannot deal with Rd objects with missing/empty names"
-msgstr "无法使用缺少或有空白名字的Rd目标对象"
+msgstr "无法使用缺少或有空白名字的Rd对象"
 
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "Rd文件里缺少或有空白的\\name域"
@@ -418,7 +416,8 @@ msgstr "无法建立temp目录"
 msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
-msgstr ""
+msgstr "处理标头'%s'失败，诊断信息为:\n"
+"%s"
 
 msgid "running make failed"
 msgstr "调用make失败"
@@ -456,9 +455,8 @@ msgstr "'%2$s' 域里没有'%1$s'里的文件:"
 msgid "unable to create '%s'"
 msgstr "无法建立'%s'"
 
-#, fuzzy
 msgid "unable to re-encode '%s'"
-msgstr "无法建立'%s'"
+msgstr "无法重新编码'%s'"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "无法拷贝索引至'%s'"
@@ -491,7 +489,7 @@ msgid "package seems to be using lazy loading for data already"
 msgstr "程辑包好象已经用数据延迟加载了"
 
 msgid "object(s) %s are created by more than one data call"
-msgstr "不能用多个数据调用来产生目标对象%s"
+msgstr "不能用多个数据调用来产生对象%s"
 
 msgid "source list must have names for all elements"
 msgstr "源列所有的单元都必需要有名字"
@@ -571,18 +569,16 @@ msgstr "好了"
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
 
-#, fuzzy
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
-msgstr[0] "文件'%s'里句法分析有错"
+msgstr[0] "文件'%s'里有警告："
 
-#, fuzzy
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
 
-#, fuzzy
 msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
 msgid_plural ""
 "Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
+

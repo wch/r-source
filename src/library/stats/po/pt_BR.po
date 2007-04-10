@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-03-21 16:08+0000\n"
+"POT-Creation-Date: 2007-04-10 07:42+0100\n"
 "PO-Revision-Date: 2005-12-17 10:57-0200\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -187,7 +187,7 @@ msgstr "função hessiana deve retornar uma matriz quadrada numérica de ordem %d"
 msgid "'rho' must be an environment"
 msgstr "'rho' deve ser um ambiente"
 
-#: port.c:386 port.c:534
+#: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' deve ser um vetor numérico não-vazio"
 
@@ -201,39 +201,39 @@ msgstr ""
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "ambiente 'rho' deve conter um vetor numérico '.par' de comprimento %d"
 
-#: port.c:402
+#: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' e 'upper' devem ser vetores numéricos"
 
-#: port.c:448
+#: port.c:451
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' se aplica apenas a listas nomeadas"
 
-#: port.c:469
+#: port.c:472
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() não encontrado"
 
-#: port.c:482
+#: port.c:485
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' deve ser uma matriz numérica de dimensão (%d,%d)"
 
-#: port.c:503
+#: port.c:506
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 "fcn retornou modo %d, comprimento %d - necessário modo %d, comprimento %d"
 
-#: port.c:516
+#: port.c:519
 msgid "invalid type for eval_check_store"
 msgstr "tipo inválido para eval_check_store"
 
-#: port.c:535
+#: port.c:538
 msgid "m must be a list"
 msgstr "m deve ser uma lista"
 
-#: port.c:555
+#: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' e 'upperb' devem ser vetores numéricos"
 
@@ -246,11 +246,11 @@ msgstr "regra final inválida para mediana móvel de 3: %d"
 msgid "allocation error in smooth(*, '3RSR')."
 msgstr "erro na alocação em smooth(*,'3RSR')."
 
-#: smooth.c:242 smooth.c:252
+#: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
 msgstr "erro na alocação em smooth(*, '3RSS')."
 
-#: smooth.c:262
+#: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
 msgstr "erro na alocação em smooth(*, '3R')."
 

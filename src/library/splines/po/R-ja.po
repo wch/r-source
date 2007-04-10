@@ -11,63 +11,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "must have at least 'ord' knots"
-msgstr "少なくとも 'ord' 個のノットを持たなければなりません"
+msgstr " 少なくとも 'ord' 個のノットを持たなければなりません"
 
 msgid "length of 'derivs' must match length of 'x'"
-msgstr "'derivs' の長さは 'x' の長さと合わせる必要があります"
+msgstr " 'derivs' の長さは 'x' の長さと合わせる必要があります"
 
 msgid "'ord' must be positive integer, at most the number of knots"
-msgstr "'ord' は正の整数で，多くてもノット数です"
+msgstr " 'ord' は正の整数で，多くてもノット数です"
 
 msgid "need at least 2*ord -1 (=%d) knots"
-msgstr "少なくとも 2*ord -1 (=%d) 個のノット必要です"
+msgstr " 少なくとも 2*ord -1 (=%d) 個のノット必要です"
 
 msgid ""
 "the 'x' data must be in the range %g to %g unless you set 'outer.ok = TRUE'"
 msgstr ""
-"'outer.ok = TRUE' でない場合は，データ 'x' は g から %g の範囲内でなければな"
+" 'outer.ok = TRUE' でない場合は，データ 'x' は g から %g の範囲内でなければな"
 "りません．"
 
 msgid "values of 'x' must be distinct"
-msgstr "'x' の値はすべて別々の値でなければなりません"
+msgstr " 'x' の値はすべて別々の値でなければなりません"
 
 msgid "'formula' must be of the form \"y ~ x\""
-msgstr "'formula' は \"y ~ x\" という形式でなければなりません"
+msgstr " 'formula' は \"y ~ x\" という形式でなければなりません"
 
 msgid "lengths of 'x' and 'y' must match"
-msgstr "'x' と 'y' の長さを合わせる必要があります"
+msgstr " 'x' と 'y' の長さを合わせる必要があります"
 
 msgid "values of 'x' must be strictly increasing"
-msgstr "ノット位置は狭義に単調増加でなければなりません"
+msgstr " ノット位置は狭義に単調増加でなければなりません"
 
 msgid "'ord' must be >= 2"
-msgstr "'ord' は 2 以上でなければなりません"
+msgstr " 'ord' は 2 以上でなければなりません"
 
 msgid "the range of 'x' values exceeds one period"
-msgstr "'x' の値の範囲は一周期を超えています"
+msgstr " 'x' の値の範囲は一周期を超えています"
 
 msgid "knot positions must be non-decreasing"
-msgstr "ノット位置は非減少順でなければなりません"
+msgstr " ノット位置は非減少順でなければなりません"
 
 msgid "lengths of 'x' and 'y' must be the same"
-msgstr "'x' と 'y' の長さは同じでなければなりません"
+msgstr " 'x' と 'y' の長さは同じでなければなりません"
 
 msgid "'deriv' must be between 0 and %d"
-msgstr "'deriv' は 0 と %d の間でなければなりません"
+msgstr " 'deriv' は 0 と %d の間でなければなりません"
 
 msgid "knot positions must be strictly increasing"
-msgstr "ノットの位置は狭義の単調増加でなければなりません"
+msgstr " ノットの位置は狭義の単調増加でなければなりません"
 
 msgid "spline must be monotone"
-msgstr "スプラインは単調でなければなりません"
+msgstr " スプラインは単調でなければなりません"
 
 msgid "'degree' must be integer >= 1"
-msgstr "'degree' は 1 以上の整数でなければなりません"
+msgstr " 'degree' は 1 以上の整数でなければなりません"
 
 msgid "'df' was too small; have used"
-msgstr "'df' が小さすぎました．代わりに以下が使われました："
+msgstr " 'df' が小さすぎました．代わりに以下が使われました："
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr ""
-"ある 'x' の値がノットの境界線を越えてしまったため，状況の悪化を招いてしまった"
-"可能性があります"
+" ある 'x' の値がノットの境界線を越えてしまったため，状況の悪化を招いてしまっ"
+"た可能性があります"

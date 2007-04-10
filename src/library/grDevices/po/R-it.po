@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-04-10 07:41\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -106,6 +106,10 @@ msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 
 msgid "argument is missing with no default"
 msgstr "argomento mancante senza valore di default"
+
+#, fuzzy
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "dev.control() usato senza che ci sia un dispositivo grafico aperto"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"

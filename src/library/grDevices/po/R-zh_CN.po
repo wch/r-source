@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2006-11-25 12:18\n"
+"POT-Creation-Date: 2007-04-10 07:41\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -31,9 +31,8 @@ msgstr "没有正确设定'z'这个矩阵"
 msgid "'bias' must be positive"
 msgstr "'bias'的值必需是正数"
 
-#, fuzzy
 msgid "at least 3 columns needed"
-msgstr "至少需要两列"
+msgstr "至少需要三列"
 
 msgid "rgb matrix must be numeric"
 msgstr "rgb矩阵必需是数字"
@@ -106,6 +105,10 @@ msgstr "在没有打开图形装置前是不能调用dev.control()的"
 
 msgid "argument is missing with no default"
 msgstr "没有设定变元，也没有默认值"
+
+#, fuzzy
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "在没有打开图形装置前是不能调用dev.control()的"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'里的变元不对(需要有带名变元)"
@@ -201,7 +204,7 @@ msgid "'x' and 'y' lengths differ"
 msgstr "'x'和'y'的长度不一样"
 
 msgid "invalid first argument [bad language object]"
-msgstr "第一个变元不对[语言目标对象出了错]"
+msgstr "第一个变元不对[语言对象出了错]"
 
 msgid "at least 2 columns needed"
 msgstr "至少需要两列"

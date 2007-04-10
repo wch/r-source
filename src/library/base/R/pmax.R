@@ -36,7 +36,7 @@ pmax <- function (..., na.rm = FALSE)
 pmin <- function (..., na.rm = FALSE)
 {
     elts <- list(...)
-    if(length(elts) == 0) stop("zero imputs")
+    if(length(elts) == 0) stop("no arguments")
     if(all(sapply(elts, function(x) is.atomic(x) && !is.object(x)))) {
         mmm <- .Internal(pmin(na.rm, ...))
     } else {
