@@ -64,8 +64,8 @@ extern Rboolean DebugMenuitem;
 static menubar RMenuBar;
 static popup RConsolePopup;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
-    msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mconfig,
-    mls, mrm, msearch, mde, mtools, mstatus;
+    msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mcomplete, 
+    mfncomplete, mconfig, mls, mrm, msearch, mde, mtools, mstatus;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext, lmanint, lmanadmin;
 static menu m;
 static char cmd[1024];
@@ -346,6 +346,47 @@ static void menulazy(control m)
 {
     consoletogglelazy(RConsole);
 /*    show(RConsole); */
+}
+
+extern void set_rcompgen_available(int x);
+
+static int filename_completion_on = 1;
+
+static int check_file_completion(void)
+{
+    /* ought really to ask rcompgen, but that means loading it */
+    return filename_completion_on;
+}
+
+static void menucomplete(control m)
+{
+    if(ischecked(mcomplete)) {
+	set_rcompgen_available(0);
+	uncheck(mcomplete);
+	uncheck(mfncomplete);
+    } else {
+	set_rcompgen_available(-1);
+	check(mcomplete);
+	if(check_file_completion()) check(mfncomplete);
+	else uncheck(mfncomplete);
+    }
+}
+
+static void menufncomplete(control m)
+{
+    char cmd[200], *c0;
+    if(ischecked(mfncomplete)) {
+	c0 = "FALSE";
+	uncheck(mfncomplete);
+	filename_completion_on = 0;
+    } else {
+	c0 = "TRUE";	
+	check(mfncomplete);
+	filename_completion_on = 1;
+    }
+    sprintf(cmd, "rcompgen::rc.settings(files=%s)", c0);
+    consolecmd(RConsole, cmd);
+    
 }
 
 static void menuconsolestayontop(control m)
@@ -1097,6 +1138,14 @@ int setupui()
 	MCHECK(newmenuitem(G_("Break to debugger"), 0, menudebug));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mlazy = newmenuitem(G_("Buffered output"), 'W', menulazy));
+    MCHECK(mcomplete = newmenuitem(G_("Word completion"), 0, menucomplete));
+    check(mcomplete);
+    MCHECK(mfncomplete = newmenuitem(G_("Filename completion"), 0, 
+				     menufncomplete));
+    if(check_file_completion())
+	check(mfncomplete);
+    else 
+	uncheck(mfncomplete);
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mls = newmenuitem(G_("List objects"), 0, menuls));
     MCHECK(mrm = newmenuitem(G_("Remove all objects"), 0, menurm));
@@ -1464,3 +1513,4 @@ int windelmenuitem(char * item, char * menu, char *errmsg)
     show(RConsole);
     return 0;
 }
+
