@@ -93,6 +93,7 @@ checked against the current version of the source code.
 * The write barrier::           
 * Serialization Formats::       
 * Encodings for CHARSXPs::      
+* S4 objects::                  
 * Internal use of global and base environments::  
 * Modules::                     
 @end menu
@@ -1136,7 +1137,7 @@ name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
 enclosure, frame, tag and attributes.
 
-@node Encodings for CHARSXPs, Internal use of global and base environments, Serialization Formats, R Internal Structures
+@node Encodings for CHARSXPs, S4 objects, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
 
 Character data in @R{} are stored in the sexptype @code{CHARSXP}.  Until
@@ -1187,8 +1188,90 @@ we have to a universal format.  For those that do not (for example those
 lacking a powerful enough @code{iconv}), it is likely that they work in
 Latin-1, the old @R{} assumption.
 
+@node S4 objects, Internal use of global and base environments, Encodings for CHARSXPs, R Internal Structures
+@section S4 objects
 
-@node Internal use of global and base environments, Modules, Encodings for CHARSXPs, R Internal Structures
+The internal representation of objects from S4 classes changed in @R{}
+2.4.0.  It is possible that objects from earlier representations still
+exist, but there is no guarantee that they will be handled
+correctly.
+
+[This section is currently a preliminary draft and should not be taken
+as definitive.]
+
+@menu
+* Representation of S4 objects::  
+* Mechanics of S4 dispatch::    
+@end menu
+
+@node Representation of S4 objects, Mechanics of S4 dispatch, S4 objects, S4 objects
+@subsection Representation of S4 objects
+
+S4 objects can be of any @code{SEXPTYPE}.  They are either an object of
+a simple type (such as an atomic vector or function) with S4 class
+information or of type @code{S4SXP}.  In all cases, the `S4 bit' (bit 4
+of the `general purpose' field) is set, and can be tested by the
+macro/function @code{IS_S4_OBJECT}.
+
+S4 objects are created via @code{new()}@footnote{This can also create
+non-S4 objects, as in @code{new("integer")}.} and thence via the C
+function @code{R_do_new_object}.  This duplicates the prototype of the
+class, adds a class attribute and sets the S4 bit.  All S4 class
+attributes should be character vectors of length one with an attribute
+giving (as a character string) the name of the package (or
+@code{.GlobalEnv}) containing the class definition.  Since S4 objects
+have a class attribute, the @code{OBJECT} bit is set.
+
+It is currently unclear what should happen if the class attribute is
+removed from an S4 object, or if this should be allowed.
+
+@node Mechanics of S4 dispatch,  , Representation of S4 objects, S4 objects
+@subsection Mechanics of S4 dispatch
+
+This subsection does not discuss how S4 methods are chosen: see
+@url{http://developer.r-project.org/howMethodsWork.pdf}.
+
+For all but primitive functions, setting a method on an existing
+function that is not itself S4 generic creates a new object in the
+current environment which is a call to @code{standardGeneric} with the
+old definition as the default method.  Such S4 generics can also be
+created @emph{via} a call to @code{setGeneric}@footnote{although this is
+not recommended as it is less future-proof.} and are standard closures
+in the @R{} language, with environment the environment within which they
+are created.  With the advent of namespaces this is somewhat
+problematic: if @code{myfn} was previously in a package with a name
+space there will be two functions called @code{myfn} on the search
+paths, and which will be called depends on which search path is in use.
+This is starkest for functions in the base name space, where the
+original will be found ahead of the newly created function from any
+other package with a name space.
+
+Primitive functions are treated quite differently, for efficiency
+reasons: this results in different semantics.  @code{setGeneric} is
+disallowed for primitive functions.  The @pkg{methods} package contains
+a list@footnote{a check in @code{make check-devel} ensures that this is
+kept current} named by primitive functions in @code{.BasicFunsList}.
+The entries are either @code{FALSE} (when no S4 method can be set) or a
+standard S4 generic showing the effective definition.  When
+@code{setMethod} is called, either it fails if setting is disallowed or
+a method is set on the effective generic.
+
+Actual dispatch of S4 methods for primitives piggy-backs on the S3
+dispatch mechanism, so S4 methods can only be dispatched for primitives
+which are internally S3 generic.  When a primitive that is internally S3
+generic is called with a first argument which is an object and S4
+dispatch is on (that is, the @pkg{methods} namespace is loaded),
+@code{DispatchOrEval} calls @code{R_possible_dispatch} (defined in
+@file{src/main/objects.c}).  The latter first checks an internal table
+to check if any S4 methods are set for that generic (and S4 dispatch is
+currently enabled for that generic), and if so proceeds to S4 dispatch
+using methods stored in another internal table.  Note that this means
+that dispatch will not occur for the pseudo-classes like
+@code{"function"} and @code{"matrix"}, but that it will occur for non-S4
+objects which have an S3 class.
+
+
+@node Internal use of global and base environments, Modules, S4 objects, R Internal Structures
 @section Internal use of global and base environments
 
 This section notes known use by the system of these environments: the
