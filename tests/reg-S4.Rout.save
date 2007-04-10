@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-04-07 r41087)
+R version 2.6.0 Under development (unstable) (2007-04-10 r41116)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -314,6 +314,7 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
 > # not allowed to define a "function" method, and existing one fails.
 > 
 > setMethod("as.integer", "c1", function(x, ...) 42)
+Creating a new generic function for "as.integer" in ".GlobalEnv"
 [1] "as.integer"
 > as.integer(x_c1)
 [1] 42
@@ -335,16 +336,19 @@ numeric(0)
 Error in as.double(x, ...) : cannot coerce to vector
 > 
 > setMethod("as.logical", "c1", function(x, ...) NA)
+Creating a new generic function for "as.logical" in ".GlobalEnv"
 [1] "as.logical"
 > as.logical(x_c1)
 [1] NA
 > 
 > setMethod("as.complex", "c1", function(x, ...) pi+0i)
+Creating a new generic function for "as.complex" in ".GlobalEnv"
 [1] "as.complex"
 > as.complex(x_c1)
 [1] 3.141593+0i
 > 
 > setMethod("as.raw", "c1", function(x) as.raw(10))
+Creating a new generic function for "as.raw" in ".GlobalEnv"
 [1] "as.raw"
 > as.raw(x_c1)
 [1] 0a
