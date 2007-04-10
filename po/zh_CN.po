@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41+0100\n"
+"POT-Creation-Date: 2007-04-10 18:05+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -4193,11 +4193,11 @@ msgid ""
 "function"
 msgstr "不能从非同屬函数体内调用standardGeneric(\"%s\") "
 
-#: src/main/objects.c:1014
+#: src/main/objects.c:1015
 msgid "argument 'code' must be a character string"
 msgstr "变元'code'必需是字符串"
 
-#: src/main/objects.c:1065
+#: src/main/objects.c:1066
 #, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
@@ -4205,11 +4205,11 @@ msgid ""
 msgstr ""
 "原始方法代码(\"%s\")有错：应该是\"clear\", \"reset\", \"set\", 或\"suppress\""
 
-#: src/main/objects.c:1073
+#: src/main/objects.c:1074
 msgid "invalid object: must be a primitive function"
 msgstr "目标对象不对: 必需是原始函数"
 
-#: src/main/objects.c:1120
+#: src/main/objects.c:1121
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
@@ -4240,7 +4240,7 @@ msgstr "调用C级的NEW宏时不能用null类别定义指针"
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "无法从虚拟类别(\"%s\")中产生目标对象"
 
-#: src/main/objects.c:1358
+#: src/main/objects.c:1361
 msgid "'R_get_primname' called on a non-primitive"
 msgstr "'R_get_primname'不能调用于非原始函数"
 
@@ -5130,23 +5130,23 @@ msgstr "'gap'必需是正整数"
 msgid "invalid 'tryS4' internal argument"
 msgstr "'tryS4'内部变元不对"
 
-#: src/main/print.c:930
+#: src/main/print.c:952
 msgid "invalid character length in dblepr"
 msgstr "dblepr字符长度不对"
 
-#: src/main/print.c:948
+#: src/main/print.c:970
 msgid "invalid character length in intpr"
 msgstr "intpr字符长度不对"
 
-#: src/main/print.c:967
+#: src/main/print.c:989
 msgid "invalid character length in realpr"
 msgstr "realpr字符长度不对"
 
-#: src/main/print.c:977
+#: src/main/print.c:999
 msgid "memory allocation error in realpr"
 msgstr "realpr内存分配错误"
 
-#: src/main/print.c:993
+#: src/main/print.c:1015
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "BLAS/LAPACK 例行程序'%6s'产生了错误%d信息"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41+0100\n"
+"POT-Creation-Date: 2007-04-10 18:05+0100\n"
 "PO-Revision-Date: 2007-04-03 14:58+0900\n"
 "Last-Translator: Ei-ji Nakama <nakama@ki.rim.or.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -4252,11 +4252,11 @@ msgstr ""
 " 見たところジェネリックな関数の本体からではない standardGeneric(\"%s\") の呼"
 "出しです"
 
-#: src/main/objects.c:1014
+#: src/main/objects.c:1015
 msgid "argument 'code' must be a character string"
 msgstr " 引数 'code' は文字列でなくてはなりません"
 
-#: src/main/objects.c:1065
+#: src/main/objects.c:1066
 #, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
@@ -4265,11 +4265,11 @@ msgstr ""
 " 不正な primitive メソッドコード (\"%s\")です。:\"clear\", \"reset\", \"set"
 "\" または \"suppress\" のいずれかでなければなりません"
 
-#: src/main/objects.c:1073
+#: src/main/objects.c:1074
 msgid "invalid object: must be a primitive function"
 msgstr " 不正なオブジェクトです：プリミティブな関数でなくてはなりません"
 
-#: src/main/objects.c:1120
+#: src/main/objects.c:1121
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
@@ -4306,7 +4306,7 @@ msgstr ""
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr " 仮想クラス (\"%s\") からオブジェクトを生成しようとしています"
 
-#: src/main/objects.c:1358
+#: src/main/objects.c:1361
 msgid "'R_get_primname' called on a non-primitive"
 msgstr " 'R_get_primname' がプリミティブでないものに対して呼び出されました"
 
@@ -5201,23 +5201,23 @@ msgstr " 'gap' は，非負の整数でなくてはなりません"
 msgid "invalid 'tryS4' internal argument"
 msgstr " 'tryS4' 内部引数が不正です"
 
-#: src/main/print.c:930
+#: src/main/print.c:952
 msgid "invalid character length in dblepr"
 msgstr " dblepr の文字列の長さが不正です"
 
-#: src/main/print.c:948
+#: src/main/print.c:970
 msgid "invalid character length in intpr"
 msgstr " intpr の文字列の長さが不正です"
 
-#: src/main/print.c:967
+#: src/main/print.c:989
 msgid "invalid character length in realpr"
 msgstr " realpr の文字列の長さが不正です"
 
-#: src/main/print.c:977
+#: src/main/print.c:999
 msgid "memory allocation error in realpr"
 msgstr " realpr でメモリ確保に失敗しました"
 
-#: src/main/print.c:993
+#: src/main/print.c:1015
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr " BLAS/LAPACK 関数 '%6s' はエラーコード %d を返しました "

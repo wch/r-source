@@ -1,7 +1,7 @@
 # Spanish translations for R package.
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de>, 2006.
+# Pablo E. Verde <pabloemilio.verde@uni-duesseldorf.de>, 2007.
 #
 msgid ""
 msgstr ""
@@ -43,11 +43,11 @@ msgstr ""
 
 #: console.c:1943
 msgid "Save selection to"
-msgstr "Salvar como"
+msgstr "Guardar como"
 
 #: console.c:1945
 msgid "Save console contents to"
-msgstr "Salvar contenido de la consola en "
+msgstr "Guardar contenido de la consola en "
 
 #: console.c:2043
 msgid "Scrolling.\n"
@@ -371,7 +371,7 @@ msgstr ""
 #: editor.c:153
 #, fuzzy
 msgid "Save script as"
-msgstr "Salvar script"
+msgstr "Guardar script"
 
 #: editor.c:462 pager.c:172 pager.c:192
 msgid "No RGui console to paste to"
@@ -461,7 +461,7 @@ msgstr "Abrir script"
 
 #: editor.c:658
 msgid "Save script"
-msgstr "Salvar script"
+msgstr "Guardar script"
 
 #: editor.c:666 pager.c:436 ../library/grDevices/src/devWindows.c:1509
 msgid "Return focus to Console"
@@ -486,11 +486,11 @@ msgstr "Abrir script..."
 
 #: editor.c:694
 msgid "Save"
-msgstr "Salvar"
+msgstr "Guardar"
 
 #: editor.c:696
 msgid "Save as..."
-msgstr "Salvar como..."
+msgstr "Guardar como..."
 
 #: editor.c:699 pager.c:455 rui.c:1066
 #: ../library/grDevices/src/devWindows.c:1603
@@ -575,7 +575,7 @@ msgstr "Pegar comandos en la consola"
 
 #: pager.c:457 rui.c:1067
 msgid "Save to File..."
-msgstr "Salvar en Archivo ..."
+msgstr "Guardar en Archivo ..."
 
 #: pager.c:472 rui.c:1085
 msgid "View"
@@ -595,7 +595,7 @@ msgstr ""
 "Las propiedades generales de la consola no pueden ser alteradas\n"
 "en una consola activa.\n"
 "\n"
-"Salvar preferencias y reiniciar Rgui para aplicarlas.\n"
+"Guardar preferencias y reiniciar Rgui para aplicarlas.\n"
 
 #: preferences.c:249
 msgid ""
@@ -646,7 +646,7 @@ msgstr "Aplicar"
 
 #: preferences.c:790
 msgid "Save..."
-msgstr "Salvar como ..."
+msgstr "Guardar como ..."
 
 #: preferences.c:791
 msgid "Load..."
@@ -662,7 +662,7 @@ msgstr "Selecionar image para cargar"
 
 #: rui.c:161
 msgid "Save image in"
-msgstr "Salvar imagen en"
+msgstr "Guardar imagen en"
 
 #: rui.c:176
 msgid "Load history from"
@@ -670,7 +670,7 @@ msgstr "Corregir histórico de"
 
 #: rui.c:185
 msgid "Save history in"
-msgstr "Salvar histórico en"
+msgstr "Guardar histórico en"
 
 #: rui.c:235 rui.c:244
 msgid "No text available"
@@ -799,7 +799,7 @@ msgstr "Cargar imagen"
 
 #: rui.c:1011
 msgid "Save image"
-msgstr "Salvar imagen"
+msgstr "Guardar imagen"
 
 #: rui.c:1027
 msgid "Stop current computation"
@@ -819,7 +819,7 @@ msgstr "Cargar área de trabajo..."
 
 #: rui.c:1057
 msgid "Save Workspace..."
-msgstr "Salvar  área de trabajo..."
+msgstr "Guardar  área de trabajo..."
 
 #: rui.c:1059
 msgid "Load History..."
@@ -827,7 +827,7 @@ msgstr "Cargar Histórico..."
 
 #: rui.c:1061
 msgid "Save History..."
-msgstr "Salvar Histórico..."
+msgstr "Guardar Histórico..."
 
 #: rui.c:1064
 msgid "Change dir..."
@@ -937,7 +937,7 @@ msgstr "menu o item no existe"
 
 #: system.c:411
 msgid "Save workspace image?"
-msgstr "Salvar imagen de área de trabajo?"
+msgstr "Guardar imagen de área de trabajo?"
 
 #: graphapp/clipboard.c:70 graphapp/clipboard.c:74
 msgid "Insufficient memory: cell not copied to the clipboard"
@@ -1093,7 +1093,7 @@ msgstr "Próximo gráfico"
 
 #: ../library/grDevices/src/devWindows.c:1542
 msgid "Save as"
-msgstr "Salvar como"
+msgstr "Guardar como"
 
 #: ../library/grDevices/src/devWindows.c:1543
 msgid "Metafile..."
@@ -1172,7 +1172,7 @@ msgstr "Próximo\tPageDown"
 
 #: ../library/grDevices/src/devWindows.c:1574
 msgid "Save to variable..."
-msgstr "Salvar para variablel..."
+msgstr "Guardar para variablel..."
 
 #: ../library/grDevices/src/devWindows.c:1575
 msgid "Get from variable..."
@@ -1208,11 +1208,11 @@ msgstr "Copiar como bitmap"
 
 #: ../library/grDevices/src/devWindows.c:1595
 msgid "Save as metafile..."
-msgstr "Salvar como metafile..."
+msgstr "Guardar como metafile..."
 
 #: ../library/grDevices/src/devWindows.c:1597
 msgid "Save as postscript..."
-msgstr "Salvar como postscript..."
+msgstr "Guardar como postscript..."
 
 #: ../library/grDevices/src/devWindows.c:2462
 msgid "Locator is active"

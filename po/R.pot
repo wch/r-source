@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41+0100\n"
+"POT-Creation-Date: 2007-04-10 18:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4191,22 +4191,22 @@ msgid ""
 "function"
 msgstr ""
 
-#: src/main/objects.c:1014
+#: src/main/objects.c:1015
 msgid "argument 'code' must be a character string"
 msgstr ""
 
-#: src/main/objects.c:1065
+#: src/main/objects.c:1066
 #, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
 "\"set\", or \"suppress\""
 msgstr ""
 
-#: src/main/objects.c:1073
+#: src/main/objects.c:1074
 msgid "invalid object: must be a primitive function"
 msgstr ""
 
-#: src/main/objects.c:1120
+#: src/main/objects.c:1121
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
@@ -4237,7 +4237,7 @@ msgstr ""
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr ""
 
-#: src/main/objects.c:1358
+#: src/main/objects.c:1361
 msgid "'R_get_primname' called on a non-primitive"
 msgstr ""
 
@@ -5122,23 +5122,23 @@ msgstr ""
 msgid "invalid 'tryS4' internal argument"
 msgstr ""
 
-#: src/main/print.c:930
+#: src/main/print.c:952
 msgid "invalid character length in dblepr"
 msgstr ""
 
-#: src/main/print.c:948
+#: src/main/print.c:970
 msgid "invalid character length in intpr"
 msgstr ""
 
-#: src/main/print.c:967
+#: src/main/print.c:989
 msgid "invalid character length in realpr"
 msgstr ""
 
-#: src/main/print.c:977
+#: src/main/print.c:999
 msgid "memory allocation error in realpr"
 msgstr ""
 
-#: src/main/print.c:993
+#: src/main/print.c:1015
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr ""

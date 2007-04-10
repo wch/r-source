@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41+0100\n"
+"POT-Creation-Date: 2007-04-10 18:05+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -4304,11 +4304,11 @@ msgstr ""
 "chiamata di standardGeneric(\"%s\") apparentemente al di fuori del corpo di "
 "quella funzione generica"
 
-#: src/main/objects.c:1014
+#: src/main/objects.c:1015
 msgid "argument 'code' must be a character string"
 msgstr "l'argomento 'code' deve essere una stringa di tipo character"
 
-#: src/main/objects.c:1065
+#: src/main/objects.c:1066
 #, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
@@ -4317,11 +4317,11 @@ msgstr ""
 "codice metodo primitiva (\"%s\") non valido : dovrebbe essere \"clear\", "
 "\"reset\", \"set\", o \"suppress\""
 
-#: src/main/objects.c:1073
+#: src/main/objects.c:1074
 msgid "invalid object: must be a primitive function"
 msgstr "oggetto non valido: deve essere una funzione primitiva"
 
-#: src/main/objects.c:1120
+#: src/main/objects.c:1121
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
@@ -4357,7 +4357,7 @@ msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr ""
 "provo a generare un oggetto in C a partire dalla classe virtuale (\"%s\")"
 
-#: src/main/objects.c:1358
+#: src/main/objects.c:1361
 msgid "'R_get_primname' called on a non-primitive"
 msgstr ""
 
@@ -5257,23 +5257,23 @@ msgstr "'gap' deve essere un intero non negativo"
 msgid "invalid 'tryS4' internal argument"
 msgstr "argomento interno 'tryS4' non valido"
 
-#: src/main/print.c:930
+#: src/main/print.c:952
 msgid "invalid character length in dblepr"
 msgstr "lunghezza carattere non valida in dblepr"
 
-#: src/main/print.c:948
+#: src/main/print.c:970
 msgid "invalid character length in intpr"
 msgstr "lunghezza carattere non valida in intpr"
 
-#: src/main/print.c:967
+#: src/main/print.c:989
 msgid "invalid character length in realpr"
 msgstr "lnghezza carattere non valida in realpr"
 
-#: src/main/print.c:977
+#: src/main/print.c:999
 msgid "memory allocation error in realpr"
 msgstr "errore di allocazione della memoria in realpr"
 
-#: src/main/print.c:993
+#: src/main/print.c:1015
 #, c-format
 msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "la routine BLAS/LAPACK '%6s' ha restituito un codice errore %d"
