@@ -227,8 +227,19 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     if(callShow) {
-	SEXP call;
-	PROTECT(call = lang2(install("show"), x));
+	/* we need to get show from the methods namespace if it is 
+	   not visible on the search path. */
+	SEXP call, showS;
+	showS = findVar(install("show"), rho);
+	if(showS == R_UnboundValue) {
+	    SEXP methodsNS = R_FindNamespace(mkString("methods"));
+	    if(methodsNS == R_UnboundValue)
+		error("missing methods namespace: this should not happen");
+	    showS = findVarInFrame3(methodsNS, install("show"), TRUE);
+	    if(showS == R_UnboundValue)
+		error("missing show() in methods namespace: this should not happen");
+	}
+	PROTECT(call = lang2(showS, x));
 	eval(call, rho);
 	UNPROTECT(1);
     } else {
@@ -865,7 +876,6 @@ void attribute_hidden PrintValueEnv(SEXP s, SEXP env)
 	    */
 	    showS = findVar(install("show"), env);
 	    if(showS == R_UnboundValue) {
-		printf("looking for show in methods NS\n");
 		SEXP methodsNS = R_FindNamespace(mkString("methods"));
 		if(methodsNS == R_UnboundValue)
 		    error("missing methods namespace: this should not happen");
