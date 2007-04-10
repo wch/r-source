@@ -29,73 +29,74 @@ msgid "Tcl package '%s' not found"
 msgstr "没有'%s'这个Tcl程序包"
 
 msgid "The tkGUI is not available under Windows"
-msgstr ""
+msgstr "Windows下没有tkGUI这个功能"
 
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 msgid "Demos"
-msgstr ""
+msgstr "Demos"
 
 msgid "Packages"
-msgstr ""
+msgstr "程序包"
 
 msgid "Help"
-msgstr ""
+msgstr "帮助"
 
 msgid "Source R code"
-msgstr ""
+msgstr "R源代码"
 
 msgid "Quit"
-msgstr ""
+msgstr "退出"
 
 msgid "Save workspace"
-msgstr ""
+msgstr "保存工作空间"
 
 msgid "Don't save workspace"
-msgstr ""
+msgstr "不要保存工作空间"
 
 msgid "t test"
-msgstr ""
+msgstr "t检验"
 
 msgid "Density"
-msgstr ""
+msgstr "密度"
 
 msgid "R FAQ"
-msgstr ""
+msgstr "R FAQ"
 
 msgid "Load"
-msgstr ""
+msgstr "载入"
 
 msgid "Go get them!"
-msgstr ""
+msgstr "动手吧!"
 
 msgid "Load packages"
-msgstr ""
+msgstr "载入程序包"
 
 msgid "Install packages from CRAN"
-msgstr ""
+msgstr "用CRAN安装程序包"
 
 msgid "Help topic:"
-msgstr ""
+msgstr "帮助题目："
 
 msgid "Manuals in PDF format"
-msgstr ""
+msgstr "说明书是PDF格式的"
 
 msgid "OK"
-msgstr ""
+msgstr "好"
 
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 msgid "Loading Tcl/Tk interface ..."
-msgstr ""
+msgstr "载入Tcl/Tk接口..."
 
 msgid "done"
-msgstr ""
+msgstr "完成"
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "这个系统不支持Tcl/Tk"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "没有安装Tcl/Tk支持文件"
+
