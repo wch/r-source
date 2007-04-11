@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-04-06
+@set FAQ_DATE @value{FAQ_YEAR}-04-11
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -2301,6 +2301,8 @@ An illustration of the use of the Rcpp R/C++ interface library.
 Electrical properties of resistor networks.
 @item Rfwdmv
 Forward Search for Multivariate Data.
+@item RiboSort
+Classification and analysis of microbial community profiles.
 @item Rigroup
 Provides small integer group functions.
 @item Rlab
@@ -2477,6 +2479,8 @@ Adaptive quadrature in up to 20 dimensions.
 Multivariate data analysis and graphical display.
 @item ade4TkGUI
 Tcl/Tk Graphical User Interface for @strong{ade4}.
+@item adegenet
+Genetic data handling for multivariate analysis using @strong{ade4}.
 @item adehabitat
 A collection of tools for the analysis of habitat selection by animals.
 @item adimpro
@@ -2756,6 +2760,8 @@ Efficient estimation of covariance and (partial) correlation.
 Plot a correlogram.
 @item covRobust
 Robust covariance estimation via nearest neighbor cleaning.
+@item coxphf
+Cox regression with Firth's penalized likelihood.
 @item coxrobust
 Robust Estimation in the Cox proportional hazards regression model.
 @item cramer
@@ -4387,8 +4393,11 @@ with essentialy the same cost as a single SVM fit.
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
 Three-Stage Least Squares (3SLS).
-@item tapiR
-Tools for accessing (UK) parliamentary information in R.
+@c <COMMENT>
+@c Moved to the Archive on 2007-04-11 as requested by the maintainer.
+@c @item tapiR
+@c Tools for accessing (UK) parliamentary information in R.
+@c </COMMENT>
 @item taskPR
 Task-Parallel R package.
 @item tcltk2
