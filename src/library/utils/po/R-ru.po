@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.1\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-04-10 07:42\n"
-"PO-Revision-Date: 2006-12-10 02:40-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"PO-Revision-Date: 2007-04-07 02:16-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -24,18 +24,19 @@ msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
 "   a documentation file"
 msgstr ""
+"RShowDoc() должен быть использован с аргументом-текстовой строкой, "
+"указывающим на\n"
+"   файл документации"
 
-#, fuzzy
 msgid "no documentation for '%s' found in package '%s'"
-msgstr "для функции '%s' и подписи '%s' нет документации"
+msgstr "для функции '%s' из пакета '%s' нет документации"
 
-#, fuzzy
 msgid "document not found"
-msgstr "объект '%s' не найден"
+msgstr "документ не найден"
 
 #, fuzzy
 msgid "A search query has been submitted to"
-msgstr "Поисковый запрос должен быть послан в"
+msgstr "Поисковый запрос должен быть послан в %s"
 
 msgid "The results page should open in your browser shortly"
 msgstr "Страница с результатами должна скоро открыться в броузере"
@@ -209,9 +210,8 @@ msgstr "неправильный аргумент 'data'"
 msgid "invalid 'modes' argument"
 msgstr "неправильный аргумент 'modes'"
 
-#, fuzzy
 msgid "invalid 'x' argument"
-msgstr "неправильный аргумент 'data'"
+msgstr "неправильный аргумент 'x'"
 
 msgid "can only handle vector and factor elements"
 msgstr "могу работать только с элементами векторов и факторов"
@@ -237,21 +237,20 @@ msgstr "найдено более одного файла помощи: использую пакет '%s'"
 msgid "'%s' has a help file but no examples file"
 msgstr "у '%s' есть файл помощи, но нет файла примеров"
 
-#, fuzzy
 msgid "test '%s' is not available"
-msgstr "зависимость '%s' недоступна"
+msgstr "тест '%s' недоступен"
 
 msgid "'fix' requires a name"
 msgstr "для 'fix' нужно имя"
 
 msgid "too many list items (at most up to number 26)"
-msgstr ""
+msgstr "слишком много пунктов в списке (самое большее 26)"
 
 msgid "too many list items (at most up to number 3899)"
-msgstr ""
+msgstr "слишком много пунктов в списке (самое большее 3899)"
 
 msgid "'form' must be a two-sided formula"
-msgstr ""
+msgstr "'form' должен быть двусторонней формулой"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
@@ -334,33 +333,31 @@ msgid "argument 'help.db' is deprecated"
 msgstr "аргумент 'help.db' не рекомендуется"
 
 msgid "Rebuilding the data base ..."
-msgstr ""
+msgstr "Перестройка базы данных..."
 
 msgid "Packages {.readRDS() sequentially}:"
-msgstr ""
+msgstr "Пакеты {.readRDS() последовательно}:"
 
 msgid "could not find package '%s'"
 msgstr "не могу найти пакет '%s'"
 
 msgid "package '%s' has empty hsearch data - strangely"
-msgstr ""
+msgstr "пакет '%s' странным образом имеет пустые данные hsearch"
 
 msgid "no hsearch.rds meta data for package"
 msgstr "нет метаданных hsearch.rds к пакету"
 
 msgid "reencoding ..."
-msgstr ""
+msgstr "перекодировка..."
 
-#, fuzzy
 msgid "done"
-msgstr "Готово."
+msgstr "готово"
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "удаляю все вхождения с неправильными многобайтными данными"
 
-#, fuzzy
 msgid "saving the database ..."
-msgstr "Использую первое совпадение..."
+msgstr "Сохраняю базу данных..."
 
 msgid ""
 "no information in the data base for package '%s': need 'rebuild = TRUE'?"
@@ -370,7 +367,7 @@ msgid "incorrect 'agrep' specification"
 msgstr "неправильное указание 'agrep'"
 
 msgid "matched %d objects."
-msgstr ""
+msgstr "соответствует %d объект(ам)."
 
 msgid "no package '%s' was found"
 msgstr "не найден пакет '%s'"
@@ -527,27 +524,26 @@ msgstr "пакеты %s обоюдозависимы"
 msgid "no packages were specified"
 msgstr "не указаны пакеты"
 
-#, fuzzy
 msgid "argument 'lib' is missing: using '%s'"
 msgstr "аргумент 'lib' пропущен: использую %s"
 
-#, fuzzy
 msgid "'lib' is not writable"
-msgstr "зависимость '%s' недоступна"
+msgstr "'lib' не для записи"
 
 msgid ""
 "Would you like to create a personal library\n"
 "'%s'\n"
 "to install packages into?"
 msgstr ""
+"Не хотите ли Вы созджать персональную библиотеку\n"
+"'%s'\n"
+"для того чтобы инсталлировать пакеты в нее?"
 
-#, fuzzy
 msgid "unable to install packages"
-msgstr "не могу найти пакет '%s'"
+msgstr "не могу установить пакеты"
 
-#, fuzzy
 msgid "unable to create"
-msgstr "не удалось создать '%s'"
+msgstr "не удалось создать"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "не могу установить бинарные пакеты MacOS X под Windows"
@@ -701,15 +697,14 @@ msgstr "у 'as.is' -- неправильная длина %d != cols = %d"
 msgid "invalid 'row.names' specification"
 msgstr "неправильное указание 'row.names'"
 
-#, fuzzy
 msgid "invalid 'row.names' length"
-msgstr "неправильное указание 'row.names'"
+msgstr "неправильная длина 'row.names'"
 
 msgid "duplicate 'row.names' are not allowed"
-msgstr ""
+msgstr "повторяющиеся 'row.names' не разрешаются"
 
 msgid "missing values in 'row.names' are not allowed"
-msgstr ""
+msgstr "пропущенные значения в 'row.names' не разрешаются"
 
 msgid "missing lengths for some fields"
 msgstr "в некоторых полях пропущены длины"
@@ -733,17 +728,16 @@ msgid "option must be a length one character vector or NULL"
 msgstr "'option' должна быть длиной с один текстовый вектор или NULL"
 
 msgid "empty beginning of file"
-msgstr ""
+msgstr "пустое начало файла"
 
-#, fuzzy
 msgid "first five rows are empty: giving up"
-msgstr "строки пусты: завязываю с этим"
+msgstr "первые пять строк пусты: завязываю с этим"
 
 msgid "cannot coerce 'x' to roman"
-msgstr ""
+msgstr "не могу перевести 'x' в римскую"
 
 msgid "Invalid roman numeral(s): %s"
-msgstr ""
+msgstr "Неправильные римские номер(а): %s"
 
 msgid "invalid 'socket' argument"
 msgstr "неправильный аргумент 'socket'"
@@ -801,31 +795,28 @@ msgid "Invalid input, please try again"
 msgstr "Неправильный ввод, пожалуйста, попробуйте опять"
 
 msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
+msgstr "'quote' должна быть 'TRUE', 'FALSE' или числом"
 
 msgid "invalid numbers in 'quote'"
-msgstr ""
+msgstr "неправильные номера в 'quote'"
 
-#, fuzzy
 msgid "invalid 'quote' specification"
-msgstr "неправильное указание 'row.names'"
+msgstr "неправильное указание 'quote'"
 
 msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
+msgstr "col.names = NA не имеет смысла если row.names = FALSE"
 
-#, fuzzy
 msgid "invalid 'col.names' specification"
-msgstr "неправильное указание 'row.names'"
+msgstr "неправильное указание 'col.names'"
 
 msgid "appending column names to file"
-msgstr ""
+msgstr "добавление имен колонок к файлу"
 
 msgid "attempt to change '%s' ignored"
-msgstr ""
+msgstr "попытка изменить '%s' пропущена"
 
-#, fuzzy
 msgid "'unzip' must be a single character string"
-msgstr "аргумент '%s' должен быть одной текстовой строкой"
+msgstr "'unzip' должен быть одной текстовой строкой"
 
 msgid "'subject' missing"
 msgstr "пропущен 'subject'"
@@ -862,13 +853,11 @@ msgstr ""
 msgid "Otherwise, be patient ..."
 msgstr "Если нет, ждите..."
 
-#, fuzzy
 msgid "'url' must be a non-empty character string"
 msgstr "'url' должен быть непустой текстовой строкой"
 
-#, fuzzy
 msgid "'browser' must be a non-empty character string"
-msgstr "броузер должен быть непустой текстовой строкой"
+msgstr "'browser' должен быть непустой текстовой строкой"
 
 msgid "cannot create HTML package index"
 msgstr "не могу создать HTML-индекс пакетов"
@@ -942,28 +931,24 @@ msgstr[0] "объект '%s' не найден"
 msgstr[1] "объекты '%s' не найдены"
 msgstr[2] "объекты '%s' не найдены"
 
-#, fuzzy
 msgid "'lib' element '%s'  is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0] "'destdir' не является папкой"
-msgstr[1] "'destdir' не является папкой"
-msgstr[2] "'destdir' не является папкой"
+msgstr[0] "элемент '%s' из 'lib' -- папка не для записи"
+msgstr[1] "элемент '%s' из 'lib' -- папки не для записи"
+msgstr[2] "элемент '%s' из 'lib' -- папки не для записи"
 
-#, fuzzy
 msgid "package %s is not available"
 msgid_plural "packages %s are not available"
 msgstr[0] "зависимость '%s' недоступна"
-msgstr[1] "зависимость '%s' недоступна"
-msgstr[2] "зависимость '%s' недоступна"
+msgstr[1] "пакеты %s недоступны"
+msgstr[2] "пакеты %s недоступны"
 
-#, fuzzy
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
 msgstr[0] "зависимость '%s' недоступна"
 msgstr[1] "зависимости '%s' недоступны"
 msgstr[2] "зависимости '%s' недоступны"
 
-#, fuzzy
 msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] "устанавливаю также зависимость"

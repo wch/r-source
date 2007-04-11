@@ -1,0 +1,1265 @@
+# Russian translations for R
+# Русский перевод для R
+#
+# Copyright (C) 2007 The R Foundation
+# This file is distributed under the same license as the R package.
+# Alexey Garkovenko <garkovenko@gmail.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.5.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2007-04-03 11:43\n"
+"PO-Revision-Date: 2007-04-09 23:30+0400\n"
+"Last-Translator: Alexey Garkovenko <garkovenko@gmail.com>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=koi8-r\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "replacement value is not a matrix"
+msgstr "замещающее значение не является матрицей"
+
+msgid "OOPS: something wrong with line"
+msgstr ""
+
+msgid "in .OldClassesPrototypes"
+msgstr "в .OldClassesPrototypes"
+
+msgid ""
+"methods may not be defined for primitive function \"%s\" in this version of R"
+msgstr ""
+"методы не могут быть определены для простой функции \"%s\" в этой версии R"
+
+msgid "\"%s\" is not one of the basic functions"
+msgstr "\"%s\" не является одной из основных функций"
+
+msgid ""
+"no 'replace' method was defined for as(x, \"%s\") <- value for class \"%s\""
+msgstr ""
+"не было определено 'replace' метода для as(x, \"%s\") <- значение для класса "
+"\"%s\""
+
+msgid ""
+"the 'coerce' argument to 'setIs' should be a function of one argument, got "
+"an object of class \"%s\""
+msgstr ""
+
+msgid ""
+"there is no automatic definition for as(object, \"%s\") <- value when object "
+"has class \"%s\" and no 'replace' argument was supplied; replacement will be "
+"an error"
+msgstr ""
+"there is no automatic definition for as(object, \"%s\") <- value when object "
+"has class \"%s\" and no 'replace' argument was supplied; replacement will be "
+"an errorp"
+
+msgid ""
+"the 'replace' argument to setIs() should be a function of 2 or 3 arguments, "
+"got an object of class \"%s\""
+msgstr ""
+"аргумент 'replace' для setIs() должен быть функцией с 2 или 3 аргументами, "
+"получен объект класса \"%s\""
+
+msgid "the member classes must be defined: not true of %s"
+msgstr "член классов должен быть определен: %s не верен"
+
+msgid "unable to create union class:  could not set members %s"
+msgstr "не могу создать класс union:  не могу установить членов %s"
+
+msgid ""
+"\"%s\" is a primitive function;  methods can be defined, but the generic "
+"function is implicit, and cannot be changed."
+msgstr ""
+"\"%s\" является элементарной функцией;  методы не могут быть определены, но "
+"подразумевается обычная функция и не может быть изменена."
+
+msgid ""
+"if the `def' argument is supplied, it must be a function that calls "
+"standardGeneric(\"%s\") to dispatch methods"
+msgstr ""
+"если предоставлен аргумент `def' , это должно быть функцией, которая "
+"вызывает standardGeneric(\"%s\") для отсылки методов"
+
+msgid "must supply a function skeleton, explicitly or via an existing function"
+msgstr ""
+"необходимо предоставить каркас функции, явно либо через вызов существующей "
+"функции"
+
+msgid ""
+"function \"%s\" appears to be a generic function, but with generic name \"%s"
+"\""
+msgstr ""
+"функция \"%s\" кажется является общей функцией, но с общим именем \"%s\""
+
+msgid "generic function \"%s\" not found for removal"
+msgstr "общая функция \"%s\" не найдена для удаления"
+
+msgid ""
+"invalid argument \"f\", expected a function or its name, got an object of "
+"class \"%s\""
+msgstr ""
+"неверный аргумент \"f\", ожидается функция или ее имя, получен объект класса "
+"\"%s\""
+
+msgid ""
+"internal error: did not get a valid generic function object for function \"%s"
+"\""
+msgstr "внутренняя ошибка: не получен верный объект общей функции для \"%s\""
+
+msgid "A function for argument \"f\" must be a generic function"
+msgstr "Функция для аргумента \"f\" должна быть общей функцией"
+
+msgid ""
+"the environment \"%s\" is locked; cannot assign methods for function \"%s\""
+msgstr ""
+"окружение \"%s\" заблокировано; не могу назначить методы для функции \"%s\""
+
+msgid ""
+"the 'where' environment (%s) is a locked namespace; cannot assign methods "
+"there"
+msgstr ""
+"окружение 'where' (%s) является заблокированным пространством имен; не могу "
+"определить здесь методы"
+
+msgid ""
+"copying the generic function \"%s\" to environment \"%s\", because the "
+"previous version was in a sealed namespace (%s)"
+msgstr ""
+"копирую общую функцию \"%s\" в окружение \"%s\", потому что предыдущая "
+"версия была в запечатанном пространстве имен (%s)"
+
+msgid "no existing definition for function \"%s\""
+msgstr "нет существующего определения для функции \"%s\""
+
+msgid "Creating a new generic function for \"%s\" in \"%s\""
+msgstr "Создание новой общей функции для \"%s\" в \"%s\""
+
+msgid ""
+"apparent internal error: a generic function was found for \"%s\", but no "
+"corresponding object was found searching from \"%s\""
+msgstr ""
+"очевидная внутренняя ошибка: для \"%s\" была найдена общая функция, но "
+"поиском по \"%s\" не было найдено соответствующего объекта"
+
+msgid ""
+"the method for function \"%s\" and signature %s is sealed and cannot be re-"
+"defined"
+msgstr ""
+"метод для функции \"%s\" и подпись %s запечатаны и не могут быть изменены"
+
+msgid ""
+"primitive functions cannot be methods; they must be enclosed in a regular "
+"function"
+msgstr ""
+"элементарные функции не могут быть методами; они должны быть вложены в "
+"регулярную функцию"
+
+msgid ""
+"invalid method definition: expected a function, got an object of class \"%s\""
+msgstr ""
+"Не верное определение метода: ожидалась функция, а получен объект класса \"%s"
+"\""
+
+msgid "Function supplied as argument \"f\" must be a generic"
+msgstr "Функция, предоставленная аргументом \"f\" должна быть общей"
+
+msgid "no generic function \"'%s\" found"
+msgstr "Не найдено общей функции \"'%s\""
+
+msgid "no method found for function \"%s\" and signature %s"
+msgstr "не найдено методов для функции \"%s\" и идентификатора %s"
+
+msgid "no generic function \"%s\" found"
+msgstr "не найдено общей функции \"%s\" "
+
+msgid "No method found for function \"%s\" and signature %s"
+msgstr "В функции \"%s\" и идентификатора %s не найдено методов"
+
+msgid ""
+"apparent inconsistency in the methods for function \"%s\"; argument \"%s\" "
+"in the signature corresponds to \"%s\" in the methods list object"
+msgstr ""
+"очевидная противоречивость в методах функции \"%s\"; аргумент \"%s\" в "
+"идентификатора соответствует \"%s\" в методах объекта списка"
+
+msgid ""
+"no S4 method for function \"%s\" and signature %s; consider getS3method() if "
+"you wanted the S3 method"
+msgstr ""
+"нет S4 метода для функции \"%s\" и идентификатора %s; обратите внимание на "
+"getS3method() если вам нужен  S3 метод"
+
+msgid "no method defined for function \"%s\" and signature %s"
+msgstr "не определено метода для функции \"%s\" идентификатора %s"
+
+msgid "No method found for signature %s"
+msgstr "Не найдено метода для идентификатора %s"
+
+msgid "\"%s\" has no methods defined"
+msgstr "\"%s\" не содержит определенных методов"
+
+msgid "signature must be a vector of classes or an environment"
+msgstr "идентификатор должен быть вектором классов или окружением"
+
+msgid "no unique method corresponding to this signature"
+msgstr ""
+"не существует единственного метода соответствующего данному идентификатору"
+
+msgid "unable to match signature to methods"
+msgstr "невозможно сопоставить идентификатор к методам"
+
+msgid ""
+"bad class specified for element %d (should be a single character string)"
+msgstr ""
+"для элемента %d установлен не верный класс (должен быть односимвольной "
+"строкой)"
+
+msgid ""
+"first argument should be the name(s) of generic functions (got object of "
+"class \"%s\")"
+msgstr ""
+"первый аргумент должен быть именем(-ами) общих функция (получен объект "
+"класса \"%s\")"
+
+msgid ""
+"No generic function found for \"%s\"; no action taken in removeMethodsObject"
+msgstr ""
+"Не найдено общей функции для \"%s\"; не предпринято никаких действий в "
+"removeMethodsObject"
+
+msgid ""
+"the environment/package \"%s\" is locked; cannot remove methods data for \"%s"
+"\""
+msgstr ""
+"окружение/пакет \"%s\" заблокировано; не могу удалить данные методов для \"%s"
+"\""
+
+msgid "\"%s\" is not a generic function in \"%s\"; methods not removed"
+msgstr "\"%s\" не является общей функцией в \"%s\"; методы не удалены"
+
+msgid ""
+"cannot restore previous version of \"%s\" in locked environment/package \"%s"
+"\""
+msgstr ""
+"не могу восстановить предыдущую версию \"%s\" в заблокированном окружении/"
+"пакете \"%s\""
+
+msgid "restoring default function definition of \"%s\""
+msgstr "восстанавливаю определение по-умолчанию функции \"%s\""
+
+msgid "cannot reset \"%s\", the definition is not a generic function object"
+msgstr ""
+"не могу сбросить \"%s\", определение не является объектом общей функции"
+
+msgid ""
+"error in updating generic function \"%s\"; the function definition is not a "
+"generic function (class \"%s\")"
+msgstr ""
+"ошибка в обновлении общей функции \"%s\"; определение функции не является "
+"общей функцией (класс \"%s\")"
+
+msgid "function \"%s\" is already a group generic; no change"
+msgstr "функция \"%s\" уже в группе общие; без изменений"
+
+msgid "function \"%s\" is a group generic; do not call it directly"
+msgstr "функция \"%s\" из группы общие; не вызывайте ее напрямую"
+
+msgid ""
+"'callGeneric' with a primitive needs explicit arguments (no formal args "
+"defined)"
+msgstr ""
+"'callGeneric' с примитивом нуждается в явных аргументах (не определены "
+"внешние аргументы)"
+
+msgid "'callGeneric' must be called from a generic function or method"
+msgstr "'callGeneric' должна быть вызвана из общей функции или метода"
+
+msgid ""
+"invalid first argument: should be the name of the first argument in the "
+"dispatch"
+msgstr ""
+"не верный первый аргумент: должно быть имя первого аргумента в отправке"
+
+msgid "duplicate element names in 'MethodsList' at level %d: %s"
+msgstr "повторяющиеся имена элементов в 'MethodsList' на уровне %d: %s"
+
+msgid ""
+"element %d at level %d (class \"%s\") cannot be interpreted as a function or "
+"named list"
+msgstr ""
+"элемент %d на уровне %d (класс \"%s\") не может быть интерпретирован как "
+"функция или именованный список"
+
+msgid "arguments 'names' and 'signature' must have the same length"
+msgstr "аргументы 'имена' и 'идентификатор' должны быть одинаковой длины"
+
+msgid ""
+"inserting method with invalid signature matching argument '...' to class \"%s"
+"\""
+msgstr ""
+"inserting method with invalid signature matching argument '...' to class \"%s"
+"\""
+
+msgid "inserting method corresponding to empty signature"
+msgstr "вставляется метод соответствующий пустому идентификатору"
+
+msgid "inserting method into non-methods-list object (class \"%s\")"
+msgstr "вставляю метод в объект, не являющийся списком методов (класс \"%s\")"
+
+msgid "invalid method sublist"
+msgstr "не верный подсписок методов"
+
+msgid ""
+"'%f' is not a valid generic function: methods list was an object of class \"%"
+"s\""
+msgstr ""
+"'%f' не является правильной общей функцией: список методов был объектом "
+"класса \"%s\""
+
+msgid ""
+"'useInherited' must be TRUE, FALSE, or a named logical vector of those "
+"values; got an object of class \"%s\""
+msgstr ""
+"'useInherited' должен быть TRUE, FALSE, или именованным логическим вектором "
+"этих значений; получен объект класса \"%s\""
+
+msgid ""
+"trying to match a method signature to an object (of class \"%s\") that is "
+"not a generic function"
+msgstr ""
+"попытка сопоставить идентификатор метода с объектом (класса \"%s\") который "
+"не является общей функцией"
+
+msgid ""
+"trying to match a method signature of class \"%s\"; expects a list or a "
+"character vector"
+msgstr ""
+"попытка подобрать метод идентификатора класса \"%s\"; ожидается список или "
+"символьный вектор"
+
+msgid ""
+"object to use as a method signature for function \"%s\" does not look like a "
+"legitimate signature (a vector of single class names): there were %d class "
+"names, but %d elements in the signature object"
+msgstr ""
+"object to use as a method signature for function \"%s\" does not look like a "
+"legitimate signature (a vector of single class names): there were %d class "
+"names, but %d elements in the signature object"
+
+msgid "more elements in the method signature (%s) than in the generic  %s(%s)"
+msgstr "в методе идентификатора (%s) больше элементов, чем в общей  %s(%s)"
+
+msgid ""
+"in the method signature for function \"%s\" invalid argument names in the "
+"signature: %s"
+msgstr ""
+"в идентификаторе метода для функции \"%s\" не верное имя аргумента в "
+"идентификаторе: %s"
+
+msgid "no methods found for generic \"%s\""
+msgstr "для общей \"%s\" не найдено методов"
+
+msgid "skipping methods list element %s of unexpected class \"%s\""
+msgstr "пропускаю элемент списка методов %s неизвестного класса \"%s\""
+
+msgid "invalid object for formal method definition: type \"%s\""
+msgstr "не верный объект для формального определения метода: тип \"%s\""
+
+msgid ""
+"missing package slot (%s) in object of class \"%s\" (package info added)"
+msgstr ""
+"отсутствует слот пакета (%s) в объекте класса \"%s\" (добавлена информация о "
+"пакете)"
+
+msgid ""
+"initialize method returned an object of class \"%s\" instead of the required "
+"class \"%s\""
+msgstr ""
+"инициализация метода возвратила объект класса \"%s\" вместо необходимого "
+"класса \"%s\""
+
+msgid "An object of class \""
+msgstr "Объект класса \""
+
+msgid "\""
+msgstr "\""
+
+msgid ""
+"the names in signature for method (%s) do not match function's arguments (%s)"
+msgstr ""
+"имена в идентификаторе для метода (%s) не совпадают с аргументами функции (%"
+"s)"
+
+msgid ""
+"'NextMethod' not defined because the current method is not a "
+"'MethodDefinition' object"
+msgstr ""
+"'NextMethod' не определен, потому-что текущий метод не является объектом "
+"'MethodDefinition'"
+
+msgid "expected a list of signature objects, got \"%s\""
+msgstr "ожидался список идентификаторов, получен \"%s\""
+
+msgid ""
+"a call to callNextMethod() appears in a call to \"%s\", but the call does "
+"not seem to come from either a generic function or another 'callNextMethod'"
+msgstr ""
+"a call to callNextMethod() appears in a call to \"%s\", but the call does "
+"not seem to come from either a generic function or another 'callNextMethod'"
+
+msgid ""
+"call to 'callNextMethod' does not appear to be in a 'method' or "
+"'callNextMethod' context"
+msgstr ""
+"call to 'callNextMethod' does not appear to be in a 'method' or "
+"'callNextMethod' context"
+
+msgid "bad object found as method (class \"%s\")"
+msgstr "обнаружено, что метод является плохим объектом (класс \"%s\")"
+
+msgid ""
+"in constructing the prototype for class \"%s\": prototype has class \"%s\", "
+"but the data part specifies class \"%s\""
+msgstr ""
+"при конструировании прототипа для класса \"%s\": прототип является классом "
+"\"%s\", но его данные указывают на класс \"%s\""
+
+msgid ""
+"in constructing the prototype for class \"%s\", slots in prototype and not "
+"in class: %s"
+msgstr ""
+"при конструировании прототипа класса \"%s\", слоты в прототипе и не в "
+"классе: %s"
+
+msgid ""
+"in making the prototype for class \"%s\" elements of the prototype failed to "
+"match the corresponding slot class: %s"
+msgstr ""
+"при создании прототипа для класса \"%s\" элементы прототипа не совпадают с "
+"соответствующим слотом класса: %s"
+
+msgid ""
+"potential cycle in class inheritance: \"%s\" has duplicates in superclasses "
+"and subclasses (%s)"
+msgstr ""
+"потенциальный цикл в наследовании класса: \"%s\" имеет повторы в супер-"
+"классах и подклассах (%s)"
+
+msgid "undefined slot classes in definition of \"%s\": %s"
+msgstr "не определенные классы слота в определении \"%s\": %s"
+
+msgid ""
+"in definition of class \"%s\", information for superclass \"%s\" is of class "
+"\"%s\" (expected \"SClassExtension\")"
+msgstr ""
+"в определении класса \"%s\", информация для суперкласса \"%s\" является "
+"классом \"%s\" (ожидалась \"SClassExtension\")"
+
+msgid "class \"%s\" extends an undefined class, \"%s\""
+msgstr "класс \"%s\" расширен неопределенным классом, \"%s\""
+
+msgid ""
+"trying to assign an object of class \"%s\" as the definition of class \"%s"
+"\": must supply a \"classRepresentation\" object"
+msgstr ""
+"попытка назначить объект класса \"%s\" определением класса \"%s\": "
+"необходимо предоставить объект \"classRepresentation\""
+
+msgid "assigning as \"%s\" a class representation with internal name \"%s\""
+msgstr "назначаю как \"%s\" представление класса со внутренним именем \"%s\""
+
+msgid "Class \"%s\" has a locked definition in package \"%s\""
+msgstr "Класс \"%s\" имеет заблокированное определение в пакете \"%s\""
+
+msgid "'externalptr' objects cannot be initialized from new()"
+msgstr "'externalptr' объекты не могут быть инициализированы из new()"
+
+msgid ""
+"initializing objects from class \"%s\" with these arguments is not supported"
+msgstr ""
+"инициализация объектов из класса \"%s\" с такими аргументами не "
+"поддерживается"
+
+msgid ""
+"in defining class \"%s\", the supplied data part class, \"%s\" is not valid "
+"(must be a basic class or a virtual class combining basic classes)"
+msgstr ""
+"при определении класса \"%s\", предоставленная часть данных класса, \"%s\" "
+"не верна (должна быть основным классом или виртуальным классом, включающем "
+"основные классы)"
+
+msgid "class \"%s\" cannot be used as the data part of another class"
+msgstr "класс \"%s\" не может быть использован как часть данных другого класса"
+
+msgid ""
+"more than one possible class for the data part: using \"%s\" rather than \"%s"
+"\""
+msgstr ""
+"более одного возможного класса для части данных: использую \"%s\" а не \"%s\""
+
+msgid ""
+"conflicting definition of data part: .Data = \"%s\", superclass implies \"%s"
+"\""
+msgstr ""
+"конфликтующее определение части данных: .Data = \"%s\", суперкласс "
+"подразумевает \"%s\""
+
+msgid ""
+"a prototype object was supplied with object slot of class \"%s\", but the "
+"class definition requires an object that is class \"%s\""
+msgstr ""
+"прототип был предоставлен вместе со слотом класса \"%s\", но определение "
+"класса требует объект, содержащийся в классе \"%s\""
+
+msgid ""
+"a prototype was supplied of class \"%s\", but the class definition requires "
+"an object that is class \"%s\""
+msgstr ""
+"прототип был предоставлен классом \"%s\", но определение класса требует "
+"объект, являющийся классом \"%s\""
+
+msgid ""
+"slot \"%s\" in class \"%s\" currently defined (or inherited) as \"%s\", "
+"conflicts with an inherited definition in class \"%s\""
+msgstr ""
+"слот \"%s\" в классе \"%s\" в данный момент определен (или наследован) как "
+"\"%s\", конфликтуя с наследованным определением класса \"%s\""
+
+msgid "class \"%s\" extends an undefined class (\"%s\")"
+msgstr "класс \"%s\" расширен неопределенным классом (\"%s\")"
+
+msgid ""
+"\"%s\" is not eligible to be the data part of another class (must be a basic "
+"class or a virtual class with no slots)"
+msgstr ""
+"\"%s\" не может быть назначен частью данных другого класса (должен быть "
+"основным классом либо виртуальным классом без слотов)"
+
+msgid ""
+"prototype is a list with named elements (could be ambiguous):  better to use "
+"function prototype() to avoid trouble."
+msgstr ""
+"прототип является списком с именованными элементами (может вызвать "
+"неоднозначность):  лучше использовать функцию prototype() чтобы избежать "
+"неприятности."
+
+msgid "named elements of prototype do not correspond to slot names: %s"
+msgstr "именованные элементы прототипа не соответствуют именам слотов: %s"
+
+msgid "the \"%s\" list for class \"%s\", includes an undefined class \"%s\""
+msgstr "список \"%s\" для класса \"%s\", включает не определенный класс \"%s\""
+
+msgid "\"class\" is a reserved slot name and cannot be redefined"
+msgstr ""
+"\"class\" является зарезервированным названием слота и не может быть "
+"переопределено"
+
+msgid "no '.Data' slot defined for class \"%s\""
+msgstr "не определен слот '.Data' для класса \"%s\""
+
+msgid "class \"%s\" does not have a data part (a .Data slot) defined"
+msgstr "класс \"%s\" не имеет определенного раздела данных (слот.Data)"
+
+msgid ""
+"trying to change the argument list of a function with %d arguments to have "
+"arguments (%s)"
+msgstr ""
+
+msgid ""
+"get rid of variables in definition (%s); they conflict with the needed "
+"change to argument names (%s)"
+msgstr ""
+
+msgid "arguments in definition changed from (%s) to (%s)"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid ""
+"a validity method must be a function of one argument, got an object of class "
+"\"%s\""
+msgstr ""
+
+msgid "unable to find required package \"%s\""
+msgstr "не могу найти необходимый пакет \"%s\""
+
+msgid "Package \"%s\" is not loaded"
+msgstr "Пакет \"%s\" не загружен"
+
+msgid "unable to find an environment containing class \"%s\""
+msgstr "не могу найти окружение, содержащее класс \"%s\""
+
+msgid "Undefined subclass, \"%s\", of class \"%s\"; definition not updated"
+msgstr ""
+"Не определенный подкласс, \"%s\", класса \"%s\"; определение не обновлено"
+
+msgid ""
+"Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new "
+"inheritance information; consider setClassUnion()"
+msgstr ""
+"Подкласс \"%s\" класса \"%s\" не является локальным и не может быть "
+"обновлен ; consider setClassUnion()"
+
+msgid ""
+"No definition of inheritance from \"%s\" to \"%s\", though the relation was "
+"implied by the setIs() from \"%s\""
+msgstr ""
+"Нет определения наследования от \"%s\" к \"%s\", однако подразумевалась "
+"зависимость через setIs() от \"%s\""
+
+msgid ""
+"Couldn't find superclass \"%s\" to clean up when removing subclass "
+"references to class \"%s\""
+msgstr ""
+"Не могу найти суперкласс \"%s\" для очистки при удалении ссылок подкласса на "
+"класс \"%s\""
+
+msgid "No class \"%s\" found as expected in removing subclass \"%s\""
+msgstr "Не найдено класса \"%s\", ожидаемого при удалении подкласса \"%s\""
+
+msgid ""
+"the function being used as %s in making a generic function for \"%s\" is "
+"currently traced; the function used will have tracing removed"
+msgstr ""
+
+msgid ""
+"the 'genericFunction' argument must be NULL or a generic function object; "
+"got an object of class \"%s\""
+msgstr ""
+"'genericFunction' аргумент должен быть NULL или объектом общей функции; "
+"получен объект класса \"%s\""
+
+msgid "non-arguments found in the signature: %s"
+msgstr "не найдено аргументов в идентификаторе: %s"
+
+msgid "no suitable arguments to dispatch methods in this function"
+msgstr "нет подходящих аргументов для методов отправки в данной функции"
+
+msgid ""
+"the formal arguments of the generic function for \"%s\" (%s) differ from "
+"those of the non-generic to be used as the default (%s)"
+msgstr ""
+
+msgid "special function \"%s\" is not permitted to have methods"
+msgstr "специальной функции \"%s\" не разрешено иметь методов"
+
+msgid ""
+"special function \"%s\" has no known argument list; will assume '(x, ...)'"
+msgstr ""
+"специальная функция \"%s\" не имеет известного списка аргументов; будет "
+"присвоено '(x, ...)'"
+
+msgid "making a generic for special function \"%s\""
+msgstr ""
+
+msgid "invalid call in method dispatch to \"%s\" (no default method)"
+msgstr "не верный вызов в методе оправки к \"%s\" (нет метода по-умолчанию)"
+
+msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
+msgstr "\"%s\" из \"%s\" не является общей функции; нет доступных методов"
+
+msgid ""
+"invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
+"'genericFunction object' or a primitive function, got an object of class \"%s"
+"\""
+msgstr ""
+"не верный 'fdef' для \"%s\" в 'getAllMethods'; ожидалась либо "
+"'genericFunction object' либо элементарная функция, получен объект класса \"%"
+"s\""
+
+msgid "formal arguments in method and function do not appear in the same order"
+msgstr ""
+"формальные аргументы в методе и функции появляются не в одинаковом порядке"
+
+msgid ""
+"formal arguments omitted in the method definition cannot be in the signature "
+"(%s)"
+msgstr ""
+"формальные аргументы, опущенные в определении метода не могут быть в "
+"идентификаторе (%s)"
+
+msgid "expanding the signature to include omitted arguments in definition: %s"
+msgstr ""
+"расширяю идентификатор для включения опущенных аргументов в определении: %s"
+
+msgid "= \"missing\""
+msgstr "= \"отсутствует\""
+
+msgid ""
+"methods can add arguments to the generic only if '...' is an argument to the "
+"generic"
+msgstr ""
+
+msgid ""
+"arguments after '...' in the generic (%s) must appear in the method, in the "
+"same place at the end of the argument list"
+msgstr ""
+
+msgid ""
+"Argument f must be a string, generic function, or primitive: got an ordinary "
+"function"
+msgstr ""
+"Аргумент f должен быть строкой, общей функцией, или примитивом: получена "
+"обычная функция"
+
+msgid "methods cannot be defined for the primitive function \"%s\""
+msgstr "методы не могут быть определены для элементарной функции \"%s\""
+
+msgid "no generic function found for \"%s\""
+msgstr "не найдено общей функции для \"%s\""
+
+msgid ""
+"the methods object name for \"%s\" must include the name of the package that "
+"contains the generic function, but no generic function of this name was found"
+msgstr ""
+"имя объекта методов \"%s\" должно включать имя пакета, содержащего общую "
+"функцию, но общей функции с таким именем не найдено"
+
+msgid "no way to associate a generic function with an object of class \"%s\""
+msgstr "нет способа ассоциировать общую функцию с объектом класса \"%s\""
+
+msgid ""
+"Package \"%s\" seems to have out-of-date methods; need to reinstall from "
+"source"
+msgstr ""
+"Пакет \"%s\" кажется, содержит устаревшие методы; необходимо переустановить "
+"его из источника"
+
+msgid ""
+"no methods found for \"%s\"; cacheGenericsMetaData() will have no effect"
+msgstr ""
+"не найдено методов для \"%s\"; cacheGenericsMetaData() не будет иметь эффекта"
+
+msgid "internal error: bad code for 'setPrimitiveMethods': %s"
+msgstr "внутренняя ошибка: плохой код для 'setPrimitiveMethods': %s"
+
+msgid "invalid value from generic function \"%s\", class \"%s\", expected %s"
+msgstr "не верное значение из общей функции \"%s\", класс \"%s\", ожидалось %s"
+
+msgid ""
+"the body of the generic function for \"%s\" calls 'standardGeneric' to "
+"dispatch on a different name (\"%s\")!"
+msgstr ""
+"тело общей функции для \"%s\" вызывает 'standardGeneric' для отправки под "
+"другим именем (\"%s\")!"
+
+msgid ""
+"the supplied generic function definition does not seem to call "
+"'standardGeneric'; no methods will be dispatched!"
+msgstr ""
+"предоставленное определение общей функции, похоже не вызвало "
+"'standardGeneric'; методы не будут переданы!"
+
+msgid ""
+"internal error: Bad methods list object in fixing methods for primitive "
+"function \"%s\""
+msgstr ""
+"внутренняя ошибка: Плохой объект списка методов в фиксированных методах для "
+"элементарной функции \"%s\""
+
+msgid ""
+"trying to change the formal arguments in %s, in an object of class \"%s\"; "
+"expected a function definition"
+msgstr ""
+"пытаюсь изменить формальные аргументы в %s, объекте класса \"%s\"; ожидалось "
+"определение функции"
+
+msgid ""
+"trying to change the formal arguments in %s, but getting the new formals "
+"from an object of class \"%s\"; expected a function definition"
+msgstr ""
+"пытаюсь изменить формальные аргументы в %s, но получаю новые формальные "
+"аргументы от объекта класса \"%s\"; ожидалось определение ффункции"
+
+msgid ""
+"trying to change the formal arguments in %s, but the number of existing "
+"arguments is less than the number of new arguments: (%s) vs (%s)"
+msgstr ""
+"пытаюсь изменить формальные аргументы в %s, но число существующих аргументов "
+"меньше, чем число новых аргументов: (%s) против (%s)"
+
+msgid ""
+"trying to change the formal arguments in %s, but the number of existing "
+"arguments is greater than the number of new arguments (the extra arguments "
+"won't be used): (%s) vs (%s)"
+msgstr ""
+"пытаюсь изменить формальные аргументы в %s, но число существующих аргументов "
+"больше, чем число новых аргументов (дополнительные аргументы не будут "
+"использованы): (%s) против (%s)"
+
+msgid ""
+"in changing formal arguments in %s, some of the old names are not in fact "
+"arguments: %s"
+msgstr ""
+"при изменении формальных аргументов в %s, некоторые старые имена не являются "
+"аргументами: %s"
+
+msgid "botched namespace: failed to find 'base' namespace in its parents"
+msgstr ""
+"поврежденное пространство имен: не могу найти пространство имен 'base' в его "
+"родителе"
+
+msgid "got a negative maximum number of frames to look at"
+msgstr ""
+
+msgid "\"%s\" is not a generic function (or not visible here)"
+msgstr "\"%s\" не является общей функцией (либо не видна здесь)"
+
+msgid "invalid element in the groupMembers slot (class \"%s\")"
+msgstr "не верный элемент в groupMembers слоте (класс \"%s\")"
+
+msgid "\"%s\" has a sealed class definition and cannot be redefined"
+msgstr ""
+"\"%s\" имеет запечатанное определение класса и не может быть переопределено"
+
+msgid ""
+"only arguments 'Class' and 'where' can be supplied when argument "
+"'representation' is a 'classRepresentation' object"
+msgstr ""
+
+msgid ""
+"error in contained classes (%s) for class \"%s\" and unable to remove "
+"definition from \"%s\""
+msgstr ""
+"ошибка в содержащихся классах (%s) для класса \"%s\" и не возможно удалить "
+"определение из \"%s\""
+
+msgid ""
+"error in contained classes (%s) for class \"%s\"; class definition removed "
+"from \"%s\""
+msgstr ""
+"ошибка в содержащихся классах (%s) для класса \"%s\"; определение класса "
+"удалено из \"%s\""
+
+msgid ""
+"error in contained classes (%s) for class \"%s\" and unable to restore "
+"previous definition from \"%s\""
+msgstr ""
+"ошибка в содержащихся классах (%s) для класса \"%s\" и не возможно "
+"восстановить предыдущее определение из \"%s\""
+
+msgid ""
+"error in contained classes (%s) for class \"%s\"; previous definition "
+"restored to \"%s\""
+msgstr ""
+"ошибка в содержащихся классах (%s) для класса \"%s\"; предыдущее определение "
+"восстановлено к \"%s\""
+
+msgid "element %d of the representation was not a single character string"
+msgstr "элемент %d представления не был одиночной символьной строкой"
+
+msgid "duplicate class names among superclasses: %s"
+msgstr "совпадение имен классов среди суперклассов: %s"
+
+msgid "duplicated slot names: %s"
+msgstr "совпадающие имена слотов: %s"
+
+msgid "only one data object (unnamed argument to prototype) allowed"
+msgstr "разрешен только один объект данных (безымянный аргумент для прототипа)"
+
+msgid "\"%s\" is not a defined class"
+msgstr "\"%s\" не является определенным классом"
+
+msgid "\"%s\" is not a slot in class \"%s\""
+msgstr "\"%s\" не является слотом в классе \"%s\""
+
+msgid ""
+"assignment of an object of class \"%s\" is not valid for slot \"%s\" in an "
+"object of class \"%s\"; is(value, \"%s\") is not TRUE"
+msgstr ""
+"assignment of an object of class \"%s\" is not valid for slot \"%s\" in an "
+"object of class \"%s\"; is(value, \"%s\") is not TRUE"
+
+msgid "Class definition for \"%s\" not found  (no action taken)"
+msgstr ""
+"Определение класса для \"%s\" не найдено  (не предпринято никаких действий)"
+
+msgid "class \"%s\" has multiple definitions visible; only the first removed"
+msgstr ""
+"класс \"%s\" имеет несколько видимых определений; удалено только первое"
+
+msgid "The class to be removed  (\""
+msgstr "Данный класс будет удален  (\""
+
+msgid "\") has defined subclasses that should also be removed: ("
+msgstr "\") содержит определенные подклассы, которые должны быть удалены: ("
+
+msgid ")"
+msgstr ")"
+
+msgid "invalid class \"%s\" object:"
+msgstr "не верный объект класса \"%s\" :"
+
+msgid "validity method must be NULL or a function of one argument"
+msgstr "правильный метод должен быть NULL или функцией с одним аргументом"
+
+msgid "class \"%s\" not found on \"%s\"; 'resetClass' will have no effect"
+msgstr "класс \"%s\" не найден на \"%s\"; 'resetClass' не будет иметь эффекта"
+
+msgid ""
+"argument 'classDef' must be a string or a class representation; got an "
+"object of class \"%s\""
+msgstr ""
+"аргумент 'classDef' должен быть строкой либо представлением класса; получен "
+"объект класса \"%s\""
+
+msgid "class \"%s\" is sealed; 'resetClass' will have no effect"
+msgstr "класс \"%s\" опечатан; 'resetClass' не будет иметь эффекта"
+
+msgid ""
+"cannot use object of class \"%s\" in new():  class \"%s\" does not extend "
+"that class"
+msgstr ""
+"не могу использовать объект класса \"%s\" в new():  класс \"%s\" не может "
+"расширить данный класс"
+
+msgid "invalid names for slots of class \"%s\": %s"
+msgstr "не верные имена для слотов класса \"%s\": %s"
+
+msgid "no definition of \"%s\" to use for %s"
+msgstr "не определения \"%s\" для использования с %s"
+
+msgid ""
+"'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
+"instead"
+msgstr ""
+
+msgid ""
+"'traceOff' is deprecated: use the function 'untrace' in the 'methods' "
+"package instead"
+msgstr ""
+
+msgid "no function \"%s\" found"
+msgstr ""
+
+msgid "no non-generic function \"%s\" found"
+msgstr ""
+
+msgid "\"%s\" is not one of the element names"
+msgstr ""
+
+msgid ""
+"internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the "
+"metadata asserts that the 'is' relation is FALSE"
+msgstr ""
+
+msgid "no method or default for coercing \"%s\" to \"%s\""
+msgstr ""
+
+msgid "no method or default for as() replacement of \"%s\" with Class=\"%s\""
+msgstr ""
+
+msgid "trying to set an 'as' relation from \"%s\" to itself"
+msgstr ""
+
+msgid "class \"%s\" is not defined in this environment"
+msgstr ""
+
+msgid ""
+"class \"%s\" is a class union: 'coerce' relations to a class union are not "
+"meaningful"
+msgstr ""
+
+msgid ""
+"'as' method must have one or two arguments, plus optional 'strict'; got (%s)"
+msgstr ""
+
+msgid ""
+"a 'replace' method definition in 'setAs' must be a function of two "
+"arguments, got %d"
+msgstr ""
+
+msgid ""
+"argument names in replace changed to agree with 'coerce<-' generic:\n"
+"%s"
+msgstr ""
+
+msgid "ambiguous object (length!=1) to coerce to \"name\""
+msgstr ""
+
+msgid "undefined coerce method"
+msgstr ""
+
+msgid ""
+"methods currently exist for coercing from \"%s\" to \"%s\"; they will be "
+"replaced."
+msgstr ""
+
+msgid "object \"%s\" not found"
+msgstr ""
+
+msgid ""
+"object \"%s\" not changed (it is not consistent with the current definition "
+"of class \"%s\" from \"%s\")"
+msgstr ""
+
+msgid "no definition for the class of \"%s\" (class \"%s\") found"
+msgstr ""
+
+msgid ""
+"object \"%s\" not changed (it does not appear to be from a version of R "
+"earlier than 1.8.0)"
+msgstr ""
+
+msgid "'class1' must be the name of a class or a class definition"
+msgstr ""
+
+msgid "'class2' must be the name of a class or a class definition"
+msgstr ""
+
+msgid ""
+"class \"%s\" has no visible definition from package or environment \"%s\""
+msgstr ""
+
+msgid ""
+"cannot create a 'setIs' relation when neither of the classes (\"%s\" and \"%s"
+"\") is local and modifiable in this package"
+msgstr ""
+
+msgid ""
+"class \"%s\" is sealed; new superclasses can not be defined, except by "
+"'setClassUnion'"
+msgstr ""
+
+msgid ""
+"Unable to find package environment for class \"%s\" to revise subclass "
+"information"
+msgstr ""
+
+msgid "class \"%s\" cannot extend class \"%s\""
+msgstr ""
+
+msgid "Both classes must be defined"
+msgstr ""
+
+msgid ""
+"class \"%s\" is missing slots from class \"%s\" (%s), and no coerce method "
+"was supplied"
+msgstr ""
+
+msgid ""
+"slots in class \"%s\" must extend corresponding slots in class \"%s\": fails "
+"for %s"
+msgstr ""
+
+msgid "invalid index for function argument"
+msgstr ""
+
+msgid "Need a definition for the method here"
+msgstr ""
+
+msgid "Skeleton of method written to"
+msgstr ""
+
+msgid "connection"
+msgstr ""
+
+msgid ""
+"Invalid object in meta table of methods for \"%s\", label \"%s\", had class "
+"\"%s\""
+msgstr ""
+
+msgid "Invalid mlist element  for signature \""
+msgstr ""
+
+msgid "\" at level"
+msgstr ""
+
+msgid "( should be methods list or method, had class \""
+msgstr ""
+
+msgid "\")"
+msgstr ""
+
+msgid "Invalid object in methods table (\""
+msgstr ""
+
+msgid "\"), expected a method, got an object of class \""
+msgstr ""
+
+msgid "Invalid or unset methods table in generic function \""
+msgstr ""
+
+msgid "Trying to find a methods table in a non-generic function"
+msgstr ""
+
+msgid "Ambiguous method selection for \"%s\", target \"%s\""
+msgstr ""
+
+msgid ""
+"(the first of the signatures shown will be used)\n"
+"%s"
+msgstr ""
+
+msgid "found"
+msgstr ""
+
+msgid "equally good next methods"
+msgstr ""
+
+msgid "unable to find an inherited method for function \""
+msgstr ""
+
+msgid "\", for signature"
+msgstr ""
+
+msgid ""
+"Internal error in finding inherited methods; didn't return a unique method"
+msgstr ""
+
+msgid ""
+"Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
+msgstr ""
+
+msgid "Methods list for generic \""
+msgstr ""
+
+msgid "\" not found"
+msgstr ""
+
+msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
+msgstr ""
+
+msgid "Failed to find expected group generic function:"
+msgstr ""
+
+msgid "Invalid group generic function in search for inherited method (class \""
+msgstr ""
+
+msgid "Trying to check signature length of group generic \""
+msgstr ""
+
+msgid "\", but it is not a group generic"
+msgstr ""
+
+msgid "Trying to check signature length of generic \""
+msgstr ""
+
+msgid "\", but it is not a  generic function: i ="
+msgstr ""
+
+msgid ", funs ="
+msgstr ""
+
+msgid "; gnames ="
+msgstr ""
+
+msgid "Could not find generic function \"%s\" to initialize cached methods"
+msgstr ""
+
+msgid ""
+"inconsistent old-style class information for \"%s\" (maybe mixing old and "
+"new classes?)"
+msgstr ""
+
+msgid "explicit coercion of old-style class (%s) is not defined"
+msgstr ""
+
+msgid ""
+"explicit replacement not defined for as(x, \"%s\") <- value for old-style "
+"class \"%s\""
+msgstr ""
+
+msgid ""
+"argument 'Classes' must be a vector of two classes; got an argument of "
+"length %d"
+msgstr ""
+
+msgid "no definition of class \"%s\" found"
+msgstr ""
+
+msgid "multiple definitions of \"%s\" found; using the one on %s"
+msgstr ""
+
+msgid ""
+"no definition of class \"%s\" in the specified position, %s, definition(s) "
+"on : %s"
+msgstr ""
+
+msgid ""
+"invalid call to 'classLabel': expected a name or a class definition, got an "
+"object of class \"%s\""
+msgstr ""
+
+msgid "argument 'what' should be the name of a function"
+msgstr ""
+
+msgid "Tracing the internal function \"%s\" is not allowed"
+msgstr ""
+
+msgid ".TraceWithMethods: after computing what, whereF"
+msgstr ""
+
+msgid "no function definition for \"%s\" found"
+msgstr ""
+
+msgid ""
+"Can't untrace method for \"%s\"; no method defined for this signature: %s"
+msgstr ""
+
+msgid ".TraceWithMethods: untrace case"
+msgstr ""
+
+msgid "the method for \"%s\" for this signature was not being traced"
+msgstr ""
+
+msgid ".TraceWithMethods: about to assign or setMethod"
+msgstr ""
+
+msgid ""
+"making a traced version of a primitive; arguments will be treated as '...'"
+msgstr ""
+
+msgid ""
+"the editing in trace() can only change the body of the function; got an "
+"object of class \"%s\""
+msgstr ""
+
+msgid ""
+"the editing in trace() can only change the body of the function, not the "
+"arguments or defaults"
+msgstr ""
+
+msgid "cannot use 'at' argument without a trace expression"
+msgstr ""
+
+msgid ""
+"cannot use 'at' argument unless the function body has the form '{ ... }'"
+msgstr ""
+
+msgid ""
+"assigning over the binding of symbol \"%s\" in environment/package \"%s\""
+msgstr ""
+
+msgid ""
+"setting a method over the binding of symbol \"%s\" in environment/package \"%"
+"s\""
+msgstr ""
+
+msgid "Constructing traceable class \""
+msgstr ""
+
+msgid "Environment of class \""
+msgstr ""
+
+msgid "\" is locked; using base environment for new class"
+msgstr ""
+
+msgid "not a package name: \"%s\""
+msgstr ""
+
+msgid ""
+"apparently bad method or class metadata in saved environment; move the file "
+"or remove the class/method"
+msgstr ""
+
+msgid "in the method signature for function \"%s\" no definition for class: %s"
+msgid_plural ""
+"in the method signature for function \"%s\" no definition for classes: %s"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""

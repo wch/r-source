@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 18:05+0100\n"
+"POT-Creation-Date: 2007-04-11 09:51+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -132,8 +132,8 @@ msgstr "'names' non valido in R_unlink"
 #: src/main/platform.c:907 src/main/platform.c:910 src/main/platform.c:913
 #: src/main/platform.c:916 src/main/platform.c:919 src/main/platform.c:998
 #: src/main/platform.c:1042 src/main/platform.c:1083 src/main/platform.c:1085
-#: src/main/platform.c:1152 src/main/platform.c:1260 src/main/platform.c:1512
-#: src/main/platform.c:1550 src/main/plot3d.c:2472 src/main/plot3d.c:2476
+#: src/main/platform.c:1152 src/main/platform.c:1261 src/main/platform.c:1513
+#: src/main/platform.c:1551 src/main/plot3d.c:2472 src/main/plot3d.c:2476
 #: src/main/plot3d.c:2481 src/main/plot3d.c:2485 src/main/plot3d.c:2489
 #: src/main/plot3d.c:2493 src/main/print.c:178 src/main/print.c:184
 #: src/main/print.c:206 src/main/print.c:212 src/main/print.c:218
@@ -4802,31 +4802,32 @@ msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "l'impostazione 'LC_NUMERIC' può causare uno strano funzionamento di R"
 
 #: src/main/platform.c:1158
-msgid "OS reports request cannot be honored"
+#, fuzzy, c-format
+msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "Il sistema operativo segnala che la richiesta non può essere esaudita"
 
-#: src/main/platform.c:1309
+#: src/main/platform.c:1310
 msgid "invalid value of 'what' argument"
 msgstr "valore di 'what' non valido"
 
-#: src/main/platform.c:1461
+#: src/main/platform.c:1462
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' deve essere una stringa di tipo character"
 
-#: src/main/platform.c:1467
+#: src/main/platform.c:1468
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nls() non riesce a identificare l'host '%s'"
 
-#: src/main/platform.c:1474
+#: src/main/platform.c:1475
 msgid "unknown format returned by gethostbyname"
 msgstr "formato sconosciuto resituito da gethostbyname"
 
-#: src/main/platform.c:1485
+#: src/main/platform.c:1486
 msgid "nsl() is not supported on this platform"
 msgstr "nls() non è supportato in questa piattaforma"
 
-#: src/main/platform.c:1532 src/main/platform.c:1574
+#: src/main/platform.c:1533 src/main/platform.c:1575
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' già esistente"

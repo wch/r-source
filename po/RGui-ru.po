@@ -1,19 +1,19 @@
 # Русский перевод для R GUI
 #
-# Copyright (C) 2005 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2005
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-04-10 08:47+0100\n"
-"PO-Revision-Date: 2006-12-04 06:14-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"PO-Revision-Date: 2007-04-07 00:42-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
@@ -192,6 +192,8 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
+"TAB вызывает дополнение.\n"
+"\n"
 
 #: console.c:2071
 msgid "Standard Windows hotkeys can be used to switch to the\n"
@@ -360,17 +362,16 @@ msgstr "Редактор данных"
 #: editor.c:116
 #, c-format
 msgid "Could not read from file '%s'"
-msgstr ""
+msgstr "Не могу прочитать из файла '%s'"
 
 #: editor.c:138
 #, c-format
 msgid "Could not save file '%s'"
-msgstr ""
+msgstr "Не могу сохранить файл '%s'"
 
 #: editor.c:153
-#, fuzzy
 msgid "Save script as"
-msgstr "Сохранить скрипт"
+msgstr "Сохранить скрипт как"
 
 #: editor.c:462 pager.c:172 pager.c:192
 msgid "No RGui console to paste to"
@@ -527,9 +528,8 @@ msgid "Unable to create editor window"
 msgstr "Не могу создать окно редактора"
 
 #: editor.c:813
-#, fuzzy
 msgid "Unable to open file for reading"
-msgstr "Не могу открыть буфер обмена"
+msgstr "Не могу открыть файл для чтения"
 
 #: editor.c:817
 msgid "Untitled"
@@ -837,11 +837,11 @@ msgstr "Редактор данных..."
 
 #: rui.c:1086
 msgid "Toolbar"
-msgstr ""
+msgstr "Панель инструментов"
 
 #: rui.c:1087
 msgid "Statusbar"
-msgstr ""
+msgstr "Строка состояния"
 
 #: rui.c:1092
 msgid "Misc"
@@ -852,9 +852,8 @@ msgid "Stop current computation           \tESC"
 msgstr "Остановить текущую процедуру       \tESC"
 
 #: rui.c:1095
-#, fuzzy
 msgid "Stop all computations"
-msgstr "Остановить текущую процедуру"
+msgstr "Остановить все вычисления"
 
 #: rui.c:1097
 msgid "Break to debugger"
@@ -1109,9 +1108,9 @@ msgstr "JPEG..."
 #: ../library/grDevices/src/devWindows.c:1550
 #: ../library/grDevices/src/devWindows.c:1552
 #: ../library/grDevices/src/devWindows.c:1554
-#, fuzzy, c-format
+#, c-format
 msgid "%s quality..."
-msgstr "Качество 50%..."
+msgstr "качество %s..."
 
 #: ../library/grDevices/src/devWindows.c:1556
 msgid "Copy to the clipboard"

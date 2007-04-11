@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 18:05+0100\n"
+"POT-Creation-Date: 2007-04-11 09:51+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -126,8 +126,8 @@ msgstr "R_unlink 的 'names' 無效"
 #: src/main/platform.c:907 src/main/platform.c:910 src/main/platform.c:913
 #: src/main/platform.c:916 src/main/platform.c:919 src/main/platform.c:998
 #: src/main/platform.c:1042 src/main/platform.c:1083 src/main/platform.c:1085
-#: src/main/platform.c:1152 src/main/platform.c:1260 src/main/platform.c:1512
-#: src/main/platform.c:1550 src/main/plot3d.c:2472 src/main/plot3d.c:2476
+#: src/main/platform.c:1152 src/main/platform.c:1261 src/main/platform.c:1513
+#: src/main/platform.c:1551 src/main/plot3d.c:2472 src/main/plot3d.c:2476
 #: src/main/plot3d.c:2481 src/main/plot3d.c:2485 src/main/plot3d.c:2489
 #: src/main/plot3d.c:2493 src/main/print.c:178 src/main/print.c:184
 #: src/main/print.c:206 src/main/print.c:212 src/main/print.c:218
@@ -4711,31 +4711,32 @@ msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "正在設定 'LC_NUMERIC' 可能會使得 R 的運作異常"
 
 #: src/main/platform.c:1158
-msgid "OS reports request cannot be honored"
+#, fuzzy, c-format
+msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "作業系統回報無法實現執行請求"
 
-#: src/main/platform.c:1309
+#: src/main/platform.c:1310
 msgid "invalid value of 'what' argument"
 msgstr "'what' 引數的值不正確"
 
-#: src/main/platform.c:1461
+#: src/main/platform.c:1462
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' 必須是長度為 1 的字元向量"
 
-#: src/main/platform.c:1467
+#: src/main/platform.c:1468
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() 無法分辨主機 '%s'"
 
-#: src/main/platform.c:1474
+#: src/main/platform.c:1475
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname 回傳了錯誤的格式"
 
-#: src/main/platform.c:1485
+#: src/main/platform.c:1486
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支援 nsl()"
 
-#: src/main/platform.c:1532 src/main/platform.c:1574
+#: src/main/platform.c:1533 src/main/platform.c:1575
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' 已存在"

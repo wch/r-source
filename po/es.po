@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 18:05+0100\n"
+"POT-Creation-Date: 2007-04-11 09:51+0100\n"
 "PO-Revision-Date: 2007-04-07 19:57-0300\n"
 "Last-Translator: Laura Pla <laurapla@yahoo.com>\n"
 "Language-Team: Spanish <RenEspanol@googlegroups.com>\n"
@@ -126,8 +126,8 @@ msgstr "'names' inválidos en R_unlink"
 #: src/main/platform.c:907 src/main/platform.c:910 src/main/platform.c:913
 #: src/main/platform.c:916 src/main/platform.c:919 src/main/platform.c:998
 #: src/main/platform.c:1042 src/main/platform.c:1083 src/main/platform.c:1085
-#: src/main/platform.c:1152 src/main/platform.c:1260 src/main/platform.c:1512
-#: src/main/platform.c:1550 src/main/plot3d.c:2472 src/main/plot3d.c:2476
+#: src/main/platform.c:1152 src/main/platform.c:1261 src/main/platform.c:1513
+#: src/main/platform.c:1551 src/main/plot3d.c:2472 src/main/plot3d.c:2476
 #: src/main/plot3d.c:2481 src/main/plot3d.c:2485 src/main/plot3d.c:2489
 #: src/main/plot3d.c:2493 src/main/print.c:178 src/main/print.c:184
 #: src/main/print.c:206 src/main/print.c:212 src/main/print.c:218
@@ -4786,31 +4786,32 @@ msgstr ""
 "especificacion de 'LC_NUMERIC' puede forzar R a funcionar de forma extraña"
 
 #: src/main/platform.c:1158
-msgid "OS reports request cannot be honored"
+#, fuzzy, c-format
+msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "el sistema operativo informa que un pedido no puede ser cumplido"
 
-#: src/main/platform.c:1309
+#: src/main/platform.c:1310
 msgid "invalid value of 'what' argument"
 msgstr "valor de argument 'what' no válido"
 
-#: src/main/platform.c:1461
+#: src/main/platform.c:1462
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' debe ser un vector de caracteres de longitud 1"
 
-#: src/main/platform.c:1467
+#: src/main/platform.c:1468
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "solución de máquina '%s' imposible en nsl()"
 
-#: src/main/platform.c:1474
+#: src/main/platform.c:1475
 msgid "unknown format returned by gethostbyname"
 msgstr "formato desconocido retornado por gethostbyname"
 
-#: src/main/platform.c:1485
+#: src/main/platform.c:1486
 msgid "nsl() is not supported on this platform"
 msgstr "esta plataforma no soporta nsl()"
 
-#: src/main/platform.c:1532 src/main/platform.c:1574
+#: src/main/platform.c:1533 src/main/platform.c:1575
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' ya existe"
