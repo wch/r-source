@@ -1155,7 +1155,8 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
     else  {
 	SET_STRING_ELT(ans, 0, mkChar(""));
-	warningcall(call, _("OS reports request cannot be honored"));
+	warning(_("OS reports request to set locale to \"%s\" cannot be honored"),
+		CHAR(STRING_ELT(locale, 0)));
     }
     UNPROTECT(1);
 #ifdef HAVE_LANGINFO_CODESET
