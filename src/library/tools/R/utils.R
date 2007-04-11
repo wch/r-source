@@ -284,8 +284,7 @@ function(primitive = TRUE) # primitive means 'include primitives'
         ## cf. zMethods.Rd).
         c("[", "[[", "$", "[<-", "[[<-", "$<-",
           ## as.character is primitive
-          "as.complex", "as.double", "as.integer", "as.logical", "as.raw",
-          "as.numeric", "as.real", "as.vector", "unlist",
+          "as.double", "as.numeric", "as.real", "as.vector", "unlist",
           .get_S3_primitive_generics(),
           ## and also the members of the group generics from
           ## groupGeneric.Rd

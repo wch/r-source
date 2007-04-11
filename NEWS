@@ -23,12 +23,13 @@ NEW FEATURES
 	written that invalidly assumes that they do duplicate, often
 	when using .C/.Fortran(DUP=FALSE).)
 
-	as.complex(), as.double(), as.integer(), as.logical() and
-	as.raw() are now .Internal and internally generic for
-	efficiency.  (As are as.numeric() and as.real(), which are
-	identical to as.double() and dispatch S3 methods for it.)
-	They no longer dispatch on methods for as.vector() (which was
-	never documented).
+	as.complex(), as.integer(), as.logical() and as.raw() are now
+	primitive and internally generic for efficiency.  as.double()
+	is .Internal and internally generic (as are as.numeric() and
+	as.real(), which are identical to as.double() and dispatch S3
+	methods for it.)  They no longer dispatch on methods for
+	as.vector() (which was never documented).
+
 	[This requires any package defining S4 methods on them to be
 	reinstalled, e.g. Matrix.]
 

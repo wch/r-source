@@ -1,6 +1,6 @@
 raw <- function(length = 0) vector("raw", length)
 
-as.raw <- function(x) .Internal(as.raw(x))
+#as.raw <- function(x) .Internal(as.raw(x))
 
 charToRaw <- function(x) .Internal(charToRaw(x))
 rawToChar <- function(x, multiple=FALSE) .Internal(rawToChar(x, multiple))

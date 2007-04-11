@@ -110,10 +110,12 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 
 
-.S3PrimitiveGenerics <- c("as.character", "c", "dim", "dim<-",
-    "dimnames", "dimnames<-", "is.array", "is.matrix", "is.na",
-    "is.nan", "is.numeric", "length", "length<-", "levels<-",
-    "names", "names<-", "rep", "seq.int")
+.S3PrimitiveGenerics <-
+    c("as.character", "as.complex", "as.integer", "as.logical", "as.raw",
+      "c", "dim", "dim<-",
+      "dimnames", "dimnames<-", "is.array", "is.matrix", "is.na",
+      "is.nan", "is.numeric", "length", "length<-", "levels<-",
+      "names", "names<-", "rep", "seq.int")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
@@ -153,6 +155,13 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 ### do these outside to get the base namespace as the environment.
 assign("as.character", function(x, ...) UseMethod("as.character"),
        envir = .GenericArgsEnv)
+assign("as.complex", function(x, ...) UseMethod("as.complex"),
+       envir = .GenericArgsEnv)
+assign("as.integer", function(x, ...) UseMethod("as.integer"),
+       envir = .GenericArgsEnv)
+assign("as.logical", function(x, ...) UseMethod("as.logical"),
+       envir = .GenericArgsEnv)
+assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
 assign("c", function(..., recursive = FALSE) UseMethod("c"),
        envir = .GenericArgsEnv)
 assign("dimnames", function(x) UseMethod("dimnames"), envir = .GenericArgsEnv)

@@ -3,9 +3,6 @@
 ## are not available, or for which a generic, if created, needs to have a special
 ## form (e.g., belonging to one of the predefined groups of functions).
 
-## Also some functions which are internally generic and need to be
-## dispatched efficiently.
-
 .BasicFunsList <-
 list("!" = function(e1)
 {
@@ -161,6 +158,7 @@ list("!" = function(e1)
 {
     standardGeneric("as.complex")
 }
+# as.double is not yet primitive
 , "as.double" = function(x, ...)
 {
     standardGeneric("as.double")
@@ -176,14 +174,6 @@ list("!" = function(e1)
 , "as.raw" = function(x)
 {
     standardGeneric("as.raw")
-}
-, "as.numeric" = function(x, ...)
-{
-    standardGeneric("as.numeric")
-}
-, "as.real" = function(x, ...)
-{
-    standardGeneric("as.real")
 }
 , "attributes" = function(x)
 {
