@@ -1,24 +1,23 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-02-24 16:00\n"
-"PO-Revision-Date: 2006-09-25 04:09-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"PO-Revision-Date: 2007-04-07 01:42-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "Invalid 'at' location in 'axis'"
 msgstr "Неправильная позиция 'at' в 'axis'"
@@ -30,7 +29,7 @@ msgid "'labels' and 'at' locations must have same length"
 msgstr "положения 'labels' и 'at' должны иметь одинаковую длину"
 
 msgid "logical 'label' supplied on length 0"
-msgstr ""
+msgstr "логическая 'label' нулевой длины"
 
 msgid "End points must not be identical"
 msgstr "Конечные точки не должны быть одинаковы"
@@ -74,19 +73,11 @@ msgstr "'row' может быть только рангом из существующих строк"
 msgid "Invalid 'row' specification"
 msgstr "Неправильное указание 'row'"
 
-msgid ""
-"Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', or 'col.after'"
-msgstr ""
-"Не могу задать больше чем один 'side=[\"left\", \"right\"]', 'col', 'col."
-"before', или 'col.after'"
+msgid "Cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr "Не могу задать больше чем один 'side=[\"left\", \"right\"]', 'col', 'col.before', или 'col.after'"
 
-msgid ""
-"Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row."
-"before', or 'row.after'"
-msgstr ""
-"Вы должны задать в точности один из 'side=[\"top\", \"bottom\"]', 'строка', "
-"'строка.before', или 'строка.after'"
+msgid "Must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr "Вы должны задать в точности один из 'side=[\"top\", \"bottom\"]', 'строка', 'строка.before', или 'строка.after'"
 
 msgid "gpar element '%s' must not be length 0"
 msgstr "элемент gpar '%s' не должен быть нулевой длины"
@@ -121,11 +112,8 @@ msgstr "grob(s) переписан (grab НЕ БУДЕТ точным; попробуйте 'wrap=TRUE')"
 msgid "viewport overwritten (grab MAY not be faithful)"
 msgstr "оконница переписана (grab, ВОЗМОЖНО, не будет точным)"
 
-msgid ""
-"grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr ""
-"grob задвинул оконницы и не извлек/переместил вверх (grab, ВОЗМОЖНО, не "
-"будет точным)"
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr "grob задвинул оконницы и не извлек/переместил вверх (grab, ВОЗМОЖНО, не будет точным)"
 
 msgid "Only valid to push viewports"
 msgstr "Правильно только для задвигания оконниц"
@@ -319,12 +307,8 @@ msgstr "'x' и 'y' должны быть единицами или NULL"
 msgid "Corrupt 'arrows' object"
 msgstr "Поврежденный объект 'arrows'"
 
-msgid ""
-"grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing "
-"functions."
-msgstr ""
-"grid.arrows() не одобряется;  используйте аргументы 'arrow' для функций, "
-"рисующих линии."
+msgid "grid.arrows() has been deprecated;  use 'arrow' arguments to line drawing functions."
+msgstr "grid.arrows() не одобряется;  используйте аргументы 'arrow' для функций, рисующих линии."
 
 msgid "The 'grob' argument must be a 'line.to', 'lines', or 'segments' grob"
 msgstr "Аргумент 'grob' должен быть 'line.to', 'lines', или 'segments' grob"
@@ -407,18 +391,11 @@ msgstr "Индекс за пределами (списковое подмножество единиц)"
 msgid "It is invalid to combine unit objects with other types"
 msgstr "Нельзя комбинировать объекты-единицы с другими типами"
 
-msgid ""
-"unit.rep has been deprecated in favour of a unit method for the generic rep "
-"function"
-msgstr ""
-"'unit.rep' не одобряется, используйте единичный метод для общей функции 'rep'"
+msgid "unit.rep has been deprecated in favour of a unit method for the generic rep function"
+msgstr "'unit.rep' не одобряется, используйте единичный метод для общей функции 'rep'"
 
-msgid ""
-"unit.length has been deprecated in favour of a unit method for the generic "
-"length function"
-msgstr ""
-"'unit.length' не одобряется, используйте единичный метод для общей функции "
-"'length'"
+msgid "unit.length has been deprecated in favour of a unit method for the generic length function"
+msgstr "'unit.length' не одобряется, используйте единичный метод для общей функции 'length'"
 
 msgid "Invalid theta"
 msgstr "Неправильная theta"
@@ -456,14 +433,11 @@ msgstr "Только оконницы разрешены в 'vpList'"
 msgid "Only viewports allowed in 'vpStack'"
 msgstr "Только оконницы разрешены в 'vpStack'"
 
-msgid ""
-"'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
-msgstr ""
-"'parent' должен быть оконницей и 'children' должны быть 'vpList' в 'vpTree'"
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr "'parent' должен быть оконницей и 'children' должны быть 'vpList' в 'vpTree'"
 
 msgid "A viewport path must contain at least one viewport name"
-msgstr ""
-"Путь к оконнице должен должен содержать по меньшей мере одно имя оконницы"
+msgstr "Путь к оконнице должен должен содержать по меньшей мере одно имя оконницы"
 
 msgid "Invalid viewport name(s)"
 msgstr "Неправильное име(на) оконницы"
@@ -476,3 +450,4 @@ msgstr "Надо задать по крайней мере одно из 'y' или 'yscale'"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x' должен быть числом"
+

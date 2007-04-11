@@ -1,23 +1,22 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2005 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2005
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-02-24 16:01\n"
-"PO-Revision-Date: 2006-09-25 04:17-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"PO-Revision-Date: 2007-04-07 02:02-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "argument 'package' must be of length 1"
 msgstr "аргумент 'package' должен быть единичной длины"
@@ -44,7 +43,7 @@ msgid "Undocumented S4 methods:"
 msgstr "Недокументированные методы S4:"
 
 msgid "Prototyped non-primitives:"
-msgstr ""
+msgstr "Прототипированные не-примитивы:"
 
 msgid "Undocumented %s:"
 msgstr "Недокументированные %s:"
@@ -55,13 +54,11 @@ msgstr "папка '%s' не содержит кода R"
 msgid "directory '%s' does not contain Rd sources"
 msgstr "папка '%s' не содержит Rd-исходников"
 
-msgid ""
-"Functions/methods with usage in documentation object '%s' but not in code:"
+msgid "Functions/methods with usage in documentation object '%s' but not in code:"
 msgstr "Функции/методы использованы в объекте документации '%s', но не в коде:"
 
-#, fuzzy
 msgid "Data sets with usage in documentation object '%s' but not in code:"
-msgstr "Функции/методы использованы в объекте документации '%s', но не в коде:"
+msgstr "Данные использованы в объекте документации '%s', но не в коде:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Имена аргументов в коде, но не в документации:"
@@ -118,15 +115,13 @@ msgid "Duplicated \\argument entries in documentation object '%s':"
 msgstr "Двойные записи \\аргументов в объекте документации '%s':"
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
-msgstr ""
-"Документированные аргументы не \\используются в объекте документации '%s':"
+msgstr "Документированные аргументы не \\используются в объекте документации '%s':"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr "Объекты \\используются без \\псевдонима в объекте документации '%s':"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr ""
-"Найдено неправильное \\использование строк в объекте документации '%s':"
+msgstr "Найдено неправильное \\использование строк в объекте документации '%s':"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr "Методы S3 показаны с полным именем в объектах документации '%s':"
@@ -168,19 +163,13 @@ msgid "Packages required but not available:"
 msgstr "Пакет требуется, но недоступен:"
 
 msgid "Former standard packages required but now defunct:"
-msgstr ""
-"Бывший стандартный пакет требуется, который сейчас вышел из употребления:"
+msgstr "Бывший стандартный пакет требуется, который сейчас вышел из употребления:"
 
 msgid "Vignette dependencies not required:"
 msgstr "Зависимости очерка не требуются:"
 
-#, fuzzy
-msgid ""
-"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
-"DESCRIPTION Depends/Suggests/Imports entries."
-msgstr ""
-"Зависимости очерка (элементы \\VignetteDepends{}) должны содержаться в "
-"пунктах 'Depends/Suggests' файла DESCRIPTION."
+msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr "Зависимости очерка (элементы \\VignetteDepends{}) должны содержаться в пунктах 'Depends/Suggests/Imports' файла DESCRIPTION."
 
 msgid "Namespace dependencies not required:"
 msgstr "Определения пространства имен не требуются:"
@@ -212,7 +201,9 @@ msgstr "Rd-файлы с неправильными не-ASCII метаданными:"
 msgid "Rd files with non-ASCII section titles:"
 msgstr "Rd-файлы с не-ASCII заголовками разделов:"
 
-msgid "Rd files with missing or empty '\\name':"
+msgid ""
+"Rd files with missing or empty '\\n"
+"ame':"
 msgstr "Rd-файлы с пропущенными или пустыми именами '\\имя':"
 
 msgid "Rd files with missing or empty '\\title':"
@@ -236,12 +227,8 @@ msgstr "Rd-файлы с неизвестными разделами:"
 msgid "Rd files with non-standard keywords:"
 msgstr "Rd-файлы с нестандартными ключевыми словами:"
 
-msgid ""
-"Each '\\keyword' entry should specify one of the standard keywords (as "
-"listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-"Каждый вход '\\keyword' должен определять одно из стандартных ключевых слов "
-"(как перечислено в файле 'KEYWORDS' в папке документации R)."
+msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
+msgstr "Каждый вход '\\keyword' должен определять одно из стандартных ключевых слов (как перечислено в файле 'KEYWORDS' в папке документации R)."
 
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-файлы с двойным псевдонимом '%s':"
@@ -265,8 +252,7 @@ msgid "This is the name of a base package."
 msgstr "Это имя базового пакета."
 
 msgid "This name was used for a base package and is remapped by library()."
-msgstr ""
-"Это имя использовано базовым пакетом и связано заново посредством library()."
+msgstr "Это имя использовано базовым пакетом и связано заново посредством library()."
 
 msgid "Unknown encoding"
 msgstr "Неизвестная кодировка"
@@ -293,18 +279,13 @@ msgid "Malformed maintainer field."
 msgstr "Плохо сформированное поле разработчика."
 
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
-msgstr ""
-"Плохо сформированное поле Depends, или Suggests, или Imports, или Enhances."
+msgstr "Плохо сформированное поле Depends, или Suggests, или Imports, или Enhances."
 
 msgid "Offending entries:"
 msgstr "Неправильные пункты:"
 
-msgid ""
-"Entries must be names of packages optionally followed by '<=' or '>=', white "
-"space, and a valid version number in parentheses."
-msgstr ""
-"Пункты должны быть именами пакетов, возможно, с последующими '<=' или '>=', "
-"пробелом, и правильным номером версии в скобках."
+msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr "Пункты должны быть именами пакетов, возможно, с последующими '<=' или '>=', пробелом, и правильным номером версии в скобках."
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "Пункты с неправдоподобным оператором сравнения:"
@@ -315,12 +296,8 @@ msgstr "Возможны лишь операторы '<=' и '>='."
 msgid "Entries with infeasible version number:"
 msgstr "Пункты с неправдоподобным номером версии:"
 
-msgid ""
-"Version numbers must be sequences of at least two non-negative integers, "
-"separated by single '.' or '-'."
-msgstr ""
-"Номера версии должны быть последовательностями по крайней мере двух "
-"неотрицательных целых, разделенных одной точкой или дефисом."
+msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
+msgstr "Номера версии должны быть последовательностями по крайней мере двух неотрицательных целых, разделенных одной точкой или дефисом."
 
 msgid "Package name and namespace differ."
 msgstr "Имена пакета и пространства имен различаются."
@@ -328,19 +305,11 @@ msgstr "Имена пакета и пространства имен различаются."
 msgid "Invalid Priority field."
 msgstr "Неправильное поле привилегий."
 
-msgid ""
-"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
-"already be known to R."
-msgstr ""
-"Пакеты с привилегиями 'base' или 'recommended' или 'defunct-base' должны "
-"быть уже известны R."
+msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
+msgstr "Пакеты с привилегиями 'base' или 'recommended' или 'defunct-base' должны быть уже известны R."
 
-msgid ""
-"See the information on DESCRIPTION files in section 'Creating R packages' of "
-"the 'Writing R Extensions' manual."
-msgstr ""
-"См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
-"руководства 'Writing R Extensions'."
+msgid "See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual."
+msgstr "См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' руководства 'Writing R Extensions'."
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
@@ -366,15 +335,18 @@ msgstr "аргумент 'lines' должен быть текстовым вектором"
 msgid "argument 'file' must be a character string or connection"
 msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
 
-msgid "missing/empty \\name field in '%s'"
+msgid ""
+"missing/empty \\n"
+"ame field in '%s'"
 msgstr "пропущенное/пустое поле \\имен в '%s'"
 
-msgid "Rd files must have a non-empty \\name."
+msgid ""
+"Rd files must have a non-empty \\n"
+"ame."
 msgstr "Rd-файлы должны иметь непустое \\имя."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
-msgstr ""
-"См. главу 'Writing R documentation' в руководстве 'Writing R Extensions'."
+msgstr "См. главу 'Writing R documentation' в руководстве 'Writing R Extensions'."
 
 msgid "missing/empty \\title field in '%s'"
 msgstr "пропущенное/пустое поле \\заголовок в '%s'"
@@ -424,7 +396,9 @@ msgstr "Синтаксическая ошибка в объекте документации '%s':"
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
 
-msgid "missing/empty \\name field in Rd file(s)"
+msgid ""
+"missing/empty \\n"
+"ame field in Rd file(s)"
 msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 
 msgid "unable to create temp directory"
@@ -434,6 +408,8 @@ msgid ""
 "processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
+"выполнение очерка '%s' не удалось с диагностикой:\n"
+"%s"
 
 msgid "running make failed"
 msgstr "не удался запуск 'make'"
@@ -471,9 +447,8 @@ msgstr "файлы в '%s' пропущены в поле '%s':"
 msgid "unable to create '%s'"
 msgstr "не могу создать '%s'"
 
-#, fuzzy
 msgid "unable to re-encode '%s'"
-msgstr "не могу создать '%s'"
+msgstr "не могу перекодировать '%s'"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "не могу скопировать 'INDEX' в '%s'"
@@ -586,27 +561,21 @@ msgstr "готово"
 msgid "parsing '%s'"
 msgstr "разбор '%s'"
 
-#, fuzzy
 msgid "Warning in file '%s':"
 msgid_plural "Warnings in file '%s':"
-msgstr[0] "ошибка разбора в файле '%s'"
-msgstr[1] "ошибка разбора в файле '%s'"
-msgstr[2] "ошибка разбора в файле '%s'"
+msgstr[0] "Предупреждение в файле '%s'"
+msgstr[1] "Предупреждения в файле '%s'"
+msgstr[2] "Предупреждения в файле '%s'"
 
-#, fuzzy
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
-msgstr[0] "Найдены возможные глобальные T или F в следующих функциях:"
+msgstr[0] "Найдены возможные глобальные T или F в следующей функциии:"
 msgstr[1] "Найдены возможные глобальные T или F в следующих функциях:"
 msgstr[2] "Найдены возможные глобальные T или F в следующих функциях:"
 
-#, fuzzy
 msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
-msgid_plural ""
-"Found possibly global 'T' or 'F' in the following Rd example files:"
-msgstr[0] ""
-"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
-msgstr[1] ""
-"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
-msgstr[2] ""
-"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+msgid_plural "Found possibly global 'T' or 'F' in the following Rd example files:"
+msgstr[0] "Найдены возможные глобальные T или F в следующем Rd-файле примеров:"
+msgstr[1] "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+msgstr[2] "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+

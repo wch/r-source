@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-04-10 07:42+0100\n"
-"PO-Revision-Date: 2006-09-26 01:05-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"PO-Revision-Date: 2007-04-07 01:47-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -117,7 +117,7 @@ msgstr "число итераций превысило максимум = %d"
 
 #: nls.c:274
 msgid "converged"
-msgstr ""
+msgstr "сошлось"
 
 #: nls.c:295
 msgid "'theta' should be of type character"

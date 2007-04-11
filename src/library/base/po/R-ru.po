@@ -1,17 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2006 The R Foundation
+# Copyright (C) 2007 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <iit512@yandex.ru> 2006
+# Alexey Shipunov <dactylorhiza@gmail.com> 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.4.0\n"
+"Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-04-10 07:41\n"
-"PO-Revision-Date: 2006-12-10 00:35-0800\n"
-"Last-Translator: Alexey Shipunov <iit512@yandex.ru>\n"
+"PO-Revision-Date: 2007-04-07 01:35-0800\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -33,10 +33,10 @@ msgid "See help(\"Defunct\")"
 msgstr "См. help(\"Defunct\")"
 
 msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.C' не нужен: удалите его"
 
 msgid "'symbol.For' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.For' не нужен: удалите его"
 
 msgid "'%s' is deprecated."
 msgstr "'%s' не одобряется."
@@ -116,9 +116,8 @@ msgstr "требуется для"
 msgid "(still attached)"
 msgstr "(по-прежнему присоединен)"
 
-#, fuzzy
 msgid "namespace cannot be unloaded"
-msgstr "пространство имен '%s' загружено"
+msgstr "пространство имен  нельзя выгрузить"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "образец регулярного выражения '[' заменен на  '\\\\['"
@@ -475,16 +474,14 @@ msgstr "не определен для объектов \"POSIXct\""
 msgid "not defined for \"POSIXlt\" objects"
 msgstr "не определен для объектов \"POSIXlt\""
 
-#, fuzzy
 msgid "'tim' is not character or numeric"
-msgstr "'%s' не является функцией, буквой или символом"
+msgstr "'tim' не является функцией или буквой"
 
 msgid "need explicit units for numeric conversion"
-msgstr ""
+msgstr "для числовой конверсии нужно прямо указать единицы"
 
-#, fuzzy
 msgid "invalid units specified"
-msgstr "неправильное указание 'quote'"
+msgstr "неправильное указание единиц"
 
 msgid "not defined for \"difftime\" objects"
 msgstr "не определен для объектов \"difftime\""
@@ -645,9 +642,8 @@ msgstr "значение для '"
 msgid "' not found"
 msgstr "' не найдено"
 
-#, fuzzy
 msgid "all arguments must be named"
-msgstr "все аргументы должны иметь одинаковую длину"
+msgstr "все аргументы должны быть именованы"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' должен быть непустой текстовой строкой"
@@ -861,9 +857,8 @@ msgstr "неправильный аргумент 'category'"
 msgid "must specify formal argument names to vectorize"
 msgstr "для векторизации надо указать формальные имена аргументов"
 
-#, fuzzy
 msgid "'arg' must be NULL or a character vector of length >= 1"
-msgstr "'normal.kind' должен быть текстовой строкой длины 1."
+msgstr "'arg' должен быть NULL либо текстовой строкой длиной не меньше 1"
 
 msgid "'arg' should be one of"
 msgstr "'arg' должен быть одним из"
@@ -896,9 +891,8 @@ msgstr ""
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
 
-#, fuzzy
 msgid "'trim' must be numeric of length one"
-msgstr "'origin' должен быть длиной 1"
+msgstr "'trim' должен быть числовым объектом длины 1"
 
 msgid "trimmed means are not defined for complex data"
 msgstr "обрезанные средние не определены для комплексных данных"
@@ -920,7 +914,7 @@ msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' и 'by.y' определяют разные номера колонок"
 
 msgid "additional arguments ignored in message()"
-msgstr ""
+msgstr "дополнительные аргументы пропущены в message()"
 
 msgid "(loaded the methods namespace)"
 msgstr "(загружено пространство имен методов)"
@@ -936,7 +930,7 @@ msgid "Expected a single logical value for the S4 object state"
 msgstr "Для состояния \"объект S4\" ожидается простое логическое значение "
 
 msgid "invalid to change the storage mode of a factor"
-msgstr ""
+msgstr "неправильно менять тип хранения фактора"
 
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
@@ -1016,9 +1010,8 @@ msgstr "пространство имен '%s' загружено"
 msgid "%s failed in unloadNamespace(%s)"
 msgstr "%s не удалось в unloadNamespace(%s)"
 
-#, fuzzy
 msgid "name space '%s' is still used by: %s"
-msgstr "пространство имен '%s' еще используется по: '%s'"
+msgstr "пространство имен '%s' еще используется в: '%s'"
 
 msgid "imperative name space directives are disabled"
 msgstr "императивные директивы пространства имен отменены"
@@ -1107,9 +1100,8 @@ msgstr "неправильный аргумент"
 msgid "not defined for package_version objects"
 msgstr "не определено для объектов package_version"
 
-#, fuzzy
 msgid "no arguments"
-msgstr "неправильный аргумент"
+msgstr "нет аргументов"
 
 msgid "invalid 'n' value"
 msgstr "неправильное значение 'n'"
@@ -1160,9 +1152,8 @@ msgstr "'x' должен быть вектором"
 msgid "invalid 'rle' structure"
 msgstr "неправильная структура 'rle'"
 
-#, fuzzy
 msgid "... must contain names or character strings"
-msgstr "'file' должен быть NULL, соединением или текстовой строкой"
+msgstr "... должен содержать имена или текстовые строки"
 
 msgid "incorrect length for 'group'"
 msgstr "неправильная длина 'group'"
@@ -1288,13 +1279,13 @@ msgid "'%s' is not an existing file"
 msgstr "'%s' не является существующим файлом"
 
 msgid "Timestamp of '"
-msgstr ""
+msgstr "ВременнАя маска '"
 
 msgid "' has changed"
-msgstr ""
+msgstr "' сменилась"
 
 msgid "additional arguments ignored in stop()"
-msgstr ""
+msgstr "дополнительные аргументы пропущены в stop()"
 
 msgid "is not"
 msgstr "не является"
@@ -1306,7 +1297,7 @@ msgid "TRUE"
 msgstr "TRUE"
 
 msgid "additional arguments ignored in warning()"
-msgstr ""
+msgstr "дополнительные аргументы пропущены в warning()"
 
 msgid "incorrect value for 'x'"
 msgstr "неправильное значение для 'x'"
@@ -1363,13 +1354,13 @@ msgid "Registering evaluate as low-level callback"
 msgstr "Регистрация подсчитывает низкоуровневый обратный вызов"
 
 msgid "user"
-msgstr ""
+msgstr "пользователь"
 
 msgid "system"
-msgstr ""
+msgstr "система"
 
 msgid "elapsed"
-msgstr ""
+msgstr "прошло"
 
 msgid "'width' must be positive"
 msgstr "'width' должна быть положительной"
@@ -1387,10 +1378,11 @@ msgid ""
 "arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
 "Windows only"
 msgstr ""
+"аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для "
+"Windows"
 
-#, fuzzy
 msgid "'input' must be a character vector or 'NULL'"
-msgstr "'zero.print' должен быть символом, логическим или NULL"
+msgstr "'input' должен быть текстовым вектором либо 'NULL'"
 
 msgid "argument must be character"
 msgstr "аргумент должен быть буквой"
@@ -1454,6 +1446,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "zero imputs"
+#~ msgstr "нулевые вводы"
 
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr "'all' нельзя использовать с другими опциями разбора"
