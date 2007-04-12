@@ -138,8 +138,9 @@ release.
 You need Windows 95 or later.  There is no specific version for Windows
 64, but the standard 32-bit version has been proven to work.  Some
 features only work on an NT-based version of Windows (and some work
-better on such an OS).  We do minimally test releases on Windows 98 and
-occasionally on NT4, but only test thoroughly on XP and later.
+better on such an OS).  We do minimally test releases on Windows 98
+(2.5.0 was tested, for example) and sometimes on NT4, but only test
+thoroughly on XP.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A full installation
@@ -152,13 +153,18 @@ with spaces in will probably work, but is little-tested.)
 To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon and
 follow the instructions.  If you installed R this way you can uninstall
 it from the Control Panel or Start Menu (unless you suppressed making a
-group for R).
+group for R).  If you have an account with Administrator privileges you
+will be able to install R in the `Program Files' area and to set all the
+optional registry entries; otherwise you will only be able to install R
+in your own file area.  On Windows Vista, for an account in the
+administrators group you may need to confirm that you want to proceed
+with an administrative installation.
 
-Choose a working directory for R.  You will have a shortcut to
-@file{@RWVER@\bin\Rgui.exe} on your desktop and/or somewhere on the
-Start menu file tree, and perhaps also in the Quick Launch bar.
-Right-click each shortcut, select Properties... and change the `Start
-in' field to your working directory.
+After installation you should choose a working directory for R.  You
+will have a shortcut to @file{@RWVER@\bin\Rgui.exe} on your desktop
+and/or somewhere on the Start menu file tree, and perhaps also in the
+Quick Launch part of the taskbar.  Right-click each shortcut, select
+Properties... and change the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
 field (@emph{after} any final double quote), for example @code{--sdi
@@ -1553,7 +1559,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2007-04-01
+@set LASTEDIT 2007-04-12
 @ifhtml
 @html
 <hr WIDTH="100%">

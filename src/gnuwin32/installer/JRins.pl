@@ -46,6 +46,7 @@ open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
 [Setup]
 OutputBaseFilename=${RW}-win32
+PrivilegesRequired=none
 END
 
 my $lines=<<END;
