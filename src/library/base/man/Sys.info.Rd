@@ -20,13 +20,13 @@ Sys.info()
   \item{user}{The name of the real user ID, or \code{"unknown"} if it
     cannot be ascertained.}
 #ifdef unix
-The first five fields come from the \code{uname(2)} system call.  The
-login name comes from \code{getlogin(2)}, and the user name from
-\code{getpwuid(getuid())}
+  The first five fields come from the \code{uname(2)} system call.  The
+  login name comes from \code{getlogin(2)}, and the user name from
+  \code{getpwuid(getuid())}
 #endif
 #ifdef windows
-The information is obtained from Windows system calls.  It is likely to
-be most complete on Windows NT/2000/XP systems.
+  The information is obtained from Windows system calls.  It is likely to
+  be most complete on Windows NT/2000/XP/2003/Vista systems.
 #endif
 }
 \details{

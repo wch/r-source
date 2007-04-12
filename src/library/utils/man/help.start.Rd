@@ -53,9 +53,9 @@ help.start(update = TRUE, gui = "irrelevant",
   specified, but \code{help} will still use the file association mechanism.
 
   \code{help.start} and the Java-based search engine have been tested
-  under Internet Explorer 6, Netscape 7.1, Opera 7.54,
-  Mozilla 1.6/1.7 and MozillaFirefox 0.8/0.9/1.0.  Users of IE6 under
-  Windows XP SP2 will probably need to allow `active content' from the
+  under Internet Explorer 6/7, Netscape 7.1, Opera 7.54,
+  Mozilla 1.6/1.7 and Firefox 1.0/1.5/2.0.  Users of IE
+  will probably need to allow `active content' from the
   \sQuote{information bar} before the search engine can be used.
 #endif
 }

@@ -20,7 +20,12 @@ file.info(\dots)
   about the file to which the link points rather than about the link.
 #endif
 #ifdef windows
-  File modes are probably only useful on Windows NT/2000/XP machines.
+  File modes are probably only useful on Windows NT/2000/XP/2003
+  machines. Windows does not have a concept of \sQuote{executable}, so
+  files are reported as executable based on their type (e.g. \code{.exe}
+  file and directories are regarded as executable).
+  
+  Reported file modes seem to be very unreliable on Windows Vista.
 #endif
 }
 \value{
@@ -39,10 +44,10 @@ file.info(\dots)
   Unknown user and group names will be \code{NA}.
 #endif
 
-Entries for non-existent or non-readable files will be \code{NA}.
+  Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
-The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
-may not be supplied on a non-POSIX Unix system.
+  The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
+  may not be supplied on a non-POSIX Unix system.
 #endif
 }
 \note{

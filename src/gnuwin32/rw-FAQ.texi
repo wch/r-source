@@ -112,6 +112,7 @@ The information here applies only to recent versions of R for Windows,
 * What does 'DLL attempted to change FPU control word' mean?::  
 * Other strange crashes.::      
 * Why does R never use more than 50% of my CPU?::  
+* Does R run under Windows Vista?::  
 @end menu
 
 
@@ -620,7 +621,7 @@ The only solution we know of is for the user to replace the buggy system
 component that is causing the error.
 
 
-@node Why does R never use more than 50% of my CPU?,  , Other strange crashes., Installation and Usage
+@node Why does R never use more than 50% of my CPU?, Does R run under Windows Vista?, Other strange crashes., Installation and Usage
 @section Why does R never use more than 50% of my CPU?
 
 This is a misreading of Windows' confusing Task Manager.  R's
@@ -633,6 +634,92 @@ will also show as two CPUs (which they genuinely are).
 
 Many benchmarks show hyperthreading reduces the overall workload, so you
 may want to experiment with disabling it.
+
+
+@node Does R run under Windows Vista?,  , Why does R never use more than 50% of my CPU?, Installation and Usage
+@section Does R run under Windows Vista?
+
+It does.  Vista was launched in January 2007 and experience with it is
+still scanty.  A few issues have been reported that related to the way
+accounts and file permissions work.  (These are not specifically R
+issues, but changes in user experiences.)
+
+The reported issues with Vista are all about how accounts are set up.
+Earlier versions of Windows had user and Administator accounts, and user
+accounts could be give administrative privileges and so write permission
+over system areas such as @file{c:\Program Files}.  R would be installed
+either by a user in his own file space or by an account with
+administrator privileges into a system area.
+
+Vista normally disables the Administrator account and expects software
+installation to done by an account which is in the (local) administator
+group.  Unlike (say) Windows XP, such accounts do not have full
+administator privileges, and this is where the issues arise.
+For background information see
+@url{http://technet.microsoft.com/en-us/windowsvista/aa906021.aspx}.
+
+Vista will report that the R installer has an `unknown publisher' and
+ask if it should be run.  System administrators can disable installing
+applications from non-trusted sources.
+
+If you install R as a standard user into your own file space and use it
+under the same account, there are no known permission issues.
+
+If you install R as Administrator and install/update packages (in the
+system area or elsewhere), no issues arise.
+
+If you install R from into a system area from a non-Administrator
+account, you will be normally prompted with a security-check dialog box,
+and may be required to provide administrator credentials.  (This is
+known as `over-the-shoulder' credentials, and can be disabled.)
+
+Vista runs programs with standard user permission even from an account
+in the administrator group.  The system area is owned by the local
+Administrator, so only that account has full permissions over the
+installed R files: if you use a non-Administrator account you will run
+into problems if you try to install (including updating) packages into
+the main R library.  (It would be nice if at that point R used
+over-the-shoulder credentials, but that has not yet been implemented in
+the standard C interface.  Vista disallows creating @code{.chm} and
+@code{.dll} files in the systen area without credentials.)  There are
+several ways around this.
+
+@itemize
+@item
+Run R with Administrator privileges in sessions where you want to
+install packages.  (Do so by right-clicking on the R shortcut and
+selecting 'Run as Administrator'.)
+
+@item
+Transfer ownership of the R installation to the user which installed R.
+To do so, Use the security tab on the @samp{Properties} of the top-level
+R folder.  (You can do this from any account in the Administrator
+group.)
+
+@item
+Install packages into a different library tree owned by the account used to
+install R.
+
+For an installation to be used by a single user, the simplest way is to
+make use of the `personal library' introduced in R 2.5.0: @xref{I don't
+have permission to write to the @RWVER@\library directory}.
+
+For a site installation, you can create a site-wide library directory
+anywhere convenient, and add it to the default package search path for
+all users via @env{R_LIBS} in @file{etc\Renviron.site}.  @xref{What are
+HOME and working directories?}.  There is a standard location for a site
+library, the @file{site-library} directory in the top-level R folder
+(which you would need to create with full control for the R installation
+account).  This will be used for installation in preference to the main
+library folder if it exists.
+
+This approach will not allow you to update the recommended packages.
+@end itemize
+
+
+Another issue with Vista is that the standard POSIX ways that R uses
+(e.g. in @code{file.info} and @code{file.access}) to look at file
+permissions no longer work reliably.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -889,13 +976,8 @@ library for you and install the packages there.  This will also happen
 if @code{update.packages} offers to update packages for you in a library
 where you do not have write permission.
 
-It seems that under Windows Vista sometimes users will have
-administrative rights when installing R but not when running it.  Two
-suggestions are to 1) give the user `Full Control' privileges on the
-top-level R folder via the security tab on the @samp{Properties} of the
-folder, or 2) to right-click the R shortcut and `Run as Administrator'
-for the session in which packages are to be installed/updated.
-
+There can be additional security issues under Windows Vista:
+@xref{Does R run under Windows Vista?}.
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
 @section The packages I installed do not appear in the HTML help system.
