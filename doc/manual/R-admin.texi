@@ -3976,10 +3976,9 @@ The @file{Rtools.exe} installer includes the currently used version of
 the MinGW port of @command{gcc} from
 @url{http://sourceforge.net/project/showfiles.php?group_id=2435}.  
 
-If you would like to install your own copy, we recommed downloading
-from the URL above, as the
-download links from @url{www.mingw.org} currently lead to obsolete
-versions. See the notes on
+If you would like to install your own copy, we recommed downloading from
+the URL above, as the download links from @url{www.mingw.org} currently
+lead to obsolete versions. See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools/,
 @code{www.murdoch-sutherland.com/@/Rtools}} for updates.
 
@@ -4018,11 +4017,13 @@ During the lifetime of this release of @R{} it is likely that
 @command{gcc 4.2.0} and an official MinGW build will be released.
 Unofficial builds from the @code{gcc} trunk were working in April 2007,
 provided @code{mingw-runtime-3.12.tar.gz} was used (and
-@code{BUILD=GFORTRAN} in @file{MkRules}).  One such build is available
-from @url{http://gcc.gnu.org/wiki/GFortranBinaries}, and can be used
-when a Fortran 90 compiler is required.  (Another MinGW-compatible
-Fortran 90 compiler is available via @url{http://www.g95.org,
-@code{www.g95.org}}.)
+@code{BUILD=GFORTRAN} is set in @file{MkRules}).  One such build is
+available from @url{http://gcc.gnu.org/wiki/GFortranBinaries}, and can
+be used when a Fortran 90 compiler is required.  (Another
+MinGW-compatible Fortran 90 compiler is available via
+@url{http://www.g95.org, @code{www.g95.org}}.  Note that these compilers
+are not completely compatible with @code{gcc3} so mixing them with the
+recommended tools is unsupported.)
 
 
 
