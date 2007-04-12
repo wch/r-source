@@ -283,7 +283,8 @@ function(primitive = TRUE) # primitive means 'include primitives'
         ## Get the names of R internal S3 generics (via DispatchOrEval(),
         ## cf. zMethods.Rd).
         c("[", "[[", "$", "[<-", "[[<-", "$<-",
-          "as.vector", "unlist",
+          ## as.character is primitive
+          "as.double", "as.numeric", "as.real", "as.vector", "unlist",
           .get_S3_primitive_generics(),
           ## and also the members of the group generics from
           ## groupGeneric.Rd

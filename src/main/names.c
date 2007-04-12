@@ -463,7 +463,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 {"as.character",do_ascharacter,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.integer",	do_ascharacter,	1,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
-{"as.double",	do_ascharacter,	2,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"as.double",	do_ascharacter,	2,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.complex",	do_ascharacter,	3,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.logical",	do_ascharacter,	4,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.raw",	do_ascharacter,	5,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
