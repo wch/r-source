@@ -719,7 +719,10 @@ This approach will not allow you to update the recommended packages.
 
 Another issue with Vista is that the standard POSIX ways that R uses
 (e.g. in @code{file.info} and @code{file.access}) to look at file
-permissions no longer work reliably.
+permissions no longer work reliably.  One consequence of this is that R
+may think you have write permission on a library directory when you do
+not: also you can have write permission but not be allowed to create
+certain types of files.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
