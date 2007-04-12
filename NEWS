@@ -807,6 +807,9 @@ BUG FIXES
 	'methods' is not loaded, and print a short summary rather than
 	dump the internal structure.
 
+    o   Sweave and Stangle had problems due to partial matching of code chunk
+        names when run with split=TRUE.
+
 
 
 

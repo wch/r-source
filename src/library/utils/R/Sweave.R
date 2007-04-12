@@ -401,7 +401,8 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           chunkprefix <- RweaveChunkPrefix(options)
 
           if(options$split){
-              chunkout <- object$chunkout[[chunkprefix]]
+              ## [x][[1]] avoids partial matching of x
+              chunkout <- object$chunkout[chunkprefix][[1]]
               if(is.null(chunkout)){
                   chunkout <- file(paste(chunkprefix, "tex", sep="."), "w")
                   if(!is.null(options$label))
@@ -854,7 +855,8 @@ RtangleRuncode <-  function(object, chunk, options)
         outfile <- paste(chunkprefix, options$engine, sep=".")
         if(!object$quiet)
             cat(options$chunknr, ":", outfile,"\n")
-        chunkout <- object$chunkout[[chunkprefix]]
+        ## [x][[1]] avoids partial matching of x
+        chunkout <- object$chunkout[chunkprefix][[1]]
         if(is.null(chunkout)){
             chunkout <- file(outfile, "w")
             if(!is.null(options$label))
