@@ -111,11 +111,11 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 
 
 .S3PrimitiveGenerics <-
-    c("as.character", "as.complex", "as.double", "as.integer",
-    "as.logical", "as.numeric", "as.raw", "as.real", "c", "dim",
-    "dim<-", "dimnames", "dimnames<-", "is.array", "is.matrix",
-    "is.na", "is.nan", "is.numeric", "length", "length<-", "levels<-",
-    "names", "names<-", "rep", "seq.int")
+    c("as.character", "as.complex", "as.integer", "as.logical", "as.raw",
+      "c", "dim", "dim<-",
+      "dimnames", "dimnames<-", "is.array", "is.matrix", "is.na",
+      "is.nan", "is.numeric", "length", "length<-", "levels<-",
+      "names", "names<-", "rep", "seq.int")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
@@ -157,17 +157,11 @@ assign("as.character", function(x, ...) UseMethod("as.character"),
        envir = .GenericArgsEnv)
 assign("as.complex", function(x, ...) UseMethod("as.complex"),
        envir = .GenericArgsEnv)
-assign("as.double", function(x, ...) UseMethod("as.double"),
-       envir = .GenericArgsEnv)
 assign("as.integer", function(x, ...) UseMethod("as.integer"),
        envir = .GenericArgsEnv)
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
        envir = .GenericArgsEnv)
 assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
-assign("as.numeric", function(x, ...) UseMethod("as.double"),
-       envir = .GenericArgsEnv)
-assign("as.real", function(x, ...) UseMethod("as.double"),
-       envir = .GenericArgsEnv)
 assign("c", function(..., recursive = FALSE) UseMethod("c"),
        envir = .GenericArgsEnv)
 assign("dimnames", function(x) UseMethod("dimnames"), envir = .GenericArgsEnv)

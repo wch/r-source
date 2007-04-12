@@ -1,6 +1,6 @@
 #as.logical <- function(x,...) .Internal(as.logical(x, ...))
 #as.integer <- function(x,...) .Internal(as.integer(x, ...))
-#as.double <- function(x,...)  .Internal(as.double(x, ...))
+as.double <- function(x,...)  .Internal(as.double(x, ...))
 #as.complex <- function(x,...) .Internal(as.complex(x, ...))
 
 as.single <- function(x,...) UseMethod("as.single")
