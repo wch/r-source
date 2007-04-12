@@ -191,25 +191,21 @@ m <- new("myMat", x = c(1, pi))
 stopifnot(identical(m, cBind(m)))
 
 
-## regression tests of dispatch: most of these became internal in 2.6.0
+## regression tests of dispatch: most of these became primitive in 2.6.0
 setClass("c1", "numeric")
 x_c1 <- new("c1")
-x_f <- function(x) x
-# the next failed < 2.5.0 as the signature was wrong
+# the next failed < 2.5.0 as the signature in .BasicFunsList was wrong
 setMethod("as.character", "c1", function(x, ...) "fn test")
 as.character(x_c1)
-# not allowed to define a "function" method, and existing one fails.
 
 setMethod("as.integer", "c1", function(x, ...) 42)
 as.integer(x_c1)
 
+# as.numeric sets methods on all the equivalent functions
 setMethod("as.numeric", "c1", function(x, ...) 42+pi)
 as.numeric(x_c1)
-as.double(x_c1) # default method
-as.real(x_c1) # default method
-setMethod("as.numeric", "function", function(x, ...) 43+pi)
-as.numeric(x_f)
-try(as.double(x_f)) # default method, fails
+as.double(x_c1)
+as.real(x_c1)
 
 setMethod("as.logical", "c1", function(x, ...) NA)
 as.logical(x_c1)

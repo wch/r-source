@@ -455,6 +455,7 @@ getGeneric <-
         value <-.Call("R_getGeneric", f, FALSE, where, package,
                      PACKAGE = "methods")
     else {
+        if(is.character(f) && (f == "as.numeric" || f == "as.real")) f <- "as.double"
         ## first look in the cache (which should eventually be done in C for speed perhaps)
         value <- .getGenericFromCache(f, where, package)
         if(is.null(value)) {
