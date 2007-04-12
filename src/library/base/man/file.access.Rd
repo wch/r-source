@@ -28,8 +28,9 @@ file.access(names, mode = 0)
   Execute permission is ignored under Windows (this function regards all
   files as executable), and all directories are reported to have both
   read and write permissions.  Write permission may be reported on
-  files that are not writable due to User Account Control settings
-  (e.g. not owned by the user of the R process).
+  files that are not writeable due to ownership, Access Control Lists or
+  User Account Control settings (e.g. not owned by the user of the R
+  process).
 #endif
 
   Please note that it is not good to use this function to test before

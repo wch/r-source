@@ -69,6 +69,13 @@ FUNCTION CHANGES
 	stderr).
 
 
+INSTALLER
+
+    o	The Inno Setup installer now installs the desktop icon (if
+	selected) for all users if run from an account with
+	administrative privileges.
+
+
 OTHERS
 
     o	This file (CHANGES) has been reformatted to be readable by the
@@ -115,6 +122,11 @@ OTHERS
     o	The toolset described in the R Installation and Administration
 	manual for building on Windows is now partially available in
 	an executable installer.
+
+    o	The messages about being unable to update package and search
+	index files when installing packages without sufficient
+	permissions to update R are now suppressed (as Windows often
+	reports inaccurately about file permissions).
 
 
 BUG FIXES

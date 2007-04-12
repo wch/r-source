@@ -166,8 +166,6 @@ contrib.url(repos, type = getOption("pkgType"))
     values.
   }
 }
-
-}
 \details{
   All of these functions work with the names of a package or bundle (and
   not the component packages of a bundle, except for
@@ -290,16 +288,26 @@ contrib.url(repos, type = getOption("pkgType"))
   for it is unclear where new dependencies should be installed.  The
   current implementation will only allow it if all the packages to be
   updated are in a single library, when that library will be used.
-% This comment is no longer true since the Contains: field was installed.
-%   Not enough information is recorded to know if a bundle is completely
-%   installed, so a bundle is regarded as installed if any of its
-%   component packages is.
 }
+#ifdef unix
 \note{
   Some binary distributions of \R have \code{INSTALL} in a separate
   bundle, e.g. an \code{R-devel} RPM.  \code{install.packages} will
   give an error if called on such a system.
 }
+#endif
+#ifdef windows
+\note{
+  \code{install.packages} tries to detect if you have write permission
+  on the library directories specified, but Windows reports unreliably.
+  If there is only one library directory (the default), \R even tries to
+  find out by creating a test directory, but even this need not be the
+  whole story.  Under Windows Vista you may have permission to write in
+  a library directory but lack permission to write binary files (such as
+  \file{.chm} and \file{.dll} files) there.  See the \emph{R for Windows
+    FAQ} for workarounds.
+}
+#endif
 \seealso{
   \code{\link{installed.packages}}, \code{\link{remove.packages}}
   
