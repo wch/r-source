@@ -107,7 +107,7 @@ Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries
 [Icons]
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
-Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
+Name: "{commondesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{app}"; Parameters: {code:CmdParms}
 
 
