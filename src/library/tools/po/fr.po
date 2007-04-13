@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: tools 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-02-24 16:01+0000\n"
-"PO-Revision-Date: 2005-12-07 00:23+0100\n"
+"PO-Revision-Date: 2007-04-13 12:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,3 +28,4 @@ msgstr "md5 a échoué sur le fichier '%s'"
 #: text.c:66
 msgid "invalid argument type"
 msgstr "type d'argument incorrect"
+

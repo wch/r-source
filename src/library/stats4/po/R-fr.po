@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-11-09 11:08\n"
-"PO-Revision-Date: 2005-12-07 00:19+0100\n"
+"PO-Revision-Date: 2007-04-13 12:32+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,3 +33,4 @@ msgstr "les seuils sont nivelés à des valeurs positives uniquement"
 
 msgid "extra arguments discarded"
 msgstr "arguments supplémentaires éliminés"
+
