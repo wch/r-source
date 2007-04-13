@@ -138,7 +138,7 @@ release.
 You need Windows 95 or later.  There is no specific version for Windows
 64, but the standard 32-bit version has been proven to work.  Some
 features only work on an NT-based version of Windows (and some work
-better on such an OS).  We do minimally test releases on Windows 98
+better on such an OS).  We do minimally test most releases on Windows 98
 (2.5.0 was tested, for example) and sometimes on NT4, but only test
 thoroughly on XP.
 
@@ -150,15 +150,15 @@ If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
 with spaces in will probably work, but is little-tested.)
 
-To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon and
-follow the instructions.  If you installed R this way you can uninstall
-it from the Control Panel or Start Menu (unless you suppressed making a
-group for R).  If you have an account with Administrator privileges you
-will be able to install R in the `Program Files' area and to set all the
-optional registry entries; otherwise you will only be able to install R
-in your own file area.  On Windows Vista, for an account in the
-administrators group you may need to confirm that you want to proceed
-with an administrative installation.
+To install use @samp{@RWVER@-win32.exe}.  Just double-click on the
+icon and follow the instructions.  If you installed R this way you can
+uninstall it from the Control Panel or Start Menu (unless you
+suppressed making a group for R).  If you have an account with
+Administrator privileges you will be able to install R in the `Program
+Files' area and to set all the optional registry entries; otherwise
+you will only be able to install R in your own file area.  On Windows
+Vista you may need to confirm that you want to proceed with
+installing a program from an `unknown publisher'.
 
 After installation you should choose a working directory for R.  You
 will have a shortcut to @file{@RWVER@\bin\Rgui.exe} on your desktop
@@ -266,11 +266,13 @@ to run R without creating a shortcut in a writable folder.
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
 @section How do I UNinstall R?
 
-Normally you can do this from the R group on the Start Menu or from the
-@samp{Add/Remove Programs} in the Control Panel.  If it does not appear
-there or if you want to remove an old version, run @file{unins000.exe}
-in the top-level installation directory.  (There should be a separate
-uninstall item in the R group for each installed version of R.)
+Normally you can do this from the R group on the Start Menu or from
+the @samp{Add/Remove Programs} in the Control Panel.  If it does not
+appear there or if you want to remove an old version, run
+@file{unins000.exe} in the top-level installation directory.  (There
+should be a separate uninstall item in the R group for each installed
+version of R. On Windows Vista, you may well be asked to confirm that
+you wish to run a program from an `unidentified publisher'.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -648,47 +650,55 @@ may want to experiment with disabling it.
 It does.  Vista was launched in January 2007 and experience with it is
 still scanty.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
-issues, but changes in user experiences.)
+issues, but changes in user experiences.)  As there many settings that
+system administrators can change, it is clear that only a tiny fraction
+of possibilities will have been explored.
 
-The reported issues with Vista are all about how accounts are set up.
-Earlier versions of Windows had user and Administator accounts, and user
-accounts could be give administrative privileges and so write permission
-over system areas such as @file{c:\Program Files}.  R would be installed
-either by a user in his own file space or by an account with
-administrator privileges into a system area.
+Earlier versions of Windows had user and Administrator accounts, and
+user accounts could be give administrative privileges (by being added to
+the local Administrators group) and so write permission over system
+areas such as @file{c:\Program Files}.  R would be installed either by a
+user in his own file space or by an account with administrator
+privileges into a system area.  Sysadmins could set policies for user
+accounts, and you might for example have needed to be a `Power User' to
+install software at all.
 
 Vista normally disables the Administrator account and expects software
-installation to done by an account which is in the (local) administator
-group.  Unlike (say) Windows XP, such accounts do not have full
-administator privileges, and this is where the issues arise.
-For background information see
-@url{http://technet.microsoft.com/en-us/windowsvista/aa906021.aspx}.
+installation to done by an account which is in the local Administrator
+group with `admin approval mode' turned on.  (The Administrator
+account by default has it turned on.)  Unlike (say) Windows XP, such
+accounts do not run programs with full administrator privileges, and
+this is where the issues arise.  (For background information consult
+@url{http://technet.microsoft.com/en-us/windowsvista/aa906021.aspx}
+and
+@url{http://windowsvistablog.com/blogs/windowsvista/archive/2007/01/23/security-features-vs-convenience.aspx}.)
+Vista has the concept of `over-the-shoulder' credentials: if you are
+running without full administrator privileges and do something which
+needs them you may be prompted with one or more security-check dialog
+boxes, and may be required to provide administrator credentials or
+confirm that you really want to take that action.
 
 Vista will report that the R installer has an `unknown publisher' and
 ask if it should be run.  System administrators can disable installing
-applications from non-trusted sources.
+applications from non-trusted sources, in which case you will have to
+persuade them that R is trustworthy.
 
 If you install R as a standard user into your own file space and use it
 under the same account, there are no known permission issues.
 
-If you install R as Administrator and install/update packages (in the
-system area or elsewhere), no issues arise.
+If you use the default Administrator account (without `admin approval
+mode' being turned on) and install/update packages (in the system area
+or elsewhere), no issues arise.
 
-If you install R from into a system area from a non-Administrator
-account, you will be normally prompted with a security-check dialog box,
-and may be required to provide administrator credentials.  (This is
-known as `over-the-shoulder' credentials, and can be disabled.)
-
-Vista runs programs with standard user permission even from an account
-in the administrator group.  The system area is owned by the local
-Administrator, so only that account has full permissions over the
-installed R files: if you use a non-Administrator account you will run
-into problems if you try to install (including updating) packages into
-the main R library.  (It would be nice if at that point R used
-over-the-shoulder credentials, but that has not yet been implemented in
-the standard C interface.  Vista disallows creating @code{.chm} and
-@code{.dll} files in the systen area without credentials.)  There are
-several ways around this.
+If you use an account in the local Administrators group in `admin
+approval mode' (which is the intended norm under Vista), installation
+will make use of `over-the-shoulder' credentials.  You will run into
+problems if you try installing (including updating) packages in the main
+R library.  (It would be nice if at that point R used over-the-shoulder
+credentials, but that has not yet been implemented in the standard C
+interface.  Vista disallows creating @code{.chm} and @code{.dll} files
+in the system area without credentials.)  There are several ways around
+this.
 
 @itemize
 @item
@@ -698,9 +708,8 @@ selecting 'Run as Administrator'.)
 
 @item
 Transfer ownership of the R installation to the user which installed R.
-To do so, Use the security tab on the @samp{Properties} of the top-level
-R folder.  (You can do this from any account in the Administrator
-group.)
+To do so, use the security tab on the @samp{Properties} of the top-level
+R folder.  It may suffice to enable `Full Control' over this directory.
 
 @item
 Install packages into a different library tree owned by the account used to
@@ -712,12 +721,12 @@ have permission to write to the @RWVER@\library directory}.
 
 For a site installation, you can create a site-wide library directory
 anywhere convenient, and add it to the default package search path for
-all users via @env{R_LIBS} in @file{etc\Renviron.site}.  @xref{What are
-HOME and working directories?}.  There is a standard location for a site
-library, the @file{site-library} directory in the top-level R folder
-(which you would need to create with full control for the R installation
-account).  This will be used for installation in preference to the main
-library folder if it exists.
+all users via @env{R_LIBS_SITE} in @file{etc\Renviron.site}.  @xref{What
+are HOME and working directories?}.  There is a standard location for a
+site library, the @file{site-library} directory in the top-level R
+folder (which you would need to create with full control for the R
+installation account).  This will be used for installation in preference
+to the main library folder if it exists.
 
 This approach will not allow you to update the recommended packages.
 @end itemize
@@ -729,6 +738,13 @@ permissions no longer work reliably.  One consequence of this is that R
 may think you have write permission on a library directory when you do
 not: also you can have write permission but not be allowed to create
 certain types of files.
+
+On suitably recent hardware Vista can prevent the execution of code
+from data areas via `Data Execution Prevention' (see from a tab in
+System Properties -> Advanced -> Performance), and sysadmins can turn
+this on for all programs.  R should (and in limited testing appears
+to) run with DEP enabled.
+
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -986,7 +1002,11 @@ if @code{update.packages} offers to update packages for you in a library
 where you do not have write permission.
 
 There can be additional security issues under Windows Vista:
-@xref{Does R run under Windows Vista?}.
+@xref{Does R run under Windows Vista?}.  In particular, the detection
+that a standard user had suitable permissions appears not to work
+correctly under Vista, so we recommend that you do create a personal
+directory yourself.
+
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
 @section The packages I installed do not appear in the HTML help system.
@@ -1559,7 +1579,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2007-04-12
+@set LASTEDIT 2007-04-13
 @ifhtml
 @html
 <hr WIDTH="100%">
