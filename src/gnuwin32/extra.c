@@ -186,31 +186,32 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	if(GetVersionEx((OSVERSIONINFO *)&osvi)) {
 	    char tmp[]="", *desc= tmp, *type = tmp;
+	    if(osvi.dwMajorVersion == 6)
+		desc = "Vista";
 	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
 		desc = "2000";
 	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)
 		desc = "XP";
+	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 2)
+		desc = "Sever 2003";
             if ( osvi.wProductType == VER_NT_WORKSTATION ) {
-               if( osvi.wSuiteMask & VER_SUITE_PERSONAL )
-                  type = "Home Edition";
-               else
-                  type = "Professional";
+               if( osvi.wSuiteMask & VER_SUITE_PERSONAL ) type = " Home";
             } else if ( osvi.wProductType == VER_NT_SERVER )
             {
                if ( osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1 )
-                  desc = ".NET";
+		   desc = " .NET";
                if( osvi.wSuiteMask & VER_SUITE_DATACENTER )
-                  type = "DataCenter Server";
+		   type = " DataCenter Server";
                else if( osvi.wSuiteMask & VER_SUITE_ENTERPRISE )
-                  type = "Advanced Server";
+		   type = " Advanced Server";
                else if ( osvi.wSuiteMask == VER_SUITE_BLADE )
-                  type = "Web Server";
+		   type = " Web Server";
                else
-		   type = "Server";
+		   type = " Server";
             }
 
 	    sprintf(ver,
-		    "Windows %s %s (build %d) Service Pack %d.%d",
+		    "Windows %s%s (build %d) Service Pack %d.%d",
 		    desc, type,
 		    LOWORD(osvi.dwBuildNumber),
 		    (int)osvi.wServicePackMajor,
