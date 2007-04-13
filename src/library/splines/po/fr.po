@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: splines 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-02-06 11:40+0000\n"
-"PO-Revision-Date: 2005-12-06 23:41+0100\n"
+"PO-Revision-Date: 2007-04-13 12:26+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,3 +19,4 @@ msgstr ""
 #: splines.c:154
 msgid "'ord' must be a positive integer"
 msgstr "'ord' doit être un entier positif"
+

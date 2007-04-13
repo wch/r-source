@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2007-04-11 09:51+0100\n"
-"PO-Revision-Date: 2006-12-05 22:11+0100\n"
+"PO-Revision-Date: 2007-04-13 11:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -312,9 +312,8 @@ msgid "'title' must be a character string"
 msgstr "'title' doit être une chaîne de caractères"
 
 #: src/gnuwin32/extra.c:1282
-#, fuzzy
 msgid "'text' must be a character string"
-msgstr "'title' doit être une chaîne de caractères"
+msgstr "'text' doit être une chaîne de caractères"
 
 #: src/gnuwin32/extra.c:1312
 msgid "'which' must be length 1"
@@ -470,7 +469,7 @@ msgstr "impossible d'ouvrir le fichier '%s'"
 #: src/gnuwin32/system.c:951 src/unix/system.c:328
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
-msgstr ""
+msgstr "AVIS : '-e %s' omis comme entrée trop longue\n"
 
 #: src/gnuwin32/system.c:955 src/unix/system.c:339
 #, c-format
@@ -483,9 +482,8 @@ msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENT '%s' __ignoré__\n"
 
 #: src/gnuwin32/system.c:987 src/unix/system.c:349
-#, fuzzy
 msgid "cannot use -e with -f or --file"
-msgstr "impossible de modifier la longueur d'un objet qui n'est pas un vecteur"
+msgstr "utilisation de -e avec -f ou --file interdite "
 
 #: src/gnuwin32/system.c:1008 src/unix/system.c:397
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
@@ -1007,7 +1005,7 @@ msgstr "tentative de changer l'attribut 'comment' à une valeur incorrecte"
 
 #: src/main/attrib.c:470
 msgid "adding class \"factor\" to an invalid object"
-msgstr ""
+msgstr "ajout d'une classe \"factor\" à un objet incorrect"
 
 #: src/main/attrib.c:478
 msgid "attempt to set invalid 'class' attribute"
@@ -1086,7 +1084,6 @@ msgid "exactly one attribute 'name' must be given"
 msgstr "un et un seul attribut 'name' doit être fourni"
 
 #: src/main/attrib.c:1146
-#, fuzzy
 msgid "'name' must be non-null character string"
 msgstr "'name' doit être une chaîne de caractères non nulle"
 
@@ -1220,9 +1217,8 @@ msgid "'enclos' must be an environment"
 msgstr "'enclos' doit être un environnement"
 
 #: src/main/builtin.c:299
-#, fuzzy
 msgid "'size' must be a positive integer"
-msgstr "l'argument 'size' doit être un entier strictement positif"
+msgstr " 'size' doit être un entier positif"
 
 #: src/main/builtin.c:313 src/main/builtin.c:330
 msgid "argument is not an environment"
@@ -1497,18 +1493,17 @@ msgid "strtrim() requires a character vector"
 msgstr "strtrim() exige un vecteur de caractères comme argument"
 
 #: src/main/character.c:2527
-#, fuzzy
 msgid "'dirmark = TRUE' is not supported on this platform"
-msgstr "'recursive = TRUE' n'est pas supporté sur cette architecture"
+msgstr "'dirmark = TRUE' n'est pas supporté sur cette architecture"
 
 #: src/main/character.c:2539
-#, fuzzy, c-format
+#, c-format
 msgid "read error on '%s'"
-msgstr "erreur de lecture"
+msgstr "erreur de lecture sur '%s'"
 
 #: src/main/character.c:2544
 msgid "internal out-of-memory condition"
-msgstr ""
+msgstr "condition interne, plus de mémoire disponible"
 
 #: src/main/coerce.c:88 src/main/errors.c:1010
 msgid "NAs introduced by coercion"
@@ -2324,18 +2319,16 @@ msgstr "fonction cumxxx inconnue"
 
 #: src/main/datetime.c:480 src/main/datetime.c:486 src/main/datetime.c:500
 #: src/main/datetime.c:505
-#, fuzzy
 msgid "problem with setting timezone"
-msgstr "problème lors de l'écriture vers la connexion"
+msgstr "problème lors de la détermination du fuseau horaire"
 
 #: src/main/datetime.c:490
 msgid "cannot set timezones on this system"
 msgstr "impossible de définir le fuseau horaire sur ce système"
 
 #: src/main/datetime.c:512 src/main/datetime.c:514
-#, fuzzy
 msgid "problem with unsetting timezone"
-msgstr "problème avec l'éditeur en cours d'exécution %s"
+msgstr "problème lors de la désaffectation d'un fuseau horaire"
 
 #: src/main/datetime.c:641 src/main/datetime.c:643 src/main/datetime.c:984
 #: src/main/datetime.c:986
@@ -2347,30 +2340,32 @@ msgid "could not allocate memory for 'read.dcf'"
 msgstr "impossible d'allouer de la mémoire pour 'read.dcf'"
 
 #: src/main/debug.c:40 src/main/debug.c:63
-#, fuzzy
 msgid "argument must be a function"
-msgstr "le second argument doit être une fonction"
+msgstr "l'argument doit être une fonction"
 
 #: src/main/debug.c:117 src/main/debug.c:150 src/main/debug.c:205
-#, fuzzy
 msgid "argument must not be a function"
-msgstr "le second argument doit être une fonction"
+msgstr "l'argument ne peut pas être une fonction"
 
 #: src/main/debug.c:120
 msgid "cannot trace NULL"
-msgstr ""
+msgstr "impossible de tracer NULL"
 
 #: src/main/debug.c:124
 msgid "'tracemem' is not useful for promise and environment objects"
 msgstr ""
+"'tracemem' est inutilisable pour des objets de type 'promise' ou "
+"'environement'"
 
 #: src/main/debug.c:127
 msgid "'tracemem' is not useful for weak reference or external pointer objects"
 msgstr ""
+"'tracemem' est inutilisable pour des objets de type référence lâche ou "
+"pointeur externe"
 
 #: src/main/debug.c:133 src/main/debug.c:155
 msgid "R was not compiled with support for memory profiling"
-msgstr ""
+msgstr "R n'a pas été compilé pour supporter le profilage de mémoire"
 
 #: src/main/deparse.c:159
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
@@ -2411,9 +2406,8 @@ msgid "bad environment"
 msgstr "mauvais environnement"
 
 #: src/main/deparse.c:352
-#, fuzzy
 msgid "'opts' should be small non-negative integer"
-msgstr "'gap' doit être un entier positif ou nul"
+msgstr "'opts' doit être un petit entier positif ou nul"
 
 #: src/main/deparse.c:362 src/main/eval.c:2551
 #, c-format
@@ -3171,9 +3165,8 @@ msgid "not in a try context"
 msgstr "vous n'êtes pas dans un contexte 'try'"
 
 #: src/main/errors.c:1576
-#, fuzzy
 msgid "error message must be a character string"
-msgstr "'msg1' doit être une chaîne de caractères"
+msgstr "le message d'erreur doit être une chaîne de caractères"
 
 #: src/main/eval.c:236
 #, c-format
@@ -3562,16 +3555,20 @@ msgstr "débordement vers le haut du tampon d'entrée"
 #, c-format
 msgid "integer literal %sL contains decimal; using numeric value"
 msgstr ""
+"le litéral entier %sL contient des décimales ; utilisation de la valeur "
+"numérique"
 
 #: src/main/gram.y:1843
 #, c-format
 msgid "non-integer value %s qualified with L; using numeric value"
 msgstr ""
+"la valeur non entière %s est qualifiée avec L ; utilisation de la valeur "
+"numérique"
 
 #: src/main/gram.y:1854
 #, c-format
 msgid "integer literal %sL contains unnecessary decimal point"
-msgstr ""
+msgstr "le litéral entier %sL contient un séparateur décimal inutile"
 
 #: src/main/gram.y:1925
 msgid "\\uxxxx sequences not supported"
@@ -3599,21 +3596,21 @@ msgid "invalid \\U{xxxxxxxx} sequence"
 msgstr "séquence \\U{xxxxxxxx} incorrecte"
 
 #: src/main/gram.y:2031
-#, fuzzy, c-format
+#, c-format
 msgid "'\\%%%%' is an unrecognized escape in a character string"
-msgstr "le premier argument doit être une chaîne de caractères"
+msgstr "'\\%%%%' est un code escape non reconnu dans une chaîne de caractères"
 
 #: src/main/gram.y:2037
-#, fuzzy, c-format
+#, c-format
 msgid "'\\%c' is an unrecognized escape in a character string"
-msgstr "le premier argument doit être une chaîne de caractères"
+msgstr "'\\%c' est un code escape non reconnu dans une chaîne de caractères"
 
 #: src/main/gram.y:2069
-#, fuzzy, c-format
+#, c-format
 msgid "unrecognized escape removed from \"%s\""
 msgid_plural "unrecognized escapes removed from \"%s\""
-msgstr[0] "valeur de 'save' non reconnue"
-msgstr[1] "valeur de 'save' non reconnue"
+msgstr[0] "code escape non reconnu éliminé de \"%s\""
+msgstr[1] "codes escape non reconnus éliminés de \"%s\""
 
 #: src/main/gram.y:2184
 msgid "functions nested too deeply in source code"
@@ -3947,19 +3944,19 @@ msgid "cons memory exhausted (limit reached?)"
 msgstr "mémoires 'cons' épuisées (limite atteinte ?)"
 
 #: src/main/memory.c:1635 src/main/memory.c:1650
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory block of size %0.1f Gb"
-msgstr "impossible d'allouer un bloc de mémoire de taille %.0f"
+msgstr "impossible d'allouer un bloc de mémoire de taille %0.1f Go"
 
 #: src/main/memory.c:1638 src/main/memory.c:1653
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory block of size %0.1f Mb"
-msgstr "impossible d'allouer un bloc de mémoire de taille %.0f"
+msgstr "impossible d'allouer un bloc de mémoire de taille %0.1f Mo"
 
 #: src/main/memory.c:1641 src/main/memory.c:1656
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory block of size %0.1f Kb"
-msgstr "impossible d'allouer un bloc de mémoire de taille %.0f"
+msgstr "impossible d'allouer un bloc de mémoire de taille %0.1f Ko"
 
 #: src/main/memory.c:1644 src/main/memory.c:1659
 #, c-format
@@ -3982,19 +3979,19 @@ msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr "type / longueur incorrecte (%d / %d) dans l'allocation de vecteur"
 
 #: src/main/memory.c:2011
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate vector of size %0.1f Gb"
-msgstr "impossible d'allouer un vecteur de taille %lu Ko"
+msgstr "impossible d'allouer un vecteur de taille %0.1f Go"
 
 #: src/main/memory.c:2015
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate vector of size %0.1f Mb"
-msgstr "impossible d'allouer un vecteur de taille %lu Ko"
+msgstr "impossible d'allouer un vecteur de taille %0.1f Mo"
 
 #: src/main/memory.c:2019
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate vector of size %0.f Kb"
-msgstr "impossible d'allouer un vecteur de taille %lu Ko"
+msgstr "impossible d'allouer un vecteur de taille %0.f Ko"
 
 #: src/main/memory.c:2130
 msgid "gc.time() is not implemented on this system"
@@ -4840,9 +4837,10 @@ msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "changer 'LC_NUMERIC' peut résulter en un fonctionnement étrange de R"
 
 #: src/main/platform.c:1158
-#, fuzzy, c-format
+#, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
-msgstr "la requête de reporting de l'OS ne peut être honorée"
+msgstr ""
+"la requête OS pour spécifier la localisation à \"%s\" n'a pas pu être honorée"
 
 #: src/main/platform.c:1310
 msgid "invalid value of 'what' argument"
@@ -5967,6 +5965,8 @@ msgstr "lecture de fonctions génériques impossible avec cette version de R"
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
+"ReadItem : type inconnu %i, peut-être écrit avec une version ultérieure de "
+"R ?"
 
 #: src/main/serialize.c:1502
 #, c-format
@@ -6101,48 +6101,48 @@ msgid "too large a range of values in 'x'"
 msgstr "intervalle de valeurs trop grand en 'x'"
 
 #: src/main/source.c:107
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s on line %d"
-msgstr "erreur de syntaxe à la ligne %d"
+msgstr "%s%s à la ligne %d"
 
 #: src/main/source.c:111
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s at\n"
 "%d: %s"
 msgstr ""
-"erreur de syntaxe à\n"
+"%s%s à\n"
 "%d: %s"
 
 #: src/main/source.c:116
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s at\n"
 "%d: %s\n"
 "%d: %s"
 msgstr ""
-"erreur de syntaxe à la ligne\n"
+"%s%s à\n"
 "%d: %s\n"
 "%d: %s"
 
 #: src/main/source.c:125
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: src/main/source.c:128
 #, c-format
 msgid "%s in \"%s\""
-msgstr ""
+msgstr "%s dans \"%s\""
 
 #: src/main/source.c:132
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s in:\n"
 "\"%s\n"
 "%s\""
 msgstr ""
-"erreur de syntaxe dans :\n"
+"%s dans :\n"
 "\"%s\n"
 "%s\""
 
@@ -6254,9 +6254,8 @@ msgid "internal error ('op = %d' in do_summary).\t Call a Guru"
 msgstr "erreur interne ('op = %d' in do_summary).\t Appelez un expert"
 
 #: src/main/summary.c:658
-#, fuzzy
 msgid "no non-missing arguments, returning NA"
-msgstr "aucun argument trouvé pour min ; Inf est renvoyé"
+msgstr "aucun argument spécifié ; NA est renvoyé"
 
 #: src/main/summary.c:661
 msgid "no non-missing arguments to min; returning Inf"
@@ -6271,18 +6270,16 @@ msgid "not all arguments have the same length"
 msgstr "les arguments n'ont pas tous la même taille"
 
 #: src/main/summary.c:945
-#, fuzzy
 msgid "no arguments"
-msgstr "trop peu d'arguments"
+msgstr "pas d'arguments"
 
 #: src/main/summary.c:956 src/main/summary.c:973
-#, fuzzy
 msgid "invalid input type"
-msgstr "type de ligne incorrect"
+msgstr "type d'entrée incorrect"
 
 #: src/main/summary.c:978
 msgid "cannot mix 0-length vectors with others"
-msgstr ""
+msgstr "impossible de mélanger des vecteurs de longueur nulle avec des autres"
 
 #: src/main/subassign.c:95
 msgid "attempt to enlarge non-vector"
@@ -6475,9 +6472,8 @@ msgid "unsupported conversion"
 msgstr "conversion automatique indisponible"
 
 #: src/main/sysutils.c:133
-#, fuzzy
 msgid "file name conversion problem"
-msgstr "nom de fichier trop long"
+msgstr "problème de conversion de nom de fichier"
 
 #: src/main/sysutils.c:191
 msgid "invalid filename pattern"
@@ -6497,19 +6493,16 @@ msgid "wrong type for argument"
 msgstr "argument de type incorrect"
 
 #: src/main/sysutils.c:337
-#, fuzzy
 msgid "wrong length for argument"
-msgstr "mauvaise longueur pour l'argument '%s'"
+msgstr "mauvaise longueur pour l'argument"
 
 #: src/main/sysutils.c:354
-#, fuzzy
 msgid "'Sys.putenv' is not available on this system"
-msgstr "'putenv' indisponible sur ce système"
+msgstr "'Sys.putenv' indisponible sur ce système"
 
 #: src/main/sysutils.c:388
-#, fuzzy
 msgid "'Sys.unsetenv' is not available on this system"
-msgstr "'putenv' indisponible sur ce système"
+msgstr "'Sys.unsetenv' indisponible sur ce système"
 
 #: src/main/sysutils.c:421
 msgid "failed to find symbols in iconv.dll"
@@ -6534,7 +6527,7 @@ msgstr "impossible de créer le répertoire R_TempDir"
 
 #: src/main/sysutils.c:766 src/main/sysutils.c:773 src/main/sysutils.c:776
 msgid "unable to set R_SESSION_TMPDIR"
-msgstr ""
+msgstr "spécification de R_SESSION_TMPDIR impossible"
 
 #: src/main/sysutils.c:785
 msgid "cannot allocate R_TempDir"
@@ -6660,9 +6653,8 @@ msgid "only the first character of 'quote' will be used"
 msgstr "seul le premier caractère de 'quote' sera utilisé"
 
 #: src/main/util.c:845
-#, fuzzy
 msgid "'value must be of positive length"
-msgstr "l'argument doit avoir une longueur strictement positive"
+msgstr "'value' doit avoir une longueur strictement positive"
 
 #: src/main/util.c:904
 msgid "invalid multibyte string"
@@ -7368,14 +7360,14 @@ msgid "unable to open file to read"
 msgstr "impossible d'ouvrir le fichier en lecture"
 
 #: src/unix/edit.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s occurred on line %d\n"
 " use a command like\n"
 " x <- edit()\n"
 " to recover"
 msgstr ""
-"une erreur s'est produite à la ligne %d\n"
+"%s s'est produit à la ligne %d\n"
 " utilisez une commande du genre\n"
 " x <- edit()\n"
 " pour corriger"

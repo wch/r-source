@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:42\n"
-"PO-Revision-Date: 2007-04-10 07:42\n"
+"POT-Creation-Date: 2007-04-13 12:51\n"
+"PO-Revision-Date: 2007-04-13 12:51\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -917,12 +917,6 @@ msgstr "zipfile ‘%s’ not found"
 
 msgid "updating HTML package descriptions"
 msgstr "updating HTML package descriptions"
-
-msgid "cannot update HTML package index"
-msgstr "cannot update HTML package index"
-
-msgid "cannot update HTML search index"
-msgstr "cannot update HTML search index"
 
 msgid "cannot update '%s'"
 msgstr "cannot update ‘%s’"

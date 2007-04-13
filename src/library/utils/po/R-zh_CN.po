@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:42\n"
+"POT-Creation-Date: 2007-04-13 12:51\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -888,12 +888,6 @@ msgstr "找不到'%s'这一zip文件"
 msgid "updating HTML package descriptions"
 msgstr "更新HTML程序包的描述内容"
 
-msgid "cannot update HTML package index"
-msgstr "无法更新HTML程序包索引"
-
-msgid "cannot update HTML search index"
-msgstr "无法更新HTML搜索索引"
-
 msgid "cannot update '%s'"
 msgstr "无法更新'%s'"
 
@@ -933,6 +927,12 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 msgstr[1] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "cannot update HTML package index"
+#~ msgstr "无法更新HTML程序包索引"
+
+#~ msgid "cannot update HTML search index"
+#~ msgstr "无法更新HTML搜索索引"
 
 #~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 #~ msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""

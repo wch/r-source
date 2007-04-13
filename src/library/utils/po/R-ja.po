@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:42\n"
+"POT-Creation-Date: 2007-04-13 12:51\n"
 "PO-Revision-Date: 2007-04-04 14:23+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -921,12 +921,6 @@ msgstr " zip ファイル '%s' が見付かりません"
 msgid "updating HTML package descriptions"
 msgstr " HTML パッケージ記述を更新"
 
-msgid "cannot update HTML package index"
-msgstr " HTML パッケージ索引を更新出来ません"
-
-msgid "cannot update HTML search index"
-msgstr " HTML 検索索引を更新出来ません"
-
 msgid "cannot update '%s'"
 msgstr " '%s' を更新出来ません"
 
@@ -962,6 +956,12 @@ msgstr[0] " 依存対象(dependency)　％s もインストールします"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "パッケージ '%s' は使用中ですから、インストールされません"
+
+#~ msgid "cannot update HTML package index"
+#~ msgstr " HTML パッケージ索引を更新出来ません"
+
+#~ msgid "cannot update HTML search index"
+#~ msgstr " HTML 検索索引を更新出来ません"
 
 #~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 #~ msgstr ""

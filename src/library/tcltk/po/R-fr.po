@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2007-01-10 22:38\n"
-"PO-Revision-Date: 2007-01-03 23:21+0100\n"
+"PO-Revision-Date: 2007-04-13 12:34+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -102,3 +102,4 @@ msgstr "les fichiers Tcl/Tk nécessaires n'ont pas été installés"
 
 #~ msgid "R-tcltk"
 #~ msgstr "R-tcltk"
+
