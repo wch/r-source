@@ -47,17 +47,17 @@ msgstr "distance()：距离值不对"
 #: family.c:20
 #, c-format
 msgid "Value %d out of range (0, 1)"
-msgstr "%d个值出界在(0, 1) 外"
+msgstr "%d个值出界在(0, 1)外"
 
 #: family.c:41 family.c:55 family.c:73
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr "变元%s必需为非空数字矢量"
+msgstr "变元%s必需为非空数字向量"
 
 #: family.c:106 family.c:109
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
-msgstr "变元%s必需为长度为一或长度为%d的数字矢量"
+msgstr "变元%s必需为长度为一或长度为%d的数字向量"
 
 #: ksmooth.c:66
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -129,7 +129,7 @@ msgstr "'rho'必需为环境"
 
 #: nls.c:303
 msgid "'dir' is not a numeric vector of the correct length"
-msgstr "'dir'这个数字矢量的长度不对"
+msgstr "'dir'这个数字向量的长度不对"
 
 #: nls.c:320 nls.c:348
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -171,7 +171,7 @@ msgstr "Rf_divset: alg = %d其值应该是1, 2, 3, 或4"
 #: port.c:324
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
-msgstr "梯度函数必需回覆长度为%d的数字矢量"
+msgstr "梯度函数必需回覆长度为%d的数字向量"
 
 #: port.c:334
 #, c-format
@@ -184,7 +184,7 @@ msgstr "'rho'必需是环境"
 
 #: port.c:386 port.c:537
 msgid "'d' must be a nonempty numeric vector"
-msgstr "'d'必需是非空数字矢量"
+msgstr "'d'必需是非空数字向量"
 
 #: port.c:388
 msgid "When Hessian defined must also have gradient defined"
@@ -193,11 +193,11 @@ msgstr "如果Hessian有定义的话梯度也必需有定义"
 #: port.c:391
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
-msgstr "'rho'环境必包含长度为%d的数字矢量'.par'"
+msgstr "'rho'环境必包含长度为%d的数字向量'.par'"
 
 #: port.c:405
 msgid "'lower' and 'upper' must be numeric vectors"
-msgstr "'lower'和'upper'必需为数字矢量"
+msgstr "'lower'和'upper'必需为数字向量"
 
 #: port.c:451
 msgid "'getElement' applies only to named lists"
@@ -228,7 +228,7 @@ msgstr "m必需为串列"
 
 #: port.c:558
 msgid "'lowerb' and 'upperb' must be numeric vectors"
-msgstr "'lowerb'和'upperb'必需为数字矢量"
+msgstr "'lowerb'和'upperb'必需为数字向量"
 
 #: smooth.c:79
 #, c-format
@@ -237,15 +237,15 @@ msgstr "三移动中位数的结尾规则出了错: %d"
 
 #: smooth.c:231
 msgid "allocation error in smooth(*, '3RSR')."
-msgstr "smooth(*, '3RSR') 中分配出错。"
+msgstr "smooth(*, '3RSR')分配出错。"
 
 #: smooth.c:244 smooth.c:254
 msgid "allocation error in smooth(*, '3RSS')."
-msgstr "smooth(*, '3RSS') 中分配出错。"
+msgstr "smooth(*, '3RSS')分配出错。"
 
 #: smooth.c:264
 msgid "allocation error in smooth(*, '3R')."
-msgstr "smooth(*, '3R') 中分配出错。"
+msgstr "smooth(*, '3R')分配出错。"
 
 #: starma.c:366
 #, c-format

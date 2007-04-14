@@ -31,7 +31,8 @@ msgid "profiling has found a better solution, so original fit had not converged"
 msgstr "通过靠模切削找到了一个更好的答案，因此原来的拟合没有收敛"
 
 msgid "levels truncated to positive values only"
-msgstr " 阶层截为正数值"
+msgstr "阶层截为正数值"
 
 msgid "extra arguments discarded"
 msgstr "多余的变元略过不用"
+

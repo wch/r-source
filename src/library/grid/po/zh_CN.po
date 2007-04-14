@@ -91,3 +91,4 @@ msgstr "单位的长度必需大于零"
 #: viewport.c:317
 msgid "Non-finite location and/or size for viewport"
 msgstr "視窗的位置或大小不能是无限的"
+

@@ -29,22 +29,22 @@ msgid "neither code nor data objects found"
 msgstr "找不到编码也找不到数据对象"
 
 msgid "Undocumented code objects:"
-msgstr "没有说明的编码对象:"
+msgstr "未公开的编码对象:"
 
 msgid "Undocumented data sets:"
-msgstr "没有说明的数据集:"
+msgstr "未公开的数据集:"
 
 msgid "Undocumented S4 classes:"
-msgstr "没有说明的S4类别:"
+msgstr "未公开的S4类别:"
 
 msgid "Undocumented S4 methods:"
-msgstr "没有说明的S4方法:"
+msgstr "未公开的S4方法:"
 
 msgid "Prototyped non-primitives:"
 msgstr "非原始函数做样机"
 
 msgid "Undocumented %s:"
-msgstr "没有说明的%s:"
+msgstr "未公开的%s:"
 
 msgid "directory '%s' does not contain R code"
 msgstr "文件目录'%s'不含R编码"
@@ -108,7 +108,7 @@ msgid "Variables in data frame '%s'"
 msgstr "数据框'%s'里的变量"
 
 msgid "Undocumented arguments in documentation object '%s'"
-msgstr "使用手冊对象'%s'有没有说明的变元"
+msgstr "使用手冊对象'%s'有未公开的变元"
 
 msgid "Duplicated \\argument entries in documentation object '%s':"
 msgstr "使用手冊对象'%s'里有重复的\\argument条目:"
@@ -123,7 +123,7 @@ msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr "使用手冊对象'%s'有些\\usage不对:"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
-msgstr "使用手冊对象'%s'里S3方法不应用全名显示出来:"
+msgstr "使用手冊对象'%s'里S3方法用全名显示出来:"
 
 msgid "unable to create"
 msgstr "无法建立"
@@ -150,7 +150,7 @@ msgid "cannot check R code installed as image"
 msgstr "因为影像安装无法检查R编码"
 
 msgid "parse error in examples from file '%s'"
-msgstr "文件'%s'中的例子句法分析时出了错"
+msgstr "文件'%s'中的例子在进行句法分析时出了错"
 
 msgid "File '%s':"
 msgstr "文件'%s':"
@@ -181,7 +181,7 @@ msgid "Package Rd sources were installed without preserving Rd file names."
 msgstr "安装程辑包Rd源编码的时候没有保留Rd文件名字."
 
 msgid "Please reinstall using a current version of R."
-msgstr "请用最新版本的R不重新安装."
+msgstr "请用最新版本的R重新安装."
 
 msgid "Rd files with syntax errors:"
 msgstr "Rd文件里有语法错误:"
@@ -239,13 +239,13 @@ msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd文件不能有重复的别名'%s':"
 
 msgid "Found invalid multi-byte character data."
-msgstr "遇到了错误的多字节字符数据."
+msgstr "遇到了错误多字节字符数据."
 
 msgid "Cannot re-encode because iconv is not available."
 msgstr "无法重新编码，因为找不到iconv这个程序."
 
 msgid "Try running R in a single-byte locale."
-msgstr "请试调用单字节本地化的R."
+msgstr "请调用单字节本地化的R."
 
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
@@ -284,7 +284,7 @@ msgid "Malformed maintainer field."
 msgstr "畸形维修人员域."
 
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
-msgstr "畸形Depends或Suggests或Imports或Enhances这些域."
+msgstr "Depends/Suggests/Imports/Enhances这些域中有些是畸形的."
 
 msgid "Offending entries:"
 msgstr "有问题的条目为:"
@@ -293,7 +293,7 @@ msgid ""
 "Entries must be names of packages optionally followed by '<=' or '>=', white "
 "space, and a valid version number in parentheses."
 msgstr ""
-"每条目都必需是程辑包的名字，名字后面可以跟'<='或'>=', 空格, 或在括号内的正确"
+"每条目都必需是程辑包的名字，名字后面可以跟'<='或'>=', 空格, 或在括号内的适当"
 "版本数目."
 
 msgid "Entries with infeasible comparison operator:"
@@ -308,7 +308,7 @@ msgstr "带不可行的版本数目的条目:"
 msgid ""
 "Version numbers must be sequences of at least two non-negative integers, "
 "separated by single '.' or '-'."
-msgstr "版本数目至少要由两个非负整数组成，中间由单个'.'或'-'符号分开."
+msgstr "版本数目至少要由两个非负整数组成，中间用单一的'.'或'-'符号分开."
 
 msgid "Package name and namespace differ."
 msgstr "程辑包的名字和它的名字空间不一样."
@@ -319,12 +319,12 @@ msgstr "Priority域不对."
 msgid ""
 "Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
 "already be known to R."
-msgstr "带'base'，'recommended'或'defunct-base'优先权的程辑包必需通知R."
+msgstr "R必需知道带'base'，'recommended'或'defunct-base'优先权的程辑包."
 
 msgid ""
 "See the information on DESCRIPTION files in section 'Creating R packages' of "
 "the 'Writing R Extensions' manual."
-msgstr "请参考说明书中'如何写R附加软件'这一段中关于DESCRIPTION文件的信息."
+msgstr "请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
@@ -336,10 +336,10 @@ msgid "found %s"
 msgstr "找到了%s"
 
 msgid "package 'methods' is used but not declared"
-msgstr "用了'methods'这个程辑包却没有声明"
+msgstr "用了'methods'这个程辑包却没有被声明"
 
 msgid "'::' or ':::' imports not declared from:"
-msgstr "'::'或':::'引进没有声明:"
+msgstr "'::'或':::'引进没有被声明:"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
@@ -354,16 +354,16 @@ msgid "missing/empty \\name field in '%s'"
 msgstr "'%s'里缺少或有空白的\\name域"
 
 msgid "Rd files must have a non-empty \\name."
-msgstr "Rd文件里必需要有非-空白的\\name."
+msgstr "Rd文件里必需要有非空白的\\name."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
-msgstr "请参考说明书'如何写R附加软件'中'如何写R使用手册'这一部分."
+msgstr "请参考说明书'如何写R附加软件'中'如何写R使用手册'这一章."
 
 msgid "missing/empty \\title field in '%s'"
 msgstr "'%s'里缺少或有空白的\\title域"
 
 msgid "Rd files must have a non-empty \\title."
-msgstr "Rd文件必需要有非-空白的\\title."
+msgstr "Rd文件必需要有非空白的\\title."
 
 msgid "argument 'outFile' must be a character string or connection"
 msgstr "变元'outfile'必需是字符串或联结"
@@ -375,7 +375,7 @@ msgid "unterminated section '%s'"
 msgstr "'%s'这一段没有结局"
 
 msgid "incomplete section 'section{%s}'"
-msgstr "'section{%s}'这一段没有全"
+msgstr "'section{%s}'这一段不全"
 
 msgid "unterminated section 'section{%s}'"
 msgstr "'section{%s}'这一段没有结局"
@@ -402,7 +402,7 @@ msgid "Rd syntax errors found"
 msgstr "Rd语法错误于"
 
 msgid "Syntax error in documentation object '%s':"
-msgstr "语法错误在使用手冊对象'%s':"
+msgstr "使用手冊对象'%s'里主语法错误:"
 
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "无法使用缺少或有空白名字的Rd对象"
@@ -492,7 +492,7 @@ msgid "object(s) %s are created by more than one data call"
 msgstr "不能用多个数据调用来产生对象%s"
 
 msgid "source list must have names for all elements"
-msgstr "源列所有的单元都必需要有名字"
+msgstr "源列里所有单元都必需要带名字"
 
 msgid "source must be an environment or a list"
 msgstr "源码要么是环境要么是列"
@@ -537,7 +537,7 @@ msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
 
 msgid "no or more than one match"
-msgstr "没有，或成对的多于一双"
+msgstr "没有成对的，或多于一双"
 
 msgid "argument 'x' must be a character vector"
 msgstr "变元'x'必需是字符向量"

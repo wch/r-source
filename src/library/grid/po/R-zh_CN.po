@@ -85,7 +85,7 @@ msgstr ""
 "个"
 
 msgid "gpar element '%s' must not be length 0"
-msgstr "gpar成分'%s'的长度不能为0"
+msgstr "gpar成分'%s'的长度不能为零"
 
 msgid "'gamma' gpar is deprecated"
 msgstr "'gamma'gpar已经不再有用"
@@ -119,7 +119,7 @@ msgstr "视口被覆盖(grab有可能不保持原状态)"
 
 msgid ""
 "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
-msgstr "grob推了视口，但没有将它零弹起来(grab有可能不保持原状态)"
+msgstr "grob推了视口，但没有将它弹起来(grab有可能不保持原状态)"
 
 msgid "Only valid to push viewports"
 msgstr "只能推视口"
@@ -242,13 +242,13 @@ msgid "gPath (%s) not found"
 msgstr "gPath(%s)不存在"
 
 msgid "Grob '%s' not found"
-msgstr "不存在Grob '%s'这个值"
+msgstr "不存在Grob'%s'这个值"
 
 msgid "Invalid element in the display list"
 msgstr "显示单里的成分不对"
 
 msgid "This function is redundant and will disappear in future versions."
-msgstr "这个函数的功能有重复，因此在新的版本里将被删除。"
+msgstr "这个函数多余，因此在新的版本里将被删除。"
 
 msgid "'l' must be a layout"
 msgstr "'l'必需为布局"

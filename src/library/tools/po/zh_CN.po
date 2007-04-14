@@ -23,8 +23,9 @@ msgstr "变元'files'必需是字符"
 #: Rmd5.c:49
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr "在文件'%s'上运行md5失败"
+msgstr "用于'%s'文件的md5运行失败"
 
 #: text.c:66
 msgid "invalid argument type"
 msgstr "变元种类不对"
+

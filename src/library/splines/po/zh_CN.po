@@ -19,3 +19,4 @@ msgstr ""
 #: splines.c:154
 msgid "'ord' must be a positive integer"
 msgstr "'ord'的值必需为正整数"
+

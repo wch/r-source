@@ -29,7 +29,7 @@ msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a'和'b'被' coef'覆盖"
 
 msgid "'x' must be a 2-d contingency table"
-msgstr "'x'必需是2-维列联表"
+msgstr "'x'必需是二维列联表"
 
 msgid "all entries of 'x' must be nonnegative and finite"
 msgstr "'x'包含的所有值都必需为非负的有限数"
