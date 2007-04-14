@@ -17,7 +17,7 @@
 \section{How Methods Work}{
   A generic function is a function that has associated with it a
   collection of other functions (the methods), all of which agree in
-  formal arguments with the generic.  
+  formal arguments with the generic.
 
   Each R package will include  methods metadata objects
   corresponding to each generic function  for which methods have been
@@ -27,7 +27,8 @@
   environment of the generic function along with the methods from
   previously loaded packages.  This merged table of methods is used to
   dispatch or select methods from the generic, using class inheritance
-  and possibly group generic functions to find an applicable method.
+  and possibly group generic functions (see
+  \code{\link{S4groupGeneric}}) to find an applicable method.
   See the \bold{Dispatch} section below.
   The caching computations ensure that only one version of each
   generic function is visible globally; although different attached
@@ -67,7 +68,7 @@
   As of version 2.4.0 of R, the cached methods are stored in an
   environment object.  The names used for assignment are a
   concatenation of the class names for the arguments in the active
-  signature. 
+  signature.
 
 }
 \section{Dispatch and Method Selection}{
@@ -84,7 +85,7 @@ the arguments by using \emph{inheritance}.
 
 Each class definition potentially includes the names of one or more
 classes that the new class contains.  (These are sometimes called the
-\emph{superclasses} of the new class.)  
+\emph{superclasses} of the new class.)
 The S language has an additional, explicit mechanism for defining superclasses, the
 \code{\link{setIs}} mechanism.
 Also, a call to \code{\link{setClassUnion}} makes the union class a
@@ -95,7 +96,7 @@ particular class.
 
 The direct superclasses themselves may
 contain other classes.  Putting all this information together produces
-the full list of superclasses for this class. 
+the full list of superclasses for this class.
 The superclass list is included in the definition of the class that is
 cached during the R session.
 Each element of the list describes the nature of the relationship (see
