@@ -158,11 +158,6 @@ list("!" = function(e1)
 {
     standardGeneric("as.complex")
 }
-# as.double is not yet primitive
-, "as.double" = function(x, ...)
-{
-    standardGeneric("as.double")
-}
 , "as.integer" = function(x, ...)
 {
     standardGeneric("as.integer")
@@ -170,6 +165,10 @@ list("!" = function(e1)
 , "as.logical" = function(x, ...)
 {
     standardGeneric("as.logical")
+}
+, "as.numeric" = function(x, ...)
+{
+    standardGeneric("as.numeric")
 }
 , "as.raw" = function(x)
 {

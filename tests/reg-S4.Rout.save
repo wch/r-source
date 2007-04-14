@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-04-10 r41116)
+R version 2.6.0 Under development (unstable) (2007-04-12 r41139)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -301,38 +301,22 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
 > stopifnot(identical(m, cBind(m)))
 > 
 > 
-> ## regression tests of dispatch: most of these became internal in 2.6.0
+> ## regression tests of dispatch: most of these became primitive in 2.6.0
 > setClass("c1", "numeric")
 [1] "c1"
+> setClass("c2", "numeric")
+[1] "c2"
 > x_c1 <- new("c1")
-> x_f <- function(x) x
-> # the next failed < 2.5.0 as the signature was wrong
+> # the next failed < 2.5.0 as the signature in .BasicFunsList was wrong
 > setMethod("as.character", "c1", function(x, ...) "fn test")
 [1] "as.character"
 > as.character(x_c1)
 [1] "fn test"
-> # not allowed to define a "function" method, and existing one fails.
 > 
 > setMethod("as.integer", "c1", function(x, ...) 42)
 [1] "as.integer"
 > as.integer(x_c1)
 [1] 42
-> 
-> setMethod("as.numeric", "c1", function(x, ...) 42+pi)
-Creating a new generic function for "as.numeric" in ".GlobalEnv"
-[1] "as.numeric"
-> as.numeric(x_c1)
-[1] 45.14159
-> as.double(x_c1) # default method
-numeric(0)
-> as.real(x_c1) # default method
-numeric(0)
-> setMethod("as.numeric", "function", function(x, ...) 43+pi)
-[1] "as.numeric"
-> as.numeric(x_f)
-[1] 46.14159
-> try(as.double(x_f)) # default method, fails
-Error in as.double(x, ...) : cannot coerce to vector
 > 
 > setMethod("as.logical", "c1", function(x, ...) NA)
 [1] "as.logical"
@@ -348,4 +332,38 @@ Error in as.double(x, ...) : cannot coerce to vector
 [1] "as.raw"
 > as.raw(x_c1)
 [1] 0a
+> 
+> # as.numeric sets methods on all the equivalent functions
+> setMethod("as.numeric", "c1", function(x, ...) 42+pi)
+[1] "as.numeric"
+> as.numeric(x_c1)
+[1] 45.14159
+> as.double(x_c1)
+[1] 45.14159
+> as.real(x_c1)
+[1] 45.14159
+> showMethods(as.numeric)
+Function: as.numeric (package base)
+x="c1"
+
+> showMethods(as.double)
+Function: as.numeric (package base)
+x="c1"
+
+> showMethods(as.real)
+Function: as.numeric (package base)
+x="c1"
+
+> 
+> setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
+[1] "as.numeric"
+> x_c2 <- new("c2", pi)
+> as.numeric(x_c2)
+[1] 6.283185
+> showMethods(as.numeric)
+Function: as.numeric (package base)
+x="c1"
+x="c2"
+
+> 
 > 

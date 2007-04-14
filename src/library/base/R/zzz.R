@@ -111,11 +111,11 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 
 
 .S3PrimitiveGenerics <-
-    c("as.character", "as.complex", "as.integer", "as.logical", "as.raw",
-      "c", "dim", "dim<-",
-      "dimnames", "dimnames<-", "is.array", "is.matrix", "is.na",
-      "is.nan", "is.numeric", "length", "length<-", "levels<-",
-      "names", "names<-", "rep", "seq.int")
+    c("as.character", "as.complex", "as.double", "as.integer",
+    "as.logical", "as.numeric", "as.raw", "as.real", "c", "dim",
+    "dim<-", "dimnames", "dimnames<-", "is.array", "is.matrix",
+    "is.na", "is.nan", "is.numeric", "length", "length<-", "levels<-",
+    "names", "names<-", "rep", "seq.int")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
@@ -157,6 +157,8 @@ assign("as.character", function(x, ...) UseMethod("as.character"),
        envir = .GenericArgsEnv)
 assign("as.complex", function(x, ...) UseMethod("as.complex"),
        envir = .GenericArgsEnv)
+assign("as.double", function(x, ...) UseMethod("as.double"),
+       envir = .GenericArgsEnv)
 assign("as.integer", function(x, ...) UseMethod("as.integer"),
        envir = .GenericArgsEnv)
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
@@ -177,3 +179,9 @@ assign("names<-", function(x, value) UseMethod("names<-"),
 assign("rep", function(x, ...) UseMethod("rep"), envir = .GenericArgsEnv)
 assign("seq.int", function(from, to, by, length.out, along.with, ...)
        UseMethod("seq.int"), envir = .GenericArgsEnv)
+
+## make these the same object as as.double
+assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
+       envir = .GenericArgsEnv)
+assign("as.real", get("as.double", envir = .GenericArgsEnv),
+       envir = .GenericArgsEnv)

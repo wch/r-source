@@ -1273,6 +1273,13 @@ namespace, and this mechanism means that S4 methods can be set for
 (some) primitives and will always be used, in contrast to setting
 methods on non-primitives.
 
+The primitive @code{as.double} is special, as @code{as.numeric} and
+@code{as.real} are copies of it.  The @pkg{methods} package code partly
+refers to generics by name and partly by function, and has been
+modified to map @code{as.double} and
+@code{as.real} to @code{as.numeric} (since that is the name used by
+packages exporting methods for it).
+
 
 @node Internal use of global and base environments, Modules, S4 objects, R Internal Structures
 @section Internal use of global and base environments
@@ -1570,7 +1577,8 @@ efficiency reasons:
 @example
 @group
 :          ~          c           list
-call       as.call    as.character
+call       as.call    as.character as.complex  as.double
+as.integer as.logical as.raw
 expression substitute as.environment
 UseMethod  invisible  standardGeneric
 .C         .Fortran   .Call       .External
