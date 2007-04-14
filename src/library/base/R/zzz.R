@@ -124,7 +124,7 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     }
     ## now add the group generics
     ## log, round, signif and the gamma fns are not primitive
-    fx <- function(x, ...) {}
+    fx <- function(x) {}
     for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
                'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
                'tanh', 'acosh', 'asinh', 'atanh',
