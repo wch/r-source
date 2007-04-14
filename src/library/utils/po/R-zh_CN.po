@@ -27,6 +27,7 @@ msgstr "程序包'%2$s'里没有'%1$s'这样一本说明书"
 msgid "document not found"
 msgstr "找不到这个说明书"
 
+#, fuzzy
 msgid "A search query has been submitted to"
 msgstr "檢索查詢疑問%s已被提出于"
 
@@ -55,7 +56,7 @@ msgid "more than one syntax specification found, using the first one"
 msgstr "在多套語法規則里选用第一个套"
 
 msgid "object '%s' does not have class \"SweaveSyntax\""
-msgstr "目标对象'%s'不是\"Sweave語法\"这一类别"
+msgstr "对象'%s'不是\"Sweave語法\"这一类别"
 
 msgid "recursive Sweave input '%s' in stack"
 msgstr "堆疊里不能有回歸Sweave输入'%s'"
@@ -167,7 +168,7 @@ msgid "Browsing in the environment with call:"
 msgstr "在調用环境里浏览:"
 
 msgid "'dump' is not an object of class 'dump.frames'"
-msgstr "'dump'必需是类别为'dump.框s'的目标对象"
+msgstr "'dump'必需是类别为'dump.框s'的对象"
 
 msgid "Message:"
 msgstr "訊息:"
@@ -413,7 +414,7 @@ msgid "'code_files' should be a character vector"
 msgstr "'code_files'必需是字符向量"
 
 msgid "'list' should be a character vector naming R objects"
-msgstr "'list'必需是为R目标对象取名的字符向量"
+msgstr "'list'必需是为R对象取名的字符向量"
 
 msgid "'namespace' should be a single logical"
 msgstr "'namespace'必需是单独逻辑值"
@@ -422,7 +423,7 @@ msgid "cannot turn off locale-specific chars via LC_CTYPE"
 msgstr "无法通过LC_CTYPE关闭与地点有关的字符"
 
 msgid "no R objects specified or available"
-msgstr "没有指点定的R目标对象"
+msgstr "没有指点定的R对象"
 
 msgid "Creating directories ..."
 msgstr "建立目录…"
@@ -569,7 +570,7 @@ msgstr ""
 "\t%s里"
 
 msgid "no object named '%s' to show"
-msgstr "找不到名字为'%s'的目标对象"
+msgstr "找不到名字为'%s'的对象"
 
 msgid "cannot determine a usable name"
 msgstr "无法指定一个可以用的名字"
@@ -623,7 +624,7 @@ msgstr "没有种类为'%s'和題目为'%s'的文件(或是在处理帮助文件
 msgid ""
 "the object of class \"%s\" in the function call '%s' could not be used as a "
 "documentation topic"
-msgstr "函数調用'%2$s'里类别为\"%1$s\"的目标对象不能用作帮助文件題目"
+msgstr "函数調用'%2$s'里类别为\"%1$s\"的对象不能用作帮助文件題目"
 
 msgid "no methods for '%s' and no documentation for it as a function"
 msgstr "'%s'没有方法，也没有将之用作函数的帮助文件"
@@ -902,8 +903,8 @@ msgstr "无法拆除原来安装的程序包"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
-msgstr[0] "找不到'%s'这个目标对象"
-msgstr[1] "找不到'%s'这个目标对象"
+msgstr[0] "找不到'%s'这个对象"
+msgstr[1] "找不到'%s'这个对象"
 
 msgid "'lib' element '%s'  is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
@@ -928,12 +929,6 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 msgstr[1] "正在使用'%s'这个程序包，因此不会被安装"
 
-#~ msgid "cannot update HTML package index"
-#~ msgstr "无法更新HTML程序包索引"
-
-#~ msgid "cannot update HTML search index"
-#~ msgstr "无法更新HTML搜索索引"
-
 #~ msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 #~ msgstr "'format'的值必需是\"normal\"或是\"short\"。现用\"normal\""
 
@@ -946,6 +941,12 @@ msgstr[1] "正在使用'%s'这个程序包，因此不会被安装"
 #~ msgstr ""
 #~ "限制设定得不对。\n"
 #~ "用'%s'"
+
+#~ msgid "cannot update HTML package index"
+#~ msgstr "无法更新HTML程序包索引"
+
+#~ msgid "cannot update HTML search index"
+#~ msgstr "无法更新HTML搜索索引"
 
 #~ msgid "Unable to create temporary directory '%s'"
 #~ msgstr "无法建立临时目录'%s'"

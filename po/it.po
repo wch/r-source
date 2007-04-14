@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-11 09:51+0100\n"
+"POT-Creation-Date: 2007-04-14 11:56+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -82,12 +82,12 @@ msgstr "impossibile ottenere la directory di lavoro"
 msgid "invalid 'names' in 'R_unlink'"
 msgstr "'names' non valido in R_unlink"
 
-#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:262
-#: src/gnuwin32/extra.c:293 src/gnuwin32/extra.c:318 src/gnuwin32/extra.c:321
-#: src/gnuwin32/extra.c:366 src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:414
-#: src/gnuwin32/extra.c:438 src/gnuwin32/extra.c:446 src/gnuwin32/extra.c:476
-#: src/gnuwin32/extra.c:492 src/gnuwin32/extra.c:525 src/gnuwin32/extra.c:677
-#: src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:764 src/gnuwin32/extra.c:769
+#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:263
+#: src/gnuwin32/extra.c:294 src/gnuwin32/extra.c:319 src/gnuwin32/extra.c:322
+#: src/gnuwin32/extra.c:367 src/gnuwin32/extra.c:404 src/gnuwin32/extra.c:415
+#: src/gnuwin32/extra.c:439 src/gnuwin32/extra.c:447 src/gnuwin32/extra.c:477
+#: src/gnuwin32/extra.c:493 src/gnuwin32/extra.c:526 src/gnuwin32/extra.c:678
+#: src/gnuwin32/extra.c:762 src/gnuwin32/extra.c:765 src/gnuwin32/extra.c:770
 #: src/main/apply.c:193 src/main/apply.c:195 src/main/apply.c:199
 #: src/main/attrib.c:191 src/main/builtin.c:127 src/main/builtin.c:445
 #: src/main/builtin.c:461 src/main/character.c:126 src/main/character.c:129
@@ -152,81 +152,81 @@ msgstr "'names' non valido in R_unlink"
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
 
-#: src/gnuwin32/extra.c:240 src/gnuwin32/extra.c:274
+#: src/gnuwin32/extra.c:241 src/gnuwin32/extra.c:275
 msgid "R_HOME not set"
 msgstr "R_HOME non impostata"
 
-#: src/gnuwin32/extra.c:245
+#: src/gnuwin32/extra.c:246
 #, fuzzy, c-format
 msgid "'%s' not found"
 msgstr " non trovato"
 
-#: src/gnuwin32/extra.c:247
+#: src/gnuwin32/extra.c:248
 #, fuzzy, c-format
 msgid "file association for '%s' not available or invalid"
 msgstr "orario di modifica del file non disponibile su uqesta sistema"
 
-#: src/gnuwin32/extra.c:250
+#: src/gnuwin32/extra.c:251
 #, c-format
 msgid "access to '%s' denied"
 msgstr ""
 
-#: src/gnuwin32/extra.c:251
+#: src/gnuwin32/extra.c:252
 #, c-format
 msgid "problem in displaying '%s'"
 msgstr ""
 
-#: src/gnuwin32/extra.c:305
+#: src/gnuwin32/extra.c:306
 msgid "unknown type"
 msgstr "type sconosciuto"
 
-#: src/gnuwin32/extra.c:338 src/gnuwin32/extra.c:362 src/gnuwin32/extra.c:400
-#: src/gnuwin32/extra.c:435
+#: src/gnuwin32/extra.c:339 src/gnuwin32/extra.c:363 src/gnuwin32/extra.c:401
+#: src/gnuwin32/extra.c:436
 msgid "Menu functions can only be used in the GUI"
 msgstr "Le funzioni Menu possono essere utilizzate solo nella GUI"
 
-#: src/gnuwin32/extra.c:370
+#: src/gnuwin32/extra.c:371
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "impossibile ottenere voci menu per %s (%s)"
 
-#: src/gnuwin32/extra.c:408
+#: src/gnuwin32/extra.c:409
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "impossibile aggiungere menu (%s)"
 
-#: src/gnuwin32/extra.c:420
+#: src/gnuwin32/extra.c:421
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "impossibile aggiungere voce menu (%s)"
 
-#: src/gnuwin32/extra.c:443
+#: src/gnuwin32/extra.c:444
 msgid "menu does not exist"
 msgstr "il menu non esiste"
 
-#: src/gnuwin32/extra.c:450
+#: src/gnuwin32/extra.c:451
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "impossibile eliminare la voce menu (%s)"
 
-#: src/gnuwin32/extra.c:481
+#: src/gnuwin32/extra.c:482
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory' può essere utilizzata solo in Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:496
+#: src/gnuwin32/extra.c:497
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' può essere utilizzata solo in Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:508 src/unix/sys-std.c:1205
+#: src/gnuwin32/extra.c:509 src/unix/sys-std.c:1205
 #, fuzzy
 msgid "invalid timestamp"
 msgstr "'tag' non valido"
 
-#: src/gnuwin32/extra.c:530
+#: src/gnuwin32/extra.c:531
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "'loadRconsole' può essere utilizzata solo in Rgui"
 
-#: src/gnuwin32/extra.c:598 src/main/connections.c:2524
+#: src/gnuwin32/extra.c:599 src/main/connections.c:2524
 #: src/main/datetime.c:557 src/main/datetime.c:623 src/main/datetime.c:831
 #: src/main/dotcode.c:191 src/main/errors.c:746 src/main/errors.c:774
 #: src/main/errors.c:873 src/main/errors.c:898 src/main/errors.c:903
@@ -254,79 +254,79 @@ msgstr "'loadRconsole' può essere utilizzata solo in Rgui"
 msgid "invalid '%s' value"
 msgstr "valore '%s' non valido"
 
-#: src/gnuwin32/extra.c:653 src/gnuwin32/extra.c:663
+#: src/gnuwin32/extra.c:654 src/gnuwin32/extra.c:664
 msgid "incorrect argument"
 msgstr "argomento non corretto"
 
-#: src/gnuwin32/extra.c:656
+#: src/gnuwin32/extra.c:657
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "esagerato: la tua macchina ha un limite massimo di indirizzi di 4Gb"
 
-#: src/gnuwin32/extra.c:659
+#: src/gnuwin32/extra.c:660
 msgid "cannot decrease memory limit"
 msgstr "impossibile diminuire il limite di memoria"
 
-#: src/gnuwin32/extra.c:791
+#: src/gnuwin32/extra.c:792
 #, fuzzy
 msgid "Select one or more"
 msgstr "Selezione: "
 
-#: src/gnuwin32/extra.c:791
+#: src/gnuwin32/extra.c:792
 #, fuzzy
 msgid "Select one"
 msgstr "Selezione: "
 
-#: src/gnuwin32/extra.c:927
+#: src/gnuwin32/extra.c:928
 #, fuzzy
 msgid "argument must be a character vector or a raw vector"
 msgstr "l'argomento deve essere un vettore character di lunghezza 1"
 
-#: src/gnuwin32/extra.c:949 src/main/connections.c:1460
+#: src/gnuwin32/extra.c:950 src/main/connections.c:1460
 msgid "Unable to open the clipboard"
 msgstr "Non è possibile aprire gli appunti"
 
-#: src/gnuwin32/extra.c:954 src/main/connections.c:1464
+#: src/gnuwin32/extra.c:955 src/main/connections.c:1464
 msgid "Unable to write to the clipboard"
 msgstr "Impossibile scrivere negli appunti"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
+#: src/gnuwin32/extra.c:1052 src/gnuwin32/extra.c:1072
 msgid "'path' must be a character vector"
 msgstr "'path' deve essere un vettore di tipo character"
 
-#: src/gnuwin32/extra.c:1099 src/gnuwin32/extra.c:1177
+#: src/gnuwin32/extra.c:1100 src/gnuwin32/extra.c:1178
 msgid "'default' must be a character string"
 msgstr "'default' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1101 src/gnuwin32/extra.c:1179
+#: src/gnuwin32/extra.c:1102 src/gnuwin32/extra.c:1180
 msgid "'default' is overlong"
 msgstr "'default' è troppo lungo"
 
-#: src/gnuwin32/extra.c:1110 src/gnuwin32/extra.c:1183
+#: src/gnuwin32/extra.c:1111 src/gnuwin32/extra.c:1184
 msgid "'caption' must be a character string"
 msgstr "'caption' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1112
+#: src/gnuwin32/extra.c:1113
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve essere un valore logico/booleano"
 
-#: src/gnuwin32/extra.c:1114
+#: src/gnuwin32/extra.c:1115
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve essere un valore intero"
 
-#: src/gnuwin32/extra.c:1265
+#: src/gnuwin32/extra.c:1266
 msgid "'title' must be a character string"
 msgstr "'title' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1282
+#: src/gnuwin32/extra.c:1283
 #, fuzzy
 msgid "'text' must be a character string"
 msgstr "'title' deve essere una stringa di tipo character"
 
-#: src/gnuwin32/extra.c:1312
+#: src/gnuwin32/extra.c:1313
 msgid "'which' must be length 1"
 msgstr "'which' deve essere di lunghezza 1"
 
-#: src/gnuwin32/extra.c:1338 src/main/connections.c:2514
+#: src/gnuwin32/extra.c:1339 src/main/connections.c:2514
 #: src/main/connections.c:2517 src/main/connections.c:2520
 #: src/main/connections.c:2755 src/main/connections.c:2758
 #: src/main/connections.c:2762 src/main/connections.c:2765
@@ -342,24 +342,24 @@ msgstr "'which' deve essere di lunghezza 1"
 msgid "invalid value for '%s'"
 msgstr "valore non valido per 'n'"
 
-#: src/gnuwin32/extra.c:1340 src/gnuwin32/extra.c:1342
-#: src/gnuwin32/extra.c:1382
+#: src/gnuwin32/extra.c:1341 src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1383
 msgid "invalid device"
 msgstr "dispositivo non valido"
 
-#: src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1344
 msgid "requires SDI mode"
 msgstr "richiede modalità SDI"
 
-#: src/gnuwin32/extra.c:1376
+#: src/gnuwin32/extra.c:1377
 msgid "invalid graphical device number"
 msgstr "numero di dispositivo non valido"
 
-#: src/gnuwin32/extra.c:1386
+#: src/gnuwin32/extra.c:1387
 msgid "bad device"
 msgstr "dispositivo errato"
 
-#: src/gnuwin32/extra.c:1494 src/gnuwin32/extra.c:1502
+#: src/gnuwin32/extra.c:1495 src/gnuwin32/extra.c:1503
 msgid "invalid input in Rmbstowcs"
 msgstr "input non valido per Rmbstowcs"
 

@@ -18,7 +18,7 @@ msgstr ""
 
 #: class_support.c:9
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
-msgstr "调用C子程式给'externalptr'目标对象进行初始化"
+msgstr "调用C子程式给'externalptr'对象进行初始化"
 
 #: do_substitute_direct.c:23
 msgid "invalid list for substitution"
@@ -37,7 +37,7 @@ msgid ""
 "no \"allMethods\" slot found in object of class \"%s\" used as methods list "
 "for function '%s'"
 msgstr ""
-"当函数'%2$s'方法串列来用的，类别为\"%1$s\" 的目标对象缺少\"allMethods\"这么一"
+"当函数'%2$s'方法串列来用的，类别为\"%1$s\" 的对象缺少\"allMethods\"这么一"
 "个槽。"
 
 #: methods_list_dispatch.c:304
@@ -64,8 +64,8 @@ msgid ""
 "invalid generic function object for method selection for function '%s': "
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
-"函数'%s'方法选择时其同属函数目标对象出了错：需要的是函数或原始函数，得到的却"
-"是类别为\"%s\"的目标对象"
+"函数'%s'方法选择时其同属函数对象出了错：需要的是函数或原始函数，得到的却"
+"是类别为\"%s\"的对象"
 
 #: methods_list_dispatch.c:434
 #, c-format
@@ -74,7 +74,7 @@ msgstr "调用时找不到用于'%s'函数的直接或继承的方法"
 
 #: methods_list_dispatch.c:460 methods_list_dispatch.c:881
 msgid "invalid object (non-function) used as method"
-msgstr "当方法用的目标对象(非函数)出了错"
+msgstr "当方法用的对象(非函数)出了错"
 
 #: methods_list_dispatch.c:477
 #, c-format
@@ -88,7 +88,7 @@ msgid ""
 "a name, got an object of class \"%s\""
 msgstr ""
 "方法调度在检查短少变元时符号出了错：需要的是个名字，得到的却是类别为\"%s\"的"
-"目标对象"
+"对象"
 
 #: methods_list_dispatch.c:487
 msgid "use of NULL environment is defunct"
@@ -99,7 +99,7 @@ msgstr "NULL环境不再有用"
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
-msgstr "方法调度在检查短少变元'%s'时环境出了错：不需要类别为\"%s\"的目标对象"
+msgstr "方法调度在检查短少变元'%s'时环境出了错：不需要类别为\"%s\"的对象"
 
 #: methods_list_dispatch.c:517
 #, c-format
@@ -107,7 +107,7 @@ msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
 "'argument' slot)"
 msgstr ""
-"函数'%s'里不能把类别为\"%s\"的目标对象当作方法串列来用(没有'argument'这样一个"
+"函数'%s'里不能把类别为\"%s\"的对象当作方法串列来用(没有'argument'这样一个"
 "槽)"
 
 #: methods_list_dispatch.c:528
@@ -124,7 +124,7 @@ msgid ""
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
 "(在为'%s'函数选择方法时) 调度时的'environment'变元必需是R环境；不需要类别为"
-"\"%s\"的目标对象"
+"\"%s\"的对象"
 
 #: methods_list_dispatch.c:545 methods_list_dispatch.c:556
 #: methods_list_dispatch.c:838
@@ -159,7 +159,7 @@ msgstr ""
 
 #: methods_list_dispatch.c:644
 msgid "error in evaluating a 'primitive' next method"
-msgstr " 評估'primitive'其次方法时出了错"
+msgstr "評估'primitive'其次方法时出了错"
 
 #: methods_list_dispatch.c:700
 #, c-format
@@ -174,7 +174,7 @@ msgstr "'%s'必需是非空字符串；现在它是空的字符串"
 #: methods_list_dispatch.c:708
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
-msgstr "'%s'必需是单一字符串(现在它是类别为\"%s\"的目标对象)"
+msgstr "'%s'必需是单一字符串(现在它是类别为\"%s\"的对象)"
 
 #: methods_list_dispatch.c:807
 #, c-format
@@ -186,7 +186,7 @@ msgstr "没有能够为原始\"%s\"找到同属函数"
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
-msgstr "需要的是同属函数或原始函数，现在得到的却是类别为\"%s\"的目标对象"
+msgstr "需要的是同属函数或原始函数，现在得到的却是类别为\"%s\"的对象"
 
 #: methods_list_dispatch.c:826
 #, c-format
@@ -196,3 +196,4 @@ msgid ""
 msgstr ""
 "同属函数\"%s\"没有为表台调度进行初始化--.SigArgs 和.AllMtable 这两个量都需要"
 "在它的环境里有定义"
+

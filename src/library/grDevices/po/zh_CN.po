@@ -35,7 +35,7 @@ msgstr "无法对字符信息作句法分析"
 
 #: devPS.c:620
 msgid "unknown AFM entity encountered"
-msgstr "遇到了不存在AFM值这样的错误"
+msgstr "遇到未知AFM值这个错误"
 
 #: devPS.c:735 devPS.c:738 devPS.c:4015 devPS.c:6668 devPicTeX.c:501
 #: devPicTeX.c:503
@@ -46,22 +46,22 @@ msgstr "'%s'里的字符串不对"
 #: devPS.c:766
 #, c-format
 msgid "font width unknown for character 0x%x"
-msgstr "字符0x%x没有字体宽度这样的设置"
+msgstr "字符0x%x不带字体宽度这样的设置"
 
 #: devPS.c:820
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
-msgstr "'PostScript度量Info'里不存在编码'%s'"
+msgstr "'PostScriptMetricInfo'里没有'%s'编码"
 
 #: devPS.c:836 devPS.c:848
 #, c-format
 msgid "font metrics unknown for Unicode character U+%04x"
-msgstr "Unicode字符U+%04x里不存在字体度量"
+msgstr "Unicode字符U+%04x不带字体度量"
 
 #: devPS.c:856
 #, c-format
 msgid "font metrics unknown for character 0x%x"
-msgstr "字符0x%x里不存在字体度量"
+msgstr "字符0x%x不带字体度量"
 
 #: devPS.c:871 devPS.c:878
 msgid ""
@@ -74,7 +74,7 @@ msgstr "无法分配CID字体信息"
 
 #: devPS.c:1007
 msgid "failed to allocate Type 1 font info"
-msgstr "无法分配类别 1字体信息"
+msgstr "无法分配一类别字体信息"
 
 #: devPS.c:1027
 msgid "failed to allocate encoding info"
@@ -86,11 +86,11 @@ msgstr "无法分配CID字体系列"
 
 #: devPS.c:1058
 msgid "failed to allocate Type 1 font family"
-msgstr "无法分配类别 1字体系列"
+msgstr "无法分配一类别字体系列"
 
 #: devPS.c:1097 devPS.c:1108
 msgid "failed to allocate font list"
-msgstr "无法 分配字体列"
+msgstr "无法分配字体列"
 
 #: devPS.c:1159
 msgid "failed to allocated encoding list"
@@ -103,11 +103,11 @@ msgstr "切断的字符串太长，无法拷贝"
 #: devPS.c:1348
 #, c-format
 msgid "failed to load encoding file '%s'"
-msgstr "无法载入编码文本 '%s'"
+msgstr "无法载入编码文本'%s'"
 
 #: devPS.c:1443 devPS.c:1481
 msgid "Invalid font name or more than one font name"
-msgstr "字体名字不对"
+msgstr "字体名字不对，或字体名字太多"
 
 #: devPS.c:1605 devPS.c:1638
 msgid "font family not found in PostScript font database"
@@ -128,7 +128,7 @@ msgstr "无法载入afm文本'%s'"
 
 #: devPS.c:2380
 msgid "Corrupt loaded encodings;  encoding not recorded"
-msgstr "载入的编码损坏了;  编码没有记录"
+msgstr "载入的编码损坏了; 没有记录编码"
 
 #: devPS.c:2391
 msgid "Failed to record device encoding"
@@ -156,7 +156,7 @@ msgstr "这个颜色模型只能用灰色"
 
 #: devPS.c:2932
 msgid "filename too long in postscript"
-msgstr " postscript文本名字太长"
+msgstr "postscript文本名字太长"
 
 #: devPS.c:2951 devPS.c:5183
 msgid "encoding path is too long"
@@ -180,7 +180,7 @@ msgstr "无法初始化外加的PostScript字体"
 
 #: devPS.c:3125
 msgid "invalid foreground/background color (postscript)"
-msgstr "出错 foreground/background 颜色 (postscript)"
+msgstr "前景/后景颜色不对(postscript)"
 
 #: devPS.c:3135
 msgid "'command' is too long"
@@ -188,12 +188,12 @@ msgstr "'command'太长"
 
 #: devPS.c:3139
 msgid "postscript(print.it=TRUE) used with an empty print command"
-msgstr "postscript(print.it=TRUE) 不能在空的印刷命令里用"
+msgstr "postscript(print.it=TRUE)不能用在空印刷命令里"
 
 #: devPS.c:3192
 #, c-format
 msgid "invalid page type '%s' (postscript)"
-msgstr "页类别'%s'(postscript) 不对"
+msgstr "页类别'%s'(postscript)不对"
 
 #: devPS.c:3397
 msgid "printing via file = \"\" is not implemented in this version"
@@ -235,7 +235,7 @@ msgstr "PostScript装置里没有'%s'系列"
 #: devPS.c:3826 devPS.c:3854 devPS.c:4811 devPS.c:6518 devPS.c:6566
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
-msgstr "不能用%d这个字体，代用字体1"
+msgstr "不能用%d这个字体，代用一字体"
 
 #: devPS.c:3913
 #, c-format
@@ -258,12 +258,12 @@ msgstr "xfig()里的颜色不够"
 #: devPS.c:4190
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
-msgstr "没有实现%08x这样的字行结构: 代用Dash-double-dotted"
+msgstr "没有实现%08x这样的字行结构: 用Dash-double-dotted"
 
 #: devPS.c:4261
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
-msgstr "不存在postscript字体系列'%s', 代用Helvetica"
+msgstr "不存在postscript字体系列'%s', 用Helvetica"
 
 #: devPS.c:4299
 msgid "filename too long in xfig"
@@ -275,7 +275,7 @@ msgstr "前景/后景颜色不对(xfig)"
 
 #: devPS.c:4357
 msgid "Only Type 1 fonts supported for XFig"
-msgstr "XFig只支持Type 1字体"
+msgstr "XFig只支持一类字体"
 
 #: devPS.c:4370
 msgid "Failed to initialise default XFig font"
@@ -289,7 +289,7 @@ msgstr "页类别'%s'出错(xfig)"
 #: devPS.c:4415
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
-msgstr "xfig(%s, onefile=FALSE) 只会返回最后的一张图"
+msgstr "xfig(%s, onefile=FALSE)只会返回最后的一张图"
 
 #: devPS.c:4534
 msgid "empty file name"
@@ -310,7 +310,7 @@ msgstr "这个系统不能进行重新编码操作"
 
 #: devPS.c:5104
 msgid "Corrupt loaded encodings;  font not added"
-msgstr "载入的编码坏了;  没有加入字体"
+msgstr "载入的编码坏了; 字体没有加入"
 
 #: devPS.c:5113
 msgid "Failed to record device encoding; font not added"
@@ -339,7 +339,7 @@ msgstr "纸张类别'%s'不对(pdf)"
 
 #: devPS.c:5425
 msgid "invalid foreground/background color (pdf)"
-msgstr "前景/后景颜色不对 (pdf)"
+msgstr "前景/后景颜色不对(pdf)"
 
 #: devPS.c:5561
 msgid "Invalid alpha value in PDF"
@@ -377,11 +377,11 @@ msgstr ""
 
 #: devPS.c:6493 devPS.c:6772 devPS.c:6815
 msgid "Failed to find or load PDF font"
-msgstr "找不到也载不入PDF字体"
+msgstr "没有能够找到和载入PDF字体"
 
 #: devPS.c:6609 devPS.c:6729
 msgid "Failed to find or load PDF CID font"
-msgstr "找不到也载不入PDFCID字体"
+msgstr "没有能够找到和载入PDFCID字体"
 
 #: devPS.c:6921 devPS.c:6925 devPS.c:7079 devPS.c:7083
 #, c-format
@@ -474,11 +474,11 @@ msgstr "无法分配bitmap"
 #: devWindows.c:1726 devWindows.c:1754 devWindows.c:2033
 #, c-format
 msgid "Unable to open file '%s' for writing"
-msgstr "无法打开'%s'文本来讲读写"
+msgstr "无法打开'%s'文本来进行读写"
 
 #: devWindows.c:1742
 msgid "filename too long in jpeg() call"
-msgstr " jpeg()調用文本名字太长"
+msgstr "jpeg()調用中的文本名字太长"
 
 #: devWindows.c:1772
 msgid "filename too long in win.metafile() call"
@@ -548,7 +548,7 @@ msgstr "无法载入Rbitmap.dll"
 
 #: devWindows.c:2899
 msgid "Impossible to open "
-msgstr "无法打开 "
+msgstr "无法打开"
 
 #: devWindows.c:2940
 msgid "invalid width or height in devWindows"

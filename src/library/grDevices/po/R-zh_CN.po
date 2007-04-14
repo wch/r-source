@@ -44,7 +44,7 @@ msgid "rgb values must be in [0, maxColorValue]"
 msgstr "rgb的值必需是在[0, maxColorValue] 之间"
 
 msgid "'start' and 'end' must be distinct and in [0, 1]."
-msgstr "'start'和'end'不是相等，而且必需在[0, 1] 之间。"
+msgstr "'start'和'end'不能相等，而且必需在[0, 1] 之间。"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "'gamma'的值要么是数量，要么是'sRGB'"
@@ -68,7 +68,7 @@ msgid "'from.ref.white' disagrees with definition of"
 msgstr "'from.ref.white'同下面这个定义有冲突"
 
 msgid "'to.ref.white' disagrees with definition of"
-msgstr "'to.ref.white' 同下面这个定义有冲突"
+msgstr "'to.ref.white'同下面这个定义有冲突"
 
 msgid "color spaces use different reference whites."
 msgstr "颜色空间不能使用不同的白色参考。"

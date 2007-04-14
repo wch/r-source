@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-11 09:51+0100\n"
+"POT-Creation-Date: 2007-04-14 11:56+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -74,12 +74,12 @@ msgstr "找不到工作目录"
 msgid "invalid 'names' in 'R_unlink'"
 msgstr "'R_unlink'里的'names'不对"
 
-#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:262
-#: src/gnuwin32/extra.c:293 src/gnuwin32/extra.c:318 src/gnuwin32/extra.c:321
-#: src/gnuwin32/extra.c:366 src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:414
-#: src/gnuwin32/extra.c:438 src/gnuwin32/extra.c:446 src/gnuwin32/extra.c:476
-#: src/gnuwin32/extra.c:492 src/gnuwin32/extra.c:525 src/gnuwin32/extra.c:677
-#: src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:764 src/gnuwin32/extra.c:769
+#: src/gnuwin32/extra.c:115 src/gnuwin32/extra.c:118 src/gnuwin32/extra.c:263
+#: src/gnuwin32/extra.c:294 src/gnuwin32/extra.c:319 src/gnuwin32/extra.c:322
+#: src/gnuwin32/extra.c:367 src/gnuwin32/extra.c:404 src/gnuwin32/extra.c:415
+#: src/gnuwin32/extra.c:439 src/gnuwin32/extra.c:447 src/gnuwin32/extra.c:477
+#: src/gnuwin32/extra.c:493 src/gnuwin32/extra.c:526 src/gnuwin32/extra.c:678
+#: src/gnuwin32/extra.c:762 src/gnuwin32/extra.c:765 src/gnuwin32/extra.c:770
 #: src/main/apply.c:193 src/main/apply.c:195 src/main/apply.c:199
 #: src/main/attrib.c:191 src/main/builtin.c:127 src/main/builtin.c:445
 #: src/main/builtin.c:461 src/main/character.c:126 src/main/character.c:129
@@ -144,80 +144,80 @@ msgstr "'R_unlink'里的'names'不对"
 msgid "invalid '%s' argument"
 msgstr "'%s'变元不对"
 
-#: src/gnuwin32/extra.c:240 src/gnuwin32/extra.c:274
+#: src/gnuwin32/extra.c:241 src/gnuwin32/extra.c:275
 msgid "R_HOME not set"
 msgstr "没有设定R_HOME"
 
-#: src/gnuwin32/extra.c:245
+#: src/gnuwin32/extra.c:246
 #, c-format
 msgid "'%s' not found"
 msgstr "找不到'%s'"
 
-#: src/gnuwin32/extra.c:247
+#: src/gnuwin32/extra.c:248
 #, c-format
 msgid "file association for '%s' not available or invalid"
 msgstr "无法同'%s'进行文件关联"
 
-#: src/gnuwin32/extra.c:250
+#: src/gnuwin32/extra.c:251
 #, c-format
 msgid "access to '%s' denied"
 msgstr "不能存取'%s'"
 
-#: src/gnuwin32/extra.c:251
+#: src/gnuwin32/extra.c:252
 #, c-format
 msgid "problem in displaying '%s'"
 msgstr "在显示'%s'时出了问题"
 
-#: src/gnuwin32/extra.c:305
+#: src/gnuwin32/extra.c:306
 msgid "unknown type"
 msgstr "没有这种类别"
 
-#: src/gnuwin32/extra.c:338 src/gnuwin32/extra.c:362 src/gnuwin32/extra.c:400
-#: src/gnuwin32/extra.c:435
+#: src/gnuwin32/extra.c:339 src/gnuwin32/extra.c:363 src/gnuwin32/extra.c:401
+#: src/gnuwin32/extra.c:436
 msgid "Menu functions can only be used in the GUI"
 msgstr "菜单功能只能在GUI中用"
 
-#: src/gnuwin32/extra.c:370
+#: src/gnuwin32/extra.c:371
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "无法检索项目%s (%s)"
 
-#: src/gnuwin32/extra.c:408
+#: src/gnuwin32/extra.c:409
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "无法加菜单(%s)"
 
-#: src/gnuwin32/extra.c:420
+#: src/gnuwin32/extra.c:421
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "无法加入菜单(%s)项"
 
-#: src/gnuwin32/extra.c:443
+#: src/gnuwin32/extra.c:444
 msgid "menu does not exist"
 msgstr "菜单不存在"
 
-#: src/gnuwin32/extra.c:450
+#: src/gnuwin32/extra.c:451
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "无法删除菜单项(%s)"
 
-#: src/gnuwin32/extra.c:481
+#: src/gnuwin32/extra.c:482
 msgid "'savehistory' can only be used in Rgui and Rterm"
 msgstr "'savehistory'只能在Rgui和Rterm里有用"
 
-#: src/gnuwin32/extra.c:496
+#: src/gnuwin32/extra.c:497
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory'只能在Rgui和Rterm有用"
 
-#: src/gnuwin32/extra.c:508 src/unix/sys-std.c:1205
+#: src/gnuwin32/extra.c:509 src/unix/sys-std.c:1205
 msgid "invalid timestamp"
 msgstr "时间标签不对"
 
-#: src/gnuwin32/extra.c:530
+#: src/gnuwin32/extra.c:531
 msgid "'loadRconsole' can only be used in Rgui"
 msgstr "’loadRconsole’只能在Rgui里有用"
 
-#: src/gnuwin32/extra.c:598 src/main/connections.c:2524
+#: src/gnuwin32/extra.c:599 src/main/connections.c:2524
 #: src/main/datetime.c:557 src/main/datetime.c:623 src/main/datetime.c:831
 #: src/main/dotcode.c:191 src/main/errors.c:746 src/main/errors.c:774
 #: src/main/errors.c:873 src/main/errors.c:898 src/main/errors.c:903
@@ -245,75 +245,75 @@ msgstr "’loadRconsole’只能在Rgui里有用"
 msgid "invalid '%s' value"
 msgstr "'%s'值不对"
 
-#: src/gnuwin32/extra.c:653 src/gnuwin32/extra.c:663
+#: src/gnuwin32/extra.c:654 src/gnuwin32/extra.c:664
 msgid "incorrect argument"
 msgstr "变元不对"
 
-#: src/gnuwin32/extra.c:656
+#: src/gnuwin32/extra.c:657
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "不要愚蠢!: 你的机器有4Gb的地址上限"
 
-#: src/gnuwin32/extra.c:659
+#: src/gnuwin32/extra.c:660
 msgid "cannot decrease memory limit"
 msgstr "无法减少内存极限"
 
-#: src/gnuwin32/extra.c:791
+#: src/gnuwin32/extra.c:792
 msgid "Select one or more"
 msgstr "选择一个或几个: "
 
-#: src/gnuwin32/extra.c:791
+#: src/gnuwin32/extra.c:792
 msgid "Select one"
 msgstr "选择一个: "
 
-#: src/gnuwin32/extra.c:927
+#: src/gnuwin32/extra.c:928
 msgid "argument must be a character vector or a raw vector"
 msgstr "变元必需是长度为一的字符向量或原始向量"
 
-#: src/gnuwin32/extra.c:949 src/main/connections.c:1460
+#: src/gnuwin32/extra.c:950 src/main/connections.c:1460
 msgid "Unable to open the clipboard"
 msgstr "无法打开裁剪板"
 
-#: src/gnuwin32/extra.c:954 src/main/connections.c:1464
+#: src/gnuwin32/extra.c:955 src/main/connections.c:1464
 msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
-#: src/gnuwin32/extra.c:1051 src/gnuwin32/extra.c:1071
+#: src/gnuwin32/extra.c:1052 src/gnuwin32/extra.c:1072
 msgid "'path' must be a character vector"
 msgstr "'path'必需为字符向量"
 
-#: src/gnuwin32/extra.c:1099 src/gnuwin32/extra.c:1177
+#: src/gnuwin32/extra.c:1100 src/gnuwin32/extra.c:1178
 msgid "'default' must be a character string"
 msgstr "'default'必需为字符串"
 
-#: src/gnuwin32/extra.c:1101 src/gnuwin32/extra.c:1179
+#: src/gnuwin32/extra.c:1102 src/gnuwin32/extra.c:1180
 msgid "'default' is overlong"
 msgstr "'default'太长了"
 
-#: src/gnuwin32/extra.c:1110 src/gnuwin32/extra.c:1183
+#: src/gnuwin32/extra.c:1111 src/gnuwin32/extra.c:1184
 msgid "'caption' must be a character string"
 msgstr "'caption'必需为字符串"
 
-#: src/gnuwin32/extra.c:1112
+#: src/gnuwin32/extra.c:1113
 msgid "'multi' must be a logical value"
 msgstr "'multi'必需为逻辑值"
 
-#: src/gnuwin32/extra.c:1114
+#: src/gnuwin32/extra.c:1115
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'必需为正数"
 
-#: src/gnuwin32/extra.c:1265
+#: src/gnuwin32/extra.c:1266
 msgid "'title' must be a character string"
 msgstr "'title'必需为字符串"
 
-#: src/gnuwin32/extra.c:1282
+#: src/gnuwin32/extra.c:1283
 msgid "'text' must be a character string"
 msgstr "'text'必需为字符串"
 
-#: src/gnuwin32/extra.c:1312
+#: src/gnuwin32/extra.c:1313
 msgid "'which' must be length 1"
 msgstr "'which'的长度必需为一"
 
-#: src/gnuwin32/extra.c:1338 src/main/connections.c:2514
+#: src/gnuwin32/extra.c:1339 src/main/connections.c:2514
 #: src/main/connections.c:2517 src/main/connections.c:2520
 #: src/main/connections.c:2755 src/main/connections.c:2758
 #: src/main/connections.c:2762 src/main/connections.c:2765
@@ -329,24 +329,24 @@ msgstr "'which'的长度必需为一"
 msgid "invalid value for '%s'"
 msgstr "'%s'的值不对"
 
-#: src/gnuwin32/extra.c:1340 src/gnuwin32/extra.c:1342
-#: src/gnuwin32/extra.c:1382
+#: src/gnuwin32/extra.c:1341 src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1383
 msgid "invalid device"
 msgstr "设备不对"
 
-#: src/gnuwin32/extra.c:1343
+#: src/gnuwin32/extra.c:1344
 msgid "requires SDI mode"
 msgstr "必需用SDI方式"
 
-#: src/gnuwin32/extra.c:1376
+#: src/gnuwin32/extra.c:1377
 msgid "invalid graphical device number"
 msgstr "图形设备号不对"
 
-#: src/gnuwin32/extra.c:1386
+#: src/gnuwin32/extra.c:1387
 msgid "bad device"
 msgstr "设备有错"
 
-#: src/gnuwin32/extra.c:1494 src/gnuwin32/extra.c:1502
+#: src/gnuwin32/extra.c:1495 src/gnuwin32/extra.c:1503
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs里的输入不对"
 
@@ -525,7 +525,7 @@ msgstr "下标出界"
 #: src/include/Errormsg.h:43 src/main/subassign.c:1391
 #: src/main/subassign.c:1750
 msgid "object is not subsettable"
-msgstr "目标对象不可以取子集"
+msgstr "对象不可以取子集"
 
 #: src/include/Errormsg.h:44
 msgid "invalid argument 'mode'"
@@ -658,7 +658,7 @@ msgstr "提供的随机种不是正确的正数"
 
 #: src/main/Rdynload.c:244
 msgid "R_RegisterRoutines called with invalid DllInfo object."
-msgstr "在调用R_RegisterRoutines时DllInfo目标对象出了错."
+msgstr "在调用R_RegisterRoutines时DllInfo对象出了错."
 
 #: src/main/Rdynload.c:522
 msgid "Maximal number of DLLs reached..."
@@ -779,7 +779,7 @@ msgstr "非整合时间系列"
 msgid ""
 "longer object length\n"
 "\tis not a multiple of shorter object length"
-msgstr "长目标对象之长度不是短目标对象之长度的整倍"
+msgstr "长对象之长度不是短对象之长度的整倍"
 
 #: src/main/arithmetic.c:530
 msgid "invalid argument to unary operator"
@@ -973,7 +973,7 @@ msgstr "无法设定'comment'属性"
 
 #: src/main/attrib.c:470
 msgid "adding class \"factor\" to an invalid object"
-msgstr "无法为不适当的目标对象加\"factor\" 类别"
+msgstr "无法为不适当的对象加\"factor\" 类别"
 
 #: src/main/attrib.c:478
 msgid "attempt to set invalid 'class' attribute"
@@ -1026,7 +1026,7 @@ msgstr "dim: 不能有0长度的大小向量"
 #: src/main/attrib.c:904
 #, c-format
 msgid "dim<- : dims [product %d] do not match the length of object [%d]"
-msgstr "dim<-: dims [product %d]与目标对象[%d]的长度不酢"
+msgstr "dim<-: dims [product %d]与对象[%d]的长度不酢"
 
 #: src/main/attrib.c:999
 msgid "attributes must be in a list"
@@ -1060,12 +1060,12 @@ msgstr "名字槽的类别或长度不对"
 #: src/main/attrib.c:1265
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
-msgstr "类别\"%2$s\"的目标对象中没有\"%1$s\"这样一个槽"
+msgstr "类别\"%2$s\"的对象中没有\"%1$s\"这样一个槽"
 
 #: src/main/attrib.c:1276
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
-msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别目标对象中"
+msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别对象中"
 
 #: src/main/attrib.c:1380
 msgid "formal classes cannot be used without the methods package"
@@ -1076,14 +1076,14 @@ msgstr "一定要有方法程序包才能用正式类别"
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
-msgstr "无法从没有槽的基本类别(\"%2$s\") 的目标对象中取得\"%1$s\"槽"
+msgstr "无法从没有槽的基本类别(\"%2$s\") 的对象中取得\"%1$s\"槽"
 
 #: src/main/attrib.c:1401
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
 "object "
-msgstr "非S4类别的目标对象(类别为\"%2$s\")没有\"%1$s\"这样的槽"
+msgstr "非S4类别的对象(类别为\"%2$s\")没有\"%1$s\"这样的槽"
 
 #: src/main/attrib.c:1421
 msgid "invalid slot type"
@@ -1170,7 +1170,7 @@ msgstr "变元数目不对"
 
 #: src/main/builtin.c:273
 msgid "replacement object is not an environment"
-msgstr "替换目标对象不是环境"
+msgstr "替换对象不是环境"
 
 #: src/main/builtin.c:293
 msgid "'enclos' must be an environment"
@@ -1255,7 +1255,7 @@ msgstr "nchar()需要字符向量"
 
 #: src/main/character.c:218
 msgid "extracting substrings from a non-character object"
-msgstr "无法从非字符目标对象里抽取子字串"
+msgstr "无法从非字符对象里抽取子字串"
 
 #: src/main/character.c:223
 msgid "invalid substring argument(s) in substr()"
@@ -1263,7 +1263,7 @@ msgstr "substr()里的子字串变元不对"
 
 #: src/main/character.c:298
 msgid "replacing substrings in a non-character object"
-msgstr "无法在非字符的目标对象里替换子字串"
+msgstr "无法在非字符的对象里替换子字串"
 
 #: src/main/character.c:303
 msgid "invalid substring argument(s) in substr<-()"
@@ -1481,12 +1481,12 @@ msgstr "状态为\"%s\"的数据有错(太短了)"
 #: src/main/coerce.c:983
 #, c-format
 msgid "'pairlist' object cannot be coerced to '%s'"
-msgstr "'pairlist'目标对象不能被强制改变成%s"
+msgstr "'pairlist'对象不能被强制改变成%s"
 
 #: src/main/coerce.c:1091
 #, c-format
 msgid "(list) object cannot be coerced to '%s'"
-msgstr "(串列)目标对象不能强制改变成%s"
+msgstr "(串列)对象不能强制改变成%s"
 
 #: src/main/coerce.c:1173
 msgid "environments cannot be coerced to other types"
@@ -1552,13 +1552,13 @@ msgstr "环境设定有错"
 
 #: src/main/coerce.c:2357
 msgid "invalid replacement object to be a class string"
-msgstr "字符串类别的替换目标对象不对"
+msgstr "字符串类别的替换对象不对"
 
 #: src/main/coerce.c:2375
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
-msgstr "只有在目标对象有这一类别的情况下才能设\"%s\"；不应该有\"%s\""
+msgstr "只有在对象有这一类别的情况下才能设\"%s\"；不应该有\"%s\""
 
 #: src/main/coerce.c:2391
 #, c-format
@@ -2278,11 +2278,11 @@ msgstr "无法跟踪NULL值"
 
 #: src/main/debug.c:124
 msgid "'tracemem' is not useful for promise and environment objects"
-msgstr "'tracemem'对允諾和环境目标对象没有作用"
+msgstr "'tracemem'对允諾和环境对象没有作用"
 
 #: src/main/debug.c:127
 msgid "'tracemem' is not useful for weak reference or external pointer objects"
-msgstr "'tracemem'对弱引用或外指针目标对象没有作用"
+msgstr "'tracemem'对弱引用或外指针对象没有作用"
 
 #: src/main/debug.c:133 src/main/debug.c:155
 msgid "R was not compiled with support for memory profiling"
@@ -2332,7 +2332,7 @@ msgstr "'opts'必需是小的非负整数"
 #: src/main/deparse.c:362 src/main/eval.c:2551
 #, c-format
 msgid "Object \"%s\" not found"
-msgstr "找不到这个目标对象\"%s\""
+msgstr "找不到这个对象\"%s\""
 
 #: src/main/deparse.c:1353
 msgid "badly formed function expression"
@@ -2854,7 +2854,7 @@ msgstr "'as.environment(NULL)'不再有用"
 
 #: src/main/envir.c:2661
 msgid "invalid object for 'as.environment'"
-msgstr "as.environment的目标对象不对"
+msgstr "as.environment的对象不对"
 
 #: src/main/envir.c:2685 src/main/envir.c:2712 src/main/envir.c:2740
 #: src/main/envir.c:2760 src/main/envir.c:2782 src/main/envir.c:2816
@@ -3095,7 +3095,7 @@ msgstr "'...'用在的上下文不对"
 #: src/main/eval.c:387 src/main/eval.c:843
 #, c-format
 msgid "object \"%s\" not found"
-msgstr "找不到这个目标对象\"%s\""
+msgstr "找不到这个对象\"%s\""
 
 #: src/main/eval.c:393 src/main/eval.c:2555
 msgid "argument is missing, with no default"
@@ -3161,7 +3161,7 @@ msgstr "赋值公式左手不能是(NULL)值"
 
 #: src/main/eval.c:1242
 msgid "target of assignment expands to non-language object"
-msgstr "赋值目标擴充到非语言目标对象"
+msgstr "赋值目标擴充到非语言对象"
 
 #: src/main/eval.c:1287
 msgid "cannot do complex assignments in base namespace"
@@ -3246,7 +3246,7 @@ msgstr "op代码不对"
 
 #: src/main/eval.c:2684
 msgid "not a vector object"
-msgstr "非向量目标对象"
+msgstr "非向量对象"
 
 #: src/main/eval.c:2692 src/main/eval.c:2714 src/main/eval.c:2738
 #: src/main/eval.c:2762
@@ -3316,7 +3316,7 @@ msgstr "符号不对"
 
 #: src/main/eval.c:3537
 msgid "argument is not a byte code object"
-msgstr "变元不是位元组码目标对象"
+msgstr "变元不是位元组码对象"
 
 #: src/main/eval.c:3558
 msgid "bad file name"
@@ -3782,7 +3782,7 @@ msgstr "变元(%s) 没有用"
 
 #: src/main/memory.c:937
 msgid "can only weakly reference/finalize reference objects"
-msgstr "只能微弱引用或定局引用目标对象"
+msgstr "只能微弱引用或定局引用对象"
 
 #: src/main/memory.c:971
 msgid "finalizer must be a function or NULL"
@@ -4125,7 +4125,7 @@ msgstr "变元不对 ..."
 
 #: src/main/objects.c:576
 msgid "object not specified"
-msgstr "没有设定目标对象"
+msgstr "没有设定对象"
 
 #: src/main/objects.c:586 src/main/objects.c:593
 msgid "generic function not specified"
@@ -4207,14 +4207,14 @@ msgstr ""
 
 #: src/main/objects.c:1074
 msgid "invalid object: must be a primitive function"
-msgstr "目标对象不对: 必需是原始函数"
+msgstr "对象不对: 必需是原始函数"
 
 #: src/main/objects.c:1121
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
 "type '%s')"
-msgstr "原始同属函数的正式定义必需是函数目标对象(不能是'%s'类)"
+msgstr "原始同属函数的正式定义必需是函数对象(不能是'%s'类)"
 
 #: src/main/objects.c:1235
 msgid "invalid primitive operation given for dispatch"
@@ -4238,7 +4238,7 @@ msgstr "调用C级的NEW宏时不能用null类别定义指针"
 #: src/main/objects.c:1308
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
-msgstr "无法从虚拟类别(\"%s\")中产生目标对象"
+msgstr "无法从虚拟类别(\"%s\")中产生对象"
 
 #: src/main/objects.c:1361
 msgid "'R_get_primname' called on a non-primitive"
@@ -5295,7 +5295,7 @@ msgstr "前正规表现不存在"
 msgid ""
 "longer object length\n"
 " \tis not a multiple of shorter object length"
-msgstr "长的目标对象长度不是短的目标对象长度的整倍数"
+msgstr "长的对象长度不是短的对象长度的整倍数"
 
 #: src/main/relop.c:103
 #, c-format
@@ -5392,7 +5392,7 @@ msgstr "NewWriteVec不适用于非向量种类"
 
 #: src/main/saveload.c:1111
 msgid "cannot save byte code objects in version 1 workspaces"
-msgstr "一号版本的工作空间无法保存位元组码目标对象"
+msgstr "一号版本的工作空间无法保存位元组码对象"
 
 #: src/main/saveload.c:1113
 #, c-format
@@ -5405,7 +5405,7 @@ msgstr "NewReadVec不适用于非向量种类"
 
 #: src/main/saveload.c:1309
 msgid "cannot read byte code objects from version 1 workspaces"
-msgstr "无法从一号版本的工作空间里读取位元组码目标对象"
+msgstr "无法从一号版本的工作空间里读取位元组码对象"
 
 #: src/main/saveload.c:1311
 #, c-format
@@ -5485,7 +5485,7 @@ msgstr "无法打开文件"
 #: src/main/saveload.c:1991 src/main/saveload.c:2291 src/main/serialize.c:2194
 #, c-format
 msgid "object '%s' not found"
-msgstr "找不到目标对象'%s'"
+msgstr "找不到对象'%s'"
 
 #: src/main/saveload.c:2025
 msgid "not a valid named list"
@@ -5734,7 +5734,7 @@ msgstr "载入时名字空间可能无用"
 
 #: src/main/serialize.c:935
 msgid "this version of R cannot write byte code objects"
-msgstr "本R版本无法书写位元组码目标对象"
+msgstr "本R版本无法书写位元组码对象"
 
 #: src/main/serialize.c:944
 #, c-format
@@ -5756,7 +5756,7 @@ msgstr "目前不支持持续字符串里的名字"
 
 #: src/main/serialize.c:1366
 msgid "this version of R cannot read byte code objects"
-msgstr "本R版本无法读取位元组码目标对象"
+msgstr "本R版本无法读取位元组码对象"
 
 #: src/main/serialize.c:1369
 msgid "this version of R cannot read class references"
@@ -6010,22 +6010,22 @@ msgstr "向量长度被強制改变成零"
 #: src/main/sprintf.c:221
 #, c-format
 msgid "use format %d or %i for logical objects"
-msgstr "逻辑目标对象使用的格式应该是%d或%i"
+msgstr "逻辑对象使用的格式应该是%d或%i"
 
 #: src/main/sprintf.c:235
 #, c-format
 msgid "use format %d, %i, %x or %X for integer objects"
-msgstr "整数目标对象使用的格式应该是%d，%i，%x或%X"
+msgstr "整数对象使用的格式应该是%d，%i，%x或%X"
 
 #: src/main/sprintf.c:249
 #, c-format
 msgid "use format %f, %e or %g for numeric objects"
-msgstr "数值目标对象使用的格式应该是%f,%e或%g"
+msgstr "数值对象使用的格式应该是%f,%e或%g"
 
 #: src/main/sprintf.c:283
 #, c-format
 msgid "use format %s for character objects"
-msgstr "字符目标对象使用的格式应该是%s"
+msgstr "字符对象使用的格式应该是%s"
 
 #: src/main/sprintf.c:286
 msgid "Likely truncation of character string"
@@ -6389,7 +6389,7 @@ msgstr "csduplicated不能调用在STRSXP上"
 
 #: src/main/util.c:93 src/main/util.c:111
 msgid "object is not a matrix"
-msgstr "目标对象不是矩阵"
+msgstr "对象不是矩阵"
 
 #: src/main/util.c:236 src/main/util.c:248 src/main/util.c:262
 #, c-format
@@ -6598,6 +6598,7 @@ msgid "cannot open: HTTP status was '%d %s'"
 msgstr "无法打开: HTTP状态是'%d%s'"
 
 #: src/modules/internet/internet.c:690 src/modules/internet/internet.c:846
+#, fuzzy
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl超时"
 
@@ -6708,7 +6709,7 @@ msgstr "分配插坐链结失败"
 
 #: src/modules/lapack/Lapack.c:41 src/modules/lapack/Lapack.c:449
 msgid "'jobu' and 'jobv' must be character strings"
-msgstr "'jobu'和'jobv'必需是字符目标对象"
+msgstr "'jobu'和'jobv'必需是字符对象"
 
 #: src/modules/lapack/Lapack.c:43
 msgid "'method' must be a character string"
@@ -7344,7 +7345,7 @@ msgstr "没有X11平台这一功能"
 #~ msgstr "'ifnotfound'变元的长度不对"
 
 #~ msgid "attach: invalid object name"
-#~ msgstr "attach: 目标对象名字不对"
+#~ msgstr "attach: 对象名字不对"
 
 #~ msgid "invalid value for 'ok'"
 #~ msgstr "'ok'的值不对"
@@ -7392,7 +7393,7 @@ msgstr "没有X11平台这一功能"
 #~ msgid ""
 #~ "trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s"
 #~ "\", ...) (not a formally defined class)"
-#~ msgstr "无法从S3类别c(\"%2$s\", \"%3$s\", ...)目标对象中取得\"%1$s\"槽"
+#~ msgstr "无法从S3类别c(\"%2$s\", \"%3$s\", ...)对象中取得\"%1$s\"槽"
 
 #~ msgid "'B' must be a complex matrix"
 #~ msgstr "'B'必需是复数矩阵"
