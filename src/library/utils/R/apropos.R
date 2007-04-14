@@ -16,7 +16,7 @@ apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any")
 	    x <- c(x, if(where) structure(li, names = rep.int(i, length(li))) else li)
 	}
     }
-    x
+    sort(x)
 }
 
 find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE)

@@ -42,6 +42,14 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   all use of non-standard evaluation in \R.
 }
 \author{Kurt Hornik and Martin Maechler (May 1997).}
+\value{
+  For \code{apropos} character vector, sorted by name, possibly with
+  names giving the (numerical) positions on the search path.
+
+  For \code{find}, either a character vector of environment names, or for
+  \code{numeric = TRUE}, a numerical vector of positions on the search path,
+  with names giving the names of the corresponding environments.
+}
 \seealso{
   \code{\link{glob2rx}} to convert wildcard patterns to regular expressions.
 
@@ -58,8 +66,8 @@ apropos("lq")
 
 cor <- 1:pi
 find("cor")        #> ".GlobalEnv"   "package:stats"
-find("cor", num=TRUE) # numbers with these names
-find("cor", num=TRUE, mode="function")# only the second one
+find("cor", numeric=TRUE) # numbers with these names
+find("cor", numeric=TRUE, mode="function")# only the second one
 rm(cor)
 
 \dontrun{apropos(".", mode="list") # a long list}
