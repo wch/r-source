@@ -100,6 +100,7 @@ if(!$opt_binary && $INSTALL_opts ne "") {
 foreach my $pkg (@ARGV) {
     my $is_bundle = 0;
     $pkg =~ s/\/$//;
+    $pkg = readlink($pkg) if(!$WINDOWS && (-l $pkg));
     my $pkgname = basename($pkg);
     my $intname;
     chdir($startdir);
@@ -498,12 +499,11 @@ sub prepare_pkg {
 	    $log->creating("vignettes");
 	    my $Rcmd = "library(tools)\n";
 	    $Rcmd .= "buildVignettes(dir = '.')\n";
-	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
+	    my %result = R_run_R($Rcmd, "--vanilla --no-save --quiet");
 	    rmtree("$libdir") unless $in_bundle;
 	    $ENV{'R_LIBS'} = $R_LIBS;
-	    my @err = grep(/^Error/, @out);
-	    if(scalar(@err) > 0) {
-		@out = grep(!/^\>/, @out);
+	    if($result{"status"}) {
+		my @out = grep(!/^\>/, @{$result{"out"}});
 		$log->error();
 		$log->print(join("\n", @out) . "\n");
 		exit(1);
