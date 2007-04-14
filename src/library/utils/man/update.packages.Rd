@@ -224,15 +224,20 @@ contrib.url(repos, type = getOption("pkgType"))
   specified).
 #endif
 
-  \code{install.packages} can be used to install new packages/bundles.
-  It takes a vector of names and a destination library, downloads the
-  packages from the repositories and installs them.  (If the library is
-  omitted it defaults to the first directory in \code{.libPaths()}, with
-  a warning if there is more than one.)  If \code{lib} is omitted or is
-  of length one and is not a writeable directory, the code offers to
-  create a personal library tree (the first element of
-  \code{Sys.getenv("R_LIBS_USER")} and install there.
-
+  \code{install.packages} can be used to install new
+  packages/bundles. It takes a vector of names and a destination
+  library, downloads the packages from the repositories and installs
+  them.  (If the library is omitted it defaults to the first directory
+  in \code{.libPaths()}, with a warning if there is more than one.)  If
+  \code{lib} is omitted or is of length one and is not a (group)
+  writeable directory, the code offers to create a personal library tree
+  (the first element of \code{Sys.getenv("R_LIBS_USER")} and install
+  there.
+#ifdef windows
+  Detection of a writeable directory is problematic on Windows: see the
+  Warning section.
+#endif
+  
 %  The first argument can be an unquoted name, as in
 %  \code{install.packages(nlme)}.
 #ifdef windows

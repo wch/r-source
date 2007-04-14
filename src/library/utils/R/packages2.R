@@ -97,6 +97,7 @@ install.packages <-
     info <- file.info(lib)
     ok <- info$isdir
     nc <- nchar(info$mode)
+    ## check for writeability by user
     ok <- ok & (nc >= 3) & (substr(info$mode, nc-2, nc-2) == "7")
     if(length(lib) > 1 && any(!ok))
         stop(sprintf(ngettext(sum(!ok),
@@ -164,16 +165,31 @@ install.packages <-
             stop("This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM")
     }
 
+    ## we need to ensure that R CMD INSTALL runs with the same
+    ## library trees as this session.
+    libpath <- .libPaths()
+    libpath <- libpath[! libpath %in% .Library]
+    if(length(libpath)) libpath <- paste(libpath, collapse=.Platform$path.sep)
+    cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
+    if(length(libpath))
+        if(.Platform$OS.type == "windows") {
+            ## We don't have a way to set an environment variable for
+            ## a single command, as we do not spawn a shell.
+            oldrlibs <- Sys.getenv("R_LIBS")
+            Sys.setenv(R_LIBS = libpath)
+            on.exit(Sys.setenv(R_LIBS = oldrlibs))
+        } else
+            cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep="="), cmd0)
+
     if(is.null(repos) & missing(contriburl)) {
+        ## install from local source tarballs
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
-        cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         if (is.character(clean))
             cmd0 <- paste(cmd0, clean)
 
         for(i in 1:nrow(update)) {
-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
                           getConfigureArgs(update[i, 1]),
                          shQuote(update[i, 1]))
@@ -282,11 +298,6 @@ install.packages <-
             ## can't use update[p0, ] due to possible multiple matches
             update <- update[sort.list(match(pkgs, p0)), ]
         }
-        cmd0 <- file.path(R.home("bin"),"R")
-	## setting R_ARCH obviates the need for this
-        ## if(nchar(r_arch <- .Platform$r_arch))
-        ##     cmd0 <- paste(cmd0, "--arch", r_arch)
-        cmd0 <- paste(cmd0, "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         if (is.character(clean))
