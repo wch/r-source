@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-04-11
+@set FAQ_DATE @value{FAQ_YEAR}-04-13
 @set REL_YEAR 2006
 @set REL_MAJOR 2
 @set REL_MINOR 4
@@ -4348,6 +4348,8 @@ A stepwise approach to identifying recombination breakpoints in a
 sequence alignment.
 @item stinepack
 Stineman interpolation package.
+@item stochasticGEM
+Fitting Stochastic General Epidemic Models.
 @item stochmod
 Learning and inference algorithms for a variety of probabilistic
 models.
@@ -4552,94 +4554,95 @@ irregular time series.
 @noindent
 See @CRAN{} @file{src/contrib/PACKAGES} for more information.
 
-There is also a @CRAN{} @file{src/contrib/Devel} directory which
-contains packages still ``under development'' or depending on features
-only present in the current development versions of R.  Volunteers are
-invited to give these a try, of course.  This area of @CRAN{} currently
-contains
-
-@table @strong
-@c <COMMENT>
-@c Moved to Attic on 2004-12-14 as requested by maintainer.
-@c @item Dopt
-@c Finding D-optimal experimental designs.
-@c </COMMENT>
+There used to be a @CRAN{} @file{src/contrib/Devel} directory with
+packages still ``under development'' or depending on features only
+present in the current development versions of R.  This area is no
+longer provided, with packages formerly in this area either in the
+regular package area or the archive @file{src/contrib/Archive}.
 
 @c <COMMENT>
-@c Moved to Devel for 1.8 as it fails R CMD check.
-@item GLMMGibbs
-Generalised Linear Mixed Models by Gibbs sampling.
-@c </COMMENT>
+@c CRAN's src/contrib/Devel discontinued on 2007-04-14.
+@c @table @strong
 
-@c <COMMENT>
-@c Moved to Devel for 1.6 as it fails R CMD check.
-@item RPgSQL
-Provides methods for accessing data stored in PostgreSQL tables.
-@c </COMMENT>
+@c @c <COMMENT>
+@c @c Moved to Attic on 2004-12-14 as requested by maintainer.
+@c @c @item Dopt
+@c @c Finding D-optimal experimental designs.
+@c @c </COMMENT>
 
-@c <COMMENT>
-@c Moved to Attic for 1.5.1 as no longer needed.
-@c (See also the info on rdbi.sourceforge.net.)
-@c @item Rdbi
-@c Generic framework for database access in R.
-@c @item Rdbi.PgSQL
+@c @c <COMMENT>
+@c @c Moved to Devel for 1.8 as it fails R CMD check.
+@c @item GLMMGibbs
+@c Generalised Linear Mixed Models by Gibbs sampling.
+@c @c </COMMENT>
+
+@c @c <COMMENT>
+@c @c Moved to Devel for 1.6 as it fails R CMD check.
+@c @item RPgSQL
 @c Provides methods for accessing data stored in PostgreSQL tables.
+@c @c </COMMENT>
+
+@c @c <COMMENT>
+@c @c Moved to Attic for 1.5.1 as no longer needed.
+@c @c (See also the info on rdbi.sourceforge.net.)
+@c @c @item Rdbi
+@c @c Generic framework for database access in R.
+@c @c @item Rdbi.PgSQL
+@c @c Provides methods for accessing data stored in PostgreSQL tables.
+@c @c </COMMENT>
+
+@c @c <COMMENT>
+@c @c Moved to Attic for 1.5 (as this contains the summary functions).
+@c @c @item colSums
+@c @c Matrix summary functions in C.
+@c @c </COMMENT>
+
+@c @c <COMMENT>
+@c @c Moved to Attic for 1.5.1 as no longer needed.
+@c @c @item cxx
+@c @c A small C++ test package.
+@c @c </COMMENT>
+
+@c @item dseplus
+@c Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
+@c time series package.  Contains PADI, juice and monitoring extensions.
+
+@c @item ensemble
+@c Ensembles of tree classifiers.
+
+@c @c <COMMENT>
+@c @c Moved to Devel for 1.5 as it fails R CMD check.
+@c @c Moved to Attic for 1.5.1 as apparently no longer actively
+@c @c maintained.
+@c @c @item event.chart
+@c @c Package for creating event charts.
+@c @c </COMMENT>
+
+@c @c <COMMENT>
+@c @c Moved to Attic for 1.5.1 as no longer maintained.
+@c @c @item hpower
+@c @c A suite of functions to compute power and sample size for tests of the
+@c @c general linear hypothesis.
+@c @c </COMMENT>
+
+@c @c <COMMENT>
+@c @c Moved to Attic on 2003-09-12 as requested by the package maintainer,
+@c @c "kjetil brinchmann halvorsen" <kjetil@@entelnet.bo>.
+@c @c @item pls
+@c @c Univariate Partial Least Squares Regression.
+@c @c </COMMENT>
+
+@c @c <COMMENT>
+@c @c Moved to Attic for 1.5.1 as no longer needed.
+@c @c @item regexp
+@c @c Simple regular expression interface.
+@c @c </COMMENT>
+
+@c @item runStat
+@c Running median and mean.
+
+@c @end table
 @c </COMMENT>
-
-@c <COMMENT>
-@c Moved to Attic for 1.5 (as this contains the summary functions).
-@c @item colSums
-@c Matrix summary functions in C.
-@c </COMMENT>
-
-@c <COMMENT>
-@c Moved to Attic for 1.5.1 as no longer needed.
-@c @item cxx
-@c A small C++ test package.
-@c </COMMENT>
-
-@item dseplus
-Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
-time series package.  Contains PADI, juice and monitoring extensions.
-
-@item ensemble
-Ensembles of tree classifiers.
-
-@c <COMMENT>
-@c Moved to Devel for 1.5 as it fails R CMD check.
-@c Moved to Attic for 1.5.1 as apparently no longer actively
-@c maintained.
-@c @item event.chart
-@c Package for creating event charts.
-@c </COMMENT>
-
-@c <COMMENT>
-@c Moved to Attic for 1.5.1 as no longer maintained.
-@c @item hpower
-@c A suite of functions to compute power and sample size for tests of the
-@c general linear hypothesis.
-@c </COMMENT>
-
-@c <COMMENT>
-@c Moved to Attic on 2003-09-12 as requested by the package maintainer,
-@c "kjetil brinchmann halvorsen" <kjetil@@entelnet.bo>.
-@c @item pls
-@c Univariate Partial Least Squares Regression.
-@c </COMMENT>
-
-@c <COMMENT>
-@c Moved to Attic for 1.5.1 as no longer needed.
-@c @item regexp
-@c Simple regular expression interface.
-@c </COMMENT>
-
-@item runStat
-Running median and mean.
-
-@item write.snns
-Function for writing a @acronym{SNNS} pattern file from a data frame or
-matrix.
-@end table
 
 @node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
 @subsection Add-on packages from Omegahat
