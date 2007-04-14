@@ -3,7 +3,7 @@
 \alias{.Library}
 \alias{.Library.site}
 \alias{.libPaths}
-\alias{..expand_R_libs_env_var}
+\alias{.expand_R_libs_env_var}
 \description{
   \code{.libPaths} gets/sets the library trees within which packages are
   looked for.

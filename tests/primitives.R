@@ -41,10 +41,10 @@ known <- c(ls(.GenericArgsEnv, all.names=TRUE),
 stopifnot(ff %in% known, known %in% ff)
 
 
-## check which are not (potentially) S4 generic
-## there probably should be none.
+## check which are not considered as possibles for S4 generic
 ff4 <- names(methods::.BasicFunsList)
-S4generic <- ff %in% ff4
+# as.double and as.real are the same as as.numeric
+S4generic <- ff %in% c(ff4, "as.double", "as.real")
 notS4 <- ff[!S4generic]
 if(length(notS4)) cat("primitives not covered in methods::.BasicFunsList:",
                       paste(sQuote(notS4), collapse=", "), "\n")
@@ -54,7 +54,6 @@ stopifnot(S4generic)
 extraS4 <- c('all', 'any', 'gamma', 'lgamma', 'log', 'log10', 'max',
              'min', 'prod', 'range', 'round', 'signif', 'sum',
              'trace', 'untrace',
-             'as.complex', 'as.double', 'as.integer', 'as.logical',
-             'as.raw', 'as.numeric', 'as.real')
+             'as.complex', 'as.integer', 'as.logical', 'as.raw', 'as.numeric')
 ff4[!ff4 %in% c(ff, extraS4)]
 stopifnot(ff4 %in% c(ff, extraS4))
