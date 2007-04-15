@@ -126,17 +126,6 @@ list("!" = function(e1)
     standardGeneric("rep")
 }
 , "substitute" = FALSE
-# not primitive
-, "trace" = function(what = character(), tracer = TRUE, exit.tracer, at = numeric(), print
-	 = TRUE, signature)
-{
-    standardGeneric("trace")
-}
-# not primitive
-, "untrace" = function(what)
-{
-    standardGeneric("untrace")
-}
 , "|" = function(e1, e2)
 {
     standardGeneric("|")
