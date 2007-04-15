@@ -33,7 +33,9 @@ USER-VISIBLE CHANGES
 	functionality formerly in package 'rcompletion' by Deepayan
 	Sarkar.  This can be disabled by setting the environment
 	variable R_COMPLETION=FALSE when starting R (e.g. in
-	~/.Renviron).
+	~/.Renviron).  (Note that when this is enabled, filename
+	completion no longer works for file paths containing R
+	operators such as '+' and '-'.)
 
 
 NEW FEATURES
