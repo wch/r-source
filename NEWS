@@ -811,6 +811,11 @@ BUG FIXES
         names when run with split=TRUE.
 
 
+    o	density() now ensures its 'y' values are non-negative. (PR#8876)
+
+    o	is.finite() and is.infinite() (and about 20 other primitives)
+	are not internally generic and so do not support S4 methods,
+	which can no longer be set. (PR#7951)
 
 
 

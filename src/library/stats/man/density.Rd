@@ -103,7 +103,8 @@ density(x, \dots)
   underlying structure is a list containing the following components.
   \item{x}{the \code{n} coordinates of the points where the density is
     estimated.}
-  \item{y}{the estimated density values.}
+  \item{y}{the estimated density values.  These will be non-negative,
+    but can be zero.}
   \item{bw}{the bandwidth used.}
   \item{n}{the sample size after elimination of missing values.}
   \item{call}{the call which produced the result.}

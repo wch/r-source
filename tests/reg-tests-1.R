@@ -4691,3 +4691,11 @@ stopifnot(length(x) == 6)
 (x <- readBin(con=bfr, what="integer", size=1, n=20))
 stopifnot(length(x) == 12)
 ## read too far where size-changing was involved in 2.4.x
+
+
+## density() could give negative values by rounding error (PR#8876)
+x <- c(0.006, 0.002, 0.024, 0.02, 0.034, 0.09, 0.074, 0.072, 0.122,
+       0.048, 0.044, 0.168)
+result <- density(x, n = 20, from = -1, to = 1)
+stopifnot(result$y >= 0)
+## slightly negative < 2.5.0
