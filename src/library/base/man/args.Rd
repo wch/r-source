@@ -3,13 +3,13 @@
 \title{Argument List of a Function}
 \description{
   Displays the argument names and corresponding default values of a
-  function.
+  function or primitive.
 }
 \usage{
 args(name)
 }
 \arguments{
-  \item{name}{a function.
+  \item{name}{a function (a closure or a primitive).
     If \code{name} is a character string then the function with that
     name is found and used.}
 }
@@ -31,7 +31,7 @@ args(name)
   \code{\link{help}}.
 }
 \examples{
-args(c)            # -> NULL (c is a 'primitive' function)
+args(c)
 args(graphics::plot.default)
 }
 \keyword{documentation}

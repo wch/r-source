@@ -81,8 +81,8 @@ parent.frame(n = 1)
 }
 \value{
   \code{sys.call} returns a call, \code{sys.function} a function
-  definition, and \code{sys.frame}, \code{sys.parent} and
-  \code{parent.frame} return an environment.
+  definition, and \code{sys.frame} and \code{parent.frame} return an
+  environment.
 
   For the other functions, see the Details section.
 }
