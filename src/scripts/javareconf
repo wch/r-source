@@ -15,9 +15,12 @@ Usage: R CMD javareconf [options]
 Detect current Java setup and update the corresponding configuration in R.
 
 Options:
-  -h, --help     print short help message and exit
+  -h, --help     print this help message and exit
   -n, --dry-run  perform Java detection, but don't touch any
                  configurations files
+  -e <prog>      same as -n but exports all detected variables
+                 and runs <prog>. If -e is the last argument
+                 or <prog> is '' then a shell is used instead
   xxx=yyy        evaluate the corresponding expression
                  (e.g. JAVA_HOME=/usr/lib/java)
 
@@ -36,8 +39,7 @@ The following variables should be used with extreme caution. They
 must all match, so use only if you have a very special setup that
 javareconf cannot detect automatically:
   JAVA_LD_LIBRARY_PATH library path necessary at run-time
-  JAVA_CPPFLAGS  C pre-processor flags necessary to compile JNI
-                 programs
+  JAVA_CPPFLAGS  C preprocessor flags necessary to compile JNI programs
   JAVA_LIBS      libraries (as linker flags) necessary to compile
                  JNI programs
 
@@ -45,10 +47,12 @@ Report bugs to <r-bugs@r-project.org>."
 
 
 dry_run=no
+export_vars=no
 while test -n "${1}"; do
     case ${1} in
 	-help | --help | -h) echo "${usage}"; exit 0 ;;
 	-n | --dry-run) dry_run=yes ;;
+	-e) dry_run=yes; export_vars=yes; run_prog=${2}; shift ;;
 	*=*) eval ${1} ;;
     esac
     shift
@@ -274,6 +278,17 @@ echo "JNI linker flags : ${JAVA_LIBS}"
 echo "JNI cpp flags    : ${JAVA_CPPFLAGS}"
 
 echo ""
+
+if test "${export_vars}" = yes; then
+    export JAVA_HOME JAVA JAVAC JAVAH JAR JAVA_LIBS JAVA_CPPFLAGS JAVA_LD_LIBRARY_PATH
+    echo "The following Java variables have been exported:"
+    echo "JAVA_HOME JAVA JAVAC JAVAH JAR JAVA_LIBS JAVA_CPPFLAGS JAVA_LD_LIBRARY_PATH"
+    test -z "${run_prog}" && test -n "${SHELL}" && run_prog="${SHELL}"
+    test -z "${run_prog}" && run_prog=/bin/sh
+    echo "Runnig: ${run_prog}"
+    ${run_prog}
+    exit 0
+fi
 
 test "${dry_run}" = yes && exit 0
 
