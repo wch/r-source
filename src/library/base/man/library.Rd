@@ -90,7 +90,9 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   (rather than an error as \code{library()} does by default) if the
   package does not exist.  Both functions check and update the list of
   currently loaded packages and do not reload a package which is already
-  loaded.
+  loaded.  (Furthermore, if the package has a name space and a name
+  space of that name is already loaded, they work from the existing
+  names space rather than reloading from the file system.)
 
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified

@@ -571,6 +571,11 @@ available locally) of a command-line in a short cut:
 The second version will prompt the user for the proxy username and
 password when HTTP downloads are first used.
 
+Another possibility is that firewall settings are blocking the R
+executables from contacting the Internet, but this should result in
+informative error messages from the firewall program (and it does from
+the Windows XP firewall).
+
 
 @node Entering certain characters crashes Rgui., What does 'DLL attempted to change FPU control word' mean?, The Internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
@@ -666,7 +671,7 @@ install software at all.
 Vista normally disables the Administrator account and expects software
 installation to done by an account which is in the local Administrator
 group with `admin approval mode' turned on.  (The Administrator
-account by default has it turned on.)  Unlike (say) Windows XP, such
+account by default has it turned off.)  Unlike (say) Windows XP, such
 accounts do not run programs with full administrator privileges, and
 this is where the issues arise.  (For background information consult
 @url{http://technet.microsoft.com/en-us/windowsvista/aa906021.aspx}
@@ -678,26 +683,26 @@ needs them you may be prompted with one or more security-check dialog
 boxes, and may be required to provide administrator credentials or
 confirm that you really want to take that action.
 
-Vista will report that the R installer has an `unknown publisher' and
-ask if it should be run.  System administrators can disable installing
-applications from non-trusted sources, in which case you will have to
-persuade them that R is trustworthy.
+Vista will report that the R installer has an `unidentified publisher'
+and ask if it should be run.  System administrators can disable
+installing applications from non-trusted sources, in which case you
+will have to persuade them that R is trustworthy.
 
 If you install R as a standard user into your own file space and use it
 under the same account, there are no known permission issues.
 
 If you use the default Administrator account (without `admin approval
 mode' being turned on) and install/update packages (in the system area
-or elsewhere), no issues arise.
+or elsewhere), no issues are known.
 
 If you use an account in the local Administrators group in `admin
 approval mode' (which is the intended norm under Vista), installation
 will make use of `over-the-shoulder' credentials.  You will run into
-problems if you try installing (including updating) packages in the main
-R library.  (It would be nice if at that point R used over-the-shoulder
-credentials, but that has not yet been implemented in the standard C
-interface.  Vista disallows creating @code{.chm} and @code{.dll} files
-in the system area without credentials.)  There are several ways around
+problems if you try installing (including updating) packages in the
+main R library.  (It would be nice if at that point R used
+over-the-shoulder credentials, but they apply to processes as a
+whole.  Vista disallows creating @code{.chm} and @code{.dll} files in
+the system area without credentials.)  There are several ways around
 this.
 
 @itemize
