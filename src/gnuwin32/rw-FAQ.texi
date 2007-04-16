@@ -149,6 +149,11 @@ takes up about 60Mb of disk space and a minimal one less than 20Mb.
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
 with spaces in will probably work, but is little-tested.)
+Users of Vista installing for a single users using in an account with
+administrator rights should consider installing into a non-system area
+(such as @file{C:\R}).  If you are installing to a network drive, you
+should consider changing the default form of help during the
+install @strong{not} to be Compiled HTML help: @xref{Help is not shown for some of the packages}.
 
 To install use @samp{@RWVER@-win32.exe}.  Just double-click on the
 icon and follow the instructions.  If you installed R this way you can
@@ -158,7 +163,7 @@ Administrator privileges you will be able to install R in the `Program
 Files' area and to set all the optional registry entries; otherwise
 you will only be able to install R in your own file area.  On Windows
 Vista you may need to confirm that you want to proceed with
-installing a program from an `unknown publisher'.
+installing a program from an `unidentified publisher'.
 
 After installation you should choose a working directory for R.  You
 will have a shortcut to @file{@RWVER@\bin\Rgui.exe} on your desktop
@@ -1136,10 +1141,10 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 @section Help is not shown for some of the packages
 
 Is this for Compiled HTML help (the default)?  If a help viewer appears
-but says the page cannot be displayed, this may be due to a recent
-Windows security patch (@url{http://support.microsoft.com/kb/896358}).
-Either apply the workarounds given at that URL or choose another form of
-help as the default (on installation or by editing
+but says the page cannot be displayed, this may be due to a 2006 Windows
+security patch (@url{http://support.microsoft.com/kb/896358}).  Either
+apply the workarounds given at that URL or choose another form of help
+as the default (on installation or by editing
 @file{R_HOME\etc\Rprofile.site}.
 
 @newchap{}
