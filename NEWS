@@ -820,9 +820,12 @@ BUG FIXES
 
     o	density() now ensures its 'y' values are non-negative. (PR#8876)
 
-    o	is.finite() and is.infinite() (and about 20 other primitives)
+    o	is.finite() and is.infinite() (and many other primitives)
 	are not internally generic and so do not support S4 methods,
 	which can no longer be set. (PR#7951)
+
+    o	nls(algorithm = "port") now accepts a list 'start' argument,
+	as for the other methods (and as documented).
 
 
 
