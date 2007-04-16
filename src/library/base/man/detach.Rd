@@ -42,6 +42,15 @@ detach(name, pos = 2, version, unload = FALSE)
   When a package have been loaded with an explicit version number it can
   be detached using the name shown by \code{\link{search}} or by
   supplying \code{name} and \code{version}: see the examples.
+
+  If a package has a namespace, detaching it does not by default unload
+  the namespace (and may not even with \code{unload=TRUE}), and
+  detaching will not in general unload any dynamically loaded compiled
+  code.  Further, registered S3 methods from the namespace will not be
+  removed.  If you use \code{\link{library}} on a package whose name
+  space is loaded, it attaches the exports of the loaded name space.
+  So detaching and re-attaching a package may not refresh some
+  or all components of the package, and is inadvisable.
 }
 \value{
   The attached database is returned invisibly, either as
@@ -58,10 +67,11 @@ detach(name, pos = 2, version, unload = FALSE)
 }
 \seealso{
   \code{\link{attach}}, \code{\link{library}}, \code{\link{search}},
-  \code{\link{objects}}.
+  \code{\link{objects}}, \code{\link{unloadNamespace}},
+  \code{\link{library.dynam.unload}} .
 }
 \examples{
-require(splines)#package
+require(splines) # package
 detach(package:splines)
 ## could equally well use detach("package:splines")
 ## but NOT  pkg <- "package:splines"; detach(pkg)
@@ -72,7 +82,7 @@ detach(pos = match(pkg, search()))
 
 ## careful: do not do this unless 'splines' is not already loaded.
 library(splines)
-detach(2)# 'pos' used for 'name'
+detach(2) # 'pos' used for 'name'
 
 ## an example of the name argument to attach
 ## and of detaching a database named by a character vector
