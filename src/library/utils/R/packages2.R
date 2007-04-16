@@ -94,18 +94,15 @@ install.packages <-
                     immediate. = TRUE, domain = NA)
     }
 
-    info <- file.info(lib)
-    ok <- info$isdir
-    nc <- nchar(info$mode)
     ## check for writeability by user
-    ok <- ok & (nc >= 3) & (substr(info$mode, nc-2, nc-2) == "7")
+    ok <- file.info(lib)$isdir & (file.access(lib, 2) == 0)
     if(length(lib) > 1 && any(!ok))
         stop(sprintf(ngettext(sum(!ok),
                               "'lib' element '%s'  is not a writable directory",
                               "'lib' elements '%s' are not writable directories"),
                      paste(lib[!ok], collapse=", ")), domain = NA)
     if(length(lib) == 1 && ok && .Platform$OS.type == "windows") {
-        ## file.info is unreliable on Windows, especially Vista.
+        ## file.access is unreliable on Windows, especially Vista.
         ## the only known reliable way is to try it
         fn <- file.path(lib, "_test_dir_")
         unlink(fn, recursive = TRUE) # precaution
