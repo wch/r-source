@@ -4,7 +4,7 @@
 ### Copyright 1999-1999 Saikat DebRoy <saikat$stat.wisc.edu>,
 ###                     Douglas M. Bates <bates$stat.wisc.edu>,
 ###                     Jose C. Pinheiro <jcp$research.bell-labs.com>
-### Copyright 2005      The R Development Core Team
+### Copyright 2005-7    The R Development Core Team
 ###
 ### This file is part of the nls library for R and related languages.
 ### It is made available under the terms of the GNU General Public
@@ -386,7 +386,7 @@ nls.control <- function(maxiter = 50, tol = 0.00001, minFactor = 1/1024,
 nls_port_fit <- function(m, start, lower, upper, control, trace)
 {
     ## Establish the working vectors and check and set options
-    p <- length(par <- as.double(start))
+    p <- length(par <- as.double(unlist(start)))
     iv <- integer(4*p + 82)
     v <- double(105 + (p * (2 * p + 20)))
     .Call(R_port_ivset, 1, iv, v)
