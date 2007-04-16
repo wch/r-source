@@ -906,19 +906,21 @@ Czech characters displayed correctly.
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated.
 
-In most cases they actually are, but by Windows.  Setting the locale or
-the @code{LANGUAGE} environment variable does not change the Windows
-setting of its `UI language'.  Under (international) Windows XP there
-are three tabs on the @emph{Regional and Language Options} applet in the
-Control Panel.  The first tab controls the locale, the second the UI and
-the third the fonts used for `non-Unicode' programs (but apparently also
-for Unicode ones in many cases): see Q3.3.
+In most cases they actually are, but by Windows.  Setting the locale
+or the @code{LANGUAGE} environment variable does not change the
+Windows setting of its `UI language'.  Under (international) Windows
+XP there are three tabs on the @emph{Regional and Language Options}
+applet in the Control Panel.  The first tab controls the locale, the
+second the UI and the third the fonts used for `non-Unicode' programs
+(but apparently also for Unicode ones in many cases): see Q3.3.  Vista
+talks about the ' UI language', and the 'system locale' for setting
+the fonts used for `non-Unicode' programs.
 
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
-Windows in one language and R in another, you may find the way Windows
+Windows XP in one language and R in another, you may find the way Windows
 handles internationalization slightly odd.  For further details see
-@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}
+@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}.
 
 @newchap{}
 @node Packages, Windows Features, Languages and Internationalization, Top
