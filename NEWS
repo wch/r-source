@@ -480,10 +480,14 @@ INSTALLATION
 	2.4.1.
 
     o	Detection of a Java development environment was added such that
-	packages don't need to provide their own Java detection.
+	packages don't need to provide their own Java detection. Newly
+	added make variables are JAVAC, JAVAH, JAR and JAVA_CPPFLAGS.
 
 	R CMD javareconf was updated to look for the corresponding
 	Java tools as well.
+
+	In addition, Java detection honors user-supplied environment
+	variables JAVA_CPPFLAGS, JAVA_LIBS and JAVA_LD_LIBRARY_PATH.
 
     o	Added workaround for reported non-POSIX sh on OSF1.  (PR#9375)
 
@@ -522,6 +526,7 @@ UTILITIES
 
     o	The following additional flags are accessible from R CMD config:
 	OBJC, OBJCFLAGS, JAR, JAVA, JAVAC, JAVAH, JAVA_HOME, JAVA_LIBS
+	and JAVA_CPPFLAGS.
 
     o	R CMD build now takes the package name from the DESCRIPTION
 	file and not from the directory.  (PR#9266)

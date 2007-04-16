@@ -47,6 +47,13 @@ AC_DEFUN([R_RUN_JAVA],
 ## JAVA_HOME to the home directory of the Java runtime/jdk
 ## JAVA_LD_LIBRARY_PATH to the path necessary for Java runtime
 ## JAVA_LIBS to flags necessary to link JNI programs (*)
+## JAVA_CPPFLAGS to cpp flags necessary to find Java includes (*)
+## JAVAC to Java compiler path (optional)
+## JAVAH to Java header preprocessor path (optional)
+## JAR to Java archiver (optional)
+##
+## (*) - those variables are modified for use in make files
+##       to rely on $(JAVA_HOME) and substituted with 0 suffix
 ##
 ## JAVA_HOME env var is honored during the search and the search
 ## will fail if it is set incorrectly.
@@ -59,7 +66,7 @@ if test -z "${JAVA_HOME}" ; then
   JAVA_PATH=${PATH}
 else
   ## try jre/bin first just in case we don't have full JDK
-  JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${PATH}
+  JAVA_PATH=${JAVA_HOME}:${JAVA_HOME}/jre/bin:${JAVA_HOME}/bin:${JAVA_HOME}/../bin:${PATH}
 fi
 ## if 'java' is not on the PATH or JAVA_HOME, add some guesses as of
 ## where java could live
@@ -109,8 +116,7 @@ if test ${acx_java_works} = yes; then
 
   AC_MSG_CHECKING([for Java environment])
 
-
-  ## retrieve JAVA_HOME from Java itself if not set 
+  ## find JAVA_HOME from Java itself unless specified
   if test -z "${JAVA_HOME}" ; then
     R_RUN_JAVA(JAVA_HOME,[-classpath ${getsp_cp} getsp java.home])
   fi
@@ -123,10 +129,19 @@ if test ${acx_java_works} = yes; then
   else
     AC_MSG_RESULT([in ${JAVA_HOME}])
 
+    : ${JAVA_LIBS=~autodetect~}
+    : ${JAVA_CPPFLAGS=~autodetect~}
+    : ${JAVA_LD_LIBRARY_PATH=~autodetect~}
+    custom_JAVA_LIBS="${JAVA_LIBS}"
+    custom_JAVA_CPPFLAGS="${JAVA_CPPFLAGS}"
+    custom_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"
+
     case "${host_os}" in
       darwin*)
         JAVA_LIBS="-framework JavaVM"
         JAVA_LIBS0="-framework JavaVM"
+	JAVA_CPPFLAGS="-I${JAVA_HOME}/include"
+	JAVA_CPPFLAGS0='-I$(JAVA_HOME)/include'
         JAVA_LD_LIBRARY_PATH=
         ;;
       *)
@@ -137,15 +152,97 @@ if test ${acx_java_works} = yes; then
 	JAVA_LIBS0=`echo ${JAVA_LIBS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
 	JAVA_LD_LIBRARY_PATH=`echo ${JAVA_LD_LIBRARY_PATH} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
 
-	## FIXME: we may want to figure out whether JAVA_HOME is a symlink
-	## to any paths in JAVA_LD_LIBARARY_PATH in which case we should use
-	## the symlink instead. This would solve versioning problems across
-	## Sun's JDKs.
+	## includes consist of two parts - jni.h and machine-dependent jni_md.h
+	jinc=''
+	for pinc in include ../include jre/include; do 
+	  if test -e "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
+	done
+	## only if we get jni.h we can try to find jni_md.h
+	if test -n "${jinc}"; then
+	   JAVA_CPPFLAGS="-I${jinc}"
+	   mdinc=''
+	   jmdirs=''
+	   ## put the most probable locations for each system in the first place
+	   case "${host_os}" in
+	     linux*)   jmdirs=linux;;
+	     bsdi*)    jmdirs=bsdos;;
+	     osf*)     jmdirs=alpha;;
+	     solaris*) jmdirs=solaris;;
+	     freebsd*) jmdirs=freebsd;;
+	   esac
+	   ## prepend . and append less-likely ones
+	   jmdirs=". ${jmdirs} genunix ppc x86 iris hp-ux aix win32 cygwin openbsd"
+	   for pimd in ${jmdirs}; do
+	     if test -e "${jinc}/${pimd}/jni_md.h"; then jmdinc="${jinc}/${pimd}"; break; fi
+	   done
+	   if test -z "${jmdinc}"; then
+	     # ultima-ratio: use find and pray that it works
+	     jmdinc=`find "${jinc}/" -name jni_md.h 2>dev/null |head -n 1 2>/dev/null`
+	     if test -n "${jmdinc}"; then jmdinc=`dirname "${jmdinc}"`; fi
+	   fi
+	   if test -n "${jmdinc}"; then
+	     if test "${jmdinc}" != "${jinc}/."; then
+	       JAVA_CPPFLAGS="${JAVA_CPPFLAGS} -I${jmdinc}"
+	     fi
+	   fi
+	fi
+	JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
         ;;
     esac
-  
-    ## note that we actually don't test JAVA_LIBS - we hope that the detection
-    ## was correct.
+
+    ## honor user overrides
+    acx_java_uses_custom_flags=no
+    if test "${custom_JAVA_LIBS}" != '~autodetect~'; then
+      JAVA_LIBS="${custom_JAVA_LIBS}"
+      JAVA_LIBS0=`echo ${JAVA_LIBS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+      acx_java_uses_custom_flags=yes
+    fi
+    if test "${custom_JAVA_CPPFLAGS}" != '~autodetect~'; then
+      JAVA_CPPFLAGS="${custom_JAVA_CPPFLAGS}"
+      JAVA_CPPFLAGS0=`echo ${JAVA_CPPFLAGS} | sed -e s:${JAVA_HOME}:\$\(JAVA_HOME\):g`
+      acx_java_uses_custom_flags=yes
+    fi
+    if test "${custom_JAVA_LD_LIBRARY_PATH}" != '~autodetect~'; then
+      JAVA_LD_LIBRARY_PATH="${custom_JAVA_LD_LIBRARY_PATH}"
+    fi
+
+    ## try to link a simple JNI program
+    AC_MSG_CHECKING([whether JNI programs can be compiled])
+    j_save_LIBS="${LIBS}"
+    j_save_CPPF="${CPPFLAGS}"
+    LIBS="${JAVA_LIBS}"
+    CPPFLAGS="${JAVA_CPPFLAGS}"
+    AC_LINK_IFELSE([
+#include <jni.h>
+int main(void) {
+    JNI_CreateJavaVM(0, 0, 0);
+    return 0;
+}
+],[AC_MSG_RESULT(yes)
+    LIBS="${j_save_LIBS}"
+    CPPFLAGS="${j_save_CPPF}"
+],[
+    if test "${acx_java_uses_custom_flags}" = yes; then
+      AC_MSG_RESULT(no)
+      AC_MSG_ERROR([Failed to compile a JNI program with custom JAVA_LIBS/JAVA_CPPFLAGS.
+See config.log for details.
+Do NOT set JAVA_LIBS/JAVA_CPPFLAGS unless you are sure they are correct!
+Java/JNI support is optional unless you set either JAVA_LIBS or JAVA_CPPFLAGS.])
+    fi
+    ## some OSes/Javas need -lpthread
+    LIBS="${LIBS} -lpthread"
+    AC_LINK_IFELSE([
+#include <jni.h>
+int main(void) {
+    JNI_CreateJavaVM(0, 0, 0);
+    return 0;
+}
+],[AC_MSG_RESULT([yes (with pthreads)])
+    JAVA_LIBS0="${JAVA_LIBS0} -lpthread"
+],[AC_MSG_RESULT(no)])
+    LIBS="${j_save_LIBS}"
+    CPPFLAGS="${j_save_CPPF}"
+])
 
     have_java=yes
   fi
@@ -162,4 +259,5 @@ AC_SUBST(JAVAH)
 AC_SUBST(JAR)
 AC_SUBST(JAVA_LD_LIBRARY_PATH)
 AC_SUBST(JAVA_LIBS0)
+AC_SUBST(JAVA_CPPFLAGS0)
 ])
