@@ -93,6 +93,8 @@ Rpwd:
 Rpwd.exe: rpwd.o rcico.o
 
 rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
+rgico.o: Rgui.exe.manifest
+rtico.o: Rterm.exe.manifest
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.dll *.lib *.a *.d Makedeps
