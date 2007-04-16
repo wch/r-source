@@ -691,7 +691,9 @@ confirm that you really want to take that action.
 Vista will report that the R installer has an `unidentified publisher'
 and ask if it should be run.  System administrators can disable
 installing applications from non-trusted sources, in which case you
-will have to persuade them that R is trustworthy.
+will have to persuade them that R is trustworthy, or digitally sign the
+R installer yourself, or (unless this is also disabled) run the
+installer from a standard account and install into your own file area.
 
 If you install R as a standard user into your own file space and use it
 under the same account, there are no known permission issues.
@@ -719,7 +721,8 @@ selecting 'Run as Administrator'.)
 @item
 Transfer ownership of the R installation to the user which installed R.
 To do so, use the security tab on the @samp{Properties} of the top-level
-R folder.  It may suffice to enable `Full Control' over this directory.
+R folder and give `Full Control' over this directory to the user (not
+just the Administrator group).
 
 @item
 Install packages into a different library tree owned by the account used to
@@ -1006,16 +1009,15 @@ dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE)
 
 @noindent
 to do so.  If you use @code{install.packages} and do not have permission
-to write to the main or site library, it will offer to create a personal
+to write to the main or site library, it should offer to create a personal
 library for you and install the packages there.  This will also happen
 if @code{update.packages} offers to update packages for you in a library
 where you do not have write permission.
 
-There can be additional security issues under Windows Vista:
-@xref{Does R run under Windows Vista?}.  In particular, the detection
-that a standard user had suitable permissions appears not to work
-correctly under Vista, so we recommend that you do create a personal
-directory yourself.
+There can be additional security issues under Windows Vista: @xref{Does
+R run under Windows Vista?}.  In particular, the detection that a
+standard user has suitable permissions appears to be unreliable under
+Vista, so we recommend that you do create a personal directory yourself.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
