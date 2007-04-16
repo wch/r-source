@@ -66,4 +66,4 @@ ex <- nongen_prims[!nongen_prims %in%
 if(length(ex))
     cat("non-generic primitives not covered in methods::.ExcludePrimitiveGenerics:",
         paste(sQuote(ex), collapse=", "), "\n")
-stopifnot(ex)
+stopifnot(length(ex) == 0)
