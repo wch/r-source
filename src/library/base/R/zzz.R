@@ -127,6 +127,8 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     }
     ## now add the group generics
     ## log, round, signif and the gamma fns are not primitive
+    ## ^^^^^^^^^^^^^^^^^^ and the first 3 plus "trigamma" are exactly
+    ##  those 'Math' members with more than one argument.
     fx <- function(x) {}
     for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
                'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
