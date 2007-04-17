@@ -93,6 +93,7 @@ checked against the current version of the source code.
 * The write barrier::           
 * Serialization Formats::       
 * Encodings for CHARSXPs::      
+* S4 objects::                  
 * Internal use of global and base environments::  
 * Modules::                     
 @end menu
@@ -632,6 +633,7 @@ table.
 @cindex attributes
 @findex ATTRIB
 @findex SET_ATTRIB
+@findex DUPLICATE_ATTRIB
 As we have seen, every @code{SEXPREC} has a pointer to the attributes of
 the node (default @code{R_NilValue}).  The attributes can be accessed/set
 by the macros/functions @code{ATTRIB} and @code{SET_ATTRIB}, but such
@@ -642,7 +644,8 @@ Otherwise access goes through the functions @code{getAttrib} and
 @code{setAttrib} which impose restrictions on the attributes.  One thing
 to watch is that if you copy attributes from one object to another you
 may (un)set the @code{"class"} attribute and so need to copy the object
-bit as well.
+and S4 bits as well.  There is a macro/function
+@code{DUPLICATE_ATTRIB} to automate this.
 
 The code assumes that the attributes of a node are either
 @code{R_NilValue} or a pairlist of non-zero length (and this is checked
@@ -687,7 +690,7 @@ Becker, Chambers & Wilks (1988, pp. 144--6) give some guidance.  Scalar
 functions (those which operate element-by-element on a vector and whose
 output is similar to the input) should preserve attributes (except
 perhaps class, and if they do preserve class they need to preserve the
-@code{OBJECT} bit).  Binary operations normally call
+@code{OBJECT} and S4 bits).  Binary operations normally call
 @findex copyMostAttributes
 @code{copyMostAttributes} to copy most attributes from the longer
 argument (and if they are of the same length from both, preferring the
@@ -733,7 +736,8 @@ attr(,"comm")
 @emph{Contexts} are the internal mechanism used to keep track of where a
 computation has got to (and from where), so that control-flow constructs
 can work and reasonable information can be produced on error conditions,
-(such as traceback) and otherwise (the @code{sys.@var{xxx}} functions).
+(such as @emph{via} traceback) and otherwise (the @code{sys.@var{xxx}}
+functions).
 
 Execution contexts are a stack of C @code{structs}:
 
@@ -875,10 +879,12 @@ primitive, @code{+} is a builtin primiitve, @code{switch} is a special
 Many of the internal functions are internal generics, which for specials
 means that they do not evaluate their arguments on call, but the C code
 starts with a call to @code{DispatchOrEval}.  The latter evaluates the
-first argument, and looks for a method based on its class.  If it finds
-a method, it dispatches to that method with a call based on promises to
-evaluate the remaining arguments.  If no method is found, the remaining
-arguments are evaluated before return to the internal generic.
+first argument, and looks for a method based on its class.  (If S4
+dispatch is on, S4 methods are looked for first, even for S3 classes.)
+If it finds a method, it dispatches to that method with a call based on
+promises to evaluate the remaining arguments.  If no method is found,
+the remaining arguments are evaluated before return to the internal
+generic.
 
 @cindex generic, generic
 @findex DispatchGeneric
@@ -888,8 +894,8 @@ their arguments), and contain a call to the C function
 @code{DispatchGeneric}.  There are some peculiarities over the number of
 arguments for the @code{"Math"} group generic, with some members
 allowing only one argument, some having two (with a default for the
-second) but the primitive members (most) allowing one or more arguments
-for the generic but only one if the default method is used.
+second) but the primitive members (mostly) allowing one or more
+arguments for the generic but only one if the default method is used.
 
 @menu
 * Missingness::                 
@@ -1015,6 +1021,13 @@ documented setting of @code{R_Visible} on return, unless the C code is
 allowed to change it (the exceptions above are indicated by
 @code{PRIMPRINT} having value 2).
 
+The actual autoprinting is done by @code{PrintValueEnv} in @file{print.c}.  If
+the object to be printed has the S4 bit set and S4 methods dispatch is
+on, @code{show} is called to print the object.  Otherwise, if the object
+bit is set (so the object has a @code{"class"} attribute), @code{print}
+is called to dispatch methods: for objects without a class the internal
+code of @code{print.default} is called.
+
 
 @node The write barrier, Serialization Formats, Autoprinting, R Internal Structures
 @section The write barrier and the garbage collector
@@ -1136,7 +1149,7 @@ name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
 enclosure, frame, tag and attributes.
 
-@node Encodings for CHARSXPs, Internal use of global and base environments, Serialization Formats, R Internal Structures
+@node Encodings for CHARSXPs, S4 objects, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
 
 Character data in @R{} are stored in the sexptype @code{CHARSXP}.  Until
@@ -1187,8 +1200,94 @@ we have to a universal format.  For those that do not (for example those
 lacking a powerful enough @code{iconv}), it is likely that they work in
 Latin-1, the old @R{} assumption.
 
+@node S4 objects, Internal use of global and base environments, Encodings for CHARSXPs, R Internal Structures
+@section S4 objects
 
-@node Internal use of global and base environments, Modules, Encodings for CHARSXPs, R Internal Structures
+The internal representation of objects from S4 classes changed in @R{}
+2.4.0.  It is possible that objects from earlier representations still
+exist, but there is no guarantee that they will be handled
+correctly.
+
+[This section is currently a preliminary draft and should not be taken
+as definitive.]
+
+@menu
+* Representation of S4 objects::  
+* Mechanics of S4 dispatch::    
+@end menu
+
+@node Representation of S4 objects, Mechanics of S4 dispatch, S4 objects, S4 objects
+@subsection Representation of S4 objects
+
+S4 objects can be of any @code{SEXPTYPE}.  They are either an object of
+a simple type (such as an atomic vector or function) with S4 class
+information or of type @code{S4SXP}.  In all cases, the `S4 bit' (bit 4
+of the `general purpose' field) is set, and can be tested by the
+macro/function @code{IS_S4_OBJECT}.
+
+S4 objects are created via @code{new()}@footnote{This can also create
+non-S4 objects, as in @code{new("integer")}.} and thence via the C
+function @code{R_do_new_object}.  This duplicates the prototype of the
+class, adds a class attribute and sets the S4 bit.  All S4 class
+attributes should be character vectors of length one with an attribute
+giving (as a character string) the name of the package (or
+@code{.GlobalEnv}) containing the class definition.  Since S4 objects
+have a class attribute, the @code{OBJECT} bit is set.
+
+It is currently unclear what should happen if the class attribute is
+removed from an S4 object, or if this should be allowed.
+
+@node Mechanics of S4 dispatch,  , Representation of S4 objects, S4 objects
+@subsection Mechanics of S4 dispatch
+
+This subsection does not discuss how S4 methods are chosen: see
+@url{http://developer.r-project.org/howMethodsWork.pdf}.
+
+For all but primitive functions, setting a method on an existing
+function that is not itself S4 generic creates a new object in the
+current environment which is a call to @code{standardGeneric} with the
+old definition as the default method.  Such S4 generics can also be
+created @emph{via} a call to @code{setGeneric}@footnote{although this is
+not recommended as it is less future-proof.} and are standard closures
+in the @R{} language, with environment the environment within which they
+are created.  With the advent of name spaces this is somewhat
+problematic: if @code{myfn} was previously in a package with a name
+space there will be two functions called @code{myfn} on the search
+paths, and which will be called depends on which search path is in use.
+This is starkest for functions in the base name space, where the
+original will be found ahead of the newly created function from any
+other package with a name space.
+
+Primitive functions are treated quite differently, for efficiency
+reasons: this results in different semantics.  @code{setGeneric} is
+disallowed for primitive functions.  The @pkg{methods} package contains
+a character vector @code{.ExcludePrimitiveGenerics} of primitives which
+are not internally generic, and S4 methods cannot be set on these.  Then
+there is a list @code{.BasicFunsList} named by primitive functions in
+@code{.BasicFunsList}: the entries are either @code{FALSE} or a standard
+S4 generic showing the effective definition.  When @code{setMethod} is
+called, either it fails if setting is disallowed or a method is set on
+the effective generic.
+
+Actual dispatch of S4 methods for primitives piggy-backs on the S3
+dispatch mechanism, so S4 methods can only be dispatched for primitives
+which are internally S3 generic.  When a primitive that is internally S3
+generic is called with a first argument which is an object and S4
+dispatch is on (that is, the @pkg{methods} name space is loaded),
+@code{DispatchOrEval} calls @code{R_possible_dispatch} (defined in
+@file{src/main/objects.c}).  The latter first checks an internal table
+to see if any S4 methods are set for that generic (and S4 dispatch is
+currently enabled for that generic), and if so proceeds to S4 dispatch
+using methods stored in another internal table.  Note that this means
+that dispatch will not occur for the pseudo-classes like
+@code{"function"} and @code{"matrix"}, but that it will occur for non-S4
+objects which have an S3 class.  All primitives are in the base
+name space, and this mechanism means that S4 methods can be set for
+(some) primitives and will always be used, in contrast to setting
+methods on non-primitives.
+
+
+@node Internal use of global and base environments, Modules, S4 objects, R Internal Structures
 @section Internal use of global and base environments
 
 This section notes known use by the system of these environments: the
@@ -1543,12 +1642,12 @@ As from @R{} 2.5.0, prototypes are available for the primitive functions
 and operators, and there are used for printing, @code{args} and package
 checking (e.g.@: by @code{tools::checkS3methods} and by package
 @pkg{codetools}).  There are two environments in the @pkg{base} package
-(and namespace), @samp{.GenericArgsEnv} for those primitives which are
+(and name space), @samp{.GenericArgsEnv} for those primitives which are
 internal S3 generics, and @samp{.ArgsEnv} for the rest.  Those
 environments contain closures with the same names as the primitives,
 formal argumnts derived (manually) from the help pages, a body which
 as suitable call to @code{UseMethod} or @code{NULL} and environment the
-base namespace.
+base name space.
 
 The C code for @code{print.default} and @code{args} uses the closures in
 these environments in preference to the definitions in base (as
@@ -1649,7 +1748,7 @@ such as @cite{The UNIX Programming Environment} by Brian W. Kernighan &
 Rob Pike.  Note in particular that @samp{|} in a regexp is an extended
 regexp, and is not supported by all versions of @command{grep} or
 @command{sed}.  The Open Group Base Specifications, Issue 6, which is
-technicall identical to ISO/IEC 9945 and IEEE Std 1003.1 (POSIX), 2004,
+technically identical to ISO/IEC 9945 and IEEE Std 1003.1 (POSIX), 2004,
 are available at
 @url{http://www.opengroup.org/onlinepubs/009695399/mindex.html}.
 @end itemize
