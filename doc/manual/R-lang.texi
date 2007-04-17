@@ -2513,10 +2513,10 @@ functions can be
 returned as values from other functions then some rather nice, but at
 first glance peculiar, properties obtain.
 
-A simple example,
+A simple example:
 
 @example
-f <- function(x) @{
+f <- function() @{
     y <- 10
     g <- function(x) x + y
     return(g)
@@ -2533,17 +2533,18 @@ function body variables can be bound, local or unbound.  The bound
 variables are those that match the formal arguments to the function.
 The local variables are those that were created or defined within the
 function body.  The unbound variables are those that are neither local
-or bound.  When a function body is evaluated there is no problem
+nor bound.  When a function body is evaluated there is no problem
 determining values for local variables or for bound variables.  Scoping
 rules determine how the language will find values for the unbound
 variables.
 
-When @code{h(3)} is evaluated we see that its body is that of @code{g}.
-Within that body @code{x} and @code{y} are unbound.  In a language with
-@cindex scope
-lexical scope @code{x} will be associated with the value 3 and @code{y}
-with the value 10 so @code{h()} should return the value 13.  In @R{}
-this is indeed what happens.
+When @code{h(3)} is evaluated we see that its body is that of
+@code{g}. Within that body @code{x} is bound to the formal argument
+and @code{y} is unbound.  In a language with
+@cindex scope 
+lexical scope @code{x} will be associated with the value 3 and
+@code{y} with the value 10 local to @code{f} so @code{h(3)} should return the value 13.
+In @R{} this is indeed what happens.
 
 In @Sl{}, because of the different scoping rules one will get an error
 indicating that @code{y} is not found, unless there is a variable
