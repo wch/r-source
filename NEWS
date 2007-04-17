@@ -827,6 +827,11 @@ BUG FIXES
     o	nls(algorithm = "port") now accepts a list 'start' argument,
 	as for the other methods (and as documented).
 
+    o	Standard errors from the "ar" method of predict() could be
+	wrong for the last p predictions for models near
+	non-stationarity. (PR#9614)
+
+
 
 
 	**************************************************

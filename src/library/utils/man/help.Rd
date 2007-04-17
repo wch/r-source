@@ -46,19 +46,21 @@ type?topic
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{chmhelp}{logical (or \code{NULL}). Only relevant under Windows.
    If \code{TRUE} the Compiled HTML version of the help on the topic
-   will be shown in a help viewer.}
+   will be shown in a help viewer.  If none is available, plain text
+   help will be shown.}
 #ifdef unix
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
    default after \code{\link{help.start}} has been called), the HTML
-   version of the help on the topic will be shown in the browser specified by
-   \code{options("browser")}.  See \code{\link{browseURL}} for details
-   of the browsers that are supported.  Where possible an existing
-   browser window is re-used.}
+   version (if available) of the help on the topic will be shown in the
+   browser specified by \code{options("browser")}.  See
+   \code{\link{browseURL}} for details of the browsers that are
+   supported.  Where possible an existing browser window is re-used.}
 #endif
 #ifdef windows
-  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
-    version of the help on the topic will be shown in a browser specified by
-    \code{options("browser")} or the file-association mechanism.
+ \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
+   version (if available) of the help on the topic will be shown in a
+   browser specified by \code{options("browser")} or the
+   file-association mechanism.
   }
 #endif
   \item{pager}{the pager to be used for \code{\link{file.show}}.}
