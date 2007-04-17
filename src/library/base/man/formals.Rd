@@ -24,7 +24,8 @@ formals(fun, envir = environment(fun)) <- value
 }
 \value{
   \code{formals} returns the formal argument list of the function
-  specified, as a \code{\link{pairlist}}.
+  specified, as a \code{\link{pairlist}}, or \code{NULL} for a
+  non-function or primitive.
 
   The replacement form sets the formals of a function to the
   list/pairlist on the right hand side, and (potentially) resets the
