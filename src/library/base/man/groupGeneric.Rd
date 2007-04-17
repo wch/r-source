@@ -81,8 +81,9 @@ Summary(\dots, na.rm = FALSE)
     }
     Members of this group dispatch on \code{x}.  Not all members will
     accept more than one argument: most members have default methods
-    expecting one argument, but \code{log}, \code{round} and
-    \code{signif} expect two.
+    expecting one argument.  (Specifically, \code{atan} and the gamma
+    functions accept only one argument and \code{log}, \code{round} and
+    \code{signif} accept one or two.)
 
     \item Group \code{"Ops"}:
     \itemize{
