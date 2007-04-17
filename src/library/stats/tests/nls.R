@@ -215,14 +215,12 @@ expsum.df <-data.frame(expsumNoisy)
 
 ## estimate decay rates, amplitudes with default Gauss-Newton
 summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
-             start = list(k = c(.6,.02), sp = c(1,2)), trace=TRUE,
-             control=nls.control(maxiter=20, warnOnly =  TRUE)))
+             start = list(k = c(.6,.02), sp = c(1,2))))
 
 ## didn't work with port in 2.4.1
 summary (nls(expsumNoisy ~ getExpmat(k, 1:100) %*% sp, expsum.df,
-             start = list(k = c(.6,.02), sp = c(1,2)), trace=TRUE,
-             algorithm = "port",
-             control = nls.control(maxiter=20, warnOnly =  TRUE)))
+             start = list(k = c(.6,.02), sp = c(1,2)),
+             algorithm = "port"))
 
 
 cat('Time elapsed: ', proc.time() - .proctime00,'\n')
