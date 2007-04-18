@@ -524,7 +524,6 @@ LibExtern SEXP	R_SourceSymbol;     /* "source" */
 LibExtern SEXP	R_DotEnvSymbol;     /* ".Environment" */
 LibExtern SEXP	R_RecursiveSymbol;  /* "recursive" */
 LibExtern SEXP	R_UseNamesSymbol;   /* "use.names" */
-LibExtern SEXP	R_RowNamesSymbol;   /* "row.names" */
 LibExtern SEXP  R_SrcfileSymbol;    /* "srcfile" */
 LibExtern SEXP  R_SrcrefSymbol;     /* "srcref" */
 
@@ -601,7 +600,6 @@ Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
 Rboolean Rf_psmatch(char *, char *, Rboolean);
 void Rf_PrintValue(SEXP);
 SEXP Rf_protect(SEXP);
-SEXP Rf_rownamesgets(SEXP,SEXP);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
