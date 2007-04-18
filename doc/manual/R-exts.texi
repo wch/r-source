@@ -5934,9 +5934,10 @@ want; these and many such symbols are defined in the header file
 @file{Rinternals.h}.
 
 There are shortcuts here too: the functions @code{namesgets},
-@code{dimgets} and @code{dimnamesgets} are the internal versions of
-@code{names<-}, @code{dim<-} and @code{dimnames<-}, and there are
-functions such as @code{GetMatrixDimnames} and @code{GetArrayDimnames}.
+@code{dimgets} and @code{dimnamesgets} are the internal versions of the
+default methods of @code{names<-}, @code{dim<-} and @code{dimnames<-}
+(for vectors and arrays), and there are functions such as
+@code{GetMatrixDimnames} and @code{GetArrayDimnames}.
 
 What happens if we want to add an attribute that is not pre-defined? We
 need to add a symbol for it @emph{via} a call to
