@@ -894,6 +894,9 @@ BUG FIXES
 	wrong for the last p predictions for models near
 	non-stationarity. (PR#9614)
 
+    o	bw.SJ(1:20) and less trivial cases used too small default search
+	interval for bandwidths.
+
 
 
 
