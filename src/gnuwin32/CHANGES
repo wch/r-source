@@ -20,6 +20,10 @@ OTHERS
 	should be more reliable, particularly on NT-based versions of
 	Windows.  (PR#7234)
 
+    o	The version number of the installer now includes the SVN
+	revision number (which is handy for R-patched and R-devel
+	daily builds).
+
 
 
 

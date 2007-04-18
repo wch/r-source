@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-5 R Development Core Team
+# Copyright (C) 2001-7 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ use File::Find;
 
 my $fn, $component, $path;
 my $startdir=cwd();
-my $RVER, $RVER0;
+my $RVER, $RVER0, $SVN;
 my $RW=$ARGV[0];
 my $SRCDIR=$ARGV[1];
 my $MDISDI=$ARGV[2];
@@ -41,6 +41,12 @@ $RVER =~ s/\n.*$//;
 $RVER =~ s/Under .*$/Pre-release/;
 $RVER0 = $RVER;
 $RVER0 =~ s/ .*$//;
+## now add SVN revision
+open ver, "< ../../../SVN-REVISION";
+$SVN = <ver>;
+close ver;
+$SVN =~s/Revision: //;
+$RVER0 .= "." . $SVN;
 
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
