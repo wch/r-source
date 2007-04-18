@@ -15,7 +15,14 @@ args(name)
 }
 \value{
   A function with identical formal argument list but an empty body if
-  given a function; \code{NULL} in case of a variable.
+  given a closure.
+
+  A function with the documented usage for a primitive: note that in
+  almost all cases primitives do not make use of named arguments and
+  match by position rather than name.  (\code{rep} and \code{seq.int}
+  are exceptions.)
+
+  \code{NULL} in case of a non-function.
 }
 \details{
   This function is mainly used interactively.
