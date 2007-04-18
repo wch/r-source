@@ -133,13 +133,16 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
+
+    ## ! is unary and handled below
     fx <- function(e1, e2) {}
-    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
+    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|',
                '==', '!=', '<', '<=', '>=', '>')) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
+
     ## none of Summary is primitive
     for(f in c("Arg", "Conj", "Im", "Mod", "Re")) {
         fx <- function(z) {}
@@ -150,6 +153,7 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     env
 })
 ### do these outside to get the base namespace as the environment.
+assign("!", function(x) UseMethod("!"), envir = .GenericArgsEnv)
 assign("as.character", function(x, ...) UseMethod("as.character"),
        envir = .GenericArgsEnv)
 assign("c", function(..., recursive = FALSE) UseMethod("c"),
