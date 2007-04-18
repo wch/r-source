@@ -412,7 +412,23 @@ function()
 ### ** .get_S3_primitive_generics
 
 .get_S3_primitive_generics <-
-function() base::.S3PrimitiveGenerics
+function(include_group_generics = TRUE)
+{
+    if(include_group_generics)
+        c(base::.S3PrimitiveGenerics,
+          "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round",
+          "signif", "exp", "log", "cos", "sin", "tan", "acos", "asin",
+          "atan", "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
+          "lgamma", "gamma", "gammaCody", "digamma", "trigamma",
+          "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax",
+          "cummin",
+          "+", "-", "*", "/", "^", "%%", "%/%", "&", "|", "!", "==",
+          "!=", "<", "<=", ">=", ">",
+          "all", "any", "sum", "prod", "max", "min", "range",
+          "Arg", "Conj", "Im", "Mod", "Re")
+    else
+        base::.S3PrimitiveGenerics
+}
 
 ### ** .get_standard_Rd_keywords
 
@@ -671,16 +687,19 @@ function(package)
              "print.atomic", "print.coefmat",
              "rep.int", "round.POSIXt",
              "seq.int", "sort.int", "sort.list"),
-             Hmisc = "t.test.cluster",
+             BSDA = "sign.test",
+             Hmisc = c("abs.error.pred, t.test.cluster"),
              HyperbolicDist = "log.hist",
              MASS = c("frequency.polygon",
              "gamma.dispersion", "gamma.shape",
              "hist.FD", "hist.scott"),
+             SMPracticals = "exp.gibbs",
              XML = "text.SAX",
              ape = "sort.index",
              boot = "exp.tilt",
              car = "scatterplot.matrix",
 	     calibrator = "t.fun",
+             equivalence = "sign.boot",
              grDevices = "boxplot.stats",
              graphics = c("close.screen",
              "plot.design", "plot.new", "plot.window", "plot.xy",
@@ -689,11 +708,12 @@ function(package)
              mratios = c("t.test.ratio.default", "t.test.ratio.formula"),
              quadprog = c("solve.QP", "solve.QP.compact"),
              reposTools = "update.packages2",
+             sac = "cumsum.test",
              sm = "print.graph",
              stats = c("anova.lmlist", "fitted.values", "lag.plot",
              "influence.measures", "t.test"),
-             utils = c("close.socket", "flush.console",
-             "update.packages")
+             supclust = c("sign.change", "sign.flip"),
+             utils = c("close.socket", "flush.console", "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]

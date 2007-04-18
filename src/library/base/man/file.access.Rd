@@ -24,22 +24,12 @@ file.access(names, mode = 0)
   Permission will be computed for real user ID and real group ID (rather
   than the effective IDs).
 #endif
-#ifdef windows
-  Execute permission is ignored under Windows (this function regards all
-  files as executable), and all directories are reported to have both
-  read and write permissions.  Write permission may be reported on
-  files that are not writeable due to ownership, Access Control Lists or
-  User Account Control settings (e.g. not owned by the user of the R
-  process).
-#endif
 
   Please note that it is not good to use this function to test before
   trying to open a file.  On a multi-tasking system, it is possible that
   the accessibility of a file will change between the time you call
-  \code{file.access()} and the time you try to open the file, and in
-  recent Windows versions the underlying function in \code{msvcrt.dll}
-  sometimes returns inaccurate values.  It is better to wrap
-  file open attempts in \code{\link{try}} instead.
+  \code{file.access()} and the time you try to open the file.  It is
+  better to wrap file open attempts in \code{\link{try}}.
 }
 \value{
   An integer vector with values \code{0} for success and \code{-1} for failure.

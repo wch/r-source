@@ -3,7 +3,7 @@
 \usage{
 ceiling(x)
 floor(x)
-trunc(x)
+trunc(x, \dots)
 
 round(x, digits = 0)
 signif(x, digits = 6)
@@ -43,6 +43,7 @@ zapsmall(x, digits = getOption("digits"))
   \item{x}{a numeric vector.  A complex vector is allowed for
     \code{round}, \code{signif} and \code{zapsmall}.}
   \item{digits}{integer indicating the precision to be used.}
+  \item{\dots}{arguments to be passed to methods.}
 }
 \details{
   All but \code{zapsmall} are generic functions: methods can be

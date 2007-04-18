@@ -1000,13 +1000,12 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
 
+    checkArity(op, args);
+
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
 
-    checkArity(op, args);
-
     if (isComplex(CAR(args)))
-
 	return complex_math1(call, op, args, env);
 
 #define MATH1(x) math1(CAR(args), x, call);
@@ -1015,7 +1014,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2: return MATH1(ceil);
     case 3: return MATH1(sqrt);
     case 4: return MATH1(sign);
-    case 5: return MATH1(trunc);
+	/* case 5: return MATH1(trunc); separate from 2.6.0 */
 
     case 10: return MATH1(exp);
     case 11: return MATH1(expm1);
@@ -1049,6 +1048,17 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("unimplemented real function of 1 argument"));
     }
     return s; /* never used; to keep -Wall happy */
+}
+
+SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP s;
+    if (DispatchGroup("Math", call, op, args, env, &s))
+	return s;
+    checkArity(op, args);
+    if (isComplex(CAR(args)))
+	errorcall(call, _("unimplemented complex function"));
+    return math1(CAR(args), trunc, call);
 }
 
 SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)

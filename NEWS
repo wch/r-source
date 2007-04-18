@@ -46,6 +46,11 @@ NEW FEATURES
     o	apropos() now sorts by name and not by position on the search
 	path.
 
+    o	abs(), sign(), sqrt(), floor(), ceiling(), exp() and the gamma,
+	trig and hyperbolic trig functions now only accept one
+	argument even when dispatching to a Math group method (which
+	may accept more than one argument for other group members).
+
 
 DEPRECATED & DEFUNCT
 
@@ -55,6 +60,18 @@ DEPRECATED & DEFUNCT
     o	storage.mode(x) <- "real" and storage.mode(x) <- "single" are
 	deprecated in favour of storage.mode(x) <- "double" and
 	mode(x) <- "single".
+
+
+UTILITIES
+
+    o	checkS3methods() (invoked by R CMD check) now checks the
+	arguments of methods for primitive members of the S3 group
+	generics.
+
+
+BUG FIXES
+
+    o	Primitives no longer dispatch S4 methods on S3 objects.
 
 
 

@@ -79,11 +79,10 @@ Summary(\dots, na.rm = FALSE)
       \item \code{cumsum}, \code{cumprod}, \code{cummax}, \code{cummin}
       % do_cum()   [cum.c:140]:    if (DispatchGroup("Math", ...))
     }
-    Members of this group dispatch on \code{x}.  Not all members will
-    accept more than one argument: most members have default methods
-    expecting one argument.  (Specifically, \code{atan} and the gamma
-    functions accept only one argument and \code{log}, \code{round} and
-    \code{signif} accept one or two.)
+    Members of this group dispatch on \code{x}.  Most members accept
+    only one argument, but members \code{log}, \code{round} and
+    \code{signif} accept one or two arguments, and \code{trunc} accepts
+    one or more.
 
     \item Group \code{"Ops"}:
     \itemize{

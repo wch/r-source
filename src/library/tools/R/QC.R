@@ -216,7 +216,7 @@ function(package, dir, lib.loc = NULL)
         S4_methods <- sapply(.get_S4_generics_really_in_env(code_env),
                              .make_S4_method_siglist)
         S4_methods <- as.character(unlist(S4_methods, use.names = FALSE))
-        
+
         ## The bad ones:
         S4_methods <-
             S4_methods[!sapply(S4_methods,
@@ -1984,7 +1984,9 @@ function(package, dir, lib.loc = NULL)
         .filter(objects_in_code,
                 function(f) is.function(get(f, envir = code_env)))
 
+    ## This is the virtual groyp generics, not the members
     S3_group_generics <- .get_S3_group_generics()
+    ## This includes the primitive group generics as from R 2.6.0
     S3_primitive_generics <- .get_S3_primitive_generics()
 
     checkArgs <- function(g, m) {
@@ -2050,6 +2052,10 @@ function(package, dir, lib.loc = NULL)
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
         margMatchOK <- all(mArgs %in% c("...", gArgs)) || "..." %in% ogArgs
         if(posMatchOK && argMatchOK && margMatchOK)
+            NULL
+        else if (g %in% c("+", "-", "*", "/", "^", "%%", "%/%", "&", "|",
+                          "!", "==", "!=", "<", "<=", ">=", ">")
+                 && (length(ogArgs) == length(omArgs)) )
             NULL
         else {
             l <- list(ogArgs, omArgs)
@@ -4099,7 +4105,7 @@ function(g, env)
     ## ???
 
     mlist <- methods::getMethodsMetaData(g, env)
-    
+
     ## First, derived default methods.
     has_derived_default <-
         methods::is(methods::finalDefaultMethod(mlist),
@@ -4114,7 +4120,7 @@ function(g, env)
         classes <- classes[!ind]
         methods <- methods[!ind]
     }
-    
+
     ## Second, inherited methods.
     package <- sub(".*:([^_]*).*", "\\1", attr(env, "name"))
     ## (Ugly, but why not?)

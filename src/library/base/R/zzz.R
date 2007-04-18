@@ -127,8 +127,6 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     }
     ## now add the group generics
     ## log, round, signif and the gamma fns are not primitive
-    ## ^^^^^^^^^^^^^^^^^^ and the first 3 plus "trigamma" are exactly
-    ##  those 'Math' members with more than one argument.
     fx <- function(x) {}
     for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
                'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
@@ -181,6 +179,7 @@ assign("names<-", function(x, value) UseMethod("names<-"),
 assign("rep", function(x, ...) UseMethod("rep"), envir = .GenericArgsEnv)
 assign("seq.int", function(from, to, by, length.out, along.with, ...)
        UseMethod("seq.int"), envir = .GenericArgsEnv)
+assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
 
 ## make these the same object as as.double
 assign("as.numeric", get("as.double", envir = .GenericArgsEnv),
