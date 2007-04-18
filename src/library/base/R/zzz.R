@@ -127,8 +127,9 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     }
     ## now add the group generics
     ## log, round, signif and the gamma fns are not primitive
+    ## trunc is handled below
     fx <- function(x) {}
-    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
+    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'exp',
                'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
                'tanh', 'acosh', 'asinh', 'atanh',
                'cumsum', 'cumprod', 'cummax', 'cummin')) {
@@ -136,13 +137,16 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
+
+    ## ! is unary and handled below
     fx <- function(e1, e2) {}
-    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
+    for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|',
                '==', '!=', '<', '<=', '>=', '>')) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)
     }
+
     ## none of Summary is primitive
     for(f in c("Arg", "Conj", "Im", "Mod", "Re")) {
         fx <- function(z) {}
@@ -153,6 +157,7 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     env
 })
 ### do these outside to get the base namespace as the environment.
+assign("!", function(x) UseMethod("!"), envir = .GenericArgsEnv)
 assign("as.character", function(x, ...) UseMethod("as.character"),
        envir = .GenericArgsEnv)
 assign("as.complex", function(x, ...) UseMethod("as.complex"),
