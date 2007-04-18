@@ -24,6 +24,16 @@ file.access(names, mode = 0)
   Permission will be computed for real user ID and real group ID (rather
   than the effective IDs).
 #endif
+#ifdef windows
+  As from \R 2.6.0 this function no longer uses the C function
+  \code{_access} in \file{msvcrt.dll}, but has been rewritten using
+  Win32 API functions.
+
+  Windows does not have the concept of an \sQuote{executable file}, so
+  this function regards directories and files with extension
+  \file{.exe}, \file{.bat}, \file{.cmd} and \file{.com} as executable.
+  (\code{\link{system}} makes the same assumption.)
+#endif
 
   Please note that it is not good to use this function to test before
   trying to open a file.  On a multi-tasking system, it is possible that
@@ -47,5 +57,13 @@ file.access(names, mode = 0)
 \examples{
 fa <- file.access(dir("."))
 table(fa) # count successes & failures
+#ifdef windows
+d <- dir(file.path(R.home(), "bin"))
+df <- dir(file.path(R.home(), "bin"), full=TRUE)
+d[file.access(df, 0) == 0] # all exist
+d[file.access(df, 1) == 0] # some are executable, some are not
+d[file.access(df, 2) == 0] # hopefully all are readable
+d[file.access(df, 4) == 0] # they may or may not be writeable
+#endif
 }
 \keyword{file}

@@ -1409,7 +1409,6 @@ int winAccess(const char *path, int mode)
 {
     DWORD attr = GetFileAttributes(path);
     
-    printf("winAccess for %s, %d\n", path, mode);
     if(attr == 0xffffffff) return -1;
     if(mode == F_OK) return 0;
 
@@ -1418,8 +1417,9 @@ int winAccess(const char *path, int mode)
 	    /* Look at extension for executables */
 	    char *p = strrchr(path, '.');
 	    if(p == NULL || 
-	       !((stricmp(p, "exe") == 0) || (stricmp(p, "com") == 0)
-		 || (stricmp(p, "bat") == 0)) ) return -1;
+	       !((stricmp(p, ".exe") == 0) || (stricmp(p, ".com") == 0) ||
+		 (stricmp(p, ".bat") == 0) || (stricmp(p, ".cmd") == 0)) )
+		return -1;
 	}
     if(GA_isNT) {
 	/* Now look for file security info, which is NT only */
