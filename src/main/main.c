@@ -558,7 +558,7 @@ static void sigactionSegv(int signum, siginfo_t *ip, void *context)
     }
     if(R_Interactive) {
 	REprintf("\nPossible actions:\n1: %s\n2: %s\n3: %s\n4: %s\n", 
-		 "abort (with core dump)", 
+		 "abort (with core dump, if enabled)", 
 		 "normal R exit", 
 		 "exit R without saving workspace",
 		 "exit R saving workspace");
