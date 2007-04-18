@@ -588,8 +588,8 @@ Test code can either be provided directly in a @file{.R} file, or via a
 and then calling them with the strangest arguments).  The results of
 running a @file{.R} file are written to a @file{.Rout} file.  If there
 is a corresponding @file{.Rout.save} file, these two are compared, with
-differences being reported but not causing an error. The whole of
-@file{tests} is copied to the check area, and the tests are run with the
+differences being reported but not causing an error.  All files in
+@file{tests} are copied to the check area, and the tests are run with the
 copy as the working directory and with @code{R_LIBS} set to ensure that
 the copy of the package installed during testing will be found by
 @code{library(@var{pkg_name})}.
