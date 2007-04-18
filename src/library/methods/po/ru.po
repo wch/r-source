@@ -51,7 +51,7 @@ msgid ""
 "S language method selection got an error when called from internal dispatch "
 "for function '%s'"
 msgstr ""
-"выбор метода языка S вызвал ошибку, когда был вызван из внутренней посылки "
+"выбор метода языка S вызвал ошибку, когда был вызван из внутренней отправки "
 "для функции '%s'"
 
 #: methods_list_dispatch.c:379
@@ -88,7 +88,7 @@ msgstr "не верный объект (не функция) использован как метод"
 #: methods_list_dispatch.c:477
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
-msgstr "не найден символ '%s' в структуре или вызове"
+msgstr "не найден символ '%s' в структуре вызова"
 
 #: methods_list_dispatch.c:484
 #, c-format
@@ -96,7 +96,7 @@ msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
 "a name, got an object of class \"%s\""
 msgstr ""
-"при проверки отсутствующего аргумента в методе отправки найден недопустимый "
+"при проверки отсутствующего аргумента в отправке метода найден недопустимый "
 "символ: ожидалось имя, получен объект класса \"%s\""
 
 #: methods_list_dispatch.c:487
@@ -109,8 +109,8 @@ msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
 msgstr ""
-"при проверке отсутствующего аргумента обнаружено не верное окружение, '%s', "
-"в методах отправки: получен объект класса \"%s\""
+"при проверке отсутствующего аргумента обнаружено неверное окружение, '%s', в "
+"методах отправки: получен объект класса \"%s\""
 
 #: methods_list_dispatch.c:517
 #, c-format
@@ -137,7 +137,7 @@ msgid ""
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
 "(при выборе метода для функции '%s') аргумент 'environment' для отправки "
-"должен быть  R окружением; получен объект класса \"%s\""
+"должен быть R окружением; получен объект класса \"%s\""
 
 #: methods_list_dispatch.c:545 methods_list_dispatch.c:556
 #: methods_list_dispatch.c:838
@@ -200,7 +200,7 @@ msgstr "'%s' должна быть одиночной строкой (получен объект класса \"%s\")"
 #: methods_list_dispatch.c:807
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
-msgstr "Не могу получить общее для примитива \"%s\""
+msgstr "не могу найти общую функцию для примитива \"%s\""
 
 #: methods_list_dispatch.c:814
 #, c-format
@@ -208,8 +208,8 @@ msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
 msgstr ""
-"Ожидалась общая функция или примитив для отправки, получен объект класса \"%s"
-"\""
+"Ожидалась общая функция либо примитив для отправки, получен объект класса \"%"
+"s\""
 
 #: methods_list_dispatch.c:826
 #, c-format
@@ -217,5 +217,5 @@ msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "
 "to have .SigArgs and .AllMtable assigned in its environment"
 msgstr ""
-"Общее \"%s\" возможно не было инициализировано для таблицы отправки---"
-"необходимо иметь .SigArgs и .AllMtable установленным в данном окружении"
+"Общая \"%s\", кажется, не была инициализирована для таблицы отправки---"
+"необходимо иметь .SigArgs и .AllMtable установленными в этом окружении"
