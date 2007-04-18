@@ -688,7 +688,7 @@ function(package)
              "rep.int", "round.POSIXt",
              "seq.int", "sort.int", "sort.list"),
              BSDA = "sign.test",
-             Hmisc = c("abs.error.pred, t.test.cluster"),
+             Hmisc = c("abs.error.pred", "t.test.cluster"),
              HyperbolicDist = "log.hist",
              MASS = c("frequency.polygon",
              "gamma.dispersion", "gamma.shape",
