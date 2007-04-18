@@ -86,6 +86,15 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.5.1
+
+BUG FIXES
+
+    o	density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
+	search interval than the default (lower,upper).
+
+
+
 		CHANGES IN R VERSION 2.5.0
 
 
@@ -913,9 +922,6 @@ BUG FIXES
     o	Standard errors from the "ar" method of predict() could be
 	wrong for the last p predictions for models near
 	non-stationarity. (PR#9614)
-
-    o	bw.SJ(1:20) and less trivial cases used too small default search
-	interval for bandwidths.
 
 
 
