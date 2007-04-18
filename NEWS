@@ -68,10 +68,13 @@ UTILITIES
 	arguments of methods for primitive members of the S3 group
 	generics.
 
+    o	R CMD check now does a recursive copy on the 'tests' directory.
+
 
 BUG FIXES
 
-    o	Primitives no longer dispatch S4 methods on S3 objects.
+    o	Internally generic primitives no longer dispatch S4 methods on
+	S3 objects.
 
 
 

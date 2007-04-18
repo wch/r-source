@@ -321,3 +321,18 @@ From glibc via
 http://lists.gnu.org/archive/html/bug-gnulib/2003-02/msg00019.html
 
    Copyright (C) 1999, 2001-2003 Free Software Foundation, Inc.
+
+
+share/perl/File/Copy/Recursive.pm
+
+   Copyright 2004 by Daniel Muey
+
+   This library is free software; you can redistribute it and/or modify
+   it under the same terms as Perl itself.
+
+
+share/perl/Text/Delimiter.pm
+
+   Copyright (C) Small Planet Software and Norman Walsh.
+   All rights reserved.  This program is free software; you can
+   redistribute it and/or modify it under the same terms as Perl itself.

@@ -22,7 +22,7 @@
 
 use Cwd;
 use File::Basename;
-use File::Copy;
+use File::Copy::Recursive qw(dircopy);
 use File::Find;
 use File::Path;
 use Getopt::Long;
@@ -2001,9 +2001,10 @@ sub check_pkg {
 	      or die "Error: cannot create directory '$testdir'\n";
         }
         chdir($testdir);
-	foreach my $file (&list_files($testsrcdir)) {
-	    copy($file, basename($file));
-	}
+	dircopy($testsrcdir, ".");
+	#foreach my $file (&list_files($testsrcdir)) {
+	#    copy($file, basename($file));
+	#}
         my $makefiles = "-f " .
 	    &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
 					      "make", "tests.mk"));
