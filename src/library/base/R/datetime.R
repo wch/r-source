@@ -706,7 +706,7 @@ quarters.POSIXt <- function(x, ...)
     paste("Q", x+1, sep = "")
 }
 
-trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
+trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"), ...)
 {
     units <- match.arg(units)
     x <- as.POSIXlt(x)

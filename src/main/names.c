@@ -254,7 +254,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"ceiling",	do_math1,	2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sqrt",	do_math1,	3,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sign",	do_math1,	4,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"trunc",	do_trunc,	5,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"trunc",	do_trunc,	5,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"exp",		do_math1,	10,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"expm1",	do_math1,	11,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

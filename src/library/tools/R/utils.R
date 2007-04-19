@@ -636,16 +636,8 @@ function(parent = parent.frame(), fixup = FALSE)
     for(f in ls(base::.GenericArgsEnv))
         assign(f, get(f, envir=base::.GenericArgsEnv), envir = env)
     if(fixup) {
-        ## now fixup the group generics
-        for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'trunc', 'exp',
-                   'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
-                   'tanh', 'acosh', 'asinh', 'atanh',
-                   'cumsum', 'cumprod', 'cummax', 'cummin')) {
-            fx <- get(f, envir = env)
-            formals(fx) <- alist(x=)
-            assign(f, fx, envir = env)
-        }
-        for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
+        ## now fixup the operators
+        for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|',
                    '==', '!=', '<', '<=', '>=', '>')) {
             fx <- get(f, envir = env)
             formals(fx) <- alist(x=, y=)
