@@ -35,7 +35,8 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     between both rows and columns.  Defaults to \code{\link{dist}}.}
   \item{hclustfun}{function used to compute the hierarchical clustering
     when \code{Rowv} or \code{Colv} are not dendrograms.  Defaults to
-    \code{\link{hclust}}.}
+    \code{\link{hclust}}. Should take as argument a result of \code{distfun}
+    and return an object to which \code{\link{as.dendrogram}} can be applied.}
   \item{reorderfun}{function(d,w) of dendrogram and weights for
     reordering the row and column dendrograms.  The default uses
     \code{\link{reorder.dendrogram}}.}
