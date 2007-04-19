@@ -79,6 +79,8 @@ BUG FIXES
     o	Internally generic primitives no longer dispatch S4 methods on
 	S3 objects.
 
+    o	as.dendrogram() failed on objects of class "dendrogram".
+
 
 
 
