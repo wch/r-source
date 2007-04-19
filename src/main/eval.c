@@ -1941,6 +1941,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     SEXP lclass, s, t, m, lmeth, lsxp, lgr, newrho;
     SEXP rclass, rmeth, rgr, rsxp;
     char lbuf[512], rbuf[512], generic[128], *pt;
+    Rboolean useS4 = TRUE;
 
     /* pre-test to avoid string computations when there is nothing to
        dispatch on because either there is only one argument and it
@@ -1951,8 +1952,12 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     if (args != R_NilValue && ! isObject(CAR(args)) &&
         (CDR(args) == R_NilValue || ! isObject(CADR(args))))
 	return 0;
+
     /* try for formal method */
-    if(R_has_methods(op)) {
+    if(length(args) == 1 && !IS_S4_OBJECT(CAR(args))) useS4 = FALSE;
+    if(length(args) == 2 && 
+       !IS_S4_OBJECT(CAR(args)) && !IS_S4_OBJECT(CADR(args))) useS4 = FALSE;
+    if(useS4 && R_has_methods(op)) {
 	SEXP value = R_possible_dispatch(call, op, args, rho);
 	if(value) {
 	    *ans = value;
@@ -2006,7 +2011,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	findmethod(rclass, group, generic, &rsxp, &rgr, &rmeth,
 		   &rwhich, rbuf, rho);
     else
-	rwhich=0;
+	rwhich = 0;
 
     PROTECT(rgr);
 
@@ -2015,7 +2020,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	return 0; /* no generic or group method so use default*/
     }
 
-    if( lsxp!=rsxp ) {
+    if( lsxp != rsxp ) {
 	if( isFunction(lsxp) && isFunction(rsxp) ) {
 	    warning(_("Incompatible methods (\"%s\", \"%s\") for \"%s\""),
 		    CHAR(PRINTNAME(lmeth)), CHAR(PRINTNAME(rmeth)), generic);
@@ -2024,11 +2029,11 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	}
 	/* if the right hand side is the one */
 	if( !isFunction(lsxp) ) { /* copy over the righthand stuff */
-	    lsxp=rsxp;
-	    lmeth=rmeth;
-	    lgr=rgr;
-	    lclass=rclass;
-	    lwhich=rwhich;
+	    lsxp = rsxp;
+	    lmeth = rmeth;
+	    lgr = rgr;
+	    lclass = rclass;
+	    lwhich = rwhich;
 	    strcpy(lbuf, rbuf);
 	}
     }
@@ -2058,13 +2063,13 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     defineVar(install(".Method"), m, newrho);
     UNPROTECT(1);
-    PROTECT(t=mkString(generic));
+    PROTECT(t = mkString(generic));
     defineVar(install(".Generic"), t, newrho);
     UNPROTECT(1);
     defineVar(install(".Group"), lgr, newrho);
-    set=length(lclass)-lwhich;
+    set = length(lclass) - lwhich;
     PROTECT(t = allocVector(STRSXP, set));
-    for(j=0 ; j<set ; j++ )
+    for(j = 0 ; j < set ; j++ )
 	SET_STRING_ELT(t, j, duplicate(STRING_ELT(lclass, lwhich++)));
     defineVar(install(".Class"), t, newrho);
     UNPROTECT(1);
