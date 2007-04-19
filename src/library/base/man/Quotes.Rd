@@ -28,7 +28,8 @@
   Unless specified in the following table, an escaped character is
   interpreted as the character itself.  (Note that the parser will warn
   about most such uses as from \R 2.5.0, as they are most often
-  erroneous, e.g. using \code{\.} where \code{\\.} was intended.)
+% pace R-exts, we do need to double these.
+  erroneous, e.g. using \code{\\.} where \code{\\\\.} was intended.)
   
   Single quotes need to be escaped by backslash in single-quoted
   strings, and double quotes in double-quoted strings.
