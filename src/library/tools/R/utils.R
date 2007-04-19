@@ -628,7 +628,7 @@ function(parent = parent.frame(), fixup = FALSE)
             formals(fx) <- alist(x=)
             assign(f, fx, envir = env)
         }
-        for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|', '!',
+        for(f in c('+', '-', '*', '/', '^', '%%', '%/%', '&', '|',
                    '==', '!=', '<', '<=', '>=', '>')) {
             fx <- get(f, envir = env)
             formals(fx) <- alist(x=, y=)
