@@ -1,9 +1,10 @@
 dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
-                       pointsize, ...)
+                       pointsize, ..., method = c("postscript", "pdf"))
 {
     if(missing(file)) stop("'file' is missing with no default")
-    if(!is.character(file) || nchar(file) == 0)
+    if(!is.character(file) || length(file) != 1 || nchar(file) == 0)
         stop("'file' must be a non-empty character string")
+    method <- match.arg(method)
     gsexe <- Sys.getenv("R_GSCMD")
     if(is.null(gsexe) || nchar(gsexe) == 0) {
         gsexe <- "gs"
@@ -28,10 +29,15 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
     if(missing(height) && !missing(width)) height <- h/w * width
 
     current.device <- dev.cur()
-    dev.off(dev.copy(device = postscript, file=tmp, width=width,
-                     height=height,
-                     pointsize=pointsize, paper="special",
-                     horizontal=FALSE, ...))
+    if(method == "pdf")
+        dev.off(dev.copy(device = pdf, file=tmp, width=width,
+                         height=height,
+                         pointsize=pointsize, paper="special", ...))
+    else
+        dev.off(dev.copy(device = postscript, file=tmp, width=width,
+                         height=height,
+                         pointsize=pointsize, paper="special",
+                         horizontal=FALSE, ...))
     dev.set(current.device)
     cmd <- paste(shQuote(gsexe), " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,

@@ -54,6 +54,9 @@ NEW FEATURES
     o	library() now sorts by library trees in the order of .libPaths()
 	and not alphabetically.
 
+    o	dev2bitmap() has a new option to go via PDF and so allow
+	semi-transparent colours to be used.
+
 
 DEPRECATED & DEFUNCT
 
