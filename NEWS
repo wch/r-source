@@ -51,6 +51,9 @@ NEW FEATURES
 	argument even when dispatching to a Math group method (which
 	may accept more than one argument for other group members).
 
+    o	library() now sorts by library trees in the order of .libPaths()
+	and not alphabetically.
+
 
 DEPRECATED & DEFUNCT
 
