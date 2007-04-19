@@ -16,7 +16,7 @@ DISTFILES = Makefile.in
 ## subdirectories of R_HOME/share
 SUBDIRS_WITH_NO_BUILD = R encodings licenses make perl sh texmf java
 ## subdirectories of R_HOME/share/perl
-SUBDIRS_SHARE_PERL = R Text
+SUBDIRS_SHARE_PERL = R File/Copy Text
 
 all: Makefile R
 
