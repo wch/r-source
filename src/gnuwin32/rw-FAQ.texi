@@ -694,6 +694,7 @@ installing applications from non-trusted sources, in which case you
 will have to persuade them that R is trustworthy, or digitally sign the
 R installer yourself, or (unless this is also disabled) run the
 installer from a standard account and install into your own file area.
+(The same issues apply to the @file{.msi} version of the installer.)
 
 If you install R as a standard user into your own file space and use it
 under the same account, there are no known permission issues.
