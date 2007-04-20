@@ -25,15 +25,14 @@ asS4(object, value = TRUE)
 \details{
   Note that \code{isS4} does not rely on the \pkg{methods}
   package, so in particular it can be used to detect the need to
-  \code{\link{require}()} that package.  (But \code{asS4} does depend on
+  \code{\link{require}} that package.  (But \code{asS4} does depend on
   \pkg{methods}.)
 
-  You should not set the flag directly unless you really know why.  In
-  the future, S4 methods may be restricted to S4 objects for primitive
-  functions; then \code{asS4} would allow method dispatch of S4 methods
-  for S3 classes.
-  For all other purposes, an object will satisfy \code{isS4(x)} if and
-  only if it should.
+  You should not set the flag directly unless you really know why.  As
+  from \R 2.6.0, S4 methods are restricted to S4 objects for primitive
+  functions; \code{asS4} allows method dispatch of S4 methods on
+  primitives for S3 classes. For all other purposes, an object will
+  satisfy \code{isS4(x)} if and only if it should.
 }
 \examples{
 \dontshow{require(methods)}

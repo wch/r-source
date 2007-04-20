@@ -1318,6 +1318,7 @@ SEXP R_do_new_object(SEXP class_def)
     return value;
 }
 
+#ifdef UNUSED
 Rboolean R_seemsS4Object(SEXP object)
 {
     static SEXP R_packageSymbol = NULL;
@@ -1333,6 +1334,7 @@ Rboolean R_seemsS4Object(SEXP object)
 	    getAttrib(klass, R_packageSymbol) != R_NilValue) ?
 	TRUE: FALSE;
 }
+#endif
 
 
 SEXP R_isS4Object(SEXP object)
