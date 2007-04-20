@@ -111,8 +111,8 @@ fixups:
 ## for Inno Setup installer
 
 R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums \
-  ../../../VERSION ../../..SVN-REVISON
-	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet)
+  ../../../VERSION ../../../SVN-REVISION
+	perl JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet)Z
 
 $(RPREFIX)-win32.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
