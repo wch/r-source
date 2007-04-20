@@ -1,4 +1,4 @@
-load <- function (file, envir = parent.frame())
+load <- function (file, envir = parent.frame(), warnOldS4 = FALSE)
 {
     if (is.character(file)) {
         ## files are allowed to be of an earlier format
@@ -21,7 +21,21 @@ load <- function (file, envir = parent.frame())
         con <- if(inherits(file, "gzfile")) file else gzcon(file)
     } else stop("bad 'file' argument")
 
-    .Internal(loadFromConn2(con, envir))
+    res <- .Internal(loadFromConn2(con, envir))
+    if(!warnOldS4) return(invisible(res))
+    ## try to detect the loading of old-style S4 objects, and warn.
+    for(a in res) {
+        A <- get(a, envir = envir)
+        if(isS4(A)) next
+        cl <- class(A)
+        if(length(cl) != 1) next
+        ex <- exists(paste(".__C__", cl, sep=""), envir = envir)
+        if(is.character(attr(cl, "package")) ||
+           (ex && is.list(A) && length(A) == 0))
+            warning(gettextf("'%s' looks like a pre-2.4.0 S4 object: please recreate it", a),
+                    domain = NA, call. = FALSE)
+    }
+    invisible(res)
 }
 
 save <- function(..., list = character(0),

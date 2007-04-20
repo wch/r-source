@@ -57,6 +57,10 @@ NEW FEATURES
     o	dev2bitmap() has a new option to go via PDF and so allow
 	semi-transparent colours to be used.
 
+    o	load() has a new option warnOldS4=TRUE to detect the loading of
+	pre-2.4.0 S4 objects: this is not the default but is used by
+	data().
+
 
 DEPRECATED & DEFUNCT
 
