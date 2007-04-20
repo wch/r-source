@@ -87,9 +87,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
 
   \code{\link{bitmap}} provides an alternative way to generate PNG and
   JPEG plots that does not depend on accessing the X11 display but does
-  depend on having GhostScript installed.  (Device \code{GDD} in
-  CRAN package \pkg{GDD} is another alternative using several other
-  additional pieces of software.)
+  depend on having GhostScript installed.  (Devices \code{GDD} in
+  CRAN package \pkg{GDD} and \code{CairoJPEG} / \code{CairoPNG} in CRAN
+  package \pkg{Cairo} are alternatives using several other additional
+  pieces of software.)
 }
 \examples{
 ## these examples will work only if the devices are available
