@@ -171,12 +171,12 @@ and/or somewhere on the Start menu file tree, and perhaps also in the
 Quick Launch part of the taskbar.  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
 
-You may also want to add command-line arguments at the end of the Target
-field (@emph{after} any final double quote), for example @code{--sdi
---max-mem-size=1Gb}.  You can also set environment variables at the end
-of the Target field, for example @code{R_LIBS=p:/myRlib}, and if you
-want to ensure that menus and messages are in (American) English,
-@code{LANGUAGE=en}.
+You may also want to add command-line arguments at the end of the
+Target field (@emph{after} any final double quote, and separated by a
+space), for example @code{--sdi --max-mem-size=1Gb}.  You can also set
+environment variables at the end of the Target field, for example
+@code{R_LIBS=p:/myRlib}, and if you want to ensure that menus and
+messages are in (American) English, @code{LANGUAGE=en}.
 
 It is also possible to install from an MSI file, which will be of interest
 only for sysadmins.  For how to build an MSI file, see the `R
@@ -660,7 +660,7 @@ may want to experiment with disabling it.
 It does.  Vista was launched in January 2007 and experience with it is
 still scanty.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
-issues, but changes in user experiences.)  As there many settings that
+issues, but changes in user experiences.)  As there are many settings that
 system administrators can change, it is clear that only a tiny fraction
 of possibilities will have been explored.
 
@@ -753,7 +753,7 @@ not: also you can have write permission but not be allowed to create
 certain types of files.
 
 On suitably recent hardware Vista can prevent the execution of code
-from data areas via `Data Execution Prevention' (see from a tab in
+from data areas via `Data Execution Prevention' (from a tab in
 System Properties -> Advanced -> Performance), and sysadmins can turn
 this on for all programs.  R should (and in limited testing appears
 to) run with DEP enabled.
