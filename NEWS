@@ -814,9 +814,12 @@ BUG FIXES
 	'methods' is not loaded, and print a short summary rather than
 	dump the internal structure.
 
-    o   Sweave and Stangle had problems due to partial matching of code chunk
-        names when run with split=TRUE.
+    o	Sweave and Stangle had problems due to partial matching of code
+	chunk names when run with split=TRUE.
 
+    o	install.packages() on a source package now ensures that
+	R CMD INSTALL sees the same library search path as
+	install.packages() did when computing dependencies.
 
     o	density() now ensures its 'y' values are non-negative. (PR#8876)
 
