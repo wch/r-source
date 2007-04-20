@@ -5,7 +5,7 @@
   Reload datasets written with the function \code{save}.
 }
 \usage{
-load(file, envir = parent.frame(), warnOldS4 = FALSE)
+load(file, envir = parent.frame(), warnOldS4 = TRUE)
 }
 \arguments{
   \item{file}{a (readable binary) connection or a character string

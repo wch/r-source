@@ -1,4 +1,4 @@
-load <- function (file, envir = parent.frame(), warnOldS4 = FALSE)
+load <- function (file, envir = parent.frame(), warnOldS4 = TRUE)
 {
     if (is.character(file)) {
         ## files are allowed to be of an earlier format
@@ -23,7 +23,7 @@ load <- function (file, envir = parent.frame(), warnOldS4 = FALSE)
 
     res <- .Internal(loadFromConn2(con, envir))
     if(!warnOldS4) return(invisible(res))
-    ## try to detect the loading of old-style S4 objects, and warn.
+    ## try to detect the loading of old-style S4 objects
     for(a in res) {
         A <- get(a, envir = envir)
         if(isS4(A)) next
@@ -31,9 +31,15 @@ load <- function (file, envir = parent.frame(), warnOldS4 = FALSE)
         if(length(cl) != 1) next
         ex <- exists(paste(".__C__", cl, sep=""), envir = envir)
         if(is.character(attr(cl, "package")) ||
-           (ex && is.list(A) && length(A) == 0))
+           (ex && is.list(A) && length(A) == 0)) {
             warning(gettextf("'%s' looks like a pre-2.4.0 S4 object: please recreate it", a),
                     domain = NA, call. = FALSE)
+            ## let's see if we can fix it for now
+            ## this does not change the type from list to S4SXP,
+            ## but it seems that is not relied on yet.
+            assign(a, asS4(A, TRUE), envir = envir)
+            require("methods")
+        }
     }
     invisible(res)
 }
