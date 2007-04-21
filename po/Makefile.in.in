@@ -335,7 +335,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 	@pkg=`echo $@ | sed -e 's/\.pkg-update$$//'`; \
 	tmpdir=`pwd`; \
 	src=$(top_srcdir)/src/library/$${pkg}; \
-	test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
+	test "$(srcdir)" = . && cdcmd="cd ../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
 	if test -f $${src}/po/$${pkg}.pot; then \
 	  echo $(ECHO_N) "updating $${pkg}.pot "$(ECHO_C); \
 	  (cd $${src}/src; $(XGETTEXT) \
