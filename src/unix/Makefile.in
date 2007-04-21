@@ -61,7 +61,7 @@ clean:
 	@-rm -rf .libs _libs
 	@-rm -f Makedeps *.d *.o *.a *.lo *.la stamp-lo
 distclean: clean
-	@-rm -f Makefile
+	@-rm -f Makefile Rscript
 maintainer-clean: distclean
 
 ## we need to build at install time to capture the correct 'rhome'
