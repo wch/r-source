@@ -51,9 +51,6 @@ NEW FEATURES
 	argument even when dispatching to a Math group method (which
 	may accept more than one argument for other group members).
 
-    o	library() now sorts by library trees in the order of .libPaths()
-	and not alphabetically.
-
     o	dev2bitmap() has a new option to go via PDF and so allow
 	semi-transparent colours to be used.
 
@@ -86,8 +83,6 @@ BUG FIXES
     o	Internally generic primitives no longer dispatch S4 methods on
 	S3 objects.
 
-    o	as.dendrogram() failed on objects of class "dendrogram".
-
 
 
 
@@ -100,10 +95,19 @@ BUG FIXES
 
 		CHANGES IN R VERSION 2.5.1
 
+
+NEW FEATURES
+
+    o	library() now sorts by library trees in the order of .libPaths()
+	and not alphabetically.
+
+    o   density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
+        search interval than the default (lower,upper).
+
+
 BUG FIXES
 
-    o	density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
-	search interval than the default (lower,upper).
+    o	as.dendrogram() failed on objects of class "dendrogram".
 
 
 
