@@ -85,7 +85,10 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
 \seealso{
   \code{\link{Devices}}, \code{\link{dev.print}}
 
-  \code{\link{bitmap}}
+  \code{\link{bitmap}} provides an alternative way to generate PNG,
+  JPEG  and other types of bitmap plots.  Devices \code{GDD} in
+  CRAN package \pkg{GDD} and \code{CairoJPEG} / \code{CairoPNG} in CRAN
+  package \pkg{Cairo} are further alternatives.
 }
 \examples{
 ## copy current plot to a (large) PNG file
