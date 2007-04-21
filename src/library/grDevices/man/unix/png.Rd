@@ -6,10 +6,10 @@
   A graphics device for JPEG or PNG format bitmap files.
 }
 \usage{
-jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480,
+jpeg(filename = "Rplot\%03d.jpeg", width = 480, height = 480, units = "px",
      pointsize = 12, quality = 75, bg = "white", res = NA, \dots)
 
-png(filename = "Rplot\%03d.png", width = 480, height = 480,
+png(filename = "Rplot\%03d.png", width = 480, height = 480, units = "px",
     pointsize = 12, bg = "white",  res = NA, \dots)
 }
 \arguments{
@@ -21,6 +21,9 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
     is performed where supported by the platform.}
   \item{width}{the width of the device in pixels.}
   \item{height}{the height of the device in pixels.}
+  \item{units}{The units in which \code{height} and \code{width} are
+    given.  Can be \code{in} (inches), \code{px} (pixels), \code{cm} or
+    \code{mm}.}
   \item{pointsize}{the default pointsize of plotted text, interpreted at
     72 dpi, so one point is approximately one pixel.}
   \item{quality}{the \sQuote{quality} of the JPEG image, as a
@@ -28,7 +31,8 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480,
     degradation of the image.}
   \item{bg}{default background colour.}
   \item{res}{The nominal resolution in dpi which will be recorded in the
-    bitmap file, if a positive integer.}
+    bitmap file, if a positive integer.  Also used for units other than
+    the default.}
   \item{\dots}{additional arguments to the underlying
     \code{\link{X11}} device.}
 }
