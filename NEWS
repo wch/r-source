@@ -58,6 +58,10 @@ NEW FEATURES
 	loading of pre-2.4.0 S4 objects.  (Experimentally, it tries
 	to fix up such objects.)
 
+    o	jpeg(), png(), bmp() (Windows), dev2bitmap() and bitmap() have
+	a new argument 'units' to specify the units of 'width' and
+	'height'.
+
 
 DEPRECATED & DEFUNCT
 

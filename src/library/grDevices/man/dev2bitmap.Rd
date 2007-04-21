@@ -4,17 +4,19 @@
 \title{Graphics Device for Bitmap Files via GhostScript}
 \usage{
 bitmap(file, type = "png256", height = 6, width = 6, res = 72,
-       pointsize, \dots)
+       units = "in", pointsize, \dots)
 
 dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
-           pointsize, \dots, method = c("postscript", "pdf"))
+           units = "in", pointsize, \dots, method = c("postscript", "pdf"))
 }
 \arguments{
   \item{file}{The output file name, with an appropriate extension.}
   \item{type}{The type of bitmap. the default is \code{"png256"}.}
-  \item{height}{The plot height, in inches.}
-  \item{width}{The plot width, in inches.}
+  \item{width, height}{Dimensions of the display region.}
   \item{res}{Resolution, in dots per inch.}
+  \item{units}{The units in which \code{height} and \code{width} are
+    given.  Can be \code{in} (inches), \code{px} (pixels), \code{cm} or
+    \code{mm}.}
   \item{pointsize}{The pointsize to be used for text: defaults to
     something reasonable given the width and height}
   \item{\dots}{Other parameters passed to \code{\link{postscript}} or
