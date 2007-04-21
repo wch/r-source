@@ -22,6 +22,7 @@
 
 use Cwd;
 use File::Basename;
+use File::Copy;
 use File::Copy::Recursive qw(dircopy);
 use File::Find;
 use File::Path;
