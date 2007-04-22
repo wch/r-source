@@ -114,7 +114,7 @@ my $R_check_subdirs_strict =
 my $R_check_Rd_xrefs =
     &R_getenv("_R_CHECK_RD_XREFS_", "TRUE");
 my $R_check_use_codetools =
-    &R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
+    &R_getenv("_R_CHECK_USE_CODETOOLS_", "TRUE");
 my $R_check_force_suggests =
     &R_getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE");
 my $R_check_Rd_style =
@@ -382,6 +382,40 @@ foreach my $pkg (@ARGV) {
 	    ## friends, and `Writing R Extensions' requires this.
 	    ## </NOTE>
 
+	    ## <NOTE>
+	    ## If a package has a namespace, checking dependencies will
+	    ## try making use of it without the NAMESPACE file ever
+	    ## being validated.  Uncaught errors can lead to messages
+	    ## like
+	    ##   * checking package dependencies ... ERROR
+	    ##   Error in e[[1]] : object is not subsettable
+	    ##   Execution halted
+	    ## which are not too helpful :-(
+	    ## Hence, we try to intercept this here.
+	    ## Note that for *bundles*, the respective namespaces are not
+	    ## checked this way (and perhaps should be lateron when the
+	    ## per-package checks are performed).
+	    if(-f &file_path($pkgdir, "NAMESPACE")) {
+		$log->checking("package name space information");
+
+		my @msg_NAMESPACE =
+		    ("See section 'Package name spaces'",
+		     "of the 'Writing R Extensions' manual.\n");
+		
+		my $Rcmd = "tools:::.check_namespace(\"${pkgdir}\")";
+		my @out = R_runR($Rcmd, "${R_opts} --quiet",
+				 "R_DEFAULT_PACKAGES=NULL");
+		@out = grep(!/^\>/, @out);
+		if(scalar(@out) > 0) {
+		    $log->error();
+		    $log->print(join("\n", @out) . "\n");	    
+		    $log->print(wrap("", "", @msg_NAMESPACE));
+		    exit(1);
+		} else {
+		    $log->result("OK");
+		}
+	    }
+
 	    $log->checking("package dependencies");
 	    ## Everything listed in Depends or Suggests or Imports
 	    ## should be available for successfully running R CMD check.
@@ -548,6 +582,7 @@ foreach my $pkg (@ARGV) {
 			## in (Unix) R CMD INSTALL?
 			$install_error =
 			    (scalar(grep(/^\* DONE/, @lines)) == 0);
+			## </NOTE>
 		    }
 		    else {
 			$cmd .= " >" .
@@ -778,28 +813,26 @@ sub check_pkg {
     ## Based on information by Uwe Ligges, Duncan Murdoch, and Brian
     ## Ripley.
 
-    ## Furthermore, Uwe Ligges says that Windows still does not allow
-    ## the following DOS device names (by themselves or with possible
-    ## extensions):
+    ## In addition, Windows does not allow the following DOS type device
+    ## names (by themselves or with possible extensions), see e.g.
+    ## http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
+    ## and http://en.wikipedia.org/wiki/Filename (which as of 2007-04-22
+    ## is wrong about claiming that COM0 and LPT0 are disallowed):
     ##
-    ## Name    Function
-    ## ----    --------
-    ## CON     Keyboard and display
-    ## PRN     System list device, usually a parallel port
-    ## AUX     Auxiliary device, usually a serial port
-    ## CLOCK$  System real-time clock
-    ## NUL     Bit-bucket device
-    ## COM1    First serial communications port
-    ## COM2    Second serial communications port
-    ## COM3    Third serial communications port
-    ## COM4    Fourth serial communications port
-    ## LPT1    First parallel printer port
-    ## LPT2    Second parallel printer port
-    ## LPT3    Third parallel printer port
+    ## CON: Keyboard and display
+    ## PRN: System list device, usually a parallel port
+    ## AUX: Auxiliary device, usually a serial port
+    ## NUL: Bit-bucket device    
+    ## CLOCK$: System real-time clock
+    ## COM1, COM2, COM3, COM4, COM5, COM6, COM7, COM8, COM9:
+    ##   Serial communications ports 1-9
+    ## LPT1, LPT2, LPT3, LPT4, LPT5, LPT6, LPT7, LPT8, LPT9:
+    ##   parallel printer ports 1-9
 
-    ## In addition, the names of help files get converted to HTML
-    ## file names and so should be valid in URLs.  We check that they are
-    ## ASCII and do not contain %, which is what is known to cause troubles.
+    ## In addition, the names of help files get converted to HTML file
+    ## names and so should be valid in URLs.  We check that they are
+    ## ASCII and do not contain %, which is what is known to cause
+    ## troubles.
 
     $log->checking("for portable file names");
     my @bad_files = ();
@@ -832,12 +865,12 @@ sub check_pkg {
 	    $file_name =~ tr/A-Z/a-z/;
 	    $file_name =~ s/\..*//;
 	    push(@bad_files, $file_path)
-	      if(grep(/^(con|prn|aux|clock\$|nul|lpt[1-3]|com[1-4])$/,
+	      if(grep(/^(con|prn|aux|clock\$|nul|lpt[1-9]|com[1-9])$/,
 		     $file_name));
 	}
     }
     if($in_bundle) {
-	chdir(dirname($pkgdir)); # more portable than '..'?
+	chdir(dirname($pkgdir));
 	find(\&find_wrong_names, $pkgname);
 	chdir($pkgname);
     }
@@ -858,7 +891,7 @@ sub check_pkg {
 	exit(1);
     }
 
-    ## next check for name clashes on case-insensitive file systems
+    ## Next check for name clashes on case-insensitive file systems
     ## (that is on Windows).
     %seen = ();
     my @duplicated = ();
@@ -868,7 +901,7 @@ sub check_pkg {
 	$seen{$file_path}  = 1;
     }
     if($in_bundle) {
-	chdir(dirname($pkgdir)); # more portable than '..'?
+	chdir(dirname($pkgdir));
 	find(\&check_case_names, $pkgname);
 	chdir($pkgname);
     }
@@ -924,7 +957,7 @@ sub check_pkg {
 	    }
 	}
 	if($in_bundle) {
-	    chdir(dirname($pkgdir)); # more portable than '..'?
+	    chdir(dirname($pkgdir));
 	    find(\&find_wrong_perms_A, $pkgname);
 	    chdir($pkgname);
 	}
@@ -1202,8 +1235,10 @@ sub check_pkg {
 			 "${R_opts} --slave");
 	if(scalar(@out) > 0) {
 	    if(defined($description->{"Encoding"})) {
-		$log->result("NOTE");
-	    } else {$log->warning();}
+		$log->note();
+	    } else {
+		$log->warning();
+	    }
 	    $log->print(wrap("", "",
 			     ("Found the following files with",
 			      "non-ASCII characters:\n")));
@@ -1466,7 +1501,7 @@ sub check_pkg {
 			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless $any;
+		$log->note() unless $any;
 		$any++;
 		$log->print(join("\n", @out) . "\n");
 	    }
@@ -1484,7 +1519,7 @@ sub check_pkg {
 			     "R_DEFAULT_PACKAGES=");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless $any;
+		$log->note() unless $any;
 		$any++;
 		$log->print(join("\n", @out) . "\n");
 	    }
@@ -1712,7 +1747,7 @@ sub check_pkg {
 			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless($any);
+		$log->note() unless($any);
 		$any++;
 		$log->print(join("\n", @out) . "\n");
 		$log->print(wrap("", "", @msg_doc_style));
@@ -1733,7 +1768,7 @@ sub check_pkg {
 	    if(scalar(@bad)) {
 		$log->warning();
 	    } else {
-		$log->result("NOTE")
+		$log->note();
 	    }
 	    $log->print("  " . join("\n  ", @out) . "\n");
 	    $log->print(wrap("", "",

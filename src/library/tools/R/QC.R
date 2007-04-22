@@ -2397,7 +2397,7 @@ function(x, ...)
     invisible(x)
 }
 
-### * .check_package_depends
+### * .check__depends
 
 ## changed in 2.3.0 to refer to a source dir.
 
@@ -2454,7 +2454,6 @@ function(dir)
 
     ## Are all namespace dependencies listed as package dependencies?
     if(file_test("-f", file.path(dir, "NAMESPACE"))) {
-        reqs <- .get_namespace_package_depends(dir)
         ## <FIXME>
         ## Not clear whether we want to require *all* namespace package
         ## dependencies listed in DESCRIPTION, or e.g. just the ones on
@@ -3987,6 +3986,20 @@ print.check_T_and_F <- function(x, ...) {
     }
     invisible(x)
 }
+
+### * .check_namespace
+
+.check_namespace <-
+function(dir)
+{
+    dir <- file_path_as_absolute(dir)
+    invisible(tryCatch(parseNamespaceFile(basename(dir), dirname(dir)),
+                       error = function(e) {
+                           writeLines("Invalid NAMESPACE file, parsing gives:")
+                           stop(e)
+                       }))
+}
+
 
 ### * Utilities
 

@@ -184,12 +184,13 @@ operating system platforms, the @acronym{ASCII} control characters as
 well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
 @samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed in file
 names.  In addition, files with names @samp{con}, @samp{prn},
-@samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com4}, and
-@samp{lpt1} to @samp{lpt3} after conversion to lower case and stripping
-possible ``extensions'', are disallowed.  Also, file names in the same
-directory must not differ only by case (see the previous paragraph).
-In addition, the names of @samp{.Rd} files will be used in URLs and so
-must be @acronym{ASCII} and not contain @code{%}.
+@samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com9}, and
+@samp{lpt1} to @samp{lpt9} after conversion to lower case and stripping
+possible ``extensions'' (e.g., @samp{lpt5.foo.bar}), are disallowed.
+Also, file names in the same directory must not differ only by case (see
+the previous paragraph).  In addition, the names of @samp{.Rd} files
+will be used in URLs and so must be @acronym{ASCII} and not contain
+@code{%}.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
@@ -1359,6 +1360,11 @@ Default: @samp{default} (which checks only tarballs, and checks in the
 @item $R_check_force_suggests
 If true, give an error if suggested packages are not available.
 Default: true.
+@item $R_check_use_codetools
+If true, make use of the @pkg{codetools} package, which provides a
+detailed analysis of visibility of objects (but may give false
+positives).
+Default: true.
 @end table
 
 Values @samp{1} or a string with lower-cased version @samp{"yes"} or
@@ -1380,10 +1386,7 @@ Future versions of @R{} will enhance this customization mechanism, and
 provide a similar scheme for @code{R CMD build}.
 
 There are other internal settings that can be changed via environment
-variables @w{@code{_R_CHECK_*_}:} see the Perl source code.  One that
-may be interesting is @code{_R_CHECK_USE_CODETOOLS_} to make use of the
-@pkg{codetools} package, which provides a detailed analysis of
-visibility of objects (but will give false positives).
+variables @w{@env{_R_CHECK_*_}:} see the Perl source code.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
