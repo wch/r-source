@@ -300,6 +300,7 @@
  R_print
  R_restore_globals
  R_run_onexits
+ R_seemsOldStyleS4Object
  R_serializeb
  R_signgam
  R_subset3_dflt

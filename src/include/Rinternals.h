@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2006   The R Development Core Team.
+ *  Copyright (C) 1999-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -772,7 +772,6 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 /* class definition, new objects */
 SEXP R_do_MAKE_CLASS(char *what);
 SEXP R_do_new_object(SEXP class_def);
-Rboolean R_seemsS4Object(SEXP object);
 
 /* preserve objects across GCs */
 void R_PreserveObject(SEXP);

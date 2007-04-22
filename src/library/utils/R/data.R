@@ -143,7 +143,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                                               envir = envir)
                                },
                                RData = , rdata = , rda =
-                               load(zfile, envir = envir, warnOldS4 = TRUE),
+                               load(zfile, envir = envir),
                                TXT = , txt = , tab =
                                assign(name,
                                       ## ensure default has not been

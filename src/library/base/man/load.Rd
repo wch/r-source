@@ -5,14 +5,12 @@
   Reload datasets written with the function \code{save}.
 }
 \usage{
-load(file, envir = parent.frame(), warnOldS4 = TRUE)
+load(file, envir = parent.frame())
 }
 \arguments{
   \item{file}{a (readable binary) connection or a character string
     giving the name of the file to load.}
   \item{envir}{the environment where the data should be loaded.}
-  \item{warnOldS4}{logical: should this attempt to detect pre-2.4.0 S4
-    objects that need to be recreated?  Used by \code{\link{data}}.}
 }
 \details{
   \code{load} can load \R objects saved in the current or any earlier

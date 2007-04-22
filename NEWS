@@ -54,9 +54,8 @@ NEW FEATURES
     o	dev2bitmap() has a new option to go via PDF and so allow
 	semi-transparent colours to be used.
 
-    o	load() has a new default argument warnOldS4 = TRUE to detect the
-	loading of pre-2.4.0 S4 objects.  (Experimentally, it tries
-	to fix up such objects.)
+    o	load() and restoring a workspace attempt to detect and warn on
+	the loading of pre-2.4.0 S4 objects.
 
     o	jpeg(), png(), bmp() (Windows), dev2bitmap() and bitmap() have
 	a new argument 'units' to specify the units of 'width' and
@@ -80,6 +79,13 @@ UTILITIES
 	generics.
 
     o	R CMD check now does a recursive copy on the 'tests' directory.
+
+
+C-LEVEL FACILITIES
+
+    o	The entry point R_seemsS4Object in Rinternals.h has not been
+	accurate since R 2.4.0 and has been removed.  Use IS_S4_OBJECT
+	instead.
 
 
 BUG FIXES
