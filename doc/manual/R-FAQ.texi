@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-04-20
-@set REL_YEAR 2006
+@set FAQ_DATE @value{FAQ_YEAR}-04-23
+@set REL_YEAR 2007
 @set REL_MAJOR 2
-@set REL_MINOR 4
-@set REL_PATCHLEVEL 1
+@set REL_MINOR 5
+@set REL_PATCHLEVEL 0
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -6591,15 +6591,13 @@ as in
 @end example
 
 Some functions, particularly those involving regular expression
-matching, themselves use metacharacters, which may need to be escaped
-by the backslash mechanism. In those cases you may need a
-@emph{quadruple} backslash to represent a single literal one.
+matching, themselves use metacharacters, which may need to be escaped by
+the backslash mechanism.  In those cases you may need a @emph{quadruple}
+backslash to represent a single literal one.
 
-@c <FIXME 2.5.0>
-In current versions of R (up to 2.4.0) an unknown escape sequence like
-@samp{\p} is quietly interpreted as just @samp{p}.
-The development version now emits a warning.
-@c </FIXME>
+In versions of R up to 2.4.1 an unknown escape sequence like @samp{\p}
+was quietly interpreted as just @samp{p}.  Current versions of R emit a
+warning.
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
