@@ -119,6 +119,9 @@ BUG FIXES
 
     o	as.dendrogram() failed on objects of class "dendrogram".
 
+    o	plot(type ="s") with many (hundreds of thousands) of points
+	could overflow the stack.  (PR#9629)
+
 
 
 		CHANGES IN R VERSION 2.5.0
