@@ -2858,7 +2858,9 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    PROTECT(ans = allocVector(REALSXP, n));
 	    p = (void *) REAL(ans);
-	}
+	} else
+	    error(_("invalid value for '%s'"), "what");
+	    
 	if(size == sizedef) {
 	    m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np) 
 		: con->read(p, size, n, con);
