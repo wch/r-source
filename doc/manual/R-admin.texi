@@ -3120,7 +3120,8 @@ errors when linking @R{} as a shared library.
 
 Intel compilers have been used under @cputype{ix86} and @cputype{x86_64}
 Linux and @R{} contains code to set the FPU options suitably.  Brian
-Ripley tried version 9.0 of the compilers for @cputype{ix86} @emph{via}
+Ripley tried version 9.0 of the compilers for @cputype{ix86} on
+Fedora Core 3 @emph{via}
 
 @example
 CC=icc
@@ -3134,15 +3135,17 @@ LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib"
 @noindent
 and adding optimization flags failed: at least @file{src/@/main/@/regex.c}
 and @file{src/@/modules/@/lapack/@/dlamc.f} needed to be compiled without
-optimization.  For @cputype{x86_64} he used
+optimization.  For @cputype{x86_64} on Fedora Core 5 he used
 
 @example
 CC=icc
-CFLAGS="-g -O2 -wd188"
+CFLAGS="-g -O3 -wd188"
 F77=ifort
+FLAGS="-g -O3"
 CXX=icc
-ICC_LIBS=/opt/compilers/intel/cce/9.0/lib
-IFC_LIBS=/opt/compilers/intel/fce/9.0/lib
+FC=ifort
+ICC_LIBS=/opt/compilers/intel/cce/9.1.039/lib
+IFC_LIBS=/opt/compilers/intel/fce/9.1.033/lib
 LDFLAGS="-L$ICC_LIBS -L$IFC_LIBS -L/usr/local/lib64"
 @end example
 
