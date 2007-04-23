@@ -1505,7 +1505,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     double *x, *y, xold, yold, xx, yy, thiscex, thislwd;
     int i, n, npch, ncex, ncol, nbg, /*nlty,*/ nlwd,
 	type=0, start=0, thispch, thiscol;
-    char *vmax;
+    char *vmax = NULL /* -Wall */;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
