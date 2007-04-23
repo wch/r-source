@@ -1269,11 +1269,11 @@ S4 generic showing the effective definition.  When @code{setMethod} is
 called, either it fails if setting is disallowed or a method is set on
 the effective generic.
 
-Actual dispatch of S4 methods for primitives piggy-backs on the S3
-dispatch mechanism, so S4 methods can only be dispatched for primitives
-which are internally S3 generic.  When a primitive that is internally S3
-generic is called with a first argument which is an object and S4
-dispatch is on (that is, the @pkg{methods} name space is loaded),
+Actual dispatch of S4 methods for almost all primitives piggy-backs on
+the S3 dispatch mechanism, so S4 methods can only be dispatched for
+primitives which are internally S3 generic.  When a primitive that is
+internally S3 generic is called with a first argument which is an object
+and S4 dispatch is on (that is, the @pkg{methods} name space is loaded),
 @code{DispatchOrEval} calls @code{R_possible_dispatch} (defined in
 @file{src/main/objects.c}).  The latter first checks an internal table
 to see if any S4 methods are set for that generic (and S4 dispatch is
@@ -1281,10 +1281,13 @@ currently enabled for that generic), and if so proceeds to S4 dispatch
 using methods stored in another internal table.  Note that this means
 that dispatch will not occur for the pseudo-classes like
 @code{"function"} and @code{"matrix"}, but that it will occur for non-S4
-objects which have an S3 class.  All primitives are in the base
-name space, and this mechanism means that S4 methods can be set for
-(some) primitives and will always be used, in contrast to setting
-methods on non-primitives.
+objects which have an S3 class.  All primitives are in the base name
+space, and this mechanism means that S4 methods can be set for (some)
+primitives and will always be used, in contrast to setting methods on
+non-primitives.
+
+The only exception is @code{%*%}, which is S4 generic but not S3 generic
+as its C code contains a call to @code{R_possible_dispatch}.
 
 The primitive @code{as.double} is special, as @code{as.numeric} and
 @code{as.real} are copies of it.  The @pkg{methods} package code partly

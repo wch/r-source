@@ -558,10 +558,10 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x = CAR(args), y = CADR(args), xdims, ydims, ans;
     Rboolean sym;
 
-    if(R_has_methods(op)) {
-      SEXP value;
-      value = R_possible_dispatch(call, op, args, rho);
-      if(value) return value;
+    if(PRIMVAL(op) == 0 && IS_S4_OBJECT(x) && R_has_methods(op)) {
+	SEXP value;
+	value = R_possible_dispatch(call, op, args, rho);
+	if(value) return value;
     }
 
     sym = isNull(y);

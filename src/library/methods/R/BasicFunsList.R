@@ -59,10 +59,7 @@ list("!" = function(e1)
     standardGeneric("|")
 }
 , "||" = FALSE
-, "~" = function(x, y)
-{
-    standardGeneric("~")
-}
+, "~" = FALSE
 , "=" = FALSE
 , ".C" = FALSE
 , ".Call" = FALSE
@@ -155,10 +152,7 @@ list("!" = function(e1)
 , "globalenv" = FALSE
 , "if" = FALSE
 , "interactive" = FALSE
-, "invisible" = function(x)
-{
-    standardGeneric("invisible")
-}
+, "invisible" = FALSE
 , "is.array" = function(x)
 {
     standardGeneric("is.array")
@@ -309,15 +303,18 @@ list("!" = function(e1)
 # setGenericForPrimitive <-function(f, value, where = topenv(parent.frame()))
 #     assign(methodsPackageMetaName("G", f), value, where)
 
-## temporary versions while primitives are still handled by a global
-## table
+## temporary versions while primitives are still handled by a global table
 
 genericForPrimitive <- function(f, where = topenv(parent.frame())) {
-    if(.matchBasic(f, .ExcludePrimitiveGenerics, FALSE))
-        stop(gettextf("methods may not be defined for primitive function \"%s\" in this version of R", f), domain = NA)
+#    if(.matchBasic(f, .ExcludePrimitiveGenerics, FALSE))
+#        stop(gettextf("methods may not be defined for primitive function \"%s\" in this version of R", f), domain = NA)
     env <- .findBasicFuns(where)
     funs <- get(".BasicFunsList", envir = env)
-    elNamed(funs, f)
+    ans <- elNamed(funs, f)
+    ## this element may not exist (yet, during loading), dom't test null
+    if(identical(ans, FALSE))
+        stop(gettextf("methods may not be defined for primitive function \"%s\" in this version of R", f), domain = NA)
+    ans
 }
 
 setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
@@ -340,84 +337,3 @@ setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
     else
         as.environment(allWhere[[1]])
 }
-
-.ExcludePrimitiveGenerics <-
-    c(
-      ".C",
-      ".Call",
-      ".Call.graphics",
-      ".External",
-      ".External.graphics",
-      ".Fortran",
-      ".Internal",
-      ".Primitive",
-      ".primTrace",
-      ".primUntrace",
-      ".subset",
-      ".subset2",
-      "UseMethod",
-      "as.call",
-      "as.environment",
-      "attr",
-      "attr<-",
-      "attributes",
-      "attributes<-",
-      "baseenv",
-      "browser",
-      "call",
-      "class",
-      "class<-",
-      "debug",
-      "emptyenv",
-      "environment<-",
-      "expression",
-      "gc.time",
-      "globalenv",
-      "interactive",
-      "invisible",
-      "is.atomic",
-      "is.call",
-      "is.character",
-      "is.complex",
-      "is.double",
-      "is.environment",
-      "is.expression",
-      "is.finite",
-      "is.function",
-      "is.infinite",
-      "is.integer",
-      "is.language",
-      "is.list",
-      "is.logical",
-      "is.name",
-      "is.null",
-      "is.function",
-      "is.object",
-      "is.pairlist",
-      "is.raw",
-      "is.real",
-      "is.recursive",
-      "is.single",
-      "is.symbol",
-      "list",
-      "missing",
-      "nargs",
-      "oldClass",
-      "oldClass<-",
-      "on.exit",
-      "pos.to.env",
-      "proc.time",
-      "quote",
-      "retracemem",
-      "return",
-      "seq.int",
-      "seq_along",
-      "seq_len",
-      "standardGeneric",
-      "storage.mode<-",
-      "substitute",
-      "tracemem",
-      "unclass",
-      "undebug",
-      "untracemem"
-      )
