@@ -4,7 +4,7 @@
 ## uses the primitive list and the function .addBasicGeneric
 ## defined (earlier) in BasicFunsList.R
 
-.makeBasicFuns<- function(where)
+.makeBasicFuns <- function(where)
 {
     env <- new.env(hash=TRUE, parent=as.environment(where))
     funs <- get(".BasicFunsList", envir=where)
@@ -16,10 +16,11 @@
 	    funs <- .addBasicGeneric(funs, curNames[[i]], val, "", env)
     }
     ## the Math group.
-    members <- c("log", "sqrt", "log10", "cumprod", "abs", "acos",
-		 "acosh", "asin", "asinh", "atan", "atanh",
-		 "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
-		 "gamma", "lgamma", "sin", "sinh", "tan", "tanh")
+    members <- c("abs", "acos", "acosh", "asin", "asinh", "atan",
+                 "atanh", "ceiling", "cos", "cosh", "cumprod", "cumsum",
+                 "exp", "floor", "gamma", "lgamma", "log", "log10",
+                 "sin", "sinh", "sqrt", "tan", "tanh")
+
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(x) standardGeneric(""),
 				 "Math", env)
@@ -54,14 +55,6 @@
     setGroupGeneric(where = where, "Arith", function(e1, e2)NULL,
 		    group = "Ops", knownMembers = members, package = "base")
 
-    ## The Logic group
-    members <- c("&", "|") ## *not*  "!" since that has only one argument
-    for(f in members)
-	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-				 "Logic", env)
-    setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
-		    group = "Ops", knownMembers = members, package = "base")
-
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")
     for(f in members)
@@ -71,10 +64,13 @@
     setGroupGeneric(where = where, "Compare", function(e1, e2)NULL,
 		    group = "Ops", knownMembers = members, package = "methods")
 
-    ## R does not currently do the Logic group (! & |)
-    ## A strange group, since the argument lists are different.	 But
-    ## perhaps we'll add it sometime.
-
+    ## The Logic group
+    members <- c("&", "|") ## *not*  "!" since that has only one argument
+    for(f in members)
+	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
+				 "Logic", env)
+    setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
+		    group = "Ops", knownMembers = members, package = "base")
 
     ## the Ops group generic
 

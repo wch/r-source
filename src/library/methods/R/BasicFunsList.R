@@ -1,7 +1,11 @@
-## lists of functions and expressions used in dispatch of functions
+## Lists of functions and expressions used in dispatch of functions
 ## defined internally (as .Primitive's) for which formal argument lists
-## are not available, or for which a generic, if created, needs to have a special
-## form (e.g., belonging to one of the predefined groups of functions).
+## are not available, or for which a generic, if created,
+## needs to have a special form (e.g., belonging to one of the
+## predefined groups of functions).
+
+## The list is expanded in .makeBasicFuns by adding the group generics.
+## Only the primitives are listed here.
 
 .BasicFunsList <-
 list("!" = function(e1)
@@ -19,6 +23,7 @@ list("!" = function(e1)
     standardGeneric("$<-")
 }
 , "%*%" = function(x, y)
+### S4 generic via R_possible_dispatch in do_matprod
 {
     standardGeneric("%*%")
 }
@@ -26,27 +31,13 @@ list("!" = function(e1)
 {
     standardGeneric("&")
 }
-, "&&" = function(e1, e2)
-{
-    standardGeneric("&&")
-}
-, ".C" = FALSE
-, ".Call" = FALSE
-, ".Fortran" = FALSE
-# not internally generic
-, ":" = function(e1, e2)
-{
-    standardGeneric(":")
-}
-, "<-" = function(x, value)
-{
-    standardGeneric("<-")
-}
-, "<<-" = function(x, value)
-{
-    standardGeneric("<<-")
-}
-, "UseMethod" = FALSE
+, "&&" = FALSE
+, "(" = FALSE
+, ":" = FALSE
+, "@" = FALSE
+, "{" = FALSE
+, "<-" = FALSE
+, "<<-" = FALSE
 , "[" = function(x, i, j, ..., drop = TRUE)
 {
     standardGeneric("[")
@@ -63,85 +54,30 @@ list("!" = function(e1)
 {
     standardGeneric("[[<-")
 }
-, "attr" = function(x, which)
-{
-    standardGeneric("attr")
-}
-, "attr<-" = function(x, which, value)
-{
-    standardGeneric("attr<-")
-}
-, "attributes<-" = function(x, value)
-{
-    standardGeneric("attributes<-")
-}
-, "browser" = function(object, ...)
-{
-    standardGeneric("browser")
-}
-, "c" = function(x, ..., recursive = FALSE)
-{
-    standardGeneric("c")
-}
-, "call" = function(x, ...)
-{
-    standardGeneric("call")
-}
-, "class<-" = function(x, value)
-{
-    standardGeneric("class<-")
-}
-, "dim<-" = function(x, value)
-{
-    standardGeneric("dim<-")
-}
-, "dimnames<-" = function(x, value)
-{
-    standardGeneric("dimnames<-")
-}
-, "names<-" = function(x, value)
-{
-    standardGeneric("names<-")
-}
-, "expression" = function(x, ...)
-{
-    standardGeneric("expression")
-}
-, "length<-" = function(x, value)
-{
-    standardGeneric("length<-")
-}
-, "levels<-" = function(x, value)
-{
-    standardGeneric("levels<-")
-}
-, "list" = function(x, ...)
-{
-    standardGeneric("list")
-}
-, "missing" = FALSE
-, "on.exit" = FALSE
-, "rep" = function(x, ...)
-{
-    standardGeneric("rep")
-}
-, "substitute" = FALSE
 , "|" = function(e1, e2)
 {
     standardGeneric("|")
 }
-, "||" = function(e1, e2)
-{
-    standardGeneric("||")
-}
+, "||" = FALSE
 , "~" = function(x, y)
 {
     standardGeneric("~")
 }
-, "as.call" = function(x)
-{
-    standardGeneric("as.call")
-}
+, "=" = FALSE
+, ".C" = FALSE
+, ".Call" = FALSE
+, ".Call.graphics" = FALSE
+, ".External" = FALSE
+, ".External.graphics" = FALSE
+, ".Fortran" = FALSE
+, ".Internal" = FALSE
+, ".Primitive" = FALSE
+, ".primTrace" = FALSE
+, ".primUntrace" = FALSE
+, ".subset" = FALSE
+, ".subset2" = FALSE
+, "UseMethod" = FALSE
+, "as.call" = FALSE
 , "as.character" = function(x, ...)
 {
     standardGeneric("as.character")
@@ -150,6 +86,7 @@ list("!" = function(e1)
 {
     standardGeneric("as.complex")
 }
+, "as.environment" = FALSE
 , "as.integer" = function(x, ...)
 {
     standardGeneric("as.integer")
@@ -166,14 +103,20 @@ list("!" = function(e1)
 {
     standardGeneric("as.raw")
 }
-, "attributes" = function(x)
+, "attr" = FALSE
+, "attr<-" = FALSE
+, "attributes" = FALSE
+, "attributes<-" = FALSE
+, "baseenv" = FALSE
+, "break" = FALSE
+, "browser" = FALSE
+, "c" = function(x, ..., recursive = FALSE)
 {
-    standardGeneric("attributes")
+    standardGeneric("c")
 }
-, "class" = function(x)
-{
-    standardGeneric("class")
-}
+, "call" = FALSE
+, "class" = FALSE
+, "class<-" = FALSE
 , "cummax" = function(x)
 {
     standardGeneric("cummax")
@@ -186,18 +129,32 @@ list("!" = function(e1)
 {
     standardGeneric("cumprod")
 }
+, "debug" = FALSE
 , "dim" = function(x)
 {
     standardGeneric("dim")
+}
+, "dim<-" = function(x, value)
+{
+    standardGeneric("dim<-")
 }
 , "dimnames" = function(x)
 {
     standardGeneric("dimnames")
 }
-, "names" = function(x)
+, "dimnames<-" = function(x, value)
 {
-    standardGeneric("names")
+    standardGeneric("dimnames<-")
 }
+, "emptyenv" = FALSE
+, "environment<-" = FALSE
+, "expression" = FALSE
+, "for" = FALSE
+, "function" = FALSE
+, "gc.time" = FALSE
+, "globalenv" = FALSE
+, "if" = FALSE
+, "interactive" = FALSE
 , "invisible" = function(x)
 {
     standardGeneric("invisible")
@@ -233,10 +190,7 @@ list("!" = function(e1)
 {
     standardGeneric("is.nan")
 }
-, "is.null" = function(x)
-{
-    standardGeneric("is.null")
-}
+, "is.null" = FALSE
 , "is.numeric" = function(x)
 {
     standardGeneric("is.numeric")
@@ -252,69 +206,54 @@ list("!" = function(e1)
 {
     standardGeneric("length")
 }
+, "length<-" = function(x, value)
+{
+    standardGeneric("length<-")
+}
+, "levels<-" = function(x, value)
+{
+    standardGeneric("levels<-")
+}
+, "list" = FALSE
+, "missing" = FALSE
+, "names" = function(x)
+{
+    standardGeneric("names")
+}
+, "names<-" = function(x, value)
+{
+    standardGeneric("names<-")
+}
+, "nargs" = FALSE
+, "next" = FALSE
+, "oldClass" = FALSE
+, "oldClass<-" = FALSE
+, "on.exit" = FALSE
+, "pos.to.env" = FALSE
+, "proc.time" = FALSE
+, "quote" = FALSE
+, "rep" = function(x, ...)
+{
+    standardGeneric("rep")
+}
+, "repeat" = FALSE
+, "retracemem" = FALSE
+, "return" = FALSE
+, "seq.int" = FALSE
+, "seq_along" = FALSE
+, "seq_len" = FALSE
 , "sign" = function(x)
 {
     standardGeneric("sign")
 }
-, "unclass" = function(x)
-{
-    standardGeneric("unclass")
-}
-, "(" = FALSE
-, ".Call.graphics" = FALSE
-, ".External" = FALSE
-, ".External.graphics" = FALSE
-, ".Internal" = FALSE
-, ".Primitive" = FALSE
-, "baseenv" = FALSE
-, "break" = FALSE
-# not internal generic
-, "debug" = function(fun)
-{
-    standardGeneric("debug")
-}
-, "emptyenv" = FALSE
-, "environment<-" = function(fun, value)
-{
-    standardGeneric("environment<-")
-}
-, "for" = FALSE
-, "function" = FALSE
-, "gc.time" = FALSE
-, "globalenv" = FALSE
-, "if" = FALSE
-, "interactive" = FALSE
-, "nargs" = FALSE
-, "next" = FALSE
-, "pos.to.env" = FALSE
-, "proc.time" = FALSE
-, "repeat" = FALSE
-, "return" = FALSE
-# not internal generic
-, "undebug" = function(fun)
-{
-    standardGeneric("undebug")
-}
-, "while" = FALSE
-, "{" = FALSE
-, "=" = FALSE
-, "@" = FALSE
-, ".primTrace" = FALSE
-, ".primUntrace" = FALSE
-, ".subset" = FALSE
-, ".subset2" = FALSE
-, "as.environment" = FALSE
-, "oldClass" = FALSE
-, "oldClass<-" = FALSE
-, "quote" = FALSE
-, "retracemem" = FALSE
-, "seq.int" = FALSE
-, "seq_along" = FALSE
-, "seq_len" = FALSE
 , "standardGeneric" = FALSE
 , "storage.mode<-" = FALSE
+, "substitute" = FALSE
 , "tracemem" = FALSE
+, "unclass" = FALSE
+, "undebug" = FALSE
 , "untracemem" = FALSE
+, "while" = FALSE
 )
 
 ## the names of the basic funs with the style of "["
@@ -425,7 +364,6 @@ setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
       "attributes<-",
       "baseenv",
       "browser",
-      "as.call",
       "call",
       "class",
       "class<-",
@@ -465,13 +403,13 @@ setGenericForPrimitive <- function(f, value, where = topenv(parent.frame()),
       "missing",
       "nargs",
       "oldClass",
-      "oldClass",
       "oldClass<-",
       "on.exit",
       "pos.to.env",
       "proc.time",
       "quote",
       "retracemem",
+      "return",
       "seq.int",
       "seq_along",
       "seq_len",
