@@ -28,6 +28,11 @@ BUG FIXES
     o	Coercing an S4 classed object to "matrix" (or other basic class)
 	failed to unset the S4 bit.
 
+    o	The 'useS4' argument of print.default() had been broken by an
+	unrelated change prior to 2.4.1.  This allowed print() and
+	show() to bounce badly constructed S4 objects between
+	themselves indefinitely.
+
 
 
 		CHANGES IN R VERSION 2.5.0

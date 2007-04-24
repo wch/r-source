@@ -217,6 +217,7 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(R_print.useSource == NA_LOGICAL)
     	errorcall(call, _("invalid '%s' argument"), "useSource");
     if(R_print.useSource) R_print.useSource = USESOURCE;
+    args = CDR(args);
 
     tryS4 = asLogical(CAR(args));
     if(tryS4 == NA_LOGICAL)
@@ -224,7 +225,6 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(tryS4 && IS_S4_OBJECT(x) && isMethodsDispatchOn())
 	callShow = TRUE;
-    args = CDR(args);
 
     if(callShow) {
 	/* we need to get show from the methods namespace if it is 
