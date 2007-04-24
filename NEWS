@@ -63,6 +63,10 @@ NEW FEATURES
 
     o	is.finite() and is.infinite() are now S3 and S4 generic.
 
+    o	The texinfo manuals are now converted to HTML with a style
+	sheet: in recent versions of makeinfo the markup such as @file
+	was being lost in the HTML rendering.
+
 
 DEPRECATED & DEFUNCT
 
