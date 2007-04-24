@@ -122,7 +122,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win32.exe} of about 28Mb.  This contains all the
+installer @samp{@RWVER@-win32.exe} of about 29Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @samp{r-patched} and
@@ -159,8 +159,8 @@ To install use @samp{@RWVER@-win32.exe}.  Just double-click on the
 icon and follow the instructions.  If you installed R this way you can
 uninstall it from the Control Panel or Start Menu (unless you
 suppressed making a group for R).  If you have an account with
-Administrator privileges you will be able to install R in the `Program
-Files' area and to set all the optional registry entries; otherwise
+Administrator privileges you will be able to install R in the @file{Program
+Files} area and to set all the optional registry entries; otherwise
 you will only be able to install R in your own file area.  On Windows
 Vista you may need to confirm that you want to proceed with
 installing a program from an `unidentified publisher'.
