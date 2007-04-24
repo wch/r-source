@@ -1257,6 +1257,7 @@
  setCURCOL
  setTitle
  setWidthOnResize
+ set_rcompgen_available
  set_workspace_name
  setconsoleoptions
  setfirstcol

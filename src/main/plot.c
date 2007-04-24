@@ -1505,6 +1505,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     double *x, *y, xold, yold, xx, yy, thiscex, thislwd;
     int i, n, npch, ncex, ncol, nbg, /*nlty,*/ nlwd,
 	type=0, start=0, thispch, thiscol;
+    char *vmax;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -1653,8 +1654,15 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	double *xtemp, *ytemp;
 	int n0 = 0;
-	xtemp = (double *) alloca(2*n*sizeof(double));
-	ytemp = (double *) alloca(2*n*sizeof(double));
+	if(n <= 1000) {
+	    xtemp = (double *) alloca(2*n*sizeof(double));
+	    ytemp = (double *) alloca(2*n*sizeof(double));
+	    R_CheckStack();
+	} else {
+	    vmax = vmaxget();
+	    xtemp = (double *) R_alloc(2*n, sizeof(double));
+	    ytemp = (double *) R_alloc(2*n, sizeof(double));
+	}
 	Rf_gpptr(dd)->col = INTEGER(col)[0];
 	xold = NA_REAL;
 	yold = NA_REAL;
@@ -1676,6 +1684,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
 	if(n0 > 0) GPolyline(n0, xtemp, ytemp, DEVICE, dd);
+	if(n > 1000) vmaxset(vmax);
     }
     break;
 
@@ -1683,8 +1692,15 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     {
 	double *xtemp, *ytemp;
 	int n0 = 0;
-	xtemp = (double *) alloca(2*n*sizeof(double));
-	ytemp = (double *) alloca(2*n*sizeof(double));
+	if(n < 1000) {
+	    xtemp = (double *) alloca(2*n*sizeof(double));
+	    ytemp = (double *) alloca(2*n*sizeof(double));
+	    R_CheckStack();
+	} else {
+	    vmax = vmaxget();
+	    xtemp = (double *) R_alloc(2*n, sizeof(double));
+	    ytemp = (double *) R_alloc(2*n, sizeof(double));
+	}
 	Rf_gpptr(dd)->col = INTEGER(col)[0];
 	xold = NA_REAL;
 	yold = NA_REAL;
@@ -1706,6 +1722,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yold = yy;
 	}
 	if(n0 > 0) GPolyline(n0, xtemp, ytemp, DEVICE, dd);
+	if(n > 1000) vmaxset(vmax);
     }
     break;
 

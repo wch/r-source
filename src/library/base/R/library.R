@@ -493,10 +493,12 @@ print.libraryIQR <-
 function(x, ...)
 {
     db <- x$results
-    ## Split according to LibPath.
+    ## Split according to LibPath, preserving order of libraries.
+    libs <- db[, "LibPath"]
+    libs <- factor(libs, levels=unique(libs))
     out <- if(nrow(db) == 0)
         NULL
-    else lapply(split(1 : nrow(db), db[, "LibPath"]),
+    else lapply(split(1 : nrow(db), libs),
                 function(ind) db[ind, c("Package", "Title"),
                                  drop = FALSE])
     outFile <- tempfile("RlibraryIQR")

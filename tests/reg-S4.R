@@ -187,3 +187,13 @@ setClass("myMat", representation(x = "numeric"))
 setMethod("cbind2", signature(x = "myMat", y = "missing"), function(x,y) x)
 m <- new("myMat", x = c(1, pi))
 stopifnot(identical(m, cBind(m)))
+
+
+## explicit print or show on a basic class with an S4 bit
+## caused infinite recursion
+setClass("Foo", representation(name="character"), contains="matrix")
+(f <- new("Foo", name="Sam", matrix()))
+(m <- as(f, "matrix"))
+show(m)
+print(m)
+## fixed in 2.5.0 patched

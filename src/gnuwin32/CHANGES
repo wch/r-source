@@ -8,6 +8,26 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.5.1
+
+GUI CHANGES
+
+    o	Within Rgui, completion can be turned on or off from the 'Misc'
+	menu, and if completion is on, file name completion can be
+	turned off (or back on again).
+
+OTHERS
+
+    o	file.access() has been rewritten using Win32 functions and
+	should be more reliable, particularly on NT-based versions of
+	Windows.  (PR#7234)
+
+    o	The version number of the installer now includes the SVN
+	revision number (which is handy for R-patched and R-devel
+	daily builds).
+
+
+
 		CHANGES IN R VERSION 2.5.0
 
 GUI CHANGES

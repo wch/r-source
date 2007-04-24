@@ -500,10 +500,10 @@ SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 docfiles: rw-FAQ ../../doc/html/rw-FAQ.html
 
-../../doc/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+../../doc/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION rw-FAQ.css
 	@echo "making rw-FAQ.html"
 	@$(SED) $(SEDVER) $< | \
-	  makeinfo --no-split --html --no-headers --number-sections -o $@ 
+	  makeinfo --no-split --html --no-headers --number-sections --css-include=rw-FAQ.css -o $@ 
 
 rw-FAQ: rw-FAQ.texi ../../VERSION
 	@echo "making rw-FAQ"

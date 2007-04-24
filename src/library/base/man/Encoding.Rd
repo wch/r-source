@@ -2,7 +2,6 @@
 \encoding{latin1}
 \alias{Encoding}
 \alias{Encoding<-}
-\concept{encoding}
 \title{Read or Set the Declared Encodings for a Character Vector}
 \description{
   Read or set the declared encodings for a character vector.
@@ -41,9 +40,11 @@ x <- "fa\xE7ile"
 Encoding(x)
 Encoding(x) <- "latin1"
 x
-xx <- iconv(x, "latin1", "UTF-8")
-Encoding(c(x, xx))
-c(x, xx)
+if(capabilities("iconv")) {
+  xx <- iconv(x, "latin1", "UTF-8")
+  print(Encoding(c(x, xx)))
+  c(x, xx)
+}
 }
 \keyword{utilities}
 \keyword{character}

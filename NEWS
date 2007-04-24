@@ -6,6 +6,30 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.5.1
+
+
+NEW FEATURES
+
+    o	library() now sorts by library trees in the order of .libPaths()
+	and not alphabetically.
+
+    o	'make check' will work with --without-iconv, to accommodate
+	building on AIX.
+
+
+BUG FIXES
+
+    o	as.dendrogram() failed on objects of class "dendrogram".
+
+    o	plot(type ="s") with many (hundreds of thousands) of points
+	could overflow the stack.  (PR#9629)
+
+    o	Coercing an S4 classed object to "matrix" (or other basic class)
+	failed to unset the S4 bit.
+
+
+
 		CHANGES IN R VERSION 2.5.0
 
 

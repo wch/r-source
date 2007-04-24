@@ -986,6 +986,13 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 # include <unistd.h>
 #endif
 
+#ifdef Win32
+#define Raccess winAccess
+extern int winAccess(const char *path, int mode);
+#else
+#define Raccess access
+#endif
+
 #ifdef HAVE_ACCESS
 SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1000,17 +1007,14 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     mode = asInteger(CADR(args));
     if(mode < 0 || mode > 7) error(_("invalid '%s' value"), "mode");
     modemask = 0;
-    /* Versions for Windows prior to Vista ignored X_OK, but it has
-       been changed to be an error to set it. */
-#ifndef Win32
     if (mode & 1) modemask |= X_OK;
-#endif
     if (mode & 2) modemask |= W_OK;
     if (mode & 4) modemask |= R_OK;
     PROTECT(ans = allocVector(INTSXP, n));
     for (i = 0; i < n; i++)
-	INTEGER(ans)[i] = access(R_ExpandFileName(translateChar(STRING_ELT(fn, i))),
-				 modemask);
+	INTEGER(ans)[i] = 
+	    Raccess(R_ExpandFileName(translateChar(STRING_ELT(fn, i))),
+		    modemask);
     UNPROTECT(1);
     return ans;
 }

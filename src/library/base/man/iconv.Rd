@@ -1,7 +1,6 @@
 \name{iconv}
 \alias{iconv}
 \alias{iconvlist}
-\concept{encoding}
 \title{Convert Character Vector between Encodings}
 \description{
   This uses system facilities to convert a character vector between
@@ -64,22 +63,18 @@ iconvlist()
 \seealso{
   \code{\link{localeToCharset}}, \code{\link{file}}. 
 }
-\examples{
-head(iconvlist(), n = 50)
+\examples{\dontrun{
+iconvlist()
 
-\dontrun{
 ## convert from Latin-2 to UTF-8: two of the glibc iconv variants.
 iconv(x, "ISO_8859-2", "UTF-8")
 iconv(x, "LATIN2", "UTF-8")
-}
 
 ## Both x below are in latin1 and will only display correctly in a
 ## latin1 locale.
-x <- "fa\xE7ile"
-Encoding(x) <- "latin1"
-x
+(x <- "fa\xE7ile")
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
-xx
+## in a UTF-8 locale, print(xx)
 
 iconv(x, "latin1", "ASCII")          #   NA
 iconv(x, "latin1", "ASCII", "?")     # "fa?ile"
@@ -87,11 +82,9 @@ iconv(x, "latin1", "ASCII", "")      # "faile"
 iconv(x, "latin1", "ASCII", "byte")  # "fa<e7>ile"
 
 # Extracts from R help files
-x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")
-Encoding(x) <- "latin1"
-x
-try(iconv(x, "latin1", "ASCII//TRANSLIT"))
+(x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher"))
+iconv(x, "latin1", "ASCII//TRANSLIT")
 iconv(x, "latin1", "ASCII", sub="byte")
-}
+}}
 \keyword{ character }
 \keyword{ utilities }

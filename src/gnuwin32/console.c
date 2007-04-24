@@ -784,6 +784,12 @@ static void storekey(control c,int k)
 
 static int rcompgen_available = -1;
 
+void set_rcompgen_available(int x)
+{
+    rcompgen_available = x;
+}
+    
+
 static void performCompletion(control c)
 {
     ConsoleData p = getdata(c);

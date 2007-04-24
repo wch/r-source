@@ -1,5 +1,7 @@
 as.dendrogram <- function(object, ...) UseMethod("as.dendrogram")
 
+as.dendrogram.dendrogram <- function(object, ...) object
+
 as.dendrogram.hclust <- function (object, hang = -1, ...)
 ## hang = 0.1  is default for plot.hclust
 {

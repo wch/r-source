@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-03-21 r40860)
+R version 2.5.0 RC (2007-04-23 r41289)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -297,4 +297,27 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
 [1] "cbind2"
 > m <- new("myMat", x = c(1, pi))
 > stopifnot(identical(m, cBind(m)))
+> 
+> 
+> ## explicit print or show on a basic class with an S4 bit
+> ## caused infinite recursion
+> setClass("Foo", representation(name="character"), contains="matrix")
+[1] "Foo"
+> (f <- new("Foo", name="Sam", matrix()))
+An object of class "Foo"
+     [,1]
+[1,]   NA
+Slot "name":
+[1] "Sam"
+
+> (m <- as(f, "matrix"))
+     [,1]
+[1,]   NA
+> show(m)
+     [,1]
+[1,]   NA
+> print(m)
+     [,1]
+[1,]   NA
+> ## fixed in 2.5.0 patched
 > 
