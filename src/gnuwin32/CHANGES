@@ -8,6 +8,16 @@
 	**************************************************
 
 
+
+	**************************************************
+	*						 *
+	*	       2.5 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.5.1
+
 GUI CHANGES
 
     o	Within Rgui, completion can be turned on or off from the 'Misc'
@@ -24,14 +34,6 @@ OTHERS
 	revision number (which is handy for R-patched and R-devel
 	daily builds).
 
-
-
-
-	**************************************************
-	*						 *
-	*	       2.5 SERIES NEWS			 *
-	*						 *
-	**************************************************
 
 
 		CHANGES IN R VERSION 2.5.0
