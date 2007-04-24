@@ -61,6 +61,8 @@ NEW FEATURES
 	a new argument 'units' to specify the units of 'width' and
 	'height'.
 
+    o	is.finite() and is.infinite() are now S3 and S4 generic.
+
 
 DEPRECATED & DEFUNCT
 

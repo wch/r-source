@@ -6,15 +6,34 @@
 
 .makeBasicFuns <- function(where)
 {
-    env <- new.env(hash=TRUE, parent=as.environment(where))
     funs <- get(".BasicFunsList", envir=where)
+
     ## First, set up the existing functions in the list as valid generics.
+    ## This will override anything except the S4 group generics.
     curNames <- names(funs)
-    for(i in seq(along=funs)) {
+    for(i in seq_along(funs)) {
 	val <- funs[[i]]
-	if(is.function(val))
-	    funs <- .addBasicGeneric(funs, curNames[[i]], val, "", env)
+        if (is.function(val))
+            funs <- .addBasicGeneric(funs, curNames[[i]], val, "")
     }
+
+    ## Next, add the remaaining primitive generics
+    prims <- ls(.GenericArgsEnv, all=TRUE)
+    new_prims <- prims[!prims %in% names(funs)]
+    for(nm in new_prims) {
+        f <- get(nm, envir = .GenericArgsEnv)
+        body(f) <- substitute(standardGeneric(ff), list(ff=val))
+        funs <- .addBasicGeneric(funs, nm, f, "")
+    }
+
+    ## Then add all the primitives that are not already there.
+    ff <- ls("package:base", all.names=TRUE)
+    prims <- ff[sapply(ff, function(x) is.primitive(get(x, "package:base")))]
+    new_prims <- prims[!prims %in% names(funs)]
+    add <- rep(list(FALSE), length(new_prims))
+    names(add) <- new_prims
+    funs <- c(funs, add)
+
     ## the Math group.
     members <- c("abs", "acos", "acosh", "asin", "asinh", "atan",
                  "atanh", "ceiling", "cos", "cosh", "cumprod", "cumsum",
@@ -23,7 +42,7 @@
 
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(x) standardGeneric(""),
-				 "Math", env)
+				 "Math")
 
     setGroupGeneric(where=where,"Math", function(x)NULL,
 		    knownMembers = members, package = "base")
@@ -34,14 +53,14 @@
 
     funs <- .addBasicGeneric(funs, "trunc",
 			     function(x, digits = 0) standardGeneric(""),
-			     "Math2", env)
+			     "Math2")
 
     funs <- .addBasicGeneric(funs, "round",
 			     function(x, digits = 0) standardGeneric(""),
-			     "Math2", env)
+			     "Math2")
     funs <- .addBasicGeneric(funs, "signif",
 			     function(x, digits = 6) standardGeneric(""),
-			     "Math2", env)
+			     "Math2")
 
     setGroupGeneric(where = where, "Math2", function(x, digits) NULL,
 		    knownMembers = c("round", "signif"), package = "methods")
@@ -50,7 +69,7 @@
     members <- c("+", "-", "*", "^", "%%", "%/%", "/")
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-				 "Arith", env)
+				 "Arith")
 
     setGroupGeneric(where = where, "Arith", function(e1, e2)NULL,
 		    group = "Ops", knownMembers = members, package = "base")
@@ -59,7 +78,7 @@
     members <- c("==", ">", "<", "!=", "<=", ">=")
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-				 "Compare", env)
+				 "Compare")
 
     setGroupGeneric(where = where, "Compare", function(e1, e2)NULL,
 		    group = "Ops", knownMembers = members, package = "methods")
@@ -68,7 +87,7 @@
     members <- c("&", "|") ## *not*  "!" since that has only one argument
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-				 "Logic", env)
+				 "Logic")
     setGroupGeneric(where = where, "Logic", function(e1, e2) NULL,
 		    group = "Ops", knownMembers = members, package = "base")
 
@@ -93,7 +112,7 @@
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function (x, ..., na.rm = FALSE)
 				 standardGeneric(""),
-				 "Summary", env)
+				 "Summary")
 
     setGroupGeneric(where = where, "Summary",
 		    function(x, ..., na.rm = FALSE) NULL,
@@ -111,13 +130,12 @@
     members <- c("Arg", "Conj", "Im", "Mod", "Re")
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(z) standardGeneric(""),
-				 "Complex", env)
+				 "Complex")
 
     setGroupGeneric(where=where,"Complex", function(z)NULL,
 		    knownMembers = members, package = "base")
 
     assign(".BasicFunsList", funs, envir=where)
-    assign(".BasicFunsEnv", env, envir=where)
     rm(.addBasicGeneric, envir=where)
 }
 

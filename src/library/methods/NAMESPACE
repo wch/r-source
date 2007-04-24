@@ -6,8 +6,8 @@ S3method(print, classRepresentation)
 
 
 export(.Last.lib)
-export(.BasicClasses)
-export(.BasicFunsList)
+#export(.BasicClasses)
+#export(.BasicFunsList)
 export(.TraceWithMethods)
 export(.untracedFunction)
 export(".__C__(")

@@ -72,9 +72,7 @@ assign("is.complex", function(x) NULL, envir = .ArgsEnv)
 assign("is.double", function(x) NULL, envir = .ArgsEnv)
 assign("is.environment", function(x) NULL, envir = .ArgsEnv)
 assign("is.expression", function(x) NULL, envir = .ArgsEnv)
-assign("is.finite", function(x) NULL, envir = .ArgsEnv)
 assign("is.function", function(x) NULL, envir = .ArgsEnv)
-assign("is.infinite", function(x) NULL, envir = .ArgsEnv)
 assign("is.integer", function(x) NULL, envir = .ArgsEnv)
 assign("is.language", function(x) NULL, envir = .ArgsEnv)
 assign("is.list", function(x) NULL, envir = .ArgsEnv)
@@ -113,7 +111,8 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 .S3PrimitiveGenerics <-
     c("as.character", "as.complex", "as.double", "as.integer",
     "as.logical", "as.numeric", "as.raw", "as.real", "c", "dim",
-    "dim<-", "dimnames", "dimnames<-", "is.array", "is.matrix",
+    "dim<-", "dimnames", "dimnames<-", "is.array", "is.finite",
+    "is.infinite", "is.matrix",
     "is.na", "is.nan", "is.numeric", "length", "length<-", "levels<-",
     "names", "names<-", "rep", "seq.int")
 
