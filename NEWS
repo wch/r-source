@@ -94,6 +94,11 @@ C-LEVEL FACILITIES
 	instead.
 
 
+INSTALLATION
+
+    o	The 'test-Lapack' test is now part of 'make check'.
+
+
 BUG FIXES
 
     o	Internally generic primitives no longer dispatch S4 methods on
