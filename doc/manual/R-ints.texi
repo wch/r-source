@@ -1260,14 +1260,12 @@ other package with a name space.
 
 Primitive functions are treated quite differently, for efficiency
 reasons: this results in different semantics.  @code{setGeneric} is
-disallowed for primitive functions.  The @pkg{methods} package contains
-a character vector @code{.ExcludePrimitiveGenerics} of primitives which
-are not internally generic, and S4 methods cannot be set on these.  Then
-there is a list @code{.BasicFunsList} named by primitive functions in
-@code{.BasicFunsList}: the entries are either @code{FALSE} or a standard
-S4 generic showing the effective definition.  When @code{setMethod} is
-called, either it fails if setting is disallowed or a method is set on
-the effective generic.
+disallowed for primitive functions.  The @pkg{methods} namespace
+contains a list @code{.BasicFunsList} named by primitive functions: the
+entries are either @code{FALSE} or a standard S4 generic showing the
+effective definition.  When @code{setMethod} (or @code{setReplaceMethod})
+is called, it fails if the list entry if @code{FALSE} or a method is set
+on the effective generic given in the list.
 
 Actual dispatch of S4 methods for almost all primitives piggy-backs on
 the S3 dispatch mechanism, so S4 methods can only be dispatched for
@@ -1294,6 +1292,17 @@ The primitive @code{as.double} is special, as @code{as.numeric} and
 refers to generics by name and partly by function, and has been modified
 to map @code{as.double} and @code{as.real} to @code{as.numeric} (since
 that is the name used by packages exporting methods for it).
+
+Some elements of the language are implemented as primitives, for example
+@code{@}}.  This includes the subset and subassignment `functions', and
+they are S4 generic, again piggybacking on S3 dispatch.
+
+@code{.BasicFunsList} is generated when @pkg{methods} is installed, by
+computing all primitives, initially disallowing methods on all and then
+setting generics for members of @code{.GenericArgsEnv}, the S4 group
+generics and a short exceptions list in @file{BasicFunsList.R}: this
+contains the subsetting and subassignment operators and overrides for
+@code{!} and @code{c}.
 
 
 @node Internal use of global and base environments, Modules, S4 objects, R Internal Structures
