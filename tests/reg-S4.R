@@ -191,6 +191,16 @@ m <- new("myMat", x = c(1, pi))
 stopifnot(identical(m, cBind(m)))
 
 
+## explicit print or show on a basic class with an S4 bit
+## caused infinite recursion
+setClass("Foo", representation(name="character"), contains="matrix")
+(f <- new("Foo", name="Sam", matrix()))
+(m <- as(f, "matrix"))
+show(m)
+print(m)
+## fixed in 2.5.0 patched
+
+
 ## regression tests of dispatch: most of these became primitive in 2.6.0
 setClass("c1", "numeric")
 setClass("c2", "numeric")
@@ -224,4 +234,3 @@ setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
 x_c2 <- new("c2", pi)
 as.numeric(x_c2)
 showMethods(as.numeric)
-

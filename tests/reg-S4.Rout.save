@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-04-12 r41139)
+R version 2.6.0 Under development (unstable) (2007-04-24 r41287)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -301,6 +301,29 @@ Ambiguous method selection for "&", target "brob#brob" (the first of the signatu
 > stopifnot(identical(m, cBind(m)))
 > 
 > 
+> ## explicit print or show on a basic class with an S4 bit
+> ## caused infinite recursion
+> setClass("Foo", representation(name="character"), contains="matrix")
+[1] "Foo"
+> (f <- new("Foo", name="Sam", matrix()))
+An object of class "Foo"
+     [,1]
+[1,]   NA
+Slot "name":
+[1] "Sam"
+
+> (m <- as(f, "matrix"))
+     [,1]
+[1,]   NA
+> show(m)
+     [,1]
+[1,]   NA
+> print(m)
+     [,1]
+[1,]   NA
+> ## fixed in 2.5.0 patched
+> 
+> 
 > ## regression tests of dispatch: most of these became primitive in 2.6.0
 > setClass("c1", "numeric")
 [1] "c1"
@@ -365,5 +388,4 @@ Function: as.numeric (package base)
 x="c1"
 x="c2"
 
-> 
 > 

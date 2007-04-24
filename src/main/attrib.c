@@ -1009,14 +1009,18 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if (isList(object))
 	setAttrib(object, R_NamesSymbol, R_NilValue);
     SET_ATTRIB(object, R_NilValue);
+    /* We have just removed the class, but might reset it later */
     SET_OBJECT(object, 0);
+    /* Probably need to fix up S4 bit in other cases, but 
+       definitely in this one */
+    nattrs = length(attrs);
+    if(nattrs == 0) UNSET_S4_OBJECT(object);
 
     /* We do two passes through the attributes; the first */
     /* finding and transferring "dim"s and the second */
     /* transferring the rest.  This is to ensure that */
     /* "dim" occurs in the attribute list before "dimnames". */
 
-    nattrs = length(attrs);
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)
