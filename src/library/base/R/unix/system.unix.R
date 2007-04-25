@@ -24,7 +24,7 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
 unlink <- function(x, recursive = FALSE) {
     if(!is.character(x)) stop("argument must be character")
     if(recursive)
-        system(paste("rm -rf ", paste(shQuote(x), collapse = " ")))
+        system(paste("rm -rf ", paste(shQuote(Sys.glob(x)), collapse = " ")))
     else
-        system(paste("rm -f ", paste(shQuote(x), collapse = " ")))
+        system(paste("rm -f ", paste(shQuote(Sys.glob(x)), collapse = " ")))
 }

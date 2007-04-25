@@ -14,8 +14,12 @@ NEW FEATURES
     o	library() now sorts by library trees in the order of .libPaths()
 	and not alphabetically.
 
+
+INSTALLATION
+
     o	'make check' will work with --without-iconv, to accommodate
-	building on AIX.
+	building on AIX where the system iconv conflicts with
+	libiconv and is not compatible with R's requirements.
 
 
 BUG FIXES
@@ -38,6 +42,9 @@ BUG FIXES
 
     o	density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
 	search interval than the default (lower,upper).
+
+    o	Wildcards work again in unlink() on Unix-alikes (they did not
+	in 2.5.0).
 
 
 
