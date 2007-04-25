@@ -18,6 +18,10 @@
 
   \code{\link{file.remove}} can only remove files, but gives more
   detailed error information.
+#ifdef unix
+
+  Wildcard expansion is done by \code{\link{Sys.glob}}.
+#endif
 }
 \value{
 #ifdef unix
