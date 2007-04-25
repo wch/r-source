@@ -70,10 +70,11 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
         itry <- 1
 	while (fSD(lower, cnt, alph2, c1, n, d) *
 	       fSD(upper, cnt, alph2, c1, n, d) > 0) {
-	    if(itry > 10 || !(missing(lower) && missing(upper)))
+	    if(itry > 20 || !(missing(lower) && missing(upper)))
 		stop("no solution in the specified range of bandwidths")
-	    lower <- lower / 1.2
-	    upper <- upper * 1.2
+	    if(itry %% 2)
+		upper <- upper * 1.2
+	    else lower <- lower / 1.2
 	    if(getOption("verbose"))
 		message("increasing bw.SJ() search interval (",itry,")", sep='')
 	    itry <- itry + 1
