@@ -36,6 +36,9 @@ BUG FIXES
     o	Prediction of the seasonal component in HoltWinters() was one
 	step out at one point in the calculations.
 
+    o	density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
+	search interval than the default (lower,upper).
+
 
 
 		CHANGES IN R VERSION 2.5.0

@@ -4699,3 +4699,8 @@ x <- c(0.006, 0.002, 0.024, 0.02, 0.034, 0.09, 0.074, 0.072, 0.122,
 result <- density(x, n = 20, from = -1, to = 1)
 stopifnot(result$y >= 0)
 ## slightly negative < 2.5.0
+
+
+## bw.SJ() used too small search interval in rare cases:
+bw.SJ(1:20) # error: "no solution in the specified range of bandwidths" in < 2.5.1
+## this is not ok when called as  density(1:20, bw = "SJ")
