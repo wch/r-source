@@ -1,6 +1,6 @@
 /*  R : A Computer Language for Statistical Data Analysis
  *
- *  Copyright (C) 2003	The R Development Core Team
+ *  Copyright (C) 2003-7  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -82,10 +82,10 @@ void HoltWinters (double *x,
 	/* estimate of seasonal component *in* period i */
 	if (*gamma > 0) {
 	    if (*seasonal == 1)
-		season[s0] = *gamma       * (x[i] - level[i0 - 1])
+		season[s0] = *gamma       * (x[i] - level[i0])
  		           + (1 - *gamma) * stmp;
 	    else
-		season[s0] = *gamma       * (x[i] / level[i0 - 1])
+		season[s0] = *gamma       * (x[i] / level[i0])
 			   + (1 - *gamma) * stmp;
 	}
     }
