@@ -125,9 +125,6 @@ NEW FEATURES
     o	'make check' will work with --without-iconv, to accommodate
 	building on AIX.
 
-    o   density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
-        search interval than the default (lower,upper).
-
 
 BUG FIXES
 
@@ -146,6 +143,9 @@ BUG FIXES
 
     o	Prediction of the seasonal component in HoltWinters() was one
 	step out at one point in the calculations.
+
+    o	density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
+	search interval than the default (lower,upper).
 
 
 
