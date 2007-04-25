@@ -22,8 +22,8 @@ BUG FIXES
 
     o	as.dendrogram() failed on objects of class "dendrogram".
 
-    o	plot(type ="s") with many (hundreds of thousands) of points
-	could overflow the stack.  (PR#9629)
+    o	plot(type ="s") (or "S") with many (hundreds of thousands)
+	of points could overflow the stack.  (PR#9629)
 
     o	Coercing an S4 classed object to "matrix" (or other basic class)
 	failed to unset the S4 bit.
@@ -32,6 +32,9 @@ BUG FIXES
 	unrelated change prior to 2.4.1.  This allowed print() and
 	show() to bounce badly constructed S4 objects between
 	themselves indefinitely.
+
+    o	Prediction of the seasonal component in HoltWinters() was one
+	step out at one point in the calculations.
 
 
 
