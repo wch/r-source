@@ -8,7 +8,7 @@
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.5.1
+		CHANGES IN R VERSION 2.5.0 patched
 
 GUI CHANGES
 
@@ -16,6 +16,10 @@ GUI CHANGES
 	menu, and if completion is on, file name completion can be
 	turned off (or back on again).
 
+    o	The "Paste commands only" context menu is slightly better at
+	recognizing and removing prompts, e.g. from example() output
+	or debug sessions.
+	
 OTHERS
 
     o	file.access() has been rewritten using Win32 functions and

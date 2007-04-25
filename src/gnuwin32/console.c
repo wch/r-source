@@ -917,19 +917,22 @@ static int CleanTranscript(char *tscpt, char *cmds)
      * Filter R commands out of a string that contains
      * prompts, commands, and output.
      * Uses a simple algorithm that just looks for '>'
-     * prompts and '+' continuation -- won't work when
-     * other prompts are used (e.g., as in a debugging
-     * session.)
+     * prompts and '+' continuation following a simple prompt prefix.
      * Always return the length of the string required
      * to hold the filtered commands.
      * If cmds is a non-null pointer, write the commands
      * to cmds & terminate with null.
      */
     int incommand = 0, startofline = 1, len = 0;
+    char nonprefix[] = ">+ \t\n\r";
     while (*tscpt) {
 	if (startofline) {
+	    /* skip initial whitespace */
 	    while (*tscpt==' ' || *tscpt=='\t')
 		tscpt++;
+	    /* skip over the prompt prefix */
+	    while (*tscpt && !strchr(nonprefix, *tscpt))
+	    	tscpt++;
 	    if (*tscpt=='>' || (incommand && *tscpt=='+')) {
 		tscpt++;
 		if (*tscpt==' ' || *tscpt=='\t') tscpt++;
