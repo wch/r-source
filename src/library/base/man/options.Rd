@@ -168,8 +168,7 @@ getOption(x)
 #endif
       Can be a character string or an \R function, in which case it
       needs to accept the same first four arguments as
-      \code{\link{file.show}}.
-    }
+      \code{\link{file.show}}.}
 
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
