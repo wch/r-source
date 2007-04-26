@@ -296,7 +296,7 @@ AC_ARG_ENABLE([mbcs],
 ## BLAS.
 AC_ARG_WITH([blas],
 [AC_HELP_STRING([--with-blas],
-                [use BLAS library, or specify it @<:@no@:>@])],
+                [use system BLAS library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=unset])
 # default is "no" except on MacOS X
@@ -304,15 +304,14 @@ AC_ARG_WITH([blas],
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AC_HELP_STRING([--with-lapack],
-                [use LAPACK library, or specify it @<:@no@:>@])],
+                [use system LAPACK library (if available), or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
 [use_lapack=unset])
 # default is "no" except on MacOS X
 
 ## Readline.
 AC_ARG_WITH([readline],
-[AC_HELP_STRING([--with-readline],
-                [use readline library (if available) @<:@yes@:>@])],
+[AC_HELP_STRING([--with-readline], [use readline library @<:@yes@:>@])],
 [R_ARG_USE(readline)],
 [use_readline=yes])
 
@@ -330,7 +329,7 @@ fi],
 ## Tcl/Tk.
 AC_ARG_WITH([tcltk],
 [AC_HELP_STRING([--with-tcltk],
-                [use Tcl/Tk, or specify its library dir @<:@yes@:>@])],
+                [use Tcl/Tk (if available), or specify its library dir @<:@yes@:>@])],
 [if test "${withval}" = no; then
   want_tcltk=no
 elif test "${withval}" = yes; then
