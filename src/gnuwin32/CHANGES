@@ -27,6 +27,7 @@ GUI CHANGES
     o	The "Paste commands only" context menu is slightly better at
 	recognizing and removing prompts, e.g. from example() output
 	or debug sessions.
+
 	
 OTHERS
 
@@ -38,7 +39,11 @@ OTHERS
 	revision number (which is handy for R-patched and R-devel
 	daily builds).
 
-    	
+BUG FIXES
+
+    o	unlink() was not accepting wildcards.
+
+
 
 		CHANGES IN R VERSION 2.5.0
 
