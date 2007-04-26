@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-04-26 10:42\n"
 "PO-Revision-Date: 2007-04-02 18:43+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -234,6 +234,9 @@ msgstr " quartzFonts 中の不正な引数です（フォント名が必要で�
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr " quartzFonts 中の不正な引数です（名前がついた引数が必要です）"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr " 不正な X11 フォントの指定方法です"

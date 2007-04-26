@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-04-26 10:42\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -235,6 +235,9 @@ msgstr "石英字体里的变元不对(必需为字体名称)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "石英字体里的变元不对(需要带名变元)"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "X11字体设置出了错:"

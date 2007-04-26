@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-04-26 10:42\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,9 @@ msgid "invalid arguments in quartzFonts (must be font names)"
 msgstr ""
 
 msgid "invalid arguments in quartzFonts (need named args)"
+msgstr ""
+
+msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr ""
 
 msgid "invalid X11 font specification:"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-04-26 10:42\n"
 "PO-Revision-Date: 2007-04-07 01:39-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -241,6 +241,9 @@ msgstr "неправильные аргументы в quartzFonts (должен быть имена шрифтов)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
 msgstr "неправильные аргументы в quartzFonts (нужны именованные аргументы)"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr ""
 
 msgid "invalid X11 font specification:"
 msgstr "неправильное указание шрифта X11:"
