@@ -4,7 +4,7 @@
 ## form (e.g., belonging to one of the predefined groups of functions).
 
 .BasicFunsList <-
-list("!" = function(x)
+list("!" = function(e1)
 {
     standardGeneric("!")
 }
