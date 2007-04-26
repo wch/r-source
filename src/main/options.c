@@ -281,7 +281,9 @@ void attribute_hidden InitOptions(void)
     /* value from Rf_initialize_R */
     SET_TAG(v, install("rl_word_breaks"));
     SETCAR(v, mkString(" \t\n\"\\'`><=+-*%;,|&{()}"));
+#ifdef HAVE_RL_COMPLETION_MATCHES
     set_rl_word_breaks(" \t\n\"\\'`><=+-*%;,|&{()}");
+#endif
 
     SET_SYMVALUE(install(".Options"), val);
     UNPROTECT(1);
@@ -511,7 +513,9 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "rl_word_breaks")) {
 		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 1)
 		    errorcall(call, _("rl_word_breaks parameter invalid"));
+#ifdef HAVE_RL_COMPLETION_MATCHES
 		set_rl_word_breaks(CHAR(STRING_ELT(argi, 0)));
+#endif
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
 	    else {
