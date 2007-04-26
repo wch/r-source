@@ -40,6 +40,9 @@ BUG FIXES
 	we change working directories before clearing the session
 	temporary directory.
 
+    o	The PDF version of the 'R Internals' manual was missing its
+	indices.
+
 
 
 		CHANGES IN R VERSION 2.5.0

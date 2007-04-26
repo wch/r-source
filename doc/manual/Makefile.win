@@ -310,6 +310,12 @@ R-exts.pdf: R-exts.texi $(texiincludes)
 	$(PDFTEX) R-exts.texi
 	$(PDFTEX) R-exts.texi
 
+R-ints.pdf: R-ints.texi $(texiincludes) 
+	$(PDFTEX) R-ints.texi
+	$(TEXINDEX) R-ints.cp R-ints.fn R-ints.vr
+	$(PDFTEX) R-ints.texi
+	$(PDFTEX) R-ints.texi
+
 R-lang.pdf: R-lang.texi $(texiincludes) 
 	$(PDFTEX) R-lang.texi
 	$(TEXINDEX) R-lang.cp R-lang.fn R-lang.vr
