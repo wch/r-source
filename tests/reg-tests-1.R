@@ -4703,3 +4703,25 @@ stopifnot(result$y >= 0)
 ## bw.SJ() used too small search interval in rare cases:
 bw.SJ(1:20) # error: "no solution in the specified range of bandwidths" in < 2.5.1
 ## this is not ok when called as  density(1:20, bw = "SJ")
+## [that's a matter of opinion, since the example is ridiculous.]
+
+
+## regression tests for unlink and wildcards
+owd <- setwd(tempdir())
+f <- c("ftest1", "ftest2", "ftestmore", "ftest&more")
+file.create(f)
+stopifnot(file.exists(f))
+unlink("ftest?")
+stopifnot(file.exists(f) == c(FALSE, FALSE, TRUE, TRUE))
+unlink("ftest*")
+stopifnot(!file.exists(f))
+dd <- c("dir1", "dir2", "dirs", "moredirs")
+for(d in dd) dir.create(d)
+dir(".")
+file.create(file.path(dd, "somefile"))
+unlink("dir?", recursive = TRUE)
+stopifnot(file.exists(dd) == c(FALSE, FALSE, FALSE, TRUE))
+unlink("*dir*", recursive = TRUE)
+stopifnot(!file.exists(dd))
+setwd(owd)
+## wildcards were broken in 2.5.0
