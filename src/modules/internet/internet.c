@@ -387,7 +387,10 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifndef Win32
 		REprintf("\n");
 #endif
-		if(nbytes > 10240)
+		if(nbytes > 1024*1024)
+		    REprintf("downloaded %0.1fMb\n\n", 
+			     (double)nbytes/1024/1024, url);
+		else if(nbytes > 10240)
 		    REprintf("downloaded %dKb\n\n", nbytes/1024, url);
 		else
 		    REprintf("downloaded %d bytes\n\n", nbytes, url);
@@ -469,7 +472,10 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifndef Win32
 		REprintf("\n");
 #endif
-		if(nbytes > 10240)
+		if(nbytes > 1024*1024)
+		    REprintf("downloaded %0.1fMb\n\n", 
+			     (double)nbytes/1024/1024, url);
+		else if(nbytes > 10240)
 		    REprintf("downloaded %dKb\n\n", nbytes/1024, url);
 		else
 		    REprintf("downloaded %d bytes\n\n", nbytes, url);
