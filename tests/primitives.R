@@ -42,12 +42,12 @@ stopifnot(ff %in% known, known %in% ff)
 
 
 ## check which are not considered as possibles for S4 generic
-ff4 <- names(methods::.BasicFunsList)
+ff4 <- names(methods:::.BasicFunsList)
 # as.double and as.real are the same as as.numeric
 S4generic <- ff %in% c(ff4, "as.double", "as.real")
 notS4 <- ff[!S4generic]
 if(length(notS4))
-    cat("primitives not covered in methods::.BasicFunsList:",
+    cat("primitives not covered in methods:::.BasicFunsList:",
         paste(sQuote(notS4), collapse=", "), "\n")
 stopifnot(S4generic)
 
@@ -61,9 +61,9 @@ stopifnot(ff4 %in% c(ff, extraS4))
 # primitives which are not internally generic cannot have S4 methods
 # unless spefically arranged (e.g. %*%)
 nongen_prims <- ff[!ff %in% ls(.GenericArgsEnv, all.names=TRUE)]
-ff3 <- names(methods::.BasicFunsList)[sapply(methods::.BasicFunsList, function(x) is.logical(x) && !x)]
+ff3 <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.logical(x) && !x)]
 ex <- nongen_prims[!nongen_prims %in% c("$", "$<-", "[", "[[" ,"[[<-", "[<-", "%*%", ff3)]
 if(length(ex))
-    cat("non-generic primitives not excluded in methods::.BasicFunsList:",
+    cat("non-generic primitives not excluded in methods:::.BasicFunsList:",
         paste(sQuote(ex), collapse=", "), "\n")
 stopifnot(length(ex) == 0)
