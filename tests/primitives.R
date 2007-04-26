@@ -59,7 +59,7 @@ stopifnot(ff4 %in% c(ff, extraS4))
 
 
 # primitives which are not internally generic cannot have S4 methods
-# unless spefically arranged (e.g. %*%)
+# unless specifically arranged (e.g. %*%)
 nongen_prims <- ff[!ff %in% ls(.GenericArgsEnv, all.names=TRUE)]
 ff3 <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.logical(x) && !x)]
 ex <- nongen_prims[!nongen_prims %in% c("$", "$<-", "[", "[[" ,"[[<-", "[<-", "%*%", ff3)]
