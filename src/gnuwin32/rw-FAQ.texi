@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.3.0} or later).
+(@samp{2.5.0} or later).
 
 
 @newchap{}
@@ -323,8 +323,8 @@ several times slower on some tasks).
 
 The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
 per process under suitably enabled versions of Windows (see
-@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}:
-even where this is supported it has to be specifically enabled).
+@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
+: even where this is supported it has to be specifically enabled).
 On such systems, the default for @code{--max-mem-size} is the smaller of
 the amount of RAM and 2.5Gb.
 
@@ -749,7 +749,7 @@ This approach will not allow you to update the recommended packages.
 Another issue with Vista is that the standard POSIX ways that R uses
 (e.g. in @code{file.info} and @code{file.access}) to look at file
 permissions no longer work reliably.  @code{file.access} has been
-re-written for R 2.6.0 to work with Windows NT-based security and
+re-written for R 2.5.1 to work with Windows NT-based security and
 seems much more reliable with Vista.
 
 On suitably recent hardware Vista can prevent the execution of code
@@ -954,7 +954,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.4.? the files are in @file{bin/windows/contrib/2.4}.  You can try
+2.5.? the files are in @file{bin/windows/contrib/2.5}.  You can try
 those compiled for earlier versions (but not before 2.0.0), at your own
 risk.
 
@@ -1149,7 +1149,7 @@ but says the page cannot be displayed, this may be due to a 2006 Windows
 security patch (@url{http://support.microsoft.com/kb/896358}).  Either
 apply the workarounds given at that URL or choose another form of help
 as the default (on installation or by editing
-@file{R_HOME\etc\Rprofile.site}.
+@file{R_HOME\etc\Rprofile.site}).
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
