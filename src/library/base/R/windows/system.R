@@ -23,9 +23,6 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
     .Internal(system(command, as.integer(flag), f))
 }
 
-unlink <- function(x, recursive=FALSE)
-    invisible(.Internal(unlink(Sys.glob(x), recursive)))
-
 shell <- function(cmd, shell, flag="/c", intern=FALSE,
                   wait=TRUE, translate=FALSE, mustWork=FALSE, ...)
 {

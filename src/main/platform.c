@@ -1026,6 +1026,142 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #endif
 
+#ifdef Win32
+#include <windows.h>
+static int R_unlink(char *name, int recursive);
+
+static int R_rmdir(const char *dir)
+{
+    char tmp[MAX_PATH];
+    GetShortPathName(dir, tmp, MAX_PATH);
+    return rmdir(tmp);
+}
+
+void R_CleanTempDir()
+{
+    if(Sys_TempDir) {
+	/* Windows cannot delete the current working directory */
+	SetCurrentDirectory(R_HomeDir());
+	R_unlink(Sys_TempDir, 1);
+    }
+}
+#else
+#define R_rmdir rmdir
+#endif
+
+static int R_unlink(char *name, int recursive)
+{
+    if(streql(name, ".") || streql(name, "..")) return 0;
+    if(recursive) {
+#ifdef HAVE_STAT
+	DIR *dir;
+	struct dirent *de;
+	char p[PATH_MAX];
+	struct stat sb;
+	int n, ans = 0;
+	
+	stat(name, &sb);	
+	if((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+	    if ((dir = opendir(name)) != NULL) {
+		while ((de = readdir(dir))) {
+		    if(streql(de->d_name, ".") || streql(de->d_name, ".."))
+			continue;
+		    /* On Windows we need to worry about trailing seps */
+		    n = strlen(name);
+		    if(name[n] == R_FileSep[0]
+#ifdef Win32
+		       || name[n] == '\\'
+#endif
+
+			) snprintf(p, PATH_MAX, "%s%s", name, de->d_name);
+		    else
+			snprintf(p, PATH_MAX, "%s%s%s", name, R_FileSep, 
+				 de->d_name);
+		    stat(p, &sb);
+		    if((sb.st_mode & S_IFDIR) > 0) { /* a directory */
+			ans += R_unlink(p, recursive);
+		    } else
+			ans += (unlink(p) == 0) ? 0 : 1;
+		}
+	    } else { /* we were unable to read a dir */
+		ans++;
+	    }
+	    closedir(dir);
+	    ans += (R_rmdir(name) == 0) ? 0 : 1;
+	    return ans;
+	}
+#endif
+	/* drop through */
+    }
+    return unlink(name) == 0 ? 0 : 1;
+}
+
+
+/* Note that wildcards are allowed in 'names' */
+#if defined(HAVE_GLOB) || defined(Win32)
+# ifdef HAVE_GLOB_H
+#  include <glob.h>
+# endif
+# ifdef Win32
+# include <dos_glob.h>
+# define glob dos_glob
+# define globfree dos_globfree
+# endif
+#endif
+
+SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  fn, ans;
+    int i, j, nfiles, res, failures = 0, recursive;
+    char *names;
+    glob_t globbuf;
+
+    checkArity(op, args);
+    fn = CAR(args);
+    nfiles = length(fn);
+    if (nfiles > 0) {
+    	if (!isString(fn))
+	    errorcall(call, _("invalid '%s' argument"), "x");
+	recursive = asLogical(CADR(args));
+    	if (recursive == NA_LOGICAL)
+	    errorcall(call, _("invalid '%s' argument"), "recursive");
+#ifndef HAVE_STAT
+	if(recursive) {
+	    warningcall(call,
+			_("'recursive = TRUE' is not supported on this platform"));
+	    recursive = FALSE;
+	}
+#endif
+    	for(i = 0; i < nfiles; i++) {
+	    names = translateChar(STRING_ELT(fn, i));
+#if defined(HAVE_GLOB) || defined(Win32)
+	    res = glob(names, 0, NULL, &globbuf);
+#ifdef GLOB_ABORTED
+	    if(res == GLOB_ABORTED)
+		warning(_("read error on '%s'"), names);
+#endif
+#ifdef GLOB_NOSPACE
+	    if(res == GLOB_NOSPACE)
+		error(_("internal out-of-memory condition"));
+#endif
+	    for( j = 0; j < globbuf.gl_pathc; j++)
+		failures += R_unlink(globbuf.gl_pathv[j], recursive);
+	    globfree(&globbuf);
+#else
+		failures += R_unlink(names, recursive);
+#endif
+	}
+    }
+    PROTECT(ans = allocVector(INTSXP, 1));
+    if (!failures)
+	INTEGER(ans)[0] = 0;
+    else
+	INTEGER(ans)[0] = 1;
+    UNPROTECT(1);
+    return (ans);
+}
+
+
 #ifdef HAVE_LOCALE_H
 # include <locale.h>
 #endif

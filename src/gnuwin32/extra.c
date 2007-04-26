@@ -38,87 +38,6 @@
 #include "graphapp/ga.h"
 #include "rui.h"
 
-
-#include <sys/types.h>
-#include <sys/stat.h>
-
-static int R_unlink(char *names, int recursive);
-
-static int R_unlink_one(char *dir, char *name, int recursive)
-{
-    char tmp[MAX_PATH];
-
-    if(strcmp(name, ".") == 0) return 0;
-    if(strcmp(name, "..") == 0) return 0;
-    if(strlen(dir)) {
-	strcpy(tmp, dir);
-	if(*(dir + strlen(dir) - 1) != '\\') strcat(tmp, "\\");
-	strcat(tmp, name);
-    } else strcpy(tmp, name);
-    return (recursive ? R_unlink(tmp, 1): unlink(tmp)) !=0;
-}
-
-static int R_unlink(char *names, int recursive)
-{
-    int failures = 0;
-    char *p, tmp[MAX_PATH], dir[MAX_PATH+2];
-    WIN32_FIND_DATA find_data;
-    HANDLE fh;
-    struct stat sb;
-
-    if(strlen(names) >= MAX_PATH) error(_("invalid 'names' in 'R_unlink'"));
-    strcpy(tmp, names);
-    for(p = tmp; *p != '\0'; p++) if(*p == '/') *p = '\\';
-    if(stat(tmp, &sb) == 0) {
-	/* Is this a directory? */
-	if(sb.st_mode & _S_IFDIR) {
-	    if(recursive) {
-		strcpy(dir, tmp); strcat(tmp, "\\*");
-		fh = FindFirstFile(tmp, &find_data);
-		if (fh != INVALID_HANDLE_VALUE) {
-		    failures += R_unlink_one(dir, find_data.cFileName, 1);
-		    while(FindNextFile(fh, &find_data))
-			failures += R_unlink_one(dir, find_data.cFileName, 1);
-		    FindClose(fh);
-		}
-		/* Use short path as e.g. ' test' fails */
-		GetShortPathName(dir, tmp, MAX_PATH);
-		if(rmdir(tmp)) failures++;
-	    } else failures++; /* don't try to delete dirs */
-	} else {/* Regular file */
-	    failures += R_unlink_one("", names, 0);
-	}
-    }
-    return failures;
-}
-
-
-SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP  fn, ans;
-    int i, nfiles, failures = 0, recursive;
-
-    checkArity(op, args);
-    fn = CAR(args);
-    nfiles = length(fn);
-    if (nfiles > 0) {
-    	if (!isString(fn))
-	    errorcall(call, _("invalid '%s' argument"), "x");
-	recursive = asLogical(CADR(args));
-    	if (recursive == NA_LOGICAL)
-	    errorcall(call, _("invalid '%s' argument"), "recursive");
-    	for(i = 0; i < nfiles; i++)
-	    failures += R_unlink(CHAR(STRING_ELT(fn, i)), recursive);
-    }
-    PROTECT(ans = allocVector(INTSXP, 1));
-    if (!failures)
-	INTEGER(ans)[0] = 0;
-    else
-	INTEGER(ans)[0] = 1;
-    UNPROTECT(1);
-    return (ans);
-}
-
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     R_FlushConsole();
@@ -256,10 +175,11 @@ SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+int winAccess(const char *path, int mode);
+
 int check_doc_file(char * file)
 {
     char *home, path[MAX_PATH];
-    struct stat sb;
 
     home = getenv("R_HOME");
     if (home == NULL)
@@ -268,7 +188,7 @@ int check_doc_file(char * file)
     strcpy(path, home);
     strcat(path, "/");
     strcat(path, file);
-    return stat(path, &sb) == 0;
+    return winAccess(path, 4) == 0;
 }
 
 SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -843,12 +763,6 @@ int Rwin_rename(char *from, char *to)
 	res = (MoveFile(from, to) == 0);
     }
     return res;
-}
-
-
-void R_CleanTempDir()
-{
-    if(Sys_TempDir) R_unlink(Sys_TempDir, 1);
 }
 
 SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)

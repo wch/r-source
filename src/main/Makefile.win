@@ -48,6 +48,7 @@ connections-CFLAGS=-I../extra/zlib -I../extra/bzip2
 dounzip-CFLAGS=-I../extra/zlib
 character-CFLAGS=-I../extra/pcre -I../gnuwin32 -DSTATIC
 pcre-CFLAGS=-I../extra/pcre -DSTATIC
+platform-CFLAGS=-I../gnuwin32
 
 libmain.a: $(OBJS)
 

@@ -4713,7 +4713,7 @@ file.create(f)
 stopifnot(file.exists(f))
 unlink("ftest?")
 stopifnot(file.exists(f) == c(FALSE, FALSE, TRUE, TRUE))
-unlink("ftest*")
+unlink("ftest*", recursive = TRUE)
 stopifnot(!file.exists(f))
 
 stopifnot(unlink("no_such_file") == 0) # not an error
@@ -4722,9 +4722,17 @@ dd <- c("dir1", "dir2", "dirs", "moredirs")
 for(d in dd) dir.create(d)
 dir(".")
 file.create(file.path(dd, "somefile"))
+dir(".", recursive=TRUE)
+stopifnot(unlink("dir?") == 1) # not an error
 unlink("dir?", recursive = TRUE)
 stopifnot(file.exists(dd) == c(FALSE, FALSE, FALSE, TRUE))
 unlink("*dir*", recursive = TRUE)
 stopifnot(!file.exists(dd))
+
+# Windows needs short path names for leading spaces
+dir.create(" test")
+dir(".", recursive=TRUE)
+unlink(" test", recursive = TRUE)
+stopifnot(!file.exists(" test"))
 setwd(owd)
 ## wildcards were broken in 2.5.0 on Unix, and always on Windows

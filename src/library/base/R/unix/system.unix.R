@@ -19,12 +19,3 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
     if(!wait && !intern) command <- paste(command, "&")
     .Internal(system(command, intern))
 }
-
-##--- The following should/could really be done in C [platform !] :
-unlink <- function(x, recursive = FALSE) {
-    if(!is.character(x)) stop("argument must be character")
-    if(recursive)
-        system(paste("rm -rf ", paste(shQuote(Sys.glob(x)), collapse = " ")))
-    else
-        system(paste("rm -f ", paste(shQuote(Sys.glob(x)), collapse = " ")))
-}

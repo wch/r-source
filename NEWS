@@ -73,6 +73,8 @@ NEW FEATURES
 	This allows it to be tuned for people who use their space bar
 	vs those who do not.
 
+    o	unlink() is now internal, using common POSIX code on all platforms.
+
 
 DEPRECATED & DEFUNCT
 

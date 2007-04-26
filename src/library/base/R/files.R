@@ -218,3 +218,7 @@ path.expand <- function(path)
 
 Sys.glob <- function(paths, dirmark = FALSE)
     .Internal(Sys.glob(paths, dirmark))
+
+unlink <- function(x, recursive = FALSE)
+    .Internal(unlink(as.character(x), recursive))
+
