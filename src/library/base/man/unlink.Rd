@@ -18,10 +18,8 @@
 
   \code{\link{file.remove}} can only remove files, but gives more
   detailed error information.
-#ifdef unix
 
   Wildcard expansion is done by \code{\link{Sys.glob}}.
-#endif
 }
 \value{
 #ifdef unix
@@ -32,10 +30,6 @@
   \code{0} for success, \code{1} for failure.
 #endif
   Not deleting a non-existent file is not a failure.
-}
-\note{
-  Prior to \R version 1.2.0 the default on Unix was \code{recursive =
-    TRUE}, and on Windows empty directories could be deleted.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

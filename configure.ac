@@ -400,15 +400,14 @@ AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 ## Recommended R packages.
 AC_ARG_WITH([recommended-packages],
 [AC_HELP_STRING([--with-recommended-packages],
-                [use/install recommended R packages (if available)
-                 @<:@yes@:>@])],
+                [use/install recommended R packages @<:@yes@:>@])],
 [R_ARG_USE(recommended_packages)],
 [use_recommended_packages=yes])
 
 ## Iconv.
 AC_ARG_WITH([iconv],
 [AC_HELP_STRING([--with-iconv],
-                [use iconv library (if available) @<:@yes@:>@])],
+                [use iconv library @<:@yes@:>@])],
 [R_ARG_USE(iconv)],
 [use_iconv=yes])
 
@@ -1856,7 +1855,7 @@ AC_SUBST(R_MODULES)
 if test "${use_iconv}" = yes; then
   R_ICONV
   if test "$r_cv_iconv_latin1" != yes; then
-    AC_MSG_ERROR([--with-iconv=yes (default) and suitable iconv is not available])
+    AC_MSG_ERROR([--with-iconv=yes (default) and a suitable iconv is not available])
   fi
 else
     AC_MSG_WARN([--with-iconv=no is deprecated and will be withdrawn shortly])

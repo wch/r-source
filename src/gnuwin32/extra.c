@@ -85,17 +85,8 @@ static int R_unlink(char *names, int recursive)
 		GetShortPathName(dir, tmp, MAX_PATH);
 		if(rmdir(tmp)) failures++;
 	    } else failures++; /* don't try to delete dirs */
-	} else {/* Regular file (or several) */
-	    strcpy(dir, tmp);
-	    if ((p = Rf_strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
-	    /* check for wildcard matches */
-	    fh = FindFirstFile(tmp, &find_data);
-	    if (fh != INVALID_HANDLE_VALUE) {
-		failures += R_unlink_one(dir, find_data.cFileName, 0);
-		while(FindNextFile(fh, &find_data))
-		    failures += R_unlink_one(dir, find_data.cFileName, 0);
-		FindClose(fh);
-	    }
+	} else {/* Regular file */
+	    failures += R_unlink_one("", names, 0);
 	}
     }
     return failures;
