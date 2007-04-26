@@ -45,6 +45,12 @@ local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        options(defaultPackages = dp)
     })
 
+## Expand R_LIBS_* environment variables.
+Sys.setenv(R_LIBS_SITE =
+           .expand_R_libs_env_var(Sys.getenv("R_LIBS_SITE")))
+Sys.setenv(R_LIBS_USER =
+           .expand_R_libs_env_var(Sys.getenv("R_LIBS_USER")))
+
 .First.sys <- function()
 {
     for(pkg in getOption("defaultPackages")) {

@@ -14,6 +14,10 @@ NEW FEATURES
     o	library() now sorts by library trees in the order of .libPaths()
 	and not alphabetically.
 
+    o	R_LIBS_USER and R_LIBS_SITE feature possible expansion of
+    	specifiers for R version specific information as part of the
+    	startup process.
+
 
 INSTALLATION
 

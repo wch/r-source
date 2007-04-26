@@ -1021,3 +1021,26 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
         for(ns in nss) loadNamespace(ns, lib.loc)
     }
 }
+
+.expand_R_libs_env_var <-
+function(x)
+{
+    v <- paste(R.version[c("major", "minor")], collapse = ".")
+
+    expand <- function(x, spec, expansion)
+        gsub(paste("(^|[^%])(%%)*%", spec, sep = ""),
+             sprintf("\\1\\2%s", expansion), x)
+    
+    ## %V => version x.y.z
+    x <- expand(x, "V", v)
+    ## %v => version x.y
+    x <- expand(x, "v", sub("\\.[^.]*$", "", v))
+    ## %p => platform
+    x <- expand(x, "p", R.version$platform)
+    ## %a => arch
+    x <- expand(x, "a", R.version$arch)
+    ## %o => os
+    x <- expand(x, "o", R.version$os)
+
+    gsub("%%", "%", x)
+}
