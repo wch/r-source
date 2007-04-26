@@ -36,6 +36,10 @@ BUG FIXES
 
     o	unlink() was not accepting wildcards.
 
+    o	Since Windows will not unlink the current working directory,
+	we change working directories before clearing the session
+	temporary directory.
+
 
 
 		CHANGES IN R VERSION 2.5.0

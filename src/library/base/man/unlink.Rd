@@ -20,6 +20,11 @@
   detailed error information.
 
   Wildcard expansion is done by \code{\link{Sys.glob}}.
+#ifdef Windows
+
+  Windows cannot remove the current working directory, nor any file
+  which is open nor any directory containing such a file.
+#endif
 }
 \value{
 #ifdef unix

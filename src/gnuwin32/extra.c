@@ -848,7 +848,11 @@ int Rwin_rename(char *from, char *to)
 
 void R_CleanTempDir()
 {
-    if(Sys_TempDir) R_unlink(Sys_TempDir, 1);
+    if(Sys_TempDir) {
+	/* Windows cannot delete the current working directory */
+	SetCurrentDirectory(R_HomeDir());
+	R_unlink(Sys_TempDir, 1);
+    }
 }
 
 SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
