@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-04-23
+@set FAQ_DATE @value{FAQ_YEAR}-04-26
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2827,6 +2827,8 @@ tail trees.
 @item depmix
 Dependent Mixture Models: fit (multi-group) mixtures of latent Markov
 models on mixed categorical and continuous (time series) data.
+@item desirability
+Desirabiliy function optimization and ranking.
 @item dglm
 Double generalized linear models.
 @item diamonds
@@ -3132,6 +3134,8 @@ approach to GLMs for dependent data.
 Generalized estimating equations solver for parameters in mean, scale,
 and correlation structures, through mean link, scale link, and
 correlation link.  Can also handle clustered categorical responses.
+@item geiger
+Analysis of evolutionary diversification.
 @item genalg
 R based genetic algorithm for binary and floating point chromosomes.
 @item genetics
@@ -3336,6 +3340,8 @@ finite setting.
 Spatially explicit population genetic simulations.
 @item kernlab
 Kernel-based machine learning methods including support vector machines.
+@item kin.cohort
+Analysis of kin-cohort studies.
 @item kinship
 Mixed-effects Cox models, sparse matrices, and modeling data from large
 pedigrees.
