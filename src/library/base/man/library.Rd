@@ -2,7 +2,6 @@
 \title{Loading and Listing of Packages}
 \alias{library}
 \alias{require}
-\alias{R_LIBS}
 \alias{.First.lib}
 \alias{.Last.lib}
 \alias{.noGenerics}

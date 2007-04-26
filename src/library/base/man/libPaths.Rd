@@ -3,6 +3,9 @@
 \alias{.Library}
 \alias{.Library.site}
 \alias{.libPaths}
+\alias{R_LIBS}
+\alias{R_LIBS_SITE}
+\alias{R_LIBS_USER}
 \alias{.expand_R_libs_env_var}
 \description{
   \code{.libPaths} gets/sets the library trees within which packages are
@@ -64,7 +67,7 @@
   \env{R\_LIBS\_SITE} (as a semicolon-separated list of library trees).
 #endif
 
-  Both \env{R\_LIBS\_USER} and \env{R\_LIBS\_USER} feature possible
+  Both \env{R\_LIBS\_USER} and \env{R\_LIBS\_SITE} feature possible
   expansion of specifiers for \R version specific information as part of
   the startup process.  The possible conversion specifiers all start
   with a \samp{\%} and are followed by a single letter (use \samp{\%\%}
