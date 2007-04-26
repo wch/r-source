@@ -4715,6 +4715,9 @@ unlink("ftest?")
 stopifnot(file.exists(f) == c(FALSE, FALSE, TRUE, TRUE))
 unlink("ftest*")
 stopifnot(!file.exists(f))
+
+stopifnot(unlink("no_such_file") == 0) # not an error
+
 dd <- c("dir1", "dir2", "dirs", "moredirs")
 for(d in dd) dir.create(d)
 dir(".")
@@ -4724,4 +4727,4 @@ stopifnot(file.exists(dd) == c(FALSE, FALSE, FALSE, TRUE))
 unlink("*dir*", recursive = TRUE)
 stopifnot(!file.exists(dd))
 setwd(owd)
-## wildcards were broken in 2.5.0
+## wildcards were broken in 2.5.0 on Unix, and always on Windows
