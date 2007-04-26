@@ -168,8 +168,7 @@ getOption(x)
 #endif
       Can be a character string or an \R function, in which case it
       needs to accept the same first four arguments as
-      \code{\link{file.show}}.
-    }
+      \code{\link{file.show}}.}
 
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
@@ -191,6 +190,18 @@ getOption(x)
 
     \item{\code{prompt}:}{a non-empty string to be used for \R's prompt;
       should usually end in a blank (\code{" "}).}
+
+#ifdef unix
+    \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
+      % verbatim, for checking " \t\n\"\\'`><=+-*%;,|&{()}"
+      interface.  Default value \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&\{()\}"}.%"
+      This is the set of characters use to break the input line up into
+      tokens for object- and file-name completion.  Those who use
+      spaces around operators may prefer
+      \code{" \\t\\n\\"\\\\'`><=\%;,|&\{()\}"}.%"
+      The default in pre-2.5.0 versions of \R was
+      \code{" \\t\\n\\"\\\\'`@$><=;|&\{("}.}%"
+#endif
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
       see \code{\link{save}}.}

@@ -67,6 +67,12 @@ NEW FEATURES
 	sheet: in recent versions of makeinfo the markup such as @file
 	was being lost in the HTML rendering.
 
+    o	There is a new option "rl_word_breaks" to control the way the
+	input line is tokenized in the readline-based terminal
+	interface for object- and file-name completion.
+	This allows it to be tuned for people who use their space bar
+	vs those who do not.
+
 
 DEPRECATED & DEFUNCT
 
