@@ -12,13 +12,13 @@
 spineplot(x, \dots)
 
 \method{spineplot}{default}(x, y = NULL,
-          breaks = NULL, tol.ylab = 0.05, off = NULL,
+          breaks = NULL, tol.ylab = 0.05, off = NULL, ylevels = NULL,
           col = NULL, main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
           xlim = NULL, ylim = c(0, 1), \dots)
 
 \method{spineplot}{formula}(formula, data = list(),
-          breaks = NULL, tol.ylab = 0.05, off = NULL,
+          breaks = NULL, tol.ylab = 0.05, off = NULL, ylevels = NULL,
           col = NULL, main = "", xlab = NULL, ylab = NULL,
           xaxlabels = NULL, yaxlabels = NULL,
           xlim = NULL, ylim = c(0, 1), \dots,
@@ -40,6 +40,8 @@ spineplot(x, \dots)
     plotted equidistantly.}
   \item{off}{vertical offset between the bars (in per cent). It is fixed to
     \code{0} for spinograms and defaults to \code{2} for spine plots.}
+  \item{ylevels}{a character or numeric vector specifying in which order
+    the levels of the dependent variable should be plotted.}
   \item{col}{a vector of fill colors of the same length as \code{levels(y)}.
     The default is to call \code{\link{gray.colors}}.}  
   \item{main, xlab, ylab}{character strings for annotation}
@@ -129,5 +131,8 @@ temperature <- c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70, 70,
 (spineplot(fail ~ temperature))
 (spineplot(fail ~ temperature, breaks = 3))
 (spineplot(fail ~ temperature, breaks = quantile(temperature)))
+
+## highlighting for failures
+spineplot(fail ~ temperature, ylevels = 2:1)
 }
 \keyword{hplot}

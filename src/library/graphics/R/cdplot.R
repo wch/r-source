@@ -7,7 +7,7 @@ cdplot <- function(x, ...) {
 
 cdplot.formula <-
 function(formula, data = list(),
-         plot = TRUE, tol.ylab = 0.05,
+         plot = TRUE, tol.ylab = 0.05, ylevels = NULL,
          bw = "nrd0", n = 512, from = NULL, to = NULL,
          col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
          yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...,
@@ -23,6 +23,8 @@ function(formula, data = list(),
     y <- mf[,1]
     if(!is.factor(y))
         stop("dependent variable should be a factor")
+    if(!is.null(ylevels))
+      y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
     x <- mf[,2]
     if(!is.numeric(x))
         stop("explanatory variable should be numeric")
@@ -33,7 +35,6 @@ function(formula, data = list(),
     if(is.null(yaxlabels)) yaxlabels <- levels(y)
 
     ## call default interface
-
     cdplot(x, y, plot = plot, tol.ylab = tol.ylab, bw = bw, n = n,
            from = from, to = to, col = col, border = border, main = main,
            xlab = xlab, ylab = ylab, yaxlabels = yaxlabels, xlim = xlim,
@@ -42,7 +43,7 @@ function(formula, data = list(),
 
 cdplot.default <-
 function(x, y,
-         plot = TRUE, tol.ylab = 0.05,
+         plot = TRUE, tol.ylab = 0.05, ylevels = NULL,
          bw = "nrd0", n = 512, from = NULL, to = NULL,
          col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
          yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...)
@@ -50,6 +51,8 @@ function(x, y,
     ## check x and y
     if(!is.numeric(x)) stop("explanatory variable should be numeric")
     if(!is.factor(y)) stop("dependent variable should be a factor")
+    if(!is.null(ylevels))
+      y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
 
     ## graphical parameters
     if(is.null(xlab)) xlab <- deparse(substitute(x))
