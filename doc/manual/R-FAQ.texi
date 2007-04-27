@@ -2759,6 +2759,8 @@ A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs.
 @item connectedness
 Find disconnected sets for two-way classification.
+@item contrast
+A collection of contrast methods.
 @item copula
 Classes of commonly used copulas (including elliptical and Archimedian),
 and methods for density, distribution, random number generators, and
