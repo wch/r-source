@@ -1814,7 +1814,7 @@ void closewin(DEstruct DE)
     }
 #endif
     XDestroyWindow(iodisplay, DE->iowindow);
-    // XCloseDisplay(iodisplay);
+    /* XCloseDisplay(iodisplay); */
 }
 
 #define USE_Xt 1
