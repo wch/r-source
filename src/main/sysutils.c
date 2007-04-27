@@ -46,13 +46,12 @@
  * This call provides a simple interface to the "stat" system call.
  */
 
-#ifdef HAVE_STAT
-# ifdef HAVE_SYS_TYPES_H
-#  include <sys/types.h>
-# endif
-# ifdef HAVE_SYS_STAT_H
-#  include <sys/stat.h>
-# endif
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
 
 #if HAVE_AQUA
 extern int (*ptr_CocoaSystem)(char*);
@@ -72,18 +71,6 @@ double attribute_hidden R_FileMtime(char *path)
 	error(_("cannot determine file modification time of '%s'"), path);
     return sb.st_mtime;
 }
-#else
-Rboolean attribute_hidden R_FileExists(char *path)
-{
-    error(_("file existence is not available on this system"));
-}
-
-double attribute_hidden R_FileMtime(char *path)
-{
-    error(_("file modification time is not available on this system"));
-    return 0.0; /* not reached */
-}
-#endif
 
     /*
      *  Unix file names which begin with "." are invisible.

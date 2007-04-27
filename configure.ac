@@ -1632,6 +1632,13 @@ R_CHECK_FUNCS([glob], [#ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif])
 
+## we can't use dir() or unlink(recursive=TRUE) without these
+if test "${ac_cv_have_decl_stat}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'stat' system call])
+fi
+if test "${ac_cv_search_opendir}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'opendir' system call])
+fi
 
 
 ## <NOTE>

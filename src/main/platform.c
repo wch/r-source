@@ -551,13 +551,12 @@ SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
     return rename(from, to) == 0 ? mkTrue() : mkFalse();
 }
 
-#ifdef HAVE_STAT
-# ifdef HAVE_SYS_TYPES_H
-#  include <sys/types.h>
-# endif
-# ifdef HAVE_SYS_STAT_H
-#  include <sys/stat.h>
-# endif
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
 
 # if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
   && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)
@@ -662,13 +661,6 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(3);
     return ans;
 }
-#else
-SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error(_("file.info() is not implemented on this system"));
-    return R_NilValue;		/* -Wall */
-}
-#endif
 
 /* No longer required by POSIX, but maybe on earlier OSes */
 #ifdef HAVE_SYS_TYPES_H
@@ -721,9 +713,7 @@ static void count_files(char *dnp, int *count,
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX];
-#ifdef HAVE_STAT
     struct stat sb;
-#endif
 
     if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
 	error(_("directory/folder path name too long"));
@@ -732,7 +722,6 @@ static void count_files(char *dnp, int *count,
     } else {
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
-#ifdef HAVE_STAT
 		if(recursive) {
 		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
@@ -744,7 +733,6 @@ static void count_files(char *dnp, int *count,
 			continue;
 		    }
 		}
-#endif
 		if (pattern) {
 		    if(regexec(&reg, de->d_name, 0, NULL, 0) == 0) (*count)++;
 		} else (*count)++;
@@ -760,32 +748,29 @@ static void list_files(char *dnp, char *stem, int *count, SEXP ans,
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX], stem2[PATH_MAX];
-#ifdef HAVE_STAT
     struct stat sb;
-#endif
 
     if ((dir = opendir(dnp)) != NULL) {
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
-#ifdef HAVE_STAT
 		if(recursive) {
 		    snprintf(p, PATH_MAX, "%s%s%s", dnp,
 			     R_FileSep, de->d_name);
 		    stat(p, &sb);
 		    if((sb.st_mode & S_IFDIR) > 0) {
-			if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
+			if (strcmp(de->d_name, ".") && 
+			    strcmp(de->d_name, "..")) {
 			    if(stem)
 			    	snprintf(stem2, PATH_MAX, "%s%s%s", stem,
 				         R_FileSep, de->d_name);
 			    else
 			    	strcpy(stem2, de->d_name);
-			    list_files(p, stem2, count, ans, allfiles, recursive,
-				   pattern, reg);
+			    list_files(p, stem2, count, ans, allfiles, 
+				       recursive, pattern, reg);
 		    	}
 			continue;
 		    }
 		}
-#endif
 		if (pattern) {
 		    if (regexec(&reg, de->d_name, 0, NULL, 0) == 0)
 			SET_STRING_ELT(ans, (*count)++,
@@ -820,13 +805,6 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args)); args = CDR(args);
     recursive = asLogical(CAR(args));
-#ifndef HAVE_STAT
-    if(recursive) {
-	warningcall(call,
-		    _("'recursive = TRUE' is not supported on this platform"));
-	recursive = FALSE;
-    }
-#endif
     ndir = length(d);
     if (pattern && regcomp(&reg, translateChar(STRING_ELT(p, 0)), REG_EXTENDED))
         errorcall(call, _("invalid 'pattern' regular expression"));
@@ -1054,7 +1032,6 @@ static int R_unlink(char *name, int recursive)
 {
     if(streql(name, ".") || streql(name, "..")) return 0;
     if(recursive) {
-#ifdef HAVE_STAT
 	DIR *dir;
 	struct dirent *de;
 	char p[PATH_MAX];
@@ -1091,7 +1068,6 @@ static int R_unlink(char *name, int recursive)
 	    ans += (R_rmdir(name) == 0) ? 0 : 1;
 	    return ans;
 	}
-#endif
 	/* drop through */
     }
     return unlink(name) == 0 ? 0 : 1;
@@ -1126,13 +1102,6 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	recursive = asLogical(CADR(args));
     	if (recursive == NA_LOGICAL)
 	    errorcall(call, _("invalid '%s' argument"), "recursive");
-#ifndef HAVE_STAT
-	if(recursive) {
-	    warningcall(call,
-			_("'recursive = TRUE' is not supported on this platform"));
-	    recursive = FALSE;
-	}
-#endif
     	for(i = 0; i < nfiles; i++) {
 	    names = translateChar(STRING_ELT(fn, i));
 #if defined(HAVE_GLOB) || defined(Win32)

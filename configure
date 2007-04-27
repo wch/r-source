@@ -35040,6 +35040,17 @@ fi
 done
 
 
+## we can't use dir() or unlink(recursive=TRUE) without these
+if test "${ac_cv_have_decl_stat}" = "no"; then
+   { { echo "$as_me:$LINENO: error: Building R requires the 'stat' system call" >&5
+echo "$as_me: error: Building R requires the 'stat' system call" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test "${ac_cv_search_opendir}" = "no"; then
+   { { echo "$as_me:$LINENO: error: Building R requires the 'opendir' system call" >&5
+echo "$as_me: error: Building R requires the 'opendir' system call" >&2;}
+   { (exit 1); exit 1; }; }
+fi
 
 
 ## <NOTE>

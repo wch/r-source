@@ -98,13 +98,17 @@ UTILITIES
 C-LEVEL FACILITIES
 
     o	The entry point R_seemsS4Object in Rinternals.h has not been
-	accurate since R 2.4.0 and has been removed.  Use IS_S4_OBJECT
+	needed since R 2.4.0 and has been removed.  Use IS_S4_OBJECT
 	instead.
 
 
 INSTALLATION
 
     o	The 'test-Lapack' test is now part of 'make check'.
+
+    o	The 'stat' system call is now required, along with 'opendir'
+	(which had long been used but not tested for).  ('make check'
+	would have failed in earlier versions without these calls.)
 
 
 BUG FIXES

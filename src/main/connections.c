@@ -677,14 +677,12 @@ static Rconnection newfile(char *description, char *mode)
 
 #if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
 
-#ifdef HAVE_STAT
-# ifdef HAVE_SYS_TYPES_H
-#  include <sys/types.h>
-# endif
-# ifdef HAVE_SYS_STAT_H
-#  include <sys/stat.h>
-# endif
-#endif /* HAVE_STAT */
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
 
 #ifdef HAVE_ERRNO_H
 # include <errno.h>
