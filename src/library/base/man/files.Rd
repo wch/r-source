@@ -22,7 +22,7 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
 \alias{dir.create}
 \arguments{
   \item{\dots, file1, file2, from, to}{character vectors,
-    containing file names.}
+    containing file names or paths.}
   \item{path}{a character vector containing a single path name.}
   \item{overwrite}{logical; should the destination files be overwritten?}
   \item{showWarnings}{logical; should the warnings on failure be shown?}
@@ -42,7 +42,13 @@ dir.create(path, showWarnings = TRUE, recursive = FALSE)
   do not already exist and truncates them if they do.
 
   \code{file.exists} returns a logical vector indicating whether
-  the files named by its argument exist.
+  the files named by its argument exist.  (Here \sQuote{exists} is in the
+  sense of the system's \code{stat} call: a file will be reported as
+  existing only if you have the permissions needed by \code{stat}.
+  Existence can also be checked by \code{\link{file.access}}, which
+  might use different permissions and so obtain a different result.
+  Note that the existence of a file does not imply that it is readable:
+  for that use \code{\link{file.access}}.)
 
   \code{file.remove} attempts to remove the files named in its
   argument.
