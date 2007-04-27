@@ -580,7 +580,7 @@ function(package, lib.loc)
             pos <- match(paste("package", package, sep = ":"), search())
             if(!is.na(pos)) {
                 if(package == "methods") return()
-                detach(pos = pos)
+                detach(pos = pos, unload = TRUE)
             }
             library(package, lib.loc = lib.loc, character.only = TRUE,
                     verbose = FALSE)
