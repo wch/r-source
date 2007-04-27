@@ -191,14 +191,6 @@ static int wcsearch(int wint, const struct interval *table, int max)
 }
 #endif
 
-/* what was this for ?
-#ifdef Win32
-# include <windows.h>
-# include <winnls.h>
-#else
-# include <langinfo.h>
-#endif
-*/
 
 /*********************************************************************
  *  There is MacOS with a CSI(CodeSet Independence) system.

@@ -620,7 +620,8 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Functions for getting and setting the working directory. */
 #ifdef Win32
-#include <windows.h>
+# define WIN32_LEAN_AND_MEAN 1
+# include <windows.h>
 #endif
 
 SEXP static intern_getwd()
@@ -650,7 +651,7 @@ SEXP attribute_hidden do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 #if defined(Win32) && defined(_MSC_VER)
-#include <direct.h> /* for chdir */
+# include <direct.h> /* for chdir, via io.h */
 #endif
 
 SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
