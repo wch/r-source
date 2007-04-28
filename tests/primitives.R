@@ -5,7 +5,7 @@ xx <- structure("OK", class="testOK")
 
 for(f in ls(.GenericArgsEnv, all.names=TRUE))
 {
-    cat("testing '", f, "'\n", sep="")
+    cat("testing S3 generic '", f, "'\n", sep="")
     method <- paste(f, "testit", sep=".")
     if(f %in% "seq.int") {
         ## note that this dispatches on 'seq'.
@@ -22,6 +22,25 @@ for(f in ls(.GenericArgsEnv, all.names=TRUE))
         }
     }
     stopifnot(res == xx)
+    rm(method)
+}
+
+## and that no others are generic
+for(f in ls(.ArgsEnv, all.names=TRUE))
+{
+    if(f == "browser") next
+    cat("testing non-generic '", f, "'\n", sep="")
+    method <- paste(f, "testit", sep=".")
+    fx <- get(f, envir=.ArgsEnv)
+    body(fx) <- quote(return(42))
+    assign(method, fx, .GlobalEnv)
+    na <- length(formals(fx))
+    res <- NULL
+    if(na == 1)
+        res <- try(eval(substitute(ff(x), list(ff=as.name(f)))), silent = TRUE)
+    else if(na == 2)
+        res <- try(eval(substitute(ff(x, x), list(ff=as.name(f)))), silent = TRUE)
+    if(!inherits(res, "try-error") && identical(res, 42)) stop("is generic")
     rm(method)
 }
 
