@@ -1021,12 +1021,13 @@ documented setting of @code{R_Visible} on return, unless the C code is
 allowed to change it (the exceptions above are indicated by
 @code{PRIMPRINT} having value 2).
 
-The actual autoprinting is done by @code{PrintValueEnv} in @file{print.c}.  If
-the object to be printed has the S4 bit set and S4 methods dispatch is
-on, @code{show} is called to print the object.  Otherwise, if the object
-bit is set (so the object has a @code{"class"} attribute), @code{print}
-is called to dispatch methods: for objects without a class the internal
-code of @code{print.default} is called.
+The actual autoprinting is done by @code{PrintValueEnv} in
+@file{print.c}.  If the object to be printed has the S4 bit set and S4
+methods dispatch is on, @code{show} is called to print the object.
+Otherwise, if the object bit is set (so the object has a
+@code{"class"} attribute), @code{print} is called to dispatch methods:
+for objects without a class the internal code of @code{print.default}
+is called.
 
 
 @node The write barrier, Serialization Formats, Autoprinting, R Internal Structures
@@ -1269,23 +1270,26 @@ S4 generic showing the effective definition.  When @code{setMethod} is
 called, either it fails if setting is disallowed or a method is set on
 the effective generic.
 
-Actual dispatch of S4 methods for primitives piggy-backs on the S3
-dispatch mechanism, so S4 methods can only be dispatched for primitives
-which are internally S3 generic.  When a primitive that is internally S3
-generic is called with a first argument which is an object and S4
-dispatch is on (that is, the @pkg{methods} name space is loaded),
-@code{DispatchOrEval} calls @code{R_possible_dispatch} (defined in
+Actual dispatch of S4 methods for primitives (with one exception)
+piggy-backs on the S3 dispatch mechanism, so S4 methods can only be
+dispatched for primitives which are internally S3 generic.  When a
+primitive that is internally S3 generic is called with a first argument
+which is an object and S4 dispatch is on (that is, the @pkg{methods}
+name space is loaded), @code{DispatchOrEval} (or for S3 group generics,
+@code{DispatchGroup}) calls @code{R_possible_dispatch} (defined in
 @file{src/main/objects.c}).  The latter first checks an internal table
 to see if any S4 methods are set for that generic (and S4 dispatch is
 currently enabled for that generic), and if so proceeds to S4 dispatch
 using methods stored in another internal table.  Note that this means
 that dispatch will not occur for the pseudo-classes like
 @code{"function"} and @code{"matrix"}, but that it will occur for non-S4
-objects which have an S3 class.  All primitives are in the base
-name space, and this mechanism means that S4 methods can be set for
-(some) primitives and will always be used, in contrast to setting
-methods on non-primitives.
+objects which have an S3 class.  All primitives are in the base name
+space, and this mechanism means that S4 methods can be set for (some)
+primitives and will always be used, in contrast to setting methods on
+non-primitives.
 
+The exception is @code{%*%}, which is S4 generic but not S3 generic as
+its C code contains a direct call to @code{R_possible_dispatch}.
 
 @node Internal use of global and base environments, Modules, S4 objects, R Internal Structures
 @section Internal use of global and base environments
@@ -1435,8 +1439,8 @@ function closure), there are exceptions which can be accessed directly.
 Note that these functions make no use of @R{} code, and hence are very
 different from the usual interpreted functions.  In particular,
 @code{args}, @code{formals} and @code{body} return @code{NULL} for such
-objects, and argument matching is purely positional (with empty
-positions being dropped).
+objects, and argument matching is purely positional (with two exceptions
+described below).
 
 The list of these ``primitive'' functions is subject to change:
 currently, it includes the following.
@@ -1455,9 +1459,10 @@ return  function  quote  on.exit
 @end example
 
 @item
-Basic @emph{operator}s (i.e., functions usually @emph{not} called as
-@code{foo(a, b, ...)}) for subsetting, assignment, arithmetic and logic.
-These are the following 1-, 2-, and @math{N}-argument functions:
+Language elements and basic @emph{operator}s (i.e., functions usually
+@emph{not} called as @code{foo(a, b, ...)}) for subsetting, assignment,
+arithmetic and logic.  These are the following 1-, 2-, and
+@math{N}-argument functions:
 
 @example
 @group
@@ -1481,7 +1486,7 @@ Basic mathematical functions with a single argument, i.e.,
 @example
 @group
 sign    abs
-floor   ceiling  trunc
+floor   ceiling
 @end group
 
 @group
@@ -1518,6 +1523,9 @@ log <- function(x, base = exp(1)) @{
 @noindent in order to ensure that @code{log(x = pi, base = 2)} is
 identical to @code{log(base = 2, x = pi)}.
 
+Function @code{trunc} is a difficult case: it is a primitive and is
+currently treated as @code{trunc(x, ..)}.
+
 @item
 Functions rarely used outside of ``programming'' (i.e., mostly used
 inside other functions), such as
@@ -1543,7 +1551,8 @@ The programming and session management utilities
 
 @example
 @group
-debug    undebug browser  proc.time  gc.time
+debug  undebug browser  proc.time  gc.time
+tracemem retracemem untracemem
 @end group
 @end example
 
@@ -1588,7 +1597,6 @@ UseMethod  invisible  standardGeneric
 .C         .Fortran   .Call       .External
 .Call.graphics        .External.graphics
 .subset    .subset2   .primTrace  .primUntrace
-tracemem   retracemem untracemem
 rep        seq.int
 @end group
 @end example
@@ -1646,7 +1654,7 @@ checking (e.g.@: by @code{tools::checkS3methods} and by package
 internal S3 generics, and @samp{.ArgsEnv} for the rest.  Those
 environments contain closures with the same names as the primitives,
 formal argumnts derived (manually) from the help pages, a body which
-as suitable call to @code{UseMethod} or @code{NULL} and environment the
+is a suitable call to @code{UseMethod} or @code{NULL} and environment the
 base name space.
 
 The C code for @code{print.default} and @code{args} uses the closures in
@@ -1659,13 +1667,14 @@ included are better thought of as language elements (at the time of
 writing
 
 @example
-$  $<-  &&  (  :  @  [  [[  [[<-  [<-  @{  ||  ~  <-  <<-  =
+$  $<-  &&  (  :  @@  [  [[  [[<-  [<-  @{  ||  ~  <-  <<-  =
 break  for function  if  next  repeat  return  while
 @end example
 
 @noindent
 .  One could argue about @code{~}, but it is known to the parser and has
-semantics quite unlike a normal function.)
+semantics quite unlike a normal function.  And @code{:} is documented
+with different argument names in its two meanings.)
 
 The QC functions @code{codoc} and @code{checkS3methods} also make use of
 these environments (effectively placing them in front of base in the
@@ -1711,12 +1720,12 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 
 @itemize @bullet
 @item
-As from @R{} 2.3.0 an ISO C99 C compiler.  Note that extensions such as
-@acronym{POSIX} 1003.1 must be tested for, typically using Autoconf
-unless you are sure they are supported on all mainstream @R{} platforms
-(including Windows and MacOS X).  Packages will be more portable if
-written assuming only C89, but this should not be done where using C99
-features will make for cleaner or more robust code.
+An ISO C99 C compiler.  Note that extensions such as @acronym{POSIX}
+1003.1 must be tested for, typically using Autoconf unless you are sure
+they are supported on all mainstream @R{} platforms (including Windows
+and MacOS X).  Packages will be more portable if written assuming only
+C89, but this should not be done where using C99 features will make for
+cleaner or more robust code.
 
 @item
 A FORTRAN 77 compiler (but not Fortran 9x).
@@ -1780,8 +1789,8 @@ hand, Perl cannot be assumed at all for installing @emph{binary}
 (pre-built) versions of add-on packages, or at run time.
 
 @item
-Makeinfo version 4.7 is needed to build the Info files for the @R{}
-manuals written in the @acronym{GNU} Texinfo system.  (Future
+Makeinfo version 4.7 or later is needed to build the Info files for the
+@R{} manuals written in the @acronym{GNU} Texinfo system.  (Future
 distributions of @R{} may contain the Info files.)
 @findex makeinfo
 @end itemize
