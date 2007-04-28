@@ -17,6 +17,9 @@ a \%*\% b
 \details{
   When a vector is promoted to a matrix, its names are not
   promoted to row or column names, unlike \code{\link{as.matrix}}.
+
+  This operator is S4 generic but not S3 generic.  S4 methods need to be
+  written for arguments named \code{x} and \code{y}.
 }
 \value{
   The matrix product.  Use \code{\link{drop}} to get rid of dimensions
