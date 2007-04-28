@@ -2212,3 +2212,14 @@ attr(x, "NA")
 attr(x, NA_character_)
 try(attr(x, NA_character_) <- 5)
 ## prior to 2.5.0 NA was treated as "NA"
+
+
+## qr with pivoting (PR#9623)
+A <- matrix(c(0,0,0, 1,1,1), nrow = 3,
+            dimnames = list(letters[1:3], c("zero","one")))
+y <- matrix(c(6,7,8), nrow = 3, dimnames = list(LETTERS[1:3], "y"))
+qr.coef(qr(A), y)
+qr.fitted(qr(A), y)
+
+qr.coef(qr(matrix(0:1, 1, dimnames=list(NULL, c("zero","one")))), 5)
+## coef names were returned unpivoted <= 2.5.0
