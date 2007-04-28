@@ -58,8 +58,8 @@ ff4[!ff4 %in% c(ff, extraS4)]
 stopifnot(ff4 %in% c(ff, extraS4))
 
 
-# primitives which are not internally generic cannot have S4 methods
-# unless specifically arranged (e.g. %*%)
+## primitives which are not internally generic cannot have S4 methods
+## unless specifically arranged (e.g. %*%)
 nongen_prims <- ff[!ff %in% ls(.GenericArgsEnv, all.names=TRUE)]
 ff3 <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.logical(x) && !x)]
 ex <- nongen_prims[!nongen_prims %in% c("$", "$<-", "[", "[[" ,"[[<-", "[<-", "%*%", ff3)]
@@ -67,3 +67,23 @@ if(length(ex))
     cat("non-generic primitives not excluded in methods:::.BasicFunsList:",
         paste(sQuote(ex), collapse=", "), "\n")
 stopifnot(length(ex) == 0)
+
+## Now check that those which are listed really are generic.
+require(methods)
+setClass("foo", representation(x="numeric", y="numeric"))
+xx <- new("foo")
+S4gen <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.function(x))]
+for(f in S4gen) {
+    cat("testing '", f, "'\n", sep="")
+    g <- get(f)
+    if(is.primitive(g)) g <- getGeneric(f) # should error on non-Generics.
+    ff <- g
+    body(ff) <- quote(x)
+    setMethod(f, "foo", ff)
+    na <- nargs(g)
+    switch(na,
+           `1` = stopifnot(get(f)(xx) == xx),
+           `2` = stopifnot(get(f)(xx, NULL) == xx),
+           stop("primitive with other than 1 or 2 args")
+           )
+}
