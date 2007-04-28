@@ -8948,7 +8948,7 @@ a state terminates (@code{@var{which}=0}).
 @deftypefun int R_ReadConsole (char *@var{prompt}, unsigned char *@var{buf}, @
   int @var{buflen}, int @var{hist})
 @deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen})
-@deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen}, int @var{otype})
+@deftypefunx void R_WriteConsoleEx (char *@var{buf}, int @var{buflen}, int @var{otype})
 @deftypefunx void R_ResetConsole ()
 @deftypefunx void R_FlushConsole ()
 @deftypefunx void R_ClearErrConsole ()
