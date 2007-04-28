@@ -75,6 +75,11 @@ NEW FEATURES
 
     o	unlink() is now internal, using common POSIX code on all platforms.
 
+    o	Rd conversion to HTML and CHM now makes use of classes, which
+	are set in the stylesheets.  Editing R.css will change the
+	styles used for \env, \option, \pkg etc.  (CHM styles are set
+	at compilation time.)
+
 
 DEPRECATED & DEFUNCT
 

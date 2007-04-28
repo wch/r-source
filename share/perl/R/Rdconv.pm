@@ -821,19 +821,19 @@ sub text2html {
 
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
-    $text = replace_command($text, "file", "&lsquo;<TT>", "</TT>&rsquo;");
+    $text = replace_command($text, "file", "&lsquo;<span class=\"file\">", "</span>&rsquo;");
 
     $text = replace_command($text, "strong", "<STRONG>", "</STRONG>");
 
-    $text = replace_command($text, "acronym", "<SMALL>", "</SMALL>");
+    $text = replace_command($text, "acronym", "<acronym><span class=\"acronym\">", "</span></acronym>");
     $text = replace_command($text, "cite", "<CITE>", "</CITE>");
     $text = replace_command($text, "command", "<CODE>", "</CODE>");
     $text = replace_command($text, "dfn", "<DFN>", "</DFN>");
-    $text = replace_command($text, "env", "<CODE>", "</CODE>");
+    $text = replace_command($text, "env", "<span class=\"env\">", "</span>");
     $text = replace_command($text, "kbd", "<KBD>", "</KBD>");
-    $text = replace_command($text, "option", "<SAMP>", "</SAMP>");
-    $text = replace_command($text, "pkg", "<STRONG>", "</STRONG>");
-    $text = replace_command($text, "samp", "<SAMP>", "</SAMP>");
+    $text = replace_command($text, "option", "<span class=\"option\">", "</span>");
+    $text = replace_command($text, "pkg", "<span class=\"pkg\">", "</span>");
+    $text = replace_command($text, "samp", "<span class=\"samp\">", "</span>");
     $text = replace_command($text, "var", "<VAR>", "</VAR>");
 
     $text = replace_command($text, "sQuote", "&lsquo;", "&rsquo;");
