@@ -13,4 +13,4 @@ Omegahat	Omegahat	http://www.omegahat.org/R	FALSE	TRUE	TRUE	FALSE
 BioCsoft	"BioC software"	http://www.bioconductor.org/packages/2.0/bioc	FALSE	TRUE	TRUE	TRUE
 BioCann	"BioC annotation"	http://www.bioconductor.org/packages/2.0/data/annotation	FALSE	TRUE	TRUE	TRUE
 BioCexp	"BioC experiment"	http://www.bioconductor.org/packages/2.0/data/experiment	FALSE	TRUE	TRUE	TRUE
-BioCmisc	"BioC misc"	http://www.bioconductor.org/packages/2.0/omegahat	FALSE	TRUE	TRUE	TRUE
+BioCextra	"BioC extra"	http://www.bioconductor.org/packages/2.0/extra	FALSE	TRUE	TRUE	TRUE
