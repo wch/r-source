@@ -1,5 +1,5 @@
 
-R version 2.5.0 Under development (unstable) (2007-02-13 r40710)
+R version 2.6.0 Under development (unstable) (2007-04-27 r41354)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1738,7 +1738,7 @@ Sep 1961  20  30
 +        0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1,
 +        1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0)
 > try(glm(y ~ x, family = poisson(identity)))
-Error: no valid set of coefficients has been found: please supply starting values
+Error : no valid set of coefficients has been found: please supply starting values
 In addition: Warning message:
 NaNs produced in: log(x) 
 > ## failed because start = NULL in 1.4.1
@@ -3276,7 +3276,7 @@ attr(,"contrasts")$x
 
 > lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
 > try(predict(lm.fit, data.frame(x=NA)))
-Error: variable 'x' was fitted with class "numeric" but class "logical" was supplied
+Error : variable 'x' was fitted with class "numeric" but class "logical" was supplied
 > ## wrong answers in 1.8.0, refused to run in 1.8.1
 > 
 > 
@@ -3452,7 +3452,6 @@ attach 'stats4' B
 detach 'stats4' B 
 detach 'stats4' A 
 > unloadNamespace("stats4")
-<environment: namespace:stats4>
 onUnload 'stats4' B 
 onUnload 'stats4' A 
 > ## Just tests
@@ -4950,7 +4949,7 @@ NULL
 > failure <- c(0,0,0,0,0,0,0,2,2)
 > predictor <- c(0, 5^(0:7))
 > try(glm(cbind(success,failure) ~ 0+predictor, family = binomial(link="log")))
-Error: no valid set of coefficients has been found: please supply starting values
+Error : no valid set of coefficients has been found: please supply starting values
 > # no coefficient is possible as the first case will have mu = 1
 > ## 2.2.1 gave a subscript out of range warning instead.
 > 
@@ -6011,4 +6010,24 @@ NULL
 Error in "attr<-"(`*tmp*`, NA_character_, value = 5) : 
 	'name' must be non-null character string
 > ## prior to 2.5.0 NA was treated as "NA"
+> 
+> 
+> ## qr with pivoting (PR#9623)
+> A <- matrix(c(0,0,0, 1,1,1), nrow = 3,
++             dimnames = list(letters[1:3], c("zero","one")))
+> y <- matrix(c(6,7,8), nrow = 3, dimnames = list(LETTERS[1:3], "y"))
+> qr.coef(qr(A), y)
+      y
+zero NA
+one   7
+> qr.fitted(qr(A), y)
+  y
+A 7
+B 7
+C 7
+> 
+> qr.coef(qr(matrix(0:1, 1, dimnames=list(NULL, c("zero","one")))), 5)
+zero  one 
+  NA    5 
+> ## coef names were returned unpivoted <= 2.5.0
 > 

@@ -50,6 +50,9 @@ BUG FIXES
     o	Wildcards work again in unlink() on Unix-alikes (they did not
 	in 2.5.0).
 
+    o	When qr() used pivoting, the coefficient names in qr.coef() were
+	not pivoted to match.  (PR#9623)
+
 
 
 		CHANGES IN R VERSION 2.5.0

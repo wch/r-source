@@ -51,6 +51,7 @@ as.qr(x)
   The functions \code{qr.coef}, \code{qr.resid}, and \code{qr.fitted}
   return the coefficients, residuals and fitted values obtained when
   fitting \code{y} to the matrix with QR decomposition \code{qr}.
+  (If pivoting is used, some of the coefficients will be \code{NA}.)
   \code{qr.qy} and \code{qr.qty} return \code{Q \%*\% y} and
   \code{t(Q) \%*\% y}, where \code{Q} is the (complete) \eqn{\bold{Q}} matrix.
 
@@ -62,8 +63,7 @@ as.qr(x)
   if \code{a} is a QR decomposition it is the same as \code{solve.qr},
   but if \code{a} is a rectangular matrix the QR decomposition is
   computed first.  Either will handle over- and under-determined
-  systems, providing a minimal-length solution or a least-squares fit
-  if appropriate.
+  systems, providing a least-squares fit if appropriate.
 
   \code{is.qr} returns \code{TRUE} if \code{x} is a \code{\link{list}}
   with components named \code{qr}, \code{rank} and \code{qraux} and
