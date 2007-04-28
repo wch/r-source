@@ -25,7 +25,8 @@ as.factor <- function(x) if (is.factor(x)) x else factor(x)
 ## Help old S users:
 category <- function(...) .Defunct()
 
-levels <- function(x) attr(x, "levels")
+levels <- function(x) UseMethod("levels")
+levels.default <- function(x) attr(x, "levels")
 nlevels <- function(x) length(levels(x))
 
 ## now a primitive

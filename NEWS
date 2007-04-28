@@ -91,6 +91,8 @@ NEW FEATURES
 	methods and in the case of '!' the argument name differed
 	between S3 and S4 methods.)
 
+    o	levels() is now generic (levels<- has been for a long time).
+
 
 DEPRECATED & DEFUNCT
 
