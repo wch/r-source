@@ -15,7 +15,7 @@ levels(x) <- value
 
   The replacement form (\code{"levels<-"}) of \code{levels} is a generic
   function and new methods can be written for it.
-  The most important method is that for \code{\link{factor}}s:
+  The most important method is that for \code{\link{factor}}s.
 }
 \arguments{
   \item{x}{an object, for example a factor.}
@@ -29,6 +29,9 @@ levels(x) <- value
   For the factor replacement method, a \code{NA} in \code{value}
   causes that level to be removed from the levels and the elements
   formerly with that level to be replaced by \code{NA}.
+
+  Note that \code{levels} is an \R function and not generic, whereas
+  \code{levels<-} is a primitive generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
