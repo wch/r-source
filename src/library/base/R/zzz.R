@@ -28,7 +28,7 @@
 
 .ArgsEnv <- new.env(hash = TRUE, parent = emptyenv())
 
-assign("%*%", function(a, b) NULL, envir = .ArgsEnv)
+assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
 assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
                       ENCODING) NULL,
        envir = .ArgsEnv)

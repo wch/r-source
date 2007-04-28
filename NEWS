@@ -80,6 +80,17 @@ NEW FEATURES
 	styles used for \env, \option, \pkg etc.  (CHM styles are set
 	at compilation time.)
 
+    o	The documented arguments of '%*%' have been changed to be x
+	and y, to match S and the implicit S4 generic.
+
+    o	If members of the Ops group (the arithmetic, logical and
+	comparison operators) and '%*%' are called as functions,
+	e.g. '>'(x, y), positional matching is always used.  (It used
+	to be the case that positional matching was used for the
+	default methods, but names would be matched for S3 and S4
+	methods and in the case of '!' the argument name differed
+	between S3 and S4 methods.)
+
 
 DEPRECATED & DEFUNCT
 
