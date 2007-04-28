@@ -56,6 +56,9 @@ BUG FIXES
     o	When qr() used pivoting, the coefficient names in qr.coef() were
 	not pivoted to match.  (PR#9623)
 
+    o	UseMethod() could crash R if the first argument as not a
+	character string.
+
 
 
 		CHANGES IN R VERSION 2.5.0
