@@ -349,9 +349,10 @@ decompose <- function (x, type = c("additive", "multiplicative"), filter = NULL)
     structure(
               list(seasonal = seasonal,
                    trend    = trend,
-                   random   = x -
-                   if (type == "additive") seasonal + trend
-                   else seasonal * trend,
+                   random   = if (type == "additive") 
+                      x - seasonal - trend
+                   else 
+                      x / seasonal / trend,
                    figure   = figure,
                    type     = type
                    ),
