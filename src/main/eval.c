@@ -1941,7 +1941,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     SEXP lclass, s, t, m, lmeth, lsxp, lgr, newrho;
     SEXP rclass, rmeth, rgr, rsxp;
     char lbuf[512], rbuf[512], generic[128], *pt;
-    Rboolean useS4 = TRUE;
+    Rboolean useS4 = TRUE, isOps = FALSE;
 
     /* pre-test to avoid string computations when there is nothing to
        dispatch on because either there is only one argument and it
@@ -1953,12 +1953,19 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
         (CDR(args) == R_NilValue || ! isObject(CADR(args))))
 	return 0;
 
+    isOps = strcmp(group, "Ops") == 0;
+
     /* try for formal method */
     if(length(args) == 1 && !IS_S4_OBJECT(CAR(args))) useS4 = FALSE;
     if(length(args) == 2 && 
        !IS_S4_OBJECT(CAR(args)) && !IS_S4_OBJECT(CADR(args))) useS4 = FALSE;
     if(useS4 && R_has_methods(op)) {
-	SEXP value = R_possible_dispatch(call, op, args, rho);
+	SEXP value;
+	/* Remove argument names to ensure positional matching */
+	if(isOps)
+	    for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
+
+	value = R_possible_dispatch(call, op, args, rho);
 	if(value) {
 	    *ans = value;
 	    return 1;
@@ -1978,7 +1985,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	    return 0;
     }
 
-    if( !strcmp(group, "Ops") )
+    if(isOps)
 	nargs = length(args);
     else
 	nargs = 1;
@@ -2076,7 +2083,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     defineVar(install(".GenericCallEnv"), rho, newrho);
     defineVar(install(".GenericDefEnv"), R_BaseEnv, newrho);
 
-    PROTECT(t = LCONS(lmeth,CDR(call)));
+    PROTECT(t = LCONS(lmeth, CDR(call)));
 
     /* the arguments have been evaluated; since we are passing them */
     /* out to a closure we need to wrap them in promises so that */
@@ -2085,8 +2092,11 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     PROTECT(s = promiseArgs(CDR(call), rho));
     if (length(s) != length(args))
 	errorcall(call, _("dispatch error"));
-    for (m = s ; m != R_NilValue ; m = CDR(m), args = CDR(args) )
+    for (m = s ; m != R_NilValue ; m = CDR(m), args = CDR(args) ) {
 	SET_PRVALUE(CAR(m), CAR(args));
+	/* ensure positional matching for operators */
+	if(isOps) SET_TAG(m, R_NilValue);
+    }
 
     *ans = applyClosure(t, lsxp, s, rho, newrho);
     UNPROTECT(5);

@@ -561,7 +561,9 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(PRIMVAL(op) == 0 && 
        (IS_S4_OBJECT(x) || IS_S4_OBJECT(y)) 
        && R_has_methods(op)) {
-	SEXP value;
+	SEXP s, value;
+	/* Remove argument names to ensure positional matching */
+	for(s = args; s != R_NilValue; s = CDR(s)) SET_TAG(s, R_NilValue);
 	value = R_possible_dispatch(call, op, args, rho);
 	if(value) return value;
     }

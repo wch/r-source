@@ -112,6 +112,9 @@ Summary(\dots, na.rm = FALSE)
     \sQuote{incompatible methods}: in that case or if no method is found
     for either argument the internal method is used.
 
+    If the members of this group are called as functions, any argument
+    names are removed to ensure that positional matching is always used.
+    
     \item Group \code{"Summary"}:
     \itemize{
       \item \code{all}, \code{any}
