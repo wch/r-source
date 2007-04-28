@@ -270,7 +270,7 @@ stopifnot(
 em <- eigen(sm, symmetric = FALSE); V2 <- em$vect
 print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
 print(i <- rev(order(lam2)))
-stopifnot(abs(lam - lam2[i]) < 60 * Meps)
+stopifnot(abs(lam - lam2[i]) < 100 * Meps) # comparing two solns
 
 zapsmall(Diag <- t(V2) %*% V2)
 stopifnot( abs(1- diag(Diag)) < 60*Meps)
