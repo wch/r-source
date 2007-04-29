@@ -1674,7 +1674,7 @@ checking (e.g.@: by @code{tools::checkS3methods} and by package
 internal S3 generics, and @samp{.ArgsEnv} for the rest.  Those
 environments contain closures with the same names as the primitives,
 formal argumnts derived (manually) from the help pages, a body which
-is suitable call to @code{UseMethod} or @code{NULL} and environment the
+is a suitable call to @code{UseMethod} or @code{NULL} and environment the
 base name space.
 
 The C code for @code{print.default} and @code{args} uses the closures in

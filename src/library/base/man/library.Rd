@@ -93,6 +93,11 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   space of that name is already loaded, they work from the existing
   names space rather than reloading from the file system.)
 
+  To suppress messages during the loading of packages use
+  \code{\link{suppressPackageStartupMessages}}: this will suppress all
+  messages from \R itself but not necessarily all those from package
+  authors.
+  
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified
   by \code{lib.loc}, and returns the corresponding information in an
