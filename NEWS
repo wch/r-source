@@ -93,6 +93,9 @@ NEW FEATURES
 
     o	levels() is now generic (levels<- has been for a long time).
 
+    o	pmatch(x, y, duplicates.ok = TRUE) now uses hashing and so is much
+	faster for large x and y when most matches are exact.
+
 
 DEPRECATED & DEFUNCT
 
@@ -133,6 +136,9 @@ BUG FIXES
 
     o	Internally generic primitives no longer dispatch S4 methods on
 	S3 objects.
+
+    o	pmatch() used to accept non-integer values for 'nomatch' even
+	though the return value was documented to be integer.
 
 
 

@@ -570,9 +570,11 @@ SEXP match(SEXP itable, SEXP ix, int nmatch)
 SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, input, target;
-    int i, j, k, mtch, n_input, n_target, mtch_count, temp, dups_ok;
-    int * used;
-    char *vmax;
+    int i, j,  mtch, n_input, n_target, mtch_count, temp, dups_ok, no_match;
+    int nexact = 0;
+    int *used = NULL, *ians;
+    char *vmax, **in, **tar;
+    Rboolean no_dups;
 
     checkArity(op, args);
     vmax = vmaxget();
@@ -580,56 +582,104 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     n_input = LENGTH(input);
     target = CADR(args);
     n_target = LENGTH(target);
-    dups_ok = asLogical(CADDR(args));
+    no_match = asInteger(CADDR(args));
+    dups_ok = asLogical(CADDDR(args));
     if (dups_ok == NA_LOGICAL)
 	errorcall(call, _("invalid '%s' argument"), "duplicates.ok");
+    no_dups = !dups_ok;
 
     if (!isString(input) || !isString(target))
 	errorcall(call, _("argument is not of mode character"));
 
-    used = (int *) R_alloc(n_target, sizeof(int));
-    for (j = 0; j < n_target; j++) used[j] = 0;
-    ans = allocVector(INTSXP, n_input);
-    for (i = 0; i < n_input; i++) INTEGER(ans)[i] = 0;
+    if(no_dups) {
+	used = (int *) R_alloc(n_target, sizeof(int));
+	for (j = 0; j < n_target; j++) used[j] = 0;
+    }
+
+    in = (char **) R_alloc(n_input, sizeof(char *));
+    tar = (char **) R_alloc(n_target, sizeof(char *));
+    PROTECT(ans = allocVector(INTSXP, n_input));
+    ians = INTEGER(ans);
+    for (i = 0; i < n_input; i++) {
+	in[i] = translateChar(STRING_ELT(input, i));
+	ians[i] = 0;
+    }
+    for (j = 0; j < n_target; j++) 
+	tar[j] = translateChar(STRING_ELT(target, j));
 
     /* First pass, exact matching */
-    for (i = 0; i < n_input; i++) {
-	char *ss = translateChar(STRING_ELT(input, i));
-	temp = strlen(ss);
-	if (temp == 0) continue;
-	for (j = 0; j < n_target; j++) {
-	    if (!dups_ok && used[j]) continue;
-	    k = strcmp(ss, translateChar(STRING_ELT(target, j)));
-	    if (k == 0) {
-		used[j] = 1;
-		INTEGER(ans)[i] = j + 1;
-		break;
+    if(no_dups) {
+	for (i = 0; i < n_input; i++) {
+	    char *ss = in[i];
+	    if (strlen(ss) == 0) continue;
+	    for (j = 0; j < n_target; j++) {
+		if (used[j]) continue;
+		if (strcmp(ss, tar[j]) == 0) {
+		    if(no_dups) used[j] = 1;
+		    ians[i] = j + 1;
+		    nexact++;
+		    break;
+		}
+	    }
+	}
+    } else {
+	/* only worth hashing if enough lookups will be done:
+	   since the tradeoff involves memory as well as time
+	   it is not really possible to optimize there.
+	 */
+	if(n_target > 100 && 10*n_input > n_target) {
+	    HashData data;
+	    HashTableSetup(target, &data);
+	    data.nomatch = 0;
+	    DoHashing(target, &data);
+	    for (i = 0; i < n_input; i++) {
+		/* we don't want to lookup "" */
+		if (strlen(in[i]) == 0) continue;
+		ians[i] = Lookup(target, input, i, &data);
+		if(ians[i]) nexact++;
+	    }
+	} else {
+	    for (i = 0; i < n_input; i++) {
+		char *ss = in[i];
+		if (strlen(ss) == 0) continue;
+		for (j = 0; j < n_target; j++)
+		    if (strcmp(ss, tar[j]) == 0) {
+			ians[i] = j + 1;
+			nexact++;
+			break;
+		    }
 	    }
 	}
     }
-    /* Second pass, partial matching */
-    for (i = 0; i < n_input; i++) {
-	char *ss;
-	if (INTEGER(ans)[i]) continue;
-	ss = translateChar(STRING_ELT(input, i));
-	temp = strlen(ss);
-	if (temp == 0) continue;
-	mtch = 0;
-	mtch_count = 0;
-	for (j = 0; j < n_target; j++) {
-	    if (!dups_ok && used[j]) continue;
-	    k = strncmp(ss, translateChar(STRING_ELT(target, j)), temp);
-	    if (k == 0) {
-		mtch = j + 1;
-		mtch_count++;
+    
+    if(nexact < n_input) {
+	/* Second pass, partial matching */
+	for (i = 0; i < n_input; i++) {
+	    char *ss;
+	    if (ians[i]) continue;
+	    ss = in[i];
+	    temp = strlen(ss);
+	    if (temp == 0) continue;
+	    mtch = 0;
+	    mtch_count = 0;
+	    for (j = 0; j < n_target; j++) {
+		if (no_dups && used[j]) continue;
+		if (strncmp(ss, tar[j], temp) == 0) {
+		    mtch = j + 1;
+		    mtch_count++;
+		}
+	    }
+	    if (mtch > 0 && mtch_count == 1) {
+		if(no_dups) used[mtch - 1] = 1;
+		ians[i] = mtch;
 	    }
 	}
-	if (mtch > 0 && mtch_count == 1) {
-	    used[mtch - 1] = 1;
-	    INTEGER(ans)[i] = mtch;
-	}
+	/* Third pass, set no matches */
+	for (i = 0; i < n_input; i++)
+	    if(ians[i] == 0) ians[i] = no_match;
+    
     }
-
+    UNPROTECT(1);
     vmaxset(vmax);
     return ans;
 }

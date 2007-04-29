@@ -14,13 +14,9 @@ match.call <-
     function(definition=NULL, call=sys.call(sys.parent()), expand.dots=TRUE)
     .Internal(match.call(definition,call,expand.dots))
 
-pmatch <-
-    function(x, table, nomatch=NA, duplicates.ok=FALSE)
-{
-    y <- .Internal(pmatch(as.character(x), as.character(table), duplicates.ok))
-    y[y == 0] <- nomatch
-    y
-}
+pmatch <- function(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
+    .Internal(pmatch(as.character(x), as.character(table), nomatch,
+                     duplicates.ok))
 
 "%in%" <- function(x, table) match(x, table, nomatch = 0) > 0
 
