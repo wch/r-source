@@ -6,6 +6,14 @@
 	*						 *
 	*	       2.6 SERIES NEWS			 *
 	**************************************************
+	
+		CHANGES IN R VERSION 2.6.0
+		
+GUI CHANGES
+
+    o	The console now handles cut and paste and mouse clicks in the
+	input line in a more Windows standard way.  It also indicates
+	insert and overwrite mode with different cursors.
 
 
 

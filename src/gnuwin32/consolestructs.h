@@ -96,6 +96,7 @@ typedef struct structConsoleData *ConsoleData;
 #define cur_pos (p->cur_pos)
 #define prompt_len (p->prompt_len)
 #define prompt_wid (p->prompt_wid)
+#define CURROW  (p->r)  /* row of cursor */
 #define CURCOL  (p->c)  /* column of cursor on whole line */
 
 #define WRITELINE(i, j) writeline(p, i, j)

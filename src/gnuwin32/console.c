@@ -365,6 +365,58 @@ newconsoledata(font f, int rows, int cols, int bufbytes, int buflines,
     return (p);
 }
 
+static int col_to_byte(ConsoleData p, int x)
+{
+    int w0 = 0 /* -Wall */;
+    wchar_t wc;
+    char *P;
+    if(mbcslocale) {
+	P = LINE(CURROW);
+	mbs_init(&mb_st);
+	for (w0 = 0; w0 < x && *P && P - LINE(CURROW) <= max_byte + prompt_len; ) {
+	    P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	    w0 += Ri18n_wcwidth(wc);
+	}
+	return(P - LINE(CURROW) - prompt_len );
+    } else {
+	return(min(x - prompt_len, max_byte));
+    }
+    
+}
+
+static int within_input(ConsoleData p, int mx, int my)
+{
+    return(my == CURROW && mx >= prompt_wid && col_to_byte(p, mx) < max_byte);
+}  
+
+/* Intersect the mouse selection with the input region. If no overlap or !apply, do nothing*/
+static int intersect_input(ConsoleData p, int apply)
+{
+    int my0 = p->my0, my1 = p->my1, mx0 = p->mx0, mx1 = p->mx1, temp;
+    if (my0 > my1 || (my0 == my1 && mx0 > my1)) { /* put them in order */
+    	temp = my0;
+    	my0 = my1;
+    	my1 = temp;
+    	temp = mx0;
+    	mx0 = mx1;
+    	mx1 = temp;
+    }
+    
+    if (my1 < CURROW || my0 > CURROW) return(0);
+    if (my0 < CURROW) mx0 = 0;
+    if (my1 > CURROW) mx1 = COLS;
+    if (mx1 < CURCOL || col_to_byte(p, mx0) >= max_byte) return(0);
+    mx0 = max(mx0, prompt_wid);
+    while (col_to_byte(p, mx1) >= max_byte) mx1--;
+    if (apply) {
+	p->mx0 = mx0;
+	p->mx1 = mx1;
+	p->my0 = my0;
+	p->my1 = my1;
+    }
+    return(1);
+}
+
 /* Here fch and lch are columns, and we have to cope with both MBCS
    and double-width chars. */
 
@@ -493,8 +545,11 @@ static int writeline(ConsoleData p, int i, int j)
 	WLHELPER(0, col1, p->fg, p->bg);
     /* This is the cursor, and it may need to be variable-width */
     if ((p->r >= 0) && (CURCOL >= FC) && (CURCOL < FC + COLS) &&
-	(i == NUMLINES - 1)) {
-	if(mbcslocale) { /* determine the width of the current char */
+	(i == NUMLINES - 1) && (p->sel == 0 || !intersect_input(p, 0))) {
+	if (!p->overwrite) {
+	    r = rect(BORDERX + (CURCOL - FC) * FW, BORDERY + j * FH, FW/4, FH);
+	    gfillrect(p->bm, p->ufg, r);
+	} else if(mbcslocale) { /* determine the width of the current char */
 	    int w0, used = 0, ii;
 	    wchar_t wc;
 	    char *P = s, nn[10];
@@ -679,8 +734,12 @@ void console_mousedrag(control c, int button, point pt)
 	p->my1 = FV + r;
 	p->mx1 = FC + s;
 	p->needredraw = 1;
-	if ((p->mx1 != p->mx0) || (p->my1 != p->my0))
-	   p->sel = 1;
+	p->sel = 1;
+	   
+	if (within_input(p, p->mx1, p->my1)) {
+	    cur_byte = col_to_byte(p, p->mx1);
+	    setCURCOL(p);
+	}
 	if (pt.y <= 0) setfirstvisible(c, FV - 3);
 	else if (pt.y >= ROWS*FH) setfirstvisible(c, FV+3);
 	if (pt.x <= 0) setfirstcol(c, FC - 3);
@@ -704,13 +763,18 @@ void console_mousedown(control c, int button, point pt)
     pt.y -= BORDERY;
     if (p->sel) {
         p->sel = 0;
-        p->needredraw = 1;  /* FIXME */
-        REDRAW;
+        p->needredraw = 1; 
     }
     if (button & LeftButton) {
 	p->my0 = FV + pt.y/FH;
 	p->mx0 = FC + pt.x/FW;
+	if (within_input(p, p->mx0, p->my0) || (p->my0 == CURROW && p->mx0 > prompt_wid)) {
+	    cur_byte = col_to_byte(p, p->mx0);
+	    setCURCOL(p);
+	    p->needredraw = 1;
+	}
     }
+    if (p->needredraw) REDRAW;
 }
 
 void consoletogglelazy(control c)
@@ -887,6 +951,29 @@ static void performCompletion(control c)
     return;
 }
 
+/* deletes that part of the selection which is on the input line */
+static void deleteselected(ConsoleData p)
+{
+    if (p->sel) {
+    	int s0, s1;
+    	char *cur_line;
+    	if (intersect_input(p, 1)) {
+	    /* convert to bytes after the prompt */
+	    s0 = col_to_byte(p, p->mx0);
+	    s1 = col_to_byte(p, p->mx1);
+	    cur_line = LINE(CURROW) + prompt_len;
+	    for(int i = s0; i <= max_byte; i++)
+		cur_line[i] = cur_line[i + s1 - s0 + 1];
+	    max_byte -= s1 - s0 + 1;
+	    cur_line[max_byte] = '\0';
+	    if (cur_byte > s0) 
+		cur_byte = cur_byte > s1 ? cur_byte - (s1 - s0 + 1) : s0;
+	    setCURCOL(p);
+	    p->needredraw = 1;
+	}
+    }
+}
+
 void consolecmd(control c, char *cmd)
 {
     ConsoleData p = getdata(c);
@@ -894,6 +981,7 @@ void consolecmd(control c, char *cmd)
     char *ch;
     int i;
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	REDRAW;
@@ -976,6 +1064,7 @@ void consolepaste(control c)
     HGLOBAL hglb;
     char *pc, *new = NULL;
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	REDRAW;
@@ -1013,6 +1102,7 @@ void consolepastecmds(control c)
     HGLOBAL hglb;
     char *pc, *new = NULL;
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	REDRAW;
@@ -1190,7 +1280,6 @@ void consolecopy(control c)
 	   x1 = p->mx0; y1 = p->my0;
 	}
 	consoletoclipboardHelper(c, x0, y0, x1, y1);
-	p->sel = 0;
 	REDRAW;
     }
 }
@@ -1251,14 +1340,16 @@ void console_normalkeyin(control c, int k)
 	    break;
 	case 'O':
 	    p->overwrite = !p->overwrite;
+	    p->needredraw = 1;
 	    st = -1;
 	    break;
 	}
     if (p->sel) {
-	p->sel = 0;
+        if (st != -1) deleteselected(p);
 	p->needredraw = 1;
-	REDRAW;
+	p->sel = 0;
     }
+    if (p->needredraw) REDRAW;
     if (st == -1) return;
     if (p->kind == PAGER) {
 	if(k == 'q' || k == 'Q') pagerbclose(c);
@@ -1327,26 +1418,34 @@ void console_ctrlkeyin(control c, int key)
 	     storekey(c, CHARRIGHT);
 	 break;
      case DEL:
-	 if (st == CtrlKey)
+     	 if (p->sel) {
+     	     if (st == ShiftKey) consolecopy(c);
+     	     deleteselected(p);
+     	     p->sel = 0;
+     	 } else  if (st == CtrlKey)
 	     storekey(c, KILLRESTOFLINE);
-	 else if (st  ==  ShiftKey)
-	     consolecopy(c);
 	 else
 	     storekey(c, DELETECHAR);
 	 break;
      case ENTER:
+     	 deleteselected(p);
 	 storekey(c, '\n');
 	 break;
      case INS:
-	 if (st == ShiftKey)
+	 if (st == ShiftKey) {
+	     deleteselected(p);
 	     consolepaste(c);
+	 } else {
+	     p->overwrite = !p->overwrite;
+	     p->needredraw = 1;
+	 }
 	 break;
     }
     if (p->sel) {
 	p->sel = 0;
 	p->needredraw = 1;
-	REDRAW;
     }
+    if (p->needredraw) REDRAW;
 }
 
 static Rboolean incomplete = FALSE;
@@ -1416,6 +1515,7 @@ static char consolegetc(control c)
 	R_ProcessEvents();
     }
     if (p->sel) {
+    	deleteselected(p);
 	p->sel = 0;
 	p->needredraw = 1;
 	setCURCOL(p); /* Needed? */
@@ -2060,7 +2160,7 @@ void  consolehelp()
     strcat(s,G_("     End or Ctrl+E: go to end of line;\n"));
     strcat(s,G_("  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"));
     strcat(s,G_("  Deleting:\n"));
-    strcat(s,G_("     Del or Ctrl+D: delete current character;\n"));
+    strcat(s,G_("     Del or Ctrl+D: delete current character or selection;\n"));
     strcat(s,G_("     Backspace: delete preceding character;\n"));
     strcat(s,G_("     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"));
     strcat(s,G_("     Ctrl+U: delete all text from current line.\n"));
@@ -2071,7 +2171,7 @@ void  consolehelp()
     strcat(s,G_("     to the console, Ctrl+X first copy then paste\n"));
     strcat(s,G_("  Misc:\n"));
     strcat(s,G_("     Ctrl+L: Clear the console.\n"));
-    strcat(s,G_("     Ctrl+O: Toggle overwrite mode: initially off.\n"));
+    strcat(s,G_("     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"));
     strcat(s,G_("     Ctrl+T: Interchange current char with one to the left.\n"));
     strcat(s,G_("\nNote: Console is updated only when some input is required.\n"));
     strcat(s,G_("  Use Ctrl+W to toggle this feature off/on.\n\n"));
