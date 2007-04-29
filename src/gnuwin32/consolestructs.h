@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file consolestructs.h
- *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 2004-7      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ struct structConsoleData {
     int  pclp;
 
     int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
+    int   wipe_completion;
     bitmap bm;
 
     int   input, cur_pos, cur_byte, max_pos, max_byte, 
