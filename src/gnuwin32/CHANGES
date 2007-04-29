@@ -16,6 +16,9 @@ GUI CHANGES
 	menu, and if completion is on, file name completion can be
 	turned off (or back on again).
 
+	The list of possible completions is removed once any further
+	key is pressed.
+
     o	The "Paste commands only" context menu is slightly better at
 	recognizing and removing prompts, e.g. from example() output
 	or debug sessions.
