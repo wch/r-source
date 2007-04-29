@@ -188,7 +188,7 @@ static SEXP SetOption(SEXP tag, SEXP value)
 /* Set the width of lines for printing i.e. like options(width=...) */
 /* Returns the previous value for the options. */
 
-int R_SetOptionWidth(int w)
+int attribute_hidden R_SetOptionWidth(int w)
 {
     SEXP t, v;
     if (w < R_MIN_WIDTH_OPT) w = R_MIN_WIDTH_OPT;
@@ -200,7 +200,7 @@ int R_SetOptionWidth(int w)
     return INTEGER(v)[0];
 }
 
-int R_SetOptionWarn(int w)
+int attribute_hidden R_SetOptionWarn(int w)
 {
     SEXP t, v;
 
