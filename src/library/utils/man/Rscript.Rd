@@ -66,12 +66,12 @@
 }
 #endif
 \examples{\dontrun{
-Rscript -e 'date()' -e 'format(Sys.time(), "%a %b %d %X %Y")'
+Rscript -e 'date()' -e 'format(Sys.time(), "\%a \%b \%d \%X \%Y")'
 
 ## example #! script
 
 #! /path/to/Rscript --vanilla --default-packages=utils
-args <- commandArgs(); args <- args[-(1:match("--args", args)]
+args <- commandArgs(TRUE)
 res <- try(install.packages(args))
 if(inherits(res, "try-error")) q(status=1) else q()
 
