@@ -655,7 +655,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(input) || !isString(target))
 	errorcall(call, _("argument is not of mode character"));
 
-    ans = allocVector(INTSXP, n_input);
+    PROTECT(ans = allocVector(INTSXP, n_input));
 
     for (i = 0; i < n_input; i++) {
 	ss = translateChar(STRING_ELT(input, i));
@@ -684,6 +684,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	INTEGER(ans)[i] = imatch;
     }
+    UNPROTECT(1);
     return ans;
 }
 
