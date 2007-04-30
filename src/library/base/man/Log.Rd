@@ -55,6 +55,10 @@ log1p(x)
   \code{log10} and \code{log2} are only special cases, but will be computed
   more efficiently and accurately where supported by the OS.
 }
+\section{S4 methods}{
+  \code{exp} is S4 generic and a member of the
+  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

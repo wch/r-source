@@ -32,6 +32,11 @@ atanh(x)
    Stegun, figure 4.7, page 86.
 
 }
+\section{S4 methods}{
+  All are S4 generic functions: methods can be defined
+  for them individually or via the
+  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+}
 \seealso{
   The trigonometric functions, \code{\link{cos}}, \code{\link{sin}},
   \code{\link{tan}}, and their inverses

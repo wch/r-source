@@ -63,6 +63,13 @@ zapsmall(x, digits = getOption("digits"))
   the specified number of digits in the larger of the components.  Each
   element of the vector is rounded individually, unlike printing.
 }
+\section{S4 methods}{
+  \code{ceiling} and \code{floor} are S4 generic and members of the
+  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+
+  \code{round} and \code{signif} are S4 generic and members of the
+  \code{\link[methods:S4groupGeneric]{Math2}} group generic.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

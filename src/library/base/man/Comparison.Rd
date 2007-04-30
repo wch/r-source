@@ -78,6 +78,12 @@ x != y
   error. Using \code{\link{all.equal}} with \code{identical} is almost
   always preferable.  See the examples.
 }
+\section{S4 methods}{
+  These operators are members of the S4 \code{\link{Compare}} group generic,
+  and so methods can be written for them individually as well as for the
+  group generic (or the \code{Ops} group generic), with arguments
+  \code{c(e1, e2)}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

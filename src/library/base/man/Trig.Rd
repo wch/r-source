@@ -56,6 +56,11 @@ atan2(y, x)
    \eqn{\left(-\infty i, -1i\right]}{\(-1i*Inf, -1i\]} and from the
    right on the interval \eqn{\left[1i, \infty i\right)}{\[1i, 1i*Inf\)}.
 }
+\section{S4 methods}{
+  All except \code{atan2} are S4 generic functions: methods can be defined
+  for them individually or via the
+  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
