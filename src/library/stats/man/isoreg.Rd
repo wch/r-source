@@ -12,9 +12,9 @@
 isoreg(x, y = NULL)
 }
 \arguments{
-  \item{x, y}{in \code{isoreg}, coordinate vectors of the regression
-    points.  Alternatively a single \dQuote{plotting} structure can be
-    specified: see \code{\link{xy.coords}}.
+  \item{x, y}{%in \code{isoreg},
+    coordinate vectors of the regression points.  Alternatively a single
+    \dQuote{plotting} structure can be specified: see \code{\link{xy.coords}}.
   }
 }
 \details{
