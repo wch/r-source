@@ -23,6 +23,10 @@ sqrt(x)
   \code{abs(x)} returns an \code{\link{integer}} vector when \code{x} is
   \code{integer} or \code{\link{logical}}.
 }
+\section{S4 methods}{
+  Both are S4 generic and members of the
+  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+}
 \seealso{
   \code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,
   \code{\link{sin}} for trigonometric, and \code{\link{Special}} for

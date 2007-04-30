@@ -87,7 +87,8 @@ isTRUE(x)
 
   Prior to \R 2.6.0 S4 methods for \code{!} needed argument name
   \code{e1}, but now \code{x} is correct.
-} \references{
+}
+\references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
