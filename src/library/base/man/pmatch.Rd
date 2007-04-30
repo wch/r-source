@@ -9,8 +9,8 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
     \code{\link{as.character}}.}
   \item{table}{the values to be matched against: converted to a character
     vector.}
-  \item{nomatch}{the value to be returned at non-matching or multiply
-    partially matching positions.}
+  \item{nomatch}{the (integer) value to be returned at non-matching or
+    multiply partially matching positions.}
   \item{duplicates.ok}{should elements be in \code{table} be used more
     than once?}
 }
@@ -45,7 +45,7 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
   \code{NA} values are treated as if they were the string constant \code{"NA"}.
 }
 \value{
-  A numeric vector of integers (including \code{NA} if \code{nomatch =
+  An integer vector (possibly including \code{NA} if \code{nomatch =
     NA}) of the same length as \code{x}, giving the indices of the
   elements in \code{table} which matched, or \code{nomatch}.
 }
