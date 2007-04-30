@@ -140,6 +140,8 @@ BUG FIXES
     o	pmatch() used to accept non-integer values for 'nomatch' even
 	though the return value was documented to be integer.
 
+	Ditto for charmatch().
+
 
 
 
