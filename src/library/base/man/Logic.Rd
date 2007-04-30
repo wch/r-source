@@ -82,11 +82,12 @@ isTRUE(x)
 }
 \section{S4 Methods}{
   \code{!}, \code{&} and \code{|} are S4 generics, the latter two part
-  of the \code{Logic} group generic.  For historical reasons, the
-  methods need argument names \code{e1} for \code{!} and \code{e1, e2}
-  for the other two.
-}
-\references{
+  of the \code{Logic} group generic (and hence methods need argument names
+  \code{e1, e2}).
+
+  Prior to \R 2.6.0 S4 methods for \code{!} needed argument name
+  \code{e1}, but now \code{x} is correct.
+} \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.

@@ -1305,8 +1305,8 @@ they are S4 generic, again piggybacking on S3 dispatch.
 computing all primitives, initially disallowing methods on all and then
 setting generics for members of @code{.GenericArgsEnv}, the S4 group
 generics and a short exceptions list in @file{BasicFunsList.R}: this
-contains the subsetting and subassignment operators and overrides for
-@code{!} and @code{c}.
+contains the subsetting and subassignment operators and an override for
+@code{c}.
 
 
 @node Internal use of global and base environments, Modules, S4 objects, R Internal Structures

@@ -32,7 +32,7 @@ setValidity(Class, method, where = topenv(parent.frame()) )
   \item{Class}{the name or class definition of the class whose validity
     method is to be set.}
   \item{method}{a validity method;  that is, either \code{NULL} or a
-    function of one argument (the \code{object}).  Like
+    function of one argument (\code{object}).  Like
     \code{validObject}, the function should return \code{TRUE} if the
     object is valid, and one or more descriptive strings if any problems
     are found.  Unlike \code{validObject}, it should never generate an
@@ -64,6 +64,9 @@ setValidity(Class, method, where = topenv(parent.frame()) )
   when an object is created via \code{\link{new}} with any optional
   arguments (without the extra arguments the result is just the class
   prototype object).
+
+  An attempt is made to fix up the definition of a validity method if
+  its argument is not \code{object}.
 }
 \value{
   \code{validObject} returns \code{TRUE} if the object is valid.
@@ -92,10 +95,10 @@ setClass("track",
           representation(x="numeric", y = "numeric"))
 t1 <- new("track", x=1:10, y=sort(rnorm(10)))
 ## A valid "track" object has the same number of x, y values
-validTrackObject <- function(x){
-    if(length(x@x) == length(x@y)) TRUE
-    else paste("Unequal x,y lengths: ", length(x@x), ", ", length(x@y),
-    sep="")
+validTrackObject <- function(object) {
+    if(length(object@x) == length(object@y)) TRUE
+    else paste("Unequal x,y lengths: ", length(object@x), ", ",
+               length(object@y), sep="")
 }
 ## assign the function as the validity method for the class
 setValidity("track", validTrackObject)

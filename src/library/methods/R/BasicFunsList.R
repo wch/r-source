@@ -46,10 +46,10 @@ list(
 {
     standardGeneric("c")
 }
-, "!" = function(e1)
-{
-    standardGeneric("!")
-}
+## , "!" = function(e1)
+## {
+##     standardGeneric("!")
+## }
 )
 
 ## the names of the basic funs with the style of "["

@@ -234,3 +234,11 @@ setMethod(as.double, "c2", function(x, ...) x@.Data+pi)
 x_c2 <- new("c2", pi)
 as.numeric(x_c2)
 showMethods(as.numeric)
+
+
+## '!' changed signature from 'e1' to 'x' in 2.6.0
+setClass("foo", "logical")
+setMethod("!", "foo", function(e1) e1+NA)
+selectMethod("!", "foo")
+xx <- new("foo", FALSE)
+!xx

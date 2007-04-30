@@ -407,6 +407,17 @@ setMethod <-
            closure = {
                fnames <- formalArgs(fdef)
                mnames <- formalArgs(definition)
+               ## fix up arg name for single-argument generics
+               ## useful for e.g. '!'
+               if(!identical(mnames, fnames) &&
+                  length(fnames) == length(mnames) && length(mnames) == 1) {
+                   warning(gettextf("argument in method definition changed from (%s) to (%s)",
+                                    mnames, fnames), domain = NA, call. = FALSE)
+                   formals(definition) <- formals(fdef)
+                   ll <- list(as.name(formalArgs(fdef))); names(ll) <- mnames
+                   body(definition) <- substituteDirect(body(definition), ll)
+                   mnames <- fnames
+               }
                if(!identical(mnames, fnames)) {
                    ## omitted classes in method => "missing"
                    fullSig <- conformMethod(signature, mnames, fnames, f)

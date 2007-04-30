@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-04-24 r41287)
+R version 2.6.0 Under development (unstable) (2007-04-30 r41388)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -388,4 +388,27 @@ Function: as.numeric (package base)
 x="c1"
 x="c2"
 
+> 
+> 
+> ## '!' changed signature from 'e1' to 'x' in 2.6.0
+> setClass("foo", "logical")
+[1] "foo"
+> setMethod("!", "foo", function(e1) e1+NA)
+[1] "!"
+Warning message:
+argument in method definition changed from (e1) to (x) 
+> selectMethod("!", "foo")
+Method Definition:
+
+function (x) 
+x + NA
+
+Signatures:
+        x    
+target  "foo"
+defined "foo"
+> xx <- new("foo", FALSE)
+> !xx
+An object of class "foo"
+[1] NA
 > 
