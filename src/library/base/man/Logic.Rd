@@ -85,6 +85,9 @@ isTRUE(x)
   of the \code{Logic} group generic.  For historical reasons, the
   methods need argument names \code{e1} for \code{!} and \code{e1, e2}
   for the other two.
+
+  \strong{NB} the signature for \code{!} methods will change to \code{x}
+  in \R 2.6.0.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
