@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2005  The R Development Core Team
+ *  Copyright (C) 1998--2007  The R Development Core Team
  *  based on code (C) 1979 and later Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -46,7 +46,6 @@
 #define const3 0.99229
 #define const4 0.04481
 
-static volatile double xtrunc;/* not a real global .. delicate though! */
 
 double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 {
@@ -128,7 +127,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
      * NEW: 'acu' accuracy NOT for squared adjustment, but simple;
      * ---- i.e.,  "new acu" = sqrt(old acu)
 
-     */
+    */
     acu = fmax2(acu_min, pow(10., -13 - 2.5/(pp * pp) - 0.5/(a * a)));
     tx = prev = 0.;	/* keep -Wall happy */
 
@@ -160,18 +159,13 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 	    }
 	    g /= 3;
 	}
-	xtrunc = tx;	/* this prevents trouble with excess FPU */
-				/* precision on some machines. */
-	if (fabs(xtrunc - xinbta) < 1e-15*xinbta)
-	    goto L_converged;
+	if (fabs(tx - xinbta) < 1e-15*xinbta) goto L_converged;
 	xinbta = tx;
 	yprev = y;
     }
     /*-- NOT converged: Iteration count --*/
     ML_ERROR(ME_PRECISION, "qbeta");
 
- L_converged:
-    if (swap_tail)
-	return 1 - xinbta;
-    return xinbta;
+L_converged:
+    return swap_tail ? 1 - xinbta : xinbta;
 }
