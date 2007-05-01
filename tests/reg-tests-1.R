@@ -4706,6 +4706,11 @@ bw.SJ(1:20) # error: "no solution in the specified range of bandwidths" in < 2.5
 ## [that's a matter of opinion, since the example is ridiculous.]
 
 
+## hexadecimal integer constants failed on some platforms
+stopifnot(identical(0x10L, 16L))
+## first was 0L on Windows in 2.5.0
+
+
 ## regression tests for unlink and wildcards
 owd <- setwd(tempdir())
 f <- c("ftest1", "ftest2", "ftestmore", "ftest&more")
