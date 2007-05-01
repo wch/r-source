@@ -62,6 +62,11 @@ BUG FIXES
     o	R and Rscript on Unix-alikes were not accepting spaces in -e
 	arguments (even if quoted).
 
+    o	Hexadecimal integer constants (e.g. 0x10L) were not being
+	parsed correctly on platforms where atof did not accept
+	hexadecimal prefixes (as required by C99, but not implemented
+	in MinGW as used by R on Windows).  (PR#9648)
+
 
 
 		CHANGES IN R VERSION 2.5.0
