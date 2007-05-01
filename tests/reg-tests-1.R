@@ -4741,3 +4741,15 @@ unlink(" test", recursive = TRUE)
 stopifnot(!file.exists(" test"))
 setwd(owd)
 ## wildcards were broken in 2.5.0 on Unix, and always on Windows
+
+
+## it really is unclear if this should work as the fit is to a
+## numeric variable with levels, and the prediction does not have
+## levels.  But some people expected it to.
+worms <- data.frame(sex=gl(2,6), Dose=factor(rep(2^(0:5),2)),
+                    deaths=c(1,4,9,13,18,20,0,2,6,10,12,16))
+worms$doselin <- unclass(worms$Dose)
+worms.glm <- glm(cbind(deaths, (20-deaths)) ~ sex+ doselin,
+                 data=worms, family=binomial)
+predict(worms.glm, new=data.frame(sex="1", doselin=6))
+## failed < 2.6.0

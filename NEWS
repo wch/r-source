@@ -101,6 +101,10 @@ NEW FEATURES
 	setMethod() will fix up methods defined for (e1), with a
 	warning.
 
+    o	stats:::.getXlevels() confines attention to factors since some
+	users expected R to treat unclass(<a factor>) as a numeric
+	vector.
+
 
 DEPRECATED & DEFUNCT
 
@@ -216,7 +220,7 @@ BUG FIXES
     o	Hexadecimal integer constants (e.g. 0x10L) were not being
 	parsed correctly on platforms where atof did not accept
 	hexadecimal prefixes (as required by C99, but not implemented
-	in MinGW as used by R on Windows).
+	in MinGW as used by R on Windows).  (PR#9648)
 
 
 

@@ -3276,7 +3276,7 @@ attr(,"contrasts")$x
 
 > lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
 > try(predict(lm.fit, data.frame(x=NA)))
-Error : variable 'x' was fitted with class "numeric" but class "logical" was supplied
+Error : variable 'x' was fitted with type "numeric" but type "logical" was supplied
 > ## wrong answers in 1.8.0, refused to run in 1.8.1
 > 
 > 
