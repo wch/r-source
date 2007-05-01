@@ -144,7 +144,7 @@ while test -n "${1}"; do
 #      echo "${version}"; exit 0 ;;
     --args)
       break ;;
-   --arch)
+    --arch)
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then
 	R_ARCH="/${2}"
         shift
@@ -155,6 +155,14 @@ while test -n "${1}"; do
     --arch=*)
       r_arch=`echo "${1}" | sed -e 's/[^=]*=//'`
       R_ARCH="/${r_arch}"
+      ;;
+    -e)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
+	a=`echo "${2}" | sed -e 's/ /~+~/g'`; shift
+      else
+	error "option '${1}' requires an argument"
+      fi
+      args="${args} -e $a"
       ;;
     *)
       args="${args} ${1}" ;;
