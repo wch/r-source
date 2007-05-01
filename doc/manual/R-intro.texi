@@ -2580,8 +2580,8 @@ somehow to make the components of a list or data frame temporarily
 visible as variables under their component name, without the need to
 quote the list name explicitly each time.
 
-The @code{attach()} function, as well as having a directory name as its
-argument, may also have a data frame.  Thus suppose @code{lentils} is a
+The @code{attach()} function takes a `database' such as a list or data
+frame as its argument.  Thus suppose @code{lentils} is a
 data frame with three variables @code{lentils$u}, @code{lentils$v},
 @code{lentils$w}.  The attach
 
@@ -2628,11 +2628,10 @@ to @code{detach}, but it is much safer to always use a name, for example
 by @code{detach(lentils)} or @code{detach("lentils")}
 
 @quotation Note
-With the current release of @R{} lists and data frames can only be
-attached at position 2 or above.  It is not possible to directly assign
-into an attached list or data frame (thus, to some extent they are
-static).
-@c This is likely to change in the next year or so.
+In @R{} lists and data frames can only be attached at position 2 or
+above, and what is attached is a @emph{copy} of the original object.
+You can alter the attached values @emph{via} @code{assign}, but the
+original list or data frame is unchanged.
 @end quotation
 
 @node Working with data frames, Attaching arbitrary lists, attach() and detach(), Data frames
