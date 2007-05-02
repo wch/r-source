@@ -714,9 +714,9 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 
 If you want to build @R{} from the sources, you will first need to
 collect, install and test an extensive set of tools.  See @ref{The
-Windows toolset} (and perhaps updates in @url{http://www.murdoch-
-sutherland.com/Rtools/, @code{www.murdoch-sutherland.com/Rtools}}) for
-details.  
+Windows toolset} (and perhaps updates in
+@url{http://www.murdoch-sutherland.com/Rtools/,
+@code{www.murdoch-sutherland.com/Rtools}}) for details.  
 
 The @file{Rtools.exe} executable installer described in @ref{The
 Windows toolset} also includes some additions to the @R{} source as
