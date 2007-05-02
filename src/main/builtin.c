@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2006  The R Development Core Team.
+ *  Copyright (C) 1999-2007  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -345,7 +345,7 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP env = CAR(args), ans=mkString("");
+    SEXP env = CAR(args), ans=mkString(""), res;
 
     checkArity(op, args);
     if (TYPEOF(env) == ENVSXP) {
@@ -356,6 +356,7 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ans = ScalarString(STRING_ELT(R_PackageEnvName(env), 0));
 	else if (R_IsNamespaceEnv(env))
 	    ans = ScalarString(STRING_ELT(R_NamespaceEnvSpec(env), 0));
+	else if (!isNull(res = getAttrib(env, install("name")))) ans = res;
     }
     return ans;
 }

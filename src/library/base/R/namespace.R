@@ -170,6 +170,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
             impenv <- new.env(parent = .BaseNamespaceEnv, hash = TRUE)
+            attr(impenv, "name") <- paste("imports", name, sep=":")
             env <- new.env(parent = impenv, hash = TRUE)
             name <- as.character(as.name(name))
             version <- as.character(version)

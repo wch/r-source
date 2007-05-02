@@ -105,6 +105,9 @@ NEW FEATURES
 	users expected R to treat unclass(<a factor>) as a numeric
 	vector.
 
+    o	Imports environments of name spaces are named (as
+	"imports:foo"), and so are known e.g. to environmentName().
+
 
 DEPRECATED & DEFUNCT
 
