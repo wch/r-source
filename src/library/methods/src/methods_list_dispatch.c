@@ -287,7 +287,7 @@ SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
 	    UNPROTECT(nprotect);
 	    return R_NilValue;
 	}
-	/* NB:  this code replicates .SigLabel().  
+	/* NB:  this code replicates .SigLabel().
 	   If that changes, e.g. to include
 	   the package, the code here must change too.
 	   Or, better, the two should use the same C code. */
@@ -778,7 +778,7 @@ SEXP R_identC(SEXP e1, SEXP e2)
 	return R_FALSE;
 }
 
-static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev) 
+static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
 {
     static SEXP dotFind = NULL, f; SEXP  e, ee;
     if(dotFind == NULL) {
@@ -888,7 +888,8 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     if(method == R_UnboundValue) {
 	method = do_inherited_table(classes, fdef, mtable, ev);
     }
-    /* the rest of this is identical to R_standardGeneric; hence the f=method to remind us  */
+    /* the rest of this is identical to R_standardGeneric; 
+       hence the f=method to remind us  */
     f = method;
     if(isObject(f))
 	f = R_loadMethod(f, fname, ev);
