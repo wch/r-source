@@ -171,6 +171,19 @@ InitDynload()
    InitFunctionHashing();
 }
 
+/* returns DllInfo used by the embedding application.
+   the underlying "(embedding)" entry is created if not present */
+DllInfo *R_getEmbeddingDllInfo() {
+    DllInfo *dll = R_getDllInfo("(embedding)");
+    if (dll == NULL) {
+	int which = addDLL(strdup("(embedding)"), "(embedding)", NULL);
+	dll = &LoadedDLL[which];
+	/* make sure we don't attempt dynamic lookup */
+	R_useDynamicSymbols(dll, FALSE);
+    }
+    return dll;
+}
+
 #ifdef UNUSED
 DllInfo *
 getBaseDllInfo()
@@ -243,11 +256,12 @@ R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
     if(info == NULL)
 	error(_("R_RegisterRoutines called with invalid DllInfo object."));
 
-
-    info->useDynamicLookup = TRUE; /* Default is to look in registered and then dynamic.
-                                      Potentially change in the future to be only registered
-                                      if there are any registered values.
-                                    */
+    /* Default is to look in registered and then dynamic (unless
+       the is no handle such as in "base" or "embedded")
+       Potentially change in the future to be only registered
+       if there are any registered values.
+    */
+    info->useDynamicLookup = (info->handle)?TRUE:FALSE;
 
     if(croutines) {
 	for(num=0; croutines[num].name != NULL; num++) {;}

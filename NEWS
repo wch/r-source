@@ -140,6 +140,10 @@ C-LEVEL FACILITIES
 	needed since R 2.4.0 and has been removed.  Use IS_S4_OBJECT
 	instead.
 
+    o	Applications embedding R can use R_getEmbeddingDllInfo() to
+	obtain DllInfo for registering symbols present in the
+	application itself.
+
 
 INSTALLATION
 

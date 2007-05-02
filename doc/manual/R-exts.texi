@@ -8894,6 +8894,7 @@ change this.
 @menu
 * Compiling against the R shared library::  
 * Setting R callbacks::         
+* Registering symbols::         
 * Meshing event loops::         
 * Threading issues::            
 @end menu
@@ -8919,7 +8920,7 @@ pkg-config --libs libR
 
 
 
-@node Setting R callbacks, Meshing event loops, Compiling against the R shared library, Embedding R under Unix-alikes
+@node Setting R callbacks, Registering symbols, Compiling against the R shared library, Embedding R under Unix-alikes
 @subsection Setting R callbacks
 
 For Unix-alkes there is a public header file @file{Rinterface.h} that
@@ -9111,8 +9112,20 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @end example
 @end deftypefun
 
+@node Registering symbols, Meshing event loops, Setting R callbacks, Embedding R under Unix-alikes
+@subsection Registering symbols
 
-@node Meshing event loops, Threading issues, Setting R callbacks, Embedding R under Unix-alikes
+The application embedding @R{} needs a special way of registering symbols, because it is not a dynamic library loaded by @R{} as would be the case with a package. Therefore @R{} reserves a special @code{DllInfo} entry for the embedding application such that it can register symbols to be used with @code{.C}, @code{.Call} etc. This entry can be obtained by calling @code{getEmbeddingDllInfo}, so the common use is analogous to
+
+@example
+DllInfo *info = R_getEmbeddingDllInfo();
+R_registerRoutines(info, cMethods, callMethods, NULL, NULL);
+@end example
+
+The native routines defined by @code{cMethod} and @code{callMethods} should be present in the embedding application. See @ref{Registering native routines} for details on registering symbols in general.
+
+
+@node Meshing event loops, Threading issues, Registering symbols, Embedding R under Unix-alikes
 @subsection Meshing event loops
 
 One of the most difficult issues in interfacing @R{} to a front-end is
