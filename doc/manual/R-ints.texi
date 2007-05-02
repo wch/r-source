@@ -1204,22 +1204,25 @@ Latin-1, the old @R{} assumption.
 @node S4 objects, Internal use of global and base environments, Encodings for CHARSXPs, R Internal Structures
 @section S4 objects
 
-The internal representation of objects from S4 classes changed in @R{}
-2.4.0.  It is possible that objects from earlier representations still
-exist, but there is no guarantee that they will be handled
-correctly.  An attempt is made to detect old-style S4 objects and warn
-when binary objects are @code{load}ed or a workspace is restored.
-
 [This section is currently a preliminary draft and should not be taken
-as definitive.]
+as definitive.  The description assumes that @env{R_NO_METHODS_TABLES}
+has not been set.]
 
 @menu
 * Representation of S4 objects::  
+* S4 classes::                  
+* S4 methods::                  
 * Mechanics of S4 dispatch::    
 @end menu
 
-@node Representation of S4 objects, Mechanics of S4 dispatch, S4 objects, S4 objects
+@node Representation of S4 objects, S4 classes, S4 objects, S4 objects
 @subsection Representation of S4 objects
+
+[The internal representation of objects from S4 classes changed in @R{}
+2.4.0.  It is possible that objects from earlier representations still
+exist, but there is no guarantee that they will be handled correctly.
+An attempt is made to detect old-style S4 objects and warn when binary
+objects are @code{load}ed or a workspace is restored.]
 
 S4 objects can be of any @code{SEXPTYPE}.  They are either an object of
 a simple type (such as an atomic vector or function) with S4 class
@@ -1239,7 +1242,75 @@ have a class attribute, the @code{OBJECT} bit is set.
 It is currently unclear what should happen if the class attribute is
 removed from an S4 object, or if this should be allowed.
 
-@node Mechanics of S4 dispatch,  , Representation of S4 objects, S4 objects
+@node S4 classes, S4 methods, Representation of S4 objects, S4 objects
+@subsection S4 classes 
+
+S4 classes are stored as @R{} objects in the environment in which they
+are created, with names @code{.__C__@var{classname}}: as such they are
+not listed by default by @code{ls}.
+
+The objects are S4 objects of class @code{"classRepresentation"} which
+is defined in the @pkg{methods} package.
+
+Since these are just objects, they are subject to the normal scoping
+rules and can be imported and exported from name spaces like other
+objects.  The directives @code{importClassesFrom} and
+@code{exportClasses} are merely convenient ways to refer to class
+objects without needing to know their internal `metaname' (although
+@code{exportClasses} does a little sanity checking via @code{isClass}).
+
+@node S4 methods, Mechanics of S4 dispatch, S4 classes, S4 objects
+@subsection S4 methods
+
+Details of methods are stored in S4 objects of class
+@code{"MethodsList"}.  They have a non-syntatic name of the form
+@code{.__M__@var{generic}:@var{package}} for all methods defined in the
+current environment for the named generic derived from a specific
+package (which might be @code{.GlobalEnv}).
+
+There is also environment @code{.__T__@var{generic}:@var{package}} which
+has names the signatures of the methods defined, and values the
+corresponding method functions.  This is often referred to as a `methods
+table'.
+
+When a package without a name space is attached these objects become
+visible on the search path.  @code{library} calls
+@code{methods:::cacheMetaData} to update the internal tables.
+
+During an @R{} session there is an environment associated with each
+non-primitive generic containing objects @code{.AllMTable},
+@code{.Generic}, @code{.Methods}, @code{.MTable}, @code{.SigArgs} and
+@code{.SigLength}.  @code{.MTable} and @code{AllMTable} are merged
+methods tables containing all the methods defined directly and via
+inheritance respectively.  @code{.Methods} is a merged methods list.
+
+Exporting methods from a name space is more complicated than exporting a
+class.  Note first that you do not export a method, but rather the
+directive @code{exportMethods} will export all the methods defined in
+the name space for a specified generic: the code also adds to the list
+of generics any that are exported directly.  For generics which are
+listed via @code{exportMethods} or exported themselves, the
+corresponding @code{"MethodsList"} and environment are exported and so
+will appear (as hidden objects) in the package environment.
+
+Methods for primitives which are internally S4 generic (see below) are
+always exported, whether mentioned in the @code{NAMESPACE} file or not.
+
+Methods can be imported either via the directive
+@code{importMethodsFrom} or via importing a namespace by @code{import}.
+Also, if a generic is imported via @code{importFrom}, its methods are
+also imported.  In all cases the generic will be imported if it is in
+the namespace, so @code{importMethodsFrom} is most appropriate for
+methods defined on generics in other packages.  Since methods for a
+generic could be imported from several different packages, the methods
+tables are merged.
+
+When a package with a name space is attached
+@code{methods:::cacheMetaData} is called to update the internal tables:
+only the visible methods will be cached.
+
+
+@node Mechanics of S4 dispatch,  , S4 methods, S4 objects
 @subsection Mechanics of S4 dispatch
 
 This subsection does not discuss how S4 methods are chosen: see
@@ -1305,8 +1376,8 @@ they are S4 generic, again piggybacking on S3 dispatch.
 computing all primitives, initially disallowing methods on all and then
 setting generics for members of @code{.GenericArgsEnv}, the S4 group
 generics and a short exceptions list in @file{BasicFunsList.R}: this
-contains the subsetting and subassignment operators and an override for
-@code{c}.
+currently contains the subsetting and subassignment operators and an
+override for @code{c}.
 
 
 @node Internal use of global and base environments, Modules, S4 objects, R Internal Structures
