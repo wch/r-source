@@ -78,7 +78,7 @@ $(lapack_la): $(lapack_la_OBJECTS)
 ## Include BLAS here, as with (static) ATLAS that pulls all the
 ## BLAS routines into one place.
 $(Rlapack_la): $(LIBOBJECTS)
-	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @BLAS_LIBS@ $(Rlapack_la_LIBADD)
+	$(DYLIB_LINK) -o $@ $(LIBOBJECTS) @RLAPACK_LDFLAGS@ @BLAS_LIBS@ $(Rlapack_la_LIBADD)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
