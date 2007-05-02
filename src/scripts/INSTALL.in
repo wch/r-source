@@ -748,6 +748,9 @@ do_install_source () {
     R_SAVE_IMAGE=${save}
   fi
   export R_SAVE_IMAGE
+  if ${R_SAVE_IMAGE}; then
+    warning "true value of 'SaveImage' is deprecated in favour of 'LazyLoad: true'"
+  fi
 
   if ${R_SAVE_IMAGE}; then
     message "save image"

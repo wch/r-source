@@ -342,6 +342,7 @@ foreach $pkg (@ARGV){
 	my $lazyload = -1;
 	my $tmp = parse_description_field("LazyLoad");
 	$lazyload = $tmp if($tmp >= 0);
+	warn "WARNING: true value of 'SaveImage' is deprecated in favour of 'LazyLoad: true'\n" if $save eq "true");
 
 	my $lazydata = 0;
 	my $tmp = parse_description_field("LazyData");

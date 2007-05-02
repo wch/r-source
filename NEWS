@@ -121,6 +121,9 @@ DEPRECATED & DEFUNCT
 	deprecated in favour of storage.mode(x) <- "double" and
 	mode(x) <- "single".
 
+    o	In package installation, SaveImage: yes is deprecated in
+	favour of LazyLoad: yes.
+
 
 UTILITIES
 
