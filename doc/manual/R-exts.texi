@@ -1642,14 +1642,21 @@ importFrom(foo, f, g)
 specifies that the exported variables @code{f} and @code{g} of the
 package @pkg{foo} are to be imported.
 
-If a package only needs one (exported) object from another package it
-can use a fully qualified variable reference in the code instead of a
-formal import.  A fully qualified reference to the function @code{f} in
-package @pkg{foo} is of the form @code{foo::f}.  This is less efficient
-than a formal import and also loses the advantage of recording all
-dependencies in the @file{NAMESPACE} file, so this approach is usually
-not recommended.  Evaluating @code{foo::f} will cause package @pkg{foo}
-to be loaded, but not attached, if it was not loaded already.
+It is possible to export variables from a name space that it has
+imported from other namespaces.
+
+If a package only needs a few objects from another package it can use a
+fully qualified variable reference in the code instead of a formal
+import.  A fully qualified reference to the function @code{f} in package
+@pkg{foo} is of the form @code{foo:::f}.  This is less efficient than a
+formal import and also loses the advantage of recording all dependencies
+in the @file{NAMESPACE} file, so this approach is usually not
+recommended.  Evaluating @code{foo:::f} will cause package @pkg{foo} to
+be loaded, but not attached, if it was not loaded already---this can be
+an advantage is delaying the loading of a rarely used package.
+
+Using @code{foo:::f} allows access to unexported objects: to confine
+references to exported objects use @code{foo::f}.
 
 @node Registering S3 methods, Load hooks, Specifying imports and exports, Package name spaces
 @subsection Registering S3 methods
@@ -1973,7 +1980,7 @@ Identify S3-style method definitions and write corresponding
 @code{S3method} declarations.
 @item
 Identify dependencies and replace any @code{require} calls by
-@code{import} directives.
+@code{import} directives (and make corresponding changes in the 
 @item
 Replace @code{.First.lib} functions with @code{.onLoad} functions or
 @code{useDynLib} directives.
@@ -1988,38 +1995,41 @@ development.
 
 Some additional steps are needed for packages which make use of formal
 (S4-style) classes and methods (unless these are purely used
-internally).  There needs to be an @code{.onLoad} action to
-ensure that the methods package is loaded @emph{and} attached:
-
-@example
-.onLoad <- function(lib, pkg) require(methods)
-@end example
-
-@noindent
-and any classes and methods which are to be exported need to be declared
-as such in the @file{NAMESPACE} file.  For example, the now-defunct
-@pkg{mle} package had
+internally).  The package should have @code{Depends: methods} in its
+@file{DESCRIPTION} file and any classes and methods which are to be
+exported need to be declared in the @file{NAMESPACE} file.  For example,
+the @pkg{stats} package has
 
 @findex exportClasses
 @findex exportMethods
 
 @example
+export(mle)
 importFrom(graphics, plot)
-importFrom(stats, profile, confint)
-exportClasses("mle", "profile.mle", "summary.mle")
-exportMethods("confint", "plot", "profile", "summary", "show")
+importFrom(stats, AIC, coef, confint, logLik, optim, profile, 
+	   qchisq, update, vcov)
+exportClasses(mle, profile.mle, summary.mle)
+exportMethods(AIC, BIC, coef, confint, logLik, plot, profile, 
+              summary, show, update, vcov)
 @end example
 
 @noindent
 All formal classes need to be listed in an @code{exportClasses}
-directive.  All generics for which formal methods are defined need to be
+directive.  Generics for which formal methods are defined need to be
 declared in an @code{exportMethods} directive, and where the generics
 are formed by taking over existing functions, those functions need to be
-imported (explicitly unless they are defined in the @code{base}
-name space).
+imported (explicitly unless they are defined in the @code{base} name
+space).
 
-In addition, a package using classes and methods defined in another
-package needs to import them, with directives
+Note that exporting methods on a generic in the namespace will also
+export the generic, and exporting a generic in the namespace will also
+export its methods.  Where a generic has been created in the package
+solely to add S4 methods to it, it can be declared @emph{via} either or
+both of @code{exports} or @code{exportMethods}, but the latter seems
+clearer (and is used in the @pkg{stats4} example above).
+
+Further, a package using classes and methods defined in another package
+needs to import them, with directives
 
 @findex importClassesFrom
 @findex importMethodsFrom
@@ -2062,6 +2072,14 @@ exportClasses(c1, c2)
 
 @noindent
 respectively.
+
+Note that @code{importMethodsFrom} will also import any generics defined
+in the namespace on those methods.
+
+If your package imports the whole of a name space, it will automatically
+import the classes from that namespace.  It will also import methods,
+but it is best to do so explicitly, especially where there are methods
+being imported from more than one namespace.
 
 
 @node Writing portable packages, Diagnostic messages, Package name spaces, Creating R packages
