@@ -67,6 +67,9 @@ BUG FIXES
 	hexadecimal prefixes (as required by C99, but not implemented
 	in MinGW as used by R on Windows).  (PR#9648)
 
+    o	libRlapack.dylib on Mac OS X had no version information and
+	somtimes an invalid identification name.
+
 
 
 		CHANGES IN R VERSION 2.5.0
