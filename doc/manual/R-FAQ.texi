@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-04-26
+@set FAQ_DATE @value{FAQ_YEAR}-05-02
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -179,11 +179,11 @@ In publications, please refer to this @acronym{FAQ} as Hornik
 @example
 @group
 @@Misc@{,
-  author	= @{Kurt Hornik@},
-  title		= @{The @{R@} @{FAQ@}@},
-  year		= @{@value{REL_YEAR}@},
-  note		= @{@{ISBN@} @value{FAQ_ISBN}@},
-  url		= @{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
+  author        = @{Kurt Hornik@},
+  title         = @{The @{R@} @{FAQ@}@},
+  year          = @{@value{REL_YEAR}@},
+  note          = @{@{ISBN@} @value{FAQ_ISBN}@},
+  url           = @{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html@}
 @}
 @end group
 @end example
@@ -500,24 +500,26 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2007-01-22:
+@c Linux binaries as of 2007-05-02:
 @c
 @c debian
-@c   stable  i386   2.4.1  Johannes Ranke
+@c   oldstable
+@c           i386   2.4.1  Johannes Ranke
 @c           amd64  2.4.1  Johannes Ranke
-@c   testing i386   2.4.1  Johannes Ranke
-@c           amd64  2.4.1  Johannes Ranke
+@c   stable  i386   2.5.0  Johannes Ranke
+@c           amd64  2.5.0  Johannes Ranke
 @c redhat
 @c   el3     i386   2.3.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c   el4     i386   2.4.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
-@c           x86_64 2.4.0  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c   el4     i386   2.4.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
+@c           x86_64 2.4.1  Matthew P Cox <rhel_cran@hmdc.harvard.edu>
 @c   fc3     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
 @c           x86_64 2.4.0  Brian Ripley
 @c   fc4     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
 @c           x86_64 2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c   fc5     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c           x86_64 2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
-@c   fc6     i386   2.4.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c   fc5     i386   2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c           x86_64 2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c   fc6     i386   2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
+@c           x86_64 2.5.0  Martyn Plummer <martyn.plummer@r-project.org>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -534,8 +536,9 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c   10.1    i586   2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c           x86_64 2.4.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c ubuntu
-@c   dapper  i386   2.4.1  Vincent Goulet
-@c   edgy    i386   2.4.1  Vincent Goulet
+@c   dapper  i386   2.5.0  Vincent Goulet
+@c   edgy    i386   2.5.0  Vincent Goulet
+@c   feisty     2.5.0  Vincent Goulet
 @c           
 @c vinelinux
 @c   3.2     i386   2.3.1  Susumu Tanimura <stanimura-ngs@umin.ac.jp>
@@ -546,17 +549,17 @@ packages.
 @quotation
 @multitable {VineLinux} {x86_64} {9.0/9.1/9.2/9.3/10.0/10.1} {James Henstridge}
 @headitem @tab CPU @tab Versions @tab Provider
-@item Debian   @tab i386 @tab stable/testing @tab Johannes Ranke
-@item          @tab amd64 @tab stable/testing @tab Johannes Ranke
+@item Debian   @tab i386 @tab stable/oldstable @tab Johannes Ranke
+@item          @tab amd64 @tab stable/oldstable @tab Johannes Ranke
 @item Red Hat  @tab i386 @tab FC3/FC4/FC5/FC6 @tab Martyn Plummer
 @item          @tab x86_64 @tab FC3 @tab Brian Ripley
-@item          @tab x86_64 @tab FC4/FC5 @tab Martyn Plummer
+@item          @tab x86_64 @tab FC4/FC5/FC6 @tab Martyn Plummer
 @item          @tab i386   @tab Enterprise Linux @tab Matthew P. Cox
 @item          @tab x86_64 @tab Enterprise Linux @tab Matthew P. Cox
 @item SuSE     @tab i386   @tab 7.3/8.0/8.1/8.2 @tab Detlef Steuer
 @item          @tab i586   @tab 9.0/9.1/9.2/9.3/10.0/10.1 @tab Detlef Steuer
 @item          @tab x86_64 @tab 9.2/9.3/10.0/10.1 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab dapper/edgy @tab Vincent Goulet
+@item Ubuntu   @tab i386   @tab dapper/edgy/feisty @tab Vincent Goulet
 @item VineLinux @tab i386 @tab 3.2 @tab Susumu Tanimura
 @end multitable
 @end quotation
@@ -2277,6 +2280,8 @@ Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
 @item RScaLAPACK
 An interface to ScaLAPACK functions from R.
+@item RSVGTipsDevice
+An R @acronym{SVG} graphics device with dynamic tips and hyperlinks.
 @item RSvgDevice
 A graphics device for R that uses the new w3.org @XML{} standard for
 Scalable Vector Graphics.
@@ -2349,6 +2354,8 @@ especially for the wavelet and Gabor transforms of noisy signals), based
 on the book ``Practical Time-Frequency Analysis: Gabor and Wavelet
 Transforms with an Implementation in S'' by Rene Carmona, Wen L. Hwang
 and Bruno Torresani, 1998, Academic Press.
+@item Ryacas
+An R interfaces to the yacas computer algebra system.
 @c <COMMENT>
 @c Removed on 2006-10-06 as requested by the maintainer (now @BioC).
 @c @item SAGx
@@ -2421,6 +2428,8 @@ distributions).
 Air quality data of Switzerland for one year in 30 min resolution.
 @item Synth
 Causal inference using the synthetic control group method.
+@item TIMP
+A problem solving environment for fitting superposition models.
 @item TRAMPR
 Terminal Restriction Fragment Length Polymorphism (TRFLP) Analysis and
 Matching Package for R.
@@ -3102,6 +3111,8 @@ Functions to fit Generalized Additive Models for Location Scale and
 Shape.
 @item gamlss.dist
 Extra distributions for GAMLSS modeling.
+@item gamlss.mx
+A GAMLSS add on package for fitting mixtute distributions.
 @item gamlss.nl
 A GAMLSS add on package for fitting non linear parametric models.
 @item gamlss.tr
@@ -3248,6 +3259,8 @@ linkage phase is ambiguous.
 Haplotype data simulation.
 @item hddplot
 Use known groups in high-dimensional data to derive scores for plots.
+@item hdeco
+Hierarchical DECOmposition of entropy for categorical map comparisons.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
 @item hdrcde
