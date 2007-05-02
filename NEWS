@@ -108,6 +108,9 @@ NEW FEATURES
     o	Imports environments of name spaces are named (as
 	"imports:foo"), and so are known e.g. to environmentName().
 
+    o	Package 'stats4' use lazy-loading in preparation for the
+	deprecation of SaveImage.
+
 
 DEPRECATED & DEFUNCT
 
