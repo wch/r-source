@@ -254,6 +254,21 @@ sub mark_brackets {
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
     }
+    # Any remaining brackets must be unmatched ones, hence report error.
+    if ($complete_text =~ /([{}])/s) {
+        # Would like to tell which which line has unmatched { or },
+        # but lines starting with % have already been removed.
+        # Hence the 'on or after' in the message.
+        my $badlineno = 0 ;
+	my $extra_info = "(\'$1\')" ;
+        $extra_info = "(\'$1\')" if $complete_text =~ /(\\\w+{)/ ;
+	foreach my $line (split /\n/, $complete_text) {
+	    $badlineno++;
+	    last if ($line =~ /[{}]/) ;
+	}
+	warn "Warning: unmatched brace $extra_info in '$Rdname'".
+	     " on or after line $badlineno\n";
+    }
 }
 
 sub unmark_brackets {

@@ -130,6 +130,10 @@ UTILITIES
 
     o	R CMD check now does a recursive copy on the 'tests' directory.
 
+    o	Rdconv now warns about unmatched braces rather than silently
+	omitting sections containing them.  (Suggestion by Bill
+	Dunlap, PR#9649)
+
 
 C-LEVEL FACILITIES
 
@@ -156,10 +160,9 @@ BUG FIXES
     o	Internally generic primitives no longer dispatch S4 methods on
 	S3 objects.
 
-    o	pmatch() used to accept non-integer values for 'nomatch' even
-	though the return value was documented to be integer.
-
-	Ditto for charmatch().
+    o	charmatch() and pmatch() used to accept non-integer values for
+	'nomatch' even though the return value was documented to be
+	integer.
 
     o	match.call() no longer 'works' outside a function unless
 	'definition' is supplied.  (Under some circumstances it used
