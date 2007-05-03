@@ -988,8 +988,12 @@ rm -rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_can_run}"; then
   AC_MSG_RESULT([yes])
 else
-  AC_MSG_WARN([cannot run mixed C/Fortran code])
-  AC_MSG_ERROR([Maybe check LDFLAGS for paths to Fortran libraries?])
+  if test "${cross_compiling}" = yes; then
+    AC_MSG_RESULT([don't know (cross-compiling)])
+  else
+    AC_MSG_WARN([cannot run mixed C/Fortran code])
+    AC_MSG_ERROR([Maybe check LDFLAGS for paths to Fortran libraries?])
+  fi
 fi
 ])# R_PROG_F77_CAN_RUN
 
@@ -1073,8 +1077,12 @@ rm -rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_cc_compat}"; then
   AC_MSG_RESULT([yes])
 else
-  AC_MSG_WARN([${F77} and ${CC} disagree on int and double])
-  AC_MSG_ERROR([Maybe change CFLAGS or FFLAGS?])
+  if test "${cross_compiling}" = yes; then
+    AC_MSG_RESULT([don't know (cross-compiling)])
+  else
+    AC_MSG_WARN([${F77} and ${CC} disagree on int and double])
+    AC_MSG_ERROR([Maybe change CFLAGS or FFLAGS?])
+  fi
 fi
 ])# R_PROG_F77_CC_COMPAT
 
@@ -3200,7 +3208,7 @@ int main () {
   exit(0);
 }
   ]])], [r_cv_iconv_latin1=yes], [r_cv_iconv_latin1=no], 
-    [r_cv_iconv_latin1=no])])
+    [r_cv_iconv_latin1=yes])])
 
   if test "$r_cv_iconv_latin1" = yes; then
     AC_DEFINE(ICONV_LATIN1, 1,
@@ -3575,6 +3583,42 @@ int main ()
   fi
 ])# R_FUNC_SIGACTION
 
+## R_CROSS_COMPILING
+## ---------
+## check for tools necessary for cross-compiling,
+## namely BUILD_CC and BUILD_R
+## This macro does nothing for native builds
+AC_DEFUN([R_CROSS_COMPILING],
+[
+if test "${cross_compiling}" = yes; then
+  AC_MSG_CHECKING([for build C compiler])
+  build_cc_works=no
+  echo "int main(void) { return 0; }" > conftest.c
+  if test -n "${BUILD_CC}" && "${BUILD_CC}" conftest.c -o conftest && ./conftest; then
+      build_cc_works=yes;
+  fi
+  if test "${build_cc_works}" = no; then
+    for prog in gcc cc; do
+      if "${prog}" conftest.c -o conftest >/dev/null 2>&1 && ./conftest; then
+        BUILD_CC="${prog}"; build_cc_works=yes; break
+      fi
+    done
+  fi
+  if test "${build_cc_works}" = no; then
+    AC_MSG_RESULT(none)
+    AC_MSG_ERROR([Build C compiler doesn't work. Set BUILD_CC to a compiler capable of creating a binary native to the build machine.])
+  fi
+  AC_MSG_RESULT([${BUILD_CC}])
+  AC_MSG_CHECKING([for build R])
+  : ${BUILD_R=R}
+  if echo 'cat(R.home())'|"${BUILD_R}" --vanilla --slave >/dev/null 2>&1; then
+    AC_MSG_RESULT([${BUILD_R}])
+  else
+    AC_MSG_RESULT(none)
+    AC_MSG_ERROR([Build R doesn't work. Set BUILD_R to a native build of the same R version that you want to cross-compile.])
+  fi
+fi
+])
 
 ### Local variables: ***
 ### mode: outline-minor ***

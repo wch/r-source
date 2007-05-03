@@ -51,8 +51,11 @@ R: Makefile chartables.h
 chartables.h: dftables
 	./dftables chartables.h
 
+@CROSS_COMPILING_TRUE@dftables: pcre_maketables.c pcre_internal.h pcre.h
+@CROSS_COMPILING_TRUE@	$(BUILD_CC) -o $@ $(srcdir)/dftables.c $(PCRE_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+
 dftables.o:  pcre_maketables.c pcre_internal.h pcre.h
-dftables: dftables.o
+@CROSS_COMPILING_FALSE@dftables: dftables.o
 	$(MAIN_LD) $(LDFLAGS) -o dftables dftables.o
 
 libpcre.a: $(libpcre_a_OBJECTS)

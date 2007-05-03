@@ -569,6 +569,12 @@ AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
 
+## cross-compiling
+R_CROSS_COMPILING
+AC_SUBST(BUILD_CC)
+AC_SUBST(BUILD_R)
+AM_CONDITIONAL(CROSS_COMPILING, [test "${cross_compiling}" = yes])
+
 ### * Checks for libraries.
 
 ## Set up LD_LIBRARY_PATH or equivalent.
@@ -743,22 +749,14 @@ AC_CHECK_TYPES([intptr_t, uintptr_t], , , [#ifdef HAVE_INTTYPES_H
 AC_C_BIGENDIAN
 AC_C_CONST
 R_C_INLINE
-if test "${cross_compiling}" = yes; then
-  warn_xcompile_sizeof_int="assuming C ints are 4 byte on ${host}"
-  AC_MSG_WARN([${warn_xcompile_sizeof_int}])
-fi
-AC_CHECK_SIZEOF(int, 4)
+AC_CHECK_SIZEOF(int)
 if test "${ac_cv_sizeof_int}" = 4; then
   AC_DEFINE(INT_32_BITS, 1, [Define if you have 32 bit ints.])
 fi
-if test "${cross_compiling}" = yes; then
-  warn_xcompile_sizeof_long="assuming C longs are 4 byte on ${host}"
-  AC_MSG_WARN([${warn_xcompile_sizeof_long}])
-fi
-AC_CHECK_SIZEOF(long, 4)
-AC_CHECK_SIZEOF(long long, 0)
-AC_CHECK_SIZEOF(double, 8)
-AC_CHECK_SIZEOF(long double, 0)
+AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(long long)
+AC_CHECK_SIZEOF(double)
+AC_CHECK_SIZEOF(long double)
 
 R_PROG_CC_MAKEFRAG
 R_PROG_CC_LO_MAKEFRAG

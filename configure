@@ -926,6 +926,10 @@ ECHO
 STRIP
 LIBTOOL
 LIBTOOL_DEPS
+BUILD_CC
+BUILD_R
+CROSS_COMPILING_TRUE
+CROSS_COMPILING_FALSE
 shlibpath_var
 striplib
 LIBM
@@ -8122,7 +8126,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 8125 "configure"' > conftest.$ac_ext
+  echo '#line 8129 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -9608,11 +9612,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9611: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9615: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9615: \$? = $ac_status" >&5
+   echo "$as_me:9619: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -9841,11 +9845,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9844: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9848: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9848: \$? = $ac_status" >&5
+   echo "$as_me:9852: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -9901,11 +9905,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9904: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9908: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9908: \$? = $ac_status" >&5
+   echo "$as_me:9912: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12048,7 +12052,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12051 "configure"
+#line 12055 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12146,7 +12150,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 12149 "configure"
+#line 12153 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14322,11 +14326,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14325: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14329: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:14329: \$? = $ac_status" >&5
+   echo "$as_me:14333: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -14382,11 +14386,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:14385: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:14389: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:14389: \$? = $ac_status" >&5
+   echo "$as_me:14393: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -15710,7 +15714,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 15713 "configure"
+#line 15717 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15808,7 +15812,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 15811 "configure"
+#line 15815 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -16635,11 +16639,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16638: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16642: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16642: \$? = $ac_status" >&5
+   echo "$as_me:16646: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -16695,11 +16699,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16698: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16702: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16702: \$? = $ac_status" >&5
+   echo "$as_me:16706: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -18724,11 +18728,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18727: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18731: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:18731: \$? = $ac_status" >&5
+   echo "$as_me:18735: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -18957,11 +18961,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:18960: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:18964: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:18964: \$? = $ac_status" >&5
+   echo "$as_me:18968: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -19017,11 +19021,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19020: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19024: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:19024: \$? = $ac_status" >&5
+   echo "$as_me:19028: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -21164,7 +21168,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21167 "configure"
+#line 21171 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -21262,7 +21266,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 21265 "configure"
+#line 21269 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -22275,6 +22279,60 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 
 
 
+
+
+## cross-compiling
+
+if test "${cross_compiling}" = yes; then
+  { echo "$as_me:$LINENO: checking for build C compiler" >&5
+echo $ECHO_N "checking for build C compiler... $ECHO_C" >&6; }
+  build_cc_works=no
+  echo "int main(void) { return 0; }" > conftest.c
+  if test -n "${BUILD_CC}" && "${BUILD_CC}" conftest.c -o conftest && ./conftest; then
+      build_cc_works=yes;
+  fi
+  if test "${build_cc_works}" = no; then
+    for prog in gcc cc; do
+      if "${prog}" conftest.c -o conftest >/dev/null 2>&1 && ./conftest; then
+        BUILD_CC="${prog}"; build_cc_works=yes; break
+      fi
+    done
+  fi
+  if test "${build_cc_works}" = no; then
+    { echo "$as_me:$LINENO: result: none" >&5
+echo "${ECHO_T}none" >&6; }
+    { { echo "$as_me:$LINENO: error: Build C compiler doesn't work. Set BUILD_CC to a compiler capable of creating a binary native to the build machine." >&5
+echo "$as_me: error: Build C compiler doesn't work. Set BUILD_CC to a compiler capable of creating a binary native to the build machine." >&2;}
+   { (exit 1); exit 1; }; }
+  fi
+  { echo "$as_me:$LINENO: result: ${BUILD_CC}" >&5
+echo "${ECHO_T}${BUILD_CC}" >&6; }
+  { echo "$as_me:$LINENO: checking for build R" >&5
+echo $ECHO_N "checking for build R... $ECHO_C" >&6; }
+  : ${BUILD_R=R}
+  if echo 'cat(R.home())'|"${BUILD_R}" --vanilla --slave >/dev/null 2>&1; then
+    { echo "$as_me:$LINENO: result: ${BUILD_R}" >&5
+echo "${ECHO_T}${BUILD_R}" >&6; }
+  else
+    { echo "$as_me:$LINENO: result: none" >&5
+echo "${ECHO_T}none" >&6; }
+    { { echo "$as_me:$LINENO: error: Build R doesn't work. Set BUILD_R to a native build of the same R version that you want to cross-compile." >&5
+echo "$as_me: error: Build R doesn't work. Set BUILD_R to a native build of the same R version that you want to cross-compile." >&2;}
+   { (exit 1); exit 1; }; }
+  fi
+fi
+
+
+
+
+
+if test "${cross_compiling}" = yes; then
+  CROSS_COMPILING_TRUE=
+  CROSS_COMPILING_FALSE='#'
+else
+  CROSS_COMPILING_TRUE='#'
+  CROSS_COMPILING_FALSE=
+fi
 
 
 ### * Checks for libraries.
@@ -26019,11 +26077,6 @@ _ACEOF
  ;;
 esac
 
-if test "${cross_compiling}" = yes; then
-  warn_xcompile_sizeof_int="assuming C ints are 4 byte on ${host}"
-  { echo "$as_me:$LINENO: WARNING: ${warn_xcompile_sizeof_int}" >&5
-echo "$as_me: WARNING: ${warn_xcompile_sizeof_int}" >&2;}
-fi
 { echo "$as_me:$LINENO: checking for int" >&5
 echo $ECHO_N "checking for int... $ECHO_C" >&6; }
 if test "${ac_cv_type_int+set}" = set; then
@@ -26435,11 +26488,6 @@ cat >>confdefs.h <<\_ACEOF
 #define INT_32_BITS 1
 _ACEOF
 
-fi
-if test "${cross_compiling}" = yes; then
-  warn_xcompile_sizeof_long="assuming C longs are 4 byte on ${host}"
-  { echo "$as_me:$LINENO: WARNING: ${warn_xcompile_sizeof_long}" >&5
-echo "$as_me: WARNING: ${warn_xcompile_sizeof_long}" >&2;}
 fi
 { echo "$as_me:$LINENO: checking for long" >&5
 echo $ECHO_N "checking for long... $ECHO_C" >&6; }
@@ -28558,7 +28606,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:28561: \"$ac_link\") >&5
+(eval echo $as_me:28609: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -28641,7 +28689,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:28644: \"$ac_link\") >&5
+(eval echo $as_me:28692: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -29521,11 +29569,16 @@ if test -n "${r_cv_prog_f77_can_run}"; then
   { echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6; }
 else
-  { echo "$as_me:$LINENO: WARNING: cannot run mixed C/Fortran code" >&5
+  if test "${cross_compiling}" = yes; then
+    { echo "$as_me:$LINENO: result: don't know (cross-compiling)" >&5
+echo "${ECHO_T}don't know (cross-compiling)" >&6; }
+  else
+    { echo "$as_me:$LINENO: WARNING: cannot run mixed C/Fortran code" >&5
 echo "$as_me: WARNING: cannot run mixed C/Fortran code" >&2;}
-  { { echo "$as_me:$LINENO: error: Maybe check LDFLAGS for paths to Fortran libraries?" >&5
+    { { echo "$as_me:$LINENO: error: Maybe check LDFLAGS for paths to Fortran libraries?" >&5
 echo "$as_me: error: Maybe check LDFLAGS for paths to Fortran libraries?" >&2;}
    { (exit 1); exit 1; }; }
+  fi
 fi
 
 
@@ -29609,11 +29662,16 @@ if test -n "${r_cv_prog_f77_cc_compat}"; then
   { echo "$as_me:$LINENO: result: yes" >&5
 echo "${ECHO_T}yes" >&6; }
 else
-  { echo "$as_me:$LINENO: WARNING: ${F77} and ${CC} disagree on int and double" >&5
+  if test "${cross_compiling}" = yes; then
+    { echo "$as_me:$LINENO: result: don't know (cross-compiling)" >&5
+echo "${ECHO_T}don't know (cross-compiling)" >&6; }
+  else
+    { echo "$as_me:$LINENO: WARNING: ${F77} and ${CC} disagree on int and double" >&5
 echo "$as_me: WARNING: ${F77} and ${CC} disagree on int and double" >&2;}
-  { { echo "$as_me:$LINENO: error: Maybe change CFLAGS or FFLAGS?" >&5
+    { { echo "$as_me:$LINENO: error: Maybe change CFLAGS or FFLAGS?" >&5
 echo "$as_me: error: Maybe change CFLAGS or FFLAGS?" >&2;}
    { (exit 1); exit 1; }; }
+  fi
 fi
 
 
@@ -39621,7 +39679,7 @@ if test "${r_cv_iconv_latin1+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   if test "$cross_compiling" = yes; then
-  r_cv_iconv_latin1=no
+  r_cv_iconv_latin1=yes
 else
   cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
@@ -53810,6 +53868,13 @@ echo "$as_me: error: conditional \"USE_LIBTOOL\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
+if test -z "${CROSS_COMPILING_TRUE}" && test -z "${CROSS_COMPILING_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"CROSS_COMPILING\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"CROSS_COMPILING\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
 if test -z "${COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE}" && test -z "${COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"COMPILE_FORTRAN_DOUBLE_COMPLEX\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
@@ -54758,6 +54823,10 @@ ECHO!$ECHO$ac_delim
 STRIP!$STRIP$ac_delim
 LIBTOOL!$LIBTOOL$ac_delim
 LIBTOOL_DEPS!$LIBTOOL_DEPS$ac_delim
+BUILD_CC!$BUILD_CC$ac_delim
+BUILD_R!$BUILD_R$ac_delim
+CROSS_COMPILING_TRUE!$CROSS_COMPILING_TRUE$ac_delim
+CROSS_COMPILING_FALSE!$CROSS_COMPILING_FALSE$ac_delim
 shlibpath_var!$shlibpath_var$ac_delim
 striplib!$striplib$ac_delim
 LIBM!$LIBM$ac_delim
@@ -54782,10 +54851,6 @@ DYLIB_UNDEFINED_ALLOWED_FALSE!$DYLIB_UNDEFINED_ALLOWED_FALSE$ac_delim
 SHLIB_LIBADD!$SHLIB_LIBADD$ac_delim
 SHLIB_EXT!$SHLIB_EXT$ac_delim
 USE_EXPORTFILES_TRUE!$USE_EXPORTFILES_TRUE$ac_delim
-USE_EXPORTFILES_FALSE!$USE_EXPORTFILES_FALSE$ac_delim
-DYLIB_EXT!$DYLIB_EXT$ac_delim
-LIBR_LDFLAGS!$LIBR_LDFLAGS$ac_delim
-RBLAS_LDFLAGS!$RBLAS_LDFLAGS$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -54827,6 +54892,10 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+USE_EXPORTFILES_FALSE!$USE_EXPORTFILES_FALSE$ac_delim
+DYLIB_EXT!$DYLIB_EXT$ac_delim
+LIBR_LDFLAGS!$LIBR_LDFLAGS$ac_delim
+RBLAS_LDFLAGS!$RBLAS_LDFLAGS$ac_delim
 RLAPACK_LDFLAGS!$RLAPACK_LDFLAGS$ac_delim
 LAPACK_LDFLAGS!$LAPACK_LDFLAGS$ac_delim
 FW_VERSION!$FW_VERSION$ac_delim
@@ -54920,10 +54989,6 @@ INTLLIBS!$INTLLIBS$ac_delim
 LIBINTL!$LIBINTL$ac_delim
 LTLIBINTL!$LTLIBINTL$ac_delim
 POSUB!$POSUB$ac_delim
-XTRA_INTL_CPPFLAGS!$XTRA_INTL_CPPFLAGS$ac_delim
-USE_NLS_TRUE!$USE_NLS_TRUE$ac_delim
-USE_NLS_FALSE!$USE_NLS_FALSE$ac_delim
-BUILD_LIBINTL_TRUE!$BUILD_LIBINTL_TRUE$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -54965,12 +55030,16 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+XTRA_INTL_CPPFLAGS!$XTRA_INTL_CPPFLAGS$ac_delim
+USE_NLS_TRUE!$USE_NLS_TRUE$ac_delim
+USE_NLS_FALSE!$USE_NLS_FALSE$ac_delim
+BUILD_LIBINTL_TRUE!$BUILD_LIBINTL_TRUE$ac_delim
 BUILD_LIBINTL_FALSE!$BUILD_LIBINTL_FALSE$ac_delim
 OSF_SH_BUG!$OSF_SH_BUG$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 3; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 7; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
