@@ -847,9 +847,11 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 		break;
 	    cptr = cptr->nextcontext;
 	}
-	if ( cptr == NULL )
+	if ( cptr == NULL ) {
 	    sysp = R_GlobalEnv;
-	else
+	    errorcall(R_NilValue, 
+		      "match.call() was called from outside a function");
+	} else
 	    sysp = cptr->sysparent;
 	if (cptr != NULL)
 	    /* Changed to use the function from which match.call was
@@ -882,13 +884,17 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(b = findFun(CAR(funcall), sysp));
 	else
 	    PROTECT(b = eval(CAR(funcall), sysp));
+
+	if (TYPEOF(b) != CLOSXP)
+	    errorcall(call, _("unable to find a closure from within which 'match.call' was called"));
+
     }
-    else PROTECT(b = CAR(args));
-
-    /* It must be a closure! */
-
-    if (TYPEOF(b) != CLOSXP)
-	errorcall(call, _("invalid '%s' argument"), "definition");
+    else {
+	/* It must be a closure! */
+	PROTECT(b = CAR(args));
+	if (TYPEOF(b) != CLOSXP)
+	    errorcall(call, _("invalid '%s' argument"), "definition");
+    }
 
     /* Do we expand ... ? */
 

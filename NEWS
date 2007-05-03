@@ -161,6 +161,10 @@ BUG FIXES
 
 	Ditto for charmatch().
 
+    o	match.call() no longer 'works' outside a function unless
+	'definition' is supplied.  (Under some circumstances it used
+	to 'work', matching itself.)
+
 
 
 
