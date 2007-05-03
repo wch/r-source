@@ -189,6 +189,12 @@ foreach $pkg (@ARGV){
 	next;
     }
 
+## is someone trying to install a Windows binary package
+    if($pkgname =~ /\.zip$/) {
+	warn "`$pkg':Windows binary packages in zipfiles are not supported: skipping\n";
+	next;
+    }
+
 ## is this a tar archive?
     if($pkgname =~ /\.tar\.gz$/ || $pkgname =~ /\.tgz$/) {
 	$pkgname =~ s/\.tar\.gz$//;
@@ -342,7 +348,7 @@ foreach $pkg (@ARGV){
 	my $lazyload = -1;
 	my $tmp = parse_description_field("LazyLoad");
 	$lazyload = $tmp if($tmp >= 0);
-	warn "WARNING: true value of 'SaveImage' is deprecated in favour of 'LazyLoad: true'\n" if $save eq "true");
+	warn "WARNING: true value of 'SaveImage' is deprecated in favour of 'LazyLoad: true'\n" if ($save eq "true");
 
 	my $lazydata = 0;
 	my $tmp = parse_description_field("LazyData");
