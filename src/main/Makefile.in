@@ -186,21 +186,21 @@ install: installdirs
 	@$(MAKE) install-bin
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 installdirs:
-	@$(MKINSTALLDIRS) "$(Rexecbindir2)"
-	@$(MKINSTALLDIRS) "$(Rexeclibdir)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir2)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexeclibdir)"
 install-bin: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir2)/R"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 install-lib: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"
 install-strip: installdirs
-	@${INSTALL_PROGRAM} -s $(R_binary) "$(Rexecbindir2)/R"
+	@${INSTALL_PROGRAM} -s $(R_binary) "$(DESTDIR)$(Rexecbindir2)/R"
 	@if test -f $(libR_la); then $(MAKE) install-lib; fi
 	@if test -n "$(STRIP_LIBS)"; then \
-	  if test -f $(libR_la); then $(STRIP_LIBS) "$(Rexeclibdir)/$(libR_la)"; fi; \
+	  if test -f $(libR_la); then $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(libR_la)"; fi; \
 	fi
 uninstall:
-	@rm -f "$(Rexecbindir)/exec/$(R_ARCH)/R" "$(Rexecbindir)/R.bin"
-	@rm -f "$(Rexeclibdir)/libR$(DYLIB_EXT)"
+	@rm -f "$(DESTDIR)$(Rexecbindir)/exec/$(R_ARCH)/R" "$(DESTDIR)$(Rexecbindir)/R.bin"
+	@rm -f "$(DESTDIR)$(Rexeclibdir)/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
 clean:

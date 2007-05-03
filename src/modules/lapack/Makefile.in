@@ -86,19 +86,19 @@ Rlapack_install: $(Rlapack_la)
 	  $(Rexeclibdir)/$(Rlapack_la)
 
 install: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
-@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"
+@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"
 installdirs:
-	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecmodulesdir)"
 install-strip-Rlapack:
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/$(Rlapack_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"
 	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(Rexeclibdir)/$(Rlapack_la)"; \
+	  $(STRIP_LIBS) "$(DESTDIR)$(Rexeclibdir)/$(Rlapack_la)"; \
 	fi
 install-strip: @USE_EXTERNAL_LAPACK_FALSE@ install-strip-Rlapack
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/$(lapack_la)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"
 	@if test -n "$(STRIP_LIBS)"; then \
-	  $(STRIP_LIBS) "$(Rexecmodulesdir)/$(lapack_la)"; \
+	  $(STRIP_LIBS) "$(DESTDIR)$(Rexecmodulesdir)/$(lapack_la)"; \
 	fi
 uninstall:
 	@rm -f "$(Rexecmodulesdir)/$(lapack_la)"

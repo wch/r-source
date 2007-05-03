@@ -79,10 +79,10 @@ install install-strip: installdirs svnonly
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)"; \
 	done
 	@for f in $(NON_SVN_INSTFILES); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rhome)"; \
 	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's|^LIBR =.*|LIBR = -F$(R_FRAMEWORK_DIR)/.. -framework R|' \
@@ -115,21 +115,21 @@ libR_la = lib/libR$(DYLIB_EXT)
 install-libR:
 	@if test -f $(libR_la); then $(MAKE) install-libR-exists; fi
 install-libR-exists:
-	@$(MKINSTALLDIRS) "${libdir}"
-	@$(INSTALL_DATA) -m755 $(libR_la) "${libdir}"
+	@$(MKINSTALLDIRS) "$(DESTDIR)${libdir}"
+	@$(INSTALL_DATA) -m755 $(libR_la) "$(DESTDIR)${libdir}"
 
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)"
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
-	  rm -f "$(rhome)/$${f}"; \
+	  rm -f "$(DESTDIR)$(rhome)/$${f}"; \
 	done
-	@rm -rf "$(Rexecbindir)" "$(rhome)/lib"
-	@rmdir "$(rhome)" 2>/dev/null \
-          || echo "  dir $(rhome) not removed"
-	@rm -f "${libdir}/libR$(DYLIB_EXT)"
+	@rm -rf "$(DESTDIR)$(Rexecbindir)" "$(DESTDIR)$(rhome)/lib"
+	@rmdir "$(DESTDIR)$(rhome)" 2>/dev/null \
+          || echo "  dir $(DESTDIR)$(rhome) not removed"
+	@rm -f "$(DESTDIR)${libdir}/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
 clean:

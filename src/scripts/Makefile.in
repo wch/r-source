@@ -94,32 +94,32 @@ $(top_builddir)/libtool:
 	@(cd $(@D); $(MAKE) $(@F))
 
 install: installdirs install-cmds
-	@rm -f $(bindir)/R
+	@rm -f $(DESTDIR)$(bindir)/R
 	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
 	  sed -e "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s+\\(R_SHARE_DIR=\\).*+\\1$(rsharedir)+;" -e  "s+\\(R_INCLUDE_DIR=\\).*+\\1$(rincludedir)+;" -e "s+\\(R_DOC_DIR=\\).*+\\1$(rdocdir)+;"\
-	  < R.fe > "$(Rexecbindir)/R")
-	@$(INSTALL_SCRIPT)  "$(Rexecbindir)/R" "$(bindir)/R"
-	@chmod 755 "$(bindir)/R" "$(Rexecbindir)/R"
-## why of all the scriots does this alone chmod just one copy?
+	  < R.fe > "$(DESTDIR)$(Rexecbindir)/R")
+	@$(INSTALL_SCRIPT)  "$(DESTDIR)$(Rexecbindir)/R" "$(DESTDIR)$(bindir)/R"
+	@chmod 755 "$(DESTDIR)$(bindir)/R" "$(DESTDIR)$(Rexecbindir)/R"
+## why of all the scripts does this alone chmod just one copy?
 installdirs:
-	@$(MKINSTALLDIRS) $(bindir)
+	@$(MKINSTALLDIRS) $(DESTDIR)$(bindir)
 install-cmds:
-	@$(MKINSTALLDIRS) "$(Rexecbindir)"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
 	@for f in $(SCRIPTS_S); do \
-	  $(INSTALL_SCRIPT) $(srcdir)/$${f} "$(Rexecbindir)"; \
+	  $(INSTALL_SCRIPT) $(srcdir)/$${f} "$(DESTDIR)$(Rexecbindir)"; \
 	done
 	@for f in $(SCRIPTS_B); do \
-	  $(INSTALL_SCRIPT) $${f} "$(Rexecbindir)"; \
+	  $(INSTALL_SCRIPT) $${f} "$(DESTDIR)$(Rexecbindir)"; \
 	done
-	@$(INSTALL_SCRIPT) $(top_builddir)/libtool "$(Rexecbindir)"
+	@$(INSTALL_SCRIPT) $(top_builddir)/libtool "$(DESTDIR)$(Rexecbindir)"
 ## there are no programs to install in this dir
 install-strip:
 	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@for f in $(SCRIPTS_S) $(SCRIPTS_B) libtool R; do \
-	  rm -f "$(Rexecbindir)/$${f}"; \
+	  rm -f "$(DESTDIR)$(Rexecbindir)/$${f}"; \
 	done
-	@rm -f $(bindir)/R
+	@rm -f $(DESTDIR)$(bindir)/R
 
 mostlyclean: clean
 clean:

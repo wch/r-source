@@ -341,75 +341,75 @@ install: install-message installdirs install-html
 install-message:
 	@echo "installing $(subdir) ..."
 installdirs:
-	@$(MKINSTALLDIRS) "$(rdocdir)/manual"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual"
 install-strip: install
 install-dvi: dvi installdirs install-images-eps
 	@echo "installing R manuals in DVI format ..."
 	@for f in *.dvi; do \
-	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual"; \
 	done
 install-images-eps:
-	@$(MKINSTALLDIRS) "$(rdocdir)/manual/images"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual/images"
 	@-for f in $(srcdir)/images/*.eps; do \
-	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual/images"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual/images"; \
 	done
 install-images-pdf:
-	@$(MKINSTALLDIRS) "$(rdocdir)/manual/images"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/manual/images"
 	@-for f in $(srcdir)/images/*.pdf; do \
-	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual/images"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual/images"; \
 	done
 ## if there is no makeinfo >= 4.7 then there are no html pages
 install-html:
 	@for f in $(OBJECTS_HTML); do \
 	  if test -f $${f} ; then \
-	    $(INSTALL_DATA) $${f} "$(rdocdir)/manual"; \
+	    $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual"; \
 	  fi \
 	done
-install-info: info $(infodir)/dir
+install-info: info $(DESTDIR)$(infodir)/dir
 	@echo "installing R info pages ..."
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
-	  $(INSTALL_DATA) $${f} "$(infodir)"; \
-	  $(R_GZIPCMD) -f "$(infodir)/$${f}"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(infodir)"; \
+	  $(R_GZIPCMD) -f "$(DESTDIR)$(infodir)/$${f}"; \
 	done
 	@echo "updating '$(infodir)/dir' ..."
 	@for f in $(OBJECTS_INFO); do \
-	  $(INSTALL_INFO) --info-dir=$(infodir) $(infodir)/$${f} \
+	  $(INSTALL_INFO) --info-dir=$(DESTDIR)$(infodir) $(DESTDIR)$(infodir)/$${f} \
 	    || echo "you need to adjust $(infodir)/dir manually"; \
 	done
 install-pdf: pdf installdirs
 	@echo "installing R manuals in PDF format ..."
 	@for f in *.pdf; do \
-	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/manual"; \
 	done
 
-$(infodir)/dir:
-	@$(MKINSTALLDIRS) "$(infodir)"
-	$(INSTALL_DATA) "$(srcdir)/dir" "$(infodir)"
+$(DESTDIR)$(infodir)/dir:
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(infodir)"
+	$(INSTALL_DATA) "$(srcdir)/dir" "$(DESTDIR)$(infodir)"
 
 uninstall:
-	@if test -f "$(infodir)/R-data.info" \
-	     || test -f "$(infodir)/R-data.info.gz"; then \
+	@if test -f "$(DESTDIR)$(infodir)/R-data.info" \
+	     || test -f "$(DESTDIR)$(infodir)/R-data.info.gz"; then \
 	  $(MAKE) uninstall-info; \
 	fi
 	@echo "uninstalling $(subdir) ..."
-	@rm -rf "$(rdocdir)/manual"
+	@rm -rf "$(DESTDIR)$(rdocdir)/manual"
 uninstall-dvi:
 	@echo "uninstalling R manuals in DVI format ..."
-	@-rm -f "$(rdocdir)/manual"/images/*.eps
-	@-rmdir "$(rdocdir)/manual"/images
-	@-rm -f "$(rdocdir)/manual"/*.dvi
+	@-rm -f "$(DESTDIR)$(rdocdir)/manual"/images/*.eps
+	@-rmdir "$(DESTDIR)$(rdocdir)/manual"/images
+	@-rm -f "$(DESTDIR)$(rdocdir)/manual"/*.dvi
 uninstall-info:
 	@echo "uninstalling R info pages ..."
 	@for f in $(OBJECTS_INFO); do \
-	  $(INSTALL_INFO) --remove --info-dir=$(infodir) $${f} \
+	  $(INSTALL_INFO) --remove --info-dir=$(DESTDIR)$(infodir) $${f} \
 	    || echo "you need to adjust $(infodir)/dir manually"; \
 	done
 	@for f in $(OBJECTS_INFO:.info=.info*); do \
-	  rm -f "$(infodir)/$${f}" "$(infodir)/$${f}.gz" ; \
+	  rm -f "$(DESTDIR)$(infodir)/$${f}" "$(DESTDIR)$(infodir)/$${f}.gz" ; \
 	done
 uninstall-pdf:
 	@echo "uninstalling R manuals in PDF format ..."
-	@-rm -f "$(rdocdir)/manual"/*.pdf
+	@-rm -f "$(DESTDIR)$(rdocdir)/manual"/*.pdf
 
 mostlyclean: clean
 clean:

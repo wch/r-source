@@ -86,15 +86,15 @@ install: installdirs install-intl-@USE_INCLUDED_LIBINTL@
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(SRC_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rincludedir)"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rincludedir)"; \
 	done
 	@for f in $(OBJ_HEADERS); do \
-	  $(INSTALL_DATA) $${f} "$(rincludedir)@R_ARCH@"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rincludedir)@R_ARCH@"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(rincludedir)@R_ARCH@"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rincludedir)@R_ARCH@"
 install-intl-yes:
-	@$(INSTALL_DATA) libintl.h "$(rincludedir)@R_ARCH@"
+	@$(INSTALL_DATA) libintl.h "$(DESTDIR)$(rincludedir)@R_ARCH@"
 install-intl-no:
 
 install-strip:
@@ -103,7 +103,7 @@ uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@rm -rf "$(rincludedir)"
+	@rm -rf "$(DESTDIR)$(rincludedir)"
 
 mostlyclean: clean
 clean:

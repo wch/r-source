@@ -68,20 +68,20 @@ maintainer-clean: distclean
 install-Rscript:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -DR_HOME='"$(rhome)"' -o Rscript \
 	  $(srcdir)/Rscript.c
-	@$(MKINSTALLDIRS) "$(Rexecbindir)"
-	@$(INSTALL_PROGRAM) Rscript "$(Rexecbindir)/Rscript"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
+	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(Rexecbindir)/Rscript"
 ## substitute at install time to allow 'prefix' to be overridden
 install-pc:
-	@$(MKINSTALLDIRS) "$(libdir)/pkgconfig"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)/pkgconfig"
 	@$(SED) -e "s:@rhome:$(rhome):" -e "s:@rincludedir:$(rincludedir):" \
 	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
-	  > "$(libdir)/pkgconfig/libR.pc"
+	  > "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
 install: install-Rscript @WANT_R_SHLIB_TRUE@ install-pc
-	@$(MKINSTALLDIRS) "$(bindir)"
-	@$(INSTALL_PROGRAM) Rscript "$(bindir)/Rscript"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(bindir)"
+	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(bindir)/Rscript"
 uninstall:
-	@rm -f "$(bindir)/Rscript" "$(Rexecbindir)/Rscript" \
-	  "$(libdir)/pkgconfig/libR.pc"
+	@rm -f "$(DESTDIR)$(bindir)/Rscript" "$(DESTDIR)$(Rexecbindir)/Rscript" \
+	  "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
 
 install-strip:
 	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
