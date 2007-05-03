@@ -57,21 +57,21 @@ FORCE:
 
 install: svnonly install-message installdirs install-sources
 	@for f in $(OBJECTS); do \
-	  $(INSTALL_DATA) $${f} "$(rdocdir)/html"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/html"; \
 	done
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(NON_SVN_INSTFILES); do \
-	  $(INSTALL_DATA) $${f} "$(rdocdir)/html"; \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)/html"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(rdocdir)/html"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rdocdir)/html"
 install-message:
 	@echo "installing $(subdir) ..."
 install-sources:
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)/html"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rdocdir)/html"; \
 	done
 install-strip: install
 uninstall:
@@ -80,10 +80,10 @@ uninstall:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@for f in $(CLEANFILES) $(INSTFILES) $(NON_SVN_INSTFILES) $(OBJECTS); do \
-	  rm -f "$(rdocdir)/html/$${f}"; \
+	  rm -f "$(DESTDIR)$(rdocdir)/html/$${f}"; \
 	done
-	@rmdir "$(rdocdir)/html" 2>/dev/null \
-	  || echo "  subdir $(subdir) not removed"
+	@rmdir "$(DESTDIR)$(rdocdir)/html" 2>/dev/null \
+	  || echo "  subdir $(DESTDIR)$(subdir) not removed"
 
 mostlyclean:
 clean:

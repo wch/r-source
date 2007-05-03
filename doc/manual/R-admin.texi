@@ -608,6 +608,13 @@ option @option{--infodir}).  The DVI and PDF files are installed into
 the @R{} @file{doc} tree, set by the @command{make} variable
 @code{rdocdir}.
 
+A staged installation is possible, that it is installing @R{} into a
+temporary directory in order to move the installed tree to its final
+destination.  In this case @code{prefix} (and so on) should reflect
+the final destination, and @env{DESTDIR} should be used: see
+@url{http://www.gnu.org/prep/standards/html_node/DESTDIR.html}
+
+
 @node Uninstallation, Sub-architectures, Installation, Installing R under Unix-alikes
 @section Uninstallation
 

@@ -106,23 +106,23 @@ examples:
 
 install: installdirs
 	@echo "installing packages ..."
-	@cp -r $(top_builddir)/library "$(rhome)" || \
+	@cp -r $(top_builddir)/library "$(DESTDIR)$(rhome)" || \
 	  (cd $(top_builddir)/library; \
-	    $(TAR) cf - . | (cd "$(rhome)/library"; $(TAR) xmof -))
+	    $(TAR) cf - . | (cd "$(DESTDIR)$(rhome)/library"; $(TAR) xmof -))
 	@echo "  building HTML index ..."
-	@echo "tools:::unix.packages.html(.Library, docdir=\"${rdocdir}\")" | \
+	@echo "tools:::unix.packages.html(.Library, docdir=\"$(DESTDIR)${rdocdir}\")" | \
           R_DEFAULT_PACKAGES=NULL LC_ALL=C ${R_EXE} >/dev/null
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)/library"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/library"
 install-strip:
 	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@echo "uninstalling packages ..."
-	@(cd "$(rhome)/library"; \
+	@(cd "$(DESTDIR)$(rhome)/library"; \
 	  for p in $(R_PKGS); do rm -rf $${p}; done)
-	@rm -f "$(rhome)/library/R.css"
-	@rmdir "$(rhome)/library" 2>/dev/null \
-          || echo "  subdir $(rhome)/library not removed"
+	@rm -f "$(DESTDIR)$(rhome)/library/R.css"
+	@rmdir "$(DESTDIR)$(rhome)/library" 2>/dev/null \
+          || echo "  subdir $(DESTDIR)$(rhome)/library not removed"
 
 
 mostlyclean: clean

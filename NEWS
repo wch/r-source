@@ -25,6 +25,8 @@ INSTALLATION
 	building on AIX where the system iconv conflicts with
 	libiconv and is not compatible with R's requirements.
 
+    o	There is support for 'DESTDIR': see the R-admin manual.
+
 
 BUG FIXES
 
