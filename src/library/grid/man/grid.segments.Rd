@@ -30,7 +30,7 @@ segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   \item{gp}{ An object of class \code{gpar}. }
   \item{draw}{ A logical value indicating whether graphics output
     should be produced.}
-  \item{vp}{A Grid viewport object (or NULL)}
+  \item{vp}{A Grid viewport object (or NULL).}
 }
 \details{
   Both functions create a segments grob (a graphical object describing
@@ -41,10 +41,10 @@ segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
 \value{
   A segments grob.  \code{grid.segments} returns the value invisibly.
 }
-\author{ Paul Murrell                }
+\author{Paul Murrell}
 \seealso{
   \link{Grid},
   \code{\link{viewport}},
-  \code{\link{arrow}}}
+  \code{\link{arrow}}
 }
 \keyword{dplot}
