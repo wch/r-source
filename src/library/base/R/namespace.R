@@ -290,18 +290,28 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
 
         ## create namespace; arrange to unregister on error
+        ## <FIXME>
+        ## Can we rely on the existence of R-ng 'nsInfo.rds' and
+        ## 'package.rds'?
+        ## No, not during Unix builds of standard packages
         nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
-        else stop(gettextf("meta-information file '%s' is missing", nsInfo),
-                  domain = NA)
-        pkgInfo <- file.path(pkgpath, "Meta", "package.rds")
-        pkgInfo <- if(file.exists(pkgInfo)) .readRDS(pkgInfo)
-        else stop(gettextf("meta-information file '%s' is missing", pkgInfo),
-                  domain = NA)
-        version <- pkgInfo$DESCRIPTION["Version"]
-        ## we need to ensure that S4 dispatch is on now if the package
-        ## will require it, or the exports will be incomplete.
-        if("methods" %in% names(pkgInfo$Depends)) loadNamespace("methods")
+        else parseNamespaceFile(package, package.lib, mustExist = FALSE)
+
+        pkgInfoFP <- file.path(pkgpath, "Meta", "package.rds")
+        if(file.exists(pkgInfoFP)) {
+            pkgInfo <- .readRDS(pkgInfoFP)
+            version <- pkgInfo$DESCRIPTION["Version"]
+            ## we need to ensure that S4 dispatch is on now if the package
+            ## will require it, or the exports will be incomplete.
+            if("methods" %in% names(pkgInfo$Depends)) loadNamespace("methods")
+        } else {
+            version <- read.dcf(file.path(pkgpath, "DESCRIPTION"),
+                                fields = "Version")
+            ## stats4 depends on methods, but exports do not matter
+            ## whilst it is being build on Unix
+        }
+        ## </FIXME>
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
 
