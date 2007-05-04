@@ -279,7 +279,7 @@ stats4-HELP = ziponly
 tcltk-HELP = ziponly
 tools-HELP = ziponly
 utils-HELP = ziponly
-stats4-SAVE = true
+stats4-LAZY = true
 
 KernSmooth-HELP = ziponly
 MASS-HELP = ziponly

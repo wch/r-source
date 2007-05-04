@@ -1,3 +1,4 @@
+import(methods)
 export(mle)
 importFrom(graphics, plot)
 importFrom(stats, AIC, coef, confint, logLik, optim, profile, 
