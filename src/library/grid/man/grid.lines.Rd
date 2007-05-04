@@ -65,7 +65,7 @@ polylineGrob(x = unit(c(0, 1), "npc"),
 \seealso{
   \link{Grid},
   \code{\link{viewport}},
-  \code{\link{arrow}}}
+  \code{\link{arrow}}
 }
 \examples{
 grid.lines()

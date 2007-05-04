@@ -11,7 +11,7 @@ canCoerce(object, Class)
 }
 \arguments{
   \item{object}{any \R object, typically of a formal S4 class.}
-  \item{Class}{an S4 class (see \code{\link{isClass}}}.}
+  \item{Class}{an S4 class (see \code{\link{isClass}}).}
 }
 \value{
   a scalar logical, \code{TRUE} if there is a \code{coerce} method

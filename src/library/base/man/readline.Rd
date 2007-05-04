@@ -20,9 +20,9 @@ readline(prompt = "")
 \value{
   A character vector of length one.
 }
-\seealso{ \code{\link{readLines}} for reading text lines of connections,
+\seealso{
+  \code{\link{readLines}} for reading text lines of connections,
   including files.
-}
 }
 \examples{
 fun <- function() {

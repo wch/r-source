@@ -35,7 +35,6 @@ method.skeleton(generic, signature, file, external = FALSE)
 \value{
   The \code{file} argument, invisibly, but the function is used for its side effect.
 }
-}
 \seealso{ \code{\link{setMethod}}, \code{\link{package.skeleton}}}
 \examples{
 \dontrun{

@@ -14,7 +14,6 @@ kernapply(x, \dots)
 
 \method{kernapply}{tskernel}(x, k, \dots)
 }
-}
 \arguments{
   \item{x}{an input vector, matrix, time series or kernel to be smoothed.}
   \item{k}{smoothing \code{"tskernel"} object.}

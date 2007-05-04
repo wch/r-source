@@ -9,7 +9,7 @@
 \alias{repeat-class}
 \alias{while-class}
 \alias{name-class}
-\alias{\{-class}
+\alias{{-class}
 
 \title{Classes to Represent Unevaluated Language Objects }
 \description{  The virtual class \code{"language"} and the specific
