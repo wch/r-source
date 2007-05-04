@@ -2747,7 +2747,7 @@ reported to fail on SGI Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
-@command{make} on Solaris 2.7/8/9 (but not earlier).
+@command{make} on Solaris 2.7 or later.
 
 If you want to use a @command{make} by another name, for example if your
 @acronym{GNU} @command{make} is called @samp{gmake}, you need to set the
@@ -3263,14 +3263,12 @@ with @command{gcc}@tie{}3.3 and later.
 @section Solaris on Sparc
 @cindex Solaris
 
-@R{} has been built successfully on Sparc Solaris 8 aka Solaris 2.8 aka
-SunOS 5.8 using @command{gcc}@tie{}3/@command{g77},
+@R{} has been built successfully on Sparc Solaris 8 (aka Solaris 2.8
+aka SunOS 5.8) using @command{gcc}@tie{}3/@command{g77},
 @command{gcc}@tie{}4/@command{gfortran} and the `Sun ONE Studio 7
-Compiler Suite' (aka Forte@tie{}7), and less regularly on Solaris@tie{}9
-and 10.  @acronym{GNU} @command{make} was needed prior to
-Solaris@tie{}2.7 for building other than in the source tree, and is
-sometimes needed to establish the correct dependencies when rebuilding.
-@R{} 2.2.1-patched has been built on Solaris 7.
+Compiler Suite' (aka Forte@tie{}7) and on Sparc Solaris 10 using 
+@command{gcc}@tie{}3/@command{g77},
+@command{gcc}@tie{}4/@command{gfortran} and Sun Studio 11 compilers.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -3296,7 +3294,7 @@ yourself.
 It was reported by Mike Pacey that Sun Forte 9 requires
 @samp{-xopenmp=stubs} added to @code{LDFLAGS}.
 
-When using the SunPro compilers do @emph{not} specify @option{-fast}, as
+When using the Sun compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
 fail.  The maximal set of optimization options known to work on Sparc is
 
@@ -3308,12 +3306,6 @@ fail.  The maximal set of optimization options known to work on Sparc is
 (@cputype{x86} versions do not need @samp{-dalign}, and some do not
 support it.)
 
-We have found little performance difference between @command{gcc} and
-@command{cc} but considerable benefit from using a SunPro Fortran
-compiler: the @command{gcc}/@command{f77} combination worked well.  For
-many C++ applications Forte 7 requires @samp{-lCstd}, which the
-configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
-the compiler correctly.
 
 To compile for a 64-bit target on Sparc Solaris (which needs an
 UltraSparc chip and for support to be enabled in the OS) with the Forte
@@ -3334,19 +3326,20 @@ FCFLAGS="-xO5 -xlibmil -dalign"
 in @file{config.site}.
 
 
-For 64-bit compilation with @command{gcc} 3.4.x we used
+For 64-bit compilation with @command{gcc} 4.0.x we used
 
 @example
 CC="gcc -m64"
-F77="g77 -m64"
+F77="gfortran -m64"
 CXX="g++ -m64"
 FC="gfortran -m64"
-LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
+LDFLAGS="-L/opt/csw/gcc4/lib/sparcv9 -L/opt/csw/lib/sparcv9"
 @end example
 
 @noindent
-replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.x.y.  Note
-that @file{/usr/local/lib/sparcv9} may need to be in the
+replacing @samp{gfortran} with @samp{g77} for @command{gcc} 3.x.y.
+Note that paths such as @file{/opt/csw/gcc4/lib/sparcv9} may need to
+be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.  (@command{configure} will
 append @code{-std=gnu99} to @code{CC}.)
@@ -3354,6 +3347,31 @@ append @code{-std=gnu99} to @code{CC}.)
 Solaris on Sparc CPUs need @samp{PIC} and not @samp{pic} versions of
 @env{CPICFLAGS} and @env{FPICFLAGS} since the @samp{pic} version only
 allows 1024 symbols on a 64-bit build (and 2048 on a 32-bit build).
+
+Modern Solaris systems allow a large selection of Open Source software
+to be installed via @command{pkg-get}: a Sparc Solaris 10 system came
+with @code{libreadline} and @code{libiconv} and a choice of
+@code{gcc3} and @code{gcc4} compilers, installed under
+@file{/opt/csw}.  For the Sun Studio compilers a little juggling of
+paths is needed to ensure GNU @code{libiconv} is used rather than the
+Solaris @code{iconv} (which is insufficiently powerful): on a Solaris
+10 system we used
+
+@example
+CC=cc
+CPPFLAGS=-I/opt/csw/include
+CFLAGS="-O -xc99"
+F77=f95
+FFLAGS=-O4
+CXX=CC
+CXXFLAGS=-O
+FC=f95
+FCFLAGS=-O4
+LDFLAGS=-L/opt/csw/lib
+@end example
+
+@noindent
+to ensure that the @code{libiconv} version of @file{iconv.h} was found.
 
 
 @cindex BLAS library
