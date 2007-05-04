@@ -290,19 +290,18 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
 
         ## create namespace; arrange to unregister on error
-        ## <FIXME PRE-R-NG>
-        ## Can we rely on the existence of R-ng 'nsInfo.rds' and
-        ## 'package.rds'?
         nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
-        else parseNamespaceFile(package, package.lib, mustExist = FALSE)
-        packageInfoFilePath <- file.path(pkgpath, "Meta", "package.rds")
-        version <- if(file.exists(packageInfoFilePath))
-            .readRDS(packageInfoFilePath)$DESCRIPTION["Version"]
-        else
-            read.dcf(file.path(pkgpath, "DESCRIPTION"),
-                     fields = "Version")
-        ## </FIXME>
+        else stop(gettextf("meta-information file '%s' is missing", nsInfo),
+                  domain = NA)
+        pkgInfo <- file.path(pkgpath, "Meta", "package.rds")
+        pkgInfo <- if(file.exists(pkgInfo)) .readRDS(pkgInfo)
+        else stop(gettextf("meta-information file '%s' is missing", pkgInfo),
+                  domain = NA)
+        version <- pkgInfo$DESCRIPTION["Version"]
+        ## we need to ensure that S4 dispatch is on now if the package
+        ## will require it, or the exports will be incomplete.
+        if("methods" %in% names(pkgInfo$Depends)) loadNamespace("methods")
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
 
