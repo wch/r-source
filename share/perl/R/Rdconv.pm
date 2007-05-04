@@ -262,14 +262,17 @@ sub mark_brackets {
         # but lines starting with % have already been removed.
         # Hence the 'on or after' in the message.
         my $badlineno = 0 ;
-	my $extra_info = "(\'$1\')" ;
-        $extra_info = "(\'$1\')" if $complete_text =~ /(\\\w+{)/ ;
+	my $extra_info = "\'$1\'" ;
+        $extra_info = "\'$1\'" if $complete_text =~ /(\\\w+{)/ ;
 	foreach my $line (split /\n/, $complete_text) {
 	    $badlineno++;
 	    last if ($line =~ /[{}]/) ;
 	}
-	if(! ($extra_info =~ /\\alias{/) ) 
-	    { warn "Warning: unmatched brace $extra_info in '$Rdname'".
+	if( $extra_info =~ /^'}'$/ ) {
+	    warn "Note: unmatched right brace in '$Rdname'".
+		" on or after line $badlineno\n";
+	} elsif(! ($extra_info =~ /\\alias{/) ) 
+	    { warn "Warning: unmatched brace ($extra_info) in '$Rdname'".
 		   " on or after line $badlineno\n"; }
     }
 }
