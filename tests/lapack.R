@@ -26,18 +26,22 @@ svd(X, nv = 0)
 # test of complex case
 
 X <- cbind(1, 1:7+(-3:3)*1i)
-(s <- svd(X)); D <- diag(s$d)
+s <- svd(X); D <- diag(s$d)
 stopifnot(abs(X - s$u %*% D %*% Conj(t(s$v))) < Eps)
 stopifnot(abs(D - Conj(t(s$u)) %*% X %*% s$v) < Eps)
 
 
 
 ##  -------  tests of random real and complex matrices ------
-
+fixsign <- function(A) {
+    A[] <- apply(A, 2, function(x) x*sign(Re(x[1])))
+    A
+}
 ##			       100  may cause failures here.
 eigenok <- function(A, E, Eps=1000*.Machine$double.eps)
 {
-    print(E)
+    print(fixsign(E$vectors))
+    print(zapsmall(E$values))
     V <- E$vect; lam <- E$values
     stopifnot(abs(A %*% V - V %*% diag(lam)) < Eps,
               abs(lam[length(lam)]/lam[1]) < Eps || # this one not for singular A :
@@ -46,7 +50,8 @@ eigenok <- function(A, E, Eps=1000*.Machine$double.eps)
 
 Ceigenok <- function(A, E, Eps=1000*.Machine$double.eps)
 {
-    print(E)
+    print(fixsign(E$vectors))
+    print(E$values)
     V <- E$vect; lam <- E$values
     stopifnot(Mod(A %*% V - V %*% diag(lam)) < Eps,
               Mod(A - V %*% diag(lam) %*% Conj(t(V))) < Eps)
