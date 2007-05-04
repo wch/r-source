@@ -1,9 +1,18 @@
+
+.known_interactive.devices <- c("X11", "GTK", "quartz", "windows", "JavaGD")
 dev.interactive <- function(orNone = FALSE) {
-    iDevs <- c("X11", "GTK", "gnome", "quartz", "windows", "JavaGD")
+    iDevs <- .known_interactive.devices
     interactive() &&
     (.Device %in% iDevs ||
+     (dev.cur() > 1 && dev.displaylist()) ||
      (orNone && .Device == "null device" && getOption("device") %in% iDevs))
 }
+
+deviceIsInteractive <- function(name)
+{
+    .known_interactive.devices <<- c(.known_interactive.devices, name)
+}
+
 
 dev.list <- function()
 {
@@ -28,12 +37,6 @@ dev.set <-
     function(which = dev.next())
 {
     which <- .Internal(dev.set(as.integer(which)))
-#     if(exists(".Devices")) {
-# 	assign(".Device", get(".Devices")[[which]])
-#     }
-#     else {
-# 	.Devices <- list("null device")
-#     }
     names(which) <- .Devices[[which]]
     which
 }

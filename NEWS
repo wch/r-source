@@ -111,6 +111,10 @@ NEW FEATURES
     o	Package 'stats4' use lazy-loading in preparation for the
 	deprecation of SaveImage.
 
+    o	dev.interactive() regards devices with the displaylist enabled
+	as interactive, and packages can register the names of their
+	devices as interactive via deviceIsInteractive().
+
 
 DEPRECATED & DEFUNCT
 
