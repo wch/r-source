@@ -1,7 +1,7 @@
 ## Subroutines for converting R documentation into text, HTML, LaTeX and
 ## R (Examples) format
 
-## Copyright (C) 1997-2006 R Development Core Team
+## Copyright (C) 1997-2007 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ require  Exporter;
 @ISA     = qw(Exporter);
 @EXPORT  = qw(Rdconv);
 
+use File::Basename;
 use FileHandle;
 use Text::DelimMatch;
 use Text::Tabs;
@@ -97,6 +98,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
                           # '<Rlib>/library/<pkg>'
 	die "Rdconv(): '$dirname' is NOT a valid directory: $!\n"
 	  unless -d $dirname;
+	$Rdname = basename($Rdname, (".Rd", ".rd"));
 	$htmlfile = file_path($dirname, "html", $Rdname . $HTML)
 	  if $type =~ /html/i;
 	$txtfile= file_path($dirname, "help", $Rdname)
