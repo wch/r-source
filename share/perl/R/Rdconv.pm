@@ -254,7 +254,9 @@ sub mark_brackets {
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
     }
-    # Any remaining brackets must be unmatched ones, hence report error.
+    # Any remaining brackets must be unmatched ones.
+    # However, unmatched brackets are sometimes legal,
+    # (e.g. \alias{{}), so only warn.
     if ($complete_text =~ /([{}])/s) {
         # Would like to tell which which line has unmatched { or },
         # but lines starting with % have already been removed.
@@ -266,8 +268,9 @@ sub mark_brackets {
 	    $badlineno++;
 	    last if ($line =~ /[{}]/) ;
 	}
-	warn "Warning: unmatched brace $extra_info in '$Rdname'".
-	     " on or after line $badlineno\n";
+	if(! ($extra_info =~ /\\alias{/) ) 
+	    { warn "Warning: unmatched brace $extra_info in '$Rdname'".
+		   " on or after line $badlineno\n"; }
     }
 }
 
