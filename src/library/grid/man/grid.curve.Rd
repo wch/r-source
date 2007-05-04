@@ -85,7 +85,7 @@ arcCurvature(theta)
   \link{Grid},
   \code{\link{viewport}},
   \code{\link{grid.xspline}},
-  \code{\link{arrow}}}
+  \code{\link{arrow}}
 }
 \examples{
 curveTest <- function(i, j, ...) {

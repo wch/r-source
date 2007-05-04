@@ -12,8 +12,8 @@
 stopifnot(\dots)
 }
 \arguments{
-  \item{\dots}{any number of (\code{\link{logical}}) \R expressions.}
-  which should evaluate to \code{\link{TRUE}}.}
+  \item{\dots}{any number of (\code{\link{logical}}) \R expressions,
+    which should evaluate to \code{\link{TRUE}}.}
 }
 \details{
   This function is intended for use in regression tests or also argument
