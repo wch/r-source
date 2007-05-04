@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2006 R Development Core Team
+# Copyright (C) 1997-2007 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -155,13 +155,16 @@ foreach $manfile (@mandir) {
 	$manfiles{$manfilebase} = $manfile;
 
 	$textflag = $htmlflag = $latexflag = $exampleflag = $chmflag = "";
+	$types = "";
+	undef $do_example;
 
 	if($opt_txt){
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = file_path($dest, "help", $targetfile);
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
-		Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
+		$types .= "txt,";
+		# Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -172,9 +175,35 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
-		Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
+		$types .= "html,";
+		# Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
 	    }
 	}
+
+	if($opt_latex){
+	    my $targetfile = $filenm{$manfilebase};
+	    $destfile = file_path($dest, "latex", $targetfile.".tex");
+	    if(fileolder($destfile, $manage)) {
+		$latexflag = "latex";
+		$types .= "latex,";
+		# Rdconv($manfile, "latex", "", "$destfile", $pkg, $version);
+	    }
+	}
+
+	if($opt_example){
+	    my $targetfile = $filenm{$manfilebase};
+	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
+	    if(fileolder($destfile, $manage)) {
+		if(-f $destfile) {unlink $destfile;}
+		# Rdconv($manfile, "example", "", "$destfile", $pkg, $version);
+		$types .= "example,";
+		$do_example = "yes";
+		#if(-f $destfile) {$exampleflag = "example";}
+	    }
+	}
+
+	Rdconv($manfile, $types, "", "$dest", $pkg, $version) if $types ne "";
+	if($do_example && -f $destfile) {$exampleflag = "example";}
 
 	if($opt_chm){
 	    my $targetfile = $filenm{$manfilebase};
@@ -185,25 +214,6 @@ foreach $manfile (@mandir) {
 		$chmflag = "chm";
 		print "\t$destfile" if $opt_debug;
 		Rdconv($manfile, "chm", "", "$destfile", $pkg, $version);
-	    }
-	}
-
-	if($opt_latex){
-	    my $targetfile = $filenm{$manfilebase};
-	    $destfile = file_path($dest, "latex", $targetfile.".tex");
-	    if(fileolder($destfile, $manage)) {
-		$latexflag = "latex";
-		Rdconv($manfile, "latex", "", "$destfile", $version);
-	    }
-	}
-
-	if($opt_example){
-	    my $targetfile = $filenm{$manfilebase};
-	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
-	    if(fileolder($destfile, $manage)) {
-		if(-f $destfile) {unlink $destfile;}
-		Rdconv($manfile, "example", "", "$destfile", $version);
-		if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
 

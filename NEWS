@@ -115,6 +115,9 @@ NEW FEATURES
 	as interactive, and packages can register the names of their
 	devices as interactive via deviceIsInteractive().
 
+    o	Installing help for a package now parses the .Rd file only
+	once, rather than once for each type.
+
 
 DEPRECATED & DEFUNCT
 
