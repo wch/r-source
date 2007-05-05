@@ -3539,11 +3539,13 @@ function(txt)
     ## throw it, rather than "basically ignore" it by putting it in the
     ## bad_lines attribute.
     txt <- gsub("(<<?see below>>?)", "`\\1`", txt)
-    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage:
-    ## the docs say that unpaired braces in \code need to be escaped, so
-    ## let's assume that this is also true for \usage.
+    ## \usage is only 'verbatim-like'
+    ## 'LanguageClasses.Rd' in package methods has '"\{"' in its usage
     txt <- gsub("\\\\\\{", "{", txt)
     txt <- gsub("\\\\\\}", "}", txt)
+    txt <- gsub("\\\\%", "%", txt)
+    ## yes really 16, as we want 4 in the Rd file coverted to 2.
+    txt <- gsub("\\\\\\\\\\\\\\\\", "\\\\\\\\", txt)
     .parse_text_as_much_as_possible(txt)
 }
 

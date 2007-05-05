@@ -64,13 +64,26 @@ BUG FIXES
     o	R and Rscript on Unix-alikes were not accepting spaces in -e
 	arguments (even if quoted).
 
-    o	Hexadecimal integer constants (e.g. 0x10L) were not being
-	parsed correctly on platforms where atof did not accept
-	hexadecimal prefixes (as required by C99, but not implemented
-	in MinGW as used by R on Windows).  (PR#9648)
+    o	Hexadecimal integer constants (e.g. 0x10L) were not being parsed
+	correctly on platforms where the C function atof did not
+	accept hexadecimal prefixes (as required by C99, but not
+	implemented in MinGW as used by R on Windows).  (PR#9648)
 
     o	libRlapack.dylib on Mac OS X had no version information and
-	somtimes an invalid identification name.
+	sometimes an invalid identification name.
+
+    o	Rd conversion of \usage treated '\\' as a single backslash in
+	all but latex: it now acts consistently with the other
+	verbatim-like environments (it was never 'verbatim' despite
+	the documentation).
+
+	\code{\.} is now rendered as '\.' in all formats, as
+	documented (it was not the case for latex conversion).
+
+	codoc() (and checkDocStyle() and checkDocUsage()) now apply
+	the same transformations to \usage as Rd conversion does,
+	so {, % and \\ in strings in usages will now be related
+	correctly to the help files.
 
 
 

@@ -2659,7 +2659,9 @@ shortened, the file probably tries to document too much at once.)
 @item \usage@{@var{fun}(@var{arg1}, @var{arg2}, @dots{})@}
 @findex \usage
 One or more lines showing the synopsis of the function(s) and variables
-documented in the file.  These are set verbatim in typewriter font.
+documented in the file.  These are set in typewriter font.  This is a
+verbatim-like command, so some characters need to be escaped
+(@pxref{Insertions}).
 
 The usage information specified should match the function definition
 @emph{exactly} (such that automatic checking for consistency between
@@ -3315,11 +3317,12 @@ backslash.  (Note that @code{\cr} is used for generating line breaks.)
 
 The ``comment'' character @samp{%} and unpaired braces@footnote{See the
 examples section in the file @file{Paren.Rd} for an example.}
-@emph{always} need to be escaped by @samp{\}, and @samp{\\} can be (but
-rarely needs to be) used for backslash.  Inside the verbatim-like
-commands (@code{\code}, @code{\preformatted} and @code{\examples}), no
-other characters are special.  Note that @code{\file} is @strong{not} a
-verbatim-like command.
+@emph{always} need to be escaped by @samp{\}, and @samp{\\} can be used
+for backslash and needs to be if representing two adjacent backslashed).
+Inside the verbatim-like commands (@code{usage}, @code{\code},
+@code{\preformatted} and @code{\examples}), no other characters are
+special.  Note that @code{\file} is @strong{not} a verbatim-like
+command.
 
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
 currently must escape most @LaTeX{} special characters, i.e., besides
