@@ -139,28 +139,30 @@ ifdef USE_UNICOWS
 LIBEXTRAS+=-lunicows
 endif
 
-PERL=perl
-RM=rm -f
-SED=sed
-ECHO=echo
-CP=cp
-MKDIR=mkdir
+
+AR=$(BINPREF)ar
+AS=$(BINPREF)as
 CAT=cat
 CC=$(BINPREF)gcc $(MINGW32CFLAG)
+CP=cp
+CPP=$(CC) -E
 CXX=$(BINPREF)g++ $(MINGW32CFLAG)
-OBJC=$(BINPREF)gcc $(MINGW32CFLAG)
-AS=$(BINPREF)as
-DLL_LDMAIN=gcc
 DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
 ## formerly used version without -k for front-ends/libproxy.a
 DLLTOOL_WIN32=$(BINPREF)dlltool --as $(AS)
 DLLTOOL=$(DLLTOOL_WIN32) -k
+DLL_LDMAIN=gcc
+ECHO=echo
+FIND=find
 LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
-AR=$(BINPREF)ar
-RANLIB=$(BINPREF)ranlib
+MKDIR=mkdir
 NM=$(BINPREF)nm
-CPP=$(CC) -E
+OBJC=$(BINPREF)gcc $(MINGW32CFLAG)
+PERL=perl
+RANLIB=$(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres
+RM=rm -f
+SED=sed
 
 .SUFFIXES:
 .SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d .f90 .f95 .m .S

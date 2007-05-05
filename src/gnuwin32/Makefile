@@ -17,13 +17,13 @@ RHOME = $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 R_EXE = $(RHOME)/bin/rterm.exe
 else
-RHOME = $(shell perl pwd.pl ../..)
-PKGD = $(shell perl pwd.pl $(PKGDIR))
+RHOME = $(shell $(PERL) pwd.pl ../..)
+PKGD = $(shell $(PERL) pwd.pl $(PKGDIR))
 endif
 
 REXE = $(R_EXE) --vanilla --slave
 
-RPREFIX = $(shell perl fixed/rwver.pl ../../VERSION)
+RPREFIX = $(shell $(PERL) fixed/rwver.pl ../../VERSION)
 
 FULLVERSION=`cat ../../VERSION`
 
@@ -553,7 +553,7 @@ recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 ifeq ($(strip $(BUILD)),CROSS)
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-          $(R_EXE) CMD perl XINSTALL --unsafe -l $(RHOME)/library --docs=normal ../library/$${p} || exit 1; \
+          $(R_EXE) CMD $(PERL) XINSTALL --unsafe -l $(RHOME)/library --docs=normal ../library/$${p} || exit 1; \
         done
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \

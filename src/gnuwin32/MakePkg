@@ -157,9 +157,9 @@ $(DPKG)/inst: $(INSTFILES)
 ifneq ($(strip $(INSTFILES)),)
 	@$(ECHO) "  installing inst files"
 	-@$(CP) -r inst/* $(DPKG)
-	@find $(DPKG) -name CVS -type d -prune -exec rm -rf {} \;
-	@find $(DPKG) -name .svn -type d -prune -exec rm -rf {} \;
-	@find $(DPKG) -name .arch-ids -type d -prune -exec rm -rf {} \;
+	@$(FIND) $(DPKG) -name CVS -type d -prune -exec rm -rf {} \;
+	@$(FIND) $(DPKG) -name .svn -type d -prune -exec rm -rf {} \;
+	@$(FIND) $(DPKG) -name .arch-ids -type d -prune -exec rm -rf {} \;
 endif
 
 

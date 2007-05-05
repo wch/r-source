@@ -29,7 +29,7 @@ TEXINDEX = LC_ALL=C texindex
 ifneq ($(strip $(BUILD)),CROSS)
 RHOME=$(shell ../../src/gnuwin32/Rpwd.exe ../..)
 else
-RHOME=$(shell perl ../../src/gnuwin32/pwd.pl ../..)
+RHOME=$(shell $(PERL) ../../src/gnuwin32/pwd.pl ../..)
 endif
 
 MAKEINFO_HTML_OPTS = --html --no-split --css-include=Rman.css
@@ -280,16 +280,16 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 %-pkg.tex: FORCE
 	@echo "collecting LaTeX docs for package \`$*' ..."
 	@if test -f "$(top_srcdir)/library/$*/latex/Rhelp.zip" ; then \
-	  PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	  PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
 	else \
 	  if test -d "$(top_srcdir)/src/library/$*" ; then \
-	    if perl ../../tools/Rdnewer.pl \
+	    if $(PERL) ../../tools/Rdnewer.pl \
 		"$(top_srcdir)/src/library/$*" "$@"; then \
 	      (cd ../../src/gnuwin32/help && $(MAKE)  --no-print-directory RHOME=$(RHOME) latex-$*); \
-	      PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	      PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
 	    fi \
 	  else \
-	    PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	    PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
 	  fi \
 	fi
 FORCE:
@@ -336,7 +336,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	  echo "@set VERSIONno $${v}" > $@; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
 	  echo "@set VERSION $${v}" >> $@; \
-	  rwv=$(shell perl $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
+	  rwv=$(shell $(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
