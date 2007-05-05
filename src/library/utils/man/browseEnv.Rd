@@ -8,7 +8,7 @@
 }
 \usage{
 browseEnv(envir = .GlobalEnv, pattern,
-          excludepatt = "^last\\.warning",
+          excludepatt = "^last\\\\.warning",
           html = .Platform$OS.type != "mac",
           expanded = TRUE, properties = NULL,
           main = NULL, debugMe = FALSE)

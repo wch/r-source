@@ -2720,7 +2720,9 @@ sub latex_print_codeblock {
     if(defined $blocks{$block}){
 	print $latexout "\\begin\{$env\}\n";
 	print $latexout "\\begin\{verbatim\}";
-	print $latexout &code2latex($blocks{$block},0);
+	my $out = &code2latex($blocks{$block},0);
+	$out =~ s/\\\\/\\/go;
+	print $latexout $out;
 	print $latexout "\\end\{verbatim\}\n";
 	print $latexout "\\end\{$env\}\n";
     }
@@ -2733,7 +2735,7 @@ sub latex_print_exampleblock {
     if(defined $blocks{$block}){
 	print $latexout "\\begin\{$env\}\n";
 	print $latexout "\\begin\{ExampleCode\}";
-	my $out = code2latex($blocks{$block},0);
+	my $out = &code2latex($blocks{$block},0);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{ExampleCode\}\n";
@@ -2857,6 +2859,7 @@ sub latex_code_trans {
 	$c =~ s/\\\^/\\textasciicircum{}/go;# ^ is SPECIAL
 	$c =~ s/\\~/\\textasciitilde{}/go;
 	$c =~ s/$BSL/\\bsl{}/go;
+	$c =~ s/\\\\/\\bsl{}/go;
     }
     ## avoid conversion to guillemets
     $c =~ s/<</<\{\}</go;

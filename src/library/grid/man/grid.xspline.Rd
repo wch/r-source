@@ -98,8 +98,8 @@ xsplineGrob(x = c(0, 0.5, 1, 0.5), y = c(0.5, 1, 0.5, 0),
 }
 \seealso{
   \link{Grid},
-  \code{\link{viewport},
-  \code{\link{arrow}}}
+  \code{\link{viewport}},
+  \code{\link{arrow}}
 }
 \examples{
 x <- c(0.25, 0.25, 0.75, 0.75)
