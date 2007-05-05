@@ -2223,11 +2223,10 @@ shared object (so must contain position-independent code), and that is
 not checked.
 
 Some enhanced BLASes are compiler-system-specific (@code{libsunperf} on
-Sun Sparc@footnote{Using the SunPro aka Forte aka Sun ONE @command{cc}
-and @command{f95} compilers}, @code{libessl} on IBM, @code{vecLib} on
-Mac OS X).  The correct incantation for these is usually found
-@emph{via} @option{--with-blas} with no value on the appropriate
-platforms.
+Sun Sparc@footnote{Using the Sun Studio @command{cc} and @command{f95}
+compilers}, @code{libessl} on IBM, @code{vecLib} on Mac OS X).  The
+correct incantation for these is usually found @emph{via}
+@option{--with-blas} with no value on the appropriate platforms.
 
 Some of the external BLASes are multi-threaded.  One issue is that @R{}
 profiling (which uses the @code{SIGPROF} signal) may cause problems, and
@@ -2511,9 +2510,9 @@ because it is necessary on some platforms.
 @subsection Caveats
 
 As with all libraries, you need to ensure that they and @R{} were
-compiled with compatible compilers and flags.  For example, this means
-that on Sun Sparc using the native compilers the flag @option{-dalign}
-is needed so @code{libsunperf} can be used.
+compiled with compatible compilers and flags.  For example, this has
+meant that on Sun Sparc using the native compilers the flag
+@option{-dalign} is needed so @code{libsunperf} can be used.
 
 On some systems it is necessary that an external BLAS/LAPACK was built
 with the same FORTRAN compiler used to build @R{}: known problems are
@@ -3260,15 +3259,113 @@ with @command{gcc}@tie{}3.3 and later.
 
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
-@section Solaris on Sparc
+@section Solaris
 @cindex Solaris
 
-@R{} has been built successfully on Sparc Solaris 8 (aka Solaris 2.8
+
+@menu
+* Solaris 10 and Open Solaris::  
+* Sparc Solaris 9 and earlier::  
+@end menu
+
+@node Solaris 10 and Open Solaris, Sparc Solaris 9 and earlier, Solaris, Solaris
+@subsection Solaris 10 and Open Solaris
+
+@R{} has been built successfully on Sparc Solaris 10 using
+@command{gcc}@tie{}3/@command{g77},
+@command{gcc}@tie{}4/@command{gfortran} and the (free) Sun Studio 11
+compilers.  Sun packages are available from
+@uref{http://www.sunfreeware.com/} for both Sparc and
+@cputype{x86} (and for earlier versions of Solaris).
+
+There are also reports of success on OpenSolaris (aka Solaris Express
+Community Edition, and sometimes as Solaris 11) on @cputype{x86}.
+
+The Solaris versions of several of the tools needed to build @R{}
+(e.g.@: @command{make}, @command{ar} and @command{ld}) are in
+@file{/usr/ccs/bin}, so if using those tools ensure this is in your
+path.
+
+Modern Solaris systems allow a large selection of Open Source software
+to be installed via @command{pkg-get}: a Sparc Solaris 10 system came
+with @code{libreadline} and @code{libiconv} and a choice of @code{gcc3}
+and @code{gcc4} compilers, installed under @file{/opt/csw}.  (You will
+need @code{libiconv}: the Solaris version of @code{iconv} is not
+sufficiently powerful.)
+
+If using @command{gcc}, do ensure that the compiler was compiled for the
+version of Solaris in use.  (This can be ascertained from @command{gcc
+-v}.)  @command{gcc} makes modified versions of some header files, and
+several reports of problems were due to using @command{gcc} compiled on
+one version of Solaris on a later version.
+
+When using the Sun compilers do @emph{not} specify @option{-fast}, as
+this disables @acronym{IEEE} arithmetic and @command{make check} will
+fail.
+
+To compile for a 64-bit target with @command{gcc}@tie{}4 we used
+
+@example
+CC="gcc -m64"
+F77="gfortran -m64"
+CXX="g++ -m64"
+FC="gfortran -m64"
+LDFLAGS="-L/opt/csw/gcc4/lib/sparcv9 -L/opt/csw/lib/sparcv9"
+@end example
+
+@noindent
+replacing @samp{gfortran} with @samp{g77} for @command{gcc} 3.x.y.
+Note that paths such as @file{/opt/csw/gcc4/lib/sparcv9} may need to
+be in the
+@enindex LD_LIBRARY_PATH
+@env{LD_LIBRARY_PATH} during configuration.
+
+For the Sun Studio 11 compilers a little juggling of paths is needed to
+ensure GNU @code{libiconv} is used rather than the Solaris @code{iconv}:
+we used
+
+@example
+CC="cc -xc99"
+CPPFLAGS=-I/opt/csw/include
+CFLAGS=-O
+F77=f95
+FFLAGS=-O4
+CXX=CC
+CXXFLAGS=-O
+FC=f95
+FCFLAGS=-O4
+LDFLAGS=-L/opt/csw/lib
+@end example
+
+@noindent
+to ensure that the @code{libiconv} version of @file{iconv.h} was found.
+For a 64-bit target add @code{-xarch=v9} (or @code{v9b}) to each of the
+compiler commands.
+
+@cindex BLAS library
+@cindex LAPACK library
+
+The Sun performance library @code{libsunperf} is available with the Sun
+Studio 11 compilers.  If selected as a BLAS, it must also be selected as
+LAPACK via
+
+@example
+./configure --with-blas=sunperf --with-lapack
+@end example
+
+@noindent
+However, our tests were none too successful: 64-bit builds crashed, and
+32-bit builds needed @samp{HAVE_WORKING_LOG} unset in @file{config.h} as
+whereas the @code{log} in Solaris' @code{libm} works correctly, that in
+@code{libsunperf} is found (and does not).
+
+@node Sparc Solaris 9 and earlier,  , Solaris 10 and Open Solaris, Solaris
+@subsection Sparc Solaris 9 and earlier
+
+@R{} 2.5.0 was built successfully on Sparc Solaris 8 (aka Solaris 2.8
 aka SunOS 5.8) using @command{gcc}@tie{}3/@command{g77},
 @command{gcc}@tie{}4/@command{gfortran} and the `Sun ONE Studio 7
-Compiler Suite' (aka Forte@tie{}7) and on Sparc Solaris 10 using 
-@command{gcc}@tie{}3/@command{g77},
-@command{gcc}@tie{}4/@command{gfortran} and Sun Studio 11 compilers.
+Compiler Suite' (aka Forte@tie{}7).
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
@@ -3288,15 +3385,15 @@ compile @R{} under Solaris 2.7.  Also, do ensure that it was compiled
 for the assembler/loader in use: if you download @command{gcc} from
 @url{http://www.sunfreeware.com, @code{www.sunfreeware.com}} then you
 need to download @code{binutils} too.  To avoid all these pitfalls we
-strongly recommended you compile @command{gcc} from the sources
-yourself.
+recommended you compile @command{gcc} from the sources yourself.
 
 It was reported by Mike Pacey that Sun Forte 9 requires
 @samp{-xopenmp=stubs} added to @code{LDFLAGS}.
 
 When using the Sun compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
-fail.  The maximal set of optimization options known to work on Sparc is
+fail.  The maximal set of optimization options known to work on Sparc
+Solaris 8 is
 
 @example
 -xlibmil -xO5 -dalign
@@ -3306,6 +3403,12 @@ fail.  The maximal set of optimization options known to work on Sparc is
 (@cputype{x86} versions do not need @samp{-dalign}, and some do not
 support it.)
 
+We have found little performance difference between @command{gcc} and
+@command{cc} but considerable benefit from using a SunPro Fortran
+compiler: the @command{gcc}/@command{f77} combination worked well.  For
+many C++ applications Forte 7 requires @samp{-lCstd}, which the
+configure script will add to @code{SHLIB_CXXLDFLAGS} if it identifies
+the compiler correctly.
 
 To compile for a 64-bit target on Sparc Solaris (which needs an
 UltraSparc chip and for support to be enabled in the OS) with the Forte
@@ -3326,20 +3429,19 @@ FCFLAGS="-xO5 -xlibmil -dalign"
 in @file{config.site}.
 
 
-For 64-bit compilation with @command{gcc} 4.0.x we used
+For 64-bit compilation with @command{gcc} 3.4.x we used
 
 @example
 CC="gcc -m64"
-F77="gfortran -m64"
+F77="g77 -m64"
 CXX="g++ -m64"
 FC="gfortran -m64"
-LDFLAGS="-L/opt/csw/gcc4/lib/sparcv9 -L/opt/csw/lib/sparcv9"
+LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
 @noindent
-replacing @samp{gfortran} with @samp{g77} for @command{gcc} 3.x.y.
-Note that paths such as @file{/opt/csw/gcc4/lib/sparcv9} may need to
-be in the
+replacing @samp{g77} with @samp{gfortran} for @command{gcc} 4.x.y.  Note
+that @file{/usr/local/lib/sparcv9} may need to be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.  (@command{configure} will
 append @code{-std=gnu99} to @code{CC}.)
@@ -3347,31 +3449,6 @@ append @code{-std=gnu99} to @code{CC}.)
 Solaris on Sparc CPUs need @samp{PIC} and not @samp{pic} versions of
 @env{CPICFLAGS} and @env{FPICFLAGS} since the @samp{pic} version only
 allows 1024 symbols on a 64-bit build (and 2048 on a 32-bit build).
-
-Modern Solaris systems allow a large selection of Open Source software
-to be installed via @command{pkg-get}: a Sparc Solaris 10 system came
-with @code{libreadline} and @code{libiconv} and a choice of
-@code{gcc3} and @code{gcc4} compilers, installed under
-@file{/opt/csw}.  For the Sun Studio compilers a little juggling of
-paths is needed to ensure GNU @code{libiconv} is used rather than the
-Solaris @code{iconv} (which is insufficiently powerful): on a Solaris
-10 system we used
-
-@example
-CC=cc
-CPPFLAGS=-I/opt/csw/include
-CFLAGS="-O -xc99"
-F77=f95
-FFLAGS=-O4
-CXX=CC
-CXXFLAGS=-O
-FC=f95
-FCFLAGS=-O4
-LDFLAGS=-L/opt/csw/lib
-@end example
-
-@noindent
-to ensure that the @code{libiconv} version of @file{iconv.h} was found.
 
 
 @cindex BLAS library
@@ -3382,30 +3459,23 @@ Note that using @command{f95} allows the Sun performance library
 versions have @command{f77} as a wrapper for @command{f95}, and these do
 work.} with @command{f77}, and will not with @command{g77}.
 @code{libsunperf} contains both BLAS and LAPACK code, and
-@option{--with-lapack} may be required if you use it.  On our test system
-using @code{libsunperf} failed for 64-bit builds with both Forte 6U1 and
-7, albeit in different ways.  Our experience has been that ATLAS's BLAS
-is faster than @code{libsunperf}, especially for complex numbers.
-
-Some care is needed to ensure that libraries found by
-@command{configure} are compatible with the @R{} executable and modules, as
-the testing process will not detect many of the possible problems.  For
-32-bit builds under @command{cc} the flag @option{-dalign} is needed for
-some of the Sun libraries: fortunately the equivalent flag for
-@command{gcc}, @option{-mno-unaligned-doubles}, is the default.  In
-theory, libraries such as @code{libpng}, @code{libjpeg}, @code{zlib} and
-the ATLAS libraries need to be built with a @code{pic} or @code{PIC}
-flag, which could be a problem if static libraries are used.  In
-practice this seems to give little problem for 32-bit builds, especially
-as @cputype{ix86} Linux accepts non-PIC code in shared libraries.
+@option{--with-lapack} may be required if you use it.  On our test
+system using @code{libsunperf} failed for 64-bit builds with both Forte
+7 and Sun Studio 11, albeit in different ways.  Our experience has been
+that ATLAS's BLAS is faster than @code{libsunperf}, especially for
+complex numbers.
 
 For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib}, you
 may need to set it to avoid finding 32-bit addons (as in the
 @command{gcc -m64} example above).  It is possible to build Tcl/Tk as
 64-bit libraries with the configure option @command{--enable-64bit}, but
-only with the Forte compiler (and not with @command{gcc}) as of
+only with the Sun compilers (and not with @command{gcc}) as of
 Tcl/Tk@tie{}8.4.5.
+
+There have been alignment issues, with Sun libraries requiring 8-byte
+alignment of doubles (which @command{gcc} generated by default, but
+@command{cc} did not).
 
 
 @node HP-UX, IRIX, Solaris, Platform notes
@@ -3904,9 +3974,9 @@ path.
 * Perl::                        
 * The Microsoft HTML Help Workshop::  
 * LaTeX::                       
-* The Inno Setup installer:: 
-* The command line tools::
-* The MinGW compilers::    
+* The Inno Setup installer::    
+* The command line tools::      
+* The MinGW compilers::         
 @end menu
 
 @node Perl, The Microsoft HTML Help Workshop, The Windows toolset, The Windows toolset
@@ -3997,7 +4067,7 @@ frustration, please use our tool set, and make sure it is at the front
 of your path (including before the Windows system directories).  If you
 are using a Windows shell, type @code{PATH} at the prompt to find out.
 
-@node The MinGW compilers, , The command line tools, The Windows toolset
+@node The MinGW compilers,  , The command line tools, The Windows toolset
 @section The MinGW compilers
 
 The @file{Rtools.exe} installer includes the currently used version of
