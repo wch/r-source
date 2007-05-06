@@ -18,8 +18,8 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
   \item{repEnds}{For open X-splines, a logical value indicating whether
     the first and last control points should be replicated for drawing
     the curve. Ignored for closed X-splines.}
-  \item{logical}{Shoul the X-spline be drawn?  If false, a set of
-    line segments to draw the curve is returned.}
+  \item{draw}{logical: should the X-spline be drawn?  If false, a set of
+    line segments to draw the curve is returned, and nothing is drawn.}
   \item{border}{the color to draw the curve.  The default, \code{NULL},
     means to use \code{\link{par}("fg")}.  Use \code{border = NA} to
     omit borders.}
