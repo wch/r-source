@@ -121,6 +121,10 @@ NEW FEATURES
     o	New function xspline() to provide base graphics support of
 	X-splines (cf grid.xspline).
 
+    o	Rprof() allows smaller values of 'interval' on machines that
+	support it: for example modern Linux systems support
+	interval = 0.001.
+
 
 DEPRECATED & DEFUNCT
 
