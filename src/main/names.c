@@ -807,6 +807,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"box",		do_box,		0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"rect",	do_rect,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"polygon",	do_polygon,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"xspline",	do_xspline,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"par",		do_par,		0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"readonly.pars",do_readonlypars,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"segments",	do_segments,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},

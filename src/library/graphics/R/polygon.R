@@ -252,3 +252,13 @@ polygon <-
         .Internal(polygon(xy$x, xy$y, col, border, lty, ...))
     }
 }
+
+xspline <-
+  function(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE,
+           draw = TRUE, border = par("fg"), col = NA, ...)
+{
+    xy <- xy.coords(x, y)
+    s <- rep.int(shape, length(xy$x))
+    if(open) s[1] <- s[length(x)] <- 0
+    .Internal(xspline(xy$x, xy$y, s, open, repEnds, draw, col, border, ...))
+}

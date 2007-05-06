@@ -4086,3 +4086,103 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(5);
     return R_NilValue;
 }
+
+SEXP attribute_hidden do_xspline(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sx, sy, ss, col, border, res, ans = R_NilValue;
+    int i, nx;
+    int ncol, nborder;
+    double *x, *y;
+    Rboolean open, repEnds, draw;
+    double *xx;
+    double *yy;
+    char *vmaxsave;
+    R_GE_gcontext gc;
+
+    SEXP originalArgs = args;
+    DevDesc *dd = CurrentDevice();
+    gcontextFromGP(&gc, dd);
+
+    GCheckState(dd);
+
+    if (length(args) < 6) errorcall(call, _("too few arguments"));
+    /* (x,y) is checked in R via xy.coords() ; no need here : */
+    sx = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
+    sy = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
+    nx = LENGTH(sx);
+    ss = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
+    open = asLogical(CAR(args)); args = CDR(args);
+    repEnds = asLogical(CAR(args)); args = CDR(args);
+    draw = asLogical(CAR(args)); args = CDR(args);
+
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));	args = CDR(args);
+    ncol = LENGTH(col);
+    if(ncol < 1)
+	errorcall(call, _("incorrect length for '%s' argument"), "col");
+    if(ncol > 1)
+	warningcall(call, _("incorrect length for '%s' argument"), "col");
+
+    PROTECT(border = FixupCol(CAR(args), Rf_gpptr(dd)->fg)); args = CDR(args);
+    nborder = LENGTH(border);
+    if(nborder < 1)
+	errorcall(call, _("incorrect length for '%s' argument"), "border");
+    if(nborder > 1)
+	warningcall(call, _("incorrect length for '%s' argument"), "border");
+
+    GSavePars(dd);
+    ProcessInlinePars(args, dd, call);
+
+    GMode(1, dd);
+
+    x = REAL(sx);
+    y = REAL(sy);
+    vmaxsave = vmaxget();
+    xx = (double *) R_alloc(nx, sizeof(double));
+    yy = (double *) R_alloc(nx, sizeof(double));
+    if (!xx || !yy)
+	error(_("unable to allocate memory (in do_xspline)"));
+    for (i = 0; i < nx; i++) {
+	xx[i] = x[i];
+	yy[i] = y[i];
+	GConvert(&(xx[i]), &(yy[i]), USER, DEVICE, dd);
+    }
+    GClip(dd);
+    gc.col = INTEGER(border)[0];
+    gc.fill = INTEGER(col)[0];
+    res = GEXspline(nx, xx, yy, REAL(ss), open, repEnds, draw, &gc,
+		    (GEDevDesc*) dd);
+    vmaxset(vmaxsave);
+    UNPROTECT(2);
+
+    if(!draw) {
+	SEXP nm, tmpx, tmpy;
+	double *xx, *yy, *x0, *y0;
+	PROTECT(ans = res);
+	PROTECT(nm = allocVector(STRSXP, 2));
+	SET_STRING_ELT(nm, 0, mkChar("x"));
+	SET_STRING_ELT(nm, 1, mkChar("y"));
+	setAttrib(ans, R_NamesSymbol, nm);
+	nx = LENGTH(VECTOR_ELT(ans, 0));
+	x0 = REAL(VECTOR_ELT(ans, 0));
+	y0 = REAL(VECTOR_ELT(ans, 1));
+	PROTECT(tmpx = allocVector(REALSXP, nx));
+	PROTECT(tmpy = allocVector(REALSXP, nx));
+	xx = REAL(tmpx);
+	yy = REAL(tmpy);
+	for (i = 0; i < nx; i++) {
+	    xx[i] = x0[i];
+	    yy[i] = y0[i];
+	    GConvert(&(xx[i]), &(yy[i]), DEVICE, USER, dd);
+	}
+	SET_VECTOR_ELT(ans, 0, tmpx);
+	SET_VECTOR_ELT(ans, 1, tmpy);
+	UNPROTECT(4);
+    }
+    
+    GMode(0, dd);
+    GRestorePars(dd);
+    /* NOTE: only record operation if no "error"  */
+    if (GRecording(call, dd))
+	recordGraphicOperation(op, originalArgs, dd);
+    return ans;
+}

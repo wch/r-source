@@ -118,6 +118,9 @@ NEW FEATURES
     o	Installing help for a package now parses the .Rd file only
 	once, rather than once for each type.
 
+    o	New function xspline() to provide base graphics support of
+	X-splines (cf grid.xspline).
+
 
 DEPRECATED & DEFUNCT
 
