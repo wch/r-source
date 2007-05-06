@@ -1105,6 +1105,10 @@ rbind.data.frame <- function(..., deparse.level = 1)
     if(is.null(value)) { # this happens if there has been no data frame
 	value <- list()
 	value[pseq] <- list(logical(nrow)) # OK for coercion except to raw.
+        all.levs <- vector("list", nvar)
+        has.dim <- logical(nvar)
+        facCol <- logical(nvar)
+        ordCol <- logical(nvar)
     }
     names(value) <- clabs
     for(j in pseq)

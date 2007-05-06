@@ -4711,6 +4711,12 @@ stopifnot(identical(0x10L, 16L))
 ## first was 0L on Windows in 2.5.0
 
 
+## rbind failed if the only data frame had 0 rows (PR#9657)
+A <- data.frame(foo=character(0), bar=character(0))
+rbind(A, c(foo="a", bar="b"))
+## failed in 2.5.0
+
+
 ## regression tests for unlink and wildcards
 owd <- setwd(tempdir())
 f <- c("ftest1", "ftest2", "ftestmore", "ftest&more")
