@@ -4709,3 +4709,9 @@ bw.SJ(1:20) # error: "no solution in the specified range of bandwidths" in < 2.5
 ## hexadecimal integer constants failed on some platforms (PR#9648)
 stopifnot(identical(0x10L, 16L))
 ## first was 0L on Windows in 2.5.0
+
+
+## rbind failed if the only data frame had 0 rows (PR#9657)
+A <- data.frame(foo=character(0), bar=character(0))
+rbind(A, c(foo="a", bar="b"))
+## failed in 2.5.0

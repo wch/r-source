@@ -6,7 +6,7 @@
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.5.1
+		CHANGES IN R VERSION 2.5.0 patched
 
 
 NEW FEATURES
@@ -84,6 +84,8 @@ BUG FIXES
 	the same transformations to \usage as Rd conversion does,
 	so {, % and \\ in strings in usages will now be related
 	correctly to the help files.
+
+    o	rbind() failed if the only data frame had 0 rows. (PR#9657)
 
 
 
