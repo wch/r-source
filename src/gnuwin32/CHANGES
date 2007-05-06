@@ -46,6 +46,9 @@ BUG FIXES
     o	The PDF version of the 'R Internals' manual was missing its
 	indices.
 
+    o	Rcmd BATCH did not accept input file paths with spaces in
+	2.5.0.  (PR#9652)
+
 
 
 		CHANGES IN R VERSION 2.5.0

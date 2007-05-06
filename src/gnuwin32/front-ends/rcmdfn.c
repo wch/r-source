@@ -192,7 +192,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    else strcat(outfile, ".Rout");
 	}
 
-	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe -f %s --restore --save",
+	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe -f \"%s\" --restore --save",
 		 getRHOME(), infile);
 	if(strlen(cmd) + strlen(cmd_extra) >= CMD_LEN) {
 	    fprintf(stderr, "command line too long\n");
