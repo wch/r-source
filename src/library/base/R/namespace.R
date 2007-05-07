@@ -316,7 +316,6 @@ loadNamespace <- function (package, lib.loc = NULL,
                                 fields = "Version")
             ## stats4 depends on methods, but exports do not matter
             ## whilst it is being build on Unix
-            dependsMethods <- FALSE
         }
         ## </FIXME>
         ns <- makeNamespace(package, version = version, lib = package.lib)
@@ -409,8 +408,10 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
-
-        if((dependsMethods || package == "methods") &&
+        ## A better test might be to see if the package depends on
+        ## 'methods' (or is 'methods') since no others should need
+        ## to go through here
+        if(.isMethodsDispatchOn() &&
            !exists(".noGenerics", envir = ns, inherits = FALSE)) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
@@ -423,38 +424,44 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   paste(expClasses[missingClasses],
                                         collapse = ", ")),
                          domain = NA)
-                expClasses <- paste(".__C__", expClasses, sep = "")
+                expClasses <- paste(methods:::classMetaName(""), expClasses,
+                                    sep = "")
             }
             ## process methods metadata explicitly exported or
             ## implied by exporting the generic function.
-            ## (this finds the names of all generics which have
-            ## methods metadata in the package or its imports)
-            l <- c(ls(ns, all=TRUE), ls(parent.env(ns), all=TRUE))
-            allMethodTables <- unique(grep("^\\.__T__", l, value=TRUE))
-            allGens <-
-                unique(gsub(".__T__(.*):([^:]+(.*))", "\\1", allMethodTables))
-            allMethodLists <- unique(grep("^\\.__M__", l, value=TRUE))
+            allMethods <- unique(c(methods:::.getGenerics(ns),
+                                   methods:::.getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
             expTables <- character()
-            if(length(allGens) > 0) {
+            if(length(allMethods) > 0) {
                 expMethods <-
-                    unique(c(expMethods, exports[exports %in% allGens]))
-                missingMethods <- !(expMethods %in% allGens)
+                    unique(c(expMethods,
+                             exports[!is.na(match(exports, allMethods))]))
+                missingMethods <- !(expMethods %in% allMethods)
                 if(any(missingMethods))
                     stop(gettextf("in '%s' methods for export not found: %s",
                                   package,
                                   paste(expMethods[missingMethods],
                                         collapse = ", ")),
                          domain = NA)
+                mlistPattern <- methods:::mlistMetaName()
+                allMethodLists <-
+                    unique(c(methods:::.getGenerics(ns, mlistPattern),
+                             methods:::.getGenerics(parent.env(ns),
+                                                    mlistPattern)))
+                tPrefix <- methods:::.TableMetaPrefix()
+                allMethodTables <-
+                    unique(c(methods:::.getGenerics(ns, tPrefix),
+                             methods:::.getGenerics(parent.env(ns), tPrefix)))
                 needMethods <-
-                    (exports %in% allGens) & !(exports %in% expMethods)
+                    (exports %in% allMethods) & !(exports %in% expMethods)
                 if(any(needMethods))
                     expMethods <- c(expMethods, exports[needMethods])
                 ## Primitives must have their methods exported as long
                 ## as a global table is used in the C code to dispatch them:
                 ## The following keeps the exported files consistent with
                 ## the internal table.
-                pm <- allGens[!(allGens %in% expMethods)]
+                pm <- allMethods[!(allMethods %in% expMethods)]
                 if(length(pm) > 0) {
                     prim <- logical(length(pm))
                     for(i in seq_along(prim)) {
@@ -469,14 +476,14 @@ loadNamespace <- function (package, lib.loc = NULL,
                        exists(mi, envir = ns, mode = "function",
                               inherits = FALSE))
                         exports <- c(exports, mi)
-                    pattern <- paste(".__M__", mi, ":", sep="")
+                    pattern <- paste(mlistPattern, mi, ":", sep="")
                     ii <- grep(pattern, allMethodLists, fixed = TRUE)
                     if(length(ii) > 0) {
-                        expMethods[[i]] <- allMethodLists[ii]
-                        if(exists(allMethodTables[[ii]], envir = ns))
-                            expTables <- c(expTables, allMethodTables[[ii]])
-                        else
-                            warning("No methods table for \"", mi, "\"")
+                      expMethods[[i]] <- allMethodLists[ii]
+                      if(exists(allMethodTables[[ii]], envir = ns))
+                        expTables <- c(expTables, allMethodTables[[ii]])
+                      else
+                        warning("No methods table for \"", mi, "\"")
                     }
                     else { ## but not possible?
                       warning(gettextf("Failed to find metadata object for \"%s\"", mi))
