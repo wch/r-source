@@ -5,7 +5,9 @@ dev.interactive <- function(orNone = FALSE) {
     interactive() &&
     (.Device %in% iDevs ||
      (dev.cur() > 1 && dev.displaylist()) ||
-     (orNone && .Device == "null device" && getOption("device") %in% iDevs))
+     (orNone && .Device == "null device" &&
+      is.character(newdev <- getOption("device")) &&
+      newdev %in% iDevs))
 }
 
 deviceIsInteractive <- function(name)
