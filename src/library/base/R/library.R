@@ -790,6 +790,15 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         return(.path.package())
     }
 
+    ## don't waste time looking for the standard packages:
+    ## we know where they are and this can take a significant
+    ## time with 1000+ packages installed.
+    if(!is.null(package) &&
+       package %in% c("base", "tools", "utils", "grDevices", "graphics",
+                      "stats", "datasets", "methods", "grid", "splines",
+                      "stats4", "tcltk"))
+        return(file.path(.Library, package))
+
     use_attached <- FALSE
     if(is.null(package)) {
         package <- .packages()

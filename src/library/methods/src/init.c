@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-6   The R Development Core Team.
+ *  Copyright (C) 2005-7   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@
 
 static const R_CallMethodDef CallEntries[] = {
     CALLDEF(R_M_setPrimitiveMethods, 5),
-    CALLDEF(R_clear_method_selection, 0),
     CALLDEF(R_dummy_extern_place, 0),
     CALLDEF(R_el_named, 2),
     CALLDEF(R_externalptr_prototype_object, 0),
@@ -40,14 +39,10 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(R_methods_test_NEW, 1),
     CALLDEF(R_missingArg, 2),
     CALLDEF(R_nextMethodCall, 2),
-    CALLDEF(R_quick_method_check, 3),
-    CALLDEF(R_selectMethod, 4),
     CALLDEF(R_set_el_named, 3),
     CALLDEF(R_set_slot, 3),
-    CALLDEF(R_standardGeneric, 3),
     CALLDEF(do_substitute_direct, 2),
     CALLDEF(Rf_allocS4Object, 0),
-    CALLDEF(R_set_method_dispatch, 1),
     {NULL, NULL, 0}
 };
 
