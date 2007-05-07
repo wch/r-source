@@ -23,7 +23,7 @@ GUI CHANGES
 	recognizing and removing prompts, e.g. from example() output
 	or debug sessions.
 
-	
+
 OTHERS
 
     o	file.access() has been rewritten using Win32 functions and
@@ -52,6 +52,12 @@ BUG FIXES
     o	R_LIBS_SITE and R_LIBS_USER did not accept paths on network
 	shares (starting \\).  (Rcmd INSTALL will not work with
 	libraries on network shares, however.)
+
+    o	path.expand() and other uses of '~' (e.g. filepaths) now take
+	the value of the home directory from the environmental
+	variable R_USER and not from the pre-2.0.0 definition of
+	'home'.  This means that if HOME is unset, the value defaults
+	to the personal directory and not %HOMEDRIVE%HOMEDIR.
 
 
 

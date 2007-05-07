@@ -69,18 +69,24 @@ char *R_ExpandFileName(char *s)
     if(isalpha(s[1])) return s;
     if(HaveHOME < 0) {
 	HaveHOME = 0;
- 	p = getenv("HOME");
+ 	p = getenv("R_USER"); /* should be set so the rest is a safety measure */
 	if(p && strlen(p) && strlen(p) < PATH_MAX) {
 	    strcpy(UserHOME, p);
-	    HaveHOME = 1;
+	    HaveHOME = 1; 
 	} else {
-	    p = getenv("HOMEDRIVE");
-	    if(p && strlen(p) < PATH_MAX) {
+	    p = getenv("HOME");
+	    if(p && strlen(p) && strlen(p) < PATH_MAX) {
 		strcpy(UserHOME, p);
-		p = getenv("HOMEPATH");
-		if(p && strlen(UserHOME) + strlen(p) < PATH_MAX) {
-		    strcat(UserHOME, p);
-		    HaveHOME = 1;
+		HaveHOME = 1;
+	    } else {
+		p = getenv("HOMEDRIVE");
+		if(p && strlen(p) < PATH_MAX) {
+		    strcpy(UserHOME, p);
+		    p = getenv("HOMEPATH");
+		    if(p && strlen(UserHOME) + strlen(p) < PATH_MAX) {
+			strcat(UserHOME, p);
+			HaveHOME = 1;
+		    }
 		}
 	    }
 	}
