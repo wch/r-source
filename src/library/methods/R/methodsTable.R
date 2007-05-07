@@ -503,8 +503,7 @@
 
 .UseMethodsTables <- TRUE
 
-.UsingMethodsTables <-
-    function(onOff = .UseMethodsTables, where = .methodsNamespace)
+.UsingMethodsTables <- function(onOff = .UseMethodsTables, where = .methodsNamespace)
 {
     prev <- .UseMethodsTables
     if(nargs()) {

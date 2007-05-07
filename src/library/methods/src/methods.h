@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-7   The R Development Core Team.
+ *  Copyright (C) 2005-6   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 
 SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 			     SEXP fundef, SEXP mlist);
+SEXP R_clear_method_selection();
 SEXP R_dummy_extern_place();
 SEXP R_el_named(SEXP object, SEXP what);
 SEXP R_externalptr_prototype_object();
@@ -40,8 +41,11 @@ SEXP R_methods_test_MAKE_CLASS(SEXP className);
 SEXP R_methods_test_NEW(SEXP className);
 SEXP R_missingArg(SEXP symbol, SEXP ev);
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev);
+SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef);
 SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist, SEXP evalArgs);
 SEXP R_set_el_named(SEXP object, SEXP what, SEXP value);
 SEXP R_set_slot(SEXP obj, SEXP name, SEXP value);
+SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef);
 SEXP do_substitute_direct(SEXP f, SEXP env);
 SEXP Rf_allocS4Object();
+SEXP R_set_method_dispatch(SEXP onOff);

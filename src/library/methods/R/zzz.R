@@ -20,6 +20,9 @@
     initMethodDispatch(where)
     ## temporary empty reference to the package's own namespace
     assign(".methodsNamespace", new.env(), envir = where)
+    useTables <-  (nchar(Sys.getenv("R_NO_METHODS_TABLES")) == 0)
+    .UsingMethodsTables(useTables) ## turn it on (or off)
+    .Call("R_set_method_dispatch", useTables, PACKAGE = "methods")
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
               get(".saveImage", envir = where)
               else
