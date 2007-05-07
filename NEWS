@@ -169,6 +169,9 @@ C-LEVEL FACILITIES
 	obtain DllInfo for registering symbols present in the
 	application itself.
 
+    o	The instructions for making and using standalone libRmath have
+	been moved to the R Installation and Administration manual.
+
 
 INSTALLATION
 

@@ -72,6 +72,7 @@ The current version of this document is @value{VERSION}.
 * Add-on packages::             
 * Internationalization::        
 * Choosing between 32- and 64-bit builds::  
+* The standalone Rmath library::  
 * Essential and useful other programs under Unix::  
 * Configuration on Unix::       
 * Platform notes::              
@@ -1889,7 +1890,7 @@ See @url{http://developer.r-project.org/Translations.html,
 @code{developer.r-project.org/@/Translations.html}} for how to prepare
 and install translation catalogues.
 
-@node Choosing between 32- and 64-bit builds, Essential and useful other programs under Unix, Internationalization, Top
+@node Choosing between 32- and 64-bit builds, The standalone Rmath library, Internationalization, Top
 @chapter Choosing between 32- and 64-bit builds
 
 @menu
@@ -1972,7 +1973,183 @@ do not work in the same way as the MinGW compilers so extensive changes
 to the build system would be needed.  Also, end users would need to have
 the same compilers to install extension packages.}
 
-@node Essential and useful other programs under Unix, Configuration on Unix, Choosing between 32- and 64-bit builds, Top
+
+@node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
+@chapter The standalone Rmath library
+
+The routines supporting the distribution and
+special@footnote{e.g. Bessel, beta and gamma function} functions in @R{}
+and a few others are declared in C header file @file{Rmath.h}.  These
+can be compiled into a standalone library for linking to other
+applications.  (Note that they are not a separate library when @R{} is
+built, and the standalone version differs in several ways.)
+
+The makefiles and other sources needed are in directory
+@file{src/nmath/standalone}, so the following instructions assume that
+is the current working directory (in the build directory tree on Unix if
+that is separate from the sources).
+
+@file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
+string containing the current @R{} version, for example @code{"2.6.0"}.
+
+There is full access to @R{}'s handling of @code{NaN}s, @code{Inf} and
+@code{-Inf} via special versions of the macros and functions
+
+@example
+    ISNAN, R_FINITE, R_log, R_pow and R_pow_di
+@end example
+
+@noindent
+and (extern) constants @code{R_PosInf}, @code{R_NegInf} and @code{NA_REAL}.
+
+There is no support for @R{}'s notion of missing values, in particular
+not for @code{NA_INTEGER} nor the distinction between @code{NA} and
+@code{NaN} for doubles.
+
+A little care is needed to use the random-number routines. You will
+need to supply the uniform random number generator 
+
+@example
+    double unif_rand(void)
+@end example
+
+@noindent
+or use the one supplied (and with a shared library or DLL you will
+have to use the one supplied, which is the Marsaglia-multicarry with
+an entry point
+
+@example
+    set_seed(unsigned int, unsigned int)
+@end example
+
+@noindent
+to set its seeds).
+
+The facilties to change the normal random number generator are
+available through the constant N01_kind. This takes values
+from the enumeration type
+
+@example
+typedef enum @{
+    KINDERMAN_RAMAGE,
+    AHRENS_DIETER,
+    BOX_MULLER
+@} N01type;
+@end example
+
+@noindent
+(and @samp{USER_NORM} is not available).
+
+
+@menu
+* Unix standalone::             
+* Windows standalone::          
+@end menu
+
+@node Unix standalone, Windows standalone, The standalone Rmath library, The standalone Rmath library
+@section Unix
+
+If @R{} has not already be made in the directory tree,
+@command{configure} must tbe run as described in the main build
+instructions.
+
+Then
+
+@example
+make
+@end example
+
+will make standalone libraries @file{libRmath.a} and @file{libRmath.so}.
+@samp{make static} and @code{make shared} will create just one of them.
+
+@strong{NB:} certain compilers are unable to do compile-time IEEE-754
+arithmetic and so cannot compile @file{mlutils.c}.  The known example is
+Sun's @code{cc}.  Use @code{gcc} for @file{mlutils.c} (or the whole
+library).
+
+To use the routines in your own C or C++ programs, include
+
+@example
+#define MATHLIB_STANDALONE
+#include <Rmath.h>
+@end example
+
+and link against @code{-lRmath} (and @code{-lm} if needed on your OS).
+The example file @file{test.c} does nothing useful, but is provided to
+test the process (via @command{make test}.  Note that you will probably
+not be able to run it unless you add the directory containing
+@file{libRmath.so} to the @env{LD_LIBRARY_PATH} environment variable.
+
+The targets
+
+@example
+make install
+make uninstall
+@end example
+
+@noindent
+will (un)install the header @file{Rmath.h} and shared and static
+libraries (if built).  Both @code{prefix=} and @env{DESTDIR} are
+supported, together with more precise control as described for the main
+build.
+
+@samp{make install} installs a file for @command{pkg-config} to use by
+e.g.
+
+@example
+$(CC) pkg-config --cflags libRmath` -c test.c
+$(CC) `pkg-config --libs libRmath` test.o -o test
+@end example
+
+On some systems @samp{make install-strip} will install a stripped shared
+library.
+
+
+
+@node Windows standalone,  , Unix standalone, The standalone Rmath library
+@section Windows
+
+You need to set up almost all the tools to make @R{} and then run
+
+@example
+(cd ../../include; make -f Makefile.win config.h Rconfig.h Rmath.h)
+make -f Makefile.win
+@end example
+
+@noindent
+This creates a static library @file{libRmath.a} and a DLL
+@file{Rmath.dll}.  If you want an import library @file{libRmath.dll.a}
+(you don't need one), use
+
+@example
+make -f Makefile.win shared implib
+@end example
+
+To use the routines in your own C or C++ programs, include
+
+@example
+#define MATHLIB_STANDALONE
+#include <Rmath.h>
+@end example
+
+and link against @code{-lRmath}.  This will use the first found of
+@file{libRmath.dll.a}, @file{libRmath.a} and @file{Rmath.dll} in that
+order, so the result depends on which files are present.  You should be
+able to force static or dynamic linking  @emph{via}
+
+@example
+-Wl,-Bstatic -lRmath -Wl,dynamic
+-Wl,-Bdynamic -lRmath
+@end example
+
+or by linking to explicit files (as in the @samp{test} target in
+@file{Makefile.win}: this makes two executable @file{test.exe} which is
+dynamically linked, and @code{test-static}, which is statically
+linked).
+
+
+
+@node Essential and useful other programs under Unix, Configuration on Unix, The standalone Rmath library, Top
 @appendix Essential and useful other programs under Unix
 
 This appendix gives details of programs you will need to build @R{} on
