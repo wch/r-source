@@ -139,6 +139,9 @@ if($opt_library){
     $library = Win32::GetShortPathName($library) if $library =~ / /;
     print "installing to '$library'\n";
 }
+die "ERROR: a library on a network share is not supported\n" 
+    if $library =~ /^\\\\/;
+$library =~ s+\\+/+g;
 
 my $helpflags = "HELP=YES WINHELP=CHM";
 if($opt_docs) {

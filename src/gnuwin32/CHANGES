@@ -49,6 +49,10 @@ BUG FIXES
     o	Rcmd BATCH did not accept input file paths with spaces in
 	2.5.0.  (PR#9652)
 
+    o	R_LIBS_SITE and R_LIBS_USER did not accept paths on network
+	shares (starting \\).  (Rcmd INSTALL will not work with
+	libraries on network shares, however.)
+
 
 
 		CHANGES IN R VERSION 2.5.0
