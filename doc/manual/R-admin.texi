@@ -1697,19 +1697,17 @@ see the help file for that function.
 for non-English languages, and @emph{localization} to adapting to a
 specific country and language.
 
-@R{} has long worked in the ISO Latin-1 8-bit character set and so
-covered English and most Western European languages (if not necessarily
-their currency symbols).  What characters are valid in names was taken
-from the current locale.  In general other locales with single-byte
-encodings worked, but e.g.@: @code{postscript()} and @code{pdf()} needed
-to be told about the encoding in use.
+@R{} long worked in the ISO Latin-1 8-bit character set and so covered
+English and most Western European languages (if not necessarily their
+currency symbols).  Since @R{} 2.1.0 it has supported (where possible)
+multi-byte character sets such as UTF-8 and others used in Chinese,
+Japanese and Korean.
 
-Full internationalization can be enabled when @R{} is built under
-Unix-alikes by the (default) @command{configure} option
-@option{--enable-mbcs}: @pxref{Configuration on Unix}.  Under Windows,
-it is enabled by default in source builds, but support for `East Asian'
-(Chinese/Japanese/Korean) languages is only enabled in the binary
-install if it is selected in the installer.
+Full internationalization of the character sets is enabled unless @R{}
+is built under Unix-alikes using @command{configure} option
+@option{--disable-mbcs} provided the OS can support it:
+@pxref{Configuration on Unix}.  Under Windows, support for Windows' own
+MBCS is always included.
 
 All builds of @R{} support all single-byte character sets that the
 underlying OS can handle.  These are interpreted according to the
@@ -1718,9 +1716,8 @@ current @code{locale}, a sufficiently complicated topic to merit a
 separate section.  Fully internationalized builds can also handle most
 multi-byte locales, in which a single character is represented by one,
 two or more consecutive bytes: examples of such locales are those using
-UTF-8 (becoming standard under Linux) and those for Chinese, Japanese
-and Korean.  Note that only some of the graphics devices can handle
-multi-byte or even non-Latin-1 character sets.
+UTF-8 (becoming standard under Linux but non-existent under Windows) and
+those for Chinese, Japanese and Korean.
 
 The other aspect of the internationalization is support of the
 translation of messages.  This is enabled in almost all builds of @R{}.
@@ -1878,12 +1875,12 @@ which are used for Brazilian locales but not for locales specifying
 Portugal.
 
 Translations in the right language but the wrong charset be made use of
-by on-the-fly re-encoding (on systems that support it).  The
-@env{LANGUAGE} variable (only) can be a colon-separated list, for
-example @samp{se:de}, giving a set of languages in decreasing order of
-preference.  One special value is @samp{en@@quot}, which can be used in
-a UTF-8 locale to have English/American error messages with pairs of
-quotes translated to Unicode directional quotes.
+by on-the-fly re-encoding (on almost all systems).  The @env{LANGUAGE}
+variable (only) can be a colon-separated list, for example @samp{se:de},
+giving a set of languages in decreasing order of preference.  One
+special value is @samp{en@@quot}, which can be used in a UTF-8 locale to
+have English/American error messages with pairs of quotes translated to
+Unicode directional quotes.
 
 If no suitable translation catalogue is found or a particular message is
 not translated in any suitable catalogue, English is used.
