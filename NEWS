@@ -128,6 +128,10 @@ NEW FEATURES
     o	Packages using 'methods' have to be installed in R 2.4.0 or
 	later (when various internal representations were changed).
 
+    o	PCRE has been updated to version 7.1.
+
+    o	bzip2 has been updated to version 1.0.4.
+
 
 DEPRECATED & DEFUNCT
 

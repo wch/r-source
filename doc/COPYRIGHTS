@@ -248,7 +248,7 @@ src/main/apse.h
 src/extra/pcre/LICENCE
 src/extra/pcre/*.[ch]
 
-   Copyright (c) 1997-2006 University of Cambridge
+   Copyright (c) 1997-2007 University of Cambridge
    All rights reserved.
 
 See file src/extra/pcre/LICENCE.  For binary builds of R that requires
@@ -293,7 +293,7 @@ src/extra/bzip2/decompress.c
 src/extra/bzip2/huffman.c
 src/extra/bzip2/randtable.c
 
-   copyright (C) 1996-2005 Julian R Seward.
+   copyright (C) 1996-2006 Julian R Seward.
 
 
 src/library/tools/src/md5.[ch]
