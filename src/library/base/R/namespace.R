@@ -182,7 +182,8 @@ loadNamespace <- function (package, lib.loc = NULL,
             setNamespaceInfo(env, "path", file.path(lib, name))
             setNamespaceInfo(env, "dynlibs", NULL)
             setNamespaceInfo(env, "S3methods", matrix(NA_character_, 0, 3))
-            assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
+            assign(".__S3MethodsTable__.",
+                   new.env(hash = TRUE, parent = baseenv()),
                    envir = env)
             .Internal(registerNamespace(name, env))
             env
@@ -306,12 +307,16 @@ loadNamespace <- function (package, lib.loc = NULL,
             version <- pkgInfo$DESCRIPTION["Version"]
             ## we need to ensure that S4 dispatch is on now if the package
             ## will require it, or the exports will be incomplete.
-            if("methods" %in% names(pkgInfo$Depends)) loadNamespace("methods")
+            dependsMethods <- "methods" %in% names(pkgInfo$Depends)
+            if(dependsMethods && pkgInfo$Built$R < "2.4.0")
+                stop("package was installed prior to 2.4.0 and must be re-installed")
+            if(dependsMethods) loadNamespace("methods")
         } else {
             version <- read.dcf(file.path(pkgpath, "DESCRIPTION"),
                                 fields = "Version")
             ## stats4 depends on methods, but exports do not matter
             ## whilst it is being build on Unix
+            dependsMethods <- FALSE
         }
         ## </FIXME>
         ns <- makeNamespace(package, version = version, lib = package.lib)
@@ -404,10 +409,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
-        ## A better test might be to see if the package depends on
-        ## 'methods' (or is 'methods') since no others should need
-        ## to go through here
-        if(.isMethodsDispatchOn() &&
+        if(dependsMethods &&
            !exists(".noGenerics", envir = ns, inherits = FALSE)) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
@@ -420,44 +422,38 @@ loadNamespace <- function (package, lib.loc = NULL,
                                   paste(expClasses[missingClasses],
                                         collapse = ", ")),
                          domain = NA)
-                expClasses <- paste(methods:::classMetaName(""), expClasses,
-                                    sep = "")
+                expClasses <- paste(".__C__", expClasses, sep = "")
             }
             ## process methods metadata explicitly exported or
             ## implied by exporting the generic function.
-            allMethods <- unique(c(methods:::.getGenerics(ns),
-                                   methods:::.getGenerics(parent.env(ns))))
+            ## (this finds the names of all generics which have
+            ## methods metadata in the package or its imports)
+            l <- c(ls(ns, all=TRUE), ls(parent.env(ns), all=TRUE))
+            allMethodTables <- unique(grep("^\\.__T__", l, value=TRUE))
+            allGens <-
+                unqiue(gsub(".__T__(.*):([^:]+(.*))", "\\1", allMethodTables))
+            allMethodLists <- unique(grep("^\\.__M__", l, value=TRUE))
             expMethods <- nsInfo$exportMethods
             expTables <- character()
-            if(length(allMethods) > 0) {
+            if(length(allGens) > 0) {
                 expMethods <-
-                    unique(c(expMethods,
-                             exports[!is.na(match(exports, allMethods))]))
-                missingMethods <- !(expMethods %in% allMethods)
+                    unique(c(expMethods, exports[exports %in% allGens]))
+                missingMethods <- !(expMethods %in% allGens)
                 if(any(missingMethods))
                     stop(gettextf("in '%s' methods for export not found: %s",
                                   package,
                                   paste(expMethods[missingMethods],
                                         collapse = ", ")),
                          domain = NA)
-                mlistPattern <- methods:::mlistMetaName()
-                allMethodLists <-
-                    unique(c(methods:::.getGenerics(ns, mlistPattern),
-                             methods:::.getGenerics(parent.env(ns),
-                                                    mlistPattern)))
-                tPrefix <- methods:::.TableMetaPrefix()
-                allMethodTables <-
-                    unique(c(methods:::.getGenerics(ns, tPrefix),
-                             methods:::.getGenerics(parent.env(ns), tPrefix)))
                 needMethods <-
-                    (exports %in% allMethods) & !(exports %in% expMethods)
+                    (exports %in% allGens) & !(exports %in% expMethods)
                 if(any(needMethods))
                     expMethods <- c(expMethods, exports[needMethods])
                 ## Primitives must have their methods exported as long
                 ## as a global table is used in the C code to dispatch them:
                 ## The following keeps the exported files consistent with
                 ## the internal table.
-                pm <- allMethods[!(allMethods %in% expMethods)]
+                pm <- allGens[!(allGens %in% expMethods)]
                 if(length(pm) > 0) {
                     prim <- logical(length(pm))
                     for(i in seq_along(prim)) {
@@ -472,14 +468,14 @@ loadNamespace <- function (package, lib.loc = NULL,
                        exists(mi, envir = ns, mode = "function",
                               inherits = FALSE))
                         exports <- c(exports, mi)
-                    pattern <- paste(mlistPattern, mi, ":", sep="")
+                    pattern <- paste(".__M__", mi, ":", sep="")
                     ii <- grep(pattern, allMethodLists, fixed = TRUE)
                     if(length(ii) > 0) {
-                      expMethods[[i]] <- allMethodLists[ii]
-                      if(exists(allMethodTables[[ii]], envir = ns))
-                        expTables <- c(expTables, allMethodTables[[ii]])
-                      else
-                        warning("No methods table for \"", mi, "\"")
+                        expMethods[[i]] <- allMethodLists[ii]
+                        if(exists(allMethodTables[[ii]], envir = ns))
+                            expTables <- c(expTables, allMethodTables[[ii]])
+                        else
+                            warning("No methods table for \"", mi, "\"")
                     }
                     else { ## but not possible?
                       warning(gettextf("Failed to find metadata object for \"%s\"", mi))
@@ -1185,6 +1181,9 @@ registerS3methods <- function(info, package, env)
 	home <- home                # force evaluation
 	delayedAssign(x, get(method, env = home), assign.env = envir)
     }
+
+    m_is <- if(.isMethodsDispatchOn()) methods::is else function(...) FALSE
+
     .registerS3method <- function(genname, class, method, nm, envir)
     {
         ## S3 generics should either be imported explicitly or be in
@@ -1200,7 +1199,7 @@ registerS3methods <- function(info, package, env)
                 stop(gettextf("object '%s' not found whilst loading namespace '%s'",
                               genname, package), call. = FALSE, domain = NA)
             genfun <- get(genname, envir = parent.env(envir))
-            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction")) {
+            if(m_is(genfun, "genericFunction")) {
                 genfun <- methods::slot(genfun, "default")@methods$ANY
                 warning(gettextf("found an S4 version of '%s' so it has not been imported correctly",
                                  genname), call. = FALSE, domain = NA)
@@ -1239,7 +1238,7 @@ registerS3methods <- function(info, package, env)
     if(.isMethodsDispatchOn())
         for(i in which(localGeneric)) {
             genfun <- get(Info[i, 1], envir = env)
-            if(methods::is(genfun, "genericFunction")) {
+            if(m_is(genfun, "genericFunction")) {
                 localGeneric[i] <- FALSE
                 registerS3method(Info[i, 1], Info[i, 2], Info[i, 3], env)
             }
@@ -1248,6 +1247,7 @@ registerS3methods <- function(info, package, env)
         lin <- Info[localGeneric, , drop = FALSE]
         S3MethodsTable <-
             get(".__S3MethodsTable__.", envir = env, inherits = FALSE)
+        ## we need to move this to C for speed.
         for(i in seq_len(nrow(lin)))
             assign(lin[i,4], get(lin[i,3], envir = env),
                    envir = S3MethodsTable)

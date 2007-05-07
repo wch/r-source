@@ -125,6 +125,9 @@ NEW FEATURES
 	support it: for example modern Linux systems support
 	interval = 0.001.
 
+    o	Packages using 'methods' have to be installed in R 2.4.0 or
+	later (when various internal representations were changed).
+
 
 DEPRECATED & DEFUNCT
 

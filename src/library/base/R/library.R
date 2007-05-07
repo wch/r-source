@@ -76,7 +76,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         else {
             ## A package will have created a generic
             ## only if it has created a formal method.
-            length(objects(env, pattern="^\\.__M", all=TRUE)) == 0
+            length(objects(env, pattern="^\\.__[MT]", all=TRUE)) == 0
         }
     }
 
@@ -90,7 +90,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
         ob <- objects(lib.pos, all = TRUE)
-        if(!nogenerics && .isMethodsDispatchOn()) {
+        if(!nogenerics) {
             these <- objects(lib.pos, all = TRUE)
             these <- these[substr(these, 1, 6) == ".__M__"]
             gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
@@ -280,6 +280,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## has a name space, then the name space loading mechanism
             ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
+                ## this checks for 'depends on methods and installed < 2.4.0'
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc),
                                         keep.source = keep.source)
@@ -295,13 +296,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                               call. = FALSE, domain = NA)
                 else {
                     on.exit(do.call("detach", list(name = pkgname)))
-                    nogenerics <- checkNoGenerics(env, package)
+                    ## If there are generics then the package should
+                    ## depend on methods
+                    nogenerics <-
+                        !.isMethodsDispatchOn() || checkNoGenerics(env, package)
                     if(warn.conflicts &&
                        !exists(".conflicts.OK", envir = env, inherits = FALSE))
                         checkConflicts(package, pkgname, pkgpath, nogenerics)
 
-                    if(!nogenerics && .isMethodsDispatchOn() &&
-                       !identical(pkgname, "package:methods"))
+                    if(!nogenerics && !identical(pkgname, "package:methods"))
                         methods::cacheMetaData(env, TRUE,
                                                searchWhere = .GlobalEnv)
                     runUserHook(package, pkgpath)
@@ -312,6 +315,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         return(invisible(.packages()))
                 }
             }
+
+            ## non-namespace branch
+            dependsMethods <- "methods" %in% names(pkgInfo$Depends)
+            if(dependsMethods && pkgInfo$Built$R < "2.4.0")
+                stop("package was installed prior to 2.4.0 and must be re-installed")
             codeFile <- file.path(which.lib.loc, package, "R",
                                   libraryPkgName(package))
             ## create environment (not attached yet)
@@ -360,20 +368,22 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     else stop(gettextf(".First.lib failed for '%s'",
                                        libraryPkgName(package)), domain = NA)
             }
-            if(!is.null(firstlib <- getOption(".First.lib")[[package]])){
+            if(!is.null(firstlib <- getOption(".First.lib")[[package]])) {
                 tt<- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
                     else stop(gettextf(".First.lib failed for '%s'",
                                        libraryPkgName(package)), domain = NA)
             }
-            nogenerics <- checkNoGenerics(env, package)
+            ## If there are generics then the package should
+            ## depend on methods and so have turned methods dispatch on.
+            nogenerics <-
+                !.isMethodsDispatchOn() || checkNoGenerics(env, package)
             if(warn.conflicts &&
                !exists(".conflicts.OK", envir = env, inherits = FALSE))
                 checkConflicts(package, pkgname, pkgpath, nogenerics)
 
-            if(!nogenerics && .isMethodsDispatchOn() &&
-               !identical(pkgname, "package:methods"))
+            if(!nogenerics && !identical(pkgname, "package:methods"))
                 methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
             runUserHook(package, pkgpath)
             on.exit()
