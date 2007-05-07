@@ -431,7 +431,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             l <- c(ls(ns, all=TRUE), ls(parent.env(ns), all=TRUE))
             allMethodTables <- unique(grep("^\\.__T__", l, value=TRUE))
             allGens <-
-                unqiue(gsub(".__T__(.*):([^:]+(.*))", "\\1", allMethodTables))
+                unique(gsub(".__T__(.*):([^:]+(.*))", "\\1", allMethodTables))
             allMethodLists <- unique(grep("^\\.__M__", l, value=TRUE))
             expMethods <- nsInfo$exportMethods
             expTables <- character()
