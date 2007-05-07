@@ -153,7 +153,10 @@ Users of Vista installing for a single users using in an account with
 administrator rights should consider installing into a non-system area
 (such as @file{C:\R}).  If you are installing to a network drive, you
 should consider changing the default form of help during the
-install @strong{not} to be Compiled HTML help: @xref{Help is not shown for some of the packages}.
+install @strong{not} to be Compiled HTML help: @xref{Help is not shown
+for some of the packages}.  Installing to a network share (a filepath
+starting with @code{\\machine\...}) is not supported: such paths will
+need to mapped to a network drive.
 
 To install use @samp{@RWVER@-win32.exe}.  Just double-click on the
 icon and follow the instructions.  If you installed R this way you can
@@ -178,9 +181,9 @@ environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/myRlib}, and if you want to ensure that menus and
 messages are in (American) English, @code{LANGUAGE=en}.
 
-It is also possible to install from an MSI file, which will be of interest
-only for sysadmins.  For how to build an MSI file, see the `R
-Installation and Administration Manual'.
+It is also possible to install from an MSI file, which will be of
+interest only for system administrators.  For how to build an MSI file,
+see the `R Installation and Administration Manual'.
 
 
 @node How do I check an installation?, Can I customize the installation?, How do I install R for Windows?, Installation and Usage

@@ -1,25 +1,22 @@
 ###-*- R -*-
 
+## this will break if R is on a network share
 .Library <- file.path(chartr("\\", "/", R.home()), "library")
 .Library.site <- Sys.getenv("R_LIBS_SITE")
 .Library.site <- if(!nchar(.Library.site)) file.path(R.home(), "site-library") else unlist(strsplit(.Library.site, ";"))
-.Library.site <- chartr("\\", "/", .Library.site)
 .Library.site <- .Library.site[file.exists(.Library.site)]
 
 if(nchar(Sys.getenv("R_LIBS_USER")) == 0)
     Sys.setenv(R_LIBS_USER=
-               file.path(chartr("\\", "/", Sys.getenv("R_USER")), "R",
+               file.path(Sys.getenv("R_USER"), "R",
                          "win-library",
                          paste(R.version$major,
                                sub("\\..*$", "", R.version$minor),
                                sep=".")
                          ))
 
-invisible(.libPaths(c(unlist(strsplit(chartr("\\", "/", Sys.getenv("R_LIBS")),
-                                      ";")),
-                      unlist(strsplit(chartr("\\", "/",
-                                             Sys.getenv("R_LIBS_USER")),
-                                      ";"))
+invisible(.libPaths(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")),
+                      unlist(strsplit(Sys.getenv("R_LIBS_USER"), ";"))
                       )))
 
 if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
