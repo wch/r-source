@@ -1,4 +1,4 @@
-\\name{reshape}
+\name{reshape}
 \alias{reshape}
 \title{Reshape Grouped Data}
 \description{
