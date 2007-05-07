@@ -409,7 +409,8 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
-        if(dependsMethods &&
+
+        if((dependsMethods || package == "methods") &&
            !exists(".noGenerics", envir = ns, inherits = FALSE)) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
@@ -1176,14 +1177,14 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 
 registerS3methods <- function(info, package, env)
 {
+    n <- NROW(info)
+    if(n == 0) return()
+
     assignWrapped <- function(x, method, home, envir) {
 	method <- method            # force evaluation
 	home <- home                # force evaluation
 	delayedAssign(x, get(method, env = home), assign.env = envir)
     }
-
-    m_is <- if(.isMethodsDispatchOn()) methods::is else function(...) FALSE
-
     .registerS3method <- function(genname, class, method, nm, envir)
     {
         ## S3 generics should either be imported explicitly or be in
@@ -1199,7 +1200,7 @@ registerS3methods <- function(info, package, env)
                 stop(gettextf("object '%s' not found whilst loading namespace '%s'",
                               genname, package), call. = FALSE, domain = NA)
             genfun <- get(genname, envir = parent.env(envir))
-            if(m_is(genfun, "genericFunction")) {
+            if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction")) {
                 genfun <- methods::slot(genfun, "default")@methods$ANY
                 warning(gettextf("found an S4 version of '%s' so it has not been imported correctly",
                                  genname), call. = FALSE, domain = NA)
@@ -1214,8 +1215,6 @@ registerS3methods <- function(info, package, env)
 	assignWrapped(nm, method, home = envir, envir = table)
     }
 
-    n <- NROW(info)
-    if(n == 0) return()
     methname <- paste(info[,1], info[,2], sep = ".")
     z <- is.na(info[,3])
     info[z,3] <- methname[z]
@@ -1238,7 +1237,7 @@ registerS3methods <- function(info, package, env)
     if(.isMethodsDispatchOn())
         for(i in which(localGeneric)) {
             genfun <- get(Info[i, 1], envir = env)
-            if(m_is(genfun, "genericFunction")) {
+            if(methods::is(genfun, "genericFunction")) {
                 localGeneric[i] <- FALSE
                 registerS3method(Info[i, 1], Info[i, 2], Info[i, 3], env)
             }
