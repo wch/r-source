@@ -1,3 +1,4 @@
+## note that there is a version ../baseloader.R that should be kept in step
 lazyLoad <- function(filebase, envir = parent.frame(), filter)
 {
     ##
@@ -17,13 +18,11 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     }
     "parent.env<-" <-
         function (env, value) .Internal("parent.env<-"(env, value))
-    along <- function(x) { n <- length(x); if (n) 1 : n else NULL }
     existsInFrame <- function (x, env) .Internal(exists(x, env, "any", FALSE))
     getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
     environment <- function () .Internal(environment(NULL))
     mkenv <- function() .Internal(new.env(TRUE, baseenv(), 29L))
-    # names <- function(x) .Internal(names(x))
     lazyLoadDBfetch <- function(key, file, compressed, hook)
         .Call("R_lazyLoadDBfetch", key, file, compressed, hook, PACKAGE="base")
 
@@ -37,7 +36,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     vars <- names(map$variables)
     rvars <- names(map$references)
     compressed <- map$compressed
-    for (i in along(rvars))
+    for (i in seq_along(rvars))
         set(rvars[i], map$references[[i]], env)
     envenv <- mkenv()
     envhook <- function(n) {
@@ -50,7 +49,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
             parent.env(e) <- data$enclos
             vars <- names(data$bindings)
-            for (i in along(vars))
+            for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
             e
         }
@@ -61,11 +60,11 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     	.Internal(delayedAssign(x, expr, environment(), env))
     }
     if (! missing(filter)) {
-        for (i in along(vars))
+        for (i in seq_along(vars))
             if (filter(vars[i]))
 		setWrapped(vars[i], map$variables[[i]], envir)
     } else {
-        for (i in along(vars))
+        for (i in seq_along(vars))
 	    setWrapped(vars[i], map$variables[[i]], envir)
     }
 
