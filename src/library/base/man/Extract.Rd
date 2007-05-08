@@ -24,19 +24,18 @@ x$name
   \item{x}{
     object from which to extract element(s) or in which to replace element(s).
   }
-  \item{i, j, \dots, name}{
-    indices specifying elements to extract or replace.  \code{i, j} are
+  \item{i, j, \dots}{
+    indices specifying elements to extract or replace.  Indices are
     \code{numeric} or \code{character} vectors or empty (missing) or
-    \code{NULL} whereas \code{name} must be a character string or an
-    (unquoted or backtick quoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}}.  For extraction with
-    \code{[[} and \code{$} character strings are normally (see under
+    \code{NULL}.  Numeric values are coerced to integer as by
+    \code{\link{as.integer}} (and hence truncated towards zero).  For
+    extraction with \code{[[} character vectors are normally (see under
     Environments) partially matched to the \code{\link{names}} of the
-    object if exact matching does not succeed.
+    object.
 
     For \code{[}-indexing only: \code{i, j, \dots} can be logical
     vectors, indicating elements/slices to select.  Such vectors are
-    recycled if necessary to match the corresponding extent. \code{i, j,
+    recycled if necessary to match the corresponding extent.  \code{i, j,
       \dots} can also be negative integers, indicating elements/slices
     to leave out of the selection.
 
@@ -46,6 +45,11 @@ x$name
     indices in each row of \code{i}.
 
     An index value of \code{NULL} is treated as if it were \code{integer(0)}.
+  }
+  \item{name}{
+    A literal character string or a \link{name} (possibly \link{backtick}
+    quoted).  For extraction, this is normally (see under Environments)
+    partially matched to the \code{\link{names}} of the object.
   }
   \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
@@ -181,6 +185,13 @@ x$name
 
   To avoid confusion, do not name index arguments (but \code{drop} must
   be named).
+}
+\section{S4 methods}{
+  These operators are also (internally) S4 generic.
+
+  S4 methods for \code{$} will be passed \code{name} as a character
+  vector: despite the message given by \code{getGeneric("$")} you cannot
+  usefully write methods based on the class of \code{name}.
 }
 \note{
   S uses partial matching when extracting by \code{[}
