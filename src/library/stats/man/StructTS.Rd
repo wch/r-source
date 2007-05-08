@@ -126,7 +126,8 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 }
 
 \seealso{
-  \code{\link{KalmanLike}}, \code{\link{tsSmooth}}.
+  \code{\link{KalmanLike}}, \code{\link{tsSmooth}};
+  \code{\link{stl}} for different kind of (seasonal) decomposition.
 }
 
 \examples{
