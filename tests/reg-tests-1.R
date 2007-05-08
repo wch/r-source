@@ -4749,6 +4749,14 @@ setwd(owd)
 ## wildcards were broken in 2.5.0 on Unix, and always on Windows
 
 
+## duplicated columns in a data frame
+x <- matrix(seq(1:12),ncol=3)
+colnames(x) <- c("A","B","A")   #a redundant name for column 2
+x.df <- as.data.frame(x)
+stopifnot(x.df[4,3] == x[4,3])
+## wrong column in 2.5.0
+
+
 ## it really is unclear if this should work as the fit is to a
 ## numeric variable with levels, and the prediction does not have
 ## levels.  But some people expected it to.
