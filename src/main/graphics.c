@@ -4445,6 +4445,7 @@ SEXP LTYget(unsigned int lty)
     int i, ndash;
     unsigned char dash[8];
     unsigned int l;
+    char *cbuf;
 
     for (i = 0; linetype[i].name; i++) {
 	if(linetype[i].pattern == lty)
@@ -4457,11 +4458,12 @@ SEXP LTYget(unsigned int lty)
 	l = l >> 4;
     }
     PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, allocString(ndash));
+    cbuf = CallocCharBuf(ndash);
     for(i=0 ; i<ndash ; i++) {
-	CHAR(STRING_ELT(ans, 0))[i] = HexDigits[dash[i]];
+        cbuf[i] = HexDigits[dash[i]];
     }
-    CHAR(STRING_ELT(ans,0))[ndash] = '\0';
+    SET_STRING_ELT(ans, 0, mkChar(cbuf));
+    Free(cbuf);
     UNPROTECT(1);
     return ans;
 }

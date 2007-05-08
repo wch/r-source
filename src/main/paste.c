@@ -33,6 +33,7 @@
 #include "Defn.h"
 #include "Rmath.h" /* imax2 */
 #include "Print.h"
+#include <R_ext/RS.h>           /* CallocCharBuf, Free */
 
 /*  .Internal(paste(args, sep, collapse))
  *
@@ -42,9 +43,9 @@
  */
 SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, collapse, sep, x, tmpchar;
+    SEXP ans, collapse, sep, x;
     int i, j, k, maxlen, nx, pwidth, sepw;
-    char *s, *buf, *csep;
+    char *s, *buf, *csep, *cbuf;
 
     checkArity(op, args);
 
@@ -96,8 +97,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 							  i % k)));
 	}
 	pwidth += (nx - 1) * sepw;
-	tmpchar = allocString(pwidth);
-	buf = CHAR(tmpchar);
+	cbuf = buf = CallocCharBuf(pwidth);
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
@@ -110,7 +110,8 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf += sepw;
 	    }
 	}
-	SET_STRING_ELT(ans, i, tmpchar);
+	SET_STRING_ELT(ans, i, mkChar(cbuf));
+        Free(cbuf);
     }
 
     /* Now collapse, if required. */
@@ -124,8 +125,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < nx; i++)
 	    pwidth += strlen(CHAR(STRING_ELT(ans, i)));
 	pwidth += (nx - 1) * sepw;
-	tmpchar = allocString(pwidth);
-	buf = CHAR(tmpchar);
+	cbuf = buf = CallocCharBuf(pwidth);
 	for (i = 0; i < nx; i++) {
 	    if(i > 0) {
 	        strcpy(buf, csep);
@@ -136,10 +136,9 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    while (*buf)
 		buf++;
 	}
-	PROTECT(tmpchar);
 	ans = allocVector(STRSXP, 1);
-	UNPROTECT(1);
-	SET_STRING_ELT(ans, 0, tmpchar);
+	SET_STRING_ELT(ans, 0, mkChar(cbuf));
+        Free(cbuf);
     }
     /* We would only know the encoding of an element of the answer 
        if we knew the encoding of all the components, so we don't

@@ -196,13 +196,7 @@ static SEXP duplicate1(SEXP s)
 	UNPROTECT(2);
 	break;
     case CHARSXP:
-	/* This was wrong, losing internal nuls before 2.5.0 */
-	PROTECT(s);
-	PROTECT(t = allocString(LENGTH(s)));
-	memcpy(CHAR(t), CHAR(s), LENGTH(s)+1);
-	DUPLICATE_ATTRIB(t, s);
-	markKnown(t, s);
-	UNPROTECT(2);
+        return s;
 	break;
     case EXPRSXP:
     case VECSXP:

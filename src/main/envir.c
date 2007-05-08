@@ -3206,3 +3206,136 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
         error("argument must be a hashed environment");
     return ans;
 }
+
+
+/* Global CHARSXP cache and code for string-based hash tables */
+
+/* We can reuse the hash structure, but need separate code for get/set
+   of values since our keys are char* and not SEXP symbol types. */
+
+void attribute_hidden InitStringHash()
+{
+    const int STRING_HASH_INIT_SIZE = 54979;
+    R_StringHash = R_NewHashTable(STRING_HASH_INIT_SIZE, 0);
+}
+
+#define NEXT_CHAIN_EL(e) (CDR(e))
+#define SET_NEXT_CHAIN_EL(e1, e2) (SETCDR(e1, e2))
+
+static SEXP R_StringHashResize(SEXP table)
+{
+    SEXP new_table, chain, new_chain, val;
+    int /*hash_grow,*/ counter, new_hashcode;
+
+    /* Do some checking */
+    if (TYPEOF(table) != VECSXP)
+	error("first argument ('table') not of type VECSXP, from R_StringHashResize");
+
+    /* Allocate the new hash table */
+    new_table = R_NewHashTable(HASHSIZE(table) * HASHTABLEGROWTHRATE,
+			       HASHTABLEGROWTHRATE);
+    PROTECT(new_table);
+    for (counter = 0; counter < length(table); counter++) {
+	chain = VECTOR_ELT(table, counter);
+	while (!isNull(chain)) {
+            val = CAR(chain);
+            if (*CHAR(val) != '\0')
+                new_hashcode = R_Newhashpjw(CHAR(val)) % HASHSIZE(new_table);
+            else
+                new_hashcode = 0;
+	    new_chain = VECTOR_ELT(new_table, new_hashcode);
+	    /* If using a primary slot then increase HASHPRI */
+	    if (isNull(new_chain))
+		SET_HASHPRI(new_table, HASHPRI(new_table) + 1);
+	    SET_VECTOR_ELT(new_table, new_hashcode,  CONS(val, new_chain));
+	    chain = NEXT_CHAIN_EL(chain);
+	}
+    }
+    /* Some debugging statements */
+#ifdef DEBUG_GLOBAL_STRING_HASH
+    char *status = HASHPRI(new_table) > HASHPRI(table) ? " OK " : "FAIL";
+    Rprintf("Resized: size %d => %d\tpri %d => %d\t%s\n",
+            HASHSIZE(table), HASHSIZE(new_table),
+            HASHPRI(table), HASHPRI(new_table), status);
+#endif
+    UNPROTECT(1);
+    return new_table;
+}
+
+
+/* Get CHARSXP for string s in the hash table.
+   Return R_NilValue, if not found.
+*/
+static SEXP R_StringHashGet(int hashcode, char *s, SEXP table)
+{
+    SEXP chain, val;
+
+    /* Grab the chain from the hashtable */
+    chain = VECTOR_ELT(table, hashcode);
+    /* Retrieve the value from the chain */
+    for (; chain != R_NilValue ; chain = CDR(chain)) {
+        val = CAR(chain);
+	if (strcmp(CHAR(val), s) == 0)
+            return val;
+    }
+    /* If not found */
+    return R_NilValue;
+}
+
+/* Add CHARSXP, schar to the table using key CHAR(schar).  If a
+   CHARSXP with that key already exists, it is replaced.  Note that we
+   might be better off witha combined get/set function that returns
+   CHARSXP adding to the hash if needed.  This will be both more
+   efficient (perhaps only slightly) but also an easier interface,
+   since with this code user really needs to call get first and then
+   set.
+*/
+static void R_StringHashSet(int hashcode, SEXP schar, SEXP table)
+{
+    SEXP chain, val;
+
+    /* Grab the chain from the hashtable */
+    chain = VECTOR_ELT(table, hashcode);
+
+    /* Search for the value in the chain */
+    for (; !isNull(chain); chain = CDR(chain)) {
+        val = CAR(chain);
+	if (strcmp(CHAR(val), CHAR(schar)) == 0) {
+            SETCAR(chain, schar); /* set to new value */
+	    return;
+	}
+    }
+    chain = VECTOR_ELT(table, hashcode);
+    if (isNull(chain))
+	SET_HASHPRI(table, HASHPRI(table) + 1);
+    /* Add the value into the chain */
+    SET_VECTOR_ELT(table, hashcode, CONS(schar, chain));
+    return;
+}
+
+
+
+/* mkChar - make a character (CHARSXP) variable */
+
+SEXP mkChar(const char *name)
+{
+    SEXP cval, tmpHash;
+    int h = 0;
+
+    if (R_HashSizeCheck(R_StringHash)) {
+        tmpHash = R_StringHashResize(R_StringHash);
+        R_StringHash = tmpHash;
+    }
+
+    /* have to handle "" specially since it doesn't hash */
+    if (*name != '\0')
+        h = R_Newhashpjw(name) % HASHSIZE(R_StringHash);
+    cval = R_StringHashGet(h, name, R_StringHash);
+    if (cval == R_NilValue) {
+        PROTECT(cval = allocString(strlen(name)));
+        strcpy(CHAR(cval), name);
+        R_StringHashSet(h, cval, R_StringHash);
+        UNPROTECT(1);
+    }
+    return cval;
+}

@@ -30,11 +30,13 @@
 
 #include <Defn.h>
 #include <Rmath.h>
+#include <R_ext/RS.h>           /* CallocCharBuf, Free */
 
 static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 {
     SEXP a, la, ls, lt, rs, rt;
     int i, j, k, n, nls, nlt, vs, vt;
+    char *cbuf;
 
     if (length(s) != length(t))
 	errorcall(call, _("unequal factor lengths"));
@@ -63,9 +65,11 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 	    vs = strlen(CHAR(STRING_ELT(ls, i)));
 	    for (j = 0; j < nlt; j++) {
 		vt = strlen(CHAR(STRING_ELT(lt, j)));
-		SET_STRING_ELT(la, k, allocString(vs + vt + 1));
-		sprintf(CHAR(STRING_ELT(la, k)), "%s:%s",
+                cbuf = CallocCharBuf(vs + vt + 1);
+		sprintf(cbuf, "%s:%s",
 			CHAR(STRING_ELT(ls, i)), CHAR(STRING_ELT(lt, j)));
+                SET_STRING_ELT(la, k, mkChar(cbuf));
+                Free(cbuf);
 		k++;
 	    }
 	}

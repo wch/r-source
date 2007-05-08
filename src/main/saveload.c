@@ -1202,8 +1202,7 @@ static SEXP InCHARSXP (FILE *fp, InputRoutines *m, SaveLoadData *d)
     tmp = m->InString(fp, d);
     len = strlen(tmp);
     R_AllocStringBuffer(len, &(d->buffer));
-    s = allocVector(CHARSXP, len);
-    memcpy(CHAR(s), tmp, len+1);
+    s = mkChar(tmp);
     return s;
 }
 

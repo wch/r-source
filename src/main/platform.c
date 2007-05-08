@@ -682,6 +682,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 static SEXP filename(char *dir, char *file)
 {
     SEXP ans;
+    char *cbuf;
     if (dir) {
 #ifdef Win32
 	switch (dir[strlen(dir)-1])
@@ -689,20 +690,26 @@ static SEXP filename(char *dir, char *file)
 	    case '/':
 	    case '\\':
 	    case ':':
-	    	ans = allocString(strlen(dir) + strlen(file));
-	    	sprintf(CHAR(ans), "%s%s", dir, file);
+                cbuf = CallocCharBuf(strlen(dir) + strlen(file));
+                sprintf(cbuf, "%s%s", dir, file);
+                ans = mkChar(cbuf);
+                Free(cbuf);
 	    	break;
 	    default:
 #endif
-	ans = allocString(strlen(dir) + strlen(R_FileSep) + strlen(file));
-	sprintf(CHAR(ans), "%s%s%s", dir, R_FileSep, file);
+        cbuf = CallocCharBuf(strlen(dir) + strlen(R_FileSep) + strlen(file));
+	sprintf(cbuf, "%s%s%s", dir, R_FileSep, file);
+        ans = mkChar(cbuf);
+        Free(cbuf);
 #ifdef Win32
     	}
 #endif
     }
     else {
-	ans = allocString(strlen(file));
-	sprintf(CHAR(ans), "%s", file);
+        cbuf = CallocCharBuf(strlen(file));
+	sprintf(cbuf, "%s", file);
+        ans = mkChar(cbuf);
+        Free(cbuf);
     }
     return ans;
 }

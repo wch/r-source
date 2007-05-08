@@ -30,6 +30,7 @@
 #include <Rmath.h>
 #include <Fileio.h>
 #include <Rversion.h>
+#include <R_ext/RS.h>           /* for CallocCharBuf, Free */
 
 /* From time to time changes in R, such as the addition of a new SXP,
  * may require changes in the save file format.  Here are some
@@ -1198,6 +1199,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
     SEXPTYPE type;
     SEXP s;
     int flags, levs, objf, hasattr, hastag, length, count;
+    char *cbuf;
 
     R_assert(TYPEOF(ref_table) == LISTSXP && TYPEOF(CAR(ref_table)) == VECSXP);
 
@@ -1321,8 +1323,10 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    if (length == -1)
 		PROTECT(s = NA_STRING);
 	    else {
-		PROTECT(s = allocVector(CHARSXP, length));
-		InString(stream, CHAR(s), length);
+                cbuf = CallocCharBuf(length);
+		InString(stream, cbuf, length);
+                PROTECT(s = mkChar(cbuf));
+                Free(cbuf);
 	    }
 	    break;
 	case LGLSXP:

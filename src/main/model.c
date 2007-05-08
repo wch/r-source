@@ -32,6 +32,7 @@
 #endif
 
 #include "Defn.h"
+#include <R_ext/RS.h>           /* CallocCharBuf, Free */
 
 #define WORDSIZE (8*sizeof(int))
 
@@ -711,6 +712,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP a, ans, v, pattern, formula, varnames, term, termlabs, ord;
     SEXP specials, t, data, rhs;
     int i, j, k, l, n, keepOrder, allowDot;
+    char *cbuf;
 
     Rboolean hadFrameNames = FALSE;
 
@@ -946,18 +948,19 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		l += strlen(CHAR(STRING_ELT(varnames, i - 1)));
 	    }
 	}
-	SET_STRING_ELT(termlabs, n, allocString(l));
-	CHAR(STRING_ELT(termlabs, n))[0] = '\0';
+        cbuf = CallocCharBuf(l);
+        cbuf[0] = '\0';
 	l = 0;
 	for (i = 1; i <= nvar; i++) {
 	    if (GetBit(CAR(call), i)) {
 		if (l > 0)
-		    strcat(CHAR(STRING_ELT(termlabs, n)), ":");
-		strcat(CHAR(STRING_ELT(termlabs, n)), 
-		       CHAR(STRING_ELT(varnames, i - 1)));
+		    strcat(cbuf, ":");
+                strcat(cbuf, CHAR(STRING_ELT(varnames, i - 1)));
 		l++;
 	    }
 	}
+        SET_STRING_ELT(termlabs, n, mkChar(cbuf));
+        Free(cbuf);
 	n++;
     }
     PROTECT(v = allocVector(VECSXP, 2));

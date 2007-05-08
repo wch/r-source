@@ -730,6 +730,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define InitNames		Rf_InitNames
 # define InitOptions		Rf_InitOptions
 # define InitRand		Rf_InitRand
+# define InitStringHash		Rf_InitStringHash
 # define InitTempDir		Rf_InitTempDir
 # define initStack		Rf_initStack
 # define IntegerFromComplex	Rf_IntegerFromComplex
@@ -908,6 +909,7 @@ SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP);
 void InitMemory(void);
 void InitNames(void);
 void InitOptions(void);
+void InitStringHash(void);
 void Init_R_Variables(SEXP);
 void InitRand(void);
 void InitTempDir(void);

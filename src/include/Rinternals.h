@@ -489,6 +489,8 @@ LibExtern SEXP  R_BaseEnv;	    /* The base environment; formerly R_NilValue */
 LibExtern SEXP	R_BaseNamespace;    /* The (fake) name space for base */
 LibExtern SEXP	R_NamespaceRegistry;/* Registry for registerd name spaces */
 
+LibExtern SEXP	R_StringHash;       /* Global hash of CHARSXPs */
+
 /* Special Values */
 LibExtern SEXP	R_NilValue;	    /* The nil object */
 LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */

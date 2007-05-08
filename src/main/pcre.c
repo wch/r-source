@@ -45,6 +45,9 @@
 # include <wctype.h>
 #endif
 
+#include <R_ext/RS.h>           /* for CallocCharBuf and Free */
+
+
 SEXP attribute_hidden do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
@@ -293,7 +296,7 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, n, ns, nns, nmatch, offset, re_nsub;
     int global, igcase_opt, useBytes, erroffset, eflag, last_end;
     int options = 0;
-    char *s, *t, *u, *uu;
+    char *s, *t, *u, *cbuf;
     const char *errorptr;
     pcre *re_pcre;
     pcre_extra *re_pe;
@@ -404,11 +407,10 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (nmatch == 0)
 	    SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
 	else {
-	    SET_STRING_ELT(ans, i, allocString(ns));
 	    offset = 0;
 	    s = translateChar(STRING_ELT(vec, i));
 	    t = srep;
-	    uu = u = CHAR(STRING_ELT(ans, i));
+            cbuf = u = CallocCharBuf(ns);
 	    eflag = 0; last_end = -1;
 	    while (pcre_exec(re_pcre, re_pe, s, nns, offset, eflag,
 			     ovector, 30) >= 0) {
@@ -445,6 +447,8 @@ SEXP attribute_hidden do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];
 	    *u = '\0';
+            SET_STRING_ELT(ans, i, mkChar(cbuf));
+            Free(cbuf);
 	}
 	markKnown(STRING_ELT(ans, i), STRING_ELT(vec, i));
     }

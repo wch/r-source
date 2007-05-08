@@ -31,6 +31,7 @@
 
 #include <Defn.h>
 #include <Rmath.h>		/* imax2 */
+#include <R_ext/RS.h>           /* CallocCharBuf, Free */
 
 #define LIST_ASSIGN(x) {SET_VECTOR_ELT(data->ans_ptr, data->ans_length, x); data->ans_length++;}
 
@@ -454,12 +455,15 @@ RawAnswer(SEXP x, struct BindData *data)
 static SEXP NewBase(SEXP base, SEXP tag)
 {
     SEXP ans;
+    char *cbuf;
     base = EnsureString(base);
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) { /* test of length */
 	char *sb = translateChar(base), *st = translateChar(tag);
-	ans = allocString(strlen(st) + strlen(sb) + 1);
-	sprintf(CHAR(ans), "%s.%s", sb, st);
+        cbuf = CallocCharBuf(strlen(st) + strlen(sb) + 1);
+	sprintf(cbuf, "%s.%s", sb, st);
+        ans = mkChar(cbuf);
+        Free(cbuf);
     }
     else if (*CHAR(tag)) {
 	ans = tag;
@@ -481,24 +485,31 @@ static SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
  * NOTE: i,n   are NOT used currently */
 
     SEXP ans;
+    char *cbuf;
     base = EnsureString(base);
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) {
 	char *sb = translateChar(base), *st = translateChar(tag);
-	ans = allocString(strlen(sb) + strlen(st) + 1);
-	sprintf(CHAR(ans), "%s.%s", sb, st);
+	cbuf = CallocCharBuf(strlen(sb) + strlen(st) + 1);
+	sprintf(cbuf, "%s.%s", sb, st);
+	ans = mkChar(cbuf);
+        Free(cbuf);
     }
     else if (*CHAR(base)) {
 	char *sb = translateChar(base);
-	ans = allocString(strlen(sb) + IndexWidth(seqno));
-	sprintf(CHAR(ans), "%s%d", sb, seqno);
+	cbuf = CallocCharBuf(strlen(sb) + IndexWidth(seqno));
+	sprintf(cbuf, "%s%d", sb, seqno);
+        ans = mkChar(cbuf);
+        Free(cbuf);
     }
     else if (*CHAR(tag)) {
 	if(tag == NA_STRING) ans = NA_STRING;
 	else {
 	    char *st = translateChar(tag);
-	    ans = allocString(strlen(st));
-	    sprintf(CHAR(ans), "%s", st);
+	    cbuf = CallocCharBuf(strlen(st));
+	    sprintf(cbuf, "%s", st);
+            ans = mkChar(cbuf);
+            Free(cbuf);
 	}
     }
     else ans = R_BlankString;

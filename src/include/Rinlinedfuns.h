@@ -47,15 +47,6 @@
 
 /* from dstruct.c */
 
-/* mkChar - make a character (CHARSXP) variable */
-
-INLINE_FUN SEXP mkChar(const char *name)
-{
-    SEXP c = allocString(strlen(name));
-    strcpy(CHAR(c), name);
-    return c;
-}
-
 /*  length - length of objects  */
 
 int Rf_envlength(SEXP rho);
@@ -589,6 +580,9 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
 
 
 /* from gram.y */
+
+/* forward declaration, defined in envir.c */
+SEXP mkChar(const char *name);
 
 INLINE_FUN SEXP mkString(const char *s)
 {
