@@ -316,6 +316,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                                 fields = "Version")
             ## stats4 depends on methods, but exports do not matter
             ## whilst it is being build on Unix
+            dependsMethods <- FALSE
         }
         ## </FIXME>
         ns <- makeNamespace(package, version = version, lib = package.lib)
@@ -429,15 +430,15 @@ loadNamespace <- function (package, lib.loc = NULL,
             }
             ## process methods metadata explicitly exported or
             ## implied by exporting the generic function.
-            allMethods <- unique(c(methods:::.getGenerics(ns),
+            allGenerics <- unique(c(methods:::.getGenerics(ns),
                                    methods:::.getGenerics(parent.env(ns))))
             expMethods <- nsInfo$exportMethods
             expTables <- character()
-            if(length(allMethods) > 0) {
+            if(length(allGenerics) > 0) {
                 expMethods <-
                     unique(c(expMethods,
-                             exports[!is.na(match(exports, allMethods))]))
-                missingMethods <- !(expMethods %in% allMethods)
+                             exports[!is.na(match(exports, allGenerics))]))
+                missingMethods <- !(expMethods %in% allGenerics)
                 if(any(missingMethods))
                     stop(gettextf("in '%s' methods for export not found: %s",
                                   package,
@@ -454,14 +455,14 @@ loadNamespace <- function (package, lib.loc = NULL,
                     unique(c(methods:::.getGenerics(ns, tPrefix),
                              methods:::.getGenerics(parent.env(ns), tPrefix)))
                 needMethods <-
-                    (exports %in% allMethods) & !(exports %in% expMethods)
+                    (exports %in% allGenerics) & !(exports %in% expMethods)
                 if(any(needMethods))
                     expMethods <- c(expMethods, exports[needMethods])
                 ## Primitives must have their methods exported as long
                 ## as a global table is used in the C code to dispatch them:
                 ## The following keeps the exported files consistent with
                 ## the internal table.
-                pm <- allMethods[!(allMethods %in% expMethods)]
+                pm <- allGenerics[!(allGenerics %in% expMethods)]
                 if(length(pm) > 0) {
                     prim <- logical(length(pm))
                     for(i in seq_along(prim)) {
@@ -479,11 +480,11 @@ loadNamespace <- function (package, lib.loc = NULL,
                     pattern <- paste(mlistPattern, mi, ":", sep="")
                     ii <- grep(pattern, allMethodLists, fixed = TRUE)
                     if(length(ii) > 0) {
-                      expMethods[[i]] <- allMethodLists[ii]
-                      if(exists(allMethodTables[[ii]], envir = ns))
-                        expTables <- c(expTables, allMethodTables[[ii]])
-                      else
-                        warning("No methods table for \"", mi, "\"")
+                        expMethods[[i]] <- allMethodLists[ii]
+                        if(exists(allMethodTables[[ii]], envir = ns))
+                            expTables <- c(expTables, allMethodTables[[ii]])
+                        else
+                            warning("No methods table for \"", mi, "\"")
                     }
                     else { ## but not possible?
                       warning(gettextf("Failed to find metadata object for \"%s\"", mi))
