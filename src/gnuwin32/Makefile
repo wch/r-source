@@ -139,7 +139,7 @@ endif
 	  echo "preparing package tools for lazy loading" ; \
 	  (cat ../library/tools/R/makeLazyLoad.R; \
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
-	    R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --vanilla --slave > /dev/null ; \
+	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) --vanilla --slave > /dev/null ; \
 	fi
 	@$(ECHO)
 	@for pkg in $(R_PKGS0); do \
