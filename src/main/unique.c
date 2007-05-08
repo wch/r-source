@@ -19,8 +19,8 @@
  *  Foundation, Inc., 51 Franklin Street Fifth Floor, Boston, MA 02110-1301  USA
  */
 
-/* <UTF8> char here is either ASCII or handled as a whole or as 
-   a leading portion for partial matching 
+/* <UTF8> char here is either ASCII or handled as a whole or as
+   a leading portion for partial matching
 */
 
 
@@ -52,15 +52,15 @@ struct _HashData {
 };
 
 
-/* 
+/*
    Integer keys are hashed via a random number generator
    based on Knuth's recommendations.  The high order K bits
    are used as the hash code.
-   
+
    NB: lots of this code relies on M being a power of two and
    on silent integer overflow mod 2^32.  It also relies on M < 31.
 
-   <FIXME>  Integer keys are wasteful for logical and raw vectors, 
+   <FIXME>  Integer keys are wasteful for logical and raw vectors,
    but the tables are small in that case.
 */
 
@@ -186,14 +186,14 @@ static int cequal(SEXP x, int i, SEXP y, int j)
 
 static int sequal(SEXP x, int i, SEXP y, int j)
 {
-    /* Two strings which have the same address must be the same, 
+    /* Two strings which have the same address must be the same,
        so avoid looking at the contents */
     if (STRING_ELT(x, i) == STRING_ELT(y, j)) return 1;
     /* Then if either is NA the other cannot be */
-    if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING) 
+    if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING)
 	return 0;
     /* Finally look at the contents if necessary */
-    return !strcmp(translateChar(STRING_ELT(x, i)), 
+    return !strcmp(translateChar(STRING_ELT(x, i)),
 		   translateChar(STRING_ELT(y, j)));
 }
 
@@ -212,7 +212,7 @@ static int vhash(SEXP x, int indx, HashData *d)
     int i;
     unsigned int key;
     SEXP _this = VECTOR_ELT(x, indx);
-    
+
     key = OBJECT(_this) + 2*TYPEOF(_this) + 100*length(_this);
     /* maybe we should also look at attributes, but that slows us down */
     switch (TYPEOF(_this)) {
@@ -357,14 +357,14 @@ static int isDuplicated(SEXP x, int indx, HashData *d)
     return 0;
 }
 
-SEXP duplicated(SEXP x)
+SEXP duplicated(SEXP x, Rboolean from_last)
 {
     SEXP ans;
     int *h, *v;
     int i, n;
     HashData data;
 
-    if (!isVector(x)) 
+    if (!isVector(x))
 	error(_("'duplicated' applies only to vectors"));
 
     n = LENGTH(x);
@@ -378,9 +378,13 @@ SEXP duplicated(SEXP x)
     for (i = 0; i < data.M; i++)
 	h[i] = NIL;
 
-    for (i = 0; i < n; i++)
-	v[i] = isDuplicated(x, i, &data);
-
+    if(from_last) {
+	for (i = n-1; i >= 0; i--)
+	    v[i] = isDuplicated(x, i, &data);
+    } else {
+	for (i = 0; i < n; i++)
+	    v[i] = isDuplicated(x, i, &data);
+    }
     return ans;
 }
 
@@ -404,7 +408,7 @@ SEXP attribute_hidden do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 	      (PRIMVAL(op) == 0 ? "duplicated" : "unique"));
     }
 
-    dup = duplicated(x);
+    dup = duplicated(x, asLogical(CADR(args)));
     if (PRIMVAL(op) == 0) /* "duplicated()" : */
 	return dup;
     /*	ELSE
@@ -604,7 +608,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	in[i] = translateChar(STRING_ELT(input, i));
 	ians[i] = 0;
     }
-    for (j = 0; j < n_target; j++) 
+    for (j = 0; j < n_target; j++)
 	tar[j] = translateChar(STRING_ELT(target, j));
 
     /* First pass, exact matching */
@@ -651,7 +655,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    
+
     if(nexact < n_input) {
 	/* Second pass, partial matching */
 	for (i = 0; i < n_input; i++) {
@@ -677,7 +681,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Third pass, set no matches */
 	for (i = 0; i < n_input; i++)
 	    if(ians[i] == 0) ians[i] = no_match;
-    
+
     }
     UNPROTECT(1);
     vmaxset(vmax);
@@ -849,7 +853,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if ( cptr == NULL ) {
 	    sysp = R_GlobalEnv;
-	    errorcall(R_NilValue, 
+	    errorcall(R_NilValue,
 		      "match.call() was called from outside a function");
 	} else
 	    sysp = cptr->sysparent;
@@ -990,7 +994,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 #  define ZERODBL(X,N,I) for(I=0;I<N;I++) REAL(X)[I]=0
 #endif
 
-SEXP attribute_hidden 
+SEXP attribute_hidden
 Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 {
     SEXP matches,ans;
@@ -1019,7 +1023,7 @@ Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 	for(i = 0; i < p; i++) {
 	    for(j = 0; j < n; j++)
 		if(!narm || !ISNAN(REAL(x)[j+offset]))
-		    REAL(ans)[INTEGER(matches)[j]-1+offsetg] 
+		    REAL(ans)[INTEGER(matches)[j]-1+offsetg]
 			+= REAL(x)[j+offset];
 	    offset += n;
 	    offsetg += ng;
@@ -1031,11 +1035,11 @@ Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)
 	    for(j = 0; j < n; j++) {
 		if (INTEGER(x)[j+offset] == NA_INTEGER) {
 		    if(!narm)
-			INTEGER(ans)[INTEGER(matches)[j]-1+offsetg] 
+			INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
 			    = NA_INTEGER;
-		} else if (INTEGER(ans)[INTEGER(matches)[j]-1+offsetg] 
+		} else if (INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
 			 != NA_INTEGER)
-		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg] 
+		    INTEGER(ans)[INTEGER(matches)[j]-1+offsetg]
 			+= INTEGER(x)[j+offset];
 	    }
 	    offset += n;
@@ -1208,8 +1212,8 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* Use hashing to improve object.size. Here we want equal CHARSXPs, 
-   not equal contents.  This only uses the bottom 32 bits of the pointer, 
+/* Use hashing to improve object.size. Here we want equal CHARSXPs,
+   not equal contents.  This only uses the bottom 32 bits of the pointer,
    but for now that's almost certainly OK */
 
 static int cshash(SEXP x, int indx, HashData *d)

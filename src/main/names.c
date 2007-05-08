@@ -224,8 +224,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"exists",	do_get,		0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"assign",	do_assign,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"remove",	do_remove,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"duplicated",	do_duplicated,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"unique",	do_duplicated,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"duplicated",	do_duplicated,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"unique",	do_duplicated,	1,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"which.min",	do_first_min,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"pmin",	do_pmin,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"pmax",	do_pmin,	1,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -243,7 +243,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 
 /* Mathematical Functions */
 /* these are group generic and so need to eval args */
-/* Note that the number of arguments for the primitives in this group 
+/* Note that the number of arguments for the primitives in this group
    only applies to the default method. */
 {"round",	do_Math2,	10001,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"atan",	do_atan,	10002,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -1131,8 +1131,8 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef CHECK_VISIBILITY
     if(flag < 2 && flag == R_Visible) {
 	char *nm = CHAR(PRINTNAME(fun));
-	if(strcmp(nm, "eval") && strcmp(nm, "options") && strcmp(nm, "Recall") 
-	   && strcmp(nm, "do.call") && strcmp(nm, "switch") 
+	if(strcmp(nm, "eval") && strcmp(nm, "options") && strcmp(nm, "Recall")
+	   && strcmp(nm, "do.call") && strcmp(nm, "switch")
 	   && strcmp(nm, "recordGraphics") && strcmp(nm, "writeBin")
 	   && strcmp(nm, "NextMethod") && strcmp(nm, "eval.with.vis"))
 	    printf("vis: internal %s\n", nm);

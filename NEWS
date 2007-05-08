@@ -136,6 +136,9 @@ NEW FEATURES
 	in the startup time without 'methods' (and one-sixth with:
 	methods now takes 70% of the startup time of a default session).
 
+    o	duplicated() and unique() and their methods in base gain an
+	additional argument 'fromLast'.
+
 
 DEPRECATED & DEFUNCT
 
