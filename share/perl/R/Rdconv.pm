@@ -258,24 +258,26 @@ sub mark_brackets {
     }
     # Any remaining brackets must be unmatched ones.
     # However, unmatched brackets are sometimes legal,
-    # (e.g. \alias{{}), so only warn.
+    # (e.g. \alias{{}), so only warn. # matching } for editors
     if ($complete_text =~ /([{}])/s) {
         # Would like to tell which which line has unmatched { or },
         # but lines starting with % have already been removed.
         # Hence the 'on or after' in the message.
         my $badlineno = 0 ;
-	my $extra_info = "\'$1\'" ;
-        $extra_info = "\'$1\'" if $complete_text =~ /(\\\w+{)/ ;
 	foreach my $line (split /\n/, $complete_text) {
 	    $badlineno++;
-	    last if ($line =~ /[{}]/) ;
-	}
-	if( $extra_info =~ /^'}'$/ ) {
-	    warn "Note: unmatched right brace in '$Rdname'".
-		" on or after line $badlineno\n";
-	} elsif(! ($extra_info =~ /\\alias{/) ) 
-	    { warn "Warning: unmatched brace ($extra_info) in '$Rdname'".
-		   " on or after line $badlineno\n"; }
+	    if ($line =~ /([{}])/) {
+		my $extra_info = "\'$1\'" ;
+		$extra_info = "\'$1\'" if $line =~ /(\\\w+{)/ ; # }
+		if( $extra_info =~ /^'}'$/ ) {
+		    warn "Note: unmatched right brace in '$Rdname'".
+			" on or after line $badlineno\n";
+		} elsif(! ($extra_info =~ /\\alias{/) ) { # }
+		    warn "Warning: unmatched brace ($extra_info) in '$Rdname'".
+			" on or after line $badlineno\n"; 
+		}
+	    }
+ 	}
     }
 }
 
