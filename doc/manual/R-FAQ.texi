@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-05-02
+@set FAQ_DATE @value{FAQ_YEAR}-05-08
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1804,6 +1804,8 @@ area.  (Packages denoted as @emph{Recommended} are to be included in all
 binary distributions of R.)
 
 @table @strong
+@item ADaCGH
+Analysis of data from aCGH experiments.
 @item AMORE
 A MORE flexible neural network package, providing the TAO robust neural
 network algorithm.
@@ -2049,6 +2051,10 @@ the hyperbolic distribution to data.
 @item ICE
 Iterated Conditional Expectation: kernel estimators for
 interval-censored data.
+@item ICS
+ICS/ICA computation based on two scatter matrices.
+@item ICSNP
+Tools for multivariate nonparametrics.
 @item IDPmisc
 Utilities from the Institute of Data Analyses and Process Design,
 IDP/ZHW.
@@ -2088,6 +2094,8 @@ Heat maps of linkage disequilibrium measures.
 @item LMGene
 Date transformation and identification of differentially expressed genes
 in gene expression arrays.
+@item LearnBayes
+Functions for Learning Bayesian Inference.
 @item Lmoments
 Estimation of L-moments and the parameters of normal and Cauchy
 polynomial quantile mixtures.
@@ -2243,6 +2251,8 @@ Regional Frequency Analysis.
 @item RGtk2
 Facilities for programming graphical interfaces using Gtk (the Gimp Tool
 Kit) version 2.
+@item RGtk2.10
+R bindings for Gtk 2.10.x.
 @item RGrace
 Mouse/menu driven interactive plotting application.
 @item RGraphics
@@ -2307,6 +2317,8 @@ Implementation of random variables by means of S4 classes and methods.
 Creating random fields using various methods.
 @item RaschSampler
 Sampling binary matrices with fixed margins.
+@item Rcapture
+Loglinear models in capture-recapture experiments.
 @item Rcmdr
 A platform-independent basic-statistics @acronym{GUI} (graphical user
 interface) for R, based on the @strong{tcltk} package.
@@ -2314,6 +2326,8 @@ interface) for R, based on the @strong{tcltk} package.
 Rcmdr support for the introductory course at Temple University.
 @item RcppTemplate
 An illustration of the use of the Rcpp R/C++ interface library.
+@item Reliability
+Functions for estimating parameters in software reliability models.
 @item ResistorArray
 Electrical properties of resistor networks.
 @item Rfwdmv
@@ -2379,6 +2393,8 @@ Cambridge University Press.
 SNP-based whole genome association studies.
 @item SNPmaxsel
 Maximally selected statistics for SNP data.
+@item SRPM
+Shared Reproducibility Package Management.
 @item SQLiteDF
 Stores data frames and matrices in SQLite tables.
 @item SciViews
@@ -2527,11 +2543,8 @@ by S. Weisberg, 2005, Wiley.
 Another Multidimensional Analysis Package.
 @item analogue
 Analogue methods for palaeoecology.
-@c <COMMENT>
-@c Moved to the Archive on 2005-10-05 (Orphaned/2.2.0).
-@c @item anm
-@c Analog model for statistical/empirical downscaling.
-@c </COMMENT>
+@item anm
+Analog model for statistical/empirical downscaling.
 @item aod
 Analysis of Overdispersed Data.
 @item apTreeshape
@@ -2632,6 +2645,8 @@ Boosting methods for real and simulated data, featuring `BagBoost',
 Functions and datasets for bootstrapping from the book ``Bootstrap
 Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.  @emph{Recommended}.
+@item bootStepAIC
+Model selection by bootstrapping the @code{stepAIC()} procedure.
 @item bootstrap
 Software (bootstrap, cross-validation, jackknife), data and errata for
 the book ``An Introduction to the Bootstrap'' by B. Efron and
@@ -2819,6 +2834,8 @@ any mixture of these.
 @item dblcens
 Calculates the NPMLE of the survival distribution for doubly censored
 data.
+@item ddesolve
+Solver for Delay Differential Equations.
 @item deal
 Bayesian networks with continuous and/or discrete variables can be
 learned and compared from data.
@@ -3340,6 +3357,8 @@ of prediction error.
 @item irr
 Coefficients of Interrater Reliability and Agreement for quantitative,
 ordinal and nominal data.
+@item irtoys
+Simple interface to the estimation and plotting of IRT models.
 @item ismev
 Functions to support the computations carried out in ``An Introduction
 to Statistical Modeling of Extreme Values;' by S. Coles, 2001, Springer.
@@ -3959,6 +3978,8 @@ Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
 Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
 screeplot, PCA and related methods.
+@item psych
+Procedures for personality and psychological research.
 @item psychometric
 Applied psychometric theory: functions useful for correlation theory,
 meta-analysis (validity-generalization), reliability, item analysis,
