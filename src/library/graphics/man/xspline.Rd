@@ -13,7 +13,7 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
     of the polygon. See \code{\link{xy.coords}} for alternatives.}
   \item{shape}{A numeric vector of values between -1 and 1, which
     control the shape of the spline relative to the control points.}
-  \item{open}{A logical value indicating whether the spline is 
+  \item{open}{A logical value indicating whether the spline is
     an open or a closed shape.}
   \item{repEnds}{For open X-splines, a logical value indicating whether
     the first and last control points should be replicated for drawing
@@ -62,7 +62,7 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
 \references{
   Blanc, C. and Schlick, C. (1995),
   \emph{X-splines : A Spline Model Designed for the End User},
-  in \emph{Proceedings of SIGGRAPH 95}, pp. 377--386. 
+  in \emph{Proceedings of SIGGRAPH 95}, pp. 377--386.
   \url{http://dept-info.labri.fr/~schlick/DOC/sig1.html}
 }
 \seealso{
@@ -73,16 +73,15 @@ xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
 \examples{
 ## based on examples in ?grid.xspline
 
-x <- c(0.25, 0.25, 0.75, 0.75)
-y <- c(0.25, 0.75, 0.75, 0.25)
-
-xsplineTest <- function(s, open = TRUE, ...) {
+xsplineTest <- function(s, open = TRUE,
+                        x = c(1,1,3,3)/4,
+                        y = c(1,3,3,1)/4, ...) {
     plot(c(0,1), c(0,1), type="n", axes=FALSE, xlab="", ylab="")
     points(x, y, pch=19)
     xspline(x, y, s, open, ...)
     text(x+0.05*c(-1,-1,1,1), y+0.05*c(-1,1,1,-1), s)
 }
-par(mfrow=c(3,3), mar=rep(0,4), oma=c(0,0,2,0))
+op <- par(mfrow=c(3,3), mar=rep(0,4), oma=c(0,0,2,0))
 xsplineTest(c(0, -1, -1, 0))
 xsplineTest(c(0, -1,  0, 0))
 xsplineTest(c(0, -1,  1, 0))
@@ -106,6 +105,7 @@ xsplineTest(c(0,  1,  0, 0), FALSE, col="grey80")
 xsplineTest(c(0,  1,  1, 0), FALSE, col="grey80")
 title("Closed X-splines", outer=TRUE)
 
+par(op)
 x <- sort(rnorm(5))
 y <- sort(rnorm(5))
 plot(x, y, pch=19)
