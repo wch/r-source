@@ -48,7 +48,10 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             set(n, e, envenv)           # MUST do this immediately
             key <- getFromFrame(n, env)
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
-            parent.env(e) <- data$enclos
+            if (is.null(data$enclos))
+              parent.env(e) <- emptyenv()
+            else
+              parent.env(e) <- data$enclos
             vars <- names(data$bindings)
             for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
