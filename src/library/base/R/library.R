@@ -793,7 +793,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     ## don't waste time looking for the standard packages:
     ## we know where they are and this can take a significant
     ## time with 1000+ packages installed.
-    if(length(package) == 1 &&
+    if(length(package) == 1 && !nchar(Sys.getenv("R_CROSS_BUILD")) &&
        package %in% c("base", "tools", "utils", "grDevices", "graphics",
                       "stats", "datasets", "methods", "grid", "splines",
                       "stats4", "tcltk"))
