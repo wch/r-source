@@ -1,8 +1,9 @@
-## note that there is a version ../baseloader.R that should be kept in step
+## note that there is a version in ../baseloader.R that should be kept in step
 lazyLoad <- function(filebase, envir = parent.frame(), filter)
 {
     ##
     ## bootstrapping definitions so we can load base
+    ## - not that this version is actually used to load base
     ##
     glue <- function (..., sep = " ", collapse = NULL)
         .Internal(paste(list(...), sep, collapse))
@@ -21,7 +22,6 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     existsInFrame <- function (x, env) .Internal(exists(x, env, "any", FALSE))
     getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
-    environment <- function () .Internal(environment(NULL))
     mkenv <- function() .Internal(new.env(TRUE, baseenv(), 29L))
     lazyLoadDBfetch <- function(key, file, compressed, hook)
         .Call("R_lazyLoadDBfetch", key, file, compressed, hook, PACKAGE="base")
@@ -54,10 +54,14 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             e
         }
     }
-    expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
+    this <- sys.frame(sys.nframe())
+    ## this should be vectorized
     setWrapped <- function(x, value, env) {
     	key <- value			# force evaluation
-    	.Internal(delayedAssign(x, expr, environment(), env))
+        expr <-
+            substitute(lazyLoadDBfetch(key, datafile, compressed, envhook),
+                       list(key=key))
+    	.Internal(delayedAssign(x, expr, this, env))
     }
     if (! missing(filter)) {
         for (i in seq_along(vars))
