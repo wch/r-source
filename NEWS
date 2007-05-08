@@ -139,6 +139,13 @@ NEW FEATURES
     o	duplicated() and unique() and their methods in base gain an
 	additional argument 'fromLast'.
 
+    o   There is now a global CHARSXP cache, R_StringHash.  CHARSXPs
+        are no longer duplicated and must not be modified in place.
+        Developers should strive to only use mkChar (and mkString) for
+        creating new CHARSXPs and avoid use of allocString.  A new
+        macro, CallocCharBuf, can be used to obtain a temporary char
+        buffer for manipulating character data.  This patch was
+        written by Seth Falcon.
 
 DEPRECATED & DEFUNCT
 
