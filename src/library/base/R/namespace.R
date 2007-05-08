@@ -1254,10 +1254,11 @@ registerS3methods <- function(info, package, env)
         lin <- Info[localGeneric, , drop = FALSE]
         S3MethodsTable <-
             get(".__S3MethodsTable__.", envir = env, inherits = FALSE)
-        ## we need to move this to C for speed.
-        for(i in seq_len(nrow(lin)))
-            assign(lin[i,4], get(lin[i,3], envir = env),
-                   envir = S3MethodsTable)
+        ## we needed to move this to C for speed.
+        ## for(i in seq_len(nrow(lin)))
+        ##    assign(lin[i,4], get(lin[i,3], envir = env),
+        ##           envir = S3MethodsTable)
+        .Internal(importIntoEnv(S3MethodsTable, lin[,4], env, lin[,3]))
     }
 
     ## now the rest

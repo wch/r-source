@@ -132,6 +132,10 @@ NEW FEATURES
 
     o	bzip2 has been updated to version 1.0.4.
 
+    o	Various performance improvements lead to a one-third reduction
+	in the startup time without 'methods' (and one-sixth with:
+	methods now takes 70% of the startup time of a default session).
+
 
 DEPRECATED & DEFUNCT
 
