@@ -106,13 +106,15 @@ xsplineTest(c(0,  1,  1, 0), FALSE, col="grey80")
 title("Closed X-splines", outer=TRUE)
 
 par(op)
+
 x <- sort(rnorm(5))
 y <- sort(rnorm(5))
 plot(x, y, pch=19)
 res <- xspline(x, y, 1, draw=FALSE)
 lines(res)
+## the end points may be very close together, so use last few for direction
 nr <- length(res$x)
-arrows(res$x[1], res$y[1], res$x[2], res$y[2], code=1)
-arrows(res$x[nr-1], res$y[nr-1], res$x[nr], res$y[nr], code=2)
+arrows(res$x[1], res$y[1], res$x[4], res$y[4], code=1, length=0.1)
+arrows(res$x[nr-3], res$y[nr-3], res$x[nr], res$y[nr], code=2, length=0.1)
 }
 \keyword{aplot}
