@@ -312,6 +312,9 @@ BUG FIXES
     o	<a data.frame>[i, j] could sometimes select the wrong column
 	when j is numeric if there are duplicate column names.
 
+    o	sample(x, size, replace=TRUE, prob) had a memory leak if
+	10000 < size <= 100000.
+
 
 
 		CHANGES IN R VERSION 2.5.0
