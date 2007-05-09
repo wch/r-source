@@ -53,9 +53,12 @@
   (otherwise \code{NULL}), and from the edited output if
   \code{edit.row.names = TRUE}.  (If the \code{row.names} column is
   incomplete, it is extended by entries like \code{row223}.)
+
+  Editing a matrix or data frame will lose all attributes apart from the
+  row and column names.
 }
 \value{
-  The edited data frame.
+  The edited data frame or matrix.
 }
 \author{ Peter Dalgaard }
 \note{
