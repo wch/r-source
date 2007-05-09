@@ -59,6 +59,10 @@ BUG FIXES
 	'home'.  This means that if HOME is unset, the value defaults
 	to the personal directory and not %HOMEDRIVE%HOMEDIR.
 
+    o	The setting of R_TEXOPTS has been moved from MkRules to
+	doc/manual/Makefile.win.  This avoid error messages if 'latex'
+	is not in the path.
+
 
 
 		CHANGES IN R VERSION 2.5.0

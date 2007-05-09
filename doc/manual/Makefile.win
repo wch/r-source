@@ -3,6 +3,17 @@
 # ${R_HOME}/doc/manual/Makefile.win
 
 include ../../src/gnuwin32/MkRules
+## this was in MkRules, but throws errors unless latex is in the path.
+ifneq ($(strip $(BUILD)),CROSS)
+ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
+# MiKTeX
+R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+else
+R_TEXOPTS=
+endif
+else # cross-builds
+R_TEXOPTS=
+endif
 include ../../share/make/vars.mk
 
 srcdir = .
