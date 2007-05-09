@@ -54,6 +54,12 @@ xedit(name = NULL, file = "")
   Should an error occur in parsing, possibly due to incorrect syntax, no
   value is returned. Calling \code{edit()}, with no arguments, will
   result in the temporary file being reopened for further editing.
+
+  Note that deparsing is not perfect, and the object recreated after
+  editing can differ in subtle ways from that deparsed: see
+  \code{\link{dput}} and \code{\link{.deparseOpts}}. (The deparse options
+  used are the same as the defaults for \code{dump}.)  Editing a
+  function will preserve its environment.
   
   Currently only the internal editor in Windows makes use of the 
   \code{title} option; it displays the given name in the window 

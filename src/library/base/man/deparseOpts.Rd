@@ -51,7 +51,8 @@
     }
     \item{\code{all}}{
       An abbreviated way to specify all of the options
-      listed above.  This is the default for \code{dump}.
+      listed above.  This is the default for \code{dump}, and the options
+      used by \code{\link{edit}} (which are fixed).
     }
     \item{\code{delayPromises}}{
       Deparse promises in the form <promise: expression> rather than

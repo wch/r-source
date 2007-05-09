@@ -67,7 +67,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{quote}{the set of quoting characters. To disable quoting
     altogether, use \code{quote = ""}.  See \code{\link{scan}} for the
-    behaviour on quotes embedded in quotes.}
+    behaviour on quotes embedded in quotes.  Quoting is only considered
+    for columns read as character, which is all of them unless
+    \code{colClasses} is specified.}
 
   \item{dec}{the character used in the file for decimal points.}
 
@@ -224,6 +226,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   Quoted fields with embedded newlines are supported except after a
   comment character.
+
+  Note that unless \code{colClasses} is specified, all columns are read
+  as character columns and then converted.  This means that quotes are
+  interpreted in all fields and that a column of values like \code{"42"}
+  will result in an integer column.
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include
