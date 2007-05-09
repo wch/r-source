@@ -17,11 +17,12 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
         on.exit(close(con))
         .Internal(unserializeFromConn(con, baseenv()))
     }
-    "parent.env<-" <-
-        function (env, value) .Internal("parent.env<-"(env, value))
+    `parent.env<-` <-
+        function (env, value) .Internal(`parent.env<-`(env, value))
     existsInFrame <- function (x, env) .Internal(exists(x, env, "any", FALSE))
     getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
+    environment <- function () .Internal(environment(NULL))
     mkenv <- function() .Internal(new.env(TRUE, baseenv(), 29L))
     lazyLoadDBfetch <- function(key, file, compressed, hook)
         .Call("R_lazyLoadDBfetch", key, file, compressed, hook, PACKAGE="base")
@@ -54,7 +55,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             e
         }
     }
-    this <- sys.frame(sys.nframe())
+    this <- environment()
     ## this should be vectorized
     setWrapped <- function(x, value, env) {
     	key <- value			# force evaluation
