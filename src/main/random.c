@@ -361,7 +361,7 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
 	k = (int) rU;
 	ans[i] = (rU < q[k]) ? k+1 : a[k]+1;
     }
-    if(n > 100000) {
+    if(n > 10000) {
 	Free(HL);
 	Free(q);
     }

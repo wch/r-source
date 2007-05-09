@@ -88,6 +88,9 @@ BUG FIXES
     o	rbind() failed if the only data frame had 0 rows. (PR#9657)
 
 
+    o	sample(x, size, replace=TRUE, prob) had a memory leak if
+	10000 < size <= 100000.
+
 
 		CHANGES IN R VERSION 2.5.0
 
