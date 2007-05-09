@@ -11,7 +11,9 @@
   indicating which elements (rows) are duplicates.
 }
 \usage{
-duplicated(x, incomparables = FALSE, fromLast = FALSE, \dots)
+duplicated(x, incomparables = FALSE, \dots)
+
+\method{duplicated}{default}(x, incomparables = FALSE, fromLast = FALSE, \dots)
 
 \method{duplicated}{array}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
 }

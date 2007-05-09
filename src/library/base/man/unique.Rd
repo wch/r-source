@@ -10,7 +10,9 @@
   but with duplicate elements removed.
 }
 \usage{
-unique(x, incomparables = FALSE, fromLast = FALSE, \dots)
+unique(x, incomparables = FALSE, \dots)
+
+\method{unique}{default}(x, incomparables = FALSE, fromLast = FALSE, \dots)
 
 \method{unique}{matrix}(x, incomparables = FALSE, MARGIN = 1, fromLast = FALSE, \dots)
 

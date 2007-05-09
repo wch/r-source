@@ -1,4 +1,4 @@
-duplicated <- function(x, incomparables = FALSE, fromLast = FALSE, ...) UseMethod("duplicated")
+duplicated <- function(x, incomparables = FALSE, ...) UseMethod("duplicated")
 
 duplicated.default <- function(x, incomparables = FALSE, fromLast = FALSE, ...)
 {
@@ -31,7 +31,7 @@ duplicated.matrix <- duplicated.array <-
     res
 }
 
-unique <- function(x, incomparables = FALSE, fromLast = FALSE, ...) UseMethod("unique")
+unique <- function(x, incomparables = FALSE, ...) UseMethod("unique")
 
 
 ## NB unique.default is used by factor to avoid unique.matrix,
