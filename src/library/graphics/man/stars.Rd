@@ -112,6 +112,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   documented as here.
 }
 \examples{
+require(grDevices)
 stars(mtcars[, 1:7], key.loc = c(14, 2),
       main = "Motor Trend Cars : stars(*, full = F)", full = FALSE)
 stars(mtcars[, 1:7], key.loc = c(14, 1.5),

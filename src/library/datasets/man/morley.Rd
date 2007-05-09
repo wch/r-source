@@ -30,7 +30,7 @@
   London: Edward Arnold.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 morley$Expt <- factor(morley$Expt)
 morley$Run <- factor(morley$Run)
 attach(morley)

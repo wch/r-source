@@ -36,6 +36,7 @@
   \code{\link{xtabs}} for ways to display these data as a table.
 }
 \examples{
+require(stats); require(graphics)
 summary(warpbreaks)
 opar <- par(mfrow = c(1,2), oma = c(0, 0, 1.1, 0))
 plot(breaks ~ tension, data = warpbreaks, col = "lightgray",

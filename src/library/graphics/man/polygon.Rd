@@ -88,7 +88,7 @@ par(op)
 
 n <- 100
 xx <- c(0:n, n:0)
-yy <- c(c(0,cumsum(rnorm(n))), rev(c(0,cumsum(rnorm(n)))))
+yy <- c(c(0,cumsum(stats::rnorm(n))), rev(c(0,cumsum(stats::rnorm(n)))))
 plot   (xx, yy, type="n", xlab="Time", ylab="Distance")
 polygon(xx, yy, col="gray", border = "red")
 title("Distance Between Brownian Motions")

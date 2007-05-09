@@ -75,7 +75,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   \code{\link{make.rgb}} for specifying other colour spaces.
 }
 \examples{
-
+require(graphics); require(stats) # for na.omit
 par(mfrow=c(2,2))
 ## The displayable colors from four planes of Lab space
 ab <- expand.grid(a=(-10:15)*10,b=(-15:10)*10)

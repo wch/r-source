@@ -131,7 +131,8 @@ barplot(height, \dots)
   \code{\link{hist}}.
 }
 \examples{
-tN <- table(Ni <- rpois(100, lambda=5))
+require(grDevices) # for colours
+tN <- table(Ni <- stats::rpois(100, lambda=5))
 r <- barplot(tN, col=rainbow(20))
 #- type = "h" plotting *is* 'bar'plot
 lines(r, tN, type='h', col='red', lwd=2)

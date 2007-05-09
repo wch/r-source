@@ -107,6 +107,7 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   \code{\link{sunflowerplot}} instead.
 }
 \examples{
+require(stats); require(grDevices)
 x <- 1:10
 y <- sort(10*runif(10))
 z <- runif(10)

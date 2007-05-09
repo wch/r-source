@@ -207,6 +207,7 @@ utils::str(legend(-3, .9, ex.cs1, lty=1:2, plot=FALSE,
            adj = c(0, .6)))# adj y !
 legend(-3, .9, ex.cs1, lty=1:2, col=2:3,    adj = c(0, .6))
 
+require(stats)
 x <- rexp(100, rate = .5)
 hist(x, main = "Mean and Median of a Skewed Distribution")
 abline(v = mean(x),   col=2, lty=2, lwd=2)

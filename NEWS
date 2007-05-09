@@ -147,6 +147,9 @@ NEW FEATURES
         buffer for manipulating character data.  This patch was
         written by Seth Falcon.
 
+    o	require() now returns invisibly.
+
+
 DEPRECATED & DEFUNCT
 
     o	$ on an atomic vector now gives a warning that it is 'invalid'.
@@ -208,6 +211,12 @@ BUG FIXES
     o	match.call() no longer 'works' outside a function unless
 	'definition' is supplied.  (Under some circumstances it used
 	to 'work', matching itself.)
+
+    o	The formula methods of boxplot, cdcplot, pairs and spineplot
+	now load 'stats' so that model.frame() is visible where
+	they evaluate it.
+
+    o	methods("Math") did not work if 'methods' was not attached.
 
 
 

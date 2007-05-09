@@ -31,7 +31,7 @@
 
 \examples{
 ## 1-d tables
-(Poiss.tab <- table(N = rpois(200, lam= 5)))
+(Poiss.tab <- table(N = stats::rpois(200, lam= 5)))
 plot(Poiss.tab, main = "plot(table(rpois(200, lam=5)))")
 
 plot(table(state.division))

@@ -69,7 +69,8 @@ methods <- function (generic.function, class)
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
         else if(!exists(generic.function, mode = "function",
-                        envir = parent.frame()))
+                        envir = parent.frame()) &&
+                !generic.function %in% c("Math", "Ops", "Complex", "Summary"))
             stop(gettextf("no function '%s' is visible", generic.function),
                  domain = NA)
         if(!any(generic.function == knownGenerics)) {

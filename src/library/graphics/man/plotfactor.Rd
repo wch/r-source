@@ -26,6 +26,7 @@
     \code{\link{barplot}}, \code{\link{boxplot}}, \code{\link{spineplot}}.
 }
 \examples{
+require(grDevices)
 plot(PlantGrowth)                                # -> plot.data.frame
 plot(weight ~ group, data = PlantGrowth)         # numeric vector ~ factor
 plot(cut(weight, 2) ~ group, data = PlantGrowth) # factor ~ factor

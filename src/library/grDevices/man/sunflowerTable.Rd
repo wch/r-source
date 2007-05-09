@@ -30,6 +30,7 @@ sunflowerTable(iris[,3:4], digits = 6)
 
 ## Discretized uncorrelated Gaussian:
 \dontshow{set.seed(1)}
+require(stats)
 xy <- data.frame(x = round(sort(rnorm(100))), y = rnorm(100))
 sunflowerTable(xy, digits = 1)
 }

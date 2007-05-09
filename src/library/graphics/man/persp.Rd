@@ -123,6 +123,7 @@ persp(x, \dots)
   \code{\link{contour}} and \code{\link{image}}; \code{\link{trans3d}}.
 }
 \examples{
+require(grDevices) # for trans3d
 ## More examples in  demo(persp) !!
 ##                   -----------
 

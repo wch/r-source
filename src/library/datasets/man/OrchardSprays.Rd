@@ -51,6 +51,7 @@
   New York: Wiley.
 }
 \examples{
+require(graphics)
 pairs(OrchardSprays, main = "OrchardSprays data")
 }
 \keyword{datasets}

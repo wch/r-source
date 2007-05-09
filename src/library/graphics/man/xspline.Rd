@@ -107,8 +107,8 @@ title("Closed X-splines", outer=TRUE)
 
 par(op)
 
-x <- sort(rnorm(5))
-y <- sort(rnorm(5))
+x <- sort(stats::rnorm(5))
+y <- sort(stats::rnorm(5))
 plot(x, y, pch=19)
 res <- xspline(x, y, 1, draw=FALSE)
 lines(res)

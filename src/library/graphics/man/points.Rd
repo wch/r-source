@@ -94,6 +94,7 @@ points(x, \dots)
   workhorse function \code{\link{plot.xy}}.
 }
 \examples{
+require(stats) # for rnorm
 plot(-4:4, -4:4, type = "n")# setting up coord. system
 points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)

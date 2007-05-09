@@ -626,6 +626,7 @@ par(las = 3)
 barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
 par(las = 0)# reset to default
 
+require(grDevices) # for gray
 ## 'fg' use:
 plot(1:12, type = "b", main="'fg' : axes, ticks and box in gray",
      fg = gray(0.7), bty="7" , sub=R.version.string)

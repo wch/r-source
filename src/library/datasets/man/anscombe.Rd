@@ -25,7 +25,7 @@
   \emph{American Statistician}, \bold{27}, 17--21.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 summary(anscombe)
 
 ##-- now some "magic" to do the 4 regressions in a loop:

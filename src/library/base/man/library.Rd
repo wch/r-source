@@ -145,7 +145,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
   \code{library} returns the list of loaded (or available) packages
   (or \code{TRUE} if \code{logical.return} is \code{TRUE}).
   \code{require} returns a logical indicating whether the required
-  package is available.
+  package is available, invisibly
 }
 \section{Packages that require other packages}{
   \bold{NB:} This mechanism has been almost entirely superseded by

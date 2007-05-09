@@ -58,7 +58,7 @@ nclass.FD(x)
 }
 \examples{
 set.seed(1)
-x <- rnorm(1111)
+x <- stats::rnorm(1111)
 nclass.Sturges(x)
 
 ## Compare them:

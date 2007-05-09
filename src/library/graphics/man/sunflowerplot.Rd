@@ -95,6 +95,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
 \seealso{\code{\link{density}}, \code{\link[grDevices]{sunflowerTable}}
 }
 \examples{
+require(stats)
 ## 'number' is computed automatically:
 sunflowerplot(iris[, 3:4])
 ## Imitating  Chambers et al., p.109, closely:

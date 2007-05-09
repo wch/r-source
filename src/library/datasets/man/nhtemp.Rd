@@ -18,6 +18,7 @@
   New York: Wiley.
 }
 \examples{
+require(stats); require(graphics)
 plot(nhtemp, main = "nhtemp data",
   ylab = "Mean annual temperature in New Haven, CT (deg. F)")
 }

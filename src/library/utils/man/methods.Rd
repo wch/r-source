@@ -65,6 +65,7 @@ methods("$")
 methods("$<-")   # replacement function
 methods("+")     # binary operator
 methods("Math")  # group generic
+require(graphics)
 methods("axis")  # looks like it has methods, but not generic
 \dontrun{methods(print)   # over 100
 }}

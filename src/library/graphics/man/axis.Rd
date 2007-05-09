@@ -130,6 +130,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats) # for rnorm
 plot(1:4, rnorm(4), axes = FALSE)
 axis(1, 1:4, LETTERS[1:4])
 axis(2)

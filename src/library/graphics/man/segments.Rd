@@ -38,7 +38,7 @@ segments(x0, y0, x1, y1,
   \code{\link{lines}} for the usual polygons.
 }
 \examples{
-x <- runif(12); y <- rnorm(12)
+x <- stats::runif(12); y <- stats::rnorm(12)
 i <- order(x,y); x <- x[i]; y <- y[i]
 plot(x, y, main="arrows(.) and segments(.)")
 ## draw arrows from point to point :

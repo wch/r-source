@@ -52,6 +52,7 @@ rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
   \code{\link{par}} for how to specify colors.
 }
 \examples{
+require(grDevices)
 ## set up the plot region:
 op <- par(bg = "thistle")
 plot(c(100, 250), c(300, 450), type = "n", xlab="", ylab="",

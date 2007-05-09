@@ -71,9 +71,9 @@
   \emph{Biometrika} \bold{6}, 1--25.
 }
 \examples{
-data(crimtab)
+require(stats)
 dim(crimtab)
-str(crimtab)
+utils::str(crimtab)
 ## for nicer printing:
 local({cT <- crimtab
        colnames(cT) <- substring(colnames(cT), 2,3)
@@ -116,6 +116,7 @@ zobs[infZ] <- 6 * sign(zobs[infZ])
 
 # 7) Plot the distribution:
 
+require(grDevices); require(graphics)
 hist(x = zobs, probab = TRUE, xlab = "Student's z",
      col = grey(0.8), border = grey(0.5),
      main = "Distribution of Student's z score  for 'crimtab' data")

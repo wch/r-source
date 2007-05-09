@@ -27,6 +27,7 @@ xyVector(x, y)
 }
 \author{Douglas Bates and Bill Venables}
 \examples{
+require(stats); require(graphics)
 ispl <- interpSpline( weight ~ height, women )
 weights <- predict( ispl, seq( 55, 75, len = 51 ))
 class( weights )

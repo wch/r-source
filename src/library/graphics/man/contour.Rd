@@ -106,6 +106,7 @@ contour(x, \dots)
   graphics demo which can be invoked as \code{demo(graphics)}.
 }
 \examples{
+require(grDevices) # for colours
 x <- -6:16
 op <- par(mfrow = c(2, 2))
 contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))

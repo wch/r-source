@@ -55,7 +55,7 @@
 }
 \seealso{\code{\link{SSfol}}}
 \examples{
-require(stats)
+require(stats); require(graphics)
 coplot(conc ~ Time | Subject, data = Theoph, show = FALSE)
 Theoph.4 <- subset(Theoph, Subject == 4)
 fm1 <- nls(conc ~ SSfol(Dose, Time, lKe, lKa, lCl),

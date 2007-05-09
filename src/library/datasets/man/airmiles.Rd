@@ -17,6 +17,7 @@
   Prentice-Hall.
 }
 \examples{
+require(graphics)
 plot(airmiles, main = "airmiles data",
      xlab = "Passenger-miles flown by U.S. commercial airlines", col = 4)
 }

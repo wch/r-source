@@ -34,6 +34,7 @@ periodicSpline(obj1, obj2, knots, period = 2*pi, ord = 4)
   \code{\link{interpSpline}}
 }
 \examples{
+require(graphics); require(stats)
 xx <- seq( -pi, pi, len = 16 )[-1]
 yy <- sin( xx )
 frm <- data.frame( xx, yy )

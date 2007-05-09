@@ -58,7 +58,7 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 bs(women$height, df = 5)
 summary(fm1 <- lm(weight ~ bs(height, df = 5), data = women))
 

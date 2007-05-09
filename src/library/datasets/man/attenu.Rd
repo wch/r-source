@@ -49,6 +49,7 @@
   Manuscript.
 }
 \examples{
+require(graphics)
 ## check the data class of the variables
 sapply(attenu, data.class)
 summary(attenu)

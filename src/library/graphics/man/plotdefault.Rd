@@ -97,7 +97,7 @@ Distance <- cars$dist
 plot(Speed, Distance, panel.first = grid(8,8),
      pch = 0, cex = 1.2, col = "blue")
 plot(Speed, Distance,
-     panel.first = lines(lowess(Speed, Distance), lty = "dashed"),
+     panel.first = lines(stats::lowess(Speed, Distance), lty = "dashed"),
      pch = 0, cex = 1.2, col = "blue")
 
 ## Show the different plot types

@@ -701,7 +701,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
             assign(".required", packages, save)
         }
     }
-    value
+    invisible(value)
 }
 
 .packages <- function(all.available = FALSE, lib.loc = NULL)

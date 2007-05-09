@@ -175,6 +175,7 @@ utils::str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = FALSE))
 hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE,
      main = "WRONG histogram") # and warning
 
+require(stats)
 set.seed(14)
 x <- rchisq(100, df = 4)
 \dontshow{op <- par(mfrow = 2:1, mgp = c(1.5, 0.6, 0), mar = .1 + c(3,3:1))}

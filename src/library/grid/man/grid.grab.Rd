@@ -67,7 +67,7 @@ grid.grabExpr(expr, warn = 2, wrap = FALSE, ...)
 \examples{
 pushViewport(viewport(w=.5, h=.5))
 grid.rect()
-grid.points(runif(10), runif(10))
+grid.points(stats::runif(10), stats::runif(10))
 popViewport()
 grab <- grid.grab()
 grid.newpage()

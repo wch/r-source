@@ -24,7 +24,7 @@
   New York: Wiley.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 boxplot(count ~ spray, data = InsectSprays,
         xlab = "Type of spray", ylab = "Insect count",
         main = "InsectSprays data", varwidth = TRUE, col = "lightgray")
