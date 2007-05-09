@@ -86,17 +86,6 @@ endif
 
 ## =============== end of user-customizable parts  ===================
 
-ifneq ($(strip $(BUILD)),CROSS)
-ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
-# MiKTeX
-R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
-else
-R_TEXOPTS=
-endif
-else # cross-builds
-R_TEXOPTS=
-endif
-
 DEPARG=-MM
 MINGW32LDFLAG=
 C99FLAG=-std=gnu99
