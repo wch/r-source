@@ -87,6 +87,8 @@ spec.pgram(x, spans = NULL, kernel, taper = 0.1,
   \code{\link{plot.spec}}, \code{\link{fft}}}
 
 \examples{
+require(graphics)
+
 ## Examples from Venables & Ripley
 spectrum(ldeaths)
 spectrum(ldeaths, spans = c(3,5))

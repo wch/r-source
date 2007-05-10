@@ -47,7 +47,9 @@
 }
 \seealso{\code{\link{isoreg}} for computation of \code{isoreg} objects.}
 \examples{
-example(isoreg) # for the examples there
+require(graphics)
+
+utils::example(isoreg) # for the examples there
 
 plot(y3, main = "simple plot(.)  +  lines(<isoreg>)")
 lines(ir3)

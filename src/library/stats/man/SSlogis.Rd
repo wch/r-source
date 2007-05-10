@@ -39,6 +39,8 @@ getInitial(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 fm1 <- nls(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 summary(fm1)
 \dontshow{
+require(graphics)
+
   xx <- seq(-0.5, 5, len = 101)
   yy <- 5 / ( 1 + exp((2-xx)))
   par(mar = c(0, 0, 3.5, 0))

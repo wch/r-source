@@ -481,7 +481,7 @@ getOption(x)
 }
 \examples{
 options() # printing all current options
-op <- options(); str(op) # nicer printing
+op <- options(); utils::str(op) # nicer printing
 
 getOption("width") == options()$width # the latter needs more memory
 options(digits = 15)

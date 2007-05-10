@@ -100,7 +100,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \code{\link{data}}.
 }
 \examples{
-x <- runif(20)
+x <- stats::runif(20)
 y <- list(a = 1, b = TRUE, c = "oops")
 save(x, y, file = "xy.Rdata")
 save.image()

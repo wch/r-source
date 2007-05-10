@@ -104,6 +104,8 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   normality.
 }
 \examples{
+require(graphics)
+
 x <- rnorm(50)
 y <- runif(30)
 # Do x and y come from the same distribution?

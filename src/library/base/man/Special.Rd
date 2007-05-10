@@ -93,6 +93,8 @@ lfactorial(x)
   For the incomplete gamma function see \code{\link{pgamma}}.
 }
 \examples{
+require(graphics)
+
 choose(5, 2)
 for (n in 0:10) print(choose(n, k = 0:n))
 

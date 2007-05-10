@@ -119,6 +119,8 @@ rt(n, df, ncp)
 }
 \seealso{\code{\link{df}} for the F distribution.}
 \examples{
+require(graphics)
+
 1 - pt(1:5, df = 1)
 qt(.975, df = c(1:10,20,50,100,1000))
 

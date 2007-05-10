@@ -76,8 +76,8 @@ for(k in 5:11) {
 pretty(pi)
 
 add.names <- function(v) { names(v) <- paste(v); v}
-str(lapply(add.names(-10:20), pretty))
-str(lapply(add.names(0:20),   pretty, min = 0))
+utils::str(lapply(add.names(-10:20), pretty))
+utils::str(lapply(add.names(0:20),   pretty, min = 0))
 sapply(    add.names(0:20),   pretty, min = 4)
 
 pretty(1.234e100)

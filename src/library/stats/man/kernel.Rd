@@ -75,6 +75,8 @@ is.tskernel(k)
   Second edition. Springer, pp. 350--365.
 }
 \examples{
+require(graphics)
+
 ## Demonstrate a simple trading strategy for the
 ## financial time series German stock index DAX.
 x <- EuStockMarkets[,1]

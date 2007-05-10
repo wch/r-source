@@ -106,7 +106,7 @@ pmin.int(\dots, na.rm = FALSE)
   i.e., the location where an extreme value occurs.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
  min(5:1, pi) #-> one number
 pmin(5:1, pi) #->  5  numbers
 

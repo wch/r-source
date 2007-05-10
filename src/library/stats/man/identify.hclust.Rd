@@ -52,6 +52,8 @@
 % get(devNam <- getOption("device"))()
 % if (dev.interactive()) {
 \dontrun{
+require(graphics)
+
 hca <- hclust(dist(USArrests))
 plot(hca)
 (x <- identify(hca)) ##  Terminate with 2nd mouse button !!

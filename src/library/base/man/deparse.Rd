@@ -60,7 +60,8 @@ deparse(expr, width.cutoff = 60,
   \code{Quotes} for quoting conventions, including backticks.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
+
 deparse(args(lm))
 deparse(args(lm), width = 500)
 myplot <-

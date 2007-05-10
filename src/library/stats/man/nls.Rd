@@ -143,6 +143,8 @@ nls(formula, data, start, control, algorithm,
   \code{\link{profile.nls}}.
 }
 \examples{
+require(graphics)
+
 DNase1 <- subset(DNase, Run == 1)
 
 ## using a selfStart model

@@ -119,6 +119,8 @@ prcomp(x, \dots)
   \code{\link{svd}}, \code{\link{eigen}}.
 }
 \examples{
+require(graphics)
+
 ## the variances of the variables in the
 ## USArrests data vary by orders of magnitude, so scaling is appropriate
 prcomp(USArrests)  # inappropriate

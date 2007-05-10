@@ -68,6 +68,8 @@ print(x, \dots)
   \code{\link{cat}}, \code{\link{format}} or also \code{\link{write}}.
 }
 \examples{
+require(stats)
+
 ts(1:20)#-- print is the "Default function" --> print.ts(.) is called
 rr <- for(i in 1:3) print(1:i)
 rr

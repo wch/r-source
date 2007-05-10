@@ -45,6 +45,8 @@ recordGraphics(expr, list, env)
 } 
 \seealso{\code{\link{eval}} }
 \examples{
+require(graphics)
+
 plot(1:10)
 # This rectangle remains 1inch wide when the device is resized
 recordGraphics(

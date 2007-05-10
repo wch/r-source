@@ -135,7 +135,7 @@ environment()
 environment(f)
 .GlobalEnv
 
-ls(envir=environment(approxfun(1:2,1:2, method="const")))
+ls(envir=environment(stats::approxfun(1:2,1:2, method="const")))
 
 is.environment(.GlobalEnv) # TRUE
 

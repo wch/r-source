@@ -35,6 +35,8 @@ smoothEnds(y, k = 3)
   \code{smoothEnds()}.
 }
 \examples{
+require(graphics)
+
 y <- ys <- (-20:20)^2
 y [c(1,10,21,41)] <-  c(100, 30, 400, 470)
 s7k <- runmed(y,7, end = "keep")

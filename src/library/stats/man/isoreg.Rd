@@ -59,6 +59,8 @@ isoreg(x, y = NULL)
   uses isotonic regression.
 }
 \examples{
+require(graphics)
+
 (ir <- isoreg(c(1,0,4,3,3,5,4,2,0)))
 plot(ir, plot.type = "row")
 

@@ -171,7 +171,9 @@ Summary(\dots, na.rm = FALSE)
   \link[methods]{S4groupGeneric} for group generics for S4 methods.
 }
 \examples{
-d.fr <- data.frame(x=1:9, y=rnorm(9))
+require(utils)
+
+d.fr <- data.frame(x=1:9, y=stats::rnorm(9))
 class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
 
 methods("Math")

@@ -227,6 +227,8 @@ optim(par, fn, gr = NULL,
 }
 
 \examples{
+require(graphics)
+
 fr <- function(x) {   ## Rosenbrock Banana function
     x1 <- x[1]
     x2 <- x[2]

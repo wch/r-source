@@ -96,6 +96,8 @@ parent.frame(n = 1)
   \code{\link{eval}} for a usage of \code{sys.frame} and \code{parent.frame}.
 }
 \examples{
+require(utils)
+
 ## Note: the first two examples will give different results
 ## if run by example().
 ff <- function(x) gg(x)

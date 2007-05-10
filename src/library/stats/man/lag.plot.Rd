@@ -57,6 +57,8 @@ lag.plot(x, lags = 1, layout = NULL, set.lags = 1:lags,
   \code{\link{plot.ts}} which is the basic work horse.
 }
 \examples{
+require(graphics)
+
 lag.plot(nhtemp, 8, diag.col = "forest green")
 lag.plot(nhtemp, 5, main="Average Temperatures in New Haven")
 ## ask defaults to TRUE when we have more than one page:

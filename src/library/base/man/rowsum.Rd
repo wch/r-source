@@ -51,6 +51,8 @@ rowsum(x, group, reorder = TRUE, \dots)
   \code{\link{tapply}}, \code{\link{aggregate}}, \code{\link{rowSums}}
 }
 \examples{
+require(stats)
+
 x <- matrix(runif(100), ncol=5)
 group <- sample(1:8, 20, TRUE)
 (xsum <- rowsum(x, group))

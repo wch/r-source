@@ -46,7 +46,7 @@
 2.1
 typeof(2)
 sqrt(1i) # remember elementary math?
-str(0xA0)
+utils::str(0xA0)
 identical(1L, as.integer(1))
 
 ## You can combine the "0x" prefix with the "L" suffix :

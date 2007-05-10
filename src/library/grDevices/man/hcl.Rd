@@ -73,6 +73,8 @@ in future.
 \code{\link{rgb}}.
 }
 \examples{
+require(graphics)
+
 # The Foley and Van Dam PhD Data.
 csd <- matrix(c( 4,2,4,6, 4,3,1,4, 4,7,7,1,
                  0,7,3,2, 4,5,3,2, 5,4,2,2,

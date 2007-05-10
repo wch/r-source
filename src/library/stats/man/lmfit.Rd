@@ -56,6 +56,7 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
   unless you know better.
 }
 \examples{
+require(utils)
 %% FIXME: Do something more sensible (non-random data) !!
 set.seed(129)
 n <- 7 ; p <- 2

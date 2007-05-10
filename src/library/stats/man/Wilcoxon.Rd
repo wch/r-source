@@ -75,6 +75,8 @@ rwilcox(nn, m, n)
   \emph{one-sample} Wilcoxon signed rank statistic.
 }
 \examples{
+require(graphics)
+
 x <- -1:(4*6 + 1)
 fx <- dwilcox(x, 4, 6)
 Fx <- pwilcox(x, 4, 6)

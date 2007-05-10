@@ -42,6 +42,8 @@ getInitial(uptake ~ SSasymp( conc, Asym, lrc, c0), data = CO2.Qn1)
 fm1 <- nls(uptake ~ SSasymp( conc, Asym, lrc, c0), data = CO2.Qn1)
 summary(fm1)
 \dontshow{
+require(graphics)
+
   xx <- seq(0.5, 5, len = 101)
   yy <- 5 * (1 -  exp(-(xx - 0.5)/(2*log(2))))
   par(mar = c(0, 0, 4.0, 0))

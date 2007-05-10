@@ -139,6 +139,7 @@ removeMethod(f, signature, where)
   matrix(0,0,0)))
 }
 
+require(graphics)
 ## methods for plotting track objects (see the example for \link{setClass})
 ##
 ## First, with only one object as argument:
@@ -270,7 +271,7 @@ Nrow <- 1000 # at one time, values this large triggered a bug in gc/protect
 ## the loop here was a trigger for the bug
 Niter <- 10
 for(i in 1:Niter)  {
-    yy <- matrix(rnorm(10*Nrow), 10, Nrow)
+    yy <- matrix(stats::rnorm(10*Nrow), 10, Nrow)
     tDF <- as.data.frame(yy)
     testFunc(tDF)
 }

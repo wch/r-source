@@ -140,6 +140,7 @@ cor.test(x, y, method = "spearm", alternative = "g")
 cor.test(x, y,                    alternative = "g")
 
 ## Formula interface.
+require(graphics)
 pairs(USJudgeRatings)
 cor.test(~ CONT + INTG, data = USJudgeRatings)
 }

@@ -198,6 +198,8 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   see \code{\link[cluster]{agnes}} from package \pkg{cluster}.
 }
 \examples{
+require(graphics)
+
 hc <- hclust(dist(USArrests), "ave")
 plot(hc)
 plot(hc, hang = -1)

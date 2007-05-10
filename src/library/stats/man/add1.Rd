@@ -120,6 +120,7 @@ drop1(object, scope, \dots)
   \code{\link{extractAIC}}, \code{\link{anova}}
 }
 \examples{
+require(graphics); require(utils)
 example(step)#-> swiss
 add1(lm1, ~ I(Education^2) + .^2)
 drop1(lm1, test="F")  # So called 'type II' anova

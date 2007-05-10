@@ -73,6 +73,8 @@ rpois(n, lambda)
   the negative binomial distribution.
 }
 \examples{
+require(graphics)
+
 -log(dpois(0:7, lambda=1) * gamma(1+ 0:7)) # == 1
 Ni <- rpois(50, lam= 4); table(factor(Ni, 0:max(Ni)))
 

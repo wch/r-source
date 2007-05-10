@@ -201,6 +201,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   and its derivatives.
 }
 \examples{
+require(graphics)
+
 attach(cars)
 plot(speed, dist, main = "data(cars)  &  smoothing splines")
 cars.spl <- smooth.spline(speed, dist)
@@ -208,7 +210,7 @@ cars.spl <- smooth.spline(speed, dist)
 ## This example has duplicate points, so avoid cv=TRUE
 \dontshow{
   stopifnot(cars.spl $ w == table(speed)) # weights = multiplicities
-  str(cars.spl, digits=5, vec.len=6)
+  utils::str(cars.spl, digits=5, vec.len=6)
   cars.spl$fit
 }
 lines(cars.spl, col = "blue")

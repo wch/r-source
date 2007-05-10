@@ -157,6 +157,8 @@ hat(x, intercept = TRUE)
 \seealso{\code{\link{influence}} (containing \code{\link{lm.influence}}).
 }
 \examples{
+require(graphics)
+
 ## Analysis of the life-cycle savings data
 ## given in Belsley, Kuh and Welsch.
 lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)

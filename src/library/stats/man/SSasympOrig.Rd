@@ -37,6 +37,8 @@ getInitial(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329)
 fm1 <- nls(height ~ SSasympOrig( age, Asym, lrc), data = Lob.329)
 summary(fm1)
 \dontshow{
+require(graphics)
+
   xx <- seq(0, 5, len = 101)
   yy <- 5 * (1- exp(-xx/(2*log(2))))
   par(mar = c(0, 0, 3.5, 0))

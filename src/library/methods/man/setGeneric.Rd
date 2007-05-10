@@ -253,7 +253,7 @@ setMethod("Arith", c("numeric", "track"),
 
 ## now arithmetic operators  will dispatch methods:
 
-t1 <- new("track", x=1:10, y=sort(rnorm(10)))
+t1 <- new("track", x=1:10, y=sort(stats::rnorm(10)))
 
 t1 - 100
 1/t1

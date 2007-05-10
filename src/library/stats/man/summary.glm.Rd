@@ -100,7 +100,7 @@
 }
 \examples{
 ## --- Continuing the Example from  '?glm':%\code{\link{glm}}:
-\dontshow{example("glm", echo = FALSE)}
+\dontshow{utils::example("glm", echo = FALSE)}
 summary(glm.D93)
 }
 \keyword{models}

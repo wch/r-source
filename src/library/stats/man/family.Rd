@@ -146,6 +146,8 @@ quasipoisson(link = "log")
   \code{\link{glm}}, \code{\link{power}}, \code{\link{make.link}}.
 }
 \examples{
+require(utils) # for str
+
 nf <- gaussian()# Normal family
 nf
 str(nf)# internal STRucture

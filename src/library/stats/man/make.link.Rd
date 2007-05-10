@@ -36,7 +36,7 @@ make.link(link)
   \code{\link{power}}, \code{\link{glm}}, \code{\link{family}}.
 }
 \examples{
-str(make.link("logit"))
+utils::str(make.link("logit"))
 }
 \keyword{models}
 

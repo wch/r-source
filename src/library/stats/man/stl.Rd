@@ -100,6 +100,8 @@ stl(x, s.window, s.degree = 0,
   \code{\link{StructTS}} for different kind of decomposition.
 }
 \examples{
+require(graphics)
+
 plot(stl(nottem, "per"))
 plot(stl(nottem, s.win = 4, t.win = 50, t.jump = 1))
 

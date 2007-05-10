@@ -79,7 +79,7 @@ extractAIC(fit, scale, k = 2, \dots)
   \code{\link{step}}
 }
 \examples{
-example(glm)
+utils::example(glm)
 extractAIC(glm.D93)#>>  5  15.129
 }
 \keyword{models}

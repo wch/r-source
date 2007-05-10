@@ -58,7 +58,9 @@ setOldClass(Classes, prototype, where, test = FALSE)
     the \code{class} attribute.
   }
 \item{prototype}{
-    An optional object to use as the prototype.  This should be provided as the default S3 object for the class, if you plan to use the class as a slot  in an S4 class.  See the details section.
+    An optional object to use as the prototype.  This should be provided
+    as the default S3 object for the class, if you plan to use the class as
+    a slot in an S4 class.  See the details section.
   }
   \item{where}{
     Where to store the class definitions, the global or top-level
@@ -177,6 +179,7 @@ The slots would  not be interpreted by S3 code written for \code{lm} objects.
 ## VOODO Why is this needed?
 removeMethods("length")
 }
+require(stats)
 setOldClass(c("mlm", "lm"))
 setGeneric("dfResidual", function(model)standardGeneric("dfResidual"))
 setMethod("dfResidual", "lm", function(model)model$df.residual)

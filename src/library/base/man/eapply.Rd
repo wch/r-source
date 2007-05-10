@@ -16,7 +16,7 @@ eapply(env, FUN, \dots, all.names = FALSE)
 }
 \description{
   \code{eapply} applies \code{FUN} to the named values from an
-  environment and returns the results as a list. The user can request
+  environment and returns the results as a list.  The user can request
   that all named objects are used (normally names that begin with a
   dot are not). The output is not sorted and no parent environments are
   searched.
@@ -25,6 +25,8 @@ eapply(env, FUN, \dots, all.names = FALSE)
   \code{\link{lapply}}.
 }
 \examples{
+require(utils); require(stats)
+
 env <- new.env()
 env$a <- 1:10
 env$beta <- exp(-3:3)

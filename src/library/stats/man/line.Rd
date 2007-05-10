@@ -31,6 +31,8 @@ line(x, y)
   \code{\link{lm}}.
 }
 \examples{
+require(graphics)
+
 plot(cars)
 (z <- line(cars))
 abline(coef(z))

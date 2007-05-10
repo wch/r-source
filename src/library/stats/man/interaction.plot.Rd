@@ -71,6 +71,8 @@ interaction.plot(x.factor, trace.factor, response, fun = mean,
 }
 
 \examples{
+require(graphics)
+
 with(ToothGrowth, {
 interaction.plot(dose, supp, len, fixed=TRUE)
 dose <- ordered(dose)

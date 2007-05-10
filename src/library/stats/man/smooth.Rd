@@ -72,6 +72,8 @@ smooth(x, kind = c("3RS3R", "3RSS", "3RSR", "3R", "3", "S"),
   \code{\link{smooth.spline}}.
 }
 \examples{
+require(graphics)
+
 ## see also   demo(smooth) !
 
 x1 <- c(4, 1, 3, 6, 6, 4, 1, 6, 2, 4, 2) # very artificial

@@ -47,6 +47,8 @@ colorRampPalette(colors, \dots)
 }
 
 \examples{
+require(graphics)
+
 ## Here space="rgb" gives palettes that vary only in saturation,
 ## as intended.
 ## With space="Lab" the steps are more uniform, but the hues

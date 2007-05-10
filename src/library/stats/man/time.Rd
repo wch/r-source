@@ -20,6 +20,8 @@
   \code{\link{ts}}).
 }
 \usage{
+require(graphics)
+
 time(x, \dots)
 \method{time}{default}(x, offset=0, \dots)
 
@@ -54,8 +56,10 @@ deltat(x, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(graphics)
+
 cycle(presidents)
-# a simple series plot: c() makes the x and y arguments into vectors
-plot(c(time(presidents)), c(presidents), type="l")
+# a simple series plot
+plot(as.vector(time(presidents)), as.vector(presidents), type="l")
 }
 \keyword{ts}

@@ -39,6 +39,8 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
   \code{\link{gray}}.
 }
 \examples{
+require(graphics)
+
 hsv(.5,.5,.5)
 
 ## Look at gamma effect:

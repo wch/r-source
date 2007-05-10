@@ -90,7 +90,9 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   medians of 3 for its compound smoothers.
 }
 \examples{
-example(nhtemp)
+require(graphics)
+
+utils::example(nhtemp)
 myNHT <- as.vector(nhtemp)
 myNHT[20] <- 2 * nhtemp[20]
 plot(myNHT, type="b", ylim = c(48,60), main = "Running Medians Example")

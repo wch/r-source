@@ -77,6 +77,8 @@ approxfun(x, y = NULL,       method="linear",
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(graphics)
+
 x <- 1:10
 y <- rnorm(10)
 par(mfrow = c(2,1))

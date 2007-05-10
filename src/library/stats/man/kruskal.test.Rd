@@ -88,6 +88,7 @@ g <- factor(rep(1:3, c(5, 4, 5)),
 kruskal.test(x, g)
 
 ## Formula interface.
+require(graphics)
 boxplot(Ozone ~ Month, data = airquality)
 kruskal.test(Ozone ~ Month, data = airquality)
 }

@@ -78,6 +78,7 @@ utils::ls.str(environment(Fn12))
 
 
 ###----------------- Plotting --------------------------
+require(graphics)
 
 op <- par(mfrow=c(3,1), mgp=c(1.5, 0.8,0), mar= .1+c(3,3,2,1))
 

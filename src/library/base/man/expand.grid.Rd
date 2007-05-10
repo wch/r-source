@@ -35,6 +35,8 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE)
   of all combinations of n elements, taken m at a time.
 }
 \examples{
+require(utils)
+
 expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
             sex = c("Male","Female"))
 

@@ -61,9 +61,9 @@ unsplit(value, f, drop = FALSE)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-require(stats)
+require(stats); require(graphics)
 n <- 10; nn <- 100
-g <- factor(round(n * runif(n * nn)))
+g <- factor(round(n * stats::runif(n * nn)))
 x <- rnorm(n * nn) + sqrt(as.numeric(g))
 xg <- split(x, g)
 boxplot(xg, col = "lavender", notch = TRUE, varwidth = TRUE)

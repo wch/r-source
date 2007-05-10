@@ -86,6 +86,8 @@ alist(\dots)
   \code{\link{unlist}} is an approximate inverse to \code{as.list()}.
 }
 \examples{
+require(graphics)
+
 # create a plotting structure
 pts <- list(x=cars[,1], y=cars[,2])
 plot(pts)

@@ -59,6 +59,8 @@
   functionality.
 }
 \examples{
+require(graphics)
+
 ## Multivariate
 z <- ts(matrix(rt(200 * 8, df = 3), 200, 8), start=c(1961, 1), frequency=12)
 plot(z, yax.flip = TRUE)

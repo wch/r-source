@@ -86,6 +86,8 @@ bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax,
   Springer.
 }
 \examples{
+require(graphics)
+
 plot(density(precip, n = 1000))
 rug(precip)
 lines(density(precip, bw="nrd"), col = 2)

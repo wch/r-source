@@ -202,9 +202,11 @@ tracingState(on = NULL)
   constructing general expressions.
 }
 \examples{
+require(graphics)
+
 ##  Very simple use
 trace(sum)
-hist(rnorm(100)) # shows about 3-4 calls to sum()
+hist(stats::rnorm(100)) # shows about 3-4 calls to sum()
 untrace(sum)
 
 if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package

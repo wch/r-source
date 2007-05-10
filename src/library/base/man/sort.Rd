@@ -124,9 +124,10 @@ is.unsorted(x, na.rm = FALSE)
 }
 \examples{
 require(stats)
+
 x <- swiss$Education[1:25]
 x; sort(x); sort(x, partial = c(10, 15))
-stats:::median.default # shows you another example for 'partial'
+median.default # shows you another example for 'partial'
 
 ## illustrate 'stable' sorting (of ties):
 sort(c(10:3,2:12), method = "sh", index=TRUE) # is stable

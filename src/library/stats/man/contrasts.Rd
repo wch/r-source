@@ -50,7 +50,7 @@ contrasts(x, how.many) <- value
   \code{\link{lm}}.
 }
 \examples{
-example(factor)
+utils::example(factor)
 fff <- ff[, drop=TRUE]  # reduce to 5 levels.
 contrasts(fff) # treatment contrasts by default
 contrasts(C(fff, sum))

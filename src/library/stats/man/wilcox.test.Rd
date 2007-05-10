@@ -153,6 +153,7 @@ wilcox.test(x, \dots)
   assumptions [or large samples]
 }
 \examples{
+require(graphics)
 ## One-sample test.
 ## Hollander & Wolfe (1973), 29f.
 ## Hamilton depression scale factor measurements in 9 patients with

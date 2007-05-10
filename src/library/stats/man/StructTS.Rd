@@ -132,6 +132,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 
 \examples{
 ## see also JohnsonJohnson, Nile and AirPassengers
+require(graphics)
 
 trees <- window(treering, start=0)
 (fit <- StructTS(trees, type = "level"))

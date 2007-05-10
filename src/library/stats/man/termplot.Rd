@@ -67,6 +67,8 @@ termplot(model, data=NULL, envir=environment(formula(model)),
 \seealso{For (generalized) linear models, \code{\link{plot.lm}} and
   \code{\link{predict.glm}}.}
 \examples{
+require(graphics)
+
 had.splines <- "package:splines" \%in\% search()
 if(!had.splines) rs <- require(splines)
 x <- 1:100

@@ -84,6 +84,8 @@ rnorm(n, mean=0, sd=1)
   Wiley, New York.
 }
 \examples{
+require(graphics)
+
 dnorm(0) == 1/ sqrt(2*pi)
 dnorm(1) == exp(-1/2)/ sqrt(2*pi)
 dnorm(1) == 1/ sqrt(2*pi*exp(1))

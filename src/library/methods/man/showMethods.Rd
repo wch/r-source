@@ -74,6 +74,7 @@ showMethods(f = character(), where = topenv(parent.frame()),
   particular function and signature of classes for the arguments.
 }
 \examples{
+require(graphics)
 \dontshow{
  setClass("track",
           representation(x="numeric", y="numeric"))

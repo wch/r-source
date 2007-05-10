@@ -95,7 +95,7 @@ rm(A,B,score)
 
 
 ## multi-stratum example where efficiencies play a role
-example(eff.aovlist)
+utils::example(eff.aovlist)
 fit <- aov(Yield ~ A + B * C + Error(Block), data = aovdat)
 cont1 <- c(-1, 1)[A]/32  # Helmert contrasts
 cont2 <- c(-1, 1)[B] * c(-1, 1)[C]/32

@@ -71,6 +71,8 @@ bartlett.test(x, \dots)
   \bold{160}, 268--282.
 }
 \examples{
+require(graphics)
+
 % FIXME: could use something more interesting here
 plot(count ~ spray, data = InsectSprays)
 bartlett.test(InsectSprays$count, InsectSprays$spray)

@@ -76,6 +76,8 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   \code{\link[multcomp]{simint}}
 }
 \examples{
+require(graphics)
+
 summary(fm1 <- aov(breaks ~ wool + tension, data = warpbreaks))
 TukeyHSD(fm1, "tension", ordered = TRUE)
 plot(TukeyHSD(fm1, "tension"))

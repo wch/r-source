@@ -81,6 +81,8 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \bold{1}, pp. 281--297. Berkeley, CA: University of California Press.
 }
 \examples{
+require(graphics)
+
 # a 2-dimensional example
 x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
            matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2))

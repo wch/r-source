@@ -91,6 +91,7 @@ rnbinom(n, size, prob, mu)
   is a special case of the negative binomial.
 }
 \examples{
+require(graphics)
 x <- 0:11
 dnbinom(x, size = 1, prob = 1/2) * 2^(1 + x) # == 1
 126 /  dnbinom(0:8, size  = 2, prob  = 1/2) #- theoretically integer

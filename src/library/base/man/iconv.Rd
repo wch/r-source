@@ -65,7 +65,7 @@ iconvlist()
   \code{\link{localeToCharset}}, \code{\link{file}}. 
 }
 \examples{
-head(iconvlist(), n = 50)
+utils::head(iconvlist(), n = 50)
 
 \dontrun{
 ## convert from Latin-2 to UTF-8: two of the glibc iconv variants.

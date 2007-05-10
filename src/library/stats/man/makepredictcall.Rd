@@ -42,6 +42,8 @@ makepredictcall(var, call)
   \pkg{splines}, \code{\link[datasets]{cars}}
 }
 \examples{
+require(graphics)
+
 ## using poly: this did not work in R < 1.5.0
 fm <- lm(weight ~ poly(height, 2), data = women)
 plot(women, xlab = "Height (in)", ylab = "Weight (lb)")

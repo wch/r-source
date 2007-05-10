@@ -93,7 +93,7 @@ setValidity(Class, method, where = topenv(parent.frame()) )
 \examples{
 setClass("track",
           representation(x="numeric", y = "numeric"))
-t1 <- new("track", x=1:10, y=sort(rnorm(10)))
+t1 <- new("track", x=1:10, y=sort(stats::rnorm(10)))
 ## A valid "track" object has the same number of x, y values
 validTrackObject <- function(object) {
     if(length(object@x) == length(object@y)) TRUE

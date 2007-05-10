@@ -48,8 +48,8 @@
 }
 \examples{
 ## random dates in a 10-week period
-cut(ISOdate(2001, 1, 1) + 70*86400*runif(100), "weeks")
-cut(as.Date("2001/1/1") + 70*runif(100), "weeks")
+cut(ISOdate(2001, 1, 1) + 70*86400*stats::runif(100), "weeks")
+cut(as.Date("2001/1/1") + 70*stats::runif(100), "weeks")
 }
 \keyword{manip}
 \keyword{chron}

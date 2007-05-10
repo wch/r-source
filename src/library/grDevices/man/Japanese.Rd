@@ -28,6 +28,8 @@
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
 }
 \examples{
+require(graphics)
+
 plot(1:9, type="n", axes=FALSE, frame=TRUE, ylab="",
      main= "example(Japanese)", xlab= "using Hershey fonts")
 par(cex=3)

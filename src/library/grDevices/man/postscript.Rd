@@ -297,6 +297,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   Brian D'Urso \email{durso@hussle.harvard.edu}.
 }
 \examples{
+require(graphics)
 \dontrun{
 # open the file "foo.ps" for graphics output
 postscript("foo.ps")

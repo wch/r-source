@@ -70,6 +70,8 @@ gammaCody(x)
   Martin Maechler \email{maechler@stat.math.ethz.ch.}
 }
 \examples{
+require(graphics)
+
 nus <- c(0:5, 10, 20)
 
 x <- seq(0, 4, len = 501)

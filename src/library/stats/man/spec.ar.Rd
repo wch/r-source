@@ -42,6 +42,8 @@ spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
 \note{The multivariate case is not yet implemented.}
 
 \examples{
+require(graphics)
+
 spec.ar(lh)
 
 spec.ar(ldeaths)

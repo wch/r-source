@@ -138,6 +138,8 @@ density(x, \dots)
   \code{\link{plot.density}}, \code{\link{hist}}.
 }
 \examples{
+require(graphics)
+
 plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0
 
 # The Old Faithful geyser data
@@ -159,7 +161,7 @@ points(xx[i.out], rep(0.01, 10))
 fe <- sort(faithful$eruptions) # has quite a few non-unique values
 ## use 'counts / n' as weights:
 dw <- density(unique(fe), weights = table(fe)/length(fe), bw = d$bw)
-str(dw) ## smaller n: only 126, but identical estimate:
+utils::str(dw) ## smaller n: only 126, but identical estimate:
 stopifnot(all.equal(d[1:3], dw[1:3]))
 
 ## simulation from a density() fit:

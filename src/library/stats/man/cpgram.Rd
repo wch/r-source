@@ -31,6 +31,8 @@ cpgram(ts, taper = 0.1,
   From package \pkg{MASS}.
 }
 \examples{
+require(graphics)
+
 par(pty = "s", mfrow = c(1,2))
 cpgram(lh)
 lh.ar <- ar(lh, order.max = 9)

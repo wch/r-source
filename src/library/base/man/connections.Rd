@@ -406,7 +406,7 @@ scan(pipe("sed -e s/,$// data2"), sep=",")
 # convert decimal point to comma in output
 # both R strings and (probably) the shell need \ doubled
 zz <- pipe(paste("sed s/\\\\\\\\./,/ >", "outfile"), "w")
-cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
+cat(format(round(stats::rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 file.show("outfile", delete.file=TRUE)}
 

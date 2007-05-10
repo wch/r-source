@@ -81,6 +81,8 @@ optimise(f = , interval = , lower = min(interval),
   \code{\link{nlm}}, \code{\link{uniroot}}.
 }
 \examples{
+require(graphics)
+
 f <- function (x,a) (x-a)^2
 xmin <- optimize(f, c(0, 1), tol = 0.0001, a = 1/3)
 xmin

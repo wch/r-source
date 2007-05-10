@@ -36,6 +36,8 @@ is.recursive(x)
   and the \code{demo("is.things")}.
 }
 \examples{
+require(stats)
+
 is.a.r <- function(x) c(is.atomic(x), is.recursive(x))
 
 is.a.r(c(a=1,b=3))      # TRUE FALSE

@@ -49,6 +49,8 @@ arima.sim(model, n, rand.gen = rnorm, innov = rand.gen(n, \dots),
   \code{\link{arima}}
 }
 \examples{
+require(graphics)
+
 arima.sim(n = 63, list(ar = c(0.8897, -0.4858), ma = c(-0.2279, 0.2488)),
           sd = sqrt(0.1796))
 # mildly long-tailed
