@@ -209,7 +209,7 @@ SEXP R_copyDFattr(SEXP in, SEXP out)
     return out;
 }
 
-/* 'name' should be 1-element STRSXP or SYMSXP */ 
+/* 'name' should be 1-element STRSXP or SYMSXP */
 SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 {
     if (isString(name))
@@ -772,8 +772,10 @@ static SEXP dimnamesgets1(SEXP val1)
 	SEXP labels = getAttrib(val1, install("levels"));
 	PROTECT(this2 = allocVector(STRSXP, n));
 	for(i = 0; i < n; i++) {
+	    int ii = INTEGER(val1)[i];
 	    SET_STRING_ELT(this2, i,
-			   STRING_ELT(labels, INTEGER(val1)[i] - 1));
+			   (ii == NA_INTEGER) ? NA_STRING
+			   : STRING_ELT(labels, ii - 1));
 	}
 	UNPROTECT(1);
 	return this2;
@@ -1011,7 +1013,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_ATTRIB(object, R_NilValue);
     /* We have just removed the class, but might reset it later */
     SET_OBJECT(object, 0);
-    /* Probably need to fix up S4 bit in other cases, but 
+    /* Probably need to fix up S4 bit in other cases, but
        definitely in this one */
     nattrs = length(attrs);
     if(nattrs == 0) UNSET_S4_OBJECT(object);

@@ -4715,3 +4715,9 @@ stopifnot(identical(0x10L, 16L))
 A <- data.frame(foo=character(0), bar=character(0))
 rbind(A, c(foo="a", bar="b"))
 ## failed in 2.5.0
+
+## factor() with NA in dimnames():
+x <- matrix(1:2, 2)
+rownames(x) <- factor(c("A", NA))
+## segfaulted <= 2.5.0
+

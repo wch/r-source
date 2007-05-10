@@ -91,6 +91,9 @@ BUG FIXES
     o	sample(x, size, replace=TRUE, prob) had a memory leak if
 	10000 < size <= 100000.
 
+    o	x <- cbind(1:2); rownames(x) <- factor(c("A",NA))  now longer
+	segfaults.
+
 
 		CHANGES IN R VERSION 2.5.0
 
