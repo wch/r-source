@@ -41,6 +41,8 @@ confint(object, parm, level = 0.95, \dots)
   package \pkg{MASS}.
 }
 \examples{
+require(utils) # for flush.console in MASS version < 7.2-35
+
 fit <- lm(100/mpg ~ disp + hp + wt + am, data=mtcars)
 confint(fit)
 confint(fit, "wt")

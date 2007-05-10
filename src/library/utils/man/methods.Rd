@@ -58,6 +58,8 @@ methods(generic.function, class)
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats)
+
 methods(summary)
 methods(class = "aov")
 methods("[[")    # uses C-internal dispatching

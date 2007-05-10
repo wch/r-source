@@ -58,9 +58,13 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   \code{\link{search}} for the search path.
 }
 \examples{
+require(stats)
+
 %% some of these have enormous output that varies a lot by version
 \dontrun{apropos("lm")}
 apropos("GLM")                      # more than a dozen
+## that may include internal objects starting '.__C__' if
+## methods is attached
 apropos("GLM", ignore.case = FALSE) # not one
 apropos("lq")
 

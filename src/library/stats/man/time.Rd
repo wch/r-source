@@ -20,8 +20,6 @@
   \code{\link{ts}}).
 }
 \usage{
-require(graphics)
-
 time(x, \dots)
 \method{time}{default}(x, offset=0, \dots)
 

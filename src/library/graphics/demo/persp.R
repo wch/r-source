@@ -2,7 +2,7 @@
 ### -------------------------
 
 require(datasets)
-require(graphics)
+require(grDevices); require(graphics)
 opar <- par(ask = dev.interactive(orNone = TRUE))
 
 
@@ -77,7 +77,7 @@ fcol <- fill
 zi <- volcano[ -1,-1] + volcano[ -1,-61] +
            volcano[-87,-1] + volcano[-87,-61]  ## / 4
 fcol[-i1,-i2] <-
-    terrain.colors(20)[cut(zi, quantile(zi, seq(0,1, len = 21)),
+    terrain.colors(20)[cut(zi, stats::quantile(zi, seq(0,1, len = 21)),
                            include.lowest = TRUE)]
 persp(x, y, 2*z, theta = 110, phi = 40, col = fcol, scale = FALSE,
       ltheta = -120, shade = 0.4, border = NA, box = FALSE)
