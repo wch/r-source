@@ -2196,7 +2196,7 @@ one language, e.g.@: French.  It is not very safe to assume that all
 such users would have their computers set to a French locale, but let us
 assume so.  The problem then is that there are several possible
 encodings for French locales, the most common ones being @samp{CP1252}
-(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-9} (latin-9 which
+(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-15} (latin-9 which
 includes the Euro), and @samp{UTF-8}.  For characters in the French
 language the first three agree, but they do not agree with @samp{UTF-8}.
 Further, you (or different users) can run @R{} in different locales in
