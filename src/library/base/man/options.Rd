@@ -302,7 +302,9 @@ getOption(x)
       type for that session.  The value of this option defaults to the
       normal screen device (e.g., \code{x11}, \code{windows} or
       \code{quartz}) for an interactive session, and \code{postscript}
-      in batch use or if a screen is not available.}
+      in batch use or if a screen is not available.  If named, it is
+      looked for first from the global environment and then in the
+      \pkg{grDevices} namespace.}
 
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.

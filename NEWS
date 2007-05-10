@@ -149,6 +149,10 @@ NEW FEATURES
 
     o	require() now returns invisibly.
 
+    o	A device named as a character string in options(device =) is now
+	looked for in the grDevices namespace if it is not visible
+	from the global environment.
+
 
 DEPRECATED & DEFUNCT
 

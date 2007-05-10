@@ -4554,14 +4554,38 @@ DevDesc* CurrentDevice(void)
      * If there is one, start it up. */
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_BaseEnv);
-	if (isString(defdev) && length(defdev) > 0)
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	else if(TYPEOF(defdev) == CLOSXP) 
+	if (isString(defdev) && length(defdev) > 0) {
+	    SEXP devName = install(CHAR(STRING_ELT(defdev, 0)));
+	    /*  not clear where this should be evaluated, since
+		grDevices need not be in the search path.
+		So we look for it first.
+	    */
+	    defdev = findVar(devName, R_GlobalEnv);
+	    if(defdev != R_UnboundValue) {
+		PROTECT(defdev = lang1(devName));
+		eval(defdev, R_GlobalEnv);
+		UNPROTECT(1);
+	    } else {
+		/* Not globally visible: 
+		   try grDevices namespace if loaded.
+		   The option is unlikely to be set if it is not loaded.
+		*/
+		SEXP ns = findVarInFrame(R_NamespaceRegistry, 
+					 install("grDevices"));
+		if(ns != R_UnboundValue && 
+		   findVar(devName, ns) != R_UnboundValue) {
+		    PROTECT(defdev = lang1(devName));
+		    eval(defdev, ns);
+		    UNPROTECT(1);
+		} else
+		    error(_("no active or default device"));
+	    }
+	} else if(TYPEOF(defdev) == CLOSXP) {
 	    PROTECT(defdev = lang1(defdev));
-	else
+	    eval(defdev, R_GlobalEnv);
+	    UNPROTECT(1);
+	} else
 	    error(_("no active or default device"));
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
     }
     return R_Devices[R_CurrentDevice];
 }
