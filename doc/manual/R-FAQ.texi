@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-05-08
+@set FAQ_DATE @value{FAQ_YEAR}-05-10
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2200,6 +2200,8 @@ to deal with curve fitting for pharmacokinetics.
 Unified computational interfaces for pop PK.
 @item POT
 Generalized Pareto distribution and Peaks Over Threshold.
+@item PSAgraphics
+Propensity Score Analysis Graphics.
 @item PTAk
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
@@ -2909,11 +2911,8 @@ Dose-response data evaluation.
 @item dse
 Dynamic System Estimation, a multivariate time series package bundle.
 Contains @strong{dse1} (the base system, including multivariate ARMA and
-state space models), @strong{dse2} (extensions for evaluating estimation
-techniques, forecasting, and for evaluating forecasting model),
-@strong{tframe} (functions for writing code that is independent of the
-representation of time), and @strong{setRNG} (a mechanism for generating
-the same random numbers in S and R).
+state space models) and @strong{dse2} (extensions for evaluating
+estimation techniques, forecasting, and for evaluating forecasting model).
 @item dtt
 Discrete Trigonometric Transforms.
 @item dyn
@@ -3939,6 +3938,9 @@ manipulations.
 Construction and analysis of matrix population models.
 @item popgen
 Statistical and POPulation GENetics.
+@item poplab
+Population Lab, a tool for constructing a virtual electronic population
+evolving over time.
 @item portfolio
 Classes for analyzing and implementing portfolios.
 @item portfolioSim
@@ -4473,6 +4475,9 @@ Transmission/disequilibrium tests for extended marker haplotypes.
 Tensor product of arrays.
 @item tensorA
 Advanced tensors arithmetic with named indices.
+@item tframe
+Time Frame coding kernel: functions for writing code that is independent
+of the way time is represented.
 @item tgp
 Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
