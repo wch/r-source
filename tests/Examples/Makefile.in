@@ -13,6 +13,9 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
+## principle is that we can run all the examples in a package
+## starting with just that package and 'datasets'
+## R = R_DEFAULT_PACKAGES=datasets $(top_builddir)/bin/R --vanilla
 R = $(top_builddir)/bin/R --vanilla
 
 EX_IN_BASE = $(R_PKGS_BASE:=-Ex.R)
