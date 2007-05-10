@@ -43,7 +43,7 @@ else
 RHOME=$(shell perl ../../src/gnuwin32/pwd.pl ../..)
 endif
 
-MAKEINFO_HTML_OPTS = --html --no-split
+MAKEINFO_HTML_OPTS = --html --no-split --css-include=Rman.css
 TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
@@ -192,17 +192,19 @@ R-intro.dvi: R-intro.texi $(texiincludes)
 	$(TEX) R-intro.texi
 
 html: $(OBJECTS_HTML)
-R-admin.html: $(texiincludes)
-R-data.html: $(texiincludes)
-R-exts.html: $(texiincludes)
-R-intro.html: $(texiincludes)
-R-lang.html: $(texiincludes)
+R-admin.html: $(texiincludes) Rman.css
+R-data.html: $(texiincludes) Rman.css
+R-exts.html: $(texiincludes) Rman.css
+R-intro.html: $(texiincludes) Rman.css
+R-ints.html: $(texiincludes) Rman.css
+R-lang.html: $(texiincludes) Rman.css
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)
 R-data.info: $(texiincludes)
 R-exts.info: $(texiincludes)
 R-intro.info: $(texiincludes)
+R-ints.info: $(texiincludes)
 R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)

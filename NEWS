@@ -27,6 +27,10 @@ INSTALLATION
 
     o	There is support for 'DESTDIR': see the R-admin manual.
 
+    o	The texinfo manuals are now converted to HTML with a style
+	sheet: in recent versions of makeinfo the markup such as @file
+	was being lost in the HTML rendering.
+
 
 BUG FIXES
 
@@ -87,12 +91,15 @@ BUG FIXES
 
     o	rbind() failed if the only data frame had 0 rows. (PR#9657)
 
+    o	<a data.frame>[i, j] could sometimes select the wrong column
+	when j is numeric if there are duplicate column names.
 
     o	sample(x, size, replace=TRUE, prob) had a memory leak if
 	10000 < size <= 100000.
 
     o	x <- cbind(1:2); rownames(x) <- factor(c("A",NA))  now longer
 	segfaults.
+
 
 
 		CHANGES IN R VERSION 2.5.0

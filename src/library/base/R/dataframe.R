@@ -510,7 +510,9 @@ data.frame <-
         x <- x[j]
         cols <- names(x)  # also needed for 'drop'
         if(any(is.na(cols))) stop("undefined columns selected")
-        sxx <- match(cols, names(xx))
+        ## sxx <- match(cols, names(xx)) fails with duplicate names
+        nxx <- structure(seq_along(xx), names=names(xx))
+        sxx <- match(nxx[j], seq_along(xx))
     } else sxx <- seq_along(x)
 
     rows <- NULL # placeholder: only create row names when needed

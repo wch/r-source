@@ -21,7 +21,7 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN
+	ISBN Rman.css
 SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
@@ -30,7 +30,7 @@ OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 MAKEINFO = @MAKEINFO@
-MAKEINFO_HTML_OPTS = --html --no-split
+MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
 TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
@@ -236,12 +236,12 @@ R-lang.dvi: $(texiincludes)
 html: $(OBJECTS_HTML)
 	@(cd ../html; $(MAKE) index.html)
 
-R-admin.html: $(texiincludes)
-R-data.html: $(texiincludes)
-R-exts.html: $(texiincludes)
-R-intro.html: $(texiincludes)
-R-ints.html: $(texiincludes)
-R-lang.html: $(texiincludes)
+R-admin.html: $(texiincludes) $(srcdir)/Rman.css
+R-data.html: $(texiincludes) $(srcdir)/Rman.css
+R-exts.html: $(texiincludes) $(srcdir)/Rman.css
+R-intro.html: $(texiincludes) $(srcdir)/Rman.css
+R-ints.html: $(texiincludes) $(srcdir)/Rman.css
+R-lang.html: $(texiincludes) $(srcdir)/Rman.css
 
 info: $(OBJECTS_INFO)
 R-admin.info: $(texiincludes)
