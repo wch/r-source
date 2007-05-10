@@ -2,6 +2,12 @@
 
 include ../MkRules
 R_HOME = ../../..
+ifneq ($(strip $(BUILD)),CROSS)
+RHOME?=$(shell ../Rpwd.exe $(R_HOME))
+else
+RHOME=$(shell $(PERL) ../pwd.pl $(R_HOME))
+endif
+
 include $(R_HOME)/share/make/vars.mk
 
 ## use next to install other packages from main library
@@ -16,8 +22,14 @@ HelpStyle = 1
 ## Default internet connection, 0=Standard, 1=Internet2
 Internet = 0
 
+ifeq ($(strip $(USE_PARL)),YES)
+PERL_FIXED=
+else
+PERL_FIXED=../fixed/
+endif
+
 FULLVERSION=`cat ../../../VERSION`
-RPREFIX = $(shell $(PERL) ../fixed/rwver.pl $(R_HOME)/VERSION)
+RPREFIX = $(shell $(PERL) $(PERL_FIXED)rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
 INFO_FILES = COPYING NEWS README

@@ -17,6 +17,10 @@ endif
 # an alternative is to use -g here, if the debugger supports only stabs.
 G_FLAG=-gdwarf-2
 
+# Define this if you want to use parl.exe from Rtools rather than
+# a full Perl installation
+#USE_PARL = YES
+
 ## ============== configuration macros for building R ===================
 
 # Comment out if the msvcrt.dll malloc/free is required.
@@ -147,7 +151,13 @@ LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
 MKDIR=mkdir
 NM=$(BINPREF)nm
 OBJC=$(BINPREF)gcc $(MINGW32CFLAG)
+
+# Note that due to a bug in parl, a full path to it must be given.
+ifeq ($(strip $(USE_PARL)),YES)
+PERL=$(RHOME)/bin/parl $(RHOME)/share/perl/scripts.par
+else
 PERL=perl
+endif
 RANLIB=$(BINPREF)ranlib
 RESCOMP=$(BINPREF)windres
 RM=rm -f

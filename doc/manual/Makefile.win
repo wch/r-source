@@ -38,7 +38,7 @@ TEX = tex $(R_TEXOPTS)
 MAKEINDEX = LC_ALL=C makeindex
 TEXINDEX = LC_ALL=C texindex
 ifneq ($(strip $(BUILD)),CROSS)
-RHOME=$(shell ../../src/gnuwin32/Rpwd.exe ../..)
+RHOME?=$(shell ../../src/gnuwin32/Rpwd.exe ../..)
 else
 RHOME=$(shell $(PERL) ../../src/gnuwin32/pwd.pl ../..)
 endif
@@ -287,20 +287,26 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
 	  echo "$${v}") > $@
 
+ifeq ($(strip $(USE_PARL)),YES)
+PERL_TOOLS=
+else
+PERL_TOOLS=../../tools/
+endif
+
 # bundles such as VR are not unpacked in src/library directly
 %-pkg.tex: FORCE
 	@echo "collecting LaTeX docs for package \`$*' ..."
 	@if test -f "$(top_srcdir)/library/$*/latex/Rhelp.zip" ; then \
-	  PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
+	  PERL5LIB=$(RHOME)/share/perl $(PERL) $(PERL_TOOLS)pkg2tex.pl $*; \
 	else \
 	  if test -d "$(top_srcdir)/src/library/$*" ; then \
-	    if $(PERL) ../../tools/Rdnewer.pl \
+	    if $(PERL) $(PERL_TOOLS)Rdnewer.pl \
 		"$(top_srcdir)/src/library/$*" "$@"; then \
 	      (cd ../../src/gnuwin32/help && $(MAKE)  --no-print-directory RHOME=$(RHOME) latex-$*); \
-	      PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
+	      PERL5LIB=$(RHOME)/share/perl $(PERL) $(PERL_TOOLS)pkg2tex.pl $*; \
 	    fi \
 	  else \
-	    PERL5LIB=$(RHOME)/share/perl $(PERL) ../../tools/pkg2tex.pl $*; \
+	    PERL5LIB=$(RHOME)/share/perl $(PERL) $(PERL_TOOLS)pkg2tex.pl $*; \
 	  fi \
 	fi
 FORCE:
@@ -341,13 +347,20 @@ R-intro.pdf: R-intro.texi $(texiincludes)
 	$(PDFTEX) R-intro.texi
 	$(PDFTEX) R-intro.texi
 
+
+ifeq ($(strip $(USE_PARL)),YES)
+PERL_FIXED=
+else
+PERL_FIXED=$(top_srcdir)/src/gnuwin32/fixed/
+endif
+
 version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
 	  echo "@set VERSIONno $${v}" > $@; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
 	  echo "@set VERSION $${v}" >> $@; \
-	  rwv=$(shell $(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
+	  rwv=$(shell $(PERL) $(PERL_FIXED)rwver.pl $(top_srcdir)/VERSION); \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \

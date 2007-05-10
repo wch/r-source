@@ -1,6 +1,12 @@
+
 include ../MkRules
 
 R_HOME = ../../..
+ifneq ($(strip $(BUILD)),CROSS)
+RHOME?=$(shell ../Rpwd.exe $(R_HOME))
+else
+RHOME=$(shell $(PERL) ../pwd.pl $(R_HOME))
+endif
 
 all: profiles fixhtml fixbin fixetc fixshare ../XINSTALL svnonly
 
@@ -37,6 +43,9 @@ fixshare: share/tests.mk
 	$(MKDIR) -p $(R_HOME)/share/make
 	$(CP) -p $^ $(R_HOME)/share/make/wintests.mk
 	@$(ECHO) done > fixshare	
+	
+fixparl: ../../../share/perl/scripts.par
+	@$(ECHO) done > fixparl
 
 svnonly:
 	@$(MAKE) -C ../../../doc/manual -f Makefile.win svnonly
@@ -46,12 +55,40 @@ clean:
 
 distclean:
 
-$(R_HOME)/doc/html/search/SearchEngine.html: $(R_HOME)/doc/html/search/SearchEngine-head.html $(R_HOME)/doc/html/search/SearchEngine-foot.html $(R_HOME)/doc/KEYWORDS.db
+ifeq ($(strip $(USE_PARL)),YES)
+PERL_TOOLS=
+else
+PERL_TOOLS=../tools/
+endif
+
+$(R_HOME)/doc/html/search/SearchEngine.html: fixparl $(R_HOME)/doc/html/search/SearchEngine-head.html $(R_HOME)/doc/html/search/SearchEngine-foot.html $(R_HOME)/doc/KEYWORDS.db
 	(cd $(R_HOME)/doc; \
 	cat html/search/SearchEngine-head.html > html/search/SearchEngine.html; \
-	$(PERL) ../tools/keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \
+	$(PERL) $(PERL_TOOLS)keywords2html.pl KEYWORDS.db >> html/search/SearchEngine.html; \
 	cat html/search/SearchEngine-foot.html >> html/search/SearchEngine.html)
 ../XINSTALL: bin/INSTALL
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(SED) -e 's/"MINGW"/"CROSS"/' $< > $@
 endif
+
+FIXED_SCRIPTS=bin/INSTALL bin/REMOVE bin/Rd2txt bin/SHLIB
+
+OTHER_SCRIPTS=rwver.pl ../../../share/perl/build-help.pl \
+	../../../share/perl/build-help-windows.pl \
+	../../../share/perl/massage-Examples.pl \
+	../../../tools/pkg2tex.pl ../../../tools/Rdnewer.pl \
+	../../../tools/keywords2html.pl \
+	../installer/JRins.pl ../installer/WIXins.pl \
+	../makeDllRes.pl ../pwd.pl \
+	../../../bin/Rdconv ../../../bin/Rprof ../../../bin/Sd2Rd \
+	../../../bin/build ../../../bin/check ../../../bin/massage-Examples 
+
+# This target updates an existing scripts.par.  To create a new one, install
+# the PAR::packer package in Perl, and then run the last line instead of the others
+
+../../../share/perl/scripts.par: fixbin  $(OTHER_SCRIPTS)
+	@$(MKDIR) -p script
+	cp $(FIXED_SCRIPTS) $(OTHER_SCRIPTS) script
+	zip -q -r $@ script
+	@$(RM) -rf script
+#	PERL5LIB="../../../share/perl" pp.bat -p -o $@ $(FIXED_SCRIPTS) $(OTHER_SCRIPTS)

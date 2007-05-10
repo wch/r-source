@@ -1,43 +1,54 @@
+R_HOME = ../../..
+ifneq ($(strip $(BUILD)),CROSS)
+RHOME?=$(shell ../Rpwd.exe $(R_HOME))
+JUNK="R_HOME=$(R_HOME) RHOME=$(RHOME)"
+else
+RHOME=$(shell $(PERL) ../pwd.pl $(R_HOME))
+endif
+
+include $(RHOME)/src/gnuwin32/MkRules
+
 # default target builds indices
 DOS=# -dosnames   # for file-name mapping
-PERL=R_OSTYPE=windows perl
+
+ifeq ($(strip $(USE_PARL)),YES)
+BUILDHELP=R_OSTYPE=windows $(PERL) build-help-windows.pl
+else
+BUILDHELP=PERL5LIB=$(RHOME)/share/perl R_OSTYPE=windows $(PERL) $(R_HOME)/share/perl/build-help-windows.pl
+endif
+
 CAT=cat
 CP=cp
 RM=rm
 MKDIR=mkdir
 
-R_HOME = ../../..
-RHOME=$(shell perl ../pwd.pl ../../..)
+
 PKGDIR=../../library
 RLIB=$(RHOME)/library
 CHM=
 
 index-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
-	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
+	  $(BUILDHELP) ${DOS} \
 	    -index $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 pkg-% help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
-	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
+	  $(BUILDHELP) ${DOS} \
 	    $(HELPTYPES) $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 pkgfake-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
-	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
+	  $(BUILDHELP) ${DOS} \
 	    -txt -latex $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	fi
 
 chm-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  if ! test -d $(PKGDIR)/$*/chm ; then \
-	    PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
+	    $(BUILDHELP) ${DOS} \
 	    -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
 	  fi; \
 	  $(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
@@ -58,8 +69,7 @@ ziponlyhelp-%:
 latex-%:
 	@$(MAKE) --no-print-directory -C $(RLIB)/$* \
 	-f $(RHOME)/src/gnuwin32/help/Makefile PKG=$* unzipit
-	PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
+	$(BUILDHELP) ${DOS} \
 	  -latex $(PKGDIR)/$* $(RLIB)
 
 clean:

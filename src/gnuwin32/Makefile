@@ -13,7 +13,7 @@ all:
 
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
-RHOME = $(shell ./Rpwd.exe ../..)
+RHOME ?= $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 R_EXE = $(RHOME)/bin/rterm.exe
 else
@@ -23,7 +23,13 @@ endif
 
 REXE = $(R_EXE) --vanilla --slave
 
-RPREFIX = $(shell $(PERL) fixed/rwver.pl ../../VERSION)
+ifeq ($(strip $(USE_PARL)),YES)
+PERL_FIXED=
+else
+PERL_FIXED=fixed/
+endif
+
+RPREFIX = $(shell $(PERL) $(PERL_FIXED)rwver.pl ../../VERSION)
 
 FULLVERSION=`cat ../../VERSION`
 
@@ -90,14 +96,18 @@ front-ends/Rpwd.exe:
 
 ## watch out: R.dll and Rblas.dll depend on each other.
 ## so build import library R.dll then Rblas.dll
-rbuild:
+rbuild: ../../bin
+	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory fixfiles
 	@$(MAKE) --no-print-directory -C ../include -f Makefile.win
-	@$(MAKE) --no-print-directory -C ../scripts -f Makefile.win
 	@$(MAKE) --no-print-directory libRblas.dll.a
 	@$(MAKE) --no-print-directory ../../bin/R.dll
 	@$(MAKE) --no-print-directory Rblas CHTML
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules Rcode
+	
+../../bin: 
+	@$(MKDIR) -p ../../bin
+	@$(CP) bin/* ../../bin
 
 ## used to build skeletal versions of packages, enough to run
 ## package tools to install them properly
@@ -406,7 +416,7 @@ distclean: clean clean-recommended
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
-	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
+	$(RM) -r ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
 	../include/libintl.h
@@ -438,6 +448,7 @@ distclean: clean clean-recommended
 	$(RM) -r .vignettes # it gets left behind sometimes
 	$(RM) -r ../../share/locale
 	$(RM) XINSTALL # from cross-building
+	$(RM) -r ../../bin 
 	$(RM) Rpwd.exe # do this last of all
 
 veryclean: distclean

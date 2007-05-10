@@ -2,11 +2,13 @@
 include ../gnuwin32/MkRules
 R_HOME = ../..
 
-all: $(R_HOME)/bin/massage-Examples \
+all: $(R_HOME)/bin $(R_HOME)/bin/massage-Examples \
 	 $(R_HOME)/bin/build $(R_HOME)/bin/check $(R_HOME)/bin/Rdconv \
 	 $(R_HOME)/bin/Sd2Rd $(R_HOME)/bin/Rdiff.sh $(R_HOME)/bin/Rprof
 	
-
+$(R_HOME)/bin:
+	@$(MKDIR) -p $(R_HOME)/bin
+	
 $(R_HOME)/bin/massage-Examples: $(R_HOME)/share/perl/massage-Examples.pl
 	@$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
 

@@ -7,7 +7,7 @@ RVER = @RVER@
 
 ## must be absolute and space-free paths
 ifneq ($(strip $(BUILD)),CROSS)
-RHOME = $(shell ./Rpwd.exe ../..)
+RHOME ?= $(shell ./Rpwd.exe ../..)
 PKGD = $(shell ./Rpwd.exe "$(PKGDIR)")
 R_EXE = $(RHOME)/bin/rterm.exe
 else

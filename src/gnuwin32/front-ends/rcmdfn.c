@@ -68,6 +68,8 @@ void rcmdusage (char *RCMD)
 	    "for usage information for each command.\n\n");
 }
 
+static char * perlScripts[] = { "INSTALL", "REMOVE", "SHLIB", "build", "check",
+					  "Rprof", "Rdconv", "Rd2txt", "Sd2Rd", NULL };
 #define CMD_LEN 10000
 int rcmdfn (int cmdarg, int argc, char **argv)
 {
@@ -300,10 +302,21 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		} else if (!strcmp(".bat", p + strlen(p) - 4)) strcpy(cmd, "");
 		else if (!strcmp(".exe", p + strlen(p) - 4)) strcpy(cmd, "");
 		else {
-		    strcpy(cmd, "perl ");
-		    strcat(cmd, RHome); strcat(cmd, "/bin/");
+		    for (i=0; perlScripts[i] && stricmp(p, perlScripts[i]); i++);
+		    if (perlScripts[i]) {
+		    	strcpy(cmd, RHome);
+		    	strcat(cmd, "/bin/parl ");
+		    	strcat(cmd, RHome);
+		    	strcat(cmd, "/share/perl/scripts.par ");
+		    	strcat(cmd, perlScripts[i]);
+		    	p[0] = '\0';
+		    } else {
+		    	strcpy(cmd, "perl ");
+		    	strcat(cmd, RHome); strcat(cmd, "/bin/");
+		    }
 		}
 		strcat(cmd, p);
+		fprintf(stderr, cmd);
 	    }
 	} else
 	    snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe", getRHOME());

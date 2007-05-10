@@ -69,8 +69,14 @@ else
 -include Makevars
 endif
 
+ifeq ($(strip $(USE_PARL)),YES)
+PERL_GNUWIN32=
+else
+PERL_GNUWIN32=$(RHOME)/src/gnuwin32/
+endif
+
 $(DLLNAME)_res.rc:
-	@PERL5LIB=$(RHOME)/share/perl $(PERL) $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
+	@PERL5LIB=$(RHOME)/share/perl $(PERL) $(PERL_GNUWIN32)makeDllRes.pl $(DLLNAME) > $@
 
 $(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/include/Rversion.h
 
