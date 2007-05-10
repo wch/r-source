@@ -1525,6 +1525,8 @@ int asLogical(SEXP x)
 	    return Rf_LogicalFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
 	    return Rf_LogicalFromComplex(COMPLEX(x)[0], &warn);
+	case STRSXP:
+	    return Rf_LogicalFromString(STRING_ELT(x, 0), &warn);
 	default:
 	    UNIMPLEMENTED_TYPE("asLogical", x);
 	}
@@ -1548,6 +1550,10 @@ int asInteger(SEXP x)
 	    return res;
 	case CPLXSXP:
 	    res = Rf_IntegerFromComplex(COMPLEX(x)[0], &warn);
+	    Rf_CoercionWarning(warn);
+	    return res;
+	case STRSXP:
+	    res = Rf_IntegerFromString(STRING_ELT(x, 0), &warn);
 	    Rf_CoercionWarning(warn);
 	    return res;
 	default:
@@ -1578,6 +1584,10 @@ double asReal(SEXP x)
 	    res = Rf_RealFromComplex(COMPLEX(x)[0], &warn);
 	    Rf_CoercionWarning(warn);
 	    return res;
+	case STRSXP:
+	    res = Rf_RealFromString(STRING_ELT(x, 0), &warn);
+	    Rf_CoercionWarning(warn);
+	    return res;
 	default:
 	    UNIMPLEMENTED_TYPE("asReal", x);
 	}
@@ -1602,6 +1612,8 @@ Rcomplex asComplex(SEXP x)
 	    return Rf_ComplexFromReal(REAL(x)[0], &warn);
 	case CPLXSXP:
 	    return COMPLEX(x)[0];
+	case STRSXP:
+	    return Rf_ComplexFromString(STRING_ELT(x, 0), &warn);
 	default:
 	    UNIMPLEMENTED_TYPE("asComplex", x);
 	}

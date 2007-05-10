@@ -108,7 +108,7 @@ NEW FEATURES
     o	Imports environments of name spaces are named (as
 	"imports:foo"), and so are known e.g. to environmentName().
 
-    o	Package 'stats4' use lazy-loading in preparation for the
+    o	Package 'stats4' uses lazy-loading in preparation for the
 	deprecation of SaveImage.
 
     o	dev.interactive() regards devices with the displaylist enabled
@@ -152,6 +152,11 @@ NEW FEATURES
     o	A device named as a character string in options(device =) is now
 	looked for in the grDevices namespace if it is not visible
 	from the global environment.
+
+    o	The internal equivalents of as.complex, as.double, as.integer
+	and as.logical used to handle length-1 arguments now accept
+	character strings (rather than report that this is
+	'unimplemented').
 
 
 DEPRECATED & DEFUNCT
