@@ -4767,3 +4767,8 @@ worms.glm <- glm(cbind(deaths, (20-deaths)) ~ sex+ doselin,
                  data=worms, family=binomial)
 predict(worms.glm, new=data.frame(sex="1", doselin=6))
 ## failed < 2.6.0
+
+## factor() with NA in dimnames():
+x <- matrix(1:2, 2)
+rownames(x) <- factor(c("A", NA))
+## segfaulted <= 2.5.0
