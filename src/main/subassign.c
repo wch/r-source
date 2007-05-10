@@ -1777,7 +1777,7 @@ SEXP attribute_hidden do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     else if(isString(nlist) )
 	SET_STRING_ELT(input, 0, STRING_ELT(nlist, 0));
     else {
-	error(_("invalid subscript type"));
+	error(_("invalid subscript type '%s'"), type2char(TYPEOF(nlist)));
 	return R_NilValue; /*-Wall*/
     }
 
