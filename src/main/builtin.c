@@ -58,6 +58,7 @@ static R_len_t asVecSize(SEXP x)
     return -1;
 }
 
+#ifdef UNUSED
 SEXP attribute_hidden do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, env;
@@ -72,6 +73,7 @@ SEXP attribute_hidden do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, R_MSG_IA);
     return mkPROMISE(expr, env);
 }
+#endif
 
 SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

@@ -125,7 +125,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"[",		do_subset,	1,	0,	-1,	{PP_SUBSET,  PREC_SUBSET, 0}},
 {"[[",		do_subset2,	2,	0,	2,	{PP_SUBSET,  PREC_SUBSET, 0}},
 {"$",		do_subset3,	3,	0,	2,	{PP_DOLLAR,  PREC_DOLLAR, 0}},
-/*{"::",	do_NS_get,	?,	?,	2,	{PP_BINARY2, PREC_NS,	  0}},*/
 {"@",		do_AT,		0,	0,	2,	{PP_DOLLAR,  PREC_DOLLAR, 0}},
 {"[<-",		do_subassign,	0,	0,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
 {"[[<-",	do_subassign2,	1,	0,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
@@ -139,9 +138,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {".Internal",	do_internal,	0,	200,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"on.exit",	do_onexit,	0,	100,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"Recall",	do_recall,	0,	210,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
-{"delay",	do_delay,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+/*{"delay",	do_delay,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}}, */
 {"delayedAssign",do_delayed,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	  0}},
-/*{".Alias",	do_alias,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	  0}},*/
 {".Primitive",	do_primitive,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"identical",	do_identical,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 
@@ -190,7 +188,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"vector",	do_makevector,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"complex",	do_complex,	0,	11,	3,	{PP_FUNCALL, PREC_FN, 	0}},
 {"matrix",	do_matrix,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
-/*MM(98/4/22){"array",	do_array,0,	1,	2,	{PP_FUNCALL, PREC_FN,	0}},*/
 {"length",	do_length,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"length<-",	do_lengthgets,	0,	1,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
 {"row",		do_rowscols,	1,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -328,7 +325,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"Mod",		do_cmathfuns,	3,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Arg",		do_cmathfuns,	4,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Conj",	do_cmathfuns,	5,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-/* {"abs",	do_cmathfuns,	6,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},*/
 
 
 /* Mathematical Functions of Three Numeric (+ 1-2 int) Variables */
@@ -560,7 +556,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"gc.time",	do_gctime,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Version",	do_version,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"machine",	do_machine,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-/*{"Machine",	do_Machine,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},*/
 {"commandArgs", do_commandArgs, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"int.unzip",	do_int_unzip,	0,	11,    -1,	{PP_FUNCALL, PREC_FN,	0}},
 #ifdef Win32
@@ -742,7 +737,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"tempdir",	do_tempdir,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"R.home",	do_Rhome,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"date",	do_date,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-/*{"Platform",	do_Platform,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},*/
 {"index.search",do_indexsearch, 0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.getenv",	do_getenv,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"Sys.setenv",	do_setenv,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -780,9 +774,6 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"dev.displaylist",do_devcontrol,1,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"dev.copy",	do_devcopy,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dev.cur",	do_devcur,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
-/*
-{"device",	do_device,	0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
-*/
 {"dev.next",	do_devnext,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dev.off",	do_devoff,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dev.prev",	do_devprev,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -824,11 +815,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"dend.window",	do_dendwindow,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"replay",	do_replay,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"erase",	do_erase,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
-/*{"dotplot",	do_dotplot,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}}, */
 {"persp",	do_persp,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"filledcontour",do_filledcontour,0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
-/* {"getDL",	do_getDL,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"getGPar",	do_getGPar,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}}, */
 {"playDL",	do_playDL,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"setGPar",	do_setGPar,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"getSnapshot",	do_getSnapshot,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},

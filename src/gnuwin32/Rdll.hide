@@ -672,7 +672,6 @@
  do_dataviewer
  do_date
  do_debug
- do_delay
  do_delayed
  do_dend
  do_dendwindow
