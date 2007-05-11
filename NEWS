@@ -128,10 +128,6 @@ NEW FEATURES
 
     o	bzip2 has been updated to version 1.0.4.
 
-    o	Various performance improvements lead to a one-third reduction
-	in the startup time without 'methods' (and one-sixth with:
-	methods now takes 70% of the startup time of a default session).
-
     o	duplicated() and unique() and their methods in base gain an
 	additional argument 'fromLast'.
 
@@ -156,6 +152,10 @@ NEW FEATURES
 
     o	Lazy-loading a package is now substantially more efficient (in
 	memory saved and load time).
+
+    o	Various performance improvements lead to a 45% reduction
+	in the startup time without 'methods' (and one-sixth with -
+	methods now takes 75% of the startup time of a default session).
 
 
 DEPRECATED & DEFUNCT

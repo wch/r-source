@@ -109,6 +109,34 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+/* makeLazy(names, values, expr, eenv, aenv) */
+SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP names, values, val, expr, eenv, aenv, expr0;
+    int i;
+
+    checkArity(op, args);    
+    names = CAR(args); args = CDR(args);
+    if (!isString(names))
+    	errorcall(call, _("invalid first argument"));
+    values = CAR(args); args = CDR(args);
+    expr = CAR(args); args = CDR(args);
+    eenv = CAR(args); args = CDR(args);
+    if (!isEnvironment(eenv)) errorcall(call, R_MSG_IA);	
+    aenv = CAR(args);
+    if (!isEnvironment(aenv)) errorcall(call, R_MSG_IA);
+
+    for(i = 0; i < LENGTH(names); i++) {
+	SEXP name = install(CHAR(STRING_ELT(names, i)));
+	PROTECT(val = eval(VECTOR_ELT(values, i), eenv));
+	PROTECT(expr0 = duplicate(expr));
+	SETCAR(CDR(expr0), val);
+	defineVar(name, mkPROMISE(expr0, eenv), aenv);
+	UNPROTECT(2);
+    }
+    return R_NilValue;
+}
+
 SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;

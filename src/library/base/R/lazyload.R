@@ -55,27 +55,22 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             e
         }
     }
-    this <- environment()
-    ## this should be vectorized
-    setWrapped <- function(x, value, env) {
-    	key <- value			# force evaluation
-        expr <-
-            substitute(lazyLoadDBfetch(key, datafile, compressed, envhook),
-                       list(key=key))
-    	.Internal(delayedAssign(x, expr, this, env))
-    }
-    if (! missing(filter)) {
-        for (i in seq_along(vars))
-            if (filter(vars[i]))
-		setWrapped(vars[i], map$variables[[i]], envir)
-    } else {
-        for (i in seq_along(vars))
-	    setWrapped(vars[i], map$variables[[i]], envir)
-    }
+    if (!missing(filter)) {
+        use <- filter(vars)
+        vars <- vars[use]
+        vals <- map$variables[use]
+        use <- NULL
+    } else
+        vals <-  map$variables
 
-    ## reduce memory use **** try some more trimming
+    expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
+    this <- environment()
+    .Internal(makeLazy(vars, vals, expr, this, envir))
+
+    ## reduce memory use
     map <- NULL
     vars <- NULL
+    vals <- NULL
     rvars <- NULL
     mapfile <- NULL
     readRDS <- NULL

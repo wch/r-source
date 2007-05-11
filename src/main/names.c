@@ -138,8 +138,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {".Internal",	do_internal,	0,	200,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"on.exit",	do_onexit,	0,	100,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"Recall",	do_recall,	0,	210,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
-/*{"delay",	do_delay,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}}, */
 {"delayedAssign",do_delayed,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	  0}},
+{"makeLazy",	do_makelazy,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	  0}},
 {".Primitive",	do_primitive,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"identical",	do_identical,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 

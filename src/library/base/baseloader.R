@@ -1,6 +1,6 @@
 ## this should be keep in step with lazyLoad in R/lazyload.R
 .Internal(eval(quote({
-..lazyLoad <- function(filebase, envir = parent.frame(), filter)
+..lazyLoad <- function(filebase, envir = parent.frame())
 {
     ##
     ## bootstrapping definitions so we can load base
@@ -59,28 +59,26 @@
         }
     }
     this <- environment()
-    setWrapped <- function(x, value, env) {
-    	key <- value			# force evaluation
-        expr <-
-            substitute(lazyLoadDBfetch(key, datafile, compressed, envhook),
-                       list(key=key))
-    	.Internal(delayedAssign(x, expr, this, env))
+    setWrapped <- function(x, vals, env) {
+        for (i in seq_along(vars)) {
+            key <- vals[[i]]	       	# force evaluation
+            expr <-
+                substitute(lazyLoadDBfetch(key, datafile, compressed, envhook),
+                           list(key=key))
+            .Internal(delayedAssign(x[i], expr, this, env))
+        }
     }
-    if (! missing(filter)) {
-        for (i in seq_along(vars))
-            if (filter(vars[i]))
-		setWrapped(vars[i], map$variables[[i]], envir)
-    } else {
-        for (i in seq_along(vars))
-	    setWrapped(vars[i], map$variables[[i]], envir)
-    }
+    expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
+    .Internal(makeLazy(vars, map$variables, expr, this, envir))
+    # setWrapped(vars, map$variables, envir)
 
-    ## reduce memory use **** try some more trimming
+    ## reduce memory use
     map <- NULL
     vars <- NULL
     rvars <- NULL
     mapfile <- NULL
     readRDS <- NULL
+    setWrapped <- NULL
 }
 
     existsInBase <- function (x)
@@ -98,4 +96,3 @@
 ## keep in sync with R/zzz.R
 as.numeric <- as.real <- as.double
 is.name <- is.symbol
-

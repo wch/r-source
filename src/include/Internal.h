@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -284,6 +284,7 @@ SEXP do_ls(SEXP, SEXP, SEXP, SEXP);
 SEXP do_l10n_info(SEXP, SEXP, SEXP, SEXP);
 /* R_lsInternal -> ./Rinternals.h */
 SEXP do_machine(SEXP, SEXP, SEXP, SEXP);
+SEXP do_makelazy(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makelist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makenames(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makeunique(SEXP, SEXP, SEXP, SEXP);

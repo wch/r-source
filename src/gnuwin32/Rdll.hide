@@ -831,6 +831,7 @@
  do_logic3
  do_ls
  do_machine
+ do_makelazy
  do_makelist
  do_makenames
  do_makeunique

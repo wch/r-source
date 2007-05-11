@@ -72,6 +72,8 @@ check.options <-
 
 ps.options <- function(..., reset=FALSE, override.check= FALSE)
 {
+    ## do initialization if needed
+    initPSandPDFfonts()
     l... <- length(new <- list(...))
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
@@ -133,6 +135,9 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
                        width, height, horizontal, pointsize,
                        paper, pagecentre, print.it, command, colormodel)
 {
+    ## do initialization if needed
+    initPSandPDFfonts()
+
     new <- list(onefile = onefile)
     if(!missing(paper)) new$paper <- paper
     if(!missing(encoding)) new$encoding <- encoding
@@ -200,6 +205,8 @@ postscript <- function(file = ifelse(onefile, "Rplots.ps", "Rplot%03d.ps"),
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                   onefile = FALSE, encoding="none", ...)
 {
+    ## do initialization if needed
+    initPSandPDFfonts()
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, envir = .PSenv,
                          name.opt = ".PostScript.Options",
@@ -217,6 +224,9 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                 title = "R Graphics Output", fonts = NULL, version = "1.1",
                 paper = "special", encoding, bg, fg, pointsize, pagecentre)
 {
+    ## do initialization if needed
+    initPSandPDFfonts()
+
     new <- list(onefile = onefile)
     new$paper <- paper
     if(!missing(encoding)) new$encoding <- encoding
@@ -409,6 +419,8 @@ printFonts <- function(fonts)
 # all of which must be named args)
 postscriptFonts <- function(...)
 {
+    ## do initialization if needed: not recursive
+    initPSandPDFfonts()
     ndots <- length(fonts <- list(...))
     if (ndots == 0)
         get(".PostScript.Fonts", envir=.PSenv)
@@ -467,6 +479,8 @@ assign(".PDF.Fonts", list(), envir = .PSenv)
 
 pdfFonts <- function(...)
 {
+    ## do initialization if needed: not recursive
+    initPSandPDFfonts()
     ndots <- length(fonts <- list(...))
     if (ndots == 0)
         get(".PDF.Fonts", envir=.PSenv)
@@ -511,8 +525,7 @@ matchFont <- function(font, encoding) {
 }
 
 # Function to initialise default PostScript and PDF fonts
-# Called in .onLoad
-# NOTE that this is in .onLoad
+# Called at first use
 #   a) because that's a sensible place to do initialisation of package globals
 #   b) because it does not work to do it BEFORE then.  In particular,
 #      if the body of this function is evaluated when the R code of the
@@ -522,6 +535,7 @@ matchFont <- function(font, encoding) {
 #      Also, we want the run-time locale not the install-time locale.
 
 initPSandPDFfonts <- function() {
+    if(exists(".PostScript.Options", envir = .PSenv)) return()
 
 assign(".PostScript.Options",
     list(paper	= "default",
