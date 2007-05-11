@@ -180,6 +180,9 @@ UTILITIES
 	omitting sections containing them.  (Suggestion by Bill
 	Dunlap, PR#9649)
 
+	Rdconv now renders (rather than ignores) \var{} inside \code{}
+	markup in latex conversion.
+
 
 C-LEVEL FACILITIES
 
@@ -211,7 +214,8 @@ BUG FIXES
 
     o	charmatch() and pmatch() used to accept non-integer values for
 	'nomatch' even though the return value was documented to be
-	integer.
+	integer.  Now 'nomatch' is coerced to integer (rather than the
+	result being coerced to the type of 'nomatch').
 
     o	match.call() no longer 'works' outside a function unless
 	'definition' is supplied.  (Under some circumstances it used

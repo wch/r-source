@@ -2542,7 +2542,7 @@ sub rdoc2latex {# (filename)
 	    $cmd = "methaliasA"
 	} else { $cmd = "aliasA"; $current = $a; }
 
-	$c = code2latex($_,0);
+	$c = code2latex($_,0, 1);
 	$a = latex_code_alias($c);
 	print STDERR "rdoc2l: alias='$_', code2l(.)='$c', latex_c_a(.)='$a'\n"
 	    if $debug;
@@ -2554,7 +2554,7 @@ sub rdoc2latex {# (filename)
 	printf $latexout "\\keyword\{%s\}\{%s\}\n", $_, $blname unless /^$/ ;
     }
     latex_print_block("description", "Description");
-    latex_print_codeblock("usage", "Usage");
+    latex_print_usageblock("usage", "Usage");
     latex_print_argblock("arguments", "Arguments");
     latex_print_block("format", "Format");
     latex_print_block("details", "Details");
@@ -2629,7 +2629,7 @@ sub text2latex {
     while(checkloop($loopcount++, $text, "escaped preformat")
 	  && $text =~ /$EPREFORMAT($ID)/){
 	my $id = $1;
-	my $ec = latex_preformat_cmd(code2latex($epreformats{$id},1));
+	my $ec = latex_preformat_cmd(code2latex($epreformats{$id},1,1));
 	$text =~ s/$EPREFORMAT$id/$ec/;
     }
 
@@ -2659,14 +2659,14 @@ sub text2latex {
 
 sub code2latex {
 
-    my ($text, $hyper) = @_;
+    my ($text, $hyper, $var) = @_;
 
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
     $text = undefine_command($text, "special");
-    $text = undefine_command($text, "var");
+    $text = undefine_command($text, "var") unless $var > 0;
 
     ##    $text =~ s/\\\\/\\bsl{}/go;
     if($hyper) {
@@ -2722,7 +2722,7 @@ sub latex_print_codeblock {
     if(defined $blocks{$block}){
 	print $latexout "\\begin\{$env\}\n";
 	print $latexout "\\begin\{verbatim\}";
-	my $out = &code2latex($blocks{$block},0);
+	my $out = &code2latex($blocks{$block},0,1);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{verbatim\}\n";
@@ -2730,6 +2730,20 @@ sub latex_print_codeblock {
     }
 }
 
+sub latex_print_usageblock {
+
+    my ($block,$env) = @_;
+
+    if(defined $blocks{$block}){
+	print $latexout "\\begin\{$env\}\n";
+	print $latexout "\\begin\{verbatim\}";
+	my $out = &code2latex($blocks{$block},0,0);
+	$out =~ s/\\\\/\\/go;
+	print $latexout $out;
+	print $latexout "\\end\{verbatim\}\n";
+	print $latexout "\\end\{$env\}\n";
+    }
+}
 sub latex_print_exampleblock {
 
     my ($block,$env) = @_;
@@ -2737,7 +2751,7 @@ sub latex_print_exampleblock {
     if(defined $blocks{$block}){
 	print $latexout "\\begin\{$env\}\n";
 	print $latexout "\\begin\{ExampleCode\}";
-	my $out = &code2latex($blocks{$block},0);
+	my $out = &code2latex($blocks{$block},0,0);
 	$out =~ s/\\\\/\\/go;
 	print $latexout $out;
 	print $latexout "\\end\{ExampleCode\}\n";
@@ -2768,7 +2782,7 @@ sub latex_print_argblock {
 		  &&  $text =~ /\\item/s){
 		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 		print $latexout "\\item\[";
-		print $latexout &latex_code_cmd(code2latex($arg,1));
+		print $latexout &latex_code_cmd(code2latex($arg,1,1));
 		print $latexout "\] ";
 		print $latexout &text2latex($desc), "\n";
 		$text =~ s/.*$id//s;
@@ -2811,7 +2825,7 @@ sub latex_unescape_codes {
     while(checkloop($loopcount++, $text, "escaped code")
 	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
-	my $ec = latex_code_cmd(code2latex($ecodes{$id},1));
+	my $ec = latex_code_cmd(code2latex($ecodes{$id},1,1));
 	$text =~ s/$ECODE$id/$ec/;
     }
 
@@ -2819,7 +2833,7 @@ sub latex_unescape_codes {
     while(checkloop($loopcount++, $text, "escaped preformat")
 	  && $text =~ /$EPREFORMAT($ID)/){
 	my $id = $1;
-	my $ec = latex_preformat_cmd(code2latex($epreformats{$id},1));
+	my $ec = latex_preformat_cmd(code2latex($epreformats{$id},1,0));
 	$text =~ s/$EPREFORMAT$id/$ec/;
     }
 
@@ -2872,6 +2886,7 @@ sub latex_code_trans {
     $c0 = latex_link_trans0($c0);
     $c =~ s/HYPERLINK\([^)]*\)\([^)]*\)/\\LinkA{$link}{$c0}/go;
     $c =~ s/,,/,{},/g; # ,, is a ligature in the ae font.
+    $c =~ s/\\bsl{}var\\{([[:alpha:]]+)\\}/\\var{$1}/go;
     $c;
 }
 
