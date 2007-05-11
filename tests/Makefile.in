@@ -67,11 +67,14 @@ DISTFILES = Makefile.in Makefile.win README \
 	gct-foot.R \
 	nanbug.rda \
 	WinUnicode.dat \
+	testit.Rd testit.txt.save testit.html.save \
+	testit.tex.save testit-Ex.R.save \
 	R-intro.Rout.save
 SUBDIRS = Embedding Examples Native
 
 R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
+RDCONV = $(top_builddir)/bin/R CMD Rdconv
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -98,7 +101,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Random Demo Primitive Segfault \
+all-devel-tests = Docs IsAs Random Demo Rd Primitive Segfault \
    Standalone Packages
 
 all check: Makefile test-all-basics
@@ -279,6 +282,17 @@ test-Standalone:
 	@echo "testing building standalone Rmath"
 	-@(cd $(top_builddir)/src/nmath/standalone; $(MAKE) check)
 ## </NOTE>
+
+test-Rd: $(srcdir)/testit.Rd
+	@echo "testing Rd conversion"
+	@$(RDCONV) -t txt $(srcdir)/testit.Rd > testit.txt
+	@diff -bw testit.txt $(srcdir)/testit.txt.save
+	@$(RDCONV) -t html $(srcdir)/testit.Rd > testit.html
+	@diff -bw testit.html $(srcdir)/testit.html.save
+	@$(RDCONV) -t latex $(srcdir)/testit.Rd > testit.tex
+	@diff -bw testit.tex $(srcdir)/testit.tex.save
+	@$(RDCONV) -t example $(srcdir)/testit.Rd > testit-Ex.R
+	@diff -bw testit-Ex.R $(srcdir)/testit-Ex.R.save
 
 test-DocFiles:
 	@echo "checking Rd usage sections"

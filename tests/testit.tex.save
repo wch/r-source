@@ -1,0 +1,39 @@
+\HeaderA{testit}{}{testit}
+\begin{Usage}
+\begin{verbatim}
+\x \y %{}
+
+foo(x, y)
+a link
+\end{verbatim}
+\end{Usage}
+\begin{Details}\relax
+Escaped backslash \code{\bsl{}x}.
+Unescaped backslash \code{\bsl{}y}.
+
+\code{\%\{\}}
+
+var in \var{text}.
+
+\code{foo(\var{x}, \var{y})}.
+\begin{alltt}
+  Escaped backslash \bsl{}x.
+  Unescaped backslash \bsl{}y.
+
+  \%\{\}
+
+  var in \var{text}.
+  
+  foo(\var{x}, \var{y}).
+\end{alltt}
+\end{Details}
+\begin{Examples}
+\begin{ExampleCode}
+\x
+\y
+%{}
+a link
+foo(x, y)
+\end{ExampleCode}
+\end{Examples}
+
