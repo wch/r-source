@@ -63,10 +63,6 @@ NEW FEATURES
 
     o	is.finite() and is.infinite() are now S3 and S4 generic.
 
-    o	The texinfo manuals are now converted to HTML with a style
-	sheet: in recent versions of makeinfo the markup such as @file
-	was being lost in the HTML rendering.
-
     o	There is a new option "rl_word_breaks" to control the way the
 	input line is tokenized in the readline-based terminal
 	interface for object- and file-name completion.
@@ -257,6 +253,10 @@ INSTALLATION
 	libiconv and is not compatible with R's requirements.
 
     o	There is support for 'DESTDIR': see the R-admin manual.
+
+    o	The texinfo manuals are now converted to HTML with a style
+	sheet: in recent versions of makeinfo the markup such as @file
+	was being lost in the HTML rendering.
 
 
 BUG FIXES
