@@ -1,5 +1,6 @@
 ## this should be keep in step with lazyLoad in R/lazyload.R
-lazyLoad <- function(filebase, envir = parent.frame(), filter)
+.Internal(eval(quote({
+..lazyLoad <- function(filebase, envir = parent.frame(), filter)
 {
     ##
     ## bootstrapping definitions so we can load base
@@ -48,9 +49,9 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             key <- getFromFrame(n, env)
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
             if (is.null(data$enclos))
-              parent.env(e) <- emptyenv()
+                parent.env(e) <- emptyenv()
             else
-              parent.env(e) <- data$enclos
+                parent.env(e) <- data$enclos
             vars <- names(data$bindings)
             for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
@@ -81,21 +82,20 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
     mapfile <- NULL
     readRDS <- NULL
 }
-.Internal(eval(quote({
 
     existsInBase <- function (x)
         .Internal(exists(x, .BaseNamespaceEnv, "any", TRUE))
     glue <- function (..., sep = " ", collapse = NULL)
         .Internal(paste(list(...), sep, collapse))
 
-    ## not sure what the first 2 are for,
-    ## but we do want to overwrite the lazyload we have just put in base.
-    filter <- function(n)
-       ! existsInBase(n) || n == "is.ts" || n == "is.factor" || n == "lazyLoad"
-
     basedb <- glue(.Internal(R.home()), "library", "base", "R",
                    "base", sep= .Platform$file.sep)
 
-    lazyLoad(basedb, baseenv(), filter)
+    ..lazyLoad(basedb, baseenv())
 
 }), .Internal(new.env(FALSE, baseenv(), 29L)), baseenv()))
+
+## keep in sync with R/zzz.R
+as.numeric <- as.real <- as.double
+is.name <- is.symbol
+

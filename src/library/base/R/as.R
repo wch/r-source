@@ -1,8 +1,3 @@
-#as.logical <- function(x,...) .Internal(as.logical(x, ...))
-#as.integer <- function(x,...) .Internal(as.integer(x, ...))
-#as.double <- function(x,...)  .Internal(as.double(x, ...))
-#as.complex <- function(x,...) .Internal(as.complex(x, ...))
-
 as.single <- function(x,...) UseMethod("as.single")
 as.single.default <- function(x,...)
     structure(.Internal(as.vector(x,"double")), Csingle=TRUE)
@@ -66,7 +61,4 @@ as.name <- as.symbol
 ## would work too: as.name <- function(x) .Internal(as.vector(x, "name"))
 
 ## as.call <- function(x) stop("type call cannot be assigned")
-as.numeric <- as.double
-as.real <- as.double
 as.qr <- function(x) stop("you cannot be serious")
-## as.ts <- function(x) if(is.ts(x)) x else ts(x) # in ts.R

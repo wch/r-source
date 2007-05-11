@@ -98,7 +98,8 @@ local({
        .saveRDS(val, mapfile)
     }
 
-    omit <- c(".Last.value", ".AutoloadEnv")
+    omit <- c(".Last.value", ".AutoloadEnv", ".BaseNamespaceEnv",
+              ".Device", ".Devices", ".Machine", ".Options", ".Platform")
 
     if (length(search()[search()!="Autoloads"]) != 2)
         stop("start R with NO packages loaded to create the data base")
@@ -109,7 +110,8 @@ local({
         stop("may already be using lazy loading on base");
 
     basevars <- ls(baseenv(), all=TRUE)
-    basevars <- basevars[! basevars %in% omit]
+    prims <- basevars[sapply(basevars, function(n) is.primitive(get(n, baseenv())))]
+    basevars <- basevars[! basevars %in% c(omit, prims)]
 
 # **** need prims too since some prims have several names (is.name, is.symbol)
 #    basevars <- ls(baseenv(), all=TRUE)

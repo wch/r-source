@@ -1,3 +1,8 @@
+## top-level assignments that need to be copied to baseloader.R
+as.numeric <- as.real <- as.double
+is.name <- is.symbol
+
+
 ## extracted from existing NAMESPACE files in Dec 2003
 .knownS3Generics <- local({
 
