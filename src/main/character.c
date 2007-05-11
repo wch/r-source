@@ -71,7 +71,7 @@
 #endif
 
 /* We use a shared buffer here to avoid reallocing small buffers, and
-   keep a standard-size (8192) buffer allocated shared between the 
+   keep a standard-size (8192) buffer allocated shared between the
    various functions.
 
    If we want to make this thread-safe, we would need to initialize an
@@ -130,7 +130,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
 	if(strncmp(type, "bytes", ntype) == 0) {
-	    /* This works for NA strings too */	
+	    /* This works for NA strings too */
 	    INTEGER(s)[i] = length(STRING_ELT(x, i));
 	} else if(strncmp(type, "chars", ntype) == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
@@ -214,7 +214,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     l = LENGTH(so);
 
     if(!isString(x))
-	errorcall(call, 
+	errorcall(call,
 		  _("extracting substrings from a non-character object"));
     len = LENGTH(x);
     PROTECT(s = allocVector(STRSXP, len));
@@ -226,7 +226,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	   shorter, but in an MBCS locale it is tedious to calculate how long.
 	*/
 	slen = 0;
-	for (i = 0; i < len; i++) 
+	for (i = 0; i < len; i++)
 	    if (STRING_ELT(x,i) != NA_STRING)
 		slen = imax2(slen, strlen(translateChar(STRING_ELT(x, i))) + 1);
 	buff = Calloc(slen, char);
@@ -234,7 +234,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < len; i++) {
 	    start = INTEGER(sa)[i % k];
 	    stop = INTEGER(so)[i % l];
-	    if (STRING_ELT(x,i) == NA_STRING 
+	    if (STRING_ELT(x,i) == NA_STRING
 		|| start == NA_INTEGER
 		|| stop == NA_INTEGER) {
 		SET_STRING_ELT(s, i, NA_STRING);
@@ -332,7 +332,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		strcpy(cbuff.data, ss);
 		if(stop > start + vlen - 1) stop = start + vlen - 1;
-		substrset(cbuff.data, translateChar(STRING_ELT(value, i % v)), 
+		substrset(cbuff.data, translateChar(STRING_ELT(value, i % v)),
 			  start, stop);
 		SET_STRING_ELT(s, i, mkChar2(cbuff.data, STRING_ELT(x, i)));
 	    }
@@ -723,7 +723,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
 
     if (!isString(x))
-	errorcall_return(call, 
+	errorcall_return(call,
 			 _("the first argument must be a character vector"));
     len = length(x);
 
@@ -810,13 +810,13 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(nc >= 0) {
 		mbstowcs(wstr, tmp, nc+1);
 		for(wc = wstr; *wc; wc++) {
-		    if (*wc == L'.' || (allow_ && *wc == L'_')) 
+		    if (*wc == L'.' || (allow_ && *wc == L'_'))
 			/* leave alone */;
 		    else if(!iswalnum((int)*wc)) *wc = L'.';
 		    /* If it changes into dot here,
 		     * length will become short on mbcs.
 		     * The name which became short will contain garbage.
-		     * cf. 
+		     * cf.
 		     *   >  make.names(c("\u30fb"))
 		     *   [1] "X.\0"
 		     */
@@ -1192,7 +1192,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    offset = regmatch[0].rm_eo;
 		    if (s[offset] == '\0' || !global) break;
 		    /* <MBCS FIXME> advance by a char */
-		    if (regmatch[0].rm_eo == regmatch[0].rm_so) 
+		    if (regmatch[0].rm_eo == regmatch[0].rm_so)
 			*u++ = s[offset++];
 		    eflags = REG_NOTBOL;
 		}
@@ -1313,7 +1313,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-static SEXP gregexpr_Regexc(const regex_t *reg, const char *string, 
+static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
                             int useBytes)
 {
     int matchIndex, j, st, foundAll, foundAny, offset, len;
@@ -1458,9 +1458,9 @@ static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
                 }
                 matchIndex++;
                 /* index from one */
-                INTEGER(matchbuf)[matchIndex] = curpos + st + 1; 
+                INTEGER(matchbuf)[matchIndex] = curpos + st + 1;
                 INTEGER(matchlenbuf)[matchIndex] = patlen;
-            } else 
+            } else
                 foundAll = 1;
         }
     }
@@ -1480,7 +1480,7 @@ static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
 static SEXP gregexpr_NAInputAns(void)
 {
     SEXP ans, matchlen;
-    PROTECT(ans = allocVector(INTSXP, 1)); 
+    PROTECT(ans = allocVector(INTSXP, 1));
     PROTECT(matchlen = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = INTEGER(matchlen)[0] = R_NaInt;
     setAttrib(ans, install("match.length"), matchlen);
@@ -1492,7 +1492,7 @@ static SEXP gregexpr_NAInputAns(void)
 static SEXP gregexpr_BadStringAns(void)
 {
     SEXP ans, matchlen;
-    PROTECT(ans = allocVector(INTSXP, 1)); 
+    PROTECT(ans = allocVector(INTSXP, 1));
     PROTECT(matchlen = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
     setAttrib(ans, install("match.length"), matchlen);
@@ -1559,7 +1559,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
         }
         SET_VECTOR_ELT(ansList, i, ans);
         UNPROTECT(1);
-    } 
+    }
     if (!fixed_opt) regfree(&reg);
     UNPROTECT(1);
     return ansList;
@@ -1569,7 +1569,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y;
     int i, n, ul;
-    char *p, *xi, *cbuf;
+    char *p, *xi;
 
     checkArity(op, args);
     ul = PRIMVAL(op); /* 0 = tolower, 1 = toupper */
@@ -1612,21 +1612,21 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
         DeallocBuffer(&cbuff);
     } else
 #endif
-        {
-            for(i = 0; i < n; i++) {
-                if (STRING_ELT(x, i) == NA_STRING)
-                    SET_STRING_ELT(y, i, NA_STRING);
-                else {
-                    xi = CallocCharBuf(strlen(CHAR(STRING_ELT(x, i))));
-                    strcpy(xi, translateChar(STRING_ELT(x, i)));
-                    for(p = xi; *p != '\0'; p++)
-                        *p = ul ? toupper(*p) : tolower(*p);
-                    SET_STRING_ELT(y, i, mkChar(xi));
-		    markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
-                    Free(xi);
-                }
-            }
-        }
+    {
+	for(i = 0; i < n; i++) {
+	    if (STRING_ELT(x, i) == NA_STRING)
+		SET_STRING_ELT(y, i, NA_STRING);
+	    else {
+		xi = CallocCharBuf(strlen(CHAR(STRING_ELT(x, i))));
+		strcpy(xi, translateChar(STRING_ELT(x, i)));
+		for(p = xi; *p != '\0'; p++)
+		    *p = ul ? toupper(*p) : tolower(*p);
+		SET_STRING_ELT(y, i, mkChar(xi));
+		markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
+		Free(xi);
+	    }
+	}
+    }
     DUPLICATE_ATTRIB(y, x);
     /* This copied the class, if any */
     UNPROTECT(1);
@@ -1909,63 +1909,63 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
         DeallocBuffer(&cbuff);
     } else
 #endif
-        {
-            unsigned char xtable[UCHAR_MAX + 1], *p, c_old, c_new;
-            struct tr_spec *trs_old, **trs_old_ptr;
-            struct tr_spec *trs_new, **trs_new_ptr;
+    {
+	unsigned char xtable[UCHAR_MAX + 1], *p, c_old, c_new;
+	struct tr_spec *trs_old, **trs_old_ptr;
+	struct tr_spec *trs_new, **trs_new_ptr;
 
-            for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
+	for(i = 0; i <= UCHAR_MAX; i++) xtable[i] = i;
 
-            /* Initialize the old and new tr_spec lists. */
-            trs_old = Calloc(1, struct tr_spec);
-            trs_old->type = TR_INIT;
-            trs_old->next = NULL;
-            trs_new = Calloc(1, struct tr_spec);
-            trs_new->type = TR_INIT;
-            trs_new->next = NULL;
-            /* Build the old and new tr_spec lists. */
-            tr_build_spec(translateChar(STRING_ELT(old, 0)), trs_old);
-            tr_build_spec(translateChar(STRING_ELT(_new, 0)), trs_new);
-            /* Initialize the pointers for walking through the old and new
-               tr_spec lists and retrieving the next chars from the lists.
-            */
-            trs_old_ptr = Calloc(1, struct tr_spec *);
-            *trs_old_ptr = trs_old->next;
-            trs_new_ptr = Calloc(1, struct tr_spec *);
-            *trs_new_ptr = trs_new->next;
-            for(;;) {
-                c_old = tr_get_next_char_from_spec(trs_old_ptr);
-                c_new = tr_get_next_char_from_spec(trs_new_ptr);
-                if(c_old == '\0')
-                    break;
-                else if(c_new == '\0')
-                    errorcall(call, _("'old' is longer than 'new'"));
-                else
-                    xtable[c_old] = c_new;
-            }
-            /* Free the memory occupied by the tr_spec lists. */
-            tr_free_spec(trs_old);
-            tr_free_spec(trs_new);
-            Free(trs_old_ptr); Free(trs_new_ptr);
+	/* Initialize the old and new tr_spec lists. */
+	trs_old = Calloc(1, struct tr_spec);
+	trs_old->type = TR_INIT;
+	trs_old->next = NULL;
+	trs_new = Calloc(1, struct tr_spec);
+	trs_new->type = TR_INIT;
+	trs_new->next = NULL;
+	/* Build the old and new tr_spec lists. */
+	tr_build_spec(translateChar(STRING_ELT(old, 0)), trs_old);
+	tr_build_spec(translateChar(STRING_ELT(_new, 0)), trs_new);
+	/* Initialize the pointers for walking through the old and new
+	   tr_spec lists and retrieving the next chars from the lists.
+	*/
+	trs_old_ptr = Calloc(1, struct tr_spec *);
+	*trs_old_ptr = trs_old->next;
+	trs_new_ptr = Calloc(1, struct tr_spec *);
+	*trs_new_ptr = trs_new->next;
+	for(;;) {
+	    c_old = tr_get_next_char_from_spec(trs_old_ptr);
+	    c_new = tr_get_next_char_from_spec(trs_new_ptr);
+	    if(c_old == '\0')
+		break;
+	    else if(c_new == '\0')
+		errorcall(call, _("'old' is longer than 'new'"));
+	    else
+		xtable[c_old] = c_new;
+	}
+	/* Free the memory occupied by the tr_spec lists. */
+	tr_free_spec(trs_old);
+	tr_free_spec(trs_new);
+	Free(trs_old_ptr); Free(trs_new_ptr);
 
-            n = LENGTH(x);
-            PROTECT(y = allocVector(STRSXP, n));
-            for(i = 0; i < n; i++) {
-                if (STRING_ELT(x,i) == NA_STRING) 
-		    SET_STRING_ELT(y, i, NA_STRING);
-                else {
-		    char *xi = translateChar(STRING_ELT(x, i));
-                    cbuf = CallocCharBuf(strlen(xi));
-                    cbuf = CallocCharBuf(strlen(CHAR(STRING_ELT(x, i))));
-                    strcpy(cbuf, xi);
-                    for(p = (unsigned char *) cbuf; *p != '\0'; p++)
-                        *p = xtable[*p];
-                    SET_STRING_ELT(y, i, mkChar(cbuf));
-		    markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
-                    Free(cbuf);
-                }
-            }
-        }
+	n = LENGTH(x);
+	PROTECT(y = allocVector(STRSXP, n));
+	for(i = 0; i < n; i++) {
+	    if (STRING_ELT(x,i) == NA_STRING)
+		SET_STRING_ELT(y, i, NA_STRING);
+	    else {
+		char *xi = translateChar(STRING_ELT(x, i));
+		cbuf = CallocCharBuf(strlen(xi));
+		cbuf = CallocCharBuf(strlen(CHAR(STRING_ELT(x, i))));
+		strcpy(cbuf, xi);
+		for(p = (unsigned char *) cbuf; *p != '\0'; p++)
+		    *p = xtable[*p];
+		SET_STRING_ELT(y, i, mkChar(cbuf));
+		markKnown(STRING_ELT(y, i), STRING_ELT(x, i));
+		Free(cbuf);
+	    }
+	}
+    }
 
     DUPLICATE_ATTRIB(y, x);
     /* This copied the class, if any */
@@ -2291,7 +2291,7 @@ static int mbrtoint(int *w, const char *s)
 
     if (byte == 0) {
         *w = 0;
-        return 0;	
+        return 0;
     } else if (byte < 0xC0) {
         *w = (int) byte;
         return 1;
@@ -2313,11 +2313,11 @@ static int mbrtoint(int *w, const char *s)
         } else return -1;
     } else if (byte < 0xF8) {
         if(strlen(s) < 4) return -2;
-        if (((s[1] & 0xC0) == 0x80) 
+        if (((s[1] & 0xC0) == 0x80)
             && ((s[2] & 0xC0) == 0x80)
             && ((s[3] & 0xC0) == 0x80)) {
             *w = (int) (((byte & 0x07) << 18)
-                        | ((s[1] & 0x3F) << 12) 
+                        | ((s[1] & 0x3F) << 12)
                         | ((s[2] & 0x3F) << 6)
                         | (s[3] & 0x3F));
             byte = *w;
@@ -2325,13 +2325,13 @@ static int mbrtoint(int *w, const char *s)
         } else return -1;
     } else if (byte < 0xFC) {
         if(strlen(s) < 5) return -2;
-        if (((s[1] & 0xC0) == 0x80) 
+        if (((s[1] & 0xC0) == 0x80)
             && ((s[2] & 0xC0) == 0x80)
             && ((s[3] & 0xC0) == 0x80)
             && ((s[4] & 0xC0) == 0x80)) {
             *w = (int) (((byte & 0x03) << 24)
-                        | ((s[1] & 0x3F) << 18) 
-                        | ((s[2] & 0x3F) << 12) 
+                        | ((s[1] & 0x3F) << 18)
+                        | ((s[2] & 0x3F) << 12)
                         | ((s[3] & 0x3F) << 6)
                         | (s[4] & 0x3F));
             byte = *w;
@@ -2339,14 +2339,14 @@ static int mbrtoint(int *w, const char *s)
         } else return -1;
     } else {
         if(strlen(s) < 6) return -2;
-        if (((s[1] & 0xC0) == 0x80) 
+        if (((s[1] & 0xC0) == 0x80)
             && ((s[2] & 0xC0) == 0x80)
             && ((s[3] & 0xC0) == 0x80)
             && ((s[4] & 0xC0) == 0x80)
             && ((s[5] & 0xC0) == 0x80)) {
             *w = (int) (((byte & 0x01) << 30)
-                        | ((s[1] & 0x3F) << 24) 
-                        | ((s[2] & 0x3F) << 18) 
+                        | ((s[1] & 0x3F) << 24)
+                        | ((s[2] & 0x3F) << 18)
                         | ((s[3] & 0x3F) << 12)
                         | ((s[5] & 0x3F) << 6)
                         | (s[5] & 0x3F));
@@ -2538,12 +2538,12 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("invalid '%s' argument"), "dirmark");
 #ifndef GLOB_MARK
     if(dirmark)
-	errorcall(call, 
+	errorcall(call,
 		  _("'dirmark = TRUE' is not supported on this platform"));
 #endif
-    
+
     for(i = 0; i < LENGTH(x); i++) {
-	res = glob(translateChar(STRING_ELT(x, i)), 
+	res = glob(translateChar(STRING_ELT(x, i)),
 #ifdef GLOB_MARK
 		   (dirmark ? GLOB_MARK : 0) |
 #endif
@@ -2551,7 +2551,7 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
 		   NULL, &globbuf);
 #ifdef GLOB_ABORTED
 	if(res == GLOB_ABORTED)
-	    warningcall(call, _("read error on '%s'"), 
+	    warningcall(call, _("read error on '%s'"),
 			translateChar(STRING_ELT(x, i)));
 #endif
 #ifdef GLOB_NOSPACE
