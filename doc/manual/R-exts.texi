@@ -9119,14 +9119,22 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @node Registering symbols, Meshing event loops, Setting R callbacks, Embedding R under Unix-alikes
 @subsection Registering symbols
 
-The application embedding @R{} needs a special way of registering symbols, because it is not a dynamic library loaded by @R{} as would be the case with a package. Therefore @R{} reserves a special @code{DllInfo} entry for the embedding application such that it can register symbols to be used with @code{.C}, @code{.Call} etc. This entry can be obtained by calling @code{getEmbeddingDllInfo}, so the common use is analogous to
+An application embedding @R{} needs a different way of registering
+symbols because it is not a dynamic library loaded by @R{} as would be
+the case with a package.  Therefore @R{} reserves a special
+@code{DllInfo} entry for the embedding application such that it can
+register symbols to be used with @code{.C}, @code{.Call} etc.  This
+entry can be obtained by calling @code{getEmbeddingDllInfo}, so a
+typical use is
 
 @example
 DllInfo *info = R_getEmbeddingDllInfo();
 R_registerRoutines(info, cMethods, callMethods, NULL, NULL);
 @end example
 
-The native routines defined by @code{cMethod} and @code{callMethods} should be present in the embedding application. See @ref{Registering native routines} for details on registering symbols in general.
+The native routines defined by @code{cMethod} and @code{callMethods}
+should be present in the embedding application.  See @ref{Registering
+native routines} for details on registering symbols in general.
 
 
 @node Meshing event loops, Threading issues, Registering symbols, Embedding R under Unix-alikes
