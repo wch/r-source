@@ -13,6 +13,7 @@ RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
 R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
 RDIFF = $(RHOME)/bin/R CMD Rdiff
 RVAL_IF_DIFF=0
+RDCONV = $(RHOME)/bin/Rcmd Rdconv
 
 test-src-gct = \
 	eval-etc.R \
@@ -75,7 +76,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout
 
 all-basic-tests = Specific Reg Internet
-all-devel-tests = Docs IsAs Random Demo Primitive Segfault \
+all-devel-tests = Docs IsAs Random Demo Rd Primitive Segfault \
    Standalone Packages
 
 all check: test-all-basics
@@ -195,6 +196,17 @@ test-Standalone:
 	@echo "testing building standalone Rmath"
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win all test || exit 1
 	@$(MAKE) -C ../src/nmath/standalone -f Makefile.win clean
+
+test-Rd: testit.Rd
+	@echo "testing Rd conversion"
+	@$(RDCONV) -t txt testit.Rd > testit.txt
+	@diff -bw testit.txt testit.txt.save
+	@$(RDCONV) -t html testit.Rd > testit.html
+	@diff -bw testit.html testit.html.save
+	@$(RDCONV) -t latex testit.Rd > testit.tex
+	@diff -bw testit.tex testit.tex.save
+	@$(RDCONV) -t example testit.Rd > testit-Ex.R
+	@diff -bw testit-Ex.R testit-Ex.R.save
 
 clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
