@@ -184,12 +184,13 @@ operating system platforms, the @acronym{ASCII} control characters as
 well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
 @samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed in file
 names.  In addition, files with names @samp{con}, @samp{prn},
-@samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com4}, and
-@samp{lpt1} to @samp{lpt3} after conversion to lower case and stripping
-possible ``extensions'', are disallowed.  Also, file names in the same
-directory must not differ only by case (see the previous paragraph).
-In addition, the names of @samp{.Rd} files will be used in URLs and so
-must be @acronym{ASCII} and not contain @code{%}.
+@samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com9}, and
+@samp{lpt1} to @samp{lpt9} after conversion to lower case and stripping
+possible ``extensions'' (e.g., @samp{lpt5.foo.bar}), are disallowed.
+Also, file names in the same directory must not differ only by case (see
+the previous paragraph).  In addition, the names of @samp{.Rd} files
+will be used in URLs and so must be @acronym{ASCII} and not contain
+@code{%}.
 
 The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
@@ -3067,11 +3068,9 @@ specific kinds of text.
 @findex \code
 Indicate text that is a literal example of a piece of a program, e.g., a
 fragment of @R{} code or the name of an @R{} object, using
-@code{typewriter} font if possible.  Only percent signs and unpaired
-braces always need to be escaped (by a backslash) inside @code{\code}:
-backslash will need to be escaped if it precedes @samp{%}, @samp{@{} or
-@samp{@}}.  The only markup interpreted inside @code{\code} is
-@code{\link} and @code{\var}.
+@code{typewriter} font if possible.  Some characters will need to be
+escaped (@pxref{Insertions}).  The only markup interpreted inside
+@code{\code} is @code{\link} and @code{\var}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
@@ -3108,7 +3107,10 @@ Web.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var
-Indicate a metasyntactic variable.
+Indicate a metasyntactic variable.  In some cases this will be rendered
+distinctly, e.g.@: in italic, but not in all@footnote{Currently it is
+rendered differently only in HTML conversions, and latex conversion
+outside verbatim-like environments.}.
 @item \env@{@var{environment_variable}@}
 @findex \env
 Indicate an environment variable.
@@ -3318,18 +3320,18 @@ backslash.  (Note that @code{\cr} is used for generating line breaks.)
 The ``comment'' character @samp{%} and unpaired braces@footnote{See the
 examples section in the file @file{Paren.Rd} for an example.}
 @emph{always} need to be escaped by @samp{\}, and @samp{\\} can be used
-for backslash and needs to be if representing two adjacent backslashed).
-Inside the verbatim-like commands (@code{usage}, @code{\code},
-@code{\preformatted} and @code{\examples}), no other characters are
-special.  Note that @code{\file} is @strong{not} a verbatim-like
-command.
+for backslash and needs to be when there two or more adjacent
+backslashes).  Inside the verbatim-like commands (@code{usage},
+@code{\code}, @code{\preformatted} and @code{\examples}), no other
+characters are special.  Note that @code{\file} is @strong{not} a
+verbatim-like command.
 
-In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
+In ``regular'' text (not verbatim-like, no @code{\eqn}, @dots{}), you
 currently must escape most @LaTeX{} special characters, i.e., besides
-@samp{%}, @samp{@{}, and @samp{@}}, the specials @samp{$},
-@samp{#}, and @samp{_} are produced by preceding each with a @samp{\}.
-(@samp{&} can also be escaped, but need not be.) Further, enter @samp{^}
-as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
+@samp{%}, @samp{@{}, and @samp{@}}, the specials @samp{$}, @samp{#}, and
+@samp{_} are produced by preceding each with a @samp{\}.  (@samp{&} can
+also be escaped, but need not be.)  Further, enter @samp{^} as
+@code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
 @code{\eqn@{\mbox@{\textasciitilde@}@}@{~@}} or @code{\eqn@{\sim@}@{~@}}
 (for a short and long tilde respectively).  Also, @samp{<}, @samp{>},
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
