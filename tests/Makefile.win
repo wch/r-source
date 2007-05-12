@@ -213,4 +213,5 @@ clean:
 	  reg-tests-?.ps $(test-src-auto) R-exts.* R-exts_res.rc R-intro.R Makedeps
 	@rm -rf *.Rcheck
 	@rm -f FALSE* .R .tex mirrors.html
+	@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	@$(MAKE) -C Embedding -f Makefile.win clean
