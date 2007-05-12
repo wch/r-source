@@ -548,6 +548,7 @@ R_PROG_F77
 AC_PROG_CXX
 AC_PROG_CXXCPP
 R_GCC4_VISIBILITY
+AC_GNU_SOURCE ## needed to libintl
 
 AC_PROG_OBJC
 ## unfortunately autoconf sets OBJC to gcc even if there is no working compiler

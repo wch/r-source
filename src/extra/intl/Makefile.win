@@ -17,7 +17,8 @@ SOURCES = \
  bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c \
  textdomain.c l10nflist.c explodename.c dcigettext.c \
  dcngettext.c dngettext.c ngettext.c plural.c plural-exp.c langprefs.c \
- localcharset.c localename.c log.c printf.c osdep.c
+ localcharset.c localename.c log.c printf.c osdep.c \
+ hash-string.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -35,7 +36,8 @@ libintl.h: libgnuintl.h
 
 $(OBJECTS): ../../include/config.h libgnuintl.h
 bindtextdom.o dcgettext.o dcigettext.o dcngettext.o dgettext.o dngettext.o \
-finddomain.o gettext.o intl-compat.o loadmsgcat.o localealias.o ngettext.o \
+finddomain.o gettext.o intl-compat.o loadmsgcat.o lock.o \
+localealias.o ngettext.o \
 textdomain.o: gettextP.h gmo.h loadinfo.h
 dcigettext.o loadmsgcat.o: hash-string.h
 explodename.o l10nflist.o: loadinfo.h

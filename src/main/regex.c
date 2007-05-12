@@ -116,9 +116,14 @@
 #if defined _LIBC
 # include <bits/libc-lock.h>
 #else
+/* gettext adds definitions to config.h for some of these */
+# undef __libc_lock_define
 # define __libc_lock_define(CLASS,NAME)
+# undef __libc_lock_init
 # define __libc_lock_init(NAME) do { } while (0)
+# undef __libc_lock_lock
 # define __libc_lock_lock(NAME) do { } while (0)
+# undef __libc_lock_unlock
 # define __libc_lock_unlock(NAME) do { } while (0)
 #endif
 
