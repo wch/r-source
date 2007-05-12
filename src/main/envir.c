@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2006 the R Development Core Group.
+ *  Copyright (C) 1999-2007 the R Development Core Group.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -179,7 +179,7 @@ static SEXP getActiveValue(SEXP fun)
 */
 
 /* was extern: used in this file and names.c */
-int attribute_hidden R_Newhashpjw(char *s)
+int attribute_hidden R_Newhashpjw(const char *s)
 {
     char *p;
     unsigned h = 0, g;
@@ -3266,7 +3266,7 @@ static SEXP R_StringHashResize(SEXP table)
 /* Get CHARSXP for string s in the hash table.
    Return R_NilValue, if not found.
 */
-static SEXP R_StringHashGet(int hashcode, char *s, SEXP table)
+static SEXP R_StringHashGet(int hashcode, const char *s, SEXP table)
 {
     SEXP chain, val;
 
@@ -3312,8 +3312,6 @@ static void R_StringHashSet(int hashcode, SEXP schar, SEXP table)
     SET_VECTOR_ELT(table, hashcode, CONS(schar, chain));
     return;
 }
-
-
 
 /* mkChar - make a character (CHARSXP) variable */
 

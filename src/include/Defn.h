@@ -964,7 +964,7 @@ SEXP R_data_class(SEXP , Rboolean);
 SEXP R_data_class2(SEXP);
 SEXP R_LoadFromFile(FILE*, int);
 SEXP R_NewHashedEnv(SEXP, SEXP);
-extern int R_Newhashpjw(char*);
+extern int R_Newhashpjw(const char*);
 FILE* R_OpenLibraryFile(char *);
 char *R_LibraryFileName(char *, char *, size_t);
 void R_RestoreGlobalEnv(void);
