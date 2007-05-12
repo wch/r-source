@@ -183,7 +183,7 @@ int attribute_hidden R_Newhashpjw(const char *s)
 {
     char *p;
     unsigned h = 0, g;
-    for (p = s; *p; p = p + 1) {
+    for (p = (char *)s; *p; p = p + 1) {
 	h = (h << 4) + (*p);
 	if ((g = h & 0xf0000000) != 0) {
 	    h = h ^ (g >> 24);
