@@ -43,6 +43,9 @@
 
 /* Look up MSGID in the DOMAINNAME message catalog for the current CATEGORY
    locale.  */
+#ifdef HAVE_VISIBILITY_ATTRIBUTE
+__attribute__ ((visibility ("default")))
+#endif
 char *
 DCGETTEXT (const char *domainname, const char *msgid, int category)
 {
