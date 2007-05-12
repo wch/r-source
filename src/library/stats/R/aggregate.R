@@ -24,16 +24,21 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
         stop("'FUN' must always return a scalar")
     z <- y[[1]]
     d <- dim(z)
-    w <- NULL
+    w <- vector("list", length(d))
     for (i in seq_along(d)) {
         j <- rep.int(rep.int(seq(1 : d[i]),
-                     prod(d[seq_len(i - 1)]) * rep.int(1, d[i])),
-                 prod(d[seq(from = i + 1, length = length(d) - i)]))
-        w <- cbind(w, dimnames(z)[[i]][j])
+                             prod(d[seq_len(i - 1)]) * rep.int(1, d[i])),
+                     prod(d[seq(from = i + 1, length = length(d) - i)]))
+        zz <- dimnames(z)[[i]][j]
+        ## zz is character, so match as character
+        w[[i]] <- by[[i]][match(zz, as.character(by[[i]]))]
     }
-    w <- w[which(!unlist(lapply(z, is.null))), , drop = FALSE]
-    y <- data.frame(w, lapply(y, unlist, use.names = FALSE))
+    ## this gives w row names that may not be consecutive.
+    w <- as.data.frame(w, stringsAsFactors = FALSE)[which(!unlist(lapply(z, is.null))), , drop = FALSE]
+    y <- data.frame(w, lapply(y, unlist, use.names = FALSE),
+                    stringsAsFactors = FALSE)
     names(y) <- c(names(by), names(x))
+    row.names(y) <- NULL
     y
 }
 

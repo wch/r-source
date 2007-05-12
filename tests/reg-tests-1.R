@@ -4768,7 +4768,26 @@ worms.glm <- glm(cbind(deaths, (20-deaths)) ~ sex+ doselin,
 predict(worms.glm, new=data.frame(sex="1", doselin=6))
 ## failed < 2.6.0
 
+
 ## factor() with NA in dimnames():
 x <- matrix(1:2, 2)
 rownames(x) <- factor(c("A", NA))
 ## segfaulted <= 2.5.0
+
+
+## regression test for changes in aggregate.data.frame
+z <- aggregate(state.x77,
+               list(Region = state.region,
+                    Cold = state.x77[,"Frost"] > 130),
+               mean)
+stopifnot(sapply(z, class)[1:2] == c("factor", "logical"),
+          identical(levels(z[[1]]), levels(state.region)) )
+f1 <- c("a","b","a","b")
+f2 <- factor(f1, levels=c("b","c","a"), ordered=TRUE)
+z <- aggregate(1:4, list(groups=f1), sum)
+stopifnot(sapply(z, class) == c("character", "integer"))
+z <- aggregate(1:4, list(groups=f2), sum)
+stopifnot(identical(sapply(z, class), list(groups=class(f2), x="integer")),
+          identical(levels(z[[1]]), levels(f2)),
+          is.ordered(z[[1]]) )
+## converted to factors < 2.6.0

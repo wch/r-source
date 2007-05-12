@@ -159,6 +159,10 @@ NEW FEATURES
 	in the startup time without 'methods' (and one-sixth with -
 	methods now takes 75% of the startup time of a default session).
 
+    o	aggregate.data.frame() no longer changes the group variables
+	into factors, and leaves alone the levels of those which are
+	factors.  (Inter alia grants the wish of PR#9666.)
+
 
 DEPRECATED & DEFUNCT
 
