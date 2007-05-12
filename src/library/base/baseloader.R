@@ -48,29 +48,16 @@
             set(n, e, envenv)           # MUST do this immediately
             key <- getFromFrame(n, env)
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
-            if (is.null(data$enclos))
-                parent.env(e) <- emptyenv()
-            else
-                parent.env(e) <- data$enclos
+            parent.env(e) <- data$enclos
             vars <- names(data$bindings)
             for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)
             e
         }
     }
-    this <- environment()
-    setWrapped <- function(x, vals, env) {
-        for (i in seq_along(vars)) {
-            key <- vals[[i]]	       	# force evaluation
-            expr <-
-                substitute(lazyLoadDBfetch(key, datafile, compressed, envhook),
-                           list(key=key))
-            .Internal(delayedAssign(x[i], expr, this, env))
-        }
-    }
     expr <- quote(lazyLoadDBfetch(key, datafile, compressed, envhook))
+    this <- environment()
     .Internal(makeLazy(vars, map$variables, expr, this, envir))
-    # setWrapped(vars, map$variables, envir)
 
     ## reduce memory use
     map <- NULL
@@ -78,7 +65,6 @@
     rvars <- NULL
     mapfile <- NULL
     readRDS <- NULL
-    setWrapped <- NULL
 }
 
     existsInBase <- function (x)
