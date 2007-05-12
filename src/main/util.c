@@ -54,7 +54,7 @@ void F77_SYMBOL(rexitc)(char *msg, int *nchar);
 }
 #endif
 
-/* Many small functions are included from Rinlinedfuns.h */
+/* Many small functions are included from ../include/Rinlinedfuns.h */
 
 Rboolean tsConform(SEXP x, SEXP y)
 {
