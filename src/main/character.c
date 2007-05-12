@@ -926,8 +926,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* end NA pattern handling */
     } else {
 	cflags = 0;
-	if (extended_opt) cflags = cflags | REG_EXTENDED;
-	if (igcase_opt) cflags = cflags | REG_ICASE;
+	if (extended_opt) cflags |= REG_EXTENDED;
+	if (igcase_opt) cflags |= REG_ICASE;
 
 	if (!fixed_opt && regcomp(&reg, cpat, cflags))
 	    errorcall(call, _("invalid regular expression '%s'"), cpat);
@@ -1069,8 +1069,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, R_MSG_IA);
 
     cflags = 0;
-    if (extended_opt) cflags = cflags | REG_EXTENDED;
-    if (igcase_opt) cflags = cflags | REG_ICASE;
+    if (extended_opt) cflags |= REG_EXTENDED;
+    if (igcase_opt) cflags |= REG_ICASE;
 
     spat = translateChar(STRING_ELT(pat, 0));
     srep = translateChar(STRING_ELT(rep, 0));
@@ -1217,12 +1217,14 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, extended_opt, fixed_opt, useBytes, cflags;
+    int i, n, st, igcase_opt, extended_opt, fixed_opt, useBytes, cflags;
     char *spat = NULL; /* -Wall */
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
+    igcase_opt = asLogical(CAR(args)); args = CDR(args);
+    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     extended_opt = asLogical(CAR(args)); args = CDR(args);
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
@@ -1235,7 +1237,9 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if ( STRING_ELT(pat,0) == NA_STRING)
 	errorcall(call, R_MSG_IA);
 
-    cflags = extended_opt ? REG_EXTENDED : 0;
+    cflags = 0;
+    if (extended_opt) cflags |= REG_EXTENDED;
+    if (igcase_opt) cflags |= REG_ICASE;
 
     spat = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_MBCS
@@ -1505,12 +1509,14 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ansList, ans;
     regex_t reg;
-    int i, n, extended_opt, fixed_opt, useBytes, cflags;
+    int i, n, igcase_opt, extended_opt, fixed_opt, useBytes, cflags;
     char *spat;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
+    igcase_opt = asLogical(CAR(args)); args = CDR(args);
+    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     extended_opt = asLogical(CAR(args)); args = CDR(args);
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
@@ -1523,7 +1529,10 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if ( STRING_ELT(pat,0) == NA_STRING)
 	errorcall(call, R_MSG_IA);
 
-    cflags = extended_opt ? REG_EXTENDED : 0;
+    cflags = 0;
+    if (extended_opt) cflags |= REG_EXTENDED;
+    if(igcase_opt) cflags |= REG_ICASE;
+
     spat = translateChar(STRING_ELT(pat, 0));
 
 #ifdef SUPPORT_MBCS

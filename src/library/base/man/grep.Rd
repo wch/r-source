@@ -26,11 +26,11 @@ gsub(pattern, replacement, x,
      ignore.case = FALSE, extended = TRUE, perl = FALSE,
      fixed = FALSE, useBytes = FALSE)
 
-regexpr(pattern, text, extended = TRUE, perl = FALSE,
-        fixed = FALSE, useBytes = FALSE)
+regexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
+        perl = FALSE, fixed = FALSE, useBytes = FALSE)
 
-gregexpr(pattern, text, extended = TRUE, perl = FALSE,
-         fixed = FALSE, useBytes = FALSE)
+gregexpr(pattern, text ignore.case = FALSE, extended = TRUE,
+         perl = FALSE, fixed = FALSE, useBytes = FALSE)
 }
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}

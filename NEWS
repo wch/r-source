@@ -163,6 +163,11 @@ NEW FEATURES
 	into factors, and leaves alone the levels of those which are
 	factors.  (Inter alia grants the wish of PR#9666.)
 
+    o	[g]regexpr() gain an 'ignore.case' argument for consistency with
+	grep().  (This does change the positional matching
+	of arguments, but no instances of positional matching beyond
+	the second were found.)
+
 
 DEPRECATED & DEFUNCT
 

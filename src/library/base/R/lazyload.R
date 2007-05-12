@@ -48,7 +48,16 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter)
             set(n, e, envenv)           # MUST do this immediately
             key <- getFromFrame(n, env)
             data <- lazyLoadDBfetch(key, datafile, compressed, envhook)
-            parent.env(e) <- data$enclos
+            ## comment from r41494
+            ## modified the loading of old environments, so that those
+            ## serialized with parent.env NULL are loaded with the
+            ## parent.env=emptyenv(); and yes an alternative would have been
+            ## baseenv(), but that was seldom the intention of folks that
+            ## set the environment to NULL.
+            if (is.null(data$enclos))
+                parent.env(e) <- emptyenv()
+            else
+                parent.env(e) <- data$enclos
             vars <- names(data$bindings)
             for (i in seq_along(vars))
                 set(vars[i], data$bindings[[i]], e)

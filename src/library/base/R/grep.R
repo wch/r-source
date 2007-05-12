@@ -56,27 +56,27 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
 }
 
 regexpr <-
-function(pattern, text, extended = TRUE, perl = FALSE,
+function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
     pattern <- as.character(pattern)
     text <- as.character(text)
     if(perl)
-        .Internal(regexpr.perl(pattern, text, useBytes))
+        .Internal(regexpr.perl(pattern, text, ignore.case, useBytes))
     else
-        .Internal(regexpr(pattern, text, extended, fixed, useBytes))
+        .Internal(regexpr(pattern, text, ignore.case, extended, fixed, useBytes))
 }
 
 gregexpr <-
-function(pattern, text, extended = TRUE, perl = FALSE,
+function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
     pattern <- as.character(pattern)
     text <- as.character(text)
     if(perl)
-      .Internal(gregexpr.perl(pattern, text, useBytes))
+      .Internal(gregexpr.perl(pattern, text, ignore.case, useBytes))
     else
-      .Internal(gregexpr(pattern, text, extended, fixed, useBytes))
+      .Internal(gregexpr(pattern, text, ignore.case, extended, fixed, useBytes))
 }
 
 agrep <-
