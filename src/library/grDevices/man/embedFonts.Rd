@@ -48,5 +48,9 @@ embedFonts(file, format, outfile = file, fontpaths = "", options = "")
 \seealso{
   \code{\link{postscriptFonts}},
   \code{\link{Devices}}.
+
+  Paul Murrell and Brian Ripley (2006) Non-standard fonts in PostScript
+  and PDF graphics. \emph{R News}, 6(2):41--47.
+  \url{http://cran.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
 \keyword{device}

@@ -198,6 +198,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   and \code{\link{CIDFont}} are also accepted.
   For compatibility with earlier versions of \R, the initial family can
   also be specified as a vector of four or five afm files.
+
+  Note that \R does not embed the font(s) used in the PostScript output:
+  see \code{\link{embedFonts}} for a utility to help do so.
 }
 
 \section{Encodings}{
@@ -291,6 +294,13 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   \code{\link{Devices}},
   {\code{\link{check.options}} which is called from both
     \code{\link{ps.options}} and \code{postscript}}.
+
+  More details of font families and encodings and especially handling
+  text in a non-Latin-1 encoding and embedding fonts can be found in
+
+  Paul Murrell and Brian Ripley (2006) Non-standard fonts in PostScript
+  and PDF graphics. \emph{R News}, 6(2):41--47.
+  \url{http://cran.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
 \author{
   Support for Computer Modern fonts is based on a contribution by

@@ -115,14 +115,23 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Helvetica.
 
   Acrobat Reader 5.x and later can be extended by support for Asian and
-  (so-called) Central European fonts (the latter only for 7.x), and this
-  will be needed for full use of encodings other than Latin-1. See
+  (so-called) Central European fonts (the latter only for 7.x and
+  later), and this will be needed for the full use of encodings other
+  than Latin-1. See
   \url{http://www.adobe.com/products/acrobat/acrrasianfontpack.html}.
 }
 \seealso{
   \code{\link{pdfFonts}},
+  \code{\link{embedFonts}},
   \code{\link{Devices}},
   \code{\link{postscript}}
+
+  More details of font families and encodings and especially handling
+  text in a non-Latin-1 encoding and embedding fonts can be found in
+
+  Paul Murrell and Brian Ripley (2006) Non-standard fonts in PostScript
+  and PDF graphics. \emph{R News}, 6(2):41--47.
+  \url{http://cran.r-project.org/doc/Rnews/Rnews_2006-2.pdf}.
 }
 \examples{
 \dontrun{
