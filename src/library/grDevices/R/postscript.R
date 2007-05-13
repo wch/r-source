@@ -842,7 +842,9 @@ embedFonts <- function(file, # The ps or pdf file to convert
         gsexe <- switch(.Platform$OS.type,
                         unix = "gs",
                         windows = "gswin32c.exe")
-    }
+    } else if(.Platform$OS.type == "windows" &&
+              length(grep(" ", gsexe, fixed=TRUE))> 0)
+        gsexe <- shortPathName(gsexe)
     tmpfile <- tempfile("Rembed")
     if (length(fontpaths) > 0)
         fontpaths <- paste("-sFONTPATH=",
@@ -851,9 +853,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", format,
                  " -sOutputFile=", tmpfile, " ", fontpaths, " ",
                  options, " ", file, sep = "")
-    ret <- switch(.Platform$OS.type,
-                  unix = system(cmd),
-                  windows = system(cmd, invisible = TRUE))
+    ret <- system(cmd, invisible = TRUE)
     if(ret != 0)
         stop(gettextf("status %d in running command '%s'", ret, cmd),
              domain = NA)

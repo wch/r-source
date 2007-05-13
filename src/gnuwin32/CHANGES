@@ -16,6 +16,11 @@ GUI CHANGES
 	insert and overwrite mode with different cursors.
 
 
+FUNCTION CHANGES
+
+    o	embedFonts() now accepts paths in 'GS_CMD' which contain spaces.
+
+
 
 	**************************************************
 	*						 *
