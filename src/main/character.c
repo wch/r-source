@@ -885,23 +885,41 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     regex_t reg;
-    int i, j, n, nmatches;
-    int igcase_opt, extended_opt, value_opt, fixed_opt, useBytes, cflags;
+    int i, j, n, nmatches, options = 0;
+    int perl_opt, igcase_opt, extended_opt, value_opt, fixed_opt, useBytes;
     char *cpat;
+    pcre *re_pcre = NULL /* -Wall */;
+    const unsigned char *tables = NULL /* -Wall */;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
     vec = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
+    perl_opt = asLogical(CAR(args)); args = CDR(args);
     value_opt = asLogical(CAR(args)); args = CDR(args);
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
+    if (perl_opt == NA_INTEGER) perl_opt = 0;
     if (value_opt == NA_INTEGER) value_opt = 0;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
+    if (fixed_opt) {
+	if(perl_opt) {
+	    warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	    perl_opt = 0;
+	}
+	if(igcase_opt)
+	    warning(_("argument '%s' will be ignored"), "igcase = TRUE");
+	if(!extended_opt)
+	    warning(_("argument '%s' will be ignored"), "extended = FALSE");
+    }
+    if(perl_opt) {
+	if(!extended_opt)
+	    warning(_("argument '%s' will be ignored"), "extended = FALSE");
+    }
 
     if (length(pat) < 1) errorcall(call, R_MSG_IA);
 
@@ -910,49 +928,66 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!useBytes && mbcslocale && !mbcsValid(cpat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
+    if(perl_opt) {
+#ifdef SUPPORT_UTF8
+	if(useBytes) ;
+	else if(utf8locale) options = PCRE_UTF8;
+	else if(mbcslocale)
+	    warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
+	if(!useBytes && mbcslocale && !mbcsValid(cpat))
+	    errorcall(call, _("regular expression is invalid in this locale"));
+#endif
+	if (igcase_opt) options |= PCRE_CASELESS;
+    } else {
+	if (extended_opt) options |= REG_EXTENDED;
+	if (igcase_opt) options |= REG_ICASE;
+    }
+
     n = length(vec);
     nmatches = 0;
     PROTECT(ind = allocVector(LGLSXP, n));
-    /* NAs are removed in R code so this isn't used */
-    /* it's left in case we change our minds again */
-    /* special case: NA pattern matches only NAs in vector */
-    if (STRING_ELT(pat, 0) == NA_STRING){
-	for(i = 0; i < n; i++){
-	    if(STRING_ELT(vec, i) == NA_STRING){
-		LOGICAL(ind)[i] = 1;
-		nmatches++;
-	    } else LOGICAL(ind)[i] = 0;
-	}
-	/* end NA pattern handling */
-    } else {
-	cflags = 0;
-	if (extended_opt) cflags |= REG_EXTENDED;
-	if (igcase_opt) cflags |= REG_ICASE;
 
-	if (!fixed_opt && regcomp(&reg, cpat, cflags))
+    if (fixed_opt) ;
+    else if(perl_opt) {
+	const char *errorptr;
+	int erroffset;
+	tables = pcre_maketables();
+	re_pcre = pcre_compile(cpat, options, &errorptr, &erroffset, tables);
+	if (!re_pcre)
 	    errorcall(call, _("invalid regular expression '%s'"), cpat);
-
-	for (i = 0 ; i < n ; i++) {
-	    LOGICAL(ind)[i] = 0;
-	    if (STRING_ELT(vec, i) != NA_STRING) {
-		char *s = translateChar(STRING_ELT(vec, i));
-#ifdef SUPPORT_MBCS
-		if(!useBytes && mbcslocale && !mbcsValid(s)) {
-		    warningcall(call,
-				_("input string %d is invalid in this locale"),
-				i+1);
-		    continue;
-		}
-#endif
-		if (fixed_opt) LOGICAL(ind)[i] =
-				   fgrep_one(cpat, s, useBytes) >= 0;
-		else if(regexec(&reg, s, 0, NULL, 0) == 0)
-		    LOGICAL(ind)[i] = 1;
-	    }
-	    if(LOGICAL(ind)[i]) nmatches++;
-	}
-	if (!fixed_opt) regfree(&reg);
+    } else {
+	if(regcomp(&reg, cpat, options))
+	    errorcall(call, _("invalid regular expression '%s'"), cpat);
     }
+
+    for (i = 0 ; i < n ; i++) {
+	LOGICAL(ind)[i] = 0;
+	if (STRING_ELT(vec, i) != NA_STRING) {
+	    char *s = translateChar(STRING_ELT(vec, i));
+#ifdef SUPPORT_MBCS
+	    if(!useBytes && mbcslocale && !mbcsValid(s)) {
+		warningcall(call,
+			    _("input string %d is invalid in this locale"),
+			    i+1);
+		continue;
+	    }
+#endif
+	    if (fixed_opt)
+		LOGICAL(ind)[i] = fgrep_one(cpat, s, useBytes) >= 0;
+	    else if (perl_opt) {
+		int ovector;
+		if (pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0,
+			      &ovector, 0) >= 0) INTEGER(ind)[i] = 1;
+	    } else
+		if (regexec(&reg, s, 0, NULL, 0) == 0) LOGICAL(ind)[i] = 1;
+	}
+	if(LOGICAL(ind)[i]) nmatches++;
+    }
+    if (fixed_opt) ;
+    else if (perl_opt) {
+	pcre_free(re_pcre);
+	pcre_free((void *)tables);
+    } else regfree(&reg);
 
     if (value_opt) {
 	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
@@ -1217,8 +1252,11 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, igcase_opt, extended_opt, fixed_opt, useBytes, cflags;
+    int i, n, st, mlen, rc;
+    int perl_opt, igcase_opt, extended_opt, fixed_opt, useBytes, options;
     char *spat = NULL; /* -Wall */
+    pcre *re_pcre = NULL /* -Wall */;
+    const unsigned char *tables = NULL /* -Wall */;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -1227,27 +1265,62 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     extended_opt = asLogical(CAR(args)); args = CDR(args);
     if (extended_opt == NA_INTEGER) extended_opt = 1;
+    perl_opt = asLogical(CAR(args)); args = CDR(args);
+    if (perl_opt == NA_INTEGER) perl_opt = 0;
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
-
+    if (fixed_opt) {
+	if(perl_opt) {
+	    warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	    perl_opt = 0;
+	}
+	if(igcase_opt)
+	    warning(_("argument '%s' will be ignored"), "igcase = TRUE");
+	if(!extended_opt)
+	    warning(_("argument '%s' will be ignored"), "extended = FALSE");
+    }
+    if(perl_opt) {
+	if(!extended_opt)
+	    warning(_("argument '%s' will be ignored"), "extended = FALSE");
+    }
+    
     /* allow 'text' to be zero-length from 2.3.1 */
     if (length(pat) < 1) errorcall(call, R_MSG_IA);
-    if ( STRING_ELT(pat,0) == NA_STRING)
+    if (STRING_ELT(pat,0) == NA_STRING)
 	errorcall(call, R_MSG_IA);
 
-    cflags = 0;
-    if (extended_opt) cflags |= REG_EXTENDED;
-    if (igcase_opt) cflags |= REG_ICASE;
+    options = 0;
+    if(perl_opt) {
+#ifdef SUPPORT_UTF8
+	if(useBytes) ;
+	else if(utf8locale) options = PCRE_UTF8;
+	else if(mbcslocale)
+	    warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
+#endif
+	if (igcase_opt) options |= PCRE_CASELESS;
+	tables = pcre_maketables();
+    } else {
+	if (extended_opt) options |= REG_EXTENDED;
+	if (igcase_opt) options |= REG_ICASE;
+    }
 
     spat = translateChar(STRING_ELT(pat, 0));
 #ifdef SUPPORT_MBCS
     if(!useBytes && mbcslocale && !mbcsValid(spat))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, spat, cflags))
+    if (fixed_opt) ; 
+    else if (perl_opt) {
+	const char *errorptr;
+	int erroffset;
+	re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
+	if (!re_pcre) 
+	    errorcall(call, _("invalid regular expression '%s'"), spat);
+    } else if (regcomp(&reg, spat, options))
 	errorcall(call, _("invalid regular expression '%s'"), spat);
+
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
     PROTECT(matchlen = allocVector(INTSXP, n));
@@ -1277,41 +1350,53 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			strlen(spat):-1;
+		continue;
+	    } 
+	    if (perl_opt) {
+		int ovector[3];
+		rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, ovector, 3) 
+		    >= 0;
+		st = ovector[0];
+		mlen  = ovector[1] - st;
 	    } else {
-		if(regexec(&reg, s, 1, regmatch, 0)
-		   == 0) {
-		    st = regmatch[0].rm_so;
-		    INTEGER(ans)[i] = st + 1; /* index from one */
-		    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
-#ifdef SUPPORT_MBCS
-		    if(!useBytes && mbcslocale) {
-			int mlen = regmatch[0].rm_eo - st;
-			/* Unfortunately these are in bytes, so we need to
-			   use chars instead */
-			if(st > 0) {
-			    AllocBuffer(st, &cbuff);
-			    memcpy(cbuff.data, s, st);
-			    cbuff.data[st] = '\0';
-			    INTEGER(ans)[i] = 1+mbstowcs(NULL, cbuff.data, 0);
-			    if(INTEGER(ans)[i] <= 0) /* an invalid string */
-				INTEGER(ans)[i] = NA_INTEGER;
-			}
-			AllocBuffer(mlen+1, &cbuff);
-			memcpy(cbuff.data, s+st, mlen);
-			cbuff.data[mlen] = '\0';
-			INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
-			if(INTEGER(matchlen)[i] < 0) /* an invalid string */
-			    INTEGER(matchlen)[i] = NA_INTEGER;
-		    }
-#endif
-		} else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+		rc = regexec(&reg, s, 1, regmatch, 0) == 0;
+		st = regmatch[0].rm_so;
+		mlen = regmatch[0].rm_eo - st;
 	    }
+	    if(rc) {
+		INTEGER(ans)[i] = st + 1; /* index from one */
+#ifdef SUPPORT_MBCS
+		if(!useBytes && mbcslocale) {
+		    /* Unfortunately mlen is in bytes: we need to
+		       use chars instead */
+		    if(st > 0) {
+			AllocBuffer(st, &cbuff);
+			memcpy(cbuff.data, s, st);
+			cbuff.data[st] = '\0';
+			INTEGER(ans)[i] = 1+mbstowcs(NULL, cbuff.data, 0);
+			if(INTEGER(ans)[i] <= 0) /* an invalid string */
+			    INTEGER(ans)[i] = NA_INTEGER;
+		    }
+		    AllocBuffer(mlen+1, &cbuff);
+		    memcpy(cbuff.data, s+st, mlen);
+		    cbuff.data[mlen] = '\0';
+		    INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
+		    if(INTEGER(matchlen)[i] < 0) /* an invalid string */
+			INTEGER(matchlen)[i] = NA_INTEGER;
+		} else INTEGER(matchlen)[i] = mlen;
+#endif
+	    } else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	}
     }
 #ifdef SUPPORT_MBCS
     DeallocBuffer(&cbuff);
 #endif
-    if (!fixed_opt) regfree(&reg);
+    if (fixed_opt) ;
+    else if (perl_opt) {
+	pcre_free(re_pcre);
+	pcre_free((void *)tables);
+    } else regfree(&reg);
+
     setAttrib(ans, install("match.length"), matchlen);
     UNPROTECT(2);
     return ans;
