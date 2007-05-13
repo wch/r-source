@@ -44,7 +44,7 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
-R: Makefile chartables.h
+R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES)
 
