@@ -891,6 +891,7 @@
  do_paste
  do_pathexpand
  do_persp
+ do_pgrep
  do_pgsub
  do_pipe
  do_playDL
@@ -903,6 +904,7 @@
  do_polygon
  do_polyroot
  do_pos2env
+ do_pregexpr
  do_primitive
  do_printDeferredWarnings
  do_printdefault

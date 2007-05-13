@@ -241,9 +241,6 @@ BUG FIXES
 
     o	methods("Math") did not work if 'methods' was not attached.
 
-    o	grep(fixed = TRUE, perl = TRUE) ignored 'fixed', although it
-	was documented to ignore 'perl'.  Same for [g]regepr and [g]sub.
-
 
 
 
