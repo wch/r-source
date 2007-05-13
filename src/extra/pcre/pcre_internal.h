@@ -246,7 +246,7 @@ must begin with PCRE_. */
 values. */
 
 #include <pcre.h>
-#include "ucp.h"
+/* #include "ucp.h" */
 
 /* When compiling for use with the Virtual Pascal compiler, these functions
 need to have their names changed. PCRE must be compiled with the -DVPCOMPAT

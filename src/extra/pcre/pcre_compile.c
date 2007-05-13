@@ -5043,8 +5043,6 @@ Returns:        pointer to compiled data block, or NULL on error,
                 with errorptr and erroroffset set
 */
 
-#include "chartables.h"
-
 PCRE_EXP_DEFN pcre *
 pcre_compile(const char *pattern, int options, const char **errorptr,
   int *erroroffset, const unsigned char *tables)

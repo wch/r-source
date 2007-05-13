@@ -1,42 +1,8 @@
-We make chartables.h rather than pcre_chartables.c, and include in 
-pcre_compile.c.  This makes the standard dependency mechanism work.
-
 pcre_internal.h includes the relevant definitions that configure would
 make.
 
 We do not define SUPPORT_UCP and so leave out the files it needs.
 
-diff -u pcre-7.1/dftables.c ../extra/pcre/dftables.c
---- pcre-7.1/dftables.c	2007-03-20 11:28:28.000000000 +0000
-+++ ../extra/pcre/dftables.c	2007-05-07 13:31:00.000000000 +0100
-@@ -43,6 +43,7 @@
- locale. Now that pcre_maketables is a function visible to the outside world, we
- make use of its code from here in order to be consistent. */
- 
-+#include <config.h> /* to avoid trivial warnings about LFS */
- #include <ctype.h>
- #include <stdio.h>
- #include <string.h>
-@@ -53,6 +54,7 @@
- #define DFTABLES          /* pcre_maketables.c notices this */
- #include "pcre_maketables.c"
- 
-+#undef fprintf /* remapped on Windows */
- 
- int main(int argc, char **argv)
- {
-diff -u pcre-7.1/pcre_compile.c ../extra/pcre/pcre_compile.c
---- pcre-7.1/pcre_compile.c	2007-04-17 09:21:58.000000000 +0100
-+++ ../extra/pcre/pcre_compile.c	2007-05-07 13:26:23.000000000 +0100
-@@ -5043,6 +5043,8 @@
-                 with errorptr and erroroffset set
- */
- 
-+#include "chartables.h"
-+
- PCRE_EXP_DEFN pcre *
- pcre_compile(const char *pattern, int options, const char **errorptr,
-   int *erroroffset, const unsigned char *tables)
 diff -u pcre-7.1/pcre_internal.h ../extra/pcre/pcre_internal.h
 --- pcre-7.1/pcre_internal.h	2007-04-18 10:26:26.000000000 +0100
 +++ ../extra/pcre/pcre_internal.h	2007-05-07 13:17:09.000000000 +0100
@@ -60,4 +26,12 @@ diff -u pcre-7.1/pcre_internal.h ../extra/pcre/pcre_internal.h
  
  /* Standard C headers plus the external interface definition. The only time
  setjmp and stdarg are used is when NO_RECURSE is set. */
+@@ -235,7 +246,7 @@
+ values. */
 
+ #include <pcre.h>
+-#include "ucp.h"
++/* #include "ucp.h" */
+
+ /* When compiling for use with the Virtual Pascal compiler, these functions
+ need to have their names changed. PCRE must be compiled with the -DVPCOMPAT
