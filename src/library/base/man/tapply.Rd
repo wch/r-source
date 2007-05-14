@@ -11,7 +11,8 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \arguments{
   \item{X}{an atomic object, typically a vector.}
-  \item{INDEX}{list of factors, each of same length as \code{X}.}
+  \item{INDEX}{list of factors, each of same length as \code{X}.  The
+    elements are coerced to factors by \code{\link{as.factor}}.}
   \item{FUN}{the function to be applied.  In the case of functions like
     \code{+}, \code{\%*\%}, etc., the function name must be quoted.  If
     \code{FUN} is \code{NULL}, tapply returns a vector which can be used
@@ -39,6 +40,10 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   returns an array of mode \code{\link{list}} whose components are the
   values of the individual calls to \code{FUN}, i.e., the result is a
   list with a \code{\link{dim}} attribute.
+
+  When there is an array answer, its \code{\link{dimnames}} are named by
+  the names of \code{INDEX} and are based on the levels of the grouping
+  factors (possibly after coercion).
 
   Note that optional arguments to \code{FUN} supplied by the
   \code{...} argument are not divided into cells.  It is therefore
