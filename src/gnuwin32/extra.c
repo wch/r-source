@@ -782,7 +782,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     wselect = newwindow(haveTitle ? CHAR(STRING_ELT(CADDDR(args), 0)):
 			(multiple ? _("Select one or more") : _("Select one")),
 			rect(0, 0, xmax, ymax),
-			Titlebar | Centered | Modal);
+			Titlebar | Centered | Modal | Floating);
     setbackground(wselect, dialog_bg());
     if(multiple)
 	f_list = newmultilist(clist, rect(10, 10, xmax-25, ylist), NULL);

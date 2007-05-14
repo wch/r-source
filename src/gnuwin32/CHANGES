@@ -23,6 +23,9 @@ GUI CHANGES
 	recognizing and removing prompts, e.g. from example() output
 	or debug sessions.
 
+    o	Using a modal widget from Rterm (e.g. select.list) is now for
+	likely to be forced to the front.
+
 
 OTHERS
 
