@@ -30,8 +30,9 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
                              prod(d[seq_len(i - 1)]) * rep.int(1, d[i])),
                      prod(d[seq(from = i + 1, length = length(d) - i)]))
         zz <- dimnames(z)[[i]][j]
-        ## zz is character, so match as character
-        w[[i]] <- by[[i]][match(zz, as.character(by[[i]]))]
+        ## zz is character, so match to the levels created in tapply
+        ## and not to as.character(by[[i]])
+        w[[i]] <- by[[i]][match(zz, as.factor(by[[i]]))]
     }
     ## this gives w row names that may not be consecutive.
     w <- as.data.frame(w, stringsAsFactors = FALSE)[which(!unlist(lapply(z, is.null))), , drop = FALSE]
