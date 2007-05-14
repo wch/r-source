@@ -4700,6 +4700,7 @@ result <- density(x, n = 20, from = -1, to = 1)
 stopifnot(result$y >= 0)
 ## slightly negative < 2.5.0
 
+
 ## bw.SJ() used too small search interval in rare cases:
 bw.SJ(1:20) # error: "no solution in the specified range of bandwidths" in < 2.5.1
 ## this is not ok when called as  density(1:20, bw = "SJ")
@@ -4715,6 +4716,22 @@ stopifnot(identical(0x10L, 16L))
 A <- data.frame(foo=character(0), bar=character(0))
 rbind(A, c(foo="a", bar="b"))
 ## failed in 2.5.0
+
+
+## factor() with NA in dimnames():
+x <- matrix(1:2, 2)
+rownames(x) <- factor(c("A", NA))
+## segfaulted <= 2.5.0
+
+
+## return value of median.
+z <- median(integer(0))
+stopifnot(identical(z, NA_integer_))
+z <- median(numeric(0))
+stopifnot(identical(z, NA_real_))
+## returned logical NA in 2.5.0
+
+### end of tests added in 2.5.1 ###
 
 
 ## regression tests for unlink and wildcards
@@ -4767,12 +4784,6 @@ worms.glm <- glm(cbind(deaths, (20-deaths)) ~ sex+ doselin,
                  data=worms, family=binomial)
 predict(worms.glm, new=data.frame(sex="1", doselin=6))
 ## failed < 2.6.0
-
-
-## factor() with NA in dimnames():
-x <- matrix(1:2, 2)
-rownames(x) <- factor(c("A", NA))
-## segfaulted <= 2.5.0
 
 
 ## regression test for changes in aggregate.data.frame
