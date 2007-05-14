@@ -10,7 +10,7 @@ median(x, na.rm = FALSE)
     numeric vector containing the values whose median is to be computed.}
   \item{na.rm}{a logical value indicating whether \code{NA}
     values should be stripped before the computation proceeds.}
-  }
+}
 \description{
   Compute the sample median.
 }
@@ -20,6 +20,10 @@ median(x, na.rm = FALSE)
   which are generic, and so the default method will work for most
   classes (e.g. \code{"\link{Date}"}) for which a median is a reasonable
   concept.
+
+  If there are no values or if \code{na.rm = FALSE} and there are \code{NA}
+  values the result is \code{NA} of the same type as \code{x} (or more
+  generally the result of \code{x[FALSE][NA]}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

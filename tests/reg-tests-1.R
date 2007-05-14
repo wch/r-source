@@ -4716,8 +4716,18 @@ A <- data.frame(foo=character(0), bar=character(0))
 rbind(A, c(foo="a", bar="b"))
 ## failed in 2.5.0
 
+
 ## factor() with NA in dimnames():
 x <- matrix(1:2, 2)
 rownames(x) <- factor(c("A", NA))
 ## segfaulted <= 2.5.0
 
+
+## return value of median.
+z <- median(integer(0))
+stopifnot(identical(z, NA_integer_))
+z <- median(numeric(0))
+stopifnot(identical(z, NA_real_))
+## returned logical NA in 2.5.0
+
+### end of tests added in 2.5.1 ###

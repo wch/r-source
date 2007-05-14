@@ -100,6 +100,10 @@ BUG FIXES
     o	x <- cbind(1:2); rownames(x) <- factor(c("A",NA))  now longer
 	segfaults.
 
+    o	median() returned a logical result when it was 'NA': it now
+	returns an NA of appropriate type (e.g. integer or double).
+
+
 
 
 		CHANGES IN R VERSION 2.5.0
