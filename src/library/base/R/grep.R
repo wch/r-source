@@ -14,7 +14,13 @@ function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
             return(rep.int(NA, length(x)))
     }
 
-    if(perl)
+    if(fixed && perl)
+        warning(gettextf("argument '%s' will be ignored", "perl = TRUE"),
+                domain = NA)
+    if(perl && !extended)
+        warning(gettextf("argument '%s' will be ignored",
+                         "extended = FALSE"), domain = NA)
+    if(!fixed && perl)
         .Internal(grep.perl(pattern, x, ignore.case, value, useBytes))
     else
         .Internal(grep(pattern, x, ignore.case, extended, value, fixed,
@@ -31,7 +37,13 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
     if (is.na(pattern))
         return(rep.int(NA_character_, length(x)))
 
-    if(perl)
+    if(fixed && perl)
+        warning(gettextf("argument '%s' will be ignored", "perl = TRUE"),
+                domain = NA)
+    if(perl && !extended)
+        warning(gettextf("argument '%s' will be ignored",
+                         "extended = FALSE"), domain = NA)
+    if(!fixed && perl)
         .Internal(sub.perl(pattern, replacement, x, ignore.case, useBytes))
     else
         .Internal(sub(pattern, replacement, x, ignore.case,
@@ -48,7 +60,13 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
     if (is.na(pattern))
         return(rep.int(NA_character_, length(x)))
 
-    if(perl)
+    if(fixed && perl)
+        warning(gettextf("argument '%s' will be ignored", "perl = TRUE"),
+                domain = NA)
+    if(perl && !extended)
+        warning(gettextf("argument '%s' will be ignored",
+                         "extended = FALSE"), domain = NA)
+    if(!fixed && perl)
         .Internal(gsub.perl(pattern, replacement, x, ignore.case, useBytes))
     else
         .Internal(gsub(pattern, replacement, x, ignore.case,
@@ -61,10 +79,16 @@ function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
 {
     pattern <- as.character(pattern)
     text <- as.character(text)
-    if(perl)
-        .Internal(regexpr.perl(pattern, text, ignore.case, useBytes))
+    if(fixed && perl)
+        warning(gettextf("argument '%s' will be ignored", "perl = TRUE"),
+                domain = NA)
+    if(perl && !extended)
+        warning(gettextf("argument '%s' will be ignored",
+                         "extended = FALSE"), domain = NA)
+    if(!fixed && perl)
+      .Internal(regexpr.perl(pattern, text, ignore.case, useBytes))
     else
-        .Internal(regexpr(pattern, text, ignore.case, extended, fixed, useBytes))
+      .Internal(regexpr(pattern, text, ignore.case, extended, fixed, useBytes))
 }
 
 gregexpr <-
@@ -73,7 +97,13 @@ function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
 {
     pattern <- as.character(pattern)
     text <- as.character(text)
-    if(perl)
+    if(fixed && perl)
+        warning(gettextf("argument '%s' will be ignored", "perl = TRUE"),
+                domain = NA)
+    if(perl && !extended)
+        warning(gettextf("argument '%s' will be ignored",
+                         "extended = FALSE"), domain = NA)
+    if(!fixed && perl)
       .Internal(gregexpr.perl(pattern, text, ignore.case, useBytes))
     else
       .Internal(gregexpr(pattern, text, ignore.case, extended, fixed, useBytes))

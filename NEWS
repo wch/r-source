@@ -174,6 +174,10 @@ NEW FEATURES
     o	The vcov() methods for classes "gls" and "nlme" have migrated to
 	package 'nlme'.
 
+    o	grep(), strsplit() and friends now warn if incompatible sets
+	of options are used, instead of silently using the documented
+	priority.
+
 
 DEPRECATED & DEFUNCT
 
@@ -356,6 +360,10 @@ BUG FIXES
 
     o	median() returned a logical result when it was 'NA': it now
 	returns an NA of appropriate type (e.g. integer or double).
+
+    o	grep(fixed = TRUE, perl = TRUE) ignored 'fixed', although it
+	was documented to ignore 'perl'
+	Same for [g]regexpr and [g]sub.
 
 
 
