@@ -168,6 +168,9 @@ NEW FEATURES
 	of arguments, but no instances of positional matching beyond
 	the second were found.)
 
+    o	For OSes that cannot unset environment variables, Sys.unsetenv()
+	sets the value to "", with a warning.
+
 
 DEPRECATED & DEFUNCT
 
