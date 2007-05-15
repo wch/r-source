@@ -116,15 +116,6 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  			     &outptr, &outleft)
  		      != (size_t) (-1))
  		    {
-@@ -1258,7 +1275,7 @@
- 		    }
- 		  if (errno != E2BIG)
- 		    {
--		      __libc_lock_unlock (lock);
-+                      __libc_lock_unlock (lock);
- 		      return NULL;
- 		    }
- #  endif
 @@ -1503,6 +1520,13 @@
  	  locale_defaulted = 1;
  	}
