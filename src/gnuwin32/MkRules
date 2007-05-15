@@ -4,7 +4,7 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives MINGW (MinGW gcc3), CROSS (e.g. Linux) GFORTRAN (MinGW gcc4)
-BUILD=MINGW
+BUILD=CROSS
 
 HELP = YES
 HELPTYPES = -txt -html -latex -example
@@ -79,9 +79,10 @@ ifeq ($(strip $(BUILD)),CROSS)
 BINPREF=i586-mingw32-
 # Set this to where the mingw32 include files are. It must be accurate.
 # It should contain fcntl.h and windows.h
-HEADER=/users/ripley/R/cross-tools5/i586-mingw32/include
+HEADER=/home/ripley/R/mingw/include
 # path (possibly full path) to same version of R on the host system
 R_EXE='I failed to read the instructions to set R_EXE in MkRules'
+R_EXE=Rdev
 endif
 
 ## =============== end of user-customizable parts  ===================

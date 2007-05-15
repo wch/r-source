@@ -133,6 +133,14 @@ ifneq ($(strip $(BUILD)),CROSS)
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
           cp ../library/base/baseloader.R ../../library/base/R/base; \
 	fi
+else
+	@if ! test -f ../../library/base/R/base.rdb ; then \
+	  echo "preparing package base for lazy loading" ; \
+	  (echo ".libPaths('../../library')"; \
+	    cat ../library/base/cross-makebasedb.R) | \
+	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE); \
+          cp ../library/base/baseloader.R ../../library/base/R/base; \
+	fi
 endif
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-tools
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
