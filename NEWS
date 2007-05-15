@@ -110,6 +110,8 @@ BUG FIXES
 	was documented to ignore 'perl'
 	Same for [g]regexpr and [g]sub.
 
+    o	getNamespaceExports("base") works again.
+
 
 
 

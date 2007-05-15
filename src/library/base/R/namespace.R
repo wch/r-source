@@ -40,7 +40,7 @@ getNamespaceVersion <- function(ns) {
 
 getNamespaceExports <- function(ns) {
     ns <- asNamespace(ns)
-    if (isBaseNamespace(ns)) ls(NULL, all = TRUE)
+    if (isBaseNamespace(ns)) ls(.BaseNamespaceEnv, all = TRUE)
     else ls(getNamespaceInfo(ns, "exports"), all = TRUE)
 }
 
