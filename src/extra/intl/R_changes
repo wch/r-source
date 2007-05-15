@@ -11,7 +11,7 @@ So we modified the iconv references to use our extra test and to use Riconv.
 Since we do not use relocation (and it was not easy to get to compile on
 Windows) we have removed it, as well as OS/2 compatibility.  Also, we
 do not install or use locale.alias, and charset.alias is compiled in
-(via localecharset.h) rather than read at runtime.
+(via charsetalias.h) rather than read at runtime.
 
 
 Since the packages will need libintl.h, we need to install it.  We also
@@ -243,7 +243,7 @@ diff -u intl/gettextP.h ../extra/intl/gettextP.h
  
 diff -u intl/localcharset.c ../extra/intl/localcharset.c
 --- intl/localcharset.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/localcharset.c	2007-05-12 06:36:09.000000000 +0100
++++ ../extra/intl/localcharset.c	2007-05-15 13:36:08.000000000 +0100
 @@ -19,7 +19,9 @@
  
  /* Written by Bruno Haible <bruno@clisp.org>.  */
@@ -268,134 +268,25 @@ diff -u intl/localcharset.c ../extra/intl/localcharset.c
  
  #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
    /* Win32, Cygwin, OS/2, DOS */
-@@ -112,104 +116,7 @@
+@@ -112,6 +116,9 @@
    if (cp == NULL)
      {
  #if !(defined VMS || defined WIN32_NATIVE || defined __CYGWIN__)
--      FILE *fp;
--      const char *dir;
--      const char *base = "charset.alias";
--      char *file_name;
++/* we convert charset.alias to a header file at compile time */
++#include "charsetalias.h"
++#if 0
+       FILE *fp;
+       const char *dir;
+       const char *base = "charset.alias";
+@@ -209,7 +216,7 @@
+ 
+       if (file_name != NULL)
+ 	free (file_name);
 -
--      /* Make it possible to override the charset.alias location.  This is
--	 necessary for running the testsuite before "make install".  */
--      dir = getenv ("CHARSETALIASDIR");
--      if (dir == NULL || dir[0] == '\0')
--	dir = relocate (LIBDIR);
--
--      /* Concatenate dir and base into freshly allocated file_name.  */
--      {
--	size_t dir_len = strlen (dir);
--	size_t base_len = strlen (base);
--	int add_slash = (dir_len > 0 && !ISSLASH (dir[dir_len - 1]));
--	file_name = (char *) malloc (dir_len + add_slash + base_len + 1);
--	if (file_name != NULL)
--	  {
--	    memcpy (file_name, dir, dir_len);
--	    if (add_slash)
--	      file_name[dir_len] = DIRECTORY_SEPARATOR;
--	    memcpy (file_name + dir_len + add_slash, base, base_len + 1);
--	  }
--      }
--
--      if (file_name == NULL || (fp = fopen (file_name, "r")) == NULL)
--	/* Out of memory or file not found, treat it as empty.  */
--	cp = "";
--      else
--	{
--	  /* Parse the file's contents.  */
--	  char *res_ptr = NULL;
--	  size_t res_size = 0;
--
--	  for (;;)
--	    {
--	      int c;
--	      char buf1[50+1];
--	      char buf2[50+1];
--	      size_t l1, l2;
--	      char *old_res_ptr;
--
--	      c = getc (fp);
--	      if (c == EOF)
--		break;
--	      if (c == '\n' || c == ' ' || c == '\t')
--		continue;
--	      if (c == '#')
--		{
--		  /* Skip comment, to end of line.  */
--		  do
--		    c = getc (fp);
--		  while (!(c == EOF || c == '\n'));
--		  if (c == EOF)
--		    break;
--		  continue;
--		}
--	      ungetc (c, fp);
--	      if (fscanf (fp, "%50s %50s", buf1, buf2) < 2)
--		break;
--	      l1 = strlen (buf1);
--	      l2 = strlen (buf2);
--	      old_res_ptr = res_ptr;
--	      if (res_size == 0)
--		{
--		  res_size = l1 + 1 + l2 + 1;
--		  res_ptr = (char *) malloc (res_size + 1);
--		}
--	      else
--		{
--		  res_size += l1 + 1 + l2 + 1;
--		  res_ptr = (char *) realloc (res_ptr, res_size + 1);
--		}
--	      if (res_ptr == NULL)
--		{
--		  /* Out of memory. */
--		  res_size = 0;
--		  if (old_res_ptr != NULL)
--		    free (old_res_ptr);
--		  break;
--		}
--	      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
--	      strcpy (res_ptr + res_size - (l2 + 1), buf2);
--	    }
--	  fclose (fp);
--	  if (res_size == 0)
--	    cp = "";
--	  else
--	    {
--	      *(res_ptr + res_size) = '\0';
--	      cp = res_ptr;
--	    }
--	}
--
--      if (file_name != NULL)
--	free (file_name);
--
-+#include "localecharset.h"
++#endif
  #else
  
  # if defined VMS
-diff -u intl/localealias.c ../extra/intl/localealias.c
---- intl/localealias.c	2006-11-27 17:02:00.000000000 +0000
-+++ ../extra/intl/localealias.c	2007-05-12 07:15:11.000000000 +0100
-@@ -121,10 +121,8 @@
- # define feof(s) feof_unlocked (s)
- #endif
- 
--
- __libc_lock_define_initialized (static, lock)
- 
--
- struct alias_map
- {
-   const char *alias;
-@@ -152,6 +150,7 @@
- 			  const struct alias_map *map2);
- 
- 
-+#define LOCALE_ALIAS_PATH ""
- const char *
- _nl_expand_alias (const char *name)
- {
 diff -u intl/localename.c ../extra/intl/localename.c
 --- intl/localename.c	2006-11-27 17:02:00.000000000 +0000
 +++ ../extra/intl/localename.c	2007-05-12 04:28:12.000000000 +0100
