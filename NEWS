@@ -171,6 +171,9 @@ NEW FEATURES
     o	For OSes that cannot unset environment variables, Sys.unsetenv()
 	sets the value to "", with a warning.
 
+    o	The vcov() methods for classes "gls" and "nlme" have migrated to
+	package 'nlme'.
+
 
 DEPRECATED & DEFUNCT
 

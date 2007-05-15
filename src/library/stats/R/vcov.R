@@ -21,7 +21,5 @@ vcov.mlm <- function(object, ...)
     kronecker(estVar(object), so$cov.unscaled, make.dimnames = TRUE)
 }
 
-## These should be moved to nlme
-vcov.gls <- function (object, ...) object$varBeta
+## gls and lme methods moved to nlme in 2.6.0
 
-vcov.lme <- function (object, ...) object$varFix
