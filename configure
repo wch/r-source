@@ -46284,31 +46284,32 @@ done
 
 { echo "$as_me:$LINENO: checking whether Java compiler works" >&5
 echo $ECHO_N "checking whether Java compiler works... $ECHO_C" >&6; }
-acx_javac_works=no
+if test "${r_cv_javac_works+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  r_cv_javac_works=no
 if test -n "${JAVAC}"; then
   rm -f A.java A.class
   echo "public class A { }" > A.java
   if "${JAVAC}" A.java 2>&5; then
     if test -e A.class; then
-      acx_javac_works=yes
+      r_cv_javac_works=yes
     fi
   fi
   rm -rf A.java A.class
 fi
-if test "${acx_javac_works}" = yes; then
-  { echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6; }
-else
-  JAVAC=
-  { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
 fi
+{ echo "$as_me:$LINENO: result: $r_cv_javac_works" >&5
+echo "${ECHO_T}$r_cv_javac_works" >&6; }
 
 getsp_cp=${ac_aux_dir}
 
 { echo "$as_me:$LINENO: checking whether Java interpreter works" >&5
 echo $ECHO_N "checking whether Java interpreter works... $ECHO_C" >&6; }
-acx_java_works=no
+if test "${r_cv_java_works+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  r_cv_java_works=no
 if test -n "${JAVA}" ; then
 
   acx_java_result=
@@ -46322,18 +46323,20 @@ if test -n "${JAVA}" ; then
   acx_jc_result=$acx_java_result
 
   if test "${acx_jc_result}" = "Test1234OK"; then
-    acx_java_works=yes
+    r_cv_java_works=yes
   fi
   acx_jc_result=
 fi
+fi
+{ echo "$as_me:$LINENO: result: $r_cv_java_works" >&5
+echo "${ECHO_T}$r_cv_java_works" >&6; }
 
-if test ${acx_java_works} = yes; then
-  { echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6; }
+if test ${r_cv_java_works} = yes; then
 
+  ## we cannot cache this part without caching JAVA_HOME
   { echo "$as_me:$LINENO: checking for Java environment" >&5
 echo $ECHO_N "checking for Java environment... $ECHO_C" >&6; }
-
+  r_cv_java_env="not found"
   ## find JAVA_HOME from Java itself unless specified
   if test -z "${JAVA_HOME}" ; then
 
@@ -46350,15 +46353,13 @@ echo $ECHO_N "checking for Java environment... $ECHO_C" >&6; }
   fi
 
   ## the availability of JAVA_HOME will tell us whether it's supported
-  if test -z "${JAVA_HOME}" ; then
-    if test x$acx_java_env_msg != xyes; then
-      { echo "$as_me:$LINENO: result: not found" >&5
-echo "${ECHO_T}not found" >&6; }
-    fi
-  else
-    { echo "$as_me:$LINENO: result: in ${JAVA_HOME}" >&5
-echo "${ECHO_T}in ${JAVA_HOME}" >&6; }
+  if test -n "${JAVA_HOME}" ; then
+    r_cv_java_env="in ${JAVA_HOME}"
+  fi
+  { echo "$as_me:$LINENO: result: $r_cv_java_env" >&5
+echo "${ECHO_T}$r_cv_java_env" >&6; }
 
+  if test "$r_cv_java_env" != "not found"; then
     : ${JAVA_LIBS=~autodetect~}
     : ${JAVA_CPPFLAGS=~autodetect~}
     : ${JAVA_LD_LIBRARY_PATH=~autodetect~}
@@ -46459,6 +46460,10 @@ echo "${ECHO_T}in ${JAVA_HOME}" >&6; }
     ## try to link a simple JNI program
     { echo "$as_me:$LINENO: checking whether JNI programs can be compiled" >&5
 echo $ECHO_N "checking whether JNI programs can be compiled... $ECHO_C" >&6; }
+if test "${r_cv_jni+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  r_cv_jni=
     j_save_LIBS="${LIBS}"
     j_save_CPPF="${CPPFLAGS}"
     LIBS="${JAVA_LIBS}"
@@ -46490,19 +46495,14 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
 	 test ! -s conftest.err
        } && test -s conftest$ac_exeext &&
        $as_test_x conftest$ac_exeext; then
-  { echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6; }
-    LIBS="${j_save_LIBS}"
-    CPPFLAGS="${j_save_CPPF}"
-
+  r_cv_jni="yes"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
 
     if test "${acx_java_uses_custom_flags}" = yes; then
-      { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
+      r_cv_jni=no
       { { echo "$as_me:$LINENO: error: Failed to compile a JNI program with custom JAVA_LIBS/JAVA_CPPFLAGS.
 See config.log for details.
 Do NOT set JAVA_LIBS/JAVA_CPPFLAGS unless you are sure they are correct!
@@ -46542,16 +46542,16 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
 	 test ! -s conftest.err
        } && test -s conftest$ac_exeext &&
        $as_test_x conftest$ac_exeext; then
-  { echo "$as_me:$LINENO: result: yes (with pthreads)" >&5
-echo "${ECHO_T}yes (with pthreads)" >&6; }
-    JAVA_LIBS0="${JAVA_LIBS0} -lpthread"
-
+  r_cv_jni="yes (with pthreads)"
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-	{ echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
+	r_cv_jni="no"
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
+      conftest$ac_exeext conftest.$ac_ext
 fi
 
 rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
@@ -46560,15 +46560,15 @@ rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
     CPPFLAGS="${j_save_CPPF}"
 
 fi
-
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-
+{ echo "$as_me:$LINENO: result: $r_cv_jni" >&5
+echo "${ECHO_T}$r_cv_jni" >&6; }
+    ##AC_MSG_RESULT([$r_cv_jni])
+    if test "$r_cv_jni"="yes (with pthreads)"; then
+      JAVA_LIBS0="${JAVA_LIBS0} -lpthread"
+    fi
     have_java=yes
   fi
-else
-  { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
+else  ## not r_cv_java_works
   JAVA=
   JAVA_HOME=
 fi
