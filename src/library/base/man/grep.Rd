@@ -29,7 +29,7 @@ gsub(pattern, replacement, x,
 regexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
         perl = FALSE, fixed = FALSE, useBytes = FALSE)
 
-gregexpr(pattern, text ignore.case = FALSE, extended = TRUE,
+gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 }
 \arguments{
