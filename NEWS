@@ -100,6 +100,9 @@ BUG FIXES
     o	x <- cbind(1:2); rownames(x) <- factor(c("A",NA))  now longer
 	segfaults.
 
+    o	R CMD BATCH no longer assumes Sys.unsetenv() is supported (it
+	is not on older Solaris systems).
+
     o	median() returned a logical result when it was 'NA': it now
 	returns an NA of appropriate type (e.g. integer or double).
 

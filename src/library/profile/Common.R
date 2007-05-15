@@ -81,5 +81,5 @@ if(Sys.getenv("R_BATCH") != "") {
     }
     ## avoid passing on to spawned R processes
     ## A system has been reported without Sys.unsetenv, so try this
-    Sys.setenv(R_BATCH="")
+    try(Sys.setenv(R_BATCH=""))
 }
