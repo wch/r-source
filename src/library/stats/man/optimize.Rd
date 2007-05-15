@@ -86,7 +86,7 @@ xmin <- optimize(f, c(0, 1), tol = 0.0001, a = 1/3)
 xmin
 
 ## See where the function is evaluated:
-optimize(function(x) x^2*(print(x)-1), l=0, u=10)
+optimize(function(x) x^2*(print(x)-1), lower=0, upper=10)
 
 ## "wrong" solution with unlucky interval and piecewise constant f():
 f  <- function(x) ifelse(x > -1, ifelse(x < 4, exp(-1/abs(x - 1)), 10), 10)

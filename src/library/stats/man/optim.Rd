@@ -248,7 +248,7 @@ optim(c(-1.2,1), fr, grr, method = "L-BFGS-B")
 flb <- function(x)
     { p <- length(x); sum(c(1, rep(4, p-1)) * (x - c(1, x[-p])^2)^2) }
 ## 25-dimensional box constrained
-optim(rep(3, 25), flb, NULL, "L-BFGS-B",
+optim(rep(3, 25), flb, NULL, method = "L-BFGS-B",
       lower=rep(2, 25), upper=rep(4, 25)) # par[24] is *not* at boundary
 
 ## "wild" function , global minimum at about -15.81515
