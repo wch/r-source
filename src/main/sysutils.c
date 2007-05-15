@@ -351,7 +351,7 @@ SEXP attribute_hidden do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 #else
-    error(_("'Sys.putenv' is not available on this system"));
+    error(_("'Sys.setenv' is not available on this system"));
     return R_NilValue; /* -Wall */
 #endif
 }
