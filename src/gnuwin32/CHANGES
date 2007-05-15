@@ -5,6 +5,7 @@
 	*        affect all versions of R.		 *
 	*						 *
 	*	       2.6 SERIES NEWS			 *
+	*						 *
 	**************************************************
 	
 		CHANGES IN R VERSION 2.6.0
@@ -19,6 +20,12 @@ GUI CHANGES
 FUNCTION CHANGES
 
     o	embedFonts() now accepts paths in 'GS_CMD' which contain spaces.
+
+
+OTHERS
+
+    o	Cross-building does now lazy-load the base package.
+
 
 
 

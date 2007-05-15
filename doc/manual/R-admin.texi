@@ -1149,20 +1149,19 @@ To distribute a cross-build (or just to transfer it to a Windows machine
 for testing) use
 
 @example
+make all recommended manuals
 cd installer
 make imagedir
 zip -r9X R-@value{VERSIONno}.zip R-@value{VERSIONno}  # or something similar
 @end example
 
-We have not found a reliable way to convert base to lazy-loading when
-cross-building, so it is left in the old format.  Note too that
-@file{.chm} help files (the default for a vanilla binary installation)
-will not be made when cross-building.
+Note that @file{.chm} help files (the default for a vanilla binary
+installation) will not be made when cross-building.
 
 Also based on this facility is
 @url{http://cran.r-project.org/doc/contrib/Makefile-rcb,
-@file{Makefile-rcb}} by J. Yan and A. J. Rossini.  For details, see the
-Makefile itself, or
+@file{Makefile-rcb}} by J. Yan and A. J. Rossini.  For details, see
+the @file{Makefile-rcb} file itself, or
 @uref{http://cran.r-project.org/doc/contrib/cross-build.pdf}.
 
 
