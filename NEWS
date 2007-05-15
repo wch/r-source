@@ -106,6 +106,10 @@ BUG FIXES
     o	median() returned a logical result when it was 'NA': it now
 	returns an NA of appropriate type (e.g. integer or double).
 
+    o	grep(fixed = TRUE, perl = TRUE) ignored 'fixed', although it
+	was documented to ignore 'perl'
+	Same for [g]regexpr and [g]sub.
+
 
 
 
