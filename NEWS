@@ -112,6 +112,8 @@ BUG FIXES
 
     o	getNamespaceExports("base") works again.
 
+    o	runmed(c(), 1) no longer segfaults.
+
 
 
 
