@@ -54,8 +54,10 @@ x$name <- value
 
   If \code{[} returns a data frame it will have unique (and non-missing)
   row names, if necessary transforming the row names using
-  \code{\link{make.unique}}.  Similarly, column names
-  will be transformed (if columns are selected more than once).
+  \code{\link{make.unique}}.  Similarly, column names will be
+  transformed to be unique if necessary (e.g. if columns are selected
+  more than once, or if more than one column of a given name is selected
+  if the data frame has duplicate columns).
 
   When \code{drop =TRUE}, this is applied to the subsetting of any
   matrices contained in the data frame as well as to the data frame itself.
@@ -92,7 +94,7 @@ x$name <- value
   right length if an exact number of repeats can be used.
 
   When \code{[} is used with a logical matrix, each value is coerced to
-  the type of the column in which it is to be placed.
+  the type of the column into which it is to be placed.
 
   When  \code{[} and \code{[[} are used with two indices, the
   column will be coerced as necessary to accommodate the value.
