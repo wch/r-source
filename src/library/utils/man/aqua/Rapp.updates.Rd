@@ -14,6 +14,5 @@ Rapp.updates()
   Is up to the user the final decision to download and install the new
   version of R with Aqua GUI.
 }
-}
 \keyword{connection}
 \keyword{utilities}

@@ -7,7 +7,6 @@
 \usage{
 data.manager()
 }
-}
 \details{
   This interface shows datasets distributed with packages that are currently
   loaded into RAqua. A graphical browser shows dataset name and package.
@@ -15,6 +14,5 @@ data.manager()
 }
 \seealso{
   \code{\link{data}}.
-}
 }
 \keyword{documentation}
