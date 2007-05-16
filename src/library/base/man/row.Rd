@@ -32,7 +32,7 @@ dx <- x[row(x) == col(x)]
 dx
 
 # create an identity 5-by-5 matrix
-x <- matrix(0, nr = 5, nc = 5)
+x <- matrix(0, nrow = 5, ncol = 5)
 x[row(x) == col(x)] <- 1
 x
 }

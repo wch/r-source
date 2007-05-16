@@ -574,7 +574,7 @@ getGeneric <-
     value <- fdef
     ev <- environment(fdef)
     environment(value) <- newEv <- new.env(TRUE, parent.env(ev))
-    for(what in objects(ev, all=TRUE)) {
+    for(what in objects(ev, all.names=TRUE)) {
         obj <- get(what, envir = ev)
         if(is.environment(obj))
           obj <- .copyEnv(obj)
@@ -702,7 +702,7 @@ getGenerics <-
       if(missing(where)) {
           ## all the packages cached ==? all packages with methods
           ## globally visible.  Assertion based on cacheMetaData + setMethod
-          fnames <- as.list(objects(.genericTable, all=TRUE))
+          fnames <- as.list(objects(.genericTable, all.names=TRUE))
           packages <- vector("list", length(fnames))
           for(i in seq(along = fnames)) {
               obj <- get(fnames[[i]], envir = .genericTable)
@@ -716,7 +716,7 @@ getGenerics <-
           if(is.environment(where)) where <- list(where)
           these <- character()
           for(i in where)
-            these <- c(these, objects(i, all=TRUE))
+            these <- c(these, objects(i, all.names=TRUE))
           metaNameUndo(unique(these), prefix = "M", searchForm = searchForm)
       }
   }
@@ -733,7 +733,7 @@ allGenerics <- getGenerics
     if(missing(where)) where <- .envSearch(topenv(parent.frame()))
     else if(is.environment(where)) where <- list(where)
     these <- character()
-    for(i in where) these <- c(these, objects(i, all=TRUE))
+    for(i in where) these <- c(these, objects(i, all.names=TRUE))
     these <- allThese <- unique(these)
     these <- these[substr(these, 1, 6) == ".__T__"]
     funNames <- gsub(".__T__(.*):([^:]+)", "\\1", these)

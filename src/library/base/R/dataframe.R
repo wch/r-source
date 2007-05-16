@@ -642,7 +642,7 @@ data.frame <-
 	    ii <- match(i, rows)
 	    nextra <- sum(new.rows <- is.na(ii))
 	    if(nextra > 0L) {
-		ii[new.rows] <- seq.int(from = nrows + 1L, length = nextra)
+		ii[new.rows] <- seq.int(from = nrows + 1L, length.out = nextra)
 		new.rows <- i[new.rows]
 	    }
 	    i <- ii
@@ -855,7 +855,7 @@ data.frame <-
 	ii <- match(i, rows)
 	n <- sum(new.rows <- is.na(ii))
 	if(n > 0L) {
-	    ii[new.rows] <- seq.int(from = nrows + 1L, length = n)
+	    ii[new.rows] <- seq.int(from = nrows + 1L, length.out = n)
 	    new.rows <- i[new.rows]
 	}
 	i <- ii
@@ -995,7 +995,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	    else nmi
 	}
 	else if(nrow > 0L && identical(ri, seq_len(ni)))
-	    as.integer(seq.int(from = nrow + 1L, length = ni))
+	    as.integer(seq.int(from = nrow + 1L, length.out = ni))
 	else ri
     }
     allargs <- list(...)
@@ -1041,7 +1041,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		if( !is.null(pi) )
 		    perm[[i]] <- pi
 	    }
-	    rows[[i]] <- seq.int(from = nrow + 1L, length = ni)
+	    rows[[i]] <- seq.int(from = nrow + 1L, length.out = ni)
 	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
 	    nrow <- nrow + ni
 	    if(is.null(value)) {
@@ -1079,7 +1079,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		ni <- ni[1L]
 	    else stop("invalid list argument: all variables should have the same length")
 	    rows[[i]] <- ri <-
-                as.integer(seq.int(from = nrow + 1L, length = ni))
+                as.integer(seq.int(from = nrow + 1L, length.out = ni))
 	    nrow <- nrow + ni
 	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
 	    if(length(nmi <- names(xi)) > 0L) {

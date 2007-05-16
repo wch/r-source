@@ -53,22 +53,22 @@ bindingIsActive(sym, env)
 \examples{
 # locking environments
 e <- new.env()
-assign("x", 1, env = e)
-get("x", env = e)
+assign("x", 1, envir = e)
+get("x", envir = e)
 lockEnvironment(e)
-get("x", env = e)
-assign("x", 2, env = e)
-try(assign("y", 2, env = e)) # error
+get("x", envir = e)
+assign("x", 2, envir = e)
+try(assign("y", 2, envir = e)) # error
 
 # locking bindings
 e <- new.env()
-assign("x", 1, env = e)
-get("x", env = e)
+assign("x", 1, envir = e)
+get("x", envir = e)
 lockBinding("x", e)
-try(assign("x", 2, env = e)) # error
+try(assign("x", 2, envir = e)) # error
 unlockBinding("x", e)
-assign("x", 2, env = e)
-get("x", env = e)
+assign("x", 2, envir = e)
+get("x", envir = e)
 
 # active bindings
 f <- local( {

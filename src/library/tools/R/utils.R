@@ -323,7 +323,7 @@ function(nsInfo)
     ## parseNamespaceFile(), as a 3-column character matrix with the
     ## names of the generic, class and method (as a function).
     S3_methods_list <- nsInfo$S3methods
-    if(!length(S3_methods_list)) return(matrix(character(), nc = 3))
+    if(!length(S3_methods_list)) return(matrix(character(), ncol = 3))
     idx <- is.na(S3_methods_list[, 3])
     S3_methods_list[idx, 3] <-
         paste(S3_methods_list[idx, 1],

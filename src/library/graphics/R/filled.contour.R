@@ -1,6 +1,6 @@
 filled.contour <-
-function (x = seq(0, 1, len = nrow(z)),
-          y = seq(0, 1, len = ncol(z)),
+function (x = seq(0, 1, length.out = nrow(z)),
+          y = seq(0, 1, length.out = ncol(z)),
           z,
           xlim = range(x, finite=TRUE),
           ylim = range(y, finite=TRUE),
@@ -21,7 +21,7 @@ function (x = seq(0, 1, len = nrow(z)),
             }
             else {
                 z <- x
-                x <- seq(0, 1, len = nrow(z))
+                x <- seq.int(0, 1, length.out = nrow(z))
             }
         }
         else stop("no 'z' matrix specified")
@@ -37,7 +37,7 @@ function (x = seq(0, 1, len = nrow(z)),
     on.exit(par(par.orig))
 
     w <- (3 + mar.orig[2]) * par('csi') * 2.54
-    layout(matrix(c(2, 1), nc=2), widths=c(1, lcm(w)))
+    layout(matrix(c(2, 1), ncol=2), widths=c(1, lcm(w)))
     par(las = las)
 
     ## Plot the 'plot key' (scale):

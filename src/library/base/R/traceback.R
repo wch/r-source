@@ -1,8 +1,8 @@
 traceback <-
 function(x = NULL, max.lines = getOption("deparse.max.lines"))
 {
-    if(is.null(x) && (exists(".Traceback", env = baseenv())))
-	x <- get(".Traceback", env = baseenv())
+    if(is.null(x) && (exists(".Traceback", envir = baseenv())))
+	x <- get(".Traceback", envir = baseenv())
     n <- length(x)
     if(n == 0)
         cat(gettext("No traceback available"), "\n")

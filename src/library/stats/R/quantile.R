@@ -71,7 +71,7 @@ quantile.default <-
 	dig <- max(2, getOption("digits"))
 	names(qs) <- paste(## formatC is slow for long probs
 			   if(np < 100)
-			   formatC(100*probs, format="fg", wid = 1, digits=dig)
+			   formatC(100*probs, format="fg", width = 1, digits=dig)
 			   else format(100 * probs, trim=TRUE, digits=dig),
 			   "%", sep = "")
     }

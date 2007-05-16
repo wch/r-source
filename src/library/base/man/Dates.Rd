@@ -57,7 +57,7 @@
 \examples{
 (today <- Sys.Date())
 format(today, "\%d \%b \%Y")  # with month as a word
-(tenweeks <- seq(today, len=10, by="1 week")) # next ten weeks
+(tenweeks <- seq(today, length.out=10, by="1 week")) # next ten weeks
 weekdays(today)
 months(tenweeks)
 as.Date(.leap.seconds)

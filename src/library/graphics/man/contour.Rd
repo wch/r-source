@@ -8,8 +8,8 @@
 \usage{
 contour(x, \dots)
 
-\method{contour}{default}(x = seq(0, 1, len = nrow(z)),
-        y = seq(0, 1, len = ncol(z)),
+\method{contour}{default}(x = seq(0, 1, length.out = nrow(z)),
+        y = seq(0, 1, length.out = ncol(z)),
         z,
         nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,
         xlim = range(x, finite = TRUE),

@@ -10,7 +10,7 @@ local({
     loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
     sys.source(baseFileBase, loadenv, keep.source = FALSE)
 
-    basevars <- ls(loadenv, all=TRUE)
+    basevars <- ls(loadenv, all.names=TRUE)
     basevars <- basevars[! basevars %in% omit]
     for(n in basevars) {
         f <- get(n, loadenv, inherits=FALSE)

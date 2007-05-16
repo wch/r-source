@@ -28,7 +28,7 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     for (i in seq_along(d)) {
         j <- rep.int(rep.int(seq(1 : d[i]),
                              prod(d[seq_len(i - 1)]) * rep.int(1, d[i])),
-                     prod(d[seq(from = i + 1, length = length(d) - i)]))
+                     prod(d[seq(from = i + 1, length.out = length(d) - i)]))
         zz <- dimnames(z)[[i]][j]
         ## zz is character, so match to the levels created in tapply
         ## and not to as.character(by[[i]])

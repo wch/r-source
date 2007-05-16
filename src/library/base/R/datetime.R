@@ -599,7 +599,7 @@ seq.POSIXt <-
         r1 <- as.POSIXlt(from)
         if(valid == 7) {
             if(missing(to)) { # years
-                yr <- seq.int(r1$year, by = by, length = length.out)
+                yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 yr <- seq.int(r1$year, to$year, by)
@@ -609,7 +609,7 @@ seq.POSIXt <-
             res <- as.POSIXct(r1)
         } else if(valid == 6) { # months
             if(missing(to)) {
-                mon <- seq.int(r1$mon, by = by, length = length.out)
+                mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)
@@ -623,7 +623,7 @@ seq.POSIXt <-
                 length.out <- 2 + floor((unclass(as.POSIXct(to)) -
                                          unclass(as.POSIXct(from)))/86400)
             }
-            r1$mday <- seq.int(r1$mday, by = by, length = length.out)
+            r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
             r1$isdst <- -1
             res <- as.POSIXct(r1)
             ## now correct if necessary.

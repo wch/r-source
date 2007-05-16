@@ -59,7 +59,7 @@ fa <- file.access(dir("."))
 table(fa) # count successes & failures
 #ifdef windows
 d <- dir(file.path(R.home(), "bin"))
-df <- dir(file.path(R.home(), "bin"), full=TRUE)
+df <- dir(file.path(R.home(), "bin"), full.names = TRUE)
 d[file.access(df, 0) == 0] # all exist
 d[file.access(df, 1) == 0] # some are executable, some are not
 d[file.access(df, 2) == 0] # hopefully all are readable

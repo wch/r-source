@@ -1,7 +1,8 @@
 contour <- function(x, ...) UseMethod("contour")
 
 contour.default <-
-function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+function (x = seq(0, 1, length.out = nrow(z)),
+          y = seq(0, 1, length.out = ncol(z)),
 	  z,
 	  nlevels = 10, levels = pretty(zlim, nlevels), labels = NULL,
 	  xlim = range(x, finite = TRUE), ylim = range(y, finite = TRUE),
@@ -18,7 +19,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 		z <- x$z; y <- x$y; x <- x$x
 	    } else {
 		z <- x
-		x <- seq(0, 1, len = nrow(z))
+		x <- seq.int(0, 1, length.out = nrow(z))
 	    }
 	} else stop("no 'z' matrix specified")
     } else if (is.list(x)) {

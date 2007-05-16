@@ -174,7 +174,7 @@ as.table.default <- function(x, ...)
 	    dnx <- vector("list", length(dim(x)))
 	for(i in which(sapply(dnx, is.null)))
 	    dnx[[i]] <-
-                make.unique(LETTERS[seq.int(from=0, length = dim(x)[i]) %% 26 + 1],
+                make.unique(LETTERS[seq.int(from=0, length.out = dim(x)[i]) %% 26 + 1],
                             sep = "")
 	dimnames(x) <- dnx
 	class(x) <- c("table", oldClass(x))

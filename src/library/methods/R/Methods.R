@@ -1027,10 +1027,10 @@ callGeneric <- function(...)
     # the  lines below this comment do what the previous version
     # did in the expression fdef <- sys.function(frame)
     if(exists(".Generic", envir = envir, inherits = FALSE))
-      fname <- get(".Generic", envir = envir)
+        fname <- get(".Generic", envir = envir)
     else # but probably an error
-      fname <- sys.call(frame)[[1]]
-    fdef <- get(as.character(fname), env = envir)
+        fname <- sys.call(frame)[[1]]
+    fdef <- get(as.character(fname), envir = envir)
 
     if(is.primitive(fdef)) {
         if(nargs() == 0)

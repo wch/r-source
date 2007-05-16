@@ -67,9 +67,9 @@ cut(x, \dots)
 }
 \examples{
 Z <- stats::rnorm(10000)
-table(cut(Z, br = -6:6))
-sum(table(cut(Z, br = -6:6, labels=FALSE)))
-sum(graphics::hist(Z, br = -6:6, plot=FALSE)$counts)
+table(cut(Z, breaks = -6:6))
+sum(table(cut(Z, breaks = -6:6, labels=FALSE)))
+sum(graphics::hist(Z, breaks = -6:6, plot=FALSE)$counts)
 
 cut(rep(1,5),4)#-- dummy
 tx0 <- c(9, 4, 6, 5, 3, 10, 5, 3, 5)
@@ -77,12 +77,12 @@ x <- rep(0:8, tx0)
 stopifnot(table(x) == tx0)
 
 table( cut(x, b = 8))
-table( cut(x, br = 3*(-2:5)))
-table( cut(x, br = 3*(-2:5), right = FALSE))
+table( cut(x, breaks = 3*(-2:5)))
+table( cut(x, breaks = 3*(-2:5), right = FALSE))
 
 ##--- some values OUTSIDE the breaks :
-table(cx  <- cut(x, br = 2*(0:4)))
-table(cxl <- cut(x, br = 2*(0:4), right = FALSE))
+table(cx  <- cut(x, breaks = 2*(0:4)))
+table(cxl <- cut(x, breaks = 2*(0:4), right = FALSE))
 which(is.na(cx));  x[is.na(cx)]  #-- the first 9  values  0
 which(is.na(cxl)); x[is.na(cxl)] #-- the last  5  values  8
 

@@ -33,7 +33,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
         ## List all possible data sets.
 
         ## Build the data db.
-        db <- matrix(character(0), nr = 0, nc = 4)
+        db <- matrix(character(0), nrow = 0, ncol = 4)
         for(path in paths) {
             entries <- NULL
             ## Use "." as the 'package name' of the working directory.

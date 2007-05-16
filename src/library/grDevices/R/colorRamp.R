@@ -3,7 +3,7 @@ colorRampPalette<-function(colors,...)
 {
     ramp<-colorRamp(colors,...)
     function(n) {
-        x <- ramp(seq.int(0, 1, length=n))
+        x <- ramp(seq.int(0, 1, length.out=n))
         rgb(x[,1], x[,2], x[,3], max=255)
     }
 
@@ -25,7 +25,7 @@ colorRamp<-function(colors, bias=1, space=c("rgb","Lab"),
 
     interpolate<-switch(interpolate, linear=stats::approxfun, spline=stats::splinefun)
 
-    x<-seq.int(0, 1, length=nrow(colors))^{bias}
+    x<-seq.int(0, 1, length.out=nrow(colors))^{bias}
 
     palette<-c(interpolate(x, colors[,1]),
                interpolate(x, colors[,2]),

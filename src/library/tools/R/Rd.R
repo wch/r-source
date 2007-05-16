@@ -771,7 +771,7 @@ function(txt)
 .get_Rd_xrefs <-
 function(txt)
 {
-    out <- matrix(character(), nr = 0, nc = 2)
+    out <- matrix(character(), nrow = 0, ncol = 2)
     if(length(txt) != 1) return(out)
     while((pos <-
            regexpr("\\\\link(\\[[^[]+\\])?\\{", txt)) != -1) {

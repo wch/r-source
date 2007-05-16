@@ -185,7 +185,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 		   Concepts = do.call("rbind", dbMat[, 4]))
 	if(is.null(db$Concepts))
 	    db$Concepts <-
-		matrix(character(), nc = 3,
+		matrix(character(), ncol = 3,
 		       dimnames = list(NULL,
 		       c("Concepts", "ID", "Package")))
 	## Make the IDs globally unique by prefixing them with the

@@ -30,7 +30,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	return(invisible())
     }
     if(pkg != "base")
-	library(pkg, lib = lib, character.only = TRUE)
+	library(pkg, lib.loc = lib, character.only = TRUE)
     if(!is.logical(setRNG) || setRNG) {
 	## save current RNG state:
 	if((exists(".Random.seed", envir = .GlobalEnv))) {
@@ -56,10 +56,10 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(length(grep("^### Encoding: ", zz)) > 0 &&
        !identical(Sys.getlocale("LC_CTYPE"), "C"))
 	encoding <- substring(zz, 15)
-    skips <- 0    
+    skips <- 0
     if (echo) {
 	## skip over header
-	zcon <- file(zfile, open="rt")	
+	zcon <- file(zfile, open="rt")
 	while(length(zz) && !length(grep("^### \\*\\*", zz))) {
 	    skips <- skips + 1
 	    zz <- readLines(zcon, n=1)
@@ -78,9 +78,9 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
         op <- options(par.ask.default = TRUE)
         on.exit(options(op), add = TRUE)
     }
-    source(zfile, local, echo = echo, 
+    source(zfile, local, echo = echo,
            prompt.echo = paste(prompt.prefix, getOption("prompt"), sep=""),
            continue.echo = paste(prompt.prefix, getOption("continue"), sep=""),
-           verbose = verbose, max.deparse.length = Inf, encoding = encoding, 
+           verbose = verbose, max.deparse.length = Inf, encoding = encoding,
     	   skip.echo = skips)
 }

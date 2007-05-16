@@ -141,12 +141,12 @@ is.environment(.GlobalEnv) # TRUE
 
 e1 <- new.env(parent = baseenv())  # this one has enclosure package:base.
 e2 <- new.env(parent = e1)
-assign("a", 3, env=e1)
+assign("a", 3, envir=e1)
 ls(e1)
 ls(e2)
-exists("a", env=e2)	# this succeeds by inheritance
-exists("a", env=e2, inherits = FALSE)
-exists("+", env=e2)	# this succeeds by inheritance
+exists("a", envir=e2)	# this succeeds by inheritance
+exists("a", envir=e2, inherits = FALSE)
+exists("+", envir=e2)	# this succeeds by inheritance
 }
 \keyword{data}
 \keyword{programming}

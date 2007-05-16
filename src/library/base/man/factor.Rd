@@ -171,7 +171,7 @@ as.integer(ff)  # the internal codes
 factor(ff)	# drops the levels that do not occur
 ff[, drop=TRUE] # the same, more transparently
 
-factor(letters[1:20], label="letter")
+factor(letters[1:20], labels="letter")
 
 class(ordered(4:1)) # "ordered", inheriting from "factor"
 

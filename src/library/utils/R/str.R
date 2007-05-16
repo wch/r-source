@@ -242,7 +242,7 @@ str.default <-
 	    if(!is.character(lev.att)) {# should not happen..
 		warning("'object' does not have valid levels()")
 		nl <- 0
-	    } else lev.att <- encodeString(lev.att, na = FALSE, quote = '"')
+	    } else lev.att <- encodeString(lev.att, na.encode = FALSE, quote = '"')
 	    ord <- is.ordered(object)
 	    object <- unclass(object)
 	    if(nl) {
@@ -390,7 +390,7 @@ str.default <-
 	    ## if object is very long, drop the rest which won't be used anyway:
 	    max.len <- max(100, width %/% 3 + 1, if(!missing(vec.len)) vec.len)
 	    if(le > max.len) object <- object[1:max.len]
-	    encObj <- encodeString(object, quote= '"', na= FALSE)
+	    encObj <- encodeString(object, quote= '"', na.encode= FALSE)
 					#O: encodeString(object)
 	    v.len <-
 		if(missing(vec.len)) {
@@ -401,7 +401,7 @@ str.default <-
 	    ile <- min(le, v.len)
 	    if(ile >= 1) ## truncate if LONG char:
 		object <- maybe_truncate(encObj[1:ile])
-					#O: encodeString(object, quote= '"', na= FALSE)
+					#O: encodeString(object, quote= '"', na.encode= FALSE)
 	    formObj <- function(x) paste(as.character(x), collapse=" ")
 	}
 	else {

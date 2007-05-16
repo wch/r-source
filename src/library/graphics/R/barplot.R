@@ -105,7 +105,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	if (is.null(ylim)) ylim <- range(rAdj, height + offset, na.rm = TRUE)
     }
     if (beside)
-	w.m <- matrix(w.m, nc = NC)
+	w.m <- matrix(w.m, ncol = NC)
     if(plot) { ##-------- Plotting :
 	opar <-
 	    if (horiz)	par(xaxs = "i", xpd = xpd)
@@ -126,7 +126,8 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	if (beside)
 	    xyrect(rectbase + offset, w.l, c(height) + offset, w.r,
 		   horizontal = horiz,
-		   angle = angle, density = density, col = col, border = border)
+		   angle = angle, density = density,
+                   col = col, border = border)
 	else {
 	    ## noInside <- NC > 1 && !inside # outside border, but not inside
 	    ## bordr <- if(noInside) 0 else border

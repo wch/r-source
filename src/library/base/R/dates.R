@@ -250,7 +250,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
         r1 <- as.POSIXlt(from)
         if(valid == 4) {
             if(missing(to)) { # years
-                yr <- seq.int(r1$year, by = by, length = length.out)
+                yr <- seq.int(r1$year, by = by, length.out = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 yr <- seq.int(r1$year, to$year, by)
@@ -259,7 +259,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
             res <- .Internal(POSIXlt2Date(r1))
         } else if(valid == 3) { # months
             if(missing(to)) {
-                mon <- seq.int(r1$mon, by = by, length = length.out)
+                mon <- seq.int(r1$mon, by = by, length.out = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 mon <- seq.int(r1$mon, 12*(to$year - r1$year) + to$mon, by)

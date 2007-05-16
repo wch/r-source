@@ -83,11 +83,11 @@ require(graphics)
 
 0i ^ (-3:3)
 
-matrix(1i^ (-6:5), nr=4)#- all columns are the same
+matrix(1i^ (-6:5), nrow=4) #- all columns are the same
 0 ^ 1i # a complex NaN
 
 ## create a complex normal vector
-z <- complex(real = stats::rnorm(100), imag = stats::rnorm(100))
+z <- complex(real = stats::rnorm(100), imaginary = stats::rnorm(100))
 ## or also (less efficiently):
 z2 <- 1:2 + 1i*(8:9)
 

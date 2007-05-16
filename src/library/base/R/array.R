@@ -30,7 +30,7 @@ function(x, MARGIN)
 
     y <- rep.int(rep.int(1:d[MARGIN],
 			 prod(d[seq_len(MARGIN - 1)]) * rep.int(1, d[MARGIN])),
-		 prod(d[seq.int(from = MARGIN + 1, length = n - MARGIN)]))
+		 prod(d[seq.int(from = MARGIN + 1, length.out = n - MARGIN)]))
     dim(y) <- d
     y
 }

@@ -280,7 +280,7 @@ getAnywhere <- function(x)
     x <- as.character(substitute(x))
     objs <- list(); where <- character(0); visible <- logical(0)
     ## first look on search path
-    if(length(pos <- find(x, numeric=TRUE))) {
+    if(length(pos <- find(x, numeric. = TRUE))) {
         objs <- lapply(pos, function(pos, x) get(x, pos=pos), x=x)
         where <- names(pos)
         visible <- rep.int(TRUE, length(pos))

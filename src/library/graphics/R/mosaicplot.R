@@ -167,8 +167,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         for (i in 2:dimd) {
             Ind <- cbind(Ind,
                          c(matrix(1:dx[i], byrow=TRUE,
-                                  nr = prod(dx[1:(i-1)]),
-                                  nc = prod(dx[i:dimd]))))
+                                  nrow = prod(dx[1:(i-1)]),
+                                  ncol = prod(dx[i:dimd]))))
         }
     }
     Ind <- cbind(Ind, c(x))
@@ -194,9 +194,9 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         shade <- sort(shade)
         breaks <- c(-Inf, - rev(shade), 0, shade, Inf)
         color <- c(hsv(0,               # red
-                       s = seq.int(1, to = 0, length = length(shade) + 1)),
+                       s = seq.int(1, to = 0, length.out = length(shade) + 1)),
                    hsv(4/6,             # blue
-                       s = seq.int(0, to = 1, length = length(shade) + 1)))
+                       s = seq.int(0, to = 1, length.out = length(shade) + 1)))
         if(is.null(margin))
             margin <- as.list(1:dimd)
         ## Fit the loglinear model.
@@ -314,7 +314,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         bh <- 0.95 * (0.95 - rtxtHeight) / (2 * len)
         x.l <- 1000 * 1.05
         x.r <- 1000 * (1.05 + 0.7 * rtxtWidth)
-        y.t <- 1000 * rev(seq.int(from = 0.95, by = - bh, length = 2 * len))
+        y.t <- 1000 * rev(seq.int(from = 0.95, by = - bh, length.out = 2 * len))
         y.b <- y.t - 1000 * 0.8 * bh
         ltype <- c(rep.int(2, len), rep.int(1, len))
         for(i in 1 : (2 * len)) {

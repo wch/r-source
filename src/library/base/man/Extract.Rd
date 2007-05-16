@@ -220,7 +220,7 @@ x$name
   %% 'info' from ESS, see \url{http://cran.R-project.org/manuals.html}.
 }
 \examples{
-x <- 1:12; m <- matrix(1:6,nr=2); li <- list(pi=pi, e = exp(1))
+x <- 1:12; m <- matrix(1:6, nrow=2); li <- list(pi=pi, e = exp(1))
 x[10]                 # the tenth element of x
 x <- x[-1]	      # delete the 1st element of x
 m[1,]                 # the first row of matrix m

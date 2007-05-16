@@ -9,7 +9,7 @@
 .GlobalEnv <- globalenv()
 attach(NULL, name = "Autoloads")
 .AutoloadEnv <- as.environment(2)
-assign(".Autoloaded", NULL, env = .AutoloadEnv)
+assign(".Autoloaded", NULL, envir = .AutoloadEnv)
 T <- TRUE
 F <- FALSE
 R.version <- structure(R.Version(), class = "simple.list")

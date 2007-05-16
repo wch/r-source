@@ -54,7 +54,7 @@ function(topic, package = NULL, lib.loc = NULL)
     if(missing(topic)) {
         ## List all possible vignettes.
 
-        vDB <- matrix(character(0), nr = 0, nc = 4)
+        vDB <- matrix(character(0), nrow = 0, ncol = 4)
         colnames(vDB) <- c("Dir", "File", "Title", "PDF")
 
         for(db in vignettes[sapply(vignettes, length) > 0]) {

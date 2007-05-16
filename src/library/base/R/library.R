@@ -76,7 +76,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         else {
             ## A package will have created a generic
             ## only if it has created a formal method.
-            length(objects(env, pattern="^\\.__[MT]", all=TRUE)) == 0
+            length(objects(env, pattern="^\\.__[MT]", all.names=TRUE)) == 0
         }
     }
 
@@ -89,9 +89,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         sp <- search()
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
-        ob <- objects(lib.pos, all = TRUE)
+        ob <- objects(lib.pos, all.names = TRUE)
         if(!nogenerics) {
-            these <- objects(lib.pos, all = TRUE)
+            these <- objects(lib.pos, all.names = TRUE)
             these <- these[substr(these, 1, 6) == ".__M__"]
             gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
             from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
@@ -102,7 +102,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	ipos <- seq_along(sp)[-c(lib.pos,
 				 match(c("Autoloads", "CheckExEnv"), sp, 0))]
         for (i in ipos) {
-            obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
+            obj.same <- match(objects(i, all.names = TRUE), ob, nomatch = 0)
             if (any(obj.same > 0)) {
                 same <- ob[obj.same]
                 same <- same[!(same %in% dont.mind)]
@@ -448,7 +448,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	## library():
         if(is.null(lib.loc))
             lib.loc <- .libPaths()
-        db <- matrix(character(0), nr = 0, nc = 3)
+        db <- matrix(character(0), nrow = 0, ncol = 3)
         nopkgs <- character(0)
 
         for(lib in lib.loc) {
@@ -652,7 +652,8 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
             packageStartupMessage(gettextf("Loading required package: %s",
                                            package), domain = NA)
 	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
-                         logical = TRUE, warn.conflicts = warn.conflicts,
+                         logical.return = TRUE,
+                         warn.conflicts = warn.conflicts,
                          keep.source = keep.source, version = version)
     } else value <- TRUE
 
@@ -833,7 +834,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             dirs <- list.files(lib,
                                pattern = paste("^", pkg_regexp,
                                sep = ""),
-                               full = TRUE)
+                               full.names = TRUE)
             ## Note that we cannot use tools::file_test() here, as
             ## cyclic name space dependencies are not supported.  Argh.
             paths <- c(paths,
@@ -1017,7 +1018,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 if (!quietly)
                     packageStartupMessage(gettextf("Loading required package: %s",
                                      pkg), domain = NA)
-                library(pkg, character.only = TRUE, logical = TRUE,
+                library(pkg, character.only = TRUE, logical.return = TRUE,
                         lib.loc = lib.loc) ||
                 stop(gettextf("package '%s' could not be loaded", pkg),
                      call. = FALSE, domain = NA)

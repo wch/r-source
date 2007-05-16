@@ -53,7 +53,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 rgb(0,1,0)
 (u01 <- seq(0,1, length=11))
 stopifnot(rgb(u01,u01,u01) == gray(u01))
-reds <- rgb((0:15)/15, g=0,b=0, names=paste("red",0:15,sep="."))
+reds <- rgb((0:15)/15, green=0, blue=0, names=paste("red",0:15,sep="."))
 reds
 
 rgb(0, 0:12, 0, max = 255)# integer input

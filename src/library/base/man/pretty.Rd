@@ -84,7 +84,7 @@ pretty(1.234e100)
 pretty(1001.1001)
 pretty(1001.1001, shrink = .2)
 for(k in -7:3)
-  cat("shrink=",formatC(2^k,wid=9),":",
-      formatC(pretty(1001.1001, shrink = 2^k), wid=6),"\n")
+  cat("shrink=", formatC(2^k, width=9),":",
+      formatC(pretty(1001.1001, shrink = 2^k), width=6),"\n")
 }
 \keyword{dplot}

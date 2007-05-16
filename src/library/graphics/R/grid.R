@@ -9,7 +9,7 @@ grid <- function (nx = NULL, ny = nx, col="lightgray", lty="dotted",
             at <- axTicks(1, axp = ax, log=log)
         } else { # equidistant, also from box borders
             U <- par("usr")
-            at <- seq.int(U[1],U[2], len = nx+1)
+            at <- seq.int(U[1],U[2], length.out = nx+1)
             at <- (if(log) 10^at else at)[-c(1,nx+1)]
         }
         abline(v = at, col = col, lty = lty, lwd = lwd)
@@ -22,7 +22,7 @@ grid <- function (nx = NULL, ny = nx, col="lightgray", lty="dotted",
             at <- axTicks(2, axp = ax, log=log)
         } else { # equidistant, also from box borders
             U <- par("usr")
-            at <- seq.int(U[3],U[4], len = ny+1)
+            at <- seq.int(U[3],U[4], length.out = ny+1)
             at <- (if(log) 10^at else at)[-c(1,ny+1)]
         }
 	abline(h = at, col = col, lty = lty, lwd = lwd)

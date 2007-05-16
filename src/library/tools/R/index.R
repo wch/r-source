@@ -147,7 +147,7 @@ function(contents, packageName)
     ## As from 2.3.0 the installation directory is no longer recorded,
     ## but the format is kept for back-compatibility.
 
-    dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), nc = 3)
+    dbAliases <- dbConcepts <- dbKeywords <- matrix(character(), ncol = 3)
 
     if((nr <- NROW(contents)) > 0) {
         ## IDs are used for indexing the Rd objects in the help.search
@@ -205,7 +205,7 @@ function(contents, packageName)
         }
     }
     else {
-        dbBase <- matrix(character(), nc = 7)
+        dbBase <- matrix(character(), ncol = 7)
     }
 
     colnames(dbBase) <-

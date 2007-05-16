@@ -179,7 +179,7 @@ format.ftable <- function(x, quote = TRUE, digits = getOption("digits"), ...)
 
     xrv <- attr(x, "row.vars")
     xcv <- attr(x, "col.vars")
-    LABS <- cbind(rbind(matrix("", nr = length(xcv), nc = length(xrv)),
+    LABS <- cbind(rbind(matrix("", nrow = length(xcv), ncol = length(xrv)),
                         charQuote(makeNames(xrv)),
                         makeLabels(xrv)),
                   c(charQuote(makeNames(xcv)),
@@ -326,8 +326,8 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
         len <- length(tmp)
     }
     values <- matrix(values,
-                     nr = prod(sapply(row.vars, length)),
-                     nc = prod(sapply(col.vars, length)),
+                     nrow = prod(sapply(row.vars, length)),
+                     ncol = prod(sapply(col.vars, length)),
                      byrow = TRUE)
     structure(values,
               row.vars = row.vars,

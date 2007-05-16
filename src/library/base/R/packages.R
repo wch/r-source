@@ -54,7 +54,7 @@ function(x, base = NULL)
     ## decrement by 1 one again.
     x <- as.numeric(sapply(x,
                            function(t)
-                           sum(t / base^seq.int(0, length = length(t)))))
+                           sum(t / base^seq.int(0, length.out = length(t)))))
     attr(x, "base") <- base
     attr(x, "lens") <- lens
     x

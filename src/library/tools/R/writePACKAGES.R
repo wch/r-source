@@ -123,7 +123,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
 {
     dir <- file_path_as_absolute(dir)
     fields <- unique(c(.get_standard_repository_db_fields(), fields))
-    paths <- list.files(dir, full = TRUE)
+    paths <- list.files(dir, full.names = TRUE)
     paths <- paths[file_test("-d", paths) &
                    file_test("-f", file.path(paths, "DESCRIPTION"))]
     db <- vector(length(paths), mode = "list")
