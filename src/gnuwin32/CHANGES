@@ -5,6 +5,7 @@
 	*        affect all versions of R.		 *
 	*						 *
 	*	       2.5 SERIES NEWS			 *
+	*						 *
 	**************************************************
 
 
@@ -23,7 +24,7 @@ GUI CHANGES
 	recognizing and removing prompts, e.g. from example() output
 	or debug sessions.
 
-    o	Using a modal widget from Rterm (e.g. select.list) is now for
+    o	Using a modal widget from Rterm (e.g. select.list) is now far
 	likely to be forced to the front.
 
 
@@ -63,7 +64,7 @@ BUG FIXES
 	to the personal directory and not %HOMEDRIVE%HOMEDIR.
 
     o	The setting of R_TEXOPTS has been moved from MkRules to
-	doc/manual/Makefile.win.  This avoid error messages if 'latex'
+	doc/manual/Makefile.win.  This avoids error messages if 'latex'
 	is not in the path.
 
 
