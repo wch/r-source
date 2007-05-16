@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-05-10
+@set FAQ_DATE @value{FAQ_YEAR}-05-15
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1977,6 +1977,9 @@ Simulation of one- and two-dimensional fractional and multifractional
 Levy motions.
 @item FunCluster
 Functional profiling of cDNA microarray expression data.
+@item G1DBN
+Dynamic Bayesian Network inference using 1st order conditional
+dependencies.
 @item GAMBoost
 Generalized additive models by likelihood based boosting.
 @item GDD
@@ -2099,6 +2102,8 @@ Functions for Learning Bayesian Inference.
 @item Lmoments
 Estimation of L-moments and the parameters of normal and Cauchy
 polynomial quantile mixtures.
+@item LogConcDEAD
+Maximum likelihood estimation of a log-concave density.
 @item LogicReg
 Routines for Logic Regression.
 @item LoopAnalyst
@@ -2158,6 +2163,8 @@ similar covariate distributions.
 Multivariate and propensity score matching with formal tests of balance.
 @item Matrix
 A Matrix package.
+@item MiscPsycho
+Miscellaneous Psychometrics.
 @item NADA
 Methods described in ``Nondetects And Data Analysis: Statistics for
 Censored Environmental Data'' by Dennis R. Helsel, 2004, John Wiley and
@@ -2226,6 +2233,8 @@ Qualitative Comparative Analysis for crisp sets.
 QCA Graphical User Interface.
 @item QRMlib
 Code to examine Quantitative Risk Management concepts.
+@item R.cache
+Fast and light-weight caching of objects.
 @item R.matlab
 Read and write of MAT files together with R-to-Matlab connectivity.
 @item R.oo
@@ -2364,6 +2373,9 @@ to be sent to R.
 @c REMOVED 2001-12-08
 @c @item Rstreams
 @c Binary file stream support functions.
+@item Runuran
+Interface to the UNU.RAN library for Universal Non-Uniform RANdom
+variate generators.
 @item Rwave
 An environment for the time-frequency analysis of 1-D signals (and
 especially for the wavelet and Gabor transforms of noisy signals), based
