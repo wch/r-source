@@ -106,22 +106,35 @@ if test -n "${JAVA}" ; then
 fi])
 
 if test ${r_cv_java_works} = yes; then
+  AC_CACHE_CHECK([Java environment], [r_cv_java_home], [
+    ## find JAVA_HOME from Java itself unless specified
+    if test -z "${JAVA_HOME}" ; then
+      R_RUN_JAVA(JAVA_HOME,[-classpath ${getsp_cp} getsp java.home])
+    fi
+    r_cv_java_home="${JAVA_HOME}"
+  ])
+  JAVA_HOME="${r_cv_java_home}"
 
-  ## we cannot cache this part without caching JAVA_HOME
-  AC_MSG_CHECKING([for Java environment])
-  r_cv_java_env="not found"
-  ## find JAVA_HOME from Java itself unless specified
-  if test -z "${JAVA_HOME}" ; then
-    R_RUN_JAVA(JAVA_HOME,[-classpath ${getsp_cp} getsp java.home])
-  fi
+  # we have Java support, detect flags
+  if test -n "${JAVA_HOME}"; then
+    # find out whether all settings are already cached
+    r_java_settings_cached=yes
+    AC_MSG_CHECKING([for cached Java settings])
+    AC_CACHE_VAL([r_cv_cache_java_flags], [
+      r_cv_cache_java_flags=yes
+      r_java_settings_cached=no])
+    AC_MSG_RESULT([${r_java_settings_cached}])
+    # if so, fetch them from the cache
+    if test "${r_java_settings_cached}" = yes; then
+      AC_CACHE_CHECK([JAVA_LIBS], [r_cv_JAVA_LIBS])
+      JAVA_LIBS0="${r_cv_JAVA_LIBS}"
+      AC_CACHE_CHECK([JAVA_CPPFLAGS],[r_cv_JAVA_CPPFLAGS])
+      JAVA_CPPFLAGS0="${r_cv_JAVA_CPPFLAGS}"
+      AC_CACHE_CHECK([JAVA_LD_LIBRARY_PATH],[r_cv_JAVA_LD_LIBRARY_PATH])
+      JAVA_LD_LIBRARY_PATH="${r_cv_JAVA_LD_LIBRARY_PATH}"
+    else
+    # otherwise detect all Java-relevant flags
 
-  ## the availability of JAVA_HOME will tell us whether it's supported
-  if test -n "${JAVA_HOME}" ; then
-    r_cv_java_env="in ${JAVA_HOME}"
-  fi
-  AC_MSG_RESULT([$r_cv_java_env])
-
-  if test "$r_cv_java_env" != "not found"; then 
     : ${JAVA_LIBS=~autodetect~}
     : ${JAVA_CPPFLAGS=~autodetect~}
     : ${JAVA_LD_LIBRARY_PATH=~autodetect~}
@@ -233,9 +246,16 @@ int main(void) {
     CPPFLAGS="${j_save_CPPF}"
 ])
     ##AC_MSG_RESULT([$r_cv_jni])
-    if test "$r_cv_jni"="yes (with pthreads)"; then
+    if test "${r_cv_jni}" = "yes (with pthreads)"; then
       JAVA_LIBS0="${JAVA_LIBS0} -lpthread"
     fi
+
+    # cache all detected flags
+      AC_CACHE_VAL([r_cv_JAVA_LIBS],[r_cv_JAVA_LIBS="${JAVA_LIBS0}"])
+      AC_CACHE_VAL([r_cv_JAVA_CPPFLAGS],[r_cv_JAVA_CPPFLAGS="${JAVA_CPPFLAGS0}"])      
+      AC_CACHE_VAL([r_cv_JAVA_LD_LIBRARY_PATH],[r_cv_JAVA_LD_LIBRARY_PATH="${JAVA_LD_LIBRARY_PATH}"])
+    fi # cached flags
+
     have_java=yes
   fi
 else  ## not r_cv_java_works
@@ -243,7 +263,7 @@ else  ## not r_cv_java_works
   JAVA_HOME=
 fi
 
-AC_SUBST(JAVA_HOME)
+## AC_SUBST(JAVA_HOME) # not needed? is precious now
 AC_SUBST(JAVA)
 AC_SUBST(JAVAC)
 AC_SUBST(JAVAH)

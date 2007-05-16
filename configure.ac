@@ -479,6 +479,8 @@ AC_ARG_VAR([SAFE_FFLAGS],
 AC_ARG_VAR([r_arch],
            [Use architecture-dependent subdirs with this name])
 AC_ARG_VAR([DEFS], [C defines for use when compiling R])
+AC_ARG_VAR([JAVA_HOME],
+           [Path to the root of the Java environment])
 
 if test -z "${r_arch}"; then
   R_ARCH=

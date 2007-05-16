@@ -1204,18 +1204,16 @@ fi
 ## -------------------
 ## Check for ObjC runtime and style.
 ## Effects:
-##  * ac_cv_objc_runtime
+##  * r_cv_objc_runtime
 ##    either "none" or flags necessary to link ObjC runtime
 ##    in the latter case they are also appended to OBJC_LIBS
-##  * ac_cv_objc_runtime_style
+##  * r_cv_objc_runtime_style
 ##    one of: unknown, gnu, next
 ##  * conditionals OBJC_GNU_RUNTIME and OBJC_NEXT_RUNTIME
 AC_DEFUN([R_PROG_OBJC_RUNTIME],
 [
-  ac_has_objc_headers=no
-
   if test -z "${OBJC}"; then
-    ac_cv_objc_runtime=none
+    r_cv_objc_runtime=none
   else
 
   AC_LANG_PUSH([Objective C])
@@ -1229,10 +1227,10 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
 
   # FIXME: we don't check whether the runtime needs -lpthread which is possible
   #        (empirically Linux GNU and Apple runtime don't)
-  AC_CACHE_CHECK([for ObjC runtime library], [ac_cv_objc_runtime], [
+  AC_CACHE_CHECK([for ObjC runtime library], [r_cv_objc_runtime], [
     save_OBJCFLAGS="$OBJCFLAGS"
     save_LIBS="$LIBS"
-    ac_cv_objc_runtime=none
+    r_cv_objc_runtime=none
     for libobjc in objc objc-gnu objc-lf objc-lf2; do
       LIBS="${save_LIBS} -l${libobjc}"
       #OBJCFLAGS="$OBJCFLAGS $PTHREAD_CFLAGS -fgnu-runtime"
@@ -1243,8 +1241,7 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
   @<:@Object class@:>@;
 			])
 		      ], [
-		        ac_cv_objc_runtime="-l${libobjc}"
-			OBJC_LIBS="${ac_cv_objc_runtime} ${OBJC_LIBS}"
+		        r_cv_objc_runtime="-l${libobjc}"
 			break
 		      ])
     done
@@ -1252,11 +1249,13 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
     OBJCFLAGS="$save_OBJCFLAGS"
   ])
 
-  if test "${ac_cv_objc_runtime}" != none; then
-  AC_CACHE_CHECK([for ObjC runtime style], [ac_cv_objc_runtime_style], [
+  OBJC_LIBS="${r_cv_objc_runtime} ${OBJC_LIBS}"
+
+  if test "${r_cv_objc_runtime}" != none; then
+  AC_CACHE_CHECK([for ObjC runtime style], [r_cv_objc_runtime_style], [
     save_OBJCFLAGS="$OBJCFLAGS"
     save_LIBS="$LIBS"
-    ac_cv_objc_runtime_style=unknown
+    r_cv_objc_runtime_style=unknown
     LIBS="${OBJC_LIBS} $LIBS"
     for objc_lookup_class in objc_lookup_class objc_lookUpClass; do
       AC_LINK_IFELSE([
@@ -1268,9 +1267,9 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
 			])
 		      ], [
 		        if test ${objc_lookup_class} = objc_lookup_class; then
-			  ac_cv_objc_runtime_style=gnu
+			  r_cv_objc_runtime_style=gnu
 			else
-			  ac_cv_objc_runtime_style=next
+			  r_cv_objc_runtime_style=next
 			fi
 			break
 		      ])
@@ -1280,10 +1279,10 @@ AC_DEFUN([R_PROG_OBJC_RUNTIME],
   ])
   fi
 
-  if test "${ac_cv_objc_runtime_style}" = gnu; then
+  if test "${r_cv_objc_runtime_style}" = gnu; then
     AC_DEFINE([OBJC_GNU_RUNTIME], 1, [Define if using GNU-style Objective C runtime.])
   fi
-  if test "${ac_cv_objc_runtime_style}" = next; then
+  if test "${r_cv_objc_runtime_style}" = next; then
     AC_DEFINE([OBJC_NEXT_RUNTIME], 1, [Define if using NeXT/Apple-style Objective C runtime.])
   fi
 
@@ -1343,6 +1342,12 @@ fi
 AC_DEFUN([R_PROG_OBJCXX],
 [AC_BEFORE([AC_PROG_CXX], [$0])
 AC_BEFORE([AC_PROG_OBJC], [$0])
+
+r_cached_objcxx=yes
+AC_MSG_CHECKING([for cached ObjC++ compiler])
+AC_CACHE_VAL([r_ac_OBJCXX],[
+ AC_MSG_RESULT([none])
+ r_cached_objcxx=no
 if test -n "${OBJCXX}"; then
   AC_MSG_RESULT([defining OBJCXX to be ${OBJCXX}])
   R_PROG_OBJCXX_WORKS(${OBJCXX},,OBJCXX='')
@@ -1361,6 +1366,12 @@ if test -z "${OBJCXX}"; then
 else
   AC_MSG_RESULT([${OBJCXX}])
 fi
+r_ac_OBJCXX="${OBJCXX}"
+if test "${r_cached_objcxx}" = yes; then
+  AC_MSG_RESULT(["${r_ac_OBJCXX}"])
+fi
+])
+OBJCXX="${r_ac_OBJCXX}"
 AC_SUBST(OBJCXX)
 ])# R_PROG_OBJCXX
 
@@ -1825,6 +1836,20 @@ AC_DEFUN([R_OBJC_FOUNDATION],
   ac_objc_foundation=no
   if test -n "${OBJC}"; then
 
+  r_foundation_cached=yes
+  AC_MSG_CHECKING([for cached Foundation settings])
+  AC_CACHE_VAL([r_cv_cache_foundation_flags], [
+      r_cv_cache_foundation_flags=yes
+      r_foundation_cached=no])
+  AC_MSG_RESULT([${r_foundation_cached}])
+  # if so, fetch them from the cache                                                                                                          
+  if test "${r_foundation_cached}" = yes; then
+    AC_CACHE_CHECK([FOUNDATION_LIBS], [r_cv_FOUNDATION_LIBS])
+    FOUNDATION_LIBS="${r_cv_FOUNDATION_LIBS}"
+    AC_CACHE_CHECK([FOUNDATION_CPPFLAGS], [r_cv_FOUNDATION_CPPFLAGS])
+    FOUNDATION_CPPFLAGS="${r_cv_FOUNDATION_CPPFLAGS}"
+  else
+
   AC_LANG_PUSH([Objective C])
   rof_save_LIBS="${LIBS}"
   rof_save_CPPFLAGS="${CPPFLAGS}"
@@ -1886,12 +1911,16 @@ EOF
   CPPFLAGS="${rof_save_CPPFLAGS}"
   AC_SUBST(FOUNDATION_CPPFLAGS)
   AC_SUBST(FOUNDATION_LIBS)
+  AC_CACHE_VAL([r_cv_FOUNDATION_CPPFLAGS],[r_cv_FOUNDATION_CPPFLAGS="${FOUNDATION_CPPFLAGS}"])
+  AC_CACHE_VAL([r_cv_FOUNDATION_LIBS],[r_cv_FOUNDATION_LIBS="${FOUNDATION_LIBS}"])
   AC_LANG_POP([Objective C])
   ac_objc_foundation=${ac_objc_foundation_works}
 
+  fi # not cached flags
+
   fi # -n ${OBJC}
-  AC_MSG_CHECKING([for working Foundation implementation])
-  AC_MSG_RESULT(${ac_objc_foundation})
+
+  AC_CACHE_CHECK([for working Foundation implementation], [r_cv_objc_foundation], [r_cv_objc_foundation="${ac_objc_foundation}"])
 ])
 
 ## R_IEEE_754
