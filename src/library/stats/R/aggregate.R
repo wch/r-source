@@ -20,15 +20,15 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
     y <- lapply(x, tapply, by, FUN, ..., simplify = FALSE)
-    if(any(sapply(unlist(y, recursive = FALSE), length) > 1))
+    if(any(sapply(unlist(y, recursive = FALSE), length) > 1L))
         stop("'FUN' must always return a scalar")
-    z <- y[[1]]
+    z <- y[[1L]]
     d <- dim(z)
     w <- vector("list", length(d))
     for (i in seq_along(d)) {
-        j <- rep.int(rep.int(seq(1 : d[i]),
-                             prod(d[seq_len(i - 1)]) * rep.int(1, d[i])),
-                     prod(d[seq.int(from = i + 1, length.out = length(d) - i)]))
+        j <- rep.int(rep.int(seq_len(d[i]),
+                             prod(d[seq_len(i - 1L)]) * rep.int(1L, d[i])),
+                     prod(d[seq.int(from = i + 1L, length.out = length(d) - i)]))
         zz <- dimnames(z)[[i]][j]
         ## zz is character, so match to the levels created in tapply
         ## and not to as.character(by[[i]])
