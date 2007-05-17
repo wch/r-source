@@ -13,7 +13,7 @@ function(file)
                       file),
              domain = NA)
 
-    y <- matrix("", nr = 0, nc = 2)
+    y <- matrix("", nrow = 0, ncol = 2)
     x <- paste(readLines(file), collapse = "\n")
 
     ## <FIXME>

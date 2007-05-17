@@ -61,7 +61,7 @@ function(x, y = NULL, z = NULL,
                           sum(apply(rbind(s.x, s.y), 2, prod)
                               / (n^2 * (n - 1))))
             PARAMETER <- 1
-            PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+            PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
             names(STATISTIC) <- "Mantel-Haenszel X-squared"
             names(PARAMETER) <- "df"
             METHOD <- paste("Mantel-Haenszel chi-squared test",
@@ -88,7 +88,7 @@ function(x, y = NULL, z = NULL,
                 switch(alternative,
                        less = c(0, ESTIMATE * exp(qnorm(conf.level) * sd)),
                        greater = c(ESTIMATE * exp(qnorm(conf.level,
-                                   lower = FALSE) * sd), Inf),
+                                   lower.tail = FALSE) * sd), Inf),
                        two.sided = {
                            ESTIMATE * exp(c(1, -1) *
                                           qnorm((1 - conf.level) / 2) * sd)
@@ -167,7 +167,7 @@ function(x, y = NULL, z = NULL,
             PVAL <-
                 switch(alternative,
                        less = pn2x2xk(s, 1),
-                       greater = pn2x2xk(s, 1, upper = TRUE),
+                       greater = pn2x2xk(s, 1, upper.tail = TRUE),
                        two.sided = {
                            ## Note that we need a little fuzz.
                            relErr <- 1 + 10 ^ (-7)
@@ -211,14 +211,14 @@ function(x, y = NULL, z = NULL,
             ncp.L <- function(x, alpha) {
                 if(x == lo)
                     return(0)
-                p <- pn2x2xk(x, 1, upper = TRUE)
+                p <- pn2x2xk(x, 1, upper.tail = TRUE)
                 if(p > alpha)
                     uniroot(function(t)
-                            pn2x2xk(x, t, upper = TRUE) - alpha,
+                            pn2x2xk(x, t, upper.tail = TRUE) - alpha,
                             c(0, 1))$root
             else if (p < alpha)
                 1 / uniroot(function(t)
-                            pn2x2xk(x, 1/t, upper = TRUE) - alpha,
+                            pn2x2xk(x, 1/t, upper.tail = TRUE) - alpha,
                             c(.Machine$double.eps, 1))$root
             else
                 1
@@ -255,7 +255,7 @@ function(x, y = NULL, z = NULL,
         ## (Thanks to Torsten Hothorn for spotting this.)
         df <- (I - 1) * (J - 1)
         n <- m <- double(length = df)
-        V <- matrix(0, nr = df, nc = df)
+        V <- matrix(0, nrow = df, ncol = df)
         for (k in 1 : K) {
             f <- x[ , , k]              # frequencies in stratum k
             ntot <- sum(f)              # n_{..k}
@@ -274,7 +274,7 @@ function(x, y = NULL, z = NULL,
         n <- n - m
         STATISTIC <- c(crossprod(n, qr.solve(V, n)))
         PARAMETER <- df
-        PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+        PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
         names(STATISTIC) <- "Cochran-Mantel-Haenszel M^2"
         names(PARAMETER) <- "df"
         METHOD <- "Cochran-Mantel-Haenszel test"

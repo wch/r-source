@@ -77,7 +77,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 		YATES <- 0
 	    STATISTIC <- sum((abs(x - E) - YATES)^2 / E)
 	    PARAMETER <- (nr - 1) * (nc - 1)
-	    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+	    PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
 	}
     }
     else {
@@ -105,7 +105,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	    PVAL <- (1 + sum(ss >= almost.1 * STATISTIC))/(B + 1)
 	} else {
 	    PARAMETER <- length(x) - 1
-	    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+	    PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
 	}
     }
 

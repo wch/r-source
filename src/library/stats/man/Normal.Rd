@@ -98,7 +98,7 @@ curve(log(dnorm(x)), add=TRUE, col="red",lwd=2)
 mtext("dnorm(x, log=TRUE)", adj=0)
 mtext("log(dnorm(x))", col="red", adj=1)
 
-plot(function(x) pnorm(x, log=TRUE), -50, 10,
+plot(function(x) pnorm(x, log.p=TRUE), -50, 10,
      main = "log { Normal Cumulative }")
 curve(log(pnorm(x)), add=TRUE, col="red",lwd=2)
 mtext("pnorm(x, log=TRUE)", adj=0)

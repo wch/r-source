@@ -17,7 +17,7 @@ Box.test <- function (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
     else
     {
         METHOD <- "Box-Ljung test"
-        STATISTIC <- n*(n+2)*sum(1/seq(n-1,n-lag)*obs^2)
+        STATISTIC <- n*(n+2)*sum(1/seq.int(n-1, n-lag)*obs^2)
         PVAL <- 1-pchisq(STATISTIC,lag)
     }
     names(STATISTIC) <- "X-squared"

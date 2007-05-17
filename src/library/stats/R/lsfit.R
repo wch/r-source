@@ -268,7 +268,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 
     m.y <- ncol(resids)
     coef.table <- as.list(1:m.y)
-    if(m.y==1) coef <- matrix(ls.out$coef, nc=1)
+    if(m.y==1) coef <- matrix(ls.out$coef, ncol=1)
     else coef <- ls.out$coef
     for(i in 1:m.y) {
 	covmat <- (resss[i]/(n[i]-p)) * (qrinv%*%t(qrinv))

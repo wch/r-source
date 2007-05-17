@@ -379,13 +379,13 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
         ## supplied by name).  The important special case is replacement methods, where
         ## value is the last argument.
         ntrail <- length(fnames) - dotsPos
-        trailingArgs <- fnames[seq(to = length(fnames), length = ntrail)]
-        if(!identical(mnames[seq(to = length(mnames), length = ntrail)],
+        trailingArgs <- fnames[seq.int(to = length(fnames), length.out = ntrail)]
+        if(!identical(mnames[seq.int(to = length(mnames), length.out = ntrail)],
                       trailingArgs))
             stop(gettextf("arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list",
                           paste(trailingArgs, collapse=", ")), domain = NA)
         newCallNames <- character(length(newCall))
-        newCallNames[seq(to =length(newCallNames), length = ntrail)] <-
+        newCallNames[seq.int(to =length(newCallNames), length.out = ntrail)] <-
             trailingArgs
         names(newCall) <- newCallNames
     }
@@ -704,7 +704,7 @@ getGenerics <-
           ## globally visible.  Assertion based on cacheMetaData + setMethod
           fnames <- as.list(objects(.genericTable, all.names=TRUE))
           packages <- vector("list", length(fnames))
-          for(i in seq(along = fnames)) {
+          for(i in seq_along(fnames)) {
               obj <- get(fnames[[i]], envir = .genericTable)
               if(is.list(obj))
                 fnames[[i]] <-  names(obj)
@@ -764,10 +764,10 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
     if(length(packages) <  length(generics))
       packages <- rep(packages, length = length(generics))
     pkg <- getPackageName(where)
-     for(i in seq(along = generics)) {
+     for(i in seq_along(generics)) {
          f <- generics[[i]]
          pkg <- packages[[i]]
-        fdef <- getGeneric(f, FALSE, searchWhere, pkg)
+         fdef <- getGeneric(f, FALSE, searchWhere, pkg)
         ## silently ignores all generics not visible from searchWhere
         if(is(fdef, "genericFunction")) {
           if(attach) {
@@ -1088,7 +1088,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
             TRUE
         }
         else {
-            for(i in seq(from=2, length = length(x)-1)) {
+            for(i in seq.int(from=2, length.out = length(x)-1)) {
                 if(Recall(x[[i]], fname))
                     return(TRUE)
             }
@@ -1096,7 +1096,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         }
     }
     else if(is(x, "language")) {
-        for(i in seq(from=2, length = length(x)-1)) {
+        for(i in seq.int(from=2, length.out = length(x)-1)) {
             if(Recall(x[[i]], fname))
                 return(TRUE)
         }
@@ -1239,7 +1239,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ## called more than nmax levels in could supply this argument
     if(nmax < 1) stop("got a negative maximum number of frames to look at")
     ev <- topenv(parent.frame()) # .GlobalEnv or the environment in which methods is being built.
-    for(back in seq(from = -n, length = nmax)) {
+    for(back in seq.int(from = -n, length.out = nmax)) {
         fun <- sys.function(back)
         if(is(fun, "function")) {
             ## Note that "fun" may actually be a method definition, and still will be counted.

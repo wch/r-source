@@ -34,7 +34,8 @@ stat.anova(table, test = c("Chisq", "F", "Cp"), scale, df.scale, n)
 \dontshow{utils::example("glm", echo = FALSE)}
 print(ag <- anova(glm.D93))
 stat.anova(ag$table, test = "Cp",
-           scale = sum(resid(glm.D93, "pearson")^2)/4, df = 4, n = 9)
+           scale = sum(resid(glm.D93, "pearson")^2)/4,
+           df.scale = 4, n = 9)
 }
 \keyword{regression}
 \keyword{models}

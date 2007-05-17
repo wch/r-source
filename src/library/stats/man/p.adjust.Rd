@@ -109,7 +109,7 @@ p.adjust.methods
 require(graphics)
 
 set.seed(123)
-x <- rnorm(50, m=c(rep(0,25),rep(3,25)))
+x <- rnorm(50, mean=c(rep(0,25),rep(3,25)))
 p <- 2*pnorm( sort(-abs(x)))
 
 round(p, 3)

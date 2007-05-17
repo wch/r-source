@@ -72,7 +72,7 @@ function(lines)
     skipList <- integer(0)
     skipLevel <- 0
     skipIndices <- ppLineIndices
-    for(i in seq(along = ppTypes)) {
+    for(i in seq_along(ppTypes)) {
         if(!is.na(skip <- ppTypes[i])) {
             if(skipLevel == 0 && skip > 0) {
                 skipStart <- ppLineIndices[i]
@@ -85,8 +85,8 @@ function(lines)
         else {
             if(skipLevel == 1 && skipList[1] > 0) {
                 skipIndices <- c(skipIndices,
-                                 seq(from = skipStart,
-                                     to = ppLineIndices[i]))
+                                 seq.int(from = skipStart,
+                                         to = ppLineIndices[i]))
                 skipLevel <- 0
             }
             else
@@ -192,7 +192,7 @@ function(RdFiles)
                  "Keywords", "Encoding")
     contents <- vector("list", length(RdFiles) * length(entries))
     dim(contents) <- c(length(RdFiles), length(entries))
-    for(i in seq(along = RdFiles)) {
+    for(i in seq_along(RdFiles)) {
         contents[i, ] <- Rdinfo(RdFiles[i])
     }
     colnames(contents) <- entries
@@ -391,7 +391,7 @@ function(package, dir, lib.loc = NULL)
             valid_lines[is.na(nchar(lines, "c"))] <- ""
             eofPos <- grep("\\eof$", valid_lines)
             db <- c(db, split(lines[-eofPos],
-                              rep(seq(along = eofPos),
+                              rep(seq_along(eofPos),
                                   times = diff(c(0, eofPos)))[-eofPos]))
         }
         ## If this was installed using a recent enough version of R CMD

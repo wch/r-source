@@ -154,7 +154,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 ##  association (that the odds ratio is greater than 1).
 TeaTasting <-
 matrix(c(3, 1, 1, 3),
-       nr = 2,
+       nrow = 2,
        dimnames = list(Guess = c("Milk", "Tea"),
                        Truth = c("Milk", "Tea")))
 fisher.test(TeaTasting, alternative = "greater")
@@ -163,7 +163,7 @@ fisher.test(TeaTasting, alternative = "greater")
 ## Fisher (1962, 1970), Criminal convictions of like-sex twins
 Convictions <-
 matrix(c(2, 10, 15, 3),
-       nr = 2,
+       nrow = 2,
        dimnames =
        list(c("Dizygotic", "Monozygotic"),
             c("Convicted", "Not convicted")))
@@ -178,6 +178,6 @@ Job <- matrix(c(1,2,1,0, 3,3,6,1, 10,10,14,9, 6,7,12,11), 4, 4,
 dimnames = list(income=c("< 15k", "15-25k", "25-40k", "> 40k"),
                 satisfaction=c("VeryD", "LittleD", "ModerateS", "VeryS")))
 fisher.test(Job)
-fisher.test(Job, simulate=TRUE, B=1e5)
+fisher.test(Job, simulate.p.value=TRUE, B=1e5)
 }
 \keyword{htest}

@@ -4,7 +4,7 @@
 \usage{
 text(x, \dots)
 
-\method{text}{default} (x, y = NULL, labels = seq(along = x), adj = NULL,
+\method{text}{default} (x, y = NULL, labels = seq_along(x), adj = NULL,
      pos = NULL, offset = 0.5, vfont = NULL,
      cex = 1, col = NULL, font = NULL, \dots)
 }

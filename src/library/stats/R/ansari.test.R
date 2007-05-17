@@ -190,7 +190,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     ## Check if the statistic exceeds both quantiles
                     ## first.
                     statu <- ab2(srange[1], zq=qnorm(alpha/2))
-                    statl <- ab2(srange[2], zq=qnorm(alpha/2, lower=FALSE))
+                    statl <- ab2(srange[2], zq=qnorm(alpha/2, lower.tail=FALSE))
                     if (statu > 0 || statl < 0) {
                         warning("samples differ in location: cannot compute confidence set, returning NA")
                         return(c(NA, NA))
@@ -198,7 +198,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                     u <- uniroot(ab2, srange, tol=1e-4,
                                  zq=qnorm(alpha/2))$root
                     l <- uniroot(ab2, srange, tol=1e-4,
-                                 zq=qnorm(alpha/2, lower=FALSE))$root
+                                 zq=qnorm(alpha/2, lower.tail=FALSE))$root
                     ## The process of the statistics does not need to be
                     ## monotone: sort is ok here.
                     sort(c(u, l))

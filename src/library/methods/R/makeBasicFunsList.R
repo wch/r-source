@@ -18,7 +18,7 @@
     }
 
     ## Next, add the remaaining primitive generics
-    prims <- ls(.GenericArgsEnv, all=TRUE)
+    prims <- ls(.GenericArgsEnv, all.names=TRUE)
     new_prims <- prims[!prims %in% names(funs)]
     for(nm in new_prims) {
         f <- get(nm, envir = .GenericArgsEnv)

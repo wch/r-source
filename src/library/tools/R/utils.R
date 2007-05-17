@@ -256,7 +256,7 @@ function(x, f, ...)
 .find_owner_env <-
 function(v, env, last = NA, default = NA) {
     while(!identical(env, last))
-        if(exists(v, env = env, inherits = FALSE))
+        if(exists(v, envir = env, inherits = FALSE))
             return(env)
         else
             env <- parent.env(env)
@@ -880,7 +880,7 @@ function(expr)
                                 grmbl = function(e, calls) {
                                     n <- length(sys.calls())
                                     ## Chop things off as needed ...
-                                    calls <- calls[-seq(length = n - 1)]
+                                    calls <- calls[-seq.int(length.out = n - 1)]
                                     calls <- rev(calls)[-c(1, 2)]
                                     tb <- lapply(calls, deparse)
                                     stop(conditionMessage(e),

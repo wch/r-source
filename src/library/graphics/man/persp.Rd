@@ -9,7 +9,8 @@
 \usage{
 persp(x, \dots)
 
-\method{persp}{default}(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+\method{persp}{default}(x = seq(0, 1, length.out = nrow(z)),
+      y = seq(0, 1, length.out = ncol(z)),
       z, xlim = range(x), ylim = range(y),
       zlim = range(z, na.rm = TRUE),
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,

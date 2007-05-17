@@ -101,9 +101,10 @@ aggregate(state.x77,
 ## (Note that no state in 'South' is THAT cold.)
 
 ## Compute the average annual approval ratings for American presidents.
-aggregate(presidents, nf = 1, FUN = mean)
+aggregate(presidents, nfrequency = 1, FUN = mean)
 ## Give the summer less weight.
-aggregate(presidents, nf = 1, FUN = weighted.mean, w = c(1, 1, 0.5, 1))
+aggregate(presidents, nfrequency = 1,
+          FUN = weighted.mean, w = c(1, 1, 0.5, 1))
 }
 \keyword{category}
 \keyword{array}

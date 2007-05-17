@@ -25,7 +25,8 @@ boxplot.stats <- function(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
 
 ## Contour lines
 contourLines <-
-function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+function (x = seq(0, 1, length.out = nrow(z)),
+          y = seq(0, 1, length.out = ncol(z)),
 	  z, nlevels = 10, levels = pretty(range(z, na.rm = TRUE), nlevels))
 {
     ## FIXME: This "validation" code for the x, y, z values
@@ -39,7 +40,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 		z <- x$z; y <- x$y; x <- x$x
 	    } else {
 		z <- x
-		x <- seq(0, 1, len = nrow(z))
+		x <- seq.int(0, 1, length.out = nrow(z))
 	    }
 	} else stop("no 'z' matrix specified")
     } else if (is.list(x)) {

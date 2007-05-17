@@ -82,7 +82,7 @@ all(crossprod(cT) == diag(4)) # TRUE: even orthonormal
 all(crossprod(cP) == diag(4)) # TRUE: even orthonormal
 
 (cP <- contr.poly(3)) # Linear and Quadratic
-zapsmall(crossprod(cP), dig=15) # orthonormal up to fuzz
+zapsmall(crossprod(cP), digits=15) # orthonormal up to fuzz
 }
 \keyword{design}
 \keyword{regression}

@@ -43,7 +43,7 @@ make.packages.html <- function(lib.loc=.libPaths())
         cat("<p>\n<table width=\"100%\" summary=\"R Package list\">\n",
             file = out)
         for (i in  pg) {
-            title <- packageDescription(i, lib.loc = lib, field = "Title",
+            title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                         encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',

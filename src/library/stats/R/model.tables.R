@@ -101,7 +101,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 	    ## Elect to use the effects from the lowest stratum:
 	    ##	usually expect this to be highest efficiency
 	    eff.used <- apply(efficiency, 2,
-			      function(x, ind = seq(length(x))) {
+			      function(x, ind = seq_len(x)) {
 				  temp <- (x > 0)
 				  if(sum(temp) == 1) temp
 				  else max(ind[temp]) == ind
@@ -185,7 +185,7 @@ make.tables.aovproj <-
 {
     tables <- vector(mode = "list", length = length(proj.cols))
     names(tables) <- names(proj.cols)
-    for(i in seq(length(tables))) {
+    for(i in seq_along(tables)) {
 	terms <- proj.cols[[i]]
         terms <- terms[terms %in% colnames(prjs)]
 	data <-
@@ -207,7 +207,7 @@ make.tables.aovprojlist <-
     tables <- vector(mode = "list", length = length(proj.cols))
     names(tables) <- names(proj.cols)
     if(!missing(eff)) {
-	for(i in seq(length(tables))) {
+	for(i in seq_along(tables)) {
 	    terms <- proj.cols[[i]]
 	    if(all(is.na(eff.i <- match(terms, names(eff)))))
 		eff.i <- rep.int(1, length(terms))
@@ -232,7 +232,7 @@ make.tables.aovprojlist <-
 	    class(tables[[i]]) <- "mtable"
 	    if(prt) print(tables[i], ..., quote = FALSE)
 	}
-    } else for(i in seq(length(tables))) {
+    } else for(i in seq_along(tables)) {
 	terms <- proj.cols[[i]]
 	if(length(terms) == 1) data <- projections[[strata.cols[i]]][, terms]
 	else {
@@ -449,9 +449,9 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     indError <- attr(Terms, "specials")$Error
     errorterm <-  attr(Terms, "variables")[[1 + indError]]
     form <- update.formula(Terms,
-                           paste(". ~ .-", deparse(errorterm, width=500,
+                           paste(". ~ .-", deparse(errorterm, width.cutoff=500,
                                                    backtick = TRUE),
-                                 "+", deparse(errorterm[[2]], width=500,
+                                 "+", deparse(errorterm[[2]], width.cutoff=500,
                                               backtick = TRUE)))
     nargs <- as.list(call)
     oargs <- as.list(oc)

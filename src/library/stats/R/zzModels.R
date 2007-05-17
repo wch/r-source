@@ -461,7 +461,7 @@ SSgompertz <- #    selfStart( ~ Asym * exp(-b2*b3^x),
               pars <- NLSstAsymptotic(xyL)
               pars <- coef(nls(y ~ exp(-b2*b3^x),
                                data = xy,
-                               alg = "plinear",
+                               algorithm = "plinear",
                                start = c(b2 = pars[["b1"]],
                                b3 = exp(-exp(pars[["lrc"]])))))
               val <- pars[c(3,1,2)]
@@ -507,7 +507,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
                              data = xy, subset = x > 0))
               val <- coef(nls(y ~ cbind(1, -exp(-exp(lrc)*x^pwr)),
                                data = xy,
-                               alg = "plinear",
+                               algorithm = "plinear",
                                start = c(lrc = pars[[1]], pwr = pars[[2]])))[
                                                          c(3,4,1,2)]
               names(val) <- mCall[c("Asym", "Drop", "lrc", "pwr")]

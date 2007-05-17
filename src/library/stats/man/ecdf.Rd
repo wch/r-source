@@ -72,7 +72,7 @@ summary(Fn12)
 summary.stepfun(Fn12)
 
 ## Advanced: What's inside the function closure?
-print(ls.Fn12 <- ls(env= environment(Fn12)))
+print(ls.Fn12 <- ls(environment(Fn12)))
 ##[1] "f"  "method"  "n"  "x"  "y"  "yleft"  "yright"
 utils::ls.str(environment(Fn12))
 
@@ -89,7 +89,7 @@ plot(F10)
 plot(F10, verticals= TRUE, do.p = FALSE)
 
 plot(Fn12 , lwd = 2) ; mtext("lwd = 2", adj=1)
-xx <- unique(sort(c(seq(-3,2, length=201), knots(Fn12))))
+xx <- unique(sort(c(seq(-3, 2, length=201), knots(Fn12))))
 lines(xx, Fn12(xx), col='blue')
 abline(v=knots(Fn12),lty=2,col='gray70')
 

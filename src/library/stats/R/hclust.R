@@ -194,7 +194,7 @@ function(x)
     x <- as.hclust(x)
     nobs <- length(x$order)
     ilist <- vector("list", length = nobs)
-    out <- matrix(0, nr = nobs, nc = nobs)
+    out <- matrix(0, nrow = nobs, ncol = nobs)
     for(i in 1 : (nobs - 1)) {
         inds <- x$merge[i,]
         ids1 <- if(inds[1] < 0) -inds[1] else ilist[[inds[1]]]

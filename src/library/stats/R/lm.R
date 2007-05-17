@@ -397,7 +397,7 @@ print.summary.lm <-
 	if (p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")
 	    if(is.logical(symbolic.cor) && symbolic.cor) {# NULL < 1.7.0 objects
-		print(symnum(correl, abbr.col = NULL))
+		print(symnum(correl, abbr.colnames = NULL))
 	    } else {
                 correl <- format(round(correl, 2), nsmall = 2, digits = digits)
                 correl[!lower.tri(correl)] <- ""
@@ -446,7 +446,7 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
                       matrix(rnorm(length(ftd) * nsim,
                                    sd = sqrt(deviance(object)/
                                    df.residual(object))),
-                             nr = length(ftd)))
+                             nrow = length(ftd)))
 
     attr(ans, "seed") <- RNGstate
     ans
@@ -720,7 +720,7 @@ predict.lm <-
             ## Predicted values will be set to 0 for any term that
             ## corresponds to columns of the X-matrix that are
             ## completely aliased with earlier columns.
-            for (i in seq(1, nterms, length = nterms)) {
+            for (i in seq.int(1L, nterms, length.out = nterms)) {
                 iipiv <- asgn[[i]]      # Columns of X, ith term
                 ii <- unpiv[iipiv]      # Corresponding rows of Rinv
                 iipiv[ii == 0] <- 0

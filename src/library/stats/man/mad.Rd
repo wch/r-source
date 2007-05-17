@@ -49,7 +49,9 @@ print(mad(c(1:9),     constant=1)) ==
       mad(c(1:8,100), constant=1)       # = 2 ; TRUE
 x <- c(1,2,3, 5,7,8)
 sort(abs(x - median(x)))
-c(mad(x, co=1), mad(x, co=1, lo = TRUE), mad(x, co=1, hi = TRUE))
+c(mad(x, constant=1),
+  mad(x, constant=1, low = TRUE),
+  mad(x, constant=1, high = TRUE))
 }
 \keyword{univar}
 \keyword{robust}

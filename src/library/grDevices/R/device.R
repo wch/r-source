@@ -20,7 +20,7 @@ dev.list <- function()
 {
     n <- if(exists(".Devices")) get(".Devices") else list("null device")
     n <- unlist(n)
-    i <- seq(along = n)[n != ""]
+    i <- seq_along(n)[n != ""]
     names(i) <- n[i]
     i <- i[-1]
     if(length(i) == 0) NULL else i

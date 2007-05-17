@@ -305,7 +305,7 @@ glm.fit <-
         ## hence we need to re-label the names ...
         ## Original code changed as suggested by BDR---give NA rather
         ## than 0 for non-estimable parameters
-        if (fit$rank < nvars) coef[fit$pivot][seq(fit$rank+1, nvars)] <- NA
+        if (fit$rank < nvars) coef[fit$pivot][seq.int(fit$rank+1, nvars)] <- NA
         xxnames <- xnames[fit$pivot]
         ## update by accurate calculation, including 0-weight cases.
         residuals <-  (y - mu)/mu.eta(eta)
@@ -684,7 +684,7 @@ print.summary.glm <-
 	if(p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")
 	    if(is.logical(symbolic.cor) && symbolic.cor) {# NULL < 1.7.0 objects
-		print(symnum(correl, abbr.col = NULL))
+		print(symnum(correl, abbr.colnames = NULL))
 	    } else {
 		correl <- format(round(correl, 2), nsmall = 2, digits = digits)
 		correl[!lower.tri(correl)] <- ""

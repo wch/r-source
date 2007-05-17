@@ -52,7 +52,7 @@ function (x, labels, panel = points, ...,
     dots <- list(...); nmdots <- names(dots)
     if (!is.matrix(x)) {
         x <- as.data.frame(x)
-        for(i in seq(along=names(x))) {
+        for(i in seq_along(names(x))) {
             if(is.factor(x[[i]]) || is.logical(x[[i]]))
                x[[i]] <- as.numeric(x[[i]])
             if(!is.numeric(unclass(x[[i]])))

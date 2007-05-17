@@ -115,7 +115,7 @@ function(x, ...)
                 tp <- basename(p)
                 titles <- tp
                 if(type == "html") tp <- tools::file_path_sans_ext(tp)
-                for (i in seq(along = fp)) {
+                for (i in seq_along(fp)) {
                     tmp <- try(.readRDS(fp[i]))
                     titles[i] <- if(inherits(tmp, "try-error"))
                         "unknown title" else

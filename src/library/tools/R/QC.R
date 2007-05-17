@@ -233,11 +233,11 @@ function(package, dir, lib.loc = NULL)
     if(is_base) {
         ## we use .ArgsEnv and .GenericArgsEnv in checkS3methods and codoc,
         ## so we check here that the set of primiitives has not been changed.
-        base_funs <- ls("package:base", all=TRUE)
+        base_funs <- ls("package:base", all.names=TRUE)
         prim <- sapply(base_funs, function(x) is.primitive(get(x, "package:base")))
         prims <- base_funs[prim]
-        prototypes <- sort(c(ls(envir=.ArgsEnv, all=TRUE),
-                             ls(envir=.GenericArgsEnv, all=TRUE)))
+        prototypes <- sort(c(ls(envir=.ArgsEnv, all.names=TRUE),
+                             ls(envir=.GenericArgsEnv, all.names=TRUE)))
         extras <- prototypes %w/o% prims
         if(length(extras))
             undoc_things <- c(undoc_things, list(prim_extra=extras))
@@ -419,11 +419,11 @@ function(package, dir, lib.loc = NULL,
                 ".onLoad", ".onAttach", ".onUnload"))
         objects_in_code_or_namespace <- objects_in_code
         known_env <- .make_S3_primitive_generic_env(code_env, fixup=TRUE)
-        extras <- ls(known_env, all = TRUE)
+        extras <- ls(known_env, all.names = TRUE)
         functions_in_code <- c(functions_in_code, extras)
         code_env <- known_env
         known_env <- .make_S3_primitive_nongeneric_env(code_env)
-        extras <- ls(known_env, all = TRUE)
+        extras <- ls(known_env, all.names = TRUE)
         functions_in_code <- c(functions_in_code, extras)
         code_env <- known_env
     }
@@ -2040,14 +2040,14 @@ function(package, dir, lib.loc = NULL)
         }
         dotsPos <- which(gArgs == "...")
         ipos <- if(length(dotsPos) > 0)
-            seq.int(from = 1, length = dotsPos[1] - 1)
+            seq.int(from = 1, length.out = dotsPos[1] - 1)
         else
             seq_along(gArgs)
 
         ## careful, this could match multiply in incorrect funs.
         dotsPos <- which(mArgs == "...")
         if(length(dotsPos) > 0)
-            ipos <- ipos[seq.int(from = 1, length = dotsPos[1] - 1)]
+            ipos <- ipos[seq.int(from = 1, length.out = dotsPos[1] - 1)]
         posMatchOK <- identical(gArgs[ipos], mArgs[ipos])
         argMatchOK <- all(gArgs %in% mArgs) || length(dotsPos) > 0
         margMatchOK <- all(mArgs %in% c("...", gArgs)) || "..." %in% ogArgs
@@ -3293,7 +3293,7 @@ function(pkgDir)
     setwd(old)
 
     non_ASCII <- latin1 <- utf8 <- character(0)
-    for(ds in ls(envir = dataEnv, all = TRUE))
+    for(ds in ls(envir = dataEnv, all.names = TRUE))
         check_one(get(ds, envir = dataEnv))
     structure(list(latin1 = unique(latin1), utf8 = unique(utf8),
                    unknown = unique(non_ASCII)),
@@ -3874,10 +3874,10 @@ function(package, dir, lib.loc = NULL)
     bad_examples <- character()
 
     find_bad_closures <- function(env) {
-        objects_in_env <- objects(env, all = TRUE)
+        objects_in_env <- objects(env, all.names = TRUE)
         x <- lapply(objects_in_env,
                     function(o) {
-                        v <- get(o, env = env)
+                        v <- get(o, envir = env)
                         if (typeof(v) == "closure")
                             codetools::findGlobals(v)
                     })

@@ -75,6 +75,6 @@ x <- 0:(k+1)
 rbind(phyper(x, m, n, k), dhyper(x, m, n, k))
 all(phyper(x, m, n, k) == cumsum(dhyper(x, m, n, k)))# FALSE
 ## but error is very small:
-signif(phyper(x, m, n, k) - cumsum(dhyper(x, m, n, k)), dig=3)
+signif(phyper(x, m, n, k) - cumsum(dhyper(x, m, n, k)), digits=3)
 }
 \keyword{distribution}

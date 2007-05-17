@@ -18,10 +18,10 @@ ecdf <- function (x)
 
 print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
 {
-    numform <- function(x) paste(formatC(x, dig=digits), collapse=", ")
+    numform <- function(x) paste(formatC(x, digits=digits), collapse=", ")
     cat("Empirical CDF \nCall: ")
     print(attr(x, "call"), ...)
-    n <- length(xx <- eval(expression(x),env = environment(x)))
+    n <- length(xx <- eval(expression(x), envir = environment(x)))
     i1 <- 1:min(3,n)
     i2 <- if(n>=4) max(4,n-1):n else integer(0)
     cat(" x[1:",n,"] = ", numform(xx[i1]),
@@ -32,7 +32,7 @@ print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
 summary.ecdf <- function(object, ...)
 {
     cat("Empirical CDF:	 ",
-	eval(expression(n), env = environment(object)),
+	eval(expression(n), envir = environment(object)),
         "unique values with summary\n")
     summary(knots(object), ...)
 }

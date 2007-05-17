@@ -31,7 +31,7 @@ r2dtable(n, r, c)
 ## Fisher's Tea Drinker data.
 TeaTasting <-
 matrix(c(3, 1, 1, 3),
-       nr = 2,
+       nrow = 2,
        dimnames = list(Guess = c("Milk", "Tea"),
                        Truth = c("Milk", "Tea")))
 ## Simulate permutation test for independence based on the maximum

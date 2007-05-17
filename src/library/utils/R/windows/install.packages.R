@@ -162,7 +162,7 @@
     }
 
     if(is.null(contriburl)) {
-        for(i in seq(along=pkgs))
+        for(i in seq_along(pkgs))
             unpackPkg(pkgs[i], pkgnames[i], lib, installWithVers)
         link.html.help(verbose=TRUE)
         return(invisible())

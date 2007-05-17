@@ -447,7 +447,7 @@ trySilent <- function(expr) {
 ### a table in this direction anywhere?
 .searchNamespaceNames <- function(env) {
     namespaces <- .Internal(getNamespaceRegistry())
-    names <- objects(namespaces, all = TRUE)
+    names <- objects(namespaces, all.names = TRUE)
     for(what in names)
         if(identical(get(what, envir=namespaces), env))
             return(paste("namespace", what, sep=":"))

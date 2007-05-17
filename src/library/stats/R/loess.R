@@ -350,7 +350,7 @@ predLoess <-
 pointwise <- function(results, coverage)
 {
     fit <- results$fit
-    lim <- qt((1 - coverage)/2, results$df, lower = FALSE) * results$se.fit
+    lim <- qt((1 - coverage)/2, results$df, lower.tail = FALSE) * results$se.fit
     list(fit = fit, lower = fit - lim, upper = fit + lim)
 }
 
@@ -425,7 +425,7 @@ loess.smooth <-
 	   evaluation = 50, ...)
 {
     notna <- !(is.na(x) | is.na(y))
-    new.x <- seq(min(x[notna]), max(x[notna]), length = evaluation)
+    new.x <- seq.int(min(x[notna]), max(x[notna]), length.out = evaluation)
 
     control <- loess.control(...)
     ##	x <- matrix(x, ncol = 1)

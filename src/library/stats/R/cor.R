@@ -40,7 +40,7 @@ function(x, y=NULL, use="all.obs", method = c("pearson", "kendall", "spearman"))
          if (is.null(y)) {
              ncy <- ncx <- ncol(x)
              r <- matrix(0, nrow=ncx, ncol=ncy)
-             for (i in seq(2, length = ncx - 1)) {
+             for (i in seq.int(2, length.out = ncx - 1)) {
                  for (j in seq_len(i - 1)) {
                      x2 <- x[,i]
                      y2 <- x[,j]

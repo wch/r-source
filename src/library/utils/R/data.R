@@ -110,7 +110,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                     next
                 }
             } else {
-                files <- list.files(p, full = TRUE)
+                files <- list.files(p, full.names = TRUE)
             }
             files <- files[grep(name, files, fixed = TRUE)]
             if(length(files) > 1) {

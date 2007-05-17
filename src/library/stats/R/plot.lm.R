@@ -216,7 +216,8 @@ function (x, which = c(1:3,5), ## was which = 1:4,
                 dispersion <- if(isGlm) summary(x)$dispersion else 1
                 p <- length(coef(x))
                 usr <- par("usr")
-                hh <- seq(min(r.hat[1], r.hat[2]/100), usr[2], length = 101)
+                hh <- seq.int(min(r.hat[1], r.hat[2]/100), usr[2],
+                              length.out = 101)
                 for(crit in cook.levels) {
                     cl.h <- sqrt(crit*p*(1-hh)/hh * dispersion)
                     lines(hh, cl.h, lty = 2, col = 2)

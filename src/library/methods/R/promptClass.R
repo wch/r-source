@@ -45,9 +45,10 @@ function (clName, filename = NULL, type = "class",
 	if (length(tmp[[1]]) == 0)
 	    NULL
 	else if ((lt <- length(tmp[[1]])) == 1)
-	    matrix(unlist(tmp[[1]]), nr = 1)
+	    matrix(unlist(tmp[[1]]), nrow = 1)
 	else {
-	    o <- matrix(" ", nc = length(tmp[[1]][[1]]), nr = length(tmp[[1]]))
+	    o <- matrix(" ", ncol = length(tmp[[1]][[1]]),
+                        nrow = length(tmp[[1]]))
 	    for (i in 1:lt) o[i, ] <- unlist(tmp[[1]][[i]])
 	    o
 	}
@@ -144,7 +145,7 @@ function (clName, filename = NULL, type = "class",
 	.slots <- character()
     .extends <- clDef@contains
     if(length(.extends) > 0) {
-	.extends <- showExtends(.extends, print = FALSE)
+	.extends <- showExtends(.extends, printTo = FALSE)
 	.extends <-
 	    c("\\section{Extends}{",
 	      paste0("Class \\code{\"\\linkS4class{",

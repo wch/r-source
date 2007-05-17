@@ -16,8 +16,8 @@ function (groups = NULL, n = NULL, between.var = NULL, within.var = NULL,
 
     p.body <- quote({
 	lambda <- (groups-1)*n*(between.var/within.var)
-	pf(qf(sig.level, groups-1, (n-1)*groups, lower = FALSE),
-	   groups-1, (n-1)*groups, lambda, lower = FALSE)
+	pf(qf(sig.level, groups-1, (n-1)*groups, lower.tail = FALSE),
+	   groups-1, (n-1)*groups, lambda, lower.tail = FALSE)
     })
 
     if (is.null(power))

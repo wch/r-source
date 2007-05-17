@@ -261,8 +261,8 @@ plotNode <-
 	cat(if(inner)"inner node" else "leaf", ":")
 	if(!is.null(nPar)) { cat(" with node pars\n"); str(nPar) }
 	cat(if(inner)paste(" height", formatC(yTop),"; "),
-	    "(x1,x2)= (",formatC(x1,wid=4),",",formatC(x2,wid=4),")",
-	    "--> xTop=", formatC(xTop, wid=8),"\n", sep="")
+	    "(x1,x2)= (",formatC(x1,width=4),",",formatC(x2,width=4),")",
+	    "--> xTop=", formatC(xTop, width=8),"\n", sep="")
     }
 
     Xtract <- function(nam, L, default, indx)

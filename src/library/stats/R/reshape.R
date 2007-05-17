@@ -1,6 +1,6 @@
 reshape <-
     function(data, varying= NULL, v.names= NULL, timevar = "time", idvar = "id",
-             ids = 1:NROW(data), times = seq(length = length(varying[[1]])),
+             ids = 1:NROW(data), times = seq_along(varying[[1]]),
              drop = NULL, direction, new.row.names = NULL,
              split = list(regexp= "\\.", include= FALSE))
 {

@@ -40,7 +40,7 @@ function(x, g, ...)
     STATISTIC <- ((12 * STATISTIC / (n * (n + 1)) - 3 * (n + 1)) /
                   (1 - sum(TIES^3 - TIES) / (n^3 - n)))
     PARAMETER <- k - 1
-    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
+    PVAL <- pchisq(STATISTIC, PARAMETER, lower.tail = FALSE)
     names(STATISTIC) <- "Kruskal-Wallis chi-squared"
     names(PARAMETER) <- "df"
 

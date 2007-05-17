@@ -1,6 +1,6 @@
 ### merge version called from namespace imports code.  Hope to avoid using generic
 .mergeMethodsTable2 <- function(table, newtable, envir, metaname) {
-    old <- objects(table, all=TRUE)
+    old <- objects(table, all.names=TRUE)
     mm <- 1
     for( what in old) {
       mm = get(what, envir =table)
@@ -9,7 +9,7 @@
           break
       }
     }
-    new = objects(newtable, all=TRUE)
+    new = objects(newtable, all.names=TRUE)
     ## check that signature length doesn't change
     canStore <- TRUE
     for(what in new) {
@@ -43,7 +43,7 @@
   n <- get(".SigLength", envir = fenv)
   anySig <- rep("ANY", n)
   anyLabel <- .sigLabel(anySig)
-  newMethods <- objects(newtable, all=TRUE)
+  newMethods <- objects(newtable, all.names=TRUE)
   for(what in newMethods) {
     obj <- get(what, envir = newtable)
     if(is.primitive(obj))
@@ -481,12 +481,12 @@
 
 .resetInheritedMethods <- function(fenv, mtable) {
     allObjects <- character()
-    direct <- objects(mtable, all=TRUE)
+    direct <- objects(mtable, all.names=TRUE)
     if(exists(".AllMTable", envir = fenv, inherits = FALSE)) {
         ## remove all inherited methods.  Note that code (e.g. setMethod) that asigns
         ## a new method to mtable is responsible for copying it to allTable as well.
         allTable <- get(".AllMTable", envir = fenv)
-        allObjects <- objects(allTable, all=TRUE)
+        allObjects <- objects(allTable, all.names=TRUE)
         remove(list= allObjects[is.na(match(allObjects, direct))], envir = allTable)
     }
     else {
@@ -495,7 +495,7 @@
     }
     ## check for missing direct objects; usually a non-existent AllMTable?
     if(any(is.na(match(direct, allObjects)))) {
-        direct <- objects(mtable, all=TRUE)
+        direct <- objects(mtable, all.names=TRUE)
         for(what in direct)
           assign(what, get(what, envir = mtable), envir = allTable)
     }
@@ -534,7 +534,7 @@
     p <- packageSlot(f)
     if(is.null(p)) p <- "base"
     deflt <- new("signature", generic, "ANY")
-    labels <- objects(table, all = TRUE)
+    labels <- objects(table, all.names = TRUE)
     if(!is.null(classes) && length(labels) > 0) {
 	sigL <- strsplit(labels, split = "#")
 	keep <- !sapply(sigL, function(x, y) all(is.na(match(x, y))), classes)
@@ -812,7 +812,7 @@ listFromMethods <- function(generic, where, table) {
 		     envir = as.environment(where), inherits = FALSE)
     fev <- environment(fdef)
     nSigArgs <- .getGenericSigLength(fdef, fev)
-    names <- objects(table, all=TRUE)
+    names <- objects(table, all.names=TRUE)
     methods <- lapply(names, function(x)get(x, envir = table))
     if(nSigArgs > 1) {
         n <- length(names)

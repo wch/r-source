@@ -179,15 +179,15 @@ lines(density(x.new), col="blue")
 plot (density(0, bw = 1), xlab = "",
       main="R's density() kernels with bw = 1")
 for(i in 2:length(kernels))
-   lines(density(0, bw = 1, kern =  kernels[i]), col = i)
+   lines(density(0, bw = 1, kernel =  kernels[i]), col = i)
 legend(1.5,.4, legend = kernels, col = seq(kernels),
-       lty = 1, cex = .8, y.int = 1)
+       lty = 1, cex = .8, y.intersp = 1)
 
 ## show the kernels in the S parametrization
-plot(density(0, from=-1.2, to=1.2, width=2, kern="gaussian"), type="l",
+plot(density(0, from=-1.2, to=1.2, width=2, kernel="gaussian"), type="l",
      ylim = c(0, 1), xlab="", main="R's density() kernels with width = 1")
 for(i in 2:length(kernels))
-   lines(density(0, width=2, kern =  kernels[i]), col = i)
+   lines(density(0, width = 2, kernel =  kernels[i]), col = i)
 legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 
 ##-------- Semi-advanced theoretic from here on ---------------------------
@@ -200,17 +200,17 @@ bw <- bw.SJ(precip) ## sensible automatic choice
 plot(density(precip, bw = bw),
      main = "same sd bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, bw = bw, kern =  kernels[i]), col = i)
+   lines(density(precip, bw = bw, kerniel =  kernels[i]), col = i)
 
 ## Bandwidth Adjustment for "Exactly Equivalent Kernels"
-h.f <- sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))
+h.f <- sapply(kernels, function(k)density(kernel = k, give.Rkern = TRUE))
 (h.f <- (h.f["gaussian"] / h.f)^ .2)
 ## -> 1, 1.01, .995, 1.007,... close to 1 => adjustment barely visible..
 
 plot(density(precip, bw = bw),
      main = "equivalent bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, bw = bw, adjust = h.f[i], kern = kernels[i]),
+   lines(density(precip, bw = bw, adjust = h.f[i], kernel = kernels[i]),
          col = i)
 legend(55, 0.035, legend = kernels, col = seq(kernels), lty = 1)
 }

@@ -30,11 +30,11 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         on.exit(options(opcons))
         allTerms <- Terms
         errorterm <-  attr(Terms, "variables")[[1 + indError]]
-        eTerm <- deparse(errorterm[[2]], width = 500, backtick = TRUE)
+        eTerm <- deparse(errorterm[[2]], width.cutoff = 500, backtick = TRUE)
         intercept <- attr(Terms, "intercept")
         ecall <- lmcall
         ecall$formula <-
-            as.formula(paste(deparse(formula[[2]], width = 500,
+            as.formula(paste(deparse(formula[[2]], width.cutoff = 500,
                                      backtick = TRUE), "~", eTerm,
                              if(!intercept) "- 1"),
                        env=environment(formula))
@@ -65,8 +65,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         } else result <- vector("list", maxasgn + 1)
         names(result) <- nmstrata
         lmcall$formula <- form <-
-            update(formula, paste(". ~ .-", deparse(errorterm, width = 500,
-                                                    backtick = TRUE)))
+            update(formula, paste(". ~ .-", deparse(errorterm, width.cutoff = 500, backtick = TRUE)))
         Terms <- terms(form)
         lmcall$method <- "model.frame"
         mf <- eval(lmcall, parent.frame())

@@ -35,7 +35,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
 
     PVAL <- switch(alternative,
                    less = pbinom(x, n, p),
-                   greater = pbinom(x - 1, n, p, lower = FALSE),
+                   greater = pbinom(x - 1, n, p, lower.tail = FALSE),
                    two.sided = {
                        if(p == 0)
                            (x == 0)
@@ -58,15 +58,15 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
 			   if (x == m)
 			   	1
                            else if (x < m) {
-                               i <- seq(from = ceiling(m), to = n)
+                               i <- seq.int(from = ceiling(m), to = n)
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(x, n, p) +
-                                   pbinom(n - y, n, p, lower = FALSE)
+                                   pbinom(n - y, n, p, lower.tail = FALSE)
                            } else {
-                               i <- seq(from = 0, to = floor(m))
+                               i <- seq.int(from = 0, to = floor(m))
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(y - 1, n, p) +
-                                   pbinom(x - 1, n, p, lower = FALSE)
+                                   pbinom(x - 1, n, p, lower.tail = FALSE)
                            }
                        }
                    })

@@ -159,7 +159,7 @@ coef(summary(fm1DNase1))
 fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
                  data = DNase1,
                  start = list(xmid = 0, scal = 1),
-                 alg = "plinear", trace = TRUE)
+                 algorithm = "plinear", trace = TRUE)
 summary(fm2DNase1)
 
 ## without conditional linearity

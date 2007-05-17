@@ -57,7 +57,7 @@ rlogis(n, location = 0, scale = 1)
   consequently been called the \dQuote{inverse logit}.
 
   The distribution function is a rescaled hyperbolic tangent,
-  \code{plogis(x) == (1+ \link{tanh}(x/2))/2}, and it is called
+  \code{plogis(x) == (1+ \link{tanh}(x/2))/2}, and it is called a
   \emph{sigmoid function} in contexts such as neural networks.
 }
 \source{
@@ -75,7 +75,7 @@ rlogis(n, location = 0, scale = 1)
   Wiley, New York.
 }
 \examples{
-var(rlogis(4000, 0, s = 5))# approximately (+/- 3)
+var(rlogis(4000, 0, scale = 5))# approximately (+/- 3)
 pi^2/3 * 5^2
 }
 \keyword{distribution}

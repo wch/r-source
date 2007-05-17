@@ -92,7 +92,7 @@ edit.data.frame <-
         out <- out[-1]
         if((ln <- length(rn)) < maxlength)
             rn <- c(rn, paste("row", (ln+1):maxlength, sep=""))
-    } else if(length(rn) != maxlength) rn <- seq(len=maxlength)
+    } else if(length(rn) != maxlength) rn <- seq_len(maxlength)
     for (i in factors) {
         if(factor.mode != mode(out[[i]])) next # user might have switched mode
         a <- attrlist[[i]]
@@ -126,7 +126,7 @@ edit.data.frame <-
     if (edit.row.names) {
         if(any(duplicated(rn))) {
             warning("edited row names contain duplicates and will be ignored")
-            attr(out, "row.names") <- seq(len=maxlength)
+            attr(out, "row.names") <- seq_len(maxlength)
         }
     }
     out

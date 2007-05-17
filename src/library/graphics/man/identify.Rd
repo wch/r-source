@@ -5,7 +5,7 @@
 \usage{
 identify(x, \dots)
 
-\method{identify}{default}(x, y = NULL, labels = seq(along = x), pos = FALSE,
+\method{identify}{default}(x, y = NULL, labels = seq_along(x), pos = FALSE,
          n = length(x), plot = TRUE, atpen = FALSE, offset = 0.5,
          tolerance = 0.25, \dots)
 }

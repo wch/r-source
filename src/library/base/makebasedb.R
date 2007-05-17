@@ -59,7 +59,7 @@ local({
                                  enclos = parent.env(e))
                     key <- lazyLoadDBinsertValue(data, datafile, ascii,
                                                  compress, envhook)
-                    assign(name, key, env = envenv)
+                    assign(name, key, envir = envenv)
                 }
                 name
             }
@@ -83,14 +83,14 @@ local({
                                                 ascii, compress,  envhook)
             else key <- lazyLoadDBinsertListElement(from, i, datafile, ascii,
                                                     compress, envhook)
-            assign(vars[i], key, env = varenv)
+            assign(vars[i], key, envir = varenv)
         }
 
-        vals <- lapply(vars, get, env = varenv, inherits = FALSE)
+        vals <- lapply(vars, get, envir = varenv, inherits = FALSE)
         names(vals) <- vars
 
         rvars <- ls(envenv, all = TRUE)
-        rvals <- lapply(rvars, get, env = envenv, inherits = FALSE)
+        rvals <- lapply(rvars, get, envir = envenv, inherits = FALSE)
         names(rvals) <- rvars
 
         val <- list(variables = vals, references = rvals,

@@ -1669,7 +1669,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
       subclasses <- class
     subs <- def@subclasses
     subNames <- names(subs)
-    for(i in seq(along = subs)) {
+    for(i in seq_along(subs)) {
         what <- subNames[[i]]
         subDef <- getClassDef(what)
         if(is.null(subDef))
@@ -1697,7 +1697,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
    subs <- def@subclasses
     subNames <- names(subs)
     extDefs <- def2@subclasses
-    for(i in seq(along = subs)) {
+    for(i in seq_along(subs)) {
         what <- subNames[[i]]
         if(.identC(what, class2))
           next # catch recursive relations
@@ -1743,8 +1743,8 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         }
     }
 }
-      
-    
+
+
 ## remove subclass from the known subclasses of class
 ## both in the package environment and in the cache
 .removeSubClass <- function(class, subclass, where) {
@@ -1755,7 +1755,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         newdef <- .deleteSubClass(cdef, subclass)
         if(!is.null(newdef))
           assignClassDef(class, newdef,  where, TRUE)
-        else { # check the cache 
+        else { # check the cache
             cdef <- .getClassFromCache(cdef@className, where)
             if(is.null(cdef)) {}
             else {

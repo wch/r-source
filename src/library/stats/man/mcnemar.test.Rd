@@ -51,7 +51,7 @@ mcnemar.test(x, y = NULL, correct = TRUE)
 ##  one month apart, for a random sample of 1600 voting-age Americans.
 Performance <-
 matrix(c(794, 86, 150, 570),
-       nr = 2,
+       nrow = 2,
        dimnames = list("1st Survey" = c("Approve", "Disapprove"),
                        "2nd Survey" = c("Approve", "Disapprove")))
 Performance

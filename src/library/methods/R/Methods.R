@@ -904,7 +904,7 @@ removeMethods <-
 
     methods <- getMethodsForDispatch(f, fdef) # list or table
     if(is.environment(methods)) {
-##      remove(list=objects(methods, all=TRUE), envir = methods)
+##      remove(list=objects(methods, all.names=TRUE), envir = methods)
       mlist <- getMethods(fdef) # always a methods list
     }
     else
