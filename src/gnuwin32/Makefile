@@ -127,7 +127,7 @@ rpackage: ../../library/R.css rpackageindices
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-base
 ifneq ($(strip $(BUILD)),CROSS)
 	@if ! test -f ../../library/base/R/base.rdb ; then \
-	  echo "preparing package base for lazy loading" ; \
+	  echo "  preparing package base for lazy loading" ; \
 	  (echo ".libPaths('../../library')"; \
 	    cat ../library/base/makebasedb.R) | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
@@ -135,7 +135,7 @@ ifneq ($(strip $(BUILD)),CROSS)
 	fi
 else
 	@if ! test -f ../../library/base/R/base.rdb ; then \
-	  echo "preparing package base for lazy loading" ; \
+	  echo "  preparing package base for lazy loading" ; \
 	  (echo ".libPaths('../../library')"; \
 	    cat ../library/base/cross-makebasedb.R) | \
 	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE); \

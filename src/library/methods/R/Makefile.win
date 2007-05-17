@@ -5,7 +5,7 @@ $(DPKG)/R:
 	@$(MKDIR) -p $(DPKG)/R
 
 $(DPKG)/R/methods.rdb: all.R
-	@$(ECHO)  "preparing package $(PKG) for lazy loading"
+	@$(ECHO) "  preparing package $(PKG) for lazy loading"
 	@$(ECHO) "  dumping R code in package \`$(PKG)'"
 	@cp all.R $(RHOME)/library/methods/R/methods
 ifeq ($(strip $(BUILD)),CROSS)
