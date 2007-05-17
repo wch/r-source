@@ -91,7 +91,7 @@ h$add(function(expr, value, ok, visible) {
 getTaskCallbackNames()
 
 # look at the R-level callbacks
-names(h$callback())
+names(h$callbacks())
 
 getTaskCallbackNames()
 removeTaskCallback("R-taskCallbackManager")
