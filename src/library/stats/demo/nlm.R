@@ -2,6 +2,7 @@
 ### Page 362 Dennis + Schnabel
 
 require(stats); require(graphics)
+
 theta <- function(x1,x2) (atan(x2/x1) + (if(x1 <= 0) pi else 0))/ (2*pi)
 ## but this is easier :
 theta <- function(x1,x2) atan2(x2, x1)/(2*pi)
@@ -14,11 +15,11 @@ f <- function(x) {
 }
 
 ## explore surface {at x3 = 0}
-x <- seq(-1, 2, len=50)
-y <- seq(-1, 1, len=50)
+x <- seq(-1, 2, length=50)
+y <- seq(-1, 1, length=50)
 z <- apply(as.matrix(expand.grid(x, y)), 1, function(x) f(c(x, 0)))
 contour(x, y, matrix(log10(z), 50, 50))
-str(nlm.f <- nlm(f, c(-1,0,0), hessian=TRUE, print=0))
+str(nlm.f <- nlm(f, c(-1,0,0), hessian = TRUE))
 points(rbind(nlm.f$estim[1:2]), col = "red", pch = 20)
 
 ### the Rosenbrock banana valley function
@@ -35,18 +36,18 @@ fx <- function(x)
     x1 <- x[,1]; x2 <- x[,2]
     100*(x2 - x1*x1)^2 + (1-x1)^2
 }
-x <- seq(-2, 2, len=100)
-y <- seq(-.5, 1.5, len=100)
+x <- seq(-2, 2, length=100)
+y <- seq(-0.5, 1.5, length=100)
 z <- fx(expand.grid(x, y))
-op <- par(mfrow = c(2,1), mar = .1 + c(3,3,0,0))
+op <- par(mfrow = c(2,1), mar = 0.1 + c(3,3,0,0))
 contour(x, y, matrix(log10(z), length(x)))
 
-str(nlm.f2 <- nlm(fR, c(-1.2, 1), hessian=TRUE))
+str(nlm.f2 <- nlm(fR, c(-1.2, 1), hessian = TRUE))
 points(rbind(nlm.f2$estim[1:2]), col = "red", pch = 20)
 
 ## Zoom in :
-rect(.9, .9, 1.1, 1.1, border = "orange", lwd = 2)
-x <- y <- seq(.9, 1.1, len=100)
+rect(0.9, 0.9, 1.1, 1.1, border = "orange", lwd = 2)
+x <- y <- seq(0.9, 1.1, length=100)
 z <- fx(expand.grid(x, y))
 contour(x, y, matrix(log10(z), length(x)))
 mtext("zoomed in");box(col = "orange")
@@ -65,25 +66,24 @@ fg <- function(x)
     return(res)
 }
 
-nlm(fg, c(-1.2,1), hessian=TRUE)
+nlm(fg, c(-1.2, 1), hessian = TRUE)
 
 ## or use deriv to find the derivatives
 
 fd <- deriv(~ 100*(x2 - x1*x1)^2 + (1-x1)^2, c("x1", "x2"))
 fdd <- function(x1, x2) {}
 body(fdd) <- fd
-nlm(function(x) fdd(x[1], x[2]), c(-1.2,1), hessian=TRUE)
+nlm(function(x) fdd(x[1], x[2]), c(-1.2,1), hessian = TRUE)
 
 
 fgh <- function(x)
 {
-    gr <- function(x1, x2) {
+    gr <- function(x1, x2)
         c(-400*x1*(x2 - x1*x1) - 2*(1-x1), 200*(x2 - x1*x1))
-    }
     h <- function(x1, x2) {
-        a11 <- 2 - 400*(x2 - x1*x1) + 800*x1*x1
+        a11 <- 2 - 400*x2 + 1200*x1*x1
         a21 <- -400*x1
-        matrix(c(a11,a21,a21,200),2,2)
+        matrix(c(a11, a21, a21, 200), 2, 2)
     }
     x1 <- x[1]; x2 <- x[2]
     res<- 100*(x2 - x1*x1)^2 + (1-x1)^2
@@ -91,4 +91,5 @@ fgh <- function(x)
     attr(res, "hessian") <- h(x1, x2)
     return(res)
 }
-nlm(fgh, c(-1.2,1), hessian=TRUE)
+
+nlm(fgh, c(-1.2,1), hessian = TRUE)
