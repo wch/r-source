@@ -9,10 +9,10 @@
   box-constrained optimization and simulated annealing.
 }
 \usage{
-optim(par, fn, gr = NULL,
+optim(par, fn, gr = NULL, \dots,
       method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
       lower = -Inf, upper = Inf,
-      control = list(), hessian = FALSE, \dots)
+      control = list(), hessian = FALSE)
 }
 \arguments{
  \item{par}{Initial values for the parameters to be optimized over.}
@@ -25,17 +25,17 @@ optim(par, fn, gr = NULL,
 
    For the \code{"SANN"} method it specifies a function to generate a new
    candidate point.  If it is \code{NULL} a default Gaussian Markov
-   kernel is used.
- }
+   kernel is used.}
+ \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.}
  \item{method}{The method to be used. See \bold{Details}.}
  \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"} method.}
  \item{control}{A list of control parameters. See \bold{Details}.}
  \item{hessian}{Logical. Should a numerically differentiated Hessian
    matrix be returned?}
- \item{\dots}{Further arguments to be passed to \code{fn} and \code{gr}.
-   Beware of partial matching to earlier arguments.}
 }
 \details{
+  Note that arguments after \code{\dots} must be matched exactly.
+  
   By default this function performs minimization, but it will maximize
   if \code{control$fnscale} is negative.
 

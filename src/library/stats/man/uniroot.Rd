@@ -1,20 +1,20 @@
 \name{uniroot}
 \title{One Dimensional Root (Zero) Finding}
 \usage{
-uniroot(f, interval, lower = min(interval), upper = max(interval),
-        tol = .Machine$double.eps^0.25, maxiter = 1000, \dots)
+uniroot(f, interval, \dots, lower = min(interval), upper = max(interval),
+        tol = .Machine$double.eps^0.25, maxiter = 1000)
 }
 \alias{uniroot}
 \arguments{
   \item{f}{the function for which the root is sought.}
   \item{interval}{a vector containing the end-points of the interval
     to be searched for the root.}
+  \item{\dots}{additional named or unnamed arguments to be passed
+    to \code{f}}
   \item{lower}{the lower end point of the interval to be searched.}
   \item{upper}{the upper end point of the interval to be searched.}
   \item{tol}{the desired accuracy (convergence tolerance).}
   \item{maxiter}{the maximum number of iterations.}
-  \item{\dots}{additional named or unnamed arguments to be passed
-    to \code{f} (but beware of partial matching to other arguments).}
 }
 \description{
   The function \code{uniroot} searches the interval from \code{lower}
@@ -22,6 +22,8 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
   respect to its first argument.
 }
 \details{
+  Note that arguments after \code{\dots} must be matched exactly.
+  
   Either \code{interval} or both \code{lower} and \code{upper} must be
   specified: the upper endpoint must be strictly larger than the lower
   endpoint.  The function values at the endpoints must be of opposite

@@ -9,6 +9,14 @@
 		CHANGES IN R VERSION 2.6.0
 
 
+USER-VISIBLE CHANGES
+
+    o	integrate(), nlm(), optim(), optimize() and uniroot() now have
+	'...' much earlier in their argument list.  This reduces the
+	chances of unintentional partial matching but means that the
+	later arguments must be named in full.
+
+
 NEW FEATURES
 
     o	storage.mode<- is now primitive, and hence makes fewer copies
