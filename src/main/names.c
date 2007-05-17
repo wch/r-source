@@ -1093,7 +1093,7 @@ SEXP install(char const *name)
 
 SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, fun;
+    SEXP s, fun, ans;
     int save = R_PPStackTop;
     int flag;
     checkArity(op, args);
@@ -1112,7 +1112,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(args);
     flag = PRIMPRINT(INTERNAL(fun));
     R_Visible = flag != 1;
-    args = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
+    ans = PRIMFUN(INTERNAL(fun)) (s, INTERNAL(fun), args, env);
     /* This resetting of R_Visible=FALSE  was to fix PR#7397,
        now fixed in GEText */
     if (flag < 2) R_Visible = flag != 1;
@@ -1128,6 +1128,6 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     UNPROTECT(1);
     check_stack_balance(INTERNAL(fun), save);
-    return (args);
+    return (ans);
 }
 #undef __R_Names__
