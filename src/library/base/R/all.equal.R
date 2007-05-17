@@ -139,7 +139,7 @@ all.equal.formula <- function(target, current, ...)
 {
     if(length(target) != length(current))
 	return(paste("target, current differ in having response: ",
-		     length(target) == 3, ", ", length(current) == 3), sep="")
+		     length(target) == 3, ", ", length(current) == 3, sep=""))
     if(all(deparse(target) != deparse(current)))
 	"formulas differ in contents"
     else TRUE
