@@ -542,7 +542,8 @@ chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
     invisible()
 }
 
-setRepositories <- function(graphics = getOption("menu.graphics"))
+setRepositories <-
+    function(graphics = getOption("menu.graphics"), ind = NULL)
 {
     if(!interactive()) stop("cannot set repositories non-interactively")
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
@@ -570,30 +571,33 @@ setRepositories <- function(graphics = getOption("menu.graphics"))
 
     default <- a[["default"]]
 
-    res <- integer(0)
-    if(graphics) {
-        ## return a list of row numbers.
-        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-            res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
-                                     "Repositories"), a[, 1])
-        else if(.Platform$OS.type == "unix" &&
-                capabilities("tcltk") && capabilities("X11"))
-            res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
-                                            multiple = TRUE, "Repositories"),
-                         a[, 1])
-    }
-    if(!length(res)) {
-        ## text-mode fallback
-        cat(gettext("--- Please select repositories for use in this session ---\n"))
-        nc <- length(default)
-        cat("", paste(seq_len(nc), ": ",
-                      ifelse(default, "+", " "), " ", a[, 1],
-                      sep=""),
-            "", sep="\n")
-        cat(gettext("Enter one or more numbers separated by spaces\n"))
-        res <- scan("", what=0, quiet=TRUE, nlines=1)
-        if(!length(res) || (length(res) == 1 && !res[1])) return(invisible())
-        res <- res[1 <= res && res <= nc]
+    if(length(ind)) res <- as.integer(ind)
+    else {
+        res <- integer(0)
+        if(graphics) {
+            ## return a list of row numbers.
+            if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+                res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
+                                         "Repositories"), a[, 1])
+            else if(.Platform$OS.type == "unix" &&
+                    capabilities("tcltk") && capabilities("X11"))
+                res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
+                                                   multiple = TRUE, "Repositories"),
+                             a[, 1])
+        }
+        if(!length(res)) {
+            ## text-mode fallback
+            cat(gettext("--- Please select repositories for use in this session ---\n"))
+            nc <- length(default)
+            cat("", paste(seq_len(nc), ": ",
+                          ifelse(default, "+", " "), " ", a[, 1],
+                          sep=""),
+                "", sep="\n")
+            cat(gettext("Enter one or more numbers separated by spaces\n"))
+            res <- scan("", what=0, quiet=TRUE, nlines=1)
+            if(!length(res) || (length(res) == 1 && !res[1])) return(invisible())
+            res <- res[1 <= res && res <= nc]
+        }
     }
     if(length(res)) {
         repos <- a[["URL"]]

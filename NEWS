@@ -186,6 +186,9 @@ NEW FEATURES
 	of options are used, instead of silently using the documented
 	priority.
 
+    o	setRepositories() has a new argument 'ind' to allow selections
+	to be made programmatically.
+
 
 DEPRECATED & DEFUNCT
 

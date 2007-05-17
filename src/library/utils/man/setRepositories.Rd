@@ -5,7 +5,7 @@
   Interact with the user to choose the package repositories to be used.
 }
 \usage{
-setRepositories(graphics = getOption("menu.graphics"))
+setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
 }
 \arguments{
   \item{graphics}{Logical.
@@ -17,6 +17,9 @@ setRepositories(graphics = getOption("menu.graphics"))
     widget, or if under the AQUA interface use a MacOS X widget,
 #endif
     otherwise use a text list in the console.}
+  \item{ind}{\code{NULL} or a vector of integer indices, which have the
+    same effect as if they were entered at the prompt for
+    \code{graphics=FALSE}.}
 }
 \details{
   The default list of known repositories is stored in the file
