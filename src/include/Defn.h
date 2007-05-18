@@ -614,6 +614,8 @@ extern0 SEXP	R_Warnings;	    /* the warnings and their calls */
 extern0 int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
 extern0 SEXP	R_HandlerStack;	/* Condition handler stack */
 extern0 SEXP	R_RestartStack;	/* Stack of available restarts */
+extern0 Rboolean R_warn_partial_match_args   INI_as(FALSE);
+extern0 Rboolean R_warn_partial_match_dollar INI_as(FALSE);
 
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
@@ -927,7 +929,7 @@ void markKnown(SEXP, SEXP);
 SEXP mat2indsub(SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
-SEXP matchArgs(SEXP, SEXP);
+SEXP matchArgs(SEXP, SEXP, SEXP);
 SEXP matchPar(char*, SEXP*);
 void memtrace_report(void *, void *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);

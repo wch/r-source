@@ -187,7 +187,7 @@ SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
 /* We need to leave 'supplied' unchanged in case we call UseMethod */
 /* MULTIPLE_MATCHES was added by RI in Jan 2005 but never activated */
 
-SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied)
+SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 {
     int i, seendots;
     SEXP f, a, b, dots, actuals;
@@ -282,6 +282,12 @@ nextarg1:
 #ifdef MULTIPLE_MATCHES
 			}
 #endif
+			if (R_warn_partial_match_args) {
+			    warningcall(call, 
+					_("partial argument match of '%s' to '%s'"),
+					CHAR(PRINTNAME(TAG(b))), 
+					CHAR(PRINTNAME(TAG(f))) );
+			}
 			SETCAR(a, CAR(b));
 			if (CAR(b) != R_MissingArg)
 			    SET_MISSING(a, 0);       /* not missing this arg */

@@ -343,7 +343,7 @@ SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(CDDR(ap), install("length.out"));
     SET_TAG(CDR(CDDR(ap)), install("each"));
     SET_TAG(CDDR(CDDR(ap)), R_DotsSymbol);
-    PROTECT(args = matchArgs(ap, args));
+    PROTECT(args = matchArgs(ap, args, call));
 
     x = CAR(args); 
     lx = length(x);
@@ -442,7 +442,7 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(tmp, install("length.out")); tmp = CDR(tmp);
     SET_TAG(tmp, install("along.with")); tmp = CDR(tmp);
     SET_TAG(tmp, R_DotsSymbol);
-    PROTECT(args = matchArgs(ap, args));
+    PROTECT(args = matchArgs(ap, args, call));
 
     /* Manage 'along.with' prior to evaluation */
     ap = CDDR(CDDR(args));

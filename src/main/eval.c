@@ -515,7 +515,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	contains the matched pairs.  Ideally this environment sould be
 	hashed.  */
 
-    PROTECT(actuals = matchArgs(formals, arglist));
+    PROTECT(actuals = matchArgs(formals, arglist, call));
     PROTECT(newrho = NewEnvironment(formals, actuals, savedrho));
 
     /*  Use the default code for unbound formals.  FIXME: It looks like

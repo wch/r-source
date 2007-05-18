@@ -885,7 +885,7 @@ static
 enum pmatch
 pstrmatch(SEXP target, SEXP input, int slen)
 {
-    char *st="";
+    char *st = "";
 
     if(target == R_NilValue)
 	return NO_MATCH;
@@ -898,12 +898,8 @@ pstrmatch(SEXP target, SEXP input, int slen)
 	st = translateChar(target);
 	break;
     }
-    if(strncmp(st, translateChar(input), slen) == 0) {
-	if (strlen(st) == slen)
-	    return EXACT_MATCH;
-	else
-	    return PARTIAL_MATCH;
-    }
+    if(strncmp(st, translateChar(input), slen) == 0)
+	return (strlen(st) == slen) ?  EXACT_MATCH : PARTIAL_MATCH;
     else return NO_MATCH;
 }
 
@@ -978,8 +974,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	    switch(pstrmatch(TAG(y), input, slen)) {
 	    case EXACT_MATCH:
 		y = CAR(y);
-		if (NAMED(x) > NAMED(y))
-		    SET_NAMED(y, NAMED(x));
+		if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
 		return y;
 	    case PARTIAL_MATCH:
 		havematch++;
@@ -989,10 +984,23 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		break;
 	    }
 	}
-	if (havematch == 1) {
+	if (havematch == 1) { /* unique partial match */
+	    if(R_warn_partial_match_dollar) {
+		char *st = "";
+		SEXP target = TAG(y);
+		switch (TYPEOF(target)) {
+		case SYMSXP:
+		    st = CHAR(PRINTNAME(target));
+		    break;
+		case CHARSXP:
+		    st = translateChar(target);
+		    break;
+		}
+		warningcall(call, _("partial match of '%s' to '%s'"),
+			    translateChar(input), st);
+	    }
 	    y = CAR(xmatch);
-	    if (NAMED(x) > NAMED(y))
-		SET_NAMED(y, NAMED(x));
+	    if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
 	    return y;
 	}
 	return R_NilValue;
@@ -1012,11 +1020,11 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		return y;
 	    case PARTIAL_MATCH:
 		havematch++;
-		if (havematch==1) {
+		if (havematch == 1) {
 		    /* partial matches can cause aliasing in eval.c:evalseq 
                        This is overkill, but alternative ways to prevent 
                        the aliasing appear to be even worse */
-		    y=VECTOR_ELT(x,i);
+		    y = VECTOR_ELT(x,i);
 		    SET_NAMED(y,2);
 		    SET_VECTOR_ELT(x,i,y);
 		}
@@ -1026,10 +1034,23 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		break;
 	    }
 	}
-	if(havematch == 1) {
+	if(havematch == 1) { /* unique partial match */
+	    if(R_warn_partial_match_dollar) {
+		char *st = "";
+		SEXP target = STRING_ELT(nlist, imatch);
+		switch (TYPEOF(target)) {
+		case SYMSXP:
+		    st = CHAR(PRINTNAME(target));
+		    break;
+		case CHARSXP:
+		    st = translateChar(target);
+		    break;
+		}
+		warningcall(call, _("partial match of '%s' to '%s'"),
+			    translateChar(input), st);
+	    }
 	    y = VECTOR_ELT(x, imatch);
-	    if (NAMED(x) > NAMED(y))
-		SET_NAMED(y, NAMED(x));
+	    if (NAMED(x) > NAMED(y)) SET_NAMED(y, NAMED(x));
 	    return y;
 	}
 	return R_NilValue;

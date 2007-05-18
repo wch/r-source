@@ -494,7 +494,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* get formals and actuals; attach the names of the formals to
        the actuals, expanding any ... that occurs */
     formals = FORMALS(s);
-    PROTECT(actuals = matchArgs(formals, cptr->promargs));
+    PROTECT(actuals = matchArgs(formals, cptr->promargs, call));
 
     i = 0;
     for(s = formals, t = actuals; s != R_NilValue; s = CDR(s), t = CDR(t)) {

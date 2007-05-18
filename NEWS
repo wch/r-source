@@ -193,6 +193,10 @@ NEW FEATURES
 	(in the sense of is.numeric()) as well as of length 1 and >= 1
 	before it is regarded as shorthand for 1:x.
 
+    o	New options 'warnPartialMatchDollar' and 'warnPartialMatchArgs'
+	to help detect the unintended use of partial matching in $ and
+	argument matching respectively.
+
 
 DEPRECATED & DEFUNCT
 
