@@ -806,3 +806,8 @@ unique.POSIXlt <- function(x, incomparables = FALSE, ...)
 
 sort.POSIXlt <- function(x, decreasing = FALSE, na.last = NA, ...)
     x[order(as.POSIXct(x), na.last = na.last, decreasing = decreasing)]
+
+
+# ---- additions in 2.6.0 -----
+
+is.numeric.POSIXt <- function(x) FALSE

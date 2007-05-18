@@ -265,8 +265,11 @@ BUG FIXES
 	to 'work', matching itself.)
 
     o	The formula methods of boxplot, cdcplot, pairs and spineplot
-	now load 'stats' so that model.frame() is visible where
+	now attach 'stats' so that model.frame() is visible where
 	they evaluate it.
+
+    o	Date-time objects are no longer regarded as numeric by
+	is.numeric().
 
     o	methods("Math") did not work if 'methods' was not attached.
 
