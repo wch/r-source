@@ -197,6 +197,9 @@ NEW FEATURES
 	to help detect the unintended use of partial matching in $ and
 	argument matching respectively.
 
+    o	vignette() has a new argument 'all' to choose between showing
+    	vignettes in attached packages or in all installed packages.
+
 
 DEPRECATED & DEFUNCT
 
