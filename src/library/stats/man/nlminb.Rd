@@ -5,8 +5,8 @@
   Unconstrained and constrained optimization using PORT routines.
 }
 \usage{
-nlminb(start, objective, gradient = NULL, hessian = NULL,
-       scale = 1, control = list(), lower = -Inf, upper = Inf, \dots)
+nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
+       scale = 1, control = list(), lower = -Inf, upper = Inf)
 }
 \arguments{
   \item{start}{
@@ -31,6 +31,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
     return a square matrix of order \code{length(start)}.  Only the
     lower triangle is used.
   }
+  \item{\dots}{Further arguments to be supplied to \code{objective}.}
   \item{scale}{See PORT documentation (or leave alone).}
   \item{control}{A list of control parameters. See below for details.}
   \item{lower, upper}{
@@ -38,7 +39,6 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
     \code{start}.  If unspecified, all parameters are assumed to be
     unconstrained.
   }
-  \item{\dots}{Further arguments to be supplied to \code{objective}.}
 }
 \details{
   The PORT documentation is at

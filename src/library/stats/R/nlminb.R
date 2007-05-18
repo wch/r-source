@@ -1,17 +1,6 @@
-##nlminb.control <-
-##    function(eval.max = NULL, iter.max = NULL, abs.tol = NULL, rel.tol = NULL,
-##             x.tol = NULL, step.min = NULL, step.max = NULL, scale.init = NULL,
-##             scale.upd = NULL, scale.fac = NULL, scale.tol = NULL, scale.mod = NULL,
-##             sing.tol = NULL, sing.step = NULL, rel.err = NULL, diff.g = NULL)
-##    list(eval.max = eval.max, iter.max = iter.max, abs.tol = abs.tol, rel.tol =
-##         rel.tol, x.tol = x.tol, step.min = step.min, step.max = step.max,
-##         scale.init = scale.init, scale.upd = scale.upd, scale.fac = scale.fac,
-##         scale.tol = scale.tol, scale.mod = scale.mod, sing.tol = sing.tol,
-##         sing.step = sing.step, rel.err = rel.err, diff.g = diff.g)
-
 nlminb <-
-    function(start, objective, gradient = NULL, hessian = NULL,
-             scale = 1, control = list(), lower =  - Inf, upper = Inf, ...)
+    function(start, objective, gradient = NULL, hessian = NULL, ...,
+             scale = 1, control = list(), lower =  - Inf, upper = Inf)
 {
     ## Establish the working vectors and check and set options
     n <- length(par <- as.double(start))
