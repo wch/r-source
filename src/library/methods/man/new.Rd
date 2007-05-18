@@ -75,7 +75,7 @@ ydata <- stats::rnorm(10); ysmooth <- 1:10
 }
 
 ## a new object with two slots specified
-t1 <- new("track", x = seq(along=ydata), y = ydata)
+t1 <- new("track", x = seq_along(ydata), y = ydata)
 
 # a new object including an object from a superclass, plus a slot
 t2 <- new("trackCurve", t1, smooth = ysmooth)

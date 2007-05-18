@@ -13,9 +13,9 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
     which.terms<-terms
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
 	if (is.null(terms))
-	    predict(model, type="terms", se=se)
+	    predict(model, type="terms", se.fit=se)
 	else
-	    predict(model, type="terms", se=se, terms=terms)
+	    predict(model, type="terms", se.fit=se, terms=terms)
     n.tms <- ncol(tms <- as.matrix(if(se) terms$fit else terms))
     mf <- model.frame(model)
     if (is.null(data))
@@ -38,7 +38,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
         main <- if(main) deparse(model$call, 500) else ""
     else if(!is.character(main))
         stop("'main' must be TRUE, FALSE, NULL or character (vector).")
-    main <- rep(main, length = n.tms) # recycling
+    main <- rep(main, length.out = n.tms) # recycling
     pf <- envir
     carrier <- function(term) { # used for non-factor ones
 	if (length(term) > 1)

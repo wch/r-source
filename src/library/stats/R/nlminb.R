@@ -3,8 +3,8 @@
 ##             x.tol = NULL, step.min = NULL, step.max = NULL, scale.init = NULL,
 ##             scale.upd = NULL, scale.fac = NULL, scale.tol = NULL, scale.mod = NULL,
 ##             sing.tol = NULL, sing.step = NULL, rel.err = NULL, diff.g = NULL)
-##    list(eval.max = eval.max, iter.max = iter.max, abs.tol = abs.tol, rel.tol = 
-##         rel.tol, x.tol = x.tol, step.min = step.min, step.max = step.max, 
+##    list(eval.max = eval.max, iter.max = iter.max, abs.tol = abs.tol, rel.tol =
+##         rel.tol, x.tol = x.tol, step.min = step.min, step.max = step.max,
 ##         scale.init = scale.init, scale.upd = scale.upd, scale.fac = scale.fac,
 ##         scale.tol = scale.tol, scale.mod = scale.mod, sing.tol = sing.tol,
 ##         sing.step = sing.step, rel.err = rel.err, diff.g = diff.g)
@@ -39,7 +39,7 @@ nlminb <-
         if (any(!ivpars))
             v[cpos[pos[!ivpars]]] <- as.double(unlist(control[!ivpars]))
     }
-    
+
     ## Establish the objective function and its environment
     obj <- quote(objective(.par, ...))
     rho <- new.env(parent = environment())
@@ -55,14 +55,14 @@ nlminb <-
             hess <- quote(hessian(.par, ...))
         }
     }
-    if (any(lower != -Inf) || any(upper != Inf)) { 
-        low <- rep(as.double(lower), length = length(par))
-        upp <- rep(as.double(upper), length = length(par))
+    if (any(lower != -Inf) || any(upper != Inf)) {
+        low <- rep(as.double(lower), length.out = length(par))
+        upp <- rep(as.double(upper), length.out = length(par))
     } else low <- upp <- numeric(0)
-    
+
     ## Do the optimization
     .Call(R_port_nlminb, obj, grad, hess, rho, low, upp,
-          d = rep(as.double(scale), length = length(par)), iv, v)
+          d = rep(as.double(scale), length.out = length(par)), iv, v)
 
     ans <- list(par = get(".par", envir = rho))
     ans$objective <- v[10]

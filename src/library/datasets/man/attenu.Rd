@@ -54,7 +54,7 @@ require(graphics)
 sapply(attenu, data.class)
 summary(attenu)
 pairs(attenu, main = "attenu data")
-coplot(accel ~ dist | as.factor(event), data = attenu, show = FALSE)
+coplot(accel ~ dist | as.factor(event), data = attenu, show.given = FALSE)
 coplot(log(accel) ~ log(dist) | as.factor(event),
        data = attenu, panel = panel.smooth, show.given = FALSE)
 }

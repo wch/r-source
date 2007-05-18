@@ -8,9 +8,9 @@ isSymmetric.matrix <- function(object, tol = 100*.Machine$double.eps, ...) {
     if(d[1] != d[2]) return(FALSE)
     test <-
         if(is.complex(object))
-            all.equal.numeric(object, Conj(t(object)), tol = tol, ...)
+            all.equal.numeric(object, Conj(t(object)), tolerance = tol, ...)
         else # numeric, character, ..
-            all.equal(object, t(object), tol = tol, ...)
+            all.equal(object, t(object), tolerance = tol, ...)
     isTRUE(test)
 }
 

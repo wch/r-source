@@ -79,8 +79,8 @@ model <- glm(y ~ ns(x,6) + z)
 par(mfrow=c(2,2)) ## 2 x 2 plots for same model :
 termplot(model, main = paste("termplot( ", deparse(model$call)," ...)"))
 termplot(model, rug=TRUE)
-termplot(model, partial=TRUE, se = TRUE, main = TRUE)
-termplot(model, partial=TRUE, smooth=panel.smooth,span.smth=1/4)
+termplot(model, partial.resid=TRUE, se = TRUE, main = TRUE)
+termplot(model, partial.resid=TRUE, smooth=panel.smooth,span.smth=1/4)
 if(!had.splines && rs) detach("package:splines")
 }
 \keyword{hplot}

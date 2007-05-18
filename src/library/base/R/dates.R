@@ -364,3 +364,7 @@ diff.Date <- function (x, lag = 1, differences = 1, ...)
         r <- r[i1] - r[-length(r):-(length(r) - lag + 1)]
     r
 }
+
+# ---- additions in 2.6.0 -----
+
+is.numeric.Date <- function(x) FALSE

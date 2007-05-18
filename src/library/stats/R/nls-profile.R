@@ -32,11 +32,11 @@ profiler.nls <- function(fitted, ...)
     defaultPars <- fittedPars <- fittedModel$getPars()
     lower <- fitted$call$lower
     lower <- rep(if(!is.null(lower)) as.double(lower) else Inf,
-                 length = length(defaultPars))
+                 length.out = length(defaultPars))
     upper <- fitted$call$upper
     upper <- rep(if(!is.null(upper)) as.double(upper) else Inf,
-                 length = length(defaultPars))
-    defaultVary <- rep(TRUE, length(defaultPars))
+                 length.out = length(defaultPars))
+    defaultVary <- rep.int(TRUE, length(defaultPars))
     S.hat <- deviance(fitted) # need to allow for weights
     s2.hat <- summary(fitted)$sigma^2
     thisEnv <- environment()
@@ -49,7 +49,7 @@ profiler.nls <- function(fitted, ...)
                      fittedModel$setVarying()
                      fittedModel$setPars(fittedPars)
                      assign("defaultPars", fittedPars, envir = thisEnv)
-                     assign("defaultVary", rep(TRUE, length(defaultPars)),
+                     assign("defaultVary", rep.int(TRUE, length(defaultPars)),
                             envir = thisEnv)
                  } else {
                      if(!missing(params)) {
@@ -133,9 +133,9 @@ profile.nls <-
     pars <- prof$getFittedPars()
     npar <- length(pars)  # less in a partially linear model
     lower <- fitted$call$lower
-    lower <- rep(if(!is.null(lower)) as.double(lower) else -Inf, length = npar)
+    lower <- rep(if(!is.null(lower)) as.double(lower) else -Inf, length.out = npar)
     upper <- fitted$call$upper
-    upper <- rep(if(!is.null(upper)) as.double(upper) else Inf, length = npar)
+    upper <- rep(if(!is.null(upper)) as.double(upper) else Inf, length.out = npar)
     if(is.character(which)) which <- match(which, names(pars), 0)
     which <- which[which >= 1 & which <= npar]
     cutoff <- sqrt(npar * qf(1 - alphamax, npar, nobs - npar))
@@ -146,7 +146,7 @@ profile.nls <-
         prof$setDefault(varying = par)
         sgn <- -1
         count <- 1
-        varying <- rep(TRUE, npar)
+        varying <- rep.int(TRUE, npar)
         varying[par] <- FALSE
         tau <- double(2 * maxpts)
         par.vals <- array(0, c(2 * maxpts, npar), list(NULL, names(pars)))
@@ -253,8 +253,8 @@ plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
             abline(v = predict(bsp, 0)$y , col = 3, lty = 2)
             for(lev in levels) {
                 pred <- predict(bsp, c(-lev, lev))$y
-                lines(pred, rep(lev, 2), type = "h", col = 6, lty = 2)
-                lines(pred, rep(lev, 2), type = "l", col = 6, lty = 2)
+                lines(pred, rep.int(lev, 2), type = "h", col = 6, lty = 2)
+                lines(pred, rep.int(lev, 2), type = "l", col = 6, lty = 2)
             }
         }
     } else {

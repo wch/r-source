@@ -136,14 +136,14 @@ stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 
 ##--- Missing value treatment:
 C1 <- cov(swiss)
-range(eigen(C1, only=TRUE)$values) # 6.19	1921
+range(eigen(C1, only.values=TRUE)$values) # 6.19	1921
 swM <- swiss
 swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 try(cov(swM)) # Error: missing obs...
 C2 <- cov(swM, use = "complete")
-range(eigen(C2, only=TRUE)$values) # 6.46	1930
+range(eigen(C2, only.values=TRUE)$values) # 6.46	1930
 C3 <- cov(swM, use = "pairwise")
-range(eigen(C3, only=TRUE)$values) # 6.19	1938
+range(eigen(C3, only.values=TRUE)$values) # 6.19	1938
 
 symnum(cor(swM, method = "kendall", use = "complete"))
 ## Kendall's tau doesn't change much:

@@ -193,7 +193,7 @@ legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 ##-------- Semi-advanced theoretic from here on ---------------------------
 %% i.e. "secondary example" in a new help system ...
 
-(RKs <- cbind(sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))))
+(RKs <- cbind(sapply(kernels, function(k)density(kernel = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
 bw <- bw.SJ(precip) ## sensible automatic choice

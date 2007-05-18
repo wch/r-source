@@ -51,7 +51,7 @@ rgb2hsv(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
 (hsv3 <- rgb2hsv(rgb3))
 ## Consistency :
 stopifnot(rgb3 == col2rgb(hsv(h=hsv3[1,], s=hsv3[2,], v=hsv3[3,])),
-          all.equal(hsv3, rgb2hsv(rgb3/255, maxC = 1)))
+          all.equal(hsv3, rgb2hsv(rgb3/255, maxColorValue = 1)))
 
 ## A (simplified) pure R version -- originally by Wolfram Fischer --
 ## showing the exact algorithm:

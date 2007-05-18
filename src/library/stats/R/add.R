@@ -88,7 +88,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	fob <- list(call = fc, terms = Terms)
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
-	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+	x <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
         offset <- model.offset(m)
         wt <- model.weights(m)
         oldn <- length(y)
@@ -196,7 +196,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	m <- model.frame(fob, xlev = object$xlevels)
         offset <- model.offset(m)
         wt <- model.weights(m)
-	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+	x <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
         oldn <- length(y)
         y <- model.response(m, "numeric")
         ## binomial case has adjusted y and weights

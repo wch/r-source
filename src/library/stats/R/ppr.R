@@ -180,7 +180,7 @@ predict.ppr <- function(object, newdata, ...)
                          xlev = object$xlevels)
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
         keep <- match(row.names(m), rn)
-        x <- model.matrix(Terms, m, contrasts = object$contrasts)
+        x <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
     } else {
         x <- as.matrix(newdata)
         keep <- 1:nrow(x)

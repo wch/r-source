@@ -55,8 +55,8 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 	## be smart -- differ for fixp. and expon. display:
 	expo <- floor(log10(ifelse(pv > 0, pv, 1e-50)))
 	fixp <- expo >= -3 | (expo == -4 & digits>1)
-	if(any( fixp)) rr[ fixp] <- format(pv[ fixp], dig=digits)
-	if(any(!fixp)) rr[!fixp] <- format(pv[!fixp], dig=digits)
+	if(any( fixp)) rr[ fixp] <- format(pv[ fixp], digits=digits)
+	if(any(!fixp)) rr[!fixp] <- format(pv[!fixp], digits=digits)
 	r[!is0]<- rr
     }
     if(any(is0)) {

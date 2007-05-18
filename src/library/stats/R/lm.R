@@ -615,7 +615,7 @@ predict.lm <-
         m <- model.frame(Terms, newdata, na.action = na.action,
                          xlev = object$xlevels)
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
-        X <- model.matrix(Terms, m, contrasts = object$contrasts)
+        X <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))
@@ -804,7 +804,8 @@ model.matrix.lm <- function(object, ...)
     if(n_match <- match("x", names(object), 0)) object[[n_match]]
     else {
         data <- model.frame(object, xlev = object$xlevels, ...)
-        NextMethod("model.matrix", data = data, contrasts = object$contrasts)
+        NextMethod("model.matrix", data = data,
+                   contrasts.arg = object$contrasts)
     }
 }
 
@@ -825,7 +826,7 @@ predict.mlm <-
         m <- model.frame(Terms, newdata, na.action = na.action,
                          xlev = object$xlevels)
         if(!is.null(cl <- attr(Terms, "dataClasses"))) .checkMFClasses(cl, m)
-        X <- model.matrix(Terms, m, contrasts = object$contrasts)
+        X <- model.matrix(Terms, m, contrasts.arg = object$contrasts)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))

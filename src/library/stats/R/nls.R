@@ -58,7 +58,7 @@ nlsModel.plinear <- function(form, data, start, wts)
     rhs <- eval(form[[3]], envir = env)
     storage.mode(rhs) <- "double"
     .swts <- if(!missing(wts) && (length(wts) != 0))
-        sqrt(wts) else rep(1, length=length(rhs))
+        sqrt(wts) else rep(1, length.out=length(rhs))
     assign(".swts", .swts, envir = env)
     p1 <- if(is.matrix(rhs)) ncol(rhs) else 1
     p <- p1 + p2
@@ -246,7 +246,7 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     lhs <- eval(form[[2]], envir = env)
     rhs <- eval(form[[3]], envir = env)
     .swts <- if(!missing(wts) && (length(wts) != 0))
-        sqrt(wts) else rep(1, length=length(rhs))
+        sqrt(wts) else rep(1, length.out=length(rhs))
     assign(".swts", .swts, envir = env)
     resid <- .swts * (lhs - rhs)
     dev <- sum(resid^2)
@@ -419,8 +419,8 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
     scale <- 1
     low <- upp <- NULL
     if (any(lower != -Inf) || any(upper != Inf)) {
-        low <- rep(as.double(lower), length = length(par))
-        upp <- rep(as.double(upper), length = length(par))
+        low <- rep(as.double(lower), length.out = length(par))
+        upp <- rep(as.double(upper), length.out = length(par))
         if(any(start < low || start > upp)) {
             iv[1] <- 300
             return(iv)
@@ -429,7 +429,7 @@ nls_port_fit <- function(m, start, lower, upper, control, trace)
     if(p > 0) {
         ## driver routine port_nlsb() in ../src/port.c -- modifies m & iv
         .Call(R_port_nlsb, m,
-              d = rep(as.double(scale), length = length(par)),
+              d = rep(as.double(scale), length.out = length(par)),
               df = m$gradient(), iv, v, low, upp)
     } else iv[1] <- 6
     iv

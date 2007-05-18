@@ -77,7 +77,7 @@ utils::str(crimtab)
 ## for nicer printing:
 local({cT <- crimtab
        colnames(cT) <- substring(colnames(cT), 2,3)
-       print(cT, zero = " ")
+       print(cT, zero.print = " ")
 })
 
 ## Repeat Student's experiment:
@@ -117,7 +117,7 @@ zobs[infZ] <- 6 * sign(zobs[infZ])
 # 7) Plot the distribution:
 
 require(grDevices); require(graphics)
-hist(x = zobs, probab = TRUE, xlab = "Student's z",
+hist(x = zobs, probability = TRUE, xlab = "Student's z",
      col = grey(0.8), border = grey(0.5),
      main = "Distribution of Student's z score  for 'crimtab' data")
 }

@@ -233,7 +233,7 @@ require(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 }
 \examples{
 library()                   # list all available packages
-library(lib = .Library)     # list all packages in the default library
+library(lib.loc = .Library) # list all packages in the default library
 library(help = splines)     # documentation on package 'splines'
 library(splines)            # load package 'splines'
 require(splines)            # the same

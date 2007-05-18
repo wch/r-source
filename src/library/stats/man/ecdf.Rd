@@ -86,7 +86,7 @@ F10 <- ecdf(rnorm(10))
 summary(F10)
 
 plot(F10)
-plot(F10, verticals= TRUE, do.p = FALSE)
+plot(F10, verticals= TRUE, do.points = FALSE)
 
 plot(Fn12 , lwd = 2) ; mtext("lwd = 2", adj=1)
 xx <- unique(sort(c(seq(-3, 2, length=201), knots(Fn12))))
@@ -94,10 +94,11 @@ lines(xx, Fn12(xx), col='blue')
 abline(v=knots(Fn12),lty=2,col='gray70')
 
 plot(xx, Fn12(xx), type='o', cex=.1)#- plot.default {ugly}
-plot(Fn12, col.h='red', add= TRUE)  #- plot method
+plot(Fn12, col.hor='red', add= TRUE)  #- plot method
 abline(v=knots(Fn12),lty=2,col='gray70')
 ## luxury plot
-plot(Fn12, verticals=TRUE, col.p='blue', col.h='red',col.v='bisque')
+plot(Fn12, verticals=TRUE, col.points='blue',
+     col.hor='red', col.vert='bisque')
 
 ##-- this works too (automatic call to  ecdf(.)):
 plot.ecdf(rnorm(24))

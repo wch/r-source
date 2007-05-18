@@ -33,7 +33,7 @@
 }
 \examples{
 require(stats); require(graphics)
-coplot(circumference ~ age | Tree, data = Orange, show = FALSE)
+coplot(circumference ~ age | Tree, data = Orange, show.given = FALSE)
 fm1 <- nls(circumference ~ SSlogis(age, Asym, xmid, scal),
            data = Orange, subset = Tree == 3)
 plot(circumference ~ age, data = Orange, subset = Tree == 3,

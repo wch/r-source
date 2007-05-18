@@ -251,7 +251,7 @@ polySpline.bSpline <- function(object, ...)
     coeff[, 1] <- asVector(predict(object, knots))
     if(ord > 1) {
 	for(i in 2:ord) {
-	    coeff[, i] <- asVector(predict(object, knots, der = i - 1))/
+	    coeff[, i] <- asVector(predict(object, knots, deriv = i - 1))/
 		prod(1:(i - 1))
 	}
     }

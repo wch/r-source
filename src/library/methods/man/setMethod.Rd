@@ -277,7 +277,7 @@ for(i in 1:Niter)  {
 }
 
 
-tMC <- new("trackMultiCurve", x=seq(length=Nrow), y = yy)
+tMC <- new("trackMultiCurve", x=seq_len(Nrow), y = yy)
 ## not enough functions have methods for this class to use testFunc
 
 stopifnot(identical(tMC[1:10, 1:10]@y, yy[1:10, 1:10]))
