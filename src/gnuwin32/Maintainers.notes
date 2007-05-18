@@ -116,7 +116,7 @@ BDR 2006-02-15, 2006-02-24
 
 It looks like just two things are needed:
 
-- change to BUILD=GFORTRAN in MkRules.
+- change to BUILD=GCC4 in MkRules.
 
 - in fixed/h/config.h, comment out
 #define HAVE_F77_EXTRA_UNDERSCORE 1
