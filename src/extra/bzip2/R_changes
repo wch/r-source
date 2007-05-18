@@ -2,7 +2,10 @@
 
 The changes for R are all to do with portability:
 
-__inline__ is not portable.
+__inline__ is not portable.  We make use of static inlining in the 
+file bzlib.c and decompress.c to avoid issues with semantics of 
+'extern inline'.
+
 fdopen is POSIX but not C89
 Solaris' cc objects to inlining functions with names starting with 'main'.
 C character strings are limited for ca 500 chars.

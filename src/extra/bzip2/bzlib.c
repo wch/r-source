@@ -730,14 +730,9 @@ Bool unRLE_obuf_to_output_FAST ( DState* s )
 
 /*---------------------------------------------------*/
 #ifndef __cplusplus
-/* see comment in Rinlinedfuns.h */
-# if defined(__GNUC_STDC_INLINE__) || defined(__GNUC_GNU_INLINE__)
-    __attribute__((gnu_inline)) inline
-# else
-    R_INLINE
-# endif
+ R_INLINE
 #endif
-Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
+static Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
 {
    Int32 nb, na, mid;
    nb = 0;

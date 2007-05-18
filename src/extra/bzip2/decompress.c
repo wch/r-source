@@ -61,6 +61,22 @@
 
 #include "bzlib_private.h"
 
+#ifndef __cplusplus
+  R_INLINE
+#endif
+static Int32 BZ2_indexIntoF ( Int32 indx, Int32 *cftab )
+{
+   Int32 nb, na, mid;
+   nb = 0;
+   na = 256;
+   do {
+      mid = (nb + na) >> 1;
+      if (indx >= cftab[mid]) nb = mid; else na = mid;
+   }
+   while (na - nb != 1);
+   return nb;
+}
+
 
 /*---------------------------------------------------*/
 static
