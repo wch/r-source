@@ -33,7 +33,8 @@
 /* The following was added in gcc 4.1.3.  It is defined if
    GCC is following C99 inline semantics by default: we
    switch R's usage to the older GNU semantics via attributes. */
-# ifdef __GNUC_STDC_INLINE__
+/* Do this even for __GNUC_GNUC_INLINE__ to shut up warnings in 4.2.x */
+# if defined(__GNUC_STDC_INLINE__) || defined(__GNUC_GNU_INLINE__)
 #  define INLINE_FUN extern __attribute__((gnu_inline)) inline
 # else
 #  define INLINE_FUN extern R_INLINE

@@ -2005,10 +2005,11 @@ means including @option{-std=gnu99} (@option{-std=c99} excludes POSIX
 functionality).  If the compiler is detected as @command{gcc},
 @code{-std=gnu99} will be appended to @code{CC} unless it conflicts with
 a setting of @code{CFLAGS}.  (For future versions of @command{gcc} this
-can causes problems with the semantics of @code{inline} for various
+may cause problems with the semantics of @code{inline} for various
 OSes: these may fixed by including in @code{CFLAGS} the flag
 @option{-fgnu89-inline} which will be available as from @command{gcc
-4.1.3}.)
+4.1.3}. The flag may be needed to suppress warnings in @command{gcc 4.2.x},
+which supports only GNU semantics for inlining.)
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora
