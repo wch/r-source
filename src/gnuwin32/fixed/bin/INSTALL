@@ -20,7 +20,7 @@
 
 use Cwd;
 use File::Basename;
-use File::Path;
+use File::Path;  # for mkpath
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
@@ -121,6 +121,7 @@ if($opt_debug) {
 if($opt_library){
     # remove quotes around the library path
     $opt_library =~ s/^['"]//; $opt_library =~ s/['"]$//; #'"
+    mkpath($opt_library) if ! -d $opt_library;
     chdir($opt_library) ||
 	die "Error: cannot change to directory \`$opt_library'\n";
     $library = cwd();
