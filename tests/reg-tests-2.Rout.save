@@ -1841,7 +1841,7 @@ attr(,"response")
 [1] 1
 attr(,".Environment")
 <environment: R_GlobalEnv>
-> lm(y ~ A:U + A:V - 1)$coef  # 1.5.1 used dummies coding for V
+> lm(y ~ A:U + A:V - 1)$coefficients  # 1.5.1 used dummies coding for V
        A:Ua        A:Ub        A:Uc        A:V1        A:V2 
  0.25303884 -0.21875499 -0.71708528 -0.61467193 -0.09030436 
 > lm(y ~ (A + B) : (U + V) - 1) # 1.5.1 used dummies coding for A:V but not B:V

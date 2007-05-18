@@ -705,7 +705,7 @@ A <- rep(c(0, 1), 9)
 B <- rep(c(1, 0), 9)
 set.seed(1); y <- rnorm(18)
 terms(y ~ A:U + A:V - 1)
-lm(y ~ A:U + A:V - 1)$coef  # 1.5.1 used dummies coding for V
+lm(y ~ A:U + A:V - 1)$coefficients  # 1.5.1 used dummies coding for V
 lm(y ~ (A + B) : (U + V) - 1) # 1.5.1 used dummies coding for A:V but not B:V
 options(oldcon)
 ## 1.5.1 miscomputed the first factor in the formula.
