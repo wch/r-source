@@ -4,7 +4,10 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
-BUILD=GCC4
+
+## This is temporarily set to GCC3, until after the release of R 2.5.1,
+## when we will change the default to GCC4.
+BUILD=GCC3
 
 HELP = YES
 HELPTYPES = -txt -html -latex -example
