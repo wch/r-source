@@ -1080,12 +1080,14 @@ specifies any special flags to be used.  There is no guarantee that
 compiled Fortran 90/95 code can be mixed with any other type of code,
 nor that a build of @R{} will have support for such packages.
 
-There is a MinGW build of @command{gfortran} available from
+MinGW huilds of @command{gcc} @code{4.2.0} or later include a F95
+compiler.  For those using @command{gcc} @code{3.4.z}, there is a MinGW
+build of @command{gfortran} available from
 @url{http://@/gcc.gnu.org/@/wiki/@/GFortranBinaries} and a MinGW
 build@footnote{Remember to set @env{LIBRARY_PATH} to point to your MinGW
 @file{lib} directory} of @command{g95} from @uref{http://www.g95.org}.
 Set @code{F95} in @code{MkRules} to point to the installed compiler.
-Then @command{R CMD SHLIB} and @command{R CMD INSTALL} work for
+Then @command{R CMD SHLIB} and @command{R CMD INSTALL} will work for
 packages containing Fortran 90/95 source code.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages

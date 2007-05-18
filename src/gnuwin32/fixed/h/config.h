@@ -22,7 +22,8 @@
 #define F77_FUNC(name,NAME) name ## _
 
 /* As F77_FUNC, but for C identifiers containing underscores. */
-#define F77_FUNC_(name,NAME) name ## __
+/* should be name # __ for GCC3 */
+#define F77_FUNC_(name,NAME) name ## _
 
 /* Define if F77 and FC dummy `main' functions are identical. */
 /* #undef FC_DUMMY_MAIN_EQ_F77 */
@@ -207,7 +208,8 @@
 
 /* Define if your Fortran compiler appends an extra_underscore to external
    names containing an underscore. */
-#define HAVE_F77_EXTRA_UNDERSCORE 1
+/* needs to be set for GCC3 */
+/* #define HAVE_F77_EXTRA_UNDERSCORE 1 */
 
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1

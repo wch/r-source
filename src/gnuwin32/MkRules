@@ -3,8 +3,8 @@
 
 ## ===== configuration macros for building packages or R  ===============
 
-# Alternatives MINGW (MinGW gcc3), CROSS (e.g. Linux) GFORTRAN (MinGW gcc4)
-BUILD=MINGW
+# Alternatives GCC3 (MinGW gcc3), GCC4 (MinGW gcc4) or CROSS (e.g. Linux)
+BUILD=GCC4
 
 HELP = YES
 HELPTYPES = -txt -html -latex -example
@@ -68,7 +68,12 @@ WIXDIR=C:/packages/WiX
 
 ## For a package using F90/95 set the name or path of gfortran.exe 
 ## or g95.exe.  Spaces allowed.
-F95=c:/MinGW/bin/gfortran
+ifeq ($(strip $(BUILD)),GCC4)
+F95=gfortran
+else
+# needs to be set by user
+F95=
+endif
 F95FLAGS=-O3 $(PKG_FCFLAGS)
 
 ## =================== cross-compilation settings  =================
@@ -91,7 +96,7 @@ DEPARG=-MM
 MINGW32LDFLAG=
 C99FLAG=-std=gnu99
 
-ifeq ($(strip $(BUILD)),MINGW)
+ifeq ($(strip $(BUILD)),GCC3)
 BINPREF=
 MINGW32CFLAG=
 F77=g77
@@ -99,7 +104,7 @@ FLIBS=-lg2c
 AWK=gawk
 endif
 
-ifeq ($(strip $(BUILD)),GFORTRAN)
+ifeq ($(strip $(BUILD)),GCC4)
 BINPREF=
 MINGW32CFLAG=
 F77=gfortran

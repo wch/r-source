@@ -4242,6 +4242,11 @@ are using a Windows shell, type @code{PATH} at the prompt to find out.
 @node The MinGW compilers,  , The command line tools, The Windows toolset
 @section The MinGW compilers
 
+This version of @R{} is set up to use @command{gcc} @code{4.2.0} for
+which MinGW compilers are due to be released in June 2007.  Until then,
+follow the instructions here but set @code{BUILD=GCC3} in file
+@file{src/gnuwin32/MkRules}.
+
 The @file{Rtools.exe} installer includes the currently used version of
 the MinGW port of @command{gcc} from
 @url{http://sourceforge.net/project/showfiles.php?group_id=2435}.  
@@ -4287,15 +4292,10 @@ During the lifetime of this release of @R{} it is likely that
 @command{gcc 4.2.0} and an official MinGW build will be released.
 Unofficial builds from the @code{gcc} trunk were working in April 2007,
 provided @code{mingw-runtime-3.12.tar.gz} was used (and
-@code{BUILD=GFORTRAN} is set in @file{MkRules}).  One such build is
-available from @url{http://gcc.gnu.org/wiki/GFortranBinaries}, and can
-be used when a Fortran 90 compiler is required.  (Another
-MinGW-compatible Fortran 90 compiler is available via
-@url{http://www.g95.org, @code{www.g95.org}}.  Note that these compilers
-are not completely compatible with @code{gcc3} so mixing them with the
-recommended tools is unsupported.)
-
-
+@code{BUILD=GCC4} is set in @file{MkRules}).  One such build is
+available from @url{http://gcc.gnu.org/wiki/GFortranBinaries}.  Note
+that these compilers are not completely compatible with @code{gcc3} so
+mixing them with the previusly recommended tools is unsupported.)
 
 
 @node Function and variable index, Concept index, The Windows toolset, Top
