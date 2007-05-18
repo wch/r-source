@@ -148,7 +148,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         dev[nas] <- pchisq(dev[nas], df[nas], lower.tail=FALSE)
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
-	rdf <- object$df.resid
+	rdf <- object$df.residual
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, aod$RSS[1], rdf)
     }
     head <- c("Single term additions", "\nModel:",
@@ -351,7 +351,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     }
     ndrop <- match(scope, tl)
     ns <- length(scope)
-    rdf <- object$df.resid
+    rdf <- object$df.residual
     chisq <- deviance.lm(object)
     dfs <- numeric(ns)
     RSS <- numeric(ns)
@@ -393,7 +393,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     } else if(test == "F") {
 	dev <- aod$"Sum of Sq"
 	dfs <- aod$Df
-	rdf <- object$df.resid
+	rdf <- object$df.residual
 	rms <- aod$RSS[1]/rdf
 	Fs <- (dev/dfs)/rms
 	Fs[dfs < 1e-4] <- NA
@@ -430,7 +430,7 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     }
     ndrop <- match(scope, tl)
     ns <- length(scope)
-    rdf <- object$df.resid
+    rdf <- object$df.residual
     chisq <- object$deviance
     dfs <- numeric(ns)
     dev <- numeric(ns)

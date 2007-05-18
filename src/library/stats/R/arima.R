@@ -176,7 +176,7 @@ arima <- function(x, order = c(0, 0, 0),
         fit <- lm(x ~ xreg - 1, na.action = na.omit)
         n.used <- sum(!is.na(resid(fit))) - length(Delta)
         init0 <- c(init0, coef(fit))
-        ses <- summary(fit)$coef[, 2]
+        ses <- summary(fit)$coefficients[, 2]
         parscale <- c(parscale, 10 * ses)
     }
     if (n.used <= 0) stop("too few non-missing observations")
@@ -396,7 +396,7 @@ predict.Arima <-
         if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal MA part of model is not invertible")
     }
-    z <- KalmanForecast(n.ahead, object$mod)
+    z <- KalmanForecast(n.ahead, object$model)
     pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(rsd),
                frequency = xtsp[3])
     if (se.fit) {

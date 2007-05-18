@@ -196,7 +196,7 @@ function (x,
                    gamma     = gamma,
                    coefficients = c(a = final.fit$level[len + 1],
                                     b = if (beta > 0) final.fit$trend[len + 1],
-                                    s = if (gamma > 0) final.fit$season[len + 1:f]),
+                                    s = if (gamma > 0) final.fit$seasonal[len + 1:f]),
                    seasonal  = seasonal,
                    SSE       = final.fit$SSE,
                    call      = match.call()

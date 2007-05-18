@@ -288,7 +288,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     p1 <- 1:p
     ## do not want missing values substituted here
     r <- z$residuals
-    f <- z$fitted
+    f <- z$fitted.values
     w <- z$weights
     if (is.null(w)) {
         mss <- if (attr(z$terms, "intercept"))
@@ -513,7 +513,7 @@ anova.lm <- function(object, ...)
     if(length(list(object, ...)) > 1)
 	return(anova.lmlist(object, ...))
     w <- object$weights
-    ssr <- sum(if(is.null(w)) object$resid^2 else w*object$resid^2)
+    ssr <- sum(if(is.null(w)) object$residuals^2 else w*object$residuals^2)
     dfr <- df.residual(object)
     p <- object$rank
     if(p > 0) {
@@ -812,7 +812,7 @@ model.matrix.lm <- function(object, ...)
 predict.mlm <-
     function(object, newdata, se.fit = FALSE, na.action = na.pass, ...)
 {
-    if(missing(newdata)) return(object$fitted)
+    if(missing(newdata)) return(object$fitted.values)
     if(se.fit)
 	stop("the 'se.fit' argument is not yet implemented for \"mlm\" objects")
     if(missing(newdata)) {

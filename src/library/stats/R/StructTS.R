@@ -159,11 +159,11 @@ tsdiag.StructTS <- function(object, gof.lag = 10, ...)
     ## plot standardized residuals, acf of residuals, Ljung-Box p-values
     oldpar<- par(mfrow = c(3, 1))
     on.exit(par(oldpar))
-    rs <- object$resid
+    rs <- object$residuals
     stdres <- rs
     plot(stdres, type = "h", main = "Standardized Residuals", ylab = "")
     abline(h = 0)
-    acf(object$resid, plot = TRUE, main = "ACF of Residuals",
+    acf(object$residuals, plot = TRUE, main = "ACF of Residuals",
         na.action = na.pass)
     nlag <- gof.lag
     pval <- numeric(nlag)

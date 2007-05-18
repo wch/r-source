@@ -126,7 +126,7 @@ arima0 <- function(x, order = c(0, 0, 0),
         }
         fit <- lm(x ~ xreg - 1, na.action = na.omit)
         init0 <- c(init0, coef(fit))
-        ses <- summary(fit)$coef[,2]
+        ses <- summary(fit)$coefficients[,2]
         parscale <- c(parscale, ses)
     }
 
@@ -308,11 +308,11 @@ tsdiag.Arima <- tsdiag.arima0 <- function(object, gof.lag = 10, ...)
     ## plot standardized residuals, acf of residuals, Ljung-Box p-values
     oldpar<- par(mfrow = c(3, 1))
     on.exit(par(oldpar))
-    rs <- object$resid
+    rs <- object$residuals
     stdres <- rs/sqrt(object$sigma2)
     plot(stdres, type = "h", main = "Standardized Residuals", ylab = "")
     abline(h = 0)
-    acf(object$resid, plot = TRUE, main = "ACF of Residuals",
+    acf(object$residuals, plot = TRUE, main = "ACF of Residuals",
         na.action = na.pass)
     nlag <- gof.lag
     pval <- numeric(nlag)

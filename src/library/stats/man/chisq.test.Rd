@@ -97,9 +97,9 @@ chisq.test(x, y = NULL, correct = TRUE,
 ## Not really a good example
 chisq.test(InsectSprays$count > 7, InsectSprays$spray)
 				# Prints test summary
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)$obs
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)$observed
 				# Counts observed
-chisq.test(InsectSprays$count > 7, InsectSprays$spray)$exp
+chisq.test(InsectSprays$count > 7, InsectSprays$spray)$expected
 				# Counts expected under the null
 
 ## Effect of simulating p-values

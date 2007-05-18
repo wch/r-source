@@ -263,7 +263,7 @@ res <- optim(50, fw, method="SANN",
 res
 ## Now improve locally
 (r2 <- optim(res$par, fw, method="BFGS"))
-points(r2$par, r2$val, pch = 8, col = "red", cex = 2)
+points(r2$par, r2$value, pch = 8, col = "red", cex = 2)
 
 ## Combinatorial optimization: Traveling salesman problem
 library(stats) # normally loaded

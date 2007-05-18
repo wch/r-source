@@ -643,7 +643,9 @@ print.summary.glm <-
         cat("\nNo Coefficients\n")
     } else {
         ## df component added in 1.8.0
-        if (!is.null(df<- x$df) && (nsingular <- df[3] - df[1]))
+        ## partial matching problem here.
+        df <- if ("df" %in% names(x)) x[["df"]] else NULL
+        if (!is.null(df) && (nsingular <- df[3] - df[1]))
             cat("\nCoefficients: (", nsingular,
                 " not defined because of singularities)\n", sep = "")
         else cat("\nCoefficients:\n")
@@ -722,7 +724,7 @@ residuals.glm <-
                y <-  mu + r * mu.eta(eta)
            })
     res <- switch(type,
-		  deviance = if(object$df.res > 0) {
+		  deviance = if(object$df.residual > 0) {
 		      d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))
 		      ifelse(y > mu, d.res, -d.res)
 		  } else rep.int(0, length(mu)),

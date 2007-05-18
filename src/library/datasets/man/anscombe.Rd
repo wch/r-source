@@ -40,7 +40,8 @@ for(i in 1:4) {
 
 ## See how close they are (numerically!)
 sapply(objects(pattern="lm\\\\.[1-4]$"), function(n) coef(get(n)))
-lapply(objects(pattern="lm\\\\.[1-4]$"), function(n) summary(get(n))$coef)
+lapply(objects(pattern="lm\\\\.[1-4]$"),
+       function(n) summary(get(n))$coefficients)
 
 ## Now, do what you should have done in the first place: PLOTS
 op <- par(mfrow=c(2,2), mar=.1+c(4,4,1,1), oma= c(0,0,2,0))

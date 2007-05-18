@@ -62,7 +62,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
 se.aov <- function(object, n, type = "means")
 {
     ## for balanced designs only
-    rdf <- object$df.resid
+    rdf <- object$df.residual
     rse <- sqrt(sum(object$residuals^2)/rdf)
     if(type == "effects") result <- rse/sqrt(n)
     if(type == "means")
@@ -165,7 +165,7 @@ se.aovlist <- function(object, dn.proj, dn.strata, factors, mf, efficiency, n,
     if(type != "effects")
 	stop(gettextf("SEs for type '%s' are not yet implemented", type),
              domain = NA)
-    RSS <- sapply(object, function(x) sum(x$residuals^2)/x$df.resid)
+    RSS <- sapply(object, function(x) sum(x$residuals^2)/x$df.residual)
     res <- vector(length = length(n), mode = "list")
     names(res) <- names(n)
     for(i in names(n)) {

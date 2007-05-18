@@ -147,11 +147,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 r <- rle(sort(pmin(r, N - r + 1)))
                 SIGMA <- if(EVEN)
                     sqrt(m * n
-                         * (16 * sum(r$l * r$v^2) - N * (N + 2)^2)
+                         * (16 * sum(r$lengths * r$values^2) - N * (N + 2)^2)
                          / (16 * N * (N - 1)))
                 else
                     sqrt(m * n
-                         * (16 * N * sum(r$l * r$v^2) - (N + 1)^4)
+                         * (16 * N * sum(r$lengths * r$values^2) - (N + 1)^4)
                          / (16 * N^2 * (N - 1)))
             }
             z / SIGMA

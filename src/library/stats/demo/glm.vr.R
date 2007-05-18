@@ -17,6 +17,6 @@ detg.mod <- glm(terms(Fr ~ M.user*Temp*Soft + Brand*M.user*Temp,
                       keep.order = TRUE),
 		family = poisson, data = detg)
 summary(detg.mod)
-symnum(summary(detg.mod, correlation = TRUE)$corr)
+summary(detg.mod, correlation = TRUE, symbolic.cor = TRUE)
 
 anova(detg.m0, detg.mod)
