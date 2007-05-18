@@ -309,6 +309,8 @@
  R_sysfunction
  R_sysparent
  R_unary
+ R_warn_partial_match_args
+ R_warn_partial_match_dollar
  Rconsolesetwidth
  Rf_CheckFormals
  Rf_CoercionWarning
