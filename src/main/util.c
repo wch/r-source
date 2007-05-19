@@ -172,6 +172,19 @@ SEXP asChar(SEXP x)
     return NA_STRING;
 }
 
+Rboolean isUnordered(SEXP s)
+{
+    return (TYPEOF(s) == INTSXP
+	    && inherits(s, "factor")
+	    && !inherits(s, "ordered"));
+}
+
+Rboolean isOrdered(SEXP s)
+{
+    return (TYPEOF(s) == INTSXP
+	    && inherits(s, "factor")
+	    && inherits(s, "ordered"));
+}
 
 
 const static struct {

@@ -333,7 +333,7 @@ typedef struct {
 
 #ifdef USE_RINTERNALS
 /* There is much more in Rinternals.h, including function versions
- * of the Promise and Hasking groups.
+ * of the Promise and Hashing groups.
  */
 
 /* Primitive Access Macros */
@@ -374,6 +374,7 @@ typedef struct {
 #define FLOAT2VEC(n)	(((n)>0)?(((n)*sizeof(double)-1)/sizeof(VECREC)+1):0)
 #define COMPLEX2VEC(n)	(((n)>0)?(((n)*sizeof(Rcomplex)-1)/sizeof(VECREC)+1):0)
 #define PTR2VEC(n)	(((n)>0)?(((n)*sizeof(SEXP)-1)/sizeof(VECREC)+1):0)
+
 /* Bindings */
 /* use the same bits (15 and 14) in symbols and bindings */
 #define ACTIVE_BINDING_MASK (1<<15)
@@ -384,6 +385,26 @@ typedef struct {
 #define SET_ACTIVE_BINDING_BIT(b) ((b)->sxpinfo.gp |= ACTIVE_BINDING_MASK)
 #define LOCK_BINDING(b) ((b)->sxpinfo.gp |= BINDING_LOCK_MASK)
 #define UNLOCK_BINDING(b) ((b)->sxpinfo.gp &= (~BINDING_LOCK_MASK))
+
+/* Test macros with function versions in Rinternals.h */
+#undef isNull
+#define isNull(s)	(TYPEOF(s) == NILSXP)
+#undef isSymbol
+#define isSymbol(s)	(TYPEOF(s) == SYMSXP)
+#undef isLogical
+#define isLogical(s)	(TYPEOF(s) == LGLSXP)
+#undef isReal
+#define isReal(s)	(TYPEOF(s) == REALSXP)
+#undef isComplex
+#define isComplex(s)	(TYPEOF(s) == CPLXSXP)
+#undef isExpression
+#define isExpression(s) (TYPEOF(s) == EXPRSXP)
+#undef isEnvironment
+#define isEnvironment(s) (TYPEOF(s) == ENVSXP)
+#undef isString
+#define isString(s)	(TYPEOF(s) == STRSXP)
+#undef isObject
+#define isObject(s)	(OBJECT(s) != 0)
 
 #else /* USE_RINTERNALS */
 

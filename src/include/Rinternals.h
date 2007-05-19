@@ -331,6 +331,17 @@ typedef struct SEXPREC *SEXP;
 #define CHAR(x)		R_CHAR(x)
 char *(R_CHAR)(SEXP x);
 
+/* Various tests, with macro versions in Defn.h */
+Rboolean (Rf_isNull)(SEXP s);
+Rboolean (Rf_isSymbol)(SEXP s);
+Rboolean (Rf_isLogical)(SEXP s);
+Rboolean (Rf_isReal)(SEXP s);
+Rboolean (Rf_isComplex)(SEXP s);
+Rboolean (Rf_isExpression)(SEXP s);
+Rboolean (Rf_isEnvironment)(SEXP s);
+Rboolean (Rf_isString)(SEXP s);
+Rboolean (Rf_isObject)(SEXP s);
+
 #endif /* USE_RINTERNALS */
 
 /* Accessor functions.  Many are declared using () to avoid the macro
@@ -560,6 +571,10 @@ SEXP Rf_allocVector(SEXPTYPE, R_len_t);
 SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
+Rcomplex Rf_asComplex(SEXP);
+int Rf_asInteger(SEXP);
+int Rf_asLogical(SEXP);
+double Rf_asReal(SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
@@ -588,6 +603,8 @@ SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_install(char const *);
 Rboolean Rf_isFree(SEXP);
+Rboolean Rf_isOrdered(SEXP);
+Rboolean Rf_isUnordered(SEXP);
 Rboolean Rf_isUnsorted(SEXP);
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP R_lsInternal(SEXP, Rboolean);
@@ -844,9 +861,6 @@ int R_system(char *);
 #define inherits		Rf_inherits
 #define install			Rf_install
 #define isArray			Rf_isArray
-#define isComplex		Rf_isComplex
-#define isEnvironment		Rf_isEnvironment
-#define isExpression		Rf_isExpression
 #define isFactor		Rf_isFactor
 #define isFrame			Rf_isFrame
 #define isFree			Rf_isFree
@@ -854,19 +868,13 @@ int R_system(char *);
 #define isInteger		Rf_isInteger
 #define isLanguage		Rf_isLanguage
 #define isList			Rf_isList
-#define isLogical		Rf_isLogical
 #define isMatrix		Rf_isMatrix
 #define isNewList		Rf_isNewList
-#define isNull			Rf_isNull
 #define isNumeric		Rf_isNumeric
-#define isObject		Rf_isObject
 #define isOrdered		Rf_isOrdered
 #define isPairList		Rf_isPairList
 #define isPrimitive		Rf_isPrimitive
-#define isReal			Rf_isReal
 #define isS4			Rf_isS4
-#define isString		Rf_isString
-#define isSymbol		Rf_isSymbol
 #define isTs			Rf_isTs
 #define isUnordered		Rf_isUnordered
 #define isUnsorted		Rf_isUnsorted
@@ -925,44 +933,39 @@ int R_system(char *);
 #define VectorToPairList	Rf_VectorToPairList
 #define warningcall		Rf_warningcall
 #define warningcall_immediate	Rf_warningcall_immediate
+
+#define isComplex		Rf_isComplex
+#define isEnvironment		Rf_isEnvironment
+#define isExpression		Rf_isExpression
+#define isLogical		Rf_isLogical
+#define isNull			Rf_isNull
+#define isObject		Rf_isObject
+#define isReal			Rf_isReal
+#define isString		Rf_isString
+#define isSymbol		Rf_isSymbol
+
 #endif
 
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
 #include "Rinlinedfuns.h"
 #else
 /* need remapped names here for use with R_NO_REMAP */
-/*SEXP Rf_allocString(int);*/
-Rcomplex Rf_asComplex(SEXP);
-int Rf_asInteger(SEXP);
-int Rf_asLogical(SEXP);
-double Rf_asReal(SEXP);
 Rboolean Rf_conformable(SEXP, SEXP);
 SEXP Rf_elt(SEXP, int);
 Rboolean Rf_inherits(SEXP, char*);
 Rboolean Rf_isArray(SEXP);
-Rboolean Rf_isComplex(SEXP);
-Rboolean Rf_isEnvironment(SEXP);
-Rboolean Rf_isExpression(SEXP);
 Rboolean Rf_isFactor(SEXP);
 Rboolean Rf_isFrame(SEXP);
 Rboolean Rf_isInteger(SEXP);
 Rboolean Rf_isFunction(SEXP);
 Rboolean Rf_isLanguage(SEXP);
 Rboolean Rf_isList(SEXP);
-Rboolean Rf_isLogical(SEXP);
 Rboolean Rf_isMatrix(SEXP);
 Rboolean Rf_isNewList(SEXP);
-Rboolean Rf_isNull(SEXP);
 Rboolean Rf_isNumeric(SEXP);
-Rboolean Rf_isObject(SEXP);
-Rboolean Rf_isOrdered(SEXP);
 Rboolean Rf_isPairList(SEXP);
 Rboolean Rf_isPrimitive(SEXP);
-Rboolean Rf_isReal(SEXP);
-Rboolean Rf_isString(SEXP);
-Rboolean Rf_isSymbol(SEXP);
 Rboolean Rf_isTs(SEXP);
-Rboolean Rf_isUnordered(SEXP);
 Rboolean Rf_isUserBinop(SEXP);
 Rboolean Rf_isValidString(SEXP);
 Rboolean Rf_isValidStringF(SEXP);

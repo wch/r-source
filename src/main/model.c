@@ -34,6 +34,23 @@
 #include "Defn.h"
 #include <R_ext/RS.h>           /* CallocCharBuf, Free */
 
+/* inline-able versions */
+static R_INLINE Rboolean isUnordered_int(SEXP s)
+{
+    return (TYPEOF(s) == INTSXP
+	    && inherits(s, "factor")
+	    && !inherits(s, "ordered"));
+}
+
+static R_INLINE Rboolean isOrdered_int(SEXP s)
+{
+    return (TYPEOF(s) == INTSXP
+	    && inherits(s, "factor")
+	    && inherits(s, "ordered"));
+}
+
+
+
 #define WORDSIZE (8*sizeof(int))
 
 static SEXP tildeSymbol = NULL;
@@ -1645,14 +1662,14 @@ SEXP attribute_hidden do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	var_i = SET_VECTOR_ELT(variable, i, VECTOR_ELT(vars, i));
 	if (nrows(var_i) != n)
 	    errorcall(call, _("variable lengths differ (found for variable %d)"), i);
-	if (isOrdered(var_i)) {
+	if (isOrdered_int(var_i)) {
 	    LOGICAL(ordered)[i] = 1;
 	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
 		errorcall(call, _("variable %d has no levels"), i+1);
 	    /* will get updated later when contrasts are set */
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
-	else if (isUnordered(var_i)) {
+	else if (isUnordered_int(var_i)) {
 	    LOGICAL(ordered)[i] = 0;
 	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
 		errorcall(call, _("variable %d has no levels"), i+1);

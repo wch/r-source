@@ -28,7 +28,9 @@
 #ifndef R_INLINES_H_
 #define R_INLINES_H_
 
-#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__)
+/* Probably not able to use C99 semantics gcc < 4.3.0 but who knows what
+   unofficial versions Debian or RedHat will distribute */
+#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
 #define C99_INLINE_SEMANTICS 1
 #endif
 
@@ -47,7 +49,7 @@
 # endif
 #endif /* ifdef COMPILING_R */
 
-#ifdef C99_INLINE_SEMANTICS
+#if C99_INLINE_SEMANTICS
 # undef INLINE_FUN
 # ifdef COMPILING_R
 /* force exported copy */
@@ -244,26 +246,11 @@ INLINE_FUN Rboolean conformable(SEXP x, SEXP y)
     return TRUE;
 }
 
-INLINE_FUN Rboolean isString(SEXP s)
-{
-    return (TYPEOF(s) == STRSXP);
-}
-
-INLINE_FUN Rboolean isNull(SEXP s)
-{
-    return (s == R_NilValue);
-}
-
-INLINE_FUN Rboolean isObject(SEXP s)
-{
-    return OBJECT(s);/* really '1-bit unsigned int' */
-}
-
 INLINE_FUN Rboolean inherits(SEXP s, char *name)
 {
     SEXP klass;
     int i, nclass;
-    if (isObject(s)) {
+    if (OBJECT(s)) {
 	klass = getAttrib(s, R_ClassSymbol);
 	nclass = length(klass);
 	for (i = 0; i < nclass; i++) {
@@ -276,7 +263,7 @@ INLINE_FUN Rboolean inherits(SEXP s, char *name)
 
 INLINE_FUN Rboolean isValidString(SEXP x)
 {
-    return isString(x) && LENGTH(x) > 0 && !isNull(STRING_ELT(x, 0));
+    return TYPEOF(x) == STRSXP && LENGTH(x) > 0 && TYPEOF(STRING_ELT(x, 0)) != NILSXP;
 }
 
 /* non-empty ("") valid string :*/
@@ -285,14 +272,9 @@ INLINE_FUN Rboolean isValidStringF(SEXP x)
     return isValidString(x) && CHAR(STRING_ELT(x, 0))[0];
 }
 
-INLINE_FUN Rboolean isSymbol(SEXP s)
-{
-    return TYPEOF(s) == SYMSXP;
-}
-
 INLINE_FUN Rboolean isUserBinop(SEXP s)
 {
-    if (isSymbol(s)) {
+    if (TYPEOF(s) == SYMSXP) {
 	char *str = CHAR(PRINTNAME(s));
 	if (strlen(str) >= 2 && str[0] == '%' && str[strlen(str)-1] == '%')
 	    return TRUE;
@@ -384,17 +366,12 @@ INLINE_FUN Rboolean isFrame(SEXP s)
 {
     SEXP klass;
     int i;
-    if (isObject(s)) {
+    if (OBJECT(s)) {
 	klass = getAttrib(s, R_ClassSymbol);
 	for (i = 0; i < length(klass); i++)
 	    if (!strcmp(CHAR(STRING_ELT(klass, i)), "data.frame")) return TRUE;
     }
     return FALSE;
-}
-
-INLINE_FUN Rboolean isExpression(SEXP s)
-{
-    return TYPEOF(s) == EXPRSXP;
 }
 
 INLINE_FUN Rboolean isLanguage(SEXP s)
@@ -434,48 +411,14 @@ INLINE_FUN Rboolean isTs(SEXP s)
 }
 
 
-INLINE_FUN Rboolean isLogical(SEXP s)
-{
-    return (TYPEOF(s) == LGLSXP);
-}
-
 INLINE_FUN Rboolean isInteger(SEXP s)
 {
     return (TYPEOF(s) == INTSXP && !inherits(s, "factor"));
 }
 
-INLINE_FUN Rboolean isReal(SEXP s)
-{
-    return (TYPEOF(s) == REALSXP);
-}
-
-INLINE_FUN Rboolean isComplex(SEXP s)
-{
-    return (TYPEOF(s) == CPLXSXP);
-}
-
-INLINE_FUN Rboolean isUnordered(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP
-	    && inherits(s, "factor")
-	    && !inherits(s, "ordered"));
-}
-
-INLINE_FUN Rboolean isOrdered(SEXP s)
-{
-    return (TYPEOF(s) == INTSXP
-	    && inherits(s, "factor")
-	    && inherits(s, "ordered"));
-}
-
 INLINE_FUN Rboolean isFactor(SEXP s)
 {
     return (TYPEOF(s) == INTSXP  && inherits(s, "factor"));
-}
-
-INLINE_FUN Rboolean isEnvironment(SEXP s)
-{
-    return (TYPEOF(s) == ENVSXP);
 }
 
 INLINE_FUN int nlevels(SEXP f)
@@ -484,7 +427,6 @@ INLINE_FUN int nlevels(SEXP f)
 	return 0;
     return LENGTH(getAttrib(f, R_LevelsSymbol));
 }
-
 
 /* Is an object of numeric type. */
 /* FIXME:  the LGLSXP case should be excluded here
@@ -557,7 +499,7 @@ INLINE_FUN SEXP ScalarRaw(Rbyte x)
 
 INLINE_FUN Rboolean isVectorizable(SEXP s)
 {
-    if (isNull(s)) return TRUE;
+    if (s == R_NilValue) return TRUE;
     else if (isNewList(s)) {
 	int i, n;
 

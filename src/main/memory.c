@@ -2817,6 +2817,17 @@ int (HASHVALUE)(SEXP x) { return HASHVALUE(x); }
 void (SET_HASHASH)(SEXP x, int v) { SET_HASHASH(x, v); }
 void (SET_HASHVALUE)(SEXP x, int v) { SET_HASHVALUE(x, v); }
 
+/* Test functions */
+Rboolean Rf_isNull(SEXP s) { return isNull(s); }
+Rboolean Rf_isSymbol(SEXP s) { return isSymbol(s); }
+Rboolean Rf_isLogical(SEXP s) { return isLogical(s); }
+Rboolean Rf_isReal(SEXP s) { return isReal(s); }
+Rboolean Rf_isComplex(SEXP s) { return isComplex(s); }
+Rboolean Rf_isExpression(SEXP s) { return isExpression(s); }
+Rboolean Rf_isEnvironment(SEXP s) { return isEnvironment(s); }
+Rboolean Rf_isString(SEXP s) { return isString(s); }
+Rboolean Rf_isObject(SEXP s) { return isObject(s); }
+
 /* Bindings accessors */
 Rboolean attribute_hidden 
 (IS_ACTIVE_BINDING)(SEXP b) {return IS_ACTIVE_BINDING(b);}
