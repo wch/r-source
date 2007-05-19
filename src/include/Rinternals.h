@@ -560,7 +560,7 @@ Rcomplex Rf_asComplex(SEXP x);
 
 
 
-/* Other Internally Used Functions */
+/* Other Internally Used Functions, excluding those which are inline-able*/
 
 SEXP Rf_allocArray(SEXPTYPE, SEXP);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
@@ -861,6 +861,9 @@ int R_system(char *);
 #define inherits		Rf_inherits
 #define install			Rf_install
 #define isArray			Rf_isArray
+#define isComplex		Rf_isComplex
+#define isEnvironment		Rf_isEnvironment
+#define isExpression		Rf_isExpression
 #define isFactor		Rf_isFactor
 #define isFrame			Rf_isFrame
 #define isFree			Rf_isFree
@@ -868,13 +871,19 @@ int R_system(char *);
 #define isInteger		Rf_isInteger
 #define isLanguage		Rf_isLanguage
 #define isList			Rf_isList
+#define isLogical		Rf_isLogical
+#define isSymbol		Rf_isSymbol
 #define isMatrix		Rf_isMatrix
 #define isNewList		Rf_isNewList
+#define isNull			Rf_isNull
 #define isNumeric		Rf_isNumeric
+#define isObject		Rf_isObject
 #define isOrdered		Rf_isOrdered
 #define isPairList		Rf_isPairList
 #define isPrimitive		Rf_isPrimitive
+#define isReal			Rf_isReal
 #define isS4			Rf_isS4
+#define isString		Rf_isString
 #define isTs			Rf_isTs
 #define isUnordered		Rf_isUnordered
 #define isUnsorted		Rf_isUnsorted
@@ -934,30 +943,26 @@ int R_system(char *);
 #define warningcall		Rf_warningcall
 #define warningcall_immediate	Rf_warningcall_immediate
 
-#define isComplex		Rf_isComplex
-#define isEnvironment		Rf_isEnvironment
-#define isExpression		Rf_isExpression
-#define isLogical		Rf_isLogical
-#define isNull			Rf_isNull
-#define isObject		Rf_isObject
-#define isReal			Rf_isReal
-#define isString		Rf_isString
-#define isSymbol		Rf_isSymbol
-
 #endif
 
 #if defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) ))
 #include "Rinlinedfuns.h"
 #else
 /* need remapped names here for use with R_NO_REMAP */
+
+/* 
+   These are the inlinable functions that are provided in Rinlinedfuns.h
+   It is *essential* that these do not appear in any other header file,
+   with or without the Rf_ prefix.
+*/
 Rboolean Rf_conformable(SEXP, SEXP);
-SEXP Rf_elt(SEXP, int);
+SEXP	 Rf_elt(SEXP, int);
 Rboolean Rf_inherits(SEXP, char*);
 Rboolean Rf_isArray(SEXP);
 Rboolean Rf_isFactor(SEXP);
 Rboolean Rf_isFrame(SEXP);
-Rboolean Rf_isInteger(SEXP);
 Rboolean Rf_isFunction(SEXP);
+Rboolean Rf_isInteger(SEXP);
 Rboolean Rf_isLanguage(SEXP);
 Rboolean Rf_isList(SEXP);
 Rboolean Rf_isMatrix(SEXP);
@@ -973,26 +978,26 @@ Rboolean Rf_isVector(SEXP);
 Rboolean Rf_isVectorAtomic(SEXP);
 Rboolean Rf_isVectorList(SEXP);
 Rboolean Rf_isVectorizable(SEXP);
-SEXP Rf_lang1(SEXP);
-SEXP Rf_lang2(SEXP, SEXP);
-SEXP Rf_lang3(SEXP, SEXP, SEXP);
-SEXP Rf_lang4(SEXP, SEXP, SEXP, SEXP);
-SEXP Rf_lastElt(SEXP);
-SEXP Rf_lcons(SEXP, SEXP);
-R_len_t Rf_length(SEXP);
-SEXP Rf_list1(SEXP);
-SEXP Rf_list2(SEXP, SEXP);
-SEXP Rf_list3(SEXP, SEXP, SEXP);
-SEXP Rf_list4(SEXP, SEXP, SEXP, SEXP);
-SEXP Rf_listAppend(SEXP, SEXP);
-SEXP Rf_mkString(const char*);
-int Rf_nlevels(SEXP);
-SEXP Rf_ScalarComplex(Rcomplex);
-SEXP Rf_ScalarInteger(int);
-SEXP Rf_ScalarLogical(int);
-SEXP Rf_ScalarRaw(Rbyte);
-SEXP Rf_ScalarReal(double);
-SEXP Rf_ScalarString(SEXP);
+SEXP	 Rf_lang1(SEXP);
+SEXP	 Rf_lang2(SEXP, SEXP);
+SEXP	 Rf_lang3(SEXP, SEXP, SEXP);
+SEXP	 Rf_lang4(SEXP, SEXP, SEXP, SEXP);
+SEXP	 Rf_lastElt(SEXP);
+SEXP	 Rf_lcons(SEXP, SEXP);
+R_len_t  Rf_length(SEXP);
+SEXP	 Rf_list1(SEXP);
+SEXP	 Rf_list2(SEXP, SEXP);
+SEXP	 Rf_list3(SEXP, SEXP, SEXP);
+SEXP	 Rf_list4(SEXP, SEXP, SEXP, SEXP);
+SEXP	 Rf_listAppend(SEXP, SEXP);
+SEXP	 Rf_mkString(const char*);
+int	 Rf_nlevels(SEXP);
+SEXP	 Rf_ScalarComplex(Rcomplex);
+SEXP	 Rf_ScalarInteger(int);
+SEXP	 Rf_ScalarLogical(int);
+SEXP	 Rf_ScalarRaw(Rbyte);
+SEXP	 Rf_ScalarReal(double);
+SEXP	 Rf_ScalarString(SEXP);
 #endif
 
 

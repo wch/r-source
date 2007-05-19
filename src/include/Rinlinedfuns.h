@@ -35,7 +35,7 @@
 #endif
 
 #ifdef COMPILING_R
-/* defined only in util.c: this emits standalone code there */
+/* defined only in inlined.c: this emits standalone code there */
 # define INLINE_FUN
 #else
 /* The following define were added in gcc 4.1.3.  It is defined if
