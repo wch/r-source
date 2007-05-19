@@ -30,7 +30,7 @@
 #endif
 
 #include <Defn.h>
-#include <Rmath.h>		/* imax2 */
+#define imax2(x, y) ((x < y) ? y : x)
 #include <R_ext/RS.h>           /* CallocCharBuf, Free */
 
 #define LIST_ASSIGN(x) {SET_VECTOR_ELT(data->ans_ptr, data->ans_length, x); data->ans_length++;}

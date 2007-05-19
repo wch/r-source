@@ -225,32 +225,31 @@ double R_pow(double x, double y) /* = x ^ y */
 	return(1.);
     if(x == 0.) {
 	if(y > 0.) return(0.);
-	/* y < 0 */return(R_PosInf);
+	/* y < 0 */ return(R_PosInf);
     }
-    if (R_FINITE(x) && R_FINITE(y)){
-      if (y == 2.0)  /* common special case */
-	return x*x;
-      else if (y == 0.5)  /* another common special case */
-	return sqrt(x);
-      else
-	return pow(x,y);
-    }
+    if (R_FINITE(x) && R_FINITE(y))
+/* work around a bug in May 2007 snapshots of gcc pre-4.3.0 */
+#if __GNUC__ == 4 && __GNUC_MINOR__ == 3
+	return (y == 2.0) ? x*x : pow(x, y);
+#else
+	return (y == 2.0) ? x*x : ((y == 0.5) ? sqrt(x) : pow(x, y));
+#endif
     if (ISNAN(x) || ISNAN(y))
 	return(x + y);
     if(!R_FINITE(x)) {
 	if(x > 0)		/* Inf ^ y */
-	    return((y < 0.)? 0. : R_PosInf);
+	    return (y < 0.)? 0. : R_PosInf;
 	else {			/* (-Inf) ^ y */
 	    if(R_FINITE(y) && y == floor(y)) /* (-Inf) ^ n */
-		return((y < 0.) ? 0. : (myfmod(y,2.) ? x  : -x));
+		return (y < 0.) ? 0. : (myfmod(y, 2.) ? x  : -x);
 	}
     }
     if(!R_FINITE(y)) {
 	if(x >= 0) {
 	    if(y > 0)		/* y == +Inf */
-		return((x >= 1)? R_PosInf : 0.);
+		return (x >= 1) ? R_PosInf : 0.;
 	    else		/* y == -Inf */
-		return((x < 1) ? R_PosInf : 0.);
+		return (x < 1) ? R_PosInf : 0.;
 	}
     }
     return(R_NaN);		/* all other cases: (-Inf)^{+-Inf,

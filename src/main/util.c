@@ -33,7 +33,7 @@
 
 #define COMPILING_R 1 /* for Rinlinedfuns.h included via Defn.h */
 #include <Defn.h>
-#include <Rmath.h>
+#define imax2(x, y) ((x < y) ? y : x)
 #include <Print.h>
 
 #ifdef HAVE_UNISTD_H

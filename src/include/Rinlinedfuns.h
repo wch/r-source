@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2006   The R Development Core Team.
+ *  Copyright (C) 1999-2007   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,14 +23,20 @@
    from GNU C systems.
 
    There are different conventions for inlining across compilation units.
-   We pro tem only use the GCC one.  See
-   http://www.greenend.org.uk/rjk/2003/03/inline.html
+   See http://www.greenend.org.uk/rjk/2003/03/inline.html
  */
 #ifndef R_INLINES_H_
 #define R_INLINES_H_
 
-#ifndef COMPILING_R /* defined only in util.c */
-/* The following was added in gcc 4.1.3.  It is defined if
+#if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__)
+#define C99_INLINE_SEMANTICS 1
+#endif
+
+#ifdef COMPILING_R
+/* defined only in util.c: this emits standalone code there */
+# define INLINE_FUN
+#else
+/* The following define were added in gcc 4.1.3.  It is defined if
    GCC is following C99 inline semantics by default: we
    switch R's usage to the older GNU semantics via attributes. */
 /* Do this even for __GNUC_GNUC_INLINE__ to shut up warnings in 4.2.x */
@@ -39,9 +45,20 @@
 # else
 #  define INLINE_FUN extern R_INLINE
 # endif
-#else
-# define INLINE_FUN
-#endif
+#endif /* ifdef COMPILING_R */
+
+#ifdef C99_INLINE_SEMANTICS
+# undef INLINE_FUN
+# ifdef COMPILING_R
+/* force exported copy */
+#  define INLINE_FUN extern inline
+# else
+/* either inline or link to extern version at compiler's choice */
+#  define INLINE_FUN inline
+# endif /* ifdef COMPILING_R */
+#endif /* C99_INLINE_SEMANTICS */
+
+
 
 /* define inline-able functions */
 
@@ -241,27 +258,6 @@ INLINE_FUN Rboolean isObject(SEXP s)
 {
     return OBJECT(s);/* really '1-bit unsigned int' */
 }
-
-/*  The following should work but as of 06/09/04 it generates warnings about 
-    undeclared IS_S4_OBJECT, in spite of being apparently identical to the handling 
-    of isObject() above ------
-INLINE_FUN Rboolean isS4(SEXP s)
-{
-  return IS_S4_OBJECT(s);
-}
-
-INLINE_FUN SEXP asS4(SEXP s, Rboolean flag)
-{
-    if(flag == IS_S4_OBJECT(s))
-        return s;
-    if(NAMED(s) == 2)
-        s = duplicate(s);
-    if(flag) SET_S4_OBJECT(s);
-    else UNSET_S4_OBJECT(s);
-    return s;
-}
-
-*/
 
 INLINE_FUN Rboolean inherits(SEXP s, char *name)
 {
@@ -582,9 +578,6 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
 
 /* from gram.y */
 
-/* forward declaration, defined in envir.c */
-SEXP mkChar(const char *name);
-
 INLINE_FUN SEXP mkString(const char *s)
 {
     SEXP t;
@@ -594,45 +587,5 @@ INLINE_FUN SEXP mkString(const char *s)
     UNPROTECT(1);
     return t;
 }
-
-/* from Rmath */
-
-#define Rf_fmin2(x, y) fmin2_int(x, y)
-#define Rf_fmax2(x, y) fmax2_int(x, y)
-#define Rf_imin2(x, y) imin2_int(x, y)
-#define Rf_imax2(x, y) imax2_int(x, y)
-#define Rf_fsign(x, y) fsign_int(x, y)
-
-INLINE_FUN double fmin2_int(double x, double y)
-{
-	if (ISNAN(x) || ISNAN(y))
-		return x + y;
-	return (x < y) ? x : y;
-}
-
-INLINE_FUN double fmax2_int(double x, double y)
-{
-	if (ISNAN(x) || ISNAN(y))
-		return x + y;
-	return (x < y) ? y : x;
-}
-
-INLINE_FUN int imin2_int(int x, int y)
-{
-    return (x < y) ? x : y;
-}
-
-INLINE_FUN int imax2_int(int x, int y)
-{
-    return (x < y) ? y : x;
-}
-
-INLINE_FUN double fsign_int(double x, double y)
-{
-    if (ISNAN(x) || ISNAN(y))
-	return x + y;
-    return ((y >= 0) ? fabs(x) : -fabs(x));
-}
-
 
 #endif /* R_INLINES_H_ */

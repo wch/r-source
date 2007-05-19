@@ -1385,3 +1385,19 @@ SEXP R_get_primname(SEXP object)
     UNPROTECT(1);
     return f;
 }
+
+Rboolean isS4(SEXP s)
+{
+    return IS_S4_OBJECT(s);
+}
+
+SEXP asS4(SEXP s, Rboolean flag)
+{
+    if(flag == IS_S4_OBJECT(s))
+        return s;
+    if(NAMED(s) == 2)
+        s = duplicate(s);
+    if(flag) SET_S4_OBJECT(s);
+    else UNSET_S4_OBJECT(s);
+    return s;
+}

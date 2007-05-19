@@ -35,7 +35,10 @@
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>
-#include <Rmath.h> /* for imin2 */
+static R_INLINE int imin2(int x, int y)
+{
+    return (x < y) ? x : y;
+}
 
 #ifdef SUPPORT_MBCS
 #include <wchar.h> /* for btowc */

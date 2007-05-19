@@ -31,7 +31,7 @@
 
 #include <Defn.h>
 #include <sys/types.h>		/* probably not needed */
-#include <Rmath.h>		/* imax2 */
+#define imax2(x, y) ((x < y) ? y : x)
 
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>

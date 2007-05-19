@@ -27,6 +27,14 @@
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
 
+static INLINE_FUN double fsign_int(double x, double y)
+{
+    if (ISNAN(x) || ISNAN(y))
+	return x + y;
+    return ((y >= 0) ? fabs(x) : -fabs(x));
+}
+
+
 #include "arithmetic.h"		/* complex_*  */
 
 #ifdef HAVE_C99_COMPLEX
@@ -539,7 +547,7 @@ static void z_atan2(double complex *r, double complex *csn,
 	    *r = NA_REAL + NA_REAL * I;
 #endif
 	} else
-	    *r = fsign(M_PI_2, creal(*csn));
+	    *r = fsign_int(M_PI_2, creal(*csn));
     } else {
 	*r = catan(*csn / *ccs);
 	if(creal(*ccs) < 0) *r += M_PI;
@@ -707,7 +715,7 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 	    r->i = NA_REAL;
 	}
 	else {
-	    r->r = fsign(M_PI_2, csn->r);
+	    r->r = fsign_int(M_PI_2, csn->r);
 	    r->i = 0;
 	}
     }

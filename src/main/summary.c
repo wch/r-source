@@ -24,7 +24,7 @@
 #endif
 
 #include <Defn.h>
-#include <Rmath.h>
+#define imax2(x, y) ((x < y) ? y : x)
 
 #define R_INT_MIN	(1+INT_MIN)
 	/* since INT_MIN is the NA_INTEGER value ! */

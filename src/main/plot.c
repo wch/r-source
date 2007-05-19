@@ -28,10 +28,25 @@
 #endif
 
 #include <Defn.h>
-#include <Rmath.h>
 #include <Graphics.h>
 #include <Rdevices.h>
 #include <Print.h>
+
+#define imax2(x, y) ((x < y) ? y : x)
+
+static INLINE_FUN double fmin2(double x, double y)
+{
+	if (ISNAN(x) || ISNAN(y))
+		return x + y;
+	return (x < y) ? x : y;
+}
+
+static INLINE_FUN double fmax2(double x, double y)
+{
+	if (ISNAN(x) || ISNAN(y))
+		return x + y;
+	return (x < y) ? y : x;
+}
 
 #ifndef HAVE_HYPOT
 # define hypot pythag

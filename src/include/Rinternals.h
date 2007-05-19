@@ -335,7 +335,7 @@ char *(R_CHAR)(SEXP x);
 
 /* Accessor functions.  Many are declared using () to avoid the macro
    definitions in the USE_RINTERNALS section.
-   The function STRING_ELT is used as an argument to arrayAssign even 
+   The function STRING_ELT is used as an argument to arrayAssign even
    if the macro version is in use.
 */
 
@@ -483,7 +483,7 @@ typedef int PROTECT_INDEX;
 /* Evaluation Environment */
 LibExtern SEXP	R_GlobalEnv;	    /* The "global" environment */
 
-LibExtern SEXP  R_EmptyEnv;	    /* An empty environment at the root of the 
+LibExtern SEXP  R_EmptyEnv;	    /* An empty environment at the root of the
 				    	environment tree */
 LibExtern SEXP  R_BaseEnv;	    /* The base environment; formerly R_NilValue */
 LibExtern SEXP	R_BaseNamespace;    /* The (fake) name space for base */
@@ -498,7 +498,7 @@ LibExtern SEXP	R_MissingArg;	    /* Missing argument marker */
 #ifdef __MAIN__
 attribute_hidden
 #else
-extern 
+extern
 #endif
 SEXP	R_RestartToken;     /* Marker for restarted function calls */
 
@@ -546,7 +546,7 @@ int Rf_asLogical(SEXP x);
 int Rf_asInteger(SEXP x);
 double Rf_asReal(SEXP x);
 Rcomplex Rf_asComplex(SEXP x);
-    
+
 
 
 /* Other Internally Used Functions */
@@ -588,12 +588,12 @@ SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_install(char const *);
 Rboolean Rf_isFree(SEXP);
-Rboolean Rf_isFunction(SEXP);
 Rboolean Rf_isUnsorted(SEXP);
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_namesgets(SEXP, SEXP);
+SEXP Rf_mkChar(const char*);
 Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
 int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
@@ -617,6 +617,9 @@ void Rf_unprotect_ptr(SEXP);
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 SEXP R_tryEval(SEXP, SEXP, int *);
+
+Rboolean Rf_isS4(SEXP);
+SEXP Rf_asS4(SEXP, Rboolean);
 
 				/* return(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
@@ -799,7 +802,6 @@ int R_system(char *);
 #define allocMatrix		Rf_allocMatrix
 #define allocS4Object		Rf_allocS4Object
 #define allocSExp		Rf_allocSExp
-/*#define allocString		Rf_allocString*/
 #define allocVector		Rf_allocVector
 #define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
@@ -808,6 +810,7 @@ int R_system(char *);
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical
 #define asReal			Rf_asReal
+#define asS4			Rf_asS4
 #define classgets		Rf_classgets
 #define coerceVector		Rf_coerceVector
 #define conformable		Rf_conformable
@@ -857,14 +860,11 @@ int R_system(char *);
 #define isNull			Rf_isNull
 #define isNumeric		Rf_isNumeric
 #define isObject		Rf_isObject
-  /*see comment in Rinlinedfuns.h
-// #define isS4                     Rf_isS4
-// #define asS4                    Rf_asS4
-*/
 #define isOrdered		Rf_isOrdered
 #define isPairList		Rf_isPairList
 #define isPrimitive		Rf_isPrimitive
 #define isReal			Rf_isReal
+#define isS4			Rf_isS4
 #define isString		Rf_isString
 #define isSymbol		Rf_isSymbol
 #define isTs			Rf_isTs
@@ -959,10 +959,6 @@ Rboolean Rf_isOrdered(SEXP);
 Rboolean Rf_isPairList(SEXP);
 Rboolean Rf_isPrimitive(SEXP);
 Rboolean Rf_isReal(SEXP);
-  /* see comment in Rinlinedfuns.h 
-  // Rboolean Rf_isS4(SEXP);
- // SEXP Rf_asS4(SEXP, Rboolean);
-  */
 Rboolean Rf_isString(SEXP);
 Rboolean Rf_isSymbol(SEXP);
 Rboolean Rf_isTs(SEXP);
@@ -986,7 +982,6 @@ SEXP Rf_list2(SEXP, SEXP);
 SEXP Rf_list3(SEXP, SEXP, SEXP);
 SEXP Rf_list4(SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_listAppend(SEXP, SEXP);
-SEXP Rf_mkChar(const char*);
 SEXP Rf_mkString(const char*);
 int Rf_nlevels(SEXP);
 SEXP Rf_ScalarComplex(Rcomplex);

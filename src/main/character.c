@@ -43,7 +43,7 @@
 
 #include <sys/types.h> /* probably not needed */
 #include <R_ext/RS.h>  /* for Calloc/Free */
-#include <Rmath.h>     /* for imax2 */
+#define imax2(x, y) ((x < y) ? y : x)
 
 
 #ifdef SUPPORT_MBCS

@@ -31,7 +31,7 @@
 #endif
 
 #include "Defn.h"
-#include "Rmath.h" /* imax2 */
+#define imax2(x, y) ((x < y) ? y : x)
 #include "Print.h"
 #include <R_ext/RS.h>           /* CallocCharBuf, Free */
 
