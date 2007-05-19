@@ -5,7 +5,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     range <- par("usr")[if(side %%2) 1:2 else 3:4]
     ## find out the scale involved
     d <- range[2] - range[1]
-    z <- as.numeric(c(range, x[is.finite(x)]))
+    z <- c(range, x[is.finite(x)])
     if(d < 1.1*60) { # seconds
         sc <- 1
         if(missing(format)) format <- "%S"
@@ -183,7 +183,7 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
     if (d < 7) # days of a week
         if(missing(format)) format <- "%a"
     if(d < 100) { # month and day
-        z <- structure(pretty(as.numeric(z)), class="Date")
+        z <- structure(pretty(z), class="Date")
         if(missing(format)) format <- "%b %d"
     } else if(d < 1.1*365) { # months
         zz <- as.POSIXlt(z)

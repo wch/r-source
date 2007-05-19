@@ -2,8 +2,7 @@ pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
                    high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
                    eps.correct = 0)
 {
-    if(!is.numeric(x))
-	stop("'x' must be numeric")
+    x <- as.numeric(x)
     if(length(x)==0)
 	return(x)
     x <- x[is.finite(x)]
