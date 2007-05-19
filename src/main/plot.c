@@ -34,14 +34,14 @@
 
 #define imax2(x, y) ((x < y) ? y : x)
 
-static INLINE_FUN double fmin2(double x, double y)
+static R_INLINE double fmin2(double x, double y)
 {
 	if (ISNAN(x) || ISNAN(y))
 		return x + y;
 	return (x < y) ? x : y;
 }
 
-static INLINE_FUN double fmax2(double x, double y)
+static R_INLINE double fmax2(double x, double y)
 {
 	if (ISNAN(x) || ISNAN(y))
 		return x + y;

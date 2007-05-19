@@ -27,7 +27,7 @@
 #include <Rmath.h>
 #include <R_ext/Applic.h>	/* R_cpoly */
 
-static INLINE_FUN double fsign_int(double x, double y)
+static R_INLINE double fsign_int(double x, double y)
 {
     if (ISNAN(x) || ISNAN(y))
 	return x + y;
