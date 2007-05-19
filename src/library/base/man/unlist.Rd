@@ -19,7 +19,8 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   \code{unlist} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 
-  If \code{x} has length zero the result is \code{NULL}.
+%never true
+%  If \code{x} has length zero the result is \code{NULL}.
 
   If \code{recursive = FALSE}, the function will not recurse beyond the
   first level items in \code{x}.
@@ -56,7 +57,7 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   hold the list components.
 
   The output type is determined from the highest type
-  of the components in the hierarchy raw < logical < integer < real <
+  of the components in the hierarchy NULL < raw < logical < integer < real <
   complex < character < list < expression, after coercion of pairlists
   to lists.
 }
