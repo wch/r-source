@@ -97,7 +97,7 @@
 
   Numeric vectors in \R will be passed as type \code{double *} to C (and
   as \code{double precision} to Fortran) unless (i) \code{.C} or
-  \code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the
+  \code{.Fortran} is used, (ii) \code{DUP} is true and (iii) the
   argument has attribute \code{Csingle} set to \code{TRUE} (use
   \code{\link{as.single}} or \code{\link{single}}).  This mechanism is
   only intended to be used to facilitate the interfacing of existing C
