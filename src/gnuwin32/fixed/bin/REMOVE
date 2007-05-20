@@ -46,7 +46,7 @@ usage() if $opt_help;
 my $startdir = cwd();
 if($opt_library){
     chdir($opt_library) ||
-	die "Error: cannot change to directory \`$opt_library'\n";
+	die "Error: cannot change to library directory '$opt_library'\n";
     $library = cwd();
     chdir($startdir);
 } else {
@@ -62,7 +62,7 @@ foreach $pkg (@ARGV) {
       if (-d "$library/$pkg") {
   	rmtree("$library/$pkg");
       } else {
-  	print "WARNING: there is no pkg \`${pkg}' in lib \`${library}'\n";
+  	print "WARNING: there is no pkg '${pkg}' in lib '${library}'\n";
       }
 }
 

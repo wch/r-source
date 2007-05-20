@@ -103,7 +103,7 @@ Usage: R CMD $name [options] files|linker options
 
 Build a DLL (shared library) for dynamic loading from the specified source 
 or object files (which are automagically made from their sources) or 
-linker options.  If not \ given via \`--output\', the name for the DLL
+linker options.  If not given via '--output', the name for the DLL
 is determined from the first source or object file.
 
 Options:
