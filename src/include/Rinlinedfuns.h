@@ -34,6 +34,11 @@
 #define C99_INLINE_SEMANTICS 1
 #endif
 
+/* Apple's gcc build >5400 (since Xcode 3.0) doesn't support GNU inline in C99 mode */
+#if __APPLE_CC__ > 5400 && !defined(C99_INLINE_SEMANTICS)
+#define C99_INLINE_SEMANTICS 1
+#endif
+
 #ifdef COMPILING_R
 /* defined only in inlined.c: this emits standalone code there */
 # define INLINE_FUN
