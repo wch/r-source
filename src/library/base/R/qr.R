@@ -57,8 +57,10 @@ qr.coef <- function(qr, y)
     ## else {not complex} :
     a <- attr(qr, "useLAPACK")
     if(!is.null(a) && is.logical(a) && a) {
-	coef <- matrix(NA_real_, nr=p, nc=ny)
-	coef[qr$pivot,] <- .Call("qr_coef_real", qr, y, PACKAGE = "base")
+        if(!is.double(y)) storage.mode(y) <- "double"
+	coef <- matrix(NA_real_, nrow = p, ncol = ny)
+	coef[qr$pivot,] <-
+            .Call("qr_coef_real", qr, y, PACKAGE = "base")[seq_len(p)]
 	return(if(im) coef else c(coef))
     }
     if (k == 0) return( if (im) matrix(NA,p,ny) else rep.int(NA,p))

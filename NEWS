@@ -114,6 +114,12 @@ BUG FIXES
 
     o	runmed(c(), 1) no longer segfaults.
 
+    o	qr.coef(QR, b) failed for an LAPACK-produced QR if b was
+	integer or for an over-determined system.
+
+	qr.solve() for an under-determined system produces a
+	solution with 0 and not NA for columns which are unused.
+
 
 
 
