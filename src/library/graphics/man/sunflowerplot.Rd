@@ -99,13 +99,13 @@ require(stats)
 ## 'number' is computed automatically:
 sunflowerplot(iris[, 3:4])
 ## Imitating  Chambers et al., p.109, closely:
-sunflowerplot(iris[, 3:4],cex=.2, cex.f=1, size=.035, seg.lwd=.8)
+sunflowerplot(iris[, 3:4], cex=.2, cex.fact=1, size=.035, seg.lwd=.8)
 
 sunflowerplot(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
               main = "Sunflower Plot of Rounded N(0,1)")
 
 ## A 'point process' {explicit 'number' argument}:
-sunflowerplot(rnorm(100),rnorm(100), number=rpois(n=100,lambda=2),
+sunflowerplot(rnorm(100), rnorm(100), number = rpois(n=100,lambda=2),
               rotate=TRUE, main="Sunflower plot", col = "blue4")
 }
 \keyword{hplot}

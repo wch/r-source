@@ -26,7 +26,7 @@ try(parse(text = "12iL")) # gives syntax error
 
 
 all((0:6) == pi + ((-pi):pi))
-all((0:7) == (pi+seq(-pi,pi, len=8))*7/(2*pi))
+all((0:7) == (pi+seq(-pi,pi, length=8))*7/(2*pi))
 
 1 == as.integer(is.na(c(pi,NA)[2]))
 1 == as.integer(is.nan(0/0))
@@ -134,7 +134,7 @@ l2 <- list(a=1, b=2)
 l2["cc"] <- pi
 l2[["d"]] <- 4
 l2 $ e <- 55
-all.equal(l2, list(a = 1, b = 2, cc = pi, d = 4, e = 55), tol = 0)
+all.equal(l2, list(a = 1, b = 2, cc = pi, d = 4, e = 55), tolerance = 0)
 all.equal(l2["d"], list(d = 4))
 l2$d == 4 && l2$d == l2[["d"]]
 
@@ -163,6 +163,6 @@ format(as.POSIXct(substr(relR120,1,10))) == substr(relR120,1,10)
 x <- c(3:1,6,4,3,NA,5,0,NA)
 rx <-  rank(x)
 all(rx == c(4.5, 3:2, 8, 6, 4.5, 9, 7, 1, 10))
-rxK <- rank(x, na = "keep")
+rxK <- rank(x, na.last = "keep")
 all(rx [rx <= 8]    == na.omit(rxK))
-all(rank(x, na= NA) == na.omit(rxK))
+all(rank(x, na.last = NA) == na.omit(rxK))

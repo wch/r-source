@@ -63,7 +63,7 @@ Error in parse(file, n, text, prompt, srcfile, encoding) :
 > 
 > all((0:6) == pi + ((-pi):pi))
 [1] TRUE
-> all((0:7) == (pi+seq(-pi,pi, len=8))*7/(2*pi))
+> all((0:7) == (pi+seq(-pi,pi, length=8))*7/(2*pi))
 [1] TRUE
 > 
 > 1 == as.integer(is.na(c(pi,NA)[2]))
@@ -219,7 +219,7 @@ Error in parse(file, n, text, prompt, srcfile, encoding) :
 > l2["cc"] <- pi
 > l2[["d"]] <- 4
 > l2 $ e <- 55
-> all.equal(l2, list(a = 1, b = 2, cc = pi, d = 4, e = 55), tol = 0)
+> all.equal(l2, list(a = 1, b = 2, cc = pi, d = 4, e = 55), tolerance = 0)
 [1] TRUE
 > all.equal(l2["d"], list(d = 4))
 [1] TRUE
@@ -258,9 +258,9 @@ Error in parse(file, n, text, prompt, srcfile, encoding) :
 > rx <-  rank(x)
 > all(rx == c(4.5, 3:2, 8, 6, 4.5, 9, 7, 1, 10))
 [1] TRUE
-> rxK <- rank(x, na = "keep")
+> rxK <- rank(x, na.last = "keep")
 > all(rx [rx <= 8]    == na.omit(rxK))
 [1] TRUE
-> all(rank(x, na= NA) == na.omit(rxK))
+> all(rank(x, na.last = NA) == na.omit(rxK))
 [1] TRUE
 > 

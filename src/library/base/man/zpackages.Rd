@@ -36,8 +36,8 @@
 }
 \examples{
 (.packages())               # maybe just "base"
-.packages(all = TRUE)       # return all available as character vector
-require(splines)            # the same
+.packages(all.available = TRUE) # return all available as character vector
+require(splines)
 (.packages())               # "splines", too
 detach("package:splines")
 }

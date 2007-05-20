@@ -79,7 +79,7 @@ layout.torture()
 grid.newpage()
 testlay <- function(just="centre") {
   pushViewport(viewport(layout=grid.layout(1, 1, widths=unit(1, "inches"),
-                          height=unit(0.25, "npc"),
+                          heights=unit(0.25, "npc"),
                           just=just)))
   pushViewport(viewport(layout.pos.col=1, layout.pos.row=1))
   grid.rect()
