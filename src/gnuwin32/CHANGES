@@ -26,12 +26,10 @@ OTHERS
 
     o	Cross-building does now lazy-load the base package.
 
-    o	Rcmd INSTALL -l <libdir> will now create the path to <libdir>
-	if it does not exist.
-
     o	The default for a build environment is to use gcc >= 4.2.0.
 	Set BUILD=GCC3 if you have gcc 3.4.5.  (Binary tools for
 	gcc 4.2.0 are not yet released but expected in June 2007.)
+	[This change has been reverted until then.]
 
 
 
