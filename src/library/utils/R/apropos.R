@@ -19,7 +19,7 @@ apropos <- function (what, where = FALSE, ignore.case = TRUE, mode = "any")
     sort(x)
 }
 
-find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE)
+find <- function(what, mode = "any", numeric = FALSE, simple.words=TRUE)
 {
     stopifnot(is.character(what))
     if(length(what) > 1) {
@@ -53,6 +53,6 @@ find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE)
         }
     }
     ## found name in  search()[ ind ]
-    if(numeric.) structure(which(ind), names=sp[ind]) else sp[ind]
+    if(numeric) structure(which(ind), names=sp[ind]) else sp[ind]
 }
 

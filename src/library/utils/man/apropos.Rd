@@ -3,14 +3,14 @@
 \usage{
 apropos(what, where = FALSE, ignore.case = TRUE, mode = "any")
 
-find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
+find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
 }
 \alias{apropos}
 \alias{find}
 \arguments{
   \item{what}{character string with name of an object, or more generally
     a \link{regular expression} to match against.}
-  \item{where, numeric.}{a logical indicating whether positions in the
+  \item{where, numeric}{a logical indicating whether positions in the
     search list should also be returned}
   \item{ignore.case}{logical indicating if the search should be
     case-insensitive, \code{TRUE} by default.  Note that in \R versions
@@ -32,9 +32,9 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
   If \code{where} is \code{TRUE}, the positions in the search list are
   returned as the names attribute.
 
-  \code{find} is a different user interface for the same task as \code{apropos}.
-  However, by default (\code{simple.words == TRUE}), only full words are
-  searched with \code{grep(fixed = TRUE)}.
+  \code{find} is a different user interface for the same task as
+  \code{apropos}. However, by default (\code{simple.words == TRUE}),
+  only full words are searched with \code{grep(fixed = TRUE)}.
 
   Note that in \R versions prior to 2.5.0, \code{what} was allowed to be
   non-character, such that \code{find(cor)} worked as it does in S.

@@ -200,6 +200,10 @@ NEW FEATURES
     o	vignette() has a new argument 'all' to choose between showing
     	vignettes in attached packages or in all installed packages.
 
+    o	The find() argument is now named 'numeric' and not 'numeric.':
+	the latter was needed to avoid warnings about name clashes
+	many years ago, but partial matching was used.
+
 
 DEPRECATED & DEFUNCT
 
