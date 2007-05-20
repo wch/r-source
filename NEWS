@@ -31,6 +31,10 @@ INSTALLATION
 	sheet: in recent versions of makeinfo the markup such as @file
 	was being lost in the HTML rendering.
 
+    o	The use of inlining has been tweaked to avoid warnings from
+	gcc >= 4.2.0 when compiling in C99 mode (which is the default
+	from configure).
+
 
 BUG FIXES
 
