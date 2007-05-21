@@ -71,7 +71,8 @@ NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
 *** does not seem to be installed on your system or is not in your path.
 *** Please install either Perl 5 on your system and re-configure R or
-*** get the PDF reference manual from the nearest CRAN server.
+*** (for a CRAN package) get the PDF reference manual from the nearest
+*** CRAN mirror.
 *** The CRAN master site can be found at
 ***    http://cran.r-project.org/"
 
@@ -300,8 +301,19 @@ if test -z "${lib}"; then
     R_DEFAULT_PACKAGES=NULL "${R_EXE}" --no-save --slave | \
     grep '^~~~' | sed 's/.*~~~//'`
   message "Installing to library '$lib'"
+  ## $lib gets checked later.
 else
   lib0=${lib}
+  if ! test -d "${lib}"; then
+    error "-l or --library value '${lib}' does not exist or is not a directory"
+    do_cleanup_tmpdir;
+    exit 2
+  fi
+  if ! test -w "${lib}"; then
+    error "-l  or --library value '${lib}' does not have write access"
+    do_cleanup_tmpdir;
+    exit 2
+  fi
   cd ${lib}
   lib=`${GETWD}`
   cd ${startdir}
