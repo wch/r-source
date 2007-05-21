@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2006  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2007  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -6361,6 +6361,8 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
 		     NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+
+    if(!R_VIS(gc->col)) return;
 
     PDF_SetLineColor(gc->col, dd);
     PDF_SetLineStyle(gc, dd);

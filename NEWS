@@ -124,6 +124,11 @@ BUG FIXES
 	qr.solve() for an under-determined system produces a
 	solution with 0 and not NA for columns which are unused.
 
+    o	segments() was not handling full transparency correctly in PDF.
+	(PR#9694)
+
+	Nor was arrows().
+
 
 
 

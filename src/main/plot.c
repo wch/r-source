@@ -1863,11 +1863,13 @@ SEXP attribute_hidden do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (R_FINITE(xx[0]) && R_FINITE(yy[0]) &&
 	    R_FINITE(xx[1]) && R_FINITE(yy[1]))
 	{
-	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
-	    /* NA color should be ok */
-	    Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
-	    Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
-	    GLine(xx[0], yy[0], xx[1], yy[1], DEVICE, dd);
+	    int thiscol = INTEGER(col)[i % ncol];
+	    if(!R_TRANSPARENT(thiscol)) {
+		Rf_gpptr(dd)->col = thiscol;
+		Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
+		Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
+		GLine(xx[0], yy[0], xx[1], yy[1], DEVICE, dd);
+	    }
 	}
     }
     GMode(0, dd);
@@ -1962,7 +1964,7 @@ SEXP attribute_hidden do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     double xx0, yy0, xx1, yy1;
     double hlength, angle;
     int code;
-    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd;
+    int nx0, nx1, ny0, ny1, i, n, ncol, nlty, nlwd, thiscol;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -2019,8 +2021,9 @@ SEXP attribute_hidden do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	yy1 = y1[i%ny1];
 	GConvert(&xx0, &yy0, USER, DEVICE, dd);
 	GConvert(&xx1, &yy1, USER, DEVICE, dd);
-	if (R_FINITE(xx0) && R_FINITE(yy0) && R_FINITE(xx1) && R_FINITE(yy1)) {
-	    Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
+	if (R_FINITE(xx0) && R_FINITE(yy0) && R_FINITE(xx1) && R_FINITE(yy1)
+	    && !R_TRANSPARENT(thiscol = INTEGER(col)[i % ncol])) {
+	    Rf_gpptr(dd)->col = thiscol;
 	    Rf_gpptr(dd)->lty = INTEGER(lty)[i % nlty];
 	    Rf_gpptr(dd)->lwd = REAL(lwd)[i % nlwd];
 	    GArrow(xx0, yy0, xx1, yy1, DEVICE,
