@@ -1010,19 +1010,24 @@ callGeneric <- function(...)
     frame <- sys.parent()
     envir <- parent.frame()
 
-    # the  lines below this comment do what the previous version
-    # did in the expression fdef <- sys.function(frame)
+    ## the  lines below this comment do what the previous version
+    ## did in the expression fdef <- sys.function(frame)
     if(exists(".Generic", envir = envir, inherits = FALSE))
-      fname <- get(".Generic", envir = envir)
-    else # but probably an error
-      fname <- sys.call(frame)[[1]]
-    fdef <- get(as.character(fname), env = envir)
+	fname <- get(".Generic", envir = envir)
+    else { # in a local method (special arguments), or	an error
+	fname <- sys.call(frame)[[1]]
+	## FIXME:  this depends on the .local mechanism, which should change
+	if(identical(as.character(fname), ".local"))
+	    fname <- sys.call(sys.parent(2))[[1]]
+	fname <- as.character(fname)
+    }
+    fdef <- get(fname, envir = envir)
 
     if(is.primitive(fdef)) {
         if(nargs() == 0)
             stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")
         else {
-            fname <- sys.call(frame)[[1]]
+            fname <- as.name(fname)
             call <- substitute(fname(...))
         }
     }
@@ -1034,6 +1039,7 @@ callGeneric <- function(...)
         fname <- as.name(f)
         if(nargs() == 0) {
             call <- sys.call(frame)
+            call[[1]] <- as.name(fname) # in case called from .local
             call <- match.call(fdef, call)
             anames <- names(call)
             matched <- !is.na(match(anames, names(formals(fdef))))

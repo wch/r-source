@@ -129,6 +129,9 @@ BUG FIXES
 
 	Nor was arrows().
 
+    o	callGeneric() inside a method with extra arguments {and hence
+	currently defined via .local()} now works.
+
 
 
 
