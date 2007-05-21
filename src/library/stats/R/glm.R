@@ -604,9 +604,11 @@ summary.glm <- function(object, dispersion = NULL,
     }
     ## return answer
 
-    ans <- c(object[c("call","terms","family","deviance", "aic",
+    ## these need not all exist, e.g. na.action.
+    keep <- match(c("call","terms","family","deviance", "aic",
 		      "contrasts", "df.residual","null.deviance","df.null",
-                      "iter", "na.action")],
+                      "iter", "na.action"), names(object), 0)
+    ans <- c(object[keep],
 	     list(deviance.resid = residuals(object, type = "deviance"),
 		  coefficients = coef.table,
                   aliased = aliased,
