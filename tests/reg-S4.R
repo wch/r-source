@@ -200,6 +200,30 @@ show(m)
 print(m)
 ## fixed in 2.5.0 patched
 
+## callGeneric inside a method with new arguments {hence using .local()}:
+setGeneric("Gfun", function(x, ...) standardGeneric("Gfun"),
+	   useAsDefault = function(x, ...) sum(x, ...))
+setClass("myMat", contains="matrix")
+setClass("mmat2", contains="matrix")
+setMethod(Gfun, signature(x = "myMat"),
+          function(x, extrarg = TRUE) {
+              cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
+              Gfun(unclass(x))
+          })
+setMethod(Gfun, signature(x = "mmat2"),
+          function(x, extrarg = TRUE) {
+              cat("in 'mmat2' method for 'Gfun() : extrarg=", extrarg, "\n")
+              x <- unclass(x)
+              callGeneric()
+          })
+(mm <- new("myMat", diag(3)))
+Gfun(mm)
+Gfun(mm, extrarg = FALSE)
+m2 <- new("mmat2", diag(3))
+Gfun(m2)
+Gfun(m2, extrarg = FALSE)
+## The last two gave Error ...... variable ".local" was not found
+
 
 ## regression tests of dispatch: most of these became primitive in 2.6.0
 setClass("c1", "numeric")
