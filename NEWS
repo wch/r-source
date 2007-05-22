@@ -204,6 +204,14 @@ NEW FEATURES
 	the latter was needed to avoid warnings about name clashes
 	many years ago, but partial matching was used.
 
+    o   The [[ subsetting operator now has an argument 'exact' that
+        allows programmers to disable partial matching.  The default
+        value is exact=NA which causes a warning to be issued when
+        partial matching occurs.  When exact=TRUE, no partial matching
+        will be performed.  When exact=FALSE, partial matching can
+        occur and no warning will be issued.  This patch was written
+        by Seth Falcon.
+
 
 DEPRECATED & DEFUNCT
 
