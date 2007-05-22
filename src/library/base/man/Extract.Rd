@@ -16,8 +16,8 @@
 \usage{
 x[i]
 x[i, j, \dots , drop = TRUE]
-x[[i]]
-x[[i, j, \dots]]
+x[[i, exact = NA]]
+x[[i, j, \dots, exact = NA]]
 x$name
 }
 \arguments{
@@ -29,9 +29,9 @@ x$name
     \code{numeric} or \code{character} vectors or empty (missing) or
     \code{NULL}.  Numeric values are coerced to integer as by
     \code{\link{as.integer}} (and hence truncated towards zero).  For
-    extraction with \code{[[} character vectors are normally (see under
-    Environments) partially matched to the \code{\link{names}} of the
-    object.
+    extraction with \code{[[}, character vectors will be partially
+    matched to the \code{\link{names}} of the object based on the value
+    of the \code{exact} argument (also see under Environments).
 
     For \code{[}-indexing only: \code{i, j, \dots} can be logical
     vectors, indicating elements/slices to select.  Such vectors are
@@ -53,7 +53,13 @@ x$name
   }
   \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
-    only works for extracting elements, not for the replacement.}
+    only works for extracting elements, not for the replacement.
+  }
+  \item{exact}{Controls partial matching of \code{[[} when indexing with
+    character vectors.  The default value, \code{NA}, allows partial
+    matching, but issues a warning when it occurs.  When \code{TRUE}, no
+    partial matching is performed.  When \code{FALSE}, partial matching
+    is allowed and no warning is issued when it occurs.}
 }
 \details{
   These operators are generic.  You can write methods to handle indexing
@@ -132,7 +138,8 @@ x$name
   Both \code{[[} and \code{$} select a single element of the list.  The
   main difference is that \code{$} does not allow computed indices,
   whereas \code{[[} does.  \code{x$name} is equivalent to
-  \code{x[["name"]]}.
+  \code{x[["name"]]}.  Also, partial matching behavior of \code{[[} can
+  be controlled using the \code{exact} argument.
 
   \code{[} and \code{[[} are sometimes applied to other recursive
   objects such as \link{call}s and \link{expression}s.  Pairlists are
