@@ -16,11 +16,7 @@ deviceIsInteractive(name)
     \code{TRUE} when \code{\link{.Device} == "null device"} and
     \code{\link{getOption}("device")} is among the known
     interactive devices.}
-  \item{name}{a device name.}
-}
-\value{
-  \code{dev.interactive()} returns a logical, \code{TRUE} if and only if an
-  interactive (screen) device is in use.
+  \item{name}{one of more device names, as a character vector, or \code{NULL}.}
 }
 \details{
   There is a list of known interactive devices, and in
@@ -33,10 +29,18 @@ deviceIsInteractive(name)
   package of the same name).  Packages can add their devices to the list
   by calling \code{deviceIsInteractive}.
 }
+\value{
+  \code{dev.interactive()} returns a logical, \code{TRUE} if and only if an
+  interactive (screen) device is in use.
+
+  \code{deviceIsInteractive} returns the updated list of known
+  interactive devices, invisibly.
+}
 \seealso{
   \code{\link{Devices}} for the available devices on your platform.
 }
 \examples{
-dev.interactive # definition -> see list of "interactive" devices explicitly
+dev.interactive()
+print(deviceIsInteractive(NULL))
 }
 \keyword{device}

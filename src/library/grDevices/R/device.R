@@ -12,7 +12,13 @@ dev.interactive <- function(orNone = FALSE) {
 
 deviceIsInteractive <- function(name)
 {
-    .known_interactive.devices <<- c(.known_interactive.devices, name)
+    if(length(name)) {
+        if(!is.character(name)) stop("'name'must be a character vector")
+        unlockBinding(".known_interactive.devices", asNamespace("grDevices"))
+        .known_interactive.devices <<- c(.known_interactive.devices, name)
+        lockBinding(".known_interactive.devices", asNamespace("grDevices"))
+    }
+    invisible(.known_interactive.devices)
 }
 
 
