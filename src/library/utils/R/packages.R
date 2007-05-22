@@ -82,7 +82,7 @@ available.packages <-
         .checkRversion <- function(x) {
             if(is.na(xx <- x["Depends"])) return(TRUE)
             xx <- tools:::.split_dependencies(xx)
-            if(length(z <- xx[["R"]]) > 1)
+            if(length(z <- xx[["R", exact=TRUE]]) > 1)
                 eval(parse(text=paste("currentR", z$op, "z$version")))
             else TRUE
         }
