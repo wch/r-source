@@ -1518,7 +1518,7 @@ SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho
 			error(_("recursive indexing failed at level %d\n"), 
 			      i+1);
 		    off = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
-				    length(x), /*partial ok*/TRUE, i);
+				    length(x), /*partial ok*/TRUE, i, call);
 		    if(off < 0 || off >= LENGTH(x))
 			error(_("no such index at level %d\n"), i+1);
 		    xup = x;
@@ -1550,7 +1550,7 @@ SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho
 		INTEGER(indx)[i] = get1index(CAR(subs), isNull(names) ?
 					      R_NilValue : VECTOR_ELT(names, i),
 					      INTEGER(dims)[i],
-					      /*partial ok*/FALSE, -1);
+					      /*partial ok*/FALSE, -1, call);
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||
 		    INTEGER(indx)[i] >= INTEGER(dims)[i])
@@ -1731,7 +1731,7 @@ SEXP attribute_hidden do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(indx)[i] = get1index(CAR(subs), CAR(names),
 					     INTEGER(dims)[i],
-					     /*partial ok*/FALSE, -1);
+					     /*partial ok*/FALSE, -1, call);
 		subs = CDR(subs);
 		if (INTEGER(indx)[i] < 0 ||
 		    INTEGER(indx)[i] >= INTEGER(dims)[i])

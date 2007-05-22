@@ -831,14 +831,14 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(!isVectorList(x))
 		    error(_("recursive indexing failed at level %d\n"), i+1);
 		offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
-				   length(x), /*partial ok*/pok, i);
+				   length(x), pok, i, call);
 		if(offset < 0 || offset >= length(x))
 		    error(_("no such index at level %d\n"), i+1);
 		x = VECTOR_ELT(x, offset);
 	    }
 	}
 	offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
-			   length(x), /*partial ok*/pok, i);
+			   length(x), pok, i, call);
 	if (offset < 0 || offset >= length(x)) {
 	    /* a bold attempt to get the same */
 	    /* behaviour for $ and [[ */
@@ -866,7 +866,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(indx)[i] =
 		get1index(CAR(subs), (i < ndn) ? VECTOR_ELT(dimnames, i) :
 			  R_NilValue,
-			  INTEGER(indx)[i], /*partial ok*/pok, -1);
+			  INTEGER(indx)[i], pok, -1, call);
 	    subs = CDR(subs);
 	    if (INTEGER(indx)[i] < 0 ||
 		INTEGER(indx)[i] >= INTEGER(dims)[i])

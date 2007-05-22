@@ -913,7 +913,7 @@ SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
-int get1index(SEXP, SEXP, int, int, int);
+int get1index(SEXP, SEXP, int, int, int, SEXP);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 int hashpjw(char*);
