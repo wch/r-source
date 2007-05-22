@@ -132,6 +132,9 @@ BUG FIXES
     o	callGeneric() inside a method with extra arguments {and hence
 	currently defined via .local()} now works.
 
+    o	[g]sub(fixed=TRUE, useBytes=FALSE) could substitute in the
+	wrong place in an MBCS locale.
+
 
 
 

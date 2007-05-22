@@ -856,7 +856,7 @@ static int fgrep_one(char *pat, char *target, int useBytes)
 
     if(plen == 0) return 0;
     if(plen == 1) {
-    /* a single char is a common case */
+    /* a single byte is a common case */
 	for(i = 0, p = target; *p; p++, i++)
 	    if(*p == pat[0]) return i;
 	return -1;
@@ -868,6 +868,36 @@ static int fgrep_one(char *pat, char *target, int useBytes)
 	mbs_init(&mb_st);
 	for(ib = 0, i = 0; ib <= len-plen; i++) {
 	    if(strncmp(pat, target+ib, plen) == 0) return i;
+	    used = Mbrtowc(NULL,  target+ib, MB_CUR_MAX, &mb_st);
+	    if(used <= 0) break;
+	    ib += used;
+	}
+    } else
+#endif
+	for(i = 0; i <= len-plen; i++)
+	    if(strncmp(pat, target+i, plen) == 0) return i;
+    return -1;
+}
+
+static int fgrep_one_bytes(char *pat, char *target, int useBytes)
+{
+    int i = -1, plen=strlen(pat), len=strlen(target);
+    char *p;
+
+    if(plen == 0) return 0;
+    if(plen == 1) {
+    /* a single byte is a common case */
+	for(i = 0, p = target; *p; p++, i++)
+	    if(*p == pat[0]) return i;
+	return -1;
+    }
+#ifdef SUPPORT_MBCS
+    if(!useBytes && mbcslocale) { /* skip along by chars */
+	mbstate_t mb_st;
+	int ib, used;
+	mbs_init(&mb_st);
+	for(ib = 0, i = 0; ib <= len-plen; i++) {
+	    if(strncmp(pat, target+ib, plen) == 0) return ib;
 	    used = Mbrtowc(NULL,  target+ib, MB_CUR_MAX, &mb_st);
 	    if(used <= 0) break;
 	    ib += used;
@@ -1118,7 +1148,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, ("input string %d is invalid in this locale"), i+1);
 #endif
 	if(fixed_opt) {
-	    st = fgrep_one(spat, s, useBytes);
+	    st = fgrep_one_bytes(spat, s, useBytes);
 	    if(st < 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
@@ -1129,10 +1159,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    do {
 			nr++;
 			s += st+patlen;
-		    } while((st = fgrep_one(spat, s, useBytes)) >= 0);
+		    } while((st = fgrep_one_bytes(spat, s, useBytes)) >= 0);
 		    /* and reset */
 		    s = translateChar(STRING_ELT(vec, i));
-		    st = fgrep_one(spat, s, useBytes);
+		    st = fgrep_one_bytes(spat, s, useBytes);
 		} else nr = 1;
 		SET_STRING_ELT(ans, i, allocString(ns + nr*(replen - patlen)));
 		u = CHAR(STRING_ELT(ans, i)); *u ='\0';
@@ -1140,7 +1170,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    nr = strlen(u);
 		    strncat(u, s, st); u[nr+st] = '\0'; s += st+patlen;
 		    strcat(u, t);
-		} while(global && (st = fgrep_one(spat, s, useBytes)) >= 0);
+		} while(global && (st = fgrep_one_bytes(spat, s, useBytes)) >= 0);
 		strcat(u, s);
 	    }
 	} else {
