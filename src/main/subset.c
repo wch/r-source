@@ -509,21 +509,55 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 }
 
 
+/* Returns and removes a named argument from argument list args.
+   The search ends as soon as a matching argument is found.  If
+   the argument is not found, the argument list is not modified
+   and R_NilValue is returned.
+ */
+static SEXP ExtractArg(SEXP args, SEXP arg_sym)
+{
+    SEXP arg, prev_arg;
+    int found = 0;
+
+    for (arg = prev_arg = args; arg != R_NilValue; arg = CDR(arg)) {
+	if(TAG(arg) == arg_sym) {
+            if (arg == prev_arg) /* found at head of args */
+                args = CDR(args);
+            else
+                SETCDR(prev_arg, CDR(arg));
+            found = 1;
+            break;
+	}
+	else  prev_arg = arg;
+    }
+    return found ? CAR(arg) : R_NilValue;
+}
+
 /* Extracts the drop argument, if present, from the argument list.
    The object being subsetted must be the first argument. */
 static void ExtractDropArg(SEXP el, int *drop)
 {
-    SEXP last = el;
-    for (el = CDR(el); el != R_NilValue; el = CDR(el)) {
-	if(TAG(el) == R_DropSymbol) {
-	    *drop = asLogical(CAR(el));
-	    if (*drop == NA_LOGICAL) *drop = 1;
-	    SETCDR(last, CDR(el));
-	}
-	else last = el;
-    }
+    SEXP dropArg = ExtractArg(el, R_DropSymbol);
+    *drop = asLogical(dropArg);
+    if (*drop == NA_LOGICAL) *drop = 1;
 }
 
+
+/* Extracts and, if present, removes the 'exact' argument from the
+   argument list.  An integer code giving the desired exact matching
+   behavior is returned:
+       0  not exact
+       1  exact
+      -1  not exact, but warn when partial matching is used
+ */
+static int ExtractExactArg(SEXP args)
+{
+    SEXP argval = ExtractArg(args, R_ExactSymbol);
+    int exact = -1;
+    exact = asLogical(argval);
+    if (exact == NA_LOGICAL) exact = -1;
+    return exact;
+}
 
 
 /* The "[" subset operator.
@@ -730,10 +764,19 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, dimnames, indx, subs, x;
     int i, ndims, nsubs, offset = 0;
-    int drop = 1;
+    int drop = 1, pok, exact = -1;
 
     PROTECT(args);
     ExtractDropArg(args, &drop);
+    /* Is partial matching ok?  When the exact arg is NA, a warning is
+       issued if partial matching occurs.
+     */
+    exact = ExtractExactArg(args);
+    if (exact == -1)
+        pok = exact;
+    else
+        pok = !exact;
+
     x = CAR(args);
 
     /* This code was intended for compatibility with S, */
@@ -788,14 +831,14 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(!isVectorList(x))
 		    error(_("recursive indexing failed at level %d\n"), i+1);
 		offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
-				   length(x), /*partial ok*/TRUE, i);
+				   length(x), /*partial ok*/pok, i);
 		if(offset < 0 || offset >= length(x))
 		    error(_("no such index at level %d\n"), i+1);
 		x = VECTOR_ELT(x, offset);
 	    }
 	}
 	offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
-			   length(x), /*partial ok*/TRUE, i);
+			   length(x), /*partial ok*/pok, i);
 	if (offset < 0 || offset >= length(x)) {
 	    /* a bold attempt to get the same */
 	    /* behaviour for $ and [[ */
@@ -823,7 +866,7 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(indx)[i] =
 		get1index(CAR(subs), (i < ndn) ? VECTOR_ELT(dimnames, i) :
 			  R_NilValue,
-			  INTEGER(indx)[i], /*partial ok*/TRUE, -1);
+			  INTEGER(indx)[i], /*partial ok*/pok, -1);
 	    subs = CDR(subs);
 	    if (INTEGER(indx)[i] < 0 ||
 		INTEGER(indx)[i] >= INTEGER(dims)[i])

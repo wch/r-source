@@ -524,6 +524,7 @@ LibExtern SEXP	R_DimSymbol;	    /* "dim" */
 LibExtern SEXP	R_DollarSymbol;	    /* "$" */
 LibExtern SEXP	R_DotsSymbol;	    /* "..." */
 LibExtern SEXP	R_DropSymbol;	    /* "drop" */
+LibExtern SEXP	R_ExactSymbol;	    /* "exact" */
 LibExtern SEXP	R_LevelsSymbol;	    /* "levels" */
 LibExtern SEXP	R_ModeSymbol;	    /* "mode" */
 LibExtern SEXP	R_NamesSymbol;	    /* "names" */
