@@ -3555,7 +3555,7 @@ function(x, ...)
         xi <- x[[i]]
         if(length(xi$Error)) {
             msg <- gsub("\n", "\n  ", sub("[^:]*: *", "", xi$Error),
-			useBytes = TRUE)
+			perl = TRUE, useBytes = TRUE)
             writeLines(c(sprintf("Error in file '%s':", xi$File),
                          paste(" ", msg)))
         }
@@ -3565,7 +3565,7 @@ function(x, ...)
                                           "Warnings in file '%s':"),
                                  xi$File),
                          paste(" ", gsub("\n\n", "\n  ", xi$Warnings,
-					 useBytes = TRUE))))
+					 perl = TRUE, useBytes = TRUE))))
     }
     invisible(x)
 }
