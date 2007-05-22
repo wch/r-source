@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-05-17
+@set FAQ_DATE @value{FAQ_YEAR}-05-22
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2235,6 +2235,8 @@ QCA Graphical User Interface.
 Code to examine Quantitative Risk Management concepts.
 @item R.cache
 Fast and light-weight caching of objects.
+@item R.huge
+Methods for accessing huge amounts of data.
 @item R.matlab
 Read and write of MAT files together with R-to-Matlab connectivity.
 @item R.oo
@@ -3823,6 +3825,8 @@ Accurate numerical derivatives.
 Functions for NetWorkSpaces and Sleigh.
 @item oc
 Optimal Classification roll call analysis.
+@item oce
+Analysis of oceanographic data.
 @item odesolve
 An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
