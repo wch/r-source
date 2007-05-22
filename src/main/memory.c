@@ -1349,23 +1349,28 @@ static void RunGenCollect(R_size_t size_needed)
     DEBUG_CHECK_NODE_COUNTS("after processing forwarded list");
 
     /* process CHARSXP cache */
-    for (i = 0; i < length(R_StringHash); i++) {
-        s = VECTOR_ELT(R_StringHash, i);
-        t = R_NilValue;
-        while (s != R_NilValue) {
-            if (! NODE_IS_MARKED(CAR(s))) { /* remove unused CHARSXP and cons cell */
-                if (t == R_NilValue) /* head of list */
-                    VECTOR_ELT(R_StringHash, i) = CDR(s);
-                else
-                    CDR(t) = CDR(s);
-                s = CDR(s);
-                continue;
-            }
-            FORWARD_NODE(s);
-            FORWARD_NODE(CAR(s));
-            t = s;
-            s = CDR(s);
-        }
+    { 
+	int nc = 0;
+	for (i = 0; i < length(R_StringHash); i++) {
+	    s = VECTOR_ELT(R_StringHash, i);
+	    t = R_NilValue;
+	    while (s != R_NilValue) {
+		if (! NODE_IS_MARKED(CAR(s))) { /* remove unused CHARSXP and cons cell */
+		    if (t == R_NilValue) /* head of list */
+			VECTOR_ELT(R_StringHash, i) = CDR(s);
+		    else
+			CDR(t) = CDR(s);
+		    s = CDR(s);
+		    continue;
+		}
+		FORWARD_NODE(s);
+		FORWARD_NODE(CAR(s));
+		t = s;
+		s = CDR(s);
+	    }
+	    if(VECTOR_ELT(R_StringHash, i) != R_NilValue) nc++;
+	}
+	SET_TRUELENGTH(R_StringHash, nc); /* SET_HASHPRI, really */
     }
     FORWARD_NODE(R_StringHash);
     PROCESS_NODES();
