@@ -135,6 +135,12 @@ BUG FIXES
     o	[g]sub(fixed=TRUE, useBytes=FALSE) could substitute in the
 	wrong place in an MBCS locale.
 
+    o	legacy quartz() device no longer crashes in locator when the
+	user attempts to close the window
+
+    o	"CGGStackRestore: gstack underflow" warning is no longer shown
+	in legacy quartz() device
+
 
 
 
