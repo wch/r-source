@@ -43,6 +43,7 @@ test-src-internet = internet.R
 test-src-isas = isas-tests.R
 test-src-primitive = primitives.R
 test-src-random = p-r-random-tests.R
+test-src-regexp = utf8-regex.R
 test-src-segfault = no-segfault.R
 
 test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
@@ -63,7 +64,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	  reg-S4.Rout.save \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
 	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
-	  reg-win.R encodings.R \
+	  reg-win.R encodings.R utf8-regex.R \
 	gct-foot.R \
 	nanbug.rda \
 	WinUnicode.dat \
@@ -73,6 +74,7 @@ DISTFILES = Makefile.in Makefile.win README \
 SUBDIRS = Embedding Examples Native
 
 R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
+R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
 RDCONV = $(top_builddir)/bin/R CMD Rdconv
 
@@ -88,6 +90,7 @@ test-out-isas = $(test-src-isas:.R=.Rout)
 test-out-primitive = $(test-src-primitive:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-regexp = $(test-src-regexp:.R=.Rout)
 test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 
@@ -101,7 +104,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
-all-devel-tests = Docs IsAs Random Demo Rd Primitive Segfault \
+all-devel-tests = Docs IsAs Random Demo Rd Primitive Regexp Segfault \
    Standalone Packages
 
 all check: Makefile test-all-basics
@@ -269,6 +272,10 @@ test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=1
 	@$(MAKE) $(test-out-reg3) RVAL_IF_DIFF=0
+
+test-Regexp:
+	@echo "running regexp regression tests"
+	@$(R2) < $(srcdir)/utf8-regex.R > utf8-regex.Rout 2>&1 || (mv utf8-regex.Rout utf8-regex.Rout.fail && exit 1)
 
 test-Segfault:
 	@echo "running tests to possibly trigger segfaults"
