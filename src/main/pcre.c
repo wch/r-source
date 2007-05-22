@@ -651,6 +651,7 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
                 st = ovector[0];
                 INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
                 INTEGER(matchlenbuf)[matchIndex] = ovector[1] - st;
+		/* we need to advance 'start' in bytes */
                 if (INTEGER(matchlenbuf)[matchIndex] == 0)
                     start = ovector[0] + 1;
                 else
@@ -677,9 +678,6 @@ SEXP attribute_hidden do_gpregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
                         INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
                         foundAll = 1; 
                     }
-                    if (!foundAll)
-                        start = INTEGER(matchbuf)[matchIndex] 
-                            + INTEGER(matchlenbuf)[matchIndex];
                 }
 #endif
             } else {

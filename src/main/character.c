@@ -849,7 +849,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* This could be faster for plen > 1, but uses in R are for small strings */
-static int fgrep_one(char *pat, char *target, int useBytes)
+static int fgrep_one(char *pat, char *target, int useBytes, int *next)
 {
     int i = -1, plen=strlen(pat), len=strlen(target);
     char *p;
@@ -867,7 +867,10 @@ static int fgrep_one(char *pat, char *target, int useBytes)
 	int ib, used;
 	mbs_init(&mb_st);
 	for(ib = 0, i = 0; ib <= len-plen; i++) {
-	    if(strncmp(pat, target+ib, plen) == 0) return i;
+	    if(strncmp(pat, target+ib, plen) == 0) {
+		if (next != NULL) *next = ib + plen;
+		return i;
+	    }
 	    used = Mbrtowc(NULL,  target+ib, MB_CUR_MAX, &mb_st);
 	    if(used <= 0) break;
 	    ib += used;
@@ -875,7 +878,10 @@ static int fgrep_one(char *pat, char *target, int useBytes)
     } else
 #endif
 	for(i = 0; i <= len-plen; i++)
-	    if(strncmp(pat, target+i, plen) == 0) return i;
+	    if(strncmp(pat, target+i, plen) == 0) {
+		if (next != NULL) *next = i + plen;
+		return i;
+	    }
     return -1;
 }
 
@@ -972,8 +978,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		    continue;
 		}
 #endif
-		if (fixed_opt) LOGICAL(ind)[i] =
-				   fgrep_one(cpat, s, useBytes) >= 0;
+		if (fixed_opt)
+		    LOGICAL(ind)[i] = fgrep_one(cpat, s, useBytes, NULL) >= 0;
 		else if(regexec(&reg, s, 0, NULL, 0) == 0)
 		    LOGICAL(ind)[i] = 1;
 	    }
@@ -1288,7 +1294,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 #endif
 	    if (fixed_opt) {
-		st = fgrep_one(spat, s, useBytes);
+		st = fgrep_one(spat, s, useBytes, NULL);
 		INTEGER(ans)[i] = (st > -1)?(st+1):-1;
 #ifdef SUPPORT_MBCS
 		if(!useBytes && mbcslocale) {
@@ -1434,7 +1440,7 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
 
 static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
 {
-    int patlen, matchIndex, st, foundAll, foundAny, curpos, j, ansSize;
+    int patlen, matchIndex, st, foundAll, foundAny, curpos, j, ansSize, nb;
     SEXP ans, matchlen;         /* return vect and its attribute */
     SEXP matchbuf, matchlenbuf; /* buffers for storing multiple matches */
     int bufsize = 1024;         /* starting size for buffers */
@@ -1447,7 +1453,7 @@ static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
 #endif
         patlen = strlen(pattern);
     foundAll = curpos = st = foundAny = 0;
-    st = fgrep_one(pattern, string, useBytes);
+    st = fgrep_one(pattern, string, useBytes, &nb);
     matchIndex = -1;
     if (st < 0) {
         INTEGER(matchbuf)[0] = -1;
@@ -1458,9 +1464,9 @@ static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
         INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
         INTEGER(matchlenbuf)[matchIndex] = patlen;
         while(!foundAll) {
-            string += st + patlen;
+            string += nb;
             curpos += st + patlen;
-            st = fgrep_one(pattern, string, useBytes);
+            st = fgrep_one(pattern, string, useBytes, &nb);
             if (st >= 0) {
                 if ((matchIndex + 1) == bufsize) {
                     /* Reallocate match buffers */
