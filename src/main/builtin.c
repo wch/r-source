@@ -300,7 +300,7 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (isNull(env) || isEnvironment(env))
 	setAttrib(s, R_DotEnvSymbol, env);
     else
-	errorcall(call, _("replacement object is not an environment"));
+	error(_("replacement object is not an environment"));
     return s;
 }
 
@@ -813,12 +813,12 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 				      rho, &ans, 0, 1))
 	return(ans);
     if (!isVector(x) && !isVectorizable(x))
-       errorcall(call,_("invalid first argument"));
+       error(_("invalid argument"));
     if (length(CADR(args)) != 1)
-       errorcall(call, _("invalid value"));
+       error(_("invalid value"));
     len = asVecSize(CADR(args));
     if (len == NA_INTEGER)
-       errorcall(call, _("missing value for 'length'"));
+       error(_("missing value for 'length'"));
     return lengthgets(x, len);
 }
 

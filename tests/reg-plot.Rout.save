@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-27 r40028)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.6.0 Under development (unstable) (2007-05-23 r41687)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -64,10 +64,11 @@ List of 3
 > t1 <- ts(0:100)
 > ## only warnings about values <= 0
 > plot(t1, log = "y")
-Warning in xy.coords(x, NULL, log = log) : 1 y value <= 0 omitted from logarithmic plot
+Warning in xy.coords(x, NULL, log = log) :
+  1 y value <= 0 omitted from logarithmic plot
 > plot(cbind(t1, 10*t1, t1 - 4), log="y", plot.type = "single")
-Warning in xy.coords(x = matrix(rep.int(tx, k), ncol = k), y = x, log = log) : 
-	 7 y values <= 0 omitted from logarithmic plot
+Warning in xy.coords(x = matrix(rep.int(tx, k), ncol = k), y = x, log = log) :
+  7 y values <= 0 omitted from logarithmic plot
 > stopifnot(par("usr")[4] > 3) # log10: ylim[2] = 1000
 > 
 > 

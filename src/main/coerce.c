@@ -2475,13 +2475,13 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     value = CADR(args);
     if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
-	errorcall(call, _("'value' must be non-null character string"));
+	error(_("'value' must be non-null character string"));
     type = str2type(CHAR(STRING_ELT(value, 0)));
     if(type == (SEXPTYPE) -1)
-	errorcall(call, _("invalid value"));
+	error(_("invalid value"));
     if(TYPEOF(obj) == type) return obj;
     if(isFactor(obj))
-	errorcall(call, _("invalid to change the storage mode of a factor"));
+	error(_("invalid to change the storage mode of a factor"));
     ans = coerceVector(obj, type);
     DUPLICATE_ATTRIB(ans, obj);
     return ans;
@@ -2498,26 +2498,24 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     value = CADR(args);
     if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
-	errorcall(call, _("'value' must be non-null character string"));
+	error(_("'value' must be non-null character string"));
     if(getAttrib(obj, install("Csingle")) != R_NilValue) isSingle = TRUE;
     type = str2type(CHAR(STRING_ELT(value, 0)));
     if(type == (SEXPTYPE) -1) {
 	/* For backwards compatibility we allow "real" and "single" */
 	if(streql(CHAR(STRING_ELT(value, 0)), "real")) {
-	    warningcall(call, 
-			"use of 'real' is deprecated: use 'double' instead");
+	    warning("use of 'real' is deprecated: use 'double' instead");
 	    type = REALSXP;
 	} else if(streql(CHAR(STRING_ELT(value, 0)), "single")) {
-	    warningcall(call, 
-			"use of 'single' is deprecated: use mode<- instead");
+	    warning("use of 'single' is deprecated: use mode<- instead");
 	    type = REALSXP;
 	    setSingle = TRUE;
 	} else
-	    errorcall(call, _("invalid value"));
+	    error(_("invalid value"));
     }
     if(TYPEOF(obj) == type && isSingle == setSingle) return obj;
     if(isFactor(obj))
-	errorcall(call, _("invalid to change the storage mode of a factor"));
+	error(_("invalid to change the storage mode of a factor"));
     PROTECT(obj = duplicate(obj));
     ans = coerceVector(obj, type);
     DUPLICATE_ATTRIB(ans, obj);

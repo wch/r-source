@@ -43,9 +43,12 @@ extern void R_ProcessEvents(void);
 #define min(a, b) (a<b?a:b)
 #endif
 
-/* limit on call length at which errorcall/warningcall is split over
+/* limit on call length at which errorcall is split over
    two lines -- this should match the value used in try(). */
 #define LONGCALL 30
+
+/* Total line length before splitting in warnings */
+#define LONGWARN 75
 
 /*
 Different values of inError are used to indicate different places
@@ -299,15 +302,16 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
     else if(w == 1) {	/* print as they happen */
 	if( call != R_NilValue ) {
 	    dcall = CHAR(STRING_ELT(deparse1(call, 0, DEFAULTDEPARSE), 0));
-	    REprintf(_("Warning in %s : "), dcall);
-	    if (strlen(dcall) > LONGCALL) REprintf("\n	 ");
-	}
-	else
-	    REprintf(_("Warning: "));
+	} else dcall = "";
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
 	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
 	    strcat(buf, " [... truncated]");
-	REprintf("%s\n", buf);
+	if(dcall[0] == '\0')
+	    REprintf(_("Warning: %s\n"), buf);
+	else if(17+strlen(dcall)+1+strlen(buf) <= LONGWARN)
+	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
+	else
+	    REprintf(_("Warning in %s :\n  %s\n"), dcall, buf);
     }
     else if(w == 0) {	/* collect them */
 	if(!R_CollectWarnings)
@@ -399,7 +403,7 @@ void PrintWarnings(void)
 	    char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
 	    dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0),
 					     0, DEFAULTDEPARSE), 0));
-	    if (strlen(dcall) + strlen(msg) > 70) sep = "\n\t";
+	    if (6+strlen(dcall) + strlen(msg) > LONGWARN) sep = "\n  ";
 	    REprintf("In %s :%s%s\n", dcall, sep, msg);
 	}
     } else if( R_CollectWarnings <= 10 ) {
@@ -412,7 +416,7 @@ void PrintWarnings(void)
 		char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
 		dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, i),
 						 0, DEFAULTDEPARSE), 0));
-		if (strlen(dcall) + strlen(msg) > 70) sep = "\n\t";
+		if (10+strlen(dcall) + strlen(msg) > LONGWARN) sep = "\n  ";
 		REprintf("%d: In %s :%s%s\n", i+1, dcall, sep, msg);
 	    }
 	}
@@ -492,7 +496,7 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
     if(call != R_NilValue) {
 	char *head = _("Error in ");
 	char *mid = " : ";
-	char *tail = "\n\t";/* <- TAB */
+	char *tail = "\n  ";/* <- TAB */
 	int len = strlen(head) + strlen(mid) + strlen(tail);
 
 	dcall = CHAR(STRING_ELT(deparse1(call, 0, DEFAULTDEPARSE), 0));

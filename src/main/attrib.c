@@ -998,7 +998,7 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     else PROTECT(object);
 
     if (!isNewList(attrs))
-	errorcall(call, _("attributes must be in a list"));
+	error(_("attributes must be in a list"));
 
     /* Empty the existing attribute list */
 
@@ -1026,11 +1026,11 @@ SEXP attribute_hidden do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nattrs > 0) {
 	names = getAttrib(attrs, R_NamesSymbol);
 	if (names == R_NilValue)
-	    errorcall(call, _("attributes must be named"));
+	    error(_("attributes must be named"));
 	for (i = 0; i < nattrs; i++) {
 	    if (STRING_ELT(names, i) == R_NilValue ||
 		CHAR(STRING_ELT(names, i))[0] == '\0') { /* all ASCII tests */
-		errorcall(call, _("all attributes must have names [%d does not]"), i+1);
+		error(_("all attributes must have names [%d does not]"), i+1);
 	    }
 	    if (!strcmp(CHAR(STRING_ELT(names, i)), "dim"))
 		setAttrib(object, R_DimSymbol, VECTOR_ELT(attrs, i));
@@ -1073,9 +1073,9 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     t = CADR(args);
 
     if (!isString(t))
-	error(_("attribute 'name' must be of mode character"));
+	errorcall(call, _("attribute 'name' must be of mode character"));
     if (length(t) != 1)
-	error(_("exactly one attribute 'name' must be given"));
+	errorcall(call, _("exactly one attribute 'name' must be given"));
 
     if(STRING_ELT(t, 0) == NA_STRING) return R_NilValue;
     str = translateChar(STRING_ELT(t, 0));
@@ -1132,11 +1132,11 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (match == NONE)
 	return R_NilValue;
-/*
+#define R_warn_partial_match_attr 0
     if (match == PARTIAL && R_warn_partial_match_attr)
 	warningcall(call, _("partial match of '%s' to '%s'"), str,
 		    CHAR(PRINTNAME(tag)));
-*/
+
     return getAttrib(s, tag);
 }
 
@@ -1153,7 +1153,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
     name = CADR(args);
     if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
-	errorcall(call, _("'name' must be non-null character string"));
+	error(_("'name' must be non-null character string"));
     setAttrib(obj, name, CADDR(args));
     UNPROTECT(1);
     return obj;
@@ -1342,43 +1342,8 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
-#endif
 
-#ifndef noSlotCheck
-
-/* This does not get used anymore (commented out in the code below).
-   Hence, comment out as well to make -Wall -pedantic happier.
-   KH 2003-06-07.
-
-static SEXP class_meta_data_env = NULL;
-
-static int make_class_meta_data_env()
-{
-    class_meta_data_env = findVar(install("__ClassMetaData"), R_GlobalEnv);
-    if(class_meta_data_env == R_UnboundValue) {
-	class_meta_data_env = NULL;
-	return 0;
-    }
-    else
-	return 1;
-}
-*/
-
-#if UNUSED
-/* check for a class definition from the internal table -- will not get
- * classes whose definition has not been completed for this session,
- * so any code relying on this routine should call the S language
- * function comleteClassDefinition after a failed call. */
-static Rboolean has_class_definition(SEXP class_name)
-{
-    /* In case we're called before initialization, try to find the
-     * class metadata environment but don't insist on it. */
-/*    if(class_meta_data_env || make_class_meta_data_env())
-	return (findVarInFrame3(class_meta_data_env, class_name, FALSE) != R_UnboundValue);
-	else */
-	return FALSE;
-}
-#endif
+#else
 
 static Rboolean can_test_S4Object = FALSE; /* turning this to TRUE will throw
    error or warning on all packages that have not been reinstalled for current R 2.3 */
@@ -1418,23 +1383,4 @@ SEXP attribute_hidden do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#endif
-
-#if 0
-/* Was a .Primitive implementation for @<-; no longer needed? */
-SEXP attribute_hidden do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP nlist, object, ans, value;
-    PROTECT(object = eval(CAR(args), env));
-    nlist = CADR(args);
-    if(!(isSymbol(nlist) || isString(nlist)))
-	errorcall_return(call, _("invalid slot type"));
-    /* The code for "$<-" claims that the RHS is already evaluated, but
-       this is not quite right.  It can, at the least, be a promise
-       for the "@" case. */
-    value = eval(CADDR(args), env);
-    ans = R_do_slot_assign(object, nlist, value);
-    UNPROTECT(1);
-    return ans;
-}
 #endif

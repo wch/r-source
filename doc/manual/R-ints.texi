@@ -93,6 +93,7 @@ checked against the current version of the source code.
 * The write barrier::           
 * Serialization Formats::       
 * Encodings for CHARSXPs::      
+* Warnings and errors::         
 * S4 objects::                  
 * Internal use of global and base environments::  
 * Modules::                     
@@ -1150,7 +1151,7 @@ name.  `Normal' environments are written out as @code{ENVSXP}s with an
 integer indicating if the environment is locked followed by the
 enclosure, frame, tag and attributes.
 
-@node Encodings for CHARSXPs, S4 objects, Serialization Formats, R Internal Structures
+@node Encodings for CHARSXPs, Warnings and errors, Serialization Formats, R Internal Structures
 @section Encodings for CHARSXPs
 
 Character data in @R{} are stored in the sexptype @code{CHARSXP}.  Until
@@ -1201,7 +1202,58 @@ we have to a universal format.  For those that do not (for example those
 lacking a powerful enough @code{iconv}), it is likely that they work in
 Latin-1, the old @R{} assumption.
 
-@node S4 objects, Internal use of global and base environments, Encodings for CHARSXPs, R Internal Structures
+@node Warnings and errors, S4 objects, Encodings for CHARSXPs, R Internal Structures
+@section Warnings and errors
+
+@findex warning
+@findex warningcall
+@findex error
+@findex errorcall
+
+Each of @code{warning} and @code{stop} have two C-level equivalents,
+@code{warning}, @code{warningcall}, @code{error} and @code{errorcall}.
+The relationship between the pairs is similar: @code{warning} tries to
+fathom out a suitable call, and then calls @code{warningcall} with that
+call as the first argument if it succeeds, and with @code{call =
+R_NilValue} it is does not.  When @code{warningcall} is called, it
+includes the deparsed call in its printout unless @code{call =
+R_NilValue}.
+
+@code{warning} and @code{error} look at the context stack.  If the
+topmost context is not of type @code{CTXT_BUILTIN}, it is used to
+provide the call, otherwise the next context provides the call.
+This means that when these function are called from a primitive or
+@code{.Internal}, the imputed call will not be to
+primitive/@code{.Internal} but to the function calling the
+primitive/@code{.Internal} .  This is exactly what one wants for a
+@code{.Internal}, as this will give the call to the closure wrapper.
+(Further, for a @code{.Internal}, the call is the argument to
+@code{.Internal}, and so may not correspond to any @R{} function.)
+However, it is unlikely to be what is needed for a primitive.
+
+The upshot is that that @code{warningcall} and @code{errorcall} should
+normally be used for code called from a primitive, and @code{warning}
+and @code{error} should be used for code called from a @code{.Internal}
+(and necessarily from @code{.Call}, @code{.C} and so on, where the call
+is not passed down).  However, there are two complications.  One is that
+code might be called from either a primitive or a @code{.Internal}, in
+which case probably @code{warningcall} is more appropriate.  The other
+involves assignment functions, where the call will be of the form
+(fron @R{} < 2.6.0)
+@example
+> length(x) <- y ~ x
+Error in "length<-"(`*tmp*`, value = y ~ x) : invalid value
+@end example
+
+@noindent
+which is unpalatable to the end user.  For assignment functions there
+will be a suitable context at the top of the stack, so @code{warning}
+should be used.  (The results for @code{.Internal} assignment functions
+such as @code{substr<-} are not ideal.)
+
+
+
+@node S4 objects, Internal use of global and base environments, Warnings and errors, R Internal Structures
 @section S4 objects
 
 [This section is currently a preliminary draft and should not be taken
