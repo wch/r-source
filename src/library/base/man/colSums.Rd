@@ -76,3 +76,4 @@ rowMeans(x, na.rm = TRUE); colMeans(x, na.rm = TRUE)
 }
 \keyword{array}
 \keyword{algebra}
+\keyword{arith}
