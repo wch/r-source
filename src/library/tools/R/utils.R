@@ -708,7 +708,7 @@ function(package)
              utils = c("close.socket", "flush.console", "update.packages")
              )
     if(is.null(package)) return(unlist(stopList))
-    thisPkg <- stopList[[package]]
+    thisPkg <- stopList[[package, exact = TRUE]] # 'st' matched 'stats'
     if(!length(thisPkg)) character(0) else thisPkg
 }
 
