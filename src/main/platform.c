@@ -230,13 +230,13 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     pg = CAR(args);
     n = 0;			/* -Wall */
     if (!isString(fn) || (n = length(fn)) < 1)
-	errorcall(call, _("invalid filename specification"));
+	error(_("invalid filename specification"));
     if (!isString(hd) || length(hd) != n)
-	errorcall(call, _("invalid 'headers'"));
+	error(_("invalid 'headers'"));
     if (!isString(tl))
-	errorcall(call, _("invalid 'title'"));
+	error(_("invalid 'title'"));
     if (!isString(pg))
-        errorcall(call, _("invalid '%s' specification"), "pager");
+        error(_("invalid '%s' specification"), "pager");
     f = (char**)R_alloc(n, sizeof(char*));
     h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
@@ -286,10 +286,10 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n = length(fn);
     if (!isString(ed))
-	errorcall(call, _("invalid '%s' specification"), "editor");
+	error(_("invalid '%s' specification"), "editor");
     if (n > 0) {
 	if (!isString(fn))
-	    errorcall(call, _("invalid '%s' specification"), "filename");
+	    error(_("invalid '%s' specification"), "filename");
 	f = (char**) R_alloc(n, sizeof(char*));
 	title = (char**) R_alloc(n, sizeof(char*));
 	for (i = 0; i < n; i++) {
@@ -372,13 +372,13 @@ SEXP attribute_hidden do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     f1 = CAR(args); n1 = length(f1);
     f2 = CADR(args); n2 = length(f2);
     if (!isString(f1))
-        errorcall(call, _("invalid first filename"));
+        error(_("invalid first filename"));
     if (!isString(f2))
-        errorcall(call, _("invalid second filename"));
+        error(_("invalid second filename"));
     if (n1 < 1)
-	errorcall(call, _("nothing to append to"));
+	error(_("nothing to append to"));
     if (PRIMVAL(op) > 0 && n1 > 1)
-	errorcall(call, _("'outFile' must be a single file"));
+	error(_("'outFile' must be a single file"));
     if (n2 < 1)
 	return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2;
@@ -431,7 +431,7 @@ SEXP attribute_hidden do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid filename argument"));
+        error(_("invalid filename argument"));
     n = length(fn);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
@@ -454,7 +454,7 @@ SEXP attribute_hidden do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     f = CAR(args);
     if (!isString(f))
-        errorcall(call, _("invalid first filename"));
+        error(_("invalid first filename"));
     n = length(f);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
@@ -483,11 +483,11 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
     f1 = CAR(args); n1 = length(f1);
     f2 = CADR(args); n2 = length(f2);
     if (!isString(f1))
-        errorcall(call, _("invalid first filename"));
+        error(_("invalid first filename"));
     if (!isString(f2))
-        errorcall(call, _("invalid second filename"));
+        error(_("invalid second filename"));
     if (n1 < 1)
-	errorcall(call, _("nothing to link"));
+	error(_("nothing to link"));
     if (n2 < 1)
 	return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2;
@@ -516,7 +516,7 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 #else
-    warningcall(call, _("symlinks are not supported on this platform"));
+    warning(_("symlinks are not supported on this platform"));
     return allocVector(LGLSXP, n);
 #endif
 }
@@ -584,7 +584,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid filename argument"));
+        error(_("invalid filename argument"));
     n = length(fn);
 #ifdef UNIX_EXTRAS
     PROTECT(ans = allocVector(VECSXP, 10));
@@ -802,19 +802,19 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
     if (!isString(d))
-	errorcall(call, _("invalid '%s' argument"), "directory");
+	error(_("invalid '%s' argument"), "directory");
     p = CAR(args);  args = CDR(args);
     pattern = 0;
     if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != R_NilValue)
 	pattern = 1;
     else if (!isNull(p) && !(isString(p) && length(p) < 1))
-	errorcall(call, _("invalid '%s' argument"), "pattern");
+	error(_("invalid '%s' argument"), "pattern");
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args)); args = CDR(args);
     recursive = asLogical(CAR(args));
     ndir = length(d);
     if (pattern && regcomp(&reg, translateChar(STRING_ELT(p, 0)), REG_EXTENDED))
-        errorcall(call, _("invalid 'pattern' regular expression"));
+        error(_("invalid 'pattern' regular expression"));
     count = 0;
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
@@ -853,7 +853,7 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, nfile;
     checkArity(op, args);
     if (!isString(file = CAR(args)))
-        errorcall(call, _("invalid '%s' argument"), "file");
+        error(_("invalid '%s' argument"), "file");
     nfile = length(file);
     ans = allocVector(LGLSXP, nfile);
     for(i = 0; i < nfile; i++) {
@@ -962,7 +962,7 @@ SEXP attribute_hidden do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((len = R_ChooseFile(_new, buf, CHOOSEBUFSIZE)) == 0)
 	error(_("file choice cancelled"));
     if (len >= CHOOSEBUFSIZE - 1)
-	errorcall(call, _("file name too long"));
+	error(_("file name too long"));
     return mkString(R_ExpandFileName(buf));
 }
 
@@ -988,7 +988,7 @@ SEXP attribute_hidden do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid '%s' argument"), "names");
+        error(_("invalid '%s' argument"), "names");
     n = length(fn);
     mode = asInteger(CADR(args));
     if(mode < 0 || mode > 7) error(_("invalid '%s' value"), "mode");
@@ -1105,10 +1105,10 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     nfiles = length(fn);
     if (nfiles > 0) {
     	if (!isString(fn))
-	    errorcall(call, _("invalid '%s' argument"), "x");
+	    error(_("invalid '%s' argument"), "x");
 	recursive = asLogical(CADR(args));
     	if (recursive == NA_LOGICAL)
-	    errorcall(call, _("invalid '%s' argument"), "recursive");
+	    error(_("invalid '%s' argument"), "recursive");
     	for(i = 0; i < nfiles; i++) {
 	    names = translateChar(STRING_ELT(fn, i));
 #if defined(HAVE_GLOB) || defined(Win32)
@@ -1197,9 +1197,9 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	errorcall(call, _("invalid '%s' argument"), "category");
+	error(_("invalid '%s' argument"), "category");
     if(!isString(locale) || LENGTH(locale) != 1)
-	errorcall(call, _("invalid '%s' argument"), "locale");
+	error(_("invalid '%s' argument"), "locale");
     switch(cat) {
     case 1:
 	cat = LC_ALL;
@@ -1237,7 +1237,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case 5:
 	cat = LC_NUMERIC;
-	warningcall(call, _("setting 'LC_NUMERIC' may cause R to function strangely"));
+	warning(_("setting 'LC_NUMERIC' may cause R to function strangely"));
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
     case 6:
@@ -1266,7 +1266,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
 #endif
     default:
-	errorcall(call, _("invalid '%s' argument"), "category");
+	error(_("invalid '%s' argument"), "category");
     }
     PROTECT(ans = allocVector(STRSXP, 1));
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
@@ -1375,7 +1375,7 @@ SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid '%s' argument"), "path");
+        error(_("invalid '%s' argument"), "path");
     n = length(fn);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
@@ -1589,7 +1589,7 @@ SEXP attribute_hidden do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    memcpy(&in.s_addr, *(hp->h_addr_list), sizeof (in.s_addr));
 	    strcpy(ip, inet_ntoa(in));
 	} else {
-	    warningcall(call, _("unknown format returned by gethostbyname"));
+	    warning(_("unknown format returned by gethostbyname"));
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));
 	SET_STRING_ELT(ans, 0, mkChar(ip));
@@ -1627,7 +1627,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid '%s' argument"), "path");
+	error(_("invalid '%s' argument"), "path");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));
@@ -1665,7 +1665,7 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid '%s' argument"), "path");
+	error(_("invalid '%s' argument"), "path");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));
@@ -1730,7 +1730,7 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if(!isString(paths))
-	errorcall(call, "'path' must be a character vector");
+	error("'path' must be a character vector");
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
 	path = translateChar(STRING_ELT(paths, i));
@@ -1754,7 +1754,7 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 #else
     checkArity(op, args);
-    warningcall(call, "insufficient OS support on this platform");
+    warning("insufficient OS support on this platform");
     return CAR(args);
 #endif
 }

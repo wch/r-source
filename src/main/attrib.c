@@ -887,10 +887,10 @@ SEXP dimgets(SEXP vec, SEXP val)
     PROTECT(vec);
     PROTECT(val);
     if ((!isVector(vec) && !isList(vec)))
-	error(_("dim<- : invalid first argument"));
+	error(_("invalid first argument"));
 
     if (!isVector(val) && !isList(val))
-	error(_("dim<- : invalid second argument"));
+	error(_("invalid second argument"));
     val = coerceVector(val, INTSXP);
     UNPROTECT(1);
     PROTECT(val);
@@ -898,12 +898,12 @@ SEXP dimgets(SEXP vec, SEXP val)
     len = length(vec);
     ndim = length(val);
     if (ndim == 0)
-	error(_("dim: length-0 dimension vector is invalid"));
+	error(_("length-0 dimension vector is invalid"));
     total = 1;
     for (i = 0; i < ndim; i++)
 	total *= INTEGER(val)[i];
     if (total != len)
-	error(_("dim<- : dims [product %d] do not match the length of object [%d]"), total, len);
+	error(_("dims [product %d] do not match the length of object [%d]"), total, len);
     removeAttrib(vec, R_DimNamesSymbol);
     installAttrib(vec, R_DimSymbol, val);
     UNPROTECT(2);
@@ -1132,8 +1132,12 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (match == NONE)
 	return R_NilValue;
-    else
-	return getAttrib(s, tag);
+/*
+    if (match == PARTIAL && R_warn_partial_match_attr)
+	warningcall(call, _("partial match of '%s' to '%s'"), str,
+		    CHAR(PRINTNAME(tag)));
+*/
+    return getAttrib(s, tag);
 }
 
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)

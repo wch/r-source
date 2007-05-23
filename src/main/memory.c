@@ -1148,14 +1148,13 @@ SEXP attribute_hidden do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != ENVSXP && TYPEOF(CAR(args)) != EXTPTRSXP)
-	errorcall(call, 
-		  _("first argument must be environment or external pointer"));
+	error(_("first argument must be environment or external pointer"));
     if (TYPEOF(CADR(args)) != CLOSXP)
-	errorcall(call, _("second argument must be a function"));
+	error(_("second argument must be a function"));
 
     onexit = asLogical(CADDR(args));
     if(onexit == NA_LOGICAL)
-	errorcall(call, _("third argument must be 'TRUE' or 'FALSE'"));
+	error(_("third argument must be 'TRUE' or 'FALSE'"));
 
     R_RegisterFinalizerEx(CAR(args), CADR(args), onexit);
     return R_NilValue;
@@ -2940,7 +2939,7 @@ SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
-	errorcall(call, _("invalid '%s' argument"), "filename");
+	error(_("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
     filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     threshold = REAL(CADDR(args))[0];

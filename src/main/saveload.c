@@ -1951,11 +1951,11 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     if (TYPEOF(CAR(args)) != STRSXP)
-	errorcall(call, _("first argument must be a character vector"));
+	error(_("first argument must be a character vector"));
     if (!isValidStringF(CADR(args)))
-	errorcall(call, _("'file' must be non-empty string"));
+	error(_("'file' must be non-empty string"));
     if (TYPEOF(CADDR(args)) != LGLSXP)
-	errorcall(call, _("'ascii' must be logical"));
+	error(_("'ascii' must be logical"));
     if (CADDDR(args) == R_NilValue)
 	version = R_DefaultSaveFormatVersion;
     else
@@ -1971,7 +1971,7 @@ SEXP attribute_hidden do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 
     fp = RC_fopen(STRING_ELT(CADR(args), 0), "wb", TRUE);
     if (!fp)
-	errorcall(call, _("unable to open file"));
+	error(_("unable to open file"));
 
     /* set up a context which will close the file if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
@@ -2087,7 +2087,7 @@ SEXP attribute_hidden do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Process the saved file to obtain a list of saved objects. */
     fp = RC_fopen(STRING_ELT(fname, 0), "rb", TRUE);
     if (!fp)
-	errorcall(call, _("unable to open file"));
+	error(_("unable to open file"));
 
     /* set up a context which will close the file if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
@@ -2234,13 +2234,13 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (TYPEOF(CAR(args)) != STRSXP)
-	errorcall(call, _("first argument must be a character vector"));
+	error(_("first argument must be a character vector"));
     list = CAR(args);
 
     con = getConnection(asInteger(CADR(args)));
 
     if (TYPEOF(CADDR(args)) != LGLSXP)
-	errorcall(call, _("'ascii' must be logical"));
+	error(_("'ascii' must be logical"));
     ascii = INTEGER(CADDR(args))[0];
 
     if (CADDDR(args) == R_NilValue)

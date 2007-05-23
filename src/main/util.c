@@ -560,9 +560,9 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ( !isInteger(yi) || !(ny = LENGTH(yi)) )
 	error(_("invalid '%s' argument"), "yinds");
     if(!LENGTH(ans = CADDR(args)) || NA_LOGICAL == (all_x = asLogical(ans)))
-	errorcall(call, _("'all.x' must be TRUE or FALSE"));
+	error(_("'all.x' must be TRUE or FALSE"));
     if(!LENGTH(ans = CADDDR(args))|| NA_LOGICAL == (all_y = asLogical(ans)))
-	errorcall(call, _("'all.y' must be TRUE or FALSE"));
+	error(_("'all.y' must be TRUE or FALSE"));
 
     /* 0. sort the indices */
     ix = (int *) R_alloc(nx, sizeof(int));
@@ -673,7 +673,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (!isPairList(args) || !isValidString(s = CAR(args)))
-	errorcall(call, _("character argument expected"));
+	error(_("character argument expected"));
 
     /* get current directory to return */
     wd = intern_getwd();
@@ -682,7 +682,7 @@ SEXP attribute_hidden do_setwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_CHDIR
     if(chdir(path) < 0)
 #endif
-	errorcall(call, _("cannot change working directory"));
+	error(_("cannot change working directory"));
     return(wd);
 }
 
@@ -696,12 +696,12 @@ SEXP attribute_hidden do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (TYPEOF(s = CAR(args)) != STRSXP)
-	errorcall(call, _("a character vector argument expected"));
+	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
 	p = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
 	if (strlen(p) > PATH_MAX - 1)
-	    errorcall(call, _("path too long"));
+	    error(_("path too long"));
 	strcpy (buf, p);
 #ifdef Win32
 	R_fixslash(buf);
@@ -733,12 +733,12 @@ SEXP attribute_hidden do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (TYPEOF(s = CAR(args)) != STRSXP)
-	errorcall(call, _("a character vector argument expected"));
+	error(_("a character vector argument expected"));
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(s)));
     for(i = 0; i < n; i++) {
 	p = R_ExpandFileName(translateChar(STRING_ELT(s, i)));
 	if (strlen(p) > PATH_MAX - 1)
-	    errorcall(call, _("path too long"));
+	    error(_("path too long"));
 	strcpy (buf, p);
 #ifdef Win32
 	R_fixslash(buf);
@@ -778,28 +778,27 @@ SEXP attribute_hidden do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
-	errorcall(call, _("a character vector argument expected"));
+	error(_("a character vector argument expected"));
     if(isNull(CADR(args))) w = NA_INTEGER;
     else {
 	w = asInteger(CADR(args));
 	if(w != NA_INTEGER && w < 0)
-	    errorcall(call, _("invalid '%s' value"), "width");
+	    error(_("invalid '%s' value"), "width");
     }
     findWidth = (w == NA_INTEGER);
     s = CADDR(args);
     if(LENGTH(s) != 1 || TYPEOF(s) != STRSXP)
-	errorcall(call, _("invalid '%s' value"), "quote");
+	error(_("invalid '%s' value"), "quote");
     cs = translateChar(STRING_ELT(s, 0));
     if(strlen(cs) > 0) quote = cs[0];
     if(strlen(cs) > 1)
-	warningcall(call,
-		    _("only the first character of 'quote' will be used"));
+	warning(_("only the first character of 'quote' will be used"));
     justify = asInteger(CADDDR(args));
     if(justify == NA_INTEGER || justify < 0 || justify > 3)
-	errorcall(call, _("invalid '%s' value"), "justify");
+	error(_("invalid '%s' value"), "justify");
     if(justify == 3) w = 0;
     na = asLogical(CAD4R(args));
-    if(na == NA_LOGICAL) errorcall(call, _("invalid '%s' value"), "na.encode");
+    if(na == NA_LOGICAL) error(_("invalid '%s' value"), "na.encode");
 
     len = LENGTH(x);
     if(findWidth && justify < 3) {
@@ -829,7 +828,7 @@ SEXP attribute_hidden do_encoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
-	errorcall(call, _("a character vector argument expected"));
+	error(_("a character vector argument expected"));
     n = LENGTH(x);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
@@ -850,12 +849,12 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
-	errorcall(call, _("a character vector argument expected"));
+	error(_("a character vector argument expected"));
     if (TYPEOF(enc = CADR(args)) != STRSXP)
-	errorcall(call, _("a character vector argument expected"));
+	error(_("a character vector argument expected"));
     m = LENGTH(enc);
     if(m == 0)
-	errorcall(call, _("'value must be of positive length"));
+	error(_("'value must be of positive length"));
     if(NAMED(x)) x = duplicate(x);
     PROTECT(x);
     n = LENGTH(x);

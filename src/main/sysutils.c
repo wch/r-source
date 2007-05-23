@@ -175,13 +175,13 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     pattern = CAR(args); n1 = length(pattern);
     tempdir = CADR(args); n2 = length(tempdir);
     if (!isString(pattern))
-        errorcall(call, _("invalid filename pattern"));
+        error(_("invalid filename pattern"));
     if (!isString(tempdir))
-        errorcall(call, _("invalid '%s' value"), "tempdir");
+        error(_("invalid '%s' value"), "tempdir");
     if (n1 < 1)
-	errorcall(call, _("no 'pattern'"));
+	error(_("no 'pattern'"));
     if (n2 < 1)
-	errorcall(call, _("no 'tempdir'"));
+	error(_("no 'tempdir'"));
     slen = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {
@@ -253,10 +253,10 @@ SEXP attribute_hidden do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isString(CAR(args)))
-	errorcall(call, _("wrong type for argument"));
+	error(_("wrong type for argument"));
 
     if (!isString(CADR(args)) || LENGTH(CADR(args)) != 1)
-	errorcall(call, _("wrong type for argument"));
+	error(_("wrong type for argument"));
 
     i = LENGTH(CAR(args));
     if (i == 0) {
@@ -306,11 +306,11 @@ SEXP attribute_hidden do_setenv(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isString(nm = CAR(args)))
-	errorcall(call, _("wrong type for argument"));
+	error(_("wrong type for argument"));
     if (!isString(vars = CADR(args)))
-	errorcall(call, _("wrong type for argument"));
+	error(_("wrong type for argument"));
     if(LENGTH(nm) != LENGTH(vars))
-	errorcall(call, _("wrong length for argument"));
+	error(_("wrong length for argument"));
 
     n = LENGTH(vars);
     PROTECT(ans = allocVector(LGLSXP, n));
@@ -340,7 +340,7 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isString(vars = CAR(args)))
-        errorcall(call, _("wrong type for argument"));
+        error(_("wrong type for argument"));
     n = LENGTH(vars);
 
 #if defined(HAVE_UNSETENV) || defined(HAVE_PUTENV_UNSET) || defined(HAVE_PUTENV_UNSET2)
@@ -480,13 +480,13 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	Rboolean isLatin1 = FALSE, isUTF8 = FALSE;
 
 	if(TYPEOF(x) != STRSXP)
-	    errorcall(call, _("'x' must be a character vector"));
+	    error(_("'x' must be a character vector"));
 	if(!isString(CADR(args)) || length(CADR(args)) != 1)
-	    errorcall(call, _("invalid '%s' argument"), "from");
+	    error(_("invalid '%s' argument"), "from");
 	if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
-	    errorcall(call, _("invalid '%s' argument"), "to");
+	    error(_("invalid '%s' argument"), "to");
 	if(!isString(CADDDR(args)) || length(CADDDR(args)) != 1)
-	    errorcall(call, _("invalid '%s' argument"), "sub");
+	    error(_("invalid '%s' argument"), "sub");
 	if(STRING_ELT(CADDDR(args), 0) == NA_STRING) sub = NULL;
 	else sub = translateChar(STRING_ELT(CADDDR(args), 0));
 	from = CHAR(STRING_ELT(CADR(args), 0)); /* ASCII */
@@ -498,7 +498,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(streql(to, "") && known_to_be_utf8) isUTF8 = TRUE;
 	obj = Riconv_open(to, from);
 	if(obj == (iconv_t)(-1))
-	    errorcall(call, _("unsupported conversion"));
+	    error(_("unsupported conversion"));
 	PROTECT(ans = duplicate(x));
 	R_AllocStringBuffer(0, &cbuff);  /* just default */
 	for(i = 0; i < LENGTH(x); i++) {

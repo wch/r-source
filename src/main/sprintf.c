@@ -43,10 +43,10 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     nargs = length(args);
     format = CAR(args);
     if (!isString(format) || length(format) == 0)
-	errorcall(call, _("'fmt' is not a non-empty character vector"));
+	error(_("'fmt' is not a non-empty character vector"));
     args = CDR(args); nargs--;
     if(nargs >= 100)
-	errorcall(call, _("only 100 arguments are allowed"));
+	error(_("only 100 arguments are allowed"));
 
     /* record the args for later re-ordering */
     for(i = 0; i < nargs; i++, args = CDR(args)) a[i] = CAR(args);
@@ -56,14 +56,14 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0; i < nargs; i++) {
 	lens[i] = length(a[i]);
 	if(lens[i] == 0)
-	    errorcall(call, _("zero-length argument"));
+	    error(_("zero-length argument"));
 	if(maxlen < lens[i]) maxlen = lens[i];
     }
     if(maxlen % length(format))
-	errorcall(call, _("arguments cannot be recycled to the same length"));
+	error(_("arguments cannot be recycled to the same length"));
     for(i = 0; i < nargs; i++) {
 	if(maxlen % lens[i])
-	    errorcall(call, _("arguments cannot be recycled to the same length"));
+	    error(_("arguments cannot be recycled to the same length"));
     }
 
     PROTECT(ans = allocVector(STRSXP, maxlen));
@@ -73,7 +73,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	formatString = translateChar(STRING_ELT(format, ns % length(format)));
 	n = strlen(formatString);
 	if (n > MAXLINE)
-	    errorcall(call, _("'fmt' length exceeds maximal buffer length %d"),
+	    error(_("'fmt' length exceeds maximal buffer length %d"),
 		      MAXLINE);
  	/* process the format string */
 	for (cur = 0; cur < n; cur += chunk) {
@@ -90,7 +90,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		    /* This is MBCS-OK, as we are in a format spec */
 		    chunk = strcspn(formatString + cur + 1, "disfeEgGxX%") + 2;
 		    if (cur + chunk > n)
-			errorcall(call, _("unrecognised format at end of string"));
+			error(_("unrecognised format at end of string"));
 
 		    strncpy(fmt, formatString + cur, chunk);
 		    fmt[chunk] = '\0';
@@ -101,14 +101,14 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			v = fmt[1] - '0';
 			if(fmt[2] == '$') {
 			    if(v > nargs)
-				errorcall(call, _("reference to non-existent argument %d"), v);
+				error(_("reference to non-existent argument %d"), v);
 			    nthis = v-1;
 			    memmove(fmt+1, fmt+3, strlen(fmt)-2);
 			} else if(fmt[2] >= '1' && fmt[2] <= '9' 
 				  && fmt[3] == '$') {
 			    v = 10*v + fmt[2] - '0';
 			    if(v > nargs)
-				errorcall(call, _("reference to non-existent argument %d"), v);
+				error(_("reference to non-existent argument %d"), v);
 			    nthis = v-1;
 			    memmove(fmt+1, fmt+4, strlen(fmt)-3);
 			}
@@ -122,33 +122,33 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    v = starc[1] - '0';
 			    if(starc[2] == '$') {
 				if(v > nargs)
-				    errorcall(call, _("reference to non-existent argument %d"), v);
+				    error(_("reference to non-existent argument %d"), v);
 				nstar = v-1;
 				memmove(starc+1, starc+3, strlen(starc)-2);
 			    } else if(starc[2] >= '1' && starc[2] <= '9' 
 				      && starc[3] == '$') {
 				v = 10*v + starc[2] - '0';
 				if(v > nargs)
-				    errorcall(call, _("reference to non-existent argument %d"), v);
+				    error(_("reference to non-existent argument %d"), v);
 				nstar = v-1;
 				memmove(starc+1, starc+4, strlen(starc)-3);
 			    }
 			}
 
 			if(nstar < 0) {
-			    if (cnt >= nargs) errorcall(call, _("too few arguments"));
+			    if (cnt >= nargs) error(_("too few arguments"));
 			    nstar = cnt++;
 			}
 
 			if (strchr(starc+1, '*'))
-			    errorcall(call, _("at most one asterisk `*' is supported in each conversion specification"));
+			    error(_("at most one asterisk `*' is supported in each conversion specification"));
 
 			_this = a[nstar];
 			if(TYPEOF(_this) == REALSXP)
 			    _this = coerceVector(_this, INTSXP);
 			if(TYPEOF(_this) != INTSXP || LENGTH(_this)<1 ||
 			   INTEGER(_this)[ns % LENGTH(_this)] == NA_INTEGER)
-			    errorcall(call, _("argument for `*' conversion specification must be a number"));
+			    error(_("argument for `*' conversion specification must be a number"));
 			has_star = 1;
 			star_arg = INTEGER(_this)[ns % LENGTH(_this)];
 		    }
@@ -161,7 +161,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    sprintf(bit, fmt);
 		    } else {
 			if(nthis < 0) {
-			    if (cnt >= nargs) errorcall(call, _("too few arguments"));
+			    if (cnt >= nargs) error(_("too few arguments"));
 			    nthis = cnt++;
 			}
 			_this = a[nthis];
@@ -289,7 +289,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    break;
 			    
 			default:
-			    errorcall(call, _("unsupported type"));
+			    error(_("unsupported type"));
 			    break;
 			}
 
@@ -307,8 +307,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 
 	    if (strlen(outputString) + strlen(bit) > MAXLINE)
-		errorcall(call, _("String length exceeds buffer size of %d"), 
-			  MAXLINE);
+		error(_("String length exceeds buffer size of %d"), MAXLINE);
 	    strcat(outputString, bit);
 	}
 	SET_STRING_ELT(ans, ns, mkChar(outputString));

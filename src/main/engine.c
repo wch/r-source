@@ -2679,15 +2679,15 @@ SEXP attribute_hidden do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP list = CADR(args);
     SEXP parentenv = CADDR(args);
     if (!isLanguage(code))
-      errorcall(call, _("'expr' argument must be an expression"));
+	error(_("'expr' argument must be an expression"));
     if (TYPEOF(list) != VECSXP)
-      errorcall(call, _("'list' argument must be a list"));
+	error(_("'list' argument must be a list"));
     if (isNull(parentenv)) {
 	error(_("use of NULL environment is defunct"));
 	parentenv = R_BaseEnv;
     } else        
     if (!isEnvironment(parentenv))
-      errorcall(call, _("'env' argument must be an environment"));
+	error(_("'env' argument must be an environment"));
     /*
      * This conversion of list to env taken from do_eval
      */

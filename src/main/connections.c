@@ -171,7 +171,7 @@ void set_iconv(Rconnection con)
 
 static Rboolean null_open(Rconnection con)
 {
-    error(_("open/close not enabled for this connection"));
+    error(_("%s not enabled for this connection"), "open");
     return FALSE;		/* -Wall */
 }
 
@@ -187,7 +187,7 @@ static void null_destroy(Rconnection con)
 
 static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
-    error(_("printing not enabled for this connection"));
+    error(_("%s not enabled for this connection"), "printing");
     return 0;			/* -Wall */
 }
 
@@ -343,19 +343,19 @@ int dummy_fgetc(Rconnection con)
 
 static int null_fgetc(Rconnection con)
 {
-    error(_("getc not enabled for this connection"));
+    error(_("%s not enabled for this connection"), "'getc'");
     return 0;			/* -Wall */
 }
 
 static double null_seek(Rconnection con, double where, int origin, int rw)
 {
-    error(_("seek not enabled for this connection"));
+    error(_("%s not enabled for this connection"), "'seek'");
     return 0.;			/* -Wall */
 }
 
 static void null_truncate(Rconnection con)
 {
-    error(_("truncation not enabled for this connection"));
+    error(_("%s not enabled for this connection"), "truncation");
 }
 
 static int null_fflush(Rconnection con)
@@ -366,14 +366,14 @@ static int null_fflush(Rconnection con)
 static size_t null_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
-    error(_("read not enabled for this connection"));
+    error(_("%s not enabled for this connection"), "'read'");
     return 0;			/* -Wall */
 }
 
 static size_t null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
-    error(_("write not enabled for this connection"));
+    error(_("%s not enabled for this connection"), "'write'");
     return 0;			/* -Wall */
 }
 
@@ -826,7 +826,7 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     sfile = CAR(args);
     if(!isString(sfile) || length(sfile) < 1)
-	errorcall(call, _("invalid '%s' argument"), "description");
+	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
     file = translateChar(STRING_ELT(sfile, 0)); /* for now, like fopen */
@@ -1152,7 +1152,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     sfile = CAR(args);
     if(!isString(sfile) || length(sfile) < 1)
-	errorcall(call, _("invalid '%s' argument"), "description");
+	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
     file = translateChar(STRING_ELT(sfile, 0));
@@ -1334,7 +1334,7 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     sfile = CAR(args);
     if(!isString(sfile) || length(sfile) < 1)
-	errorcall(call, _("invalid '%s' argument"), "description");
+	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
     file = translateChar(STRING_ELT(sfile, 0));
@@ -2071,7 +2071,7 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "text");
     }
     else
-	errorcall(call, _("unsupported mode"));
+	error(_("unsupported mode"));
     /* already opened */
 
     PROTECT(ans = allocVector(INTSXP, 1));
@@ -2091,7 +2091,7 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     
     checkArity(op, args);
     if(!inherits(CAR(args), "textConnection"))
-	errorcall(call, _("'con' is not a textConnection"));
+	error(_("'con' is not a textConnection"));
     con = getConnection(asInteger(CAR(args)));
     if(!con->canwrite)
 	error(_("'con' is not an output textConnection"));
@@ -2182,7 +2182,7 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     sfile = CAR(args);
     if(!isString(sfile) || length(sfile) < 1)
-	errorcall(call, _("invalid '%s' argument"), "description");
+	error(_("invalid '%s' argument"), "description");
     if(length(sfile) > 1)
 	warning(_("only first element of 'description' argument used"));
     file = translateChar(STRING_ELT(sfile, 0));
@@ -2230,7 +2230,7 @@ SEXP attribute_hidden do_open(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     i = asInteger(CAR(args));
     con = getConnection(i);
     if(i < 3) error(_("cannot open standard connections"));
@@ -2269,7 +2269,7 @@ SEXP attribute_hidden do_isopen(SEXP call, SEXP op, SEXP args, SEXP env)
     case 0: break;
     case 1: res = res & con->canread; break;
     case 2: res = res & con->canwrite; break;
-    default: errorcall(call, _("unknown 'rw' value"));
+    default: error(_("unknown 'rw' value"));
     }
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = res;
@@ -2284,7 +2284,7 @@ SEXP attribute_hidden do_isincomplete(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = con->incomplete != FALSE;
@@ -2299,7 +2299,7 @@ SEXP attribute_hidden do_isseekable(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
     PROTECT(ans = allocVector(LGLSXP, 1));
     LOGICAL(ans)[0] = con->canseek != FALSE;
@@ -2348,7 +2348,7 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     i = asInteger(CAR(args));
     if(i < 3) error(_("cannot close standard connections"));
     for(j = 0; j < R_SinkNumber; j++)
@@ -2370,7 +2370,7 @@ SEXP attribute_hidden do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
     if(!con->isopen) error(_("connection is not open"));
     where = asReal(CADR(args));
@@ -2389,7 +2389,7 @@ SEXP attribute_hidden do_truncate(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
     con->truncate(con);
     return R_NilValue;
@@ -2401,7 +2401,7 @@ SEXP attribute_hidden do_flush(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
     if(con->canwrite) con->fflush(con);
     return R_NilValue;
@@ -2505,21 +2505,21 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
     n = asInteger(CADR(args));
     if(n == NA_INTEGER)
-	errorcall(call, _("invalid value for '%s'"), "n");
+	error(_("invalid value for '%s'"), "n");
     ok = asLogical(CADDR(args));
     if(ok == NA_LOGICAL)
-	errorcall(call, _("invalid value for '%s'"), "ok");
+	error(_("invalid value for '%s'"), "ok");
     warn = asLogical(CADDDR(args));
     if(warn == NA_LOGICAL)
-	errorcall(call, _("invalid value for '%s'"), "warn");
+	error(_("invalid value for '%s'"), "warn");
     if(!con->canread)
-	errorcall(call, _("cannot read from this connection"));
+	error(_("cannot read from this connection"));
     if(!isString(CAD4R(args)) || LENGTH(CAD4R(args)) != 1)
-	errorcall(call, _("invalid '%s' value"), "encoding");
+	error(_("invalid '%s' value"), "encoding");
     encoding = CHAR(STRING_ELT(CAD4R(args), 0)); /* ASCII */
     wasopen = con->isopen;
     if(!wasopen) {
@@ -2604,7 +2604,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
     text = CAR(args);
     if(!isString(text)) error(_("invalid '%s' argument"), "text");
     if(!inherits(CADR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CADR(args)));
     sep = CADDR(args);
     if(!isString(sep)) error(_("invalid '%s' argument"), "sep");
@@ -2808,7 +2808,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		break;
 	    default:
-		errorcall(call, _("size %d is unknown on this machine"), size);
+		error(_("size %d is unknown on this machine"), size);
 	    }
 	    PROTECT(ans = allocVector(INTSXP, n));
 	    p = (void *) INTEGER(ans);
@@ -2826,7 +2826,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		break;
 	    default:
-		errorcall(call, _("size %d is unknown on this machine"), size);
+		error(_("size %d is unknown on this machine"), size);
 	    }
 	    PROTECT(ans = allocVector(LGLSXP, n));
 	    p = (void *) LOGICAL(ans);
@@ -2837,7 +2837,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    case 1:
 		break;
 	    default:
-		errorcall(call, _("raw is always of size 1"));
+		error(_("raw is always of size 1"));
 	    }
 	    PROTECT(ans = allocVector(RAWSXP, n));
 	    p = (void *) RAW(ans);
@@ -2852,7 +2852,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		break;
 	    default:
-		errorcall(call, _("size %d is unknown on this machine"), size);
+		error(_("size %d is unknown on this machine"), size);
 	    }
 	    PROTECT(ans = allocVector(REALSXP, n));
 	    p = (void *) REAL(ans);
@@ -2896,9 +2896,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #endif
 		    default:
-			errorcall(call,
-				  _("size %d is unknown on this machine"),
-				  size);
+			error(_("size %d is unknown on this machine"), size);
 		    }
 		}
 	    } else if (mode == 2) {
@@ -2917,7 +2915,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 #endif
 		    default:
-			errorcall(call, 
+			error(
 				  _("size %d is unknown on this machine"),
 				  size);
 		    }
@@ -3013,7 +3011,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		break;
 	    default:
-		errorcall(call, _("size %d is unknown on this machine"), size);
+		error(_("size %d is unknown on this machine"), size);
 	    }
 	    break;
 	case REALSXP:
@@ -3026,7 +3024,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		break;
 	    default:
-		errorcall(call, _("size %d is unknown on this machine"), size);
+		error(_("size %d is unknown on this machine"), size);
 	    }
 	    break;
 	case CPLXSXP:
@@ -3085,7 +3083,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 		    buf[i] = (signed char) INTEGER(object)[i];
 		break;
 	    default:
-		errorcall(call, _("size %d is unknown on this machine"), size);
+		error(_("size %d is unknown on this machine"), size);
 	    }
 	    break;
 	case REALSXP:
@@ -3114,7 +3112,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 #endif
 	    default:
-		errorcall(call, _("size %d is unknown on this machine"), size);
+		error(_("size %d is unknown on this machine"), size);
 	    }
 	    break;
 	case CPLXSXP:
@@ -4056,23 +4054,23 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
-	errorcall(call, _("'con' is not a connection"));
+	error(_("'con' is not a connection"));
     incon = getConnection(icon = asInteger(CAR(args)));
     level = asInteger(CADR(args));
     if(level == NA_INTEGER || level < 0 || level > 9)
-	errorcall(call, _("'level' must be one of 0 ... 9"));
+	error(_("'level' must be one of 0 ... 9"));
     allow = asLogical(CADDR(args));
     if(allow == NA_INTEGER)
-	errorcall(call, _("'allowNonCompression' must be TRUE or FALSE"));
+	error(_("'allowNonCompression' must be TRUE or FALSE"));
 
     if(incon->isGzcon) {
-	warningcall(call, _("this is already a gzcon connection"));
+	warning(_("this is already a gzcon connection"));
 	return CAR(args);
     }
     m = incon->mode;
     if(strcmp(m, "r") == 0 || strncmp(m, "rb", 2) == 0) mode = "rb";
     else if (strcmp(m, "w") == 0 || strncmp(m, "wb", 2) == 0) mode = "wb";
-    else errorcall(call, _("can only use read- or write- binary connections"));
+    else error(_("can only use read- or write- binary connections"));
     if(strcmp(incon->class, "file") == 0 &&
        (strcmp(m, "r") == 0 || strcmp(m, "w") == 0))
 	warning(_("using a text-mode 'file' connection may not work correctly"));
@@ -4194,12 +4192,12 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     insock = CAR(args);
     if (TYPEOF(insock) != VECSXP || LENGTH(insock) == 0)
-	errorcall(call, _("not a list of sockets"));
+	error(_("not a list of sockets"));
     nsock = LENGTH(insock);
 
     write = CADR(args);
     if (TYPEOF(write) != LGLSXP || LENGTH(write) != nsock)
-	errorcall(call, _("bad write indicators"));
+	error(_("bad write indicators"));
 
     timeout = asReal(CADDR(args));
 
@@ -4210,7 +4208,7 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
 	Rsockconn scp = (Rsockconn) conn->private;
 	if (strcmp(conn->class, "socket") != 0)
-	    errorcall(call, _("not a socket connection"));
+	    error(_("not a socket connection"));
 	INTEGER(insockfd)[i] = scp->fd;
 	if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
 	    LOGICAL(val)[i] = TRUE;

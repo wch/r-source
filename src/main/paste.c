@@ -58,11 +58,11 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     if (!isVectorList(x))
-	errorcall(call, _("invalid first argument"));
+	error(_("invalid first argument"));
 
     sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0)
-	errorcall(call, _("invalid separator"));
+	error(_("invalid separator"));
     sep = STRING_ELT(sep, 0);
     csep = translateChar(sep);
     sepw = strlen(csep); /* not LENGTH as might contain \0 */
@@ -70,7 +70,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     collapse = CADDR(args);
     if (!isNull(collapse))
 	if(!isString(collapse) || LENGTH(collapse) <= 0)
-	    errorcall(call, _("invalid '%s' argument"), "collapse");
+	    error(_("invalid '%s' argument"), "collapse");
 
     /* Maximum argument length and */
     /* check for arguments of list type */
@@ -161,44 +161,44 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     PrintDefaults(env);
     
     if (!isVector(x = CAR(args)))
-	errorcall(call, _("first argument must be atomic"));
+	error(_("first argument must be atomic"));
     args = CDR(args);
 
     trim = asLogical(CAR(args));
     if (trim == NA_INTEGER)
-	errorcall(call, _("invalid '%s' argument"), "trim");
+	error(_("invalid '%s' argument"), "trim");
     args = CDR(args);
 
     if (!isNull(CAR(args))) {
 	digits = asInteger(CAR(args));
 	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
 	    || digits > R_MAX_DIGITS_OPT)
-	    errorcall(call, _("invalid '%s' argument"), "digits");
+	    error(_("invalid '%s' argument"), "digits");
 	R_print.digits = digits;
     }
     args = CDR(args);
 
     nsmall = asInteger(CAR(args));
     if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
-	errorcall(call, _("invalid '%s' argument"), "nsmall");
+	error(_("invalid '%s' argument"), "nsmall");
     args = CDR(args);
 
     if (isNull(swd = CAR(args))) wd = 0; else wd = asInteger(swd);
     if(wd == NA_INTEGER)
-	errorcall(call, _("invalid '%s' argument"), "width");
+	error(_("invalid '%s' argument"), "width");
     args = CDR(args);
 
     adj = asInteger(CAR(args));
     if(adj == NA_INTEGER || adj < 0 || adj > 3)
-	errorcall(call, _("invalid '%s' argument"), "justify");
+	error(_("invalid '%s' argument"), "justify");
     args = CDR(args);
 
     na = asLogical(CAR(args));
     if(na == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' argument"), "na.encode");
+	error(_("invalid '%s' argument"), "na.encode");
     args = CDR(args);
     if(LENGTH(CAR(args)) != 1)
-	errorcall(call, _("invalid '%s' argument"), "scientific");
+	error(_("invalid '%s' argument"), "scientific");
     if(isLogical(CAR(args))) {
 	int tmp = LOGICAL(CAR(args))[0];
 	if(tmp == NA_LOGICAL) sci = NA_INTEGER;
@@ -206,7 +206,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if (isNumeric(CAR(args))) {
 	sci = asInteger(CAR(args));
     } else
-	errorcall(call, _("invalid '%s' argument"), "scientific");
+	error(_("invalid '%s' argument"), "scientific");
     if(sci != NA_INTEGER) R_print.scipen = sci;
 
     if ((n = LENGTH(x)) <= 0) {
@@ -316,7 +316,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
 	break;
 	default:
-	    errorcall(call, _("Impossible mode ( x )")); y = R_NilValue;/* -Wall */
+	    error(_("Impossible mode ( x )")); y = R_NilValue;/* -Wall */
 	}
     }
     if((l = getAttrib(x, R_DimSymbol)) != R_NilValue) {
@@ -354,12 +354,12 @@ SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	digits = asInteger(CADR(args));
 	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
 	    || digits > R_MAX_DIGITS_OPT)
-	    errorcall(call, _("invalid '%s' argument"), "digits");
+	    error(_("invalid '%s' argument"), "digits");
 	R_print.digits = digits;
     }
     nsmall = asInteger(CADDR(args));
     if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
-	errorcall(call, _("invalid '%s' argument"), "nsmall");
+	error(_("invalid '%s' argument"), "nsmall");
 
     w = 0;
     d = 0;
@@ -401,7 +401,7 @@ SEXP attribute_hidden do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     default:
-	errorcall(call, _("atomic vector arguments only"));
+	error(_("atomic vector arguments only"));
     }
     x = allocVector(INTSXP, no);
     INTEGER(x)[0] = w;

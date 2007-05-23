@@ -1141,7 +1141,7 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
 	if(!R_Interactive)
-	    warningcall(call, _("save=\"ask\" in non-interactive use: command-line default will be used"));
+	    warning(_("save=\"ask\" in non-interactive use: command-line default will be used"));
     } else if( !strcmp(tmp, "no") )
 	ask = SA_NOSAVE;
     else if( !strcmp(tmp, "yes") )
@@ -1152,12 +1152,12 @@ SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("unrecognized value of 'save'"));
     status = asInteger(CADR(args));
     if (status == NA_INTEGER) {
-        warningcall(call, _("invalid 'status', 0 assumed"));
+        warning(_("invalid 'status', 0 assumed"));
 	runLast = 0;
     }
     runLast = asLogical(CADDR(args));
     if (runLast == NA_LOGICAL) {
-        warningcall(call, _("invalid 'runLast', FALSE assumed"));
+        warning(_("invalid 'runLast', FALSE assumed"));
 	runLast = 0;
     }
     /* run the .Last function. If it gives an error, will drop back to main

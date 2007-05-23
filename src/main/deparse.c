@@ -183,7 +183,7 @@ SEXP attribute_hidden do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if(length(args) < 1) errorcall(call, _("too few arguments"));
+    if(length(args) < 1) error(_("too few arguments"));
 
     ca1 = CAR(args); args = CDR(args);
     cut0 = DEFAULT_Cutoff;
@@ -319,7 +319,7 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, i)));
 	    if(!havewarned &&
 	       res < strlen(CHAR(STRING_ELT(tval, i))) + 1)
-		warningcall(call, _("wrote too few characters"));
+		warning(_("wrote too few characters"));
 	}
     if (!wasopen) con->close(con);
     return (CAR(args));
@@ -339,13 +339,13 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     names = CAR(args);
     file = CADR(args);
     if(!isString(names))
-	errorcall(call, _("character arguments expected"));
+	error( _("character arguments expected"));
     nobjs = length(names);
     if(nobjs < 1 || length(file) < 1)
-	errorcall(call, _("zero length argument"));
+	error(_("zero length argument"));
     source = CADDR(args);
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
-	error(_("bad environment"));
+	error(_("invalid '%s' argument"), "envir");
     opts = asInteger(CADDDR(args));
     /* <NOTE>: change this if extra options are added */ 
     if(opts == NA_INTEGER || opts < 0 || opts > 256)
@@ -359,8 +359,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_TAG(o, install(translateChar(STRING_ELT(names, j))));
 	SETCAR(o, findVar(TAG(o), source));
 	if (CAR(o) == R_UnboundValue)
-	    warning(_("Object \"%s\" not found"), 
-		    CHAR(PRINTNAME(TAG(o))));
+	    warning(_("Object \"%s\" not found"), CHAR(PRINTNAME(TAG(o))));
 	else nout++;
     }
     o = objs;
@@ -392,13 +391,13 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 		s = translateChar(STRING_ELT(names, i));
 		res = Rconn_printf(con, "`%s` <-\n", s);
 		if(!havewarned && res < strlen(s) + 6)
-		    warningcall(call, _("wrote too few characters"));
+		    warning(_("wrote too few characters"));
 		tval = deparse1(CAR(o), 0, opts);
 		for (j = 0; j < LENGTH(tval); j++) {
 		    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
 		    if(!havewarned &&
 		       res < strlen(CHAR(STRING_ELT(tval, j))) + 1)
-			warningcall(call, _("wrote too few characters"));
+			warning(_("wrote too few characters"));
 		}
 		o = CDR(o);
 	    }

@@ -47,42 +47,42 @@ SEXP attribute_hidden do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP en
     nd = dd->dev;
     
     if (!nd->newDevStruct || !nd->getEvent) 
-    	errorcall(call, _("graphics device does not support graphics events"));
+    	error(_("graphics device does not support graphics events"));
     
     prompt = CAR(args);
-    if (!isString(prompt) || !length(prompt)) errorcall(call, _("invalid prompt"));
+    if (!isString(prompt) || !length(prompt)) error(_("invalid prompt"));
     args = CDR(args);
     
     onMouseDown = CAR(args);
     if (TYPEOF(onMouseDown) == NILSXP) onMouseDown = NULL;
     else if (!nd->canGenMouseDown)
-	errorcall(call, _("'onMouseDown' not supported"));
+	error(_("'onMouseDown' not supported"));
     else if (TYPEOF(onMouseDown) != CLOSXP) 
-	errorcall(call, _("invalid 'onMouseDown' callback"));
+	error(_("invalid 'onMouseDown' callback"));
     args = CDR(args);
     
     onMouseMove = CAR(args);
     if (TYPEOF(onMouseMove) == NILSXP) onMouseMove = NULL;
     else if (!nd->canGenMouseMove) 
-	errorcall(call, _("'onMouseMove' not supported"));
+	error(_("'onMouseMove' not supported"));
     else if (TYPEOF(onMouseMove) != CLOSXP)
-	errorcall(call, _("invalid 'onMouseMove' callback"));
+	error(_("invalid 'onMouseMove' callback"));
     args = CDR(args);
     
     onMouseUp = CAR(args);
     if (TYPEOF(onMouseUp) == NILSXP) onMouseUp = NULL;
     else if (!nd->canGenMouseUp) 
-	errorcall(call, _("'onMouseUp' not supported"));
+	error(_("'onMouseUp' not supported"));
     else if (TYPEOF(onMouseUp) != CLOSXP) 
-	errorcall(call, _("invalid 'onMouseUp' callback"));
+	error(_("invalid 'onMouseUp' callback"));
     args = CDR(args);
     
     onKeybd = CAR(args);
     if (TYPEOF(onKeybd) == NILSXP) onKeybd = NULL;
     else if (!nd->canGenKeybd) 
-	errorcall(call, _("'onKeybd' not supported"));
+	error(_("'onKeybd' not supported"));
     else if (TYPEOF(onKeybd) != CLOSXP)
-	errorcall(call, _("invalid 'onKeybd' callback"));
+	error(_("invalid 'onKeybd' callback"));
     
     /* NB:  cleanup of event handlers must be done by driver in onExit handler */
     

@@ -127,8 +127,7 @@ SEXP attribute_hidden do_colon(SEXP call, SEXP op, SEXP args, SEXP rho)
     s2 = CADR(args);
     n1 = length(s1);
     if( n1 > 1 )
-	warningcall(call, 
-		    _("numerical expression has %d elements: only the first used"), (int) n1);
+	warningcall(call, _("numerical expression has %d elements: only the first used"), (int) n1);
     n2 = length(s2);
     if( n2 > 1 )
 	warningcall(call, _("numerical expression has %d elements: only the first used"), (int) n2);

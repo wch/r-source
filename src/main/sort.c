@@ -267,9 +267,9 @@ SEXP attribute_hidden do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("'decreasing' must be TRUE or FALSE"));
     if(CAR(args) == R_NilValue) return R_NilValue;
     if(!isVectorAtomic(CAR(args)))
-	errorcall(call, _("only atomic vectors can be sorted"));
+	error(_("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
-	errorcall(call, _("raw vectors cannot be sorted"));
+	error(_("raw vectors cannot be sorted"));
     /* we need consistent behaviour here, including dropping attibutes,
        so as from 2.3.0 we always duplicate. */
     ans = duplicate(CAR(args));
@@ -517,18 +517,18 @@ SEXP attribute_hidden do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (!isVectorAtomic(CAR(args)))
-	errorcall(call, _("only atomic vectors can be sorted"));
+	error(_("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
-	errorcall(call, _("raw vectors cannot be sorted"));
+	error(_("raw vectors cannot be sorted"));
     n = LENGTH(CAR(args));
     SETCADR(args, coerceVector(CADR(args), INTSXP));
     l = INTEGER(CADR(args));
     k = LENGTH(CADR(args));
     for (i = 0; i < k; i++) {
 	if (l[i] == NA_INTEGER)
-	    errorcall(call, _("NA index"));
+	    error(_("NA index"));
 	if (l[i] < 1 || l[i] > n)
-	    errorcall(call, _("index %d outside bounds"), l[i]);
+	    error(_("index %d outside bounds"), l[i]);
     }
     SETCAR(args, duplicate(CAR(args)));
     SET_ATTRIB(CAR(args), R_NilValue);  /* remove all attributes */
@@ -803,9 +803,9 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = LENGTH(CAR(args));
     for (ap = args; ap != R_NilValue; ap = CDR(ap), narg++) {
 	if (!isVector(CAR(ap)))
-	    errorcall(call, _("argument %d is not a vector"), narg + 1);
+	    error(_("argument %d is not a vector"), narg + 1);
 	if (LENGTH(CAR(ap)) != n)
-	    errorcall(call, _("argument lengths differ"));
+	    error(_("argument lengths differ"));
     }
     ans = allocVector(INTSXP, n);
     if (n != 0) {
@@ -834,9 +834,9 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     x = CAR(args);
     if (!isVectorAtomic(x))
-	errorcall(call, _("argument is not an atomic vector"));
+	error(_("argument is not an atomic vector"));
     if(TYPEOF(x) == RAWSXP)
-	errorcall(call, _("raw vectors cannot be sorted"));
+	error(_("raw vectors cannot be sorted"));
     n = LENGTH(x);
     PROTECT(indx = allocVector(INTSXP, n));
     PROTECT(rank = allocVector(REALSXP, n));
@@ -900,7 +900,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < n; i++) {
 	tmp = INTEGER(x)[i];
 	if(tmp == NA_INTEGER) continue;
-	if(tmp < 0) errorcall(call, _("negative value in 'x'"));
+	if(tmp < 0) error(_("negative value in 'x'"));
 	if(xmax == NA_INTEGER || tmp > xmax) xmax = tmp;
 	if(xmin == NA_INTEGER || tmp < xmin) xmin = tmp;
     }
@@ -911,7 +911,7 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     xmax -= xmin;
-    if(xmax > 100000) errorcall(call, _("too large a range of values in 'x'"));
+    if(xmax > 100000) error(_("too large a range of values in 'x'"));
     napos = off ? 0 : xmax + 1;
     off -= xmin;
     /* alloca is fine here: we know this is small */

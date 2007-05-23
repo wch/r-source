@@ -443,7 +443,7 @@ SEXP attribute_hidden do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     if( cptr == R_ToplevelContext )
-	errorcall(call, _("no function to restart"));
+	error(_("no function to restart"));
     return(R_NilValue);
 }
 
@@ -475,7 +475,7 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     switch (PRIMVAL(op)) {
     case 1: /* parent */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for '%s'"), "n");
+	    error(_("invalid value for '%s'"), "n");
 	nframe = framedepth(cptr);
 	rval = allocVector(INTSXP,1);
 	i = nframe;
@@ -487,11 +487,11 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return rval;
     case 2: /* call */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for '%s'"), "which");
+	    error(_("invalid value for '%s'"), "which");
 	return R_syscall(n, cptr);
     case 3: /* frame */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for '%s'"), "which");
+	    error(_("invalid value for '%s'"), "which");
 	return R_sysframe(n, cptr);
     case 4: /* sys.nframe */
 	rval = allocVector(INTSXP, 1);
@@ -526,7 +526,7 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return rval;
     case 9: /* sys.function */
 	if(n == NA_INTEGER)
-	    errorcall(call, _("invalid value for 'which'"));
+	    error(_("invalid value for 'which'"));
 	return(R_sysfunction(n, cptr));
     default:
 	error(_("internal error in 'do_sys'"));
@@ -545,7 +545,7 @@ SEXP attribute_hidden do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = asInteger(t);
 
     if(n == NA_INTEGER || n < 1 )
-	errorcall(call, _("invalid value for 'n'"));
+	error(_("invalid value for 'n'"));
 
     cptr = R_GlobalContext;
     t = cptr->sysparent;

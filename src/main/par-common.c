@@ -121,7 +121,7 @@
 	if (((GEDevDesc*) dd)->dev->canChangeGamma)
 	    R_DEV__(gamma) = x;
 	else
-	    warningcall(call, _("'gamma' cannot be modified on this device"));
+	    warning(_("'gamma' cannot be modified on this device"));
     }
     else if (streql(what, "lab")) {
 	value = coerceVector(value, INTSXP);
@@ -178,7 +178,7 @@
 	naRealCheck(REAL(value)[2], what);
 	if(REAL(value)[0] * REAL(value)[1] < 0 ||
 	   REAL(value)[0] * REAL(value)[2] < 0)
-	    warningcall(call, "`mgp[1:3]' are of differing sign");
+	    warning("`mgp[1:3]' are of differing sign");
 	R_DEV__(mgp[0]) = REAL(value)[0];
 	R_DEV__(mgp[1]) = REAL(value)[1];
 	R_DEV__(mgp[2]) = REAL(value)[2];

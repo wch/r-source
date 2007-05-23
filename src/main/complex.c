@@ -917,7 +917,7 @@ SEXP attribute_hidden do_complex(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, na, nr, ni;
     na = asInteger(CAR(args));
     if(na == NA_INTEGER || na < 0)
-	errorcall(call, _("invalid length"));
+	error(_("invalid length"));
     PROTECT(re = coerceVector(CADR(args), REALSXP));
     PROTECT(im = coerceVector(CADDR(args), REALSXP));
     nr = length(re);
@@ -971,11 +971,11 @@ SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     n = degree + 1; /* omit trailing zeroes */
     if(degree >= 1) {
-	if(n > 49) errorcall(call, _("polynomial degree too high (49 max)"));
+	if(n > 49) error(_("polynomial degree too high (49 max)"));
 	/* <==>	 #define NMAX 50  in  ../appl/cpoly.c */
 
 	/* if(COMPLEX(z)[n-1].r == 0.0 && COMPLEX(z)[n-1].i == 0.0)
-	   errorcall(call, "highest power has coefficient 0");*/
+	   error("highest power has coefficient 0");*/
 
 	PROTECT(rr = allocVector(REALSXP, n));
 	PROTECT(ri = allocVector(REALSXP, n));
@@ -984,12 +984,12 @@ SEXP attribute_hidden do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	for(i=0 ; i<n ; i++) {
 	    if(!R_FINITE(COMPLEX(z)[i].r) || !R_FINITE(COMPLEX(z)[i].i))
-		errorcall(call, _("invalid polynomial coefficient"));
+		error(_("invalid polynomial coefficient"));
 	    REAL(zr)[degree-i] = COMPLEX(z)[i].r;
 	    REAL(zi)[degree-i] = COMPLEX(z)[i].i;
 	}
 	R_cpolyroot(REAL(zr), REAL(zi), &degree, REAL(rr), REAL(ri), &fail);
-	if(fail) errorcall(call, _("root finding code failed"));
+	if(fail) error(_("root finding code failed"));
 	UNPROTECT(2);
 	r = allocVector(CPLXSXP, degree);
 	for(i=0 ; i<degree ; i++) {

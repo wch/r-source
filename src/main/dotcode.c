@@ -209,11 +209,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	    q++;
 	}
     }
-    /*
-    if(symbol->type == R_FORTRAN_SYM && strchr(buf, '_'))
-	warningcall(call, _("Fortran symbol names contaning '_' are not portable"));
-    */
-
+ 
     if(!*fun) {
 	if(dll.type != FILENAME) {
 	    /* no PACKAGE= arg, so see if we can identify a DLL
@@ -730,39 +726,6 @@ static SEXP enctrim(SEXP args, char *name, int len)
 }
 
 
-SEXP attribute_hidden do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    char buf[128], *p, *q;
-
-    checkArity(op, args);
-
-    if(!isValidString(CAR(args)))
-	errorcall(call, R_MSG_IA);
-
-    warningcall(call, _("'%s' is deprecated"), 
-		PRIMVAL(op) ? "symbol.For" : "symbol.C");
-    p = translateChar(STRING_ELT(CAR(args), 0));
-    q = buf;
-    while ((*q = *p) != '\0') {
-	if(PRIMVAL(op)) *q = tolower(*q);
-	p++;
-	q++;
-    }
-#ifdef HAVE_F77_UNDERSCORE
-    if(PRIMVAL(op)) {
-	*q++ = '_';
-	*q = '\0';
-    }
-#endif
-#ifdef HAVE_F77_EXTRA_UNDERSCORE
-    p = translateChar(STRING_ELT(CAR(args), 0));
-    if(strchr(p, '_') && PRIMVAL(op)) {
-	*q++ = '_';
-	*q = '\0';
-    }
-#endif
-    return mkString(buf);
-}
 
 SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {

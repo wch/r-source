@@ -320,13 +320,13 @@ SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 	enclos = R_BaseEnv;
     } else    
     if( !isEnvironment(enclos) )
-	errorcall(call, _("'enclos' must be an environment"));
+	error(_("'enclos' must be an environment"));
 
     if( hash ) {
         args = CDR(args);
         PROTECT(size = coerceVector(CAR(args), INTSXP));
         if (INTEGER(size)[0] == NA_INTEGER || INTEGER(size)[0] <= 0)
-            errorcall(call, _("'size' must be a positive integer"));
+            error(_("'size' must be a positive integer"));
 	ans = R_NewHashedEnv(enclos, size);
         UNPROTECT(1);
     } else
@@ -340,9 +340,9 @@ SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if( !isEnvironment(CAR(args)) )
-	errorcall(call, _("argument is not an environment"));
+	error( _("argument is not an environment"));
     if( CAR(args) == R_EmptyEnv )
-    	errorcall(call, _("the empty environment has no parent"));
+    	error(_("the empty environment has no parent"));
     return( ENCLOS(CAR(args)) );
 }
 
@@ -465,7 +465,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     sepr = CAR(args);
     if (!isString(sepr))
-	errorcall(call, _("invalid '%s' specification"), "sep");
+	error(_("invalid '%s' specification"), "sep");
     nlsep = 0;
     for (i = 0; i < LENGTH(sepr); i++)
 	if (strstr(CHAR(STRING_ELT(sepr, i)), "\n")) nlsep = 1; /* ASCII */
@@ -473,7 +473,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     fill = CAR(args);
     if ((!isNumeric(fill) && !isLogical(fill)) || (length(fill) != 1))
-	errorcall(call, _("invalid '%s' argument"), "fill");
+	error(_("invalid '%s' argument"), "fill");
     if (isLogical(fill)) {
 	if (asLogical(fill) == 1)
 	    pwidth = R_print.width;
@@ -482,20 +482,20 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else pwidth = asInteger(fill);
     if(pwidth <= 0) {
-	warningcall(call, _("non-positive 'fill' argument will be ignored"));
+	warning(_("non-positive 'fill' argument will be ignored"));
 	pwidth = INT_MAX;
     }
     args = CDR(args);
 
     labs = CAR(args);
     if (!isString(labs) && labs != R_NilValue)
-	errorcall(call, _("invalid '%s' argument"), "label");
+	error(_("invalid '%s' argument"), "label");
     lablen = length(labs);
     args = CDR(args);
 
     append = asLogical(CAR(args));
     if (append == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' specification"), "append");
+	error(_("invalid '%s' specification"), "append");
 
     ci.wasopen = con->isopen;
 
@@ -545,9 +545,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 #endif
 	    else
-		errorcall(call, 
-			  _("argument %d (type '%s') cannot be handled by 'cat'"),
-			  1+iobj, type2char(TYPEOF(s)));
+		error(_("argument %d (type '%s') cannot be handled by 'cat'"),
+		      1+iobj, type2char(TYPEOF(s)));
 	    /* FIXME : cat(...) should handle ANYTHING */
 	    w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);
@@ -814,12 +813,12 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 				      rho, &ans, 0, 1))
 	return(ans);
     if (!isVector(x) && !isVectorizable(x))
-       error(_("length<- invalid first argument"));
+       errorcall(call,_("invalid first argument"));
     if (length(CADR(args)) != 1)
-       error(_("length<- invalid second argument"));
+       errorcall(call, _("invalid value"));
     len = asVecSize(CADR(args));
     if (len == NA_INTEGER)
-       error(_("length<- missing value for 'length'"));
+       errorcall(call, _("missing value for 'length'"));
     return lengthgets(x, len);
 }
 

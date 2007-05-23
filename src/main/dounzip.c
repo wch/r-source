@@ -169,29 +169,29 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     int   i, ntopics, rc, nnames = 0;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, _("invalid zip name argument"));
+	error(_("invalid zip name argument"));
     p = translateChar(STRING_ELT(CAR(args), 0));
     if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, _("zip path is too long"));
+	error(_("zip path is too long"));
     strcpy(zipname, p);
     args = CDR(args);
     fn = CAR(args);
     ntopics = length(fn);
     if (ntopics > 0) {
 	if (!isString(fn) || ntopics > 500)
-	    errorcall(call, _("invalid '%s' argument"), "topics");
+	    error(_("invalid '%s' argument"), "topics");
 	for (i = 0; i < ntopics; i++)
 	    topics[i] = translateChar(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, _("invalid '%s' argument"), "destination");
+	error(_("invalid '%s' argument"), "destination");
     p = R_ExpandFileName(translateChar(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, _("'destination' is too long"));
+	error(_("'destination' is too long"));
     strcpy(dest, p);
     if(!R_FileExists(dest))
-	errorcall(call, _("'destination' does not exist"));
+	error(_("'destination' does not exist"));
     
     if(ntopics > 0)
 	PROTECT(names = allocVector(STRSXP, ntopics));

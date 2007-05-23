@@ -589,11 +589,11 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     no_match = asInteger(CADDR(args));
     dups_ok = asLogical(CADDDR(args));
     if (dups_ok == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' argument"), "duplicates.ok");
+	error(_("invalid '%s' argument"), "duplicates.ok");
     no_dups = !dups_ok;
 
     if (!isString(input) || !isString(target))
-	errorcall(call, _("argument is not of mode character"));
+	error(_("argument is not of mode character"));
 
     if(no_dups) {
 	used = (int *) R_alloc(n_target, sizeof(int));
@@ -707,7 +707,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     n_target = LENGTH(target);
 
     if (!isString(input) || !isString(target))
-	errorcall(call, _("argument is not of mode character"));
+	error(_("argument is not of mode character"));
     no_match = asInteger(CADDR(args));
 
     PROTECT(ans = allocVector(INTSXP, n_input));
@@ -837,7 +837,7 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	funcall = VECTOR_ELT(funcall, 0);
 
     if (TYPEOF(funcall) != LANGSXP)
-	errorcall(call, _("invalid '%s' argument"), "call");
+	error(_("invalid '%s' argument"), "call");
 
     /* Get the function definition */
     sysp = R_GlobalContext->sysparent;
@@ -890,21 +890,21 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(b = eval(CAR(funcall), sysp));
 
 	if (TYPEOF(b) != CLOSXP)
-	    errorcall(call, _("unable to find a closure from within which 'match.call' was called"));
+	    error(_("unable to find a closure from within which 'match.call' was called"));
 
     }
     else {
 	/* It must be a closure! */
 	PROTECT(b = CAR(args));
 	if (TYPEOF(b) != CLOSXP)
-	    errorcall(call, _("invalid '%s' argument"), "definition");
+	    error(_("invalid '%s' argument"), "definition");
     }
 
     /* Do we expand ... ? */
 
     expdots = asLogical(CAR(CDDR(args)));
     if (expdots == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' argument"), "expand.dots");
+	error(_("invalid '%s' argument"), "expand.dots");
 
     /* Get the formals and match the actual args */
 
@@ -1163,11 +1163,11 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     names = CAR(args);
     if(!isString(names))
-	errorcall(call, _("'names' must be a character vector"));
+	error(_("'names' must be a character vector"));
     n = LENGTH(names);
     sep = CADR(args);
     if(!isString(sep) || LENGTH(sep) != 1)
-	errorcall(call, _("'sep' must be a character string"));
+	error(_("'sep' must be a character string"));
     csep = translateChar(STRING_ELT(sep, 0));
     PROTECT(ans = allocVector(STRSXP, n));
     for(i = 0; i < n; i++) {

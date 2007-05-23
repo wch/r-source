@@ -562,7 +562,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     else
-	errorcall(call, _("wrong argument ..."));
+	error(_("wrong argument ..."));
 
     /*
       .Class is used to determine the next method; if it doesn't
@@ -575,7 +575,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (klass == R_UnboundValue) {
 	s = GetObject(cptr);
-	if (!isObject(s)) errorcall(call, _("object not specified"));
+	if (!isObject(s)) error(_("object not specified"));
 	klass = getAttrib(s, R_ClassSymbol);
     }
 
@@ -585,14 +585,14 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if (generic == R_UnboundValue)
 	generic = eval(CAR(args), env);
     if( generic == R_NilValue )
-	errorcall(call, _("generic function not specified"));
+	error(_("generic function not specified"));
     PROTECT(generic);
 
     if (!isString(generic) || length(generic) > 1)
-	errorcall(call, _("invalid generic argument to NextMethod"));
+	error(_("invalid generic argument to NextMethod"));
 
     if (CHAR(STRING_ELT(generic, 0))[0] == '\0')
-	errorcall(call, _("generic function not specified"));
+	error(_("generic function not specified"));
 
     /* determine whether we are in a Group dispatch */
 
@@ -602,7 +602,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     else PROTECT(group);
 
     if (!isString(group) || length(group) > 1)
-	errorcall(call, _("invalid 'group' argument found in NextMethod"));
+	error(_("invalid 'group' argument found in NextMethod"));
 
     /* determine the root: either the group or the generic will be it */
 
@@ -745,10 +745,10 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     switch(TYPEOF(CAR(args))) {
     case ENVSXP:
-	errorcall(call, _("cannot unclass an environment"));
+	error(_("cannot unclass an environment"));
 	break;
     case EXTPTRSXP:
-	errorcall(call, _("cannot unclass an external pointer"));
+	error(_("cannot unclass an external pointer"));
 	break;
     default:
 	break;
@@ -818,12 +818,12 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 
     what = CADR(args);
     if(!isString(what))
-	errorcall(call, _("'what' must be a character vector"));
+	error(_("'what' must be a character vector"));
     nwhat = length(what);
 
     which = CADDR(args);
     if( !isLogical(which) || (length(which) != 1) )
-	errorcall(call, _("'which' must be a length 1 logical vector"));
+	error(_("'which' must be a length 1 logical vector"));
     isvec = asLogical(which);
 
     if(isvec)
