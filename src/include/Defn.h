@@ -945,9 +945,9 @@ void R_JumpToContext(RCNTXT *, int, SEXP);
 void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
 void mainloop(void);
-SEXP makeSubscript(SEXP, SEXP, int *);
+SEXP makeSubscript(SEXP, SEXP, int *, SEXP);
 void markKnown(SEXP, SEXP);
-SEXP mat2indsub(SEXP, SEXP);
+SEXP mat2indsub(SEXP, SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
 SEXP matchArgs(SEXP, SEXP, SEXP);
@@ -968,7 +968,7 @@ SEXP NewEnvironment(SEXP, SEXP, SEXP);
 void onintr();
 RETSIGTYPE onsigusr1(int);
 RETSIGTYPE onsigusr2(int);
-int OneIndex(SEXP, SEXP, int, int, SEXP*, int);
+int OneIndex(SEXP, SEXP, int, int, SEXP*, int, SEXP);
 SEXP parse(FILE*, int);
 void PrintDefaults(SEXP);
 void PrintGreeting(void);
@@ -1019,7 +1019,7 @@ void unmarkPhase(void);
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
 SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
-                        SEXP (*)(SEXP, int), SEXP);
+                        SEXP (*)(SEXP, int), SEXP, SEXP);
 
 /* ../main/bind.c */
 SEXP ItemName(SEXP, int);
