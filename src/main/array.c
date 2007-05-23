@@ -68,7 +68,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     snc = CADDR(args);
     byrow = asLogical(CADR(CDDR(args)));
     if (byrow == NA_INTEGER)
-	error(_("matrix: invalid 'byrow' value"));
+	error(_("invalid 'byrow' value"));
 
     /* R wrapper does as.vector
     if (isVector(vals) || isList(vals)) {
@@ -83,16 +83,16 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     lendat = length(vals);
     nr = asInteger(snr);
     if (nr == NA_INTEGER) /* This is < 0 */
-	error(_("matrix: invalid 'nrow' value (too large or NA)"));
+	error(_("invalid 'nrow' value (too large or NA)"));
     if (nr < 0)
-	error(_("matrix: invalid 'nrow' value (< 0)"));
+	error(_("invalid 'nrow' value (< 0)"));
     nc = asInteger(snc);
     if (nc < 0)
-	error(_("matrix: invalid 'ncol' value (< 0)"));
+	error(_("invalid 'ncol' value (< 0)"));
     if (nc == NA_INTEGER)
-	error(_("matrix: invalid 'ncol' value (too large or NA)"));
+	error(_("invalid 'ncol' value (too large or NA)"));
     if (nc < 0)
-	error(_("matrix: invalid 'ncol' value (< 0)"));
+	error(_("invalid 'ncol' value (< 0)"));
 
     if(lendat > 0 ) {
 	if (lendat > 1 && (nr * nc) % lendat != 0) {
@@ -109,7 +109,7 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if ((double)nr * (double)nc > INT_MAX)
-	error(_("matrix: too many elements specified"));
+	error(_("too many elements specified"));
 
     PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
     if(lendat) {

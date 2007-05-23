@@ -222,6 +222,7 @@ static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
 void warning(const char *format, ...)
 {
     char buf[BUFSIZE], *p;
+    RCNTXT *c = R_GlobalContext;
 
     va_list(ap);
     va_start(ap, format);
@@ -231,7 +232,8 @@ void warning(const char *format, ...)
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
 	strcat(buf, " [... truncated]");
-    warningcall(R_NilValue, buf);
+    if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
+    warningcall(c ? c->call : R_NilValue, "%s", buf);
 }
 
 /* temporary hook to allow experimenting with alternate warning mechanisms */
@@ -260,7 +262,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	return;
 
     s = GetOption(install("warning.expression"), R_BaseEnv);
-    if( s!= R_NilValue ) {
+    if( s != R_NilValue ) {
 	if( !isLanguage(s) &&  ! isExpression(s) )
 	    error(_("invalid option \"warning.expression\""));
 	cptr = R_GlobalContext;
@@ -387,31 +389,34 @@ void PrintWarnings(void)
     cntxt.cend = &cleanup_PrintWarnings;
 
     inPrintWarnings = 1;
-    header = P_("Warning message:\n", "Warning messages:\n", 
-		R_CollectWarnings);
+    header = P_("Warning message:\n", "Warning messages:\n", R_CollectWarnings);
     if( R_CollectWarnings == 1 ) {
 	REprintf(header);
 	names = CAR(ATTRIB(R_Warnings));
 	if( VECTOR_ELT(R_Warnings, 0) == R_NilValue )
 	   REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
-	else
-	   REprintf("%s in: %s \n", CHAR(STRING_ELT(names, 0)),
-		CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0), 0, 
-					 DEFAULTDEPARSE), 0)));
-    }
-    else if( R_CollectWarnings <= 10 ) {
+	else {
+	    char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
+	    dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0),
+					     0, DEFAULTDEPARSE), 0));
+	    if (strlen(dcall) + strlen(msg) > 70) sep = "\n\t";
+	    REprintf("In %s :%s%s\n", dcall, sep, msg);
+	}
+    } else if( R_CollectWarnings <= 10 ) {
 	REprintf(header);
 	names = CAR(ATTRIB(R_Warnings));
 	for(i = 0; i < R_CollectWarnings; i++) {
 	    if( VECTOR_ELT(R_Warnings, i) == R_NilValue )
-	       REprintf("%d: %s \n",i+1, CHAR(STRING_ELT(names, i)));
-	    else
-	       REprintf("%d: %s in: %s \n", i+1, CHAR(STRING_ELT(names, i)),
-		   CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, i), 0, 
-					    DEFAULTDEPARSE), 0)));
+		REprintf("%d: %s \n", i+1, CHAR(STRING_ELT(names, i)));
+	    else {
+		char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
+		dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, i),
+						 0, DEFAULTDEPARSE), 0));
+		if (strlen(dcall) + strlen(msg) > 70) sep = "\n\t";
+		REprintf("%d: In %s :%s%s\n", i+1, dcall, sep, msg);
+	    }
 	}
-    }
-    else {
+    } else {
 	if (R_CollectWarnings < 50)
 	    REprintf(_("There were %d warnings (use warnings() to see them)\n"),
 		     R_CollectWarnings);

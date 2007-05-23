@@ -212,6 +212,14 @@ NEW FEATURES
         occur and no warning will be issued.  This patch was written
         by Seth Falcon.
 
+    o	C-level warning calls now print a more informative context,
+	as C-level errors have for a while.
+
+	Many of the C-level warning / error mesages (e.g. from
+	subscripting) have been re-worked to give more detailed
+	information on either the location or the cause of the
+	problem.
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,6 +1,6 @@
 
-R version 2.4.0 Under development (unstable) (2006-05-20 r38139)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -248,8 +248,8 @@ n= 48 : ......................
 +              pgamma(Inf,Inf,scale=Inf))))
 [1] TRUE
 Warning messages:
-1: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
-2: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
+1: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced 
+2: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced 
 > scLrg <- c(2,100, 1e300*c(.1, 1,10,100), 1e307, xMax, Inf)
 > stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
 +           pgamma(xMax,1, scale=Inf) == 0,
@@ -343,8 +343,8 @@ df = 100[1] TRUE
 + is.nan(qnorm(-.1)) # + warn
 [1] TRUE
 Warning messages:
-1: NaNs produced in: qnorm(p, mean, sd, lower.tail, log.p) 
-2: NaNs produced in: qnorm(p, mean, sd, lower.tail, log.p) 
+1: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced 
+2: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced 
 > 
 > x <- c(-Inf, -1e100, 1:6, 1e200, Inf)
 > rbind(d.s0 =dnorm(x,3,s=0),   p.s0 = pnorm(x,3,s=0),
@@ -1078,8 +1078,8 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
 +           dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
 Warning messages:
-1: non-integer x = -0.000000 
-2: non-integer x = -0.000020 
+1: In dbinom(x0, 3, 0.1) : non-integer x = -0.000000 
+2: In dbinom(x0, 3, 0.1) : non-integer x = -0.000020 
 > ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 > 
 > ## dbeta(*, ncp):
@@ -1098,5 +1098,5 @@ Warning messages:
 +           )
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  5.148 0.034 5.203 0 0 
+Time elapsed:  3.95 0.03 3.98 NA NA 
 > 

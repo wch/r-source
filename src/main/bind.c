@@ -1213,7 +1213,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 	    if (!warned && k>0 && (k > rows || rows % k)) {
 		warned = 1;
 		PROTECT(call = substituteList(call, rho));
-		warningcall(call, "number of rows of result\n\tis not a multiple of vector length (arg %d)", n);
+		warningcall(call, "number of rows of result is not a multiple of vector length (arg %d)", n);
 		UNPROTECT(1);
 	    }
 	    dn = getAttrib(u, R_NamesSymbol);

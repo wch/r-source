@@ -116,7 +116,7 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
     }
     if(mismatch)
 	warningcall(call, 
-		    _("longer object length\n\tis not a multiple of shorter object length"));
+		    _("longer object length is not a multiple of shorter object length"));
 
     if (isRaw(x) && isRaw(y)) {
 	PROTECT(x = binaryLogic2(PRIMVAL(op), x, y));

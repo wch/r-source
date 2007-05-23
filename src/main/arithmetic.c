@@ -457,7 +457,7 @@ SEXP attribute_hidden R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 
     if (mismatch)
 	warningcall(lcall,
-		    _("longer object length\n\tis not a multiple of shorter object length"));
+		    _("longer object length is not a multiple of shorter object length"));
 
     /* need to preserve object here, as *_binary copies class attributes */
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {

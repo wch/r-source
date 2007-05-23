@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-09 r41507)
+R version 2.6.0 Under development (unstable) (2007-05-23 r41677)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -609,12 +609,12 @@ Your balance is 120
 Error in ross$withdraw(500) : You don't have that much money!
 
 In addition: Warning messages:
-1: is.nan() applied to non-(list or vector) in: fn(obj) 
-2: is.nan() applied to non-(list or vector) in: fn(obj) 
-3: is.na() applied to non-(list or vector) in: fn(obj) 
-4: is.nan() applied to non-(list or vector) in: fn(obj) 
-5: is.nan() applied to non-(list or vector) in: fn(obj) 
-6: is.nan() applied to non-(list or vector) in: fn(obj) 
+1: In fn(obj) : is.nan() applied to non-(list or vector)
+2: In fn(obj) : is.nan() applied to non-(list or vector)
+3: In fn(obj) : is.na() applied to non-(list or vector)
+4: In fn(obj) : is.nan() applied to non-(list or vector)
+5: In fn(obj) : is.nan() applied to non-(list or vector)
+6: In fn(obj) : is.nan() applied to non-(list or vector)
 
 
 	demo(graphics)
@@ -1123,43 +1123,66 @@ AIC: 170.07
 Number of Fisher Scoring iterations: 4
 
 
-> symnum(summary(detg.mod, correlation = TRUE)$corr)
-                            ( M.sY TmH M.sY:TH SM SS M.Y:SM M.Y:SS TH:SM TH:SS
-(Intercept)                 1                                                 
-M.userY                     , 1                                               
-TempHigh                    , .    1                                          
-M.userY:TempHigh            . ,    ,   1                                      
-SoftMedium                  , .    .           1                              
-SoftSoft                    , .    .           .  1                           
-M.userY:SoftMedium          . ,        .       ,  .  1                        
-M.userY:SoftSoft            . ,        .       .  ,  .      1                 
-TempHigh:SoftMedium         .      ,   .       .  .  .             1          
-TempHigh:SoftSoft           .      ,   .       .  .         .      .     1    
-M.userY:TempHigh:SoftMedium   .    .   .       .     ,      .      ,     .    
-M.userY:TempHigh:SoftSoft     .    .   .          .  .      ,      .     ,    
-BrandM                      .                                                 
-M.userY:BrandM                .                                               
-TempHigh:BrandM                    .   .                                      
-M.userY:TempHigh:BrandM            .   .                                      
-                            M.Y:TH:SM M.Y:TH:SS B M.Y:B TH:B M.Y:TH:B
-(Intercept)                                                          
-M.userY                                                              
-TempHigh                                                             
-M.userY:TempHigh                                                     
-SoftMedium                                                           
-SoftSoft                                                             
-M.userY:SoftMedium                                                   
-M.userY:SoftSoft                                                     
-TempHigh:SoftMedium                                                  
-TempHigh:SoftSoft                                                    
-M.userY:TempHigh:SoftMedium 1                                        
-M.userY:TempHigh:SoftSoft   .         1                              
-BrandM                                          1                    
-M.userY:BrandM                                  , 1                  
-TempHigh:BrandM                                 . .     1            
-M.userY:TempHigh:BrandM                         . .     ,    1       
+> summary(detg.mod, correlation = TRUE, symbolic.cor = TRUE)
+
+Call:
+glm(formula = terms(Fr ~ M.user * Temp * Soft + Brand * M.user * 
+    Temp, keep.order = TRUE), family = poisson, data = detg)
+
+Deviance Residuals: 
+      Min         1Q     Median         3Q        Max  
+-0.913649  -0.355846   0.002531   0.330274   0.921460  
+
+Coefficients:
+                            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                  4.14887    0.10603  39.128   <2e-16 ***
+M.userY                     -0.40521    0.16188  -2.503   0.0123 *  
+TempHigh                    -0.44275    0.17121  -2.586   0.0097 ** 
+M.userY:TempHigh            -0.12692    0.26257  -0.483   0.6288    
+SoftMedium                   0.05311    0.13308   0.399   0.6898    
+SoftSoft                     0.05311    0.13308   0.399   0.6898    
+M.userY:SoftMedium           0.08323    0.19685   0.423   0.6725    
+M.userY:SoftSoft             0.12169    0.19591   0.621   0.5345    
+TempHigh:SoftMedium         -0.30442    0.22239  -1.369   0.1710    
+TempHigh:SoftSoft           -0.30442    0.22239  -1.369   0.1710    
+M.userY:TempHigh:SoftMedium  0.21189    0.31577   0.671   0.5022    
+M.userY:TempHigh:SoftSoft   -0.20387    0.32540  -0.627   0.5310    
+BrandM                      -0.30647    0.10942  -2.801   0.0051 ** 
+M.userY:BrandM               0.40757    0.15961   2.554   0.0107 *  
+TempHigh:BrandM              0.04411    0.18463   0.239   0.8112    
+M.userY:TempHigh:BrandM      0.44427    0.26673   1.666   0.0958 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 118.627  on 23  degrees of freedom
+Residual deviance:   5.656  on  8  degrees of freedom
+AIC: 170.07
+
+Number of Fisher Scoring iterations: 4
+
+Correlation of Coefficients:
+                                                           
+(Intercept)                 1                              
+M.userY                     , 1                            
+TempHigh                    , . 1                          
+M.userY:TempHigh            . , , 1                        
+SoftMedium                  , . .   1                      
+SoftSoft                    , . .   . 1                    
+M.userY:SoftMedium          . ,   . , . 1                  
+M.userY:SoftSoft            . ,   . . , . 1                
+TempHigh:SoftMedium         .   , . . . .   1              
+TempHigh:SoftSoft           .   , . . .   . . 1            
+M.userY:TempHigh:SoftMedium   . . . .   , . , . 1          
+M.userY:TempHigh:SoftSoft     . . .   . . , . , . 1        
+BrandM                      .                       1      
+M.userY:BrandM                .                     , 1    
+TempHigh:BrandM                 . .                 . . 1  
+M.userY:TempHigh:BrandM         . .                 . . , 1
 attr(,"legend")
 [1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1
+
 
 > anova(detg.m0, detg.mod)
 Analysis of Deviance Table
@@ -1300,5 +1323,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  3.567 0.143 3.709 0 0 
+Time elapsed:  4.35 0.2 4.75 NA NA 
 > 

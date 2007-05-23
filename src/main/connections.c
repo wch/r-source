@@ -2573,7 +2573,7 @@ no_more_lines:
 	if(con->text && con->blocking) {
 	    nread++;
 	    if(warn)
-		warning(_("incomplete final line found by readLines on '%s'"),
+		warning(_("incomplete final line found on '%s'"),
 			con->description);
 	} else {
 	    /* push back the rest */

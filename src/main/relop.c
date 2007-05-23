@@ -69,8 +69,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	if (nx > 0 && ny > 0)
 	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
 	if (mismatch)
-	    warningcall(call, _("longer object length\n\
- \tis not a multiple of shorter object length"));
+	    warningcall(call, _("longer object length is not a multiple of shorter object length"));
 	UNPROTECT(2);
 	return ans;
     }
@@ -163,7 +162,7 @@ SEXP attribute_hidden do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	}
     }
     if (mismatch)
-	warningcall(call, _("longer object length\n\tis not a multiple of shorter object length"));
+	warningcall(call, _("longer object length is not a multiple of shorter object length"));
 
     if (isString(x) || isString(y)) {
 	REPROTECT(x = coerceVector(x, STRSXP), xpi);

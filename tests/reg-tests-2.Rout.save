@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-04-27 r41354)
+R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -21,7 +21,8 @@ Type 'q()' to quit R.
 > postscript("reg-tests-2.ps", encoding = "ISOLatin1.enc")
 > RNGversion("1.6.2")
 Warning message:
-Buggy version of Kinderman-Ramage generator used. in: RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") 
+In RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") :
+	Buggy version of Kinderman-Ramage generator used. 
 > 
 > ## force standard handling for data frames
 > options(stringsAsFactors=TRUE)
@@ -466,7 +467,7 @@ numeric(0)
    100 -1e-13    Inf   -Inf    NaN   3.14     NA 
    100      0     NA     NA     NA      3     NA 
 Warning message:
-NAs introduced by coercion 
+In structure(as.integer(x), names = names(x)) : NAs introduced by coercion 
 > ##-   100 -1e-13    Inf   -Inf    NaN   3.14     NA
 > ##-   100      0     NA     NA     NA      3     NA
 > all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
@@ -1469,7 +1470,8 @@ Error in log(x) : Non-numeric argument to mathematical function
 > mean(as.factor(x))
 [1] NA
 Warning message:
-argument is not numeric or logical: returning NA in: mean.default(as.factor(x)) 
+In mean.default(as.factor(x)) :
+	argument is not numeric or logical: returning NA
 > ## last had confusing error message in 1.3.1.
 > 
 > 
@@ -1653,11 +1655,11 @@ Levels: C A B
 > sum(x, x)    # did not warn in 1.4.1
 [1] NA
 Warning message:
-Integer overflow in sum(.); use sum(as.numeric(.)) 
+In sum(x, x) : Integer overflow - use sum(as.numeric(.))
 > sum(c(x, x)) # did warn
 [1] NA
 Warning message:
-Integer overflow in sum(.); use sum(as.numeric(.)) 
+In sum(c(x, x)) : Integer overflow - use sum(as.numeric(.))
 > (z <- sum(x, x, 0.0)) # was NA in 1.4.1
 [1] 2147483648
 > typeof(z)
@@ -1740,7 +1742,7 @@ Sep 1961  20  30
 > try(glm(y ~ x, family = poisson(identity)))
 Error : no valid set of coefficients has been found: please supply starting values
 In addition: Warning message:
-NaNs produced in: log(x) 
+In log(x) : NaNs produced
 > ## failed because start = NULL in 1.4.1
 > ## now gives useful error message
 > glm(y ~ x, family = poisson(identity), start = c(1,0))
@@ -2220,9 +2222,12 @@ par("usr")[3:4]:     1.784     4.499
 par("yaxp") :            2         4         4
 
 Warning messages:
-1: relative range of values =  43 * EPS, is small (axis 2) 
-2: relative range of values =  36 * EPS, is small (axis 2) 
-3: relative range of values =  17 * EPS, is small (axis 2) 
+1: In plot.window(...) :
+	relative range of values =  43 * EPS, is small (axis 2)
+2: In plot.window(...) :
+	relative range of values =  36 * EPS, is small (axis 2)
+3: In plot.window(...) :
+	relative range of values =  17 * EPS, is small (axis 2)
 > par(mfrow = c(1,1))
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing
@@ -2447,7 +2452,8 @@ x3  0.81       -0.97
 14     71
 15     72
 Warning message:
-drop argument will be ignored in: `[.data.frame`(women, "height", drop = FALSE) 
+In `[.data.frame`(women, "height", drop = FALSE) :
+	drop argument will be ignored
 > women["height", drop = TRUE]   # ditto
    height
 1      58
@@ -2466,7 +2472,8 @@ drop argument will be ignored in: `[.data.frame`(women, "height", drop = FALSE)
 14     71
 15     72
 Warning message:
-drop argument will be ignored in: `[.data.frame`(women, "height", drop = TRUE) 
+In `[.data.frame`(women, "height", drop = TRUE) :
+	drop argument will be ignored
 > women[,"height", drop = FALSE] # no warning
    height
 1      58
@@ -2690,7 +2697,8 @@ $residual.scale
 [1] 0.5234843
 
 Warning message:
-prediction from a rank-deficient fit may be misleading in: predict.lm(fit, data.frame(x = x), se = TRUE) 
+In predict.lm(fit, data.frame(x = x), se = TRUE) :
+	prediction from a rank-deficient fit may be misleading
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -2890,7 +2898,8 @@ $residual.scale
 [1] 0.5234843
 
 Warning message:
-prediction from a rank-deficient fit may be misleading in: predict.lm(object, newdata, se.fit, scale = residual.scale, type = ifelse(type ==  
+In predict.lm(object, newdata, se.fit, scale = residual.scale, type = ifelse(type ==  :
+	prediction from a rank-deficient fit may be misleading
 > predict(fit, type="terms", se=TRUE)
 $fit
    x
@@ -3637,11 +3646,11 @@ probability of success
 > try(numeric(2^31))
 Error in vector("double", length) : vector size specified is too large
 > try(matrix( , 2^31, 1))
-Error in matrix(, 2^31, 1) : matrix: invalid 'nrow' value (too large or NA)
+Error in matrix(, 2^31, 1) : invalid 'nrow' value (too large or NA)
 In addition: Warning message:
-NAs introduced by coercion 
+In matrix(, 2^31, 1) : NAs introduced by coercion
 > try(matrix( , 2^31/10, 100))
-Error in matrix(, 2^31/10, 100) : matrix: too many elements specified
+Error in matrix(, 2^31/10, 100) : too many elements specified
 > try(array(dim=c(2^31/10, 100)))
 Error in array(dim = c(2^31/10, 100)) : 'dim' specifies too large an array
 > ## reported negative values (really integer NA) for R < 1.9.0
@@ -3661,7 +3670,8 @@ Error in array(dim = c(2^31/10, 100)) : 'dim' specifies too large an array
 + )
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f1+f2)), data=sample.df)
 Warning message:
-Error() model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) 
+In aov(dep.variable ~ f1 * f2 + Error(subject/(f1 + f2)), data = sample.df) :
+	Error() model is singular
 > sample.aov
 
 Call:
@@ -3715,7 +3725,8 @@ Error: Within
 Residuals 42 29204.1   695.3               
 > sample.aov <- aov(dep.variable ~ f1 * f2 + Error(subject/(f2+f1)), data=sample.df)
 Warning message:
-Error() model is singular in: aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) 
+In aov(dep.variable ~ f1 * f2 + Error(subject/(f2 + f1)), data = sample.df) :
+	Error() model is singular
 > sample.aov
 
 Call:
@@ -3813,8 +3824,7 @@ Residuals 42 29204.1   695.3
 > x1 * y1
 [1]  0.5574682  0.1410502  0.1609194 -0.3641637
 Warning message:
-longer object length
-	is not a multiple of shorter object length in: x1 * y1 
+In x1 * y1 : longer object length is not a multiple of shorter object length
 > x1 * as.matrix(y1) # no warning in 1.8.1
            [,1]
 [1,]  0.5574682
@@ -3822,22 +3832,21 @@ longer object length
 [3,]  0.1609194
 [4,] -0.3641637
 Warning message:
-longer object length
-	is not a multiple of shorter object length in: x1 * as.matrix(y1) 
+In x1 * as.matrix(y1) :
+	longer object length is not a multiple of shorter object length
 > x1 * matrix(y1,2,2)# ditto
           [,1]       [,2]
 [1,] 0.5574682  0.1609194
 [2,] 0.1410502 -0.3641637
 Warning message:
-longer object length
-	is not a multiple of shorter object length in: x1 * matrix(y1, 2, 2) 
+In x1 * matrix(y1, 2, 2) :
+	longer object length is not a multiple of shorter object length
 > z1 <- x1 > 0
 > z2 <- y1 > 0
 > z1 & z2
 [1]  TRUE  TRUE  TRUE FALSE
 Warning message:
-longer object length
-	is not a multiple of shorter object length in: z1 & z2 
+In z1 & z2 : longer object length is not a multiple of shorter object length
 > z1 & as.matrix(z2) # no warning in 1.8.1
       [,1]
 [1,]  TRUE
@@ -3845,13 +3854,12 @@ longer object length
 [3,]  TRUE
 [4,] FALSE
 Warning message:
-longer object length
-	is not a multiple of shorter object length in: z1 & as.matrix(z2) 
+In z1 & as.matrix(z2) :
+	longer object length is not a multiple of shorter object length
 > x1 < y1            # no warning in 1.8.1
 [1] FALSE  TRUE FALSE FALSE
 Warning message:
-longer object length
- 	is not a multiple of shorter object length in: x1 < y1 
+In x1 < y1 : longer object length is not a multiple of shorter object length
 > x1 < as.matrix(y1) # ditto
       [,1]
 [1,] FALSE
@@ -3859,8 +3867,8 @@ longer object length
 [3,] FALSE
 [4,] FALSE
 Warning message:
-longer object length
-	is not a multiple of shorter object length in: x1 < as.matrix(y1) 
+In x1 < as.matrix(y1) :
+	longer object length is not a multiple of shorter object length
 > ##
 > 
 > 
@@ -3955,7 +3963,7 @@ attr(,".Environment")
 > ## negative subscripts could be mixed with NAs
 > x <- 1:3
 > try(x[-c(1, NA)])
-Error in try(x[-c(1, NA)]) : only 0's may be mixed with negative subscripts
+Error in x[-c(1, NA)] : only 0's may be mixed with negative subscripts
 > ## worked on some platforms, segfaulted on others in 1.8.1
 > 
 > 
@@ -4033,7 +4041,8 @@ quote(b)
 > readBin(zz, "character", 100)  # is confused by embedded nul.
 [1] "A test string"
 Warning message:
-incomplete string at end of file has been discarded 
+In readBin(zz, "character", 100) :
+	incomplete string at end of file has been discarded
 > seek(zz, 0, "start")
 [1] 18
 > readChar(zz, length(xx)) # correct
@@ -4432,7 +4441,7 @@ y ~ x
 <none>              17.6049  3.6005
 x2      1    0.0117 17.5931  5.5885
 Warning message:
-using the 18/19 rows from a combined fit in: add1.lm(fit, ~. + x2) 
+In add1.lm(fit, ~. + x2) : using the 18/19 rows from a combined fit
 > res <-  try(stats:::add1.default(fit, ~ . +x2))
 Error in stats:::add1.default(fit, ~. + x2) : 
 	number of rows in use has changed: remove missing values?
@@ -4531,19 +4540,19 @@ integer(0)
 > x[rbind(c(1,0), c(2,NA), c(1,2))]
 [1] NA  4
 > try(x[rbind(c(1,1), c(2,2), c(-1,2))])
-Error in try(x[rbind(c(1, 1), c(2, 2), c(-1, 2))]) : 
+Error in x[rbind(c(1, 1), c(2, 2), c(-1, 2))] : 
 	negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-2,2))])
-Error in try(x[rbind(c(1, 1), c(2, 2), c(-2, 2))]) : 
+Error in x[rbind(c(1, 1), c(2, 2), c(-2, 2))] : 
 	negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-3,2))])
-Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 2))]) : 
+Error in x[rbind(c(1, 1), c(2, 2), c(-3, 2))] : 
 	negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-4,2))])
-Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 2))]) : 
+Error in x[rbind(c(1, 1), c(2, 2), c(-4, 2))] : 
 	negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-1,-1))])
-Error in try(x[rbind(c(1, 1), c(2, 2), c(-1, -1))]) : 
+Error in x[rbind(c(1, 1), c(2, 2), c(-1, -1))] : 
 	negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1,1), c(2,2,2))])
 [1] 1 2 1 2 1 2
@@ -4551,10 +4560,10 @@ Error in try(x[rbind(c(1, 1), c(2, 2), c(-1, -1))]) :
 > # verify that range checks are applied to negative indices
 > x <- matrix(1:6, ncol=3)
 > try(x[rbind(c(1,1), c(2,2), c(-3,3))])
-Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 3))]) : 
+Error in x[rbind(c(1, 1), c(2, 2), c(-3, 3))] : 
 	negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-4,3))])
-Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 3))]) : 
+Error in x[rbind(c(1, 1), c(2, 2), c(-4, 3))] : 
 	negative values are not allowed in a matrix subscript
 > ## generally allowed in 2.1.0.
 > 
@@ -5088,7 +5097,8 @@ AIC: Inf
 Number of Fisher Scoring iterations: 2
 
 Warning message:
-observations with zero weight not used for calculating dispersion in: summary.glm(glm(y ~ x, weights = w)) 
+In summary.glm(glm(y ~ x, weights = w)) :
+	observations with zero weight not used for calculating dispersion
 > summary(glm(y ~ x, subset = w > 0))
 
 Call:
@@ -5140,7 +5150,7 @@ $estim.prec
 [1] 0.8295023
 
 Warning message:
-_NOT_ converged in 10 iterations in: uniroot(ff, c(-10, 10), maxiter = 10) 
+In uniroot(ff, c(-10, 10), maxiter = 10) : _NOT_ converged in 10 iterations
 > ## should warn, did not < 2.3.0
 > 
 > 
@@ -5170,7 +5180,8 @@ Error in prod(..., na.rm = na.rm) : invalid 'type' (raw) of argument
 +           ## arguments which don't make sense for plot=FALSE - give a warning:
 +           xlab = "N(0,1)", col = "blue")
 Warning message:
-arguments 'col', 'xlab' are not made use of in: hist.default(rnorm(100), plot = FALSE, breaks = 12, xlab = "N(0,1)",  
+In hist.default(rnorm(100), plot = FALSE, breaks = 12, xlab = "N(0,1)",  :
+	arguments 'col', 'xlab' are not made use of
 > ## gave no warning in 2.3.0 and earlier
 > 
 > 
@@ -5681,7 +5692,7 @@ z 3
   height weight
 1     58    115
 Warning message:
-drop argument will be ignored in: `[.data.frame`(w, , drop = TRUE) 
+In `[.data.frame`(w, , drop = TRUE) : drop argument will be ignored
 > w[1,]
   height weight
 1     58    115
