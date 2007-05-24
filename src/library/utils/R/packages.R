@@ -218,7 +218,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
            package_version(instp[k, "Version"])) next
         deps <- onRepos["Depends"]
         if(!is.na(deps)) {
-            Rdeps <- tools:::.split_dependencies(deps)[["R"]]
+            Rdeps <- tools:::.split_dependencies(deps)[["R", exact=TRUE]]
             if(length(Rdeps) > 1) {
                 target <- Rdeps$version
                 res <- eval(parse(text=paste("currentR", Rdeps$op, "target")))
