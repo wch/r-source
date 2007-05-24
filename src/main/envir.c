@@ -3208,7 +3208,7 @@ SEXP attribute_hidden do_envprofile(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* Global CHARSXP cache and code for string-based hash tables */
+/* Global CHARSXP cache and code for char-based hash tables */
 
 /* We can reuse the hash structure, but need separate code for get/set
    of values since our keys are char* and not SEXP symbol types. */
@@ -3222,7 +3222,9 @@ void attribute_hidden InitStringHash()
 #define NEXT_CHAIN_EL(e) (CDR(e))
 #define SET_NEXT_CHAIN_EL(e1, e2) (SETCDR(e1, e2))
 
-static SEXP R_StringHashResize(SEXP table)
+/* Resize a hash table with char* based keys.  The new table will be
+   sized according to HASHTABLEGROWTHRATE. */
+static SEXP R_CharHashResize(SEXP table)
 {
     SEXP new_table, chain, new_chain, val;
     int /*hash_grow,*/ counter, new_hashcode;
@@ -3251,22 +3253,39 @@ static SEXP R_StringHashResize(SEXP table)
 	    chain = NEXT_CHAIN_EL(chain);
 	}
     }
-    /* Some debugging statements */
+    UNPROTECT(1);
+    return new_table;
+}
+
+/* Resize the global R_StringHash CHARSXP cache */
+static void R_StringHash_resize()
+{
+    SEXP new_table;
+
+    /* Normally, GC can modify R_StringHash by null-ifying unmarked CHARSXPs.
+       Since GC can occur during the resize, we temporarily preserve all CHARSXPs
+       in the cache to avoid any changes during the resize op.
+     */
+    R_PreserveObject(R_StringHash);
+
+    PROTECT(new_table = R_CharHashResize(R_StringHash));
+
 #ifdef DEBUG_GLOBAL_STRING_HASH
-    char *status = HASHPRI(new_table) > HASHPRI(table) ? " OK " : "FAIL";
+    char *status = HASHPRI(new_table) > HASHPRI(R_StringHash) ? " OK" : "BAD";
     Rprintf("Resized: size %d => %d\tpri %d => %d\t%s\n",
-            HASHSIZE(table), HASHSIZE(new_table),
+            HASHSIZE(R_StringHash), HASHSIZE(new_table),
             HASHPRI(table), HASHPRI(new_table), status);
 #endif
     UNPROTECT(1);
-    return new_table;
+    R_ReleaseObject(R_StringHash);
+    R_StringHash = new_table;
 }
 
 
 /* Get CHARSXP for string s in the hash table.
    Return R_NilValue, if not found.
 */
-static SEXP R_StringHashGet(int hashcode, const char *s, SEXP table)
+static SEXP R_CharHashGet(int hashcode, const char *s, SEXP table)
 {
     SEXP chain, val;
 
@@ -3282,15 +3301,14 @@ static SEXP R_StringHashGet(int hashcode, const char *s, SEXP table)
     return R_NilValue;
 }
 
+/* Get a CHARSXP from the global cache, R_NilValue if not found */
+#define R_StringHash_get(h, s) (R_CharHashGet(h, s, R_StringHash))
+
+
 /* Add CHARSXP, schar to the table using key CHAR(schar).  If a
-   CHARSXP with that key already exists, it is replaced.  Note that we
-   might be better off witha combined get/set function that returns
-   CHARSXP adding to the hash if needed.  This will be both more
-   efficient (perhaps only slightly) but also an easier interface,
-   since with this code user really needs to call get first and then
-   set.
+   CHARSXP with that key already exists, it is replaced.
 */
-static void R_StringHashSet(int hashcode, SEXP schar, SEXP table)
+static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
 {
     SEXP chain, val;
 
@@ -3313,26 +3331,30 @@ static void R_StringHashSet(int hashcode, SEXP schar, SEXP table)
     return;
 }
 
-/* mkChar - make a character (CHARSXP) variable */
+/* Add a CHARSXP to the global cache */
+#define R_StringHash_set(h, s) (R_CharHashSet(h, s, R_StringHash))
 
+/* mkChar - make a character (CHARSXP) variable.  If a CHARSXP with
+   the same string already exists in the global CHARSXP cache,
+   R_StringHash, it is returned.  Otherwise, a new CHARSXP is created,
+   added to the cache and then returned. */
 SEXP mkChar(const char *name)
 {
-    SEXP cval, tmpHash;
+    SEXP cval;
     int h = 0;
 
     if (R_HashSizeCheck(R_StringHash)) {
-        tmpHash = R_StringHashResize(R_StringHash);
-        R_StringHash = tmpHash;
+        R_StringHash_resize();
     }
 
     /* have to handle "" specially since it doesn't hash */
     if (*name != '\0')
         h = R_Newhashpjw(name) % HASHSIZE(R_StringHash);
-    cval = R_StringHashGet(h, name, R_StringHash);
+    cval = R_StringHash_get(h, name);
     if (cval == R_NilValue) {
         PROTECT(cval = allocString(strlen(name)));
         strcpy(CHAR(cval), name);
-        R_StringHashSet(h, cval, R_StringHash);
+        R_StringHash_set(h, cval);
         UNPROTECT(1);
     }
     return cval;
