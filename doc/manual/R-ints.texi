@@ -1248,7 +1248,7 @@ Error in "length<-"(`*tmp*`, value = y ~ x) : invalid value
 @noindent
 which is unpalatable to the end user.  For replacement functions there
 will be a suitable context at the top of the stack, so @code{warning}
-should be used.  (The results for @code{.Internal} assignment functions
+should be used.  (The results for @code{.Internal} replacement functions
 such as @code{substr<-} are not ideal.)
 
 

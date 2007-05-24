@@ -244,11 +244,15 @@ getOption(x)
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
 
-    \item{\code{warnPartialMatchDollar}:}{logical.  If true, warns if
-      partial matching is used for extraction by \code{$}.}
-
     \item{\code{warnPartialMatchArgs}:}{logical.  If true, warns if
       partial matching is used in argument matching.}
+
+    \item{\code{warnPartialMatchAttr}:}{logical.  If true, warns if
+      partial matching is used in extracting attributes via
+      \code{\link{attr}}.}
+
+    \item{\code{warnPartialMatchDollar}:}{logical.  If true, warns if
+      partial matching is used for extraction by \code{$}.}
 
     \item{\code{warning.expression}:}{an \R code expression to be called
       if a warning is generated, replacing the standard message.  If

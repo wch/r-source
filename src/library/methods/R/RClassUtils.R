@@ -700,10 +700,11 @@ reconcilePropertiesAndPrototype <-
       what <- seq_along(properties)
       props <- properties[what]
       what <- slots[what]
+      nm <- names(attributes(prototype))
       for(i in seq_along(what)) {
           propName <- el(what, i)
-          if(!identical(propName, ".Data") &&
-             is.null(attr(prototype, propName)))
+          if(!identical(propName, ".Data") && !propName %in% nm)
+#             is.null(attr(prototype, propName)))
               slot(prototype, propName, FALSE) <- tryNew(el(props, i), where)
       }
       list(properties = properties, prototype = prototype)

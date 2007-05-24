@@ -193,9 +193,10 @@ NEW FEATURES
 	(in the sense of is.numeric()) as well as of length 1 and >= 1
 	before it is regarded as shorthand for 1:x.
 
-    o	New options 'warnPartialMatchDollar' and 'warnPartialMatchArgs'
-	to help detect the unintended use of partial matching in $ and
-	argument matching respectively.
+    o	New options 'warnPartialMatchDollar', 'warnPartialMatchArgs'
+	and 'warnPartialMatchAttr' to help detect the unintended use
+	of partial matching in $, argument matching  and attr()
+	respectively.
 
     o	vignette() has a new argument 'all' to choose between showing
     	vignettes in attached packages or in all installed packages.
@@ -222,6 +223,9 @@ NEW FEATURES
 
     o   sessionInfo() now provides details about package namespaces
         that are loaded, but not attached.
+
+    o	attr() gains an 'exact = TRUE' argument to disable partial
+	matching.
 
 
 DEPRECATED & DEFUNCT

@@ -461,15 +461,15 @@ trySilent <- function(expr) {
         if(length(whereF)>0)
             whereF <- whereF[[1]]
         else return(list(pname = pname, whereF = baseenv()))
-    }
-    else {
+    } else
         whereF <- .genEnv(what, where)
-    }
-    if(!is.null(attr(whereF, "name")))
+
+    ## avoid partial matches to "names"
+    if("name" %in% names(attributes(whereF)))
         pname <- gsub("^.*:", "", attr(whereF, "name"))
     else if(isNamespace(whereF))
         pname <- .searchNamespaceNames(whereF)
-    list(pname=pname, whereF = whereF)
+    list(pname = pname, whereF = whereF)
 }
 
 .makeTraceClass <- function(traceClassName, className, verbose = TRUE) {

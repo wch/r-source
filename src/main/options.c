@@ -528,6 +528,13 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_warn_partial_match_args = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
+	    else if (streql(CHAR(namei), "warnPartialMatchAttr")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		k = asLogical(argi);
+		R_warn_partial_match_attr = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
