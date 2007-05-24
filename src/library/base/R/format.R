@@ -133,8 +133,12 @@ formatC <- function (x, digits = NULL, width = NULL,
 	digits <- if (mode == "integer") 2 else 4
     else if(digits < 0)
 	digits <- 6
+    if (digits > 50) {
+        warning("'digits' reduced to 50")
+        digits <- 50
+    }
     if(is.null(width))	width <- digits + 1
-    else if (width == 0)width <- digits
+    else if (width == 0) width <- digits
     i.strlen <-
 	pmax(abs(width),
 	     if(format == "fg"||format == "f") {

@@ -16,7 +16,7 @@
     \code{NULL}, uses \code{\link{getOption}(digits)}.  (For the
     interpretation for complex numbers see \code{\link{signif}}.)
     Non-integer values will be rounded down, and only values
-    greater than or equal to one are accepted.
+    greater than or equal to 1 and no greater than 22 are accepted.
   }
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
