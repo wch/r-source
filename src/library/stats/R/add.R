@@ -503,16 +503,16 @@ add.scope <- function(terms1, terms2)
 {
     terms1 <- terms(terms1)
     terms2 <- terms(terms2)
-    factor.scope(attr(terms1, "factor"),
-		 list(add = attr(terms2, "factor")))$add
+    factor.scope(attr(terms1, "factors"),
+		 list(add = attr(terms2, "factors")))$add
 }
 
 drop.scope <- function(terms1, terms2)
 {
     terms1 <- terms(terms1)
     f2 <- if(missing(terms2)) numeric(0)
-    else attr(terms(terms2), "factor")
-    factor.scope(attr(terms1, "factor"), list(drop = f2))$drop
+    else attr(terms(terms2), "factors")
+    factor.scope(attr(terms1, "factors"), list(drop = f2))$drop
 }
 
 factor.scope <- function(factor, scope)
