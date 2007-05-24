@@ -144,6 +144,9 @@ BUG FIXES
     o	"CGGStackRestore: gstack underflow" warning is no longer shown
 	in legacy quartz() device
 
+    o	formatC() now limits 'digits' to 50 to avoid problems in
+	C-level sprintf in some OSes.
+
 
 
 
