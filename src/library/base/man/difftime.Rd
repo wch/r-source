@@ -77,7 +77,7 @@ as.difftime(tim, format = "\%X", units="auto")
   same units as the \code{"difftime"} object.
 
   The units of a \code{"difftime"} object can be extracted by the
-  \code{units} function, which also has an assignment form. If the units
+  \code{units} function, which also has an replacement form.  If the units
   are changed, the numerical value is scaled accordingly.
 
   The \code{as.double} method returns the numeric value expressed in

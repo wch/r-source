@@ -89,10 +89,10 @@ x$name
   expression appears on the left side of an assignment (known as
   \emph{subassignment}) then that part of \code{x} is set to the value
   of the right hand side of the assignment.  In this case no partial
-  matching of indices is done, and the left-hand-side is coerced as
-  needed to accept the values.  Attributes are preserved (although
-  \code{names}, \code{dim} and \code{dimnames} will be adjusted
-  suitably).
+  matching of character indices is done, and the left-hand-side is
+  coerced as needed to accept the values.  Attributes are preserved
+  (although \code{names}, \code{dim} and \code{dimnames} will be
+  adjusted suitably).
 }
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to
@@ -138,8 +138,8 @@ x$name
   Both \code{[[} and \code{$} select a single element of the list.  The
   main difference is that \code{$} does not allow computed indices,
   whereas \code{[[} does.  \code{x$name} is equivalent to
-  \code{x[["name"]]}.  Also, partial matching behavior of \code{[[} can
-  be controlled using the \code{exact} argument.
+  \code{x[["name", exact = FALSE]]}.  Also, the partial matching
+  behavior of \code{[[} can be controlled using the \code{exact} argument.
 
   \code{[} and \code{[[} are sometimes applied to other recursive
   objects such as \link{call}s and \link{expression}s.  Pairlists are
@@ -159,10 +159,10 @@ x$name
 }
 \section{Environments}{
   Both \code{$} and \code{[[} can be applied to environments.  Only
-  character arguments are allowed and no partial matching is done. The
+  character indices are allowed and no partial matching is done. The
   semantics of these operations are those of \code{get(i, env=x,
     inherits=FALSE)}.  If no match is found then \code{NULL} is
-  returned.  The assignment versions, \code{$<-} and \code{[[<-}, can
+  returned.  The replacement versions, \code{$<-} and \code{[[<-}, can
   also be used.  Again, only character arguments are allowed.  The
   semantics in this case are those of \code{assign(i, value, env=x,
     inherits=FALSE)}.  Such an assignment will either create a new
@@ -190,8 +190,8 @@ x$name
   not true for the \code{data.frame} methods described in
   \code{\link{[.data.frame}}.
 
-  To avoid confusion, do not name index arguments (but \code{drop} must
-  be named).
+  To avoid confusion, do not name index arguments (but \code{drop} and
+  \code{exact} must be named).
 }
 \section{S4 methods}{
   These operators are also S4 generic, but as primitives, S4 methods
@@ -216,6 +216,9 @@ x$name
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  \code{\link{options}(warnPartialMatchAttr = TRUE)} causes partial
+  matches in \code{$name} to give warnings.
+
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
 
   \code{\link{[.data.frame}} and \code{\link{[.factor}} for the

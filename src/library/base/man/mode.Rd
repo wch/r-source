@@ -36,7 +36,7 @@ storage.mode(x) <- value
   version of \code{mode<-}, which works for \code{"newmode"} which is
   one of the internal types (see \code{\link{typeof}}).  Attributes are
   preserved.  (Prior to \R 2.6.0 this was identical to the \code{mode}
-  assignment function.  Setting modes \code{"real"} and \code{"single"} is
+  replacement function.  Setting modes \code{"real"} and \code{"single"} is
   deprecated and will be removed shortly.)
 
   As storage mode \code{"single"} is only a pseudo-mode in \R, it will
