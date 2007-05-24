@@ -96,7 +96,7 @@ proj.aov <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	result
     }
     projections <- NextMethod("proj")
-    t.factor <- attr(terms(object), "factor")
+    t.factor <- attr(terms(object), "factors")
     attr(projections, "factors") <-
 	factors.aov(colnames(projections), t.factor)
     attr(projections, "call") <- object$call
@@ -148,12 +148,12 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 	unweighted.scale <- FALSE
     err.qr <- attr(object, "error.qr")
     Terms <- terms(object, "Error")
-    t.factor <- attr(Terms, "factor")
+    t.factor <- attr(Terms, "factors")
     i <- attr(Terms, "specials")$Error
     t <- attr(Terms, "variables")[[1 + i]]
     error <- Terms
     error[[3]] <- t[[2]]
-    e.factor <- attr(terms(formula(error)), "factor")
+    e.factor <- attr(terms(formula(error)), "factors")
     n <- nrow(err.qr$qr)
     n.object <- length(object)
     result <- vector("list", n.object)
