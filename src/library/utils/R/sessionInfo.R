@@ -17,6 +17,13 @@ sessionInfo <- function(package=NULL)
         z$otherPkgs <- pkgDesc[!basePkgs]
         names(z$otherPkgs) <- package[!basePkgs]
     }
+    loadedOnly <- loadedNamespaces()
+    loadedOnly <- loadedOnly[!(loadedOnly %in% package)]
+    if (length(loadedOnly)) {
+        names(loadedOnly) <- loadedOnly
+        pkgDesc <- c(pkgDesc, lapply(loadedOnly, packageDescription))
+        z$loadedOnly <- pkgDesc[loadedOnly]
+    }
     class(z) <- "sessionInfo"
     z
 }
@@ -34,12 +41,18 @@ print.sessionInfo <- function(x, ...)
         print(sapply(x$otherPkgs,
                      function(x) x$Version))
     }
+    if(!is.null(x$loadedOnly)){
+        cat("\nloaded via a namespace (and not attached):\n")
+        print(sapply(x$loadedOnly,
+                     function(x) x$Version))
+    }
     x
 }
 
 toLatex.sessionInfo <- function(object, ...)
 {
     opkgver <- sapply(object$otherPkgs, function(x) x$Version)
+    nspkgver <- sapply(object$loadedOnly, function(x) x$Version)
     z <- c("\\begin{itemize}",
            paste("  \\item ", object$R.version$version.string,
                  ", \\verb|", object$R.version$platform, "|", sep=""),
@@ -53,6 +66,14 @@ toLatex.sessionInfo <- function(object, ...)
         z <- c(z,
                strwrap(paste("  \\item Other packages: ",
                              paste(names(opkgver), opkgver, sep="~",
+                                   collapse=", ")),
+                       indent=2, exdent=4))
+    }
+    if(length(nspkgver)){
+        nspkgver <- nspkgver[sort(names(nspkgver))]
+        z <- c(z,
+               strwrap(paste("  \\item Loaded via a namespace (and not attached): ",
+                             paste(names(nspkgver), nspkgver, sep="~",
                                    collapse=", ")),
                        indent=2, exdent=4))
     }

@@ -220,6 +220,9 @@ NEW FEATURES
 	information on either the location or the cause of the
 	problem.
 
+    o   sessionInfo() now provides details about package namespaces
+        that are loaded, but not attached.
+
 
 DEPRECATED & DEFUNCT
 
