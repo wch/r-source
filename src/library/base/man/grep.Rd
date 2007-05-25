@@ -71,7 +71,7 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
   replaces all occurrences.
 
   For \code{regexpr} it is an error for \code{pattern} to be \code{NA},
-  otherwise \code{NA} is permitted and matches only itself.
+  otherwise \code{NA} is permitted and gives an \code{NA} match.
 
   The regular expressions used are those specified by POSIX 1003.2,
   either extended or basic, depending on the value of the
@@ -82,9 +82,12 @@ gregexpr(pattern, text, extended = TRUE, perl = FALSE,
   system PCRE.  \R's internal copy used PCRE 6.7.)
 
   \code{useBytes} is only used if \code{fixed = TRUE} or \code{perl = TRUE}.
-  For \code{grep} its main effect is to avoid errors/warnings about
-  invalid inputs, but for \code{regexpr} it changes the interpretation
+  Its main effect is to avoid errors/warnings about invalid inputs and
+  spurious matches, but for \code{regexpr} it changes the interpretation
   of the output.
+
+  The implementation of PCRE used in \R only supports caseless matching for
+  an ASCII pattern in a UTF-8 locale, even if \code{useBytes = TRUE}.
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of
