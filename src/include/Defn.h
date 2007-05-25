@@ -419,6 +419,8 @@ void (SET_PRIMOFFSET)(SEXP x, int v);
 #define PRIMARITY(x)	(R_FunTab[PRIMOFFSET(x)].arity)
 #define PPINFO(x)	(R_FunTab[PRIMOFFSET(x)].gram)
 #define PRIMPRINT(x)	(((R_FunTab[PRIMOFFSET(x)].eval)/100)%10)
+#define PRIMINTERNAL(x) (((R_FunTab[PRIMOFFSET(x)].eval)%100)/10)
+
 
 Rboolean (IS_ACTIVE_BINDING)(SEXP b);
 Rboolean (BINDING_IS_LOCKED)(SEXP b);

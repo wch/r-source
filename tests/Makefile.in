@@ -251,7 +251,7 @@ test-Demo:
 
 test-Errormsgs:
 	@echo "running tests of error messages"
-	@$(MAKE) $(test-out-errmsgs) RVAL_IF_DIFF=1
+	@$(MAKE) $(test-out-errmsgs) RVAL_IF_DIFF=0
 
 ## <NOTE>
 ## These depend on an internet connection, and the sites being up.
