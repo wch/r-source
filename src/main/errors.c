@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  The R Development Core Team.
+ *  Copyright (C) 1997--2007  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -222,6 +222,7 @@ static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
 void warning(const char *format, ...)
 {
     char buf[BUFSIZE], *p;
+    RCNTXT *c = R_GlobalContext;
 
     va_list(ap);
     va_start(ap, format);
@@ -231,7 +232,8 @@ void warning(const char *format, ...)
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
 	strcat(buf, " [... truncated]");
-    warningcall(R_NilValue, buf);
+    if (c && (c->callflag & CTXT_BUILTIN)) c = c->nextcontext;
+    warningcall(c ? c->call : R_NilValue, "%s", buf);
 }
 
 /* temporary hook to allow experimenting with alternate warning mechanisms */
@@ -260,7 +262,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	return;
 
     s = GetOption(install("warning.expression"), R_BaseEnv);
-    if( s!= R_NilValue ) {
+    if( s != R_NilValue ) {
 	if( !isLanguage(s) &&  ! isExpression(s) )
 	    error(_("invalid option \"warning.expression\""));
 	cptr = R_GlobalContext;
@@ -277,7 +279,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 
     if( w <= 0 && immediateWarning ) w = 1;
 
-    if(w < 0 || inWarning || inError) /* ignore if w<0 or already in here*/
+    if( w < 0 || inWarning || inError) /* ignore if w<0 or already in here*/
 	return;
 
     /* set up a context which will restore inWarning if there is an exit */
@@ -422,13 +424,12 @@ void PrintWarnings(void)
     PROTECT(s = allocVector(VECSXP, R_CollectWarnings));
     PROTECT(t = allocVector(STRSXP, R_CollectWarnings));
     names = CAR(ATTRIB(R_Warnings));
-    for(i=0; i<R_CollectWarnings; i++) {
+    for(i = 0; i < R_CollectWarnings; i++) {
 	SET_VECTOR_ELT(s, i, VECTOR_ELT(R_Warnings, i));
 	SET_STRING_ELT(t, i, STRING_ELT(names, i));
     }
     setAttrib(s, R_NamesSymbol, t);
     SET_SYMVALUE(install("last.warning"), s);
-    /* defineVar(install("last.warning"), s, R_GlobalEnv); */
     UNPROTECT(2);
 
     endcontext(&cntxt);
@@ -872,7 +873,8 @@ SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	domain = CHAR(STRING_ELT(sdom,0));
     else errorcall(call, _("invalid '%s' value"), "domain");
 
-    if(strlen(domain)) {
+    /* libintl seems to malfunction if given a message of "" */
+    if(strlen(domain) && length(STRING_ELT(msg1, 0))) {
 	char *fmt = dngettext(domain,
 			      translateChar(STRING_ELT(msg1, 0)),
 			      translateChar(STRING_ELT(msg2, 0)),

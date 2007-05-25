@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-04-27 r41354)
+R version 2.5.0 Patched (2007-05-24 r41704)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -466,7 +466,7 @@ numeric(0)
    100 -1e-13    Inf   -Inf    NaN   3.14     NA 
    100      0     NA     NA     NA      3     NA 
 Warning message:
-NAs introduced by coercion 
+NAs introduced by coercion in: as.integer.default(x) 
 > ##-   100 -1e-13    Inf   -Inf    NaN   3.14     NA
 > ##-   100      0     NA     NA     NA      3     NA
 > all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
@@ -1653,11 +1653,11 @@ Levels: C A B
 > sum(x, x)    # did not warn in 1.4.1
 [1] NA
 Warning message:
-Integer overflow in sum(.); use sum(as.numeric(.)) 
+Integer overflow; use sum(as.numeric(.)) in: sum(x, x) 
 > sum(c(x, x)) # did warn
 [1] NA
 Warning message:
-Integer overflow in sum(.); use sum(as.numeric(.)) 
+Integer overflow; use sum(as.numeric(.)) in: sum(c(x, x)) 
 > (z <- sum(x, x, 0.0)) # was NA in 1.4.1
 [1] 2147483648
 > typeof(z)
@@ -2220,9 +2220,9 @@ par("usr")[3:4]:     1.784     4.499
 par("yaxp") :            2         4         4
 
 Warning messages:
-1: relative range of values =  43 * EPS, is small (axis 2) 
-2: relative range of values =  36 * EPS, is small (axis 2) 
-3: relative range of values =  17 * EPS, is small (axis 2) 
+1: relative range of values =  43 * EPS, is small (axis 2) in: plot.window(...) 
+2: relative range of values =  36 * EPS, is small (axis 2) in: plot.window(...) 
+3: relative range of values =  17 * EPS, is small (axis 2) in: plot.window(...) 
 > par(mfrow = c(1,1))
 > ## The warnings from inside GScale() will differ in their  relrange() ...
 > ## >> do sloppy testing
@@ -3639,7 +3639,7 @@ Error in vector("double", length) : vector size specified is too large
 > try(matrix( , 2^31, 1))
 Error in matrix(, 2^31, 1) : matrix: invalid 'nrow' value (too large or NA)
 In addition: Warning message:
-NAs introduced by coercion 
+NAs introduced by coercion in: matrix(, 2^31, 1) 
 > try(matrix( , 2^31/10, 100))
 Error in matrix(, 2^31/10, 100) : matrix: too many elements specified
 > try(array(dim=c(2^31/10, 100)))
@@ -4033,7 +4033,7 @@ quote(b)
 > readBin(zz, "character", 100)  # is confused by embedded nul.
 [1] "A test string"
 Warning message:
-incomplete string at end of file has been discarded 
+incomplete string at end of file has been discarded in: readBin(zz, "character", 100) 
 > seek(zz, 0, "start")
 [1] 18
 > readChar(zz, length(xx)) # correct
@@ -4674,11 +4674,11 @@ z       1    82.814 89.130 23.875
 > as.raw(1234)
 [1] 00
 Warning message:
-out-of-range values treated as 0 in coercion to raw 
+out-of-range values treated as 0 in coercion to raw in: as.vector(x, "raw") 
 > as.raw(list(a=1234))
 [1] 00
 Warning message:
-out-of-range values treated as 0 in coercion to raw 
+out-of-range values treated as 0 in coercion to raw in: as.vector(x, "raw") 
 > ## 2.1.1: spurious and missing messages, wrong result for second.
 > 
 > 

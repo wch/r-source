@@ -1,6 +1,6 @@
 
-R version 2.4.0 Under development (unstable) (2006-05-20 r38139)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.5.0 Patched (2007-05-24 r41704)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1078,8 +1078,8 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
 +           dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
 Warning messages:
-1: non-integer x = -0.000000 
-2: non-integer x = -0.000020 
+1: non-integer x = -0.000000 in: dbinom(x0, 3, 0.1) 
+2: non-integer x = -0.000020 in: dbinom(x0, 3, 0.1) 
 > ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 > 
 > ## dbeta(*, ncp):

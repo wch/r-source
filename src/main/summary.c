@@ -58,7 +58,7 @@ static Rboolean isum(int *x, int n, int *value, Rboolean narm)
 	}
     }
     if(s > INT_MAX || s < R_INT_MIN){
-	warning(_("Integer overflow in sum(.); use sum(as.numeric(.))"));
+	warning(_("Integer overflow; use sum(as.numeric(.))"));
 	*value = NA_INTEGER;
     }
     else *value = s;
@@ -547,7 +547,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			if(ans_type == INTSXP) {
 			    s = (double) icum + (double) itmp;
 			    if(s > INT_MAX || s < R_INT_MIN){
-				warning(_("Integer overflow in sum(.); use sum(as.numeric(.))"));
+				warning(_("Integer overflow; use sum(as.numeric(.))"));
 				goto na_answer;
 			    }
 			    else icum += itmp;

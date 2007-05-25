@@ -1,5 +1,5 @@
 
-R version 2.5.0 alpha (2007-03-30 r40962)
+R version 2.5.0 Patched (2007-05-24 r41704)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1300,7 +1300,7 @@ IS: [1] TRUE
 [1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
 Warning message:
-inaccurate integer conversion in coercion 
+inaccurate integer conversion in coercion in: as.integer.default(X[[1L]], ...) 
 > if(!inherits(res, 'try-error')) report(is.package_version(res))
 [1] TRUE
 > res <- try(as.pairlist( x ), silent = TRUE)
@@ -1419,7 +1419,7 @@ IS: [1] TRUE
 [1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
 Warning message:
-inaccurate integer conversion in coercion 
+inaccurate integer conversion in coercion in: as.integer.default(X[[1L]], ...) 
 > if(!inherits(res, 'try-error'))
 +    report({if(is.package_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
@@ -1529,7 +1529,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.package_version( x ), silent = TRUE)
 Warning message:
-inaccurate integer conversion in coercion 
+inaccurate integer conversion in coercion in: as.integer.default(X[[1L]], ...) 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.package_version( f )))
 [1] TRUE
 > f <- try(as.pairlist( x ), silent = TRUE)
@@ -2250,7 +2250,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error')) report(is.qr(res))
 > res <- try(as.raw( x ), silent = TRUE)
 Warning message:
-out-of-range values treated as 0 in coercion to raw 
+out-of-range values treated as 0 in coercion to raw in: as.vector(x, "raw") 
 > if(!inherits(res, 'try-error')) report(is.raw(res))
 [1] TRUE
 > res <- try(as.real( x ), silent = TRUE)
@@ -2371,7 +2371,7 @@ Error: x is not all TRUE
 +    } else   !isall.equal(x, res)})
 > res <- try(as.raw( x ), silent = TRUE)
 Warning message:
-out-of-range values treated as 0 in coercion to raw 
+out-of-range values treated as 0 in coercion to raw in: as.vector(x, "raw") 
 > if(!inherits(res, 'try-error'))
 +    report({if(is.raw(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
@@ -2469,7 +2469,7 @@ Error: x is not TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
 > f <- try(as.raw( x ), silent = TRUE)
 Warning message:
-out-of-range values treated as 0 in coercion to raw 
+out-of-range values treated as 0 in coercion to raw in: as.vector(x, "raw") 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
 [1] TRUE
 > f <- try(as.real( x ), silent = TRUE)

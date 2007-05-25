@@ -1,6 +1,6 @@
 
-R version 2.4.0 Under development (unstable) (2006-06-09 r38316)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.5.0 Patched (2007-05-24 r41704)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -77,7 +77,7 @@ header and 'col.names' are of different lengths in: read.table("foo3", header = 
 1    2
 3    4
 Warning message:
-incomplete final line found by readTableHeader on 'foo4' 
+incomplete final line found by readTableHeader on 'foo4' in: read.table("foo4", header = TRUE) 
 > unlink("foo4")
 > 
 > # blank last line
