@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
+R version 2.6.0 Under development (unstable) (2007-05-24 r41702)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -22,7 +22,7 @@ Type 'q()' to quit R.
 > RNGversion("1.6.2")
 Warning message:
 In RNGkind("Marsaglia-Multicarry", "Buggy Kinderman-Ramage") :
-	Buggy version of Kinderman-Ramage generator used. 
+  Buggy version of Kinderman-Ramage generator used.
 > 
 > ## force standard handling for data frames
 > options(stringsAsFactors=TRUE)
@@ -467,7 +467,7 @@ numeric(0)
    100 -1e-13    Inf   -Inf    NaN   3.14     NA 
    100      0     NA     NA     NA      3     NA 
 Warning message:
-In structure(as.integer(x), names = names(x)) : NAs introduced by coercion 
+In structure(as.integer(x), names = names(x)) : NAs introduced by coercion
 > ##-   100 -1e-13    Inf   -Inf    NaN   3.14     NA
 > ##-   100      0     NA     NA     NA      3     NA
 > all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
@@ -1801,8 +1801,10 @@ Warning messages:
 23: step size truncated: out of bounds
 24: step size truncated: out of bounds
 25: step size truncated: out of bounds
-26: algorithm did not converge in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
-27: algorithm stopped at boundary value in: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart,   ...
+26: In glm.fit(x = X, y = Y, weights = weights, start = start,  ... :
+  algorithm did not converge
+27: In glm.fit(x = X, y = Y, weights = weights, start = start,  ... :
+  algorithm stopped at boundary value
 > 
 > 
 > ## extending char arrrays
