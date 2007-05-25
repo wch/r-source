@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-26 10:58\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
 "PO-Revision-Date: 2007-04-07 01:47-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1462,11 +1462,12 @@ msgstr "'termlabels' должен быть текстовым вектором с длиной не меньше единицы"
 msgid "'termobj' must be a object of class \"terms\""
 msgstr "'termobj' должен быть объектом класса \"terms\""
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "переменная '%s' была подогнана с классом \"%s\", а указан класс \"%s\""
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr "переменные %s указаны с другим классом, чем в подгонке"
 
 msgid "'data' must be a data.frame, not a matrix or an array"

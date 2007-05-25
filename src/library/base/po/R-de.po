@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-05-25 12:16\n"
 "PO-Revision-Date: 2005-09-28 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -524,6 +524,9 @@ msgstr "nur Matrixdiagonalen können ersetzt werden"
 msgid "replacement diagonal has wrong length"
 msgstr "Ersatzdiagonale hat falsche Länge"
 
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr ""
+
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -627,6 +630,9 @@ msgstr "wandle Argument in \"character\" für das Format=\"%s\""
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' muss eins aus {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"} sein"
+
+msgid "'digits' reduced to 50"
+msgstr ""
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' kann nur '0+- #' enthalten"
@@ -742,6 +748,10 @@ msgstr "'%s' nicht im Suchpfad gefunden, nutze pos = 2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "Laden von Paket/Namensraum für '%s' fehlgeschlagen"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr "Paket '%s' wurde vor R 2.0.0 gebaut: bitte Paket neu installieren"
 
 msgid "unable to load R code in package '%s'"
 msgstr "kann R Kode in Paket '%s' nicht laden"
@@ -1402,9 +1412,6 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' und 'target' müssen Zeichenkettenvektoren sein"
 
-msgid "argument must be character"
-msgstr "Argument muss eine Zeichenkette sein"
-
 msgid "'cmd' could not be run"
 msgstr "'cmd' konnte nicht ausgeführt werden"
 
@@ -1438,13 +1445,15 @@ msgid_plural "there are no packages called"
 msgstr[0] "es gibt kein Paket '%s'"
 msgstr[1] "es gibt kein Paket '%s'"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "Objekt %s wird nicht von 'namespace:%s' exportiert"
 msgstr[1] "Objekte %s werden nicht von 'namespace:%s' exportiert"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "vorhergehender Export %s wird ersetzt"
 msgstr[1] "vorhergehende Exporte %s werden ersetzt"
 
@@ -1457,6 +1466,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "Argument muss eine Zeichenkette sein"
 
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr ""

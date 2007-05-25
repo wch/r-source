@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-05-25 12:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -500,6 +500,9 @@ msgstr ""
 msgid "replacement diagonal has wrong length"
 msgstr ""
 
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr ""
+
 msgid "MARGIN ="
 msgstr ""
 
@@ -597,6 +600,9 @@ msgid "coercing argument to \"character\" for format=\"s\""
 msgstr ""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr ""
+
+msgid "'digits' reduced to 50"
 msgstr ""
 
 msgid "'flag' can contain only '0+- #'"
@@ -708,6 +714,9 @@ msgid "'%s' not found on search path, using pos = 2"
 msgstr ""
 
 msgid "package/namespace load failed for '%s'"
+msgstr ""
+
+msgid "package was installed prior to 2.4.0 and must be re-installed"
 msgstr ""
 
 msgid "unable to load R code in package '%s'"
@@ -1334,9 +1343,6 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr ""
 
-msgid "argument must be character"
-msgstr ""
-
 msgid "'cmd' could not be run"
 msgstr ""
 
@@ -1369,13 +1375,13 @@ msgid_plural "there are no packages called"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgid        "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+msgid        "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0]    ""
 msgstr[1]    ""
 

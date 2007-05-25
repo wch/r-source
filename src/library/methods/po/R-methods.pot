@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-03-30 11:03\n"
+"POT-Creation-Date: 2007-05-25 12:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,6 +87,9 @@ msgid "apparent internal error: a generic function was found for \"%s\", but no 
 msgstr ""
 
 msgid "the method for function \"%s\" and signature %s is sealed and cannot be re-defined"
+msgstr ""
+
+msgid "argument in method definition changed from (%s) to (%s)"
 msgstr ""
 
 msgid "primitive functions cannot be methods; they must be enclosed in a regular function"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-05-25 12:16\n"
 "PO-Revision-Date: 2007-04-07 01:02+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -513,6 +513,10 @@ msgstr " 行列の対角成分だけが置き換えられます"
 msgid "replacement diagonal has wrong length"
 msgstr " 置き換え対角成分の長さが間違っています"
 
+#, fuzzy
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr "'quote' は 'TRUE', 'FALSE' もしくは数値でなければなりません"
+
 msgid "MARGIN ="
 msgstr " MARGIN="
 
@@ -621,6 +625,9 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 " 'format' は {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\" } のいずれかでなけれ"
 "ばなりません"
+
+msgid "'digits' reduced to 50"
+msgstr ""
 
 msgid "'flag' can contain only '0+- #'"
 msgstr " 'flag' は '0 + - #' だけを含めます"
@@ -736,6 +743,11 @@ msgstr " '%s' は検索パス上には見つかりませんでした。pos = 2 �
 
 msgid "package/namespace load failed for '%s'"
 msgstr " '%s' に対するパッケージもしくは名前空間のロードが失敗しました"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr ""
+" パッケージ '%s' は R 2.0.0 以前に造らました。新しくインストールして下さい"
 
 msgid "unable to load R code in package '%s'"
 msgstr " パッケージ '%s' 中の R コードをロードできません"
@@ -1406,9 +1418,6 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr " 'input' は文字ベクトルまたは NULL でなければなりません"
 
-msgid "argument must be character"
-msgstr " 引数は文字でなければなりません"
-
 msgid "'cmd' could not be run"
 msgstr " 'cmd' を実行できませんでした"
 
@@ -1437,12 +1446,14 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "呼び出されたパッケージがありません"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "オブジェクト %s は 'namespace:%s' によってエクスポートされません"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "以前のエクスポート %s は置き換えられています"
 
 msgid "S3 method %s was declared in NAMESPACE but not found"
@@ -1453,6 +1464,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告メッセージ：\n"
+
+#~ msgid "argument must be character"
+#~ msgstr " 引数は文字でなければなりません"
 
 #~ msgid "zero imputs"
 #~ msgstr " ゼロ入力"
@@ -1501,9 +1515,6 @@ msgstr[0] "警告メッセージ：\n"
 
 #~ msgid "conversion to factor is deprecated"
 #~ msgstr "factorへの変換はお薦めできません"
-
-#~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-#~ msgstr "'quote' は 'TRUE', 'FALSE' もしくは数値でなければなりません"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "'quote' 中に無効な数値があります"

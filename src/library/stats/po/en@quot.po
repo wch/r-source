@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:42+0100\n"
-"PO-Revision-Date: 2007-04-10 07:42+0100\n"
+"POT-Creation-Date: 2007-05-25 12:19+0100\n"
+"PO-Revision-Date: 2007-05-25 12:19+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -55,8 +55,8 @@ msgid "can only transform 100 pars in arima0"
 msgstr "can only transform 100 pars in arima0"
 
 #: distance.c:151
-msgid "dist(.,\"binary\"): treating non-finite values as NA"
-msgstr "dist(.,“binary”): treating non-finite values as NA"
+msgid "treating non-finite values as NA"
+msgstr "treating non-finite values as NA"
 
 #: distance.c:220
 msgid "distance(): invalid p"

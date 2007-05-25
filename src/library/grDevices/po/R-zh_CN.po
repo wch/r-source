@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-26 10:42\n"
+"POT-Creation-Date: 2007-05-25 12:17\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -72,6 +72,10 @@ msgstr "'to.ref.white'同下面这个定义有冲突"
 
 msgid "color spaces use different reference whites."
 msgstr "颜色空间不能使用不同的白色参考。"
+
+#, fuzzy
+msgid "'name'must be a character vector"
+msgstr "'file'必需是非空字符串"
 
 msgid "cannot shut down device 1 (the null device)"
 msgstr "不能关闭一号装置(无效装置)"

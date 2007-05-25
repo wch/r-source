@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-05-25 12:16\n"
 "PO-Revision-Date: 2007-04-07 01:35-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -516,6 +516,10 @@ msgstr "только диагонали матрицы могут быть заменены"
 msgid "replacement diagonal has wrong length"
 msgstr "у замены диагонали -- неправильная длина"
 
+#, fuzzy
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr "'quote' должен быть 'TRUE', 'FALSE' или числом"
+
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -617,6 +621,9 @@ msgstr "преобразую аргумент в \"character\" для format=\"s\""
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+
+msgid "'digits' reduced to 50"
+msgstr ""
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' может содержать лишь '0+- #'"
@@ -729,6 +736,11 @@ msgstr "'%s' не найден в пути поиска, использую pos = 2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "не удалась загрузка пакета/пространства имен для '%s'"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr ""
+"пакет '%s' был скомпилирован до R 2.0.0: пожалуйста, инсталлируйте его заново"
 
 msgid "unable to load R code in package '%s'"
 msgstr "не могу загрузить код R пакета '%s'"
@@ -1384,9 +1396,6 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' должен быть текстовым вектором либо 'NULL'"
 
-msgid "argument must be character"
-msgstr "аргумент должен быть буквой"
-
 msgid "'cmd' could not be run"
 msgstr "'cmd' не запускается"
 
@@ -1423,14 +1432,16 @@ msgstr[0] "нет пакета под названием"
 msgstr[1] "нет пакетов под названиями"
 msgstr[2] "нет пакетов под названиями"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "объект %s не экспортирован 'namespace:%s'"
 msgstr[1] "объекты %s не экспортированы 'namespace:%s'"
 msgstr[2] "объекты %s не экспортированы 'namespace:%s'"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "предыдущий экспорт %s заменяется"
 msgstr[1] "предыдущие экспорты %s заменяются"
 msgstr[2] "предыдущие экспорты %s заменяются"
@@ -1446,6 +1457,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "аргумент должен быть буквой"
 
 #~ msgid "zero imputs"
 #~ msgstr "нулевые вводы"
@@ -1494,9 +1508,6 @@ msgstr[2] "Предупреждения:\n"
 
 #~ msgid "conversion to factor is deprecated"
 #~ msgstr "преобразование в фактор не одобряется"
-
-#~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-#~ msgstr "'quote' должен быть 'TRUE', 'FALSE' или числом"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "неправильные числа в 'quote'"

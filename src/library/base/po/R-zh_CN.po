@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-05-25 12:16\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -507,6 +507,10 @@ msgstr "只能替换矩阵的对角"
 msgid "replacement diagonal has wrong length"
 msgstr "对角替换值的长度不对"
 
+#, fuzzy
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr "'quote'的值必需是'TRUE', 'FALSE'或数值三者之一"
+
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -607,6 +611,9 @@ msgstr "用format=\"s\"时变元被强迫转变成\"character\" "
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format'的值必需从{\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}中选一个"
+
+msgid "'digits' reduced to 50"
+msgstr ""
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag'只能含'0+- #'"
@@ -718,6 +725,10 @@ msgstr "在搜索路径上找不到'%s'，用pos=2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "'%s'程辑包/名字空间载入失败，"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr "程辑包'%s'是在R版本2.0.0之前建的：你得重新组装"
 
 msgid "unable to load R code in package '%s'"
 msgstr "程辑包'%s'里的R写碼载入失败"
@@ -1364,9 +1375,6 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input'只能为字符向量或NULL值"
 
-msgid "argument must be character"
-msgstr "变元必需为字符"
-
 msgid "'cmd' could not be run"
 msgstr "无法運行'cmd'"
 
@@ -1398,13 +1406,15 @@ msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] "不存在叫这个名称的程辑包"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "'namespace:%2$s'没有出口%1$s这个对象"
 msgstr[1] "'namespace:%2$s'没有出口%1$s这个对象"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "现在正在替换原出口对象%s"
 
 msgid "S3 method %s was declared in NAMESPACE but not found"
@@ -1415,6 +1425,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "变元必需为字符"
 
 #~ msgid "zero imputs"
 #~ msgstr "没有输入"
@@ -1463,9 +1476,6 @@ msgstr[1] "警告信息：\n"
 
 #~ msgid "conversion to factor is deprecated"
 #~ msgstr "因子转换功能不再有用"
-
-#~ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-#~ msgstr "'quote'的值必需是'TRUE', 'FALSE'或数值三者之一"
 
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "'quote'里的数不对"

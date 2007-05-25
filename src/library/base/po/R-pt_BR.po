@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-05-25 12:16\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -528,6 +528,9 @@ msgstr "somente diagonais de matrizes podem ser substituidas"
 msgid "replacement diagonal has wrong length"
 msgstr "a diagonal substituta tem o comprimento errado"
 
+msgid "'fromLast' must be TRUE or FALSE"
+msgstr ""
+
 msgid "MARGIN ="
 msgstr "MARGIN ="
 
@@ -633,6 +636,9 @@ msgstr "fazendo do argumento para \"character\" para format=\"s\""
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' deve ser um dentre {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+
+msgid "'digits' reduced to 50"
+msgstr ""
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' pode conter somente '0+- #'"
@@ -749,6 +755,11 @@ msgstr "'%s' não encontrado no caminho de procura, usando pos = 2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "carregamento do pacote/espaço de nomes falhou para '%s'"
+
+#, fuzzy
+msgid "package was installed prior to 2.4.0 and must be re-installed"
+msgstr ""
+"pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
 
 msgid "unable to load R code in package '%s'"
 msgstr "não foi possivel carregar código R do pacote '%s'"
@@ -1411,9 +1422,6 @@ msgstr ""
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' e 'target' devem ser vetores de caracteres"
 
-msgid "argument must be character"
-msgstr "argumento deve ser caracter"
-
 msgid "'cmd' could not be run"
 msgstr "'cmd' não pôde ser executado"
 
@@ -1447,13 +1455,15 @@ msgid_plural "there are no packages called"
 msgstr[0] "não há nenhum pacote chamado '%s'"
 msgstr[1] "não há nenhum pacote chamado '%s'"
 
-msgid "object %s is not exported by 'namespace:%s'"
-msgid_plural "objects %s are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "object '%s' is not exported by 'namespace:%s'"
+msgid_plural "objects '%s' are not exported by 'namespace:%s'"
 msgstr[0] "objeto %s não está exportado por 'namespace:%s'"
 msgstr[1] "objetos %s não estão exportados por 'namespace:%s'"
 
-msgid "previous export %s is being replaced"
-msgid_plural "previous exports %s are being replaced"
+#, fuzzy
+msgid "previous export '%s' is being replaced"
+msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] "exportação anterior %s substituida"
 msgstr[1] "exportações anteriores %s substituidas"
 
@@ -1466,6 +1476,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "argument must be character"
+#~ msgstr "argumento deve ser caracter"
 
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr "'all' não pode ser usado junto com outras opções de deparse"

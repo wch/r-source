@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-26 10:58\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1488,13 +1488,14 @@ msgstr "'ColSideColors' deve ser um vetor de caracteres de comprimento ncol(x)"
 msgid "'termobj' must be a object of class \"terms\""
 msgstr "'centers' deve ser um número ou uma matriz"
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr ""
 "variável '%s' foi ajustada com a classe \"%s\" mas a classe \"%s\" foi "
 "especificada"
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr "variáveis %s foram especificadas com classes diferentes do ajuste"
 
 msgid "'data' must be a data.frame, not a matrix or an array"

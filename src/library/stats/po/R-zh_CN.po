@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-26 10:58\n"
+"POT-Creation-Date: 2007-05-25 12:20\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1423,11 +1423,12 @@ msgstr "'termlabels'必需是长度至少为一的字节向量"
 msgid "'termobj' must be a object of class \"terms\""
 msgstr "'termobj'必需是类别为个\"terms\"的对象"
 
-msgid ""
-"variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
+#, fuzzy
+msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "变量'%s'是由\"%s\"类别拟合而成，与提供的类别\"%s\"不相配"
 
-msgid "variables %s were specified with different classes from the fit"
+#, fuzzy
+msgid "variables %s were specified with different types from the fit"
 msgstr "设定的变量%s的类别同拟合的类别不相符"
 
 msgid "'data' must be a data.frame, not a matrix or an array"

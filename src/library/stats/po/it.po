@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:42+0100\n"
+"POT-Creation-Date: 2007-05-25 12:19+0100\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -33,7 +33,8 @@ msgid "can only transform 100 pars in arima0"
 msgstr "posso trasformare al più 100 parametri in arima0"
 
 #: distance.c:151
-msgid "dist(.,\"binary\"): treating non-finite values as NA"
+#, fuzzy
+msgid "treating non-finite values as NA"
 msgstr "dist(.,\"binary\"): valori infiniti trattati come NA"
 
 #: distance.c:220
