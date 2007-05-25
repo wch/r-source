@@ -122,7 +122,7 @@ if($opt_library){
     # remove quotes around the library path
     $opt_library =~ s/^['"]//; $opt_library =~ s/['"]$//; #'"
     chdir($opt_library) ||
-	die "Error: cannot change to directory \`$opt_library'\n";
+	die "Error: cannot change to library directory \$opt_library'\n";
     $library = cwd();
     $library = Win32::GetShortPathName($library) if $library =~ / /;
     my $R_LIBS = $ENV{'R_LIBS'};
@@ -395,9 +395,10 @@ foreach $pkg (@ARGV){
 	}
 	$opt = $opt . " DPKG=$dpkg";
 	$opt = $opt . " $pkgname-LAZYDATA=true" if $lazydata;
+	$opt = $opt . " $pkgname-LAZY=true" if $lazyload > 0;
 #	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
     	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname");
-	if($res == 0) {
+	if($res == 0 && $lazyload == -1) {
 	    if(! -f "$library/$decpkgname/R/$pkgname") {$lazyload = 0;}
 	    if($lazyload == -1) { # choose based on code size
 		my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
@@ -418,11 +419,13 @@ foreach $pkg (@ARGV){
 #		print "$cmd\n";
 		$res = system($cmd);
 	    }
+	}
+	if($res == 0) {
 	    ## add MD5 sums last of all
 	    my $cmd = "make --no-print-directory -f $R_HOME/src/gnuwin32/MakePkg ";
 	    $cmd .= "BUILD=$BUILD RHOME=$R_HOME DPKG=$library/$decpkgname md5sums";
 #	    print "$cmd\n";
-	    $res = system($cmd) if($res == 0);
+	    $res = system($cmd);
 
 	} # end of if($res)
 	if($res) {
