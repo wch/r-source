@@ -338,7 +338,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
        defenv = environment where the generic was defined */
     cptr = R_GlobalContext;
     if ( !(cptr->callflag & CTXT_FUNCTION) || cptr->cloenv != env)
-	error(_("'UseMethod' used in an inappropriate fashion"));
+	errorcall(call, _("'UseMethod' used in an inappropriate fashion"));
     callenv = cptr->sysparent;
     if (nargs)
 	PROTECT(generic = eval(CAR(args), env));
@@ -382,7 +382,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cptr = cptr->nextcontext;
 	}
 	if (cptr == NULL)
-	    error(_("'UseMethod' called from outside a closure"));
+	    errorcall(call, _("'UseMethod' called from outside a closure"));
 	/* if (generic == R_MissingArg)
 	   PROTECT(generic = mkString(CHAR(PRINTNAME(CAR(cptr->call))))); */
 	PROTECT(obj = GetObject(cptr));
@@ -401,8 +401,8 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
     else
-	error(_("no applicable method for \"%s\""), 
-	      translateChar(STRING_ELT(generic, 0)));
+	errorcall(call, _("no applicable method for \"%s\""), 
+		  translateChar(STRING_ELT(generic, 0)));
     return R_NilValue; /* NOT Used */
 }
 
@@ -745,10 +745,10 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     switch(TYPEOF(CAR(args))) {
     case ENVSXP:
-	error(_("cannot unclass an environment"));
+	errorcall(call, _("cannot unclass an environment"));
 	break;
     case EXTPTRSXP:
-	error(_("cannot unclass an external pointer"));
+	errorcall(call, _("cannot unclass an external pointer"));
 	break;
     default:
 	break;
@@ -980,7 +980,8 @@ SEXP attribute_hidden do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env
 {
     SEXP arg, value, fdef; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
     if(!ptr) {
-	warning(_("standardGeneric called without methods dispatch enabled (will be ignored)"));
+	warningcall(call, 
+		    _("standardGeneric called without methods dispatch enabled (will be ignored)"));
 	R_set_standardGeneric_ptr(dispatchNonGeneric, NULL);
 	ptr = R_get_standardGeneric_ptr();
     }
@@ -990,7 +991,8 @@ SEXP attribute_hidden do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env
     checkArity(op, args);
     arg = CAR(args);
     if(!isValidStringF(arg))
-      error(_("argument to standardGeneric must be a non-empty character string"));
+      errorcall(call,
+		_("argument to standardGeneric must be a non-empty character string"));
 
     PROTECT(fdef = get_this_generic(args));
 

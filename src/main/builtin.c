@@ -545,8 +545,9 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 #endif
 	    else
-		error(_("argument %d (type '%s') cannot be handled by 'cat'"),
-		      1+iobj, type2char(TYPEOF(s)));
+		errorcall(call,
+			  _("argument %d (type '%s') cannot be handled by 'cat'"),
+			  1+iobj, type2char(TYPEOF(s)));
 	    /* FIXME : cat(...) should handle ANYTHING */
 	    w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);

@@ -1419,7 +1419,7 @@ SEXP attribute_hidden do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP arglist, envir, names, pargs, body;
+    SEXP arglist, envir, names, pargs, body;
     int i, n;
 
     checkArity(op, args);
@@ -2168,15 +2168,16 @@ SEXP attribute_hidden do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* must be a string or a function */
     if( isString(fun) ) {
 	if( length(fun) != 1 || CHAR(STRING_ELT(fun,0)) == '\0') /* ASCII */
-	    errorcall_return(call, _("first argument must be a character string or a function"))
+	    error(_("first argument must be a character string or a function"));
     } else if (!isFunction(fun) )
-	    errorcall_return(call, _("first argument must be a character string or a function"))
+	error(_("first argument must be a character string or a function"));
+    
 
     if (!isNull(args) && !isNewList(args))
-	errorcall_return(call, R_MSG_A2_list);
+	error(R_MSG_A2_list);
 
     if (!isEnvironment(envir))
-	errorcall_return(call, _("'envir' must be an environment"));
+	error(_("'envir' must be an environment"));
 
     n = length(args);
     names = getAttrib(args, R_NamesSymbol);
