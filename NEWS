@@ -224,6 +224,9 @@ NEW FEATURES
     o	attr() gains an 'exact = TRUE' argument to disable partial
 	matching.
 
+   o	New option 'showCalls' to give a concise traceback on warnings
+	and errors.  [Currently experimental, especially the format.]
+
 
 DEPRECATED & DEFUNCT
 

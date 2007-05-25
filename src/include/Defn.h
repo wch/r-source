@@ -345,6 +345,7 @@ typedef struct {
 #define PRIMARITY(x)	(R_FunTab[(x)->u.primsxp.offset].arity)
 #define PPINFO(x)	(R_FunTab[(x)->u.primsxp.offset].gram)
 #define PRIMPRINT(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)/100)%10)
+#define PRIMINTERNAL(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)%100)/10)
 
 /* Promise Access Macros */
 #define PRCODE(x)	((x)->u.promsxp.expr)
@@ -638,6 +639,7 @@ extern0 SEXP	R_RestartStack;	/* Stack of available restarts */
 extern0 Rboolean R_warn_partial_match_args   INI_as(FALSE);
 extern0 Rboolean R_warn_partial_match_dollar INI_as(FALSE);
 extern0 Rboolean R_warn_partial_match_attr INI_as(FALSE);
+extern0 Rboolean R_ShowCalls INI_as(FALSE);
 
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
@@ -701,11 +703,11 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 #endif
 #undef INI_as
 
+#define checkArity(a,b) Rf_checkArityCall(a,b,call)
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
 # define begincontext		Rf_begincontext
-# define checkArity		Rf_checkArity
 # define check_stack_balance	Rf_check_stack_balance
 # define CheckFormals		Rf_CheckFormals
 # define CleanEd		Rf_CleanEd
@@ -889,7 +891,7 @@ SEXP Rf_EnsureString(SEXP);
 
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
-void checkArity(SEXP, SEXP);
+void Rf_checkArityCall(SEXP, SEXP, SEXP);
 void CheckFormals(SEXP);
 void check_stack_balance(SEXP op, int save);
 void CleanEd(void);

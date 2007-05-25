@@ -420,15 +420,21 @@ SEXP attribute_hidden EnsureString(SEXP s)
 }
 
 /* used in modules */
-void checkArity(SEXP op, SEXP args)
+void Rf_checkArityCall(SEXP op, SEXP args, SEXP call)
 {
-    if (PRIMARITY(op) >= 0 && PRIMARITY(op) != length(args))
-	error(P_("%d argument passed to '%s' which requires %d",
-		 "%d arguments passed to '%s' which requires %d",
-		 length(args)),
-	      length(args), PRIMNAME(op), PRIMARITY(op));
+    if (PRIMARITY(op) >= 0 && PRIMARITY(op) != length(args)) {
+	if (PRIMINTERNAL(op))
+	    error(P_("%d argument passed to .Internal(%s) which requires %d",
+		     "%d arguments passed to%s .Internal(%s) which requires %d",
+		     length(args)),
+		  length(args), PRIMNAME(op), PRIMARITY(op));
+	else
+	    errorcall(call, P_("%d argument passed to '%s' which requires %d",
+			       "%d arguments passed to '%s' which requires %d",
+			       length(args)),
+		      length(args), PRIMNAME(op), PRIMARITY(op));
+    }
 }
-
 
 SEXP nthcdr(SEXP s, int n)
 {
@@ -851,10 +857,10 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(x = CAR(args)) != STRSXP)
 	error(_("a character vector argument expected"));
     if (TYPEOF(enc = CADR(args)) != STRSXP)
-	error(_("a character vector argument expected"));
+	error(_("a character vector 'value' expected"));
     m = LENGTH(enc);
     if(m == 0)
-	error(_("'value must be of positive length"));
+	error(_("'value' must be of positive length"));
     if(NAMED(x)) x = duplicate(x);
     PROTECT(x);
     n = LENGTH(x);

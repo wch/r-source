@@ -1201,9 +1201,11 @@ Apr 1921 10     11
 > 
 > ## PR 883 (cor(x,y) when is.null(y))
 > try(cov(rnorm(10), NULL))
-Error in cov(rnorm(10), NULL) : supply both 'x' and 'y' or a matrix-like 'x'
+Error in cov(rnorm(10), NULL) : 
+  supply both 'x' and 'y' or a matrix-like 'x'
 > try(cor(rnorm(10), NULL))
-Error in cor(rnorm(10), NULL) : supply both 'x' and 'y' or a matrix-like 'x'
+Error in cor(rnorm(10), NULL) : 
+  supply both 'x' and 'y' or a matrix-like 'x'
 > ## gave the variance and 1 respectively in 1.2.2.
 > try(var(NULL))
 Error in var(NULL) : 'x' is empty
@@ -3170,11 +3172,9 @@ $wt.res
 > try(x[c("a", "c")])
 Error in `[.data.frame`(x, c("a", "c")) : undefined columns selected
 > try(x[, c("a", "c")])
-Error in `[.data.frame`(x, , c("a", "c")) : 
-	undefined columns selected
+Error in `[.data.frame`(x, , c("a", "c")) : undefined columns selected
 > try(x[1, c("a", "c")])
-Error in `[.data.frame`(x, 1, c("a", "c")) : 
-	undefined columns selected
+Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
 > ## Second succeeded, third gave uniformative error message in 1.7.x.
 > 
 > 
@@ -3654,7 +3654,8 @@ In matrix(, 2^31, 1) : NAs introduced by coercion
 > try(matrix( , 2^31/10, 100))
 Error in matrix(, 2^31/10, 100) : too many elements specified
 > try(array(dim=c(2^31/10, 100)))
-Error in array(dim = c(2^31/10, 100)) : 'dim' specifies too large an array
+Error in array(dim = c(2^31/10, 100)) : 
+  'dim' specifies too large an array
 > ## reported negative values (really integer NA) for R < 1.9.0
 > 
 > 
@@ -4435,7 +4436,8 @@ y ~ x
 <none>              20.1913  5.1555
 x       1    1.4798 21.6711  4.4993
 > res <-  try(stats:::drop1.default(fit))
-Error in stats:::drop1.default(fit) : number of rows in use has changed: remove missing values?
+Error in stats:::drop1.default(fit) : 
+  number of rows in use has changed: remove missing values?
 > stopifnot(inherits(res, "try-error"))
 > add1(fit, ~ . +x2)
 Single term additions
@@ -4449,7 +4451,7 @@ Warning message:
 In add1.lm(fit, ~. + x2) : using the 18/19 rows from a combined fit
 > res <-  try(stats:::add1.default(fit, ~ . +x2))
 Error in stats:::add1.default(fit, ~. + x2) : 
-	number of rows in use has changed: remove missing values?
+  number of rows in use has changed: remove missing values?
 > stopifnot(inherits(res, "try-error"))
 > ## 2.0.1 ran and gave incorrect answers.
 > 
@@ -4546,19 +4548,19 @@ integer(0)
 [1] NA  4
 > try(x[rbind(c(1,1), c(2,2), c(-1,2))])
 Error in x[rbind(c(1, 1), c(2, 2), c(-1, 2))] : 
-	negative values are not allowed in a matrix subscript
+  negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-2,2))])
 Error in x[rbind(c(1, 1), c(2, 2), c(-2, 2))] : 
-	negative values are not allowed in a matrix subscript
+  negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-3,2))])
 Error in x[rbind(c(1, 1), c(2, 2), c(-3, 2))] : 
-	negative values are not allowed in a matrix subscript
+  negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-4,2))])
 Error in x[rbind(c(1, 1), c(2, 2), c(-4, 2))] : 
-	negative values are not allowed in a matrix subscript
+  negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-1,-1))])
 Error in x[rbind(c(1, 1), c(2, 2), c(-1, -1))] : 
-	negative values are not allowed in a matrix subscript
+  negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1,1), c(2,2,2))])
 [1] 1 2 1 2 1 2
 > 
@@ -4566,10 +4568,10 @@ Error in x[rbind(c(1, 1), c(2, 2), c(-1, -1))] :
 > x <- matrix(1:6, ncol=3)
 > try(x[rbind(c(1,1), c(2,2), c(-3,3))])
 Error in x[rbind(c(1, 1), c(2, 2), c(-3, 3))] : 
-	negative values are not allowed in a matrix subscript
+  negative values are not allowed in a matrix subscript
 > try(x[rbind(c(1,1), c(2,2), c(-4,3))])
 Error in x[rbind(c(1, 1), c(2, 2), c(-4, 3))] : 
-	negative values are not allowed in a matrix subscript
+  negative values are not allowed in a matrix subscript
 > ## generally allowed in 2.1.0.
 > 
 > 
@@ -4734,9 +4736,10 @@ out-of-range values treated as 0 in coercion to raw
 > # but not allowed
 > try(df2[df2 == 2] <- 1:2)
 Error in x[[v]][thisvar] <- if (N > 1L) value[n + seq_len(nv)] else value : 
-	NAs are not allowed in subscripted assignments
+  NAs are not allowed in subscripted assignments
 > try(m2[m2 == 2] <- 1:2)
-Error in m2[m2 == 2] <- 1:2 : NAs are not allowed in subscripted assignments
+Error in m2[m2 == 2] <- 1:2 : 
+  NAs are not allowed in subscripted assignments
 > ##
 > 
 > 
@@ -4806,7 +4809,7 @@ coef[0] = 1
 > DF <- data.frame(A=1:2, B=3:4)
 > try(DF[2, 1:3] <- NULL)
 Error in `[<-.data.frame`(`*tmp*`, 2, 1:3, value = NULL) : 
-	replacement has 0 items, need 3
+  replacement has 0 items, need 3
 > ## wrong error message in R < 2.2.0
 > 
 > 
@@ -4976,7 +4979,8 @@ Error : no valid set of coefficients has been found: please supply starting valu
 Error in solve.default(temp) : only square matrices can be inverted
 > # also complex
 > try(solve(temp+0i))
-Error in solve.default(temp + (0+0i)) : only square matrices can be inverted
+Error in solve.default(temp + (0+0i)) : 
+  only square matrices can be inverted
 > # and non-comformant systems
 > try(solve(temp, diag(3)))
 Error in solve.default(temp, diag(3)) : 'b' must be compatible with 'a'
@@ -5305,10 +5309,10 @@ I II III
 > ## removing variable from baseenv
 > try(remove("ls", envir=baseenv()))
 Error in remove("ls", envir = baseenv()) : 
-	cannot remove variables from the base environment
+  cannot remove variables from the base environment
 > try(remove("ls", envir=asNamespace("base")))
 Error in remove("ls", envir = asNamespace("base")) : 
-	cannot remove variables from base namespace
+  cannot remove variables from base namespace
 > ## no message in 2.3.1
 > 
 > 
@@ -5658,7 +5662,7 @@ structure(list(a = NA, b = as.integer(NA), c = as.double(NA),
 > d <- data.frame(y= runif(10), x=runif(10))
 > try(nls(y ~ 1/(1+x), data = d, start=list(x=0.5,y=0.5), trace=TRUE))
 Error in nls(y ~ 1/(1 + x), data = d, start = list(x = 0.5, y = 0.5),  : 
-	no parameters to fit
+  no parameters to fit
 > ## changed in 2.4.1 patched
 > 
 > 
@@ -5676,7 +5680,7 @@ Levels: 2000-01-01 2001-01-01
 > A <- data.frame(a=character(0))
 > try(row.names(A) <- 1:10) # succeeded in Dec 2006
 Error in `row.names<-.data.frame`(`*tmp*`, value = 1:10) : 
-	invalid 'row.names' length
+  invalid 'row.names' length
 > A <- list(a=1:3)
 > class(A) <- "data.frame"
 > row.names(A) <- letters[24:26] # failed at one point in Dec 2006
@@ -6023,7 +6027,8 @@ $`NA`
 > attr(x, NA_character_)
 NULL
 > try(attr(x, NA_character_) <- 5)
-Error in attr(x, NA_character_) <- 5 : 'name' must be non-null character string
+Error in attr(x, NA_character_) <- 5 : 
+  'name' must be non-null character string
 > ## prior to 2.5.0 NA was treated as "NA"
 > 
 > 

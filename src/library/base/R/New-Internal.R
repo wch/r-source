@@ -12,9 +12,9 @@ try <- function(expr, silent = FALSE) {
                 call <- sys.call(-4)
             dcall <- deparse(call)[1]
             prefix <- paste("Error in", dcall, ": ")
-            LONGCALL <- 30 # to match value in errors.c
-            if (nchar(dcall) > LONGCALL)
-                prefix <- paste(prefix, "\n\t", sep = "")
+            LONG <- 75 # to match value in errors.c, but that is in bytes
+            if (14 + nchar(dcall) + nchar(conditionMessage(e)) > LONG)
+                prefix <- paste(prefix, "\n  ", sep = "")
         }
         else prefix <- "Error : "
         msg <- paste(prefix, conditionMessage(e), "\n", sep="")

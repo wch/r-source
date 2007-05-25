@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2006  The R Development Core Team.
+ *  Copyright (C) 1997--2007  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,11 +43,7 @@ extern void R_ProcessEvents(void);
 #define min(a, b) (a<b?a:b)
 #endif
 
-/* limit on call length at which errorcall is split over
-   two lines -- this should match the value used in try(). */
-#define LONGCALL 30
-
-/* Total line length before splitting in warnings */
+/* Total line length, in chars, before splitting in warnings/errors */
 #define LONGWARN 75
 
 /*
@@ -62,6 +58,7 @@ static int immediateWarning = 0;
 static void try_jump_to_restart(void);
 static void jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
 static void signalInterrupt(void);
+static char * R_ConciseTraceback(SEXP call, int skip);
 
 /* Interface / Calling Hierarchy :
 
@@ -282,7 +279,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 
     if( w <= 0 && immediateWarning ) w = 1;
 
-    if(w < 0 || inWarning || inError) /* ignore if w<0 or already in here*/
+    if( w < 0 || inWarning || inError) /* ignore if w<0 or already in here*/
 	return;
 
     /* set up a context which will restore inWarning if there is an exit */
@@ -300,6 +297,7 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	errorcall(call, _("(converted from warning) %s"), buf);
     }
     else if(w == 1) {	/* print as they happen */
+	char *tr;
 	if( call != R_NilValue ) {
 	    dcall = CHAR(STRING_ELT(deparse1(call, 0, DEFAULTDEPARSE), 0));
 	} else dcall = "";
@@ -308,12 +306,22 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    strcat(buf, " [... truncated]");
 	if(dcall[0] == '\0')
 	    REprintf(_("Warning: %s\n"), buf);
-	else if(17+strlen(dcall)+1+strlen(buf) <= LONGWARN)
+#ifdef SUPPORT_MBCS
+	else if(mbcslocale &&
+		18+mbstowcs(NULL, dcall, 0)+mbstowcs(NULL, buf, 0) <= LONGWARN)
+	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
+#endif
+	else if(18+strlen(dcall)+strlen(buf) <= LONGWARN)
 	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
 	else
 	    REprintf(_("Warning in %s :\n  %s\n"), dcall, buf);
+	if(R_ShowCalls && call != R_NilValue) {
+	    tr = R_ConciseTraceback(call, 0);
+	    if (strlen(tr)) REprintf("Calls: %s\n", tr);
+	}
     }
     else if(w == 0) {	/* collect them */
+	char *tr; int nc; 
 	if(!R_CollectWarnings)
 	    setupwarnings();
 	if( R_CollectWarnings > 49 )
@@ -322,6 +330,13 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	Rvsnprintf(buf, min(BUFSIZE, R_WarnLength+1), format, ap);
 	if(R_WarnLength < BUFSIZE - 20 && strlen(buf) == R_WarnLength)
 	    strcat(buf, " [... truncated]");
+	if(R_ShowCalls && call != R_NilValue) {
+	    tr =  R_ConciseTraceback(call, 0); nc = strlen(tr);
+	    if (nc && nc + strlen(buf) + 8 < BUFSIZE) {
+		strcat(buf, "\nCalls: "); 
+		strcat(buf, tr);
+	    }
+	}
 	names = CAR(ATTRIB(R_Warnings));
 	SET_STRING_ELT(names, R_CollectWarnings++, mkChar(buf));
     }
@@ -403,7 +418,13 @@ void PrintWarnings(void)
 	    char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
 	    dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0),
 					     0, DEFAULTDEPARSE), 0));
-	    if (6+strlen(dcall) + strlen(msg) > LONGWARN) sep = "\n  ";
+#ifdef SUPPORT_MBCS
+	    if (mbcslocale) {
+		if (6+mbstowcs(NULL, dcall, 0) + mbstowcs(NULL, msg, 0)
+		    > LONGWARN) sep = "\n  ";
+	    } else
+#endif
+		if (6+strlen(dcall) + strlen(msg) > LONGWARN) sep = "\n  ";
 	    REprintf("In %s :%s%s\n", dcall, sep, msg);
 	}
     } else if( R_CollectWarnings <= 10 ) {
@@ -416,6 +437,12 @@ void PrintWarnings(void)
 		char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
 		dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, i),
 						 0, DEFAULTDEPARSE), 0));
+#ifdef SUPPORT_MBCS
+		if (mbcslocale) {
+		    if (10+mbstowcs(NULL, dcall, 0) + mbstowcs(NULL, msg, 0)
+			> LONGWARN) sep = "\n  ";
+		} else
+#endif
 		if (10+strlen(dcall) + strlen(msg) > LONGWARN) sep = "\n  ";
 		REprintf("%d: In %s :%s%s\n", i+1, dcall, sep, msg);
 	    }
@@ -431,13 +458,12 @@ void PrintWarnings(void)
     PROTECT(s = allocVector(VECSXP, R_CollectWarnings));
     PROTECT(t = allocVector(STRSXP, R_CollectWarnings));
     names = CAR(ATTRIB(R_Warnings));
-    for(i=0; i<R_CollectWarnings; i++) {
+    for(i = 0; i < R_CollectWarnings; i++) {
 	SET_VECTOR_ELT(s, i, VECTOR_ELT(R_Warnings, i));
 	SET_STRING_ELT(t, i, STRING_ELT(names, i));
     }
     setAttrib(s, R_NamesSymbol, t);
     SET_SYMVALUE(install("last.warning"), s);
-    /* defineVar(install("last.warning"), s, R_GlobalEnv); */
     UNPROTECT(2);
 
     endcontext(&cntxt);
@@ -463,8 +489,8 @@ static void restore_inError(void *data)
 static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 {
     RCNTXT cntxt;
-    char *p, *dcall;
-    int oldInError;
+    char *p, *dcall, *tr;
+    int oldInError, nc;
 
     if (inError) {
 	/* fail-safe handler for recursive errors */
@@ -494,26 +520,45 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
     inError = 1;
 
     if(call != R_NilValue) {
-	char *head = _("Error in ");
-	char *mid = " : ";
-	char *tail = "\n  ";/* <- TAB */
+	char tmp[BUFSIZE];
+	char *head = _("Error in "), *mid = " : ", *tail = "\n  ";
 	int len = strlen(head) + strlen(mid) + strlen(tail);
 
+	Rvsnprintf(tmp, min(BUFSIZE, R_WarnLength) - strlen(head), format, ap);
 	dcall = CHAR(STRING_ELT(deparse1(call, 0, DEFAULTDEPARSE), 0));
-	if (strlen(dcall) + len < BUFSIZE) {
+	if (len + strlen(dcall) + strlen(tmp) < BUFSIZE) {
 	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
-	    if (strlen(dcall) > LONGCALL) strcat(errbuf, tail);
-	}
-	else
+#ifdef SUPPORT_MBCS
+	    if (mbcslocale) {
+		if (14+mbstowcs(NULL, dcall, 0) + mbstowcs(NULL, tmp, 0)
+		    > LONGWARN) strcat(errbuf, tail);
+	    } else
+#endif
+	    if (14 + strlen(dcall) + strlen(tmp) > LONGWARN)
+		strcat(errbuf, tail);
+	    strcat(errbuf, tmp);
+	} else {
 	    sprintf(errbuf, _("Error: "));
+	    strcat(errbuf, tmp);
+	}
     }
-    else
+    else {
 	sprintf(errbuf, _("Error: "));
-
-    p = errbuf + strlen(errbuf);
-    Rvsnprintf(p, min(BUFSIZE, R_WarnLength) - strlen(errbuf), format, ap);
+	p = errbuf + strlen(errbuf);
+	Rvsnprintf(p, min(BUFSIZE, R_WarnLength) - strlen(errbuf), format, ap);
+    }
+    
     p = errbuf + strlen(errbuf) - 1;
     if(*p != '\n') strcat(errbuf, "\n");
+
+    if(R_ShowCalls && call != R_NilValue) {  /* assume we want to avoid deparse */
+	tr = R_ConciseTraceback(call, 0); nc = strlen(tr);
+	if (nc && nc + strlen(errbuf) + 8 < BUFSIZE) {
+	    strcat(errbuf, "Calls: ");
+	    strcat(errbuf, tr);
+	    strcat(errbuf, "\n");
+	}
+    }
     if (R_ShowErrorMessages) REprintf("%s", errbuf);
 
     if( R_ShowErrorMessages && R_CollectWarnings ) {
@@ -1171,6 +1216,68 @@ SEXP R_GetTraceback(int skip)
     UNPROTECT(1);
     return s;
 }
+
+static char * R_ConciseTraceback(SEXP call, int skip)
+{
+    static char buf[260];
+    RCNTXT *c;
+    int nl, ncalls = 0;
+    Rboolean too_many = FALSE;
+    char *top = "" /* -Wall */;
+
+    buf[0] = '\0';
+    for (c = R_GlobalContext;
+	 c != NULL && c->callflag != CTXT_TOPLEVEL;
+	 c = c->nextcontext)
+	if (c->callflag & (CTXT_FUNCTION | CTXT_BUILTIN) ) {
+	    if (skip > 0)
+		skip--;
+	    else {
+		SEXP fun = CAR(c->call);
+		char *this = (TYPEOF(fun) == SYMSXP) ?
+		    CHAR(PRINTNAME(fun)) : "<Anonymous>";
+		if(streql(this, "stop") || 
+		   streql(this, "warning") || 
+		   streql(this, "suppressWarnings") || 
+		   streql(this, ".signalSimpleWarning")) {
+		    buf[0] =  '\0'; ncalls = 0; too_many = FALSE;
+		} else {
+		    ncalls++;
+		    if(too_many) {
+			top = this;
+		    } else if(strlen(buf) > 200) {
+			memmove(buf+4, buf, strlen(buf)+1);
+			memcpy(buf, "... ", 4);
+			too_many = TRUE;
+			top = this;
+		    } else if(strlen(buf)) {
+			nl = strlen(this);
+			memmove(buf+nl+4, buf, strlen(buf)+1);
+			memcpy(buf, this, strlen(this));
+			memcpy(buf+nl, " -> ", 4);
+		    } else
+			memcpy(buf, this, strlen(this)+1);
+		}
+	    }
+	}
+    if(too_many && (nl = strlen(top)) < 50) {
+	memmove(buf+nl+1, buf, strlen(buf)+1);
+	memcpy(buf, top, strlen(top));
+	memcpy(buf+nl, " ", 1);
+    }
+    /* don't add Calls if it adds no extra information */
+    /* However: do we want to include the call in the list if it is a
+       primitive? */
+    if (ncalls == 1 && call != R_NilValue) {
+	SEXP fun = CAR(call);
+	char *this = (TYPEOF(fun) == SYMSXP) ?
+	    CHAR(PRINTNAME(fun)) : "<Anonymous>";
+	if(streql(buf, this)) return "";
+    }
+    return buf;
+}
+
+
 
 static SEXP mkHandlerEntry(SEXP klass, SEXP parentenv, SEXP handler, SEXP rho,
 			   SEXP result, int calling)

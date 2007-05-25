@@ -212,6 +212,9 @@ getOption(x)
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
 
+    \item{\code{showCalls}:}{a logical.  Should warning and error
+      messages show a summary of the call stack?}
+
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}

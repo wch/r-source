@@ -80,8 +80,6 @@ SEXP attribute_hidden do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (nr < 0)
 	error(_("invalid 'nrow' value (< 0)"));
     nc = asInteger(snc);
-    if (nc < 0)
-	error(_("invalid 'ncol' value (< 0)"));
     if (nc == NA_INTEGER)
 	error(_("invalid 'ncol' value (too large or NA)"));
     if (nc < 0)
@@ -350,8 +348,7 @@ SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans;
     int i, j, nr, nc;
 
-    if (length(args) != 1)
-	error(_("incorrect number of arguments to 'row/col'"));
+    checkArity(op, args);
     if (!isMatrix(CAR(args)))
 	error(_("a matrix is required as argument to 'row/col'"));
 

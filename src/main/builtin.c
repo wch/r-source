@@ -489,7 +489,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     labs = CAR(args);
     if (!isString(labs) && labs != R_NilValue)
-	error(_("invalid '%s' argument"), "label");
+	error(_("invalid '%s' argument"), "labels");
     lablen = length(labs);
     args = CDR(args);
 
