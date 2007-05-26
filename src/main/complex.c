@@ -838,10 +838,11 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     default:
-	errorcall(call, _("unimplemented complex function"));
+	/* examples are not primitive */
+	error(_("unimplemented complex function"));
     }
     if (naflag)
-	warning("NAs produced in function \"%s\"", PRIMNAME(op));
+	warningcall(call, "NAs produced in function \"%s\"", PRIMNAME(op));
     DUPLICATE_ATTRIB(y, x);
     UNPROTECT(2);
     return y;
@@ -879,6 +880,7 @@ static SEXP cmath2(SEXP op, SEXP sa, SEXP sb, void (*f)())
 	    f(&y[i], &ai, &bi);
 	}
     }
+    /* should really be warningcall */
     if (naflag)
 	warning("NAs produced in function \"%s\"", PRIMNAME(op));
     if(n == na) {

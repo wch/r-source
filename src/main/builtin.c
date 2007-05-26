@@ -81,7 +81,7 @@ SEXP attribute_hidden do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
-    	errorcall(call, _("invalid first argument"));
+    	error(_("invalid first argument"));
     else
 	name = install(translateChar(STRING_ELT(CAR(args), 0)));
     args = CDR(args);
@@ -118,13 +118,13 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);    
     names = CAR(args); args = CDR(args);
     if (!isString(names))
-    	errorcall(call, _("invalid first argument"));
+    	error(_("invalid first argument"));
     values = CAR(args); args = CDR(args);
     expr = CAR(args); args = CDR(args);
     eenv = CAR(args); args = CDR(args);
-    if (!isEnvironment(eenv)) errorcall(call, R_MSG_IA);	
+    if (!isEnvironment(eenv)) error(R_MSG_IA);	
     aenv = CAR(args);
-    if (!isEnvironment(aenv)) errorcall(call, R_MSG_IA);
+    if (!isEnvironment(aenv)) error(R_MSG_IA);
 
     for(i = 0; i < LENGTH(names); i++) {
 	SEXP name = install(CHAR(STRING_ELT(names, i)));
@@ -153,7 +153,8 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 2:
 	code = CAR(args);
 	add = eval(CADR(args), rho);
-	if ( TYPEOF(add) != LGLSXP || length(add) != 1 )
+	if ( TYPEOF(add) != LGLSXP || length(add) != 1 || 
+	     LOGICAL(add)[0] == NA_INTEGER)
 	    errorcall(call, _("invalid '%s' argument"), "add");
 	addit = (LOGICAL(add)[0] == 1);
 	break;
@@ -357,16 +358,16 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	env = R_BaseEnv;
     } else
     if( !isEnvironment(env) )
-	errorcall(call, _("argument is not an environment"));
+	error(_("argument is not an environment"));
     if( env == R_EmptyEnv )
-    	errorcall(call, _("can not set parent of the empty environment"));
+    	error(_("can not set parent of the empty environment"));
     parent = CADR(args);
     if (isNull(parent)) {
 	error(_("use of NULL environment is defunct"));
 	parent = R_BaseEnv;
     } else    
     if( !isEnvironment(parent) )
-	errorcall(call, _("'parent' is not an environment"));
+	error(_("'parent' is not an environment"));
 
     SET_ENCLOS(env, parent);
 

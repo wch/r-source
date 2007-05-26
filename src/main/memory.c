@@ -2860,7 +2860,7 @@ void attribute_hidden (UNSET_UTF8)(SEXP x) { UNSET_UTF8(x); }
 
 SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    errorcall(call,_("memory profiling is not available on this system"));
+    error(_("memory profiling is not available on this system"));
     return R_NilValue; /* not reached */
 }
 

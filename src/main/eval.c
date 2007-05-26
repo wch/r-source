@@ -281,7 +281,7 @@ SEXP attribute_hidden do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     checkArity(op, args);
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
-	errorcall(call, _("invalid '%s' argument"), "filename");
+	error(_("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
     dinterval = asReal(CADDR(args));
     mem_profiling = asLogical(CADDDR(args));
@@ -1162,7 +1162,7 @@ SEXP attribute_hidden do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warningcall(call, _("multi-argument returns are deprecated"));
 	for (v = vals; v != R_NilValue; v = CDR(v)) {
 	    if (CAR(v) == R_MissingArg)
-		error(_("empty expression in return value"));
+		errorcall(call, _("empty expression in return value"));
 	    if (NAMED(CAR(v)))
 		SETCAR(v, duplicate(CAR(v)));
 	}
@@ -1636,7 +1636,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   (and documented as such */
 	encl = R_BaseEnv;
     } else if ( !isEnvironment(encl) )
-	errorcall(call, _("invalid '%s' argument"), "enclos");
+	error(_("invalid '%s' argument"), "enclos");
     switch(TYPEOF(env)) {
     case NILSXP:
         env = encl;     /* so eval(expr, NULL, encl) works */
@@ -1657,14 +1657,14 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     case INTSXP:
     case REALSXP:
 	if (length(env) != 1)
-	    errorcall(call, _("numeric 'envir' arg not of length one"));
+	    error(_("numeric 'envir' arg not of length one"));
 	frame = asInteger(env);
 	if (frame == NA_INTEGER)
-	    errorcall(call, _("invalid '%s' argument"), "envir");
+	    error(_("invalid '%s' argument"), "envir");
 	PROTECT(env = R_sysframe(frame, R_GlobalContext));
 	break;
     default:
-	errorcall(call, _("invalid '%s' argument"), "envir");
+	error(_("invalid '%s' argument"), "envir");
     }
 
     /* isLanguage include NILSXP, and that does not need to be
@@ -1679,7 +1679,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    expr = R_ReturnedValue;
 	    if (expr == R_RestartToken) {
 		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-		errorcall(call, _("restarts not supported in 'eval'"));
+		error(_("restarts not supported in 'eval'"));
 	    }
 	}
 	endcontext(&cntxt);
@@ -1698,7 +1698,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    tmp = R_ReturnedValue;
 	    if (tmp == R_RestartToken) {
 		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-		errorcall(call, _("restarts not supported in 'eval'"));
+		error(_("restarts not supported in 'eval'"));
 	    }
 	}
 	endcontext(&cntxt);
@@ -2092,7 +2092,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     PROTECT(s = promiseArgs(CDR(call), rho));
     if (length(s) != length(args))
-	errorcall(call, _("dispatch error"));
+	error(_("dispatch error"));
     for (m = s ; m != R_NilValue ; m = CDR(m), args = CDR(args) ) {
 	SET_PRVALUE(CAR(m), CAR(args));
 	/* ensure positional matching for operators */

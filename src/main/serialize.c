@@ -1726,7 +1726,8 @@ static SEXP CallHook(SEXP x, SEXP fun)
     return val;
 }
 
-SEXP attribute_hidden do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden
+do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* serializeToConn(object, conn, ascii, version, hook) */
 
@@ -1744,7 +1745,7 @@ SEXP attribute_hidden do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env
     con = getConnection(asInteger(CADR(args)));
 
     if (TYPEOF(CADDR(args)) != LGLSXP)
-	errorcall(call, _("'ascii' must be logical"));
+	error(_("'ascii' must be logical"));
     ascii = INTEGER(CADDR(args))[0];
     if (ascii) type = R_pstream_ascii_format;
     else type = R_pstream_xdr_format;

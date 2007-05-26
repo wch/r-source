@@ -889,13 +889,12 @@ SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
-	errorcall(call, _("character argument expected"));
+	error(_("character argument expected"));
     GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
     /* AddDLL does this DeleteDLL(buf); */
     info = AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0]);
     if(!info)
-	errorcall(call, _("unable to load shared library '%s':\n  %s"),
-		  buf, DLLerror);
+	error(_("unable to load shared library '%s':\n  %s"), buf, DLLerror);
     return(Rf_MakeDLLInfo(info));
 }
 
@@ -905,11 +904,10 @@ SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op,args);
     if (!isString(CAR(args)) || length(CAR(args)) < 1)
-	errorcall(call, _("character argument expected"));
+	error(_("character argument expected"));
     GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
     if(!DeleteDLL(buf))
-	errorcall(call, _("dynamic/shared library '%s\' was not loaded"),
-		  buf);
+	error(_("dynamic/shared library '%s\' was not loaded"), buf);
     return R_NilValue;
 }
 

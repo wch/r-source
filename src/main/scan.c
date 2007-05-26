@@ -996,8 +996,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else {
 	    char *dc = translateChar(STRING_ELT(dec, 0));
 	    if(strlen(dc) != 1)
-		errorcall(call,
-			  _("invalid decimal separator: must be one byte"));
+		error(_("invalid decimal separator: must be one byte"));
 	    data.decchar = dc[0];
 	}
     }
@@ -1215,8 +1214,7 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 		while ((c = scanchar(inquote, &data)) != quote) {
 		    if (c == R_EOF || c == '\n') {
 			if(!data.wasopen) data.con->close(data.con);
-			errorcall(call,
-				  _("string terminated by newline or EOF"));
+			error(_("string terminated by newline or EOF"));
 		    }
 		}
 		inquote = 0;

@@ -2071,7 +2071,7 @@ SEXP attribute_hidden do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
 
     if (!isValidString(fname = CAR(args)))
-	errorcall (call, _("first argument must be a file name"));
+	error(_("first argument must be a file name"));
 
     /* GRW 1/26/99 GRW : added environment parameter so that */
     /* the loaded objects can be placed where desired  */

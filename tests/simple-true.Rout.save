@@ -1,13 +1,11 @@
 
-R version 2.5.0 Under development (unstable) (2007-02-07 r40667)
+R version 2.6.0 Under development (unstable) (2007-05-25 r41714)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -57,8 +55,8 @@ non-integer value 1e-3 qualified with L; using numeric value
 Warning message:
 integer literal 1.L contains unnecessary decimal point 
 > try(parse(text = "12iL")) # gives syntax error
-Error in parse(file, n, text, prompt, srcfile, encoding) : 
-	syntax error, unexpected SYMBOL, expecting '\n' or ';' in "12iL"
+Error in parse(text = "12iL") : 
+  syntax error, unexpected SYMBOL, expecting '\n' or ';' in "12iL"
 > 
 > 
 > all((0:6) == pi + ((-pi):pi))

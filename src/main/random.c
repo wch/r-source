@@ -31,7 +31,7 @@
 
 static void invalid(SEXP call)
 {
-    errorcall(call, _("invalid arguments"));
+    error(_("invalid arguments"));
 }
 
 static Rboolean random1(double (*f) (double), double *a, int na, double *x, int n)
@@ -472,7 +472,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (k == NA_INTEGER || k < 0)
 	error(_("invalid '%s' argument"), "size");
     if (!replace && k > n)
-	error(_("cannot take a sample larger than the population\n when 'replace = FALSE'"));
+	error(_("cannot take a sample larger than the population when 'replace = FALSE'"));
     GetRNGstate();
     PROTECT(y = allocVector(INTSXP, k));
     if (!isNull(prob)) {

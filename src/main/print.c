@@ -137,7 +137,7 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     naprint = CAR(a);
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
-	    errorcall(call, _("invalid 'na.print' specification"));
+	    error(_("invalid 'na.print' specification"));
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
 	R_print.na_width = R_print.na_width_noquote =
 	    strlen(CHAR(R_print.na_string));
@@ -146,9 +146,9 @@ SEXP attribute_hidden do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(rowlab) == 0) rowlab = R_NilValue;
     if (length(collab) == 0) collab = R_NilValue;
     if (!isNull(rowlab) && !isString(rowlab))
-	errorcall(call, _("invalid row labels"));
+	error(_("invalid row labels"));
     if (!isNull(collab) && !isString(collab))
-	errorcall(call, _("invalid column labels"));
+	error(_("invalid column labels"));
 
     printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right,
 		rowlab, collab, rowname, colname);
@@ -175,19 +175,19 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (R_print.digits == NA_INTEGER ||
 	    R_print.digits < R_MIN_DIGITS_OPT ||
 	    R_print.digits > R_MAX_DIGITS_OPT)
-		errorcall(call, _("invalid '%s' argument"), "digits");
+		error(_("invalid '%s' argument"), "digits");
     }
     args = CDR(args);
 
     R_print.quote = asLogical(CAR(args));
     if(R_print.quote == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' argument"), "quote");
+	error(_("invalid '%s' argument"), "quote");
     args = CDR(args);
 
     naprint = CAR(args);
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
-	    errorcall(call, _("invalid 'na.print' specification"));
+	    error(_("invalid 'na.print' specification"));
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
 	R_print.na_width = R_print.na_width_noquote =
 	    strlen(CHAR(R_print.na_string));
@@ -197,31 +197,31 @@ SEXP attribute_hidden do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(CAR(args))) {
 	R_print.gap = asInteger(CAR(args));
 	if (R_print.gap == NA_INTEGER || R_print.gap < 0)
-	    errorcall(call, _("'gap' must be non-negative integer"));
+	    error(_("'gap' must be non-negative integer"));
     }
     args = CDR(args);
 
     R_print.right = (Rprt_adj) asLogical(CAR(args)); /* Should this be asInteger()? */
     if(R_print.right == NA_LOGICAL)
-	errorcall(call, _("invalid '%s' argument"), "right");
+	error(_("invalid '%s' argument"), "right");
     args = CDR(args);
 
     if(!isNull(CAR(args))) {
 	R_print.max = asInteger(CAR(args));
 	if(R_print.max == NA_INTEGER)
-	    errorcall(call, _("invalid '%s' argument"), "max");
+	    error(_("invalid '%s' argument"), "max");
     }
     args = CDR(args);
 
     R_print.useSource = asLogical(CAR(args));
     if(R_print.useSource == NA_LOGICAL)
-    	errorcall(call, _("invalid '%s' argument"), "useSource");
+    	error(_("invalid '%s' argument"), "useSource");
     if(R_print.useSource) R_print.useSource = USESOURCE;
     args = CDR(args);
 
     tryS4 = asLogical(CAR(args));
     if(tryS4 == NA_LOGICAL)
-	errorcall(call, _("invalid 'tryS4' internal argument"));
+	error(_("invalid 'tryS4' internal argument"));
 
     if(tryS4 && IS_S4_OBJECT(x) && isMethodsDispatchOn())
 	callShow = TRUE;

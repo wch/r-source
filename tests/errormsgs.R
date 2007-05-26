@@ -1,7 +1,11 @@
-## This file has two purposes:
+### This file has two purposes:
 
 # 1) to provide a check that these errors/warnings get a sensible context.
 # 2) to allow translators to see their work in action.
+
+### Initially it is concentrating on primitives.
+### There are error messages that cannot nowadays be invoked or
+### could only be invoked by calling .Internals directly.
 
 options(error=expression())
 
@@ -19,6 +23,8 @@ atan(2,3)
 round(pi, integer(0))
 log(pi, integer(0))
 log(pi, 10, 1)
+1:3+1:4
+1e9L*1e9L
 
 ## array.c
 matrix(1:6,2,3, byrow="foo")
@@ -61,6 +67,8 @@ unlist(y ~ x)
 c(pi, recursive=TRUE, recursive=FALSE)
 c(list(), use.names=FALSE, use.names=TRUE)
 cbind(expression(pi), pi)
+cbind(1:3, 1:4)
+rbind(1:3, 1:4)
 cbind(matrix(1:6,2,3), matrix(1:6,3,2))
 rbind(matrix(1:6,2,3), matrix(1:6,3,2))
 
@@ -78,6 +86,14 @@ x <- pi
 length(x) <- 1:3
 length(x) <- NA
 switch(1:3)
+delayedAssign(pi, "foo")
+on.exit(ls(), add=NA_real_)
+on.exit(ls(), add=NA)
+on.exit(1,2,3)
+x <- new.env()
+parent.env(x) <- emptyenv()
+parent.env(x) <- pi
+parent.env(pi) <- pi
 
 ## character.c
 nchar(letters, type="")
@@ -133,6 +149,16 @@ as.raw(1777)
 as.integer(baseenv())
 as.integer(pi+1i)
 
+## complex.c
+gamma(1+1i)
+complex(-1)
+polyroot(1:50)
+polyroot(c(1,2,NA))
+
+## cum.c
+cummin(1+1i)
+cummax(1+1i)
+
 ## debug.c
 debug(is.na)
 undebug(ls)
@@ -146,6 +172,58 @@ retracemem(ls)
 retracemem(pi, 1, 2)
 retracemem(pi, pi)
 
+## envir.c
+as.environment(NULL)
+as.environment(y ~ x)
+as.environment("foo")
+assign(pi, pi)
+assign("pi", pi)
+assign("pi", pi, envir=list())
+assign("pi", pi, inherits=NA_real_)
+remove("x", envir=list())
+remove("x", inherits=NA_real_)
+remove("xxx")
+get(pi)
+get("")
+get("pi", envir=list())
+get("pi", inherits=NA_real_)
+get("pi", mode=pi)
+get("pi", mode="foo")
+get("xxx", mode="any")
+mget(pi)
+mget(letters, envir=list())
+mget(letters, baseenv(), inherits=NA)
+mget("pi", baseenv(), mode=pi)
+mget("pi", baseenv(), mode="foo")
+missing(3)
+attach(list(), pos="foo")
+attach(list(), name=pi)
+attach(list(pi))
+attach(pi)
+detach("package:base")
+detach(pi)
+ls(envir = y ~ x)
+pos.to.env(integer(0))
+pos.to.env(0)
+as.list.environment(pi)
+
+## eval.c
+if(rep(TRUE, 10)) "foo"
+f <- function() return(1,2,3)
+x <- f()
+f <- function() return(1,,3)
+x <- f()
+
+## main.c
+q(pi)
+q("foo")
+
+## names.c
+.Primitive(pi)
+.Primitive("foo")
+.Internal(pi)
+.Internal(pairlist(list))
+
 ## objects.c
 UseMethod()
 f <- function(x) UseMethod(); f(pi)
@@ -158,6 +236,40 @@ unclass(baseenv())
 inherits(pi, pi)
 inherits(pi, "factor", pi)
 standardGeneric(pi)
+
+## random.c
+runif(-1, 0, 1)
+sample(10, replace=logical(0))
+sample(10, replace=NA)
+sample(1:10, -1)
+sample(1:10, 20, replace=FALSE)
+sample(1:10, 3, prob=rep(0.2,5))
+rmultinom(-1, 1, rep(0.2, 5))
+rmultinom(1, -1, rep(0.2, 5))
+
+## seq.c
+factor(1:3) : factor(1:4)
+1:1e20
+x <- 2:3
+x:1
+1:x
+1:NA
+rep.int(pi, -1)
+rep.int(c(pi,pi), c(-1,-2))
+rep.int(y ~ x, 2)
+rep.int(2, y ~ x)
+rep.int(1:3, 1:2)
+rep(pi, length.out = -1)
+rep(pi, each = -1)
+rep(pi, times=NA)
+seq.int(1, length.out=-3)
+seq.int(1, length.out=NA)
+seq.int(Inf, 1, 2)
+seq.int(1, Inf, 2)
+seq.int(1, 2, NA)
+seq.int(1.2, 1, by=1)
+seq.int(1, 2, 3, 4, 5)
+seq_len(-1)
 
 ## util.c
 # arity checks
