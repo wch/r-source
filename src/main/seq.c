@@ -508,9 +508,9 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if(n > (double) INT_MAX)
 		errorcall(call, _("'by' argument is much too small"));
-	    nn = (int)(n + FLT_EPSILON);
-	    if(nn < 0)
+	    if(n < -FLT_EPSILON)
 		errorcall(call, _("wrong sign in 'by' argument"));
+	    nn = (int)(n + FLT_EPSILON);
 	    ans = allocVector(REALSXP, nn+1);
 	    for(i = 0; i <= nn; i++)
 		REAL(ans)[i] = rfrom + i * rby;

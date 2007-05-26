@@ -150,6 +150,9 @@ BUG FIXES
     o	formatC() now limits 'digits' to 50 to avoid problems in
 	C-level sprintf in some OSes.
 
+    o	seq.int(x, y, by=z) gave 'x' (and not an error) if
+	0 > (y-x)/z > -1.
+
 
 
 
