@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-25 r41713)
+R version 2.6.0 Under development (unstable) (2007-05-26 r41715)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -15,10 +15,14 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> ## This file has two purposes:
+> ### This file has two purposes:
 > 
 > # 1) to provide a check that these errors/warnings get a sensible context.
 > # 2) to allow translators to see their work in action.
+> 
+> ### Initially it is concentrating on primitives.
+> ### There are error messages that cannot nowadays be invoked or
+> ### could only be invoked by calling .Internals directly.
 > 
 > options(error=expression())
 > 
@@ -49,6 +53,15 @@ Error in round(x, digits) : invalid second argument of length 0
 Error in log(x, base) : invalid argument 'base' of length 0
 > log(pi, 10, 1)
 Error in log(pi, 10, 1) : unused argument(s) (1)
+> 1:3+1:4
+[1] 2 4 6 5
+Warning message:
+In 1:3 + 1:4 :
+  longer object length is not a multiple of shorter object length
+> 1e9L*1e9L
+[1] NA
+Warning message:
+In 1000000000L * 1000000000L : NAs produced by integer overflow
 > 
 > ## array.c
 > matrix(1:6,2,3, byrow="foo")
@@ -136,6 +149,22 @@ Error in c(list(), use.names = FALSE, use.names = TRUE) :
 > cbind(expression(pi), pi)
 Error in cbind(expression(pi), pi) : 
   cannot create a matrix from these types
+> cbind(1:3, 1:4)
+     [,1] [,2]
+[1,]    1    1
+[2,]    2    2
+[3,]    3    3
+[4,]    1    4
+Warning message:
+In cbind(1:3, 1:4) :
+  number of rows of result is not a multiple of vector length (arg 1)
+> rbind(1:3, 1:4)
+     [,1] [,2] [,3] [,4]
+[1,]    1    2    3    1
+[2,]    1    2    3    4
+Warning message:
+In rbind(1:3, 1:4) :
+  number of columns of result is not a multiple of vector length (arg 1)
 > cbind(matrix(1:6,2,3), matrix(1:6,3,2))
 Error in cbind(matrix(1:6, 2, 3), matrix(1:6, 3, 2)) : 
   number of rows of matrices must match (see arg 2)
@@ -172,6 +201,22 @@ Error in length(x) <- 1:3 : invalid value
 Error in length(x) <- NA : vector size cannot be NA
 > switch(1:3)
 Error in switch(1:3) : switch: EXPR must return a length 1 vector
+> delayedAssign(pi, "foo")
+Error in delayedAssign(pi, "foo") : invalid first argument
+> on.exit(ls(), add=NA_real_)
+Error in on.exit(ls(), add = NA_real_) : invalid 'add' argument
+> on.exit(ls(), add=NA)
+Error in on.exit(ls(), add = NA) : invalid 'add' argument
+> on.exit(1,2,3)
+Error in on.exit(1, 2, 3) : invalid number of arguments
+> x <- new.env()
+> parent.env(x) <- emptyenv()
+> parent.env(x) <- pi
+Error in `parent.env<-`(`*tmp*`, value = 3.14159265358979) : 
+  'parent' is not an environment
+> parent.env(pi) <- pi
+Error in `parent.env<-`(`*tmp*`, value = 3.14159265358979) : 
+  argument is not an environment
 > 
 > ## character.c
 > nchar(letters, type="")
@@ -306,6 +351,22 @@ Error in as.integer(baseenv()) : cannot coerce to vector
 Warning message:
 imaginary parts discarded in coercion 
 > 
+> ## complex.c
+> gamma(1+1i)
+Error in gamma(1 + (0+1i)) : unimplemented complex function
+> complex(-1)
+Error in complex(-1) : invalid length
+> polyroot(1:50)
+Error in polyroot(1:50) : polynomial degree too high (49 max)
+> polyroot(c(1,2,NA))
+Error in polyroot(c(1, 2, NA)) : invalid polynomial coefficient
+> 
+> ## cum.c
+> cummin(1+1i)
+Error in cummin(1 + (0+1i)) : min/max not defined for complex numbers
+> cummax(1+1i)
+Error in cummax(1 + (0+1i)) : min/max not defined for complex numbers
+> 
 > ## debug.c
 > debug(is.na)
 Error in debug(is.na) : argument must be a closure
@@ -331,6 +392,114 @@ Error in retracemem(ls) : argument must not be a function
 Error in retracemem(pi, 1, 2) : invalid number of arguments
 > retracemem(pi, pi)
 Error in retracemem(pi, pi) : invalid 'origin' argument
+> 
+> ## envir.c
+> as.environment(NULL)
+Error in as.environment(NULL) : using 'as.environment(NULL)' is defunct
+> as.environment(y ~ x)
+Error in as.environment(y ~ x) : invalid object for 'as.environment'
+> as.environment("foo")
+Error in as.environment("foo") : no item called "foo" on the search list
+> assign(pi, pi)
+Error in assign(pi, pi) : invalid first argument
+> assign("pi", pi)
+> assign("pi", pi, envir=list())
+Error in assign("pi", pi, envir = list()) : invalid 'envir' argument
+> assign("pi", pi, inherits=NA_real_)
+Error in assign("pi", pi, inherits = NA_real_) : 
+  invalid 'inherits' argument
+> remove("x", envir=list())
+Error in remove("x", envir = list()) : invalid 'envir' argument
+> remove("x", inherits=NA_real_)
+Error in remove("x", inherits = NA_real_) : invalid 'inherits' argument
+> remove("xxx")
+Warning message:
+In remove("xxx") : variable "xxx" was not found
+> get(pi)
+Error in get(pi) : invalid first argument
+> get("")
+Error in get("") : invalid first argument
+> get("pi", envir=list())
+Error in get("pi", envir = list()) : invalid 'envir' argument
+> get("pi", inherits=NA_real_)
+Error in get("pi", inherits = NA_real_) : invalid 'inherits' argument
+> get("pi", mode=pi)
+Error in get("pi", mode = pi) : invalid 'mode' argument
+> get("pi", mode="foo")
+Error in get("pi", mode = "foo") : 
+  variable "pi" of mode "foo" was not found
+> get("xxx", mode="any")
+Error in get("xxx", mode = "any") : variable "xxx" was not found
+> mget(pi)
+Error in mget(pi) : argument "envir" is missing, with no default
+> mget(letters, envir=list())
+Error in mget(letters, envir = list()) : 
+  second argument must be an environment
+> mget(letters, baseenv(), inherits=NA)
+Error in mget(letters, baseenv(), inherits = NA) : 
+  invalid 'inherits' argument
+> mget("pi", baseenv(), mode=pi)
+Error in mget("pi", baseenv(), mode = pi) : invalid 'mode' argument
+> mget("pi", baseenv(), mode="foo")
+Error in mget("pi", baseenv(), mode = "foo") : invalid 'mode' argument
+> missing(3)
+Error in missing(3) : invalid use of 'missing'
+> attach(list(), pos="foo")
+Error in attach(list(), pos = "foo") : 'pos' must be an integer
+In addition: Warning message:
+In attach(list(), pos = "foo") : NAs introduced by coercion
+> attach(list(), name=pi)
+Error in attach(list(), name = pi) : invalid value for 'name'
+> attach(list(pi))
+Error in attach(list(pi)) : all elements of a list must be named
+> attach(pi)
+Error in attach(pi) : 
+  'attach' only works for lists, data frames and environments
+> detach("package:base")
+Error in detach("package:base") : detaching "package:base" is not allowed
+> detach(pi)
+Error in detach(pi) : invalid name
+> ls(envir = y ~ x)
+Error in ls(envir = y ~ x) : invalid 'envir' argument
+> pos.to.env(integer(0))
+Error in pos.to.env(integer(0)) : invalid 'pos' argument
+> pos.to.env(0)
+Error in pos.to.env(0) : invalid argument
+> as.list.environment(pi)
+Error in as.list.environment(pi) : argument must be an environment
+> 
+> ## eval.c
+> if(rep(TRUE, 10)) "foo"
+[1] "foo"
+Warning message:
+In if (rep(TRUE, 10)) "foo" :
+  the condition has length > 1 and only the first element will be used
+> f <- function() return(1,2,3)
+> x <- f()
+Warning message:
+In return(1, 2, 3) : multi-argument returns are deprecated
+> f <- function() return(1,,3)
+> x <- f()
+Error in return(1, , 3) : empty expression in return value
+In addition: Warning message:
+In return(1, , 3) : multi-argument returns are deprecated
+> 
+> ## main.c
+> q(pi)
+Error in quit(save, status, runLast) : 
+  one of "yes", "no", "ask" or "default" expected.
+> q("foo")
+Error in quit(save, status, runLast) : unrecognized value of 'save'
+> 
+> ## names.c
+> .Primitive(pi)
+Error in .Primitive(pi) : string argument required
+> .Primitive("foo")
+Error in .Primitive("foo") : no such primitive function
+> .Internal(pi)
+Error in .Internal(pi) : invalid .Internal() argument
+> .Internal(pairlist(list))
+Error in .Internal(pairlist(list)) : no internal function "pairlist"
 > 
 > ## objects.c
 > UseMethod()
@@ -359,6 +528,77 @@ Error in inherits(pi, "factor", pi) :
 > standardGeneric(pi)
 Error in standardGeneric(pi) : 
   argument to standardGeneric must be a non-empty character string
+> 
+> ## random.c
+> runif(-1, 0, 1)
+Error in runif(-1, 0, 1) : invalid arguments
+> sample(10, replace=logical(0))
+Error in sample(10, replace = logical(0)) : invalid 'replace' argument
+> sample(10, replace=NA)
+Error in sample(10, replace = NA) : invalid 'replace' argument
+> sample(1:10, -1)
+Error in sample(1:10, -1) : invalid 'size' argument
+> sample(1:10, 20, replace=FALSE)
+Error in sample(1:10, 20, replace = FALSE) : 
+  cannot take a sample larger than the population when 'replace = FALSE'
+> sample(1:10, 3, prob=rep(0.2,5))
+Error in sample(1:10, 3, prob = rep(0.2, 5)) : 
+  incorrect number of probabilities
+> rmultinom(-1, 1, rep(0.2, 5))
+Error in rmultinom(-1, 1, rep(0.2, 5)) : invalid first argument 'n'
+> rmultinom(1, -1, rep(0.2, 5))
+Error in rmultinom(1, -1, rep(0.2, 5)) : invalid second argument 'size'
+> 
+> ## seq.c
+> factor(1:3) : factor(1:4)
+Error in factor(1:3):factor(1:4) : unequal factor lengths
+> 1:1e20
+Error in 1:1e+20 : result would be too long a vector
+> x <- 2:3
+> x:1
+[1] 2 1
+Warning message:
+In x:1 : numerical expression has 2 elements: only the first used
+> 1:x
+[1] 1 2
+Warning message:
+In 1:x : numerical expression has 2 elements: only the first used
+> 1:NA
+Error in 1:NA : NA/NaN argument
+> rep.int(pi, -1)
+Error in rep.int(pi, -1) : invalid 'times' value
+> rep.int(c(pi,pi), c(-1,-2))
+Error in rep.int(c(pi, pi), c(-1, -2)) : invalid 'times' value
+> rep.int(y ~ x, 2)
+Error in rep.int(y ~ x, 2) : attempt to replicate non-vector
+> rep.int(2, y ~ x)
+Error in rep.int(2, y ~ x) : incorrect type for second argument
+> rep.int(1:3, 1:2)
+Error in rep.int(1:3, 1:2) : invalid 'times' value
+> rep(pi, length.out = -1)
+Error in rep(pi, length.out = -1) : invalid 'length.out' argument
+> rep(pi, each = -1)
+Error in rep(pi, each = -1) : invalid 'each' argument
+> rep(pi, times=NA)
+Error in rep(pi, times = NA) : invalid 'times' argument
+> seq.int(1, length.out=-3)
+Error in seq.int(1, length.out = -3) : 
+  'length.out' must be a non-negative number
+> seq.int(1, length.out=NA)
+Error in seq.int(1, length.out = NA) : 
+  'length.out' must be a non-negative number
+> seq.int(Inf, 1, 2)
+Error in seq.int(Inf, 1, 2) : 'from' must be finite
+> seq.int(1, Inf, 2)
+Error in seq.int(1, Inf, 2) : 'to' must be finite
+> seq.int(1, 2, NA)
+Error in seq.int(1, 2, NA) : invalid '(to - from)/by' in 'seq'
+> seq.int(1.2, 1, by=1)
+Error in seq.int(1.2, 1, by = 1) : wrong sign in 'by' argument
+> seq.int(1, 2, 3, 4, 5)
+Error in seq.int(1, 2, 3, 4, 5) : too many arguments
+> seq_len(-1)
+Error in seq_len(-1) : argument must be non-negative
 > 
 > ## util.c
 > # arity checks
