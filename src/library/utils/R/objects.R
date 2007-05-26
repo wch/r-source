@@ -210,7 +210,7 @@ getS3method <-  function(f, class, optional = FALSE)
 getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
-        nm <- attr(envir, "name")
+        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1, 8) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9))
@@ -222,7 +222,7 @@ assignInNamespace <-
     function(x, value, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
-        nm <- attr(envir, "name")
+        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1, 8) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9))
@@ -266,7 +266,7 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
     if (!is.character(subx) || length(subx) != 1)
         stop("'fixInNamespace' requires a name")
     if(missing(ns)) {
-        nm <- attr(envir, "name")
+        nm <- attr(envir, "name", exact = TRUE)
         if(is.null(nm) || substring(nm, 1, 8) != "package:")
             stop("environment specified is not a package")
         ns <- asNamespace(substring(nm, 9))

@@ -4135,7 +4135,7 @@ function(g, env)
     }
 
     ## Second, inherited methods.
-    package <- sub(".*:([^_]*).*", "\\1", attr(env, "name"))
+    package <- sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
     ## (Ugly, but why not?)
     penv <- if(length(package) && nchar(package)) {
         ## Seems that there is no other way to get the name space for a
