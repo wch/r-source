@@ -591,6 +591,17 @@ static SEXP
     RComp_getFileCompSym,
     RComp_retrieveCompsSym;
 
+void set_rl_word_breaks(char *str)
+{
+    static char p1[201], p2[203];
+    strncpy(p1, str, 200); p1[200]= '\0';
+    strncpy(p2, p1, 200); p2[200] = '\0';
+    strcat(p2, "[]");
+    rl_basic_word_break_characters = p2;
+    rl_completer_word_break_characters = p1;
+}
+
+
 /* Tell the GNU Readline library how to complete. */
 
 static int rcompgen_active = -1;
@@ -678,15 +689,6 @@ static void initialize_rlcompletion(void)
        be practically impossible, to begin with) */
 
 
-    /* 
-       These break line into tokens.  Unfortunately, this also breaks
-       file names, so a path with a - in it will not be completed.
-
-       Not sure why the second one is needed.  Should play around more
-       with this at some point.
-    */
-    rl_basic_word_break_characters = " \t\n\\\"'`><=+-*%;,|&{()}[]";
-    rl_completer_word_break_characters = " \t\n\\\"'`><=+-*%;,|&{()}";
     return;
 }
 
@@ -774,6 +776,10 @@ static char *R_completion_generator(const char *text, int state)
 }
 
 /* ============================================================ */
+#else
+void set_rl_word_breaks(char *str)
+{
+}
 #endif /* HAVE_RL_COMPLETION_MATCHES */
 
 #else

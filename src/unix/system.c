@@ -408,7 +408,7 @@ int Rf_initialize_R(int ac, char **av)
 	Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
 
- return(0);
+    return(0);
 }
 
     /*

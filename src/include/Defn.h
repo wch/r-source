@@ -1080,6 +1080,8 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
 
+/* unix/sys-std.c, main/options.c */
+void set_rl_word_breaks(char *str);
 
 /* From localecharset.c */
 extern char * locale2charset(const char *);
