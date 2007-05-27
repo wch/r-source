@@ -1117,17 +1117,23 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     */
     if (match != FULL && strncmp("names", str, n) == 0) {
 	if (strlen("names") == n) {
-	    /* we have a full match on "names" */
+	    /* we have a full match on "names", if there is such an 
+	       attribute */
 	    tag = R_NamesSymbol;
 	    match = FULL;
 	}
-	else if (match == NONE) {
-	    /* no match on other attributes and a partial match on "names" */
+	else if (match == NONE && !exact) {
+	    /* no match on other attributes and a possible 
+	       partial match on "names" */
 	    tag = R_NamesSymbol;
-	    match = PARTIAL;
+	    t = getAttrib(s, tag);
+	    if(t != R_NilValue && R_warn_partial_match_attr)
+		warningcall(call, _("partial match of '%s' to '%s'"), str,
+			    CHAR(PRINTNAME(tag)));
+	    return t;
 	}
 	else if (match == PARTIAL && strcmp(CHAR(PRINTNAME(tag)), "names")) {
-	    /* There is a partial match on "names" and on another
+	    /* There is a possible partial match on "names" and on another
 	       attribute. If there really is a "names" attribute, then the
 	       query is ambiguous and we return R_NilValue.  If there is no
 	       "names" attribute, then the partially matched one, which is
