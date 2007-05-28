@@ -97,8 +97,8 @@ NEW FEATURES
 
     o	levels() is now generic (levels<- has been for a long time).
 
-    o	pmatch(x, y, duplicates.ok = TRUE) now uses hashing and so is much
-	faster for large x and y when most matches are exact.
+    o	pmatch(x, y, duplicates.ok = TRUE) now uses hashing and so is
+	much faster for large x and y when most matches are exact.
 
     o	The S4 generic for '!' has been changed to have signature (x)
 	(was (e1)) to match the documentation and the S3 generic.
@@ -208,8 +208,8 @@ NEW FEATURES
     o   The [[ subsetting operator now has an argument 'exact' that
         allows programmers to disable partial matching.  The default
         value is exact=NA which causes a warning to be issued when
-        partial matching occurs.  When exact=TRUE, no partial matching
-        will be performed.  When exact=FALSE, partial matching can
+        partial matching occurs.  When exact = TRUE, no partial matching
+        will be performed.  When exact = FALSE, partial matching can
         occur and no warning will be issued.  This patch was written
         by Seth Falcon.
 
@@ -219,13 +219,17 @@ NEW FEATURES
 	problem.
 
     o   sessionInfo() now provides details about package namespaces
-        that are loaded, but not attached.
+        that are loaded but not attached.
 
     o	attr() gains an 'exact = TRUE' argument to disable partial
 	matching.
 
    o	New option 'showCalls' to give a concise traceback on warnings
 	and errors.  [Currently experimental, especially the format.]
+
+    o	New primitive nzchar() as a faster alternative to
+	nchar(x) > 0 (and to avoid having to convert to wide chars in
+	a MBCS locale).
 
 
 DEPRECATED & DEFUNCT

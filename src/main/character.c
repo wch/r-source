@@ -105,6 +105,24 @@ static SEXP mkChar2(const char *name, SEXP ref)
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
 
+SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, ans;
+    int i, len;
+    
+    checkArity(op, args);
+    PROTECT(x = coerceVector(CAR(args), STRSXP));
+    if (!isString(x))
+	error(_("nchar() requires a character vector"));
+    len = LENGTH(x);
+    PROTECT(ans = allocVector(LGLSXP, len));
+    for(i = 0; i < len; i++)
+	LOGICAL(ans)[i] = length(STRING_ELT(x, i)) > 0;
+    UNPROTECT(2);
+    return ans;
+}
+
+
 SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP d, s, x, stype;

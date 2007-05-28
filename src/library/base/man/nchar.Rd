@@ -1,13 +1,19 @@
 \name{nchar}
+\alias{nchar}
+\alias{nzchar}
 \title{Count the Number of Characters (Bytes)}
 \usage{
 nchar(x, type = "bytes")
+
+nzchar(x)
 }
-\alias{nchar}
 \description{
   \code{nchar} takes a character vector as an argument and
   returns a vector whose elements contain the sizes of
   the corresponding elements of \code{x}.
+
+  \code{nzchar} is a fast way to find out if elements of a character
+  vector are non-empty strings.
 }
 \arguments{
   \item{x}{character vector, or a vector to be coerced to a character
@@ -40,7 +46,7 @@ nchar(x, type = "bytes")
   passing them through \code{\link{deparse}} first will be required.
 }
 \value{
-  An integer vector giving the sizes of each element,
+  For \code{nchar}, an integer vector giving the sizes of each element,
   currently always \code{2} for missing values (for \code{NA}).
 
   If an element is invalid in a multi-byte character set such as UTF-8,
@@ -49,6 +55,9 @@ nchar(x, type = "bytes")
   \code{!is.na(nchar(x, "chars"))} is a test of validity.
 
   Names, dims and dimnames are copied from the input.
+
+  For \code{nzchar}, a logical vector of the same length as \code{x},
+  true if and one if the element has non-zero length.
 }
 \note{
   This does \strong{not} by default give the number of characters that

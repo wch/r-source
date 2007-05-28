@@ -875,6 +875,7 @@
  do_nlm
  do_normalizepath
  do_nsl
+ do_nzchar
  do_objectsize
  do_onexit
  do_open
