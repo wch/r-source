@@ -420,11 +420,23 @@ void PrintWarnings(void)
 					     0, DEFAULTDEPARSE), 0));
 #ifdef SUPPORT_MBCS
 	    if (mbcslocale) {
-		if (6+mbstowcs(NULL, dcall, 0) + mbstowcs(NULL, msg, 0)
+		int msgline1;
+		char *p = strchr(msg, '\n');
+		if (p) {
+		    *p = '\0';
+		    msgline1 = mbstowcs(NULL, msg, 0);
+		    *p = '\n';
+		} else msgline1 = mbstowcs(NULL, msg, 0);
+		if (6+mbstowcs(NULL, dcall, 0) + msgline1
 		    > LONGWARN) sep = "\n  ";
 	    } else
 #endif
-		if (6+strlen(dcall) + strlen(msg) > LONGWARN) sep = "\n  ";
+	    {
+		int msgline1 = strlen(msg);
+		char *p = strchr(msg, '\n');
+		if (p) msgline1 = (int)(p - msg);
+		if (6+strlen(dcall) + msgline1 > LONGWARN) sep = "\n  ";
+	    }
 	    REprintf("In %s :%s%s\n", dcall, sep, msg);
 	}
     } else if( R_CollectWarnings <= 10 ) {
@@ -439,11 +451,23 @@ void PrintWarnings(void)
 						 0, DEFAULTDEPARSE), 0));
 #ifdef SUPPORT_MBCS
 		if (mbcslocale) {
-		    if (10+mbstowcs(NULL, dcall, 0) + mbstowcs(NULL, msg, 0)
+		    int msgline1;
+		    char *p = strchr(msg, '\n');
+		    if (p) {
+			*p = '\0';
+			msgline1 = mbstowcs(NULL, msg, 0);
+			*p = '\n';
+		    } else msgline1 = mbstowcs(NULL, msg, 0);
+		    if (10+mbstowcs(NULL, dcall, 0) + msgline1
 			> LONGWARN) sep = "\n  ";
 		} else
 #endif
-		if (10+strlen(dcall) + strlen(msg) > LONGWARN) sep = "\n  ";
+		{
+		    int msgline1 = strlen(msg);
+		    char *p = strchr(msg, '\n');
+		    if (p) msgline1 = (int)(p - msg);
+		    if (10+strlen(dcall) + msgline1 > LONGWARN) sep = "\n  ";
+		}
 		REprintf("%d: In %s :%s%s\n", i+1, dcall, sep, msg);
 	    }
 	}
