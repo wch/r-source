@@ -246,7 +246,7 @@ getAllMethods <-
       }
       else
           stop(gettextf("invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a 'genericFunction object' or a primitive function, got an object of class \"%s\"", f, class(fdef)), domain = NA)
-      metaname <- mlistMetaName(fdef@generic, where)
+      metaname <- mlistMetaName(fdef@generic, fdef@package) # was 'where'
       primCase <- is.primitive(deflt)
       ## NOTE: getGroup & getGeneric have to be called with the default
       ## topenv() here.  This may not work for installs w/o saved image TODO: check
@@ -620,11 +620,12 @@ getGroup <-
 getMethodsMetaData <-
   ## get the methods meta-data for function f on database where
   function(f, where = topenv(parent.frame())) {
-        mname <- mlistMetaName(f, where)
-        if(exists(mname, where = where, inherits = missing(where)))
-            get(mname, where)
-        else
-            NULL
+      fdef <- getGeneric(f, where = where)
+      mname <- mlistMetaName(fdef@generic, fdef@package)
+      ##was mname <- mlistMetaName(f, where)
+      if(exists(mname, where = where, inherits = missing(where)))
+          get(mname, where)
+      ## else NULL
   }
 
 

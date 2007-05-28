@@ -32,27 +32,6 @@ function (clName, filename = NULL, type = "class",
 	genl
     }
 
-    sigsMatrix <- function (g, where)
-    ## given a generic g, obtain matrix
-    ## with one row per signature
-    ## it assumes at present that signatures for a given generic
-    ## are all of the same length.
-    ##
-    ## it would be simple to jettison the matrix construct
-    ## replace it by a list
-    {
-	tmp <- listFromMlist(getMethods(g, where))
-	if (length(tmp[[1]]) == 0)
-	    NULL
-	else if ((lt <- length(tmp[[1]])) == 1)
-	    matrix(unlist(tmp[[1]]), nr = 1)
-	else {
-	    o <- matrix(" ", nc = length(tmp[[1]][[1]]), nr = length(tmp[[1]]))
-	    for (i in 1:lt) o[i, ] <- unlist(tmp[[1]][[i]])
-	    o
-	}
-    }
-
     sigsList <- function (g, where)
     ## given a generic g, obtain list with one element per signature
     {
@@ -93,7 +72,8 @@ function (clName, filename = NULL, type = "class",
     else if(length(whereClass) > 1) {
 	if(identical(where, topenv(parent.frame()))) {
 	    whereClass <- whereClass[[1]]
-	    warning(gettextf("multiple definitions of \"%s\" found; using the one on %s", clName, whereClass), domain = NA)
+	    warning(gettextf("multiple definitions of \"%s\" found; using the one on %s",
+                             clName, whereClass), domain = NA)
 	}
 	else {
 	    if(exists(classMetaName(clName), where, inherits = FALSE))
@@ -128,7 +108,8 @@ function (clName, filename = NULL, type = "class",
 	## but for new() the first argument is the class name
 	argNames[[1]] <- clNameQ
 	.usage <- c(paste0(.usage,"{"),
-		    paste0("Objects can be created by calls of the form \\code{", .makeCallString(initMethod, "new", argNames), "}."),
+		    paste0("Objects can be created by calls of the form \\code{",
+                           .makeCallString(initMethod, "new", argNames), "}."),
 		    "	 ~~ describe objects here ~~ ", "}")
     }
     if (nslots > 0) {
@@ -164,17 +145,17 @@ function (clName, filename = NULL, type = "class",
     if (nmeths > 0) {
 	.meths.body <- "  \\describe{"
 	for (i in 1:nmeths) {
-	    .sigmat <- sigsList(methnms[i], where)
-	    for (j in seq_along(.sigmat)) {
-		if (!all(is.na(match(.sigmat[[j]],clName)))) {
+	    .sig <- sigsList(methnms[i], where = whereClass)
+	    for (j in seq_along(.sig)) {
+		if (!all(is.na(match(.sig[[j]],clName)))) {
 		    methn.i <- escape(methnms[i])
 		    .meths.body <-
 			c(.meths.body,
 			  paste0("    \\item{",
 				 methn.i, "}{\\code{signature",
-				 pastePar(.sigmat[[j]]), "}: ... }"))
+				 pastePar(.sig[[j]]), "}: ... }"))
 
-		    cur <- paste(.sigmat[[j]], collapse = ",")
+		    cur <- paste(.sig[[j]], collapse = ",")
 		    .methAliases <- paste0(.methAliases, "\\alias{",
 					   methn.i, ",", cur, "-method}\n")
 		}

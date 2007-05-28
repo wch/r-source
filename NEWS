@@ -159,6 +159,9 @@ BUG FIXES
     o	seq.int(x, y, by=z) gave 'x' (and not an error) if
 	0 > (y-x)/z > -1.
 
+    o	promptClass() now lists methods, including those for generics in
+	other attached packages.
+
 
 
 

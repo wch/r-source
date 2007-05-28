@@ -528,7 +528,7 @@
     qs <- function(what) paste('"', what, '"', collapse = ", ", sep = "")
     doFun <- function(func, pkg) cf("Function: ", func, " (package ", pkg, ")\n")
     env <- environment(generic)
-    signature = generic@signature
+    signature <- generic@signature
     table <- get(if(inherited) ".AllMTable" else ".MTable", envir = env)
     f <- generic@generic
     p <- packageSlot(f)
@@ -802,6 +802,17 @@ outerLabels <- function(labels, new) {
     args
 }
 
+
+## the most simple part of listFromMethods() below; not yet exported
+tableNames <- function(generic, where, table) {
+    fdef <- getGeneric(generic)
+    if(missing(table))
+	table <-
+	    if(missing(where)) .getMethodsTable(fdef)
+	    else get(.TableMetaName(fdef@generic, fdef@package),
+                     envir = as.environment(where), inherits = FALSE)
+    objects(table, all.names=TRUE)
+}
 
 listFromMethods <- function(generic, where, table) {
     fdef <- getGeneric(generic)
