@@ -72,6 +72,9 @@ BUG FIXES
 	packages that use 'methods' and need to load themselves to
 	process their data.
 
+    o	winMenuDel() was not automatically deleting sub-menus when a
+	user menu was deleted.  (PR#9702)
+
 
 
 		CHANGES IN R VERSION 2.5.0
