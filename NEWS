@@ -231,6 +231,10 @@ NEW FEATURES
 	nchar(x) > 0 (and to avoid having to convert to wide chars in
 	a MBCS locale).
 
+    o	relink() utility, as S3 generic with several methods,
+	providing an inversion for unlist(); thanks to a code proposal from
+	Andrew Clausen.
+
 
 DEPRECATED & DEFUNCT
 
