@@ -1060,7 +1060,7 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
 
 metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     pattern <- methodsPackageMetaName(prefix, "")
-    n <- nzchar(pattern)
+    n <- nchar(pattern, "c")
     matched <- substr(strings, 1, n) == pattern
     value <- substring(strings[matched], n+1)
     pkg <- sub("^[^:]*", "", value) # will be "" if no : in the name
