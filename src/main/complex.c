@@ -838,8 +838,8 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     default:
-	/* examples are not primitive */
-	error(_("unimplemented complex function"));
+	/* such as sign, gamma */
+	errorcall(call, _("unimplemented complex function"));
     }
     if (naflag)
 	warningcall(call, "NAs produced in function \"%s\"", PRIMNAME(op));
