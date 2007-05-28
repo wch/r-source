@@ -830,15 +830,14 @@ showMethods <-
     if(length(f) == 0)
 	cat(file = con, "No applicable functions\n")
     else if(length(f) > 1) {
-            for(ff in f) { ## recall for each
-            fdef <- getGeneric(ff, where = where)
-            if(is.null(fdef))
-                next
-            Recall(ff, where=where, classes=classes,
-                   includeDefs=includeDefs, inherited=inherited,
-                   showEmpty=showEmpty, printTo=printTo)
-        }
-
+	for(ff in f) { ## recall for each
+	    fdef <- getGeneric(ff, where = where)
+	    if(is.null(fdef))
+		next
+	    Recall(ff, where=where, classes=classes,
+		   includeDefs=includeDefs, inherited=inherited,
+		   showEmpty=showEmpty, printTo=printTo)
+	}
     }
     else { ## f of length 1 --- the "workhorse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
