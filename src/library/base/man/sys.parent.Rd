@@ -52,7 +52,7 @@ parent.frame(n = 1)
   the frame number of the current evaluation, nor is it the environment
   within which the function was defined.  \code{sys.parent} returns the
   number of the parent frame if \code{n} is 1 (the default), the
-  grandparent if \code{n} is 2, and so on.
+  grandparent if \code{n} is 2, and so on.  See also the Note.
 
   \code{sys.nframe} returns an integer, the number of the current frame
   as described in the first paragraph.
@@ -78,6 +78,13 @@ parent.frame(n = 1)
 
   \code{parent.frame(n)} is a convenient shorthand for
   \code{sys.frame(sys.parent(n))} (implemented slightly more efficiently).
+}
+\note{
+  Strictly, \code{sys.parent} and \code{parent.frame} refer to the
+  \emph{context} of the parent interpreted function.  So internal
+  functions (which may or may not set contexts and so may or may not
+  appear on the call stack) are not counted, and S3 methods can also do
+  suprising things.
 }
 \value{
   \code{sys.call} returns a call, \code{sys.function} a function
