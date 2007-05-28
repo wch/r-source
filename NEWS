@@ -224,7 +224,7 @@ NEW FEATURES
     o	attr() gains an 'exact = TRUE' argument to disable partial
 	matching.
 
-   o	New option 'showCalls' to give a concise traceback on warnings
+    o	New option 'showCalls' to give a concise traceback on warnings
 	and errors.  [Currently experimental, especially the format.]
 
     o	New primitive nzchar() as a faster alternative to
@@ -463,6 +463,9 @@ BUG FIXES
 
     o	seq.int(x, y, by=z) gave 'x' (and not an error) if
 	0 > (y-x)/z > -1.
+
+    o	promptClass() now lists methods, including those for generics in
+	other attached packages.
 
 
 

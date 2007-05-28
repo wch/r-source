@@ -259,6 +259,7 @@ x_c2 <- new("c2", pi)
 as.numeric(x_c2)
 showMethods(as.numeric)
 
+promptClass("c1", stdout())# want all methods
 
 ## '!' changed signature from 'e1' to 'x' in 2.6.0
 setClass("foo", "logical")

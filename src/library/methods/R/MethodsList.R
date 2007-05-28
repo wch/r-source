@@ -680,7 +680,7 @@ listFromMlist <-
   ## signature (a named list of classes) to be prepended to the signatures in this object.
   ##
   ## A utility function used to iterate over all the individual methods in the object.
-  function(mlist, prefix = list())
+  function(mlist, prefix = list(), sigs. = TRUE, methods. = TRUE)
 {
     methodSlot <- slot(mlist, "methods")
     mnames <- names(methodSlot)
@@ -692,13 +692,13 @@ listFromMlist <-
         thisClass <- el(mnames, i)
         elNamed(prefix, argName) <- thisClass
         if(is.function(thisMethod)) {
-            sigs <- c(sigs, list(prefix))
-            methods <- c(methods, list(thisMethod))
+            if(sigs.) sigs <- c(sigs, list(prefix))
+            if(methods.) methods <- c(methods, list(thisMethod))
         }
         else {
             more <- Recall(thisMethod, prefix)
-            sigs <- c(sigs, el(more, 1))
-            methods <- c(methods, el(more, 2))
+            if(sigs.) sigs <- c(sigs, el(more, 1))
+            if(methods.) methods <- c(methods, el(more, 2))
         }
     }
     list(sigs, methods)

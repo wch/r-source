@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
+R version 2.6.0 Under development (unstable) (2007-05-27 r41721)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -284,10 +284,10 @@ Slot "y":
 > assertError(b & b)
 Warning message:
 In .findInheritedMethods(classes, fdef, mtable) :
-	Ambiguous method selection for "&", target "brob#brob" (the first of the signatures shown will be used)
+  Ambiguous method selection for "&", target "brob#brob" (the first of the signatures shown will be used)
     brob#ANY
     ANY#brob
- 
+
 > assertError(b | 1)
 > assertError(TRUE & b)
 > 
@@ -436,6 +436,59 @@ x="c1"
 x="c2"
 
 > 
+> promptClass("c1", stdout())# want all methods
+\name{c1-class}
+\docType{class}
+\alias{c1-class}
+\alias{as.character,c1-method}
+\alias{as.complex,c1-method}
+\alias{as.integer,c1-method}
+\alias{as.logical,c1-method}
+\alias{as.numeric,c1-method}
+\alias{as.raw,c1-method}
+
+\title{Class "c1" ~~~ }
+\description{	 ~~ A concise (1-5 lines) description of what the class is.  ~~}
+\section{Objects from the Class}{
+Objects can be created by calls of the form \code{new("c1", ...)}.
+	 ~~ describe objects here ~~ 
+}
+\section{Slots}{
+	 \describe{
+    \item{\code{.Data}:}{Object of class \code{"numeric"} ~~ }
+  }
+}
+\section{Extends}{
+Class \code{"\linkS4class{numeric}"}, from data part.
+Class \code{"\linkS4class{vector}"}, by class "numeric", distance 2.
+}
+\section{Methods}{
+  \describe{
+    \item{as.character}{\code{signature(x = "c1")}: ... }
+    \item{as.complex}{\code{signature(x = "c1")}: ... }
+    \item{as.integer}{\code{signature(x = "c1")}: ... }
+    \item{as.logical}{\code{signature(x = "c1")}: ... }
+    \item{as.numeric}{\code{signature(x = "c1")}: ... }
+    \item{as.raw}{\code{signature(x = "c1")}: ... }
+	 }
+}
+\references{ ~put references to the literature/web site here ~ }
+\author{ ~~who you are~~ }
+\note{ ~~further notes~~ }
+
+ ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+	~~objects to See Also as \code{\link{~~fun~~}}, ~~~
+	or \code{\linkS4class{CLASSNAME}} for links to other classes
+}
+\examples{
+showClass("c1")
+}
+\keyword{classes}
+A shell of class documentation has been written to the 
+connection 'stdout'.
+ 
 > 
 > ## '!' changed signature from 'e1' to 'x' in 2.6.0
 > setClass("foo", "logical")

@@ -40,7 +40,7 @@ showMlist(mlist, includeDefs = TRUE, inherited = TRUE,
 
 \method{print}{MethodsList}(x, ...)
 
-listFromMlist(mlist, prefix = list())
+listFromMlist(mlist, prefix = list(), sigs. = TRUE, methods. = TRUE)
 
 linearizeMlist(mlist, inherited = TRUE)
 
@@ -109,10 +109,12 @@ loadMethod(method, fname, envir)
 
     \item{\code{listFromMlist}:}{
       Undo the recursive nature of the methods list, making a list of
-      function definitions, with the names of the list being the
-      corresponding signatures
+      \code{list(sigs,methods)} of function definitions, i.e. of
+      matching signatures and methods.
       \code{prefix} is the partial signature (a named list of classes)
-      to be prepended to the signatures in this object.
+      to be prepended to the signatures in this object.  If \code{sigs.}
+      or \code{methods.} are \code{FALSE}, the resulting part of the
+      return value will be empty.
 
       A utility function used to iterate over all the individual methods
       in the object, it calls itself recursively.
