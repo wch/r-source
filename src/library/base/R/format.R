@@ -148,7 +148,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 			 2 + pmax(xEx,0)
 		     } else {# format == "fg"
 			 pmax(xEx, digits,digits+(-xEx)+1) +
-			     ifelse(flag != "", nchar(flag), 0) + 1
+			     ifelse(flag != "", nchar(flag, "b"), 0) + 1
 		     }
 	     } else # format == "g" or "e":
 	     rep.int(digits+8, n)
@@ -262,8 +262,8 @@ prettyNum <-
 	    zero.print <- if(zero.print) "0" else " "
 	if(!is.character(zero.print))
 	    stop("'zero.print' must be character, logical or NULL")
-	nz <- nchar(zero.print)
-	nc <- nchar(x[i0])
+	nz <- nchar(zero.print, "c")
+	nc <- nchar(x[i0], "c")
 	ind0 <- regexpr("0", x[i0], fixed = TRUE)# first '0' in string
 	substr(x[i0],ind0, ind0+nz-1) <- zero.print
 	substr(x[i0],ind0+nz, nc) <- " "
@@ -282,14 +282,14 @@ prettyNum <-
     A. <- sapply(x.sp, "[", 2)	    # After  "." ; empty == NA
     if(any(iN <- is.na(A.))) A.[iN] <- ""
 
-    if(nchar(big.mark) &&
+    if(nzchar(big.mark) &&
        length(i.big <- grep(P0("[0-9]{", big.interval + 1,",}"), B.))
        ) { ## add 'big.mark' in decimals before "." :
 	B.[i.big] <-
 	    revStr(gsub(P0("([0-9]{",big.interval,"})\\B"),
 			P0("\\1",big.mark), revStr(B.[i.big])))
     }
-    if(nchar(small.mark) &&
+    if(nzchar(small.mark) &&
        length(i.sml <- grep(P0("[0-9]{", small.interval + 1,",}"), A.))
        ) { ## add 'small.mark' in decimals after "."  -- but *not* trailing
 	A.[i.sml] <- gsub(P0("([0-9]{",small.interval,"}\\B)"),
@@ -298,15 +298,15 @@ prettyNum <-
     ## extraneous trailing dec.marks: paste(B., A., sep = decimal.mark)
     A. <- P0(B., c(decimal.mark, "")[iN+ 1L], A.)
     if(preserve.width != "none") {
-	nnc <- nchar(A.)
-	d.len <- nnc - nchar(x) # extra space added by 'marks' above
+	nnc <- nchar(A., "c")
+	d.len <- nnc - nchar(x, "c") # extra space added by 'marks' above
 	if(any(ii <- d.len > 0)) {
 	    switch(preserve.width,
 		   "individual" = {
 		       ## drop initial blanks preserving original width
 		       ## where possible:
 		       A.[ii] <- sapply(which(ii), function(i)
-					sub(sprintf("^ {1,%d}",d.len[i]), "",
+					sub(sprintf("^ {1,%d}", d.len[i]), "",
 					    A.[i]))
 		   },
 		   "common" = {

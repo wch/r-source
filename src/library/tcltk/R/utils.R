@@ -8,7 +8,7 @@ tk_select.list <-
     tkwm.deiconify(dlg)
     tkgrab.set(dlg)
     tkfocus(dlg)
-    if(!is.null(title) && nchar(title)) {
+    if(!is.null(title) && nzchar(title)) {
         lab <- tklabel(dlg, text = title, fg = "blue")
         tkpack(lab, side="top")
     }

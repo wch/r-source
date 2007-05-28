@@ -13,14 +13,14 @@ findGeneric <- function(fname, envir)
     }
     isUMEbrace <- function(e) {
         for (ee in as.list(e[-1]))
-            if (nchar(res <- isUME(ee))) return(res)
+            if (nzchar(res <- isUME(ee))) return(res)
         ""
     }
     isUMEif <- function(e) {
         if (length(e) == 3) isUME(e[[3]])
         else {
-            if (nchar(res <- isUME(e[[3]]))) res
-            else if (nchar(res <- isUME(e[[4]]))) res
+            if (nzchar(res <- isUME(e[[3]]))) res
+            else if (nzchar(res <- isUME(e[[4]]))) res
             else ""
         }
     }
@@ -78,7 +78,7 @@ methods <- function (generic.function, class)
             if(truegf == "")
                 warning(gettextf("function '%s' appears not to be generic",
                                  generic.function), domain = NA)
-            if(nchar(truegf) && truegf != generic.function) {
+            if(nzchar(truegf) && truegf != generic.function) {
                 warning(gettextf("generic function '%s' dispatches methods for generic '%s'",
                         generic.function, truegf), domain = NA)
                 generic.function <- truegf
@@ -134,7 +134,7 @@ methods <- function (generic.function, class)
                 where <- find(nm, mode = "function")
                 if(!length(where)) return(FALSE)
                 any(sapply(where, function(w)
-                           nchar(findGeneric(nm, envir=as.environment(w))) > 0))
+                           nzchar(findGeneric(nm, envir=as.environment(w)))))
             })
             info <- info[keep, ]
         }
@@ -180,7 +180,7 @@ getS3method <-  function(f, class, optional = FALSE)
                        names(.knownS3Generics))
     if(!any(f == knownGenerics)) {
         truegf <- findGeneric(f, parent.frame())
-        if(nchar(truegf)) f <- truegf
+        if(nzchar(truegf)) f <- truegf
         else {
             if(optional) return(NULL)
             else stop(gettextf("no function '%s' could be found", f), domain = NA)

@@ -156,7 +156,7 @@ as.personList.default <- function(x)
 
     ## first split into individual persons
     x <- unlist(strsplit(x,"[[:space:]]?(,|[[:space:]]and)[[:space:]]+"))
-    x <- x[nchar(x)>0]
+    x <- x[nzchar(x)]
 
     z <- list()
     for(k in seq_along(x)) z[[k]] <- as.person(x[k])
@@ -166,7 +166,7 @@ as.personList.default <- function(x)
 
 as.character.person <- function(x, ...)
 {
-    paste(x$name[nchar(x$name)>0], collapse=" ")
+    paste(x$name[nzchar(x$name)], collapse=" ")
 }
 
 as.character.personList <- function(x, ...)
@@ -216,9 +216,7 @@ citation <- function(package="base", lib.loc = NULL)
 {
     ## if we have a CITATION file, use it
     citfile <- system.file("CITATION", package=package, lib.loc=lib.loc)[1]
-    if(nchar(citfile)>0){
-        return(readCitationFile(citfile))
-    }
+    if(nzchar(citfile)) return(readCitationFile(citfile))
     else if(package=="base"){
         ## avoid infinite recursion for broken installation
         stop("broken installation, no CITATION file in the base package.")

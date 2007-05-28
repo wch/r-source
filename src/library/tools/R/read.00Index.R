@@ -49,8 +49,7 @@ function(file)
                 x <- strsplit(unlist(strsplit(chunk, "\n")), "[ \t]")
                 cbind(unlist(lapply(x, "[[", 1)),
                       unlist(lapply(x, function(t) {
-                          paste(t[-c(1, which(nchar(t) == 0))],
-                                collapse = " ")
+                          paste(t[-c(1, which(!nzchar(t)))], collapse = " ")
                       })))
             }
         },

@@ -374,7 +374,7 @@ print.glm <- function(x, digits= max(3, getOption("digits") - 3), ...)
     } else cat("No coefficients\n\n")
     cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
         x$df.residual, "Residual\n")
-    if(nchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     cat("Null Deviance:	   ",	format(signif(x$null.deviance, digits)),
 	"\nResidual Deviance:", format(signif(x$deviance, digits)),
 	"\tAIC:", format(signif(x$aic, digits)), "\n")
@@ -672,7 +672,7 @@ print.summary.glm <-
 		    format(unlist(x[c("df.null","df.residual")])),
 		    " degrees of freedom\n"),
 	      1, paste, collapse=" "), sep="")
-    if(nchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     cat("AIC: ", format(x$aic, digits= max(4, digits+1)),"\n\n",
 	"Number of Fisher Scoring iterations: ", x$iter,
 	"\n", sep="")

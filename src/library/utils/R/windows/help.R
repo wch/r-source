@@ -17,7 +17,7 @@ function(file, topic)
         "paper]{article}",
         "\n",
         "\\usepackage[",
-        if(nchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
+        if(nzchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
         "]{Rd}",
         "\n",
         "\\InputIfFileExists{Rhelp.cfg}{}{}\n",

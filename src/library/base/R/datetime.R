@@ -22,7 +22,7 @@ as.POSIXlt <- function(x, tz = "")
 	   !is.na(strptime(xx, f <- "%Y/%m/%d")))
         {
 	    res <- strptime(x, f)
-            if(nchar(tz)) attr(res, "tzone") <- tz
+            if(nzchar(tz)) attr(res, "tzone") <- tz
             return(res)
         }
 	stop("character string is not in a standard unambiguous format")

@@ -12,8 +12,9 @@ try <- function(expr, silent = FALSE) {
                 call <- sys.call(-4)
             dcall <- deparse(call)[1]
             prefix <- paste("Error in", dcall, ": ")
-            LONG <- 75 # to match value in errors.c, but that is in bytes
-            if (14 + nchar(dcall) + nchar(conditionMessage(e)) > LONG)
+            LONG <- 75 # to match value in errors.c
+            if (14 + nchar(dcall, type="c") +
+                nchar(conditionMessage(e), type="c") > LONG)
                 prefix <- paste(prefix, "\n  ", sep = "")
         }
         else prefix <- "Error : "
@@ -239,7 +240,8 @@ iconvlist <- function()
     int <- .Internal(iconv(NULL, "", "", ""))
     if(length(int)) return(sort.int(int))
     icfile <- system.file("iconvlist", package="utils")
-    if(!nchar(icfile)) stop("'iconvlist' is not available on this system")
+    if(!nchar(icfile, type="bytes"))
+        stop("'iconvlist' is not available on this system")
     ext <- readLines(icfile)
     if(!length(ext)) stop("'iconvlist' is not available on this system")
     ## glibc has lines ending //, some versions with a header and some without.

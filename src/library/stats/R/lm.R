@@ -380,7 +380,7 @@ print.summary.lm <-
     ##
     cat("\nResidual standard error:",
 	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")
-    if(nchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (",mess, ")\n", sep="")
     if (!is.null(x$fstatistic)) {
 	cat("Multiple R-Squared:", formatC(x$r.squared, digits=digits))
 	cat(",\tAdjusted R-squared:",formatC(x$adj.r.squared,digits=digits),

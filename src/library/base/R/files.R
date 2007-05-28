@@ -3,9 +3,9 @@ R.home <- function(component="home")
     rh <- .Internal(R.home())
     switch(component,
            "home" = rh,
-           "share"= if(nchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p
+           "share"= if(nzchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p
            else file.path(rh, component),
-	   "doc"=if(nchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p
+	   "doc"=if(nzchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p
            else file.path(rh, component),
            file.path(rh, component))
 }

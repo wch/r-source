@@ -25,7 +25,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             nc <- nchar(words, type="w")
 	    if(any(is.na(nc))) {
 		## use byte count as a reasonable substitute
-		nc0 <- nchar(words)
+		nc0 <- nchar(words, type="b")
 		nc[is.na(nc)] <- nc0[is.na(nc)]
 	    }
 

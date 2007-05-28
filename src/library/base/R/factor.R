@@ -132,16 +132,16 @@ Ops.factor <- function(e1, e2)
 	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
-    if (nchar(.Method[1])) {
+    if (nzchar(.Method[1])) {
 	l1 <- levels(e1)
 	e1 <- l1[e1]
     }
-    if (nchar(.Method[2])) {
+    if (nzchar(.Method[2])) {
 	l2 <- levels(e2)
 	e2 <- l2[e2]
     }
-    if (all(nchar(.Method)) && (length(l1) != length(l2) ||
-				!all(sort.int(l2) == sort.int(l1))))
+    if (all(nzchar(.Method) > 0) &&
+        (length(l1) != length(l2) || !all(sort.int(l2) == sort.int(l1))))
 	stop("level sets of factors are different")
     value <- NextMethod(.Generic)
     value[nas] <- NA
@@ -207,15 +207,16 @@ function (e1, e2)
     nas <- is.na(e1) | is.na(e2)
     ord1 <- FALSE
     ord2 <- FALSE
-    if (nchar(.Method[1])) {
+    if (nzchar(.Method[1])) {
 	l1 <- levels(e1)
 	ord1 <- TRUE
     }
-    if (nchar(.Method[2])) {
+    if (nzchar(.Method[2])) {
 	l2 <- levels(e2)
 	ord2 <- TRUE
     }
-    if (all(nchar(.Method)) && (length(l1) != length(l2) || !all(l2 == l1)))
+    if (all(nzchar(.Method)) &&
+        (length(l1) != length(l2) || !all(l2 == l1)))
 	stop("level sets of factors are different")
     if (ord1 && ord2) {
 	e1 <- as.integer(e1) # was codes, but same thing for ordered factor.

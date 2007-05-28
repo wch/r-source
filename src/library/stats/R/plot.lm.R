@@ -84,7 +84,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    names(cal)[2] <- "" # drop	" formula = "
 	}
 	cc <- deparse(cal, 80) # (80, 75) are ``parameters''
-	nc <- nchar(cc[1])
+	nc <- nchar(cc[1], "c")
 	abbr <- length(cc) > 1 || nc > 75
 	sub.caption <-
 	    if(abbr) paste(substr(cc[1], 1, min(75,nc)), "...") else cc[1]

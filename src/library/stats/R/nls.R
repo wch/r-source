@@ -702,7 +702,7 @@ print.summary.nls <-
 
     .p.nls.convInfo(x, digits = digits)
 
-    if(nchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep="")
+    if(nzchar(mess <- naprint(x$na.action))) cat("  (", mess, ")\n", sep="")
     cat("\n")
     invisible(x)
 }

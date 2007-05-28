@@ -10,7 +10,7 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE)
     nmc <- paste("Var", 1:nargs, sep="")
     nm <- names(args)
     if(is.null(nm)) nm <- nmc
-    else if(any(ng0 <- nchar(nm) > 0)) nmc[ng0] <- nm[ng0]
+    else if(any(ng0 <- nzchar(nm))) nmc[ng0] <- nm[ng0]
     names(cargs) <- nmc
     rep.fac <- 1
     d <- sapply(args, length)

@@ -156,6 +156,7 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 {
     if(!is.character(x))
         stop("argument 'x' must be a character vector")
+    ## FIXME: bytes or chars?
     if((length(delim) != 2) || any(nchar(delim) != 1))
         stop("argument 'delim' must specify two characters")
     if(syntax != "Rd")
@@ -211,7 +212,7 @@ function(x, y)
 function()
 {
     OS <- Sys.getenv("R_OSTYPE")
-    if(nchar(OS)) OS else .Platform$OS.type
+    if(nzchar(OS)) OS else .Platform$OS.type
 }
 
 ### ** .capture_output_from_print
@@ -538,14 +539,14 @@ function(fname, envir, mustMatch = TRUE)
     f <- get(fname, envir = envir, inherits = FALSE)
     if(!is.function(f)) return(FALSE)
     isUMEbrace <- function(e) {
-        for (ee in as.list(e[-1])) if (nchar(res <- isUME(ee))) return(res)
+        for (ee in as.list(e[-1])) if (nzchar(res <- isUME(ee))) return(res)
         ""
     }
     isUMEif <- function(e) {
         if (length(e) == 3) isUME(e[[3]])
         else {
-            if (nchar(res <- isUME(e[[3]]))) res
-            else if (nchar(res <- isUME(e[[4]]))) res
+            if (nzchar(res <- isUME(e[[3]]))) res
+            else if (nzchar(res <- isUME(e[[4]]))) res
             else ""
         }
 
@@ -560,7 +561,7 @@ function(fname, envir, mustMatch = TRUE)
         } else ""
     }
     res <- isUME(body(f))
-    if(mustMatch) res == fname else nchar(res) > 0
+    if(mustMatch) res == fname else nzchar(res)
 }
 
 ### ** .load_package_quietly

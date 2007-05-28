@@ -466,7 +466,7 @@ getGeneric <-
               .cacheGeneric(f, value)
         }
     }
-    if(is.null(value) && nchar(package)>0 && !identical(package, "base")) {
+    if(is.null(value) && nzchar(package) && !identical(package, "base")) {
         env <- .requirePackage(package, FALSE)
         if(is.environment(env))
           value <- .Call("R_getGeneric", f, FALSE, env, package,
@@ -536,7 +536,7 @@ getGeneric <-
         value <- get(name, envir = .genericTable)
         if(is.list(value)) { # multiple generics with this name
             ## force a check of package name, even if argument is ""
-            if(nchar(pkg) == 0) {
+            if(!nzchar(pkg)) {
                 if(is.character(where))
                   pkg <- where
                 else {
@@ -558,7 +558,7 @@ getGeneric <-
            else
               return(NULL)
         }
-        else if(nchar(pkg) && !identical(pkg, value@package))
+        else if(nzchar(pkg) && !identical(pkg, value@package))
                 NULL
         else
           value
@@ -659,7 +659,7 @@ mlistMetaName <-
       else if(missing(name))
           methodsPackageMetaName("M","")
       else if(is.character(name)) {
-          if(nchar(package) == 0) {
+          if(!nzchar(package)) {
               pkg <- packageSlot(name)
               if(!is.null(pkg))
                 package <- pkg
@@ -670,11 +670,11 @@ mlistMetaName <-
               for(i in seq_along(value))
                   value[[i]] = methodsPackageMetaName("M", name[[i]])
           }
-          else if(nchar(package))
+          else if(nzchar(package))
              return(methodsPackageMetaName("M", paste(name, package, sep=":")))
           else {
               if(is.null(fdef)) {
-                  if(nchar(package)>0)
+                  if(nzchar(package))
                     return(methodsPackageMetaName("M",paste(name,package, sep=":")))
                   fdef <- getGeneric(name)
                   if(!is(fdef, "genericFunction"))
@@ -1060,7 +1060,7 @@ methodSignatureMatrix <- function(object, sigSlots = c("target", "defined")) {
 
 metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     pattern <- methodsPackageMetaName(prefix, "")
-    n <- nchar(pattern)
+    n <- nzchar(pattern)
     matched <- substr(strings, 1, n) == pattern
     value <- substring(strings[matched], n+1)
     pkg <- sub("^[^:]*", "", value) # will be "" if no : in the name
@@ -1385,7 +1385,8 @@ deletePrimMethods <- function(f, env) {
 }
 
 .copyMethodDefaults <- function(generic, method) {
-    emptyDefault <- function(value) missing(value) || (is.name(value) && (nchar(as.character(value))>0))
+    emptyDefault <- function(value) missing(value) ||
+    (is.name(value) && nzchar(as.character(value)) )
     fg <- formals(generic)
     mg <- formals(method)
     mgn <- names(mg)

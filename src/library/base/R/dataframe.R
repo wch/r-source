@@ -210,7 +210,7 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE, ...,
     ## changed in 1.8.0
     if(is.null(row.names)) row.names <- dn[[1L]]
     collabs <- dn[[2L]]
-    if(any(empty <- nchar(collabs) == 0L))
+    if(any(empty <- !nzchar(collabs)))
 	collabs[empty] <- paste("V", ic, sep = "")[empty]
     value <- vector("list", ncols)
     if(mode(x) == "character" && stringsAsFactors) {
@@ -353,7 +353,7 @@ data.frame <-
     vnames <- names(x)
     if(length(vnames) != n)
 	vnames <- character(n)
-    no.vn <- nchar(vnames) == 0L
+    no.vn <- !nzchar(vnames)
     vlist <- vnames <- as.list(vnames)
     nrows <- ncols <- integer(n)
     for(i in seq_len(n)) {
@@ -376,7 +376,7 @@ data.frame <-
             else if (no.vn[[i]]) {
                 tmpname <- deparse(object[[i]])[1L]
                 if( substr(tmpname, 1L, 2L) == "I(" ) {
-                    ntmpn <- nchar(tmpname)
+                    ntmpn <- nchar(tmpname, type="c")
                     if(substr(tmpname, ntmpn, ntmpn) == ")")
                         tmpname <- substr(tmpname, 3L, ntmpn - 1L)
                 }
@@ -414,7 +414,7 @@ data.frame <-
     value <- unlist(vlist, recursive=FALSE, use.names=FALSE)
     ## unlist() drops i-th component if it has 0 columns
     vnames <- unlist(vnames[ncols > 0L])
-    noname <- nchar(vnames) == 0L
+    noname <- !nzchar(vnames)
     if(any(noname))
 	vnames[noname] <- paste("Var", seq_along(vnames), sep = ".")[noname]
     if(check.names)
@@ -989,7 +989,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     Make.row.names <- function(nmi, ri, ni, nrow)
     {
-	if(nchar(nmi) > 0L) {
+	if(nzchar(nmi)) {
             if(ni == 0L) character(0L)  # PR8506
 	    else if(ni > 1L) paste(nmi, ri, sep = ".")
 	    else nmi
@@ -1094,7 +1094,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	}
 	else if(length(xi) > 0L) {
 	    rows[[i]] <- nrow <- nrow + 1L
-	    rlabs[[i]] <- if(nchar(nmi) > 0L) nmi else as.integer(nrow)
+	    rlabs[[i]] <- if(nzchar(nmi)) nmi else as.integer(nrow)
 	}
     }
     nvar <- length(clabs)
@@ -1279,8 +1279,8 @@ Ops.data.frame <- function(e1, e2 = NULL)
 {
     isList <- function(x) !is.null(x) && is.list(x)
     unary <- nargs() == 1L
-    lclass <- nchar(.Method[1L]) > 0L
-    rclass <- !unary && (nchar(.Method[2L]) > 0L)
+    lclass <- nzchar(.Method[1L])
+    rclass <- !unary && (nzchar(.Method[2L]))
     value <- list()
     rn <- NULL
     ## set up call as op(left, right)

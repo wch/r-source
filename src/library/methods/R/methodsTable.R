@@ -561,7 +561,8 @@
 	    cf(sigString(t), "\n")
 	    if(!identical(t, d))
 		cf("    (inherited from: ", sigString(d), ")\n")
-            if(!.identC(m@generic, f) && length(m@generic) == 1 && nchar(m@generic)>0)
+            if(!.identC(m@generic, f) && length(m@generic) == 1 &&
+               nzchar(m@generic))
 		cf("    (definition from function \"", m@generic, "\")\n")
 	}
 	if(includeDefs) {

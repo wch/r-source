@@ -52,7 +52,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         rlabp <- FALSE
         cols <- length(col.names)
     } else {
-        if(all(nchar(lines) == 0)) stop("empty beginning of file")
+        if(all(!nzchar(lines))) stop("empty beginning of file")
         if(nlines < n0lines && file == 0)  { # stdin() has reached EOF
             pushBack(c(lines, lines, ""), file)
             on.exit(.Internal(clearPushBack(stdin())))

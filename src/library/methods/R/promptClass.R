@@ -235,7 +235,7 @@ function (clName, filename = NULL, type = "class",
 ## used in promptClass() above and in promptMethods() :
 .fileDesc <- function(file) {
     if(is.character(file)) {
-	if(nchar(file))
+	if(nzchar(file))
 	    paste(" to the file", sQuote(file))
 	else
 	    " to the standard output connection"

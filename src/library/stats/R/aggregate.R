@@ -16,7 +16,7 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
         names(by) <- paste("Group", seq_along(by), sep = ".")
     else {
         nam <- names(by)
-        ind <- which(nchar(nam) == 0)
+        ind <- which(!nzchar(nam))
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
     y <- lapply(x, tapply, by, FUN, ..., simplify = FALSE)

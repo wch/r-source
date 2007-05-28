@@ -55,7 +55,7 @@ read.socket <- function(socket, maxlen=256, loop=FALSE)
 	tmp <- .C("Rsockread", port,
 		  buffer = buffer, len = maxlen, PACKAGE="base")
 	rval <- substr(tmp$buffer, 1, tmp$len)
-	if (nchar(rval) > 0 || !loop) break
+	if (nzchar(rval) || !loop) break
     }
     rval
 }

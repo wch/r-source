@@ -90,7 +90,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     }
 
     ## Rewrite margin numbers to names if possible
-    if (!is.null(varnames) && all(nchar(varnames) > 0)) {
+    if (!is.null(varnames) && all(nzchar(varnames))) {
         for (k in seq_along(margin))
             margin[[k]] <- varnames[margin[[k]]]
     } else {

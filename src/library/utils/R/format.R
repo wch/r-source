@@ -16,7 +16,7 @@ function(x, type = "arabic", offset = 0, start = 1,
     type_tokens <- c("1", "A", "a", "I", "i")
     type_full_names <- c("arabic", "Alph", "alph", "Roman", "roman")
     type <- match.arg(type, c(type_tokens, type_full_names))
-    if(nchar(type) > 1)
+    if(nchar(type, "b") > 1)
         type <- type_tokens[match(type, type_full_names)]
     len <- length(x)
     labels <- seq.int(start[1], length.out = len)

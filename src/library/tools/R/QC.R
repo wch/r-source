@@ -563,7 +563,7 @@ function(package, dir, lib.loc = NULL,
                 vffc <- as.character(ffc) # values
                 vffd <- as.character(ffd) # values
                 if(!identical(use.values, TRUE)) {
-                    ind <- nchar(as.character(ffd)) > 0
+                    ind <- nzchar(as.character(ffd))
                     vffc <- vffc[ind]
                     vffd <- vffd[ind]
                 }
@@ -2986,7 +2986,7 @@ function(dfile)
                 bad_dep_entry <- c(bad_dep_entry, dep)
                 next
             }
-            if(nchar(sub(dep_regexp, "\\2", dep))) {
+            if(nzchar(sub(dep_regexp, "\\2", dep))) {
                 ## If not just a valid package name ...
                 if(!sub(dep_regexp, "\\3", dep) %in% c("<=", ">="))
                     bad_dep_op <- c(bad_dep_op, dep)
@@ -3818,7 +3818,7 @@ function(x, ...)
         writeLines(gettext("'library' or 'require' calls not declared from:"))
         .pretty_print(x$others)
     }
-    if(nchar(x$methods_message))
+    if(nzchar(x$methods_message))
         writeLines(x$methods_message)
     invisible(x)
 }
@@ -4137,7 +4137,7 @@ function(g, env)
     ## Second, inherited methods.
     package <- sub(".*:([^_]*).*", "\\1", attr(env, "name", exact = TRUE))
     ## (Ugly, but why not?)
-    penv <- if(length(package) && nchar(package)) {
+    penv <- if(length(package) && nzchar(package)) {
         ## Seems that there is no other way to get the name space for a
         ## given package (getNamespace() would try loading a name space
         ## not found in the registry).

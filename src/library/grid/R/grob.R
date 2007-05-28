@@ -313,7 +313,7 @@ getName <- function(elt) {
 getNames <- function() {
   dl <- grid.Call("L_getDisplayList")[1:grid.Call("L_getDLindex")]
   names <- sapply(dl, getName)
-  names[nchar(names) != 0]
+  names[nzchar(names)]
 }
 
 ################
@@ -973,7 +973,7 @@ setDLfromGPath <- function(gPath, newGrob, strict, grep) {
 #####
 editThisGrob <- function(grob, specs) {
   for (i in names(specs))
-    if (nchar(i) > 0)
+    if (nzchar(i))
       # Handle gp as special case
       if (match(i, "gp", nomatch=0))
         # Handle NULL as special case

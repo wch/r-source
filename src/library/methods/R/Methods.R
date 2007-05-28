@@ -62,7 +62,7 @@ setGeneric <-
         if(is.null(genericFunction) && .NonstandardGenericTest(body(fdef), name, stdGenericBody))
             genericFunction <- new("nonstandardGenericFunction") # force this class for fdef
     }
-    if(is.null(package) || nchar(package) == 0)
+    if(is.null(package) || !nzchar(package))
         ## either no previous def'n or failed to find its package name
         package <- getPackageName(where)
     if(is.null(fdef))

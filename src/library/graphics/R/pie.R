@@ -43,7 +43,7 @@ pie <-
                 border = border[i], col = col[i], lty = lty[i])
 	P <- t2xy(mean(x[i + 0:1]))
         lab <-  as.character(labels[i])
-        if(!is.na(lab) && nchar(lab)) {
+        if(!is.na(lab) && nzchar(lab)) {
             lines(c(1, 1.05)*P$x, c(1, 1.05)*P$y)
             text(1.1*P$x, 1.1*P$y, labels[i], xpd = TRUE,
                  adj = ifelse(P$x < 0, 1, 0), ...)

@@ -13,7 +13,7 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 		  "--please do not edit the information below--\\n\\n",
 		  "Version:\\n ",
 		  paste(names(R.version),R.version, sep=" = ",collapse="\\n "),
-                  if (nchar(Sys.getenv("R_GUI_APP_VERSION"))>0)
+                  if (nzchar(Sys.getenv("R_GUI_APP_VERSION")))
                       paste("\\n\\nGUI:\\n R-GUI ",Sys.getenv("R_GUI_APP_VERSION"),
                             " (",Sys.getenv("R_GUI_APP_REVISION"),")",sep='')
                   else
@@ -62,7 +62,7 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 	cat(body, file=file, append=FALSE)
 	system(paste(getOption("editor"), file))
 
-        if(is.character(ccaddress) && nchar(ccaddress)>0) {
+        if(is.character(ccaddress) && nzchar(ccaddress)) {
             cmdargs <- paste("-s '", subject, "' -c", ccaddress,
                              address, "<", file, "2>/dev/null")
         }

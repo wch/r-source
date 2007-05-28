@@ -802,7 +802,7 @@ showExtends <-
     }
     if(identical(printTo, FALSE))
         list(what = what, how = how)
-    else if(all(nchar(how)==0)|| all(how == "directly")) {
+    else if(all(!nzchar(how)) ||  all(how == "directly")) {
         what <- paste('"', what, '"', sep="")
         if(length(what)>1)
             what <- c(paste(what[-length(what)], ",", sep=""), what[[length(what)]])
@@ -1039,7 +1039,7 @@ requireMethods <-
 
 ## Construct an error message for an unsatisfied required method.
 .missingMethod <- function(f, message = "", method) {
-    if(nchar(message)>0)
+    if(nzchar(message))
         message <- paste("(", message, ")", sep="")
     message <- paste("for function", f, message)
     if(is(method, "MethodDefinition")) {
@@ -1560,31 +1560,32 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## they use getClassDef and .getGeneric resp.  Also, .getEnv returns baseenv() rather
 ## than generating an error if no generic found (so getGeneric can return gen'c for prim'ves)
 
-.genEnv <-  function(f, default = .requirePackage("methods"), package = "") {
-        if(nchar(package) == 0)
-          package <- packageSlot(f)
-        if(is.null(package)) {
-            ## use the default, but check that the object is there, and if not
-            ## try a couple of other heuristics
-            value <- default
+.genEnv <-  function(f, default = .requirePackage("methods"), package = "")
+{
+    if(!nzchar(package))
+        package <- packageSlot(f)
+    if(is.null(package)) {
+        ## use the default, but check that the object is there, and if not
+        ## try a couple of other heuristics
+        value <- default
+        def <- .getGeneric(f, value)
+        if(is.null(def)) {
+            value <- .GlobalEnv
             def <- .getGeneric(f, value)
             if(is.null(def)) {
-                value <- .GlobalEnv
-                def <- .getGeneric(f, value)
-                if(is.null(def)) {
-                    value <- .requirePackage("methods")
-                    if(!identical(default, value)) # user supplied default
-                        def <- .getGeneric(f, value)
-                }
+                value <- .requirePackage("methods")
+                if(!identical(default, value)) # user supplied default
+                    def <- .getGeneric(f, value)
             }
-            if(is.null(def))
-                baseenv()
-            else
-                value
         }
+        if(is.null(def))
+            baseenv()
         else
-            .requirePackage(package)
+            value
     }
+    else
+        .requirePackage(package)
+}
 
 ## cache and retrieve class definitions  If there is a conflict with
 ## packages a list of  classes will be cached

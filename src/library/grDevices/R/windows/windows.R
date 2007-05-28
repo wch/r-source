@@ -122,7 +122,7 @@ savePlot <- function(filename = "Rplot",
     devname <- names(devlist)[devcur]
     if(devname != "windows") stop("can only copy from 'windows' devices")
     if(filename == "clipboard" && type == "wmf") filename <- ""
-    if(nchar(filename) > 0) filename <- paste(filename, type, sep=".")
+    if(nzchar(filename)) filename <- paste(filename, type, sep=".")
     invisible(.External("savePlot", device, filename, type, restoreConsole,
                         PACKAGE = "grDevices"))
 }

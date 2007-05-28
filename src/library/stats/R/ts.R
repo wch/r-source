@@ -195,7 +195,7 @@ Ops.ts <- function(e1, e2)
     if(missing(e2)) {
         ## univariate operator
         NextMethod(.Generic)
-    } else if(any(nchar(.Method) == 0)) {
+    } else if(any(!nzchar(.Method))) {
         ## one operand is not a ts
         NextMethod(.Generic)
     } else {

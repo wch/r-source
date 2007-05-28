@@ -220,7 +220,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         if(sum(abs(R))/d2 > tol)
             cat("Estimated effects may be unbalanced\n")
         else cat("Estimated effects are balanced\n")
-        if(nchar(mess <- naprint(x$na.action))) cat(mess, "\n", sep="")
+        if(nzchar(mess <- naprint(x$na.action))) cat(mess, "\n", sep="")
     }
     invisible(x)
 }
@@ -366,7 +366,7 @@ print.summary.aov <-
 {
     if (length(x) == 1)  print(x[[1]], ...)
     else NextMethod()
-    if(nchar(mess <- naprint(attr(x, "na.action")))) cat(mess, "\n", sep="")
+    if(nzchar(mess <- naprint(attr(x, "na.action")))) cat(mess, "\n", sep="")
     invisible(x)
 }
 

@@ -27,7 +27,7 @@ getNativeSymbolInfo <- function(name, PACKAGE, unlist = TRUE,
        v <- .Call("R_getSymbolInfo", as.character(id), PACKAGE, as.logical(withRegistrationInfo), PACKAGE = "base")
        if(is.null(v)) {
            msg <- paste("no such symbol", id)
-           if(length(pkgName) && nchar(pkgName))
+           if(length(pkgName) && nzchar(pkgName))
                msg <- paste(msg, "in package", pkgName)
            stop(msg)
        }

@@ -3,14 +3,14 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
                        method = c("postscript", "pdf"))
 {
     if(missing(file)) stop("'file' is missing with no default")
-    if(!is.character(file) || length(file) != 1 || nchar(file) == 0)
+    if(!is.character(file) || length(file) != 1 || !nzchar(file))
         stop("'file' must be a non-empty character string")
     method <- match.arg(method)
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
     width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
     gsexe <- Sys.getenv("R_GSCMD")
-    if(is.null(gsexe) || nchar(gsexe) == 0) {
+    if(is.null(gsexe) || !nzchar(gsexe)) {
         gsexe <- "gs"
         rc <- system(paste(shQuote(gsexe), "-help > /dev/null"))
         if(rc != 0) stop("sorry, 'gs' cannot be found")
@@ -55,13 +55,13 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
                    units = "in", pointsize, ...)
 {
     if(missing(file)) stop("'file' is missing with no default")
-    if(!is.character(file) || length(file) != 1 || nchar(file) == 0)
+    if(!is.character(file) || length(file) != 1 || !nzchar(file))
         stop("'file' must be a non-empty character string")
     units <- match.arg(units, c("in", "px", "cm", "mm"))
     height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
     width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
     gsexe <- Sys.getenv("R_GSCMD")
-    if(is.null(gsexe) || nchar(gsexe) == 0) {
+    if(is.null(gsexe) || !nzchar(gsexe)) {
         gsexe <- "gs"
         rc <- system(paste(gsexe, "-help > /dev/null"))
         if(rc != 0) stop("sorry, 'gs' cannot be found")

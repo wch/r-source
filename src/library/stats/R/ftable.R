@@ -300,7 +300,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                     paste("Factor", seq_along(col.vars), sep = ".")
             else {
                 nam <- names(col.vars)
-                ind <- which(nchar(nam) == 0)
+                ind <- which(!nzchar(nam))
                 names(col.vars)[ind] <-
                     paste("Factor", ind, sep = ".")
             }

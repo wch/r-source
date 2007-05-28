@@ -825,7 +825,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
                        options = "" # Additional options to ghostscript
                        )
 {
-    if(!is.character(file) || length(file) != 1 || nchar(file) == 0)
+    if(!is.character(file) || length(file) != 1 || !nzchar(file))
         stop("'file' must be a non-empty character string")
     suffix <- gsub(".+[.]", "", file)
     if (missing(format)) {
@@ -838,7 +838,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
         stop("Invalid output format")
     }
     gsexe <- Sys.getenv("R_GSCMD")
-    if(is.null(gsexe) || nchar(gsexe) == 0) {
+    if(is.null(gsexe) || !nzchar(gsexe)) {
         gsexe <- switch(.Platform$OS.type,
                         unix = "gs",
                         windows = "gswin32c.exe")

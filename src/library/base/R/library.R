@@ -6,7 +6,7 @@ testPlatformEquivalence <- function(built, run)
     run <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", run)
     ## Mac OS X supports multiple CPUs by using 'universal' binaries
     if (length(grep("^universal-darwin", built)) > 0 &&
-        nchar(.Platform$r_arch) > 0)
+        nzchar(.Platform$r_arch))
         built <- sub("^universal", R.version$arch, built)
     ## allow for small mismatches, e.g. OS version number and i686 vs i586.
     length(agrep(built, run)) > 0
@@ -50,7 +50,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                   pkgname, platform),
                          call. = FALSE, domain = NA)
                 ## if using r_arch subdirs, check for presence
-                if(nchar(r_arch <- .Platform$r_arch)
+                if(nzchar(r_arch <- .Platform$r_arch)
                    && file.exists(file.path(pkgpath, "libs"))
                    && !file.exists(file.path(pkgpath, "libs", r_arch)))
                     stop(gettextf("package '%s' is not installed for 'arch=%s'",
@@ -259,7 +259,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             which.lib.loc <- dirname(pkgpath)
             pfile <- system.file("Meta", "package.rds", package = package,
                                  lib.loc = which.lib.loc)
-            if(!nchar(pfile))
+            if(!nzchar(pfile))
             	stop(gettextf("'%s' is not a valid package -- installed < 2.0.0?",
                      libraryPkgName(package)), domain = NA)
             pkgInfo <- .readRDS(pfile)
@@ -546,19 +546,19 @@ function(chname, package = NULL, lib.loc = NULL,
 {
     dll_list <- .dynLibs()
 
-    if(missing(chname) || (nc_chname <- nchar(chname)) == 0)
+    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
         return(dll_list)
 
     ## Be defensive about possible system-specific extension for shared
     ## libraries, although the docs clearly say they should not be
     ## added.
-    nc_file_ext <- nchar(file.ext)
+    nc_file_ext <- nchar(file.ext, "c")
     if(substr(chname, nc_chname - nc_file_ext + 1, nc_chname)
        == file.ext)
         chname <- substr(chname, 1, nc_chname - nc_file_ext)
 
     for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
-        file <- if(nchar(.Platform$r_arch))
+        file <- if(nzchar(.Platform$r_arch))
                 file.path(pkg, "libs", .Platform$r_arch,
                           paste(chname, file.ext, sep = ""))
 	else    file.path(pkg, "libs",
@@ -599,18 +599,18 @@ function(chname, libpath, verbose = getOption("verbose"),
 {
     dll_list <- .dynLibs()
 
-    if(missing(chname) || (nc_chname <- nchar(chname)) == 0)
+    if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
         stop("no shared library was specified")
 
     ## Be defensive about possible system-specific extension for shared
     ## libraries, although the docs clearly say they should not be
     ## added.
-    nc_file_ext <- nchar(file.ext)
+    nc_file_ext <- nchar(file.ext, "c")
     if(substr(chname, nc_chname - nc_file_ext + 1, nc_chname)
        == file.ext)
         chname <- substr(chname, 1, nc_chname - nc_file_ext)
 
-     file <- if(nchar(.Platform$r_arch))
+     file <- if(nzchar(.Platform$r_arch))
              file.path(libpath, "libs", .Platform$r_arch,
                        paste(chname, file.ext, sep = ""))
      else    file.path(libpath, "libs",
@@ -794,7 +794,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
     ## don't waste time looking for the standard packages:
     ## we know where they are and this can take a significant
     ## time with 1000+ packages installed.
-    if(length(package) == 1 && !nchar(Sys.getenv("R_CROSS_BUILD")) &&
+    if(length(package) == 1 && !nzchar(Sys.getenv("R_CROSS_BUILD")) &&
        package %in% c("base", "tools", "utils", "grDevices", "graphics",
                       "stats", "datasets", "methods", "grid", "splines",
                       "stats4", "tcltk"))
@@ -1004,7 +1004,7 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 if (length(z) > 1) {
                     pfile <- system.file("Meta", "package.rds",
                                          package = pkg, lib.loc = lib.loc)
-                    if(nchar(pfile) == 0)
+                    if(nzchar(pfile) == 0)
                         stop(gettextf("package '%s' required by '%s' could not be found",
                                       pkg, pkgname),
                              call. = FALSE, domain = NA)

@@ -2,7 +2,7 @@
 {
     packageStartupMessage("Loading Tcl/Tk interface ...", domain = "R-tcltk",
                           appendLF = FALSE)
-    if(nchar(Sys.getenv("MY_TCLTK"))) {
+    if(nzchar(Sys.getenv("MY_TCLTK"))) {
         library.dynam("tcltk", pkg, lib)
     } else {
         if(!file.exists(file.path(R.home(), "Tcl")))
