@@ -80,6 +80,6 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
     if (length(x) <= 1) x <- par("usr")[1:2]
     if (length(y) <= 1) y <- par("usr")[3:4]
     if (length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
-        stop("dimensions of z are not length(x)(+1) times length(y)(+1)")
+        stop("dimensions of z are not length(x)(-1) times length(y)(-1)")
     .Internal(image(as.double(x), as.double(y), as.integer(zi), col))
 }
