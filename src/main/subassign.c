@@ -1393,8 +1393,11 @@ SEXP attribute_hidden do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     if (oldtype == LANGSXP) {
-	x = VectorToPairList(x);
-	SET_TYPEOF(x, LANGSXP);
+	if(length(x)) {
+	    x = VectorToPairList(x);
+	    SET_TYPEOF(x, LANGSXP);
+	} else
+	    error(_("result is zero-length and so cannot be a language object"));
     }
 
     /* Note the setting of NAMED(x) to zero here.  This means */

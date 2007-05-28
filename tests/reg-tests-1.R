@@ -4730,9 +4730,16 @@ z <- median(numeric(0))
 stopifnot(identical(z, NA_real_))
 ## returned logical NA in 2.5.0
 
+
 ## seq.int on small reversed 'by'
 stopifnot(inherits(try(seq.int(1.2, 1, by=1)), "try-error"))
 ## was '1.2' in 2.5.0
+
+
+## subassignment on pairlists: Uwe Ligges on R-help, 2007-05-29
+Call <- call("round", 10.5)
+try({Call[] <- NULL; Call})
+## seqgfaulted in 2.5.0
 
 
 ### end of tests added in 2.5.1 ###
