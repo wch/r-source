@@ -1452,7 +1452,8 @@ int windelmenu(char * menu, char *errmsg)
     j = 0;
     for (i = 0; i < nmenus; i++) {
 	if (strcmp(menu, usermenunames[i]) == 0
-	  || (strncmp(menu, usermenunames[i], len) && usermenunames[i][len] == '/')) {
+	  || (strncmp(menu, usermenunames[i], len) == 0 && 
+	      usermenunames[i][len] == '/')) {
 	    remove_menu_item(usermenus[i]);
 	    count++;
 	} else {
@@ -1471,10 +1472,12 @@ int windelmenu(char * menu, char *errmsg)
 
     /* Delete any menu items in this menu */
 
-    for (j = nitems-1; j >= 0; j--) {
-	if (strncmp(menu, umitems[j]->name, len) == 0 && umitems[j]->name[len] == '/')
+    for (j = nitems - 1; j >= 0; j--) {
+	if (strncmp(menu, umitems[j]->name, len) == 0 && 
+	    umitems[j]->name[len] == '/')
 	    windelmenuitem(umitems[j]->name + len + 1, menu, errmsg);
     }
+
 
     show(RConsole);
     return 0;
