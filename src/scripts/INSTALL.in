@@ -304,12 +304,12 @@ if test -z "${lib}"; then
   ## $lib gets checked later.
 else
   lib0=${lib}
-  if ! test -d "${lib}"; then
+  if test ! -d "${lib}"; then
     error "-l or --library value '${lib}' does not exist or is not a directory"
     do_cleanup_tmpdir;
     exit 2
   fi
-  if ! test -w "${lib}"; then
+  if test ! -w "${lib}"; then
     error "-l  or --library value '${lib}' does not have write access"
     do_cleanup_tmpdir;
     exit 2
