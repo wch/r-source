@@ -194,7 +194,9 @@ reference@footnote{a pointer to a function or a symbol to look up the
 function by name, or a language object to be evaluated to give a
 function.} to the function to be called with remaining elements the
 actual arguments for the call (and with the tags if present giving the
-specified argument names).
+specified argument names).  Although this is not enforced, many places
+in the code assume that the pairlist is of length one or more, often
+without checking.
 
 @cindex expression
 Expressions are of type @code{EXPRSXP}: they are a vector of (usually
