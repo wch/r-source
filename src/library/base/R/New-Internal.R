@@ -13,8 +13,9 @@ try <- function(expr, silent = FALSE) {
             dcall <- deparse(call)[1]
             prefix <- paste("Error in", dcall, ": ")
             LONG <- 75 # to match value in errors.c
-            if (14 + nchar(dcall, type="c") +
-                nchar(conditionMessage(e), type="c") > LONG)
+            msg <- conditionMessage(e)
+            sm <- strsplit(msg, "\n")[[1]]
+            if (14 + nchar(dcall, type="w") + nchar(sm[1], type="w") > LONG)
                 prefix <- paste(prefix, "\n  ", sep = "")
         }
         else prefix <- "Error : "
@@ -70,10 +71,6 @@ commandArgs <- function(trailingOnly = FALSE) {
 }
 
 args <- function(name).Internal(args(name))
-
-##=== Problems here [[	attr(f, "class") <- "factor"  fails in factor(..)  ]]:
-##- attr <- function(x, which).Internal(attr(x, which))
-##- "attr<-" <- function(x, which, value).Internal("attr<-"(x, which, value))
 
 cbind <- function(..., deparse.level = 1)
     .Internal(cbind(deparse.level, ...))
@@ -153,13 +150,10 @@ is.unsorted <- function(x, na.rm = FALSE) {
 }
 
 mem.limits <- function(nsize=NA, vsize=NA)
-{
     structure(.Internal(mem.limits(as.integer(nsize), as.integer(vsize))),
               names=c("nsize", "vsize"))
-}
 
-nchar <- function(x, type = "bytes")
-    .Internal(nchar(x, type))
+nchar <- function(x, type = "chars") .Internal(nchar(x, type))
 
 polyroot <- function(z).Internal(polyroot(z))
 

@@ -147,41 +147,38 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     if(ntype == 0) error(_("invalid '%s' argument"), "type");
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
+	SEXP sxi = STRING_ELT(x, i);
+	if(sxi == NA_STRING) {
+	    INTEGER(s)[i] = 2;
+	    continue;
+	}
 	if(strncmp(type, "bytes", ntype) == 0) {
-	    /* This works for NA strings too */
-	    INTEGER(s)[i] = length(STRING_ELT(x, i));
+	    /* This case counts embedded nuls */
+	    INTEGER(s)[i] = length(sxi);
 	} else if(strncmp(type, "chars", ntype) == 0) {
-	    if(STRING_ELT(x, i) == NA_STRING) {
-		INTEGER(s)[i] = 2;
-	    } else {
 #ifdef SUPPORT_MBCS
-		if(mbcslocale) {
-		    nc = mbstowcs(NULL, translateChar(STRING_ELT(x, i)), 0);
-		    INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
-		} else
+	    if(mbcslocale) {
+		nc = mbstowcs(NULL, translateChar(sxi), 0);
+		INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
+	    } else
 #endif
-		    INTEGER(s)[i] = strlen(translateChar(STRING_ELT(x, i)));
-	    }
+		INTEGER(s)[i] = strlen(translateChar(sxi));
 	} else if(strncmp(type, "width", ntype) == 0) {
-	    if(STRING_ELT(x, i) == NA_STRING) {
-		INTEGER(s)[i] = 2;
-	    } else {
 #ifdef SUPPORT_MBCS
-		if(mbcslocale) {
-		    xi = translateChar(STRING_ELT(x, i));
-		    nc = mbstowcs(NULL, xi, 0);
-		    if(nc >= 0) {
-			AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
-			wc = (wchar_t *) cbuff.data;
-			mbstowcs(wc, xi, nc + 1);
-			INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
-			if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
-		    } else
-			INTEGER(s)[i] = NA_INTEGER;
+	    if(mbcslocale) {
+		xi = translateChar(sxi);
+		nc = mbstowcs(NULL, xi, 0);
+		if(nc >= 0) {
+		    AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
+		    wc = (wchar_t *) cbuff.data;
+		    mbstowcs(wc, xi, nc + 1);
+		    INTEGER(s)[i] = Ri18n_wcswidth(wc, 2147483647);
+		    if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
 		} else
+		    INTEGER(s)[i] = NA_INTEGER;
+	    } else
 #endif
-		INTEGER(s)[i] = strlen(translateChar(STRING_ELT(x, i)));
-	    }
+		INTEGER(s)[i] = strlen(translateChar(sxi));
 	} else
 	    error(_("invalid '%s' argument"), "type");
     }

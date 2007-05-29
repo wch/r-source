@@ -1,9 +1,9 @@
 \name{nchar}
 \alias{nchar}
 \alias{nzchar}
-\title{Count the Number of Characters (Bytes)}
+\title{Count the Number of Characters (or Bytes or Width)}
 \usage{
-nchar(x, type = "bytes")
+nchar(x, type = "chars")
 
 nzchar(x)
 }
@@ -57,7 +57,7 @@ nzchar(x)
   Names, dims and dimnames are copied from the input.
 
   For \code{nzchar}, a logical vector of the same length as \code{x},
-  true if and one if the element has non-zero length.
+  true if and only if the element has non-zero length.
 }
 \note{
   This does \strong{not} by default give the number of characters that
@@ -78,7 +78,7 @@ nzchar(x)
   \code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}
 }
 \examples{
-x <- c("asfef","qwerty","yuiop[","b","stuff.blah.yech")
+x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
 nchar(x)
 # 5  6  6  1 15
 

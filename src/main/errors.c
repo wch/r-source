@@ -554,12 +554,24 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
 #ifdef SUPPORT_MBCS
 	    if (mbcslocale) {
+		int msgline1;
+		char *p = strchr(tmp, '\n');
+		if (p) {
+		    *p = '\0';
+		    msgline1 = mbstowcs(NULL, tmp, 0);
+		    *p = '\n';
+		} else msgline1 = mbstowcs(NULL, tmp, 0);
 		if (14+mbstowcs(NULL, dcall, 0) + mbstowcs(NULL, tmp, 0)
 		    > LONGWARN) strcat(errbuf, tail);
 	    } else
 #endif
-	    if (14 + strlen(dcall) + strlen(tmp) > LONGWARN)
-		strcat(errbuf, tail);
+	    {
+		int msgline1 = strlen(tmp);
+		char *p = strchr(tmp, '\n');
+		if (p) msgline1 = (int)(p - tmp);
+		if (14 + strlen(dcall) + msgline1 > LONGWARN)
+		    strcat(errbuf, tail);
+	    }
 	    strcat(errbuf, tmp);
 	} else {
 	    sprintf(errbuf, _("Error: "));

@@ -16,6 +16,10 @@ USER-VISIBLE CHANGES
 	reduces the chances of unintentional partial matching but
 	means that the later arguments must be named in full.
 
+    o	The default type for nchar() is now "chars".  This is almost
+	always what was intended, and differs from the previous default
+	only for non-ASCII strings in a MBCS locale.
+
 
 NEW FEATURES
 
@@ -228,8 +232,8 @@ NEW FEATURES
 	and errors.  [Currently experimental, especially the format.]
 
     o	New primitive nzchar() as a faster alternative to
-	nchar(x) > 0 (and to avoid having to convert to wide chars in
-	a MBCS locale).
+	nchar(x) > 0 (and avoids having to convert to wide chars in
+	a MBCS locale and hence consider validity).
 
     o	relink() utility, as S3 generic with several methods,
 	providing an inversion for unlist(); thanks to a code proposal from

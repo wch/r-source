@@ -19,7 +19,7 @@ print.warnings <- function(x, ...)
                 ## Put on one line if narrow enough.
                 sm <- strsplit(msgs[i], "\n")[[1]]
                 nl <- if(nchar(ind, "w") + nchar(temp[1], "w") +
-                         nchar(sm[1], "w") <= 70)
+                         nchar(sm[1], "w") <= 75)
                     " " else "\n  "
                 paste(ind, "In ",
                       temp[1], if(length(temp) > 1) " ...",
