@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-05-22
+@set FAQ_DATE @value{FAQ_YEAR}-05-29
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2337,6 +2337,8 @@ A platform-independent basic-statistics @acronym{GUI} (graphical user
 interface) for R, based on the @strong{tcltk} package.
 @item Rcmdr.HH
 Rcmdr support for the introductory course at Temple University.
+@item RcmdrPlugin.TeachingDemos
+Rcmdr Teaching Demos plug-in.
 @item RcppTemplate
 An illustration of the use of the Rcpp R/C++ interface library.
 @item Reliability
@@ -3356,6 +3358,8 @@ Imputation for microarray data (currently KNN only).
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
+@item inline
+Inline C/C++ function calls from R.
 @item intcox
 Implementation of the Iterated Convex Minorant Algorithm for the Cox
 proportional hazard model for interval censored event data.
@@ -3663,6 +3667,8 @@ Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
 @item modeest
 Mode estimation and Chernoff distribution.
+@item modehunt
+Multiscale analysis for density functions.
 @item modeltools
 A collection of tools to deal with statistical models.
 @item moments
@@ -4005,6 +4011,8 @@ Procedures for personality and psychological research.
 Applied psychometric theory: functions useful for correlation theory,
 meta-analysis (validity-generalization), reliability, item analysis,
 inter-rater reliability, and classical utility.
+@item psyphy
+Functions for analyzing psychophysical data in R.
 @item pwr
 Basic functions for power analysis.
 @item pwt
@@ -4218,6 +4226,11 @@ Scientific graphing functions for factorial designs.
 Data manipulation using arbitrary row and column criteria.
 @item scuba
 Scuba diving calculations and decompression models.
+@item sdcMicro
+Statistical Disclosure Control methods for the generation of public and
+scientific use files.
+@item sde
+Simulation and inference for Stochastic Differential Equations.
 @item seacarb
 Calculates parameters of the seawater carbonate system.
 @c <COMMENT>
