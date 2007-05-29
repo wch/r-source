@@ -2073,12 +2073,14 @@ static int StringValue(int c)
     if(have_warned) {
 	*ct = '\0';
 #ifdef ENABLE_NLS
-	warning(ngettext("unrecognized escape removed from \"%s\"",
-			 "unrecognized escapes removed from \"%s\"",
-			 have_warned),
-		currtext);
+	warningcall(R_NilValue,
+		    ngettext("unrecognized escape removed from \"%s\"",
+			     "unrecognized escapes removed from \"%s\"",
+			     have_warned),
+		    currtext);
 #else
-	warning("unrecognized escape(s) removed from \"%s\"", currtext);
+	warningcall(R_NilValue,
+		    "unrecognized escape(s) removed from \"%s\"", currtext);
 #endif
     }
     return STR_CONST;
