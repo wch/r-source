@@ -285,8 +285,8 @@ void attribute_hidden InitOptions(void)
 #ifdef HAVE_RL_COMPLETION_MATCHES
     /* value from Rf_initialize_R */
     SET_TAG(v, install("rl_word_breaks"));
-    SETCAR(v, mkString(" \t\n\"\\'`><=+-*%;,|&{()}"));
-    set_rl_word_breaks(" \t\n\"\\'`><=+-*%;,|&{()}");
+    SETCAR(v, mkString(" \t\n\"\\'`><=%;,|&{()}"));
+    set_rl_word_breaks(" \t\n\"\\'`><=%;,|&{()}");
 #endif
 
     SET_SYMVALUE(install(".Options"), val);

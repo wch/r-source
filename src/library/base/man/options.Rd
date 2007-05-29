@@ -193,14 +193,14 @@ getOption(x)
 
 #ifdef unix
     \item{\code{rl_word_breaks}:}{Used for the readline-based terminal
-      % verbatim, for checking " \t\n\"\\'`><=+-*%;,|&{()}"
-      interface.  Default value \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&\{()\}"}.%"
+      % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
+      interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&\{()\}"}.%"
       This is the set of characters use to break the input line up into
-      tokens for object- and file-name completion.  Those who use
+      tokens for object- and file-name completion.  Those who do not use
       spaces around operators may prefer
-      \code{" \\t\\n\\"\\\\'`><=\%;,|&\{()\}"}.%"
-      The default in pre-2.5.0 versions of \R was
-      \code{" \\t\\n\\"\\\\'`@$><=;|&\{("}.}%"
+      \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&\{()\}"}.%"
+      which was the default in \R 2.5.0.  (The default in pre-2.5.0
+      versions of \R was \code{" \\t\\n\\"\\\\'`@$><=;|&\{("}.)}%"
 #endif
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
