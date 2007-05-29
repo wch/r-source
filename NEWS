@@ -25,7 +25,8 @@ NEW FEATURES
 	input line is tokenized in the readline-based terminal
 	interface for object- and file-name completion.
 	This allows it to be tuned for people who use their space bar
-	vs those who do not.
+	vs those who do not.  The default now allows filename-completion
+	with +-* in the filenames.
 
 
 INSTALLATION
