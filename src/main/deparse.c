@@ -751,6 +751,8 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case LANGSXP:
 	printcomment(s, d);
+	if (!isNull(ATTRIB(s)))
+	    d->sourceable = FALSE;
 	if (localOpts & QUOTEEXPRESSIONS) {
 	    print2buff("quote(", d);
 	    d->opts &= SIMPLE_OPTS;
