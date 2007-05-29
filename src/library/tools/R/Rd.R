@@ -10,7 +10,7 @@ function(lines)
 
     ## Re-encode if necessary (and possible).
     encoding <-
-        .get_Rd_metadata_from_Rd_lines(lines[!is.na(nchar(lines, "c"))],
+        .get_Rd_metadata_from_Rd_lines(lines[!is.na(nchar(lines, "c", TRUE))],
                                        "encoding")
     if(length(encoding)) {
         if((Sys.getlocale("LC_CTYPE") != "C")
@@ -26,7 +26,7 @@ function(lines)
         if(!all(.is_ISO_8859(lines)))
             encoding <- NA
     }
-    if(any(is.na(nchar(lines, "c")))) {
+    if(any(is.na(nchar(lines, "c", TRUE)))) {
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
@@ -388,7 +388,7 @@ function(package, dir, lib.loc = NULL)
         db <- list()
         for(f in docsFiles) {
             valid_lines <- lines <- .read_Rd_lines_quietly(f)
-            valid_lines[is.na(nchar(lines, "c"))] <- ""
+            valid_lines[is.na(nchar(lines, "c", TRUE))] <- ""
             eofPos <- grep("\\eof$", valid_lines)
             db <- c(db, split(lines[-eofPos],
                               rep(seq_along(eofPos),

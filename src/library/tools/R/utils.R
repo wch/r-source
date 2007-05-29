@@ -138,7 +138,7 @@ function(file, topic)
         on.exit(close(file))
     }
     valid_lines <- lines <- readLines(file, warn = FALSE)
-    valid_lines[is.na(nchar(lines, "c"))] <- ""
+    valid_lines[is.na(nchar(lines, "c", TRUE))] <- ""
     patt <- paste("^% --- Source file:.*/", topic, ".Rd ---$", sep="")
     if(length(top <- grep(patt, valid_lines)) != 1)
         stop("no or more than one match")

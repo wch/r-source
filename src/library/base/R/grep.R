@@ -39,8 +39,7 @@ function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
                        ignore.case, extended, perl, fixed, useBytes))
 
 agrep <-
-function(pattern, x, ignore.case = FALSE, value = FALSE,
-         max.distance = 0.1)
+function(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
 {
     pattern <- as.character(pattern)
     if(!is.character(x)) x <- as.character(x)
@@ -53,11 +52,11 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
             return(rep.int(NA, length(x)))
     }
 
-    if(!is.character(pattern)
-       || (length(pattern) < 1)
-       || ((n <- nchar(pattern)) == 0))
+    if(!is.character(pattern) || length(pattern) != 1 || !nzchar(pattern))
         stop("'pattern' must be a non-empty character string")
 
+    n <- nchar(pattern, "c")
+    if(is.na(n)) stop("invalid multibyte string for 'pattern'")
     if(!is.list(max.distance)) {
         if(!is.numeric(max.distance) || (max.distance < 0))
             stop("'max.distance' must be non-negative")

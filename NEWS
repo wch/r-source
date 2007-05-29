@@ -18,7 +18,10 @@ USER-VISIBLE CHANGES
 
     o	The default type for nchar() is now "chars".  This is almost
 	always what was intended, and differs from the previous default
-	only for non-ASCII strings in a MBCS locale.
+	only for non-ASCII strings in a MBCS locale.  There is a new
+	argument 'allowNA', and the default behaviour is now to throw
+	an error on an invalid multibyte string if type="chars" or
+	type="width".
 
 
 NEW FEATURES
@@ -235,7 +238,7 @@ NEW FEATURES
 	nchar(x) > 0 (and avoids having to convert to wide chars in
 	a MBCS locale and hence consider validity).
 
-    o	relink() utility, as S3 generic with several methods,
+    o	relink() utility, an S3 generic with several methods,
 	providing an inversion for unlist(); thanks to a code proposal from
 	Andrew Clausen.
 

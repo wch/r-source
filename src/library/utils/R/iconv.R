@@ -61,7 +61,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         x <- strsplit(locale, ".", fixed=TRUE)[[1]]
         enc <- if(length(x) == 2) gsub("@.*$o", "", x[2]) else ""
         if(enc == "UTF-8") enc <- "utf8" # for AIX
-        if(nchar(enc) && enc != "utf8") {
+        if(nzchar(enc) && enc != "utf8") {
             enc <- tolower(enc)
             known <-
                 c("ISO8859-1", "ISO8859-2", "ISO8859-3", "ISO8859-6",

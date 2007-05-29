@@ -180,7 +180,7 @@ vignetteInfo <- function(file) {
     ## <FIXME>
     ## Can only proceed with lines with are valid in the current
     ## locale ... (or should we try to iconv() from latin1?)
-    lines[is.na(nchar(lines, "c"))] <- ""
+    lines[is.na(nchar(lines, "c", TRUE))] <- ""
     ## </FIXME>
     ## \VignetteIndexEntry
     vignetteIndexEntryRE <- vignetteMetaRE("IndexEntry")

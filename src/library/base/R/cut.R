@@ -31,7 +31,7 @@ cut.default <-
                 substr(labels[1], 1, 1) <- "[" # was "("
             else
                 substring(labels[nb-1],
-                          nchar(labels[nb-1], type="char")) <- "]" # was ")"
+                          nchar(labels[nb-1], "c")) <- "]" # was ")"
         }
     } else if (is.logical(labels) && !labels)
         codes.only <- TRUE

@@ -2906,7 +2906,7 @@ function(dfile)
         out$missing_encoding <- TRUE
     }
 
-    if(any(is.na(nchar(db, "c")))) {
+    if(any(is.na(nchar(db, "c", TRUE)))) {
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.

@@ -220,7 +220,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	bad_IDs <-
 	    unlist(sapply(db,
 			  function(u)
-			  u[rowSums(is.na(nchar(u, "c"))) > 0, "ID"]))
+			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
 	if(length(bad_IDs)) {
 	    warning("removing all entries with invalid multi-byte character data")
 	    for(i in seq_along(db)) {

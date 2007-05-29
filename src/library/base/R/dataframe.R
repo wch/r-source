@@ -376,7 +376,7 @@ data.frame <-
             else if (no.vn[[i]]) {
                 tmpname <- deparse(object[[i]])[1L]
                 if( substr(tmpname, 1L, 2L) == "I(" ) {
-                    ntmpn <- nchar(tmpname, type="c")
+                    ntmpn <- nchar(tmpname, "c")
                     if(substr(tmpname, ntmpn, ntmpn) == ")")
                         tmpname <- substr(tmpname, 3L, ntmpn - 1L)
                 }

@@ -3,7 +3,7 @@
 \alias{nzchar}
 \title{Count the Number of Characters (or Bytes or Width)}
 \usage{
-nchar(x, type = "chars")
+nchar(x, type = "chars", allowNA = FALSE)
 
 nzchar(x)
 }
@@ -20,6 +20,8 @@ nzchar(x)
     vector.}
   \item{type}{character string: partial matching to one of
     \code{c("bytes", "chars", "width")}.  See Details.}
+  \item{allowNA}{logical: show \code{NA} be returned for invalid
+    multibyte strings (rather than throwing an error)?}
 }
 \details{
   The \sQuote{size} of a character string can be measured in one of
@@ -49,10 +51,11 @@ nzchar(x)
   For \code{nchar}, an integer vector giving the sizes of each element,
   currently always \code{2} for missing values (for \code{NA}).
 
-  If an element is invalid in a multi-byte character set such as UTF-8,
-  its number of characters and the width will be \code{NA}.  Otherwise
-  the number of characters will be non-negative, so
-  \code{!is.na(nchar(x, "chars"))} is a test of validity.
+  If \code{allowNA = TRUE} and an element is invalid in a multi-byte
+  character set such as UTF-8, its number of characters and the width
+  will be \code{NA}.  Otherwise the number of characters will be
+  non-negative, so \code{!is.na(nchar(x, "chars", TRUE))} is a test of
+  validity.
 
   Names, dims and dimnames are copied from the input.
 
