@@ -425,7 +425,7 @@ void Rf_checkArityCall(SEXP op, SEXP args, SEXP call)
     if (PRIMARITY(op) >= 0 && PRIMARITY(op) != length(args)) {
 	if (PRIMINTERNAL(op))
 	    error(P_("%d argument passed to .Internal(%s) which requires %d",
-		     "%d arguments passed to%s .Internal(%s) which requires %d",
+		     "%d arguments passed to .Internal(%s) which requires %d",
 		     length(args)),
 		  length(args), PRIMNAME(op), PRIMARITY(op));
 	else
