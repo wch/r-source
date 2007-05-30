@@ -112,7 +112,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   This applies to the internal code only.
 
   Proxies can be specified via environment variables.
-  Setting \code{"no_proxy"} stops any proxy being tried.
+  Setting \code{"no_proxy"} to \code{"*"} stops any proxy being tried.
   Otherwise the setting of \code{"http_proxy"} or \code{"ftp_proxy"}
   (or failing that, the all upper-case version) is consulted and if
   non-empty used as a proxy site.  For FTP transfers, the username
