@@ -53,7 +53,7 @@
     else
       stop(gettextf(
                     "Invalid object in meta table of methods for \"%s\", label \"%s\", had class \"%s\"",
-                    generic@generic, what, class(obj)))
+                    generic@generic, what, class(obj)), domain=NA)
     ns <- length(sig)
     if(ns == n) {}
     else {
@@ -287,7 +287,8 @@
 	warning(gettextf(paste("Ambiguous method selection for \"%s\", target \"%s\"",
                                "(the first of the signatures shown will be used)\n%s\n"),
 			 fdef@generic, .sigLabel(classes),
-			 paste("   ", names(methods), collapse = "\n")))
+			 paste("   ", names(methods), collapse = "\n")),
+                domain = NA, call. = FALSE)
       methods <- methods[1]
   }
   if(doMtable  && length(methods)>0) {
@@ -457,7 +458,7 @@
     else {
       warning(gettextf(
               "Couldn't find methods table for \"%s\", package \"%s\" may be out of date",
-                       generic@generic, generic@package))
+                       generic@generic, generic@package), domain=NA)
       metaName <- mlistMetaName(generic)
       if(exists(metaName, envir = env, inherits = FALSE))
         .mlistAddToTable(generic, get(metaName, envir = env), mtable, attach)
@@ -511,7 +512,8 @@
 	if(!is.na(onOff))
 	    .assignOverBinding(".UseMethodsTables", onOff, where = where, FALSE)
 	else
-	    stop(gettextf(".UsingMethodsTables: 'onOff' is not TRUE or FALSE"))
+	    stop(gettextf(".UsingMethodsTables: 'onOff' is not TRUE or FALSE"),
+                 domain = NA)
     }
     prev
 }
@@ -777,7 +779,7 @@ outerLabels <- function(labels, new) {
     if(is.null(generic)) {
       warning(gettextf(
        "Could not find generic function \"%s\" to initialize cached methods",
-                       name))
+                       name), domain=NA)
       next
     }
     table <- .getMethodsTable(generic)
