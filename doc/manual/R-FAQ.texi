@@ -2264,8 +2264,11 @@ Regional Frequency Analysis.
 @item RGtk2
 Facilities for programming graphical interfaces using Gtk (the Gimp Tool
 Kit) version 2.
-@item RGtk2.10
-R bindings for Gtk 2.10.x.
+@c <COMMENT>
+@c Moved to Archive on 2007-05-29.
+@c @item RGtk2.10
+@c R bindings for Gtk 2.10.x.
+@c </COMMENT>
 @item RGrace
 Mouse/menu driven interactive plotting application.
 @item RGraphics
@@ -4038,6 +4041,8 @@ Tools for the design of QTL experiments.
 QTL Bayesian Interval Mapping.
 @item quadprog
 For solving quadratic programming problems.
+@item qualV
+Qualitative methods for the validation of models.
 @item quantchem
 Quantitative chemical analysis: calibration and evaluation of results.
 @item quantreg
