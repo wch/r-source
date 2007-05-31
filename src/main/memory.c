@@ -2542,13 +2542,13 @@ int (TRUELENGTH)(SEXP x) { return TRUELENGTH(x); }
 void (SETLENGTH)(SEXP x, int v) { SETLENGTH(x, v); }
 void (SET_TRUELENGTH)(SEXP x, int v) { SET_TRUELENGTH(x, v); }
 
-char *(R_CHAR)(SEXP x) {
+const char *(R_CHAR)(SEXP x) {
 #ifdef USE_TYPE_CHECKING
     if(TYPEOF(x) != CHARSXP) 
 	error("%s() can only be applied to a '%s', not a '%s'", 
 	      "CHAR", "CHARSXP", type2char(TYPEOF(x)));
 #endif
-    return CHAR(x);
+    return (const char *)CHAR(x);
 }
 
 SEXP (STRING_ELT)(SEXP x, int i) {

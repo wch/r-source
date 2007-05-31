@@ -3221,6 +3221,17 @@ void attribute_hidden InitStringHash()
 #define NEXT_CHAIN_EL(e) (CDR(e))
 #define SET_NEXT_CHAIN_EL(e1, e2) (SETCDR(e1, e2))
 
+#define INT_IS_LATIN1(x) (x & LATIN1_MASK)
+#define INT_IS_UTF8(x)   (x & UTF8_MASK)
+#define STRINGHASHCMP(s, k, e) ( \
+                                ((INT_IS_UTF8(e) == IS_UTF8(s)) &&    \
+                                 (INT_IS_LATIN1(e) == IS_LATIN1(s)))  && \
+                                strcmp(CHAR(s), k) == 0)
+
+#define CHARENCCMP(a, b) ( \
+                         ((IS_UTF8(a) == IS_UTF8(b)) && \
+                          (IS_UTF8(a) == IS_UTF8(b))))
+
 /* Resize a hash table with char* based keys.  The new table will be
    sized according to HASHTABLEGROWTHRATE. */
 static SEXP R_CharHashResize(SEXP table)
@@ -3284,7 +3295,7 @@ static void R_StringHash_resize()
 /* Get CHARSXP for string s in the hash table.
    Return R_NilValue, if not found.
 */
-static SEXP R_CharHashGet(int hashcode, const char *s, SEXP table)
+static SEXP R_CharHashGet(int hashcode, const char *s, int enc, SEXP table)
 {
     SEXP chain, val;
 
@@ -3293,7 +3304,7 @@ static SEXP R_CharHashGet(int hashcode, const char *s, SEXP table)
     /* Retrieve the value from the chain */
     for (; chain != R_NilValue ; chain = CDR(chain)) {
         val = CAR(chain);
-	if (strcmp(CHAR(val), s) == 0)
+	if (STRINGHASHCMP(val, s, enc))
             return val;
     }
     /* If not found */
@@ -3301,7 +3312,7 @@ static SEXP R_CharHashGet(int hashcode, const char *s, SEXP table)
 }
 
 /* Get a CHARSXP from the global cache, R_NilValue if not found */
-#define R_StringHash_get(h, s) (R_CharHashGet(h, s, R_StringHash))
+#define R_StringHash_get(h, s, e) (R_CharHashGet(h, s, e, R_StringHash))
 
 
 /* Add CHARSXP, schar to the table using key CHAR(schar).  If a
@@ -3310,6 +3321,7 @@ static SEXP R_CharHashGet(int hashcode, const char *s, SEXP table)
 static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
 {
     SEXP chain, val;
+    int enc_match = 0;
 
     /* Grab the chain from the hashtable */
     chain = VECTOR_ELT(table, hashcode);
@@ -3317,7 +3329,8 @@ static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
     /* Search for the value in the chain */
     for (; !isNull(chain); chain = CDR(chain)) {
         val = CAR(chain);
-	if (strcmp(CHAR(val), CHAR(schar)) == 0) {
+	if (CHARENCCMP(val, schar) &&
+            strcmp(CHAR(val), CHAR(schar)) == 0) {
             SETCAR(chain, schar); /* set to new value */
 	    return;
 	}
@@ -3333,14 +3346,18 @@ static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
 /* Add a CHARSXP to the global cache */
 #define R_StringHash_set(h, s) (R_CharHashSet(h, s, R_StringHash))
 
-/* mkChar - make a character (CHARSXP) variable.  If a CHARSXP with
-   the same string already exists in the global CHARSXP cache,
-   R_StringHash, it is returned.  Otherwise, a new CHARSXP is created,
-   added to the cache and then returned. */
-SEXP mkChar(const char *name)
+/* mkCharEnc - make a character (CHARSXP) variable and set its
+   encoding bit.  If a CHARSXP with the same string already exists in
+   the global CHARSXP cache, R_StringHash, it is returned.  Otherwise,
+   a new CHARSXP is created, added to the cache and then returned. */
+SEXP mkCharEnc(const char *name, int enc)
 {
     SEXP cval;
     int h = 0;
+
+    if (enc != 0 && enc != UTF8_MASK &&
+        enc != LATIN1_MASK)
+        error("unknown encoding mask: %d", enc);
 
     if (R_HashSizeCheck(R_StringHash)) {
         R_StringHash_resize();
@@ -3349,12 +3366,33 @@ SEXP mkChar(const char *name)
     /* have to handle "" specially since it doesn't hash */
     if (*name != '\0')
         h = R_Newhashpjw(name) % HASHSIZE(R_StringHash);
-    cval = R_StringHash_get(h, name);
+    cval = R_StringHash_get(h, name, enc);
     if (cval == R_NilValue) {
         PROTECT(cval = allocString(strlen(name)));
         strcpy(CHAR(cval), name);
+        switch(enc) {
+        case 0:
+            break;          /* don't set encoding */
+        case UTF8_MASK:
+            SET_UTF8(cval);
+            break;
+        case LATIN1_MASK:
+            SET_LATIN1(cval);
+            break;
+        default:
+            error("unknown encoding mask: %d", enc);
+        }
         R_StringHash_set(h, cval);
         UNPROTECT(1);
     }
     return cval;
+}
+
+/* mkChar - make a character (CHARSXP) variable.  If a CHARSXP with
+   the same string already exists in the global CHARSXP cache,
+   R_StringHash, it is returned.  Otherwise, a new CHARSXP is created,
+   added to the cache and then returned. */
+SEXP mkChar(const char *name)
+{
+    return mkCharEnc(name, 0);
 }

@@ -92,13 +92,11 @@ static void DeallocBuffer(R_StringBuffer *cbuff)
 
 static SEXP mkChar2(const char *name, SEXP ref)
 {
-    SEXP c = allocString(strlen(name));
-    strcpy(CHAR(c), name);
     if(IS_LATIN1(ref) || IS_UTF8(ref)) {
-	if(known_to_be_latin1) SET_LATIN1(c);
-	if(known_to_be_utf8) SET_UTF8(c);
+	if(known_to_be_latin1) return mkCharEnc(name, LATIN1_MASK);
+	if(known_to_be_utf8) return mkCharEnc(name, UTF8_MASK);
     }
-    return c;
+    return mkChar(name);
 }
 
 

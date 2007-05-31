@@ -329,7 +329,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 typedef struct SEXPREC *SEXP;
 
 #define CHAR(x)		R_CHAR(x)
-char *(R_CHAR)(SEXP x);
+const char *(R_CHAR)(SEXP x);
 
 /* Various tests, with macro versions in Defn.h */
 Rboolean (Rf_isNull)(SEXP s);
@@ -612,6 +612,7 @@ SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_namesgets(SEXP, SEXP);
 SEXP Rf_mkChar(const char*);
+SEXP Rf_mkCharEnc(const char*, int);
 Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
 int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
@@ -910,6 +911,7 @@ int R_system(char *);
 #define listAppend		Rf_listAppend
 #define match			Rf_match
 #define mkChar			Rf_mkChar
+#define mkCharEnc		Rf_mkCharEnc
 #define mkString		Rf_mkString
 #define namesgets		Rf_namesgets
 #define ncols			Rf_ncols

@@ -836,13 +836,11 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 
 static SEXP mkChar2(const char *name)
 {
-    SEXP c = allocString(strlen(name));
-    strcpy(CHAR(c), name);
     if(!utf8strIsASCII((char *) name)) {
-	if(known_to_be_latin1) SET_LATIN1(c);
-	else if(known_to_be_utf8) SET_UTF8(c);
+	if(known_to_be_latin1) return mkCharEnc(name, LATIN1_MASK);
+	else if(known_to_be_utf8) return mkCharEnc(name, UTF8_MASK);
     }
-    return c;
+    return mkChar(name);
 }
 
 static SEXP mkString2(const char *s)
