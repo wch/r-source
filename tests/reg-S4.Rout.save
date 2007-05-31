@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-27 r41721)
+R version 2.6.0 Under development (unstable) (2007-05-29 r41751)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -283,11 +283,10 @@ Slot "y":
 +     stopifnot(inherits(try(expr, silent = TRUE), "try-error"))
 > assertError(b & b)
 Warning message:
-In .findInheritedMethods(classes, fdef, mtable) :
-  Ambiguous method selection for "&", target "brob#brob" (the first of the signatures shown will be used)
+Ambiguous method selection for "&", target "brob#brob" (the first of the signatures shown will be used)
     brob#ANY
     ANY#brob
-
+ 
 > assertError(b | 1)
 > assertError(TRUE & b)
 > 
