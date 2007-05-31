@@ -238,8 +238,10 @@ offset <- function(object) object
 
 .checkMFClasses <- function(cl, m, ordNotOK = FALSE)
 {
+    ## when called from predict.nls, vars not match.
     new <- sapply(m, .MFclass)
-    if(length(new) == 0) return()
+    new <- new[names(new) %in% names(cl)]
+     if(length(new) == 0) return()
     old <- cl[names(new)]
     if(!ordNotOK) {
         old[old == "ordered"] <- "factor"
