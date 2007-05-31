@@ -236,6 +236,8 @@ NEW FEATURES
 	providing an inversion for unlist(); thanks to a code proposal from
 	Andrew Clausen.
 
+    o	row() and col() now work on matrix-like objects, not just matrices.
+
 
 DEPRECATED & DEFUNCT
 

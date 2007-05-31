@@ -81,13 +81,13 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
 }
 
 row <- function(x, as.factor=FALSE) {
-    if(as.factor) factor(.Internal(row(x)), labels=rownames(x))
-    else .Internal(row(x))
+    if(as.factor) factor(.Internal(row(dim(x))), labels=rownames(x))
+    else .Internal(row(dim(x)))
 }
 
 col <- function(x, as.factor=FALSE) {
-    if(as.factor) factor(.Internal(col(x)), labels=colnames(x))
-    else .Internal(col(x))
+    if(as.factor) factor(.Internal(col(dim(x))), labels=colnames(x))
+    else .Internal(col(dim(x)))
 }
 
 crossprod <- function(x, y=NULL) .Internal(crossprod(x,y))

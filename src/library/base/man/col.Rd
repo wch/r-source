@@ -2,14 +2,15 @@
 \alias{col}
 \title{Column Indexes}
 \description{
-  Returns a matrix of integers indicating their column number in the
-  matrix.
+  Returns a matrix of integers indicating their column number in a
+  matrix-like object.
 }
 \usage{
 col(x, as.factor = FALSE)
 }
 \arguments{
-  \item{x}{a matrix.}
+  \item{x}{a matrix-like object, that is one with a two-dimensional
+    \code{dim}.} 
   \item{as.factor}{a logical value indicating whether the value should
     be returned as a factor rather than as numeric.}
 }

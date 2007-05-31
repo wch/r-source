@@ -345,15 +345,16 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
+    SEXP x, ans;
     int i, j, nr, nc;
 
     checkArity(op, args);
-    if (!isMatrix(CAR(args)))
-	error(_("a matrix is required as argument to 'row/col'"));
+    x = CAR(args);
+    if (!isInteger(x) || LENGTH(x) != 2)
+	error(_("a matrix-like objects is required as argument to 'row/col'"));
 
-    nr = nrows(CAR(args));
-    nc = ncols(CAR(args));
+    nr = INTEGER(x)[0];
+    nc = INTEGER(x)[1];
 
     ans = allocMatrix(INTSXP, nr, nc);
 
