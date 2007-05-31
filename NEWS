@@ -23,6 +23,10 @@ USER-VISIBLE CHANGES
 	an error on an invalid multibyte string if type="chars" or
 	type="width".
 
+    o	Connections will be closed if there is no R object referring to
+	them.  A warning is issued if this is done, either at garbage
+	collection or if all the connection slots are in use.
+
 
 NEW FEATURES
 

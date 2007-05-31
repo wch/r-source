@@ -148,7 +148,9 @@ isIncomplete(con)
   connections on Windows, and \code{\link{pushBack}} is text-oriented and
   is only allowed on connections open for reading in text mode.
 
-  \code{close} closes and destroys a connection.
+  \code{close} closes and destroys a connection.  Note that this will
+  happen automatically in due course if there is no \R object referring
+  to the connection.
 
   \code{flush} flushes the output stream of a connection open for
   write/append (where implemented).

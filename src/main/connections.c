@@ -71,6 +71,12 @@ static SEXP OutTextData;
 static int R_SinkNumber;
 static int SinkCons[NSINKS], SinkConsClose[NSINKS], R_SinkSplit[NSINKS];
 
+/* We need a unique id for a connection to ensure that the finalizer
+   does not try to close it after it is already closed.  And that id
+   will be passed as a pointer, so it seemed easiest to use void *.
+*/
+static void * current_id = NULL;
+
 /* ------------- admin functions (see also at end) ----------------- */
 
 int attribute_hidden NextConnection()
@@ -78,8 +84,13 @@ int attribute_hidden NextConnection()
     int i;
     for(i = 3; i < NCONNECTIONS; i++)
 	if(!Connections[i]) break;
-    if(i >= NCONNECTIONS)
-	error(_("all connections are in use"));
+    if(i >= NCONNECTIONS) {
+	R_gc(); /* Try to reclaim unused ones */
+	for(i = 3; i < NCONNECTIONS; i++)
+	    if(!Connections[i]) break;
+	if(i >= NCONNECTIONS)
+	    error(_("all connections are in use"));
+    }
     return i;
 }
 
@@ -107,15 +118,37 @@ Rconnection getConnection(int n)
 }
 
 attribute_hidden
-int getActiveSink(int n){
-  if (n>=R_SinkNumber || n<0)
-    return 0;
-  if (R_SinkSplit[R_SinkNumber-n])
-    return SinkCons[R_SinkNumber-n-1];
-  else
-    return 0;
+int getActiveSink(int n)
+{
+    if (n >= R_SinkNumber || n < 0)
+	return 0;
+    if (R_SinkSplit[R_SinkNumber - n])
+	return SinkCons[R_SinkNumber - n - 1];
+    else
+	return 0;
 }
 
+static void conFinalizer(SEXP ptr)
+{
+    int i, ncon;
+    void *cptr = R_ExternalPtrAddr(ptr);
+
+    if(!cptr) return;
+
+    for(i = 3; i < NCONNECTIONS; i++)
+	if(Connections[i] && Connections[i]->id == cptr) {
+	    ncon = i;
+	    break;
+	}
+    if(i >= NCONNECTIONS) return;
+    /* printf("closing unused connection %d (%s)\n", ncon,
+       getConnection(ncon)->description); */
+    warning(_("closing unused connection %d (%s)\n"), ncon,
+	    getConnection(ncon)->description);
+
+    con_close(ncon);
+    R_ClearExternalPtr(ptr); /* not really needed */
+}
 
 
 /* for use in REvprintf */
@@ -399,6 +432,11 @@ void init_con(Rconnection new, char *description, const char * const mode)
     new->save = new->save2 = -1000;
     new->private = NULL;
     new->inconv = new->outconv = NULL;
+    /* increment id, avoid NULL */
+    current_id = (void *)((size_t) current_id+1);
+    if(!current_id) current_id = (void *) 1;
+    new->id = current_id;
+    new->ex_ptr = NULL;
 }
 
 /* ------------------- file connections --------------------- */
@@ -861,6 +899,10 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("fifo"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 
     return ans;
@@ -1006,6 +1048,10 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 
     return ans;
@@ -1187,6 +1233,10 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("gzfile"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 
     return ans;
@@ -1365,6 +1415,10 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("bzfile"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 
     return ans;
@@ -2080,6 +2134,10 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("textConnection"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
     return ans;
 }
@@ -2162,6 +2220,10 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("sockconn"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 #else
     error(_("sockets are not available on this system"));
@@ -2213,6 +2275,10 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar("unz"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 
     return ans;
@@ -2313,6 +2379,7 @@ static void con_close1(Rconnection con)
     if(con->isGzcon) {
 	Rgzconn priv = (Rgzconn)con->private;
 	con_close1(priv->con);
+	R_ReleaseObject(priv->con->ex_ptr);
     }
     /* close inconv and outconv if open */
     if(con->inconv) Riconv_close(con->inconv);
@@ -3512,6 +3579,7 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 	R_OutputCon = SinkCons[++R_SinkNumber] = icon;
 	SinkConsClose[R_SinkNumber] = toclose;
  	R_SinkSplit[R_SinkNumber] = tee;
+	R_PreserveObject(con->ex_ptr);
    } else { /* removing a sink */
 	if (R_SinkNumber <= 0) {
 	    warning(_("no sink to remove"));
@@ -3520,6 +3588,7 @@ switch_or_tee_stdout(int icon, int closeOnExit, int tee)
 	    R_OutputCon = SinkCons[--R_SinkNumber];
 	    if((icon = SinkCons[R_SinkNumber + 1]) >= 3) {
 		Rconnection con = getConnection(icon);
+		R_ReleaseObject(con->ex_ptr);
 		if(SinkConsClose[R_SinkNumber + 1] == 1) /* close it */
 		    con->close(con);
 		else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
@@ -3565,10 +3634,13 @@ SEXP attribute_hidden do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("sink stack is full"));
 	switch_or_tee_stdout(icon, closeOnExit, tee);
     } else {
-	if(icon < 0) R_ErrorCon = 2;
-	else {
+	if(icon < 0) {
+	    R_ErrorCon = 2;
+	    R_ReleaseObject(getConnection(R_ErrorCon)->ex_ptr);
+	} else {
 	    getConnection(icon); /* check validity */
 	    R_ErrorCon = icon;
+	    R_PreserveObject(getConnection(icon)->ex_ptr);
 	}
     }
 
@@ -3610,7 +3682,8 @@ void attribute_hidden InitConnections()
     SinkCons[0] = 1; R_ErrorCon = 2;
 }
 
-SEXP attribute_hidden do_getallconnections(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden 
+do_getallconnections(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, j=0, n=0;
     SEXP ans;
@@ -3622,6 +3695,31 @@ SEXP attribute_hidden do_getallconnections(SEXP call, SEXP op, SEXP args, SEXP e
 	if(Connections[i])
 	    INTEGER(ans)[j++] = i;
     UNPROTECT(1);
+    return ans;
+}
+
+SEXP attribute_hidden 
+do_getconnection(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, class;
+    int what;
+    Rconnection con;
+
+    checkArity(op, args);
+    what = asInteger(CAR(args));
+    if (what == NA_INTEGER || what < 0 || what >= NCONNECTIONS ||
+	!Connections[what]) error(_("there is no connection %d"), what);
+
+    con = Connections[what];
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = what;
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar(con->class));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    if (what > 2)
+	setAttrib(ans, install("conn_id"), con->ex_ptr);
+    UNPROTECT(2);
     return ans;
 }
 
@@ -3758,6 +3856,10 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(class, 0, mkChar(class2));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), con->ex_ptr);
+    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 
     return ans;
@@ -4108,6 +4210,10 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     ((Rgzconn)(new->private))->nsaved = -1;
     ((Rgzconn)(new->private))->allow = allow;
 
+    /* as there might not be an R-level reference to the wrapped
+       connection */
+    R_PreserveObject(incon->ex_ptr);
+
     Connections[icon] = new;
     strncpy(new->encname, incon->encname, 100);
     if(incon->isopen) new->open(new);
@@ -4119,6 +4225,10 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(class, 0, mkChar("gzcon"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
+    new->ex_ptr = R_MakeExternalPtr((void *)new->id, install("connection"),
+				    R_NilValue);
+    setAttrib(ans, install("conn_id"), new->ex_ptr);
+    R_RegisterCFinalizerEx(new->ex_ptr, conFinalizer, FALSE);
     UNPROTECT(2);
 
     return ans;

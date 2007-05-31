@@ -43,6 +43,7 @@
  DefaultPalette
  DialogSelectFile
  EhiWakeUp
+ EncodeReal2
  GA_MDIFrame
  GA_MDIStatus
  GA_MDIToolbar
@@ -764,6 +765,7 @@
  do_getWindowHandle
  do_getWindowTitle
  do_getallconnections
+ do_getconnection
  do_getenv
  do_geterrmessage
  do_getlocale
@@ -1489,6 +1491,7 @@
  xdr_void
  xdr_wrapstring
  xdrstdio_create
+ yylloc
  zError
  z_errmsg
  z_prec_r

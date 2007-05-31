@@ -1271,7 +1271,7 @@ typedef struct typecvt_possible_types {
  *
  * The typeInfo struct should be initialized with all fields TRUE.
  */
-void ruleout_types(char *s, Typecvt_Info *typeInfo, LocalData *data)
+static void ruleout_types(char *s, Typecvt_Info *typeInfo, LocalData *data)
 {
     int res;
     char *endp;

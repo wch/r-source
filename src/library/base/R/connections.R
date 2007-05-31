@@ -143,12 +143,7 @@ showConnections <- function(all = FALSE)
 getAllConnections <- function()
     .Internal(getAllConnections())
 
-getConnection <- function(what)
-{
-    set <- getAllConnections()
-    if(what %in% set) structure(what, class="connection")
-    else NULL
-}
+getConnection <- function(what) .Internal(getConnection(what))
 
 closeAllConnections <- function()
 {
