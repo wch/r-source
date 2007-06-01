@@ -163,6 +163,10 @@ BUG FIXES
     o	promptClass() now lists methods, including those for generics in
 	other attached packages.
 
+    o	connection-releated functions such as readBin no longer crash
+	when supplied with an invalid connection
+
+
 
 
 

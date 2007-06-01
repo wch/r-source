@@ -2743,9 +2743,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	bytes = RAW(CAR(args));
 	nbytes = LENGTH(CAR(args));
     } else {
-	i = asInteger(CAR(args)); 
-	if(i == NA_INTEGER || !(con = Connections[i]))
-	    error(_("invalid connection"));
+	con = getConnection(asInteger(CAR(args)));
 	if(con->text) error(_("can only read from a binary connection"));
     }
     
@@ -2954,9 +2952,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
     if(TYPEOF(CADR(args)) == RAWSXP) {
 	isRaw = TRUE;
     } else {
-	i = asInteger(CADR(args));
-	if(i == NA_INTEGER || !(con = Connections[i]))
-	    error("invalid connection");
+	con = getConnection(asInteger(CADR(args)));
 	if(con->text) error(_("can only write to a binary connection"));
 	wasopen = con->isopen;
 	if(!con->canwrite)
@@ -3217,9 +3213,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     	bytes = RAW(CAR(args));
     	nbytes = LENGTH(CAR(args));
     } else {
-    	i = asInteger(CAR(args));
-    	if(i == NA_INTEGER || !(con = Connections[i]))
-	    error(_("invalid connection"));
+	con = getConnection(asInteger(CAR(args)));
     	if(!con->canread)
 	    error(_("cannot read from this connection"));
     }
@@ -3274,9 +3268,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     if(TYPEOF(CADR(args)) == RAWSXP) {
     	isRaw = TRUE;
     } else {
-    	i = asInteger(CADR(args));
-    	if(i == NA_INTEGER || !(con = Connections[i]))
-	    error(_("invalid connection"));
+	con = getConnection(asInteger(CADR(args)));
     	if(!con->canwrite)
 	    error(_("cannot write to this connection"));
 	wasopen = con->isopen;
@@ -3420,9 +3412,7 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
     stext = CAR(args);
     if(!isString(stext))
 	error(_("invalid '%s' argument"), "data");
-    i = asInteger(CADR(args));
-    if(i == NA_INTEGER || !(con = Connections[i]))
-	error(_("invalid connection"));
+    con = getConnection(asInteger(CADR(args)));
     newLine = asLogical(CADDR(args));
     if(newLine == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "newLine");
@@ -3456,13 +3446,10 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i;
     Rconnection con = NULL;
     SEXP ans;
 
-    i = asInteger(CAR(args));
-    if(i == NA_INTEGER || !(con = Connections[i]))
-	error(_("invalid connection"));
+    con = getConnection(asInteger(CAR(args)));
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = con->nPushBack;
     UNPROTECT(1);
@@ -3471,12 +3458,10 @@ SEXP attribute_hidden do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_clearpushback(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, j;
+    int j;
     Rconnection con = NULL;
 
-    i = asInteger(CAR(args));
-    if(i == NA_INTEGER || !(con = Connections[i]))
-	error(_("invalid connection"));
+    con = getConnection(asInteger(CAR(args)));
 
     if(con->nPushBack > 0) {
 	for(j = 0; j < con->nPushBack; j++) free(con->PushBack[j]);
