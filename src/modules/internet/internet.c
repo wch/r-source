@@ -252,7 +252,7 @@ static void doneprogressbar(void *data)
 static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, scmd, sfile, smode, sheaders, agentFun;
-    char *url, *file, *mode, *headers;
+    const char *url, *file, *mode, *headers;
     int quiet, status = 0, cacheOK;
 
     checkArity(op, args);

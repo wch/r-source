@@ -132,7 +132,7 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 			       Rboolean backtick, int opts);
 static void args2buff(SEXP, int, int, LocalParseData *);
 static void deparse2buff(SEXP, LocalParseData *);
-static void print2buff(char *, LocalParseData *);
+static void print2buff(const char *, LocalParseData *);
 static void printtab2buff(int, LocalParseData *);
 static void writeline(LocalParseData *);
 static void vector2buff(SEXP, LocalParseData *);
@@ -1123,7 +1123,7 @@ static void writeline(LocalParseData *d)
     d->startline = TRUE;
 }
 
-static void print2buff(char *strng, LocalParseData *d)
+static void print2buff(const char *strng, LocalParseData *d)
 {
     int tlen, bufflen;
 

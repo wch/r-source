@@ -116,17 +116,17 @@ static void drawrow(DEstruct, int);
 static void find_coords(DEstruct, int, int, int*, int*);
 static void handlechar(DEstruct, char*);
 static void highlightrect(DEstruct);
-static Rboolean initwin(DEstruct, char *);
+static Rboolean initwin(DEstruct, const char *);
 static void jumppage(DEstruct, int);
 static void jumpwin(DEstruct, int, int);
 static void de_popupmenu(DEstruct, int, int, int);
 static void printlabs(DEstruct);
 static void printrect(DEstruct, int, int);
-static void printstring(DEstruct, char*, int, int, int, int);
+static void printstring(DEstruct, const char*, int, int, int, int);
 static void printelt(DEstruct, SEXP, int, int, int);
 static void setcellwidths(DEstruct);
 
-static dataeditor newdataeditor(DEstruct, char *);
+static dataeditor newdataeditor(DEstruct, const char *);
 static void de_copy(control c);
 static void de_paste(control c);
 static void de_delete(control c);
@@ -493,7 +493,7 @@ static void advancerect(DEstruct DE, int which)
     highlightrect(DE);
 }
 
-static char *get_col_name(DEstruct DE, int col)
+static const char *get_col_name(DEstruct DE, int col)
 {
     static char clab[25];
     if (col <= DE->xmaxused) {
@@ -551,7 +551,7 @@ static void drawcol(DEstruct DE, int whichcol)
 {
     int i, src_x, src_y, len, col = whichcol - DE->colmin + 1, 
 	bw = BOXW(whichcol);
-    char *clab;
+    const char *clab;
     SEXP tmp;
 
     find_coords(DE, 0, col, &src_x, &src_y);
@@ -632,7 +632,7 @@ static void printelt(DEstruct DE, SEXP invec, int vrow, int ssrow, int sscol)
 static void drawelt(DEstruct DE, int whichrow, int whichcol)
 {
     int i;
-    char *clab;
+    const char *clab;
     SEXP tmp;
 
     if (whichrow == 0) {
@@ -835,8 +835,8 @@ static void closerect(DEstruct DE)
 
 /* This version will only display BUFSIZE chars, but the maximum col width
    will not allow that many */
-static void printstring(DEstruct DE, 
-			char *ibuf, int buflen, int row, int col, int left)
+static void printstring(DEstruct DE, const char *ibuf, int buflen, 
+			int row, int col, int left)
 {
     int x_pos, y_pos, bw, fw, bufw;
     char buf[BUFSIZE+1];
@@ -954,7 +954,8 @@ static void handlechar(DEstruct DE, char *text)
 
 static void printlabs(DEstruct DE)
 {
-    char clab[15], *p;
+    char clab[15];
+    const char *p;
     int i;
 
     for (i = DE->colmin; i <= DE->colmax; i++) {
@@ -1331,7 +1332,7 @@ static void copyH(DEstruct DE, int src_x, int dest_x, int width)
 	     rect(src_x, DE->hwidth, width, DE->windowHeight - DE->hwidth));
 }
 
-static Rboolean initwin(DEstruct DE, char *title)
+static Rboolean initwin(DEstruct DE, const char *title)
 {
     int i, labdigs;
     rect r;
@@ -1443,7 +1444,7 @@ static void nm_hit_key(window w, int key)
 
 static void de_popupmenu(DEstruct DE, int x_pos, int y_pos, int col)
 {
-    char *blah;
+    const char *blah;
     rect r = screen_coords(DE->de);
 
     popupcol = DE->colmin + col - 1;
@@ -1454,7 +1455,7 @@ static void de_popupmenu(DEstruct DE, int x_pos, int y_pos, int col)
     setclose(wconf, popupclose);
     setbackground(wconf, bbg);
     lwhat = newlabel(G_("variable name"), rect(10, 22, 90, 20), AlignLeft);
-    varname = newfield(blah, rect(100, 20, 120, 20));
+    varname = newfield((char *)blah, rect(100, 20, 120, 20));
     lrb = newlabel(G_("type"), rect(50, 62, 50, 20), AlignLeft);
     rb_num = newradiobutton("numeric", rect(100, 60 , 80, 20), NULL);
     rb_char = newradiobutton("character", rect(180, 60 , 80, 20), NULL);
@@ -1663,7 +1664,7 @@ static void depopupact(control m)
 
 RECT *RgetMDIsize(); /* in rui.c */
 
-static dataeditor newdataeditor(DEstruct DE, char *title)
+static dataeditor newdataeditor(DEstruct DE, const char *title)
 {
     int w, h, x, y;
     dataeditor c;
@@ -1685,7 +1686,7 @@ static dataeditor newdataeditor(DEstruct DE, char *title)
 	x = (devicewidth(NULL) - w) / 3;
 	y = (deviceheight(NULL) - h) / 3 ;
     }
-    c = (dataeditor) newwindow(title, rect(x, y, w, h),
+    c = (dataeditor) newwindow((char *) title, rect(x, y, w, h),
 			       Document | StandardWindow | Menubar |
 			       VScrollbar | HScrollbar | TrackMouse);
     if (!c) {

@@ -891,7 +891,7 @@ void attribute_hidden markKnown(SEXP x, SEXP ref)
 
 /* Note: this is designed to be fast and valid only for UTF-8 strings.
    It is also correct in EUC-* locales. */
-Rboolean utf8strIsASCII(char *str)
+Rboolean utf8strIsASCII(const char *str)
 {
     char *p;
     for(p = str; *p; p++)

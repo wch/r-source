@@ -35,7 +35,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
     int *xdims, n, p, lwork, info = 0;
     double *work, *xvals, tmp;
     SEXP val, nm;
-    char *meth;
+    const char *meth;
 
     if (!(isString(jobu) && isString(jobv)))
 	error(_("'jobu' and 'jobv' must be character strings"));

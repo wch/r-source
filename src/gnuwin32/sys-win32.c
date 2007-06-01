@@ -61,7 +61,7 @@ FILE *R_OpenInitFile(void)
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
 static char newFileName[PATH_MAX];
-char *R_ExpandFileName(char *s)
+const char *R_ExpandFileName(const char *s)
 {
     char *p;
 

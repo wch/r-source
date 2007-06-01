@@ -1076,7 +1076,7 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
-Rboolean utf8strIsASCII(char *str);
+Rboolean utf8strIsASCII(const char *str);
 #ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(char *in, ucs2_t *out, int nout);

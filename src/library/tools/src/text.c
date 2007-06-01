@@ -54,7 +54,8 @@ delim_match(SEXP x, SEXP delims)
       Nevertheless, this is already useful for parsing Rd.
     */
 
-    char c, *s, *s0, *delim_start, *delim_end;
+    char c;
+    const char *s, *s0, *delim_start, *delim_end;
     Sint n, i, pos, start, end, delim_depth;
     int lstart, lend;
     Rboolean is_escaped, equal_start_and_end_delims;
