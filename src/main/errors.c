@@ -38,7 +38,9 @@ extern void R_ProcessEvents(void);
 #include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h> /* for GEonExit */
 #include <Rmath.h> /* for imax2 */
-#include <R_ext/eventloop.h>
+#if  !( defined(HAVE_AQUA) || defined(Win32) )
+#include <R_ext/eventloop.h> /* for R_PolledEvents */
+#endif
 
 #ifndef min
 #define min(a, b) (a<b?a:b)
