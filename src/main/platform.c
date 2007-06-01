@@ -477,7 +477,8 @@ SEXP attribute_hidden do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_SYMLINK
     SEXP ans;
     int i;
-    char from[PATH_MAX], to[PATH_MAX], *p;
+    char from[PATH_MAX], to[PATH_MAX];
+    const char *p;
 #endif
     checkArity(op, args);
     f1 = CAR(args); n1 = length(f1);
@@ -527,7 +528,8 @@ int Rwin_rename(char *from, char *to);  /* in src/gnuwin32/extra.c */
 
 SEXP attribute_hidden do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    char from[PATH_MAX], to[PATH_MAX], *p;
+    char from[PATH_MAX], to[PATH_MAX];
+    const char *p;
 
     checkArity(op, args);
     if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
@@ -679,7 +681,7 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #include "Rregex.h"
 
-static SEXP filename(char *dir, char *file)
+static SEXP filename(const char *dir, const char *file)
 {
     SEXP ans;
     char *cbuf;
@@ -714,7 +716,7 @@ static SEXP filename(char *dir, char *file)
     return ans;
 }
 
-static void count_files(char *dnp, int *count,
+static void count_files(const char *dnp, int *count,
 			int allfiles, int recursive, int pattern, regex_t reg)
 {
     DIR *dir;
@@ -749,7 +751,7 @@ static void count_files(char *dnp, int *count,
     }
 }
 
-static void list_files(char *dnp, char *stem, int *count, SEXP ans,
+static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 			int allfiles, int recursive, int pattern, regex_t reg)
 {
     DIR *dir;
@@ -796,7 +798,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP d, p, ans;
     int allfiles, fullnames, count, pattern, recursive;
     int i, ndir;
-    char *dnp;
+    const char *dnp;
     regex_t reg;
 
     checkArity(op, args);

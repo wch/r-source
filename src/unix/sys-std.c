@@ -416,7 +416,8 @@ extern char *tilde_expand (const char *);
 static void initialize_rlcompletion(void); /* forward declaration */
 #endif
 
-char attribute_hidden *R_ExpandFileName_readline(char *s, char *buff)
+attribute_hidden
+char *R_ExpandFileName_readline(const char *s, char *buff)
 {
     char *s2 = tilde_expand(s);
 
@@ -1157,7 +1158,8 @@ void attribute_hidden Rstd_read_history(char *s)
 void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX], *p;
+    char file[PATH_MAX];
+    const char *p;
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
@@ -1179,7 +1181,8 @@ void attribute_hidden Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 void attribute_hidden Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    char file[PATH_MAX], *p;
+    char file[PATH_MAX];
+    const char *p;
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)

@@ -67,7 +67,7 @@ void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 /* ../../main/printutils.c : */
 int	IndexWidth(int);
 /* ../../main/util.c  and others : */
-char*	R_ExpandFileName(char*);
+const char *R_ExpandFileName(const char *);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
 Rboolean StringFalse(char*);

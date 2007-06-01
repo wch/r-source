@@ -28,7 +28,7 @@ extern "C" {
 #undef Riconv_open
 #undef Riconv
 #undef Riconv_close
-void * Riconv_open (char* tocode, char* fromcode);
+void * Riconv_open (const char* tocode, const char* fromcode);
 size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft,
 	       char  **outbuf, size_t *outbytesleft);
 int Riconv_close (void * cd);

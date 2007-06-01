@@ -187,7 +187,7 @@ static void Putenv(char *a, char *b)
 
 #define BUF_SIZE 255
 #define MSG_SIZE 2000
-static int process_Renviron(char *filename)
+static int process_Renviron(const char *filename)
 {
     FILE *fp;
     char *s, *p, sm[BUF_SIZE], *lhs, *rhs, msg[MSG_SIZE+50];
@@ -269,7 +269,7 @@ void process_site_Renviron ()
 /* try user Renviron: ./.Renviron, then ~/.Renviron */
 void process_user_Renviron()
 {
-    char *s;
+    const char *s;
 
     if(process_Renviron(".Renviron")) return;
 #ifdef Unix

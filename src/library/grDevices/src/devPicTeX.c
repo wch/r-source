@@ -2,7 +2,7 @@
  *  A PicTeX device, (C) 1996 Valerio Aimale, for
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-5  The R Development Core Team
+ *  Copyright (C) 2001-7  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -650,8 +650,8 @@ static void PicTeX_Hold(NewDevDesc *dd)
 }
 
 static
-Rboolean PicTeXDeviceDriver(NewDevDesc *dd, char *filename, 
-			    char *bg, char *fg,
+Rboolean PicTeXDeviceDriver(NewDevDesc *dd, const char *filename, 
+			    const char *bg, const char *fg,
 			    double width, double height, 
 			    Rboolean debug)
 {
@@ -753,7 +753,7 @@ SEXP PicTeX(SEXP args)
     NewDevDesc *dev;
     GEDevDesc *dd;
     char *vmax;
-    char *file, *bg, *fg;
+    const char *file, *bg, *fg;
     double height, width;
     Rboolean debug;
 

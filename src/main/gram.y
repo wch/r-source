@@ -141,11 +141,11 @@ static size_t ucstomb(char *s, wchar_t wc, mbstate_t *ps)
     memset(wcs, 0, sizeof(wcs));
     wcs[0] = wc;
 
-    if((void *)(-1) == (cd = Riconv_open("", (char *)UNICODE))) {
+    if((void *)(-1) == (cd = Riconv_open("", UNICODE))) {
 #ifndef  Win32
         /* locale set fuzzy case */
     	strncpy(tocode, locale2charset(NULL), sizeof(tocode));
-	if((void *)(-1) == (cd = Riconv_open(tocode, (char *)UNICODE)))
+	if((void *)(-1) == (cd = Riconv_open(tocode, UNICODE)))
             return (size_t)(-1); 
 #else
         return (size_t)(-1);

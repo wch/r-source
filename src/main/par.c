@@ -338,7 +338,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	else par_error(what);
     }
     else if (streql(what, "family")) {
-	char *ss;
+	const char *ss;
 	value = coerceVector(value, STRSXP);
 	lengthCheck(what, value, 1, call);
 	ss = translateChar(STRING_ELT(value, 0));
@@ -726,7 +726,7 @@ void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 	/* not setting cexbase here (but in Specify()) */
     }
     else if (streql(what, "family")) {
-	char *ss;
+	const char *ss;
 	value = coerceVector(value, STRSXP);
 	lengthCheck(what, value, 1, call);
 	ss = translateChar(STRING_ELT(value, 0));

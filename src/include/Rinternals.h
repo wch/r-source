@@ -618,17 +618,17 @@ int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
 SEXP Rf_nthcdr(SEXP, int);
 Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
-Rboolean Rf_psmatch(char *, char *, Rboolean);
+Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 void Rf_PrintValue(SEXP);
 SEXP Rf_protect(SEXP);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
-SEXPTYPE Rf_str2type(char*);
+SEXPTYPE Rf_str2type(const char*);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
 char * Rf_translateChar(SEXP);
-char * Rf_type2char(SEXPTYPE);
+const char * Rf_type2char(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
 void Rf_unprotect(int);
 void Rf_unprotect_ptr(SEXP);
@@ -807,9 +807,9 @@ void R_RunExitFinalizers(void);	/* in memory.c */
 
 /* Replacements for popen and system */
 #ifdef HAVE_POPEN
-FILE *R_popen(char *, char *);
+FILE *R_popen(const char *, const char *);
 #endif
-int R_system(char *);
+int R_system(const char *);
 
 /* now a macro */
 #define allocString(n)		Rf_allocVector(CHARSXP, n)
@@ -960,7 +960,7 @@ int R_system(char *);
 */
 Rboolean Rf_conformable(SEXP, SEXP);
 SEXP	 Rf_elt(SEXP, int);
-Rboolean Rf_inherits(SEXP, char*);
+Rboolean Rf_inherits(SEXP, const char*);
 Rboolean Rf_isArray(SEXP);
 Rboolean Rf_isFactor(SEXP);
 Rboolean Rf_isFrame(SEXP);

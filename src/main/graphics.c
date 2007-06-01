@@ -4099,7 +4099,7 @@ static unsigned int digithex(int digit)
 
 
 /* String Comparison Ignoring Case and Squeezing Out Blanks */
-int StrMatch(char *s, char *t)
+int StrMatch(const char *s, const char *t)
 {
     for(;;) {
 	if(*s == '\0' && *t == '\0') {
@@ -4121,7 +4121,7 @@ int StrMatch(char *s, char *t)
 /*
  * Paul:  Add ability to handle #RRGGBBAA
  */
-unsigned int rgb2col(char *rgb)
+unsigned int rgb2col(const char *rgb)
 {
     unsigned int r=0, g=0, b=0, a=0; /* -Wall */
     if(rgb[0] != '#')
@@ -4145,7 +4145,7 @@ unsigned int rgb2col(char *rgb)
 
 /* External Color Name to Internal Color Code */
 
-unsigned int attribute_hidden name2col(char *nm)
+unsigned int attribute_hidden name2col(const char *nm)
 {
     int i;
     if(strcmp(nm, "NA") == 0 || strcmp(nm, "transparent") == 0)
@@ -4174,7 +4174,7 @@ unsigned int attribute_hidden name2col(char *nm)
 
 /* Index (as string) to Internal Color Code */
 
-unsigned int attribute_hidden number2col(char *nm)
+unsigned int attribute_hidden number2col(const char *nm)
 {
     int indx;
     char *ptr;
@@ -4262,7 +4262,7 @@ char *col2name(unsigned int col)
 /* assumes that `s' is a name */
 
 /* used in grDevices */
-unsigned int str2col(char *s)
+unsigned int str2col(const char *s)
 {
     if(s[0] == '#') return rgb2col(s);
     else if(isdigit((int)s[0])) return number2col(s);

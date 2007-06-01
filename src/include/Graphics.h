@@ -414,11 +414,11 @@ int devNumber(DevDesc *dd);
 
 		/* Miscellaneous (from graphics.c & colors.c) */
 
-unsigned int rgb2col(char *);
-unsigned int name2col(char *);
-unsigned int number2col(char *);
-unsigned int char2col(char *);/* rgb2col() or name2col() */
-unsigned int str2col(char *);
+unsigned int rgb2col(const char *);
+unsigned int name2col(const char *);
+unsigned int number2col(const char *);
+unsigned int char2col(const char *);/* rgb2col() or name2col() */
+unsigned int str2col(const char *);
 
 char* col2name(unsigned int);
 
@@ -429,7 +429,7 @@ Rboolean isNAcol(SEXP col, int index, int ncol);
 char* RGB2rgb(unsigned int, unsigned int, unsigned int);
 char* RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
 
-int StrMatch(char *s, char *t);
+int StrMatch(const char *s, const char *t);
 
 double R_Log10(double);
 

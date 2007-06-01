@@ -63,7 +63,7 @@ Rboolean NonNullStringMatch(SEXP s, SEXP t)
 }
 
 /* currently unused outside this file */
-Rboolean psmatch(char *f, char *t, Rboolean exact)
+Rboolean psmatch(const char *f, const char *t, Rboolean exact)
 {
     if (exact)
 	return (Rboolean)!strcmp(f, t);

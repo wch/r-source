@@ -251,7 +251,7 @@ INLINE_FUN Rboolean conformable(SEXP x, SEXP y)
     return TRUE;
 }
 
-INLINE_FUN Rboolean inherits(SEXP s, char *name)
+INLINE_FUN Rboolean inherits(SEXP s, const char *name)
 {
     SEXP klass;
     int i, nclass;

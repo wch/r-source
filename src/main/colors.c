@@ -28,7 +28,7 @@
 #include <Graphics.h>
 #include <Rmath.h>
 
-unsigned int char2col(char *s)
+unsigned int char2col(const char *s)
 {
     if (s[0] == '#') return rgb2col(s);
     else return name2col(s);

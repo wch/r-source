@@ -320,7 +320,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir)
 	    error(_("Missing value or an infinity produced when evaluating the model"));
     }
     for(i = 0; i < LENGTH(theta); i++) {
-	char *name = translateChar(STRING_ELT(theta, i));
+	const char *name = translateChar(STRING_ELT(theta, i));
 	SEXP temp = findVar(install(name), rho);
 	if(isInteger(temp))
 	    error(_("variable '%s' is integer, not numeric"), name);
