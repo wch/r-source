@@ -154,7 +154,8 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
        in UTF-8.
     */
     int i, nbslash = 0; /* number of preceding backslashes */
-    char *p, quote= '\0';
+    constchar *p;
+    char quote= '\0';
     Rboolean ign, inquote = FALSE;
 
     if(TYPEOF(text) != STRSXP) error("invalid input");

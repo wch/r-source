@@ -88,7 +88,7 @@ SEXP viewportgpar(SEXP vp) {
     return VECTOR_ELT(vp, PVP_GPAR);
 }
 
-char* viewportFontFamily(SEXP vp) {
+const char* viewportFontFamily(SEXP vp) {
     return CHAR(STRING_ELT(VECTOR_ELT(VECTOR_ELT(vp, PVP_GPAR), GP_FONTFAMILY),
 			   0));
 }

@@ -91,7 +91,7 @@ SEXP unitData(SEXP unit, int index) {
 
 /* Accessor functions for unit arithmetic object
  */
-char* fName(SEXP ua) {
+const char* fName(SEXP ua) {
     return CHAR(STRING_ELT(getListElement(ua, "fname"), 0));
 }
 

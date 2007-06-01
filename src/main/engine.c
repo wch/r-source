@@ -2274,7 +2274,7 @@ void GEMetricInfo(int c,
  * GEStrWidth
  ****************************************************************
  */
-double GEStrWidth(char *str,
+double GEStrWidth(const char *str,
 		  R_GE_gcontext *gc,
 		  GEDevDesc *dd)
 {
@@ -2291,7 +2291,8 @@ double GEStrWidth(char *str,
 	char *sbuf = NULL;
 	w = 0;
 	if(str && *str) {
-	    char *s, *sb;
+	    const char *s;
+	    char *sb;
 	    double wdash;
 	    sbuf = (char*) R_alloc(strlen(str) + 1, sizeof(char));
 	    sb = sbuf;
@@ -2320,7 +2321,7 @@ double GEStrWidth(char *str,
  * GEStrHeight
  ****************************************************************
  */
-double GEStrHeight(char *str,
+double GEStrHeight(const char *str,
 		   R_GE_gcontext *gc,
 		   GEDevDesc *dd)
 {
@@ -2334,7 +2335,7 @@ double GEStrHeight(char *str,
 	return R_GE_VStrHeight((unsigned char *) str, gc, dd);
     } else {
 	double h;
-	char *s;
+	const char *s;
 	double asc, dsc, wid;
 	int n;
 	/* Count the lines of text minus one */

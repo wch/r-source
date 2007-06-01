@@ -279,9 +279,9 @@ void xbufaddc(xbuf p, char c)
     *p->free = '\0';
 }
 
-static void xbufadds(xbuf p, char *s, int user)
+static void xbufadds(xbuf p, const char *s, int user)
 {
-    char *ps;
+    const char *ps;
     int   l;
 
     l = user ? strlen(p->s[p->ns - 1]) : -1;
@@ -880,7 +880,7 @@ static void performCompletion(control c)
     ConsoleData p = getdata(c);
     int i, alen, alen2, max_show = 10, cursor_position = p->c - prompt_wid;
     char *partial_line = LINE(NUMLINES - 1) + prompt_wid;
-    char *additional_text;
+    const char *additional_text;
     char *pline, *cmd;
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;
@@ -1473,7 +1473,7 @@ void console_ctrlkeyin(control c, int key)
 }
 
 static Rboolean incomplete = FALSE;
-int consolewrites(control c, char *s)
+int consolewrites(control c, const char *s)
 {
     ConsoleData p = getdata(c);
 

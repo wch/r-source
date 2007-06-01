@@ -37,7 +37,7 @@ static int rt_completion(char *buf, int offset, int *loc)
 {
     int i, alen, cursor_position = *loc;
     char *partial_line = buf;
-    char *additional_text;
+    const char *additional_text;
     char *pline, *cmd;
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;

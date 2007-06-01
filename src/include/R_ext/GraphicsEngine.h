@@ -320,9 +320,9 @@ void GEPretty(double *lo, double *up, int *ndiv);
 void GEMetricInfo(int c, R_GE_gcontext *gc, 
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd);
-double GEStrWidth(char *str, 
+double GEStrWidth(const char *str, 
 		  R_GE_gcontext *gc, GEDevDesc *dd);
-double GEStrHeight(char *str, 
+double GEStrHeight(const char *str, 
 		  R_GE_gcontext *gc, GEDevDesc *dd);
 
 /* 

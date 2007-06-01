@@ -468,7 +468,7 @@ double gpCex(SEXP gp, int i);
 
 int gpFont(SEXP gp, int i);
 
-char* gpFontFamily(SEXP gp, int i);
+const char* gpFontFamily(SEXP gp, int i);
 
 SEXP gpFontSXP(SEXP gp);
 
@@ -493,7 +493,7 @@ SEXP viewportHeight(SEXP vp);
 
 SEXP viewportgpar(SEXP vp);
 
-char* viewportFontFamily(SEXP vp);
+const char* viewportFontFamily(SEXP vp);
 
 int viewportFont(SEXP vp);
 

@@ -36,7 +36,7 @@ pager newpager(char *title, char *filename, char *header, int unlinkonexit);
 console newconsole(char *name, int flags);
 int  consolereads(console c, char *prompt, char *buf, int len,
 		  int addtohistory);
-int  consolewrites(console c, char *s);
+int  consolewrites(console c, const char *s);
 int  consolecancopy(console c);
 int  consolecanpaste(console c);
 void consolecopy(console c);
