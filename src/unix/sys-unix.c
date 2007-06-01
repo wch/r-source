@@ -90,7 +90,7 @@ FILE *R_OpenInitFile(void)
      *   R_ChooseFile is interface-specific
      */
 
-char *R_ExpandFileName_readline(const char *s, char *buff);  /* sys-std.c */
+char *R_ExpandFileName_readline(char *s, char *buff);  /* sys-std.c */
 
 static char newFileName[PATH_MAX];
 static int HaveHOME=-1;
@@ -131,7 +131,7 @@ static char *R_ExpandFileName_unix(char *s, char *buff)
 
 extern Rboolean UsingReadline;
 
-char *R_ExpandFileName(const char *s)
+char *R_ExpandFileName(char *s)
 {
 #ifdef HAVE_LIBREADLINE
     if(UsingReadline) {
@@ -141,7 +141,7 @@ char *R_ExpandFileName(const char *s)
 	    return c;
     }
 #endif
-    return R_ExpandFileName_unix((char *) s, newFileName);
+    return R_ExpandFileName_unix(s, newFileName);
 }
 
 
