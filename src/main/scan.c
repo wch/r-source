@@ -846,8 +846,8 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
     char *p, *vmax, *encoding;
     RCNTXT cntxt;
-    LocalData data = {NULL, 0, 0, '\0', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE, 0};
+    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
@@ -1011,8 +1011,8 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef SUPPORT_MBCS
     Rboolean dbcslocale = (MB_CUR_MAX == 2);
 #endif
-    LocalData data = {NULL, 0, 0, '\0', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE, 0};
+    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
@@ -1236,8 +1236,8 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, len, numeric, asIs;
     Rboolean done = FALSE;
     char *endp, *tmp = NULL;
-    LocalData data = {NULL, 0, 0, '\0', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE, 0};
+    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+		      FALSE, 0, FALSE, FALSE};
     Typecvt_Info typeInfo;      /* keep track of possible types of cvec */
     typeInfo.islogical = TRUE;  /* we can't rule anything out initially */
     typeInfo.isinteger = TRUE;
@@ -1472,8 +1472,8 @@ SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     double first;
     char buffer[MAXELTSIZE], *bufp = buffer;
     SEXP ans;
-    LocalData data = {NULL, 0, 0, '\0', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE, 0};
+    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
     checkArity(op,args);
@@ -1518,8 +1518,8 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
     char *p, *buf;
     Rboolean empty, skip;
-    LocalData data = {NULL, 0, 0, '\0', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
-		      FALSE, 0, FALSE, FALSE, 0};
+    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
