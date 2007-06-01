@@ -415,7 +415,8 @@ extern char *tilde_expand (const char *);
 static void initialize_rlcompletion(void); /* forward declaration */
 
 
-char attribute_hidden *R_ExpandFileName_readline(char *s, char *buff)
+attribute_hidden 
+char *R_ExpandFileName_readline(const char *s, char *buff)
 {
     char *s2 = tilde_expand(s);
 

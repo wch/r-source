@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2005    Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2007    Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -67,7 +67,7 @@ void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 /* ../../main/printutils.c : */
 int	IndexWidth(int);
 /* ../../main/util.c  and others : */
-char*	R_ExpandFileName(char*);
+char*	R_ExpandFileName(const char*);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
 Rboolean StringFalse(char*);

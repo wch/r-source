@@ -61,12 +61,11 @@ FILE *R_OpenInitFile(void)
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
 static char newFileName[PATH_MAX];
-char *R_ExpandFileName(char *s)
+char *R_ExpandFileName(const char *s)
 {
     char *p;
 
-    if(s[0] != '~') return s;
-    if(isalpha(s[1])) return s;
+    if(s[0] != '~' || isalpha(s[1])) return (char *)s;
     if(HaveHOME < 0) {
 	HaveHOME = 0;
  	p = getenv("R_USER"); /* should be set so the rest is a safety measure */
@@ -95,7 +94,7 @@ char *R_ExpandFileName(char *s)
 	strcpy(newFileName, UserHOME);
 	strcat(newFileName, s+1);
 	return newFileName;
-    } else return s;
+    } else return (char *)s;
 }
 
 /*
