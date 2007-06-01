@@ -3321,7 +3321,6 @@ static SEXP R_CharHashGet(int hashcode, const char *s, int enc, SEXP table)
 static void R_CharHashSet(int hashcode, SEXP schar, SEXP table)
 {
     SEXP chain, val;
-    int enc_match = 0;
 
     /* Grab the chain from the hashtable */
     chain = VECTOR_ELT(table, hashcode);
