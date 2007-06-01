@@ -280,7 +280,7 @@ INLINE_FUN Rboolean isValidStringF(SEXP x)
 INLINE_FUN Rboolean isUserBinop(SEXP s)
 {
     if (TYPEOF(s) == SYMSXP) {
-	char *str = CHAR(PRINTNAME(s));
+	const char *str = CHAR(PRINTNAME(s));
 	if (strlen(str) >= 2 && str[0] == '%' && str[strlen(str)-1] == '%')
 	    return TRUE;
     }

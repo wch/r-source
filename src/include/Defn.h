@@ -75,12 +75,12 @@ Rcomplex Rf_ComplexFromReal(double, int*);
 #undef CALLED_FROM_DEFN_H
 
 /* CHARSXP charset bits */
+#define LATIN1_MASK (1<<2)
+#define UTF8_MASK (1<<3)
 #ifdef USE_RINTERNALS
-# define LATIN1_MASK (1<<2)
 # define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
 # define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
 # define UNSET_LATIN1(x) (((x)->sxpinfo.gp) &= ~LATIN1_MASK)
-# define UTF8_MASK (1<<3)
 # define IS_UTF8(x) ((x)->sxpinfo.gp & UTF8_MASK)
 # define SET_UTF8(x) (((x)->sxpinfo.gp) |= UTF8_MASK)
 # define UNSET_UTF8(x) (((x)->sxpinfo.gp) &= ~UTF8_MASK)
