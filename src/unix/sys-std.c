@@ -152,7 +152,7 @@ int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 
 /*
    This object is used for the standard input and its file descriptor
-   value is reset by setSelectMask() each time to ensure that it points
+   value is reset by setSelectwblplotMask() each time to ensure that it points
    to the correct value of stdin.
  */
 static InputHandler BasicInputHandler = {StdinActivity, -1, NULL};
@@ -412,8 +412,9 @@ extern void rl_callback_read_char(void);
 extern char *tilde_expand (const char *);
 # endif
 
+#ifdef HAVE_RL_COMPLETION_MATCHES
 static void initialize_rlcompletion(void); /* forward declaration */
-
+#endif
 
 attribute_hidden 
 char *R_ExpandFileName_readline(const char *s, char *buff)
