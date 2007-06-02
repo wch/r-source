@@ -69,7 +69,8 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
 
   When \code{srcfile} is non-\code{NULL}, a \code{"srcref"} attribute
   will be attached to the result containing a list of \code{\link{srcref}}
-  records corresponding to each element.
+  records corresponding to each element, and a \code{"srcfile"} attribute
+  will be attached containing a copy of \code{srcfile}.
   
   A syntax error (including an incomplete expression) will throw an error.
 
