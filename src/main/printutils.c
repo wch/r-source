@@ -265,9 +265,9 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
    and allowing for embedded nuls.
    In MBCS locales it works in characters, and reports in display width.
  */
-int Rstrwid(char *str, int slen, int quote)
+int Rstrwid(const char *str, int slen, int quote)
 {
-    char *p = str;
+    const char *p = str;
     int len = 0, i;
 
 #ifdef SUPPORT_MBCS
@@ -382,7 +382,7 @@ int Rstrlen(SEXP s, int quote)
 char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 {
     int b, b0, i, j, cnt;
-    char *p, *q, buf[11];
+    const char *p; char *q, buf[11];
 
     /* We have to do something like this as the result is returned, and
        passed on by EncodeElement -- so no way could be enduser be

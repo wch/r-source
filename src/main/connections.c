@@ -410,7 +410,8 @@ static size_t null_write(const void *ptr, size_t size, size_t nitems,
     return 0;			/* -Wall */
 }
 
-void init_con(Rconnection new, char *description, const char * const mode)
+void init_con(Rconnection new, const char *description,
+	      const char * const mode)
 {
     strcpy(new->description, description);
     strncpy(new->mode, mode, 4); new->mode[4] = '\0';
@@ -673,7 +674,7 @@ static size_t file_write(const void *ptr, size_t size, size_t nitems,
     return fwrite(ptr, size, nitems, fp);
 }
 
-static Rconnection newfile(char *description, char *mode)
+static Rconnection newfile(const char *description, const char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -817,7 +818,7 @@ static size_t fifo_write(const void *ptr, size_t size, size_t nitems,
 }
 
 
-static Rconnection newfifo(char *description, char *mode)
+static Rconnection newfifo(const char *description, const char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -857,7 +858,7 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
     SEXP sfile, sopen, ans, class, enc;
-    char *file, *open;
+    const char *file, *open;
     int ncon, block;
     Rconnection con = NULL;
 
@@ -955,7 +956,7 @@ static void pipe_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static Rconnection newpipe(char *description, char *mode)
+static Rconnection newpipe(const char *description, const char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -990,14 +991,14 @@ static Rconnection newpipe(char *description, char *mode)
 #endif
 
 #ifdef Win32
-extern Rconnection newWpipe(char *description, char *mode);
+extern Rconnection newWpipe(const char *description, const char *mode);
 #endif
 
 SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_POPEN
     SEXP scmd, sopen, ans, class, enc;
-    char *file, *open;
+    const char *file, *open;
     int ncon;
     Rconnection con = NULL;
 
@@ -1150,7 +1151,8 @@ static size_t gzfile_write(const void *ptr, size_t size, size_t nitems,
     return gzwrite(fp, (voidp)ptr, size*nitems)/size;
 }
 
-static Rconnection newgzfile(char *description, char *mode, int compress)
+static Rconnection newgzfile(const char *description, const char *mode,
+			     int compress)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -1191,7 +1193,7 @@ static Rconnection newgzfile(char *description, char *mode, int compress)
 SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
-    char *file, *open;
+    const char *file, *open;
     int ncon, compress;
     Rconnection con = NULL;
 
@@ -1337,7 +1339,7 @@ static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
     else return nitems;
 }
 
-static Rconnection newbzfile(char *description, char *mode)
+static Rconnection newbzfile(const char *description, const char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -1377,7 +1379,7 @@ static Rconnection newbzfile(char *description, char *mode)
 SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
-    char *file, *open;
+    const char *file, *open;
     int ncon;
     Rconnection con = NULL;
 
@@ -1618,10 +1620,10 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
     return (size_t) used/size;
 }
 
-static Rconnection newclp(char *url, char *mode)
+static Rconnection newclp(const char *url, const char *mode)
 {
     Rconnection new;
-    char *description;
+    const char *description;
     int sizeKB = 32;
 
     if(strlen(mode) != 1 ||
@@ -1724,7 +1726,7 @@ static int stderr_fflush(Rconnection con)
     return 0;
 }
 
-static Rconnection newterminal(char *description, char *mode)
+static Rconnection newterminal(const char *description, const char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -1861,7 +1863,7 @@ static double text_seek(Rconnection con, double where, int origin, int rw)
     return 0; /* if just asking, always at the beginning */
 }
 
-static Rconnection newtext(char *description, SEXP text)
+static Rconnection newtext(const char *description, SEXP text)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -2001,7 +2003,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
     return res;
 }
 
-static void outtext_init(Rconnection con, SEXP stext, char *mode, int idx)
+static void outtext_init(Rconnection con, SEXP stext, const char *mode, int idx)
 {
     Routtextconn this = (Routtextconn)con->private;
     SEXP val;
@@ -2040,8 +2042,8 @@ static void outtext_init(Rconnection con, SEXP stext, char *mode, int idx)
 }
 
 
-static Rconnection newouttext(char *description, SEXP stext, char *mode,
-			      int idx)
+static Rconnection newouttext(const char *description, SEXP stext,
+			      const char *mode, int idx)
 {
     Rconnection new;
     void *tmp;
@@ -2085,7 +2087,7 @@ static Rconnection newouttext(char *description, SEXP stext, char *mode,
 SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, stext, sopen, ans, class, venv;
-    char *desc, *open;
+    const char *desc, *open;
     int ncon;
     Rconnection con = NULL;
 
@@ -2166,7 +2168,7 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
-    char *host, *open;
+    const char *host, *open;
     int ncon, port, server, blocking;
     Rconnection con = NULL;
 
@@ -2237,7 +2239,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
-    char *file, *open;
+    const char *file, *open;
     int ncon;
     Rconnection con = NULL;
 
@@ -2291,7 +2293,7 @@ SEXP attribute_hidden do_open(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, block;
     Rconnection con=NULL;
     SEXP sopen;
-    char *open;
+    const char *open;
     Rboolean success;
 
     checkArity(op, args);
@@ -2664,7 +2666,7 @@ SEXP attribute_hidden do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
     int i;
     Rboolean wasopen;
     Rconnection con=NULL;
-    char *ssep;
+    const char *ssep;
     SEXP text, sep;
 
     checkArity(op, args);
@@ -3003,7 +3005,8 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP object, ans = R_NilValue;
     int i, j, size, swap, len, n = 0;
-    char *s, *buf;
+    const char *s;
+    char *buf;
     Rboolean wasopen = TRUE, isRaw = FALSE;
     Rconnection con = NULL;
 
@@ -3316,7 +3319,8 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP object, nchars, sep, ans = R_NilValue;
     int i, len, lenb, lenc, n, nwrite=0, slen, tlen;
-    char *s, *buf, *ssep = "";
+    char *buf;
+    const char *s, *ssep = "";
     Rboolean wasopen = TRUE, usesep, isRaw = FALSE;
     Rconnection con = NULL;
     char *vmax = vmaxget();
@@ -3397,7 +3401,7 @@ SEXP attribute_hidden do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(mbcslocale) {
 		/* find out how many bytes we need to write */
 		int i, used;
-		char *p = s;
+		const char *p = s;
 		mbs_init(&mb_st);
 		for(i = 0, lenb = 0; i < len; i++) {
 		    used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
@@ -3468,7 +3472,8 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, nexists, newLine;
     Rconnection con = NULL;
     SEXP stext;
-    char *p, **q;
+    const char *p;
+    char **q;
 
     checkArity(op, args);
 

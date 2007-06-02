@@ -125,10 +125,10 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP d, s, x, stype;
     int i, len, ntype, allowNA;
-    char *type;
+    const char *type;
 #ifdef SUPPORT_MBCS
     int nc;
-    char *xi;
+    const char *xi;
     wchar_t *wc;
 #endif
 
@@ -200,7 +200,7 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-static void substr(char *buf, char *str, int sa, int so)
+static void substr(char *buf, const char * str, int sa, int so)
 {
 /* Store the substring	str [sa:so]  into buf[] */
     int i;
@@ -224,7 +224,8 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, x, sa, so;
     int i, len, start, stop, slen, k, l;
-    char *buff, *ss;
+    char *buff;
+    const char *ss;
 
     checkArity(op, args);
     x = CAR(args);
@@ -278,7 +279,7 @@ SEXP attribute_hidden do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     return s;
 }
 
-static void substrset(char *buf, char *str, int sa, int so)
+static void substrset(char *buf, const char * const str, int sa, int so)
 {
 /* Replace the substring buf [sa:so] by str[] */
 #ifdef SUPPORT_MBCS
@@ -303,7 +304,7 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, x, sa, so, value;
     int i, len, start, stop, slen, vlen, k, l, v;
-    char *ss;
+    const char *ss;
 
     checkArity(op, args);
     x = CAR(args);
@@ -372,7 +373,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok, slen;
     int extended_opt, cflags, fixed_opt, perl_opt;
-    char *buf, *pt = NULL, *split = "", *bufp, *laststart;
+    const char *buf, *split = "", *bufp, *laststart;
+    char *pt = NULL;  
     regex_t reg;
     regmatch_t regmatch[1];
     pcre *re_pcre = NULL;
@@ -556,7 +558,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* split into individual characters (not bytes) */
 #ifdef SUPPORT_MBCS
 	    if(mbcslocale && !utf8strIsASCII(buf)) {
-		char bf[20 /* > MB_CUR_MAX */], *p = buf;
+		char bf[20 /* > MB_CUR_MAX */];
+		const char *p = buf;
 		int used;
 		mbstate_t mb_st;
 
@@ -640,7 +643,7 @@ static void mystrcpy(char *dest, const char *src)
 
 
 /* abbreviate(inchar, minlen) */
-static SEXP stripchars(char *inchar, int minlen)
+static SEXP stripchars(const char * const inchar, int minlen)
 {
 /* This routine used to use strcpy with overlapping dest and src.
    That is not allowed by ISO C.
@@ -738,7 +741,7 @@ SEXP attribute_hidden do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x, ans;
     int i, len, minlen, uclass;
     Rboolean warn = FALSE;
-    char *s;
+    const char *s;
 
     checkArity(op,args);
     x = CAR(args);
@@ -772,7 +775,8 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg, ans;
     int i, l, n, allow_;
-    char *p, *_this, *tmp, *cbuf;
+    char *p, *tmp, *cbuf;
+    const char *This, *pp;
     Rboolean need_prefix;
 
     checkArity(op ,args);
@@ -785,32 +789,33 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid value of 'allow_'"));
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
-	_this = translateChar(STRING_ELT(arg, i));
-	l = strlen(_this);
+	This = translateChar(STRING_ELT(arg, i));
+	l = strlen(This);
 	/* need to prefix names not beginning with alpha or ., as
 	   well as . followed by a number */
 	need_prefix = FALSE;
 #ifdef SUPPORT_MBCS
-	if (mbcslocale && _this[0]) {
+	if (mbcslocale && This[0]) {
 	    int nc = l, used;
 	    wchar_t wc;
 	    mbstate_t mb_st;
 
-	    p = _this;
+	    pp = This;
 	    mbs_init(&mb_st);
-	    used = Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st); p += used; nc -= used;
+	    used = Mbrtowc(&wc, pp, MB_CUR_MAX, &mb_st);
+	    pp += used; nc -= used;
 	    if (wc == L'.') {
 		if (nc > 0) {
-		    Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
+		    Mbrtowc(&wc, pp, MB_CUR_MAX, &mb_st);
 		    if(iswdigit(wc))  need_prefix = TRUE;
 		}
 	    } else if (!iswalpha(wc)) need_prefix = TRUE;
 	} else
 #endif
 	{
-	    if (_this[0] == '.') {
-		if (l >= 1 && isdigit(0xff & (int) _this[1])) need_prefix = TRUE;
-	    } else if (!isalpha(0xff & (int) _this[0])) need_prefix = TRUE;
+	    if (This[0] == '.') {
+		if (l >= 1 && isdigit(0xff & (int) This[1])) need_prefix = TRUE;
+	    } else if (!isalpha(0xff & (int) This[0])) need_prefix = TRUE;
 	}
 	if (need_prefix) {
 	    tmp = Calloc(l+2, char);
@@ -871,10 +876,11 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* This could be faster for plen > 1, but uses in R are for small strings */
-static int fgrep_one(char *pat, char *target, int useBytes, int *next)
+static int fgrep_one(const char *pat, const char *target, int useBytes,
+		     int *next)
 {
     int i = -1, plen=strlen(pat), len=strlen(target);
-    char *p;
+    const char *p;
 
     if(plen == 0) {
 	if (next != NULL) *next = 1;
@@ -913,10 +919,10 @@ static int fgrep_one(char *pat, char *target, int useBytes, int *next)
     return -1;
 }
 
-static int fgrep_one_bytes(char *pat, char *target, int useBytes)
+static int fgrep_one_bytes(const char *pat, const char *target, int useBytes)
 {
     int i = -1, plen=strlen(pat), len=strlen(target);
-    char *p;
+    const char *p;
 
     if(plen == 0) return 0;
     if(plen == 1) {
@@ -949,8 +955,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     int i, j, n, nmatches = 0, cflags = 0, ov, erroffset;
     int igcase_opt, extended_opt, value_opt, perl_opt, fixed_opt, useBytes;
-    char *cpat;
-    const char *errorptr;
+    const char *cpat, *errorptr;
     pcre *re_pcre = NULL /* -Wall */;
     const unsigned char *tables = NULL /* -Wall */;
 
@@ -1030,7 +1035,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 	LOGICAL(ind)[i] = 0;
 	if (STRING_ELT(vec, i) != NA_STRING) {
-	    char *s = translateChar(STRING_ELT(vec, i));
+	    const char *s = translateChar(STRING_ELT(vec, i));
 #ifdef SUPPORT_MBCS
 	    if(!useBytes && mbcslocale && !mbcsValid(s)) {
 		warning(_("input string %d is invalid in this locale"), i+1);
@@ -1081,10 +1086,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
  * either once or globally.
  * The functions are loosely patterned on the "sub" and "gsub" in "nawk". */
 
-static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
+static int length_adj(const char *repl, regmatch_t *regmatch, int nsubexpr)
 {
     int k, n;
-    char *p = repl;
+    const char *p = repl;
     n = strlen(repl) - (regmatch[0].rm_eo - regmatch[0].rm_so);
     while (*p) {
 	if (*p == '\\') {
@@ -1109,11 +1114,11 @@ static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
     return n;
 }
 
-static char *string_adj(char *target, char *orig, char *repl,
+static char *string_adj(char *target, const char *orig, const char *repl,
 			regmatch_t *regmatch)
 {
     int i, k;
-    char *p = repl, *t = target;
+    const char *p = repl; char *t = target;
     while (*p) {
 	if (*p == '\\') {
 	    if ('1' <= p[1] && p[1] <= '9') {
@@ -1136,8 +1141,8 @@ static char *string_adj(char *target, char *orig, char *repl,
 }
 
 extern SEXP
-do_pgsub(char *spat, char *srep, SEXP vec, int global, int igcase_opt,
-	 int useBytes);
+do_pgsub(const char *spat, const char *srep, SEXP vec, 
+	 int global, int igcase_opt, int useBytes);
 
 SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1147,8 +1152,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, n, ns, nmatch, offset;
     int global, igcase_opt, extended_opt, perl_opt, fixed_opt, useBytes,
 	cflags = 0, eflags, last_end;
-    char *s, *t, *u, *cbuf;
-    char *spat, *srep;
+    char *u, *cbuf;
+    const char *spat, *srep, *s, *t;
     int patlen = 0, replen = 0, st, nr;
 
     checkArity(op, args);
@@ -1342,7 +1347,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, st, igcase_opt, extended_opt, perl_opt, fixed_opt, useBytes,
 	cflags = 0, erroffset;
     int rc, ovector[3];
-    char *spat = NULL; /* -Wall */
+    const char *spat = NULL; /* -Wall */
     const char *errorptr;
     pcre *re_pcre = NULL /* -Wall */;
     const unsigned char *tables = NULL /* -Wall */;
@@ -1412,7 +1417,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(text, i) == NA_STRING) {
 	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = R_NaInt;
 	} else {
-	    char *s = translateChar(STRING_ELT(text, i));
+	    const char *s = translateChar(STRING_ELT(text, i));
 #ifdef SUPPORT_MBCS
 	    if(!useBytes && mbcslocale && !mbcsValid(s)) {
 		warning(_("input string %d is invalid in this locale"), i+1);
@@ -1597,7 +1602,8 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
     return ans;
 }
 
-static SEXP gregexpr_fixed(char *pattern, char *string, int useBytes)
+static SEXP
+gregexpr_fixed(const char *pattern, const char *string, int useBytes)
 {
     int patlen, matchIndex, st, foundAll, foundAny, curpos, j, ansSize, nb=0;
     SEXP ans, matchlen;         /* return vect and its attribute */
@@ -1691,14 +1697,14 @@ static SEXP gregexpr_BadStringAns(void)
 }
 #endif
 
-extern SEXP do_gpregexpr(char *spat, SEXP vec, int igcase_opt, int useBytes);
+extern SEXP do_gpregexpr(const char *spat, SEXP vec, int igcase_opt, int useBytes);
 
 SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ansList, ans;
     regex_t reg;
     int i, n, igcase_opt, extended_opt, perl_opt, fixed_opt, useBytes, cflags;
-    char *spat;
+    const char *spat;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -1752,7 +1758,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(text, i) == NA_STRING) {
             PROTECT(ans = gregexpr_NAInputAns());
 	} else {
-	    char *s = translateChar(STRING_ELT(text, i));
+	    const char *s = translateChar(STRING_ELT(text, i));
 #ifdef SUPPORT_MBCS
 	    if(!useBytes && mbcslocale && !mbcsValid(s)) {
 		warning(_("input string %d is invalid in this locale"), i+1);
@@ -1778,7 +1784,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y;
     int i, n, ul;
-    char *p, *xi;
+    char *p;
 
     checkArity(op, args);
     ul = PRIMVAL(op); /* 0 = tolower, 1 = toupper */
@@ -1800,7 +1806,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
             if (STRING_ELT(x, i) == NA_STRING)
                 SET_STRING_ELT(y, i, NA_STRING);
             else {
-                xi = translateChar(STRING_ELT(x, i));
+                const char *xi = translateChar(STRING_ELT(x, i));
                 nc = mbstowcs(NULL, xi, 0);
                 if(nc >= 0) {
                     AllocBuffer((nc+1)*sizeof(wchar_t), &cbuff);
@@ -1822,6 +1828,7 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 #endif
     {
+	char *xi;
 	for(i = 0; i < n; i++) {
 	    if (STRING_ELT(x, i) == NA_STRING)
 		SET_STRING_ELT(y, i, NA_STRING);
@@ -1860,9 +1867,9 @@ struct wtr_spec {
 static void
 wtr_build_spec(const wchar_t *s, struct wtr_spec *trs) {
     int i, len = wcslen(s);
-    struct wtr_spec *_this, *_new;
+    struct wtr_spec *This, *_new;
 
-    _this = trs;
+    This = trs;
     for(i = 0; i < len - 2; ) {
         _new = Calloc(1, struct wtr_spec);
         _new->next = NULL;
@@ -1879,48 +1886,48 @@ wtr_build_spec(const wchar_t *s, struct wtr_spec *trs) {
             _new->u.c = s[i];
             i++;
         }
-        _this = _this->next = _new;
+        This = This->next = _new;
     }
     for( ; i < len; i++) {
         _new = Calloc(1, struct wtr_spec);
         _new->next = NULL;
         _new->type = WTR_CHAR;
         _new->u.c = s[i];
-        _this = _this->next = _new;
+        This = This->next = _new;
     }
 }
 
 static void
 wtr_free_spec(struct wtr_spec *trs) {
-    struct wtr_spec *_this, *next;
-    _this = trs;
-    while(_this) {
-        next = _this->next;
-        Free(_this);
-        _this = next;
+    struct wtr_spec *This, *next;
+    This = trs;
+    while(This) {
+        next = This->next;
+        Free(This);
+        This = next;
     }
 }
 
 static wchar_t
 wtr_get_next_char_from_spec(struct wtr_spec **p) {
     wchar_t c;
-    struct wtr_spec *_this;
+    struct wtr_spec *This;
 
-    _this = *p;
-    if(!_this)
+    This = *p;
+    if(!This)
         return('\0');
-    switch(_this->type) {
+    switch(This->type) {
         /* Note: this code does not deal with the WTR_INIT case. */
     case WTR_CHAR:
-        c = _this->u.c;
-        *p = _this->next;
+        c = This->u.c;
+        *p = This->next;
         break;
     case WTR_RANGE:
-        c = _this->u.r.first;
-        if(c == _this->u.r.last) {
-            *p = _this->next;
+        c = This->u.r.first;
+        if(c == This->u.r.last) {
+            *p = This->next;
         } else {
-            (_this->u.r.first)++;
+            (This->u.r.first)++;
         }
         break;
     default:
@@ -1946,9 +1953,9 @@ struct tr_spec {
 static void
 tr_build_spec(const char *s, struct tr_spec *trs) {
     int i, len = strlen(s);
-    struct tr_spec *_this, *_new;
+    struct tr_spec *This, *_new;
 
-    _this = trs;
+    This = trs;
     for(i = 0; i < len - 2; ) {
         _new = Calloc(1, struct tr_spec);
         _new->next = NULL;
@@ -1965,48 +1972,48 @@ tr_build_spec(const char *s, struct tr_spec *trs) {
             _new->u.c = s[i];
             i++;
         }
-        _this = _this->next = _new;
+        This = This->next = _new;
     }
     for( ; i < len; i++) {
         _new = Calloc(1, struct tr_spec);
         _new->next = NULL;
         _new->type = TR_CHAR;
         _new->u.c = s[i];
-        _this = _this->next = _new;
+        This = This->next = _new;
     }
 }
 
 static void
 tr_free_spec(struct tr_spec *trs) {
-    struct tr_spec *_this, *next;
-    _this = trs;
-    while(_this) {
-        next = _this->next;
-        Free(_this);
-        _this = next;
+    struct tr_spec *This, *next;
+    This = trs;
+    while(This) {
+        next = This->next;
+        Free(This);
+        This = next;
     }
 }
 
 static unsigned char
 tr_get_next_char_from_spec(struct tr_spec **p) {
     unsigned char c;
-    struct tr_spec *_this;
+    struct tr_spec *This;
 
-    _this = *p;
-    if(!_this)
+    This = *p;
+    if(!This)
         return('\0');
-    switch(_this->type) {
+    switch(This->type) {
         /* Note: this code does not deal with the TR_INIT case. */
     case TR_CHAR:
-        c = _this->u.c;
-        *p = _this->next;
+        c = This->u.c;
+        *p = This->next;
         break;
     case TR_RANGE:
-        c = _this->u.r.first;
-        if(c == _this->u.r.last) {
-            *p = _this->next;
+        c = This->u.r.first;
+        if(c == This->u.r.last) {
+            *p = This->next;
         } else {
-            (_this->u.r.first)++;
+            (This->u.r.first)++;
         }
         break;
     default:
@@ -2040,7 +2047,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     if(mbcslocale) {
         int j, nb, nc;
         wchar_t xtable[65536 + 1], c_old, c_new, *wc;
-        char *xi, *s;
+        const char *xi, *s;
         struct wtr_spec *trs_old, **trs_old_ptr;
         struct wtr_spec *trs_new, **trs_new_ptr;
 
@@ -2162,7 +2169,7 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (STRING_ELT(x,i) == NA_STRING)
 		SET_STRING_ELT(y, i, NA_STRING);
 	    else {
-		char *xi = translateChar(STRING_ELT(x, i));
+		const char *xi = translateChar(STRING_ELT(x, i));
 		cbuf = CallocCharBuf(strlen(xi));
 		cbuf = CallocCharBuf(strlen(CHAR(STRING_ELT(x, i))));
 		strcpy(cbuf, xi);
@@ -2188,7 +2195,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     int igcase_opt, value_opt, max_distance_opt;
     int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
     apse_t *aps;
-    char *str;
+    const char *str;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -2653,9 +2660,9 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, x, width;
     int i, len, nw, w, nc;
-    char *_this;
+    const char *This;
 #if defined(SUPPORT_MBCS)
-    char *p, *q;
+    const char *p; char *q;
     int w0, wsum, k, nb;
     wchar_t wc;
     mbstate_t mb_st;
@@ -2681,13 +2688,13 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
             continue;
         }
         w = INTEGER(width)[i % nw];
-        _this = translateChar(STRING_ELT(x, i));
-        nc = strlen(_this);
+        This = translateChar(STRING_ELT(x, i));
+        nc = strlen(This);
         AllocBuffer(nc, &cbuff);
 #if defined(SUPPORT_MBCS)
         wsum = 0;
         mbs_init(&mb_st);
-        for(p = _this, w0 = 0, q = cbuff.data; *p ;) {
+        for(p = This, w0 = 0, q = cbuff.data; *p ;) {
             nb =  Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
             w0 = Ri18n_wcwidth(wc);
             if(w0 < 0) { p += nb; continue; } /* skip non-printable chars */
@@ -2703,7 +2710,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
             SET_STRING_ELT(s, i, STRING_ELT(x, i));
             continue;
         }
-        strncpy(cbuff.data, _this, w);
+        strncpy(cbuff.data, This, w);
         cbuff.data[w] = '\0';
 #endif
         SET_STRING_ELT(s, i, mkChar2(cbuff.data, STRING_ELT(x, i)));

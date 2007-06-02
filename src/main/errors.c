@@ -830,7 +830,8 @@ void jump_to_toplevel()
 SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef ENABLE_NLS
-    char *domain = "", *buf;
+    const char *domain = "";
+    char *buf;
     SEXP ans, string = CADR(args);
     int i, n = LENGTH(string);
     
@@ -871,8 +872,8 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(ans = allocVector(STRSXP, n));
 	for(i = 0; i < n; i++) {
 	    int ihead = 0, itail = 0;
-	    char * This = translateChar(STRING_ELT(string, i)), 
-		*tmp, *head = NULL, *tail = NULL, *p, *tr;
+	    const char * This = translateChar(STRING_ELT(string, i));
+	    char *tmp, *head = NULL, *tail = NULL, *p, *tr;
 	    tmp = (char *) alloca(strlen(This) + 1);
 	    R_CheckStack();
 	    strcpy(tmp, This);
@@ -909,7 +910,7 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if(ihead > 0) strcat(tmp, head);
 		strcat(tmp, tr);
 		if(itail > 0) strcat(tmp, tail);
-	    } else tmp = This;
+	    } else tmp = (char *) This;
 	    SET_STRING_ELT(ans, i, mkChar(tmp));
 	}
 	UNPROTECT(1);
@@ -924,7 +925,8 @@ SEXP attribute_hidden do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef ENABLE_NLS
-    char *domain = "", *buf;
+    const char *domain = "";
+    char *buf;
     SEXP ans, sdom = CADDDR(args);
 #endif
     SEXP msg1 = CADR(args), msg2 = CADDR(args);
@@ -1506,7 +1508,7 @@ SEXP attribute_hidden do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho
 	if (IS_CALLING_ENTRY(entry)) {
 	    SEXP h = ENTRY_HANDLER(entry);
 	    if (h == R_RestartToken) {
-		char *msgstr = NULL;
+		const char *msgstr = NULL;
 		if (TYPEOF(msg) == STRSXP && LENGTH(msg) > 0)
 		    msgstr = translateChar(STRING_ELT(msg, 0));
 		else error(_("error message not a string"));
@@ -1604,7 +1606,7 @@ R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
 
 SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    char *msg;
+    const char *msg;
     SEXP ecall;
 
     checkArity(op, args);
@@ -1620,7 +1622,7 @@ SEXP attribute_hidden do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_dfltStop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    char *msg;
+    const char *msg;
     SEXP ecall;
 
     checkArity(op, args);

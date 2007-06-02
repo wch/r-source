@@ -893,7 +893,7 @@ void attribute_hidden markKnown(SEXP x, SEXP ref)
    It is also correct in EUC-* locales. */
 Rboolean utf8strIsASCII(const char *str)
 {
-    char *p;
+    const char *p;
     for(p = str; *p; p++)
 	if((unsigned int)*p > 0x7F) return FALSE;
     return TRUE;
@@ -925,13 +925,13 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
     return used;
 }
 
-Rboolean mbcsValid(char *str)
+Rboolean mbcsValid(const char *str)
 {
     return  ((int)mbstowcs(NULL, str, 0) >= 0);
 }
 
 /* We do this conversion ourselves to do our own error recovery */
-void mbcsToLatin1(char *in, char *out)
+void mbcsToLatin1(const char *in, char *out)
 {
     wchar_t *wbuff;
     int i;

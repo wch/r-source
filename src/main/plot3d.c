@@ -2206,7 +2206,7 @@ static double labelAngle(double x1, double y1, double x2, double y2) {
 
 static void PerspAxis(double *x, double *y, double *z,
 		      int axis, int axisType, int nTicks, int tickType,
-		      char *label, DevDesc *dd) {
+		      const char *label, DevDesc *dd) {
     Vector3d u1, u2, u3, v1, v2, v3;
     double tickLength = .03; /* proportion of axis length */
     double min, max, d_frac;
@@ -2388,7 +2388,7 @@ static void PerspAxis(double *x, double *y, double *z,
  * has the lowest x-value to decide which of the z-axes to label
  */
 static void PerspAxes(double *x, double *y, double *z,
-                      char *xlab, char *ylab, char *zlab,
+                      const char *xlab, const char *ylab, const char *zlab,
 		      int nTicks, int tickType, DevDesc *dd) {
     int xAxis=0, yAxis=0, zAxis=0; /* -Wall */
     int xpdsave;

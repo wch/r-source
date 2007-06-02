@@ -166,7 +166,7 @@ int attribute_hidden R_IoBufferGetc(IoBuffer *iob)
 
 	/* Initialization code for text buffers */
 
-static void transferChars(unsigned char *p, char *q)
+static void transferChars(unsigned char *p, const char *q)
 {
     while (*q) *p++ = *q++;
     *p++ = '\n';

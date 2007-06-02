@@ -1673,8 +1673,8 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-static SEXP gfind(char *name, SEXP env, SEXPTYPE mode, SEXP ifnotfound,
-	     int inherits, SEXP enclos)
+static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode, 
+		  SEXP ifnotfound, int inherits, SEXP enclos)
 {
     SEXP rval, t1, R_fcall, var;
 
@@ -2621,7 +2621,7 @@ SEXP attribute_hidden do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     return env;
 }
 
-static SEXP matchEnvir(SEXP call, char *what)
+static SEXP matchEnvir(SEXP call, const char *what)
 {
     SEXP t, name, nameSymbol;
     if(!strcmp(".GlobalEnv", what))

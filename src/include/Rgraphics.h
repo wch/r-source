@@ -313,12 +313,12 @@ void GPolyline(int, double*, double*, int, DevDesc*);
 /* Draw a rectangle given two opposite corners: */
 void GRect(double, double, double, double, int, int, int, DevDesc*);
 /* Return the height of the specified string in the specified units: */
-double GStrHeight(char*, GUnit, DevDesc*);
+double GStrHeight(const char *, GUnit, DevDesc*);
 /* Return the width of the specified string in the specified units */
-double GStrWidth(char*, GUnit, DevDesc*);
+double GStrWidth(const char *, GUnit, DevDesc*);
 /* Draw the specified text at location (x,y) with the specified
  * rotation and justification: */
-void GText(double, double, int, char*, double, double, double, DevDesc*);
+void GText(double, double, int, const char *, double, double, double, DevDesc*);
 
 
 void GStartPath(DevDesc*);
@@ -328,7 +328,7 @@ void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
-typedef void (*GVTextRoutine)(double x, double y, int unit, char* s, int typeface, int fontindex,
+typedef void (*GVTextRoutine)(double x, double y, int unit, const char * s, int typeface, int fontindex,
 	                      double xadj, double yadj, double rot, DevDesc *dd);
 typedef double (*GVStrWidthRoutine)(const unsigned char *s, int typeface, int fontindex,
 		                    int unit, DevDesc *dd);
@@ -336,7 +336,7 @@ typedef double (*GVStrHeightRoutine)(const unsigned char *s, int typeface, int f
    	   	                     int unit, DevDesc *dd);
 void R_setVFontRoutines(GVStrWidthRoutine vwidth, GVStrHeightRoutine vheight, GVTextRoutine vtext);
 
-void GVText(double x, double y, int unit, char* s, int typeface, int fontindex,
+void GVText(double x, double y, int unit, const char *s, int typeface, int fontindex,
 	    double xadj, double yadj, double rot, DevDesc *dd);
 double GVStrWidth(const unsigned char *s, int typeface, int fontindex,
 		  int unit, DevDesc *dd);
@@ -362,7 +362,7 @@ void GBox(int, DevDesc*);
 void GPretty(double*, double*, int*);
 void GLPretty(double*, double*, int*);
 /* Draw text in margins. */
-void GMtext(char*, int, double, int, double, int, double, DevDesc*);
+void GMtext(const char *, int, double, int, double, int, double, DevDesc*);
 /* Draw one of the predefined symbols (circle, square, diamond, ...) */
 void GSymbol(double, double, int, int, DevDesc*);
 
@@ -445,7 +445,7 @@ double yNPCtoUsr(double, DevDesc*);
 
 double GVStrWidth (const unsigned char *, int, int, int, DevDesc *);
 double GVStrHeight (const unsigned char *, int, int, int, DevDesc *);
-void GVText (double, double, int, char *, int, int,
+void GVText (double, double, int, const char *, int, int,
 	     double, double, double, DevDesc *);
 
 

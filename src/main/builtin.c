@@ -413,7 +413,7 @@ static void cat_sepwidth(SEXP sep, int *width, int ntot)
 
 static void cat_printsep(SEXP sep, int ntot)
 {
-    char *sepchar;
+    const char *sepchar;
     if (sep == R_NilValue || LENGTH(sep) == 0)
 	return;
 
@@ -449,7 +449,7 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rconnection con;
     int append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
-    char *p = "", buf[512];
+    const char *p = ""; char buf[512];
 
     checkArity(op, args);
 

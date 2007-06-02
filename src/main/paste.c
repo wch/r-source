@@ -45,7 +45,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x;
     int i, j, k, maxlen, nx, pwidth, sepw;
-    char *s, *buf, *csep, *cbuf;
+    const char *s, *csep, *cbuf; char *buf;
 
     checkArity(op, args);
 
@@ -156,7 +156,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
     int w, d, e;
     int wi, di, ei;
-    char *strp;
+    const char *strp;
 
     checkArity(op, args);
     PrintDefaults(env);
@@ -262,7 +262,7 @@ SEXP attribute_hidden do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 	    /* this has to be different from formatString/EncodeString as
 	       we don't actually want to encode here */
-	    char *s, *buff, *q;
+	    const char *s; char *buff, *q;
 	    int b, b0, cnt = 0, j;
 	    SEXP s0, xx;
 	    

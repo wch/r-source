@@ -316,7 +316,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	    case STRSXP:
 		if (LENGTH(tmp) == 1) {
 		    /* This can potentially overflow */
-		    char *ctmp = translateChar(STRING_ELT(tmp, 0));
+		    const char *ctmp = translateChar(STRING_ELT(tmp, 0));
 		    int len = strlen(ctmp);
 		    if(len < 100)
 			snprintf(pbuf, 115, "\"%s\"", ctmp);
@@ -375,7 +375,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		if (names != R_NilValue &&
 		    STRING_ELT(names, i) != R_NilValue &&
 		    *CHAR(STRING_ELT(names, i)) != '\0') {
-		    char *ss = translateChar(STRING_ELT(names, i));
+		    const char *ss = translateChar(STRING_ELT(names, i));
 		    if (taglen + strlen(ss) > TAGBUFLEN)
 			sprintf(ptag, "$...");
 		    else {
@@ -413,13 +413,14 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	}
 	else { /* ns = length(s) == 0 */
 	    /* Formal classes are represented as empty lists */
-	    char *className = NULL;
+	    const char *className = NULL;
 	    SEXP klass;
 	    if(isObject(s) && isMethodsDispatchOn()) {
 		klass = getAttrib(s, R_ClassSymbol);
 		if(length(klass) == 1) {
 		    /* internal version of isClass() */
-		    char str[201], *ss = translateChar(STRING_ELT(klass, 0));
+		    char str[201];
+		    const char *ss = translateChar(STRING_ELT(klass, 0));
 		    snprintf(str, 200, ".__C__%s", ss);
 		    if(findVar(install(str), env) != R_UnboundValue)
 			className = ss;
@@ -705,7 +706,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 		PROTECT(t = getAttrib(s, R_DimNamesSymbol));
 		if (t != R_NilValue && VECTOR_ELT(t, 0) != R_NilValue) {
 		    SEXP nn = getAttrib(t, R_NamesSymbol);
-		    char *title = NULL;
+		    const char *title = NULL;
 
 		    if (!isNull(nn))
 		        title = translateChar(STRING_ELT(nn, 0));

@@ -217,12 +217,13 @@ SEXP attribute_hidden do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl, hd, pg;
-    char **f, **h, *t, *vm, *pager;
+    char **f, **h, *vmax;
+    const char *t, *pager;
     Rboolean dl;
     int i, n;
 
     checkArity(op, args);
-    vm = vmaxget();
+    vmax = vmaxget();
     fn = CAR(args); args = CDR(args);
     hd = CAR(args); args = CDR(args);
     tl = CAR(args); args = CDR(args);
@@ -242,13 +243,13 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	if (!isNull(STRING_ELT(fn, i)))
 	    /* Do better later for file names? */
-	    f[i] = translateChar(STRING_ELT(fn, i));
+	    f[i] = (char *) translateChar(STRING_ELT(fn, i));
 	else
-	    f[i] = CHAR(R_BlankString);
+	    f[i] = (char *) CHAR(R_BlankString);
 	if (!isNull(STRING_ELT(hd, i)))
-	    h[i] = translateChar(STRING_ELT(hd, i));
+	    h[i] = (char *) translateChar(STRING_ELT(hd, i));
 	else
-	    h[i] = CHAR(R_BlankString);
+	    h[i] = (char *) CHAR(R_BlankString);
     }
     if (length(tl) >= 1 || !isNull(STRING_ELT(tl, 0)))
 	t = translateChar(STRING_ELT(tl, 0));
@@ -258,8 +259,8 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pager = CHAR(STRING_ELT(pg, 0));
     else
 	pager = CHAR(R_BlankString);
-    R_ShowFiles(n, f, h, t, dl, pager);
-    vmaxset(vm);
+    R_ShowFiles(n, f, h, (char *)t, dl, (char *) pager);
+    vmaxset(vmax);
     return R_NilValue;
 }
 
@@ -295,13 +296,13 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < n; i++) {
 	    if (!isNull(STRING_ELT(fn, i)))
 		/* Do better later for file names? */
-		f[i] = translateChar(STRING_ELT(fn, i));
+		f[i] = (char *) translateChar(STRING_ELT(fn, i));
 	    else
-		f[i] = CHAR(R_BlankString);
+		f[i] = (char *) CHAR(R_BlankString);
 	    if (!isNull(STRING_ELT(ti, i)))
-	    	title[i] = translateChar(STRING_ELT(ti, i));
+	    	title[i] = (char *) translateChar(STRING_ELT(ti, i));
 	    else
-	    	title[i] = CHAR(R_BlankString);
+	    	title[i] = (char *) CHAR(R_BlankString);
 	}
     }
     else {  /* open a new file for editing */
@@ -313,9 +314,9 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (length(ed) >= 1 || !isNull(STRING_ELT(ed, 0)))
 	/* Do better later for file names? */
-	editor = translateChar(STRING_ELT(ed, 0));
+	editor = (char *) translateChar(STRING_ELT(ed, 0));
     else
-	editor = CHAR(R_BlankString);
+	editor = (char *) CHAR(R_BlankString);
     R_EditFiles(n, f, title, editor);
     vmaxset(vm);
     return R_NilValue;
@@ -1099,7 +1100,7 @@ SEXP attribute_hidden do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans;
     int i, j, nfiles, res, failures = 0, recursive;
-    char *names;
+    const char *names;
     glob_t globbuf;
 
     checkArity(op, args);
@@ -1573,7 +1574,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans = R_NilValue;
-    char *name, ip[] = "xxx.xxx.xxx.xxx";
+    const char *name; char ip[] = "xxx.xxx.xxx.xxx";
     struct hostent *hp;
 
     checkArity(op, args);
@@ -1727,7 +1728,8 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 #if defined(HAVE_GETCWD) && defined(HAVE_REALPATH)
     SEXP ans, paths = CAR(args);
     int i, n = LENGTH(paths);
-    char *path, tmp[PATH_MAX+1], abspath[PATH_MAX+1], *res = NULL;
+    const char *path;
+    char tmp[PATH_MAX+1], abspath[PATH_MAX+1], *res = NULL;
     Rboolean OK;
 
     checkArity(op, args);

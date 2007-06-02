@@ -172,7 +172,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 		     int *nargs, int *naok, int *dup, SEXP call)
 {
     SEXP op;
-    char *p, *q;
+    const char *p; char *q;
     DllReference dll = {"", NULL, NULL, NOT_DEFINED};
 
     op = CAR(args);
@@ -372,7 +372,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	    error(_("character variables must be duplicated in .C/.Fortran"));
 	n = LENGTH(s);
 	if(Fort) {
-	    char *ss = translateChar(STRING_ELT(s, 0));
+	    const char *ss = translateChar(STRING_ELT(s, 0));
 	    if(n > 1)
 		warning(_("only first string in char vector used in .Fortran"));
 	    l = strlen(ss);
@@ -414,7 +414,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 #endif
 	    {
 		for (i = 0 ; i < n ; i++) {
-		    char *ss = translateChar(STRING_ELT(s, i));
+		    const char *ss = translateChar(STRING_ELT(s, i));
 		    l = strlen(ss);
 		    cptr[i] = (char*)R_alloc(l + 1, sizeof(char));
 		    strcpy(cptr[i], ss);
@@ -597,7 +597,7 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 {
     SEXP s, prev;
     int nargs=0, naokused=0, dupused=0, pkgused=0;
-    char *p;
+    const char *p;
 
     *naok = 0;
     *dup = 1;
@@ -654,7 +654,9 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 
 static void setDLLname(SEXP s, char *DLLname)
 {
-    SEXP ss = CAR(s); char *name;
+    SEXP ss = CAR(s); 
+    const char *name;
+
     if(TYPEOF(ss) != STRSXP || length(ss) != 1)
 	error(_("PACKAGE argument must be a single character string"));
     name = translateChar(STRING_ELT(ss, 0));
@@ -730,7 +732,7 @@ static SEXP enctrim(SEXP args, char *name, int len)
 SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    char *sym, *pkg= "", *type="";
+    const char *sym, *pkg= "", *type="";
     int val = 1, nargs = length(args);
     R_RegisteredNativeSymbol symbol = {R_FORTRAN_SYM, {NULL}, NULL};
 

@@ -1911,7 +1911,7 @@ static void findmethod(SEXP Class, char *group, char *generic,
     /* eg if class(x) is "foo" "bar" then x>3 should invoke */
     /* "Ops.foo" rather than ">.bar" */
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
-	char *ss = translateChar(STRING_ELT(Class, whichclass));
+	const char *ss = translateChar(STRING_ELT(Class, whichclass));
 	if(strlen(generic) + strlen(ss) + 2 > 512)
 	    error(_("class name too long in '%s'"), generic);
 	sprintf(buf, "%s.%s", generic, ss);

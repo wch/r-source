@@ -207,7 +207,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     }
 }
 
-int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
+int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
 {
     SEXP klass, method, sxp, t, s, matchedarg;
@@ -260,7 +260,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(klass = R_data_class2(obj));
     nclass = length(klass);
     for (i = 0; i < nclass; i++) {
-	char *ss = translateChar(STRING_ELT(klass, i));
+	const char *ss = translateChar(STRING_ELT(klass, i));
 	if(strlen(generic) + strlen(ss) + 2 > 512)
 	    error(_("class name too long in '%s'"), generic);
 	sprintf(buf, "%s.%s", generic, ss);
@@ -440,7 +440,8 @@ static SEXP fixcall(SEXP call, SEXP args)
 
 SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[512], b[512], bb[512], tbuf[10], *sb, *sg, *sk;
+    char buf[512], b[512], bb[512], tbuf[10];
+    const char *sb, *sg, *sk;
     SEXP ans, s, t, klass, method, matchedarg, generic, nextfun;
     SEXP sysp, m, formals, actuals, tmp, newcall;
     SEXP a, group, basename;
@@ -619,7 +620,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     method = findVarInFrame3(R_GlobalContext->sysparent,
 			     install(".Method"), TRUE);
     if( method != R_UnboundValue) {
-	char *ss;
+	const char *ss;
 	if( !isString(method) )
 	    error(_("wrong value for .Method"));
 	for(i = 0; i < length(method); i++) {
@@ -632,7 +633,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* for binary operators check that the second argument's method
 	   is the same or absent */
 	for(j = i; j < length(method); j++){
-	    char *ss = translateChar(STRING_ELT(method, j));
+	    const char *ss = translateChar(STRING_ELT(method, j));
 	    if(strlen(ss) >= 512)
 		error(_("method name too long in '%s'"), ss);
 	  sprintf(bb, "%s", ss);
@@ -830,7 +831,7 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 	rval = allocVector(INTSXP, nwhat);
 
     for(j = 0; j < nwhat; j++) {
-	char *ss = translateChar(STRING_ELT(what, j));
+	const char *ss = translateChar(STRING_ELT(what, j));
 	for(i = 0; i < nclass; i++) {
 	    if(isvec)
 		INTEGER(rval)[j] = 0;
@@ -1017,7 +1018,7 @@ static SEXP *prim_mlist;
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 		       SEXP mlist)
 {
-    char *code_string;
+    const char *code_string;
     if(!isValidString(code_vec))
 	error(_("argument 'code' must be a character string"));
     code_string = translateChar(asChar(code_vec));
@@ -1048,7 +1049,8 @@ SEXP R_primitive_generic(SEXP op)
 }
 
 /* This is used in the methods package, in src/methods_list_dispatch.c */
-SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
+SEXP do_set_prim_method(SEXP op, const char *code_string, SEXP fundef,
+			SEXP mlist)
 {
     int offset = 0;
     prim_methods_t code = NO_METHODS; /* -Wall */
@@ -1165,7 +1167,8 @@ static SEXP get_this_generic(SEXP args)
 {
     SEXP value = R_NilValue; static SEXP gen_name;
     int i, n;
-    RCNTXT *cptr; char *fname;
+    RCNTXT *cptr;
+    const char *fname;
 
     /* a second argument to the call, if any, is taken as the function */
     if(CDR(args) != R_NilValue)

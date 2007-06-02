@@ -30,7 +30,7 @@
 SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int i, nargs, cnt, v, thislen;
-    char *formatString, *starc, *ss;
+    const char *formatString, *ss; char *starc;
     char fmt[MAXLINE+1], fmt2[MAXLINE+1], *fmtp, bit[MAXLINE+1], 
 	outputString[MAXLINE+1];
     size_t n, cur, chunk;

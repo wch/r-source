@@ -58,13 +58,13 @@ extern int (*ptr_CocoaSystem)(char*);
 extern	Rboolean useaqua;
 #endif
 
-Rboolean attribute_hidden R_FileExists(char *path)
+Rboolean attribute_hidden R_FileExists(const char *path)
 {
     struct stat sb;
     return stat(R_ExpandFileName(path), &sb) == 0;
 }
 
-double attribute_hidden R_FileMtime(char *path)
+double attribute_hidden R_FileMtime(const char *path)
 {
     struct stat sb;
     if (stat(R_ExpandFileName(path), &sb) != 0)
@@ -76,7 +76,7 @@ double attribute_hidden R_FileMtime(char *path)
      *  Unix file names which begin with "." are invisible.
      */
 
-Rboolean attribute_hidden R_HiddenFile(char *name)
+Rboolean attribute_hidden R_HiddenFile(const char *name)
 {
     if (name && name[0] != '.') return 0;
     else return 1;
@@ -586,7 +586,7 @@ int Riconv_close (void *cd)
 
 static void *latin1_obj = NULL, *utf8_obj=NULL;
 
-char *translateChar(SEXP x)
+const char *translateChar(SEXP x)
 {
     void * obj;
     char *inbuf, *outbuf, *p;

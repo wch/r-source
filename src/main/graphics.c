@@ -299,7 +299,7 @@ static double yDevtoCharUnits(double y, DevDesc *dd)
     return yDevtoNDCUnits(y, dd)/(Rf_gpptr(dd)->cex * Rf_gpptr(dd)->yNDCPerChar);
 }
 
-static void BadUnitsError(char *where)
+static void BadUnitsError(const char *where)
 {
     error(_("bad units specified in %s, please report!"), where);
 }
@@ -1741,7 +1741,7 @@ static Rboolean validFigureMargins(DevDesc *dd)
 	    (Rf_gpptr(dd)->plt[2] < Rf_gpptr(dd)->plt[3]));
 }
 
-static void invalidError(char* message, DevDesc *dd)
+static void invalidError(const char *message, DevDesc *dd)
 {
     Rf_dpptr(dd)->currentFigure -= 1;
     if (Rf_dpptr(dd)->currentFigure < 1)
@@ -2935,7 +2935,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 }
 
 /* Compute string width. */
-double GStrWidth(char *str, GUnit units, DevDesc *dd)
+double GStrWidth(const char *str, GUnit units, DevDesc *dd)
 {
     double w;
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
@@ -2948,7 +2948,7 @@ double GStrWidth(char *str, GUnit units, DevDesc *dd)
 
 /* Compute string height. */
 
-double GStrHeight(char *str, GUnit units, DevDesc *dd)
+double GStrHeight(const char *str, GUnit units, DevDesc *dd)
 {
     double h;
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
@@ -2961,7 +2961,7 @@ double GStrHeight(char *str, GUnit units, DevDesc *dd)
 /* Draw text in a plot. */
 /* If you want EXACT centering of text (e.g., like in GSymbol) */
 /* then pass NA_REAL for xc and yc */
-void GText(double x, double y, int coords, char *str,
+void GText(double x, double y, int coords, const char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
     R_GE_gcontext gc; gcontextFromGP(&gc, dd);
@@ -3199,8 +3199,8 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 
 
 /* Draw text in plot margins. */
-void GMtext(char *str, int side, double line, int outer, double at, int las,
-	    double yadj, DevDesc *dd)
+void GMtext(const char *str, int side, double line, int outer, double at,
+	    int las, double yadj, DevDesc *dd)
 {
 /* "las" gives the style of axis labels:
 	 0 = always parallel to the axis [= default],

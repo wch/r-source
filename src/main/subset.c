@@ -928,7 +928,7 @@ static
 enum pmatch
 pstrmatch(SEXP target, SEXP input, int slen)
 {
-    char *st = "";
+    const char *st = "";
 
     if(target == R_NilValue)
 	return NO_MATCH;
@@ -1029,7 +1029,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	}
 	if (havematch == 1) { /* unique partial match */
 	    if(R_warn_partial_match_dollar) {
-		char *st = "";
+		const char *st = "";
 		SEXP target = TAG(y);
 		switch (TYPEOF(target)) {
 		case SYMSXP:
@@ -1079,7 +1079,7 @@ SEXP attribute_hidden R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	}
 	if(havematch == 1) { /* unique partial match */
 	    if(R_warn_partial_match_dollar) {
-		char *st = "";
+		const char *st = "";
 		SEXP target = STRING_ELT(nlist, imatch);
 		switch (TYPEOF(target)) {
 		case SYMSXP:

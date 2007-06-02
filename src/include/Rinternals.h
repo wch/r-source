@@ -627,7 +627,7 @@ void Rf_setVar(SEXP, SEXP, SEXP);
 SEXPTYPE Rf_str2type(const char*);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
-char * Rf_translateChar(SEXP);
+const char * Rf_translateChar(SEXP);
 const char * Rf_type2char(SEXPTYPE);
 SEXP Rf_type2str(SEXPTYPE);
 void Rf_unprotect(int);

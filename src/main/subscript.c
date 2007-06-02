@@ -135,7 +135,7 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
 */
     int indx, i, warn_pok = 0;
     double dblind;
-    char *ss, *cur_name;
+    const char *ss, *cur_name;
 
     if (pok == -1) {
         pok = 1;

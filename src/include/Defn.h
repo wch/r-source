@@ -676,7 +676,8 @@ LibExtern SEXP R_MethodsNamespace;
 SEXP R_deferred_default_method();
 SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 		       SEXP mlist);
-SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist);
+SEXP do_set_prim_method(SEXP op, const char *code_string, SEXP fundef,
+			SEXP mlist);
 void R_set_quick_method_check(R_stdGen_ptr_t);
 SEXP R_primitive_methods(SEXP op);
 SEXP R_primitive_generic(SEXP op);
@@ -851,9 +852,9 @@ int	R_ShowFiles(int, char **, char **, char *, Rboolean, char *);
 int     R_EditFiles(int, char **, char **, char *);
 int	R_ChooseFile(int, char*, int);
 char*	R_HomeDir(void);
-Rboolean R_FileExists(char*);
-Rboolean R_HiddenFile(char*);
-double	R_FileMtime(char*);
+Rboolean R_FileExists(const char*);
+Rboolean R_HiddenFile(const char*);
+double	R_FileMtime(const char*);
 
 /* environment cell access */
 typedef struct R_varloc_st *R_varloc_t;
@@ -945,7 +946,7 @@ void initStack(void);
 void R_InsertRestartHandlers(RCNTXT *, Rboolean);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 Rboolean isMethodsDispatchOn(void);
-int isValidName(char *);
+int isValidName(const char *);
 void R_JumpToContext(RCNTXT *, int, SEXP);
 void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
@@ -1022,7 +1023,7 @@ void unbindVar(SEXP, SEXP);
 void unmarkPhase(void);
 #endif
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
-int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
+int usemethod(const char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
 SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
                         SEXP (*)(SEXP, int), SEXP, SEXP);
 
@@ -1086,8 +1087,8 @@ size_t ucs2Mblen(ucs2_t *in); */
 int utf8clen(char c);
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
-void mbcsToLatin1(char *in, char *out);
-Rboolean mbcsValid(char *str);
+void mbcsToLatin1(const char *in, char *out);
+Rboolean mbcsValid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
 #else

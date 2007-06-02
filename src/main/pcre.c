@@ -52,11 +52,11 @@
  * either once or globally.
  * The functions are loosely patterned on the "sub" and "gsub" in "nawk". */
 
-static int length_adj(char *orig, char *repl, int *ovec, int nsubexpr, 
-		      Rboolean useBytes)
+static int length_adj(const char *orig, const char *repl, int *ovec,
+		      int nsubexpr, Rboolean useBytes)
 {
     int k, n, nb;
-    char *p = repl;
+    const char *p = repl;
     Rboolean upper = FALSE, lower = FALSE;
 
     n = strlen(repl) - (ovec[1] - ovec[0]);
@@ -108,11 +108,11 @@ static int length_adj(char *orig, char *repl, int *ovec, int nsubexpr,
     return n;
 }
 
-static char *string_adj(char *target, char *orig, char *repl, int *ovec, 
-			Rboolean useBytes)
+static char *string_adj(char *target, const char *orig, const char *repl,
+			int *ovec, Rboolean useBytes)
 {
     int i, k, nb;
-    char *p = repl, *t = target, c;
+    const char *p = repl; char *t = target, c;
     Rboolean upper = FALSE, lower = FALSE;
 
     while (*p) {
@@ -166,14 +166,14 @@ static char *string_adj(char *target, char *orig, char *repl, int *ovec,
 }
 
 SEXP attribute_hidden
-do_pgsub(char *spat, char *srep, SEXP vec, int global, int igcase_opt,
-         int useBytes)
+do_pgsub(const char *spat, const char *srep, SEXP vec, int global,
+	 int igcase_opt, int useBytes)
 {
     SEXP ans;
     int i, j, n, ns, nns, nmatch, offset, re_nsub;
     int erroffset, eflag, last_end;
     int options = 0;
-    char *s, *t, *u, *cbuf;
+    const char *s, *t; char *u, *cbuf;
     const char *errorptr;
     pcre *re_pcre;
     pcre_extra *re_pe;
@@ -307,7 +307,7 @@ do_pgsub(char *spat, char *srep, SEXP vec, int global, int igcase_opt,
 #include "RBufferUtils.h"
 
 SEXP attribute_hidden
-do_gpregexpr(char *spat, SEXP text, int igcase_opt, int useBytes)
+do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
 {
     SEXP ansList, ans, matchlen;
     SEXP matchbuf, matchlenbuf;
@@ -343,7 +343,7 @@ do_gpregexpr(char *spat, SEXP text, int igcase_opt, int useBytes)
     matchlenbuf = PROTECT(allocVector(INTSXP, bufsize));
 
     for (i = 0 ; i < n ; i++) {
-	char *s;
+	const char *s;
         int j, foundAll, foundAny, matchIndex, start;
         foundAll = foundAny = start = 0;
         matchIndex = -1;
