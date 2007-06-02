@@ -165,6 +165,8 @@ BUG FIXES
 
     o	connection-releated functions such as readBin no longer crash
 	when supplied with an invalid connection
+	
+    o	as.character.srcref() didn't handle bad srcref objects cleanly.
 
 
 
