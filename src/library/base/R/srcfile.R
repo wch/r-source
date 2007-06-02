@@ -129,6 +129,8 @@ as.character.srcref <- function(x, useSource = TRUE, ...)
     	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",
                        x[1],":",x[2], " to ",x[3],":",x[4], ">", sep="")
     else {
+        if (length(lines) < x[3] - x[1] + 1) 
+            x[4] <- .Machine$integer.max
     	lines[length(lines)] <- substring(lines[length(lines)], 1, x[4])
     	lines[1] <- substring(lines[1], x[2])
     }
