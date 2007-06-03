@@ -27,6 +27,9 @@ NEW FEATURES
 	This allows it to be tuned for people who use their space bar
 	vs those who do not.  The default now allows filename-completion
 	with +-* in the filenames.
+	
+    o	If the srcfile argument to parse() is not NULL, it will be added
+    	to the result as a "srcfile" attribute.
 
 
 INSTALLATION

@@ -491,7 +491,7 @@ static SEXP makeSrcref(YYLTYPE *lloc, SEXP srcfile)
     return val;
 }
 
-static SEXP attachSrcrefs(SEXP val)
+static SEXP attachSrcrefs(SEXP val, SEXP srcfile)
 {
     SEXP t, srval;
     int n;
@@ -502,6 +502,7 @@ static SEXP attachSrcrefs(SEXP val)
     for (n = 0 ; n < LENGTH(srval) ; n++, t = CDR(t))
     	SET_VECTOR_ELT(srval, n, CAR(t));
     setAttrib(val, R_SrcrefSymbol, srval);
+    setAttrib(val, R_SrcfileSymbol, srcfile);
     UNPROTECT(1);
     SrcRefs = NULL;
     return val;
@@ -991,7 +992,7 @@ static SEXP xxexprlist(SEXP a1, SEXP a2)
 	SETCAR(a2, a1);
 	if (SrcFile) {
 	    PROTECT(prevSrcrefs = getAttrib(a2, R_SrcrefSymbol));
-	    PROTECT(ans = attachSrcrefs(a2));
+	    PROTECT(ans = attachSrcrefs(a2, SrcFile));
 	    REPROTECT(SrcRefs = prevSrcrefs, srindex);
 	    /* SrcRefs got NAMED by being an attribute... */
 	    SET_NAMED(SrcRefs, 0);
@@ -1342,7 +1343,7 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (SrcFile) {
-    	rval = attachSrcrefs(rval);
+    	rval = attachSrcrefs(rval, SrcFile);
         SrcFile = NULL;    
     }
     R_PPStackTop = savestack;
@@ -1488,7 +1489,7 @@ finish:
     for (n = 0 ; n < LENGTH(rval) ; n++, t = CDR(t))
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (SrcFile) {
-    	rval = attachSrcrefs(rval);
+    	rval = attachSrcrefs(rval, SrcFile);
         SrcFile = NULL;    
     }	
     R_PPStackTop = savestack;
