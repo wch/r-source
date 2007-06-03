@@ -224,7 +224,7 @@ char *locale2charset(const char *locale);
   memset(mb_buf, 0, sizeof(mb_buf));				     \
   memset(ucs4_buf, 0, sizeof(ucs4_buf));			     \
   wcrtomb( mb_buf, wc, NULL);					     \
-  if((void *)(-1) != (cd = Riconv_open((char*)UNICODE, fromcode))) { \
+  if((void *)(-1) != (cd = Riconv_open(UNICODE, fromcode))) {	     \
       wc_len = sizeof(ucs4_buf);		                     \
       _wc_buf = (char *)ucs4_buf;		       		     \
       mb_len = strlen(mb_buf);					     \
