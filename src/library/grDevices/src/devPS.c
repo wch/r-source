@@ -816,7 +816,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent, double *width,
 	size_t i_len, o_len, status;
 	unsigned short w[2];
 
-	if ((void*)-1 == (cd = Riconv_open(encoding, (char *)UCS2ENC)))
+	if ((void*)-1 == (cd = Riconv_open(encoding, UCS2ENC)))
 	    error(_("unknown encoding '%s' in 'PostScriptMetricInfo'"),
 		  encoding);
 
@@ -3535,7 +3535,7 @@ static void PS_NewPage(R_GE_gcontext *gc,
 }
 
 #ifdef Win32
-int   Rf_runcmd(char *cmd, int wait, int visible, char *finput);
+int   Rf_runcmd(const char *cmd, int wait, int visible, const char *finput);
 #endif
 static void PostScriptClose(NewDevDesc *dd)
 {
