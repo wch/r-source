@@ -664,7 +664,7 @@ RECT *RgetMDIsize(); /* in rui.c */
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP list, preselect, ans = R_NilValue;
-    char **clist;
+    const char **clist;
     int i, j = -1, n, mw = 0, multiple, nsel = 0;
     int xmax, ymax, ylist, fht, h0;
     Rboolean haveTitle;
@@ -682,7 +682,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' argument"), "preselect");
 
     n = LENGTH(list);
-    clist = (char **) R_alloc(n + 1, sizeof(char *));
+    clist = (const char **) R_alloc(n + 1, sizeof(char *));
     for(i = 0; i < n; i++) {
 	clist[i] = CHAR(STRING_ELT(list, i));
 	mw = max(mw, gstrwidth(NULL, SystemFont, clist[i]));
@@ -1271,7 +1271,7 @@ static int getDeviceHandle(int dev)
    or $Graph<nn>LocPopup where <nn> is the
    device number.  We've already checked the $Graph prefix. */
 
-menu getGraphMenu(char* menuname)
+menu getGraphMenu(const char* menuname)
 {
     int devnum;
     GEDevDesc *gdd;

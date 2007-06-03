@@ -35,7 +35,7 @@
 #define RGBCOLORS 657
 
 /* not static and NULL terminated => we can use it in list boxes..*/
-char *ColorName[]= {
+const char *ColorName[]= {
     "AliceBlue",
     "AntiqueWhite",
     "AntiqueWhite1",
@@ -1361,7 +1361,7 @@ static int RgbValue[RGBCOLORS][3] = {
 /* Return transparent if the color doesn't exist.
  *  Case insensitive comparison?
 */
-rgb nametorgb(char *name)
+rgb nametorgb(const char *name)
 {
     int mid, high, low, cmp;
 
@@ -1381,7 +1381,7 @@ rgb nametorgb(char *name)
 }
 
 /* return "white" not "gray100" */
-char *rgbtoname(rgb in)
+const char *rgbtoname(rgb in)
 {
     int i;
 

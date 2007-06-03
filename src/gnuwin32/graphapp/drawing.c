@@ -44,7 +44,7 @@
 
 	int move_to_ex(HDC hdc, int x, int y, POINT *p);
 	int get_current_position_ex(HDC hdc, POINT *p);
-	int get_text_extent_point(HDC hdc, char *str, int len, SIZE *s);
+	int get_text_extent_point(HDC hdc, const char *str, int len, SIZE *s);
 
 static int move_to_ex(HDC hdc, int x, int y, POINT *p)
 {
@@ -66,7 +66,7 @@ static int get_current_position_ex(HDC hdc, POINT *p)
 	return 1;
 }
 
-static int get_text_extent_point(HDC hdc, char *str, int len, SIZE *s)
+static int get_text_extent_point(HDC hdc, const char *str, int len, SIZE *s)
 {
 	DWORD result = GetTextExtent(hdc, str, len);
 	if (s) {
@@ -614,7 +614,7 @@ void fillpolygon(point *p, int n)
 /*
  *  Drawstr returns the width of the string drawn.
  */
-int drawstr(point p, char *s)
+int drawstr(point p, const char *s)
 {
 	POINT curr_pos;
 	int width;
@@ -639,7 +639,7 @@ int drawstr(point p, char *s)
 	return width;
 }
 
-rect strrect(font f, char *s)
+rect strrect(font f, const char *s)
 {
 	SIZE size;
 	long h;
@@ -660,13 +660,13 @@ rect strrect(font f, char *s)
 	return rect(0,0,size.cx, h);
 }
 
-point strsize(font f, char *s)
+point strsize(font f, const char *s)
 {
 	rect r = strrect(f,s);
 	return pt(r.width, r.height);
 }
 
-int strwidth(font f, char *s)
+int strwidth(font f, const char *s)
 {
 	rect r = strrect(f,s);
 	return r.width;

@@ -28,7 +28,7 @@
  *  Create and return a newly allocated copy of a string.
  *  Null strings are converted into empty strings first.
  */
-char *new_string(char *src)
+char *new_string(const char *src)
 {
 	char *str;
 	if (! src)
@@ -39,7 +39,7 @@ char *new_string(char *src)
 	return str;
 }
 
-void del_string(char *str)
+void del_string(const char *str)
 {
 	discard(str);
 }
@@ -48,7 +48,7 @@ void del_string(char *str)
  *  String length function.
  *  If the string is null, the length is defined to be zero.
  */
-long string_length(char *s)
+long string_length(const char *s)
 {
 	long len = 0;
 	if (s)
@@ -61,7 +61,7 @@ long string_length(char *s)
  *  Copy a string.
  *  Same as strcpy except it avoids doing anything to null strings.
  */
-void copy_string(char *dest, char *src)
+void copy_string(char *dest, const char *src)
 {
 	int len;
 	if ((dest) && (src)) {
@@ -75,7 +75,7 @@ void copy_string(char *dest, char *src)
  *  String comparison function.
  *  Null == null, null == "", "" == null, otherwise same as strcmp.
  */
-int compare_strings(char *s1, char *s2)
+int compare_strings(const char *s1, const char *s2)
 {
 	int len, diff;
 
@@ -107,7 +107,7 @@ int compare_strings(char *s1, char *s2)
  *  of the parameters are temporary strings returned by an earlier
  *  call to this function.
  */
-char *add_strings(char *s1, char *s2)
+const char *add_strings(const char *s1, const char *s2)
 {
 	static char *buffer = NULL;
 	char *prev;
@@ -139,7 +139,7 @@ char *add_strings(char *s1, char *s2)
 /*
  *  Convert a char to a string, return the result in a static buffer.
  */
-char *char_to_string(char ch)
+char *char_to_string(const char ch)
 {
 	static char str[2];
 	str[0] = ch;
@@ -176,7 +176,7 @@ char *float_to_string(float f)
  *  Case-insensitive string comparison function.
  */
 PROTECTED
-int string_diff(char *s, char *t)
+int string_diff(const char *s, const char *t)
 {
 	int ch1, ch2;
 	int diff = 0;
@@ -200,15 +200,15 @@ int string_diff(char *s, char *t)
  *  to mark end of line. The returned string must later be freed.
  */
 PROTECTED
-char *to_dos_string(char *text)
+char *to_dos_string(const char *text)
 {
-	char *s;
-	char *newstr;
+	const char *s;
+	char *newstr, *ss;
 	char prev;
 	long length = 0;
 
 	if (!text)
-		return text;
+		return (char *) NULL;
 	prev = '\0';
 	for (s = text; *s != '\0'; s++) {
 		length++;
@@ -220,15 +220,15 @@ char *to_dos_string(char *text)
 	newstr = array (length, char);
 
 	prev = '\0';
-	for (s = newstr; *text != '\0'; s++, text++) {
+	for (ss = newstr; *text != '\0'; ss++, text++) {
 		if ((*text == '\n') && (prev != '\r')) {
-			*s = '\r';
-			s++;
+			*ss = '\r';
+			ss++;
 		}
-		*s = *text;
-		prev = *s;
+		*ss = *text;
+		prev = *ss;
 	}
-	*s = '\0';
+	*ss = '\0';
 
 	return newstr;
 }
@@ -238,14 +238,14 @@ char *to_dos_string(char *text)
  *  string must later be freed.
  */
 PROTECTED
-char *to_c_string(char *text)
+char *to_c_string(const char *text)
 {
-	char *s;
-	char *newstr;
+	const char *s;
+	char *newstr, *ss;
 	long length = 0;
 
 	if (!text)
-		return text;
+		return (char *) NULL;
 	for (s = text; *s != '\0'; s++) {
 		length++;
 		if ((*s == '\r') && (*(s+1) == '\n'))
@@ -254,12 +254,12 @@ char *to_c_string(char *text)
 
 	newstr = array (length, char);
 
-	for (s = newstr; *text != '\0'; s++, text++) {
+	for (ss = newstr; *text != '\0'; ss++, text++) {
 		if ((*text == '\r') && (*(text+1) == '\n'))
 			text++;
-		*s = *text;
+		*ss = *text;
 	}
-	*s = '\0';
+	*ss = '\0';
 
 	return newstr;
 }

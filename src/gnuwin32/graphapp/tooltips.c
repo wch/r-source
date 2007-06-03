@@ -32,7 +32,8 @@ static HWND hwndToolTip = 0;
 #include "commctrl.h"
 #endif
 
-int addtooltip(control c,char *tp) {
+int addtooltip(control c, const char *tp)
+{
     TOOLINFO ti;
     char *cc = (char*) &ti;
     int i, lim = sizeof (ti);

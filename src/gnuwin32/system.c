@@ -79,7 +79,7 @@ void set_workspace_name(char *fn); /* ../main/startup.c */
 
 /* used to avoid some flashing during cleaning up */
 Rboolean AllDevicesKilled = FALSE;
-int (*R_YesNoCancel)(char *s);
+static int (*R_YesNoCancel)(char *s);
 
 static DWORD mainThreadId;
 
@@ -756,6 +756,17 @@ void R_setupHistory()
     }
 }
 
+static void wrap_askok(char *info)
+{
+    askok(info);
+}
+
+static int wrap_askyesnocancel(char *question)
+{
+    return askyesnocancel(question);    
+}
+
+
 int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
@@ -847,8 +858,8 @@ int cmdlineoptions(int ac, char **av)
 	Rp->R_Interactive = TRUE;
 	Rp->ReadConsole = GuiReadConsole;
 	Rp->WriteConsole = GuiWriteConsole;
-	Rp->ShowMessage = askok;
-	Rp->YesNoCancel = askyesnocancel;
+	Rp->ShowMessage = wrap_askok;
+	Rp->YesNoCancel = wrap_askyesnocancel;
 	Rp->Busy = GuiBusy;
     }
 

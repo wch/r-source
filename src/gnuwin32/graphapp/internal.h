@@ -63,7 +63,7 @@ typedef objinfo *object;
 /* extras */
 rect getcliprect(void);
 void setcliprect(rect r);
-PROTECTED void updatestatus(char *text);
+PROTECTED void updatestatus(const char *text);
 PROTECTED font new_font_object();
 
 #ifdef __cplusplus
@@ -362,8 +362,8 @@ struct callinfo
 
 /* Image private functions. */
 
-  PROTECTED image   load_gif(char *filename);
-  PROTECTED void    save_gif(image img, char *filename);
+  PROTECTED image   load_gif(const char *filename);
+  PROTECTED void    save_gif(image img, const char *filename);
 
   PROTECTED rgb  get_image_pixel(image img, int x, int y);
   PROTECTED rgb  get_monochrome_pixel(image img, int x, int y);
@@ -380,19 +380,19 @@ struct callinfo
 
 /* String functions. */
 
-  char * new_string(char *src);
-  void   del_string(char *str);
-  long   string_length(char *s);
-  void   copy_string(char *dest, char *src);
-  int    compare_strings(char *s1, char *s2);
-  char * add_strings(char *s1, char *s2);
+  char * new_string(const char *src);
+  void   del_string(const char *str);
+  long   string_length(const char *s);
+  void   copy_string(char *dest, const char *src);
+  int    compare_strings(const char *s1, const char *s2);
+  const char * add_strings(const char *s1, const char *s2);
   char * char_to_string(char ch);
   char * int_to_string(long i);
   char * float_to_string(float f);
 
-  PROTECTED int    string_diff(char *s, char *t);
-  PROTECTED char * to_dos_string(char *str);
-  PROTECTED char * to_c_string(char *str);
+  PROTECTED int    string_diff(const char *s, const char *t);
+  PROTECTED char * to_dos_string(const char *str);
+  PROTECTED char * to_c_string(const char *str);
 
 /* New functions yet to be placed in the official header file */
 

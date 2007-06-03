@@ -1455,7 +1455,7 @@ static void de_popupmenu(DEstruct DE, int x_pos, int y_pos, int col)
     setclose(wconf, popupclose);
     setbackground(wconf, bbg);
     lwhat = newlabel(G_("variable name"), rect(10, 22, 90, 20), AlignLeft);
-    varname = newfield((char *)blah, rect(100, 20, 120, 20));
+    varname = newfield(blah, rect(100, 20, 120, 20));
     lrb = newlabel(G_("type"), rect(50, 62, 50, 20), AlignLeft);
     rb_num = newradiobutton("numeric", rect(100, 60 , 80, 20), NULL);
     rb_char = newradiobutton("character", rect(180, 60 , 80, 20), NULL);
@@ -1686,7 +1686,7 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
 	x = (devicewidth(NULL) - w) / 3;
 	y = (deviceheight(NULL) - h) / 3 ;
     }
-    c = (dataeditor) newwindow((char *) title, rect(x, y, w, h),
+    c = (dataeditor) newwindow(title, rect(x, y, w, h),
 			       Document | StandardWindow | Menubar |
 			       VScrollbar | HScrollbar | TrackMouse);
     if (!c) {

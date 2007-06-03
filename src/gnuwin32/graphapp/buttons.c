@@ -94,7 +94,7 @@ static void private_delcontrol(control obj)
 /*
  *  Creating controls.
  */
-control newcontrol(char *text, rect r)
+control newcontrol(const char *text, rect r)
 {
 	control obj;
 
@@ -121,8 +121,8 @@ drawing newdrawing(rect r, drawfn fn)
 	return obj;
 }
 
-static object newchildwin(char *kind, char *text,
-		unsigned long style, rect r, actionfn fn)
+static object newchildwin(const char *kind, const char *text,
+			  unsigned long style, rect r, actionfn fn)
 {
 	HWND hwnd;
 	object obj;
@@ -168,7 +168,7 @@ static object newchildwin(char *kind, char *text,
  *  The old native version of newlabel.
  */
 #if USE_NATIVE_LABELS
-label newlabel(char *text, rect r, int alignment)
+label newlabel(const char *text, rect r, int alignment)
 {
 	label obj;
 	unsigned long style = SS_LEFT;
@@ -205,7 +205,7 @@ static void draw_label(control c, rect r)
  *  support and there are no 'look and feel' issues with
  *  labels, so no problems are introduced by doing this.
  */
-control newlabel(char *text, rect r, int alignment)
+control newlabel(const char *text, rect r, int alignment)
 {
 	control obj = newcontrol(text, r);
 	if (obj) {
@@ -532,7 +532,7 @@ button newimagecheckbox(image img, rect r, actionfn fn)
 
 
 #if USE_NATIVE_BUTTONS
-button newbutton(char *text, rect r, actionfn fn)
+button newbutton(const char *text, rect r, actionfn fn)
 {
 	button obj;
 	obj = newchildwin("button", text, BS_PUSHBUTTON, r, fn);
@@ -581,7 +581,7 @@ static void draw_button(control c, rect r)
 	setcolour(old);
 }
 
-button newbutton(char *text, rect r, actionfn fn)
+button newbutton(const char *text, rect r, actionfn fn)
 {
 	button obj = newcontrol(text, r);
 	if (obj) {
@@ -602,7 +602,7 @@ button newbutton(char *text, rect r, actionfn fn)
 #endif
 
 #if USE_NATIVE_TOGGLES
-checkbox newcheckbox(char *text, rect r, actionfn fn)
+checkbox newcheckbox(const char *text, rect r, actionfn fn)
 {
 	checkbox obj = newchildwin("button", text, BS_CHECKBOX, r, fn);
 	if (obj) {
@@ -612,7 +612,7 @@ checkbox newcheckbox(char *text, rect r, actionfn fn)
 	return obj;
 }
 
-radiobutton newradiobutton(char *text, rect r, actionfn fn)
+radiobutton newradiobutton(const char *text, rect r, actionfn fn)
 {
 	radiobutton obj = newchildwin("button", text, BS_RADIOBUTTON, r, fn);
 	if (obj) {
@@ -699,7 +699,7 @@ static void draw_checkbox(control c, rect r)
 	setcolour(old);
 }
 
-checkbox newcheckbox(char *text, rect r, actionfn fn)
+checkbox newcheckbox(const char *text, rect r, actionfn fn)
 {
 	checkbox obj = newcontrol(text, r);
 	if (obj) {
@@ -800,7 +800,7 @@ static void radio_keydown(control c, int ch)
 		radio_hit(c);
 }
 
-radiobutton newradiobutton(char *text, rect r, actionfn fn)
+radiobutton newradiobutton(const char *text, rect r, actionfn fn)
 {
 	radiobutton obj = newcontrol(text, r);
 	if (obj) {
@@ -865,7 +865,7 @@ void pastetext(control obj)
 	sendmessage(obj->handle, WM_PASTE, 0, 0L);
 }
 
-void inserttext(control obj, char *text)
+void inserttext(control obj, const char *text)
 {
 	if (! obj)
 		return;
@@ -910,7 +910,7 @@ void textselection(control obj, long *start, long *end)
 }
 
 
-field newfield(char *text, rect r)
+field newfield(const char *text, rect r)
 {
 	field obj = newchildwin("edit", NULL,
 			WS_BORDER | ES_LEFT | ES_AUTOHSCROLL,
@@ -923,7 +923,7 @@ field newfield(char *text, rect r)
 }
 
 
-field newfield_no_border(char *text, rect r)
+field newfield_no_border(const char *text, rect r)
 {
 	field obj = newchildwin("edit", NULL,
 			ES_LEFT | ES_AUTOHSCROLL,
@@ -935,7 +935,7 @@ field newfield_no_border(char *text, rect r)
 	return obj;
 }
 
-field newpassword(char *text, rect r)
+field newpassword(const char *text, rect r)
 {
 	field obj = newchildwin("edit", NULL,
 			WS_BORDER | ES_LEFT | ES_AUTOHSCROLL
@@ -948,7 +948,7 @@ field newpassword(char *text, rect r)
 	return obj;
 }
 
-textbox newtextbox(char *text, rect r)
+textbox newtextbox(const char *text, rect r)
 {
 	textbox obj = newchildwin("edit", NULL,
 			/* WS_HSCROLL | ES_AUTOHSCROLL | */
@@ -963,7 +963,7 @@ textbox newtextbox(char *text, rect r)
 	return obj;
 }
 
-textbox newtextarea(char *text, rect r)
+textbox newtextarea(const char *text, rect r)
 {
 	textbox obj = newchildwin("edit", NULL,
 			WS_HSCROLL | ES_AUTOHSCROLL |
@@ -978,7 +978,7 @@ textbox newtextarea(char *text, rect r)
 	return obj;
 }
 
-textbox newrichtextarea(char *text, rect r)
+textbox newrichtextarea(const char *text, rect r)
 {
     textbox obj;
     if (!LoadLibrary("riched20.dll")) /* RichEdit version 2.0, not included in Win95 */
@@ -1045,7 +1045,7 @@ void changescrollbar(scrollbar obj, int where, int max, int pagesize)
 	SetScrollInfo(hwnd, SB_CTL, &si, 1);
 }
 
-listbox newlistbox(char *list[], rect r, scrollfn fn)
+listbox newlistbox(const char *list[], rect r, scrollfn fn)
 {
 	listbox obj;
 
@@ -1063,7 +1063,7 @@ listbox newlistbox(char *list[], rect r, scrollfn fn)
 	return obj;
 }
 
-listbox newmultilist(char *list[], rect r, scrollfn fn)
+listbox newmultilist(const char *list[], rect r, scrollfn fn)
 {
 	listbox obj;
 
@@ -1083,7 +1083,7 @@ listbox newmultilist(char *list[], rect r, scrollfn fn)
 	return obj;
 }
 
-listbox newdroplist(char *list[], rect r, scrollfn fn)
+listbox newdroplist(const char *list[], rect r, scrollfn fn)
 {
 	listbox obj;
 	int h, i;
@@ -1110,7 +1110,7 @@ listbox newdroplist(char *list[], rect r, scrollfn fn)
 	return obj;
 }
 
-listbox newdropfield(char *list[], rect r, scrollfn fn)
+listbox newdropfield(const char *list[], rect r, scrollfn fn)
 {
 	listbox obj;
 	int h, i;
@@ -1208,7 +1208,7 @@ int getlistitem(listbox obj)
 	}
 }
 
-void changelistbox(listbox obj, char **list)
+void changelistbox(listbox obj, const char **list)
 {
 	int i;
 	HWND hwnd;

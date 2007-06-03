@@ -466,7 +466,7 @@ void gfillpolygon(drawing d, rgb fill, point *p, int n)
 }
 
 /* For ordinary text, e.g. in console */
-int gdrawstr(drawing d, font f, rgb c, point p, char *s)
+int gdrawstr(drawing d, font f, rgb c, point p, const char *s)
 {
     POINT curr_pos;
     int width;
@@ -496,7 +496,7 @@ int gdrawstr(drawing d, font f, rgb c, point p, char *s)
 }
 
 /* This version aligns on baseline, and allows hadj = 0, 0.5, 1 */
-void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
+void gdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj)
 {
     HFONT old;
     HDC dc = GETHDC(d);
@@ -515,7 +515,7 @@ void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 }
 
 /* This version interprets 's' as MBCS in the current locale */
-void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
+void gwdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj)
 {
     HFONT old;
     HDC dc = GETHDC(d);
@@ -540,7 +540,7 @@ void gwdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 #include <wchar.h>
 size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
 
-void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj)
+void gwdrawstr(drawing d, font f, rgb c, point p, const char *s, double hadj)
 {
     HFONT old;
     HDC dc = GETHDC(d);
@@ -561,7 +561,7 @@ void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj)
 }
 #endif
 
-rect gstrrect(drawing d, font f, char *s)
+rect gstrrect(drawing d, font f, const char *s)
 {
     SIZE size;
     HFONT old;
@@ -579,20 +579,20 @@ rect gstrrect(drawing d, font f, char *s)
     return rect(0, 0, size.cx, size.cy);
 }
 
-point gstrsize(drawing d, font f, char *s)
+point gstrsize(drawing d, font f, const char *s)
 {
     rect r = gstrrect(d, f, s);
     return pt(r.width, r.height);
 }
 
-int gstrwidth(drawing d, font f, char *s)
+int gstrwidth(drawing d, font f, const char *s)
 {
     rect r = gstrrect(d, f ,s);
     return r.width;
 }
 
 #ifdef SUPPORT_UTF8
-static rect gwstrrect(drawing d, font f, char *s)
+static rect gwstrrect(drawing d, font f, const char *s)
 {
     SIZE size;
     HFONT old;
@@ -613,7 +613,7 @@ static rect gwstrrect(drawing d, font f, char *s)
     return rect(0, 0, size.cx, size.cy);
 }
 
-int gwstrwidth(drawing d, font f, char *s)
+int gwstrwidth(drawing d, font f, const char *s)
 {
     rect r = gwstrrect(d,f,s);
     return r.width;
@@ -774,7 +774,7 @@ void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     }
 }
 
-font gnewfont(drawing d, char *face, int style, int size, double rot)
+font gnewfont(drawing d, const char *face, int style, int size, double rot)
 {
     font obj;
     HFONT hf;
@@ -797,7 +797,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
     if ((strlen(face) > 1) && (face[0] == 'T') && (face[1] == 'T')) {
-        char *pf;
+        const char *pf;
         lf.lfOutPrecision = OUT_TT_ONLY_PRECIS;
         for (pf = &face[2]; isspace(*pf) ; pf++);
         strncpy(lf.lfFaceName, pf, LF_FACESIZE-1);

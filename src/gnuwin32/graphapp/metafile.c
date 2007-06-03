@@ -71,7 +71,7 @@ static object get_metafile_base(void)
 }
 
 /* width and height are in mm */
-metafile newmetafile(char *name, double width, double height)
+metafile newmetafile(const char *name, double width, double height)
 {
     metafile obj;
     HDC hDC;

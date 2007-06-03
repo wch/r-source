@@ -97,3 +97,5 @@ int RguiCommonHelp();
 void helpmenuact(HelpMenuItems hmenu);
 void closeconsole(control m);
 void showstatusbar();
+
+menu getGraphMenu(const char *); /* from extra.c */

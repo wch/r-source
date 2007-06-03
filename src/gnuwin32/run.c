@@ -35,75 +35,82 @@
 static char RunError[256] = "";
 
 
-static char * expandcmd(char *cmd)
+static char * expandcmd(const char *cmd)
 {
+    char *buf;
     char  c;
     char *s, *p, *q, *f, *dest, *src, *fl, *fn;
     int   d , ext, len = strlen(cmd)+1;
+
+    /* make a copy as we manipulate in place */
+    buf = alloca(strlen(cmd) + 1);
+    strcpy(buf, cmd);
 
     if (!(s = (char *) malloc(MAX_PATH + strlen(cmd)))) {
 	strcpy(RunError, _("Insufficient memory (expandcmd)"));
 	return NULL;
     }
-    for (p = cmd; *p && isspace(*p); p++);
+    /* skip leading spaces */
+    for (p = buf; *p && isspace(*p); p++);
+    /* find the command itself, possibly double-quoted */
     for (q = p, d = 0; *q && ( d || !isspace(*q) ); q++)
-      if (*q == '\"') d = d ? 0 : 1;
+	if (*q == '\"') d = d ? 0 : 1;
     if (d) {
 	strcpy(RunError, _("A \" is missing (expandcmd)"));
 	return NULL;
     }
-    c = *q;
+    c = *q; /* character after the command, normally a space */
     *q = '\0';
 
 /*
  * I resort to this since SearchPath returned FOUND also
  * for file name without extension -> explicitly set
  *  extension
-*/
-   for ( f = p, ext = 0 ; *f ; f++) {
-     if ((*f == '\\') || (*f == '/')) ext = 0;
-     else if (*f == '.') ext = 1;
-   }
-   /* SearchPath doesn't like \" */
-   fl = alloca(len);
-   fn = alloca(len);
-   for ( dest = fl , src = p; *src ; src++)
-       if (*src != '\"') *dest++ = *src;
-   *dest = '\0';
-   if (ext) {
-   /*
-    * user set extension; we don't check that it is executable;
-    * it might get an error after; but maybe sometimes
-    * in the future every extension will be executable
-   */
-      d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f);
-   } else {
-     int iexts = 0;
-     char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
-     while (exts[iexts]) {
-       strcpy(dest, exts[iexts]);
-       if ((d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f))) break;
-       iexts ++ ;
-     }
-   }
-   if (!d) {
-       free(s);
-       strncpy(RunError, p, 200);
-       strcat(RunError, _(" not found"));
-       *q = c;
-       return NULL;
-   }
-   /*
+ */
+    for ( f = p, ext = 0 ; *f ; f++) {
+	if ((*f == '\\') || (*f == '/')) ext = 0;
+	else if (*f == '.') ext = 1;
+    }
+    /* SearchPath doesn't like ", so strip out quotes */
+    fl = alloca(len);
+    fn = alloca(len);
+    for ( dest = fl , src = p; *src ; src++)
+	if (*src != '\"') *dest++ = *src;
+    *dest = '\0';
+    if (ext) {
+	/*
+	 * user set extension; we don't check that it is executable;
+	 * it might get an error after; but maybe sometimes
+	 * in the future every extension will be executable
+	 */
+	d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f);
+    } else {
+	int iexts = 0;
+	char *exts[] = { ".exe" , ".com" , ".cmd" , ".bat" , NULL };
+	while (exts[iexts]) {
+	    strcpy(dest, exts[iexts]);
+	    if ((d = SearchPath(NULL, fl, NULL, MAX_PATH, fn, &f))) break;
+	    iexts++ ;
+	}
+    }
+    if (!d) {
+	free(s);
+	strncpy(RunError, p, 200);
+	strcat(RunError, _(" not found"));
+	*q = c;
+	return NULL;
+    }
+    /*
       Paranoia : on my system switching to short names is not needed
       since SearchPath already returns 'short names'. However,
       this is not documented so I prefer to be explicit.
       Problem is that we have removed \" from the executable since
       SearchPath seems dislikes them
-   */
-   GetShortPathName(fn, s, MAX_PATH);
-   *q = c;
-   strcat(s, q);
-   return s;
+    */
+    GetShortPathName(fn, s, MAX_PATH);
+    *q = c;
+    strcat(s, q);
+    return s;
 }
 
 /*
@@ -114,7 +121,7 @@ static char * expandcmd(char *cmd)
    inpipe != 0 to duplicate I/O handles
 */
 
-static HANDLE pcreate(char* cmd, char *finput,
+static HANDLE pcreate(const char* cmd, const char *finput,
 		      int newconsole, int visible, int inpipe)
 {
     DWORD ret;
@@ -170,7 +177,7 @@ static HANDLE pcreate(char* cmd, char *finput,
 	si.wShowWindow = SW_SHOWDEFAULT;
 	break;
     }
-    ret = CreateProcess(0, (char *) ecmd, &sa, &sa, TRUE,
+    ret = CreateProcess(NULL, ecmd, &sa, &sa, TRUE,
 		    (newconsole && (visible == 1)) ? CREATE_NEW_CONSOLE : 0,
 			NULL, NULL, &si, &pi);
     CloseHandle(hTHIS);
@@ -228,7 +235,7 @@ char *runerror()
    finput is either NULL or the name of a file from which to
      redirect stdin for the child.
  */
-int runcmd(char *cmd, int wait, int visible, char *finput)
+int runcmd(const char *cmd, int wait, int visible, const char *finput)
 {
     HANDLE p;
     int ret;
@@ -249,7 +256,7 @@ int runcmd(char *cmd, int wait, int visible, char *finput)
    io = 0 to read stdout from pipe, 1 to write to pipe,
    2 to read stdout and stderr from pipe.
  */
-rpipe * rpipeOpen(char *cmd, int visible, char *finput, int io)
+rpipe * rpipeOpen(const char *cmd, int visible, const char *finput, int io)
 {
     rpipe *r;
     HANDLE hIN, hOUT, hERR, hThread, hTHIS, hTemp;
@@ -522,7 +529,7 @@ static int Wpipe_vfprintf(Rconnection con, const char *format, va_list ap)
     return res;
 }
 
-Rconnection newWpipe(char *description, char *mode)
+Rconnection newWpipe(const char *description, const char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));

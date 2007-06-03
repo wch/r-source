@@ -60,7 +60,7 @@ int delstatusbar() {
   return 1;
 }
 
-PROTECTED void updatestatus(char *text) {
+PROTECTED void updatestatus(const char *text) {
     /* strncpy(MDIStatusText, text, 255); */
   if (!MDIStatus) return;
   SendMessage(MDIStatus,SB_SETTEXT,
@@ -68,7 +68,7 @@ PROTECTED void updatestatus(char *text) {
   SendMessage(MDIStatus, WM_PAINT, (WPARAM)0, (LPARAM)0);
 }
 
-void setstatus(char *text) {
+void setstatus(const char *text) {
   strncpy(MDIStatusText, text, 255);
   if (!MDIStatus || !current_window) return;
   strncpy(current_window->status, text, 255);

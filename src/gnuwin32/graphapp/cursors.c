@@ -240,7 +240,7 @@ cursor newcursor(point p, image img)
 /*
  *  Load a cursor from resources.
  */
-static point load_hotspot(char *filename)
+static point load_hotspot(const char *filename)
 {
 	FILE *file;
 	char line[100];
@@ -270,7 +270,7 @@ static point load_hotspot(char *filename)
 	return p;
 }
 
-static cursor load_image_cursor(char *filename)
+static cursor load_image_cursor(const char *filename)
 {
 	cursor c = NULL;
 	image img;
@@ -285,7 +285,7 @@ static cursor load_image_cursor(char *filename)
 	return c;
 }
 
-cursor loadcursor(char *name)
+cursor loadcursor(const char *name)
 {
 	HCURSOR hc;
 	cursor c;
@@ -306,7 +306,7 @@ cursor loadcursor(char *name)
 /*
  *  Private cursor initialisation routines.
  */
-static cursor make_special_cursor(char *name, LPCSTR idc)
+static cursor make_special_cursor(const char *name, LPCSTR idc)
 {
 	cursor c;
 
