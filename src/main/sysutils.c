@@ -647,7 +647,7 @@ next_char:
     return p;
 }
 #else
-void * Riconv_open (char* tocode, char* fromcode)
+void * Riconv_open (const char* tocode, const char* fromcode)
 {
     error(_("'iconv' is not available on this system"));
     return (void *)-1;
