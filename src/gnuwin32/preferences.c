@@ -50,12 +50,12 @@ void editorsetfont(font f);
 
 static void showDialog(Gui gui);
 
-extern char *ColorName[]; /* from graphapp/rgb.c */
+extern const char *ColorName[]; /* from graphapp/rgb.c */
 
-static int cmatch(char *col, char **list)
+static int cmatch(char *col, const char **list)
 {
     int i=0;
-    char **pos = list;
+    const char **pos = list;
     while(*pos != NULL) {
 	if(strcmpi(*pos, col) == 0) return(i);
 	i++; pos++;
