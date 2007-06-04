@@ -2551,7 +2551,8 @@ function(dir)
     ## the top-level package source directory ...
     Rd_files <- list_files_with_type(file.path(dir), "docs")
     db <- lapply(Rd_files, .read_Rd_lines_quietly)
-    names(db) <- Rd_files
+    z <- strsplit(Rd_files, "/", fixed = TRUE)
+    names(db) <- sapply(z, function(x) x[length(x)])
     .check_Rd_files_in_Rd_db(db)
 }
 
@@ -3075,6 +3076,62 @@ function(x, ...)
                      strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
                      ""))
 
+    if(any(as.integer(sapply(x, length))))
+        writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
+                     ""))
+
+    invisible(x)
+}
+
+### * .check_package_description_encoding
+
+.check_package_description_encoding <-
+function(dfile)
+{
+    dfile <- file_path_as_absolute(dfile)
+    db <- .read_description(dfile)
+    out <- list()
+
+    ## Check encoding-related things.
+
+    ## All field tags must be ASCII.
+    if(any(ind <- !.is_ASCII(names(db))))
+        out$fields_with_non_ASCII_tags <- names(db)[ind]
+
+    if(! "Encoding" %in% names(db)) {
+        ind <- !.is_ASCII(db)
+        if(any(ind)) {
+            out$missing_encoding <- TRUE
+            out$fields_with_non_ASCII_values <- names(db)[ind]
+        }
+    } else {
+        enc <- db[["Encoding"]]
+        if (! enc %in% c("latin1", "latin2", "UTF-8"))
+            out$non_portable_encoding <- enc
+    }
+
+    class(out) <- "check_package_description_encoding"
+    out
+}
+
+print.check_package_description_encoding<-
+function(x, ...)
+{
+    if(length(x$non_portable_encoding))
+       writeLines(c(gettextf("Encoding '%s' is not portable",
+                             x$non_portable_encoding),
+                    ""))
+    if(length(x$missing_encoding))
+        writeLines(gettext("Unknown encoding with non-ASCII data"))
+    if(length(x$fields_with_non_ASCII_tags)) {
+        writeLines(gettext("Fields with non-ASCII tags:"))
+        .pretty_print(x$fields_with_non_ASCII_tags)
+        writeLines(c(gettext("All field tags must be ASCII."), ""))
+    }
+    if(length(x$fields_with_non_ASCII_values)) {
+        writeLines(gettext("Fields with non-ASCII values:"))
+        .pretty_print(x$fields_with_non_ASCII_values)
+    }
     if(any(as.integer(sapply(x, length))))
         writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
                      ""))

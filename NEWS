@@ -270,6 +270,9 @@ UTILITIES
 	long-standing stipulation in 'Writing R Extensions', and
 	catches some packages with UTF-8 man pages.
 
+    o	R CMD check now warns on DESCRIPTION files with a non-portable
+	Encoding field, or with non-ASCII data and no Encoding field.
+
     o	Rdconv now warns about unmatched braces rather than silently
 	omitting sections containing them.  (Suggestion by Bill
 	Dunlap, PR#9649)
