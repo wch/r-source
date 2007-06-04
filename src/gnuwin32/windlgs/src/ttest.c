@@ -1,7 +1,9 @@
-#include <windows.h>
+#include <R.h> /* for R_ProcessEvents */
 #include "ga.h"
 #include <stdlib.h> /* atof */
 #include <ctype.h> /* tolower */
+#define WIN32_LEAN_AND_MEAN 1
+#include <windows.h> /* for Sleep */
 
 
 static window win;
@@ -10,8 +12,6 @@ static label l_var1, l_var2, l_lvl;
 static field var1, var2, lvl;
 static checkbox paired, varequal;
 static listbox alt;
-
-extern void R_ProcessEvents();
 
 static int done = 0;
 static char *v[2];
