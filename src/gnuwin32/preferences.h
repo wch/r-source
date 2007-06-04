@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.h
  *  Copyright (C) 2000  Guido Masarotto and Brian Ripley
- *                2004-6  R Core Development Team
+ *                2004-7  R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,6 +42,6 @@ struct structGUI
 };
 typedef struct structGUI *Gui;
 
-int loadRconsole(Gui gui, char *optf);
+int loadRconsole(Gui gui, const char *optf);
 void getActive(Gui gui);
 void applyGUI(Gui newGUI);

@@ -24,7 +24,7 @@ static int      gl_tab();  /* forward reference needed for gl_tab_hook */
 
 int             getline();		/* read a line of input */
 void            gl_setwidth();		/* specify width of screen */
-void            gl_histadd();		/* adds entries to hist */
+void            gl_histadd(const char *);	/* adds entries to hist */
 void		gl_strwidth();		/* to bind gl_strlen */
 
 int 		(*gl_in_hook)() = 0;
@@ -1203,10 +1203,10 @@ gl_hist_init(int size, int beep)
 }
 
 void
-gl_histadd(char *buf)
+gl_histadd(const char *buf)
 {
     static char *prev = 0;
-    char *p = buf;
+    const char *p = buf;
 
     /* in case we call gl_histadd() before we call getline() */
     if (gl_init_done < 0) {		/* -1 only on startup */
@@ -1269,7 +1269,7 @@ gl_hist_next(void)
 }
 
 static char *
-hist_save(char *p)
+hist_save(const char *p)
         
 /* makes a copy of the string */
 {
@@ -1292,7 +1292,7 @@ hist_save(char *p)
     return s;
 }
 
-void gl_savehistory(char *file, int size)
+void gl_savehistory(const char *file, int size)
 {
     FILE *fp;
     int i, init;
@@ -1312,7 +1312,7 @@ void gl_savehistory(char *file, int size)
     fclose(fp); 
 }
 
-void gl_loadhistory(char *file)
+void gl_loadhistory(const char *file)
 {
     FILE *fp;
     int i;
