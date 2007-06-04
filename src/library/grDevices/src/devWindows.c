@@ -561,7 +561,7 @@ static char* translateFontFamily(const char* family) {
     if (strlen(family) > 0) {
 	int found = 0;
 	for (i = 0; i < nfonts && !found; i++) {
-	    char* fontFamily = CHAR(STRING_ELT(fontnames, i));
+	    const char* fontFamily = CHAR(STRING_ELT(fontnames, i));
 	    if (strcmp(family, fontFamily) == 0) {
 		found = 1;
 		result = SaveFontSpec(VECTOR_ELT(fontdb, i), 0);
@@ -2694,7 +2694,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
 SEXP savePlot(SEXP args)
 {
     SEXP filename, type;
-    char *fn, *tp, display[550];
+    const char *fn, *tp; char display[550];
     int device;
     NewDevDesc* dd;
     Rboolean restoreConsole;
@@ -2917,13 +2917,13 @@ static void SaveAsBmp(NewDevDesc *dd, const char *fn)
     fclose(fp);
 }
 
-/* This is Guido's devga device, ga for GraphApp. */
+/* This is Guido's devga device, 'ga' for GraphApp. */
 
 SEXP devga(SEXP args)
 {
     NewDevDesc *dev;
     GEDevDesc* dd;
-    char *display, *vmax;
+    const char *display; char *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
     int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
     Rboolean restoreConsole;
