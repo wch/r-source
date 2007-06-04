@@ -22,9 +22,8 @@ function(lines)
     }
     else {
         ## No \encoding metadata.
-        ## Determine whether we can assume Latin1.
-        if(!all(.is_ISO_8859(lines)))
-            encoding <- NA
+        ## Determine if ASCII
+        if(!all(.is_ASCII(lines))) encoding <- NA
     }
     if(any(is.na(nchar(lines, "c", TRUE)))) {
         ## Ouch, invalid in the current locale.

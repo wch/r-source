@@ -264,6 +264,12 @@ UTILITIES
 
     o	R CMD check now does a recursive copy on the 'tests' directory.
 
+    o	R CMD check now warns on non-ASCII .Rd files without an
+	\encoding field, rather than just on ones that are definitely
+	not from an ISO-8859 encoding.  This agrees with the
+	long-standing stipulation in 'Writing R Extensions', and
+	catches some packages with UTF-8 man pages.
+
     o	Rdconv now warns about unmatched braces rather than silently
 	omitting sections containing them.  (Suggestion by Bill
 	Dunlap, PR#9649)
