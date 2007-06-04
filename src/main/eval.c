@@ -2563,7 +2563,7 @@ typedef int BCODE;
   if (value == R_UnboundValue) \
     error(_("Object \"%s\" not found"), CHAR(PRINTNAME(symbol))); \
   else if (value == R_MissingArg) { \
-    char *n = CHAR(PRINTNAME(symbol)); \
+    const char *n = CHAR(PRINTNAME(symbol)); \
     if(*n) error(_("argument \"%s\" is missing, with no default"), n); \
     else error(_("argument is missing, with no default")); \
   } \
