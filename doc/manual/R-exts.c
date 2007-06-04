@@ -135,7 +135,7 @@ SEXP showArgs(SEXP args)
 {
     int i;
     Rcomplex cpl;
-    char *name;
+    const char *name;
     SEXP el;
 
     args = CDR(args); /* skip 'name' */
@@ -170,7 +170,7 @@ SEXP showArgs1(SEXP largs)
     int i, nargs = LENGTH(largs);
     Rcomplex cpl;
     SEXP el, names = getAttrib(largs, R_NamesSymbol);
-    char *name;
+    const char *name;
 
     for(i = 0; i < nargs; i++) {
 	el = VECTOR_ELT(largs, i);
