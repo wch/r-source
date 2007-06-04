@@ -958,7 +958,7 @@ SEXP attribute_hidden do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     return(R_NilValue);		/* -Wall */
 }
 
-int StrToInternal(char *s)
+int StrToInternal(const char *s)
 {
     int i;
     for (i = 0; R_FunTab[i].name; i++)

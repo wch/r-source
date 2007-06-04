@@ -275,7 +275,7 @@ SEXP type2symbol(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
-void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t)
+void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t)
 {
     int i;
 
@@ -286,7 +286,7 @@ void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t)
     error(_("unimplemented type (%d) in '%s'\n"), t, s);
 }
 
-void UNIMPLEMENTED_TYPE(char *s, SEXP x)
+void UNIMPLEMENTED_TYPE(const char *s, SEXP x)
 {
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
@@ -312,7 +312,7 @@ static const char UCS2ENC[] = "UCS-2LE";
 /* Note: this does not terminate out, as all current uses are to look
  * at 'out' a wchar at a time, and sometimes just one char.
  */
-size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
+size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout)
 {
     void   *cd = NULL ;
     const char *i_buf;
@@ -323,15 +323,14 @@ size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
     wc_len = mbstowcs(NULL, in, 0);
     if (out == NULL || (int)wc_len < 0) return wc_len;
 
-    if ((void*)-1 == (cd = Riconv_open((char *)UCS2ENC, "")))
+    if ((void*)-1 == (cd = Riconv_open(UCS2ENC, "")))
 	return (size_t) -1;
 
-    i_buf = in;
+    i_buf = (char *)in;
     i_len = strlen(in); /* not including terminator */
     o_buf = (char *)out;
     o_len = nout * sizeof(ucs2_t);
-    status = Riconv(cd, &i_buf, (size_t *)&i_len,
-		    (char **)&o_buf, (size_t *)&o_len);
+    status = Riconv(cd, &i_buf, (size_t *)&i_len, &o_buf, (size_t *)&o_len);
 
     Riconv_close(cd);
     if (status == (size_t)-1) {

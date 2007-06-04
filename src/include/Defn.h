@@ -991,14 +991,14 @@ void process_system_Renviron();
 void process_user_Renviron();
 SEXP promiseArgs(SEXP, SEXP);
 void Rcons_vprintf(const char *, va_list);
-void RemoveClass(SEXP, char *);
+/* void RemoveClass(SEXP, char *); */
 SEXP R_data_class(SEXP , Rboolean);
 SEXP R_data_class2(SEXP);
+char *R_LibraryFileName(const char *, char *, size_t);
 SEXP R_LoadFromFile(FILE*, int);
 SEXP R_NewHashedEnv(SEXP, SEXP);
 extern int R_Newhashpjw(const char*);
-FILE* R_OpenLibraryFile(char *);
-char *R_LibraryFileName(char *, char *, size_t);
+FILE* R_OpenLibraryFile(const char *);
 void R_RestoreGlobalEnv(void);
 void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
 void R_SaveGlobalEnv(void);
@@ -1012,7 +1012,7 @@ void R_Suicide(char*);
 void R_getProcTime(double *data);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
-int StrToInternal(char*);
+int StrToInternal(const char*);
 SEXP substituteList(SEXP, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
@@ -1078,12 +1078,12 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 /* main/util.c */
-void UNIMPLEMENTED_TYPE(char *s, SEXP x);
-void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
+void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
+void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(const char *str);
 #ifdef SUPPORT_MBCS
 typedef unsigned short ucs2_t;
-size_t mbcsToUcs2(char *in, ucs2_t *out, int nout);
+size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout);
 /* size_t mbcsMblen(char *in);
 size_t ucs2ToMbcs(ucs2_t *in, char *out);
 size_t ucs2Mblen(ucs2_t *in); */
@@ -1119,7 +1119,7 @@ FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
 void set_rl_word_breaks(const char *str);
 
 /* From localecharset.c */
-extern char * locale2charset(const char *);
+extern char *locale2charset(const char *);
 
 /* used in relop.c and sort.c */
 #if defined(Win32) && defined(SUPPORT_UTF8)
