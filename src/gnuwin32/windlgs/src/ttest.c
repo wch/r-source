@@ -17,7 +17,7 @@ static int done = 0;
 static char *v[2];
 
 
-static char *alts[] = {"two.sided", "greater", "less", NULL};
+static const char *alts[] = {"two.sided", "greater", "less", NULL};
 
 /* keyboard shortcuts: CR or A/a accepts, ESC or C/c cancels */
 static void hit_key(window w, int key)
