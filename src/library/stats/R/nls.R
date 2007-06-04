@@ -450,6 +450,9 @@ nls <-
 
     mf <- match.call()                  # for creating the model frame
     varNames <- all.vars(formula) # parameter and variable names from formula
+    ## for prediction we will need to know those which are in RHS
+    form2 <- formula; form2[[2]] <- 0
+    varNamesRHS <- all.vars(form2)
     mWeights <- missing(weights)
 
     ## adjust a one-sided model formula by using 0 as the response
@@ -515,7 +518,7 @@ nls <-
     respLength <- length(eval(formula[[2]], data, env))
     varIndex <- n %% respLength == 0
 
-    mf$formula <-                # replace RHS by linear model formula
+    mf$formula <-                # replace by one-sided linear model formula
         as.formula(paste("~", paste(varNames[varIndex], collapse = "+")),
                    env = environment(formula))
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- mf$model <- NULL
@@ -527,6 +530,7 @@ nls <-
     if (missing(start)) start <- getInitial(formula, mf)
     for(var in varNames[!varIndex])
         mf[[var]] <- eval(as.name(var), data, env)
+    varNamesRHS <- varNamesRHS[ varNamesRHS %in% varNames[varIndex] ]
     wts <- if(!mWeights) model.weights(mf) else rep(1, n)
     if (any(wts < 0 | is.na(wts)))
 	stop("missing or negative weights not allowed")
@@ -593,7 +597,8 @@ nls <-
     nls.out$call$trace <- trace
 
     nls.out$na.action <- attr(mf, "na.action")
-    nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")
+    nls.out$dataClasses <-
+        attr(attr(mf, "terms"), "dataClasses")[varNamesRHS]
     if(model)
 	nls.out$model <- mf
     if(!mWeights)
