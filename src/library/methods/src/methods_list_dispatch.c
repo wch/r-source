@@ -820,7 +820,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength;
     int nprotect = 0;
     SEXP mtable, classes, thisClass, sigargs, siglength, f_env = R_NilValue,
-	label, method, f, val=R_NilValue;
+	method, f, val=R_NilValue;
     char *buf, *bufptr;
     int nargs, i, lwidth = 0;
     Rboolean prim_case = FALSE;
