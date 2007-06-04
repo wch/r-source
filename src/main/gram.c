@@ -274,7 +274,7 @@ static size_t ucstomb(char *s, const wchar_t wc, mbstate_t *ps)
     char     buf[16];
     void    *cd = NULL ;
     wchar_t  wcs[2];
-    char    *inbuf = (char *) wcs;
+    const char *inbuf = (const char *) wcs;
     size_t   inbytesleft = sizeof(wchar_t);
     char    *outbuf = buf;
     size_t   outbytesleft = sizeof(buf);

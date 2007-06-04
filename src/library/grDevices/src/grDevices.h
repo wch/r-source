@@ -45,14 +45,14 @@ SEXP Quartz(SEXP);
 SEXP R_GD_nullDevice();
 
 Rboolean
-PSDeviceDriver(NewDevDesc*, const char*, const char*, const char*, char**,
-	       const char*, const char*, const char*, double, double,
-	       Rboolean, double, Rboolean, Rboolean, Rboolean,
-	       const char*, const char*, SEXP, const char*);
+PSDeviceDriver(NewDevDesc*, const char*, const char*, const char*,
+	       const char**, const char*, const char*, const char*,
+	       double, double, Rboolean, double, Rboolean, Rboolean,
+	       Rboolean, const char*, const char*, SEXP, const char*);
 
 Rboolean
 PDFDeviceDriver(NewDevDesc*, const char *, const char *, const char *,
-		char**, const char *, const char *, const char *,
+		const char**, const char *, const char *, const char *,
 		double, double, double, int, int, const char*, SEXP, int, int);
 
 #ifdef WIN32

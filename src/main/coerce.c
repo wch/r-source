@@ -332,16 +332,18 @@ ComplexFromString(SEXP x, int *warn)
 {
     double xr, xi;
     Rcomplex z;
-    const char *endp = CHAR(x); /* ASCII */
+    const char *xx = CHAR(x); /* ASCII */
+    char *endp;
+
     z.r = z.i = NA_REAL;
     if (x != R_NaString && !isBlankString(endp)) {
-	xr = R_strtod(endp, &endp);
+	xr = R_strtod(xx, &endp);
 	if (isBlankString(endp)) {
 	    z.r = xr;
 	    z.i = 0.0;
 	}
 	else if (*endp == '+' || *endp == '-') {
-	    xi = R_strtod(endp, &endp);
+	    xi = R_strtod(xx, &endp);
 	    if (*endp++ == 'i' && isBlankString(endp)) {
 		z.r = xr;
 		z.i = xi;
