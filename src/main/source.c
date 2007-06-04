@@ -151,7 +151,7 @@ SEXP attribute_hidden do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean wasopen, old_latin1=known_to_be_latin1,
 	old_utf8=known_to_be_utf8;
     int ifile, num;
-    char *encoding;
+    const char *encoding;
     ParseStatus status;
 
     checkArity(op, args);

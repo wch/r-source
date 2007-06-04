@@ -267,7 +267,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
    immediately after the node structure, so the data address is a
    known offset from the node SEXP. */
 #define DATAPTR(x)	(((SEXPREC_ALIGN *) (x)) + 1)
-#define CHAR(x)		((char *) DATAPTR(x))
+#define CHAR(x)		((const char *) DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
 #define RAW(x)		((Rbyte *) DATAPTR(x))

@@ -121,7 +121,7 @@ Rboolean pmatch(SEXP formal, SEXP tag, Rboolean exact)
 /* Returns the first partially matching tag found. */
 /* Pattern is a C string. */
 
-static SEXP matchPar_int(char *tag, SEXP *list, Rboolean exact)
+static SEXP matchPar_int(const char *tag, SEXP *list, Rboolean exact)
 {
     if (*list == R_NilValue)
 	return R_MissingArg;
@@ -150,7 +150,7 @@ static SEXP matchPar_int(char *tag, SEXP *list, Rboolean exact)
 }
 
 /* unused outside this file */
-SEXP attribute_hidden matchPar(char *tag, SEXP * list)
+SEXP attribute_hidden matchPar(const char *tag, SEXP * list)
 {
     return matchPar_int(tag, list, FALSE);
 }

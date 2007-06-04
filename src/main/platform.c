@@ -217,8 +217,8 @@ SEXP attribute_hidden do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl, hd, pg;
-    char **f, **h, *vmax;
-    const char *t, *pager;
+    const char **f, **h, *t, *pager;
+    char *vmax;
     Rboolean dl;
     int i, n;
 
@@ -238,8 +238,8 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid 'title'"));
     if (!isString(pg))
         error(_("invalid '%s' specification"), "pager");
-    f = (char**)R_alloc(n, sizeof(char*));
-    h = (char**)R_alloc(n, sizeof(char*));
+    f = (const char**)R_alloc(n, sizeof(char*));
+    h = (const char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
 	if (!isNull(STRING_ELT(fn, i)))
 	    /* Do better later for file names? */
@@ -276,7 +276,8 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ti, ed;
-    char **f, *vm, **title, *editor;
+    const char **f, **title, *editor;
+    char *vm;
     int i, n;
 
     checkArity(op, args);
@@ -291,8 +292,8 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n > 0) {
 	if (!isString(fn))
 	    error(_("invalid '%s' specification"), "filename");
-	f = (char**) R_alloc(n, sizeof(char*));
-	title = (char**) R_alloc(n, sizeof(char*));
+	f = (const char**) R_alloc(n, sizeof(char*));
+	title = (const char**) R_alloc(n, sizeof(char*));
 	for (i = 0; i < n; i++) {
 	    if (!isNull(STRING_ELT(fn, i)))
 		/* Do better later for file names? */
@@ -307,9 +308,9 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else {  /* open a new file for editing */
 	n = 1;
-	f = (char**) R_alloc(1, sizeof(char*));
+	f = (const char**) R_alloc(1, sizeof(char*));
 	f[0] = CHAR(R_BlankString);
-	title = (char**) R_alloc(1, sizeof(char*));
+	title = (const char**) R_alloc(1, sizeof(char*));
 	title[0] = CHAR(R_BlankString);
     }
     if (length(ed) >= 1 || !isNull(STRING_ELT(ed, 0)))
@@ -1195,7 +1196,7 @@ SEXP attribute_hidden do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_LOCALE_H
     SEXP locale = CADR(args), ans;
     int cat;
-    char *p = "";
+    const char *p = "";
 
     checkArity(op, args);
     cat = asInteger(CAR(args));

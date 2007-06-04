@@ -468,7 +468,7 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 extern char *tzname[2];
 #endif
 
-static int set_tz(char *tz, char *oldtz)
+static int set_tz(const char *tz, char *oldtz)
 {
     char *p = NULL;
     int settz = 0;
@@ -549,7 +549,8 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans, ansnames, klass, tzone;
     int i, n, isgmt = 0, valid, settz = 0;
-    char *tz = NULL, oldtz[20] = "";
+    char oldtz[20] = "";
+    const char *tz = NULL;
 
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), REALSXP));
@@ -611,7 +612,8 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP stz, x, ans;
     int i, n = 0, isgmt = 0, nlen[9], settz = 0;
-    char *tz = NULL, oldtz[20] = "";
+    char oldtz[20] = "";
+    const char *tz = NULL;
     struct tm tm;
     double tmp;
 
@@ -681,7 +683,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, tz;
     int i, n = 0, m, N, nlen[9], UseTZ;
-    char buff[300], *p;
+    char buff[300];
+    const char *p;
     struct tm tm;
 
     checkArity(op, args);
@@ -729,7 +732,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
-		char *q = CHAR(STRING_ELT(sformat, i%m)), buf2[500];
+		const char *q = CHAR(STRING_ELT(sformat, i%m));
+                char buf2[500];
 		strcpy(buf2,  q);
 		p = strstr(q, "%OS");
 		if(p) {
@@ -819,7 +823,8 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x, sformat, ans, ansnames, klass, stz, tzone;
     int i, n, m, N, invalid, isgmt = 0, settz = 0;
     struct tm tm, tm2;
-    char *tz = NULL, oldtz[20] = "";
+    const char *tz = NULL;
+    char oldtz[20] = "";
     double psecs = 0.0;
 
     checkArity(op, args);

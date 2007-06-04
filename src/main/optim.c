@@ -210,7 +210,7 @@ SEXP attribute_hidden do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, npar=0, *mask, trace, maxit, fncount, grcount, nREPORT, tmax;
     int ifail = 0;
     double *dpar, *opar, val, abstol, reltol, temp;
-    char *tn;
+    const char *tn;
     OptStruct OS;
     char *vmax;
 

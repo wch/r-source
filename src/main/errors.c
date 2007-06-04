@@ -258,7 +258,8 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 {
     int w;
     SEXP names, s;
-    char *dcall, buf[BUFSIZE];
+    const char *dcall;
+    char buf[BUFSIZE];
     RCNTXT *cptr;
     RCNTXT cntxt;
 
@@ -419,7 +420,7 @@ void PrintWarnings(void)
 	if( VECTOR_ELT(R_Warnings, 0) == R_NilValue )
 	   REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
 	else {
-	    char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
+	    const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
 	    dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, 0),
 					     0, DEFAULTDEPARSE), 0));
 #ifdef SUPPORT_MBCS
@@ -450,7 +451,7 @@ void PrintWarnings(void)
 	    if( VECTOR_ELT(R_Warnings, i) == R_NilValue )
 		REprintf("%d: %s \n", i+1, CHAR(STRING_ELT(names, i)));
 	    else {
-		char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
+		const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
 		dcall = CHAR(STRING_ELT(deparse1(VECTOR_ELT(R_Warnings, i),
 						 0, DEFAULTDEPARSE), 0));
 #ifdef SUPPORT_MBCS
@@ -517,7 +518,8 @@ static void restore_inError(void *data)
 static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 {
     RCNTXT cntxt;
-    char *p, *dcall, *tr;
+    const char *dcall;
+    char *p, *tr;
     int oldInError, nc;
 
     if (inError) {
@@ -680,7 +682,7 @@ static void try_jump_to_restart(void)
 	if (TYPEOF(restart) == VECSXP && LENGTH(restart) > 1) {
 	    SEXP name = VECTOR_ELT(restart, 0);
 	    if (TYPEOF(name) == STRSXP && LENGTH(name) == 1) {
-		char *cname = CHAR(STRING_ELT(name, 0));
+		const char *cname = CHAR(STRING_ELT(name, 0));
 		if (! strcmp(cname, "browser") ||
 		    ! strcmp(cname, "tryRestart") ||
 		    ! strcmp(cname, "abort")) /**** move abort eventually? */
@@ -1157,7 +1159,7 @@ void WarningMessage(SEXP call, R_WARNING which_warn, ...)
 
 void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart);
 void R_PrintDeferredWarnings(void);
-void R_SetErrmessage(char *s);
+void R_SetErrmessage(const char *s);
 void R_SetErrorHook(void (*hook)(SEXP, char *));
 void R_SetWarningHook(void (*hook)(SEXP, char *));
 void R_JumpToToplevel(Rboolean restart);
@@ -1212,7 +1214,7 @@ void R_JumpToToplevel(Rboolean restart)
     LONGJMP(c->cjmpbuf, CTXT_TOPLEVEL);
 }
 
-void R_SetErrmessage(char *s)
+void R_SetErrmessage(const char *s)
 {
     strncpy(errbuf, s, sizeof(errbuf));
     errbuf[sizeof(errbuf) - 1] = 0;
@@ -1265,7 +1267,7 @@ static char * R_ConciseTraceback(SEXP call, int skip)
     RCNTXT *c;
     int nl, ncalls = 0;
     Rboolean too_many = FALSE;
-    char *top = "" /* -Wall */;
+    const char *top = "" /* -Wall */;
 
     buf[0] = '\0';
     for (c = R_GlobalContext;
@@ -1276,7 +1278,7 @@ static char * R_ConciseTraceback(SEXP call, int skip)
 		skip--;
 	    else {
 		SEXP fun = CAR(c->call);
-		char *this = (TYPEOF(fun) == SYMSXP) ?
+		const char *this = (TYPEOF(fun) == SYMSXP) ?
 		    CHAR(PRINTNAME(fun)) : "<Anonymous>";
 		if(streql(this, "stop") || 
 		   streql(this, "warning") || 
@@ -1312,7 +1314,7 @@ static char * R_ConciseTraceback(SEXP call, int skip)
        primitive? */
     if (ncalls == 1 && call != R_NilValue) {
 	SEXP fun = CAR(call);
-	char *this = (TYPEOF(fun) == SYMSXP) ?
+	const char *this = (TYPEOF(fun) == SYMSXP) ?
 	    CHAR(PRINTNAME(fun)) : "<Anonymous>";
 	if(streql(buf, this)) return "";
     }

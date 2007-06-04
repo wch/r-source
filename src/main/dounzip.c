@@ -119,7 +119,7 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 
 
 static int 
-do_unzip(const char *zipname, const char *dest, int nfiles, char **files, 
+do_unzip(const char *zipname, const char *dest, int nfiles, const char **files,
 	 SEXP *pnames, int *nnames)
 {
     int   i, err = UNZ_OK;
@@ -166,8 +166,8 @@ do_unzip(const char *zipname, const char *dest, int nfiles, char **files,
 SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans, names = R_NilValue;
-    char  zipname[PATH_MAX], *topics[500], dest[PATH_MAX];
-    const char *p;
+    char  zipname[PATH_MAX], dest[PATH_MAX];
+    const char *p, *topics[500];
     int   i, ntopics, rc, nnames = 0;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)

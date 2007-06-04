@@ -277,7 +277,7 @@ static void OutByte(R_outpstream_t stream, Rbyte i)
     }
 }
 
-static void OutString(R_outpstream_t stream, char *s, int length)
+static void OutString(R_outpstream_t stream, const char *s, int length)
 {
     if (stream->type == R_pstream_ascii_format) {
 	int i;
@@ -311,7 +311,7 @@ static void OutString(R_outpstream_t stream, char *s, int length)
 	stream->OutChar(stream, '\n');
     }
     else
-	stream->OutBytes(stream, s, length);
+	stream->OutBytes(stream, (void *)s, length); /* FIXME: is this case right? */
 }
 
 
@@ -1312,11 +1312,10 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case SPECIALSXP:
 	case BUILTINSXP:
 	    length = InInteger(stream);
-	    PROTECT(s = allocVector(CHARSXP, length)); /* as buffer */
-	    InString(stream,CHAR(s), length);
-	    s = mkPRIMSXP(StrToInternal(CHAR(s)), type == BUILTINSXP);
-	    UNPROTECT(1);  /* pop the old s off the protect stack */
-	    PROTECT(s);    /* and push the new s on it */
+            cbuf = CallocCharBuf(length);
+	    InString(stream, cbuf, length);
+	    PROTECT(s = mkPRIMSXP(StrToInternal(cbuf), type == BUILTINSXP));
+            Free(cbuf);
 	    break;
 	case CHARSXP:
 	    length = InInteger(stream);
@@ -2007,7 +2006,7 @@ SEXP R_unserialize(SEXP icon, SEXP fun)
 
     if (TYPEOF(icon) == STRSXP && LENGTH(icon) > 0) {
         struct membuf_st mbs;
-	void *data = CHAR(STRING_ELT(icon, 0));
+	void *data = (void *)CHAR(STRING_ELT(icon, 0)); /* FIXME, is this right? */
 	int length = LENGTH(STRING_ELT(icon, 0));
 	InitMemInPStream(&in, &mbs, data,  length, hook, fun);
 	return R_Unserialize(&in);
@@ -2085,7 +2084,7 @@ static char *ptr[NC];
 SEXP attribute_hidden R_lazyLoadDBflush(SEXP file)
 {
     int i;
-    char *cfile = CHAR(STRING_ELT(file, 0));
+    const char *cfile = CHAR(STRING_ELT(file, 0));
 
     /* fprintf(stderr, "flushing file %s", cfile); */
     for (i = 0; i < used; i++)
@@ -2108,7 +2107,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
     FILE *fp;
     int offset, len, in, i, icache = -1, filelen;
     SEXP val;
-    char *cfile = CHAR(STRING_ELT(file, 0));
+    const char *cfile = CHAR(STRING_ELT(file, 0));
 
     if (! IS_PROPER_STRING(file))
 	error(_("not a proper file name"));

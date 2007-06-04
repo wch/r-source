@@ -1035,7 +1035,7 @@ void InitNames()
        "NA" and then return NA_STRING rather than alloc a new CHAR */
     /* NA_STRING */
     NA_STRING = allocString(strlen("NA"));
-    strcpy(CHAR(NA_STRING), "NA");
+    strcpy(CHAR_RW(NA_STRING), "NA");
     R_print.na_string = NA_STRING;
     /* R_BlankString */
     R_BlankString = mkChar("");

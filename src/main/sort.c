@@ -826,7 +826,7 @@ SEXP attribute_hidden do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     int *in;
     double *rk;
     int i, j, k, n;
-    char *ties_str;
+    const char *ties_str;
     enum {AVERAGE, MAX, MIN} ties_kind = AVERAGE;
 
     checkArity(op, args);

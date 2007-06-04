@@ -290,7 +290,8 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 #endif
 #ifdef HAVE_ICONV
     if(con->outconv) { /* translate the buffer */
-	char outbuf[BUFSIZE+1], *ib = b, *ob;
+	char outbuf[BUFSIZE+1], *ob;
+        const char *ib = b;
 	size_t inb = res, onb, ires;
 	Rboolean again = FALSE;
 	int ninit = strlen(con->init_out);
@@ -327,7 +328,8 @@ int dummy_fgetc(Rconnection con)
     if(con->inconv) {
 	if(con->navail <= 0) {
 	    unsigned int i, inew = 0;
-	    char *p, *ib, *ob;
+	    char *p, *ob;
+            const char *ib;
 	    size_t inb, onb, res;
 
 	    if(con->EOF_signalled) return R_EOF;
@@ -2570,7 +2572,8 @@ SEXP attribute_hidden do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, nn, nnn, ok, warn, nread, c, nbuf, buf_size = BUF_SIZE;
     Rconnection con = NULL;
     Rboolean wasopen;
-    char *buf, *encoding;
+    char *buf;
+    const char *encoding; 
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
@@ -2796,7 +2799,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans = R_NilValue, swhat;
     int i, size, signd, swap, n, m = 0, sizedef= 4, mode = 1,
 	nbytes = 0, np = 0;
-    char *what;
+    const char *what;
     void *p = NULL;
     Rboolean wasopen = TRUE, isRaw = FALSE;
     Rconnection con = NULL;
@@ -3256,7 +3259,7 @@ static SEXP readFixedString(Rconnection con, int len)
     }
     /* String may contain nuls so don't use mkChar */
     ans = allocString(pos);
-    memcpy(CHAR(ans), buf, pos);
+    memcpy(CHAR_RW(ans), buf, pos);
     return ans;
 }
 
@@ -3751,7 +3754,8 @@ SEXP attribute_hidden do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
-    char *url, *open, *class2 = "url";
+    char *class2 = "url";
+    const char *url, *open;
     int ncon, block;
     Rconnection con = NULL;
 #ifdef HAVE_INTERNET

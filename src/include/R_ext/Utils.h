@@ -72,7 +72,7 @@ void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
 Rboolean StringFalse(char*);
 Rboolean StringTrue(char*);
-Rboolean isBlankString(char *);
+Rboolean isBlankString(const char *);
 
 double 	R_strtod(const char *c, char **end);
 char *  R_tmpnam(const char *prefix, const char *tempdir);

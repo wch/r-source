@@ -315,7 +315,8 @@ static const char UCS2ENC[] = "UCS-2LE";
 size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
 {
     void   *cd = NULL ;
-    char   *i_buf, *o_buf;
+    const char *i_buf;
+    char *o_buf;
     size_t  i_len, o_len, status, wc_len;
 
     /* out length */
@@ -329,7 +330,7 @@ size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
     i_len = strlen(in); /* not including terminator */
     o_buf = (char *)out;
     o_len = nout * sizeof(ucs2_t);
-    status = Riconv(cd, (char **)&i_buf, (size_t *)&i_len,
+    status = Riconv(cd, &i_buf, (size_t *)&i_len,
 		    (char **)&o_buf, (size_t *)&o_len);
 
     Riconv_close(cd);
@@ -356,7 +357,7 @@ size_t mbcsToUcs2(char *in, ucs2_t *out, int nout)
 #endif
 
 /* This one is not in Rinternals.h, but is used in internet module */
-Rboolean isBlankString(char *s)
+Rboolean isBlankString(const char *s)
 {
 #ifdef SUPPORT_MBCS
     if(mbcslocale) {
@@ -853,7 +854,7 @@ SEXP attribute_hidden do_setencoding(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, enc, tmp;
     int i, m, n;
-    char *this;
+    const char *this;
 
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
@@ -991,7 +992,7 @@ char *Rf_strrchr(const char *s, int c)
 int utf8clen(char c) { return 1;}
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, void *ps)
 { return (size_t)(-1);}
-Rboolean mbcsValid(char *str) { return TRUE; }
+Rboolean mbcsValid(const CHAR *str) { return TRUE; }
 void mbcsToLatin1(char *in, char *out) {}
 #undef Rf_strchr
 char *Rf_strchr(const char *s, int c)

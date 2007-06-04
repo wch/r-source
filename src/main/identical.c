@@ -75,7 +75,7 @@ Rboolean attribute_hidden compute_identical(SEXP x, SEXP y)
 	    /* They are the same length and should have 
 	       unique non-empty non-NA tags */
 	    for(elx = ax; elx != R_NilValue; elx = CDR(elx)) {
-		char *tx = CHAR(PRINTNAME(TAG(elx)));
+		const char *tx = CHAR(PRINTNAME(TAG(elx)));
 		for(ely = ay; ely != R_NilValue; ely = CDR(ely))
 		    if(streql(tx, CHAR(PRINTNAME(TAG(ely))))) {
 			/* We need to treat row.names specially here */

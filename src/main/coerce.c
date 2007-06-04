@@ -332,7 +332,7 @@ ComplexFromString(SEXP x, int *warn)
 {
     double xr, xi;
     Rcomplex z;
-    char *endp = CHAR(x); /* ASCII */
+    const char *endp = CHAR(x); /* ASCII */
     z.r = z.i = NA_REAL;
     if (x != R_NaString && !isBlankString(endp)) {
 	xr = R_strtod(endp, &endp);
@@ -2371,7 +2371,7 @@ static classType classTable[] = {
     { (char *)0,	(SEXPTYPE)-1, FALSE}
 };
 
-static int class2type(char *s)
+static int class2type(const char *s)
 {
     /* return the type if the class string is one of the basic types, else -1.
        Note that this is NOT str2type:  only certain types are defined to be basic
@@ -2410,7 +2410,7 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	error(_("invalid replacement object to be a class string"));
     }
     else {
-	char *valueString, *classString; int whichType;
+	const char *valueString, *classString; int whichType;
 	SEXP cur_class; SEXPTYPE valueType;
 	valueString = CHAR(asChar(value)); /* ASCII */
 	whichType = class2type(valueString);

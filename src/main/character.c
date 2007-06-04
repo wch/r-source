@@ -373,8 +373,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok, slen;
     int extended_opt, cflags, fixed_opt, perl_opt;
+    char *pt = NULL;
     const char *buf, *split = "", *bufp, *laststart;
-    char *pt = NULL;  
     regex_t reg;
     regmatch_t regmatch[1];
     pcre *re_pcre = NULL;
@@ -775,7 +775,7 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg, ans;
     int i, l, n, allow_;
-    char *p, *tmp, *cbuf;
+    char *p, *tmp = NULL, *cbuf;
     const char *This, *pp;
     Rboolean need_prefix;
 
@@ -799,7 +799,6 @@ SEXP attribute_hidden do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int nc = l, used;
 	    wchar_t wc;
 	    mbstate_t mb_st;
-
 	    pp = This;
 	    mbs_init(&mb_st);
 	    used = Mbrtowc(&wc, pp, MB_CUR_MAX, &mb_st);
@@ -2380,7 +2379,7 @@ SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
         /* String is not necessarily 0-terminated and may contain nuls
            so don't use mkChar */
         c = allocString(len); /* adds zero terminator */
-        memcpy(CHAR(c), RAW(x), len);
+        memcpy(CHAR_RW(c), RAW(x), len);
         SET_STRING_ELT(ans, 0, c);
     }
     UNPROTECT(1);
@@ -2573,7 +2572,7 @@ SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args);
     int i, j, nc, *ians, tmp, used = 0; /* -Wall */
-    char *s = CHAR(STRING_ELT(x, 0));
+    const char *s = CHAR(STRING_ELT(x, 0));
 
     checkArity(op, args);
     if(!isString(x) || LENGTH(x) == 0)
@@ -2647,7 +2646,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
         c = allocString(len); /* adds zero terminator */
         for(i = 0, len = 0; i < nc; i++) {
             used = inttomb(buf, INTEGER(x)[i]);
-            strncpy(CHAR(c) + len, buf, used);
+            strncpy(CHAR_RW(c) + len, buf, used);
             len += used;
         }
         SET_STRING_ELT(ans, 0, c);

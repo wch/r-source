@@ -294,6 +294,11 @@ C-LEVEL FACILITIES
     o	The instructions for making and using standalone libRmath have
 	been moved to the R Installation and Administration manual.
 
+    o   CHAR() now returns (const char *) since CHARSXPs should no
+        longer be modified in place.  This change allows compilers to
+        warn or error about improper modification.  Thanks to Herve
+        Pages for the suggestion.
+
 
 INSTALLATION
 

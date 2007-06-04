@@ -107,7 +107,7 @@ extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();
 extern void (*ptr_R_Busy)(int);
 extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
-extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, Rboolean, char *);
+extern int  (*ptr_R_ShowFiles)(int, const char **, const char **, const char *, Rboolean, const char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern int  (*ptr_R_EditFile)(char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
@@ -115,7 +115,7 @@ extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_addhistory)(SEXP, SEXP, SEXP, SEXP);
 
 #ifdef HAVE_AQUA
-extern int  (*ptr_R_EditFiles)(int, char **, char **, char *);
+extern int  (*ptr_R_EditFiles)(int, const char **, const char **, const char *);
 #endif
 
 /* These two are not used by R itself, but are used by the GNOME front-end

@@ -68,9 +68,10 @@ static SEXP R_loadMethod_name, R_dot_Method;
 
 static SEXP Methods_Namespace = NULL;
 
-static char *check_single_string(SEXP, Rboolean, char *);
-static char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty, char *what);
-static char *class_string(SEXP obj);
+static const char *check_single_string(SEXP, Rboolean, const char *);
+static const char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty,
+                                          const char *what);
+static const char *class_string(SEXP obj);
 
 static void init_loadMethod()
 {
@@ -159,7 +160,7 @@ SEXP R_initMethodDispatch(SEXP envir)
 
 
 /* simplified version of do_subset2_dflt, with no partial matching */
-static SEXP R_element_named(SEXP obj, char * what)
+static SEXP R_element_named(SEXP obj, const char * what)
 {
     int offset = -1, i, n;
     SEXP names = getAttrib(obj, R_NamesSymbol);
@@ -177,7 +178,7 @@ static SEXP R_element_named(SEXP obj, char * what)
 	return VECTOR_ELT(obj, offset);
 }
 
-static SEXP R_insert_element(SEXP mlist, char * what, SEXP object)
+static SEXP R_insert_element(SEXP mlist, const char * what, SEXP object)
 {
     SEXP sym = install(what);
     return R_subassign3_dflt(R_NilValue, mlist, sym, object);
@@ -185,14 +186,14 @@ static SEXP R_insert_element(SEXP mlist, char * what, SEXP object)
 
 SEXP R_el_named(SEXP object, SEXP what)
 {
-    char * str;
+    const char * str;
     str = CHAR(asChar(what));
     return R_element_named(object, str);
 }
 
 SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
 {
-    char * str;
+    const char * str;
     str = CHAR(asChar(what));
     return R_insert_element(object, str, value);
 }
@@ -206,7 +207,7 @@ SEXP R_clear_method_selection()
     return R_NilValue;
 }
 
-static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
+static SEXP R_find_method(SEXP mlist, const char *class, SEXP fname)
 {
     /* find the element of the methods list that matches this class,
        but not including inheritance. */
@@ -225,7 +226,7 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
 {
     /* Match the list of (evaluated) args to the methods list. */
     SEXP object, methods, value, retValue = R_NilValue;
-    char *class; int nprotect = 0;
+    const char *class; int nprotect = 0;
     if(!mlist)
 	return R_NilValue;
     methods = R_do_slot(mlist, s_allMethods);
@@ -260,7 +261,7 @@ SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
 {
     /* Match the list of (evaluated) args to the methods table. */
     SEXP object, value, retValue = R_NilValue;
-    char *class; int nprotect = 0;
+    const char *class; int nprotect = 0;
 #define NBUF 200
     char buf[NBUF]; char *ptr;
     if(!mtable || TYPEOF(mtable) != ENVSXP)
@@ -342,7 +343,7 @@ static SEXP R_S_MethodsListSelect(SEXP fname, SEXP ev, SEXP mlist, SEXP f_env)
 
 static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 {
-    SEXP vl, generic = R_UnboundValue, gpackage; char * pkg; Rboolean ok;
+    SEXP vl, generic = R_UnboundValue, gpackage; const char *pkg; Rboolean ok;
     if(!isSymbol(symbol))
 	symbol = install(CHAR(asChar(symbol)));
     pkg = CHAR(STRING_ELT(package, 0)); /* package is guaranteed single string */
@@ -422,7 +423,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
     /* TODO:  the code for do_standardGeneric does a test of fsym,
      * with a less informative error message.  Should combine them.*/
     if(!isSymbol(fsym)) {
-	char *fname = check_single_string(fsym, TRUE, "The function name in the call to standardGeneric");
+	const char *fname = check_single_string(fsym, TRUE, "The function name in the call to standardGeneric");
 	fsym = install(fname);
     }
     switch(TYPEOF(fdef)) {
@@ -529,7 +530,7 @@ SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist, SEXP evalArgs)
 static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs)
 {
-    char *class;
+    const char *class;
     SEXP arg_slot, arg_sym, method, value = R_NilValue;
     int nprotect = 0;
     /* check for dispatch turned off inside MethodsListSelect */
@@ -718,9 +719,10 @@ static SEXP R_loadMethod(SEXP def, SEXP fname, SEXP ev)
     else return def;
 }
 
-static char *check_single_string(SEXP obj, Rboolean nonEmpty, char *what)
+static const char *
+check_single_string(SEXP obj, Rboolean nonEmpty, const char *what)
 {
-    char *string = "<unset>"; /* -Wall */
+    const char *string = "<unset>"; /* -Wall */
     if(isString(obj)) {
 	if(length(obj) != 1)
 	    error(_("'%s' must be a single string (got a character vector of length %d)"),
@@ -737,7 +739,8 @@ static char *check_single_string(SEXP obj, Rboolean nonEmpty, char *what)
     return string;
 }
 
-static char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty, char *what)
+static const char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty,
+                                          const char *what)
 {
     if(isSymbol(obj))
 	return CHAR(PRINTNAME(obj));
@@ -745,7 +748,7 @@ static char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty, char *what)
 	return check_single_string(obj, nonEmpty, what);
 }
 
-static char *class_string(SEXP obj)
+static const char *class_string(SEXP obj)
 {
     return CHAR(STRING_ELT(R_data_class(obj, TRUE), 0));
 }
@@ -755,7 +758,8 @@ static char *class_string(SEXP obj)
 SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
 {
     SEXP ans;
-    char str[201], *prefixString, *nameString;
+    char str[201];
+    const char *prefixString, *nameString;
 
     prefixString = check_single_string(prefix, TRUE,
 				       "The internal prefix (e.g., \"C\") for a meta-data object");
@@ -874,8 +878,8 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	lwidth += strlen(STRING_VALUE(thisClass)) + 1;
     }
     /* make the label */
-    label = allocString(lwidth);
-    buf = bufptr = CHAR(label);
+    buf = (char *) R_alloc(lwidth + 1, sizeof(char));
+    bufptr = buf;
     for(i = 0; i<nargs; i++) {
 	if(i > 0)
 	    *bufptr++ = '#';

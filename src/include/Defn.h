@@ -74,6 +74,9 @@ Rcomplex Rf_ComplexFromReal(double, int*);
 				  PrtUtil.h, Utils.h */
 #undef CALLED_FROM_DEFN_H
 
+ /* writable char access for R internal use only */
+#define CHAR_RW(x)	((char *) CHAR(x))
+
 /* CHARSXP charset bits */
 #define LATIN1_MASK (1<<2)
 #define UTF8_MASK (1<<3)
@@ -905,7 +908,7 @@ void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
 SEXP deparse1line(SEXP,Rboolean);
-int DispatchOrEval(SEXP, SEXP, char*, SEXP, SEXP, SEXP*, int, int);
+int DispatchOrEval(SEXP, SEXP, const char*, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP, Rboolean);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
@@ -957,7 +960,7 @@ SEXP mat2indsub(SEXP, SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
 SEXP matchArgs(SEXP, SEXP, SEXP);
-SEXP matchPar(char*, SEXP*);
+SEXP matchPar(const char*, SEXP*);
 void memtrace_report(void *, void *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
 /* SEXP mkComplex(char *s); */
@@ -1113,7 +1116,7 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
 
 /* unix/sys-std.c, main/options.c */
-void set_rl_word_breaks(char *str);
+void set_rl_word_breaks(const char *str);
 
 /* From localecharset.c */
 extern char * locale2charset(const char *);

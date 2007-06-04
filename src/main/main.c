@@ -985,7 +985,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
     int rval = 0;
     if (isSymbol(CExpr)) {
-	char *expr = CHAR(PRINTNAME(CExpr));
+	const char *expr = CHAR(PRINTNAME(CExpr));
 	if (!strcmp(expr, "n")) {
 	    SET_DEBUG(rho, 1);
 	    rval = 1;
@@ -1127,7 +1127,7 @@ void R_dot_Last(void)
 
 SEXP attribute_hidden do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    char *tmp;
+    const char *tmp;
     SA_TYPE ask=SA_DEFAULT;
     int status, runLast;
 
@@ -1455,7 +1455,7 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
     SEXP internalData;
     SEXP index;
     R_ToplevelCallbackEl *el;
-    char *tmpName = NULL;
+    const char *tmpName = NULL;
 
     internalData = allocVector(VECSXP, 3);
     R_PreserveObject(internalData);

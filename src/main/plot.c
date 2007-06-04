@@ -611,7 +611,7 @@ SEXP attribute_hidden do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP xlim, ylim, logarg;
     double asp, xmin, xmax, ymin, ymax;
     Rboolean logscale;
-    char *p;
+    const char *p;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 

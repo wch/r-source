@@ -5618,6 +5618,7 @@ right type.
 * Attributes::                  
 * Classes::                     
 * Handling lists::              
+* Handling character data::
 * Finding and setting variables::  
 * Some convenience functions::  
 * Named objects and copying::   
@@ -5996,7 +5997,7 @@ Suppose we want to give the return value in our example the class
 @group
 #include <R.h>
 #include <Rdefines.h>
-    ....
+    .... 
   SEXP ans, dim, dimnames, class;
     ....
   PROTECT(class = allocVector(STRSXP, 1));
@@ -6013,7 +6014,7 @@ As the value is a character vector, we have to know how to create that
 from a C character array, which we do using the function
 @code{mkChar}.
 
-@node Handling lists, Finding and setting variables, Classes, Handling R objects in C
+@node Handling lists, Handling character data, Classes, Handling R objects in C
 @subsection Handling lists
 @cindex Handling lists
 
@@ -6075,7 +6076,43 @@ and enables us to say
 @end group
 @end example
 
-@node Finding and setting variables, Some convenience functions, Handling lists, Handling R objects in C
+@node Handling character data, Finding and setting variables, Handling lists, Handling R objects in C
+@subsection Handling character data
+@cindex handling character data
+
+R character vectors are stored as @code{STRSXP}s, a vector type like
+@code{VECSXP} where every element is of type @code{CHARSXP}.  The
+@code{CHARSXP} elements of @code{STRSXP}s are accessed using
+@code{STRING_ELT} and @code{SET_STRING_ELT}.
+
+As of R 2.6.0, @code{CHARSXP}s are read-only objects and must never be
+modified.  In particular, the C-style string contained in a
+@code{CHARSXP} should be treated as read-only and for this reason the
+@code{CHAR} function used to access the character data of a
+@code{CHARSXP} returns @code{(const char *)} (this also allows compilers
+to issue warnings about improper use).  Since @code{CHARSXP}s are
+immutable, the same @code{CHARSXP} can be shared by any @code{STRSXP}
+needing an element representing the same string.  As of R 2.6.0, R
+maintains a global cache of @code{CHARSXP}s so that there is only ever
+one @code{CHARSXP} representing a given string in memory.
+
+You can obtain a @code{CHARSXP} by calling @code{mkChar} and providing a
+nul-terminated C-style string.  This function will return a pre-existing
+@code{CHARSXP} if one with a matching string already exists, otherwise
+it will create a new one and add it to the cache before returning it to
+you.
+
+Currently, it is still possible to create @code{CHARSXP}s using
+@code{allocVector} or @code{allocString}; @code{CHARSXP}s created in
+this way will not be captured by the global @code{CHARSXP} cache and
+this should be avoided.  In the future, all @code{CHARSXP}s will be
+captured by the cache and this will allow further optimizations, for
+example, replacing calls to @code{strcmp} with pointer comparisons.  A
+helper macro, @code{CallocCharBuf}, can be used to obtain a temporary
+character buffer for in-place string manipulation, this memory must be
+released using @code{Free}.
+
+@node Finding and setting variables, Some convenience functions, Handling character data, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
 @cindex Setting variables

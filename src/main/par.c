@@ -145,7 +145,7 @@ ParTable  [] = {
 };
 
 
-static int ParCode(char *what)
+static int ParCode(const char *what)
 {
     int i;
     for (i = 0; ParTable[i].name; i++)
@@ -165,13 +165,13 @@ void RecordGraphicsCall(SEXP call)
 }
 #endif
 
-static void par_error(char *what)
+static void par_error(const char *what)
 {
     error(_("invalid value specified for graphical parameter \"%s\""),  what);
 }
 
 
-static void lengthCheck(char *what, SEXP v, int n, SEXP call)
+static void lengthCheck(const char *what, SEXP v, int n, SEXP call)
 {
     if (length(v) != n)
 	error(_("graphical parameter \"%s\" has the wrong length"),
@@ -179,52 +179,52 @@ static void lengthCheck(char *what, SEXP v, int n, SEXP call)
 }
 
 
-static void nonnegIntCheck(int x, char *s)
+static void nonnegIntCheck(int x, const char *s)
 {
     if (x == NA_INTEGER || x < 0)
 	par_error(s);
 }
 
-static void posIntCheck(int x, char *s)
+static void posIntCheck(int x, const char *s)
 {
     if (x == NA_INTEGER || x <= 0)
 	par_error(s);
 }
 
 #ifdef UNUSED
-static void naIntCheck(int x, char *s)
+static void naIntCheck(int x, const char *s)
 {
     if (x == NA_INTEGER)
 	par_error(s);
 }
 #endif
 
-static void posRealCheck(double x, char *s)
+static void posRealCheck(double x, const char *s)
 {
     if (!R_FINITE(x) || x <= 0)
 	par_error(s);
 }
 
-static void nonnegRealCheck(double x, char *s)
+static void nonnegRealCheck(double x, const char *s)
 {
     if (!R_FINITE(x) || x < 0)
 	par_error(s);
 }
 
-static void naRealCheck(double x, char *s)
+static void naRealCheck(double x, const char *s)
 {
     if (!R_FINITE(x))
 	par_error(s);
 }
 
-static void logAxpCheck(int x, char *s)
+static void logAxpCheck(int x, const char *s)
 {
     if (x == NA_INTEGER || x == 0 || x > 4)
 	par_error(s);
 }
 
 
-static void BoundsCheck(double x, double a, double b, char *s)
+static void BoundsCheck(double x, double a, double b, const char *s)
 {
 /* Check if   a <= x <= b */
     if (!R_FINITE(x) || (R_FINITE(a) && x < a) || (R_FINITE(b) && x > b))
@@ -250,7 +250,7 @@ static void BoundsCheck(double x, double a, double b, char *s)
      "R_DEV_2(\\1)" nil nil nil)
 */
 
-static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
+static void Specify(const char *what, SEXP value, DevDesc *dd, SEXP call)
 {
 /* If you ADD a NEW par, then do NOT forget to update the code in
  *			 ../library/base/R/par.R
@@ -683,7 +683,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 /* Now defined differently in Specify2() : */
 #define R_DEV__(_P_) Rf_gpptr(dd)->_P_
 
-void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
+void attribute_hidden Specify2(const char *what, SEXP value, DevDesc *dd, SEXP call)
 {
     double x;
     int ix = 0, ptype = ParCode(what);
@@ -746,7 +746,7 @@ void attribute_hidden Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
 /* Do NOT forget to update  ../library/base/R/par.R */
 /* if you  ADD a NEW  par !! */
 
-static SEXP Query(char *what, DevDesc *dd)
+static SEXP Query(const char *what, DevDesc *dd)
 {
     SEXP value;
 

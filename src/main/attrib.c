@@ -1091,7 +1091,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     /* try to find a match among the attributes list */
     for (alist = ATTRIB(s); alist != R_NilValue; alist = CDR(alist)) {
 	SEXP tmp = TAG(alist);
-	char *s = CHAR(PRINTNAME(tmp));
+	const char *s = CHAR(PRINTNAME(tmp));
 	if (! strncmp(s, str, n)) {
 	    if (strlen(s) == n) {
 		tag = tmp;

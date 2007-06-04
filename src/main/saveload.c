@@ -134,7 +134,7 @@ typedef struct {
  void	(*OutInteger)(FILE*, int, SaveLoadData *);
  void	(*OutReal)(FILE*, double, SaveLoadData *);
  void	(*OutComplex)(FILE*, Rcomplex, SaveLoadData *);
- void	(*OutString)(FILE*, char*, SaveLoadData *);
+ void	(*OutString)(FILE*, const char*, SaveLoadData *);
  void	(*OutSpace)(FILE*, int, SaveLoadData *);
  void	(*OutNewline)(FILE*, SaveLoadData *);
  void	(*OutTerm)(FILE*, SaveLoadData *);
@@ -604,7 +604,7 @@ static void RestoreSEXP(SEXP s, FILE *fp, InputRoutines *m, NodeInfo *node, int 
     case CHARSXP:
 	len = m->InInteger(fp, d);
 	R_AllocStringBuffer(len, &(d->buffer));
-	strcpy(CHAR(s), m->InString(fp, d));
+	strcpy(CHAR_RW(s), m->InString(fp, d));
 	break;
     case REALSXP:
 	len = m->InInteger(fp, d);
@@ -1410,7 +1410,7 @@ static int InIntegerAscii(FILE *fp, SaveLoadData *unused)
     return x;
 }
 
-static void OutStringAscii(FILE *fp, char *x, SaveLoadData *unused)
+static void OutStringAscii(FILE *fp, const char *x, SaveLoadData *unused)
 {
     int i, nbytes;
     nbytes = strlen(x);
@@ -1675,7 +1675,7 @@ static int InIntegerXdr(FILE *fp, SaveLoadData *d)
     return i;
 }
 
-static void OutStringXdr(FILE *fp, char *s, SaveLoadData *d)
+static void OutStringXdr(FILE *fp, const char *s, SaveLoadData *d)
 {
     unsigned int n = strlen(s);
     OutIntegerXdr(fp, n, d);

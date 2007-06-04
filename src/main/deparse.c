@@ -544,7 +544,7 @@ static void attr2(SEXP s, LocalParseData *d)
 		}
 		else {
 		    /* TAG(a) might contain spaces etc */
-		    char *tag = CHAR(PRINTNAME(TAG(a)));
+		    const char *tag = CHAR(PRINTNAME(TAG(a)));
 		    d->opts = SIMPLEDEPARSE; /* turn off quote()ing */
 		    if(isValidName(tag))
 			deparse2buff(TAG(a), d);
@@ -588,7 +588,7 @@ static void printcomment(SEXP s, LocalParseData *d)
     }
 }
 
-static char * backquotify(char *s)
+static char * backquotify(const char *s)
 {
     static char buf[120];
     char *t = buf;
@@ -1032,7 +1032,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    }
 		    else {
 			if ( isSymbol(CAR(s)) ){
-			    char *ss = CHAR(PRINTNAME(CAR(s)));
+			    const char *ss = CHAR(PRINTNAME(CAR(s)));
 			    if ( !isValidName(ss) ){
 
 				print2buff("`", d);
@@ -1354,7 +1354,8 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 #if 0
 	    deparse2buff(TAG(arglist));
 #else
-	    char tpb[120], *ss;
+	    char tpb[120];
+            const char *ss;
 	    SEXP s = TAG(arglist);
 
 	    ss = CHAR(PRINTNAME(s));

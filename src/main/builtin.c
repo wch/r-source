@@ -449,7 +449,8 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     Rconnection con;
     int append;
     int w, i, iobj, n, nobjs, pwidth, width, sepw, lablen, ntot, nlsep, nlines;
-    const char *p = ""; char buf[512];
+    char buf[512];
+    const char *p = "";
 
     checkArity(op, args);
 

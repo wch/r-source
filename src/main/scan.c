@@ -33,6 +33,7 @@
 #endif
 
 #include <Defn.h>
+#include <R_ext/RS.h>  /* for Calloc/Free */
 #include <Fileio.h>
 #include <Rconnections.h>
 static R_INLINE int imin2(int x, int y)
@@ -67,7 +68,7 @@ typedef struct {
     int quiet;
     int sepchar; /*  = 0 */      /* This gets compared to ints */
     char decchar; /* = '.' */    /* This only gets compared to chars */
-    char *quoteset;
+    const char *quoteset;
     char *quotesave; /* = NULL */
     int comchar;
     int ttyflag;
@@ -487,7 +488,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 /* If mode = 0 use for numeric fields where "" is NA
    If mode = 1 use for character fields where "" is verbatim unless
    na.strings includes "" */
-static R_INLINE int isNAstring(char *buf, int mode, LocalData *d)
+static R_INLINE int isNAstring(const char *buf, int mode, LocalData *d)
 {
     int i;
 
@@ -1185,7 +1186,7 @@ typedef struct typecvt_possible_types {
  *
  * The typeInfo struct should be initialized with all fields TRUE.
  */
-static void ruleout_types(char *s, Typecvt_Info *typeInfo, LocalData *data)
+static void ruleout_types(const char *s, Typecvt_Info *typeInfo, LocalData *data)
 {
     int res;
     char *endp;
@@ -1236,7 +1237,8 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP rval = R_NilValue; /* -Wall */
     int i, j, len, numeric, asIs;
     Rboolean done = FALSE;
-    char *endp, *tmp = NULL;
+    char *endp;
+    const char *tmp = NULL;
     LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     Typecvt_Info typeInfo;      /* keep track of possible types of cvec */

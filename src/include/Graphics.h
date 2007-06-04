@@ -434,7 +434,7 @@ int StrMatch(const char *s, const char *t);
 double R_Log10(double);
 
 void ProcessInlinePars(SEXP, DevDesc*, SEXP call);
-void Specify2(char*, SEXP, DevDesc*, SEXP call);
+void Specify2(const char*, SEXP, DevDesc*, SEXP call);
 #ifdef UNUSED
 void RecordGraphicsCall(SEXP);
 #endif
