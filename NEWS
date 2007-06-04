@@ -166,11 +166,15 @@ BUG FIXES
     o	promptClass() now lists methods, including those for generics in
 	other attached packages.
 
-    o	connection-releated functions such as readBin no longer crash
-	when supplied with an invalid connection
+    o	Connection-releated functions such as readBin() no longer crash
+	when supplied with a non-connection object.
 	
     o	as.character.srcref() didn't handle bad srcref objects cleanly.
-
+	
+    o	predict.nls() no longer requires 'newdata' to contain exactly
+	the variable names needed to fit the model: variables used on
+	the LHS only are no longer required and further variables are
+	allowed.
 
 
 
