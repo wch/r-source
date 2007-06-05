@@ -2733,6 +2733,8 @@ A package for working with chronological objects (times and dates).
 @item circular
 Circular statistics, from ``Topics in Circular Statistics'' by Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
+@item clValid
+Statistical and biological validation of clustering results.
 @item clac
 Clust Along Chromosomes, a method to call gains/losses in CGH array
 data.
@@ -4640,6 +4642,8 @@ Basic wavelet routines for time series analysis.
 Software to perform 1-d and 2-d wavelet statistics and transforms.
 @item wccsom
 SOM networks for comparing patterns with peak shifts.
+@item wikibooks
+Functions and datasets for the German WikiBook ``GNU R''.
 @item wle
 Robust statistical inference via a weighted likelihood approach.
 @item wnominate
