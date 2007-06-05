@@ -2038,9 +2038,6 @@ sub check_pkg {
         }
         chdir($testdir);
 	dircopy($testsrcdir, ".");
-	#foreach my $file (&list_files($testsrcdir)) {
-	#    copy($file, basename($file));
-	#}
         my $makefiles = "-f " .
 	    &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
 					      "make", "tests.mk"));

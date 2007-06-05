@@ -517,6 +517,8 @@ function(package, dir, lib.loc = NULL,
                 ## current layout, and it is also not clear whether we
                 ## should do this: formally, what we get is different
                 ## from what the authors thought and documented.
+                ## Also note that setAs() typically seems to give formals
+                ## (from, to, strict = TRUE).
                 ## </NOTE>
                 fun <- methods::slot(m, ".Data")
                 bdy <- body(fun)
