@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-05-29
+@set FAQ_DATE @value{FAQ_YEAR}-06-04
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2254,6 +2254,8 @@ convergence in a table and graph, and save the simulations in arrays for
 easy access in R.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
+@item RBGL
+Interface to the boost C++ graph library.
 @item RBloomberg
 Fetch data from a Bloomberg API using COM.
 @item RColorBrewer
@@ -2283,6 +2285,9 @@ Access to databases through the JDBC interface.
 Reversible Jump MCMC for the analysis of CGH arrays.
 @item RLMM
 A genotype calling algorithm for Affymetrix SNP arrays.
+@item RLRsim
+Exact (Restricted) Likelihood Ratio tests for mixed and additive
+models.
 @item RLadyBug
 Analysis of infectious diseases using stochastic epidemic models.
 @item RMySQL
@@ -3204,6 +3209,8 @@ Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
 @item ggplot
 Grammar of graphics based plots for R.
+@item ggplot2
+An implementation of the Grammar of Graphics in R.
 @item ghyp
 Univariate and multivariate generalized hyperbolic distributions.
 @item giRaph
@@ -3243,6 +3250,8 @@ multi-group (more than 2 group) classification.
 Various functions to draw plots.
 @item grImport
 Importing vector graphics.
+@item graph
+Handling of graph data structures.
 @item grasper
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
@@ -3437,6 +3446,8 @@ Laboratory for Dynamic Synthetic Vegephenomenology.
 Functions for the book ``Laboratorio di statistica con R'' by
 S. M. Iacus and G. Masarotto, 2002, McGraw-Hill.  Function names and
 documentation in Italian.
+@item lancet.iraqmortality
+Surveys of Iraq mortality published in The Lancet.
 @item languageR
 Data sets and functions for the book ``Analyzing Linguistic Data: A
 practical introduction to statistics'' by R. H. Baayen, 2007, Cambridge:
@@ -4105,6 +4116,9 @@ likelihood.  Can be used for multivariate models and random effects
 models.
 @item relaimpo
 RELAtive IMPOrtance of regressors in linear models.
+@item relations
+Data structures for @math{k}-ary relations with arbitrary domains,
+predicate functions, and fitters for consensus relations.
 @item relax
 Functions for report writing, presentation, and programming.
 @item relaxo
@@ -4520,6 +4534,8 @@ Bayesian regression and adaptive sampling with Treed Gaussian Process
 models.
 @item time
 Time tracking for developers.
+@item timsac
+TIMe Series Analysis and Control package.
 @item titan
 Titration analysis for mass spectrometry data.
 @item titecrm
