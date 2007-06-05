@@ -290,8 +290,8 @@ static void SaveAsPostscript(NewDevDesc *dd, const char *fn)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    char family[256], encoding[256], paper[256], bg[256], fg[256],
-	**afmpaths = NULL;
+    char family[256], encoding[256], paper[256], bg[256], fg[256];
+    const char **afmpaths = NULL;
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
@@ -355,7 +355,8 @@ static void SaveAsPDF(NewDevDesc *dd, const char *fn)
     NewDevDesc *ndd = (NewDevDesc *) calloc(1, sizeof(NewDevDesc));
     GEDevDesc* gdd = (GEDevDesc*) GetDevice(devNumber((DevDesc*) dd));
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    char family[256], encoding[256], bg[256], fg[256], **afmpaths = NULL;
+    char family[256], encoding[256], bg[256], fg[256];
+    const char **afmpaths = NULL;
 
     if (!ndd) {
 	R_ShowMessage(_("Not enough memory to copy graphics window"));
