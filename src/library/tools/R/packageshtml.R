@@ -97,7 +97,8 @@ unix.packages.html <-
             '</h3>\n<p>\n<table width="100%" summary="R Package list">\n',
             sep = "", file=out)
         for (i in pg) {
-            title <- utils::packageDescription(i, lib.loc = lib, field = "Title",
+            title <- utils::packageDescription(i, lib.loc = lib,
+                                               fields = "Title",
                                         encoding = ifelse(useUTF8,"UTF-8",""))
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
