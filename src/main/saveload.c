@@ -30,6 +30,7 @@
 #include <Rinterface.h>
 #include <Rmath.h>
 #include <Fileio.h>
+#include <R_ext/RS.h>
 
 /* From time to time changes in R, such as the addition of a new SXP,
  * may require changes in the save file format.  Here are some
@@ -1678,8 +1679,14 @@ static int InIntegerXdr(FILE *fp, SaveLoadData *d)
 static void OutStringXdr(FILE *fp, const char *s, SaveLoadData *d)
 {
     unsigned int n = strlen(s);
+    char *t = CallocCharBuf(n);
+    bool_t res;
+    /* This copy may not be needed, will xdr_bytes ever modify 2nd arg? */
+    strcpy(t, s);
     OutIntegerXdr(fp, n, d);
-    if (!xdr_bytes(&d->xdrs, &s, &n, n))
+    res = xdr_bytes(&d->xdrs, &t, &n, n);
+    Free(t);
+    if (!res)
 	error(_("an xdr string data write error occurred"));
 }
 

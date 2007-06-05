@@ -260,7 +260,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
     int i, taglen, ns, w, d, e, wr, dr, er, wi, di, ei;
     SEXP dims, t, names, newcall, tmp;
     char pbuf[115], *ptag, save[TAGBUFLEN + 5];
-    const char *rn, *cn;
+    char *rn, *cn;
 
     ns = length(s);
     if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
@@ -446,7 +446,7 @@ static void printList(SEXP s, SEXP env)
     int i, taglen;
     SEXP dims, dimnames, t, newcall;
     char pbuf[101], *ptag;
-    const char *rn, *cn;
+    char *rn, *cn;
 
     if ((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
 	PROTECT(dims);
@@ -721,7 +721,7 @@ void attribute_hidden PrintValueRec(SEXP s, SEXP env)
 	    }
 	    else if (LENGTH(t) == 2) {
 		SEXP rl, cl;
-		const char *rn, *cn;
+		char *rn, *cn;
 		GetMatrixDimnames(s, &rl, &cl, &rn, &cn);
 		printMatrix(s, 0, t, R_print.quote, R_print.right, rl, cl,
 			    rn, cn);

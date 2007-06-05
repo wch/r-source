@@ -217,7 +217,7 @@ SEXP attribute_hidden do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl, hd, pg;
-    const char **f, **h, *t, *pager;
+    char **f, **h, *t, *pager;
     char *vmax;
     Rboolean dl;
     int i, n;
@@ -238,28 +238,28 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid 'title'"));
     if (!isString(pg))
         error(_("invalid '%s' specification"), "pager");
-    f = (const char**)R_alloc(n, sizeof(char*));
-    h = (const char**)R_alloc(n, sizeof(char*));
+    f = (char**)R_alloc(n, sizeof(char*));
+    h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
 	if (!isNull(STRING_ELT(fn, i)))
 	    /* Do better later for file names? */
-	    f[i] = (char *) translateChar(STRING_ELT(fn, i));
+	    f[i] = acopy_string(translateChar(STRING_ELT(fn, i)));
 	else
-	    f[i] = (char *) CHAR(R_BlankString);
+	    f[i] = acopy_string(CHAR(R_BlankString));
 	if (!isNull(STRING_ELT(hd, i)))
-	    h[i] = (char *) translateChar(STRING_ELT(hd, i));
+	    h[i] = acopy_string(translateChar(STRING_ELT(hd, i)));
 	else
-	    h[i] = (char *) CHAR(R_BlankString);
+	    h[i] = acopy_string(CHAR(R_BlankString));
     }
     if (length(tl) >= 1 || !isNull(STRING_ELT(tl, 0)))
-	t = translateChar(STRING_ELT(tl, 0));
+	t = acopy_string(translateChar(STRING_ELT(tl, 0)));
     else
-	t = CHAR(R_BlankString);
+	t = acopy_string(CHAR(R_BlankString));
     if (length(pg) >= 1 || !isNull(STRING_ELT(pg, 0)))
-	pager = CHAR(STRING_ELT(pg, 0));
+	pager = acopy_string(CHAR(STRING_ELT(pg, 0)));
     else
-	pager = CHAR(R_BlankString);
-    R_ShowFiles(n, f, h, (char *)t, dl, (char *) pager);
+	pager = acopy_string(CHAR(R_BlankString));
+    R_ShowFiles(n, f, h, t, dl, pager);
     vmaxset(vmax);
     return R_NilValue;
 }
@@ -276,7 +276,7 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, ti, ed;
-    const char **f, **title, *editor;
+    char **f, **title, *editor;
     char *vm;
     int i, n;
 
@@ -292,32 +292,32 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (n > 0) {
 	if (!isString(fn))
 	    error(_("invalid '%s' specification"), "filename");
-	f = (const char**) R_alloc(n, sizeof(char*));
-	title = (const char**) R_alloc(n, sizeof(char*));
+	f = (char**) R_alloc(n, sizeof(char*));
+	title = (char**) R_alloc(n, sizeof(char*));
 	for (i = 0; i < n; i++) {
 	    if (!isNull(STRING_ELT(fn, i)))
 		/* Do better later for file names? */
-		f[i] = (char *) translateChar(STRING_ELT(fn, i));
+		f[i] = acopy_string(translateChar(STRING_ELT(fn, i)));
 	    else
-		f[i] = (char *) CHAR(R_BlankString);
+		f[i] = acopy_string(CHAR(R_BlankString));
 	    if (!isNull(STRING_ELT(ti, i)))
-	    	title[i] = (char *) translateChar(STRING_ELT(ti, i));
+	    	title[i] = acopy_string(translateChar(STRING_ELT(ti, i)));
 	    else
-	    	title[i] = (char *) CHAR(R_BlankString);
+	    	title[i] = acopy_string(CHAR(R_BlankString));
 	}
     }
     else {  /* open a new file for editing */
 	n = 1;
-	f = (const char**) R_alloc(1, sizeof(char*));
-	f[0] = CHAR(R_BlankString);
-	title = (const char**) R_alloc(1, sizeof(char*));
-	title[0] = CHAR(R_BlankString);
+	f = (char**) R_alloc(1, sizeof(char*));
+	f[0] = acopy_string(CHAR(R_BlankString));
+	title = (char**) R_alloc(1, sizeof(char*));
+	title[0] = acopy_string(CHAR(R_BlankString));
     }
     if (length(ed) >= 1 || !isNull(STRING_ELT(ed, 0)))
 	/* Do better later for file names? */
-	editor = (char *) translateChar(STRING_ELT(ed, 0));
+	editor = acopy_string(translateChar(STRING_ELT(ed, 0)));
     else
-	editor = (char *) CHAR(R_BlankString);
+	editor = acopy_string(CHAR(R_BlankString));
     R_EditFiles(n, f, title, editor);
     vmaxset(vm);
     return R_NilValue;

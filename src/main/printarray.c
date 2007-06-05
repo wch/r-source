@@ -460,7 +460,7 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
 /* == printArray(.) */
 
     int ndim = LENGTH(dim);
-    const char *rn = NULL, *cn = NULL;
+    char *rn = NULL, *cn = NULL;
 
     if (ndim == 1)
 	printVector(x, 1, quote);

@@ -1195,8 +1195,8 @@ void GetMatrixDimnames(SEXP x, SEXP *rl, SEXP *cl, char **rn, char **cn)
 	    *cn = NULL;
         }
 	else {
-	    *rn = (char *) translateChar(STRING_ELT(nn, 0));
-	    *cn = (char *) translateChar(STRING_ELT(nn, 1));
+	    *rn = acopy_string(translateChar(STRING_ELT(nn, 0)));
+	    *cn = acopy_string(translateChar(STRING_ELT(nn, 1)));
         }
     }
 }

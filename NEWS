@@ -299,6 +299,12 @@ C-LEVEL FACILITIES
         warn or error about improper modification.  Thanks to Herve
         Pages for the suggestion.
 
+    o   acopy_string is a (provisional) new helper function that
+        copies character data and returns a pointer to memory
+        allocated using R_alloc.  This can be used to create a copy of
+        a string stored in a CHARSXP before passing the data on to a
+        function that modifies its arguments.
+
 
 INSTALLATION
 

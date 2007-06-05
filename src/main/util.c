@@ -1074,3 +1074,15 @@ void F77_SYMBOL(rchkusr)(void)
     R_CheckUserInterrupt();
 }
 
+/* Return a copy of a string using memory from R_alloc */
+char *acopy_string(const char *in)
+{
+    char *out;
+    int len = strlen(in);
+    if (len > 0) {
+        out = (char *) R_alloc(strlen(in), sizeof(char));
+        strcpy(out, in);
+    } else
+        out = "";
+    return out;
+}

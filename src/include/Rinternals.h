@@ -563,6 +563,7 @@ Rcomplex Rf_asComplex(SEXP x);
 
 /* Other Internally Used Functions, excluding those which are inline-able*/
 
+char * Rf_acopy_string(const char *);
 SEXP Rf_allocArray(SEXPTYPE, SEXP);
 SEXP Rf_allocMatrix(SEXPTYPE, int, int);
 SEXP Rf_allocList(int);
@@ -816,6 +817,7 @@ int R_system(const char *);
 #define Rf_allocString(n)      	Rf_allocVector(CHARSXP, n)
 
 #ifndef R_NO_REMAP
+#define acopy_string		Rf_acopy_string
 #define allocArray		Rf_allocArray
 #define allocList		Rf_allocList
 #define allocMatrix		Rf_allocMatrix
