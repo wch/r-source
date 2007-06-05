@@ -198,12 +198,13 @@ sub list_files {
 ### * list_files_with_exts
 
 sub list_files_with_exts {
-    my ($dir, $exts) = @_;
+    my ($dir, $exts, $all_files) = @_;
     my @files;
     $exts = ".*" unless $exts;
     opendir(DIR, $dir) or die "cannot opendir $dir: $!";
     @files = grep { /\.$exts$/ && -f "$dir/$_" } readdir(DIR);
     closedir(DIR);
+    @files = grep(!/^\./, @files) unless($all_files);
     ## We typically want the paths to the files, see also the R variant
     ## list_files_with_exts() used in some of the QC tools.
     my @paths;
