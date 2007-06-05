@@ -1101,6 +1101,8 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, fun;
     int save = R_PPStackTop;
     int flag;
+    char *vmax = vmaxget();
+
     checkArity(op, args);
     s = CAR(args);
     if (!isPairList(s))
@@ -1133,6 +1135,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     UNPROTECT(1);
     check_stack_balance(INTERNAL(fun), save);
+    vmaxset(vmax);
     return (args);
 }
 #undef __R_Names__
