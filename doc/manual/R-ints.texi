@@ -68,6 +68,7 @@ The current version of this document is @value{VERSION}.
 @menu
 * R Internal Structures::       
 * .Internal vs .Primitive::     
+* Internationaliation in the R sources::  
 * R coding standards::          
 * Testing R code::              
 * Function and variable index::  
@@ -1545,7 +1546,7 @@ compiled against Internet Explorer internals (and so loads
 @file{wininet.dll} and @file{wsock32.dll}).
 @end table
 
-@node .Internal vs .Primitive, R coding standards, R Internal Structures, Top
+@node .Internal vs .Primitive, Internationaliation in the R sources, R Internal Structures, Top
 @chapter @code{.Internal} vs @code{.Primitive}
 
 @findex .Internal
@@ -1848,7 +1849,125 @@ this can fail for other reasons).  However, there is no certain way to
 know that if other @code{.Internal} or primitive functions are not
 internally generic except by reading the source code.
 
-@node R coding standards, Testing R code, .Internal vs .Primitive, Top
+
+@node Internationaliation in the R sources, R coding standards, .Internal vs .Primitive, Top
+@chapter Internationaliation in the R sources
+
+The process of marking messages (errors, warnings etc) for translation
+in an @R{} package is described in `Writing R Extensions', and the
+standard packages included with @R{} have (with an exception in
+@pkg{grDevices}) been internationalized in the same way as other
+packages.
+
+@menu
+* R code::                      
+* Main C code::                 
+* Windows-GUI-specific code::   
+* MacOS X GUI::                 
+* Updating::                    
+@end menu
+
+@node R code, Main C code, Internationaliation in the R sources, Internationaliation in the R sources
+@section R code
+
+Internationalization for @R{} code is done in exactly the same way as
+for extension packages.  As all standard packages which have @R{} code
+also have a namespace, it is never necessary to specify @code{domain},
+but for efficiency calls to @code{message}, @code{warning} and
+@code{stop} should include @code{domain = NA} when the message is
+constructed @emph{via} @code{gettextf}, @code{gettext} or
+@code{ngettext}.
+
+For each package, the extracted messages and translation sources are
+stored under package directory @file{po} in the source package, and compiled
+translations under @file{inst/po} for installation to package directory
+@file{po} in the installed package.  This also applies to C code in
+packages.
+
+@node Main C code, Windows-GUI-specific code, R code, Internationaliation in the R sources
+@section Main C code
+
+The main C code (e.g.@: that in @file{src/*/*.c} and in
+the modules) is where @R{} is closest to the sort of application for
+which @samp{gettext} was written.  Messages in the main C code are in
+domain @code{R} and stored in the top-level directory @file{po} with
+compiled translations under @file{share/locale}.
+
+The list of files covered by the @R{} domain is specified in file
+@file{po/POTFILES.in}.
+
+The normal way to mark messages for translation is via @code{_("msg")}
+just as for packages.  However, sometimes one needs to mark passages for
+translation without wanting them translated at the time, for example
+when declaring string constants.  This is the purpose of the @code{N_}
+macro, for example
+
+@example
+@{ ERROR_ARGTYPE,           N_("invalid argument type")@},
+@end example
+
+@noindent
+from @file{src/main/errors.c}.
+
+A macro
+
+@example
+#ifdef ENABLE_NLS
+#define P_(StringS, StringP, N) ngettext (StringS, StringP, N)
+#else
+#define P_(String, StringP, N) (N > 1 ? StringP: String)
+#endif
+@end example
+
+@noindent
+as a wrapper for @code{ngettext}: however in some cases the preferred
+approach has been to conditionalize code using @code{ngettext} on
+@code{ENABLE_NLS}.
+
+The macro @code{_("msg")} can safely be used in @file{src/appl}; the
+header for standalone @samp{nmath} skips possible translation.  (This
+does not apply to @code{N_} or @code{P_}).
+
+
+@node Windows-GUI-specific code, MacOS X GUI, Main C code, Internationaliation in the R sources
+@section Windows-GUI-specific code
+
+Messages for the Windows GUI are in a separate domain @samp{RGui}.  This
+was done for two reasons:
+
+@itemize
+@item
+The translators for the Windows version of @R{} might be separate from
+those for the rest of @R{} (familiarity with the GUI helps), and
+
+@item
+Messages for Windows are most naturally handled in the native charset
+for the language, and in the case of CJK languages the charset is
+Windows-specific.  (It transpires that as the @code{iconv} we ported
+works well under Windows, this is less important that anticipated.)
+@end itemize
+
+Messages for the @samp{RGui} domain are marked by @code{G_("msg")}, a
+macro that is defined in @file{src/gnuwin32/win-nls.h}.  The list of
+files that are considered is hardcoded in the @code{RGui.pot-update}
+target of @file{po/Makefile.in.in}: note that this includes
+@file{devWindows.c} as the menus on the @code{windows} device are
+considered to be part of the GUI.  (There is also @code{GN_("msg")}, the
+analogue of @code{N_("msg")}.)
+
+@node MacOS X GUI, Updating, Windows-GUI-specific code, Internationaliation in the R sources
+@section MacOS X GUI
+
+This is handled separately: see
+@uref{http://developer.r-project.org/Translations.html}.
+
+
+@node Updating,  , MacOS X GUI, Internationaliation in the R sources
+@section Updating
+
+See @file{po/README} for how to update the message templates and catalogs.
+
+@node R coding standards, Testing R code, Internationaliation in the R sources, Top
 @chapter R coding standards
 
 @cindex coding standards
