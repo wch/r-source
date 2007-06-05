@@ -874,7 +874,7 @@ namespaceExport <- function(ns, vars) {
         new <- makeImportExportNames(unique(vars))
         ## calling exists each time is too slow, so do two phases
         undef <- new[! new %in% .Internal(ls(ns, TRUE))]
-        undef <- undef[! sapply(undef, exists, env = ns)]
+        undef <- undef[! sapply(undef, exists, envir = ns)]
         if (length(undef) != 0) {
             undef <- do.call("paste", as.list(c(undef, sep = ", ")))
             stop("undefined exports :", undef)
