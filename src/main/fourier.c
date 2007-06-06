@@ -36,7 +36,6 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, inv, maxf, maxmaxf, maxmaxp, maxp, n, ndims, nseg, nspn;
     double *work;
     int *iwork;
-    char *vmax;
 
     checkArity(op, args);
 
@@ -66,7 +65,6 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	inv = 2;
 
     if (LENGTH(z) > 1) {
-	vmax = vmaxget();
 	if (isNull(d = getAttrib(z, R_DimSymbol))) {  /* temporal transform */
 	    n = length(z);
 	    fft_factor(n, &maxf, &maxp);
@@ -109,7 +107,6 @@ SEXP attribute_hidden do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	}
-	vmaxset(vmax);
     }
     UNPROTECT(1);
     return z;
@@ -124,7 +121,6 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, inv, maxf, maxp, n, p;
     double *work;
     int *iwork;
-    char *vmax;
 
     checkArity(op, args);
 
@@ -158,7 +154,6 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     else inv = 2;
 
     if (n > 1) {
-	vmax = vmaxget();
 	fft_factor(n, &maxf, &maxp);
 	if (maxf == 0)
 	    error(_("fft factorization error"));
@@ -169,7 +164,6 @@ SEXP attribute_hidden do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fft_work(&(COMPLEX(z)[i*n].r), &(COMPLEX(z)[i*n].i),
 		     1, n, 1, inv, work, iwork);
 	}
-	vmaxset(vmax);
     }
     UNPROTECT(1);
     return z;

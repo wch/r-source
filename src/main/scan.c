@@ -846,14 +846,12 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
     const char *p, *encoding;
-    char *vmax;
     RCNTXT cntxt;
     LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
     checkArity(op, args);
-    vmax = vmaxget();
 
     file = CAR(args);		   args = CDR(args);
     what = CAR(args);		   args = CDR(args);
@@ -1000,7 +998,6 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);
     if (data.quotesave) free(data.quotesave);
-    vmaxset(vmax);
     return ans;
 }
 

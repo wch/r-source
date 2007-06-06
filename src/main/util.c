@@ -556,7 +556,6 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nx = 0, ny = 0, i, j, k, nans = 0, nx_lone = 0, ny_lone = 0;
     int all_x = 0, all_y = 0, ll = 0/* "= 0" : for -Wall */;
     int *ix, *iy, tmp, nnx, nny, i0, j0;
-    char *vmax = vmaxget();
 
     checkArity(op, args);
     xi = CAR(args);
@@ -624,7 +623,6 @@ SEXP attribute_hidden do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
     }
 
-    vmaxset(vmax);
     PROTECT(ansnames = allocVector(STRSXP, 4));
     SET_STRING_ELT(ansnames, 0, mkChar("xi"));
     SET_STRING_ELT(ansnames, 1, mkChar("yi"));

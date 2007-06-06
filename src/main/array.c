@@ -960,7 +960,6 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP a, perm, resize, r, dimsa, dimsr, dna;
     int i, j, n, len, itmp;
     int *pp, *iip, *stride;
-    char *vmax;
 
     checkArity(op, args);
 
@@ -974,7 +973,6 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* check the permutation */
 
     PROTECT(perm = coerceVector(CADR(args), INTSXP));
-    vmax = vmaxget();
     pp = (int *) R_alloc(n, sizeof(int));
     if (length(perm) == 0) {
 	for (i=0; i<n; i++)
@@ -1106,8 +1104,6 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	setAttrib(r, R_DimNamesSymbol, dnr);
 	UNPROTECT(3); /* dnna, dnr, dnnr */
     }
-    /* free temporary memory */
-    vmaxset(vmax);
 
     UNPROTECT(6); /* dimsa, perm, r, dimsr, resize, dna */
     return r;

@@ -533,7 +533,6 @@ SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     int code, i, j, k, itnlim, method, iexp, omsg, msg,
 	n, ndigit, iagflg, iahflg, want_hessian, itncnt;
 
-    char *vmax;
 
 /* .Internal(
  *	nlm(function(x) f(x, ...), p, hessian, typsize, fscale,
@@ -543,7 +542,6 @@ SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     PrintDefaults(rho);
-    vmax = vmaxget();
 
     state = (function_info *) R_alloc(1, sizeof(function_info));
 
@@ -739,7 +737,6 @@ SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     k++;
 
     setAttrib(value, R_NamesSymbol, names);
-    vmaxset(vmax);
     UNPROTECT(3);
     return value;
 }

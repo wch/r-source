@@ -885,10 +885,8 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, ans2, expr, funarg, names, s;
     int f_index, *d_index, *d2_index;
     int i, j, k, nexpr, nderiv=0, hessian;
-    char *vmax;
     SEXP exprlist, tag;
     checkArity(op, args);
-    vmax = vmaxget();
     InitDerivSymbols();
     PROTECT(exprlist = LCONS(install("{"), R_NilValue));
     /* expr: */
@@ -1072,6 +1070,5 @@ SEXP attribute_hidden do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* funarg = lang2(install("expression"), exprlist); */
     }
     UNPROTECT(2);
-    vmaxset(vmax);
     return funarg;
 }
