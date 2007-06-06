@@ -3390,7 +3390,7 @@ void rgb2hsv(double r, double g, double b,
  */
 
 attribute_hidden
-char *DefaultPalette[] = {
+const char *DefaultPalette[] = {
     "black",
     "red",
     "green3",
@@ -4222,7 +4222,7 @@ attribute_hidden char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
 /* If this fails, create an #RRGGBB string */
 
 /* used in grid */
-char *col2name(unsigned int col)
+const char *col2name(unsigned int col)
 {
     int i;
 

@@ -62,7 +62,7 @@ static unsigned int CheckAlpha(int x)
     return (unsigned int)x;
 }
 
-static void setpalette(char **palette)
+static void setpalette(const char **palette)
 {
     int i;
     for (i = 0; (i<COLOR_TABLE_SIZE) && palette[i]; i++)
