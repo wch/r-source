@@ -4086,6 +4086,8 @@ Ishwaran and Kogalur's random survival forest.
 Breiman's random forest classifier.
 @item rankreg
 Rank regression estimator for the AFT model with right censored data.
+@item rateratio.test
+Exact rate ratio test.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
@@ -4631,6 +4633,8 @@ Construction of test suites using verify objects.
 @item vioplot
 Violin plots, which are a combination of a box plot and a kernel density
 plot.
+@item vrtest
+Variance ratio tests for weak-form market efficiency.
 @item waved
 WaveD transform in R.
 @item wavelets
