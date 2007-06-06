@@ -181,7 +181,7 @@ static void GA_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void GA_Close(NewDevDesc *dd);
 static void GA_Deactivate(NewDevDesc *dd);
-static SEXP GA_getEvent(SEXP eventRho, char* prompt);
+static SEXP GA_getEvent(SEXP eventRho, const char* prompt);
 static void GA_Hold(NewDevDesc *dd);
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
@@ -3060,7 +3060,7 @@ static Rboolean GA_NewFrameConfirm()
     return TRUE;
 }
 
-static SEXP GA_getEvent(SEXP eventRho, char* prompt)
+static SEXP GA_getEvent(SEXP eventRho, const char* prompt)
 {
     gadesc *xd;
     GEDevDesc *dd = GEcurrentDevice();
@@ -3077,7 +3077,7 @@ static SEXP GA_getEvent(SEXP eventRho, char* prompt)
     gchangemenubar(xd->mbar);
     gchangepopup(xd->gawin, NULL);
     setstatus(prompt);
-    Rprintf(prompt, strlen(prompt));
+    Rprintf("%s", prompt);
     Rprintf("\n", 1);
     R_FlushConsole();
     settext(xd->gawin, prompt);

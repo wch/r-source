@@ -420,14 +420,14 @@ unsigned int number2col(const char *);
 unsigned int char2col(const char *);/* rgb2col() or name2col() */
 unsigned int str2col(const char *);
 
-char* col2name(unsigned int);
+const char *col2name(unsigned int);
 
 unsigned int ScaleColor(double x);
 unsigned int CheckColor(int x);
 Rboolean isNAcol(SEXP col, int index, int ncol);
 
-char* RGB2rgb(unsigned int, unsigned int, unsigned int);
-char* RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
+char *RGB2rgb(unsigned int, unsigned int, unsigned int);
+char *RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
 
 int StrMatch(const char *s, const char *t);
 
@@ -473,12 +473,16 @@ typedef enum {knUNKNOWN = -1,
               
 /* These are the three possible mouse events */
 
+#define doKeybd			Rf_doKeybd
+#define doMouseEvent		Rf_doMouseEvent
+
 typedef enum {meMouseDown = 0,
 	      meMouseUp,
 	      meMouseMove} R_MouseEvent;
 
 SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event, 
                   int buttons, double x, double y);
-SEXP doKeybd	(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey, char *keyname);
+SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey, 
+	     const char *keyname);
 
 #endif /* GRAPHICS_H_ */

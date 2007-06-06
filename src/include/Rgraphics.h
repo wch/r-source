@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  R Development Core Team
+ *  Copyright (C) 1998--2007  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -148,7 +148,7 @@ typedef struct colorDataBaseEntry ColorDataBaseEntry;
 extern int R_ColorTableSize;
 extern unsigned int R_ColorTable[];
 extern ColorDataBaseEntry ColorDataBase[];
-extern char *DefaultPalette[];
+extern const char *DefaultPalette[];
 
 /* Graphics State:
  *
@@ -170,8 +170,6 @@ int dummy;
 #define curDevice		Rf_curDevice
 #define CurrentDevice		Rf_CurrentDevice
 #define currentFigureLocation	Rf_currentFigureLocation
-#define doKeybd			Rf_doKeybd
-#define doMouseEvent		Rf_doMouseEvent
 #define GArrow			Rf_GArrow
 #define GBox			Rf_GBox
 #define GCheckState		Rf_GCheckState
@@ -381,7 +379,7 @@ double GExpressionWidth(SEXP, GUnit, DevDesc*);
 /* a string) into an internal colour specification. */
 unsigned int RGBpar(SEXP, int);
     /* Convert an internal colour specification into a colour name */
-char *col2name(unsigned int col);
+const char *col2name(unsigned int col); /* used in grid */
 
 
 /*-------------------------------------------------------------------
