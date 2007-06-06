@@ -96,6 +96,7 @@ checked against the current version of the source code.
 * Encodings for CHARSXPs::      
 * Warnings and errors::         
 * S4 objects::                  
+* Memory allocators::           
 * Internal use of global and base environments::  
 * Modules::                     
 @end menu
@@ -1256,7 +1257,7 @@ such as @code{substr<-} are not ideal.)
 
 
 
-@node S4 objects, Internal use of global and base environments, Warnings and errors, R Internal Structures
+@node S4 objects, Memory allocators, Warnings and errors, R Internal Structures
 @section S4 objects
 
 [This section is currently a preliminary draft and should not be taken
@@ -1434,8 +1435,76 @@ generics and a short exceptions list in @file{BasicFunsList.R}: this
 currently contains the subsetting and subassignment operators and an
 override for @code{c}.
 
+@node Memory allocators, Internal use of global and base environments, S4 objects, R Internal Structures
+@section Memory allocators
 
-@node Internal use of global and base environments, Modules, S4 objects, R Internal Structures
+@R{}'s memory allocation is almost all done via routines in
+@file{src/main/memory.c}.  It is important to keep track of where memory
+is allocated, as the Windows port (by default) makes use of a memory
+allocator that differs from @code{malloc} etc as provided by MinGW.
+Specifically, there are entry points @code{Rm_malloc}, @code{Rm_free},
+@code{Rm_calloc} and @code{Rm_free} provided by
+@code{src/gnuwin/malloc.c}.  This was done for two reasons.  The primary
+motivation was performance: the allocator provided by MSVCRT @emph{via}
+MinGW was far too slow at handling the many small allocations that the
+current (since @R{} 1.2.0) allocation system for @code{SEXPREC}s uses.
+As a side benefit, we can set a limit on the amount of allocated memory:
+this is useful as whereas Windows does provide virtual memory it is
+relatively far slower than many other @R{} platforms and so limiting
+@R{}'s use of swapping is highly advantageous.  The high-performance
+allocator is only called from @file{src/main/memory.c}.
+
+The rest of @R{} should where possible make use of the allocators made
+available by @file{src/main/memory.c}, which are also the methods
+recommended in 
+@ifset UseExternalXrefs
+@ref{Memory allocation, , Memory allocation, R-exts, Writing R Extensions}
+@end ifset
+@ifclear UseExternalXrefs
+`Writing R Extensions'
+@end ifclear
+@findex R_alloc
+@findex Calloc
+@findex Realloc
+@findex Free
+for use in @R{} packages, namely the use of @code{R_alloc},
+@code{Calloc}, @code{Realloc} and @code{Free}.  Memory allocated by
+@code{R_alloc} is freed by the garbage collector once the `watermark'
+has been reset by calling
+@findex vmaxset
+@code{vmaxset}.  This is done automatically by the wrapper code calling
+primitives and @code{.Internal} functions (and also by the wrapper code
+to @code{.Call} and @code{.External}), but
+@findex vmaxget 
+@code{vmaxget} and @code{vmaxset} can be used to reset the watermark
+from within internal code if the memory is only required for a short
+time.
+
+@findex alloca
+All of the methods of memory allocation mentioned so far are relatively
+expensive.  All @R{} platforms support @code{alloca}, and in almost all
+cases this is managed by the compiler, allocates memory on the C stack
+and is very efficient.   
+
+There are two disadvantages in using @code{alloca}.  First, it is
+fragile and care is needed to avoid writing (or even reading) outside
+the bounds of the allocation block returned.  Second, it increases the
+danger of overflowing the C stack.   It is suggested that it is only
+used for smallish allocations (up to tens of thousands of bytes), and
+that
+
+@example
+    R_CheckStack();
+@end example
+
+@noindent
+is called immediately after the allocation (as @R{}'s stack checking
+mechanism will warn far enough from the stack limit to allow for modest
+use of alloca).  (@code{do_makeunique} in @file{src/main/unique.c}
+provides an example of both points.)
+
+
+@node Internal use of global and base environments, Modules, Memory allocators, R Internal Structures
 @section Internal use of global and base environments
 
 This section notes known use by the system of these environments: the
@@ -1854,8 +1923,14 @@ internally generic except by reading the source code.
 @chapter Internationaliation in the R sources
 
 The process of marking messages (errors, warnings etc) for translation
-in an @R{} package is described in `Writing R Extensions', and the
-standard packages included with @R{} have (with an exception in
+in an @R{} package is described in 
+@ifset UseExternalXrefs
+@ref{Localization, , Localization, R-exts, Writing R Extensions},
+@end ifset
+@ifclear UseExternalXrefs
+`Writing R Extensions',
+@end ifclear
+and the standard packages included with @R{} have (with an exception in
 @pkg{grDevices}) been internationalized in the same way as other
 packages.
 
@@ -1921,8 +1996,8 @@ A macro
 
 @noindent
 as a wrapper for @code{ngettext}: however in some cases the preferred
-approach has been to conditionalize code using @code{ngettext} on
-@code{ENABLE_NLS}.
+approach has been to conditionalize (on @code{ENABLE_NLS}) code using
+@code{ngettext}.
 
 The macro @code{_("msg")} can safely be used in @file{src/appl}; the
 header for standalone @samp{nmath} skips possible translation.  (This
@@ -1944,7 +2019,7 @@ those for the rest of @R{} (familiarity with the GUI helps), and
 Messages for Windows are most naturally handled in the native charset
 for the language, and in the case of CJK languages the charset is
 Windows-specific.  (It transpires that as the @code{iconv} we ported
-works well under Windows, this is less important that anticipated.)
+works well under Windows, this is less important than anticipated.)
 @end itemize
 
 Messages for the @samp{RGui} domain are marked by @code{G_("msg")}, a
@@ -1954,6 +2029,10 @@ target of @file{po/Makefile.in.in}: note that this includes
 @file{devWindows.c} as the menus on the @code{windows} device are
 considered to be part of the GUI.  (There is also @code{GN_("msg")}, the
 analogue of @code{N_("msg")}.)
+
+The template and message catalogs for the @samp{RGui} domain are in the
+top-level @file{po} directory.
+
 
 @node MacOS X GUI, Updating, Windows-GUI-specific code, Internationaliation in the R sources
 @section MacOS X GUI
