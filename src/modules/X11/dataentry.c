@@ -133,7 +133,7 @@ static void find_coords(DEstruct, int, int, int*, int*);
 static int  findcell(DEstruct);
 static char *GetCharP(DEEvent*);
 static KeySym GetKey(DEEvent*);
-static void handlechar(DEstruct, char*);
+static void handlechar(DEstruct, char *);
 static void highlightrect(DEstruct);
 static Rboolean initwin(DEstruct, const char *);
 static void jumppage(DEstruct, DE_DIRECTION);
