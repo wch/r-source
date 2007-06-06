@@ -6,6 +6,7 @@
 \alias{relist.matrix}
 \alias{as.relistable}
 \alias{is.relistable}
+\alias{unlist.relistable}
 %
 \title{Allow Re-Listing an unlisted() Object}
 \description{
