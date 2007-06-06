@@ -27,7 +27,6 @@
 #define formatFactor        Rf_formatFactor
 #define formatRaw           Rf_formatRaw
 #define formatString        Rf_formatString
-#define EncodeFactor        Rf_EncodeFactor
 #define EncodeElement       Rf_EncodeElement
 #define printArray          Rf_printArray
 #define printMatrix         Rf_printMatrix
@@ -56,7 +55,6 @@ void formatRaw(Rbyte *, int, int *);
 void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */
-char *EncodeFactor(int, int, int, SEXP);
 char *EncodeElement(SEXP, int, int, char);
 
 /* Printing */

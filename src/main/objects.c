@@ -765,51 +765,6 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
-#if UNUSED
-/* ___unused___	 InheritsClass() and RemoveClass() */
-Rboolean InheritsClass(SEXP x, char *name)
-{
-/* does an object inherit from a class ? */
-    SEXP class;
-    int i, nclass;
-    if (isObject(x)) {
-	class = getAttrib(x, R_ClassSymbol);
-	nclass = length(class);
-	for (i = 0; i < nclass; i++)
-	    if (!strcmp(translateChar(STRING_ELT(class, i)), name))
-		return TRUE;
-    }
-    return FALSE;
-}
-
-void RemoveClass(SEXP x, char *name)
-{
-    SEXP class, newclass;
-    int i, j, nclass, nmatch;
-
-    if (isObject(x)) {
-	PROTECT(x);
-	class = getAttrib(x, R_ClassSymbol);
-	nclass = length(class);
-	nmatch = 0;
-	for (i = 0; i < nclass; i++)
-	    if (!strcmp(translateChar(STRING_ELT(class, i)), name))
-		nmatch++;
-	if (nmatch == nclass) {
-	    setAttrib(x, R_ClassSymbol, R_NilValue);
-	} else if (nmatch > 0) {
-	    PROTECT(newclass = allocVector(STRSXP, nclass-nmatch));
-	    for (i = 0, j = 0; i < nclass; i++)
-		if (strcmp(translateChar(STRING_ELT(class, i)), name))
-		    SET_STRING_ELT(newclass, j++, STRING_ELT(class, i));
-	    setAttrib(x, R_ClassSymbol, newclass);
-	    UNPROTECT(1);
-	}
-	UNPROTECT(1);
-    }
-}
-#endif
-
 SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, klass, what, which, rval = R_NilValue /* -Wall */;

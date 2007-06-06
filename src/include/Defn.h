@@ -749,8 +749,6 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define get1index		Rf_get1index
 # define getVar			Rf_getVar
 # define getVarInFrame		Rf_getVarInFrame
-# define hashpjw		Rf_hashpjw
-# define InheritsClass		Rf_InheritsClass
 # define InitArithmetic		Rf_InitArithmetic
 # define InitColors		Rf_InitColors
 # define InitConnections	Rf_InitConnections
@@ -814,7 +812,6 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define RealFromInteger	Rf_RealFromInteger
 # define RealFromLogical	Rf_RealFromLogical
 # define RealFromString		Rf_RealFromString
-# define RemoveClass		Rf_RemoveClass
 # define sortVector		Rf_sortVector
 # define ssort			Rf_ssort
 # define StringFromComplex	Rf_StringFromComplex
@@ -925,8 +922,6 @@ SEXP frameSubscript(int, SEXP, SEXP);
 int get1index(SEXP, SEXP, int, int, int, SEXP);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
-int hashpjw(char*);
-Rboolean InheritsClass(SEXP, char*);
 void InitArithmetic(void);
 void InitColors(void);
 void InitConnections(void);
@@ -991,7 +986,6 @@ void process_system_Renviron();
 void process_user_Renviron();
 SEXP promiseArgs(SEXP, SEXP);
 void Rcons_vprintf(const char *, va_list);
-/* void RemoveClass(SEXP, char *); */
 SEXP R_data_class(SEXP , Rboolean);
 SEXP R_data_class2(SEXP);
 char *R_LibraryFileName(const char *, char *, size_t);
