@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:01+0000\n"
+"POT-Creation-Date: 2007-06-06 11:24+0100\n"
 "PO-Revision-Date: 2005-09-28 06:04+0300\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -20,15 +20,15 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: Rmd5.c:35
+#: Rmd5.c:36
 msgid "argument 'files' must be character"
 msgstr "аргумент 'files' должен быть символьным"
 
-#: Rmd5.c:49
+#: Rmd5.c:50
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 на файле '%s' не удался"
 
-#: text.c:66
+#: text.c:67
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"

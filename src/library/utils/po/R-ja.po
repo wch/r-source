@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:21\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2007-04-04 14:23+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -748,6 +748,17 @@ msgstr " ファイルの先頭が空です"
 
 msgid "first five rows are empty: giving up"
 msgstr " 冒頭の５行が空です： お手上げです"
+
+msgid "relist() requires recursively unlisted objects."
+msgstr ""
+
+msgid "The flesh argument does not contain a skeleton attribute."
+msgstr ""
+
+msgid ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
+msgstr ""
 
 msgid "cannot coerce 'x' to roman"
 msgstr " 'x' をローマンに変換できません"

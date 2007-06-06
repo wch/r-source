@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-02-24 16:01\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2007-04-04 14:08+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -345,6 +345,14 @@ msgid ""
 msgstr ""
 " マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
 "ファイルにある情報を参照してください．"
+
+#, fuzzy
+msgid "Encoding '%s' is not portable"
+msgstr " テスト '%s' は利用出来ません"
+
+#, fuzzy
+msgid "Unknown encoding with non-ASCII data"
+msgstr " ASCIIタグのないフィールドです："
 
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable なフラグ:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:16\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -644,6 +644,10 @@ msgstr "所有变元都必需有名字"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern'必需为非空字符串"
+
+#, fuzzy
+msgid "invalid multibyte string for 'pattern'"
+msgstr "'by'的字符串有错"
 
 msgid "'max.distance' must be non-negative"
 msgstr "'max.distance'不能有负值"

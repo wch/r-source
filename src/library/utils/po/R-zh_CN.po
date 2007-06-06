@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:21\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -719,6 +719,17 @@ msgstr "空白的文件开头"
 
 msgid "first five rows are empty: giving up"
 msgstr "开头五行都是空白的：停止运行"
+
+msgid "relist() requires recursively unlisted objects."
+msgstr ""
+
+msgid "The flesh argument does not contain a skeleton attribute."
+msgstr ""
+
+msgid ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
+msgstr ""
 
 msgid "cannot coerce 'x' to roman"
 msgstr "无法将'x'转变成罗马数"

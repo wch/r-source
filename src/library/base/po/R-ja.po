@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:16\n"
+"POT-Creation-Date: 2007-06-06 11:24\n"
 "PO-Revision-Date: 2007-04-07 01:02+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -659,6 +659,10 @@ msgstr " 全ての引数は名前を持たなければなりません"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr " 'pattern' は空でない文字列でなければなりません"
+
+#, fuzzy
+msgid "invalid multibyte string for 'pattern'"
+msgstr " 'by' に対する無効な文字列です"
 
 msgid "'max.distance' must be non-negative"
 msgstr " 'max.distance' は非負でなければなりません"
