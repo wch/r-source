@@ -39,7 +39,7 @@ SEXP out(SEXP x, SEXP y)
 
 /* get the list element named str, or return NULL */
 
-SEXP getListElement(SEXP list, char *str)
+SEXP getListElement(SEXP list, const char *str)
 {
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;

@@ -40,7 +40,7 @@
  */
 
 static SEXP
-getListElement(SEXP list, SEXP names, char *str)
+getListElement(SEXP list, SEXP names, const char *str)
 {
     SEXP elmt = (SEXP) NULL;
     const char *tempChar;

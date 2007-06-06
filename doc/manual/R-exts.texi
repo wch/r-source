@@ -6049,7 +6049,7 @@ one in package @pkg{stats}) is very useful:
 @group
 /* get the list element named str, or return NULL */
 
-SEXP getListElement(SEXP list, char *str)
+SEXP getListElement(SEXP list, const char *str)
 @{
   SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
   int i;
@@ -8365,7 +8365,7 @@ Return a pathname for a temporary file with name beginning with
 There is also the internal function used to expand file names in several
 @R{} functions, and called directly by @code{path.expand}.
 
-@deftypefun {char *} R_ExpandFileName (char* @var{fn})
+@deftypefun {const char *} R_ExpandFileName (const char* @var{fn})
 Expand a path name @var{fn} by replacing a leading tilde by the user's
 home directory (if defined).  The precise meaning is platform-specific;
 it will usually be taken from the environment variable @env{HOME} if
@@ -8399,7 +8399,7 @@ These are declared in header file @file{R_ext/Riconv.h}.
 Set up a pointer to an encoding object to be used to convert between two
 encodings: @code{""} indicates the current locale.
 
-@deftypefun size_t Riconv (void *@var{cd}, char **@var{inbuf}, size_t *@var{inbytesleft}, char  **@var{outbuf}, size_t *@var{outbytesleft})
+@deftypefun size_t Riconv (void *@var{cd}, const char **@var{inbuf}, size_t *@var{inbytesleft}, char  **@var{outbuf}, size_t *@var{outbytesleft})
 @end deftypefun
 Convert as much as possible of @code{inbuf} to @code{outbuf}.  Initially
 the @code{int} variables indicate the number of bytes available in the
