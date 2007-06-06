@@ -224,7 +224,10 @@ NEW FEATURES
 	problem.
 
     o   sessionInfo() now provides details about package namespaces
-        that are loaded but not attached.
+        that are loaded but not attached.  The output of sessionInfo
+        has been improved to make it easier to read when it is
+        inadvertently wrapped after being pasted into an email
+        message.
 
     o	attr() gains an 'exact = TRUE' argument to disable partial
 	matching.

@@ -30,21 +30,25 @@ sessionInfo <- function(package=NULL)
 
 print.sessionInfo <- function(x, ...)
 {
+    mkLabel <- function(L, n) {
+        vers <- sapply(L[[n]], function(x) x[["Version"]])
+        pkg <-  sapply(L[[n]], function(x) x[["Package"]])
+        paste(pkg, vers, sep="_")
+    }
+
     cat(x$R.version$version.string, "\n")
     cat(x$R.version$platform, "\n\n")
     cat("locale:\n")
     cat(x$locale, "\n\n", sep="")
     cat("attached base packages:\n")
-    print(x$basePkgs)
+    print(x$basePkgs, quote=FALSE)
     if(!is.null(x$otherPkgs)){
         cat("\nother attached packages:\n")
-        print(sapply(x$otherPkgs,
-                     function(x) x$Version))
+        print(mkLabel(x, "otherPkgs"), quote=FALSE)
     }
     if(!is.null(x$loadedOnly)){
         cat("\nloaded via a namespace (and not attached):\n")
-        print(sapply(x$loadedOnly,
-                     function(x) x$Version))
+        print(mkLabel(x, "loadedOnly"), quote=FALSE)
     }
     x
 }
