@@ -28,7 +28,7 @@
 #ifndef R_INLINES_H_
 #define R_INLINES_H_
 
-/* Probably not able to use C99 semantics gcc < 4.3.0 but who knows what
+/* Probably not able to use C99 semantics in gcc < 4.3.0 but who knows what
    unofficial versions Debian or RedHat will distribute */
 #if __GNUC__ == 4 && __GNUC_MINOR__ >= 3 && defined(__GNUC_STDC_INLINE__) && !defined(C99_INLINE_SEMANTICS)
 #define C99_INLINE_SEMANTICS 1
@@ -43,10 +43,13 @@
 /* defined only in inlined.c: this emits standalone code there */
 # define INLINE_FUN
 #else
-/* The following define were added in gcc 4.1.3.  It is defined if
+/* This section is normally only used for versions of gcc which do not
+   support C99 semantics.  __GNUC_STDC_INLINE__ is defined if
    GCC is following C99 inline semantics by default: we
-   switch R's usage to the older GNU semantics via attributes. */
-/* Do this even for __GNUC_GNUC_INLINE__ to shut up warnings in 4.2.x */
+   switch R's usage to the older GNU semantics via attributes.
+   Do this even for __GNUC_GNUC_INLINE__ to shut up warnings in 4.2.x.
+   __GNUC_STDC_INLINE__ and __GNUC_GNU_INLINE__ were added in gcc 4.2.0.
+*/
 # if defined(__GNUC_STDC_INLINE__) || defined(__GNUC_GNU_INLINE__)
 #  define INLINE_FUN extern __attribute__((gnu_inline)) inline
 # else

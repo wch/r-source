@@ -2184,8 +2184,7 @@ a setting of @code{CFLAGS}.  (For future versions of @command{gcc} this
 may cause problems with the semantics of @code{inline} for various
 OSes: these may fixed by including in @code{CFLAGS} the flag
 @option{-fgnu89-inline} which will be available as from @command{gcc
-4.1.3}. The flag may be needed to suppress warnings in @command{gcc 4.2.x},
-which supports only GNU semantics for inlining.)
+4.2.0}.)
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora
