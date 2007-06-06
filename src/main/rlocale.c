@@ -204,7 +204,6 @@ static const char UNICODE[] = "UCS-4BE";
 #else
 static const char UNICODE[] = "UCS-4LE";
 #endif
-char *locale2charset(const char *locale);
 
 #define ISWFUNC(ISWNAME) static int Ri18n_isw ## ISWNAME (wint_t wc) \
 {	                                                             \
