@@ -6085,14 +6085,14 @@ R character vectors are stored as @code{STRSXP}s, a vector type like
 @code{CHARSXP} elements of @code{STRSXP}s are accessed using
 @code{STRING_ELT} and @code{SET_STRING_ELT}.
 
-As of R 2.6.0, @code{CHARSXP}s are read-only objects and must never be
-modified.  In particular, the C-style string contained in a
+As of @R{} 2.6.0, @code{CHARSXP}s are read-only objects and must never
+be modified.  In particular, the C-style string contained in a
 @code{CHARSXP} should be treated as read-only and for this reason the
 @code{CHAR} function used to access the character data of a
 @code{CHARSXP} returns @code{(const char *)} (this also allows compilers
 to issue warnings about improper use).  Since @code{CHARSXP}s are
 immutable, the same @code{CHARSXP} can be shared by any @code{STRSXP}
-needing an element representing the same string.  As of R 2.6.0, R
+needing an element representing the same string.  As of @R{} 2.6.0, @R{}
 maintains a global cache of @code{CHARSXP}s so that there is only ever
 one @code{CHARSXP} representing a given string in memory.
 
@@ -6109,7 +6109,7 @@ this should be avoided.  In the future, all @code{CHARSXP}s will be
 captured by the cache and this will allow further optimizations, for
 example, replacing calls to @code{strcmp} with pointer comparisons.  A
 helper macro, @code{CallocCharBuf}, can be used to obtain a temporary
-character buffer for in-place string manipulation, this memory must be
+character buffer for in-place string manipulation: this memory must be
 released using @code{Free}.
 
 @node Finding and setting variables, Some convenience functions, Handling character data, Handling R objects in C
