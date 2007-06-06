@@ -105,8 +105,6 @@
 #define MAX_Cutoff (BUFSIZE - 12)
 /* ----- MAX_Cutoff  <	BUFSIZE !! */
 
-extern int isValidName(char*);
-
 #include "RBufferUtils.h"
 
 typedef R_StringBuffer DeparseBuffer;
@@ -345,7 +343,7 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("zero length argument"));
     source = CADDR(args);
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
-	error(_("bad environment"));
+	error(_("invalid '%s' argument"), "envir");
     opts = asInteger(CADDDR(args));
     /* <NOTE>: change this if extra options are added */ 
     if(opts == NA_INTEGER || opts < 0 || opts > 256)
@@ -593,7 +591,9 @@ static void printcomment(SEXP s, LocalParseData *d)
 
 static char * backquotify(char *s)
 {
-    static char buf[120];
+    /* backquotifying can at most double the length of the symbol in bytes,
+       plus surrounding quotes and terminator. */
+    static char buf[2*MAXIDSIZE+10];
     char *t = buf;
 
     /* If a symbol is not a valid name, put it in backquotes, escaping
@@ -603,6 +603,10 @@ static char * backquotify(char *s)
      * used. Ideally, we should insert backslash escapes, etc. */
 
     if (isValidName(s) || *s == '\0') return s;
+
+    /* Don't translate 'impossible' error condition. */
+    if(strlen(s) > MAXIDSIZE)
+	error("symbol '%s' is too long to be a valid symbol", s);
 
     *t++ = '`';
 #ifdef SUPPORT_MBCS
@@ -635,7 +639,6 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     PPinfo fop;
     Rboolean lookahead = FALSE, lbreak = FALSE, parens;
     SEXP op, t;
-    char tpb[120];
     int localOpts = d->opts, i, n;
 
     switch (TYPEOF(s)) {
@@ -661,8 +664,9 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
     case SPECIALSXP:
     case BUILTINSXP:
-	snprintf(tpb, 120, ".Primitive(\"%s\")", PRIMNAME(s));
-	print2buff(tpb, d);
+	print2buff(".Primitive(\"", d);
+	print2buff(PRIMNAME(s), d);
+	print2buff("\")", d);
 	break;
     case PROMSXP:
 	if(d->opts & DELAYPROMISES) {
@@ -1082,9 +1086,12 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	if (localOpts & SHOWATTRIBUTES) attr2(s, d);
 	break;
     case EXTPTRSXP:
+    {
+	char tpb[12+sizeof(void *)];
     	d->sourceable = FALSE;
 	sprintf(tpb, "<pointer: %p>", R_ExternalPtrAddr(s));
 	print2buff(tpb, d);
+    }
 	break;
 #ifdef BYTECODE
     case BCODESXP:
@@ -1094,14 +1101,13 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 #endif
     case WEAKREFSXP:
     	d->sourceable = FALSE;
-	sprintf(tpb, "<weak reference>");
-	print2buff(tpb, d);
+	print2buff("<weak reference>", d);
 	break;
     case S4SXP:
-      d->sourceable = FALSE;
-      print2buff("<S4 object of class ", d);
-      deparse2buff(getAttrib(s, R_ClassSymbol), d);
-      print2buff(">", d);
+	d->sourceable = FALSE;
+	print2buff("<S4 object of class ", d);
+	deparse2buff(getAttrib(s, R_ClassSymbol), d);
+	print2buff(">", d);
       break;
     default:
     	d->sourceable = FALSE;
@@ -1354,28 +1360,16 @@ static void args2buff(SEXP arglist, int lineb, int formals, LocalParseData *d)
 	if (TYPEOF(arglist) != LISTSXP && TYPEOF(arglist) != LANGSXP)
             error(_("badly formed function expression"));
 	if (TAG(arglist) != R_NilValue) {
-#if 0
-	    deparse2buff(TAG(arglist));
-#else
-	    char tpb[120], *ss;
 	    SEXP s = TAG(arglist);
 
-	    ss = CHAR(PRINTNAME(s));
+	    char *ss = CHAR(PRINTNAME(s));
 	    if( s == R_DotsSymbol || isValidName(ss) )
 		print2buff(ss, d);
 	    else {
-		if( strlen(ss) < 117 ) {
-		    snprintf(tpb, 120, "\"%s\"", ss);
-		    print2buff(tpb, d);
-		}
-		else {
-		    sprintf(tpb,"\"");
-		    strncat(tpb, ss, 117);
-		    strcat(tpb, "\"");
-		    print2buff(tpb, d);
-		}
+		print2buff("\"", d);
+		print2buff(ss, d);
+		print2buff("\"", d);
 	    }
-#endif
 	    if(formals) {
 		if (CAR(arglist) != R_MissingArg) {
 		    print2buff(" = ", d);
