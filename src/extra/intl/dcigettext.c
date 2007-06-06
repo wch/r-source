@@ -1266,7 +1266,7 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 
 		  outleft = freemem_size - sizeof (size_t);
 		  if (Riconv (convd->conv,
-			     (char **) &inptr, &inleft,
+			     &inptr, &inleft,
 			     &outptr, &outleft)
 		      != (size_t) (-1))
 		    {
@@ -1275,7 +1275,7 @@ _nl_find_msg (struct loaded_l10nfile *domain_file,
 		    }
 		  if (errno != E2BIG)
 		    {
-                      __libc_lock_unlock (lock);
+		      __libc_lock_unlock (lock);
 		      return NULL;
 		    }
 #  endif

@@ -72,14 +72,14 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
  			outcharset = tmp;
  
 -			convd->conv = iconv_open (outcharset, charset);
-+			convd->conv = Riconv_open ((char *)outcharset, charset);
++			convd->conv = Riconv_open (outcharset, charset);
  
  			freea (outcharset);
  		      }
  		    else
  #   endif
 -		      convd->conv = iconv_open (outcharset, charset);
-+		      convd->conv = Riconv_open ((char *)outcharset, charset);
++		      convd->conv = Riconv_open (outcharset, charset);
  #  endif
  # endif
  
@@ -112,7 +112,7 @@ diff -u intl/dcigettext.c ../extra/intl/dcigettext.c
 -		  if (iconv (convd->conv,
 -			     (ICONV_CONST char **) &inptr, &inleft,
 +		  if (Riconv (convd->conv,
-+			     (char **) &inptr, &inleft,
++			     &inptr, &inleft,
  			     &outptr, &outleft)
  		      != (size_t) (-1))
  		    {
