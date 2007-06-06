@@ -332,7 +332,7 @@ typedef struct {
      * lists, corresponding to different device-specific preferences.
      * An example is ...
      *
-     * Rboolean X11_Open(NewDevDesc *dd, char *dsp, double w, double h, 
+     * Rboolean X11_Open(NewDevDesc *dd, const char *dsp, double w, double h, 
      *                   double gamma_fac, X_COLORTYPE colormodel, 
      *                   int maxcube, int canvascolor);
      *
@@ -410,7 +410,7 @@ typedef struct {
      * string in DEVICE units.				
      * An example is ...
      *
-     * static double X11_StrWidth(char *str, 
+     * static double X11_StrWidth(const char *str, 
      *                            R_GE_gcontext *gc,
      *                            NewDevDesc *dd)
      *
@@ -424,7 +424,7 @@ typedef struct {
      * The text should be rotated according to rot (degrees)
      * An example is ...
      *
-     * static void X11_Text(double x, double y, char *str, 
+     * static void X11_Text(double x, double y, const char *str, 
      *                      double rot, double hadj, 
      *                      R_GE_gcontext *gc,
      * 	                    NewDevDesc *dd);
@@ -450,7 +450,7 @@ typedef struct {
      * and then return it
      * An example is ...
      *
-     * static SEXP GA_getEvent(SEXP eventRho, char *prompt);
+     * static SEXP GA_getEvent(SEXP eventRho, const char *prompt);
      */
     SEXP (*getEvent)();
     
