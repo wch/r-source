@@ -11,8 +11,12 @@
 
 NEW FEATURES
 
-    o	library() now sorts by library trees in the order of .libPaths()
-	and not alphabetically.
+    o	density(1:20, bw = "SJ") now works as bw.SJ() now tries a larger
+	search interval than the default (lower, upper) if it does not
+	find a solution within the latter.
+
+    o	The output of library() (no arguments) is now sorted by library
+	trees in the order of .libPaths() and not alphabetically.
 
     o	R_LIBS_USER and R_LIBS_SITE feature possible expansion of
     	specifiers for R version specific information as part of the
@@ -69,9 +73,6 @@ BUG FIXES
 
 	decompose() incorrectly computed the 'random' component for a
 	multiplicative fit.
-
-    o	density(1:20, bw="SJ") now works as bw.SJ() now tries a larger
-	search interval than the default (lower,upper).
 
     o	Wildcards work again in unlink() on Unix-alikes (they did not
 	in 2.5.0).
@@ -151,11 +152,11 @@ BUG FIXES
 	gregexpr() could give incorrect answers in MBCS locales for
 	perl = TRUE or fixed = TRUE (unless useBytes = TRUE).
 
-    o	legacy quartz() device no longer crashes in locator when the
-	user attempts to close the window
+    o   The legacy quartz() device no longer crashes in locator()
+	if the user attempts to close the window.
 
     o	"CGGStackRestore: gstack underflow" warning is no longer shown
-	in legacy quartz() device
+	in legacy quartz() device.
 
     o	formatC() now limits 'digits' to 50 to avoid problems in
 	C-level sprintf in some OSes.
@@ -166,7 +167,7 @@ BUG FIXES
     o	promptClass() now lists methods, including those for generics in
 	other attached packages.
 
-    o	Connection-releated functions such as readBin() no longer crash
+    o	Connection-related functions such as readBin() no longer crash
 	when supplied with a non-connection object.
 	
     o	as.character.srcref() didn't handle bad srcref objects cleanly.
