@@ -688,7 +688,7 @@ Windows 64).
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-Installation is @emph{via} the installer @file{@value{RWVERSION}.exe}.
+Installation is @emph{via} the installer @file{@value{RWVERSION}-win32.exe}.
 Just double-click on the icon and follow the instructions.  You can
 uninstall @R{} from the Control Panel.  (Note that you will probably
 (depending on the Windows language settings) be asked to choose a
@@ -1040,7 +1040,7 @@ make myR IMAGEDIR=rootdir
 @noindent
 where @file{rootdir} is the path to the root of the customized
 installation (forward slashes and no spaces, please).  This creates an
-executable with the standard name, @file{@value{RWVERSION}.exe}, so
+executable with the standard name, @file{@value{RWVERSION}-win32.exe}, so
 please rename it to indicate that it is customized.
 
 The defaults for the startup parameters may also be customized.  For example
@@ -4100,7 +4100,7 @@ but no compiled code, only the first two of these are needed.
 
 A complete build of @R{} including compiled @HTML{} help files and
 PDF manuals, and producing the standalone installer 
-@file{@value{RWVERSION}.exe} will also need the following:
+@file{@value{RWVERSION}-win32.exe} will also need the following:
 @itemize
 @item
 The Microsoft @HTML{} Help Workshop
@@ -4205,7 +4205,7 @@ suitably; ensure you have the required fonts installed.
 @node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
 @section The Inno Setup installer
 
-To make the installer package (@file{@value{RWVERSION}.exe}) we require
+To make the installer package (@file{@value{RWVERSION}-win32.exe}) we require
 Inno Setup 5.1.7 or later from @url{http://jrsoftware.org,
 @code{jrsoftware.org}}.  This is @emph{not} included in @file{Rtools.exe}.
 
