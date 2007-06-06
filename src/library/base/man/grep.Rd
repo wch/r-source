@@ -86,8 +86,8 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   spurious matches, but for \code{regexpr} it changes the interpretation
   of the output.
 
-  The implementation of PCRE used in \R only supports caseless matching for
-  an ASCII pattern in a UTF-8 locale, even if \code{useBytes = TRUE}.
+  PCRE only supports caseless matching for a non-ASCII pattern in a
+  UTF-8 locale (and not for \code{useBytes = TRUE} in any locale).
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of

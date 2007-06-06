@@ -74,12 +74,13 @@ be absolutely sure we get our version. */
 #ifndef NEWLINE
 #define NEWLINE '\n'
 #define LINK_SIZE 2
-#define POSIX_MALLOC_THRESHOLD 10
 #define MATCH_LIMIT 10000000
-#define MAX_NAME_SIZE 32
-#define MAX_NAME_COUNT 10000
-#define MAX_DUPLENGTH 30000
 #define MATCH_LIMIT_RECURSION MATCH_LIMIT
+#define MAX_DUPLENGTH 30000
+#define MAX_NAME_COUNT 10000
+#define MAX_NAME_SIZE 32
+#define POSIX_MALLOC_THRESHOLD 10
+#define SUPPORT_UCP
 #endif
 
 /* Standard C headers plus the external interface definition. The only time
@@ -246,7 +247,7 @@ must begin with PCRE_. */
 values. */
 
 #include <pcre.h>
-/* #include "ucp.h" */
+#include "ucp.h"
 
 /* When compiling for use with the Virtual Pascal compiler, these functions
 need to have their names changed. PCRE must be compiled with the -DVPCOMPAT

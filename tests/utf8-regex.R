@@ -47,9 +47,10 @@ stopifnot(identical(r2, regexpr(pat, txt, ignore.case=TRUE, perl=TRUE,
                                 useBytes=TRUE)))
 pat2 <- toupper(pat)
 stopifnot(identical(r1, regexpr(pat2, txt, ignore.case=TRUE)))
-regexpr(pat2, txt, ignore.case=TRUE, perl=TRUE)
+stopifnot(identical(r1, regexpr(pat2, txt, ignore.case=TRUE, perl=TRUE)))
 regexpr(pat2, txt, ignore.case=TRUE, perl=TRUE, useBytes=TRUE)
 ## PCRE (as used here) does not have caseless matching for non-ASCII chars
+## unless (from R 2.6.0) in UTF-8 mode
 
 
 (r1 <- gregexpr(pat, txt, fixed=TRUE))

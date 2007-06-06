@@ -199,10 +199,10 @@
 
   For complete details please consult the man pages for PCRE, especially
   \code{man pcrepattern} and \code{man pcreapi}) on your system or from
-  the sources at \url{http://www.pcre.org}. If PCRE
-  support was compiled from the sources within \R, the PCRE version is 7.0
-  as described here (version \eqn{\ge}{>=} 4.0 is required if \R is
-  configured to use the system's PCRE library).
+  the sources at \url{http://www.pcre.org}. If PCRE support was compiled
+  from the sources within \R, the PCRE version is 7.1 as described here
+  (version \eqn{\ge}{>=} 4.0 is required if \R is configured to use the
+  system's PCRE library).
 
   All the regular expressions described for extended regular expressions
   are accepted except \code{\\<} and \code{\\>}: in Perl all backslashed
@@ -237,7 +237,8 @@
 
   The escape sequences \code{\\d}, \code{\\s} and \code{\\w} represent any
   decimal digit, space character and \sQuote{word} character
-  (letter, digit or underscore in the current locale) respectively, and
+  (letter, digit or underscore in the current locale, except that in a
+  UTF-8 locale only ASCII letters are considered) respectively, and
   their upper-case versions represent their negation.
   Unlike POSIX and earlier versions of Perl and PCRE, vertical tab is
   not regarded as a whitespace character.
@@ -285,11 +286,12 @@
   in \code{\dots}.
 
   Named subpatterns, atomic grouping, possessive qualifiers and conditional
-  and recursive patterns are not covered here.
+  and recursive patterns are not covered here.  Nor is the use of
+  Unicode properties, which is supported in UTF-8 locales as from \R 2.6.0.
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2 and the
-  \code{pcrepattern} man page from PCRE 7.0.
+  \code{pcrepattern} man page from PCRE 7.1.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
