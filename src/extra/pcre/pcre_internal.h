@@ -80,7 +80,9 @@ be absolutely sure we get our version. */
 #define MAX_NAME_COUNT 10000
 #define MAX_NAME_SIZE 32
 #define POSIX_MALLOC_THRESHOLD 10
+#ifdef SUPPORT_UTF8
 #define SUPPORT_UCP
+#endif
 #endif
 
 /* Standard C headers plus the external interface definition. The only time
