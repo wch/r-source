@@ -381,7 +381,7 @@ Rboolean StringBlank(SEXP x)
 
 /* Function to test whether a string is a true value */
 
-Rboolean StringTrue(char *name)
+Rboolean StringTrue(const char *name)
 {
     int i;
     for (i = 0; truenames[i]; i++)
@@ -390,7 +390,7 @@ Rboolean StringTrue(char *name)
     return FALSE;
 }
 
-Rboolean StringFalse(char *name)
+Rboolean StringFalse(const char *name)
 {
     int i;
     for (i = 0; falsenames[i]; i++)

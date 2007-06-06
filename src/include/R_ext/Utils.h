@@ -70,8 +70,8 @@ int	IndexWidth(int);
 const char *R_ExpandFileName(const char *);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
-Rboolean StringFalse(char*);
-Rboolean StringTrue(char*);
+Rboolean StringFalse(const char *);
+Rboolean StringTrue(const char *);
 Rboolean isBlankString(const char *);
 
 double 	R_strtod(const char *c, char **end);
