@@ -2059,10 +2059,12 @@ sub check_pkg {
         else {
             open(MAKEVARS, "> Makevars");
             print MAKEVARS "makevars = -f Makevars\n";
-            print MAKEVARS "srcdir = $testsrcdir\n";
             ## at least windows does not pass env correctly to make
             print MAKEVARS "R_LIBS = $ENV{'R_LIBS'}\n";
-            print MAKEVARS "VPATH = \$(srcdir)\n\n";
+	    ## No longer needed now that we dircopy() all of
+	    ## $testsrcdir:
+            ##   print MAKEVARS "srcdir = $testsrcdir\n";
+            ##   print MAKEVARS "VPATH = \$(srcdir)\n\n";
             print MAKEVARS "test-src-1 =";
 	    foreach my $file (sort &list_files_with_exts($testdir, "R")) {
                 print MAKEVARS "\\\n " . basename($file);
