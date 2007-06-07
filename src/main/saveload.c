@@ -638,12 +638,12 @@ static void RestoreSEXP(SEXP s, FILE *fp, InputRoutines *m, NodeInfo *node, int 
     }
 }
 
-static void RestoreError(char *msg, int startup)
+static void RestoreError(/* const */ char *msg, int startup)
 {
     if(startup)
 	R_Suicide(msg);
     else
-	error(msg);
+	error("%s", msg);
 }
   
 static SEXP DataLoad(FILE *fp, int startup, InputRoutines *m, int version, SaveLoadData *d)

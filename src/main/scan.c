@@ -58,10 +58,9 @@ static R_INLINE int imin2(int x, int y)
 #define MAX_STRINGS	10000
 
 
-static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE+1];
-static unsigned char *ConsoleBufp;
+static unsigned char ConsoleBuf[CONSOLE_BUFFER_SIZE+1], *ConsoleBufp;
 static int  ConsoleBufCnt;
-static char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
+static char ConsolePrompt[CONSOLE_PROMPT_SIZE];
 
 typedef struct {
     SEXP NAstrings;
@@ -106,7 +105,8 @@ static int ConsoleGetchar()
 	ConsoleBufCnt = strlen((char *)ConsoleBuf);
 	ConsoleBufCnt--;
     }
-    return *ConsoleBufp++;
+    /* at this point we need to use unsigned char or similar */
+    return (int) *ConsoleBufp++;
 }
 
 /* used by scan() */
@@ -228,7 +228,7 @@ strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d)
 static Rbyte
 strtoraw (const char *nptr, char **endptr)
 {
-    char *p = (char *) nptr;
+    const char *p = nptr;
     int i, val = 0;
 
     /* should have whitespace plus exactly 2 hex digits */
@@ -240,7 +240,7 @@ strtoraw (const char *nptr, char **endptr)
 	else if (*p >= 'a' && *p <= 'f') val += *p - 'a' + 10;
 	else {val = 0; break;}
     }
-    *endptr = p;
+    *endptr = (char *) p;
     return (Rbyte) val;
 }
 
@@ -918,7 +918,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isString(quotes)) {
 	/* This is necessary to protect quoteset against GC */
-	data.quoteset = (char *) translateChar(STRING_ELT(quotes, 0));
+	data.quoteset = translateChar(STRING_ELT(quotes, 0));
 	/* Protect against broken realloc */
 	if(data.quotesave)
 	    data.quotesave = realloc(data.quotesave,
@@ -1041,7 +1041,7 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isString(quotes)) {
 	/* This is necessary to protect quoteset against GC */
-	data.quoteset = (char *) translateChar(STRING_ELT(quotes, 0));
+	data.quoteset = translateChar(STRING_ELT(quotes, 0));
 	/* Protect against broken realloc */
 	if(data.quotesave) data.quotesave = realloc(data.quotesave, strlen(data.quoteset) + 1);
 	else data.quotesave = malloc(strlen(data.quoteset) + 1);
@@ -1536,7 +1536,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (blskip == NA_LOGICAL) blskip = 1;
     if (isString(quotes)) {
 	/* This is necessary to protect quoteset against GC */
-	data.quoteset = (char *) translateChar(STRING_ELT(quotes, 0));
+	data.quoteset = translateChar(STRING_ELT(quotes, 0));
 	/* Protect against broken realloc */
 	if(data.quotesave)
 	    data.quotesave = realloc(data.quotesave,
@@ -1579,7 +1579,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     buf = (char *) malloc(buf_size);
     if(!buf)
-	error(_("cannot allocate buffer in readTableHead"));
+	error(_("cannot allocate buffer in 'readTableHead'"));
 
     PROTECT(ans = allocVector(STRSXP, nlines));
     for(nread = 0; nread < nlines; ) {
@@ -1591,7 +1591,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 		buf_size *= 2;
 		buf = (char *) realloc(buf, buf_size);
 		if(!buf)
-		    error(_("cannot allocate buffer in readTableHead"));
+		    error(_("cannot allocate buffer in 'readTableHead'"));
 	    }
 	    /* Need to handle escaped embedded quotes, and how they are
 	       escaped depends on 'sep' */

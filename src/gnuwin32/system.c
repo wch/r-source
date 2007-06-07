@@ -205,8 +205,8 @@ static int
 GuiReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     int res;
-    char *NormalPrompt =
-	(char *) CHAR(STRING_ELT(GetOption(install("prompt"), R_BaseEnv), 0));
+    const char *NormalPrompt =
+	CHAR(STRING_ELT(GetOption(install("prompt"), R_BaseEnv), 0));
 
     if(!R_is_running) {
 	R_is_running = 1;
@@ -301,12 +301,12 @@ FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 	err = (res == (size_t)(-1));
 	/* errors lead to part of the input line being ignored */
 	if(err) fputs(_("<ERROR: invalid input in encoding>\n"), stdout);
-	strncpy((char *)buf, obuf, len);
+	strncpy(buf, obuf, len);
     }
 
 /* according to system.txt, should be terminated in \n, so check this
    at eof or error */
-    ll = strlen((char *)buf);
+    ll = strlen(buf);
     if ((err || feof(ifp ? ifp: stdin))
 	&& buf[ll - 1] != '\n' && ll < len) {
 	buf[ll++] = '\n'; buf[ll] = '\0';

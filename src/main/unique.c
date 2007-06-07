@@ -604,11 +604,11 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, n_input));
     ians = INTEGER(ans);
     for (i = 0; i < n_input; i++) {
-	in[i] = (char *)translateChar(STRING_ELT(input, i));
+	in[i] = translateChar(STRING_ELT(input, i));
 	ians[i] = 0;
     }
     for (j = 0; j < n_target; j++)
-	tar[j] = (char *)translateChar(STRING_ELT(target, j));
+	tar[j] = translateChar(STRING_ELT(target, j));
 
     /* First pass, exact matching */
     if(no_dups) {

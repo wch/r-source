@@ -183,7 +183,7 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isString(fn) || ntopics > 500)
 	    error(_("invalid '%s' argument"), "topics");
 	for (i = 0; i < ntopics; i++)
-	    topics[i] = (char *) translateChar(STRING_ELT(fn, i));
+	    topics[i] = translateChar(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)

@@ -183,7 +183,7 @@ int attribute_hidden R_Newhashpjw(const char *s)
 {
     char *p;
     unsigned h = 0, g;
-    for (p = (char *)s; *p; p = p + 1) {
+    for (p = (char *) s; *p; p++) {
 	h = (h << 4) + (*p);
 	if ((g = h & 0xf0000000) != 0) {
 	    h = h ^ (g >> 24);
@@ -1961,7 +1961,7 @@ SEXP attribute_hidden do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 
     pos = asInteger(CADR(args));
     if (pos == NA_INTEGER)
-	error(("'pos' must be an integer"));
+	error(_("'pos' must be an integer"));
 
     name = CADDR(args);
     if (!isValidStringF(name))
@@ -2086,7 +2086,7 @@ SEXP attribute_hidden do_detach(SEXP call, SEXP op, SEXP args, SEXP env)
     for (t = R_GlobalEnv ; ENCLOS(t) != R_BaseEnv && pos > 2 ; t = ENCLOS(t))
 	pos--;
     if (pos != 2) {
-	error(("invalid '%s' argument"), "pos");
+	error(_("invalid '%s' argument"), "pos");
 	s = t;	/* for -Wall */
     }
     else {
@@ -2784,7 +2784,7 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	if (SYMVALUE(sym) != R_UnboundValue && ! IS_ACTIVE_BINDING(sym))
 	    error(_("symbol already has a regular binding"));
 	else if (BINDING_IS_LOCKED(sym))
-	    error(("cannot change active binding if binding is locked"));
+	    error(_("cannot change active binding if binding is locked"));
 	SET_SYMVALUE(sym, fun);
 	SET_ACTIVE_BINDING_BIT(sym);
 	/* we don't need to worry about the global cache here as
@@ -2800,7 +2800,7 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	else if (! IS_ACTIVE_BINDING(binding))
 	    error(_("symbol already has a regular binding"));
 	else if (BINDING_IS_LOCKED(binding))
-	    error(("cannot change active binding if binding is locked"));
+	    error(_("cannot change active binding if binding is locked"));
 	else
 	    SETCAR(binding, fun);
     }
