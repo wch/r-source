@@ -612,8 +612,8 @@ SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_namesgets(SEXP, SEXP);
-SEXP Rf_mkChar(const char*);
-SEXP Rf_mkCharEnc(const char*, int);
+SEXP Rf_mkChar(const char *);
+SEXP Rf_mkCharEnc(const char *, int);
 Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
 int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
@@ -625,7 +625,7 @@ SEXP Rf_protect(SEXP);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
-SEXPTYPE Rf_str2type(const char*);
+SEXPTYPE Rf_str2type(const char *);
 Rboolean Rf_StringBlank(SEXP);
 SEXP Rf_substitute(SEXP,SEXP);
 const char * Rf_translateChar(SEXP);
@@ -710,9 +710,9 @@ Rboolean R_HasFancyBindings(SEXP rho);
 
 /* ../main/errors.c : */
 /* needed for R_load/savehistory handling in front ends */
-void Rf_errorcall(SEXP, const char*, ...);
-void Rf_warningcall(SEXP, const char*, ...);
-void Rf_warningcall_immediate(SEXP, const char*, ...);
+void Rf_errorcall(SEXP, const char *, ...);
+void Rf_warningcall(SEXP, const char *, ...);
+void Rf_warningcall_immediate(SEXP, const char *, ...);
 
 /* Save/Load Interface */
 #define R_XDR_DOUBLE_SIZE 8
@@ -962,7 +962,7 @@ int R_system(const char *);
 */
 Rboolean Rf_conformable(SEXP, SEXP);
 SEXP	 Rf_elt(SEXP, int);
-Rboolean Rf_inherits(SEXP, const char*);
+Rboolean Rf_inherits(SEXP, const char *);
 Rboolean Rf_isArray(SEXP);
 Rboolean Rf_isFactor(SEXP);
 Rboolean Rf_isFrame(SEXP);
@@ -995,7 +995,7 @@ SEXP	 Rf_list2(SEXP, SEXP);
 SEXP	 Rf_list3(SEXP, SEXP, SEXP);
 SEXP	 Rf_list4(SEXP, SEXP, SEXP, SEXP);
 SEXP	 Rf_listAppend(SEXP, SEXP);
-SEXP	 Rf_mkString(const char*);
+SEXP	 Rf_mkString(const char *);
 int	 Rf_nlevels(SEXP);
 SEXP	 Rf_ScalarComplex(Rcomplex);
 SEXP	 Rf_ScalarInteger(int);

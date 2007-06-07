@@ -45,15 +45,15 @@ extern void R_SaveGlobalEnv(void);
 extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
-extern void R_Suicide(char*);
-extern char* R_HomeDir(void);
+extern void R_Suicide(char *);
+extern char *R_HomeDir(void);
 extern int R_DirtyImage;	/* Current image dirty */
-extern char* R_GUIType;
+extern char *R_GUIType;
 extern void R_setupHistory();
-extern char* R_HistoryFile;	/* Name of the history file */
+extern char *R_HistoryFile;	/* Name of the history file */
 extern int R_HistorySize;	/* Size of the history file */
 extern int R_RestoreHistory;	/* restore the history file? */
-extern char* R_Home;		    /* Root of the R tree */
+extern char *R_Home;		    /* Root of the R tree */
 
 # define jump_to_toplevel	Rf_jump_to_toplevel
 # define mainloop		Rf_mainloop

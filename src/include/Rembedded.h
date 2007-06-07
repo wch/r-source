@@ -48,7 +48,7 @@ extern void CleanEd();
 extern void Rf_KillAllDevices();
 LibExtern int R_DirtyImage;
 extern void R_CleanTempDir();
-LibExtern char*	R_TempDir;    
+LibExtern char *R_TempDir;    
 extern void R_SaveGlobalEnv(void);
 
 

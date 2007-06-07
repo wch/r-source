@@ -564,7 +564,7 @@ LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);
 LibExtern int R_interrupts_pending INI_as(0);
 
 /* R Home Directory */
-LibExtern char*	R_Home;		    /* Root of the R tree */
+LibExtern char *R_Home;		    /* Root of the R tree */
 
 /* Memory Management */
 extern0 R_size_t R_NSize  INI_as(R_NSIZE);/* Size of cons cell heap */
@@ -611,8 +611,8 @@ extern0 Rboolean R_Verbose	INI_as(FALSE);	/* Be verbose */
 extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
 extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
 extern0 int	R_ErrorCon	INI_as(2);	/* Error connection */
-LibExtern char*	R_TempDir	INI_as(NULL);	/* Name of per-session dir */
-extern0 char*   Sys_TempDir	INI_as(NULL);	/* Name of per-session dir
+LibExtern char *R_TempDir	INI_as(NULL);	/* Name of per-session dir */
+extern0 char   *Sys_TempDir	INI_as(NULL);	/* Name of per-session dir
 						   if set by R itself */
 extern0 char	R_StdinEnc[31]  INI_as("");	/* Encoding assumed for stdin */
 
@@ -630,7 +630,7 @@ extern0 int	R_ParseContextLast INI_as(0); /* last character in context buffer */
 extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
 
 /* History */
-LibExtern char*	R_HistoryFile;	/* Name of the history file */
+LibExtern char *R_HistoryFile;	/* Name of the history file */
 LibExtern int	R_HistorySize;	/* Size of the history file */
 LibExtern int	R_RestoreHistory;	/* restore the history file? */
 extern void 	R_setupHistory();
@@ -660,7 +660,7 @@ extern int Rf_initEmbeddedR(int argc, char **argv);
 
 /* GUI type */
 
-extern char*	R_GUIType	INI_as("unknown");
+extern char	*R_GUIType	INI_as("unknown");
 
 #ifdef BYTECODE
 #define R_BCNODESTACKSIZE 10000
@@ -786,10 +786,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define matchPar		Rf_matchPar
 # define Mbrtowc		Rf_mbrtowc
 # define mkCLOSXP		Rf_mkCLOSXP
-# define mkComplex              Rf_mkComplex
 # define mkFalse		Rf_mkFalse
-# define mkFloat		Rf_mkFloat
-# define mkNA			Rf_mkNA
 # define mkPROMISE		Rf_mkPROMISE
 # define mkQUOTE		Rf_mkQUOTE
 # define mkSYMSXP		Rf_mkSYMSXP
@@ -841,20 +838,20 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 
 /* The maximum length of input line which will be asked for */
 #define CONSOLE_BUFFER_SIZE 1024
-int	R_ReadConsole(char*, unsigned char*, int, int);
-void	R_WriteConsole(char*, int); /* equivalent to R_WriteConsoleEx(a, b, 0) */
-void	R_WriteConsoleEx(char*, int, int);
+int	R_ReadConsole(char *, unsigned char *, int, int);
+void	R_WriteConsole(char *, int); /* equivalent to R_WriteConsoleEx(a, b, 0) */
+void	R_WriteConsoleEx(char *, int, int);
 void	R_ResetConsole(void);
 void	R_FlushConsole(void);
 void	R_ClearerrConsole(void);
 void	R_Busy(int);
 int	R_ShowFiles(int, char **, char **, char *, Rboolean, char *);
 int     R_EditFiles(int, char **, char **, char *);
-int	R_ChooseFile(int, char*, int);
-char*	R_HomeDir(void);
-Rboolean R_FileExists(const char*);
-Rboolean R_HiddenFile(const char*);
-double	R_FileMtime(const char*);
+int	R_ChooseFile(int, char *, int);
+char	*R_HomeDir(void);
+Rboolean R_FileExists(const char *);
+Rboolean R_HiddenFile(const char *);
+double	R_FileMtime(const char *);
 
 /* environment cell access */
 typedef struct R_varloc_st *R_varloc_t;
@@ -905,8 +902,8 @@ void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
 SEXP deparse1line(SEXP,Rboolean);
-int DispatchOrEval(SEXP, SEXP, const char*, SEXP, SEXP, SEXP*, int, int);
-int DispatchGroup(const char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
+int DispatchOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
+int DispatchGroup(const char *, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP, Rboolean);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
@@ -955,14 +952,10 @@ SEXP mat2indsub(SEXP, SEXP, SEXP);
 SEXP matchArg(SEXP, SEXP*);
 SEXP matchArgExact(SEXP, SEXP*);
 SEXP matchArgs(SEXP, SEXP, SEXP);
-SEXP matchPar(const char*, SEXP*);
+SEXP matchPar(const char *, SEXP*);
 void memtrace_report(void *, void *);
 SEXP mkCLOSXP(SEXP, SEXP, SEXP);
-/* SEXP mkComplex(char *s); */
-/* SEXP mkEnv(SEXP, SEXP, SEXP); */
 SEXP mkFalse(void);
-/* SEXP mkFloat(char *s);
-   SEXP mkNA(void); */
 SEXP mkPRIMSXP (int, int);
 SEXP mkPROMISE(SEXP, SEXP);
 SEXP mkQUOTE(SEXP);
@@ -1002,11 +995,11 @@ void R_SaveToFileV(SEXP, FILE*, int, int);
 Rboolean R_seemsOldStyleS4Object(SEXP object);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
-void R_Suicide(char*);
+void R_Suicide(char *);
 void R_getProcTime(double *data);
 void sortVector(SEXP, Rboolean);
 void ssort(SEXP*,int);
-int StrToInternal(const char*);
+int StrToInternal(const char *);
 SEXP substituteList(SEXP, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
@@ -1020,7 +1013,7 @@ void unbindVar(SEXP, SEXP);
 void unmarkPhase(void);
 #endif
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
-int usemethod(const char*, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
+int usemethod(const char *, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
 SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
                         SEXP (*)(SEXP, int), SEXP, SEXP);
 
