@@ -94,7 +94,7 @@ install.packages <-
                     immediate. = TRUE, domain = NA)
     }
 
-    ## check for writeability by user
+    ## check for writability by user
     ok <- file.info(lib)$isdir & (file.access(lib, 2) == 0)
     if(length(lib) > 1 && any(!ok))
         stop(sprintf(ngettext(sum(!ok),
@@ -111,7 +111,8 @@ install.packages <-
         else unlink(fn, recursive = TRUE)
     }
     if(length(lib) == 1 && !ok) {
-        warning("'lib' is not writable", immediate.=TRUE)
+        warning(gettextf("'lib = \"%s\"' is not writable", lib),
+                domain = NA, immediate. = TRUE)
         userdir <- unlist(strsplit(Sys.getenv("R_LIBS_USER"),
                                    .Platform$path.sep))[1]
         if(interactive() && !file.exists(userdir)) {
@@ -120,8 +121,7 @@ install.packages <-
                 ans <- winDialog("yesno", sprintf(msg, userdir))
                 if(ans != "YES") stop("unable to install packages")
             } else {
-                ans <-
-                    readline(paste(sprintf(msg, userdir), " (y/n) "))
+                ans <- readline(paste(sprintf(msg, userdir), " (y/n) "))
                 if(substr(ans, 1, 1) == "n") stop("unable to install packages")
             }
             if(!dir.create(userdir, recursive = TRUE))
