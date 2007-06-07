@@ -603,7 +603,7 @@ int Rf_GetOptionDigits(SEXP);
 int Rf_GetOptionWidth(SEXP);
 SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
-SEXP Rf_install(char const *);
+SEXP Rf_install(const char *);
 Rboolean Rf_isFree(SEXP);
 Rboolean Rf_isOrdered(SEXP);
 Rboolean Rf_isUnordered(SEXP);

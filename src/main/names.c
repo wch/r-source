@@ -1061,7 +1061,7 @@ void InitNames()
 /*  If "name" is not found, it is installed in the symbol table.
     The symbol corresponding to the string "name" is returned. */
 
-SEXP install(char const *name)
+SEXP install(const char *name)
 {
     char buf[MAXIDSIZE+1];
     SEXP sym;
