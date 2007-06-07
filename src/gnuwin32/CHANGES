@@ -26,10 +26,13 @@ OTHERS
 
     o	Cross-building does now lazy-load the base package.
 
-    o	The default for a build environment is to use gcc >= 4.2.0.
+    o	The Lea malloc is now used by regex.c, src/extra/pcre and
+	src/extra/xdr.  (This is for potential performance gains.)
+
+    o	[The default for a build environment is to use gcc >= 4.2.0.
 	Set BUILD=GCC3 if you have gcc 3.4.5.  (Binary tools for
 	gcc 4.2.0 are not yet released but expected in June 2007.)
-	[This change has been reverted until then.]
+	This change has been reverted until then.]
 
 
 

@@ -5232,8 +5232,8 @@ two routines declared as
 @findex R_RegisterCCallable
 @findex R_GetCCallable
 @example
-void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr);
-DL_FUNC R_GetCCallable(char *package, char *name);
+void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr);
+DL_FUNC R_GetCCallable(const char *package, const char *name);
 @end example
 
 A package @pkg{packA} that wants to make a C routine @code{myCfun}
@@ -6205,7 +6205,7 @@ To return a length-one real vector we can use
 @noindent
 and there are versions of this for all the atomic vector types (those for
 a length-one character vector being @code{ScalarString} with argument a
-@code{CHARSXP} and @code{mkString} with argument @code{char *}).
+@code{CHARSXP} and @code{mkString} with argument @code{const char *}).
 
 Some of the @code{isXXXX} functions differ from their apparent
 @R{}-level counterparts: for example @code{isVector} is true for any
@@ -7363,7 +7363,7 @@ Here @R{} will reclaim the memory at the end of the call to @code{.C}.
 Use
 
 @example
-char* R_alloc(long @var{n}, int @var{size})
+char *R_alloc(long @var{n}, int @var{size})
 @end example
 
 @noindent
@@ -7378,14 +7378,14 @@ There is a similar call, @code{S_alloc} (for compatibility with older
 versions of @Sl{}) which zeroes the memory allocated,
 
 @example
-char* S_alloc(long @var{n}, int @var{size})
+char *S_alloc(long @var{n}, int @var{size})
 @end example
 
 @noindent
 and
 
 @example
-char* S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
+char *S_realloc(char *@var{p}, long @var{new}, long @var{old}, int @var{size})
 @end example
 
 @noindent
@@ -8355,7 +8355,7 @@ HSV to RGB and back.  Note that all colours must be in [0,1].
 A system-independent interface to produce the name of a temporary
 file is provided as
 
-@deftypefun {char *} R_tmpnam (const char* @var{prefix})
+@deftypefun {char *} R_tmpnam (const char *@var{prefix})
 Return a pathname for a temporary file with name beginning with
 @var{prefix}.  A @code{NULL} prefix is replaced by @code{""}.
 @end deftypefun
@@ -8365,7 +8365,7 @@ Return a pathname for a temporary file with name beginning with
 There is also the internal function used to expand file names in several
 @R{} functions, and called directly by @code{path.expand}.
 
-@deftypefun {const char *} R_ExpandFileName (const char* @var{fn})
+@deftypefun {const char *} R_ExpandFileName (const char *@var{fn})
 Expand a path name @var{fn} by replacing a leading tilde by the user's
 home directory (if defined).  The precise meaning is platform-specific;
 it will usually be taken from the environment variable @env{HOME} if
@@ -8394,7 +8394,7 @@ implementations of @code{iconv}.
 
 These are declared in header file @file{R_ext/Riconv.h}.
 
-@deftypefun void *Riconv_open (const char* @var{to}, const char* @var{from})
+@deftypefun void *Riconv_open (const char *@var{to}, const char *@var{from})
 @end deftypefun
 Set up a pointer to an encoding object to be used to convert between two
 encodings: @code{""} indicates the current locale.
@@ -9122,8 +9122,6 @@ It needs to be quite complex:
 
 void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @{
-    char *tmpdir;
-
     if(saveact == SA_DEFAULT) saveact = SaveAction;
     if(saveact == SA_SAVEASK) @{
        /* ask what to do and set saveact */

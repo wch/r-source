@@ -214,6 +214,18 @@
 # define __attribute(arg)
 #endif
 
+#if defined(Win32) && defined(LEA_MALLOC)
+#include <stddef.h>
+extern void *Rm_malloc(size_t n);
+extern void *Rm_calloc(size_t n_elements, size_t element_size);
+extern void Rm_free(void * p);
+extern void *Rm_realloc(void * p, size_t n);
+#define calloc Rm_calloc
+#define malloc Rm_malloc
+#define realloc Rm_realloc
+#define free Rm_free
+#endif
+
 /* extern const char __re_error_msgid[] attribute_hidden;
    extern const size_t __re_error_msgid_idx[] attribute_hidden; */
 

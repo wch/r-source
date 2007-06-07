@@ -48,12 +48,27 @@ differently, and global variables are not used (see pcre.in). */
 
 #include "pcre_internal.h"
 
+#if defined(Win32) && defined(LEA_MALLOC)
+
+#include <stddef.h>
+extern void *Rm_malloc(size_t n);
+extern void Rm_free(void * p);
+PCRE_EXP_DATA_DEFN void *(*pcre_malloc)(size_t) = Rm_malloc;
+PCRE_EXP_DATA_DEFN void  (*pcre_free)(void *) = Rm_free;
+PCRE_EXP_DATA_DEFN void *(*pcre_stack_malloc)(size_t) = Rm_malloc;
+PCRE_EXP_DATA_DEFN void  (*pcre_stack_free)(void *) = Rm_free;
+PCRE_EXP_DATA_DEFN int   (*pcre_callout)(pcre_callout_block *) = NULL;
+
+#else
+
 #ifndef VPCOMPAT
 PCRE_EXP_DATA_DEFN void *(*pcre_malloc)(size_t) = malloc;
 PCRE_EXP_DATA_DEFN void  (*pcre_free)(void *) = free;
 PCRE_EXP_DATA_DEFN void *(*pcre_stack_malloc)(size_t) = malloc;
 PCRE_EXP_DATA_DEFN void  (*pcre_stack_free)(void *) = free;
 PCRE_EXP_DATA_DEFN int   (*pcre_callout)(pcre_callout_block *) = NULL;
+#endif
+
 #endif
 
 /* End of pcre_globals.c */
