@@ -26,10 +26,10 @@
 extern "C" {
 #endif
 
-void Rprintf(char*, ...);
-void REprintf(char*, ...);
-void Rvprintf(const char*, va_list);
-void REvprintf(const char*, va_list);
+void Rprintf(char *, ...);
+void REprintf(char *, ...);
+void Rvprintf(const char *, va_list);
+void REvprintf(const char *, va_list);
 
 #ifdef  __cplusplus
 }
