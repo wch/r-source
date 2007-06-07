@@ -203,17 +203,24 @@ setGeneric("Gfun", function(x, ...) standardGeneric("Gfun"),
 	   useAsDefault = function(x, ...) sum(x, ...))
 setClass("myMat", contains="matrix")
 setClass("mmat2", contains="matrix")
+setClass("mmat3", contains="mmat2")
 setMethod(Gfun, signature(x = "myMat"),
-          function(x, extrarg = TRUE) {
-              cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
-              Gfun(unclass(x))
-          })
+	  function(x, extrarg = TRUE) {
+	      cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
+	      Gfun(unclass(x))
+	  })
 setMethod(Gfun, signature(x = "mmat2"),
-          function(x, extrarg = TRUE) {
-              cat("in 'mmat2' method for 'Gfun() : extrarg=", extrarg, "\n")
-              x <- unclass(x)
-              callGeneric()
-          })
+	  function(x, extrarg = TRUE) {
+	      cat("in 'mmat2' method for 'Gfun() : extrarg=", extrarg, "\n")
+	      x <- unclass(x)
+	      callGeneric()
+	  })
+setMethod(Gfun, signature(x = "mmat3"),
+	  function(x, extrarg = TRUE) {
+	      cat("in 'mmat3' method for 'Gfun() : extrarg=", extrarg, "\n")
+	      x <- as(x, "mmat2")
+	      callGeneric()
+	  })
 (mm <- new("myMat", diag(3)))
 Gfun(mm)
 Gfun(mm, extrarg = FALSE)
@@ -221,4 +228,7 @@ m2 <- new("mmat2", diag(3))
 Gfun(m2)
 Gfun(m2, extrarg = FALSE)
 ## The last two gave Error ...... variable ".local" was not found
+(m3 <- new("mmat3", diag(3)))
+Gfun(m3)
+Gfun(m3, extrarg = FALSE) # used to not pass 'extrarg'
 

@@ -329,20 +329,31 @@ Slot "name":
 [1] "myMat"
 > setClass("mmat2", contains="matrix")
 [1] "mmat2"
+> setClass("mmat3", contains="mmat2")
+[1] "mmat3"
 > setMethod(Gfun, signature(x = "myMat"),
-+           function(x, extrarg = TRUE) {
-+               cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
-+               Gfun(unclass(x))
-+           })
++ 	  function(x, extrarg = TRUE) {
++ 	      cat("in 'myMat' method for 'Gfun() : extrarg=", extrarg, "\n")
++ 	      Gfun(unclass(x))
++ 	  })
 [1] "Gfun"
 attr(,"package")
 [1] ".GlobalEnv"
 > setMethod(Gfun, signature(x = "mmat2"),
-+           function(x, extrarg = TRUE) {
-+               cat("in 'mmat2' method for 'Gfun() : extrarg=", extrarg, "\n")
-+               x <- unclass(x)
-+               callGeneric()
-+           })
++ 	  function(x, extrarg = TRUE) {
++ 	      cat("in 'mmat2' method for 'Gfun() : extrarg=", extrarg, "\n")
++ 	      x <- unclass(x)
++ 	      callGeneric()
++ 	  })
+[1] "Gfun"
+attr(,"package")
+[1] ".GlobalEnv"
+> setMethod(Gfun, signature(x = "mmat3"),
++ 	  function(x, extrarg = TRUE) {
++ 	      cat("in 'mmat3' method for 'Gfun() : extrarg=", extrarg, "\n")
++ 	      x <- as(x, "mmat2")
++ 	      callGeneric()
++ 	  })
 [1] "Gfun"
 attr(,"package")
 [1] ".GlobalEnv"
@@ -366,5 +377,19 @@ in 'mmat2' method for 'Gfun() : extrarg= TRUE
 in 'mmat2' method for 'Gfun() : extrarg= FALSE 
 [1] 3
 > ## The last two gave Error ...... variable ".local" was not found
+> (m3 <- new("mmat3", diag(3)))
+An object of class "mmat3"
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    1    0
+[3,]    0    0    1
+> Gfun(m3)
+in 'mmat3' method for 'Gfun() : extrarg= TRUE 
+in 'mmat2' method for 'Gfun() : extrarg= TRUE 
+[1] 3
+> Gfun(m3, extrarg = FALSE) # used to not pass 'extrarg'
+in 'mmat3' method for 'Gfun() : extrarg= FALSE 
+in 'mmat2' method for 'Gfun() : extrarg= FALSE 
+[1] 3
 > 
 > 
