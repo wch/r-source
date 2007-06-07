@@ -911,7 +911,7 @@ SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-int R_moduleCdynload(char *module, int local, int now)
+int R_moduleCdynload(const char *module, int local, int now)
 {
     char dllpath[PATH_MAX], *p = getenv("R_HOME");
     DllInfo *res;
@@ -1360,7 +1360,7 @@ static SEXP get_package_CEntry_table(char *package)
 }
 
 
-void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr)
+void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr)
 {
     SEXP penv = get_package_CEntry_table(package);
     SEXP eptr = R_MakeExternalPtr((void *) fptr, R_NilValue, R_NilValue);
@@ -1369,7 +1369,7 @@ void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr)
     UNPROTECT(1);
 }
 
-DL_FUNC R_GetCCallable(char *package, char *name)
+DL_FUNC R_GetCCallable(const char *package, const char *name)
 {
     SEXP penv = get_package_CEntry_table(package);
     SEXP eptr = findVarInFrame(penv, install(name));

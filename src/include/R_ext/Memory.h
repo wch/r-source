@@ -29,7 +29,7 @@ extern "C" {
 #endif
 
 char*	vmaxget(void);
-void	vmaxset(char*);
+void	vmaxset(const char *);
 
 void	R_gc(void);
 
@@ -38,7 +38,7 @@ void	R_gc(void);
 */
 char*	R_alloc(long, int);
 char*	S_alloc(long, int);
-char*	S_realloc(char*, long, long, int);
+char*	S_realloc(char *, long, long, int);
 
 #ifdef  __cplusplus
 }

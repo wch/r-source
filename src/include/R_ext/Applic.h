@@ -225,8 +225,8 @@ void periodic_spline(int n, double *x, double *y,
 Rboolean stemleaf(double *x, int *n, double *scale, int *width, double *atom);
 
 /* appl/strsignif.c */
-void str_signif(char *x, int *n, char **type, int *width, int *digits,
-		char **format, char **flag, char **result);
+void str_signif(char *x, int *n, const char **type, int *width, int *digits,
+		const char **format, const char **flag, char **result);
 
 /* appl/tabulate.c */
 void R_tabulate(int *x, int *n, int *nbin, int *ans);
@@ -264,8 +264,8 @@ double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
  *				 f2c -A -P *.f; cat *.P > all.h	 and editing]
  */
 
-/* This is not in the applications but in the BLAS, and defined in Linpack.h
-extern int F77_NAME(lsame)(char *, char *);
+/* This is not in the applications but in the BLAS, and defined in Lapack.h
+extern int F77_NAME(lsame)(const char *, const char *);
 */
 
 /* LINPACK routines also declared in Linpack.h

@@ -110,7 +110,7 @@ typedef enum {R_ANY_SYM=0, R_C_SYM, R_CALL_SYM, R_FORTRAN_SYM, R_EXTERNAL_SYM} N
 DL_FUNC R_FindSymbol(char const *, char const *, 
                        R_RegisteredNativeSymbol *symbol);
 
-int R_moduleCdynload(char *module, int local, int now);
+int R_moduleCdynload(const char *module, int local, int now);
 
 
 
@@ -119,7 +119,7 @@ int R_moduleCdynload(char *module, int local, int now);
    part probably ought to be integrated with the other registrations.
    The naming of these routines may be less than ideal. */
 
-void R_RegisterCCallable(char *package, char *name, DL_FUNC fptr);
-DL_FUNC R_GetCCallable(char *package, char *name);
+void R_RegisterCCallable(const char *package, const char *name, DL_FUNC fptr);
+DL_FUNC R_GetCCallable(const char *package, const char *name);
 
 #endif /* R_EXT_DYNLOAD_H_ */

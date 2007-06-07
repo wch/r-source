@@ -1634,7 +1634,7 @@ char *vmaxget(void)
     return (char *) R_VStack;
 }
 
-void vmaxset(char *ovmax)
+void vmaxset(const char *ovmax)
 {
     R_VStack = (SEXP) ovmax;
 }
