@@ -351,26 +351,9 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 /* 
  * From vfonts.c
  */
-typedef void (*R_GE_VTextRoutine)(double x, double y, const char * const s, 
-				  double x_justify, double y_justify, 
-				  double rotation,
-				  R_GE_gcontext *gc, GEDevDesc *dd);
+double R_GE_VStrWidth(const char *s, R_GE_gcontext *gc, GEDevDesc *dd);
 
-typedef double (*R_GE_VStrWidthRoutine)(const unsigned char *s, 
-					R_GE_gcontext *gc, GEDevDesc *dd);
-
-typedef double (*R_GE_VStrHeightRoutine)(const unsigned char *s, 
-					 R_GE_gcontext *gc, GEDevDesc *dd);
-
-void R_GE_setVFontRoutines(R_GE_VStrWidthRoutine vwidth, 
-			   R_GE_VStrHeightRoutine vheight, 
-			   R_GE_VTextRoutine vtext);
-
-double R_GE_VStrWidth(const unsigned char *s, 
-		      R_GE_gcontext *gc, GEDevDesc *dd);
-
-double R_GE_VStrHeight(const unsigned char *s, 
-		       R_GE_gcontext *gc, GEDevDesc *dd);
+double R_GE_VStrHeight(const char *s, R_GE_gcontext *gc, GEDevDesc *dd);
 
 void R_GE_VText(double x, double y, const char * const s, 
 		double x_justify, double y_justify, double rotation,

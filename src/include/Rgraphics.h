@@ -326,20 +326,11 @@ void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
-typedef void (*GVTextRoutine)(double x, double y, int unit, const char * s, int typeface, int fontindex,
-	                      double xadj, double yadj, double rot, DevDesc *dd);
-typedef double (*GVStrWidthRoutine)(const unsigned char *s, int typeface, int fontindex,
-		                    int unit, DevDesc *dd);
-typedef double (*GVStrHeightRoutine)(const unsigned char *s, int typeface, int fontindex,
-   	   	                     int unit, DevDesc *dd);
-void R_setVFontRoutines(GVStrWidthRoutine vwidth, GVStrHeightRoutine vheight, GVTextRoutine vtext);
-
-void GVText(double x, double y, int unit, const char *s, int typeface, int fontindex,
-	    double xadj, double yadj, double rot, DevDesc *dd);
-double GVStrWidth(const unsigned char *s, int typeface, int fontindex,
-		  int unit, DevDesc *dd);
-double GVStrHeight(const unsigned char *s, int typeface, int fontindex,
-		   int unit, DevDesc *dd);
+/* This are called from plot3d.c, and provided directly by vfonts.c */
+void GVText(double, double, int, const char *, int, int, double, double,
+	    double, DevDesc *);
+double GVStrWidth(const char *, int, int, int, DevDesc *);
+double GVStrHeight(const char *, int, int, int, DevDesc *);
 
 /*-------------------------------------------------------------------
  *
@@ -437,15 +428,6 @@ double xDevtoUsr(double, DevDesc*);
 double yDevtoUsr(double, DevDesc*);
 double xNPCtoUsr(double, DevDesc*);
 double yNPCtoUsr(double, DevDesc*);
-
-
-/* Vector fonts */
-
-double GVStrWidth (const unsigned char *, int, int, int, DevDesc *);
-double GVStrHeight (const unsigned char *, int, int, int, DevDesc *);
-void GVText (double, double, int, const char *, int, int,
-	     double, double, double, DevDesc *);
-
 
 /* Devices */
 

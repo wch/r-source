@@ -28,27 +28,10 @@
 #include <Defn.h>
 #include <Rdynpriv.h>
 #include <Graphics.h>
-
-typedef struct {
-    R_GE_VTextRoutine GEVText;
-    R_GE_VStrWidthRoutine GEVStrWidth;
-    R_GE_VStrHeightRoutine GEVStrHeight;
-} VfontRoutines;
+#include <Rmodules/Rvfonts.h>
 
 static VfontRoutines routines, *ptr = &routines;
 
-/*
-static double (*ptr_GVStrWidth)(const unsigned char *s, int typeface,
-				int fontindex,
-				int unit, DevDesc *dd);
-static double (*ptr_GVStrHeight)(const unsigned char *s, int typeface,
-				 int fontindex,
-				 int unit, DevDesc *dd);
-static void (*ptr_GVText)(double x, double y, int unit, char *s,
-			  int typeface, int fontindex,
-			  double x_justify, double y_justify, double rotation,
-			  DevDesc *dd);
-*/
 
 static int initialized = 0;
 
@@ -73,7 +56,7 @@ static void vfonts_Init(void)
     return;
 }
 
-double GVStrWidth (const unsigned char *s, int typeface, int fontindex,
+double GVStrWidth (const char *s, int typeface, int fontindex,
 		   int unit, DevDesc *dd)
 {
     R_GE_gcontext gc;
@@ -95,14 +78,11 @@ double GVStrWidth (const unsigned char *s, int typeface, int fontindex,
 	str = buff;
     }
 #endif
-    return GConvertXUnits(R_GE_VStrWidth((unsigned char *)str, &gc,
-					 (GEDevDesc *) dd),
+    return GConvertXUnits(R_GE_VStrWidth(str, &gc, (GEDevDesc *) dd),
 			  DEVICE, unit, dd);
 }
 
-double R_GE_VStrWidth(const unsigned char *s,
-		      R_GE_gcontext *gc,
-		      GEDevDesc *dd)
+double R_GE_VStrWidth(const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)
@@ -113,7 +93,7 @@ double R_GE_VStrWidth(const unsigned char *s,
     }
 }
 
-double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
+double GVStrHeight (const char *s, int typeface, int fontindex,
 		    int unit, DevDesc *dd)
 {
     R_GE_gcontext gc;
@@ -135,14 +115,11 @@ double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
 	str = buff;
     }
 #endif
-    return GConvertYUnits(R_GE_VStrHeight((unsigned char *)str, &gc,
-					  (GEDevDesc *) dd),
+    return GConvertYUnits(R_GE_VStrHeight(str, &gc, (GEDevDesc *) dd),
 			  DEVICE, unit, dd);
 }
 
-double R_GE_VStrHeight(const unsigned char *s,
-		       R_GE_gcontext *gc,
-		       GEDevDesc *dd)
+double R_GE_VStrHeight(const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)

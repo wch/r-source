@@ -26,6 +26,7 @@
 #include "g_extern.h"
 #include "g_control.h"
 #include "g_her_metr.h"
+#include <Rmodules/Rvfonts.h>
 
 /* Shearing factor for oblique fonts, new_x = x + SHEAR * y  */
 
@@ -151,9 +152,8 @@ static void _draw_stroke (vfontContext *vc, R_GE_gcontext *gc, GEDevDesc *dd,
 /* this is the version of the flabelwidth() method that is specific to the
    case when the current Plotter font is a Hershey font; called in
    g_flabelwidth () */
-static double R_VF_VStrWidth (const unsigned char *s, 
-			      R_GE_gcontext *gc,
-			      GEDevDesc *dd)
+static double R_VF_VStrWidth (const char *s, 
+			      R_GE_gcontext *gc, GEDevDesc *dd)
 {
   double label_width;
   unsigned short *codestring;
@@ -166,7 +166,8 @@ static double R_VF_VStrWidth (const unsigned char *s,
   char *vmax = vmaxget();
 
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, s, gc->fontfamily[0], gc->fontface);
+  codestring = _controlify (dd, (const unsigned char *) s,
+			    gc->fontfamily[0], gc->fontface);
 
   label_width = _label_width_hershey (gc, dd, codestring);
 
@@ -187,9 +188,7 @@ static double _label_height_hershey (R_GE_gcontext *gc,
     return( HERSHEY_Y_UNITS_TO_USER_UNITS(HERSHEY_LARGE_CAPHEIGHT) );
 }
 
-static double R_VF_VStrHeight (const unsigned char *s, 
-			       R_GE_gcontext *gc,
-			       GEDevDesc *dd)
+static double R_VF_VStrHeight (const char *s, R_GE_gcontext *gc, GEDevDesc *dd)
 {
   double label_height;
   unsigned short *codestring;
@@ -197,7 +196,8 @@ static double R_VF_VStrHeight (const unsigned char *s,
   char *vmax = vmaxget();
 
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, s, gc->fontfamily[0], gc->fontface);
+  codestring = _controlify (dd, (const unsigned char *) s,
+			    gc->fontfamily[0], gc->fontface);
 
   label_height = _label_height_hershey (gc, dd, codestring);
 
@@ -211,14 +211,14 @@ static double R_VF_VStrHeight (const unsigned char *s,
    Renamed from _g_falabel_hershey to GVText
    Reordered arguments
    Added x, y, rotation, and font specification arguments
-   Retyped x/y_justify from int to double
-   Retyped s from "const unsigned char *" to char*
+   Re-typed x/y_justify from int to double
+   Re-typed s from "unsigned char *" to char *
    Changed return value from double to void
 */
 
 /* this is the version of the falabel() method that is specific
    to the case when the current Plotter font is a Hershey font */
-static void R_VF_VText (double x, double y, const char * const s, 
+static void R_VF_VText (double x, double y, const char *s, 
 			double x_justify, double y_justify, double rotation,
 			R_GE_gcontext *gc,
 			GEDevDesc *dd)
@@ -252,7 +252,8 @@ static void R_VF_VText (double x, double y, const char * const s,
   gc->ljoin = GE_ROUND_JOIN;
 
   /* convert string to a codestring, including annotations */
-  codestring = _controlify (dd, (unsigned char *)s, gc->fontfamily[0], gc->fontface);
+  codestring = _controlify (dd, (const unsigned char *)s, 
+			    gc->fontfamily[0], gc->fontface);
 
   
   /* PAUL MURRELL
