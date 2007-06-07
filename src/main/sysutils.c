@@ -629,7 +629,7 @@ top_of_loop:
     Riconv (obj, NULL, NULL, &outbuf, &outb);
 next_char:
     /* Then convert input  */
-    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
+    res = Riconv(obj, &inbuf , &inb, &outbuf, &outb);
     if(res == -1 && errno == E2BIG) {
 	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	goto top_of_loop;
