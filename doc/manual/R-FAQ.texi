@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-04
+@set FAQ_DATE @value{FAQ_YEAR}-06-07
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2716,6 +2716,8 @@ Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 (Soft Competitive Learning) and calculation of several indexes for
 finding the number of clusters in a data set.
+@item celsius
+Retrieve Affymetrix microarray measurements and metadata from Celsius.
 @item cfa
 Analysis of configuration frequencies.
 @item cgh
