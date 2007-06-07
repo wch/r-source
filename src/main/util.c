@@ -70,14 +70,6 @@ Rboolean tsConform(SEXP x, SEXP y)
     return FALSE;
 }
 
-const static char * const truenames[] = {
-    "T",
-    "True",
-    "TRUE",
-    "true",
-    (char *) 0,
-};
-
 int nrows(SEXP s)
 {
     SEXP t;
@@ -124,12 +116,20 @@ void attribute_hidden internalTypeCheck(SEXP call, SEXP s, SEXPTYPE type)
     }
 }
 
+const static char * const truenames[] = {
+    "T",
+    "True",
+    "TRUE",
+    "true",
+    (char *) NULL,
+};
+
 const static char * const falsenames[] = {
     "F",
     "False",
     "FALSE",
     "false",
-    (char *) 0,
+    (char *) NULL,
 };
 
 SEXP asChar(SEXP x)
@@ -221,7 +221,7 @@ TypeTable[] = {
     { "numeric",	REALSXP	   },
     { "name",		SYMSXP	   },
 
-    { (char *)0,	-1	   }
+    { (char *)NULL,	-1	   }
 };
 
 
@@ -249,7 +249,7 @@ SEXP type2str(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
-const char * type2char(SEXPTYPE t)
+const char *type2char(SEXPTYPE t)
 {
     int i;
 
@@ -269,7 +269,7 @@ SEXP type2symbol(SEXPTYPE t)
        character string and to the symbol would be better */
     for (i = 0; TypeTable[i].str; i++) {
 	if (TypeTable[i].type == t)
-	    return install((char *)&TypeTable[i].str);
+	    return install((char *) &TypeTable[i].str);
     }
     error(_("type %d is unimplemented in '%s'"), t, "type2symbol");
     return R_NilValue; /* for -Wall */
@@ -1051,7 +1051,7 @@ void F77_SYMBOL(rexitc)(char *msg, int *nchar)
     }
     strncpy(buf, msg, nc);
     buf[nc] = '\0';
-    error(buf);
+    error("%s", buf);
 }
 
 void F77_SYMBOL(rwarnc)(char *msg, int *nchar)
@@ -1064,7 +1064,7 @@ void F77_SYMBOL(rwarnc)(char *msg, int *nchar)
     }
     strncpy(buf, msg, nc);
     buf[nc] = '\0';
-    warning(buf);
+    warning("%s", buf);
 }
 
 void F77_SYMBOL(rchkusr)(void)
