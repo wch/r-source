@@ -1903,7 +1903,7 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 
 
 /* gr needs to be protected on return from this function */
-static void findmethod(SEXP Class, char *group, char *generic,
+static void findmethod(SEXP Class, const char *group, const char *generic,
 		       SEXP *sxp,  SEXP *gr, SEXP *meth, int *which,
 		       char *buf, SEXP rho)
 {
@@ -1939,7 +1939,7 @@ static void findmethod(SEXP Class, char *group, char *generic,
 }
 
 attribute_hidden
-int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
+int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 		  SEXP *ans)
 {
     int i, j, nargs, lwhich, rwhich, set;

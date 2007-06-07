@@ -1150,12 +1150,10 @@ static void print2buff(const char *strng, LocalParseData *d)
     d->len += tlen;
 }
 
-char *EncodeReal2(double x, int w, int d, int e);
-
 static void vector2buff(SEXP vector, LocalParseData *d)
 {
     int tlen, i, quote;
-    char *strp;
+    const char *strp;
     Rboolean surround = FALSE, allNA, addL = TRUE;
 
     tlen = length(vector);

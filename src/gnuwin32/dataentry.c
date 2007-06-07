@@ -508,7 +508,7 @@ static const char *get_col_name(DEstruct DE, int col)
 static int get_col_width(DEstruct DE, int col)
 {
     int i, w = 0, w1, fw = FIELDWIDTH;
-    char *strp;
+    const char *strp;
     SEXP tmp, lab;
 
     if (DE->nboxchars > 0) return DE->nboxchars;
@@ -612,7 +612,7 @@ static void drawrow(DEstruct DE, int whichrow)
 
 static void printelt(DEstruct DE, SEXP invec, int vrow, int ssrow, int sscol)
 {
-    char *strp;
+    const char *strp;
     PrintDefaults(R_NilValue);
     if (TYPEOF(invec) == REALSXP) {
 	strp = EncodeElement(invec, vrow, 0, '.');
@@ -1137,10 +1137,10 @@ static void de_ctrlkeyin(control c, int key)
 
 /* mouse callbacks */
 
-static char *get_cell_text(DEstruct DE)
+static const char *get_cell_text(DEstruct DE)
 {
     int  wrow = DE->rowmin + DE->crow - 2, wcol = DE->colmin + DE->ccol - 1;
-    char *prev = "";
+    const char *prev = "";
     SEXP tvec;
 
     if (wcol <= DE->xmaxused) {
@@ -1228,7 +1228,7 @@ static void de_mousedown(control c, int buttons, point xy)
 		return;
 	} else if (buttons & DblClick) {
 	    int x, y, bw;
-	    char *prev;
+	    const char *prev;
 	    rect rr;
 
 	    DE->ccol = wcol;

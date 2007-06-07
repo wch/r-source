@@ -906,7 +906,7 @@ SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
 SEXP deparse1line(SEXP,Rboolean);
 int DispatchOrEval(SEXP, SEXP, const char*, SEXP, SEXP, SEXP*, int, int);
-int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
+int DispatchGroup(const char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP, Rboolean);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
@@ -991,7 +991,7 @@ SEXP R_data_class2(SEXP);
 char *R_LibraryFileName(const char *, char *, size_t);
 SEXP R_LoadFromFile(FILE*, int);
 SEXP R_NewHashedEnv(SEXP, SEXP);
-extern int R_Newhashpjw(const char*);
+extern int R_Newhashpjw(const char *);
 FILE* R_OpenLibraryFile(const char *);
 void R_RestoreGlobalEnv(void);
 void R_RestoreGlobalEnvFromFile(const char *, Rboolean);
@@ -1054,8 +1054,10 @@ typedef enum {
 } Rprt_adj;
 
 int	Rstrlen(SEXP, int);
-char *EncodeRaw(Rbyte);
-char *EncodeString(SEXP, int, int, Rprt_adj);
+const char *EncodeRaw(Rbyte);
+const char *EncodeString(SEXP, int, int, Rprt_adj);
+const char *EncodeReal2(double, int, int, int);
+
 
 /* main/sort.c */
 void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,

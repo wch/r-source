@@ -24,7 +24,6 @@
 #include <R_ext/PrtUtil.h>
 #include "Defn.h"
 
-#define formatFactor        Rf_formatFactor
 #define formatRaw           Rf_formatRaw
 #define formatString        Rf_formatString
 #define EncodeElement       Rf_EncodeElement
@@ -50,12 +49,11 @@ typedef struct {
 extern R_print_par_t R_print;
 
 /* Computation of printing formats */
-void formatFactor(int *, int, int *, SEXP, int);
 void formatRaw(Rbyte *, int, int *);
 void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */
-char *EncodeElement(SEXP, int, int, char);
+const char *EncodeElement(SEXP, int, int, char);
 
 /* Printing */
 void MatrixColumnLabel(SEXP, int, int);
@@ -72,9 +70,9 @@ void printNamedVector(SEXP, SEXP, int, const char*);
 void printVector(SEXP, int, int);
 
 /* Utilities for S compatibility and debuggging */
-int F77_SYMBOL(dblepr0)(char *, int *, double *, int *);
-int F77_SYMBOL(intpr0) (char *, int *, int *, int *);
-int F77_SYMBOL(realpr0)(char *, int *, float *, int *);
+int F77_SYMBOL(dblepr0)(const char *, int *, double *, int *);
+int F77_SYMBOL(intpr0) (const char *, int *, int *, int *);
+int F77_SYMBOL(realpr0)(const char *, int *, float *, int *);
 void R_PV(SEXP s);
 
 /* Offset for rowlabels if there are named dimnames */

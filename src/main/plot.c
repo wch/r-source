@@ -749,7 +749,7 @@ SEXP attribute_hidden labelformat(SEXP labels)
     /* format(labels): i.e. from numbers to strings */
     SEXP ans = R_NilValue;/* -Wall*/
     int i, n, w, d, e, wi, di, ei;
-    char *strp;
+    const char *strp;
     n = length(labels);
     R_print.digits = 7;/* maximally 7 digits -- ``burnt in'';
 			  S-PLUS <= 5.x has about 6

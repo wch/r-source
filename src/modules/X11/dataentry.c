@@ -894,7 +894,7 @@ static void drawrow(DEstruct DE, int whichrow)
 
 static void printelt(DEstruct DE, SEXP invec, int vrow, int ssrow, int sscol)
 {
-    char *strp;
+    const char *strp;
     PrintDefaults(R_NilValue);
     if (TYPEOF(invec) == REALSXP) {
 	strp = EncodeElement(invec, vrow, 0, '.');
