@@ -866,8 +866,6 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
     return mainlist;
 }
 
-SEXP GEdrawContourLines();
-
 SEXP attribute_hidden do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, c, x, y, z;

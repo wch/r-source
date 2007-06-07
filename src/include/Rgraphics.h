@@ -326,9 +326,10 @@ void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, double, DevDesc*);
 
 
-/* This are called from plot3d.c, and provided directly by vfonts.c */
+/* Called from do_text and do_contour */
 void GVText(double, double, int, const char *, int, int, double, double,
 	    double, DevDesc *);
+/* Called only from do_contour */
 double GVStrWidth(const char *, int, int, int, DevDesc *);
 double GVStrHeight(const char *, int, int, int, DevDesc *);
 
