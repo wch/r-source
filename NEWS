@@ -312,6 +312,9 @@ C-LEVEL FACILITIES
         a string stored in a CHARSXP before passing the data on to a
         function that modifies its arguments.
 
+    o   asLogical, asInteger, asReal and asComplex now accept STRSXP
+	and CHARSXP arguments.
+
 
 INSTALLATION
 

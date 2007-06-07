@@ -1510,6 +1510,8 @@ int asLogical(SEXP x)
 	default:
 	    UNIMPLEMENTED_TYPE("asLogical", x);
 	}
+    } else if(TYPEOF(x) == CHARSXP) {
+	    return Rf_LogicalFromString(x, &warn);
     }
     return NA_LOGICAL;
 }
@@ -1539,6 +1541,10 @@ int asInteger(SEXP x)
 	default:
 	    UNIMPLEMENTED_TYPE("asInteger", x);
 	}
+    } else if(TYPEOF(x) == CHARSXP) {
+	res = Rf_IntegerFromString(x, &warn);
+	Rf_CoercionWarning(warn);
+	return res;
     }
     return NA_INTEGER;
 }
@@ -1571,6 +1577,10 @@ double asReal(SEXP x)
 	default:
 	    UNIMPLEMENTED_TYPE("asReal", x);
 	}
+    } else if(TYPEOF(x) == CHARSXP) {
+	res = Rf_RealFromString(x, &warn);
+	Rf_CoercionWarning(warn);
+	return res;
     }
     return NA_REAL;
 }
@@ -1597,6 +1607,8 @@ Rcomplex asComplex(SEXP x)
 	default:
 	    UNIMPLEMENTED_TYPE("asComplex", x);
 	}
+    } else if(TYPEOF(x) == CHARSXP) {
+	return Rf_ComplexFromString(x, &warn);
     }
     return z;
 }

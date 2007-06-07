@@ -573,7 +573,9 @@ void * Riconv_open (const char* tocode, const char* fromcode)
     else if(strcmp(fromcode, "") == 0) return iconv_open(tocode, cp);
     else return iconv_open(tocode, fromcode);
 #else
-    return iconv_open(tocode, fromcode);
+    /* const char * is right according to POSIX, but libiconv
+       plays games so that on Solaris 10 it needs the casts */
+    return iconv_open((char *)tocode, (char *)fromcode);
 #endif
 }
 
