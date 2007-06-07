@@ -1342,7 +1342,7 @@ R_getRegisteredRoutines(SEXP dll)
 
 static SEXP CEntryTable = NULL;
 
-static SEXP get_package_CEntry_table(char *package)
+static SEXP get_package_CEntry_table(const char *package)
 {
     SEXP penv, pname;
 
