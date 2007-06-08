@@ -6902,7 +6902,7 @@ Implies @option{--no-save} unless @option{--save} has been set.
 
 @item -e @var{expression}
 Use @var{expression} as an input line.  One or more @option{-e} options
-can be used, but not together with @option{-e} or @option{--file}.
+can be used, but not together with @option{-f} or @option{--file}.
 Implies @option{--no-save} unless @option{--save} has been set.  (There
 is a limit of 10,000 bytes on the total length of expressions used in
 this way.)
@@ -6941,8 +6941,10 @@ value accepted is 100000.
 @item --max-mem-size=@var{N}
 (Windows only) Specify a limit for the amount of memory to be used both
 for @R{} objects and working areas.  This is set by default to the
-smaller of 1024Mb and the amount of physical RAM in the machine, and
-must be at least 16Mb.
+smaller of 1.5Gb@footnote{2.5Gb on versions of Windows that support 3Gb
+per process and have the support enabled: see the @file{rw-FAQ} Q2.9.}
+and the amount of physical RAM in the machine, and must be between 32Mb
+and 3Gb.
 
 @item --quiet
 @itemx --silent
@@ -6961,9 +6963,11 @@ control the printing of diagnostic messages.
 
 @item --debugger=@var{name}
 @itemx -d @var{name}
-(UNIX only) Run @R{} through debugger @var{name}.  Note that in this
-case, further command line options are disregarded, and should instead
-be given when starting the @R{} executable from inside the debugger.
+(UNIX only) Run @R{} through debugger @var{name}.  For most debuggers
+(the exceptions are @command{valgrind} and recent versions of
+@command{gdb}), further command line options are disregarded, and should
+instead be given when starting the @R{} executable from inside the
+debugger.
 
 @item --gui=@var{type}
 @itemx -g @var{type}
