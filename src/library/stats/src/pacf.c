@@ -166,9 +166,8 @@ SEXP arma0fa(SEXP pG, SEXP inparams)
 {
     int i, j, ifault = 0, it, streg;
     double sumlog, ssq, tmp, ans;
-    SEXP res;
-    GET_STARMA;
 
+    GET_STARMA;
     dotrans(G, REAL(inparams), G->params, G->trans);
 
     if(G->ns > 0) {
