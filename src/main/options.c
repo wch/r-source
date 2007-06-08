@@ -246,36 +246,30 @@ void attribute_hidden InitOptions(void)
     v = CDR(v);
 
     SET_TAG(v, install("echo"));
-    SETCAR(v, allocVector(LGLSXP, 1));
-    LOGICAL(CAR(v))[0] = !R_Slave;
+    SETCAR(v, ScalarLogical(!R_Slave));
     v = CDR(v);
 
     SET_TAG(v, install("verbose"));
-    SETCAR(v, allocVector(LGLSXP, 1));
-    LOGICAL(CAR(v))[0] = R_Verbose;
+    SETCAR(v, ScalarLogical(R_Verbose));
     v = CDR(v);
 
     SET_TAG(v, install("check.bounds"));
-    SETCAR(v, allocVector(LGLSXP, 1));
-    LOGICAL(CAR(v))[0] = 0;	/* no checking */
+    SETCAR(v, ScalarLogical(0)); 	/* no checking */
     v = CDR(v);
 
     p = getenv("R_KEEP_PKG_SOURCE");
     R_KeepSource = (p && (strcmp(p, "yes") == 0)) ? 1 : 0;
 
     SET_TAG(v, install("keep.source")); /* overridden in common.R */
-    SETCAR(v, allocVector(LGLSXP, 1));
-    LOGICAL(CAR(v))[0] = R_KeepSource;
+    SETCAR(v, ScalarLogical(R_KeepSource));
     v = CDR(v);
 
     SET_TAG(v, install("keep.source.pkgs"));
-    SETCAR(v, allocVector(LGLSXP, 1));
-    LOGICAL(CAR(v))[0] = R_KeepSource;
+    SETCAR(v, ScalarLogical(R_KeepSource));
     v = CDR(v);
 
     SET_TAG(v, install("warnings.length"));
-    SETCAR(v, allocVector(INTSXP, 1));
-    INTEGER(CAR(v))[0] = 1000;
+    SETCAR(v, ScalarInteger(1000));
     v = CDR(v);
 
     SET_TAG(v, install("OutDec"));

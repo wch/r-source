@@ -1436,17 +1436,11 @@ findLoadedFont(const char *name, const char *encoding, Rboolean isPDF)
 
 SEXP Type1FontInUse(SEXP name, SEXP isPDF)
 {
-    SEXP result;
-
     if (!isString(name) || LENGTH(name) > 1)
 	error(_("Invalid font name or more than one font name"));
-    PROTECT(result = allocVector(LGLSXP, 1));
-    if (findLoadedFont(CHAR(STRING_ELT(name, 0)), NULL, asLogical(isPDF)))
-	LOGICAL(result)[0] = TRUE;
-    else
-	LOGICAL(result)[0] = FALSE;
-    UNPROTECT(1);
-    return result;
+    return ScalarLogical( 
+	findLoadedFont(CHAR(STRING_ELT(name, 0)), NULL, asLogical(isPDF)) 
+	!= NULL);
 }
 
 static cidfontfamily findLoadedCIDFont(const char *family, Rboolean isPDF)
@@ -1475,16 +1469,11 @@ static cidfontfamily findLoadedCIDFont(const char *family, Rboolean isPDF)
 
 SEXP CIDFontInUse(SEXP name, SEXP isPDF)
 {
-    SEXP result;
     if (!isString(name) || LENGTH(name) > 1)
 	error(_("Invalid font name or more than one font name"));
-    PROTECT(result = allocVector(LGLSXP, 1));
-    if (findLoadedCIDFont(CHAR(STRING_ELT(name, 0)), asLogical(isPDF)))
-	LOGICAL(result)[0] = TRUE;
-    else
-	LOGICAL(result)[0] = FALSE;
-    UNPROTECT(1);
-    return result;
+    return ScalarLogical(
+	findLoadedCIDFont(CHAR(STRING_ELT(name, 0)), asLogical(isPDF)) 
+	!= NULL);
 }
 
 /*

@@ -3284,8 +3284,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  SEXP pargs, str;
 	  PROTECT(pargs = promiseArgs(CDR(call), rho));
 	  SET_PRVALUE(CAR(pargs), x);
-	  str = allocVector(STRSXP, 1);
-	  SET_STRING_ELT(str, 0, PRINTNAME(symbol));
+	  str = ScalarString(PRINTNAME(symbol));
 	  SET_PRVALUE(CADR(pargs), str);
 	  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */
 	  if (usemethod("$", x, call, pargs, rho, rho, R_BaseEnv, &value))
@@ -3311,8 +3310,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  SEXP pargs, str;
 	  PROTECT(pargs = promiseArgs(CDR(call), rho));
 	  SET_PRVALUE(CAR(pargs), x);
-	  str = allocVector(STRSXP, 1);
-	  SET_STRING_ELT(str, 0, PRINTNAME(symbol));
+	  str = ScalarString(PRINTNAME(symbol));
 	  SET_PRVALUE(CADR(pargs), str);
 	  SET_PRVALUE(CADDR(pargs), value);
 	  begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs, R_NilValue);/**** FIXME: put in op */

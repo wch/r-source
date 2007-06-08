@@ -701,8 +701,7 @@ SEXP attribute_hidden do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     k = 0;
 
     SET_STRING_ELT(names, k, mkChar("minimum"));
-    SET_VECTOR_ELT(value, k, allocVector(REALSXP, 1));
-    REAL(VECTOR_ELT(value, k))[0] = fpls;
+    SET_VECTOR_ELT(value, k, ScalarReal(fpls));
     k++;
 
     SET_STRING_ELT(names, k, mkChar("estimate"));

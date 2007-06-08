@@ -33,13 +33,8 @@ static Rboolean neWithNaN(double x,  double y);
 
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
-
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 1));
-    LOGICAL(ans)[0] = compute_identical(CAR(args), CADR(args));
-    UNPROTECT(1);
-    return(ans);
+    return ScalarLogical( compute_identical(CAR(args), CADR(args)) );
 }
 
 /* do the two objects compute as identical? */

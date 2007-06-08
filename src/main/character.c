@@ -419,8 +419,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(VECSXP, len));
     for(i = 0; i < len; i++) {
 	if (STRING_ELT(x, i) == NA_STRING){
-	    PROTECT(t = allocVector(STRSXP, 1));
-	    SET_STRING_ELT(t, 0, NA_STRING);
+	    PROTECT(t = ScalarString(NA_STRING));
 	    SET_VECTOR_ELT(s, i, t);
 	    UNPROTECT(1);
 	    continue;
@@ -565,8 +564,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		ntok = mbstowcs(NULL, buf, 0);
 		if(ntok < 0) {
-		    PROTECT(t = allocVector(STRSXP, 1));
-		    SET_STRING_ELT(t, 0, NA_STRING);
+		    PROTECT(t = ScalarString(NA_STRING));
 		} else {
 		    mbs_init(&mb_st);
 		    PROTECT(t = allocVector(STRSXP, ntok));

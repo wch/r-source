@@ -737,10 +737,9 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	} else { /* cancel */
 	    PROTECT(ans = allocVector(STRSXP, 0));
 	}
-    } else {
-	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0, mkChar(selected));
-    }
+    } else
+	PROTECT(ans = mkString(selected));
+
     cleanup();
     show(RConsole);
     UNPROTECT(1);
@@ -802,8 +801,7 @@ SEXP do_readClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
     	   	(hglb = GetClipboardData(format)) &&
     	   	(pc = (const char *)GlobalLock(hglb))) {
 	    if(!raw) {
-		PROTECT(ans = allocVector(STRSXP, 1));
-		SET_STRING_ELT(ans, 0, mkChar(pc));
+		PROTECT(ans = mkString(pc));
 	    } else {
 		size = GlobalSize(hglb);
 		PROTECT(ans = allocVector(RAWSXP, size));

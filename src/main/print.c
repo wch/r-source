@@ -843,18 +843,8 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		SET_TYPEOF(s, LANGSXP);
 		SETCAR(t, install("print")); t = CDR(t);
 		SETCAR(t,  CAR(a)); t = CDR(t);
-		SETCAR(t, allocVector(INTSXP, 1));
-		INTEGER(CAR(t))[0] = digits;
-		SET_TAG(t, install("digits")); /* t = CDR(t);
-		SETCAR(t, allocVector(LGLSXP, 1));
-		LOGICAL(CAR(t))[0] = quote;
-		SET_TAG(t, install("quote")); t = CDR(t);
-		SETCAR(t, allocVector(LGLSXP, 1));
-		LOGICAL(CAR(t))[0] = right;
-		SET_TAG(t, install("right")); t = CDR(t);
-		SETCAR(t, allocVector(INTSXP, 1));
-		INTEGER(CAR(t))[0] = gap;
-		SET_TAG(t, install("gap")); */
+		SETCAR(t, ScalarInteger(digits));
+		SET_TAG(t, install("digits"));
 		eval(s, env);
 		UNPROTECT(1);
 		R_print.quote = quote;

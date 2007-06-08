@@ -733,7 +733,6 @@ static SEXP enctrim(SEXP args, char *name, int len)
 
 SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans;
     const char *sym, *type="", *pkg = "";
     int val = 1, nargs = length(args);
     R_RegisteredNativeSymbol symbol = {R_FORTRAN_SYM, {NULL}, NULL};
@@ -764,9 +763,7 @@ SEXP attribute_hidden do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!(R_FindSymbol(sym, pkg, NULL)) && 
 	    !(R_FindSymbol(sym, pkg, &symbol))) val = 0;
     }
-    ans = allocVector(LGLSXP, 1);
-    LOGICAL(ans)[0] = val;
-    return ans;
+    return ScalarLogical(val);
 }
 
 /*   Call dynamically loaded "internal" functions */

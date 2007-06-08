@@ -147,21 +147,13 @@ char *R_HomeDir()
 
 SEXP attribute_hidden do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP rval;
-
-    rval=allocVector(LGLSXP, 1);
-    LOGICAL(rval)[0]= (R_Interactive) ? 1 : 0;
-    return rval;
+    return ScalarLogical( (R_Interactive) ? 1 : 0 );
 }
 
 SEXP attribute_hidden do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  ans;
-
-    PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkChar(R_TempDir));
-    UNPROTECT(1);
-    return (ans);
+    checkArity(op, args);
+    return mkString(R_TempDir);
 }
 
 

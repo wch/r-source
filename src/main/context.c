@@ -476,15 +476,12 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 1: /* parent */
 	if(n == NA_INTEGER)
 	    error(_("invalid value for '%s'"), "n");
-	nframe = framedepth(cptr);
-	rval = allocVector(INTSXP,1);
-	i = nframe;
+	i = nframe = framedepth(cptr);
 	/* This is a pretty awful kludge, but the alternative would be
 	   a major redesign of everything... -pd */
 	while (n-- > 0)
 	    i = R_sysparent(nframe - i + 1, cptr);
-	INTEGER(rval)[0] = i;
-	return rval;
+	return ScalarInteger(i);
     case 2: /* call */
 	if(n == NA_INTEGER)
 	    error(_("invalid value for '%s'"), "which");
@@ -494,9 +491,7 @@ SEXP attribute_hidden do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("invalid value for '%s'"), "which");
 	return R_sysframe(n, cptr);
     case 4: /* sys.nframe */
-	rval = allocVector(INTSXP, 1);
-	INTEGER(rval)[0] = framedepth(cptr);
-	return rval;
+	return ScalarInteger(framedepth(cptr));
     case 5: /* sys.calls */
 	nframe = framedepth(cptr);
 	PROTECT(rval = allocList(nframe));

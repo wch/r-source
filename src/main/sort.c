@@ -124,12 +124,8 @@ Rboolean isUnsorted(SEXP x)
 
 SEXP attribute_hidden do_isunsorted(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
-
     checkArity(op, args);
-    ans = allocVector(LGLSXP, 1);
-    LOGICAL(ans)[0] = isUnsorted(CAR(args));
-    return ans;
+    return ScalarLogical(isUnsorted(CAR(args)));
 }
 
 

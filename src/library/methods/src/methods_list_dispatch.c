@@ -757,7 +757,6 @@ static const char *class_string(SEXP obj)
    for speed so few checks */
 SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
 {
-    SEXP ans;
     char str[201];
     const char *prefixString, *nameString;
 
@@ -766,10 +765,7 @@ SEXP R_methodsPackageMetaName(SEXP prefix, SEXP name)
     nameString = check_single_string(name, FALSE,
 				     "The name of the object (e.g,. a class or generic function) to find in the meta-data");
     snprintf(str, 200, ".__%s__%s", prefixString, nameString);
-    PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkChar(str));
-    UNPROTECT(1);
-    return ans;
+    return mkString(str);
 }
 
 SEXP R_identC(SEXP e1, SEXP e2)

@@ -1060,13 +1060,11 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(a, install("order"));
     a = CDR(a);
 
-    SETCAR(a, allocVector(INTSXP, 1));
-    INTEGER(CAR(a))[0] = (intercept != 0);
+    SETCAR(a, ScalarInteger(intercept != 0));
     SET_TAG(a, install("intercept"));
     a = CDR(a);
 
-    SETCAR(a, allocVector(INTSXP, 1));
-    INTEGER(CAR(a))[0] = (response != 0);
+    SETCAR(a, ScalarInteger(response != 0));
     SET_TAG(a, install("response"));
     a = CDR(a);
 
@@ -1472,8 +1470,7 @@ SEXP attribute_hidden do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
         SEXP klass;
         PROTECT(call = duplicate(call));
-        PROTECT(klass = allocVector(STRSXP, 1));
-        SET_STRING_ELT(klass, 0, mkChar("formula"));
+        PROTECT(klass = mkString("formula"));
         setAttrib(call, R_ClassSymbol, klass);
         setAttrib(call, R_DotEnvSymbol, rho);
         UNPROTECT(2);

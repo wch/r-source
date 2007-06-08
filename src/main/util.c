@@ -453,7 +453,6 @@ SEXP nthcdr(SEXP s, int n)
 
 SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP t;
     RCNTXT *cptr;
     int nargs = NA_INTEGER;
     for (cptr = R_GlobalContext; cptr != NULL; cptr = cptr->nextcontext) {
@@ -462,9 +461,7 @@ SEXP attribute_hidden do_nargs(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	}
     }
-    t = allocVector(INTSXP, 1);
-    *INTEGER(t) = nargs;
-    return (t);
+    return ScalarInteger(nargs);
 }
 
 

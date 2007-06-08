@@ -875,8 +875,7 @@ static SEXP coerceToPairList(SEXP v)
 	    COMPLEX(CAR(ansp))[0] = COMPLEX(v)[i];
 	    break;
 	case STRSXP:
-	    SETCAR(ansp, allocVector(STRSXP, 1));
-	    SET_STRING_ELT(CAR(ansp), 0, STRING_ELT(v, i));
+	    SETCAR(ansp, ScalarString(STRING_ELT(v, i)));
 	    break;
 	case RAWSXP:
 	    SETCAR(ansp, allocVector(RAWSXP, 1));
@@ -1273,11 +1272,8 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 	}
 	return v;
     }
-    else if (isSymbol(u) && type == STRSXP) {
-	v = allocVector(STRSXP, 1);
-	SET_STRING_ELT(v, 0, PRINTNAME(u));
-	return v;
-    }
+    else if (isSymbol(u) && type == STRSXP)
+	return ScalarString(PRINTNAME(u));
     else if (isSymbol(u) && type == SYMSXP)
 	return u;
     else if (isSymbol(u) && type == VECSXP) {
@@ -1617,12 +1613,8 @@ Rcomplex asComplex(SEXP x)
 /* return the type (= "detailed mode") of the SEXP */
 SEXP attribute_hidden do_typeof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans,0, type2str(TYPEOF(CAR(args))));
-    UNPROTECT(1);
-    return ans;
+    return ScalarString(type2str(TYPEOF(CAR(args))));
 }
 
 /* Define many of the <primitive> "is.xxx" functions :

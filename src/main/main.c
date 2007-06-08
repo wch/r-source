@@ -1311,7 +1311,6 @@ R_removeTaskCallback(SEXP which)
 {
     int id;
     Rboolean val;
-    SEXP status;
 
     if(TYPEOF(which) == STRSXP) {
 	val = Rf_removeTaskCallbackByName(CHAR(STRING_ELT(which, 0)));
@@ -1319,10 +1318,7 @@ R_removeTaskCallback(SEXP which)
 	id = asInteger(which) - 1;
 	val = Rf_removeTaskCallbackByIndex(id);
     }
-    status = allocVector(LGLSXP, 1);
-    LOGICAL(status)[0] = val;
-
-    return(status);
+    return ScalarLogical(val);
 }
 
 SEXP
@@ -1423,11 +1419,9 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
     cur = CDR(cur);
     SETCAR(cur, value);
     cur = CDR(cur);
-    SETCAR(cur, tmp = allocVector(LGLSXP, 1));
-    LOGICAL(tmp)[0] = succeeded;
+    SETCAR(cur, ScalarLogical(succeeded));
     cur = CDR(cur);
-    SETCAR(cur, tmp = allocVector(LGLSXP, 1));
-    LOGICAL(tmp)[0] = visible;
+    SETCAR(cur, tmp = ScalarLogical(visible));
     if(useData) {
 	cur = CDR(cur);
 	SETCAR(cur, VECTOR_ELT(f, 1));
@@ -1472,9 +1466,7 @@ R_addTaskCallback(SEXP f, SEXP data, SEXP useData, SEXP name)
 			    INTEGER(index));
 
     if(length(name) == 0) {
-	PROTECT(name = allocVector(STRSXP, 1));
-        SET_STRING_ELT(name, 0, mkChar(el->name));
-
+	PROTECT(name = mkString(el->name));
         setAttrib(index, R_NamesSymbol, name);
 	UNPROTECT(1);
     } else {

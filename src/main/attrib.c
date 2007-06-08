@@ -191,11 +191,9 @@ SEXP R_shortRowNames(SEXP vec, SEXP stype)
 	error(_("invalid '%s' argument"), "type");
 
     if(type >= 1) {
-	int n;
-	ans = allocVector(INTSXP, 1);
-	n = (isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER)
+	int n = (isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER)
 	    ? INTEGER(s)[1] : (isNull(s) ? 0 : LENGTH(s));
-	INTEGER(ans)[0] = (type == 1) ? n : abs(n);
+	ans = ScalarInteger((type == 1) ? n : abs(n));
     }
     return ans;
 }
@@ -565,9 +563,8 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
     else
 	klass = asChar(klass);
     PROTECT(klass);
-    PROTECT(value = allocVector(STRSXP, 1));
-    SET_STRING_ELT(value, 0, klass);
-    UNPROTECT(2);
+    value = ScalarString(klass);
+    UNPROTECT(1);
     return value;
 }
 
@@ -620,14 +617,13 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 	}
 	PROTECT(klass);
 	if(isNull(class0)) {
-	    PROTECT(value = allocVector(STRSXP, 1));
-	    SET_STRING_ELT(value, 0, klass);
+	    value = ScalarString(klass);
 	} else {
-	    PROTECT(value = allocVector(STRSXP, 2));
+	    value = allocVector(STRSXP, 2);
 	    SET_STRING_ELT(value, 0, class0);
 	    SET_STRING_ELT(value, 1, klass);
 	}
-	UNPROTECT(3);
+	UNPROTECT(2);
 	return value;
     }
 }
@@ -1279,8 +1275,7 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
 	if(value == R_NilValue) {
 	    SEXP input = name, classString;
 	    if(isSymbol(name) ) {
-		input = PROTECT(allocVector(STRSXP, 1));
-		SET_STRING_ELT(input, 0, PRINTNAME(name));
+		input = PROTECT(ScalarString(PRINTNAME(name)));
 		classString = GET_CLASS(obj);
 		if(isNull(classString)) {
 		    UNPROTECT(1);

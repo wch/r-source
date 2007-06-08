@@ -374,8 +374,7 @@ SEXP attribute_hidden do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = dpar[i] * (OS->parscale[i]);
 	UNPROTECT(1); /* OS->R_gcall */
-	PROTECT(smsg = allocVector(STRSXP, 1));
-	SET_STRING_ELT(smsg, 0, mkChar(msg));
+	PROTECT(smsg = mkString(msg));
 	SET_VECTOR_ELT(res, 4, smsg);
 	UNPROTECT(1);
     } else

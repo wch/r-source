@@ -233,18 +233,13 @@ SEXP arma0fa(SEXP pG, SEXP inparams)
 	G->s2 = ssq/(double)G->nused;
 	ans = 0.5*(log(ssq/(double)G->nused) + sumlog/(double)G->nused);
     }
-    res = allocVector(REALSXP, 1);
-    REAL(res)[0] = ans;
-    return res;
+    return ScalarReal(ans);
 }
 
 SEXP get_s2(SEXP pG)
 {
-    SEXP res = allocVector(REALSXP, 1);
     GET_STARMA;
-
-    REAL(res)[0] = G->s2;
-    return res;
+    return ScalarReal(G->s2);
 }
 
 SEXP get_resid(SEXP pG)

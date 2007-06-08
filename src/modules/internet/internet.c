@@ -251,7 +251,7 @@ static void doneprogressbar(void *data)
 #define IBUFSIZE 4096
 static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, scmd, sfile, smode, sheaders, agentFun;
+    SEXP scmd, sfile, smode, sheaders, agentFun;
     const char *url, *file, *mode, *headers;
     int quiet, status = 0, cacheOK;
 
@@ -496,10 +496,8 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 	error(_("unsupported URL scheme"));
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = status;
-    UNPROTECT(2);
-    return ans;
+    UNPROTECT(1);
+    return ScalarInteger(status);
 }
 
 

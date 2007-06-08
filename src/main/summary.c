@@ -739,9 +739,8 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 	INTEGER(ans)[0] = indx + 1;
 	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* preserve names */
 	    SEXP ansnam;
-	    PROTECT(ansnam = allocVector(STRSXP, 1));
-	    SET_STRING_ELT(ansnam, 0,
-			   STRING_ELT(getAttrib(sx, R_NamesSymbol), indx));
+	    PROTECT(ansnam = 
+		    ScalarString(STRING_ELT(getAttrib(sx, R_NamesSymbol), indx)));
 	    setAttrib(ans, R_NamesSymbol, ansnam);
 	    UNPROTECT(1);
 	}

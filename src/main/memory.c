@@ -1448,11 +1448,10 @@ static void RunGenCollect(R_size_t size_needed)
 SEXP attribute_hidden do_gctorture(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i;
-    SEXP old = allocVector(LGLSXP, 1);
+    SEXP old = ScalarLogical(!gc_inhibit_torture);
 
     checkArity(op, args);
     i = asLogical(CAR(args));
-    LOGICAL(old)[0] = !gc_inhibit_torture;
     if (i != NA_LOGICAL)
 	gc_inhibit_torture = !i;
     return old;
@@ -1461,11 +1460,9 @@ SEXP attribute_hidden do_gctorture(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i;
-    SEXP old = allocVector(LGLSXP, 1);
-
+    SEXP old = ScalarLogical(gc_reporting);
     checkArity(op, args);
     i = asLogical(CAR(args));
-    LOGICAL(old)[0] = gc_reporting;
     if (i != NA_LOGICAL)
 	gc_reporting = i;
     return old;

@@ -748,16 +748,13 @@ ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
     }
     if (useResid) {
 	PROTECT(res = allocVector(VECSXP, 2));
-	SET_VECTOR_ELT(res, 0, nres = allocVector(REALSXP, 1));
-	REAL(nres)[0] = ssq / (double) (nu);
+	SET_VECTOR_ELT(res, 0, ScalarReal(ssq / (double) (nu)));
 	SET_VECTOR_ELT(res, 1, sResid);
 	UNPROTECT(2);
 	return res;
     } else {
-	nres = allocVector(REALSXP, 1);
-	REAL(nres)[0] = ssq / (double) (nu);
 	UNPROTECT(1);
-	return nres;
+	return ScalarReal(ssq / (double) (nu));
     }
 }
 

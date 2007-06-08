@@ -221,8 +221,7 @@ SEXP attribute_hidden do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 	default:
 	    warning(_("error %d in extracting from zip file"), rc);
 	}
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = rc;
+    PROTECT(ans = ScalarLogical(rc));
     PROTECT(names = lengthgets(names, nnames));
     setAttrib(ans, install("extracted"), names);
     UNPROTECT(3);

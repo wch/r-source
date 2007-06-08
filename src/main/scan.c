@@ -1410,8 +1410,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(rval)[i] = INTEGER(a)[i];
 
 	    setAttrib(rval, R_LevelsSymbol, levs);
-	    PROTECT(a = allocVector(STRSXP, 1));
-	    SET_STRING_ELT(a, 0, mkChar("factor"));
+	    PROTECT(a = mkString("factor"));
 	    setAttrib(rval, R_ClassSymbol, a);
 	    UNPROTECT(3);
 	}
@@ -1471,7 +1470,6 @@ SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     int c, j;
     double first;
     char buffer[MAXELTSIZE], *bufp = buffer;
-    SEXP ans;
     LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
@@ -1503,9 +1501,7 @@ SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     }
-    ans = allocVector(INTSXP, 1);
-    INTEGER(ans)[0] = first;
-    return ans;
+    return ScalarInteger(first);
 }
 
 /* readTableHead(file, nlines, comment.char, blank.lines.skip, quote, sep) */

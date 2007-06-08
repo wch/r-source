@@ -911,8 +911,7 @@ SEXP attribute_hidden do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("fifo"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -1056,8 +1055,7 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("pipe"));
 #ifdef Win32
@@ -1246,8 +1244,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("gzfile"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -1428,8 +1425,7 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("bzfile"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -1775,8 +1771,7 @@ SEXP attribute_hidden do_stdin(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = getConnection(0);
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = 0;
+    PROTECT(ans = ScalarInteger(0));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar(con->class));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -1791,8 +1786,7 @@ SEXP attribute_hidden do_stdout(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = getConnection(R_OutputCon);
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = R_OutputCon;
+    PROTECT(ans = ScalarInteger(R_OutputCon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar(con->class));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -1808,8 +1802,7 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
     Rconnection con = getConnection(2);
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = 2;
+    PROTECT(ans = ScalarInteger(2));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar(con->class));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -2147,8 +2140,7 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("unsupported mode"));
     /* already opened */
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("textConnection"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -2233,8 +2225,7 @@ SEXP attribute_hidden do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("sockconn"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -2288,8 +2279,7 @@ SEXP attribute_hidden do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("unz"));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -2343,7 +2333,6 @@ SEXP attribute_hidden do_open(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_isopen(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     Rconnection con;
-    SEXP ans;
     int rw, res;
 
     checkArity(op, args);
@@ -2356,40 +2345,29 @@ SEXP attribute_hidden do_isopen(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2: res = res & con->canwrite; break;
     default: error(_("unknown 'rw' value"));
     }
-    PROTECT(ans = allocVector(LGLSXP, 1));
-    LOGICAL(ans)[0] = res;
-    UNPROTECT(1);
-    return ans;
+    return ScalarLogical(res);
 }
 
 SEXP attribute_hidden do_isincomplete(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     Rconnection con;
-    SEXP ans;
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
 	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
-    PROTECT(ans = allocVector(LGLSXP, 1));
-    LOGICAL(ans)[0] = con->incomplete != FALSE;
-    UNPROTECT(1);
-    return ans;
+    return ScalarLogical(con->incomplete != FALSE);
 }
 
 SEXP attribute_hidden do_isseekable(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     Rconnection con;
-    SEXP ans;
 
     checkArity(op, args);
     if(!inherits(CAR(args), "connection"))
 	error(_("'con' is not a connection"));
     con = getConnection(asInteger(CAR(args)));
-    PROTECT(ans = allocVector(LGLSXP, 1));
-    LOGICAL(ans)[0] = con->canseek != FALSE;
-    UNPROTECT(1);
-    return ans;
+    return ScalarLogical(con->canseek != FALSE);
 }
 
 static void con_close1(Rconnection con)
@@ -2450,7 +2428,6 @@ SEXP attribute_hidden do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int origin, rw;
-    SEXP ans;
     Rconnection con = NULL;
     double where;
 
@@ -2462,10 +2439,7 @@ SEXP attribute_hidden do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
     where = asReal(CADR(args));
     origin = asInteger(CADDR(args));
     rw = asInteger(CADDDR(args));
-    PROTECT(ans = allocVector(REALSXP, 1));
-    REAL(ans)[0] = con->seek(con, where, origin, rw);
-    UNPROTECT(1);
-    return ans;
+    return ScalarReal(con->seek(con, where, origin, rw));
 }
 
 /* truncate(con) */
@@ -3527,13 +3501,9 @@ SEXP attribute_hidden do_pushback(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     Rconnection con = NULL;
-    SEXP ans;
 
     con = getConnection(asInteger(CAR(args)));
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = con->nPushBack;
-    UNPROTECT(1);
-    return ans;
+    return ScalarInteger(con->nPushBack);
 }
 
 SEXP attribute_hidden do_clearpushback(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -3651,17 +3621,13 @@ SEXP attribute_hidden do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP attribute_hidden do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans;
     int errcon;
     checkArity(op, args);
 
     errcon = asLogical(CAR(args));
     if(errcon == NA_LOGICAL)
 	error(_("invalid value for '%s'"), "type");
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = errcon ? R_SinkNumber : R_ErrorCon;
-    UNPROTECT(1);
-    return ans;
+    return ScalarInteger(errcon ? R_SinkNumber : R_ErrorCon);
 }
 
 
@@ -3713,8 +3679,7 @@ do_getconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	!Connections[what]) error(_("there is no connection %d"), what);
 
     con = Connections[what];
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = what;
+    PROTECT(ans = ScalarInteger(what));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar(con->class));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -3853,8 +3818,7 @@ SEXP attribute_hidden do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = ncon;
+    PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar(class2));
     SET_STRING_ELT(class, 1, mkChar("connection"));
@@ -4222,8 +4186,7 @@ SEXP attribute_hidden do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(incon->isopen) new->open(new);
     /* show we do encoding here */
 
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = icon;
+    PROTECT(ans = ScalarInteger(icon));
     PROTECT(class = allocVector(STRSXP, 2));
     SET_STRING_ELT(class, 0, mkChar("gzcon"));
     SET_STRING_ELT(class, 1, mkChar("connection"));

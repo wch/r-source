@@ -351,6 +351,8 @@ BUG FIXES
 
     o	methods("Math") did not work if 'methods' was not attached.
 
+    o	deriv() was creating results with double (and not integer) dims.
+
 
 
 

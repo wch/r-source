@@ -115,35 +115,27 @@ SEXP attribute_hidden do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_devcur(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP cd = allocVector(INTSXP, 1);
     checkArity(op, args);
-    INTEGER(cd)[0] = curDevice() + 1;
-    return cd;
+    return ScalarInteger(curDevice() + 1);
 }
 
 SEXP attribute_hidden do_devnext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP nd = allocVector(INTSXP, 1);
     checkArity_length;
-    INTEGER(nd)[0] = nextDevice(INTEGER(CAR(args))[0] - 1) + 1;
-    return nd;
+    return ScalarInteger( nextDevice(INTEGER(CAR(args))[0] - 1) + 1 );
 }
 
 SEXP attribute_hidden do_devprev(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP pd = allocVector(INTSXP, 1);
     checkArity_length;
-    INTEGER(pd)[0] = prevDevice(INTEGER(CAR(args))[0] - 1) + 1;
-    return pd;
+    return ScalarInteger( prevDevice(INTEGER(CAR(args))[0] - 1) + 1 );
 }
 
 SEXP attribute_hidden do_devset(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     int devNum = INTEGER(CAR(args))[0] - 1;
-    SEXP sd = allocVector(INTSXP, 1);
     checkArity(op, args);
-    INTEGER(sd)[0] = selectDevice(devNum) + 1;
-    return sd;
+    return ScalarInteger( selectDevice(devNum) + 1 );
 }
 
 SEXP attribute_hidden do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -207,8 +199,7 @@ SEXP FixupPch(SEXP pch, int dflt)
 
     n = length(pch);
     if (n == 0) {
-	ans = allocVector(INTSXP, 1);
-	INTEGER(ans)[0] = dflt;
+	ans = ScalarInteger(dflt);
     }
     else if (isList(pch)) {
 	ans = allocVector(INTSXP, n);
@@ -268,8 +259,7 @@ SEXP FixupLty(SEXP lty, int dflt)
     SEXP ans;
     n = length(lty);
     if (n == 0) {
-	ans = allocVector(INTSXP, 1);
-	INTEGER(ans)[0] = dflt;
+	ans = ScalarInteger(dflt);
     }
     else {
 	ans = allocVector(INTSXP, n);
@@ -287,10 +277,8 @@ SEXP FixupLwd(SEXP lwd, double dflt)
     SEXP ans = NULL;
 
     n = length(lwd);
-    if (n == 0) {
-	ans = allocVector(REALSXP, 1);
-	REAL(ans)[0] = dflt;
-    }
+    if (n == 0)
+	ans = ScalarReal(dflt);
     else {
 	PROTECT(lwd = coerceVector(lwd, REALSXP));
 	n = length(lwd);
@@ -313,8 +301,7 @@ SEXP FixupFont(SEXP font, int dflt)
     SEXP ans = R_NilValue;/* -Wall*/
     n = length(font);
     if (n == 0) {
-	ans = allocVector(INTSXP, 1);
-	INTEGER(ans)[0] = dflt;
+	ans = ScalarInteger(dflt);
     }
     else if (isLogical(font)) {
 	ans = allocVector(INTSXP, n);
@@ -363,8 +350,7 @@ SEXP FixupCol(SEXP col, unsigned int dflt)
     SEXP ans;
     n = length(col);
     if (n == 0) {
-	PROTECT(ans = allocVector(INTSXP, 1));
-	INTEGER(ans)[0] = dflt;
+	PROTECT(ans = ScalarInteger(dflt));
     }
     else {
 	ans = PROTECT(allocVector(INTSXP, n));
@@ -3377,15 +3363,13 @@ SEXP attribute_hidden do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	SETCADDDR(saveans, y);
 	SETCAD4R(saveans, Offset);
 	SETCAD4R(CDR(saveans), l);
-	PROTECT(draw = allocVector(LGLSXP, 1));
-	LOGICAL(draw)[0] = plot;
-	SETCAD4R(CDDR(saveans), draw);
+	SETCAD4R(CDDR(saveans), ScalarLogical(plot));
 
 	/* If we are recording, save enough information to be able to
 	   redraw the text labels beside identified points */
 	if (GRecording(call, dd))
 	    recordGraphicOperation(op, saveans, dd);
-	UNPROTECT(7);
+	UNPROTECT(6);
 
 	R_Visible = TRUE;
 	return ans;

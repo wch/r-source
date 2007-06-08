@@ -120,14 +120,10 @@ SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event,
 	if (buttons & rightButton) INTEGER(bvec)[i++] = 2;
 	SETLENGTH(bvec, i);
 
-	PROTECT(sx = allocVector(REALSXP, 1));
-	REAL(sx)[0] = (x - dd->left) / (dd->right - dd->left);
-	PROTECT(sy = allocVector(REALSXP, 1));
-	REAL(sy)[0] = (y - dd->bottom) / (dd->top - dd->bottom);
-
+	PROTECT(sx = ScalarReal( (x - dd->left) / (dd->right - dd->left) ));
+	PROTECT(sy = ScalarReal((y - dd->bottom) / (dd->top - dd->bottom) ));
 	PROTECT(temp = lang4(handler, bvec, sx, sy));
 	PROTECT(result = eval(temp, eventRho));
-
 	R_FlushConsole();
 	UNPROTECT(5);    
     }
@@ -154,17 +150,12 @@ SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey,
     	
     result = NULL;
     
-    if (handler != R_UnboundValue && handler != R_NilValue) {   
-    
-    	PROTECT(skey = allocVector(STRSXP, 1));
-    	if (keyname) SET_STRING_ELT(skey, 0, mkChar(keyname));
-    	else SET_STRING_ELT(skey, 0, mkChar(keynames[rkey]));
-    
+    if (handler != R_UnboundValue && handler != R_NilValue) {
+	PROTECT(skey = mkString(keyname ? keyname : keynames[rkey]));
     	PROTECT(temp = lang2(handler, skey));
-    	PROTECT(result = eval(temp, eventRho));
+    	PROTECT(result = eval(temp, eventRho)); /* PROTECT not needed? */
     	R_FlushConsole();
-    	UNPROTECT(3);
-    	
+    	UNPROTECT(2);
     }
     dd->gettingEvent = TRUE;
     return result;

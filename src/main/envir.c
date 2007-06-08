@@ -1668,9 +1668,7 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    ginherits = 0;
 	else
 	    ginherits = 1;
-	rval = allocVector(LGLSXP, 1);
-	LOGICAL(rval)[0] = ginherits;
-	return rval;
+	return ScalarLogical(ginherits);
     }
 }
 

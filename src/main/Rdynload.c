@@ -946,8 +946,7 @@ Rf_MakeNativeSymbolRef(DL_FUNC f)
   PROTECT(ref = R_MakeExternalPtr((void *) f, Rf_install("native symbol"),
 				  R_NilValue));
 
-  PROTECT(klass = allocVector(STRSXP, 1));
-  SET_STRING_ELT(klass, 0, mkChar("NativeSymbol"));
+  PROTECT(klass = mkString("NativeSymbol"));
   setAttrib(ref, R_ClassSymbol, klass);
 
   UNPROTECT(2);
@@ -980,8 +979,7 @@ Rf_MakeRegisteredNativeSymbol(R_RegisteredNativeSymbol *symbol)
                                   R_NilValue));
   R_RegisterCFinalizer(ref, freeRegisteredNativeSymbolCopy);
 
-  PROTECT(klass = allocVector(STRSXP, 1));
-  SET_STRING_ELT(klass, 0, mkChar("RegisteredNativeSymbol"));
+  PROTECT(klass = mkString("RegisteredNativeSymbol"));
   setAttrib(ref, R_ClassSymbol, klass);
 
   UNPROTECT(2);

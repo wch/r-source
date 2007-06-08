@@ -137,8 +137,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 		buf++;
 	}
         UNPROTECT(1);
-        PROTECT(ans = allocVector(STRSXP, 1));
-        SET_STRING_ELT(ans, 0, mkChar(cbuf));
+        PROTECT(ans = mkString(cbuf));
         Free(cbuf);
     }
     /* We would only know the encoding of an element of the answer 

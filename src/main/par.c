@@ -763,17 +763,13 @@ static SEXP Query(const char *what, DevDesc *dd)
 	LOGICAL(value)[0] = Rf_dpptr(dd)->ask;
     }
     else if (streql(what, "bg")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->bg)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->bg));
     }
     else if (streql(what, "bty")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->bty;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "cex")) {
 	value = allocVector(REALSXP, 1);
@@ -801,29 +797,19 @@ static SEXP Query(const char *what, DevDesc *dd)
 	REAL(value)[1] = Rf_dpptr(dd)->cra[1]*Rf_dpptr(dd)->ipr[1];
     }
     else if (streql(what, "col")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->col)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->col));
     }
     else if (streql(what, "col.main")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colmain)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->colmain));
     }
     else if (streql(what, "col.lab")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->collab)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->collab));
     }
     else if (streql(what, "col.sub")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colsub)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->colsub));
     }
     else if (streql(what, "col.axis")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->colaxis)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->colaxis));
     }
     else if (streql(what, "cra")) {
 	value = allocVector(REALSXP, 2);
@@ -856,14 +842,10 @@ static SEXP Query(const char *what, DevDesc *dd)
 	INTEGER(value)[0] = Rf_dpptr(dd)->err;
     }
     else if (streql(what, "family")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(Rf_dpptr(dd)->family));
-	UNPROTECT(1);
+	value = mkString(Rf_dpptr(dd)->family);
     }
     else if (streql(what, "fg")) {
-	PROTECT(value = allocVector(STRSXP, 1));
-	SET_STRING_ELT(value, 0, mkChar(col2name(Rf_dpptr(dd)->fg)));
-	UNPROTECT(1);
+	value = mkString(col2name(Rf_dpptr(dd)->fg));
     }
     else if (streql(what, "fig")) {
 	value = allocVector(REALSXP, 4);
@@ -1002,18 +984,14 @@ static SEXP Query(const char *what, DevDesc *dd)
 	REAL(value)[3] = Rf_dpptr(dd)->omi[3];
     }
     else if (streql(what, "pch")) {
-	char buf[2];
 	if(Rf_dpptr(dd)->pch < ' ' || Rf_dpptr(dd)->pch > 255) {
-	    PROTECT(value = allocVector(INTSXP, 1));
-	    INTEGER(value)[0] = Rf_dpptr(dd)->pch;
-	}
-	else {
-	    PROTECT(value = allocVector(STRSXP, 1));
+	    value = ScalarInteger(Rf_dpptr(dd)->pch);
+	} else {
+	    char buf[2];
 	    buf[0] = Rf_dpptr(dd)->pch;
 	    buf[1] = '\0';
-	    SET_STRING_ELT(value, 0, mkChar(buf));
+	    value = mkString(buf);
 	}
-	UNPROTECT(1);
     }
     else if (streql(what, "pin")) {
 	value = allocVector(REALSXP, 2);
@@ -1033,11 +1011,9 @@ static SEXP Query(const char *what, DevDesc *dd)
     }
     else if (streql(what, "pty")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->pty;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "smo")) {
 	value = allocVector(REALSXP, 1);
@@ -1082,19 +1058,15 @@ static SEXP Query(const char *what, DevDesc *dd)
     }
     else if (streql(what, "xaxs")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->xaxs;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "xaxt")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->xaxt;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "xlog")) {
 	value = allocVector(LGLSXP, 1);
@@ -1115,19 +1087,15 @@ static SEXP Query(const char *what, DevDesc *dd)
     }
     else if (streql(what, "yaxs")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->yaxs;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "yaxt")) {
 	char buf[2];
-	PROTECT(value = allocVector(STRSXP, 1));
 	buf[0] = Rf_dpptr(dd)->yaxt;
 	buf[1] = '\0';
-	SET_STRING_ELT(value, 0, mkChar(buf));
-	UNPROTECT(1);
+	value = mkString(buf);
     }
     else if (streql(what, "ylog")) {
 	value = allocVector(LGLSXP, 1);
