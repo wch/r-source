@@ -224,12 +224,7 @@ drawDetails.polyline <- function(x, recording=TRUE) {
             n <- length(unique(x$id))
             id <- x$id
         }
-        index <- vector("list", n)
-        count <- 1
-        for (i in unique(id)) {
-            index[[count]] <- as.integer((1:length(x$x))[id == i])
-            count <- count + 1
-        }
+        index <- split(as.integer(1:length(x$x)), id)
         grid.Call.graphics("L_lines", x$x, x$y, index, x$arrow)
     }
 }
@@ -576,12 +571,7 @@ drawDetails.polygon <- function(x, recording=TRUE) {
       n <- length(unique(x$id))
       id <- x$id
     }
-    index <- vector("list", n)
-    count <- 1
-    for (i in unique(id)) {
-      index[[count]] <- as.integer((1:length(x$x))[id == i])
-      count <- count + 1
-    }
+    index <- split(as.integer(1:length(x$x)), id)
     grid.Call.graphics("L_polygon", x$x, x$y, index)
   }
 }
@@ -691,13 +681,7 @@ xsplineIndex <- function(x) {
       n <- length(unique(x$id))
       id <- x$id
     }
-    index <- vector("list", n)
-    count <- 1
-    for (i in unique(id)) {
-      index[[count]] <- as.integer((1:length(x$x))[id == i])
-      count <- count + 1
-    }
-    index
+    split(as.integer(1:length(x$x)), id)
   }
 }
 
