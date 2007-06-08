@@ -315,6 +315,9 @@ C-LEVEL FACILITIES
     o   asLogical, asInteger, asReal and asComplex now accept STRSXP
 	and CHARSXP arguments.
 
+    o   New R_GE_str2col() exported via GraphicsEngine.h for 
+        external device developers.
+
 
 INSTALLATION
 

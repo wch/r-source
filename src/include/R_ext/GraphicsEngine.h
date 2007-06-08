@@ -38,9 +38,10 @@ extern "C" {
  *
  * Version 1:  Introduction of the version number.
  * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
+ * Version 3:  R_GE_str2col() added to API.
  */
 
-#define R_GE_version 2
+#define R_GE_version 3
 
 int R_GE_getVersion();
 
@@ -294,6 +295,8 @@ R_GE_lineend LENDpar(SEXP value, int ind);
 SEXP LENDget(R_GE_lineend lend);
 R_GE_linejoin LJOINpar(SEXP value, int ind);
 SEXP LJOINget(R_GE_linejoin ljoin);
+
+unsigned int R_GE_str2col(const char *s);
 
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
 void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd);

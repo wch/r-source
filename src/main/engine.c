@@ -593,6 +593,20 @@ SEXP LJOINget(R_GE_linejoin ljoin)
 }
 
 /****************************************************************
+ * Code to convert string colour name/description to internal colour
+ ****************************************************************
+ */
+
+unsigned int R_GE_str2col(const char *s) {
+    /*
+     * Call the one in graphics.c 
+     * Ideally, move colour stuff from graphics.c to here
+     * and have the traditional graphics code call this.
+     */
+    return str2col(s);
+}
+
+/****************************************************************
  * Code to retrieve current clipping rect from device
  ****************************************************************
  */
