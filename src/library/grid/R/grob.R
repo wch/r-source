@@ -535,6 +535,12 @@ grid.edit <- function(gPath, ..., strict=FALSE,
   editDLfromGPath(gPath, specs, strict, grep, global, redraw)
 }
 
+# Just different defaults to grid.edit for convenience
+# Justified by usage patterns of Hadley Wickham
+grid.gedit <- function(..., grep=TRUE, global=TRUE) {
+    grid.edit(..., grep=grep, global=global)
+}
+
 # Edit a (child of a ...) grob
 editGrob <- function(grob, gPath=NULL, ..., strict=FALSE,
                      grep=FALSE, global=FALSE) {

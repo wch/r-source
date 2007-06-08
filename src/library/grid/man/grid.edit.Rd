@@ -1,5 +1,6 @@
 \name{grid.edit}
 \alias{grid.edit}
+\alias{grid.gedit}
 \alias{editGrob}
 \title{Edit the Description of a Grid Graphical Object}
 \description{
@@ -8,7 +9,10 @@
 }
 \usage{
 grid.edit(gPath, ..., strict = FALSE, grep = FALSE, global = FALSE,
-          allDevices = FALSE, redraw = TRUE) 
+          allDevices = FALSE, redraw = TRUE)
+
+grid.gedit(..., grep = TRUE, global = TRUE)
+
 editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
          global = FALSE) 
 }
@@ -48,7 +52,9 @@ editGrob(grob, gPath = NULL, ..., strict = FALSE, grep = FALSE,
   Both functions call \code{editDetails} to allow a grob to perform
   custom actions and \code{validDetails} to check that the modified grob
   is still coherent.
-  
+
+  \code{grid.gedit} (\code{g} for global) is just a convenience wrapper for
+  \code{grid.edit} with different defaults.
 }
 \value{
   \code{editGrob} returns a grob object;  \code{grid.edit} returns \code{NULL}.
