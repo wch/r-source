@@ -1,7 +1,7 @@
 pcre_internal.h includes the relevant definitions that configure would
 make.
 
-We do not define SUPPORT_UCP and so leave out the files it needs.
+SUPPORT_UCP is only used for UTF-8 locales, so only built on Unix-alikes.
 
 diff -u pcre-7.1/pcre_internal.h ../extra/pcre/pcre_internal.h
 --- pcre-7.1/pcre_internal.h	2007-04-18 10:26:26.000000000 +0100
@@ -16,40 +16,16 @@ diff -u pcre-7.1/pcre_internal.h ../extra/pcre/pcre_internal.h
 +#ifndef NEWLINE
 +#define NEWLINE '\n'
 +#define LINK_SIZE 2
-+#define POSIX_MALLOC_THRESHOLD 10
 +#define MATCH_LIMIT 10000000
-+#define MAX_NAME_SIZE 32
-+#define MAX_NAME_COUNT 10000
-+#define MAX_DUPLENGTH 30000
 +#define MATCH_LIMIT_RECURSION MATCH_LIMIT
++#define MAX_DUPLENGTH 30000
++#define MAX_NAME_COUNT 10000
++#define MAX_NAME_SIZE 32
++#define POSIX_MALLOC_THRESHOLD 10
++#ifdef SUPPORT_UTF8
++#define SUPPORT_UCP
++#endif
 +#endif
  
  /* Standard C headers plus the external interface definition. The only time
  setjmp and stdarg are used is when NO_RECURSE is set. */
-@@ -235,7 +246,7 @@
- values. */
-
- #include <pcre.h>
--#include "ucp.h"
-+/* #include "ucp.h" */
-
- /* When compiling for use with the Virtual Pascal compiler, these functions
- need to have their names changed. PCRE must be compiled with the -DVPCOMPAT
-diff -u pcre-7.1/pcre_tables.c ../extra/pcre/pcre_tables.c
---- pcre-7.1/pcre_tables.c      2007-03-09 15:27:02.000000000 +0000
-+++ ../extra/pcre/pcre_tables.c 2007-05-13 22:24:28.000000000 +0100
-@@ -83,6 +83,7 @@
-   2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-   3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5 };
-
-+#ifdef UNUSED
- /* This table translates Unicode property names into type and code values. It
- is searched by binary chop, so must be in collating sequence of name. */
-
-@@ -195,6 +196,7 @@
- };
-
- const int _pcre_utt_size = sizeof(_pcre_utt)/sizeof(ucp_type_table);
-+#endif
-
- #endif  /* SUPPORT_UTF8 */
