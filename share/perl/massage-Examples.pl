@@ -138,7 +138,7 @@ foreach my $file (@Rfiles) {
     }
     close(FILE);
     if ($have_examples) {
-	print "cleanEx(); nameEx(\"$nm\");\n";
+	print "cleanEx(); nameEx(\"$nm\")\n";
     }
 
     print "### * $nm\n\n";
