@@ -205,6 +205,7 @@
  R_FileMtime
  R_FreeSEXP
  R_FreeStringBuffer
+ R_FreeStringBufferL
  R_FunTab
  R_GetMaxNSize
  R_GetMaxVSize
