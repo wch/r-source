@@ -43,7 +43,7 @@ static int allocated_n;
 
 /* The idea is to allocate w of size SIGNRANK_MAX on the first small call, and
    to reallocate only for n > SIGNRANK_MAX, although for some reason
-   realloc is not used */
+   realloc is not used (possibly as it does not zero?) */
 
 static void
 w_free(int n)
@@ -71,11 +71,12 @@ w_init_maybe(int n)
 	w_free(allocated_n);
 
     if (!w) {
-	allocated_n = n = imax2(n, SIGNRANK_MAX);
+	n = imax2(n, SIGNRANK_MAX);
 	w = (double **) calloc(n + 1, sizeof(double *));
 #ifdef MATHLIB_STANDALONE
 	if (!w) MATHLIB_ERROR("%s", _("signrank allocation error"));
 #endif
+	allocated_n = n;
     }
 }
 
