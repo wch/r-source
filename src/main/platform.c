@@ -326,7 +326,9 @@ SEXP attribute_hidden do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 
 #if defined(BUFSIZ) && (BUFSIZ > 512)
-/* OS's buffer size in stdio.h, probably */
+/* OS's buffer size in stdio.h, probably.
+   Windows has 512, Solaris 1024, glibc 8192
+ */
 # define APPENDBUFSIZE BUFSIZ
 #else
 # define APPENDBUFSIZE 512

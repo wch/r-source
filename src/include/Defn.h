@@ -222,15 +222,25 @@ extern int putenv(char *string);
 #endif
 
 
-/* Maximal length of an entire file name */
+/* Maximal length in bytes of an entire path name.
+   POSIX has required this to be at least 255/256, and X/Open at least 1024.
+   Solaris has 1024, Linux glibc has 4192.
+   File names are limited to FILENAME_MAX bytes (usually the same as PATH_MAX)
+   or NAME_MAX (often 255/256).
+ */
 #if !defined(PATH_MAX)
 # if defined(HAVE_SYS_PARAM_H)
 #  include <sys/param.h>
 # endif
 # if !defined(PATH_MAX)
 #  if defined(MAXPATHLEN)
+/* Try BSD name */
 #    define PATH_MAX MAXPATHLEN
 #  elif defined(Win32)
+/* seems this is now defined by MinGW to be 259, whereas FILENAME_MAX
+   and MAX_PATH are 260.  It is not clear that this really is in bytes,
+   but might be chars for the Unicode interfaces.
+*/
 #    define PATH_MAX 260
 #  else
 /* quite possibly unlimited, so we make this large, and test when used */
