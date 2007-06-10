@@ -700,13 +700,8 @@ glob3(Char *pathbuf, Char *pathbuf_last, Char *pathend, Char *pathend_last,
     return(err);
 }
 
-extern void *R_chk_calloc(size_t, size_t);
-extern void *R_chk_realloc(void *, size_t);
-extern void R_chk_free(void *);
 
-#define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
-#define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
-#define Free(p)        (R_chk_free( (void *)(p) ), (p) = NULL)
+#include <R_ext/RS.h> /* for Calloc, Realloc, Free */
 
 /*
  * Extend the gl_pathv member of a glob_t structure to accomodate a new item,
