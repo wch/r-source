@@ -30,7 +30,9 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-#include <R_ext/RS.h>           /* CallocCharBuf, Free */
+
+#include "RBufferUtils.h"
+static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 {
@@ -65,11 +67,10 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
 	    vs = strlen(CHAR(STRING_ELT(ls, i)));
 	    for (j = 0; j < nlt; j++) {
 		vt = strlen(CHAR(STRING_ELT(lt, j)));
-                cbuf = CallocCharBuf(vs + vt + 1);
+                cbuf = R_AllocStringBuffer(vs + vt + 1, &cbuff);
 		sprintf(cbuf, "%s:%s",
 			CHAR(STRING_ELT(ls, i)), CHAR(STRING_ELT(lt, j)));
                 SET_STRING_ELT(la, k, mkChar(cbuf));
-                Free(cbuf);
 		k++;
 	    }
 	}
@@ -79,6 +80,7 @@ static SEXP cross_colon(SEXP call, SEXP s, SEXP t)
     PROTECT(la = mkString("factor"));
     setAttrib(a, R_ClassSymbol, la);
     UNPROTECT(2);
+    R_FreeStringBufferL(&cbuff);
     return(a);
 }
 

@@ -139,41 +139,6 @@ static void vec2buff(SEXP, LocalParseData *);
 static void linebreak(Rboolean *lbreak, LocalParseData *);
 static void deparse2(SEXP, SEXP, LocalParseData *);
 
-void attribute_hidden
-R_AllocStringBuffer(int blen, DeparseBuffer *buf)
-{
-    if(blen >= 0) {
-	if(blen*sizeof(char) < buf->bufsize) return;
-	blen = (blen+1)*sizeof(char);
-	if(blen < buf->defaultSize) blen = buf->defaultSize;
-	if(buf->data == NULL){
-		buf->data = (char *) malloc(blen);
-		buf->data[0] = '\0';
-	} else
-		buf->data = (char *) realloc(buf->data, blen);
-	buf->bufsize = blen;
-	if(!buf->data) {
-		buf->bufsize = 0;
-		error(_("could not allocate memory in C function 'R_AllocStringBuffer'"));
-	}
-    } else {
-	if(buf->bufsize == buf->defaultSize) return;
-	free(buf->data);
-	buf->data = (char *) malloc(buf->defaultSize);
-	buf->bufsize = buf->defaultSize;
-    }
-}
-
-void attribute_hidden
-R_FreeStringBuffer(DeparseBuffer *buf)
-{
-    if (buf->data != NULL) {
-	free(buf->data);
-	buf->bufsize = 0;
-	buf->data = NULL;
-    }
-}
-
 SEXP attribute_hidden do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ca1;
@@ -1141,10 +1106,6 @@ static void print2buff(const char *strng, LocalParseData *d)
     tlen = strlen(strng);
     R_AllocStringBuffer(0, &(d->buffer));
     bufflen = strlen(d->buffer.data);
-    /*if (bufflen + tlen > BUFSIZE) {
-	buff[0] = '\0';
-	error("string too long in deparse");
-	}*/
     R_AllocStringBuffer(bufflen + tlen, &(d->buffer));
     strcat(d->buffer.data, strng);
     d->len += tlen;

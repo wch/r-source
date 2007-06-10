@@ -33,9 +33,9 @@
 #endif
 
 #include <Defn.h>
-#include <R_ext/RS.h>  /* for Calloc/Free */
 #include <Fileio.h>
 #include <Rconnections.h>
+
 static R_INLINE int imin2(int x, int y)
 {
     return (x < y) ? x : y;

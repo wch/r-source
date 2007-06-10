@@ -2948,3 +2948,50 @@ SEXP attribute_hidden do_Rprofmem(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #endif /* R_MEMORY_PROFILING */
+
+/* RBufferUtils, moved from deparse.c */
+
+#include "RBufferUtils.h"
+
+attribute_hidden
+void *R_AllocStringBuffer(size_t blen, R_StringBuffer *buf)
+{
+    size_t blen1, bsize = buf->defaultSize;
+
+    if(blen * sizeof(char) < buf->bufsize) return buf->data;
+    blen1 = blen = (blen + 1) * sizeof(char);
+    blen = (blen / bsize) * bsize;
+    if(blen < blen1) blen += bsize;
+
+    if(buf->data == NULL) {
+	buf->data = (char *) malloc(blen);
+	buf->data[0] = '\0';
+    } else
+	buf->data = (char *) realloc(buf->data, blen);
+    buf->bufsize = blen;
+    if(!buf->data) {
+	buf->bufsize = 0;
+	error(_("could not allocate memory in C function 'R_AllocStringBuffer'"));
+    }
+    return buf->data;
+}
+
+void attribute_hidden
+R_FreeStringBuffer(R_StringBuffer *buf)
+{
+    if (buf->data != NULL) {
+	free(buf->data);
+	buf->bufsize = 0;
+	buf->data = NULL;
+    }
+}
+
+void attribute_hidden
+R_FreeStringBufferL(R_StringBuffer *buf)
+{
+    if (buf->bufsize > buf->defaultSize) {
+	free(buf->data);
+	buf->bufsize = 0;
+	buf->data = NULL;
+    }
+}

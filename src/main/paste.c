@@ -32,8 +32,10 @@
 
 #include "Defn.h"
 #define imax2(x, y) ((x < y) ? y : x)
+
 #include "Print.h"
-#include <R_ext/RS.h>           /* CallocCharBuf, Free */
+#include "RBufferUtils.h"
+static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 /*  .Internal(paste(args, sep, collapse))
  *
@@ -97,7 +99,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 							  i % k)));
 	}
 	pwidth += (nx - 1) * sepw;
-	cbuf = buf = CallocCharBuf(pwidth);
+	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	for (j = 0; j < nx; j++) {
 	    k = length(VECTOR_ELT(x, j));
 	    if (k > 0) {
@@ -111,7 +113,6 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	SET_STRING_ELT(ans, i, mkChar(cbuf));
-        Free(cbuf);
     }
 
     /* Now collapse, if required. */
@@ -125,7 +126,7 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < nx; i++)
 	    pwidth += strlen(CHAR(STRING_ELT(ans, i)));
 	pwidth += (nx - 1) * sepw;
-	cbuf = buf = CallocCharBuf(pwidth);
+	cbuf = buf = R_AllocStringBuffer(pwidth, &cbuff);
 	for (i = 0; i < nx; i++) {
 	    if(i > 0) {
 	        strcpy(buf, csep);
@@ -138,11 +139,11 @@ SEXP attribute_hidden do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
         UNPROTECT(1);
         PROTECT(ans = mkString(cbuf));
-        Free(cbuf);
     }
     /* We would only know the encoding of an element of the answer 
        if we knew the encoding of all the components, so we don't
        bother to mark it here */
+    R_FreeStringBufferL(&cbuff);
     UNPROTECT(1);
     return ans;
 }

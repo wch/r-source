@@ -414,9 +414,10 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
        but it turns 2/3 into 6, and 4 (and perhaps 5/6) into 10.
        Let's be wasteful here (the worst case appears to be an MBCS with
        two bytes for an upper-plane Unicode point output as ten bytes).
+
+       +2 allows for quotes,
      */
-    R_AllocStringBuffer(imax2(5*cnt+2, w), buffer); /* +2 allows for quotes */
-    q = buffer->data;
+    q = R_AllocStringBuffer(imax2(5*cnt+2, w), buffer);
     b = w - i - (quote ? 2 : 0); /* total amount of padding */
     if(justify == Rprt_adj_none) b = 0;
     if(b > 0 && justify != Rprt_adj_left) {

@@ -497,7 +497,7 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(obj == (iconv_t)(-1))
 	    error(_("unsupported conversion"));
 	PROTECT(ans = duplicate(x));
-	R_AllocStringBuffer(0, &cbuff);  /* just default */
+	R_AllocStringBuffer(0, &cbuff);  /* 0 -> default */
 	for(i = 0; i < LENGTH(x); i++) {
 	top_of_loop:
 	    inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
@@ -574,7 +574,8 @@ void * Riconv_open (const char* tocode, const char* fromcode)
 size_t Riconv (void *cd, const char **inbuf, size_t *inbytesleft,
 	       char **outbuf, size_t *outbytesleft)
 {
-    return iconv((iconv_t) cd, (char **) inbuf, inbytesleft, outbuf, outbytesleft);
+    return iconv((iconv_t) cd, (char **) inbuf, inbytesleft, 
+		 outbuf, outbytesleft);
 }
 
 int Riconv_close (void *cd)

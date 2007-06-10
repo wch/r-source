@@ -322,8 +322,8 @@ do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
     pcre *re_pcre;
     const unsigned char *tables;
 
-    /* To make this thread-safe remove static here and remove
-       test on R_FreeStringBuffer below */
+    /* To make this thread-safe remove static here use
+       R_FreeStringBuffer below */
     static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 #ifdef SUPPORT_UTF8
@@ -456,7 +456,7 @@ do_gpregexpr(const char *spat, SEXP text, int igcase_opt, int useBytes)
         UNPROTECT(2);
     }
     /* see comment above */
-    if(cbuff.bufsize != MAXELTSIZE) R_FreeStringBuffer(&cbuff);
+    R_FreeStringBufferL(&cbuff);
     pcre_free(re_pcre);
     pcre_free((void *)tables);
     UNPROTECT(3);

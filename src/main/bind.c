@@ -31,7 +31,9 @@
 
 #include <Defn.h>
 #define imax2(x, y) ((x < y) ? y : x)
-#include <R_ext/RS.h>           /* CallocCharBuf, Free */
+
+#include "RBufferUtils.h"
+static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 #define LIST_ASSIGN(x) {SET_VECTOR_ELT(data->ans_ptr, data->ans_length, x); data->ans_length++;}
 
@@ -460,10 +462,9 @@ static SEXP NewBase(SEXP base, SEXP tag)
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) { /* test of length */
 	const char *sb = translateChar(base), *st = translateChar(tag);
-        cbuf = CallocCharBuf(strlen(st) + strlen(sb) + 1);
+        cbuf = R_AllocStringBuffer(strlen(st) + strlen(sb) + 1, &cbuff);
 	sprintf(cbuf, "%s.%s", sb, st);
         ans = mkChar(cbuf);
-        Free(cbuf);
     }
     else if (*CHAR(tag)) {
 	ans = tag;
@@ -490,26 +491,23 @@ static SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) {
 	const char *sb = translateChar(base), *st = translateChar(tag);
-	cbuf = CallocCharBuf(strlen(sb) + strlen(st) + 1);
+	cbuf = R_AllocStringBuffer(strlen(sb) + strlen(st) + 1, &cbuff);
 	sprintf(cbuf, "%s.%s", sb, st);
 	ans = mkChar(cbuf);
-        Free(cbuf);
     }
     else if (*CHAR(base)) {
 	const char *sb = translateChar(base);
-	cbuf = CallocCharBuf(strlen(sb) + IndexWidth(seqno));
+	cbuf = R_AllocStringBuffer(strlen(sb) + IndexWidth(seqno), &cbuff);
 	sprintf(cbuf, "%s%d", sb, seqno);
         ans = mkChar(cbuf);
-        Free(cbuf);
     }
     else if (*CHAR(tag)) {
 	if(tag == NA_STRING) ans = NA_STRING;
 	else {
 	    const char *st = translateChar(tag);
-	    cbuf = CallocCharBuf(strlen(st));
+	    cbuf = R_AllocStringBuffer(strlen(st), &cbuff);
 	    sprintf(cbuf, "%s", st);
             ans = mkChar(cbuf);
-            Free(cbuf);
 	}
     }
     else ans = R_BlankString;
@@ -810,6 +808,7 @@ SEXP attribute_hidden do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
     UNPROTECT(2);
+    R_FreeStringBufferL(&cbuff);
     return ans;
 } /* do_c */
 
@@ -955,6 +954,7 @@ SEXP attribute_hidden do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
     UNPROTECT(2);
+    R_FreeStringBufferL(&cbuff);
     return ans;
 } /* do_unlist */
 

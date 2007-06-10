@@ -31,8 +31,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include <R_ext/RS.h>           /* CallocCharBuf, Free */
+#include <Defn.h>
 
 /* inline-able versions */
 static R_INLINE Rboolean isUnordered_int(SEXP s)
@@ -965,7 +964,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		l += strlen(CHAR(STRING_ELT(varnames, i - 1)));
 	    }
 	}
-        cbuf = CallocCharBuf(l);
+        cbuf = (char *) alloca(l+1);
         cbuf[0] = '\0';
 	l = 0;
 	for (i = 1; i <= nvar; i++) {
@@ -977,7 +976,6 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
         SET_STRING_ELT(termlabs, n, mkChar(cbuf));
-        Free(cbuf);
 	n++;
     }
     PROTECT(v = allocVector(VECSXP, 2));

@@ -1496,6 +1496,7 @@ danger of overflowing the C stack.   It is suggested that it is only
 used for smallish allocations (up to tens of thousands of bytes), and
 that
 
+@findex R_CheckStack
 @example
     R_CheckStack();
 @end example
@@ -1506,6 +1507,52 @@ mechanism will warn far enough from the stack limit to allow for modest
 use of alloca).  (@code{do_makeunique} in @file{src/main/unique.c}
 provides an example of both points.)
 
+An alternative strategy has been used for various functions which
+require intermediate blocks of storage of varying but usually small
+size, and this has been consolidated into the routines in the header
+file @file{src/main/RBufferUtils.h}.  This uses a structure which
+contains a buffer, the current size and the default size. A call to
+@findex R_AllocStringBuffer
+@example
+    R_AllocStringBuffer(size_t blen, R_StringBuffer *buf);
+@end example
+
+@noindent
+sets @code{buf->data} to a memory area of at least @code{blen+1} bytes.
+At least the default size is used, which means that for small
+allocations the same buffer can be reused.  A call to
+@findex R_FreeStringBufferL}
+@findex R_FreeStringBuffer}
+@code{R_FreeStringBufferL} releases memory if more than the default has
+been allocated whereas a call to @code{R_FreeStringBuffer} frees any
+memory allocated.
+
+The @code{R_StringBuffer} structure needs to be initialized, for example by
+
+@example
+static R_StringBuffer ex_buff = @{NULL, 0, MAXELTSIZE@};
+@end example
+
+@noindent
+which uses a default size of @code{MAXELTSIZE = 8192} bytes.  Most
+current uses have a static @code{ R_StringBuffer} structure, which
+allows the (default-sized) buffer to be shared between calls to e.g.@:
+@code{grep} and even between functions: this will need to be changed if
+@R{} ever allows concurrent evaluation threads.  So the idiom is
+
+@example
+static R_StringBuffer ex_buff = @{NULL, 0, MAXELTSIZE@};
+...
+    char *buf;
+    for(i = 0; i < n; i++) @{
+        compute len
+        buf = R_AllocStringBuffer(len, &ex_buff);
+        use buf
+    @}
+    /*  free allocation if larger than the default, but leave
+        default allocated for future use */
+   R_FreeStringBufferL(&ex_buff);
+@end example
 
 @node Internal use of global and base environments, Modules, Memory allocators, R Internal Structures
 @section Internal use of global and base environments

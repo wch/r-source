@@ -676,37 +676,33 @@ SEXP attribute_hidden do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #include "Rregex.h"
 
+#define CBUFSIZE 2*PATH_MAX+1
 static SEXP filename(const char *dir, const char *file)
 {
     SEXP ans;
-    char *cbuf;
+    char cbuf[CBUFSIZE];
     if (dir) {
 #ifdef Win32
 	switch (dir[strlen(dir)-1])
 	{
-	    case '/':
-	    case '\\':
-	    case ':':
-                cbuf = CallocCharBuf(strlen(dir) + strlen(file));
-                sprintf(cbuf, "%s%s", dir, file);
-                ans = mkChar(cbuf);
-                Free(cbuf);
-	    	break;
-	    default:
+	case '/':
+	case '\\':
+	case ':':
+	{
+	    snprintf(cbuf, CBUFSIZE, "%s%s", dir, file);
+	    ans = mkChar(cbuf);
+	    break;
+	}
+	default:
 #endif
-        cbuf = CallocCharBuf(strlen(dir) + strlen(R_FileSep) + strlen(file));
-	sprintf(cbuf, "%s%s%s", dir, R_FileSep, file);
-        ans = mkChar(cbuf);
-        Free(cbuf);
+	    snprintf(cbuf, CBUFSIZE, "%s%s%s", dir, R_FileSep, file);
+	    ans = mkChar(cbuf);
 #ifdef Win32
     	}
 #endif
-    }
-    else {
-        cbuf = CallocCharBuf(strlen(file));
-	sprintf(cbuf, "%s", file);
+    } else {
+	snprintf(cbuf, CBUFSIZE, "%s", file);
         ans = mkChar(cbuf);
-        Free(cbuf);
     }
     return ans;
 }
