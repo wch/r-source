@@ -1094,7 +1094,7 @@ SEXP attribute_hidden do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, fun, ans;
     int save = R_PPStackTop;
     int flag;
-    char *vmax = vmaxget();
+    void *vmax = vmaxget();
 
     checkArity(op, args);
     s = CAR(args);

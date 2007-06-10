@@ -1506,7 +1506,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     double *x, *y, xold, yold, xx, yy, thiscex, thislwd;
     int i, n, npch, ncex, ncol, nbg, /*nlty,*/ nlwd,
 	type=0, start=0, thispch, thiscol;
-    char *vmax = NULL /* -Wall */;
+    void *vmax = NULL /* -Wall */;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -3565,7 +3565,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, imax, n;
     double pin, *ll, tmp, yval, *y, ymin, ymax, yrange, m;
     SEXP originalArgs, merge, height, llabels, str;
-    char *vmax;
+    void *vmax;
     DevDesc *dd;
 
     dd = CurrentDevice();
@@ -3818,7 +3818,7 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     double pmax, pmin, inches, rx, ry;
     double xx, yy, p0, p1, p2, p3, p4;
     double *pp, *xp, *yp;
-    char *vmax;
+    void *vmax;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -4094,7 +4094,7 @@ SEXP attribute_hidden do_xspline(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean open, repEnds, draw;
     double *xx;
     double *yy;
-    char *vmaxsave;
+    void *vmaxsave;
     R_GE_gcontext gc;
 
     SEXP originalArgs = args;

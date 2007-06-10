@@ -248,7 +248,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
     char buf[BUFSIZE], *b = buf;
     int res;
 #ifdef HAVE_VA_COPY
-    char *vmax = vmaxget();
+    void *vmax = vmaxget();
     int usedRalloc = FALSE, usedVasprintf = FALSE;
     va_list aq;
 
@@ -1942,7 +1942,8 @@ static void outtext_destroy(Rconnection con)
 static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     Routtextconn this = (Routtextconn)con->private;
-    char buf[BUFSIZE], *b = buf, *p, *q, *vmax = vmaxget();
+    char buf[BUFSIZE], *b = buf, *p, *q;
+    void *vmax = vmaxget();
     int res = 0, usedRalloc = FALSE, buffree,
 	already = strlen(this->lastline);
     SEXP tmp;

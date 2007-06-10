@@ -649,7 +649,7 @@ static void RestoreError(/* const */ char *msg, int startup)
 static SEXP DataLoad(FILE *fp, int startup, InputRoutines *m, int version, SaveLoadData *d)
 {
     int i, j;
-    char *vmaxsave;
+    void *vmaxsave;
     fpos_t savepos;
     NodeInfo node;
 
@@ -724,7 +724,7 @@ static SEXP DataLoad(FILE *fp, int startup, InputRoutines *m, int version, SaveL
     UNPROTECT(1);
 
     /* clean the string buffer */
-    R_AllocStringBuffer(-1, &(d->buffer));
+    R_FreeStringBufferL(&(d->buffer));
 
     /* return the "top-level" object */
     /* this is usually a list */

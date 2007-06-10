@@ -28,8 +28,8 @@
 extern "C" {
 #endif
 
-char*	vmaxget(void);
-void	vmaxset(const char *);
+void*	vmaxget(void);
+void	vmaxset(const void *);
 
 void	R_gc(void);
 

@@ -955,7 +955,7 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     int **subs, *indx, *bound, *offset;
     SEXP dims, tmp;
     double ry;
-    char *vmax = vmaxget();
+    void *vmax = vmaxget();
 
     PROTECT(dims = getAttrib(x, R_DimSymbol));
     if (dims == R_NilValue || (k = LENGTH(dims)) != length(s))
@@ -1208,7 +1208,7 @@ static SEXP listRemove(SEXP x, SEXP s)
 {
     SEXP a, pa, px;
     int i, ii, *ind, ns, nx, stretch=0;
-    char *vmax;
+    void *vmax;
 
     vmax = vmaxget();
     nx = length(x);
