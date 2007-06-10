@@ -2449,7 +2449,6 @@ SEXP attribute_hidden R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_set_class(CAR(args), CADR(args), call);
 }
 
-#if NOT_YET
 SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP obj, value, ans;
@@ -2462,8 +2461,15 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
 	error(_("'value' must be non-null character string"));
     type = str2type(CHAR(STRING_ELT(value, 0)));
-    if(type == (SEXPTYPE) -1)
-	error(_("invalid value"));
+    if(type == (SEXPTYPE) -1) {
+	/* For backwards compatibility we allow "real" and "single" */
+	if(streql(CHAR(STRING_ELT(value, 0)), "real")) {
+	    error("use of 'real' is defunct: use 'double' instead");
+	} else if(streql(CHAR(STRING_ELT(value, 0)), "single")) {
+	    error("use of 'single' is defunct: use mode<- instead");
+	} else
+	    error(_("invalid value"));
+    }
     if(TYPEOF(obj) == type) return obj;
     if(isFactor(obj))
 	error(_("invalid to change the storage mode of a factor"));
@@ -2471,42 +2477,3 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
     DUPLICATE_ATTRIB(ans, obj);
     return ans;
 }
-#else
-SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP obj, value, ans;
-    SEXPTYPE type;
-    Rboolean isSingle = FALSE, setSingle = FALSE;
-    
-    checkArity(op, args);
-    obj = CAR(args);
-
-    value = CADR(args);
-    if (!isValidString(value) || STRING_ELT(value, 0) == NA_STRING)
-	error(_("'value' must be non-null character string"));
-    if(getAttrib(obj, install("Csingle")) != R_NilValue) isSingle = TRUE;
-    type = str2type(CHAR(STRING_ELT(value, 0)));
-    if(type == (SEXPTYPE) -1) {
-	/* For backwards compatibility we allow "real" and "single" */
-	if(streql(CHAR(STRING_ELT(value, 0)), "real")) {
-	    warning("use of 'real' is deprecated: use 'double' instead");
-	    type = REALSXP;
-	} else if(streql(CHAR(STRING_ELT(value, 0)), "single")) {
-	    warning("use of 'single' is deprecated: use mode<- instead");
-	    type = REALSXP;
-	    setSingle = TRUE;
-	} else
-	    error(_("invalid value"));
-    }
-    if(TYPEOF(obj) == type && isSingle == setSingle) return obj;
-    if(isFactor(obj))
-	error(_("invalid to change the storage mode of a factor"));
-    PROTECT(obj = duplicate(obj));
-    ans = coerceVector(obj, type);
-    DUPLICATE_ATTRIB(ans, obj);
-    setAttrib(ans, install("Csingle"),
-	      setSingle ? ScalarLogical(TRUE) : R_NilValue);
-    UNPROTECT(1);
-    return ans;
-}
-#endif

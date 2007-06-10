@@ -256,7 +256,7 @@ DEPRECATED & DEFUNCT
 	It remains deprecated, but may be removed in R >= 2.7.0.
 
     o	storage.mode(x) <- "real" and storage.mode(x) <- "single" are
-	deprecated in favour of storage.mode(x) <- "double" and
+	defunct: use instead storage.mode(x) <- "double" and
 	mode(x) <- "single".
 
     o	In package installation, SaveImage: yes is deprecated in
