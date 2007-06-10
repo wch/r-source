@@ -1521,8 +1521,8 @@ contains a buffer, the current size and the default size. A call to
 sets @code{buf->data} to a memory area of at least @code{blen+1} bytes.
 At least the default size is used, which means that for small
 allocations the same buffer can be reused.  A call to
-@findex R_FreeStringBufferL}
-@findex R_FreeStringBuffer}
+@findex R_FreeStringBufferL
+@findex R_FreeStringBuffer
 @code{R_FreeStringBufferL} releases memory if more than the default has
 been allocated whereas a call to @code{R_FreeStringBuffer} frees any
 memory allocated.
