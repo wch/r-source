@@ -3604,8 +3604,9 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase * Rf_gpptr(dd)->cex;
     dnd_offset = GStrWidth("m", INCHES, dd);
     vmax = vmaxget();
-    y =  (double*)R_alloc(n, sizeof(double));
-    ll = (double*)R_alloc(n, sizeof(double));
+    /* n is the number of merges, so the points are labelled 1 ... n+1 */
+    y =  (double*)R_alloc(n+1, sizeof(double));
+    ll = (double*)R_alloc(n+1, sizeof(double));
     dnd_lptr = &(INTEGER(merge)[0]);
     dnd_rptr = &(INTEGER(merge)[n]);
     ymax = ymin = REAL(height)[0];
@@ -3617,7 +3618,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
 	    ymin = m;
     }
     pin = Rf_gpptr(dd)->pin[1];
-    for (i = 0; i < n; i++) {
+    for (i = 0; i <= n; i++) {
 	str = STRING_ELT(llabels, i);
 	ll[i] = (str == NA_STRING) ? 0.0 :
 	    GStrWidth(translateChar(str), INCHES, dd) + dnd_offset;
@@ -3637,7 +3638,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* determine the most extreme label depth */
 	/* assuming that we are using the full plot */
 	/* window for the tree itself */
-	for (i = 0; i < n; i++) {
+	for (i = 0; i <= n; i++) {
 	    tmp = ((ymax - y[i]) / yrange) * pin + ll[i];
 	    if (tmp > yval) {
 		yval = tmp;
@@ -3647,7 +3648,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else {
 	yrange = ymax;
-	for (i = 0; i < n; i++) {
+	for (i = 0; i <= n; i++) {
 	    tmp = pin + ll[i];
 	    if (tmp > yval) {
 		yval = tmp;

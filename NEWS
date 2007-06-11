@@ -176,6 +176,10 @@ BUG FIXES
 	the variable names needed to fit the model: variables used on
 	the LHS only are no longer required and further variables are
 	allowed.
+	
+    o	plot.hclust() has a 'out by one' error, and ignored the last
+	object when computing the window region (and could overrun
+	arrays).
 
 
 
