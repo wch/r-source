@@ -36,7 +36,7 @@
 
 #include <Rmath.h>
 
-#include <Graphics.h>
+#include <R_ext/GraphicsEngine.h> /* needed for GEDevDesc in do_Externalgr */
 
 #include <R_ext/RConverters.h>
 #ifdef HAVE_ICONV
