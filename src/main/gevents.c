@@ -30,10 +30,7 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-#include <Rinterface.h>
 #include <Graphics.h>
-#include <Rdevices.h>
-
 
 SEXP attribute_hidden 
 do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -90,10 +87,6 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     return(nd->getEvent(env, translateChar(STRING_ELT(prompt,0))));
 }
     
-#define leftButton   1
-#define middleButton 2
-#define rightButton  4
-
 static const char * mouseHandlers[] = 
 {"onMouseDown", "onMouseUp", "onMouseMove"};
 

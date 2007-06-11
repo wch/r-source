@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-5 The R Development Core Team.
+ *  Copyright (C) 2001-7 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,8 @@
 
 #ifndef R_GRAPHICSENGINE_H_
 #define R_GRAPHICSENGINE_H_
+
+#include <R_ext/GraphicsDevice.h> /* needed for NewDevDesc */
 
 #ifdef __cplusplus
 extern "C" {

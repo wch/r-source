@@ -461,28 +461,5 @@ GPar* Rf_dpptr(DevDesc *dd);
 GPar* Rf_dpSavedptr(DevDesc *dd);
 SEXP Rf_displayList(DevDesc *dd);
 
-/* Graphics events */
-
-/* These give the indices of some known keys */    
-
-typedef enum {knUNKNOWN = -1,
-              knLEFT = 0, knUP, knRIGHT, knDOWN,
-              knF1, knF2, knF3, knF4, knF5, knF6, knF7, knF8, knF9, knF10,
-              knF11, knF12,
-              knPGUP, knPGDN, knEND, knHOME, knINS, knDEL} R_KeyName;
-              
-/* These are the three possible mouse events */
-
-#define doKeybd			Rf_doKeybd
-#define doMouseEvent		Rf_doMouseEvent
-
-typedef enum {meMouseDown = 0,
-	      meMouseUp,
-	      meMouseMove} R_MouseEvent;
-
-SEXP doMouseEvent(SEXP eventRho, NewDevDesc *dd, R_MouseEvent event, 
-                  int buttons, double x, double y);
-SEXP doKeybd(SEXP eventRho, NewDevDesc *dd, R_KeyName rkey, 
-	     const char *keyname);
 
 #endif /* GRAPHICS_H_ */
