@@ -301,22 +301,28 @@ C-LEVEL FACILITIES
     o	The instructions for making and using standalone libRmath have
 	been moved to the R Installation and Administration manual.
 
-    o   CHAR() now returns (const char *) since CHARSXPs should no
+    o	CHAR() now returns (const char *) since CHARSXPs should no
         longer be modified in place.  This change allows compilers to
         warn or error about improper modification.  Thanks to Herve
         Pages for the suggestion.
 
-    o   acopy_string is a (provisional) new helper function that
+    o	acopy_string is a (provisional) new helper function that
         copies character data and returns a pointer to memory
         allocated using R_alloc.  This can be used to create a copy of
         a string stored in a CHARSXP before passing the data on to a
         function that modifies its arguments.
 
-    o   asLogical, asInteger, asReal and asComplex now accept STRSXP
+    o	asLogical, asInteger, asReal and asComplex now accept STRSXP
 	and CHARSXP arguments.
 
-    o   New R_GE_str2col() exported via GraphicsEngine.h for 
+    o	New R_GE_str2col() exported via R_ext/GraphicsEngine.h for
         external device developers.
+
+    o   doKeybd and doMouseevent are now exported in GraphicsDevice.h.
+
+    o	R_alloc now has first argument of type 'size_t' to support
+	64-bit platforms with 32-bit 'long' type, and returns 'void *'
+	for consistency with modern C.
 
 
 INSTALLATION
@@ -533,6 +539,10 @@ BUG FIXES
 	the variable names needed to fit the model: variables used on
 	the LHS only are no longer required and further variables are
 	allowed.
+	
+    o	plot.hclust() has a 'out by one' error, and ignored the last
+	object when computing the window region (and could overrun
+	arrays).
 
 
 
