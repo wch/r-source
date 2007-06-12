@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-06-12 18:43\n"
 "PO-Revision-Date: 2007-04-07 01:02+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -622,6 +622,9 @@ msgstr ""
 " 'format' は {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\" } のいずれかでなけれ"
 "ばなりません"
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr " 'flag' は '0 + - #' だけを含めます"
 
@@ -649,6 +652,10 @@ msgstr " ' が見つけられません"
 
 msgid "all arguments must be named"
 msgstr " 全ての引数は名前を持たなければなりません"
+
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr " drop 引数は無視されます"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr " 'pattern' は空でない文字列でなければなりません"

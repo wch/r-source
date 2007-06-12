@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-03 11:43+0100\n"
+"POT-Creation-Date: 2007-06-12 18:44+0100\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -37,7 +37,7 @@ msgstr "无法对字符信息作句法分析"
 msgid "unknown AFM entity encountered"
 msgstr "遇到未知AFM值这个错误"
 
-#: devPS.c:735 devPS.c:738 devPS.c:4015 devPS.c:6668 devPicTeX.c:501
+#: devPS.c:735 devPS.c:738 devPS.c:4015 devPS.c:6670 devPicTeX.c:501
 #: devPicTeX.c:503
 #, c-format
 msgid "invalid string in '%s'"
@@ -138,15 +138,15 @@ msgstr "无法记录装置编码"
 msgid "Object .ps.prolog is not a character vector"
 msgstr "对象.ps.prolog不是字符向量"
 
-#: devPS.c:2615 devPS.c:5656 devQuartz.c:1394 devWindows.c:698
+#: devPS.c:2615 devPS.c:5656 devQuartz.c:1402 devWindows.c:698
 msgid "Invalid line end"
 msgstr "行尾出错"
 
-#: devPS.c:2634 devPS.c:5675 devQuartz.c:1414 devWindows.c:711
+#: devPS.c:2634 devPS.c:5675 devQuartz.c:1422 devWindows.c:711
 msgid "Invalid line join"
 msgstr "行接連處出错"
 
-#: devPS.c:2642 devQuartz.c:1424
+#: devPS.c:2642 devQuartz.c:1432
 msgid "Invalid line mitre"
 msgstr "行斜接出错"
 
@@ -166,7 +166,7 @@ msgstr "编码路径太长"
 msgid "failed to load encoding"
 msgstr "无法载入编码"
 
-#: devPS.c:3009 devPS.c:3072 devPS.c:5242 devPS.c:5297 devPS.c:6468
+#: devPS.c:3009 devPS.c:3072 devPS.c:5242 devPS.c:5297 devPS.c:6470
 msgid "Invalid font type"
 msgstr "字体类别出错"
 
@@ -232,7 +232,7 @@ msgstr "PostScript装置里没有CID系列'%s'"
 msgid "family '%s' not included in PostScript device"
 msgstr "PostScript装置里没有'%s'系列"
 
-#: devPS.c:3826 devPS.c:3854 devPS.c:4811 devPS.c:6518 devPS.c:6566
+#: devPS.c:3826 devPS.c:3854 devPS.c:4811 devPS.c:6520 devPS.c:6568
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "不能用%d这个字体，代用一字体"
@@ -246,7 +246,7 @@ msgstr "'mbcsToSbcs'不存在'%s'这样的编码"
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr "'mbcsToSbcs'中转换出错"
 
-#: devPS.c:4002 devPS.c:4866 devPS.c:6654
+#: devPS.c:4002 devPS.c:4866 devPS.c:6656
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "文字转换到编码'%s'时出了错"
@@ -375,33 +375,33 @@ msgstr ""
 "无法打开'pdf'文本变元'%s'\n"
 "  请关闭PDF装置"
 
-#: devPS.c:6493 devPS.c:6772 devPS.c:6815
+#: devPS.c:6495 devPS.c:6774 devPS.c:6817
 msgid "Failed to find or load PDF font"
 msgstr "没有能够找到和载入PDF字体"
 
-#: devPS.c:6609 devPS.c:6729
+#: devPS.c:6611 devPS.c:6731
 msgid "Failed to find or load PDF CID font"
 msgstr "没有能够找到和载入PDFCID字体"
 
-#: devPS.c:6921 devPS.c:6925 devPS.c:7079 devPS.c:7083
+#: devPS.c:6923 devPS.c:6927 devPS.c:7081 devPS.c:7085
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s里的'system'参数不对"
 
-#: devPS.c:6944 devPS.c:7095
+#: devPS.c:6946 devPS.c:7097
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s里的'fonts'参数不对"
 
-#: devPS.c:6961
+#: devPS.c:6963
 msgid "unable to start device PostScript"
 msgstr "无法启动PostScript装置"
 
-#: devPS.c:7030
+#: devPS.c:7032
 msgid "unable to start device xfig"
 msgstr "无法启动xfig装置"
 
-#: devPS.c:7113
+#: devPS.c:7115
 msgid "unable to start device pdf"
 msgstr "无法启动pdf装置"
 
@@ -409,27 +409,27 @@ msgstr "无法启动pdf装置"
 msgid "unable to start device PicTeX"
 msgstr "无法启动PicTeX装置"
 
-#: devQuartz.c:454
+#: devQuartz.c:457
 msgid "invalid string argument"
 msgstr "字符串变元不对"
 
-#: devQuartz.c:492
+#: devQuartz.c:495
 msgid "invalid width or height in quartz"
 msgstr "石英的宽度或长度不对"
 
-#: devQuartz.c:526
+#: devQuartz.c:529
 msgid "unable to start device Quartz"
 msgstr "无法启动石英装置"
 
-#: devQuartz.c:1016 devWindows.c:531
+#: devQuartz.c:1024 devWindows.c:531
 msgid "Invalid font specification"
 msgstr "字体设置出错"
 
-#: devQuartz.c:1061
+#: devQuartz.c:1069
 msgid "Font family not found in Quartz font database"
 msgstr "石英字体数据库里找不到字体系列"
 
-#: devQuartz.c:1695
+#: devQuartz.c:1717
 msgid "Quartz device not available on this platform"
 msgstr "这个平台上没有石英装置"
 

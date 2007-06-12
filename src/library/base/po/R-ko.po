@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-06-12 18:43\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -623,6 +623,9 @@ msgstr ""
 "'format'는 {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\"}의 중에서만 되지 않습"
 "니다"
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag'는 '0+- #'만을 포함합니다"
 
@@ -653,6 +656,10 @@ msgstr "(을)를 찾아낼수가 없습니다"
 #, fuzzy
 msgid "all arguments must be named"
 msgstr "모든 인수는 동일 길이가 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "drop인수는 무시됩니다"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern'는 비어 있지 않는 문자열이 아니면 되지 않습니다"

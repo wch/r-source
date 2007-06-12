@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-13 12:51\n"
+"POT-Creation-Date: 2007-06-12 18:48\n"
 "PO-Revision-Date: 2007-04-07 02:16-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -527,7 +527,8 @@ msgstr "не указаны пакеты"
 msgid "argument 'lib' is missing: using '%s'"
 msgstr "аргумент 'lib' пропущен: использую %s"
 
-msgid "'lib' is not writable"
+#, fuzzy
+msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib' не для записи"
 
 msgid ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-06-12 18:43\n"
 "PO-Revision-Date: 2007-04-07 01:35-0800\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -618,6 +618,9 @@ msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr ""
 "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
+msgid "'digits' reduced to 50"
+msgstr ""
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag' может содержать лишь '0+- #'"
 
@@ -644,6 +647,10 @@ msgstr "' не найдено"
 
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
+
+#, fuzzy
+msgid "argument '%s' will be ignored"
+msgstr "аргумент 'drop' не будет учтен"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' должен быть непустой текстовой строкой"

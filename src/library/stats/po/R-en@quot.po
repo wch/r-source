@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-03 11:44\n"
-"PO-Revision-Date: 2007-04-03 11:44\n"
+"POT-Creation-Date: 2007-06-12 18:46\n"
+"PO-Revision-Date: 2007-06-12 18:46\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -382,6 +382,12 @@ msgstr "sample is too sparse to find alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "no solution in the specified range of bandwidths"
+
+msgid "increasing bw.SJ() search interval ("
+msgstr "increasing bw.SJ() search interval ("
+
+msgid ")"
+msgstr ")"
 
 msgid "minimum occurred at one end of the range"
 msgstr "minimum occurred at one end of the range"

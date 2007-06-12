@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-13 12:51\n"
+"POT-Creation-Date: 2007-06-12 18:48\n"
 "PO-Revision-Date: 2005-12-16 00:00+GMT\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -515,7 +515,8 @@ msgstr "没有设定程序包"
 msgid "argument 'lib' is missing: using '%s'"
 msgstr "没有'lib'这个变元：改用%s"
 
-msgid "'lib' is not writable"
+#, fuzzy
+msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib'不可写"
 
 msgid ""

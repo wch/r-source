@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-10 07:41\n"
-"PO-Revision-Date: 2007-04-10 07:41\n"
+"POT-Creation-Date: 2007-06-12 18:43\n"
+"PO-Revision-Date: 2007-06-12 18:43\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -627,6 +627,9 @@ msgstr "coercing argument to “character” for format=“s”"
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 msgstr "‘format’ must be one of {“f”,“e”,“E”,“g”,“G”, “fg”, “s”}"
 
+msgid "'digits' reduced to 50"
+msgstr "‘digits’ reduced to 50"
+
 msgid "'flag' can contain only '0+- #'"
 msgstr "‘flag’ can contain only ‘0+- #’"
 
@@ -653,6 +656,9 @@ msgstr "' not found"
 
 msgid "all arguments must be named"
 msgstr "all arguments must be named"
+
+msgid "argument '%s' will be ignored"
+msgstr "argument ‘%s’ will be ignored"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "‘pattern’ must be a non-empty character string"

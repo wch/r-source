@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-03 11:44\n"
+"POT-Creation-Date: 2007-06-12 18:46\n"
 "PO-Revision-Date: 2007-04-05 21:42+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -368,6 +368,12 @@ msgstr " サンプルが疎過ぎるため alph2 を見つけることができ�
 
 msgid "no solution in the specified range of bandwidths"
 msgstr " 指定されたバンド幅の範囲内には解はありません"
+
+msgid "increasing bw.SJ() search interval ("
+msgstr ""
+
+msgid ")"
+msgstr ""
 
 msgid "minimum occurred at one end of the range"
 msgstr " 最小値が範囲の端点にありました"

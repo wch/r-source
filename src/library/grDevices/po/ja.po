@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-04-03 11:43+0100\n"
+"POT-Creation-Date: 2007-06-12 18:44+0100\n"
 "PO-Revision-Date: 2007-04-02 20:15+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -39,7 +39,7 @@ msgstr " CharInfo を構文解析できませんでした"
 msgid "unknown AFM entity encountered"
 msgstr " 未知の AFM 項目に出会いました"
 
-#: devPS.c:735 devPS.c:738 devPS.c:4015 devPS.c:6668 devPicTeX.c:501
+#: devPS.c:735 devPS.c:738 devPS.c:4015 devPS.c:6670 devPicTeX.c:501
 #: devPicTeX.c:503
 #, c-format
 msgid "invalid string in '%s'"
@@ -145,15 +145,15 @@ msgstr " デバイスのエンコーディングを記録することに失敗�
 msgid "Object .ps.prolog is not a character vector"
 msgstr " オブジェクト .ps.prolog は文字列ベクトルではありません"
 
-#: devPS.c:2615 devPS.c:5656 devQuartz.c:1394 devWindows.c:698
+#: devPS.c:2615 devPS.c:5656 devQuartz.c:1402 devWindows.c:698
 msgid "Invalid line end"
 msgstr " 行末が不正です"
 
-#: devPS.c:2634 devPS.c:5675 devQuartz.c:1414 devWindows.c:711
+#: devPS.c:2634 devPS.c:5675 devQuartz.c:1422 devWindows.c:711
 msgid "Invalid line join"
 msgstr " 行のつながりが不正です"
 
-#: devPS.c:2642 devQuartz.c:1424
+#: devPS.c:2642 devQuartz.c:1432
 msgid "Invalid line mitre"
 msgstr " 不正な line mitre です"
 
@@ -173,7 +173,7 @@ msgstr " エンコーディングのパスが長すぎます"
 msgid "failed to load encoding"
 msgstr " エンコーディングのロードに失敗しました"
 
-#: devPS.c:3009 devPS.c:3072 devPS.c:5242 devPS.c:5297 devPS.c:6468
+#: devPS.c:3009 devPS.c:3072 devPS.c:5242 devPS.c:5297 devPS.c:6470
 msgid "Invalid font type"
 msgstr " 不正なフォントタイプです"
 
@@ -239,7 +239,7 @@ msgstr " ポストスクリプトデバイス中に CID ファミリ '%s' は含
 msgid "family '%s' not included in PostScript device"
 msgstr " ポストスクリプトデバイス中にフォントファミリ '%s' は含まれていません"
 
-#: devPS.c:3826 devPS.c:3854 devPS.c:4811 devPS.c:6518 devPS.c:6566
+#: devPS.c:3826 devPS.c:3854 devPS.c:4811 devPS.c:6520 devPS.c:6568
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr " 不正なフォント %d を使おうとしましたが、フォント 1 で置き換えました"
@@ -253,7 +253,7 @@ msgstr " 'mbcsToSbcs' 中に未知のエンコーディング '%s' がありま�
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr " 'mbcsToSbcs'　中で変換に失敗"
 
-#: devPS.c:4002 devPS.c:4866 devPS.c:6654
+#: devPS.c:4002 devPS.c:4866 devPS.c:6656
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr " テキストをエンコーディング '%s' に変換することに失敗しました"
@@ -385,33 +385,33 @@ msgstr ""
 " 'pdf\" ファイル引数 '%s' を開くことができません\n"
 " PDF デバイスを閉じてください"
 
-#: devPS.c:6493 devPS.c:6772 devPS.c:6815
+#: devPS.c:6495 devPS.c:6774 devPS.c:6817
 msgid "Failed to find or load PDF font"
 msgstr " PDF フォントが見付からないかロードできませんでした"
 
-#: devPS.c:6609 devPS.c:6729
+#: devPS.c:6611 devPS.c:6731
 msgid "Failed to find or load PDF CID font"
 msgstr " PDF CID フォントが見付からないかロードできませんでした"
 
-#: devPS.c:6921 devPS.c:6925 devPS.c:7079 devPS.c:7083
+#: devPS.c:6923 devPS.c:6927 devPS.c:7081 devPS.c:7085
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr " %s 中に不正な 'family' パラメータ"
 
-#: devPS.c:6944 devPS.c:7095
+#: devPS.c:6946 devPS.c:7097
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr " %s 中に不正な 'fonts' パラメータ"
 
-#: devPS.c:6961
+#: devPS.c:6963
 msgid "unable to start device PostScript"
 msgstr " ポストスクリプトデバイスを開始できませんでした"
 
-#: devPS.c:7030
+#: devPS.c:7032
 msgid "unable to start device xfig"
 msgstr " xfig デバイスを開始できませんでした"
 
-#: devPS.c:7113
+#: devPS.c:7115
 msgid "unable to start device pdf"
 msgstr " pdf デバイスを開始できませんでした"
 
@@ -419,27 +419,27 @@ msgstr " pdf デバイスを開始できませんでした"
 msgid "unable to start device PicTeX"
 msgstr " PicTeX デバイスを開始できませんでした"
 
-#: devQuartz.c:454
+#: devQuartz.c:457
 msgid "invalid string argument"
 msgstr " 不正な文字列引数"
 
-#: devQuartz.c:492
+#: devQuartz.c:495
 msgid "invalid width or height in quartz"
 msgstr " quartz デバイスの幅か高さが不正です"
 
-#: devQuartz.c:526
+#: devQuartz.c:529
 msgid "unable to start device Quartz"
 msgstr " quartz デバイスを開始できません"
 
-#: devQuartz.c:1016 devWindows.c:531
+#: devQuartz.c:1024 devWindows.c:531
 msgid "Invalid font specification"
 msgstr " 不正なフォント指定"
 
-#: devQuartz.c:1061
+#: devQuartz.c:1069
 msgid "Font family not found in Quartz font database"
 msgstr " Quartz フォントのデータベースにフォントファミリが見付かりません"
 
-#: devQuartz.c:1695
+#: devQuartz.c:1717
 msgid "Quartz device not available on this platform"
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません"
 

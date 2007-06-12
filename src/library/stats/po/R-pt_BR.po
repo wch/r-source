@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2007-04-03 11:44\n"
+"POT-Creation-Date: 2007-06-12 18:46\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -375,6 +375,12 @@ msgstr "amostra é muito esparsa para encontrar alph2"
 
 msgid "no solution in the specified range of bandwidths"
 msgstr "nenhuma solução no intervalo larguras de banda"
+
+msgid "increasing bw.SJ() search interval ("
+msgstr ""
+
+msgid ")"
+msgstr ""
 
 msgid "minimum occurred at one end of the range"
 msgstr "mínimo ocorreu em um dos extremos"
