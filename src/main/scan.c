@@ -67,16 +67,15 @@ typedef struct {
     int quiet;
     int sepchar; /*  = 0 */      /* This gets compared to ints */
     char decchar; /* = '.' */    /* This only gets compared to chars */
-    const char *quoteset;
-    char *quotesave; /* = NULL */
-    int comchar;
-    int ttyflag;
-    Rconnection con;
-    Rboolean wasopen;
-    Rboolean escapes;
+    char *quoteset; /* = NULL */
+    int comchar; /* = NO_COMCHAR */
+    int ttyflag; /* = 0 */
+    Rconnection con; /* = NULL */
+    Rboolean wasopen; /* = FALSE */
+    Rboolean escapes; /* = FALSE */
     int save; /* = 0; */
-    Rboolean isLatin1;
-    Rboolean isUTF8;
+    Rboolean isLatin1; /* = FALSE */
+    Rboolean isUTF8; /* = FALSE */
     char convbuf[100];
 } LocalData;
 
@@ -334,7 +333,7 @@ static void scan_cleanup(void *data)
 {
     LocalData *ld = data;
     if(!ld->ttyflag && !ld->wasopen) ld->con->close(ld->con);
-    if (ld->quotesave) free(ld->quotesave);
+    if (ld->quoteset[0]) free(ld->quoteset);
 }
 
 #include "RBufferUtils.h"
@@ -847,7 +846,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline, escapes;
     const char *p, *encoding;
     RCNTXT cntxt;
-    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+    LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
@@ -917,17 +916,9 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid decimal separator"));
 
     if (isString(quotes)) {
-	/* This is necessary to protect quoteset against GC */
-	data.quoteset = translateChar(STRING_ELT(quotes, 0));
-	/* Protect against broken realloc */
-	if(data.quotesave)
-	    data.quotesave = realloc(data.quotesave,
-				     strlen(data.quoteset) + 1);
-	else data.quotesave = malloc(strlen(data.quoteset) + 1);
-	if (!data.quotesave)
-	    error(_("out of memory"));
-	strcpy(data.quotesave, data.quoteset);
-	data.quoteset = data.quotesave;
+	const char *sc = translateChar(STRING_ELT(quotes, 0));
+	if (strlen(sc)) data.quoteset = strdup(sc);
+	else data.quoteset = "";
     } else if (isNull(quotes))
 	data.quoteset = "";
     else
@@ -997,7 +988,7 @@ SEXP attribute_hidden do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if (!data.ttyflag && !data.wasopen)
 	data.con->close(data.con);
-    if (data.quotesave) free(data.quotesave);
+    if (data.quoteset[0]) free(data.quoteset);
     return ans;
 }
 
@@ -1010,7 +1001,7 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef SUPPORT_MBCS
     Rboolean dbcslocale = (MB_CUR_MAX == 2);
 #endif
-    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+    LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
@@ -1040,15 +1031,9 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else error(_("invalid '%s' value"), "sep");
 
     if (isString(quotes)) {
-	/* This is necessary to protect quoteset against GC */
-	data.quoteset = translateChar(STRING_ELT(quotes, 0));
-	/* Protect against broken realloc */
-	if(data.quotesave) data.quotesave = realloc(data.quotesave, strlen(data.quoteset) + 1);
-	else data.quotesave = malloc(strlen(data.quoteset) + 1);
-	if (!data.quotesave)
-	    error(_("out of memory"));
-	strcpy(data.quotesave, data.quoteset);
-	data.quoteset = data.quotesave;
+	const char *sc = translateChar(STRING_ELT(quotes, 0));
+	if (strlen(sc)) data.quoteset = strdup(sc);
+	else data.quoteset = "";
     } else if (isNull(quotes))
 	data.quoteset = "";
     else
@@ -1167,7 +1152,7 @@ SEXP attribute_hidden do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i <= nlines; i++)
 	INTEGER(bns)[i] = INTEGER(ans)[i];
     UNPROTECT(1);
-    if (data.quotesave) free(data.quotesave);
+    if (data.quoteset[0]) free(data.quoteset);
     return bns;
 }
 
@@ -1236,7 +1221,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean done = FALSE;
     char *endp;
     const char *tmp = NULL;
-    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+    LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     Typecvt_Info typeInfo;      /* keep track of possible types of cvec */
     typeInfo.islogical = TRUE;  /* we can't rule anything out initially */
@@ -1470,7 +1455,7 @@ SEXP attribute_hidden do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     int c, j;
     double first;
     char buffer[MAXELTSIZE], *bufp = buffer;
-    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+    LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
@@ -1514,7 +1499,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
     const char *p; char *buf;
     Rboolean empty, skip;
-    LocalData data = {NULL, 0, 0, '.', NULL, NULL, NO_COMCHAR, 0, NULL, FALSE,
+    LocalData data = {NULL, 0, 0, '.', NULL, NO_COMCHAR, 0, NULL, FALSE,
 		      FALSE, 0, FALSE, FALSE};
     data.NAstrings = R_NilValue;
 
@@ -1531,17 +1516,9 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid '%s' value"), "nlines");
     if (blskip == NA_LOGICAL) blskip = 1;
     if (isString(quotes)) {
-	/* This is necessary to protect quoteset against GC */
-	data.quoteset = translateChar(STRING_ELT(quotes, 0));
-	/* Protect against broken realloc */
-	if(data.quotesave)
-	    data.quotesave = realloc(data.quotesave,
-				     strlen(data.quoteset) + 1);
-	else data.quotesave = malloc(strlen(data.quoteset) + 1);
-	if (!data.quotesave)
-	    error(_("out of memory"));
-	strcpy(data.quotesave, data.quoteset);
-	data.quoteset = data.quotesave;
+	const char *sc = translateChar(STRING_ELT(quotes, 0));
+	if (strlen(sc)) data.quoteset = strdup(sc);
+	else data.quoteset = "";
     } else if (isNull(quotes))
 	data.quoteset = "";
     else
@@ -1634,7 +1611,7 @@ SEXP attribute_hidden do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     free(buf);
     if(!data.wasopen) data.con->close(data.con);
-    if (data.quotesave) free(data.quotesave);
+    if (data.quoteset[0]) free(data.quoteset);
     return ans;
 
 no_more_lines:
@@ -1652,7 +1629,7 @@ no_more_lines:
     for(i = 0; i < nread; i++)
 	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
     UNPROTECT(2);
-    if (data.quotesave) free(data.quotesave);
+    if (data.quoteset[0]) free(data.quoteset);
     return ans2;
 }
 
