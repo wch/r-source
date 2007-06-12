@@ -321,8 +321,7 @@ C-LEVEL FACILITIES
     o   doKeybd and doMouseevent are now exported in GraphicsDevice.h.
 
     o	R_alloc now has first argument of type 'size_t' to support
-	64-bit platforms with 32-bit 'long' type, and returns 'void *'
-	for consistency with modern C.
+	64-bit platforms with 32-bit 'long' type.
 
 
 INSTALLATION

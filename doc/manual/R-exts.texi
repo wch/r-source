@@ -7365,7 +7365,7 @@ Here @R{} will reclaim the memory at the end of the call to @code{.C}.
 Use
 
 @example
-void *R_alloc(size_t @var{n}, int @var{size})
+char *R_alloc(size_t @var{n}, int @var{size})
 @end example
 
 @noindent
