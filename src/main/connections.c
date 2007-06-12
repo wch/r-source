@@ -3103,8 +3103,11 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 #if SIZEOF_LONG_DOUBLE > SIZEOF_DOUBLE
 	    case sizeof(long double):
 	    {
-		long double ld1;
-		for (i = 0, j = 0; i < len; i++, j+=size) {
+		/* some systems have problems with memcpy from
+		   the address of an automatic long double,
+		   e.g. ix86/x86_64 Linux with gcc4 */
+		static long double ld1;
+		for (i = 0, j = 0; i < len; i++, j += size) {
 		    ld1 = (long double) REAL(object)[i];
 		    memcpy(buf+j, &ld1, size);
 		}
