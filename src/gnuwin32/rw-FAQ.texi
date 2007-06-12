@@ -215,7 +215,7 @@ set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
 @samp{chtml}, @samp{html}, @samp{latex}, @samp{manuals}, @samp{refman},
-@samp{libdocs}, @samp{devel}, @samp{tcl}, @samp{mbcs}, @samp{Rd} and
+@samp{libdocs}, @samp{devel}, @samp{tcl}, @samp{Rd}, @samp{latex} and
 @samp{trans}.
 @end table
 

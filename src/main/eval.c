@@ -405,7 +405,7 @@ SEXP eval(SEXP e, SEXP rho)
 	if (PRVALUE(e) == R_UnboundValue) {
 	    if(PRSEEN(e))
 		errorcall(R_GlobalContext->call,
-			  _("recursive default argument reference"));
+			  _("promise already under evaluation: recursive default argument reference or earlier problems?"));
 	    SET_PRSEEN(e, 1);
 	    val = eval(PRCODE(e), PRENV(e));
 	    SET_PRSEEN(e, 0);

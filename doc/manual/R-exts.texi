@@ -3420,13 +3420,16 @@ can be put in a @file{unix} or @file{windows} subdirectory.
 @cindex encoding
 
 Rd files are text files and so it is impossible to deduce the encoding
-they are written in: @acronym{ASCII}, UTF-8, Latin-1, Latin-9
-@emph{etc}.  So the @code{\encoding@{@}} directive must be used to
-specify the encoding if it is not @acronym{ASCII}.  This is used when
-creating the header of the @HTML{} conversion (if not present, for
-back-compatibility the processing to @HTML{} assumes that the file is in
-Latin-1 (ISO-8859-1)) and to make a comment in the examples file.  It is
-also used to indicate to @LaTeX{} how to process the file (see below).
+they are written in unless @acronym{ASCII}: files with 8-bit characters
+could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP, @emph{etc}.  So the
+@code{\encoding@{@}} directive must be used to specify the encoding if
+it is not @acronym{ASCII}.  (The @code{\encoding@{@}} directive must be
+on a line by itself, and in particular one containing no
+non-@acronym{ASCII} characters.)  This is used when creating the header
+of the @HTML{} conversion (if not present, for back-compatibility the
+processing to @HTML{} assumes that the file is in Latin-1 (ISO-8859-1))
+and to make a comment in the examples file.  It is also used to indicate
+to @LaTeX{} how to process the file (see below).
 
 Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and even
 symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
