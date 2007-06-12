@@ -7363,7 +7363,7 @@ Here @R{} will reclaim the memory at the end of the call to @code{.C}.
 Use
 
 @example
-char *R_alloc(long @var{n}, int @var{size})
+void *R_alloc(size_t @var{n}, int @var{size})
 @end example
 
 @noindent
@@ -7373,6 +7373,10 @@ which allocates @var{n} units of @var{size} bytes each.  A typical usage
 @example
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 @end example
+
+@noindent
+(@code{size_t} is defined in @file{stddef.h} which the header defining
+@code{R_alloc} includes.)
 
 There is a similar call, @code{S_alloc} (for compatibility with older
 versions of @Sl{}) which zeroes the memory allocated,

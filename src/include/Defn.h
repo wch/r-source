@@ -137,17 +137,17 @@ extern void R_ProcessEvents(void);
 typedef unsigned long R_ulong_t;
 typedef long R_long_t;
 
-# ifdef HAVE_INTTYPES_H
-#  include <inttypes.h>
-# endif
+#ifdef HAVE_INTTYPES_H
+# include <inttypes.h>
+#endif
 /* According to POSIX inttypes.h should include stdint.h, but let's be
    sure. */
-# ifdef HAVE_STDINT_H
-#  include <stdint.h>
-# endif
-# ifdef HAVE_LIMITS_H
-#  include <limits.h>
-# endif
+#ifdef HAVE_STDINT_H
+# include <stdint.h>
+#endif
+#ifdef HAVE_LIMITS_H
+# include <limits.h>
+#endif
 
 /* NB: will need a 64-bit type, ULONG64 or size_t, for Win64 */
 #if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX

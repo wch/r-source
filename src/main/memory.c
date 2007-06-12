@@ -1623,7 +1623,7 @@ void attribute_hidden InitMemory()
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just
-   allocates off the heap as CHARSXP's and maintains the stack of
+   allocates off the heap as RAWSXP/REALSXP and maintains the stack of
    allocations through the ATTRIB pointer.  The stack pointer R_VStack
    is traced by the collector. */
 void *vmaxget(void)
@@ -1636,20 +1636,17 @@ void vmaxset(const void *ovmax)
     R_VStack = (SEXP) ovmax;
 }
 
-/* <FIXME> this really needs to be R_size_t with an appropriate test.
-   That would mean exporting R_size_t.
- */
-char *R_alloc(long nelem, int eltsize)
+char *R_alloc(size_t nelem, int eltsize)
 {
     R_size_t size = nelem * eltsize;
     double dsize = (double)nelem * eltsize;
     if (dsize > 0) { /* precaution against integer overflow */
 	SEXP s;
-#if SIZEOF_LONG > 4
+#if SIZEOF_SIZE_T > 4
 	/* In this case by allocating larger units we can get up to
 	   size(double) * (2^31 - 1) bytes, approx 16Gb */
 	if(dsize < R_LEN_T_MAX)
-	    s = allocString(size); /**** avoid extra null byte?? */
+	    s = allocVector(RAWSXP, size+1); /* seems some rely on this +1 */
 	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
 	    s = allocVector(REALSXP, (int)(0.99+dsize/sizeof(double)));
 	else {
@@ -1682,14 +1679,14 @@ char *R_alloc(long nelem, int eltsize)
 		error(_("cannot allocate memory block of size %.0f"),
 		      dsize);
 	}	
-	s = allocString(size); /**** avoid extra null byte?? */
+	s = allocVector(RAWSXP, size+1);
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
 #if VALGRIND_LEVEL > 0
-	VALGRIND_MAKE_WRITABLE(CHAR_RW(s), (int) dsize);
+	VALGRIND_MAKE_WRITABLE(DATAPTR(s), (int) dsize);
 #endif
-	return CHAR_RW(s);
+	return (char *)DATAPTR(s);
     }
     else return NULL;
 }
@@ -1700,19 +1697,17 @@ char *R_alloc(long nelem, int eltsize)
 
 char *S_alloc(long nelem, int eltsize)
 {
-    R_size_t /*i,*/ size  = nelem * eltsize;
+    R_size_t size  = nelem * eltsize;
     char *p = R_alloc(nelem, eltsize);
 
     memset(p, 0, size);
-    /* for(i = 0; i < size; i++)
-       p[i] = 0; */
     return p;
 }
 
 
 char *S_realloc(char *p, long new, long old, int size)
 {
-    int /*i,*/ nold;
+    int nold;
     char *q;
     /* shrinking is a no-op */
     if(new <= old) return p;
@@ -1720,10 +1715,6 @@ char *S_realloc(char *p, long new, long old, int size)
     nold = old * size;
     memcpy(q, p, nold);
     memset(q + nold, 0, new*size - nold);
-    /* for(i = 0; i < nold; i++)
-	q[i] = p[i];
-    for(i = nold; i < new*size; i++)
-        q[i] = 0; */
     return q;
 }
 
@@ -2095,7 +2086,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	VALGRIND_MAKE_WRITABLE(INTEGER(s), actual_size);
 #endif
     }
-    /* <FIXME> why not valgrindify LGLSXP, CPLXSXP and RAWSXP/ */
+    /* <FIXME> why not valgrindify LGLSXP, CPLXSXP and RAWSXP? */
     return s;
 }
 

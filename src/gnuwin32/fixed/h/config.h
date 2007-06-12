@@ -867,6 +867,9 @@
 /* The size of `long long', as computed by sizeof. */
 #define SIZEOF_LONG_LONG 8
 
+/* The size of `size_t', as computed by sizeof. */
+#define SIZEOF_SIZE_T 4
+
 /* Define as the maximum value of type 'size_t', if the system doesn't define
    it. */
 /* #undef SIZE_MAX */
