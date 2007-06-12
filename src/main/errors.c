@@ -1280,14 +1280,17 @@ static void gotoExitingHandler(SEXP cond, SEXP call, SEXP entry)
 
 static void vsignalError(SEXP call, const char *format, va_list ap)
 {
+    char localbuf[BUFSIZE];
     SEXP list, oldstack;
 
     oldstack = R_HandlerStack;
+    Rvsnprintf(localbuf, BUFSIZE - 1, format, ap);
     while ((list = findSimpleErrorHandler()) != R_NilValue) {
 	char *buf = errbuf;
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
-	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
+	strncpy(buf, localbuf, BUFSIZE - 1);
+	/*	Rvsnprintf(buf, BUFSIZE - 1, format, ap);*/
 	buf[BUFSIZE - 1] = 0;
 	if (IS_CALLING_ENTRY(entry)) {
 	    if (ENTRY_HANDLER(entry) == R_RestartToken)
