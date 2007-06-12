@@ -1636,7 +1636,7 @@ void vmaxset(const void *ovmax)
     R_VStack = (SEXP) ovmax;
 }
 
-char *R_alloc(size_t nelem, int eltsize)
+void *R_alloc(size_t nelem, int eltsize)
 {
     R_size_t size = nelem * eltsize;
     double dsize = (double)nelem * eltsize;
