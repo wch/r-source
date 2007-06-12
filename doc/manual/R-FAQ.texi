@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-07
+@set FAQ_DATE @value{FAQ_YEAR}-06-10
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2706,6 +2706,8 @@ emphasis on regression diagnostics, particularly graphical diagnostic
 methods.
 @item cat
 Analysis of categorical-variable datasets with missing values.
+@item catmap
+Case-control and TDT meta-analysis package.
 @item catspec
 Special models for categorical variables.
 @item cba
@@ -3104,6 +3106,8 @@ M-competitions).
 @item foreign
 Functions for reading and writing data stored by statistical software
 like Minitab, S, SAS, SPSS, Stata, Systat, etc.  @emph{Recommended}.
+@item forensic
+Statistical methods in forensic genetics.
 @item fork
 Functions for handling multiple processes: simple wrappers around the
 Unix process management API calls.
@@ -3691,6 +3695,8 @@ Multiscale analysis for density functions.
 A collection of tools to deal with statistical models.
 @item moments
 Moments, skewness, kurtosis and related tests.
+@item monomvn
+Estimation for multivariate normal data with monotone missingness.
 @item monreg
 Estimation of monotone regression and variance functions in
 nonparametric models.
@@ -4010,6 +4016,8 @@ Pretty descriptive stats.
 Patient Rule Induction Method (PRIM).
 @item princurve
 Fits a principal curve to a matrix of points in arbitrary dimension.
+@item proj4
+A simple interface to the PROJ.4 cartographic projections library.
 @item proptest
 Tests of the proportional hazards assumption in the Cox model.
 @item proto
@@ -4245,6 +4253,8 @@ Markov-chain Monte Carlo diagnostic plots, accompanying the
 @strong{scape} package.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
+@item schoolmath
+Functions and datasets for math used in school.
 @item sciplot
 Scientific graphing functions for factorial designs.
 @item scope
