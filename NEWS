@@ -321,7 +321,11 @@ C-LEVEL FACILITIES
     o   doKeybd and doMouseevent are now exported in GraphicsDevice.h.
 
     o	R_alloc now has first argument of type 'size_t' to support
-	64-bit platforms with 32-bit 'long' type.
+	64-bit platforms with a 32-bit 'long' type.
+
+    o	The type of the last two arguments of getMatrixDimnames (non-API
+	but mentioned in R-exts.texi and in Rinternals.h) has been
+	changed to 'const char **' (from char **).
 
 
 INSTALLATION
