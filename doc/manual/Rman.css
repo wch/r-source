@@ -17,6 +17,10 @@ H3{             background: white;
                 font-family: monospace;
                 font-size: large }
 
+H4{             background: white;
+                color: rgb(40%, 40%, 40%);
+                font-family: monospace }
+
 span.samp{font-family: monospace}
 span.command{font-family: monospace}
 span.option{font-family: monospace}

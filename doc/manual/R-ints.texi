@@ -1554,6 +1554,34 @@ static R_StringBuffer ex_buff = @{NULL, 0, MAXELTSIZE@};
    R_FreeStringBufferL(&ex_buff);
 @end example
 
+
+@menu
+* Internals of R_alloc::        
+@end menu
+
+@node Internals of R_alloc,  , Memory allocators, Memory allocators
+@subsection Internals of R_alloc
+
+The memory used by @code{R_alloc} is allocated as @R{} vectors, of type
+@code{RAWSXP} for `small' allocations (less than 2^31 - 1 bytes) and of
+type @code{REALSXP} for allocations up to 2^34 - 1 bytes on 64-bit
+machines.  Thus the allocation is in units of 8 bytes, and is rounded
+up.  (Prior to @R{} 2.6.0 @code{CHARSXP}s were used, and so one byte was
+added prior to rounding up.  This had the effect of over-allocating
+areas for @code{double}s by one and thereby masked several subtle
+programming errors.)
+
+The vectors allocated are protected via the setting of @code{R_VStack},
+as the garbage collector marks everything that can be reached from that
+location.  When a vector is @code{R_alloc}ated, its @code{ATTRIB}
+pointer is set to the current @code{R_VStack}, and @code{R_VStack} is
+set to the latest allocation.  Thus @code{R_VStack} is a single-linked
+chain of vectors currently allocated via @code{R_alloc}.  Function
+@code{vmaxset} resets the location @code{R_VStack}, and should be to a
+value that has previously be obtained @emph{via} @code{vmaxget}:
+allocations after the value was obtained will no longer be protected and
+hence available for garbage collection.
+
 @node Internal use of global and base environments, Modules, Memory allocators, R Internal Structures
 @section Internal use of global and base environments
 
