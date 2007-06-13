@@ -48,5 +48,4 @@ fi
   for i in ${PKGS} ; do
     ln -s $i*.tar.gz ${i}.tgz
   done
-)
-exit 0
+) && exit 0 || exit 1
