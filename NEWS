@@ -360,8 +360,6 @@ BUG FIXES
 
     o	methods("Math") did not work if 'methods' was not attached.
 
-    o	deriv() was creating results with double (and not integer) dims.
-
 
 
 
@@ -546,6 +544,8 @@ BUG FIXES
     o	plot.hclust() has a 'out by one' error, and ignored the last
 	object when computing the window region (and could overrun
 	arrays).
+
+    o	deriv() was creating results with double (and not integer) dims.
 
 
 
