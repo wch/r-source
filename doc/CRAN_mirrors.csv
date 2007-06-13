@@ -50,8 +50,9 @@ Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",ne
 "South Africa (Cape Town)","South Africa","Cape Town",http://cbio.uct.ac.za/CRAN/,"University of Cape Town",r-project@cbio.uct.ac.za
 "South Africa (Grahamstown)","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
 "Spain (Alicante)",Spain,Alicante,http://cran.noha.es/,"NumismaticProject, Alicante","Mundo Numismatico Monedas del Mundo <monedasdelmundo@gmail.com>"
+"Spain (La Coruna)",Spain,"La Coruna",http://ftp.udc.es/CRAN,"University of La Coruna",ftp@udc.es
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>"
-Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","GÃÂ¶ran BrostrÃÂ¶m <gb@stat.umu.se>"
+Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb@stat.umu.se>"
 "Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org
 "Switzerland (Bern 1)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>"
 "Switzerland (Bern 2)",Switzerland,Bern,http://cran.prokmu.com/,"Prokmu Hosting, Bern",info@prokmu.com
