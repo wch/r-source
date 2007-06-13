@@ -67,7 +67,7 @@ typedef struct {
 } DllReference;
 
 /* Maximum length of entry-point name, including nul terminator */
-#define MaxSymbolBytes 128
+#define MaxSymbolBytes 1024
 
 /* This looks up entry points in DLLs in a platform specific way. */
 #define MAX_ARGS 65
