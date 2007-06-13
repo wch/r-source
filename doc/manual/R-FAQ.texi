@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-10
+@set FAQ_DATE @value{FAQ_YEAR}-06-12
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -3230,6 +3230,8 @@ Routines for log-linear models of incomplete contingency tables,
 including some latent class models via EM and Fisher scoring approaches.
 @item glmc
 Fitting Generalized Linear Models subject to Constraints.
+@item glmmAK
+Generalized Linear Mixed Models.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
