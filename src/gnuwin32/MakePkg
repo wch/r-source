@@ -74,10 +74,10 @@ all:
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s nmspace
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg Dynlib 
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s R
+	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s $(DPKG)/demo $(DPKG)/exec $(DPKG)/inst $(DATA)
 ifeq ($(strip $(LAZY)),true)
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s lazyload
 endif
-	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s $(DPKG)/demo $(DPKG)/exec $(DPKG)/inst $(DATA)
 ifeq ($(strip $(LAZYDATA)),true)
 	@$(MAKE) --no-print-directory -f $(RHOME)/src/gnuwin32/MakePkg -s lazydata
 endif
