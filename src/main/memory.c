@@ -1646,7 +1646,7 @@ char *R_alloc(size_t nelem, int eltsize)
 	/* In this case by allocating larger units we can get up to
 	   size(double) * (2^31 - 1) bytes, approx 16Gb */
 	if(dsize < R_LEN_T_MAX)
-	    s = allocVector(RAWSXP, size);
+	    s = allocVector(RAWSXP, size + 1);
 	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
 	    s = allocVector(REALSXP, (int)(0.99+dsize/sizeof(double)));
 	else {
@@ -1658,7 +1658,7 @@ char *R_alloc(size_t nelem, int eltsize)
 	if(dsize > R_LEN_T_MAX) /* must be in the Gb range */
 	    error(_("cannot allocate memory block of size %0.1f Gb"), 
 		  dsize/1024.0/1024.0/1024.0);
-	s = allocVector(RAWSXP, size); 
+	s = allocVector(RAWSXP, size + 1); 
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
