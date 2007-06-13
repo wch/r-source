@@ -341,6 +341,12 @@ grid.get <- function(gPath, strict=FALSE, grep=FALSE, global=FALSE,
   getDLfromGPath(gPath, strict, grep, global)
 }
 
+# Just different defaults to grid.get for convenience
+# Justified by usage patterns of Hadley Wickham
+grid.gget <- function(..., grep=TRUE, global=TRUE) {
+    grid.get(..., grep=grep, global=global)
+}
+
 # Get a child (of a child, of a child, ...) of a grob
 getGrob <- function(gTree, gPath, strict=FALSE,
                     grep=FALSE, global=FALSE) {
@@ -484,6 +490,12 @@ grid.remove <- function(gPath, warn=TRUE, strict=FALSE,
   }
 }
 
+# Just different defaults to grid.remove for convenience
+# Justified by usage patterns of Hadley Wickham
+grid.gremove <- function(..., grep=TRUE, global=TRUE) {
+    grid.remove(..., grep=grep, global=global)
+}
+
 # Remove a child from a (child of ...) gTree
 removeGrob <- function(gTree, gPath, strict=FALSE,
                        grep=FALSE, global=FALSE, warn=TRUE) {
@@ -598,6 +610,7 @@ nameMatch <- function(pathName, grobName, grep) {
 
 # Return the position of path$name in vector of names
 # Return FALSE if not found
+# If grep=TRUE, the answer may be a vector!
 namePos <- function(pathName, names, grep) {
   if (grep) {
     pos <- grep(pathName, names)
@@ -1391,7 +1404,8 @@ removeGTree <- function(gTree, name, pathsofar, gPath, strict,
           if (!is.null(newChild <- removeGrobFromGPath(child, name,
                                                        newpathsofar,
                                                        gPath, strict,
-                                                       grep, global, warn))) {
+                                                       grep, grepname,
+                                                       global, warn))) {
             gTree$children[[childName]] <- newChild
             found <- TRUE
           }
@@ -1420,7 +1434,8 @@ removeGTree <- function(gTree, name, pathsofar, gPath, strict,
           if (!is.null(newChild <- removeGrobFromGPath(child, name,
                                                        newpathsofar,
                                                        gPath, strict,
-                                                       grep, global, warn))) {
+                                                       grep, grepname,
+                                                       global, warn))) {
             gTree$children[[childName]] <- newChild
             found <- TRUE
           }
@@ -1480,7 +1495,9 @@ removeDLFromGPath <- function(gPath, name, strict, grep, grepname, global,
     index <- index + 1
   }
   if (!found)
-    stop(gettextf("gPath (%s) not found", gPath), domain = NA)
+    stop(gettextf("gPath (%s) not found",
+                  paste(gPath, name, sep=.grid.pathSep)),
+                  domain = NA)
   else if (redraw)
     draw.all()
 }
@@ -1498,6 +1515,11 @@ removeGrobFromName.grob <- function(grob, name, grep, global, warn) {
   NULL
 }
 
+# For a gTree, just recurse straight back to removeName
+removeGrobFromName.gTree <- function(grob, name, grep, global, warn) {
+    removeName(grob, name, FALSE, grep, global, warn)
+}
+
 removeName <- function(gTree, name, strict, grep, global, warn) {
   found <- FALSE
   index <- 1
@@ -1506,38 +1528,29 @@ removeName <- function(gTree, name, strict, grep, global, warn) {
          (!found || global)) {
     childName <- gTree$childrenOrder[index]
     child <- gTree$children[[childName]]
-    # Just check for name amongst children and recurse if no match
+    # Just check child name and recurse if no match
     if (nameMatch(name, childName, grep)) {
       # name might be a regexp, so get real name
       gTree$children[[gTree$childrenOrder[index]]] <- NULL
       gTree$childrenOrder <- gTree$childrenOrder[-index]
       found <- TRUE
+      # If deleted the child, do NOT increase index!
     } else if (strict) {
       NULL
+      index <- index + 1
     } else {
       if (!is.null(newChild <- removeGrobFromName(child, name,
                                                   grep, global, warn))) {
         gTree$children[[childName]] <- newChild
         found <- TRUE
       }
+      index <- index + 1
     }
-    index <- index + 1
   }
   if (found)
     gTree
   else
     NULL
-}
-
-removeGrobFromName.gTree <- function(grob, name, grep, global, warn) {
-  if (old.pos <- namePos(name, grob$childrenOrder, grep)) {
-    # name might be a regexp, so get real name
-    grob$children[[grob$childrenOrder[old.pos]]] <- NULL
-    grob$childrenOrder <- grob$childrenOrder[-old.pos]
-    grob
-  } else {
-    removeName(grob, name, FALSE, grep, global, warn)
-  }
 }
 
 removeNameFromDL <- function(name, strict, grep, global, warn, redraw) {
@@ -1578,7 +1591,7 @@ removeNameFromDL <- function(name, strict, grep, global, warn, redraw) {
   }
   if (!found) {
     if (warn)
-        stop(gettextf("gPath (%s) not found", gPath), domain = NA)
+        stop(gettextf("gPath (%s) not found", name), domain = NA)
   } else if (redraw)
     draw.all()
 }
