@@ -31,7 +31,7 @@ NEW FEATURES
 	This allows it to be tuned for people who use their space bar
 	vs those who do not.  The default now allows filename-completion
 	with +-* in the filenames.
-	
+
     o	If the srcfile argument to parse() is not NULL, it will be added
     	to the result as a "srcfile" attribute.
 
@@ -169,17 +169,19 @@ BUG FIXES
 
     o	Connection-related functions such as readBin() no longer crash
 	when supplied with a non-connection object.
-	
+
     o	as.character.srcref() didn't handle bad srcref objects cleanly.
-	
+
     o	predict.nls() no longer requires 'newdata' to contain exactly
 	the variable names needed to fit the model: variables used on
 	the LHS only are no longer required and further variables are
 	allowed.
-	
+
     o	plot.hclust() has a 'out by one' error, and ignored the last
 	object when computing the window region (and could overrun
 	arrays).
+
+    o	deriv() was creating results with double (and not integer) dims.
 
 
 

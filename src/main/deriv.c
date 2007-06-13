@@ -89,9 +89,7 @@ static void InitDerivSymbols()
 
 static SEXP Constant(double x)
 {
-    SEXP s = allocVector(REALSXP, 1);
-    REAL(s)[0] = x;
-    return s;
+    return ScalarReal(x);
 }
 
 static int isZero(SEXP s)
@@ -749,18 +747,15 @@ static SEXP CreateGrad(SEXP names)
     PROTECT(q = allocList(n));
     SETCADDR(dimnames, LCONS(p, q));
     UNPROTECT(1);
-    for(i=0 ; i<n ; i++) {
-	SETCAR(q, allocVector(STRSXP, 1));
-	SET_STRING_ELT(CAR(q), 0, STRING_ELT(names, i));
+    for(i = 0 ; i < n ; i++) {
+	SETCAR(q, ScalarString(STRING_ELT(names, i)));
 	q = CDR(q);
     }
     PROTECT(dim = lang3(R_NilValue, R_NilValue, R_NilValue));
     SETCAR(dim, install("c"));
     SETCADR(dim, lang2(install("length"), install(".value")));
-    SETCADDR(dim, allocVector(REALSXP, 1));
-    REAL(CADDR(dim))[0] = length(names);
-    PROTECT(data = allocVector(REALSXP, 1));
-    REAL(data)[0] = 0;
+    SETCADDR(dim, ScalarInteger(length(names))); /* was real? */
+    PROTECT(data = ScalarReal(0.));
     PROTECT(p = lang4(install("array"), data, dim, dimnames));
     p = lang3(install("<-"), install(".grad"), p);
     UNPROTECT(4);
@@ -778,21 +773,17 @@ static SEXP CreateHess(SEXP names)
     PROTECT(q = allocList(n));
     SETCADDR(dimnames, LCONS(p, q));
     UNPROTECT(1);
-    for(i=0 ; i<n ; i++) {
-	SETCAR(q, allocVector(STRSXP, 1));
-	SET_STRING_ELT(CAR(q), 0, STRING_ELT(names, i));
+    for(i = 0 ; i < n ; i++) {
+	SETCAR(q, ScalarString(STRING_ELT(names, i)));
 	q = CDR(q);
     }
     SETCADDDR(dimnames, duplicate(CADDR(dimnames)));
     PROTECT(dim = lang4(R_NilValue, R_NilValue, R_NilValue,R_NilValue));
     SETCAR(dim, install("c"));
     SETCADR(dim, lang2(install("length"), install(".value")));
-    SETCADDR(dim, allocVector(REALSXP, 1));
-    REAL(CADDR(dim))[0] = length(names);
-    SETCADDDR(dim, allocVector(REALSXP, 1));
-    REAL(CADDDR(dim))[0] = length(names);
-    PROTECT(data = allocVector(REALSXP, 1));
-    REAL(data)[0] = 0;
+    SETCADDR(dim, ScalarInteger(length(names)));
+    SETCADDDR(dim, ScalarInteger(length(names)));
+    PROTECT(data = ScalarReal(0.));
     PROTECT(p = lang4(install("array"), data, dim, dimnames));
     p = lang3(install("<-"), install(".hessian"), p);
     UNPROTECT(4);
@@ -803,8 +794,7 @@ static SEXP DerivAssign(SEXP name, SEXP expr)
 {
     SEXP ans, newname;
     PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
-    PROTECT(newname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(newname, 0, name);
+    PROTECT(newname = ScalarString(name));
     SETCADR(ans, lang4(install("["), install(".grad"), R_MissingArg, newname));
     UNPROTECT(2);
     return ans;
@@ -822,8 +812,7 @@ static SEXP HessAssign1(SEXP name, SEXP expr)
 {
     SEXP ans, newname;
     PROTECT(ans = lang3(install("<-"), R_NilValue, expr));
-    PROTECT(newname = allocVector(STRSXP, 1));
-    SET_STRING_ELT(newname, 0, name);
+    PROTECT(newname = ScalarString(name));
     SETCADR(ans, lang5(install("["), install(".hessian"), R_MissingArg,
 		       newname, newname));
     UNPROTECT(2);
@@ -833,10 +822,8 @@ static SEXP HessAssign1(SEXP name, SEXP expr)
 static SEXP HessAssign2(SEXP name1, SEXP name2, SEXP expr)
 {
     SEXP ans, newname1, newname2;
-    PROTECT(newname1 = allocVector(STRSXP, 1));
-    PROTECT(newname2 = allocVector(STRSXP, 1));
-    SET_STRING_ELT(newname1, 0, name1);
-    SET_STRING_ELT(newname2, 0, name2);
+    PROTECT(newname1 = ScalarString(name1));
+    PROTECT(newname2 = ScalarString(name2));
     ans = lang3(install("<-"),
 		lang5(install("["), install(".hessian"), R_MissingArg,
 		      newname1, newname2),
