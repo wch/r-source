@@ -3239,7 +3239,7 @@ function(package, lib.loc = NULL)
         if(.Platform$OS.type != "unix")
             assign("nsl", function(hostname) {}, envir = compat)
         if(.Platform$OS.type != "windows") {
-           assign("choose.files",
+            assign("choose.files",
                    function (default = "", caption = "Select files",
                              multi = TRUE, filters = Filters,
                              index = nrow(Filters)) {}, envir = compat)
@@ -3256,12 +3256,12 @@ function(package, lib.loc = NULL)
 
             assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
                    envir = compat)
-            assing("bmp",
+            assign("bmp",
                    function (filename = "Rplot%03d.bmp", width = 480,
                              height = 480, units = "px", pointsize = 12,
                              bg = "white", res = NA, restoreConsole = TRUE) {},
                    envir = compat)
-             assign("win.graph",
+            assign("win.graph",
                    function(width = 7, height = 7, pointsize = 12,
                             restoreConsole = FALSE) {}, envir = compat)
             assign("win.metafile",
