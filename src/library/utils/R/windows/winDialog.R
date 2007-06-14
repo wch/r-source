@@ -10,12 +10,6 @@ winDialog <- function(type = c("ok", "okcancel", "yesno", "yesnocancel"),
 winDialogString <- function(message, default)
     .Internal(winDialogString(message, default))
 
-winMenuAdd <- function(menuname)
-    invisible(.Internal(winMenuAdd(menuname, NULL, NULL)))
-
-winMenuAddItem <- function(menuname, itemname, action)
-    invisible(.Internal(winMenuAdd(menuname, itemname, action)))
-
 winMenuDel <- function(menuname)
     invisible(.Internal(winMenuDel(menuname, NULL)))
 
@@ -27,16 +21,12 @@ winMenuAdd <- function(menuname)
 
 winMenuAddItem <- function(menuname, itemname, action) {
     ## If specified menu does not exist, add it
-    z <- winMenuNames()
-    if (! menuname %in% z)
-        winMenuAdd(menuname)
+    if (! menuname %in% winMenuNames()) winMenuAdd(menuname)
 
     invisible(.Internal(winMenuAdd(menuname, itemname, action)))
 }
-winMenuNames <- function() {
-    .Internal(winMenuNames())
-}
 
-winMenuItems <- function(menuname) {
-    .Internal(winMenuItems(menuname))
-}
+winMenuNames <- function() .Internal(winMenuNames())
+
+winMenuItems <- function(menuname) .Internal(winMenuItems(menuname))
+

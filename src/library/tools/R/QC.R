@@ -3220,8 +3220,52 @@ function(x, ...)
 function(package, lib.loc = NULL)
 {
     is_base <- package == "base"
-    if(!is_base)
+    if(!is_base) {
         .load_package_quietly(package, lib.loc)
+
+        capture.output({
+        ## avoid warnings about code in other packages the package uses
+        desc <- .readRDS(file.path(.find.package(package, NULL),
+                                   "Meta", "package.rds"))
+        pkgs1 <- sapply(desc$Suggests, "[[", "name")
+        pkgs2 <- sapply(desc$Enhances, "[[", "name")
+        for( pkg in unique(c(pkgs1, pkgs2)) )
+            suppressMessages(try(require(pkg, character.only = TRUE,
+                                         quietly=TRUE),
+                                 silent = TRUE))
+                       })
+
+        compat <- new.env(hash=TRUE)
+        if(.Platform$OS.type != "unix")
+            assign("nsl", function(hostname) {}, envir = compat)
+        if(.Platform$OS.type != "windows") {
+            assign("getClipboardFormats", function() {}, envir = compat)
+            assign("readClipboard", function(format = 1, raw = FALSE) {},
+                   envir = compat)
+            assign("shell",
+                   function(cmd, shell, flag = "/c", intern = FALSE,
+                            wait = TRUE, translate = FALSE, mustWork = FALSE,
+                            ...) {},
+                   envir = compat)
+            assign("shell.exec", function(file) {}, envir = compat)
+            assign("shortPathName", function(path) {}, envir = compat)
+
+            assign("winDialog", function(type = "ok", message) {},
+                   envir = compat)
+            assign("winDialogString", function(message, default) {},
+                   envir = compat)
+            assign("winMenuAdd", function(menuname) {}, envir = compat)
+            assign("winMenuAddItem", function(menuname, itemname, action) {},
+                   envir = compat)
+            assign("winMenuDel", function(menuname) {}, envir = compat)
+            assign("winMenuDelItem", function(menuname, itemname) {},
+                   envir = compat)
+            assign("winMenuNames", function() {}, envir = compat)
+            assign("winMenuItems", function(menuname) {}, envir = compat)
+        }
+        attach(compat, name="compat", pos = length(search()),
+               warn.conflicts = FALSE)
+    }
 
     ## A simple function for catching the output from the codetools
     ## analysis using the checkUsage report mechanism.

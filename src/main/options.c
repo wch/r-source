@@ -533,12 +533,26 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		R_warn_partial_match_attr = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
-	    else if (streql(CHAR(namei), "showCalls")) {
+	    else if (streql(CHAR(namei), "showWarnCalls")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		k = asLogical(argi);
-		R_ShowCalls = k;
+		R_ShowWarnCalls = k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
+	    else if (streql(CHAR(namei), "showErrorCalls")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		k = asLogical(argi);
+		R_ShowErrorCalls = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
+	    else if (streql(CHAR(namei), "showNCalls")) {
+		k = asInteger(argi);
+		if (k < 30 || k > 500 || k == NA_INTEGER || LENGTH(argi) != 1)
+		    error(_("invalid value for '%s'"), CHAR(namei));
+		R_NShowCalls = k;
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarInteger(k)));
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));

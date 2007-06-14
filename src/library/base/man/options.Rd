@@ -212,8 +212,14 @@ getOption(x)
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
 
-    \item{\code{showCalls}:}{a logical.  Should warning and error
-      messages show a summary of the call stack?}
+    \item{\code{showWarnCalls}, \code{showErrorCalls}:}{a logical.
+      Should warning and error messages show a summary of the call
+      stack?  By default error calls are shown in non-interactive
+      sessions.}
+
+    \item{\code{showNCalls}:}{a integer.  Controls how long the sequence
+      of calls must be (in bytes) before ellipses are used.  Defaults to
+      40 and should be at least 30 and no more than 500.}
 
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a

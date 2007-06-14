@@ -232,8 +232,10 @@ NEW FEATURES
     o	attr() gains an 'exact = TRUE' argument to disable partial
 	matching.
 
-    o	New option 'showCalls' to give a concise traceback on warnings
-	and errors.  [Currently experimental, especially the format.]
+    o	New options 'showWarnCalls' and 'showErrorCalls' to give a
+	concise traceback on warnings and errors.  showErrorCalls=TRUE
+	is the default for non-interactive sessions.  Option
+	'showNCalls' controls how abbreviated the call sequence is.
 
     o	New primitive nzchar() as a faster alternative to
 	nchar(x) > 0 (and avoids having to convert to wide chars in
@@ -279,6 +281,11 @@ UTILITIES
 
     o	R CMD check now warns on DESCRIPTION files with a non-portable
 	Encoding field, or with non-ASCII data and no Encoding field.
+
+    o	R CMD check now loads all the 'Suggests' and 'Enhances'
+	dependencies to reduce warnings about non-visible objects, and
+	also emulates standard functions (such as shell()) on
+	alternative R platforms.
 
     o	Rdconv now warns about unmatched braces rather than silently
 	omitting sections containing them.  (Suggestion by Bill

@@ -5031,6 +5031,7 @@ Browse[1]> c
 > f <- function(...) stop()
 > do.call(f, mtcars)
 Error in function (...)  : 
+Calls: do.call -> <Anonymous>
 > traceback()
 3: stop()
 2: function (...) 

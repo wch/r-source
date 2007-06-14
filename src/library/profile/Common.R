@@ -4,7 +4,7 @@
 
 ### Notice that it is a bad idea to use this file as a template for
 ### personal startup files, since things will be executed twice and in
-### the wrong environment since user profiles are run in .GlobalEnv.
+### the wrong environment (user profiles are run in .GlobalEnv).
 
 .GlobalEnv <- globalenv()
 attach(NULL, name = "Autoloads")
@@ -34,6 +34,8 @@ options(scipen = 0)
 options(max.print = 99999)# max. #{entries} in internal printMatrix()
 options(add.smooth = TRUE)# currently only used in 'plot.lm'
 options(stringsAsFactors = TRUE)
+if(!interactive() && is.null(getOption("showErrorCalls")))
+    options(showErrorCalls = TRUE)
 
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last
