@@ -3239,6 +3239,10 @@ function(package, lib.loc = NULL)
         if(.Platform$OS.type != "unix")
             assign("nsl", function(hostname) {}, envir = compat)
         if(.Platform$OS.type != "windows") {
+           assign("choose.files",
+                   function (default = "", caption = "Select files",
+                             multi = TRUE, filters = Filters,
+                             index = nrow(Filters)) {}, envir = compat)
             assign("getClipboardFormats", function() {}, envir = compat)
             assign("readClipboard", function(format = 1, raw = FALSE) {},
                    envir = compat)
@@ -3249,6 +3253,21 @@ function(package, lib.loc = NULL)
                    envir = compat)
             assign("shell.exec", function(file) {}, envir = compat)
             assign("shortPathName", function(path) {}, envir = compat)
+
+            assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
+                   envir = compat)
+            assing("bmp",
+                   function (filename = "Rplot%03d.bmp", width = 480,
+                             height = 480, units = "px", pointsize = 12,
+                             bg = "white", res = NA, restoreConsole = TRUE) {},
+                   envir = compat)
+             assign("win.graph",
+                   function(width = 7, height = 7, pointsize = 12,
+                            restoreConsole = FALSE) {}, envir = compat)
+            assign("win.metafile",
+                   function (filename = "", width = 7, height = 7,
+                             pointsize = 12, restoreConsole = TRUE) {},
+                   envir = compat)
 
             assign("winDialog", function(type = "ok", message) {},
                    envir = compat)
