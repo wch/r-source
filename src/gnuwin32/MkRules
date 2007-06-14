@@ -7,7 +7,7 @@
 
 ## This is temporarily set to GCC3, until after the release of R 2.5.1,
 ## when we will change the default to GCC4.
-BUILD=GCC4
+BUILD=GCC3
 
 HELP = YES
 HELPTYPES = -txt -html -latex -example
