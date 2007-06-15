@@ -183,6 +183,10 @@ BUG FIXES
 
     o	deriv() was creating results with double (and not integer) dims.
 
+    o	The unserialize code (e.g. as called by load()) looked for a
+	function findPackageEnv() to set a saved package environment.
+	This was missing, but is now supplied.
+
 
 
 

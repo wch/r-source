@@ -13,6 +13,7 @@
 \alias{.set_row_names}
 \alias{.ArgsEnv}
 \alias{.GenericArgsEnv}
+\alias{findPackageEnv}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
@@ -41,6 +42,8 @@ sys.save.image(name)
 
 .row_names_info(x, type = 1L)
 .set_row_names(n)
+
+findPackageEnv(info)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -66,6 +69,7 @@ sys.save.image(name)
     the number of rows implied by the attribute, and \code{type = 1} the
     latter with a negative sign for \sQuote{automatic} row names.}
   \item{n}{integer.  The number of rows.}
+  \item{info}{character string such as \code{"package:MASS"}.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -140,6 +144,9 @@ sys.save.image(name)
   details.  They are used by \code{\link{args}} and
   \code{\link{print.default}} and the QC functions \code{\link{codoc}}
   and \code{\link{checkS3methods}}.
+
+  \code{findPackageEnv} is invoked by the unserialize code to set a
+  saved environment if possible.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character

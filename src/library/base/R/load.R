@@ -115,3 +115,15 @@ sys.save.image <- function(name)
     closeAllConnections()
     save.image(name)
 }
+
+findPackageEnv <- function(info)
+{
+    if(info %in% search()) return(as.environment(info))
+    message(gettextf("Attempting to load the environment '%s'", info),
+            domain = NA)
+    pkg <- substr(info, 9, 1000)
+    if(require(pkg, character.only=TRUE, quietly = TRUE))
+        return(as.environment(info))
+    message("not found: using .GlobalEnv instead")
+    return(.GlobalEnv)
+}
