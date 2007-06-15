@@ -3348,6 +3348,7 @@ function(package, lib.loc = NULL)
                                                   report = foo,
                                                   suppressLocalUnused = TRUE,
                                                   skipWith = TRUE))
+    out <- unique(out)
     class(out) <- "check_code_usage_in_package"
     out
 }
