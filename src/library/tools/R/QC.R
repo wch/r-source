@@ -2675,7 +2675,7 @@ function(db)
     }
 
     ## db_aliases could be length 0, or could contain nothing
-    lens <- sapply(db_aliases, length)
+    lens <- unlist(lapply(db_aliases, length))
     db_aliases_by_db_names <- if(sum(lens))
         split(rep(names(db_aliases), lens),
               unlist(db_aliases, use.names = FALSE))
@@ -3334,13 +3334,17 @@ function(package, dir, lib.loc = NULL)
     ## Add the aliases from the package itself, and build a db with all
     ## \link xrefs in the package Rd objects.
     if(!missing(package)) {
-        aliases <-
-            c(aliases, list(Rd_aliases(package, lib.loc = lib.loc)))
+        aliases1 <- Rd_aliases(package, lib.loc = lib.loc)
+        if(!length(aliases1))
+            return(structure(NULL, class = "check_Rd_xrefs"))
+        aliases <- c(aliases, list(aliases1))
         db <- .build_Rd_xref_db(package, lib.loc = lib.loc)
     }
     else {
-        aliases <-
-            c(aliases, list(Rd_aliases(dir = dir)))
+        aliases1 <- Rd_aliases(dir = dir)
+        if(!length(aliases1))
+            return(structure(NULL, class = "check_Rd_xrefs"))
+        aliases <- c(aliases, list(aliases1))
         db <- .build_Rd_xref_db(dir = dir)
     }
 

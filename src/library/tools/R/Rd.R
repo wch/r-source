@@ -545,9 +545,10 @@ function(package, dir, lib.loc = NULL)
     if(!missing(package)) {
         dir <- .find.package(package, lib.loc)
         rds <- file.path(dir, "Meta", "Rd.rds")
-        if(file_test("-f", rds))
-            sort(unlist(.readRDS(rds)$Aliases))
-        else
+        if(file_test("-f", rds)) {
+            aliases <- .readRDS(rds)$Aliases
+            if(length(aliases)) sort(unlist(aliases)) else character()
+        } else
             character()
         ## <NOTE>
         ## Alternatively, we could get the aliases from the help index
@@ -571,7 +572,9 @@ function(package, dir, lib.loc = NULL)
             db <- Rd_db(dir = dir)
             db <- lapply(db, Rd_pp)
             aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
-            sort(unique(unlist(aliases, use.names = FALSE)))
+            if(length(aliases))
+                sort(unique(unlist(aliases, use.names = FALSE)))
+            else character()
         }
         else
             character()
