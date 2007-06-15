@@ -109,6 +109,8 @@ my $R_check_all_non_ISO_C =
     &R_getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE");
 my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
+my $R_check_latex_vignettes =
+    &R_getenv("_R_CHECK_LATEX_VIGNETTES_", "TRUE");
 my $R_check_subdirs_strict =
     &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
 my $R_check_Rd_xrefs =
@@ -151,6 +153,8 @@ $R_check_all_non_ISO_C =
     &config_val_to_logical($R_check_all_non_ISO_C);
 $R_check_weave_vignettes =
     &config_val_to_logical($R_check_weave_vignettes);
+$R_check_latex_vignettes =
+    &config_val_to_logical($R_check_latex_vignettes);
 $R_check_Rd_xrefs =
     &config_val_to_logical($R_check_Rd_xrefs);
 $R_check_use_codetools =
@@ -2142,20 +2146,18 @@ sub check_pkg {
 	}
 
 	## Can we run the code in the vignettes?
-	if($opt_install && $opt_vignettes) {
+	if($opt_install && $opt_vignettes && -d "$pkgdir/inst/doc") {
+	    ## copy the inst directory to check directory
+	    ## so we can work in place.
+	    mkpath("inst/doc");
+	    dircopy("$pkgdir/inst/doc", "inst/doc");
+
+	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
-	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
-            ## A base package does not get installed during check.
-	    if(!$is_base_pkg && $opt_install) {
-		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
-		         "lib.loc = \"${library}\", " .
-		         "workdir = \"src\"";
-	    }
-	    else {
-		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\"";
-	    }
-	    $Rcmd .= ", weave = FALSE" if(!$R_check_weave_vignettes);
+	    $Rcmd .= "checkVignettes(dir = '$pkgoutdir', workdir='src'";
+	    $Rcmd .= ", weave = FALSE" unless $R_check_weave_vignettes;
+	    $Rcmd .= ", latex = TRUE" if $R_check_latex_vignettes;
 	    $Rcmd .= ")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
@@ -2164,9 +2166,18 @@ sub check_pkg {
 	    ## likely not indicate a problem ...
 	    @out = grep(!/^[[:space:]]*$/, @out);
 	    if(scalar(@out) > 0) {
-		$log->warning() unless($any);
-		$any++;
-		$log->print(join("\n", @out) . "\n");
+		if($out[0] =~ /^--- running/) {
+		    @out = grep(!/\.(jpg|pdf|png)$/, @out);
+		    if (scalar(@out) > 1) {
+			$log->note() unless($any);
+			$any++;
+			$log->print(join("\n", @out) . "\n");
+		    }
+		} else {
+		    $log->warning() unless($any);
+		    $any++;
+		    $log->print(join("\n", @out) . "\n");
+		}
 	    }
 	}
 

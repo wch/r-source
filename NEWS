@@ -289,6 +289,10 @@ UTILITIES
 	also emulates standard functions (such as shell()) on
 	alternative R platforms.
 
+    o	R CMD check now (by default) attempts to latex the vignettes
+	rather than just weave and tangle them: this will give a NOTE
+	if there are latex errors.
+
     o	Rdconv now warns about unmatched braces rather than silently
 	omitting sections containing them.  (Suggestion by Bill
 	Dunlap, PR#9649)
