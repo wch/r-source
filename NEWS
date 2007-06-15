@@ -251,6 +251,8 @@ NEW FEATURES
 
 	fifo("") is now implemented, and works in the same way as file("").
 
+    o	C(f, SAS) now works as well as C(f, treatment), etc.
+
 
 DEPRECATED & DEFUNCT
 

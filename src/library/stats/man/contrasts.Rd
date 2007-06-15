@@ -40,7 +40,7 @@ contrasts(x, how.many) <- value
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{C}},
+  \code{\link{C}},% ./zC.Rd
   \code{\link{contr.helmert}},
   \code{\link{contr.poly}},
   \code{\link{contr.sum}},
