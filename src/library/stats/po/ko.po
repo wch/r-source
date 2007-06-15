@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:19+0100\n"
+"POT-Creation-Date: 2007-06-12 18:52+0100\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -29,7 +29,7 @@ msgstr "qunsari()에서 확률이 [0,1]의 범위외입니다"
 msgid "invalid argument type"
 msgstr "부적절한 인수의 유형입니다"
 
-#: arima.c:418 arima.c:502 pacf.c:314 pacf.c:354
+#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0에서 100개의 파라미터까지만 변환 할수 없습니다"
 
@@ -151,17 +151,17 @@ msgstr ""
 msgid "bad Starma struct"
 msgstr "부적절한 Starma struct입니다"
 
-#: pacf.c:228
+#: pacf.c:227
 #, c-format
 msgid "starma error code %d"
 msgstr "starma 에러 코드는 %d입니다"
 
-#: pacf.c:293
+#: pacf.c:287
 #, c-format
 msgid "forkal error code %d"
 msgstr "forkal 에러 code는 %d입니다"
 
-#: pacf.c:457
+#: pacf.c:451
 msgid "invalid value of lag.max"
 msgstr "부적절한 lag.max 값입니다"
 

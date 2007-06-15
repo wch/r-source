@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-05-25 12:19+0100\n"
+"POT-Creation-Date: 2007-06-12 18:52+0100\n"
 "PO-Revision-Date: 2005-12-17 10:57-0200\n"
 "Last-Translator: Cesar Torres <chtorres@linux.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -31,7 +31,7 @@ msgstr "probabilidades fora do intervalo [0,1] em qansari()"
 msgid "invalid argument type"
 msgstr "tipo de argumento inválido"
 
-#: arima.c:418 arima.c:502 pacf.c:314 pacf.c:354
+#: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
 msgstr "pode-se transformar apenas 100 pares em arima0"
 
@@ -155,17 +155,17 @@ msgstr "variável '%s' não é numérica"
 msgid "bad Starma struct"
 msgstr "estrutura Starma inválida"
 
-#: pacf.c:228
+#: pacf.c:227
 #, c-format
 msgid "starma error code %d"
 msgstr "starma erro código %d"
 
-#: pacf.c:293
+#: pacf.c:287
 #, c-format
 msgid "forkal error code %d"
 msgstr "erro forkal código %d"
 
-#: pacf.c:457
+#: pacf.c:451
 msgid "invalid value of lag.max"
 msgstr "valor inválido para lag.max"
 
