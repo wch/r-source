@@ -3278,6 +3278,7 @@ function(package, lib.loc = NULL)
             assign("shell.exec", function(file) {}, envir = compat)
             assign("shortPathName", function(path) {}, envir = compat)
             assign("win.version", function() {}, envir = compat)
+            assign("zip.unpack", function(zipname, dest) {}, envir = compat)
 
             assign("bmp",
                    function (filename = "Rplot%03d.bmp", width = 480,
