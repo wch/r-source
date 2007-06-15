@@ -3236,15 +3236,38 @@ function(package, lib.loc = NULL)
                        })
 
         compat <- new.env(hash=TRUE)
-        if(.Platform$OS.type != "unix")
+        if(.Platform$OS.type != "unix") {
             assign("nsl", function(hostname) {}, envir = compat)
+            assign("X11Font", function(font) {}, envir = compat)
+            assign("X11Fonts", function(...) {}, envir = compat)
+            assign("quartz",
+                   function(display = "", width = 5, height = 5,
+                            pointsize = 12, family = "Helvetica",
+                            antialias = TRUE, autorefresh = TRUE) {},
+                   envir = compat)
+            assign("quartzFont", function(font) {}, envir = compat)
+            assign("quartzFonts", function(...) {}, envir = compat)
+        }
         if(.Platform$OS.type != "windows") {
+            assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
+                   envir = compat)
+            assign("choose.dir",
+                   function (default = "", caption = "Select folder") {},
+                   envir = compat)
             assign("choose.files",
                    function (default = "", caption = "Select files",
                              multi = TRUE, filters = Filters,
                              index = nrow(Filters)) {}, envir = compat)
+            assign("DLL.version", function(path) {}, envir = compat)
             assign("getClipboardFormats", function() {}, envir = compat)
+            assign("getIdentification", function() {}, envir = compat)
+            assign("getWindowsHandle", function(which = "Console") {},
+                   envir = compat)
+            assign("getWindowTitle", function() {}, envir = compat)
             assign("readClipboard", function(format = 1, raw = FALSE) {},
+                   envir = compat)
+            assign("setWindowTitle",
+                   function(suffix, title = paste(getIdentification(), suffix)) {},
                    envir = compat)
             assign("shell",
                    function(cmd, shell, flag = "/c", intern = FALSE,
@@ -3253,13 +3276,18 @@ function(package, lib.loc = NULL)
                    envir = compat)
             assign("shell.exec", function(file) {}, envir = compat)
             assign("shortPathName", function(path) {}, envir = compat)
+            assign("win.version", function() {}, envir = compat)
 
-            assign("bringToTop", function (which = dev.cur(), stay = FALSE) {},
-                   envir = compat)
             assign("bmp",
                    function (filename = "Rplot%03d.bmp", width = 480,
                              height = 480, units = "px", pointsize = 12,
                              bg = "white", res = NA, restoreConsole = TRUE) {},
+                   envir = compat)
+            assign("savePlot",
+                   function (filename = "Rplot",
+                             type = c("wmf", "emf", "png", "jpeg", "jpg",
+                             "bmp", "ps", "eps", "pdf"),
+                             device = dev.cur(), restoreConsole = TRUE) {},
                    envir = compat)
             assign("win.graph",
                    function(width = 7, height = 7, pointsize = 12,
@@ -3268,6 +3296,21 @@ function(package, lib.loc = NULL)
                    function (filename = "", width = 7, height = 7,
                              pointsize = 12, restoreConsole = TRUE) {},
                    envir = compat)
+            assign("win.print",
+                   function(width = 7, height = 7, pointsize = 12,
+                            printer = "", restoreConsole = TRUE) {},
+                   envir = compat)
+            assign("windows",
+                   function(width = 7, height = 7, pointsize = 12,
+                            record = getOption("graphics.record"),
+                            rescale = c("R", "fit", "fixed"), xpinch, ypinch,
+                            bg = "transparent", canvas = "white",
+                            gamma = getOption("gamma"),
+                            xpos = NA, ypos = NA,
+                            buffered = getOption("windowsBuffered"),
+                            restoreConsole = FALSE) {}, envir = compat)
+            assign("windowsFont", function(font) {}, envir = compat)
+            assign("windowsFonts", function(...) {}, envir = compat)
 
             assign("winDialog", function(type = "ok", message) {},
                    envir = compat)
@@ -3835,7 +3878,8 @@ function(package, dir, lib.loc = NULL)
 
     ## it is OK to refer to yourself and non-S4 standard packages
     standard_package_names <-
-        .get_standard_package_names()$base %w/o% c("methods", "stats4")
+        .get_standard_package_names()$base %w/o%
+           c("methods", "stats4", "grid", "splines", "tcltk", "tools")
     depends_suggests <- c(depends, suggests, pkg_name, contains,
                           standard_package_names)
     imports <- c(imports, depends_suggests, enhances)
