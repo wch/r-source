@@ -3229,7 +3229,8 @@ function(package, lib.loc = NULL)
                                    "Meta", "package.rds"))
         pkgs1 <- sapply(desc$Suggests, "[[", "name")
         pkgs2 <- sapply(desc$Enhances, "[[", "name")
-        for( pkg in unique(c(pkgs1, pkgs2)) )
+	## add tcltk for now, as many packages require() but not Suggests it
+        for( pkg in unique(c(pkgs1, pkgs2, "tcltk")) )
             suppressMessages(try(require(pkg, character.only = TRUE,
                                          quietly=TRUE),
                                  silent = TRUE))
