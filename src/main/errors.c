@@ -260,8 +260,8 @@ static void reset_inWarning(void *data)
 static int wd(const char * buf)
 {
     int nc = mbstowcs(NULL, buf, 0), nw;
-    if(nc >= 0 || nc < 200) {
-	wchar_t wc[200];
+    if(nc > 0 && nc < 2000) {
+	wchar_t wc[2000];
 	mbstowcs(wc, buf, nc + 1);
 	nw = Ri18n_wcswidth(wc, 2147483647);
 	return (nw < 1) ? nc : nw;
