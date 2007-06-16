@@ -11,7 +11,7 @@
 }
 \usage{
 checkVignettes(package, dir, lib.loc = NULL,
-               tangle = TRUE, weave = TRUE, latex = TRUE,
+               tangle = TRUE, weave = TRUE, latex = FALSE,
                workdir = c("tmp", "src", "cur"),
                keepfiles = FALSE)
 }
