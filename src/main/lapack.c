@@ -60,7 +60,7 @@ static void La_Init(void)
     return;
 }
 
-attribute_hidden
+/* Regretably, package 'party' calls this: attribute_hidden */
 SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v, SEXP method)
 {
     if(!initialized) La_Init();
