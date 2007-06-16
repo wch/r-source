@@ -172,6 +172,17 @@
  IS_UTF8
  InitDynload
  Init_R_Variables
+ La_chol
+ La_chol2inv
+ La_dgeqp3
+ La_dgesv
+ La_rg
+ La_rg_cmplx
+ La_rs
+ La_rs_cmplx
+ La_svd_cmplx
+ La_zgeqp3
+ La_zgesv
  LOCK_BINDING
  LeftMatrixColumnLabel
  LoadInitFile
@@ -207,6 +218,9 @@
  R_FreeStringBuffer
  R_FreeStringBufferL
  R_FunTab
+ R_GE_VStrHeight
+ R_GE_VStrWidth
+ R_GE_VText
  R_GetMaxNSize
  R_GetMaxVSize
  R_HandlerStack
@@ -333,6 +347,8 @@
  Rf_FixupVFont
  Rf_GInit
  Rf_GetOptionParAsk
+ Rf_GVStrHeight
+ Rf_GVStrWidth
  Rf_IndexWidth
  Rf_InitArithmetic
  Rf_InitBaseEnv
@@ -452,6 +468,13 @@
  Rregexec
  Rrowsum_df
  Rrowsum_matrix
+ Rsockclose
+ Rsockconnect
+ Rsocklisten
+ Rsockopen
+ Rsockread
+ Rsockselect
+ Rsockwrite
  Rwin_rename
  SET_ACTIVE_BINDING_BIT
  SET_LATIN1
@@ -585,6 +608,7 @@
  deflateTune
  deflate_copyright
  deleditordata
+ det_ge_real
  do_AT
  do_Cstack_info
  do_D
@@ -1253,7 +1277,14 @@
  pkgmenuact
  pnchisq_raw
  pointsize
+ process_site_Renviron
+ process_system_Renviron
+ process_user_Renviron
  pythag_
+ qr_coef_cmplx
+ qr_coef_real
+ qr_qy_cmplx
+ qr_qy_real
  raise
  realp0_
  reset_duplicate_counter
@@ -1462,7 +1493,7 @@
  trio_xstring_substring
  uncompress
  utf8clen
- wcrtomb
+ winAccess
  winNewFrameConfirm
  winaddmenu
  winaddmenuitem
