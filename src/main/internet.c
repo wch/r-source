@@ -33,7 +33,7 @@ static R_InternetRoutines routines, *ptr = &routines;
 
 
 /*
-SEXP attribute_hidden do_download(SEXP call, SEXP op, SEXP args, SEXP env);
+SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);
 
@@ -115,8 +115,8 @@ Rconnection attribute_hidden R_newurl(const char *description,
     }    
 }
 
-Rconnection R_newsock(const char *host, int port, int server, 
-		      const char * const mode)
+Rconnection attribute_hidden 
+R_newsock(const char *host, int port, int server, const char * const mode)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)
@@ -189,6 +189,7 @@ void  R_FTPClose(void *ctx)
 	error(_("internet routines cannot be loaded"));
 }
 
+attribute_hidden
 void Rsockopen(int *port)
 {
     if(!initialized) internet_Init();
@@ -198,6 +199,7 @@ void Rsockopen(int *port)
 	error(_("socket routines cannot be loaded"));
 }
 
+attribute_hidden
 void Rsocklisten(int *sockp, char **buf, int *len)
 {
     if(!initialized) internet_Init();
@@ -207,6 +209,7 @@ void Rsocklisten(int *sockp, char **buf, int *len)
 	error(_("socket routines cannot be loaded"));
 }
 
+attribute_hidden
 void Rsockconnect(int *port, char **host)
 {
     if(!initialized) internet_Init();
@@ -216,6 +219,7 @@ void Rsockconnect(int *port, char **host)
 	error(_("socket routines cannot be loaded"));
 }
 
+attribute_hidden
 void Rsockclose(int *sockp)
 {
     if(!initialized) internet_Init();
@@ -225,6 +229,7 @@ void Rsockclose(int *sockp)
 	error(_("socket routines cannot be loaded"));
 }
 
+attribute_hidden
 void Rsockread(int *sockp, char **buf, int *maxlen)
 {
     if(!initialized) internet_Init();
@@ -234,6 +239,7 @@ void Rsockread(int *sockp, char **buf, int *maxlen)
 	error(_("socket routines cannot be loaded"));
 }
 
+attribute_hidden
 void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 {
     if(!initialized) internet_Init();
@@ -243,6 +249,7 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 	error(_("socket routines cannot be loaded"));
 }
 
+attribute_hidden
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 		double timeout)
 {
