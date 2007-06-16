@@ -20,9 +20,9 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
-            message("trying +", tt)
+	    cat("trying +", tt, sep='')
 	    utils::flush.console()
-        }
+	}
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
@@ -303,7 +303,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     for(i in seq(ns)) {
 	tt <- scope[i]
 	if(trace > 1) {
-            message("trying -", tt)
+	    cat("trying -", tt, sep='')
 	    utils::flush.console()
         }
         nfit <- update(object, as.formula(paste("~ . -", tt)),
@@ -683,8 +683,8 @@ step <- function(object, scope, scale = 0,
     nm <- 1
     Terms <- fit$terms
     if(trace)
-	message("Start:  AIC=", format(round(bAIC, 2)), "\n",
-                cut.string(deparse(as.vector(formula(fit)))), "\n")
+	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
+	    cut.string(deparse(as.vector(formula(fit)))), "\n", sep='')
 
     models[[nm]] <- list(deviance = mydeviance(fit), df.resid = n - edf,
 			 change = "", AIC = bAIC)
@@ -743,8 +743,8 @@ step <- function(object, scope, scale = 0,
 	edf <- bAIC[1]
 	bAIC <- bAIC[2]
 	if(trace)
-	    message("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
-                    cut.string(deparse(as.vector(formula(fit)))), "\n")
+	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
+		cut.string(deparse(as.vector(formula(fit)))), "\n", sep='')
         ## add a tolerance as dropping 0-df terms might increase AIC slightly
 	if(bAIC >= AIC + 1e-7) break
 	nm <- nm + 1
