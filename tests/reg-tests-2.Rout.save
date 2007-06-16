@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-24 r41702)
+R version 2.6.0 Under development (unstable) (2007-06-16 r41964)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6051,4 +6051,15 @@ C 7
 zero  one 
   NA    5 
 > ## coef names were returned unpivoted <= 2.5.0
+> 
+> ## readChar read extra items, terminated on zeros
+> x <- as.raw(65:74)
+> readChar(x, nchar=c(3,3,0,3,3,3))
+[1] "ABC" "DEF" ""    "GHI" "J"  
+> f <- tempfile()
+> writeChar("ABCDEFGHIJ", con=f, eos=NULL)
+> readChar(f, nchar=c(3,3,0,3,3,3))
+[1] "ABC" "DEF" ""    "GHI" "J"  
+> unlink(f)
+> ##
 > 

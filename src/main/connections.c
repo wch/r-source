@@ -2768,18 +2768,19 @@ static SEXP rawOneString(Rbyte *bytes, int nbytes, int *np)
 
 static SEXP rawFixedString(Rbyte *bytes, int len, int nbytes, int *np)
 {
-    int i;
     char *buf;
     SEXP res;
 
-    i = *np + len;
-    if(i < nbytes) nbytes = i;
+    if(*np + len > nbytes) {
+    	len = nbytes - *np;
+    	if(!len) return(R_NilValue);
+    }
     /* no terminator */
-    buf = R_chk_calloc(nbytes - (*np) + 1, 1);
-    memcpy(buf, bytes+(*np), nbytes-(*np));
+    buf = R_chk_calloc(len + 1, 1);
+    memcpy(buf, bytes+(*np), len);
+    *np += len;
     res = mkChar(buf);
     Free(buf);
-    *np = nbytes;
     return res;
 }
 
@@ -3245,7 +3246,7 @@ static SEXP readFixedString(Rconnection con, int len)
 	buf = (char *) R_alloc(len+1, sizeof(char));
 	memset(buf, 0, len+1);
 	m = con->read(buf, sizeof(char), len, con);
-	if(m == 0) return R_NilValue;
+	if(len && !m) return R_NilValue;
 	pos = m;
     }
     /* String may contain nuls so don't use mkChar */
@@ -3286,7 +3287,7 @@ SEXP attribute_hidden do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!con->open(con)) error(_("cannot open the connection"));
     }
     PROTECT(ans = allocVector(STRSXP, n));
-    for(i = 0, m = i+1; i < n; i++) {
+    for(i = 0, m = 0; i < n; i++) {
 	len = INTEGER(nchars)[i];
 	if(len == NA_INTEGER || len < 0)
 	    error(_("invalid value for '%s'"), "nchar");

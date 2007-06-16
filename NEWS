@@ -372,6 +372,10 @@ BUG FIXES
 	is.numeric().
 
     o	methods("Math") did not work if 'methods' was not attached.
+    
+    o	readChar() read an extra empty item (or more than one) beyond
+	the end of the source; in some conditions it would terminate
+	early when reading an item of length 0.
 
 
 

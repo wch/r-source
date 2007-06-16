@@ -2223,3 +2223,12 @@ qr.fitted(qr(A), y)
 
 qr.coef(qr(matrix(0:1, 1, dimnames=list(NULL, c("zero","one")))), 5)
 ## coef names were returned unpivoted <= 2.5.0
+
+## readChar read extra items, terminated on zeros
+x <- as.raw(65:74)
+readChar(x, nchar=c(3,3,0,3,3,3))
+f <- tempfile()
+writeChar("ABCDEFGHIJ", con=f, eos=NULL)
+readChar(f, nchar=c(3,3,0,3,3,3))
+unlink(f)
+##
