@@ -247,6 +247,7 @@
  R_KT_ran_arr_sentinel
  R_KeepSource
  R_LastvalueSymbol
+ R_LibraryFileName
  R_LoadFromFile
  R_Log10
  R_NHeap
@@ -329,8 +330,6 @@
  R_getVarsFromFrame
  R_init_base
  R_initialize_bcode
- R_interrupts_pending
- R_interrupts_suspended
  R_is_running
  R_lazyLoadDBfetch
  R_lazyLoadDBflush
@@ -375,9 +374,10 @@
  Rf_FixupPch
  Rf_FixupVFont
  Rf_GInit
- Rf_GetOptionParAsk
  Rf_GVStrHeight
  Rf_GVStrWidth
+ Rf_GVText
+ Rf_GetOptionParAsk
  Rf_IndexWidth
  Rf_InitArithmetic
  Rf_InitBaseEnv
@@ -390,6 +390,7 @@
  Rf_InitMemory
  Rf_InitOptions
  Rf_InitRand
+ Rf_InitStringHash
  Rf_InitTempDir
  Rf_IntegerFromComplex
  Rf_IntegerFromLogical
@@ -1125,6 +1126,7 @@
  do_writechar
  do_writelines
  do_writetable
+ do_xspline
  do_zeroin
  dos_glob
  dos_globfree
@@ -1149,6 +1151,7 @@
  getGraphMenu
  getIdentification
  getParseContext
+ getParseFilename
  getWindowTitle
  get_crc_table
  get_current_mem
