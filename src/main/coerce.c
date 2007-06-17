@@ -2473,7 +2473,8 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
     if(TYPEOF(obj) == type) return obj;
     if(isFactor(obj))
 	error(_("invalid to change the storage mode of a factor"));
-    ans = coerceVector(obj, type);
+    PROTECT(ans = coerceVector(obj, type));
     DUPLICATE_ATTRIB(ans, obj);
+    UNPROTECT(1);
     return ans;
 }
