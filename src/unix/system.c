@@ -355,7 +355,7 @@ int Rf_initialize_R(int ac, char **av)
     if(strlen(cmdlines)) { /* had at least one -e option */
 	if(ifp) R_Suicide(_("cannot use -e with -f or --file"));
 	ifp = tmpfile();
-	fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
+	(void) fwrite(cmdlines, strlen(cmdlines)+1, 1, ifp);
 	fflush(ifp);
 	rewind(ifp);
     }

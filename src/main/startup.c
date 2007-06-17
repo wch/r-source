@@ -52,6 +52,7 @@ void attribute_hidden R_InitialData(void)
 }
 
 
+attribute_hidden
 FILE *R_OpenLibraryFile(const char *file)
 {
     char buf[256];
@@ -62,6 +63,7 @@ FILE *R_OpenLibraryFile(const char *file)
     return fp;
 }
 
+attribute_hidden
 char *R_LibraryFileName(const char *file, char *buf, size_t bsize)
 {
     if (snprintf(buf, bsize, "%s/library/base/R/%s", R_Home, file) < 0)
@@ -69,6 +71,7 @@ char *R_LibraryFileName(const char *file, char *buf, size_t bsize)
     return buf;
 }     
      
+attribute_hidden
 FILE *R_OpenSysInitFile(void)
 {
     char buf[256];
@@ -79,6 +82,7 @@ FILE *R_OpenSysInitFile(void)
     return fp;
 }
 
+attribute_hidden
 FILE *R_OpenSiteFile(void)
 {
     char buf[256];
