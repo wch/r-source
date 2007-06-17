@@ -91,6 +91,8 @@ extern0 SEXP	R_SrcrefSymbol;     /* "srcref" */
 extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
 
+extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
+
 
  /* writable char access for R internal use only */
 #define CHAR_RW(x)	((char *) CHAR(x))

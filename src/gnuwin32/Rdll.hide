@@ -173,6 +173,7 @@
  IS_UTF8
  InitDynload
  Init_R_Variables
+ LOCK_BINDING
  La_chol
  La_chol2inv
  La_dgeqp3
@@ -185,7 +186,6 @@
  La_zgeqp3
  La_zgesv
  LeftMatrixColumnLabel
- LOCK_BINDING
  LoadInitFile
  MDIset
  MDIsize
@@ -254,6 +254,10 @@
  R_NSize
  R_NaRmSymbol
  R_Newhashpjw
+ R_OpenInitFile
+ R_OpenLibraryFile
+ R_OpenSiteFile
+ R_OpenSysInitFile
  R_OutputCon
  R_PPStack
  R_PPStackSize
@@ -265,6 +269,7 @@
  R_ParseContextLast
  R_ParseError
  R_ParseFile
+ R_PromiseExpr
  R_Quiet
  R_RecursiveSymbol
  R_RestartStack

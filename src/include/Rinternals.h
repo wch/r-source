@@ -498,9 +498,7 @@ LibExtern SEXP  R_EmptyEnv;	    /* An empty environment at the root of the
 				    	environment tree */
 LibExtern SEXP  R_BaseEnv;	    /* The base environment; formerly R_NilValue */
 LibExtern SEXP	R_BaseNamespace;    /* The (fake) name space for base */
-LibExtern SEXP	R_NamespaceRegistry;/* Registry for registerd name spaces */
-
-LibExtern SEXP	R_StringHash;       /* Global hash of CHARSXPs */
+LibExtern SEXP	R_NamespaceRegistry;/* Registry for registered name spaces */
 
 /* Special Values */
 LibExtern SEXP	R_NilValue;	    /* The nil object */
