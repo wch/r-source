@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-12
+@set FAQ_DATE @value{FAQ_YEAR}-06-16
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2683,6 +2683,8 @@ Includes maximum likelihood and Bayesian tools.
 @item brainwaver
 Basic wavelet analysis of multivariate time series with a vizualisation
 and parametrization using graph theory.
+@item brew
+Templating framework for report generation.
 @item brlr
 Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
@@ -4609,6 +4611,9 @@ Maximum likelihood computations for Tweedie exponential family models.
 @c Functions for optimal design of two-stage-studies using the Mean Score
 @c method.
 @c </COMMENT>
+@item twslm
+A two-way semilinear model for normalization and analysis of cDNA
+microarray data.
 @item udunits
 Interface to Unidata's routines to convert units.
 @item ump
