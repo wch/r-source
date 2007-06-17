@@ -2239,26 +2239,6 @@ R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
    If the result is a promise, then the promise is forced. */
 
 SEXP attribute_hidden
-R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
-{
-    PROTECT_INDEX vpi;
-    Rboolean compressed = asLogical(compsxp);
-    SEXP val;
-
-    PROTECT_WITH_INDEX(val = readRawFromFile(file, key), &vpi);
-    if (compressed)
-	REPROTECT(val = R_decompress1(val), vpi);
-    val = R_unserialize(val, hook);
-    if (TYPEOF(val) == PROMSXP) {
-        REPROTECT(val, vpi);
-        val = eval(val, R_GlobalEnv);
-        SET_NAMED(val, 2);
-    }
-    UNPROTECT(1);
-    return val;
-}
-
-SEXP attribute_hidden
 do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP key, file, compsxp, hook;

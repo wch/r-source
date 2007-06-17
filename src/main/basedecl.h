@@ -89,7 +89,6 @@ SEXP R_unserialize(SEXP, SEXP);
 
 SEXP R_getVarsFromFrame(SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBinsertValue(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP R_lazyLoadDBfetch(SEXP, SEXP, SEXP, SEXP);
 SEXP R_lazyLoadDBflush(SEXP);
 
 SEXP R_get_primname(SEXP op) ;

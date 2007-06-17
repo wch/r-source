@@ -247,7 +247,6 @@ static R_CallMethodDef callMethods [] = {
     /* lazy loading support */
     CALLDEF(R_getVarsFromFrame, 3),
     CALLDEF(R_lazyLoadDBinsertValue, 5),
-    CALLDEF(R_lazyLoadDBfetch, 4),
     CALLDEF(R_lazyLoadDBflush, 1),
 
 #ifdef BYTECODE
