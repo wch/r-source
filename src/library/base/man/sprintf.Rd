@@ -11,7 +11,7 @@ sprintf(fmt, \dots)
 gettextf(fmt, \dots, domain = NULL)
 }
 \arguments{
-  \item{fmt}{a format string.}
+  \item{fmt}{a format string.  Up to 8192 bytes.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
     integer, real and character vectors are supported, but some coercion
     will be done: see the Details section.}
@@ -63,7 +63,9 @@ gettextf(fmt, \dots, domain = NULL)
   \code{s} and \code{\link{as.double}} for non-double arguments with
   \code{f, e, E, g, G}.  NB: the length is determined before conversion,
   so do not rely on the internal coercion if this would change the
-  length.
+  length.  Also, the coercion has to be done for each line of output (as
+  the format string may differ between lines), so it is more efficient
+  not to rely on internal coercion.
   
   In addition, between the initial \code{\%} and the terminating
   conversion character there may be, in any order:
@@ -89,9 +91,6 @@ gettextf(fmt, \dots, domain = NULL)
   positive field width. A negative precision is taken as if the
   precision were omitted. The \code{*1$} to \code{*99$} notation for
   arguments referenced out of order is also supported.
-
-  The result has a length limit, probably 8192 bytes, and attempts
-  to exceed this may result in an error, or truncation with a warning.
 }
 
 \value{

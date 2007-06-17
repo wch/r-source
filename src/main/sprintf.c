@@ -24,22 +24,27 @@
 #endif
 
 #include <Defn.h>
+#include "RBufferUtils.h"
 
 #define MAXLINE MAXELTSIZE
 
 SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i, nargs, cnt, v, thislen;
+    int i, nargs, cnt, v, thislen, nfmt;
     const char *formatString, *ss; char *starc;
-    char fmt[MAXLINE+1], fmt2[MAXLINE+1], *fmtp, bit[MAXLINE+1], 
-	outputString[MAXLINE+1];
+    /* fmt2 is a copy of fmt with '*' expanded.
+       bit will hold numeric formats, so be quite small. */
+    char fmt[MAXLINE+1], fmt2[MAXLINE+10], *fmtp, bit[MAXLINE+1], 
+	*outputString;
     size_t n, cur, chunk;
 
     SEXP format, ans, _this, a[100], tmp;
     int ns, maxlen, lens[100], nthis, has_star, star_arg = 0, nstar;
+    static R_StringBuffer outbuff = {NULL, 0, MAXELTSIZE};
+
+    outputString = R_AllocStringBuffer(0, &outbuff);
 
     /* grab the format string */
-
     nargs = length(args);
     format = CAR(args);
     if (!isString(format) || length(format) == 0)
@@ -51,8 +56,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     /* record the args for later re-ordering */
     for(i = 0; i < nargs; i++, args = CDR(args)) a[i] = CAR(args);
 
-    maxlen = length(format);
-
+    maxlen = nfmt = length(format);
     for(i = 0; i < nargs; i++) {
 	lens[i] = length(a[i]);
 	if(lens[i] == 0)
@@ -61,23 +65,25 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(maxlen % length(format))
 	error(_("arguments cannot be recycled to the same length"));
-    for(i = 0; i < nargs; i++) {
+    for(i = 0; i < nargs; i++)
 	if(maxlen % lens[i])
 	    error(_("arguments cannot be recycled to the same length"));
-    }
+
+    /* FIXME?  pull format analysis and conversion outside the loop if
+       there is only one format */
 
     PROTECT(ans = allocVector(STRSXP, maxlen));
     for(ns = 0; ns < maxlen; ns++) {
 	cnt = 0;
 	outputString[0] = '\0';
-	formatString = translateChar(STRING_ELT(format, ns % length(format)));
+	formatString = translateChar(STRING_ELT(format, ns % nfmt));
 	n = strlen(formatString);
 	if (n > MAXLINE)
-	    error(_("'fmt' length exceeds maximal buffer length %d"),
-		      MAXLINE);
+	    error(_("'fmt' length exceeds maximal format length %d"),
+		  MAXLINE);
  	/* process the format string */
 	for (cur = 0; cur < n; cur += chunk) {
-
+	    ss = NULL;
 	    if (formatString[cur] == '%') { /* handle special format command */
 
 		if (cur < n - 1 && formatString[cur + 1] == '%') {
@@ -176,7 +182,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			
 			/* Now let us see if some minimal coercion would be sensible.
 			 */
-			switch(tolower(fmtp[strlen(fmtp) - 1])) {
+			switch(fmtp[strlen(fmtp) - 1]) {
 			case 'd':
 			case 'i':
 			case 'x':
@@ -190,6 +196,8 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			case 'e':
 			case 'f':
 			case 'g':
+			case 'E':
+			case 'G':
 			    if(TYPEOF(_this) != REALSXP) {
 				PROTECT(tmp = lang2(install("as.double"), _this));
 				_this = eval(tmp, env);
@@ -282,10 +290,6 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    if (strcspn(fmtp, "s") >= strlen(fmtp))
 				error("%s", _("use format %s for character objects"));
 			    ss = translateChar(STRING_ELT(_this, ns % thislen));
-			    if(strlen(ss) > MAXLINE)
-				warning(_("Likely truncation of character string"));
-			    snprintf(bit, MAXLINE, fmtp, ss);
-			    bit[MAXLINE] = '\0';
 			    break;
 			    
 			default:
@@ -305,15 +309,22 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		strncpy(bit, formatString + cur, chunk);
 		bit[chunk] = '\0';
 	    }
-
-	    if (strlen(outputString) + strlen(bit) > MAXLINE)
-		error(_("String length exceeds buffer size of %d"), MAXLINE);
-	    strcat(outputString, bit);
+	    if(ss) {
+		outputString = R_AllocStringBuffer(strlen(outputString) + 
+						   strlen(ss) + 1, &outbuff);
+		strcat(outputString, ss);
+	    } else {
+		outputString = R_AllocStringBuffer(strlen(outputString) + 
+						   strlen(bit) + 1, &outbuff);
+		strcat(outputString, bit);
+		
+	    }
 	}
 	SET_STRING_ELT(ans, ns, mkChar(outputString));
     }
 
     UNPROTECT(1);
+    R_FreeStringBufferL(&outbuff);
     return ans;
 }
 

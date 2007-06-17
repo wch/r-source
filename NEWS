@@ -247,11 +247,13 @@ NEW FEATURES
 
     o	row() and col() now work on matrix-like objects, not just matrices.
 
-    o	fifo() no longer has a default description.
+    o	fifo() no longer has a default 'description'.
 
 	fifo("") is now implemented, and works in the same way as file("").
 
     o	C(f, SAS) now works as well as C(f, treatment), etc.
+
+    o	sprintf() no longer has a string length limit.
 
 
 DEPRECATED & DEFUNCT
