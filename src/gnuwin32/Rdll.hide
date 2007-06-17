@@ -167,6 +167,7 @@
  GA_win_rgb
  GRecording
  GetCurrentWinPos
+ INTERNAL
  IS_ACTIVE_BINDING
  IS_LATIN1
  IS_UTF8
@@ -183,8 +184,8 @@
  La_svd_cmplx
  La_zgeqp3
  La_zgesv
- LOCK_BINDING
  LeftMatrixColumnLabel
+ LOCK_BINDING
  LoadInitFile
  MDIset
  MDIsize
@@ -193,6 +194,11 @@
  MatrixRowLabel
  NextConnection
  OutDec
+ PRCODE
+ PRENV
+ PRIMOFFSET
+ PRSEEN
+ PRVALUE
  PrintUsage
  ProfileEvent
  R_AllocStringBuffer
@@ -207,9 +213,12 @@
  R_CollectWarnings
  R_Collected
  R_CommentSxp
+ R_CommentSymbol
  R_ConsoleIob
+ R_DotEnvSymbol
  R_EditFiles
  R_ErrorCon
+ R_ExactSymbol
  R_Expressions
  R_Expressions_keep
  R_FileExists
@@ -237,10 +246,13 @@
  R_KT_ran_arr_ptr
  R_KT_ran_arr_sentinel
  R_KeepSource
+ R_LastvalueSymbol
  R_LoadFromFile
  R_Log10
  R_NHeap
+ R_NShowCalls
  R_NSize
+ R_NaRmSymbol
  R_Newhashpjw
  R_OutputCon
  R_PPStack
@@ -254,6 +266,7 @@
  R_ParseError
  R_ParseFile
  R_Quiet
+ R_RecursiveSymbol
  R_RestartStack
  R_RestartToken
  R_ReturnedValue
@@ -264,14 +277,22 @@
  R_SetOptionWarn
  R_SetOptionWidth
  R_SetWin32
+ R_ShowErrorCalls
  R_ShowErrorMessages
+ R_ShowWarnCalls
  R_ShowFiles
+ R_SourceSymbol
+ R_SrcfileSymbol
+ R_SrcrefSymbol
  R_StdinEnc
+ R_StringHash
  R_SymbolTable
  R_TextBufferFree
  R_TextBufferGetc
  R_TextBufferInit
+ R_TmpvalSymbol
  R_ToplevelExec
+ R_UseNamesSymbol
  R_VSize
  R_Verbose
  R_Visible
@@ -303,12 +324,15 @@
  R_getVarsFromFrame
  R_init_base
  R_initialize_bcode
+ R_interrupts_pending
+ R_interrupts_suspended
  R_is_running
  R_lazyLoadDBfetch
  R_lazyLoadDBflush
  R_lazyLoadDBinsertValue
  R_max_memory
  R_moduleCdynload
+ R_newsock
  R_newunz
  R_newurl
  R_osDynSymbol

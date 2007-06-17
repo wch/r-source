@@ -517,29 +517,18 @@ SEXP	R_RestartToken;     /* Marker for restarted function calls */
 LibExtern SEXP	R_Bracket2Symbol;   /* "[[" */
 LibExtern SEXP	R_BracketSymbol;    /* "[" */
 LibExtern SEXP	R_BraceSymbol;      /* "{" */
-LibExtern SEXP	R_TmpvalSymbol;     /* "*tmp*" */
 LibExtern SEXP	R_ClassSymbol;	    /* "class" */
 LibExtern SEXP	R_DimNamesSymbol;   /* "dimnames" */
 LibExtern SEXP	R_DimSymbol;	    /* "dim" */
 LibExtern SEXP	R_DollarSymbol;	    /* "$" */
 LibExtern SEXP	R_DotsSymbol;	    /* "..." */
 LibExtern SEXP	R_DropSymbol;	    /* "drop" */
-LibExtern SEXP	R_ExactSymbol;	    /* "exact" */
 LibExtern SEXP	R_LevelsSymbol;	    /* "levels" */
 LibExtern SEXP	R_ModeSymbol;	    /* "mode" */
 LibExtern SEXP	R_NamesSymbol;	    /* "names" */
-LibExtern SEXP	R_NaRmSymbol;	    /* "na.rm" */
 LibExtern SEXP	R_RowNamesSymbol;   /* "row.names" */
 LibExtern SEXP	R_SeedsSymbol;	    /* ".Random.seed" */
 LibExtern SEXP	R_TspSymbol;	    /* "tsp" */
-LibExtern SEXP	R_LastvalueSymbol;  /* ".Last.value" */
-LibExtern SEXP	R_CommentSymbol;    /* "comment" */
-LibExtern SEXP	R_SourceSymbol;     /* "source" */
-LibExtern SEXP	R_DotEnvSymbol;     /* ".Environment" */
-LibExtern SEXP	R_RecursiveSymbol;  /* "recursive" */
-LibExtern SEXP	R_UseNamesSymbol;   /* "use.names" */
-LibExtern SEXP  R_SrcfileSymbol;    /* "srcfile" */
-LibExtern SEXP  R_SrcrefSymbol;     /* "srcref" */
 
 /* Missing Values - others from Arith.h */
 #define NA_STRING	R_NaString

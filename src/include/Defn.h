@@ -50,6 +50,13 @@
 # define attribute_hidden
 #endif
 
+#ifdef __MAIN__
+# define extern0 attribute_hidden
+#else
+# define extern0 extern
+#endif
+
+
 #define MAXELTSIZE 8192 /* Used as a default for string buffer sizes,
 			   and occasionally as a limit. */
 
@@ -68,11 +75,22 @@ Rcomplex Rf_ComplexFromLogical(int, int*);
 Rcomplex Rf_ComplexFromInteger(int, int*);
 Rcomplex Rf_ComplexFromReal(double, int*);
 
-
 #define CALLED_FROM_DEFN_H 1
 #include <Rinternals.h>		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
 #undef CALLED_FROM_DEFN_H
+extern0 SEXP	R_CommentSymbol;    /* "comment" */
+extern0 SEXP	R_DotEnvSymbol;     /* ".Environment" */
+extern0 SEXP	R_ExactSymbol;	    /* "exact" */
+extern0 SEXP	R_LastvalueSymbol;  /* ".Last.value" */
+extern0 SEXP	R_NaRmSymbol;	    /* "na.rm" */
+extern0 SEXP	R_RecursiveSymbol;  /* "recursive" */
+extern0 SEXP	R_SourceSymbol;     /* "source" */
+extern0 SEXP	R_SrcfileSymbol;    /* "srcfile" */
+extern0 SEXP	R_SrcrefSymbol;     /* "srcref" */
+extern0 SEXP	R_TmpvalSymbol;     /* "*tmp*" */
+extern0 SEXP	R_UseNamesSymbol;   /* "use.names" */
+
 
  /* writable char access for R internal use only */
 #define CHAR_RW(x)	((char *) CHAR(x))
