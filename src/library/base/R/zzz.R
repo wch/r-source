@@ -92,6 +92,8 @@ assign("is.recursive", function(x) NULL, envir = .ArgsEnv)
 assign("is.single", function(x) NULL, envir = .ArgsEnv)
 assign("is.symbol", function(x) NULL, envir = .ArgsEnv)
 assign("list", function(...) NULL, envir = .ArgsEnv)
+assign("lazyLoadDBfetch", function(key, file, compressed, hook) NULL,
+       envir = .ArgsEnv)
 assign("missing", function(x) NULL, envir = .ArgsEnv)
 assign("nargs", function() NULL, envir = .ArgsEnv)
 assign("nzchar", function(x) NULL, envir = .ArgsEnv)

@@ -2257,3 +2257,31 @@ R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
     UNPROTECT(1);
     return val;
 }
+
+SEXP attribute_hidden
+do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP key, file, compsxp, hook;
+    PROTECT_INDEX vpi;
+    Rboolean compressed;
+    SEXP val;
+
+    checkArity(op, args);
+    key = CAR(args); args = CDR(args);
+    file = CAR(args); args = CDR(args);
+    compsxp = CAR(args); args = CDR(args);
+    hook = CAR(args);
+    compressed = asLogical(compsxp);
+    
+    PROTECT_WITH_INDEX(val = readRawFromFile(file, key), &vpi);
+    if (compressed)
+	REPROTECT(val = R_decompress1(val), vpi);
+    val = R_unserialize(val, hook);
+    if (TYPEOF(val) == PROMSXP) {
+        REPROTECT(val, vpi);
+        val = eval(val, R_GlobalEnv);
+        SET_NAMED(val, 2);
+    }
+    UNPROTECT(1);
+    return val;
+}

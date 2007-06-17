@@ -1891,6 +1891,7 @@ UseMethod  invisible  standardGeneric
 .Call.graphics        .External.graphics
 .subset    .subset2   .primTrace  .primUntrace
 rep        seq.int
+lazyLoadDBfetch
 @end group
 @end example
 

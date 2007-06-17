@@ -14,6 +14,7 @@
 \alias{.ArgsEnv}
 \alias{.GenericArgsEnv}
 \alias{findPackageEnv}
+\alias{lazyLoadDBfetch}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
@@ -44,6 +45,8 @@ sys.save.image(name)
 .set_row_names(n)
 
 findPackageEnv(info)
+
+lazyLoadDBfetch(key, file, compressed, hook)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -70,6 +73,10 @@ findPackageEnv(info)
     latter with a negative sign for \sQuote{automatic} row names.}
   \item{n}{integer.  The number of rows.}
   \item{info}{character string such as \code{"package:MASS"}.}
+  \item{key}{the object name in a lazyload database.}
+  \item{file}{the filepath to a lazyload database.}
+  \item{compressed}{logical: are the values in the database compressed?}
+  \item{refhook}{a load hook: see \code{\link{unserialize}}.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially

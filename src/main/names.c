@@ -933,6 +933,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"write.table",	do_writetable,	0,    111,     11,	{PP_FUNCALL, PREC_FN,	0}},
 {"Encoding",	do_encoding,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"setEncoding",	do_setencoding,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"lazyLoadDBfetch",do_lazyLoadDBfetch,0,1,	4,	{PP_FUNCALL, PREC_FN,	0}},
 
 {NULL,		NULL,		0,	0,	0,	{PP_INVALID, PREC_FN,	0}},
 };

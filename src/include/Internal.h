@@ -264,6 +264,7 @@ SEXP do_isunsorted(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isvector(SEXP, SEXP, SEXP, SEXP);
 SEXP do_lapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_layout(SEXP, SEXP, SEXP, SEXP);
+SEXP do_lazyLoadDBfetch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_length(SEXP, SEXP, SEXP, SEXP);
 SEXP do_lengthgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_levelsgets(SEXP, SEXP, SEXP, SEXP);
