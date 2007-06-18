@@ -977,7 +977,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     {
 	if(identical(clabs, nmi)) NULL
 	else if(length(nmi) == length(clabs) && all(match(nmi, clabs, 0L))) {
-            ## we need unique matches here
+            ## we need 1-1 matches here
 	    m <- pmatch(nmi, clabs, 0L)
             if(any(m == 0L))
                 stop("names do not match previous names")
@@ -1034,9 +1034,10 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	    if(is.null(clabs))
 		clabs <- names(xi)
 	    else {
+                if(length(xi) != length(clabs))
+                    stop("numbers of columns of arguments do not match")
 		pi <- match.names(clabs, names(xi))
-		if( !is.null(pi) )
-		    perm[[i]] <- pi
+		if( !is.null(pi) ) perm[[i]] <- pi
 	    }
 	    rows[[i]] <- seq.int(from = nrow + 1L, length.out = ni)
 	    rlabs[[i]] <- Make.row.names(nmi, ri, ni, nrow)
@@ -1083,9 +1084,10 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		if(is.null(clabs))
 		    clabs <- nmi
 		else {
-		    tmp<-match.names(clabs, nmi)
-		    if( !is.null(tmp) )
-			perm[[i]] <- tmp
+                    if(length(xi) != length(clabs))
+                        stop("numbers of columns of arguments do not match")
+		    pi <- match.names(clabs, nmi)
+		    if( !is.null(pi) ) perm[[i]] <- pi
 		}
 	    }
 	}
