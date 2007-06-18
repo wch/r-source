@@ -406,6 +406,10 @@ SEXP eval(SEXP e, SEXP rho)
 	    if(PRSEEN(e))
 		errorcall(R_GlobalContext->call,
 			  _("promise already under evaluation: recursive default argument reference or earlier problems?"));
+	    /* We don't want to interrupt a lazyload evaluation, and that
+	       means we must not check when calling the wrapper function
+	       or the .Call call.  So delay checking for long enough. */
+	    if(evalcount > 95) evalcount = 95;
 	    SET_PRSEEN(e, 1);
 	    val = eval(PRCODE(e), PRENV(e));
 	    SET_PRSEEN(e, 0);

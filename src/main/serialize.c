@@ -1722,7 +1722,8 @@ static SEXP CallHook(SEXP x, SEXP fun)
     return val;
 }
 
-SEXP attribute_hidden do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP attribute_hidden
+do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* serializeToConn(object, conn, ascii, version, hook) */
 
@@ -2241,6 +2242,14 @@ R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
     Rboolean compressed = asLogical(compsxp);
     SEXP val;
 
+    /* Temporary fix for R 2.5.1.
+       Note that we cannot use BEGIN/END_SUSPEND_INTERRUPTS as that
+       checks interrupts at the suspend, and we don't want it done until
+       after the return. */
+ 
+    Rboolean __oldsusp__ = R_interrupts_suspended;
+    R_interrupts_suspended = TRUE;
+
     PROTECT_WITH_INDEX(val = readRawFromFile(file, key), &vpi);
     if (compressed)
 	REPROTECT(val = R_decompress1(val), vpi);
@@ -2251,5 +2260,7 @@ R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
         SET_NAMED(val, 2);
     }
     UNPROTECT(1);
+    R_interrupts_suspended = __oldsusp__;
+
     return val;
 }

@@ -35,6 +35,12 @@ NEW FEATURES
     o	If the srcfile argument to parse() is not NULL, it will be added
     	to the result as a "srcfile" attribute.
 
+    o	It is no longer possible to interrupt lazy-loading (which was
+	only at all likely when lazy-loading environments), which
+	would leave the object being loaded in an unusable state.
+	This is a temporary measure: error-recovery when evaluating
+	promises will be tackled more comprehensively in 2.6.0.
+
 
 INSTALLATION
 
