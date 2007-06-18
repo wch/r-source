@@ -177,7 +177,7 @@ BUG FIXES
 	the LHS only are no longer required and further variables are
 	allowed.
 
-    o	plot.hclust() has a 'out by one' error, and ignored the last
+    o	plot.hclust() had a 'out by one' error, and ignored the last
 	object when computing the window region (and could overrun
 	arrays).
 
@@ -614,6 +614,9 @@ NEW FEATURES
     o	There have been numerous performance improvements to the data
 	editor on both Windows and X11.	 In particular, resizing the
 	window works much better on X11.
+
+    o	Packages graphics and grid no longer require grDevices, as
+	they might be used only with third-party devices.
 
 
 DEPRECATED & DEFUNCT
