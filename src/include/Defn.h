@@ -469,6 +469,12 @@ typedef union { void *p; int i; } IStackval;
 # endif
 #endif
 
+/* Stack entry for pending promises */
+typedef struct RPRSTACK {
+    SEXP promise;
+    struct RPRSTACK *next;
+} RPRSTACK;
+
 /* Evaluation Context Structure */
 typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
@@ -488,6 +494,7 @@ typedef struct RCNTXT {
     int intsusp;                /* interrupts are suspended */
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
+    struct RPRSTACK *prstack;   /* stack of pending promises */
 #ifdef BYTECODE
     SEXP *nodestack;
 # ifdef BC_INT_STACK
@@ -629,6 +636,7 @@ extern uintptr_t R_CStackLimit	INI_as((uintptr_t)-1);	/* C stack limit */
 extern uintptr_t R_CStackStart	INI_as((uintptr_t)-1);	/* Initial stack address */
 extern0 int	R_CStackDir	INI_as(1);	/* C stack direction */
 extern0 Rboolean R_WarnEscapes  INI_as(TRUE);   /* Warn on unrecognized escapes */
+extern0 struct RPRSTACK *R_PendingPromises INI_as(NULL); /* Pending promise stack */
 
 /* File Input/Output */
 LibExtern Rboolean R_Interactive INI_as(TRUE);	/* TRUE during interactive use*/

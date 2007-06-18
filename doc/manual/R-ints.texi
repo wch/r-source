@@ -765,6 +765,7 @@ typedef struct RCNTXT @{
     int intsusp;                /* @r{Interrupts are suspended} */
     SEXP handlerstack;          /* @r{Condition handler stack} */
     SEXP restartstack;          /* @r{Stack of available restarts} */
+    struct RPRSTACK *prstack;   /* @r{Stack of pending promises} */
 @} RCNTXT, *context;
 @end example
 

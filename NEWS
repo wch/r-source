@@ -377,6 +377,9 @@ BUG FIXES
 	the end of the source; in some conditions it would terminate
 	early when reading an item of length 0.
 
+    o   Added a promise evaluation stack so interrupted promise
+        evaluations can be restarted.
+
 
 
 

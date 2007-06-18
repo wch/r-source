@@ -158,6 +158,13 @@ void attribute_hidden R_restore_globals(RCNTXT *cptr)
     R_interrupts_suspended = cptr->intsusp;
     R_HandlerStack = cptr->handlerstack;
     R_RestartStack = cptr->restartstack;
+    while (R_PendingPromises != cptr->prstack) {
+	/* The value installed in PRSSN 2 allows forcePromise in
+	   eval.c to signal a warning when asked to evaluate a promise
+	   whose evaluation has been interrupted by a jump. */
+	SET_PRSEEN(R_PendingPromises->promise, 2);
+	R_PendingPromises = R_PendingPromises->next;
+    }
 #ifdef BYTECODE
     R_BCNodeStackTop = cptr->nodestack;
 # ifdef BC_INT_STACK
@@ -217,6 +224,7 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->intsusp = R_interrupts_suspended;
     cptr->handlerstack = R_HandlerStack;
     cptr->restartstack = R_RestartStack;
+    cptr->prstack = R_PendingPromises;
 #ifdef BYTECODE
     cptr->nodestack = R_BCNodeStackTop;
 # ifdef BC_INT_STACK
