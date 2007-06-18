@@ -33,7 +33,7 @@ NEW FEATURES
     o	storage.mode<- is now primitive, and hence makes fewer copies
 	of an object (none if the mode is unchanged).  It is a little
 	less general than mode<-, which remains available.  (See also
-	the entry under DEPRECATED below.)
+	the entry under DEFUNCT below.)
 
     o	as.vector() and the default methods of as.character(),
 	as.complex(), as.double(), as.expression(), as.integer(),
@@ -55,9 +55,6 @@ NEW FEATURES
 	dispatch: these no longer dispatch on classes based on types
 	but do dispatch whenever the function in the base namespace is
 	called.
-
-	[This requires any package defining S4 methods on these
-	functions to be reinstalled, e.g. Matrix.]
 
     o	New function sunflowerTable() [name subject to be changed]
 	does the 2D gridding "computations" used by sunflowerplot().
@@ -200,7 +197,7 @@ NEW FEATURES
 
     o	New options 'warnPartialMatchDollar', 'warnPartialMatchArgs'
 	and 'warnPartialMatchAttr' to help detect the unintended use
-	of partial matching in $, argument matching  and attr()
+	of partial matching in $, argument matching and attr()
 	respectively.
 
     o	vignette() has a new argument 'all' to choose between showing
@@ -241,13 +238,14 @@ NEW FEATURES
 	nchar(x) > 0 (and avoids having to convert to wide chars in
 	a MBCS locale and hence consider validity).
 
-    o	relist() utility, an S3 generic with several methods,
-	providing an inversion for unlist(); thanks to a code proposal from
+    o	relist() utility, an S3 generic with several methods, providing
+	an 'inverse' for unlist(); thanks to a code proposal from
 	Andrew Clausen.
 
-    o	row() and col() now work on matrix-like objects, not just matrices.
+    o	row() and col() now work on matrix-like objects such as data
+	frames, not just matrices.
 
-    o	fifo() no longer has a default 'description'.
+    o	fifo() no longer has a default 'description' argument.
 
 	fifo("") is now implemented, and works in the same way as file("").
 
@@ -389,7 +387,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.5.0 patched
+		CHANGES IN R VERSION 2.5.1
 
 
 NEW FEATURES
