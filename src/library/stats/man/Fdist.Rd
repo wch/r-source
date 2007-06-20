@@ -62,9 +62,9 @@ rf(n, df1, df2, ncp)
   non-central distributions.
 }
 \source{
-  For \code{df}, and \code{cdf == 0}, computed via a binomial
+  For \code{df}, and \code{ncp == 0}, computed via a binomial
   probability, code contributed by Catherine Loader (see \code{\link{dbinom}});
-  for \code{cdf != 0}, computed via a \code{\link{dbeta}},
+  for \code{ncp != 0}, computed via a \code{\link{dbeta}},
   code contributed by Peter Ruckdeschel.
 
   For \code{pf}, via \code{\link{pbeta}} (or for large \code{df2}, via
