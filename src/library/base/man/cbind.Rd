@@ -21,10 +21,9 @@ rbind(\dots, deparse.level = 1)
     arguments.  Other \R objects will be coerced as appropriate: see
     section Details and Value.  (For the \code{"data.frame"} method of
     \code{cbind} these can be further arguments to
-    \code{\link{data.frame}} such as \code{stringsAsFactors} and
-    \code{check.names}.)}
+    \code{\link{data.frame}} such as \code{stringsAsFactors}.)}
   \item{deparse.level}{integer controlling the construction of labels in
-    the case of \dQuote{non-matrix-like} arguments (i.e., for the
+    the case of \dQuote{non-matrix-like} arguments (for the
     default method):\cr
     \code{deparse.level = 0} constructs no labels; the default,
     \code{deparse.level = 1 or 2} constructs labels from the argument
@@ -35,7 +34,8 @@ rbind(\dots, deparse.level = 1)
   methods for data frames.  The data frame method will be used if at
   least one argument is a data frame and the rest are vectors or
   matrices.  There can be other methods; in particular, there is one for
-  time series objects.
+  time series objects.  See the section on Dispatch for how the method
+  to be used is selected.
 
   In the default method, all the vectors/matrices must be atomic (see
   \code{\link{vector}}) or lists.  Expressions are not allowed.
@@ -60,6 +60,13 @@ rbind(\dots, deparse.level = 1)
   \code{NULL}) are ignored unless the result would have zero rows
   (columns), for S compatibility.
   (Zero-extent matrices do not occur in S3 and are not ignored in \R.)
+}
+\section{Data frame methods}{
+  The \code{cbind} data frame method is just a wrapper for
+  \code{\link{data.frame}(..., check.names = FALSE)}.  This means that
+  it will split matrix columns in data frame arguments, and convert
+  character columns to factors unless \code{stringsAsFactors = TRUE} is
+  passed.
 
   The \code{rbind} data frame method first drops all zero-column and
   zero-row arguments.  (If that leaves none, it returns the first
@@ -73,9 +80,13 @@ rbind(\dots, deparse.level = 1)
   (integer vectors with levels) are promoted to factors.
 }
 \value{
-  A matrix or data frame combining the \code{\dots} arguments
-  column-wise or row-wise.  (Exception: if all the inputs are
-  \code{NULL}, the value is \code{NULL}.)
+  For the default method, a matrix combining the \code{\dots} arguments
+  column-wise or row-wise.  (Exception: if there are no inputs or all
+  the inputs are \code{NULL}, the value is \code{NULL}.)
+
+  The type of a matrix result determined from the highest type of any of
+  the inputs in the hierarchy raw < logical < integer < real < complex <
+  character < list .
 
   For \code{cbind} (\code{rbind}) the column (row) names are taken from
   the \code{colnames} (\code{rownames}) of the arguments if these are
@@ -84,15 +95,15 @@ rbind(\dots, deparse.level = 1)
   expressions given, for \code{deparse.level = 1} only if that gives a
   sensible name (a \sQuote{symbol}, see \code{\link{is.symbol}}).
 
-  The names will depend on whether data frames are included:
-  see the examples.
+  For \code{cbind} row names are taken from the first argument with
+  appropriate names: rownames for a matrix, or names for a vector of
+  length the number of rows of the result.
 
-  If a matrix is created, it will be a list if any of the inputs is not
-  NULL nor an atomic vector.   Otherwise its type is determined from the
-  highest type of the inputs in the hierarchy NULL < raw < logical <
-  integer < real < complex < character < list.
+  For \code{rbind} column names are taken from the first argument with
+  appropriate names: colnames for a matrix, or names for a vector of
+  length the number of columns of the result.
 }
-\note{
+\section{Dispatch}{
   The method dispatching is \emph{not} done via
   \code{\link{UseMethod}()}, but by C-internal dispatching.
   Therefore, there is no need for, e.g., \code{rbind.default}.
@@ -114,8 +125,8 @@ rbind(\dots, deparse.level = 1)
    }
    If you want to combine other objects with data frames, it may be
    necessary to coerce them to data frames first.  (Note that this
-   algorithm can result in calling the data frame method if the
-   arguments are all either data frames or vectors, and this will result in
+   algorithm can result in calling the data frame method if all the
+   arguments are either data frames or vectors, and this will result in
    the coercion of character vectors to factors.)
 }
 \references{
