@@ -33,7 +33,7 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, nargs, cnt, v, thislen, nfmt;
     const char *formatString, *ss; char *starc;
     /* fmt2 is a copy of fmt with '*' expanded.
-       bit will hold numeric formats, so be quite small. */
+       bit will hold numeric formats and %<w>s, so be quite small. */
     char fmt[MAXLINE+1], fmt2[MAXLINE+10], *fmtp, bit[MAXLINE+1], 
 	*outputString;
     size_t n, cur, chunk;
@@ -290,6 +290,13 @@ SEXP attribute_hidden do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			    if (strcspn(fmtp, "s") >= strlen(fmtp))
 				error("%s", _("use format %s for character objects"));
 			    ss = translateChar(STRING_ELT(_this, ns % thislen));
+			    if(fmtp[1] != 's') {
+				if(strlen(ss) > MAXLINE)
+				    warning(_("Likely truncation of character string"));
+				snprintf(bit, MAXLINE, fmtp, ss);
+				bit[MAXLINE] = '\0';
+				ss = NULL;
+			    }
 			    break;
 			    
 			default:
