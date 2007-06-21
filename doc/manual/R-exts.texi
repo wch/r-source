@@ -135,6 +135,7 @@ Other types of extensions are supported: @xref{Package types}.
 * Diagnostic messages::         
 * Localization::                
 * Package types::               
+* Services::                    
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -2442,7 +2443,7 @@ Packages without name spaces will need to use @code{domain="R-@var{pkg}"}
 explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @code{gettext}/@code{gettextf} and @code{ngettext}.
 
-@node Package types,  , Localization, Creating R packages
+@node Package types, Services, Localization, Creating R packages
 @section Package types
 
 The @file{DESCRIPTION} file has an optional field @code{Type} which if
@@ -2506,6 +2507,23 @@ Author: The translators
 Maintainer: Some Body <somebody@@some.where.net>
 Licence: GPL Version 2 or later.
 @end example
+
+@node Services,  , Package types, Creating R packages
+@section Services
+
+Several members of the @R{} project have set up services to assist those
+writing @R{} packages, particularly those intended for public
+distribution.
+
+@url{http://win-builder.r-project.org, win-builder.r-project.org} offers
+the automated preparation of Windows binaries from well-tested source
+packages. 
+
+R-forge (@url{http://R-forge.r-project.org, R-forge.r-project.org}) and
+RForge (@url{http://www.rforge.net, www.rforge.net}) are similar
+services with similar names.  Both provide source-code management
+through SVN, daily building and checking, mailing lists and a repository
+that can be accessed @emph{via} @code{install.packages}.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
@@ -5626,7 +5644,7 @@ right type.
 * Attributes::                  
 * Classes::                     
 * Handling lists::              
-* Handling character data::
+* Handling character data::     
 * Finding and setting variables::  
 * Some convenience functions::  
 * Named objects and copying::   
