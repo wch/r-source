@@ -5,11 +5,11 @@ any(\dots, na.rm = FALSE)
 }
 \alias{any}
 \description{
-  Given a set of logical vectors, are any of the values true?
+  Given a set of logical vectors, is at least one of the values true?
 }
 \arguments{
-  \item{\dots}{one or more logical vectors.  Other objects are coerced in
-    a similar way as \code{as.logical.default}.}
+  \item{\dots}{zero or more logical vectors.  Other objects are coerced in
+    a similar way to \code{as.logical.default}.}
   \item{na.rm}{logical.  If true \code{NA} values are removed before
     the result is computed.}
 }
@@ -20,15 +20,18 @@ any(\dots, na.rm = FALSE)
   unnamed, and dispatch is on the first argument.
 }
 \value{
-  Given a sequence of logical arguments, a logical value indicating
-  whether or not any of the elements of \code{x} are \code{TRUE}.
+  The value is a logical vector of length one.
+  
+  Let \code{x} denote the concatenation of all the logical vectors in
+  \code{...} (after coercion), after removing \code{NA}s if requested by
+  \code{na.rm = TRUE}.
 
-  The value returned is \code{TRUE} if any of the values in \code{x}
-  are \code{TRUE}, and \code{FALSE} if all of the values in \code{x}
-  are \code{FALSE}.
-
-  If \code{na.rm = FALSE} and \code{x} consists of a mix of \code{FALSE}
-  and \code{NA} values, the value is \code{NA}.
+  The value returned is \code{TRUE} if at least one of the values in
+  \code{x} is \code{TRUE}, and \code{FALSE} if all of the values in
+  \code{x} are \code{FALSE} (including if there are no values).  Otherwise
+  the value is \code{NA} (which can only occur if \code{na.rm = FALSE}
+  and \code{\dots} contains no \code{TRUE} values and at least one
+  \code{NA} value).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
