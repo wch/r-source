@@ -687,7 +687,7 @@ AMD64/EM64T chips and Windows 64).
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-Installation is @emph{via} the installer @file{@value{RWVERSION}.exe}.
+Installation is @emph{via} the installer @file{@value{RWVERSION}-win32.exe}.
 Just double-click on the icon and follow the instructions.  You can
 uninstall @R{} from the Control Panel.  (Note that you will probably
 (depending on the Windows language settings) be asked to choose a
@@ -1039,7 +1039,7 @@ make myR IMAGEDIR=rootdir
 @noindent
 where @file{rootdir} is the path to the root of the customized
 installation (forward slashes and no spaces, please).  This creates an
-executable with the standard name, @file{@value{RWVERSION}.exe}, so
+executable with the standard name, @file{@value{RWVERSION}-win32.exe}, so
 please rename it to indicate that it is customized.
 
 The defaults for the startup parameters may also be customized.  For example
@@ -1148,6 +1148,7 @@ To distribute a cross-build (or just to transfer it to a Windows machine
 for testing) use
 
 @example
+make all recommended manuals
 cd installer
 make imagedir
 zip -r9X R-@value{VERSIONno}.zip R-@value{VERSIONno}  # or something similar
@@ -1160,8 +1161,8 @@ will not be made when cross-building.
 
 Also based on this facility is
 @url{http://cran.r-project.org/doc/contrib/Makefile-rcb,
-@file{Makefile-rcb}} by J. Yan and A. J. Rossini.  For details, see the
-Makefile itself, or
+@file{Makefile-rcb}} by J. Yan and A. J. Rossini.  For details, see
+the @file{Makefile-rcb} file itself, or
 @uref{http://cran.r-project.org/doc/contrib/cross-build.pdf}.
 
 
@@ -1299,7 +1300,7 @@ set (as a comma-separated list).  Setting @env{R_DEFAULT_PACKAGES=NULL}
 ensures that only package @pkg{base} is loaded.
 
 Changing the set of default packages is normally used to reduce the set
-for speed when scripting: in particular on using @pkg{methods} will
+for speed when scripting: in particular not using @pkg{methods} will
 typically halve the start-up time.  But it can also be used to customize
 @R{}, e.g.@: for class use.
 
@@ -1349,11 +1350,19 @@ library paths, separated by colons (semicolons on Windows).
 @section Installing packages
 @cindex Packages, installing
 
+@menu
+* Windows packages::            
+* Mac OS X packages::           
+* Customizing package compilation under Unix::  
+* Customizing package compilation under Windows::  
+@end menu
+
+
 Packages may be distributed in source form or compiled binary form.
 Installing source packages requires that compilers and tools (including
-Perl 5.004 or later) be installed.  Binary packages are platform
-specific and generally need no special tools to install, but see the
-documentation for your platform for details.
+Perl 5.004 or later) be installed.  Binary packages are
+platform-specific and generally need no special tools to install, but
+see the documentation for your platform for details.
 
 Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
@@ -1386,10 +1395,6 @@ a valid temporary directory.
 There are a number of options available: use @code{R CMD INSTALL --help}
 to see the current list.
 
-The same command works in Windows if you have the source-code package
-files (option ``Source Package Installation Files'' in the installer)
-and toolset (see @ref{The Windows toolset}) installed.
-
 @findex install.packages
 Alternatively, packages can be downloaded and installed from within
 @R{}.  First set the option @code{CRAN} to your nearest @acronym{CRAN}
@@ -1415,19 +1420,26 @@ not already installed, use e.g.
 > install.packages("Rcmdr", dependencies = TRUE)
 @end example
 
-
-What @code{install.packages} does by default is different on Unix and
-Windows.  On Unix-alikes (include MacOS X unless running from the GUI
-console) it consults the list of available @emph{source} packages on
-@acronym{CRAN} (or other repository/ies), downloads the latest version
-of the package sources, and installs them (via @code{R CMD INSTALL}).
-On Windows it looks (by default) at the list of @emph{binary} versions
-of packages available for your version of @R{} and downloads the latest
-versions (if any), although optionally it will also download and install
-a source package by setting the @code{type} argument.
-
 @code{install.packages} can install a source package from a local
 @file{.tar.gz} file by setting argument @code{repos} to @code{NULL}.
+
+@code{install.packages} can look in several repositories, specified as a
+character vector by the argument @code{repos}: these can include a
+@acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
+files, @dots{}).
+
+@node Windows packages, Mac OS X packages, Installing packages, Installing packages
+@subsection Windows
+
+What @code{install.packages} does by default is different on Unix and
+Windows.  On Unix-alikes it consults the list of available @emph{source}
+packages on @acronym{CRAN} (or other repository/ies), downloads the
+latest version of the package sources, and installs them (via @code{R
+CMD INSTALL}).  On Windows it looks (by default) at the list of
+@emph{binary} versions of packages available for your version of @R{}
+and downloads the latest versions (if any), although optionally it will
+also download and install a source package by setting the @code{type}
+argument.
 
 On Windows @code{install.packages} can also install a binary package
 from a local @file{zip} file by setting argument @code{repos} to
@@ -1435,24 +1447,29 @@ from a local @file{zip} file by setting argument @code{repos} to
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
-@code{install.packages} can look in several repositories, specified as a
-character vector by the argument @code{repos}: these can include a
-@acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
-files, @dots{}).
+@command{R CMD INSTALL} works in Windows to install source packages if
+you have the source-code package files (option ``Source Package
+Installation Files'' in the installer) and toolset (see @ref{The Windows
+toolset}) installed.  Installation of binary packages must be done by
+@code{install.packages}. 
+
+If you have only a source package that is known to work with current
+@R{} and just want a binary Windows build of it, you could make use of
+the building service offered at @url{http://win-builder.r-project.org,
+win-builder.r-project.org}.
+
+@node Mac OS X packages, Customizing package compilation under Unix, Windows packages, Installing packages
+@subsection Mac OS X
 
 On Mac OS X @code{install.packages} works as it does on other Unix-like
 systems, but there is an additional type @code{mac.binary} that can be
-passed to @code{install.package} in order to download and install binary
-packages from @acronym{CRAN}. These Macintosh binary package files have
-the extension @samp{tgz}.  The R GUI provides for installation of either
-binary or source packages, from @acronym{CRAN} or local files.
+passed to @code{install.packages} in order to download and install
+binary packages from a suitable repository, and is the default if
+running from the GUI console.  These Macintosh binary package files have
+the extension @samp{tgz}.  The @R{} GUI provides for installation of
+either binary or source packages, from @acronym{CRAN} or local files.
 
-@menu
-* Customizing package compilation under Unix::  
-* Customizing package compilation under Windows::  
-@end menu
-
-@node Customizing package compilation under Unix, Customizing package compilation under Windows, Installing packages, Installing packages
+@node Customizing package compilation under Unix, Customizing package compilation under Windows, Mac OS X packages, Installing packages
 @subsection Customizing package compilation under Unix
 
 The R system and package-specific compilation flags can be overridden or
@@ -2008,8 +2025,7 @@ a setting of @code{CFLAGS}.  (For future versions of @command{gcc} this
 may cause problems with the semantics of @code{inline} for various
 OSes: these may fixed by including in @code{CFLAGS} the flag
 @option{-fgnu89-inline} which will be available as from @command{gcc
-4.1.3}. The flag may be needed to suppress warnings in @command{gcc 4.2.x},
-which supports only GNU semantics for inlining.)
+4.2.0}.)
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora
@@ -3929,7 +3945,7 @@ but no compiled code, only the first two of these are needed.
 
 A complete build of @R{} including compiled @HTML{} help files and
 PDF manuals, and producing the standalone installer 
-@file{@value{RWVERSION}.exe} will also need the following:
+@file{@value{RWVERSION}-win32.exe} will also need the following:
 @itemize
 @item
 The Microsoft @HTML{} Help Workshop
@@ -4020,7 +4036,7 @@ the @samp{fptex} distribution (available from any CTAN node such as
 @url{http://www.ctan.org/tex-archive/systems/windows/fptex/,
 @code{www.ctan.org/@/tex-archive/@/systems/@/windows/@/fptex}} and as
 part of TexLive (@url{http://www.tug.org/texlive/,
-@code{www.tug.org/@/texlive}})).  Another actively-maintained version
+@code{www.tug.org/@/texlive}}).  Another actively-maintained version
 is available from
 @url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/,
 @code{www.fsci.fuk.kindai.ac.jp/@/kakuto/@/win32-ptex}}.  The
@@ -4036,7 +4052,7 @@ suitably; ensure you have the required fonts installed.
 @node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
 @section The Inno Setup installer
 
-To make the installer package (@file{@value{RWVERSION}.exe}) we require
+To make the installer package (@file{@value{RWVERSION}-win32.exe}) we require
 Inno Setup 5.1.7 or later from @url{http://jrsoftware.org,
 @code{jrsoftware.org}}.  This is @emph{not} included in @file{Rtools.exe}.
 
