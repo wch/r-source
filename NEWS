@@ -193,6 +193,9 @@ BUG FIXES
 	function findPackageEnv() to set a saved package environment.
 	This was missing, but is now supplied.
 
+    o	[cr]bind could segfault when creating a list matrix result.
+	(Reported by Martin Morgan.)
+
 
 
 
