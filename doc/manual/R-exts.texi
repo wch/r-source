@@ -4857,14 +4857,14 @@ The following table gives the mapping between the modes of @R{} vectors
 and the types of arguments to a C function or FORTRAN subroutine.
 
 @quotation
-@multitable {RRR storage.mode} {RRR storage.mode} {DOUBLE PRECISION}
+@multitable {RRR storage.mode} {RRR unsigned char * RR} {DOUBLE PRECISION}
 @headitem @R{} storage mode @tab  C type  @tab   FORTRAN type
 @item @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
 @item @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
 @item @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
-@item @code{raw}       @tab @code{char *}    @tab none
+@item @code{raw}       @tab @code{unsigned char *}    @tab none
 @end multitable
 @end quotation
 
@@ -4897,11 +4897,10 @@ memory management facilities and will corrupt the object and the R
 session.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or to FORTRAN as @code{REAL} by setting the attribute
-@code{Csingle}, most conveniently by using the @R{} functions
-@code{as.single}, @code{single} or @code{storage.mode}.  This is
-intended only to be used to aid interfacing to existing C or FORTRAN
-code.
+C as @code{float *} or to FORTRAN as @code{REAL} by setting the
+attribute @code{Csingle}, most conveniently by using the @R{} functions
+@code{as.single}, @code{single} or @code{mode}.  This is intended only
+to be used to aid interfacing to existing C or FORTRAN code.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
 checked for missing values @code{NA} and for the @acronym{IEEE} special
