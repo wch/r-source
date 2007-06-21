@@ -680,9 +680,9 @@ R --arch=@var{name} CMD INSTALL --libs-only @samp{pkg(s)}
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME, XP and 2003
-(at least) on Intel x86 and clones (including AMD64/EM64T chips and
-Windows 64).
+from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000, ME, XP, 2003
+Server and Vista (at least) on Intel x86 and clones (including
+AMD64/EM64T chips and Windows 64).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
@@ -1966,7 +1966,7 @@ Currently the Windows build of @R{} is a 32-bit executable.  This runs
 happily on Windows 64 on AMD64 and EM64T, but is limited to (we are
 told) a 2GB address space.  It will not be possible to provide a native
 version for Windows 64 until suitable compilers are available, and
-currently (mid-2006) that is not in prospect.@footnote{It is likely that
+currently (mid-2007) that is not imminent.@footnote{It is likely that
 commercial 64-bit compilers could be used, but those we have looked at
 do not work in the same way as the MinGW compilers so extensive changes
 to the build system would be needed.  Also, end users would need to have
@@ -2311,16 +2311,16 @@ the AMD Core Math Library (ACML) @url{http://www.amd.com/acml,
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRRARY_PATH
-@file{/opt/acml3.6.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.  For
-other compilers, see the ACML documentation.  Although the documentation
-is unclear, 32-bit versions of ACML do run on other @cputype{ia32} chips
-such as AthlonMP and P4.  There is a multithreaded version of ACML
-available for @command{gfortran} which makes use of @code{libgomp} (and
-the latter must be installed). To make use of this you may need
-something like
+@file{/opt/acml3.6.1/gfortran64/lib}) is in the
+@env{LD_LIBRRARY_PATH}.  For other compilers, see the ACML
+documentation.  Although the documentation is unclear, 32-bit versions
+of ACML do run on other @cputype{ia32} chips such as AthlonMP and P4.
+There is a multithreaded version of ACML available for
+@command{gfortran} which needs @command{gcc} >= 4.2.0.  To make use of
+this you will need something like
 
 @example
---with-blas="-L/opt/acml3.6.0/gfortran64_mp/lib -lacml_mp"
+--with-blas="-L/opt/acml3.6.1/gfortran64_mp/lib -lacml_mp"
 @end example
 
 
@@ -2333,7 +2333,7 @@ ACML can be used on Windows when building from source.
 
 Another tuned BLAS which is available for some processors@footnote{}
 under Linux, FreeBSD and MacOS X is by Kazushige Goto.  This has been
-made available in several formats, and is currently (April 2006)
+made available in several formats, and is currently (June 2007)
 available only as source code.  For @emph{academic use only} (after
 registering) it can be obtained via
 @url{http://www.tacc.utexas.edu/resources/software/software.php,
@@ -2350,7 +2350,7 @@ necessary to set @code{GOTO_NUM_THREADS=1} or @code{OMP_NUM_THREADS=1}
 (to disable multiple threads) in the environment when using a
 multi-threaded Goto BLAS, but others run happily with multiple threads.
 
-Note that currently (July 2006) a multi-threaded Goto BLAS will be built
+Note that currently (June 2007) a multi-threaded Goto BLAS will be built
 by default if and only if the building is on a multi-processor system
 (counting multiple cores and hyperthreading), and at run time the
 default number of threads is the number of CPUs detected.
@@ -2427,13 +2427,13 @@ For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /opt/acml3.5.0/gfortran64_mp/lib/libacml.so @var{R_HOME}/lib/libRblas.so
+ln -s /opt/acml3.6.1/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 
-will change the BLAS in use to multithreaded ACML.  A similar link works
-for Goto 1.06 (even a multithreaded one, unlike Goto 1.00.) and MKL
-(provided the appropriate @file{lib} directory is in the run-time
-library path).
+will change the BLAS in use to multithreaded ACML.  A similar link
+works for recent versions of the Goto BLAS and for MKL (provided the
+appropriate @file{lib} directory is in the run-time library path or
+@command{ld.so} cache).
 
 
 @node LAPACK, Caveats, BLAS, Linear algebra
@@ -3893,6 +3893,9 @@ sutherland.com/Rtools}} for the current locations and other updates to
 these instructions.  (Most Windows users will not need to build add-on
 packages from source; see @ref{Add-on packages} for details.)
 
+There are known problems with this toolset on Windows Vista and
+Windows 64, so those are not currently supported.
+
 We have found that the build process for @R{}
 is quite sensitive to the choice of tools: please follow our
 instructions @strong{exactly}, even to the choice of particular versions
@@ -4012,15 +4015,17 @@ In this case the Help Workshop will not be needed.
 The @samp{MiKTeX} (@url{http://www.miktex.org, @code{www.miktex.org}})
 distribution of @LaTeX{} includes a suitable port of @code{pdftex}, as
 does the @samp{ProText} (@url{http://www.tug.org/protext/,
-@code{www.tug.org/@/protext}}) enhanced version.  We have also used the
-@samp{fptex} distribution (available from any CTAN node such as
+@code{www.tug.org/@/protext}}) enhanced version.  We have also used
+the @samp{fptex} distribution (available from any CTAN node such as
 @url{http://www.ctan.org/tex-archive/systems/windows/fptex/,
-@code{www.ctan.org/@/tex-archive/@/systems/@/windows/@/fptex}} and as part of
-TexLive 2005 (@url{http://www.tug.org/texlive/,
-@code{www.tug.org/@/texlive}})).  Another actively-maintained version is
-available from @url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/,
-@code{www.fsci.fuk.kindai.ac.jp/@/kakuto/@/win32-ptex}}.  The @file{Rtools.exe}
-installer does @emph{not} include either version of @LaTeX{}.
+@code{www.ctan.org/@/tex-archive/@/systems/@/windows/@/fptex}} and as
+part of TexLive (@url{http://www.tug.org/texlive/,
+@code{www.tug.org/@/texlive}})).  Another actively-maintained version
+is available from
+@url{http://www.fsci.fuk.kindai.ac.jp/kakuto/win32-ptex/,
+@code{www.fsci.fuk.kindai.ac.jp/@/kakuto/@/win32-ptex}}.  The
+@file{Rtools.exe} installer does @emph{not} include any version of
+@LaTeX{}.
 
 @enindex R_RD4DVI
 @enindex R_RD4PDF
