@@ -46,13 +46,12 @@ The RGB values produced by this function correspond to the sRGB
 color space used on most PC computer displays.  There are other
 packages which provide more general color space facilities.
 
-  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on a
-  few devices: at the time of writing only on the \code{\link{pdf}} and
-  (on MacOS X) \code{quartz} devices.
+  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
+  some devices: see \code{\link{rgb}}.
 }
 \value{
-A vector of character strings which can be used as color
-specifications by R graphics functions.
+  A vector of character strings which can be used as color
+  specifications by R graphics functions.
 }
 \references{
 Ihaka, R. (2003).
@@ -63,10 +62,10 @@ Workshop on Distributed Statistical Computing (DSC 2003), March 20-22,
 }
 \author{Ross Ihaka}
 \note{
-At present there is no guarantee that the colours rendered by R
-graphics devices will correspond to their sRGB description.
-It is planned to adopt sRGB as the standard R color description
-in future.
+  At present there is no guarantee that the colours rendered by R
+  graphics devices will correspond to their sRGB description.
+  It is planned to adopt sRGB as the standard R color description
+  in future.
 }
 \seealso{
 \code{\link{hsv}},

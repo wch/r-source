@@ -18,9 +18,8 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
     alpha transparency channel (0 means transparent and 1 means opaque).}
 }
 \details{
-  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on a
-  few devices: at the time of writing only on the \code{\link{pdf}} and
-  (on MacOS X) \code{quartz} devices.
+  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
+  some devices: see \code{\link{rgb}}.
 }
 \value{
   This function creates a vector of \dQuote{colors} corresponding to the
