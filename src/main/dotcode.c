@@ -277,7 +277,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			const char *name, R_toCConverter **converter,
 			int targetType, char* encname)
 {
-    unsigned char *rawptr;
+    Rbyte *rawptr;
     int *iptr;
     float *sptr;
     double *rptr;
@@ -320,7 +320,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
     n = LENGTH(s);
     rawptr = RAW(s);
     if (dup) {
-        rawptr = (unsigned char *) R_alloc(n, sizeof(unsigned char));
+        rawptr = (Rbyte *) R_alloc(n, sizeof(Rbyte));
         for (i = 0; i < n; i++)
             rawptr[i] = RAW(s)[i];
     }
@@ -468,7 +468,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		       R_NativePrimitiveArgType type, char *encname)
 {
-    unsigned char *rawptr;
+    Rbyte *rawptr;
     int *iptr, n=length(arg);
     float *sptr;
     double *rptr;
@@ -481,7 +481,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     switch(type) {
     case RAWSXP:
     s = allocVector(type, n);
-    rawptr = (unsigned char *)p;
+    rawptr = (Rbyte *)p;
     for (i = 0; i < n; i++)
         RAW(s)[i] = rawptr[i];
     break;
