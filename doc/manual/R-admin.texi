@@ -3917,12 +3917,13 @@ these instructions.  (Most Windows users will not need to build add-on
 packages from source; see @ref{Add-on packages} for details.)
 
 There are known problems with this toolset on Windows Vista and
-Windows 64, so those are not currently supported.
+especially Vista 64, so those are not currently supported.
 
-We have found that the build process for @R{}
-is quite sensitive to the choice of tools: please follow our
-instructions @strong{exactly}, even to the choice of particular versions
-of the tools.  The build process for add-on packages is somewhat more
+We have found that the build process for @R{} is quite sensitive to
+the choice of tools: please follow our instructions @strong{exactly},
+even to the choice of particular versions of the tools.@footnote{For
+example, the Cygwin version of @code{make 3.81} fails to work
+correctly.}  The build process for add-on packages is somewhat more
 forgiving, but we recommend using the exact toolset at first, and only
 substituting other tools once you are familiar with the process.
 
