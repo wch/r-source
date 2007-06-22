@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-22 r41673)
+R version 2.6.0 Under development (unstable) (2007-06-21 r42015)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -44,7 +44,7 @@ Type 'q()' to quit R.
 +                       scale = max(0, mean(abs(x), na.rm=TRUE)))
 + }
 > if(!interactive())
-+     .Random.seed <- c(0,rep(7654, 3))
++     .Random.seed <- c(0L, rep(7654L, 3))
 > 
 > ## The prefixes of ALL the PDQ & R functions
 > PDQRinteg <- c("binom", "geom", "hyper", "nbinom", "pois","signrank","wilcox")
@@ -248,8 +248,8 @@ n= 48 : ......................
 +              pgamma(Inf,Inf,scale=Inf))))
 [1] TRUE
 Warning messages:
-1: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced 
-2: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced 
+1: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced
+2: In pgamma(q, shape, scale, lower.tail, log.p) : NaNs produced
 > scLrg <- c(2,100, 1e300*c(.1, 1,10,100), 1e307, xMax, Inf)
 > stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
 +           pgamma(xMax,1, scale=Inf) == 0,
@@ -343,8 +343,8 @@ df = 100[1] TRUE
 + is.nan(qnorm(-.1)) # + warn
 [1] TRUE
 Warning messages:
-1: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced 
-2: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced 
+1: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced
+2: In qnorm(p, mean, sd, lower.tail, log.p) : NaNs produced
 > 
 > x <- c(-Inf, -1e100, 1:6, 1e200, Inf)
 > rbind(d.s0 =dnorm(x,3,s=0),   p.s0 = pnorm(x,3,s=0),
@@ -430,7 +430,7 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > 
 > ###===== Random numbers -- first, just output:
 > 
-> .Random.seed <- c(0, 17292, 29447, 24113)
+> .Random.seed <- c(0L, 17292L, 29447L, 24113L)
 > n <- 20
 > ## for(pre in PDQR) { n <- paste("r",pre,sep=""); cat(n,": "); str(get(n))}
 > (Rbeta	  <- rbeta    (n, shape1 = .8, shape2 = 2) )
@@ -1078,8 +1078,8 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > stopifnot(pbinom(x0, size = 3, prob = 0.1) == 0,
 +           dbinom(x0, 3, 0.1) == 0) # d*() warns about non-integer
 Warning messages:
-1: In dbinom(x0, 3, 0.1) : non-integer x = -0.000000 
-2: In dbinom(x0, 3, 0.1) : non-integer x = -0.000020 
+1: In dbinom(x0, 3, 0.1) : non-integer x = -0.000000
+2: In dbinom(x0, 3, 0.1) : non-integer x = -0.000020
 > ## very small negatives were rounded to 0 in R 2.2.1 and earlier
 > 
 > ## dbeta(*, ncp):
