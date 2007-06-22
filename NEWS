@@ -372,7 +372,7 @@ BUG FIXES
 	is.numeric().
 
     o	methods("Math") did not work if 'methods' was not attached.
-    
+
     o	readChar() read an extra empty item (or more than one) beyond
 	the end of the source; in some conditions it would terminate
 	early when reading an item of length 0.
@@ -584,6 +584,8 @@ BUG FIXES
     o	[cr]bind could segfault when creating a list matrix result.
 	(Reported by Martin Morgan.)
 
+    o	besselI(x, nu, exp=TRUE) and besselY(x, nu) could give wrong
+	answers for nu < 0. (Reported by Hiroyuki Kawakatsu.)
 
 
 
