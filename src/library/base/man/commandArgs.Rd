@@ -30,7 +30,7 @@ commandArgs(trailingOnly=FALSE)
   application.
 
   If \code{trailingOnly=TRUE}, a character vector of those arguments
-  (if any) supplied after \code{==args}.
+  (if any) supplied after \code{--args}.
 }
 %\author{DTL}
 \seealso{\code{\link{Startup}}
