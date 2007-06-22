@@ -432,6 +432,12 @@ environment and using @command{make -e}.  (If re-making the manuals for
 a different papersize, you should first delete the file
 @file{doc/manual/version.texi}.)
 
+The @file{R-intro.texi} manual needs @file{epsf.tex}.  This is part of
+the @code{texinfo} distribution but often not installed as part of a
+@TeX{} installation: it can be obtained from
+@url{http://www.ctan.org/tex-archive/macros/generic/epsf/epsf.tex,
+@code{www.ctan.org/@/tex-archive/@/macros/@/generic/@/epsf/@/epsf.tex}}.
+
 There are some issues with making the reference manual, and in
 particular with the PDF version @file{refman.pdf}.  The help files
 contain both ISO Latin1 characters (e.g.@: in @file{text.Rd}) and
@@ -440,10 +446,10 @@ Computer Modern fonts.  We have provided four alternatives:
 
 @table @code
 @item times
-(The default.) Using standard PostScript fonts.  This works well both
-for on-screen viewing and for printing, and is the default.  The one
-disadvantage is that the Usage and Examples sections may come out rather
-wide.
+(The default for PDF.) Using standard PostScript fonts.  This works
+well both for on-screen viewing and for printing, and is the default.
+The one disadvantage is that the Usage and Examples sections may come
+out rather wide.
 
 @item lm
 Using the @emph{Latin Modern} fonts.  These are not often installed as
@@ -462,21 +468,22 @@ and its mirrors.  These type-1 fonts have poor hinting and so are
 nowhere near so readable on-screen as the other three options.
 
 @item ae
-A package to use composites of Computer Modern fonts.  This works well
-most of the time, and its PDF is more readable on-screen than the
-previous two options.  There are three fonts for which it will need to
-use bitmapped fonts, @file{tctt0900.600pk}, @file{tctt1000.600pk} and
-@file{tcrm1000.600pk}.  Unfortunately, if those files are not available,
-Acrobat Reader will substitute completely incorrect glyphs so you need
-to examine the logs carefully.  This was the default in @R{} version
-1.x.y.
+(The default for DVI.)  A package to use composites of Computer Modern
+fonts.  This works well most of the time, and its PDF is more readable
+on-screen than the previous two options.  There are three fonts for
+which it will need to use bitmapped fonts, @file{tctt0900.600pk},
+@file{tctt1000.600pk} and @file{tcrm1000.600pk}.  Unfortunately, if
+those files are not available, Acrobat Reader will substitute
+completely incorrect glyphs so you need to examine the logs carefully.
 @end table
 
-The default can be overridden by setting the environment variable
+The default can be overridden by setting the environment variables
+@enindex R_RD4DVI
 @enindex R_RD4PDF
-@env{R_RD4PDF}.  (On Unix, this will be picked up at install time.)  The
-default value is @code{times,hyper}: omit @code{hyper} if you do not
-want hyperlinks, e.g.@: for printing.
+@env{R_RD4PDF} and @env{R_RD4DVI}.  (On Unix, these will be picked up
+at install time.)  The default value for @env{R_RD4PDF} is
+@code{times,hyper}: omit @code{hyper} if you do not want hyperlinks,
+e.g.@: for printing.  The default for @env{R_RD4DVI} is @code{ae}.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
