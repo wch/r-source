@@ -3488,7 +3488,7 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     double x, y;
     int n;
 
-    SEXP originalArgs, dnd_llabels;
+    SEXP originalArgs, dnd_llabels, xpos;
     DevDesc *dd;
 
     dd = CurrentDevice();
@@ -3520,7 +3520,8 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     /* ord = order(x$order) */
     if (length(CAR(args)) != n+1)
 	goto badargs;
-    dnd_xpos = REAL(coerceVector(CAR(args),REALSXP));
+    PROTECT(xpos = coerceVector(CAR(args), REALSXP));
+    dnd_xpos = REAL(xpos);
     args = CDR(args);
 
     /* hang */
@@ -3553,6 +3554,7 @@ SEXP attribute_hidden do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
     /* NOTE: only record operation if no "error"  */
     if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
+    UNPROTECT(1);
     return R_NilValue;
 
   badargs:

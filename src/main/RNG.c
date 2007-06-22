@@ -286,6 +286,9 @@ void GetRNGstate()
 	Randomize(RNG_kind);
     }
     else {
+	/* How could this not be INTSXP?
+	   Only if the user has been directly assigning .Random.seed, 
+	   Better to throw an error, but no more allocation is done here */
 	seeds = coerceVector(seeds, INTSXP);
 	if (seeds == R_MissingArg)
 	    error(_(".Random.seed is a missing argument with no default"));
