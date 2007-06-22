@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-17
+@set FAQ_DATE @value{FAQ_YEAR}-06-22
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -3035,6 +3035,10 @@ the Streitberg/Roehmel shift algorithm.
 @item exactmaxsel
 Exact methods for maximally selected statistics for binary response
 variables.
+@item experiment
+Designing and analyzing randomized experiments.
+@item extRemes
+Extreme value toolkit.
 @item fBasics
 The Rmetrics module for ``Markets, basic statistics, and stylized
 facts''.  Rmetrics is an environment and software collection for
@@ -4641,6 +4645,8 @@ Interactive variogram diagnostics.
 Mixture model on the variance for the analysis of gene expression data.
 @item vars
 VAR modeling.
+@item vbmp
+Variational Bayesian Multinomial Probit Regression.
 @item vcd
 Functions and data sets based on the book ``Visualizing Categorical
 Data'' by Michael Friendly.
