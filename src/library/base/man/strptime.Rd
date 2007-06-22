@@ -133,7 +133,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       divided by 100.}
     \item{\code{\%D}}{Locale-specific date format such as
       \code{\%m/\%d/\%y}: ISO C99 says it should be that exact format.}
-    \item{\code{\%e}}{Day of the month as decimal number ( 1--31), with
+    \item{\code{\%e}}{Day of the month as decimal number (1--31), with
       a leading space for a single-digit number.}
     \item{\code{\%F}}{Equivalent to \%Y-\%m-\%d (the ISO 8601 date
       format).}

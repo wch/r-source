@@ -2,7 +2,8 @@
 \alias{seq.Date}
 \title{Generate Regular Sequences of Dates}
 \description{
-  The method for \code{\link{seq}} for date-time classes.
+  The method for \code{\link{seq}} for objects of class class
+  \code{"\link{Date}"} representing calendar dates.
 }
 \usage{
 \method{seq}{Date}(from, to, by, length.out = NULL, along.with = NULL, \dots)
@@ -44,7 +45,7 @@ seq(as.Date("2000/1/1"), as.Date("2003/1/1"), by="3 months")
 ## find all 7th of the month between two dates, the last being a 7th.
 st <- as.Date("1998-12-17")
 en <- as.Date("2000-1-7")
-ll <- seq.Date(en, st, by="-1 month")
+ll <- seq(en, st, by="-1 month")
 rev(ll[ll > st & ll < en])
 }
 \keyword{manip}

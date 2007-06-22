@@ -56,7 +56,7 @@ as.POSIXlt(x, tz = "")
 
   Where OSes describe their valid timezones can be obscure.  The help
   for \code{tzset} (or \code{_tzset} on Windows) can be helpful, but it
-  can also be inaccurate.  There is a cumbersome POSIX specification,
+  can also be inaccurate.  There is a cumbersome POSIX specification
   (listed under environment variable \code{TZ} at
   \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap08.html}),
   which is often at least partially supported, but there may be other more
