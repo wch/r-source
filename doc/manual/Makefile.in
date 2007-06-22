@@ -16,7 +16,7 @@ SOURCES_TEXI = R-FAQ.texi R-admin.texi R-data.texi R-exts.texi \
 DISTFILES = \
 	README \
 	Makefile.in Makefile.win \
-	R-defs.texi dir pdfcolor.tex texinfo.tex txi-en.tex \
+	R-defs.texi dir epsf.tex pdfcolor.tex texinfo.tex txi-en.tex \
 	$(SOURCES_TEXI) \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
