@@ -3882,12 +3882,13 @@ function(package, dir, lib.loc = NULL)
     ## it is OK to refer to yourself and non-S4 standard packages
     standard_package_names <-
         .get_standard_package_names()$base %w/o% c("methods", "stats4")
-    depends_suggests <- c(depends, suggests, pkg_name, contains,
-                          standard_package_names)
-    imports <- c(imports, depends_suggests, enhances)
     ## It helps to know if non-default standard packages are require()d
-    depends_suggests <-
-        depends_suggests %w/o% c("grid", "splines", "tcltk", "tools")
+    default_package_names<-
+         standard_package_names %w/o% c("grid", "splines", "tcltk", "tools")
+    depends_suggests <- c(depends, suggests, pkg_name, contains,
+                          default_package_names)
+    imports <- c(imports, depends, suggests, enhances, pkg_name, contains,
+                 standard_package_names)
     ## the first argument could be named, or could be a variable name.
     ## we just have a stop list here.
     common_names <- c("pkg", "pkgName", "package", "pos")
