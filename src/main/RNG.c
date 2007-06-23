@@ -288,9 +288,13 @@ void GetRNGstate()
     else {
 	if (seeds == R_MissingArg)
 	    error(_(".Random.seed is a missing argument with no default"));
-	if (!isInteger(seeds))
-	    error(_(".Random.seed is not an integer vector but of type '%s'"),
-		  type2char(TYPEOF(seeds)));
+	if (!isInteger(seeds)) {
+	    warning(_(".Random.seed is not an integer vector but of type '%s'"),
+		    type2char(TYPEOF(seeds)));
+	    seeds = coerceVector(seeds, INTSXP);
+	    if(!isInteger(seeds))
+		error(_("unable to coerce .Random.seed to an integer vector"));
+	}
 	is = INTEGER(seeds);
 	tmp = is[0];
 	if (tmp == NA_INTEGER)

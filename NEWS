@@ -380,8 +380,8 @@ BUG FIXES
     o   Added a promise evaluation stack so interrupted promise
         evaluations can be restarted.
 
-    o   It is now an error to have an non-integer object for
-	.Random.seed: this indicated as user had been playing with it,
+    o   It is now an warning to have an non-integer object for
+	.Random.seed: this indicates a user had been playing with it,
 	and it was documented that users should only save and restore it.
 
 

@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-06-22 r42030)
+R version 2.6.0 Under development (unstable) (2007-06-23 r42031)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -132,7 +132,7 @@ n= 30 : 465+0i -15+142.7155i -15+70.56945i -15+46.16525i -15+33.69055i -15+25.98
 [1] TRUE
 > 
 > 
-> .Random.seed <- c(0L, 629L, 6137L, 22167L) # want reproducible output
+> set.seed(123) # want reproducible output
 > Isi <- Im(sin(asin(1i + rnorm(100))))
 > all(abs(Isi-1) < 100* Meps)
 [1] TRUE
