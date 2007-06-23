@@ -7290,7 +7290,7 @@ with @code{R_alloc} which thus persists to the end of the
 * Optimization::                
 * Integration::                 
 * Utility functions::           
-* Internationalization::        
+* Re-encoding::                 
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        
@@ -8284,7 +8284,7 @@ The comments in the source code in @file{src/appl/integrate.c} give
 more details, particularly about reasons for failure (@code{ier >= 1}).
 
 
-@node Utility functions, Internationalization, Integration, The R API
+@node Utility functions, Re-encoding, Integration, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -8403,8 +8403,8 @@ it will usually be taken from the environment variable @env{HOME} if
 this is defined.
 @end deftypefun
 
-@node Internationalization, Allowing interrupts, Utility functions, The R API
-@section Internationalization
+@node Re-encoding, Allowing interrupts, Utility functions, The R API
+@section Re-encoding
 
 @R{} has its own C-level interface to the encoding conversion
 capabilities provided by @code{iconv}, for the following reasons
@@ -8448,7 +8448,7 @@ input does not end with a complete multi-byte character).
 Free the resources of an encoding object.
 
 
-@node Allowing interrupts, Platform and version information, Internationalization, The R API
+@node Allowing interrupts, Platform and version information, Re-encoding, The R API
 @section Allowing interrupts
 @cindex Interrupts
 
