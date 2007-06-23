@@ -17,7 +17,7 @@ Type 'q()' to quit R.
 
 > #### Run all demos that do not depend on tcl and other specials.
 > .ptime <- proc.time()
-> .Random.seed <- c(0,rep(7654, 3))
+> set.seed(123)
 > 
 > ## Drop these for strict testing {and add them to demos2.R)
 > ## lm.glm is in ../src/library/utils/man/demo.Rd }:
