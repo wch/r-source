@@ -4742,4 +4742,16 @@ try({Call[] <- NULL; Call})
 ## seqgfaulted in 2.5.0
 
 
+## Bessel bugs for nu < 0:
+x <- seq(0., 3, length = 101)
+nu <- -0.4
+stopifnot(all.equal(besselI(x,nu, TRUE),
+		    exp(-x)*besselI(x,nu, FALSE), tol = 1e-13))
+## wrong in 2.5.0
+stopifnot(all.equal(besselY(seq(0.5, 3, 0.5), nu),
+		    c(0.309568577942, 0.568866844337, 0.626095631907,
+		      0.544013906248, 0.366321150943, 0.141533189246),
+		    tol = 1e-11))
+## wrong numbers in 2.5.0
+
 ### end of tests added in 2.5.1 ###

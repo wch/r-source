@@ -196,6 +196,8 @@ BUG FIXES
     o	[cr]bind could segfault when creating a list matrix result.
 	(Reported by Martin Morgan.)
 
+    o	besselI(x, nu, exp=TRUE) and besselY(x, nu) could give wrong
+	answers for nu < 0. (Reported by Hiroyuki Kawakatsu.)
 
 
 
