@@ -109,8 +109,19 @@ my $R_check_all_non_ISO_C =
     &R_getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE");
 my $R_check_weave_vignettes =
     &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
+
+## This needs texi2dvi.  We provide a script for Unix-alikes, but it
+## does not work under Windows.  MiKTeX has a binary texi2dvi, but other
+## Windows' LaTeX distributions do not.
+my $check_latex_vignettes_default;
+if($WINDOWS) { 
+    $check_latex_vignettes_default = "FALSE"; 
+} else { 
+    $check_latex_vignettes_default = "TRUE"; 
+}
 my $R_check_latex_vignettes =
-    &R_getenv("_R_CHECK_LATEX_VIGNETTES_", "TRUE");
+    &R_getenv("_R_CHECK_LATEX_VIGNETTES_", $check_latex_vignettes_default);
+
 my $R_check_subdirs_strict =
     &R_getenv("_R_CHECK_SUBDIRS_STRICT_", "default");
 my $R_check_Rd_xrefs =
