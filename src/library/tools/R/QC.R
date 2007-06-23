@@ -3231,9 +3231,9 @@ function(package, lib.loc = NULL)
         pkgs2 <- sapply(desc$Enhances, "[[", "name")
 	## add tcltk for now, as many packages require() but not Suggests it
         for( pkg in unique(c(pkgs1, pkgs2, "tcltk")) )
-            suppressMessages(try(require(pkg, character.only = TRUE,
-                                         quietly=TRUE),
-                                 silent = TRUE))
+            ## tcltk warns if no DISPLAY variable
+            suppressWarnings(suppressMessages(try(require(pkg, character.only = TRUE, quietly=TRUE),
+                                                  silent = TRUE)))
                        })
 
         compat <- new.env(hash=TRUE)
