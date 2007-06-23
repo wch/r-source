@@ -133,7 +133,7 @@ Other types of extensions are supported: @xref{Package types}.
 * Package name spaces::         
 * Writing portable packages::   
 * Diagnostic messages::         
-* Localization::                
+* Internationalization::        
 * Package types::               
 * Services::                    
 @end menu
@@ -598,7 +598,7 @@ Tcl.  This mechanism is currently used only by a very few packages, and
 still experimental.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
-@pxref{Localization}.
+@pxref{Internationalization}.
 
 @node  Package bundles,  , Package subdirectories, Package structure
 @subsection Package bundles
@@ -2243,7 +2243,7 @@ current locale in UTF-8 and @samp{iconv} is available, when the
 package code is translated to UTF-8 for syntax checking.
 
 
-@node Diagnostic messages, Localization, Writing portable packages, Creating R packages
+@node Diagnostic messages, Internationalization, Writing portable packages, Creating R packages
 @section Diagnostic messages
 
 Now that diagnostic messages can be made available for translation, it
@@ -2339,8 +2339,8 @@ in another language one might need to say `There is no package in library
 
 @end itemize
 
-@node Localization, Package types, Diagnostic messages, Creating R packages
-@section Localization
+@node Internationalization, Package types, Diagnostic messages, Creating R packages
+@section Internationalization
 
 There are mechanisms to translate the R- and C-level error and warning
 messages.  There are only available if @R{} is compiled with NLS support
@@ -2359,7 +2359,7 @@ archive mirrors and packaged with the @code{poEdit} package
 * R messages::                  
 @end menu
 
-@node C-level messages, R messages, Localization, Localization
+@node C-level messages, R messages, Internationalization, Internationalization
 @subsection C-level messages
 
 The process of enabling translations is
@@ -2412,7 +2412,7 @@ for any language @var{lang} that matches the user's preferences (via the
 setting of the @code{LANGUAGE} environment variable or from the locale
 settings).
 
-@node R messages,  , C-level messages, Localization
+@node R messages,  , C-level messages, Internationalization
 @subsection R messages
 
 Mechanisms to support the automatic translation of @R{} @code{stop},
@@ -2443,7 +2443,7 @@ Packages without name spaces will need to use @code{domain="R-@var{pkg}"}
 explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @code{gettext}/@code{gettextf} and @code{ngettext}.
 
-@node Package types, Services, Localization, Creating R packages
+@node Package types, Services, Internationalization, Creating R packages
 @section Package types
 
 The @file{DESCRIPTION} file has an optional field @code{Type} which if
