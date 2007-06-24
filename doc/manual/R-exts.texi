@@ -2519,11 +2519,15 @@ distribution.
 the automated preparation of Windows binaries from well-tested source
 packages. 
 
-R-forge (@url{http://R-forge.r-project.org, R-forge.r-project.org}) and
+R-Forge (@url{http://R-Forge.r-project.org, R-Forge.r-project.org}) and
 RForge (@url{http://www.rforge.net, www.rforge.net}) are similar
 services with similar names.  Both provide source-code management
 through SVN, daily building and checking, mailing lists and a repository
-that can be accessed @emph{via} @code{install.packages}.
+that can be accessed @emph{via} @code{install.packages}.  Package
+developers have the opportunity to present their work on the basis of
+project websites or news announcements.  Mailing lists, forums or wikis
+provide useRs with convenient instruments for discussions and for
+exchanging information between developers and/or interested useRs.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
