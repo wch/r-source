@@ -47,14 +47,13 @@ gridList <- function(x, ...) {
 
 # The default method lists the grobs on the DL
 gridList.default <- function(x, grobs=TRUE, viewports=FALSE,
-                            fullNames=FALSE, recursive=TRUE,
-                            printMethod=nestedList, ...) {
+                             fullNames=FALSE, recursive=TRUE) {
     if (is.null(x)) {
         display.list <- grid.Call("L_getDisplayList")
         dl.index <- grid.Call("L_getDLindex")
         result <- lapply(display.list[1:dl.index], gridList,
                          grobs=grobs, viewports=viewports,
-                         fullNames=fullNames, recursive=recursive, ...)
+                         fullNames=fullNames, recursive=recursive)
         names(result) <- NULL
         class(result) <- c("gridListListing", "gridListing")
     } else if (is.null(x)) {
@@ -69,8 +68,7 @@ gridList.default <- function(x, grobs=TRUE, viewports=FALSE,
 
 # Grob methods
 gridList.grob <- function(x, grobs=TRUE, viewports=FALSE,
-                         fullNames=FALSE, recursive=TRUE,
-                         printMethod=nestedList, ...) {
+                          fullNames=FALSE, recursive=TRUE) {
     if (grobs) {
         if (fullNames) {
             result <- as.character(x)
@@ -90,19 +88,19 @@ gridList.grob <- function(x, grobs=TRUE, viewports=FALSE,
         result <- list(gridList(x$vp,
                                grobs=grobs, viewports=viewports,
                                fullNames=fullNames,
-                               recursive=recursive, ...),
+                               recursive=recursive),
                        result,
                        gridList(n, 
                                grobs=grobs, viewports=viewports,
                                fullNames=fullNames,
-                               recursive=recursive, ...))
+                               recursive=recursive))
         class(result) <- c("gridListListing", "gridListing")
     }
     result
 }
 
 gridList.gList <- function(x, grobs=TRUE, viewports=FALSE,
-                         fullNames=FALSE, recursive=TRUE, ...) {
+                           fullNames=FALSE, recursive=TRUE) {
     # Allow for grobs=FALSE but viewports=TRUE
     if (grobs || viewports) {
         if (length(x) == 0) {
@@ -111,7 +109,7 @@ gridList.gList <- function(x, grobs=TRUE, viewports=FALSE,
         } else {
             result <- lapply(x, gridList,
                              grobs=grobs, viewports=viewports,
-                             fullNames=fullNames, recursive=recursive, ...)
+                             fullNames=fullNames, recursive=recursive)
             class(result) <- c("gListListing", "gridListListing",
                                "gridListing")
         }
@@ -123,7 +121,7 @@ gridList.gList <- function(x, grobs=TRUE, viewports=FALSE,
 }
 
 gridList.gTree <- function(x, grobs=TRUE, viewports=FALSE,
-                          fullNames=FALSE, recursive=TRUE, ...) {
+                           fullNames=FALSE, recursive=TRUE) {
     if (fullNames) {
         name <- as.character(x)
     } else {
@@ -134,20 +132,20 @@ gridList.gTree <- function(x, grobs=TRUE, viewports=FALSE,
         # Allow for grobs=FALSE but viewports=TRUE
         result <- gridList(x$children,
                           grobs=grobs, viewports=viewports,
-                          fullNames=fullNames, recursive=recursive, ...)
+                          fullNames=fullNames, recursive=recursive)
         if (viewports && !is.null(x$childrenvp)) {
             # Bit dodgy this bit
             # Emulates an "upViewport" on the DL
             n <- depth(x$childrenvp)
             class(n) <- "up"
             result <- list(gridList(x$childrenvp,
-                                   grobs=grobs, viewports=viewports,
-                                   fullNames=fullNames,
-                                   recursive=recursive, ...),
+                                    grobs=grobs, viewports=viewports,
+                                    fullNames=fullNames,
+                                    recursive=recursive),
                            gridList(n,
-                                   grobs=grobs, viewports=viewports,
-                                   fullNames=fullNames,
-                                   recursive=recursive, ...),
+                                    grobs=grobs, viewports=viewports,
+                                    fullNames=fullNames,
+                                    recursive=recursive),
                            result)
             class(result) <- c("gridListListing", "gridListing")
         }
@@ -174,14 +172,14 @@ gridList.gTree <- function(x, grobs=TRUE, viewports=FALSE,
         n <- depth(x$vp)
         class(n) <- "up"
         result <- list(gridList(x$vp,
-                               grobs=grobs, viewports=viewports,
-                               fullNames=fullNames,
-                               recursive=recursive, ...),
+                                grobs=grobs, viewports=viewports,
+                                fullNames=fullNames,
+                                recursive=recursive),
                        result,
                        gridList(n, 
-                               grobs=grobs, viewports=viewports,
-                               fullNames=fullNames,
-                               recursive=recursive, ...))
+                                grobs=grobs, viewports=viewports,
+                                fullNames=fullNames,
+                                recursive=recursive))
         class(result) <- c("gridListListing", "gridListing")
     }
     result
@@ -189,7 +187,7 @@ gridList.gTree <- function(x, grobs=TRUE, viewports=FALSE,
 
 # Viewport methods
 gridList.viewport <- function(x, grobs=TRUE, viewports=FALSE,
-                             fullNames=FALSE, recursive=TRUE, ...) {
+                              fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
         if (fullNames) {
             result <- as.character(x)
@@ -215,7 +213,7 @@ listvpListElement <- function(x, ...) {
 }
 
 gridList.vpList <- function(x, grobs=TRUE, viewports=FALSE,
-                           fullNames=FALSE, recursive=TRUE, ...) {
+                            fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
         if (length(x) == 0) {
             result <- character()
@@ -224,16 +222,16 @@ gridList.vpList <- function(x, grobs=TRUE, viewports=FALSE,
             result <- gridList(x[[1]],
                               grobs=grobs, viewports=viewports,
                               fullNames=fullNames,
-                              recursive=recursive, ...)
+                              recursive=recursive)
         } else {
             result <- c(lapply(x[-length(x)], listvpListElement, 
                                grobs=grobs, viewports=viewports,
                                fullNames=fullNames,
-                               recursive=recursive, ...),
+                               recursive=recursive),
                         list(gridList(x[[length(x)]], 
                                      grobs=grobs, viewports=viewports,
                                      fullNames=fullNames,
-                                     recursive=recursive, ...)))
+                                     recursive=recursive)))
             attr(result, "depth") <- depth(x[[length(x)]])
             class(result) <- c("vpListListing", "gridListListing",
                                "gridListing")
@@ -246,26 +244,26 @@ gridList.vpList <- function(x, grobs=TRUE, viewports=FALSE,
 }
 
 gridList.vpStack <- function(x, grobs=TRUE, viewports=FALSE,
-                            fullNames=FALSE, recursive=TRUE, ...) {
+                             fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
         if (length(x) == 0) {
             result <- character()
             class(result) <- "gridListing"
         } else if (length(x) == 1 || !recursive) {
             result <- gridList(x[[1]], 
-                              grobs=grobs, viewports=viewports,
-                              fullNames=fullNames, recursive=recursive, ...)
+                               grobs=grobs, viewports=viewports,
+                               fullNames=fullNames, recursive=recursive)
         } else {
             theRest <- x[-1]
             class(theRest) <- "vpStack"
             result <- gridList(theRest, 
-                              grobs=grobs, viewports=viewports,
-                              fullNames=fullNames,
-                              recursive=recursive, ...)
+                               grobs=grobs, viewports=viewports,
+                               fullNames=fullNames,
+                               recursive=recursive)
             result <- list(parent=gridList(x[[1]],
-                                     grobs=grobs, viewports=viewports,
-                                     fullNames=fullNames,
-                                     recursive=recursive, ...),
+                             grobs=grobs, viewports=viewports,
+                             fullNames=fullNames,
+                             recursive=recursive),
                            children=result)
             attr(result, "depth") <- depth(x)
             class(result) <- c("vpTreeListing", "gridTreeListing",
@@ -279,25 +277,25 @@ gridList.vpStack <- function(x, grobs=TRUE, viewports=FALSE,
 }
 
 gridList.vpTree <- function(x, grobs=TRUE, viewports=FALSE,
-                           fullNames=FALSE, recursive=TRUE, ...) {
+                            fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
         if (recursive) {
             result <- gridList(x$children, 
-                              grobs=grobs, viewports=viewports,
-                              fullNames=fullNames, recursive=recursive, ...)
+                               grobs=grobs, viewports=viewports,
+                               fullNames=fullNames, recursive=recursive)
             # Parent can only be a plain viewport
             result <- list(parent=gridList(x$parent, 
                              grobs=grobs, viewports=viewports,
                              fullNames=fullNames,
-                             recursive=recursive, ...),
+                             recursive=recursive),
                            children=result)
             attr(result, "depth") <- depth(x$children) + 1
             class(result) <- c("vpTreeListing", "gridTreeListing",
                                "gridListing")
         } else {
             result <- gridList(x$parent, 
-                              grobs=grobs, viewports=viewports,
-                              fullNames=fullNames, recursive=recursive, ...)
+                               grobs=grobs, viewports=viewports,
+                               fullNames=fullNames, recursive=recursive)
         }
     } else {
         result <- character()
@@ -308,7 +306,7 @@ gridList.vpTree <- function(x, grobs=TRUE, viewports=FALSE,
 
 # This handles downViewports in the display list
 gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
-                           fullNames=FALSE, recursive=TRUE, ...) {
+                            fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
         # This would be simpler if paths were kept as vectors
         # but that redesign is a bit of an undertaking
@@ -322,13 +320,13 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
                                "gridListing")
         } else if (depth(x) == 2) {
             result <- gridList(vpPath(x$name), 
-                              grobs=grobs, viewports=viewports,
-                              fullNames=fullNames,
-                              recursive=recursive, ...)
+                               grobs=grobs, viewports=viewports,
+                               fullNames=fullNames,
+                               recursive=recursive)
             result <- list(parent=gridList(vpPath(x$path),
                              grobs=grobs, viewports=viewports,
                              fullNames=fullNames,
-                             recursive=recursive, ...),
+                             recursive=recursive),
                            children=result)
             attr(result, "depth") <- depth(x)
             class(result) <- c("vpTreeListing", "gridTreeListing",
@@ -336,13 +334,13 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
         } else {
             path <- explodePath(x$path)
             result <- gridList(vpPathFromVector(c(path[-1], x$name)), 
-                              grobs=grobs, viewports=viewports,
-                              fullNames=fullNames,
-                              recursive=recursive, ...)
+                               grobs=grobs, viewports=viewports,
+                               fullNames=fullNames,
+                               recursive=recursive)
             result <- list(parent=gridList(vpPath(path[1]),
                              grobs=grobs, viewports=viewports,
                              fullNames=fullNames,
-                             recursive=recursive, ...),
+                             recursive=recursive),
                            children=result)
             attr(result, "depth") <- depth(x)
             class(result) <- c("vpTreeListing", "gridTreeListing",
@@ -357,7 +355,7 @@ gridList.vpPath <- function(x, grobs=TRUE, viewports=FALSE,
 
 # This handles popViewports in the display list
 gridList.pop <- function(x, grobs=TRUE, viewports=FALSE,
-                        fullNames=FALSE, recursive=TRUE, ...) {
+                         fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
         result <- as.character(x)
         if (fullNames) {
@@ -373,7 +371,7 @@ gridList.pop <- function(x, grobs=TRUE, viewports=FALSE,
 
 # This handles upViewports in the display list
 gridList.up <- function(x, grobs=TRUE, viewports=FALSE,
-                       fullNames=FALSE, recursive=TRUE, ...) {
+                        fullNames=FALSE, recursive=TRUE) {
     if (viewports) {
         result <- as.character(x)
         if (fullNames) {
