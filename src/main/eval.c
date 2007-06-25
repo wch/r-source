@@ -349,7 +349,7 @@ static SEXP forcePromise(SEXP e)
 
 SEXP eval(SEXP e, SEXP rho)
 {
-    SEXP op, tmp, val;
+    SEXP op, tmp;
     static int evalcount = 0;
 
     /* The use of depthsave below is necessary because of the
