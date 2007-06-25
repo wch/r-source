@@ -119,7 +119,7 @@ libnn=lib
 case "${host_os}" in
   linux*)
     case "${host_cpu}" in
-      x86_64|mips64|ppc64|sparc64|s390x)
+      x86_64|mips64|ppc64|powerpc64|sparc64|s390x)
         libnn=lib64
       ;;
     esac
@@ -1114,7 +1114,7 @@ if test "${GCC}" = yes; then
 ## has 32k and so can use -fpic.
 ## However, although the gcc docs do not mention it, it seems s390/s390x
 ## also supports and needs -fPIC
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       cpicflags="-fPIC"
       ;;
     *)
@@ -1125,7 +1125,7 @@ if test "${GCC}" = yes; then
 fi
 if test "${G77}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       fpicflags="-fPIC"
       ;;
     *)
@@ -1135,7 +1135,7 @@ if test "${G77}" = yes; then
 fi
 if test "${GXX}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       cxxpicflags="-fPIC"
       ;;
     *)
@@ -2011,7 +2011,7 @@ AC_SUBST(SHLIB_FCLDFLAGS)
 ## use this to pick out gfortran (even though it is unreliable).
 if test "${ac_cv_fc_compiler_gnu}" = yes; then
   case "${host_cpu}" in
-    sparc*|ppc64|s390*)
+    sparc*|ppc64|powerpc64|s390*)
       fcpicflags="-fPIC"
       ;;
     *)
