@@ -75,6 +75,9 @@ BUG FIXES
     o	winMenuDel() was not automatically deleting sub-menus when a
 	user menu was deleted.  (PR#9702)
 
+    o	Rcnd INSTALL --docs=txt etc works (for a single type, except
+	'chm' which is equivalent to 'all' nowadays).
+
 
 
 		CHANGES IN R VERSION 2.5.0

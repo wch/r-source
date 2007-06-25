@@ -163,6 +163,9 @@ if($opt_docs) {
 	    $tmp .= " -$f";
 	}
 	$helpflags = "HELP=YES WINHELP=$chm HELPTYPES='$tmp'";
+    } elsif ($opt_docs eq "txt"|| ($opt_docs eq "html")
+	     || ($opt_docs eq "latex")|| ($opt_docs eq "example")) {
+	$helpflags = "HELP=YES WINHELP=$chm HELPTYPES=-$opt_docs";
     } else {
 	die "ERROR: invalid --docs value `$opt_docs'\n";
     }
