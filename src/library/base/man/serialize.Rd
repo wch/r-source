@@ -62,6 +62,10 @@ unserialize(connection, refhook = NULL)
   values might change in future versions (and the value of
   \code{serialize} was changed for \R 2.4.0).  \code{.saveRDS} and
   \code{.readRDS} are intended for internal use.
+
+  A raw vector is limited to \eqn{2^{31} - 1}{2^31 - 1} bytes, but \R
+  objects can exceed this and their serializations will normally be
+  larger than the objects.
 }
 \value{
   For \code{serialize}, \code{NULL} unless \code{connection = NULL}, when

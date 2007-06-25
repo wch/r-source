@@ -1873,7 +1873,10 @@ static void resize_buffer(membuf_t mb, R_size_t needed)
     /* This used to allocate double 'needed', but that was problematic for
        large buffers */
     R_size_t newsize = needed;
-    if(needed < R_SIZE_T_MAX - MAXELTSIZE) needed += MAXELTSIZE;
+    /* we need to store the result in a RAWSXP */
+    if(needed > INT_MAX)
+	error(_("serialization is too large to store in a raw vector"));
+    if(needed < INT_MAX - MAXELTSIZE) needed += MAXELTSIZE;
     mb->buf = realloc(mb->buf, newsize);
     if (mb->buf == NULL)
 	error(_("cannot allocate buffer"));
@@ -1893,8 +1896,8 @@ static void OutBytesMem(R_outpstream_t stream, void *buf, int length)
     membuf_t mb = stream->data;
     R_size_t needed = mb->count + (R_size_t) length;
     /* There is a potential overflow here on 32-bit systems */
-    if((double )mb->count + length > (double) R_SIZE_T_MAX)
-	error(_("cannot allocate buffer"));
+    if((double) mb->count + length > (double) INT_MAX)
+	error(_("serialization is too large to store in a raw vector"));
     if (needed > mb->size) resize_buffer(mb, needed);
     memcpy(mb->buf + mb->count, buf, length);
     mb->count = needed;
@@ -1953,6 +1956,9 @@ static SEXP CloseMemOutPStream(R_outpstream_t stream)
 {
     SEXP val;
     membuf_t mb = stream->data;
+    /* duplicate check, for future proofing */
+    if(mb->count > INT_MAX)
+	error(_("serialization is too large to store in a raw vector"));
     PROTECT(val = allocVector(RAWSXP, mb->count));
     memcpy(RAW(val), mb->buf, mb->count);
     free_mem_buffer(mb);
