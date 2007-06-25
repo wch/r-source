@@ -133,8 +133,9 @@ Other types of extensions are supported: @xref{Package types}.
 * Package name spaces::         
 * Writing portable packages::   
 * Diagnostic messages::         
-* Localization::                
+* Internationalization::        
 * Package types::               
+* Services::                    
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -601,7 +602,7 @@ Tcl.  This mechanism is currently used only by a very few packages, and
 still experimental.
 
 Subdirectory @file{po} is used for files related to @emph{localization}:
-@pxref{Localization}.
+@pxref{Internationalization}.
 
 @node  Package bundles,  , Package subdirectories, Package structure
 @subsection Package bundles
@@ -1089,7 +1090,7 @@ There is a MinGW build of @command{gfortran} available from
 build@footnote{Remember to set @env{LIBRARY_PATH} to point to your MinGW
 @file{lib} directory} of @command{g95} from @uref{http://www.g95.org}.
 Set @code{F95} in @code{MkRules} to point to the installed compiler.
-Then @command{R CMD SHLIB} and @command{R CMD INSTALL} work for
+Then @command{R CMD SHLIB} and @command{R CMD INSTALL} will work for
 packages containing Fortran 90/95 source code.
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
@@ -2235,7 +2236,7 @@ current locale in UTF-8 and @samp{iconv} is available, when the
 package code is translated to UTF-8 for syntax checking.
 
 
-@node Diagnostic messages, Localization, Writing portable packages, Creating R packages
+@node Diagnostic messages, Internationalization, Writing portable packages, Creating R packages
 @section Diagnostic messages
 
 Now that diagnostic messages can be made available for translation, it
@@ -2331,8 +2332,8 @@ in another language one might need to say `There is no package in library
 
 @end itemize
 
-@node Localization, Package types, Diagnostic messages, Creating R packages
-@section Localization
+@node Internationalization, Package types, Diagnostic messages, Creating R packages
+@section Internationalization
 
 There are mechanisms to translate the R- and C-level error and warning
 messages.  There are only available if @R{} is compiled with NLS support
@@ -2351,7 +2352,7 @@ archive mirrors and packaged with the @code{poEdit} package
 * R messages::                  
 @end menu
 
-@node C-level messages, R messages, Localization, Localization
+@node C-level messages, R messages, Internationalization, Internationalization
 @subsection C-level messages
 
 The process of enabling translations is
@@ -2404,7 +2405,7 @@ for any language @var{lang} that matches the user's preferences (via the
 setting of the @code{LANGUAGE} environment variable or from the locale
 settings).
 
-@node R messages,  , C-level messages, Localization
+@node R messages,  , C-level messages, Internationalization
 @subsection R messages
 
 Mechanisms to support the automatic translation of @R{} @code{stop},
@@ -2435,7 +2436,7 @@ Packages without name spaces will need to use @code{domain="R-@var{pkg}"}
 explicitly in calls to @code{stop}, @code{warning}, @code{message},
 @code{gettext}/@code{gettextf} and @code{ngettext}.
 
-@node Package types,  , Localization, Creating R packages
+@node Package types, Services, Internationalization, Creating R packages
 @section Package types
 
 The @file{DESCRIPTION} file has an optional field @code{Type} which if
@@ -2499,6 +2500,27 @@ Author: The translators
 Maintainer: Some Body <somebody@@some.where.net>
 Licence: GPL Version 2 or later.
 @end example
+
+@node Services,  , Package types, Creating R packages
+@section Services
+
+Several members of the @R{} project have set up services to assist those
+writing @R{} packages, particularly those intended for public
+distribution.
+
+@url{http://win-builder.r-project.org, win-builder.r-project.org} offers
+the automated preparation of Windows binaries from well-tested source
+packages. 
+
+R-Forge (@url{http://R-Forge.r-project.org, R-Forge.r-project.org}) and
+RForge (@url{http://www.rforge.net, www.rforge.net}) are similar
+services with similar names.  Both provide source-code management
+through SVN, daily building and checking, mailing lists and a repository
+that can be accessed @emph{via} @code{install.packages}.  Package
+developers have the opportunity to present their work on the basis of
+project websites or news announcements.  Mailing lists, forums or wikis
+provide useRs with convenient instruments for discussions and for
+exchanging information between developers and/or interested useRs.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
@@ -3619,7 +3641,7 @@ has to be built to enable this, but the option
 The command @command{Rprof} is used to control profiling, and its help
 page can be consulted for full details.  Profiling works by recording at
 fixed intervals@footnote{For Unix-alikes these are intervals of CPU
-time, and for WIndows of elapsed time.} (by default every 20 msecs) which
+time, and for Windows of elapsed time.} (by default every 20 msecs) which
 @R{} function is being used, and recording the results in a file
 (default @file{Rprof.out} in the working directory).  Then the function
 @code{summaryRprof} or the command-line utility @code{R CMD Rprof
@@ -7228,7 +7250,7 @@ with @code{R_alloc} which thus persists to the end of the
 * Optimization::                
 * Integration::                 
 * Utility functions::           
-* Internationalization::        
+* Re-encoding::                 
 * Allowing interrupts::         
 * Platform and version information::  
 * Inlining C functions::        
@@ -7296,6 +7318,7 @@ without notice.
 @item @emph{private}
 Entry points that are used when building @R{} and exported on all @R{}
 platforms but are not declared in the installed header files.
+Do not use these in distributed code.
 
 @item @emph{hidden}
 Entry points that are where possible (Windows and some modern Unix
@@ -8217,7 +8240,7 @@ The comments in the source code in @file{src/appl/integrate.c} give
 more details, particularly about reasons for failure (@code{ier >= 1}).
 
 
-@node Utility functions, Internationalization, Integration, The R API
+@node Utility functions, Re-encoding, Integration, The R API
 @section Utility functions
 @cindex Sort functions from C
 
@@ -8336,8 +8359,8 @@ it will usually be taken from the environment variable @env{HOME} if
 this is defined.
 @end deftypefun
 
-@node Internationalization, Allowing interrupts, Utility functions, The R API
-@section Internationalization
+@node Re-encoding, Allowing interrupts, Utility functions, The R API
+@section Re-encoding
 
 @R{} has its own C-level interface to the encoding conversion
 capabilities provided by @code{iconv}, for the following reasons
@@ -8381,7 +8404,7 @@ input does not end with a complete multi-byte character).
 Free the resources of an encoding object.
 
 
-@node Allowing interrupts, Platform and version information, Internationalization, The R API
+@node Allowing interrupts, Platform and version information, Re-encoding, The R API
 @section Allowing interrupts
 @cindex Interrupts
 
