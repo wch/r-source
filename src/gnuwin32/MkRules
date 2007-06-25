@@ -6,6 +6,8 @@
 # Alternatives MINGW (MinGW gcc3), CROSS (e.g. Linux) GFORTRAN (MinGW gcc4)
 BUILD=MINGW
 
+## These are overridden by R CMD INSTALL: they only apply to
+## standard packages when building R and when using 'make pkg-foo'
 HELP = YES
 HELPTYPES = -txt -html -latex -example
 ifeq ($(strip $(BUILD)),CROSS)
