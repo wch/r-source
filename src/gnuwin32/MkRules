@@ -9,6 +9,8 @@
 ## when we will change the default to GCC4.
 BUILD=GCC3
 
+## These are overridden by R CMD INSTALL: they only apply to
+## standard packages when building R and when using 'make pkg-foo'
 HELP = YES
 HELPTYPES = -txt -html -latex -example
 ifeq ($(strip $(BUILD)),CROSS)
