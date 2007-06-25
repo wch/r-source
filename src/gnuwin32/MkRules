@@ -7,7 +7,7 @@
 
 ## This is temporarily set to GCC3, until after the release of R 2.5.1,
 ## when we will change the default to GCC4.
-BUILD=GCC3
+BUILD=GCC4
 
 ## These are overridden by R CMD INSTALL: they only apply to
 ## standard packages when building R and when using 'make pkg-foo'
@@ -92,7 +92,6 @@ BINPREF=i586-mingw32-
 HEADER=/home/ripley/R/mingw/include
 # path (possibly full path) to same version of R on the host system
 R_EXE='I failed to read the instructions to set R_EXE in MkRules'
-R_EXE=Rdev
 endif
 
 ## =============== end of user-customizable parts  ===================
