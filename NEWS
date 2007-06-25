@@ -384,6 +384,11 @@ BUG FIXES
 	.Random.seed: this indicates a user had been playing with it,
 	and it was documented that users should only save and restore it.
 
+    o   [g]sub could confuse a trailing byte '\' for a backreference
+	in MBCSs where '\' can occur as a trailing byte (not UTF-8 not
+	EUC-JP, but SIJS and the CJK character sets used on Windows).
+	(PR#9751) 
+
 
 
 
