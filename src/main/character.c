@@ -1026,8 +1026,24 @@ static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
 {
     int k, n;
     char *p = repl;
+#ifdef  SUPPORT_MBCS
+    mbstate_t mb_st;
+    mbs_init(&mb_st);
+#endif
+
     n = strlen(repl) - (regmatch[0].rm_eo - regmatch[0].rm_so);
     while (*p) {
+#ifdef  SUPPORT_MBCS
+	if(mbcslocale) {
+	    /* skip over multibyte chars, since they could have
+	       an embedded \ */
+	    int clen;
+	    if((clen = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) > 1) {
+		p += clen;
+		continue;
+	    }
+	}
+#endif
 	if (*p == '\\') {
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
@@ -1055,7 +1071,23 @@ static char *string_adj(char *target, char *orig, char *repl,
 {
     int i, k;
     char *p = repl, *t = target;
+#ifdef  SUPPORT_MBCS
+    mbstate_t mb_st;
+    mbs_init(&mb_st);
+#endif
+
     while (*p) {
+#ifdef  SUPPORT_MBCS
+	if(mbcslocale) {
+	    /* skip over multibyte chars, since they could have
+	       an embedded \ */
+	    int clen;
+	    if((clen = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) > 1) {
+		for (i = 0; i < clen; i++) *t++ = *p++;
+		continue;
+	    }
+	}
+#endif
 	if (*p == '\\') {
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';

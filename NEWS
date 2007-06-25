@@ -199,6 +199,11 @@ BUG FIXES
     o	besselI(x, nu, exp=TRUE) and besselY(x, nu) could give wrong
 	answers for nu < 0. (Reported by Hiroyuki Kawakatsu.)
 
+    o   [g]sub could confuse a trailing byte '\' for a backreference
+	in MBCSs where '\' can occur as a trailing byte (not UTF-8 not
+	EUC-JP, but SIJS and the CJK character sets used on Windows).
+	(PR#9751) 
+
 
 
 		CHANGES IN R VERSION 2.5.0
