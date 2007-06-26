@@ -1458,7 +1458,10 @@ interface to @code{install.packages}, @code{update.packages} and
 you have the source-code package files (option ``Source Package
 Installation Files'' in the installer) and toolset (see @ref{The Windows
 toolset}) installed.  Installation of binary packages must be done by
-@code{install.packages}. 
+@code{install.packages}.   @command{R CMD INSTALL --help} will tell you
+the current options under Windows (which differ from those on a
+Unix-alike): in particular there is a choice of the types of
+documentation to be installed.
 
 If you have only a source package that is known to work with current
 @R{} and just want a binary Windows build of it, you could make use of
@@ -1568,7 +1571,7 @@ right form by using the header files.  You must include them.
 
 For additional control, @file{@var{R_HOME}/src/gnuwin32/Makefile}
 contains additional make targets corresponding to various options to
-@code{R CMD INSTALL}.  These assume that package @code{foo}'s source
+@command{R CMD INSTALL}.  These assume that package @code{foo}'s source
 code has been installed in directory
 @file{@var{R_HOME}/src/library/foo}. Then @code{make pkg-foo} is similar
 to @code{R CMD INSTALL foo} (but the latter would require
@@ -4027,11 +4030,13 @@ and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm,
 This is @emph{not} included in @file{Rtools.exe}.
 
 You may need this on the same drive as the other tools.  (Although we
-regularly use it on a different, problems have been reported in the
-past.)
+regularly use it on a different drive, problems have been reported in
+the past.)
 
-To skip building compiled html help, set @code{WINHELP=NO} in @file{MkRules}.
-In this case the Help Workshop will not be needed.
+To skip building compiled html help when building @R{}, set
+@code{WINHELP=NO} in @file{MkRules}.  In this case the Help Workshop
+will not be needed (but it will be needed for installing packages by
+@command{R CMD INSTALL} with the default settings).
 
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
