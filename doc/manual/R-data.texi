@@ -2102,17 +2102,17 @@ access to Excel, export the data you want from Excel in tab-delimited or
 comma-separated form, and use @code{read.delim} or @code{read.csv} to
 import it into R.  (You may need to use @code{read.delim2} or
 @code{read.csv2} in a continental European locale that uses comma as the
-decimal point.)  Exporting a DIF file and reading it using @code{read.DIF}
-is another possibility.
-If you do not have Excel, many other programs are able
-to read such spreadsheets and export in a text format on both Windows
-and Unix, for example Gnumeric
-(@url{http://www.gnome.org/projects/gnumeric/}) and OpenOffice
-(@url{http://www.openoffice.org}).  You can also cut-and-paste from the
-display of a spreadsheet in such a program and R: @code{read.table} will
-read from the R console or, under Windows, from the clipboard (via
-@code{file = "clipboard"} or @code{readClipboard}).  The @code{read.DIF}
-function can also read from the clipboard.
+decimal point.)  Exporting a DIF file and reading it using
+@code{read.DIF} is another possibility.
+
+If you do not have Excel, many other programs are able to read such
+spreadsheets and export in a text format on both Windows and Unix, for
+example Gnumeric (@url{http://www.gnome.org/projects/gnumeric/}) and
+OpenOffice (@url{http://www.openoffice.org}).  You can also
+cut-and-paste from the display of a spreadsheet in such a program and R:
+@code{read.table} will read from the R console or, under Windows, from
+the clipboard (via @code{file = "clipboard"} or @code{readClipboard}).
+The @code{read.DIF} function can also read from the clipboard.
 
 Note that an Excel @file{.xls} is not just a spreadsheet: such files can
 contain many sheets, and the sheets can contain formulae, macros and so
@@ -2124,11 +2124,15 @@ Windows users can use @code{odbcConnectExcel} in package @pkg{RODBC}.
 This can select rows and columns from any of the sheets in an Excel
 spreadsheet file.
 
+@findex xlsReadWrite
+Also only for Windows, the package @pkg{xlsReadWrite} has a function
+@code{read.xls} to read @file{.xls} files (based on a third-party
+non-Open Source Delphi component).
+
 @code{Perl} users have contributed a module
 @code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
 convert Excel spreadsheets to CSV files.  Package @pkg{gdata} provides a
 basic wrapper in its @code{read.xls} function.
-
 
 
 @node References, Function and variable index, Reading Excel spreadsheets, Top
