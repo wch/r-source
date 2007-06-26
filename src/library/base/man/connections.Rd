@@ -256,7 +256,10 @@ isIncomplete(con)
 
   Most blocking operations on URLs and sockets are subject to the
   timeout set by \code{options("timeout")}.  Note that this is a timeout
-  for no response at all, not for the whole operation.
+  for no response at all, not for the whole operation.  The timeout is
+  set at the time the connection is opened (more precisely, when the
+  last connection of that type -- \code{http:}, \code{ftp:} or socket --
+  was opened).
 }
 \section{Fifos}{
   Fifos default to non-blocking.  That follows Svr4 and is probably most
