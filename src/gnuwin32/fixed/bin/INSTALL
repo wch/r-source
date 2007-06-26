@@ -150,7 +150,7 @@ if($opt_docs) {
 	$helpflags = "HELP=NO";
     } elsif ($opt_docs eq "normal") {
 	$helpflags = "HELP=YES WINHELP=NO";
-    } elsif ($opt_docs eq "chm"|| ($opt_docs eq "all")) {
+    } elsif ($opt_docs eq "all") {
 	$helpflags = "HELP=YES WINHELP=CHM";
     } elsif ($opt_docs =~ /,/) {
 	@l = split /, */, $opt_docs;
@@ -163,9 +163,11 @@ if($opt_docs) {
 	    $tmp .= " -$f";
 	}
 	$helpflags = "HELP=YES WINHELP=$chm HELPTYPES='$tmp'";
-    } elsif ($opt_docs eq "txt"|| ($opt_docs eq "html")
-	     || ($opt_docs eq "latex")|| ($opt_docs eq "example")) {
-	$helpflags = "HELP=YES WINHELP=$chm HELPTYPES=-$opt_docs";
+    } elsif ($opt_docs eq "txt"|| $opt_docs eq "html"
+	     || $opt_docs eq "latex" || $opt_docs eq "example") {
+	$helpflags = "HELP=YES WINHELP=NO HELPTYPES=-$opt_docs";
+    } elsif ($opt_docs eq "chm") {
+	$helpflags = "HELP=YES WINHELP=CHM HELPTYPES=";
     } else {
 	die "ERROR: invalid --docs value '$opt_docs'\n";
     }
@@ -519,8 +521,6 @@ Options:
   -v, --version		print version info and exit
   -c, --clean		remove all files created during installation
 
-  --fake		do minimal install for testing purposes
-  --unsafe		install on top of any existing installation
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
   --docs=TYPE	        type(s) of documentation to build and install
@@ -530,11 +530,13 @@ Options:
   --use-zip-help	collect help and examples into zip archives
   --use-zip		combine '--use-zip-data' and '--use-zip-help'
   --auto-zip	        select whether to zip automatically
+  --fake		do minimal install for testing purposes
+  --unsafe		install on top of any existing installation
   --build		zip-up the installation.  Implies --auto-zip
 
 
-TYPE can be "none" or "normal" or "chm" (the default) or "all", or
-  a comma-separated list of one or more of 
+TYPE can be "none" or "normal" (everything but chm), or "all" (the default),
+  or a comma-separated list of one or more of 
   'txt', 'html', 'latex', "example' and 'chm'.
 
 Report bugs to <r-bugs\@r-project.org>.
