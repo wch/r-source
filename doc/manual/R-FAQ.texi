@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-22
+@set FAQ_DATE @value{FAQ_YEAR}-06-25
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -2650,6 +2650,8 @@ Evaluation and experimental design for binomial group testing.
 Generation of correlated artificial binary data.
 @item binom
 Binomial confidence intervals for several parameterizations.
+@item bio.infer
+Compute biological inferences.
 @item biopara
 Self-contained parallel system for R.
 @item bitops
@@ -2767,7 +2769,7 @@ Utilities for clinical study design and data analyses.
 @item clue
 CLUster Ensembles.
 @item clustTool
-GUI for clustering data with spatial information.
+@acronym{GUI} for clustering data with spatial information.
 @item cluster
 Functions for cluster analysis.  @emph{Recommended}.
 @item clusterGeneration
@@ -3953,6 +3955,8 @@ Functions for import, export, plotting and other manipulations of
 bitmapped images.
 @item plm
 Linear models for panel data.
+@item plotAndPlayGTK
+A @acronym{GUI} for interactive plots using GTK.
 @item plotrix
 Various useful functions for enhancing plots.
 @item plugdensity
@@ -4574,6 +4578,8 @@ Simple mechanism for placing R graphics in a Tk widget.
 Two-level normal independent sampling estimation.
 @item tm
 A framework for text mining applications within R.
+@item tradeCosts
+Post-trade analysis of transaction costs.
 @item tree
 Classification and regression trees.
 @item treeglia
@@ -4904,7 +4910,7 @@ Suffix Trees in R via the libstree C library.
 Interface to Snowball implementation of Porter's word stemming
 algorithm.
 @item RwxWidgets
-Facilities to program GUIs using wxWidgets in R.
+Facilities to program @acronym{GUI}s using wxWidgets in R.
 @item Ryacas
 R interface to yacas.
 @item SASXML
