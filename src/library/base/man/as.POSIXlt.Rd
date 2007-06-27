@@ -48,7 +48,7 @@ as.POSIXlt(x, tz = "")
   Logical \code{NA}s can be converted to either of the classes, but no
   other logical vectors can be.
 
-  The \code{as.numeric} method converts \code{"POSIXlt"} objects to
+  The \code{as.double} method converts \code{"POSIXlt"} objects to
   \code{"POSIXct"}.
 
   If you are given a numeric time as the number of seconds since an
