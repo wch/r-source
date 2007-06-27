@@ -104,7 +104,13 @@ assign("cleanEx",
        },
        pos = "CheckExEnv")
 assign("ptime", proc.time(), pos = "CheckExEnv")
-grDevices::postscript("$PKG-Ex.ps")
+_EOF_
+if($PKG eq "graphics") {
+    print "grDevices::postscript(\"$PKG-Ex.ps\", encoding='ISOLatin1')\n";
+} else {
+    print "grDevices::postscript(\"$PKG-Ex.ps\")\n";
+}
+print <<_EOF_;
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 options(warn = 1)    
