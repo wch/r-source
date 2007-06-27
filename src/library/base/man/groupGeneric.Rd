@@ -57,7 +57,7 @@ Summary(\dots, na.rm = FALSE)
       \code{floor}, \code{ceiling}, \code{trunc},\cr
       \code{round}, \code{signif}
 
-      \item \code{exp}, \code{log}, \cr
+      \item \code{exp}, \code{log},  \code{expm1}, \code{log1p}, \cr
       \code{cos}, \code{sin}, \code{tan},\cr
       \code{acos}, \code{asin}, \code{atan}
 
@@ -67,7 +67,7 @@ Summary(\dots, na.rm = FALSE)
       \item
       \code{lgamma}, \code{gamma}, \code{gammaCody},\cr
       \code{digamma}, \code{trigamma}
-      %   do_math1() [arithmetic.c:794]: if (DispatchGroup("Math",...))
+      %   do_math1() [../../../main/arithmetic.c:794]: if (DispatchGroup("Math",...))
       %
       %
       % "atan", "round", "log", "signif":
@@ -114,7 +114,7 @@ Summary(\dots, na.rm = FALSE)
 
     If the members of this group are called as functions, any argument
     names are removed to ensure that positional matching is always used.
-    
+
     \item Group \code{"Summary"}:
     \itemize{
       \item \code{all}, \code{any}

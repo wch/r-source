@@ -17,7 +17,7 @@
             funs <- .addBasicGeneric(funs, curNames[[i]], val, "")
     }
 
-    ## Next, add the remaaining primitive generics
+    ## Next, add the remaining primitive generics
     prims <- ls(.GenericArgsEnv, all.names=TRUE)
     new_prims <- prims[!prims %in% names(funs)]
     for(nm in new_prims) {
@@ -35,10 +35,15 @@
     funs <- c(funs, add)
 
     ## the Math group.
-    members <- c("abs", "acos", "acosh", "asin", "asinh", "atan",
-                 "atanh", "ceiling", "cos", "cosh", "cumprod", "cumsum",
-                 "exp", "floor", "gamma", "lgamma", "log", "log10",
-                 "sin", "sinh", "sqrt", "tan", "tanh")
+    members <- c("abs", "sqrt",
+                 "ceiling", "floor",
+                 "cummax", "cummin", "cumprod", "cumsum",
+		 "exp", "expm1",
+		 "log", "log10", "log1p",
+                 "cos", "cosh", "sin", "sinh", "tan", "tanh",
+                 "acos", "acosh", "asin", "asinh", "atan", "atanh",
+                 "gamma", "lgamma", "digamma", "trigamma"
+                 )
 
     for(f in members)
 	funs <- .addBasicGeneric(funs, f, function(x) standardGeneric(""),

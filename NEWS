@@ -97,6 +97,11 @@ NEW FEATURES
 	methods and in the case of '!' the argument name differed
 	between S3 and S4 methods.)
 
+    o	The Math group has been harmonized more between S3 and S4,
+	notably log1p(), expm1() and log2() {FIXME} are new official
+	members, and cummax(), cummin(), digamma(), and trigamma() are new
+	additionally in the S4 Math group.
+
     o	levels() is now generic (levels<- has been for a long time).
 
     o	pmatch(x, y, duplicates.ok = TRUE) now uses hashing and so is
@@ -596,7 +601,7 @@ BUG FIXES
     o   [g]sub could confuse a trailing byte '\' for a backreference
 	in MBCSs where '\' can occur as a trailing byte (not UTF-8 nor
 	EUC-JP, but SJIS and the CJK character sets used on Windows).
-	(PR#9751) 
+	(PR#9751)
 
 
 

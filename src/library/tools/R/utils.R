@@ -285,19 +285,9 @@ function(primitive = TRUE) # primitive means 'include primitives'
         ## cf. zMethods.Rd).
         c("[", "[[", "$", "[<-", "[[<-", "$<-",
           "as.vector", "unlist",
-          .get_S3_primitive_generics(),
-          ## and also the members of the group generics from
-          ## groupGeneric.Rd
-          "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round",
-          "signif", "exp", "log", "cos", "sin", "tan", "acos", "asin",
-          "atan", "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
-          "lgamma", "gamma", "gammaCody", "digamma", "trigamma",
-          "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax",
-          "cummin",
-          "+", "-", "*", "/", "^", "%%", "%/%", "&", "|", "!", "==",
-          "!=", "<", "<=", ">=", ">",
-          "all", "any", "sum", "prod", "max", "min", "range",
-          "Arg", "Conj", "Im", "Mod", "Re")
+          .get_S3_primitive_generics()
+          ## ^^^^^^^ now contains the members of the group generics from groupGeneric.Rd
+          )
     if(!primitive)
         out <- out[!sapply(out, .is_primitive, baseenv())]
     out
@@ -418,7 +408,7 @@ function(include_group_generics = TRUE)
     if(include_group_generics)
         c(base::.S3PrimitiveGenerics,
           "abs", "sign", "sqrt", "floor", "ceiling", "trunc", "round",
-          "signif", "exp", "log", "cos", "sin", "tan", "acos", "asin",
+          "signif", "exp", "log", "expm1", "log1p", "cos", "sin", "tan", "acos", "asin",
           "atan", "cosh", "sinh", "tanh", "acosh", "asinh", "atanh",
           "lgamma", "gamma", "gammaCody", "digamma", "trigamma",
           "tetragamma", "pentagamma", "cumsum", "cumprod", "cummax",
