@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-25
+@set FAQ_DATE @value{FAQ_YEAR}-06-26
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -863,8 +863,8 @@ sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
 binaries.
 
-The @CRAN{} master site at TU Wien, Austria, can be found at the
-@acronym{URL}
+The @CRAN{} master site at Wirtschaftsuniversit@"at Wien, Austria, can
+be found at the @acronym{URL}
 
 @quotation
 @c @multitable @columnfractions .45 .30
@@ -881,7 +881,7 @@ Daily mirrors are available at @acronym{URL}s including
 @quotation
 @multitable @columnfractions .45 .40
 @item @url{http://cran.at.R-project.org/}
-@tab (TU Wien, Austria)
+@tab (WU Wien, Austria)
 @item @url{http://cran.au.R-project.org/}
 @tab (PlanetMirror, Australia)
 @item @url{http://cran.br.R-project.org/}
@@ -2596,6 +2596,8 @@ Exploratory analysis of missing patterns for microarray data.
 Adaptive Rejection Sampling.
 @item arules
 Mining association rules and frequent itemsets with R.
+@item arulesSequences
+Mining frequent sequences.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
 @item aspace
@@ -2634,6 +2636,8 @@ Modifications and extensions of @strong{stats4} MLE code.
 @item bcp
 Bayesian Change Point based on the Barry and Hartigan product partition
 model.
+@item benchden
+28 benchmark densities from Berlinet/Devroye (1994).
 @item betareg
 Beta regression for modeling rates and proportions.
 @item bicreduc
@@ -2983,6 +2987,9 @@ and generalised linear models.
 A package for survival and event history analysis.
 @item eiPack
 Ecological inference and higher-dimension data management.
+@item eigenmodel
+Semiparametric factor and regression models for symmetric relational
+data.
 @item elasticnet
 Elastic net regularization and variable selection.
 @item ellipse
