@@ -37536,6 +37536,8 @@ _ACEOF
 fi
 
 fi
+## check value of log(0) and log(-1)
+## Solaris defines log(0) to be -HUGE_VAL, but we want -Inf
 { echo "$as_me:$LINENO: checking for working log" >&5
 echo $ECHO_N "checking for working log... $ECHO_C" >&6; }
 if test "${r_cv_func_log_works+set}" = set; then
@@ -37608,6 +37610,7 @@ else
 fi
 
 
+## check accuracy of log1p
 { echo "$as_me:$LINENO: checking for working log1p" >&5
 echo $ECHO_N "checking for working log1p... $ECHO_C" >&6; }
 if test "${r_cv_func_log1p_works+set}" = set; then
