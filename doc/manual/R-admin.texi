@@ -301,8 +301,11 @@ make check
 @noindent
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
-discrepancies. To re-run the tests including those successfully run you
-would need
+discrepancies.  (Note that the tests may not run successfully in all
+locales: if you have problems try @code{C} or an English locale -- a
+UTF-8 locale if you usually use UTF-8.)
+
+To re-run the tests including those successfully run you would need
 
 @example
 make check FORCE=FORCE
