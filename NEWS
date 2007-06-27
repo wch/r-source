@@ -249,9 +249,13 @@ NEW FEATURES
 
 	fifo("") is now implemented, and works in the same way as file("").
 
-    o	C(f, SAS) now works as well as C(f, treatment), etc.
+    o	C(f, SAS) now works in the same way as C(f, treatment), etc.
 
-    o	sprintf() no longer has a string length limit.
+    o	sprintf() no longer has a output string length limit.
+
+    o   It is now an warning to have an non-integer object for
+	.Random.seed: this indicates a user had been playing with it,
+	and it was documented that users should only save and restore it.
 
 
 DEPRECATED & DEFUNCT
@@ -380,13 +384,11 @@ BUG FIXES
     o   Added a promise evaluation stack so interrupted promise
         evaluations can be restarted.
 
-    o   It is now an warning to have an non-integer object for
-	.Random.seed: this indicates a user had been playing with it,
-	and it was documented that users should only save and restore it.
-
     o   Attempting to do in-memory serialization of an object requring
-	more than 1Gb might have failed, and any requiring more than
-	2Gb would have failed.
+	more than 1Gb might have failed.
+
+    o   Using formals<- on a function whose body was NULL worked
+	incorrectly.  (PR#9758)
 
 
 

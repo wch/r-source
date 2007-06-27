@@ -4826,3 +4826,12 @@ stopifnot(identical(sapply(z, class), list(groups=class(f2), x="integer")),
           identical(levels(z[[1]]), levels(f2)),
           is.ordered(z[[1]]) )
 ## converted to factors < 2.6.0
+
+
+## formals<- on function with NULL body (PR#9758)
+f <- function() NULL
+g <- alist(a=, b=4, c=)
+formals(f) <- g
+# identical(formals(f), g) is false as g has .Names attribute
+stopifnot(is.null(body(f)), identical(names(formals(f)), names(g)))
+## was function(a, b=4)  before 2.6.0
