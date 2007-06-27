@@ -86,7 +86,10 @@ oldClass(x) <- value
   replacing the class this way is strongly deprecated.  The expression
   \code{\link[methods]{as}(object, value)} is the way to coerce an object to a
   particular class.
+
+  The analogue of \code{inherits} for formal classes is \code{\link{is}}.
 }
+
 \seealso{
   \code{\link{UseMethod}}, \code{\link{NextMethod}},
   \code{\link{group generic}}.
