@@ -185,14 +185,10 @@
  La_svd_cmplx
  La_zgeqp3
  La_zgesv
- LeftMatrixColumnLabel
  LoadInitFile
  MDIset
  MDIsize
  MainThread
- MatrixColumnLabel
- MatrixRowLabel
- NextConnection
  OutDec
  PRCODE
  PRENV
@@ -485,7 +481,6 @@
  Ri18n_iswctype
  Ri18n_wcswidth
  Ri18n_wctype
- RightMatrixColumnLabel
  Rm_calloc
  Rm_cfree
  Rm_free

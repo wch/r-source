@@ -79,7 +79,7 @@ static void * current_id = NULL;
 
 /* ------------- admin functions (see also at end) ----------------- */
 
-int attribute_hidden NextConnection()
+static int NextConnection()
 {
     int i;
     for(i = 3; i < NCONNECTIONS; i++)

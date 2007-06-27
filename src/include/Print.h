@@ -55,11 +55,6 @@ void formatString(SEXP*, int, int*, int);
 /* Formating of values */
 const char *EncodeElement(SEXP, int, int, char);
 
-/* Printing */
-void MatrixColumnLabel(SEXP, int, int);
-void RightMatrixColumnLabel(SEXP, int, int);
-void LeftMatrixColumnLabel(SEXP, int, int);
-void MatrixRowLabel(SEXP, int, int, int);
 
 /* In Rinternals.h (and MUST be there):
    CustomPrintValue,  PrintValue, PrintValueRec */
