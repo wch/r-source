@@ -435,12 +435,6 @@ environment and using @command{make -e}.  (If re-making the manuals for
 a different papersize, you should first delete the file
 @file{doc/manual/version.texi}.)
 
-The @file{R-intro.texi} manual needs @file{epsf.tex}.  This is part of
-the @code{texinfo} distribution but often not installed as part of a
-@TeX{} installation: it can be obtained from
-@url{http://www.ctan.org/tex-archive/macros/generic/epsf/epsf.tex,
-@code{www.ctan.org/@/tex-archive/@/macros/@/generic/@/epsf/@/epsf.tex}}.
-
 There are some issues with making the reference manual, and in
 particular with the PDF version @file{refman.pdf}.  The help files
 contain both ISO Latin1 characters (e.g.@: in @file{text.Rd}) and
@@ -450,7 +444,7 @@ Computer Modern fonts.  We have provided four alternatives:
 @table @code
 @item times
 (The default for PDF.) Using standard PostScript fonts.  This works
-well both for on-screen viewing and for printing, and is the default.
+well both for on-screen viewing and for printing.
 The one disadvantage is that the Usage and Examples sections may come
 out rather wide.
 

@@ -6,6 +6,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.5.1 patched
+
+INSTALLATION
+
+    o	doc/manual now includes the texinfo support file epsf.tex which
+	basic TeX installations often omit.
+
+
+
 		CHANGES IN R VERSION 2.5.1
 
 
