@@ -48,12 +48,17 @@ log1p(x)
   is preferred if \code{base} is specified, for S-PLUS compatibility.
 }
 \details{
-  \code{exp} and \code{log} are generic functions: methods can be defined
-  for them individually or via the \code{\link[base:groupGeneric]{Math}}
-  group generic.
+  \code{exp}, \code{expm1}, \code{log} and \code{log1p} are generic
+  functions: methods can be defined for them individually or via the
+  \code{\link[base:groupGeneric]{Math}} group generic.
 
-  \code{log10} and \code{log2} are only special cases, but will be computed
-  more efficiently and accurately where supported by the OS.
+  \code{log10} and \code{log2} are only convenience wrappers, but logs
+  to bases 10 and 2 (whether computed \emph{via} \code{log} or the wrappers)
+  will be computed more efficiently and accurately where supported by the OS.
+
+  \code{logb} is a wrapper for \code{log} for compatibility with S.  If
+  (S3 or S4) methods are set for \code{log} they will be dispatched.
+  Do not set S4 methods on \code{logb} itself.
 }
 \section{S4 methods}{
   \code{exp} is S4 generic and a member of the

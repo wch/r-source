@@ -57,7 +57,7 @@ Summary(\dots, na.rm = FALSE)
       \code{floor}, \code{ceiling}, \code{trunc},\cr
       \code{round}, \code{signif}
 
-      \item \code{exp}, \code{log}, \cr
+      \item \code{exp}, \code{log},  \code{expm1}, \code{log1p}, \cr
       \code{cos}, \code{sin}, \code{tan},\cr
       \code{acos}, \code{asin}, \code{atan}
 
