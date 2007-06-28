@@ -1867,7 +1867,10 @@ typedef struct membuf_st {
 
 static void resize_buffer(membuf_t mb, int needed)
 {
-    int newsize = 2 * needed;
+    size_t newsize = needed; /* possible integer overflow */
+    if (needed > INT_MAX)
+	error("serialization exceeds maximum size of raw vector");
+    if (newsize <= INT_MAX/2) newsize = 2 * needed;
     mb->buf = realloc(mb->buf, newsize);
     if (mb->buf == NULL)
 	error(_("cannot allocate buffer"));

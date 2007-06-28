@@ -14,6 +14,15 @@ INSTALLATION
 	basic TeX installations often omit.
 
 
+BUG FIXES
+
+    o   Attempting to do in-memory serialization of an object requring
+	more than 1Gb might have failed.
+
+    o   Using formals<- on a function whose body was NULL worked
+	incorrectly.  (PR#9758)
+
+
 
 		CHANGES IN R VERSION 2.5.1
 
@@ -211,7 +220,7 @@ BUG FIXES
     o   [g]sub could confuse a trailing byte '\' for a backreference
 	in MBCSs where '\' can occur as a trailing byte (not UTF-8 nor
 	EUC-JP, but SJIS and the CJK character sets used on Windows).
-	(PR#9751) 
+	(PR#9751)
 
 
 
