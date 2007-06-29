@@ -65,8 +65,9 @@ zapsmall(x, digits = getOption("digits"))
   element of the vector is rounded individually, unlike printing.
 }
 \section{S4 methods}{
-  \code{ceiling} and \code{floor} are S4 generic and members of the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+  \code{ceiling}, \code{floor} and \code{trunc} are S4 generic and
+  members of the \code{\link[methods:S4groupGeneric]{Math}} group
+  generic.  As an S4 generic, \code{trunc} has only one argument.
 
   \code{round} and \code{signif} are S4 generic and members of the
   \code{\link[methods:S4groupGeneric]{Math2}} group generic.

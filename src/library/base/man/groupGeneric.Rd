@@ -53,11 +53,12 @@ Summary(\dots, na.rm = FALSE)
     \item Group \code{"Math"}:
     \itemize{
       \item
-      \code{abs}, \code{sign}, \code{sqrt}, \cr
+      \code{abs}, \code{sign}, \code{sqrt},\cr
       \code{floor}, \code{ceiling}, \code{trunc},\cr
       \code{round}, \code{signif}
 
-      \item \code{exp}, \code{log},  \code{expm1}, \code{log1p}, \cr
+      \item
+      \code{exp}, \code{log},  \code{expm1}, \code{log1p},\cr
       \code{cos}, \code{sin}, \code{tan},\cr
       \code{acos}, \code{asin}, \code{atan}
 
@@ -65,8 +66,7 @@ Summary(\dots, na.rm = FALSE)
       \code{acosh}, \code{asinh}, \code{atanh}
 
       \item
-      \code{lgamma}, \code{gamma}, \code{gammaCody},\cr
-      \code{digamma}, \code{trigamma}
+      \code{lgamma}, \code{gamma}, \code{digamma}, \code{trigamma}
       %   do_math1() [../../../main/arithmetic.c:794]: if (DispatchGroup("Math",...))
       %
       %
