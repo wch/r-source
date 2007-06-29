@@ -4835,3 +4835,6 @@ formals(f) <- g
 # identical(formals(f), g) is false as g has .Names attribute
 stopifnot(is.null(body(f)), identical(names(formals(f)), names(g)))
 ## was function(a, b=4)  before 2.6.0
+
+## subsetting R.version
+stopifnot(identical("simple.list", class(R.version[1:7])))

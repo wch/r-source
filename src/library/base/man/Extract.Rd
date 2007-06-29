@@ -3,6 +3,8 @@
 \alias{Extract}
 \alias{Subscript}
 \alias{[}
+\alias{[.listof}
+\alias{[.simple.list}
 \alias{[[}
 \alias{$}
 \alias{[<-}

@@ -395,6 +395,7 @@ BUG FIXES
     o   Using formals<- on a function whose body was NULL worked
 	incorrectly.  (PR#9758)
 
+    o	R.version[1:10] now nicely prints.
 
 
 
