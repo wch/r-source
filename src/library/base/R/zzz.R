@@ -188,7 +188,7 @@ assign("length<-", function(x, value) UseMethod("length<-"),
        envir = .GenericArgsEnv)
 assign("levels<-", function(x, value) UseMethod("levels<-"),
        envir = .GenericArgsEnv)
-assign("log", function(x, base=exp(1)) UseMethod("trunc"),
+assign("log", function(x, base=exp(1)) UseMethod("log"),
        envir = .GenericArgsEnv)
 assign("names<-", function(x, value) UseMethod("names<-"),
        envir = .GenericArgsEnv)
