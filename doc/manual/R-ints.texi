@@ -1777,17 +1777,23 @@ Basic mathematical functions with a single argument, i.e.,
 
 @example
 @group
-sign    abs
+abs     sign    sqrt
 floor   ceiling
 @end group
 
 @group
-sqrt    exp
-cos     sin      tan
-acos    asin     atan
-cosh    sinh     tanh
-acosh   asinh    atanh
+exp     expm1
+log2    log10   log1p
+cos     sin     tan
+acos    asin    atan
+cosh    sinh    tanh
+acosh   asinh   atanh
 @end group
+
+@group
+gamma   lgamma  digamma trigamma
+@end group
+
 
 @group
 cumsum  cumprod cummax  cummin
@@ -1798,25 +1804,13 @@ Im  Re  Arg  Conj  Mod
 @end group
 @end example
 
-@noindent Note however that the @R{} function @code{log} has an optional
-named argument @code{base}, and therefore is defined as
+@code{log} is a function of one or two arguments, but was made
+primitive as from @R{} 2.6.0 and so has named rather than positional
+matching for back compatibility.
 
-@example
-@group
-log <- function(x, base = exp(1)) @{
-  if(missing(base))
-    .Internal(log(x))
-  else
-    .Internal(log(x, base))
-@}
-@end group
-@end example
-
-@noindent in order to ensure that @code{log(x = pi, base = 2)} is
-identical to @code{log(base = 2, x = pi)}.
-
-Function @code{trunc} is a difficult case: it is a primitive and is
-currently treated as @code{trunc(x, ..)}.
+@code{trunc} is a difficult case: it is a primitive that can have zero
+or more arguments: the default method handled in the primitive has
+only one.
 
 @item
 Functions rarely used outside of ``programming'' (i.e., mostly used

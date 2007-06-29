@@ -243,9 +243,11 @@ attribute_hidden FUNTAB R_FunTab[] =
 /* Note that the number of arguments for the primitives in this group
    only applies to the default method. */
 {"round",	do_Math2,	10001,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
-{"atan",	do_atan,	10002,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"log",		do_log,		10003,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"signif",	do_Math2,	10004,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
+{"atan",	do_atan,	10002,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"log",		do_log,		10003,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"log10",	do_log,		10010,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"log2",	do_log,		10012,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"abs",		do_abs,		6,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"floor",	do_math1,	1,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"ceiling",	do_math1,	2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -254,8 +256,8 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"trunc",	do_trunc,	5,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"exp",		do_math1,	10,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"expm1",	do_math1,	11,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"log1p",	do_math1,	12,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"expm1",	do_math1,	11,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"log1p",	do_math1,	12,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"cos",		do_math1,	20,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"sin",		do_math1,	21,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
@@ -270,11 +272,11 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"asinh",	do_math1,	34,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"atanh",	do_math1,	35,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"lgamma",	do_math1,	40,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"gamma",	do_math1,	41,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"lgamma",	do_math1,	40,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"gamma",	do_math1,	41,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
-{"digamma",	do_math1,	42,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"trigamma",	do_math1,	43,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"digamma",	do_math1,	42,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"trigamma",	do_math1,	43,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"gammaCody",	do_math1,	46,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 /* see "psigamma" below !*/
 

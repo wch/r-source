@@ -36,22 +36,14 @@ comment <- function(x).Internal(comment(x))
 
 round <- function(x, digits = 0).Internal(round(x,digits))
 signif <- function(x, digits = 6).Internal(signif(x,digits))
-logb <- log <- function(x, base=exp(1))
-    if(missing(base)).Internal(log(x)) else .Internal(log(x,base))
-log1p <- function(x).Internal(log1p(x))
-expm1 <- function(x).Internal(expm1(x))
+logb <- function(x, base=exp(1)) if(missing(base)) log(x) else log(x,base)
 
 atan2 <- function(y, x).Internal(atan2(y, x))
 
 beta <- function(a, b).Internal( beta(a, b))
 lbeta <- function(a, b).Internal(lbeta(a, b))
 
-gamma <- function(x).Internal( gamma(x))
-lgamma <- function(x).Internal(lgamma(x))
-digamma <- function(x).Internal(   digamma(x))
-trigamma <- function(x).Internal(  trigamma(x))
-psigamma <- function(x, deriv=0) .Internal(psigamma(x, deriv))
-## tetragamma, pentagamma : deprecated in 1.9.0
+psigamma <- function(x, deriv = 0) .Internal(psigamma(x, deriv))
 
 factorial <- function(x) gamma(x + 1)
 lfactorial <- function(x) lgamma(x + 1)

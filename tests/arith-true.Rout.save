@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-22 r41669)
+R version 2.6.0 Under development (unstable) (2007-06-27 r42086)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -99,7 +99,7 @@ Type 'q()' to quit R.
 > is.nan(log(-1))# TRUE and warning
 [1] TRUE
 Warning message:
-In log(x) : NaNs produced 
+In log(-1) : NaNs produced
 > 
 > rp <- c(1:2,Inf); rn <- rev(- rp)
 > r <- c(rn, 0, rp)
@@ -171,7 +171,7 @@ In log(x) : NaNs produced
 > all(is.nan(gamma(0:-47))) # + warn.
 [1] TRUE
 Warning message:
-In gamma(x) : NaNs produced 
+In gamma(0:-47) : NaNs produced
 > 
 > ## choose() {and lchoose}:
 > n51 <- c(196793068630200, 229591913401900, 247959266474052)
@@ -204,8 +204,8 @@ In gamma(x) : NaNs produced
 > stopifnot(all.equal( digamma(x), psigamma(x,0), 2*Meps),
 +           all.equal(trigamma(x), psigamma(x,1), 2*Meps))# TRUE (+ NaN warnings)
 Warning messages:
-1: In digamma(x) : NaNs produced 
-2: In psigamma(x, deriv) : NaNs produced 
+1: In digamma(x) : NaNs produced
+2: In psigamma(x, deriv) : NaNs produced
 > 
 > ## fft():
 > ok <- TRUE

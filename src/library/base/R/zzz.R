@@ -133,12 +133,14 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
         assign(f, fx, envir = env)
     }
     ## now add the group generics
-    ## log, round, signif and the gamma fns are not primitive
-    ## trunc is handled below
+    ## round, signif are not primitive
+    ## log, trunc are handled below
     fx <- function(x) {}
-    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling', 'exp',
+    for(f in c('abs', 'sign', 'sqrt', 'floor', 'ceiling',
+               'exp', 'expm1', 'log1p', 'log10', 'log2',
                'cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'cosh', 'sinh',
                'tanh', 'acosh', 'asinh', 'atanh',
+               'gamma', 'lgamma', 'digamma', 'trigamma',
                'cumsum', 'cumprod', 'cummax', 'cummin')) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
@@ -185,6 +187,8 @@ assign("dimnames<-", function(x, value) UseMethod("dimnames<-"),
 assign("length<-", function(x, value) UseMethod("length<-"),
        envir = .GenericArgsEnv)
 assign("levels<-", function(x, value) UseMethod("levels<-"),
+       envir = .GenericArgsEnv)
+assign("log", function(x, base=exp(1)) UseMethod("trunc"),
        envir = .GenericArgsEnv)
 assign("names<-", function(x, value) UseMethod("names<-"),
        envir = .GenericArgsEnv)

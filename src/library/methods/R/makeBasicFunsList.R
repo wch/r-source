@@ -35,31 +35,32 @@
     funs <- c(funs, add)
 
     ## the Math group.
-    members <- c("abs", "sqrt",
-                 "ceiling", "floor",
+    members <- c("abs", "sign", "sqrt",
+                 "ceiling", "floor", "trunc",
                  "cummax", "cummin", "cumprod", "cumsum",
 		 "exp", "expm1",
-		 "log", "log10", "log1p",
+		 "log", "log10", "log2", "log1p",
                  "cos", "cosh", "sin", "sinh", "tan", "tanh",
                  "acos", "acosh", "asin", "asinh", "atan", "atanh",
                  "gamma", "lgamma", "digamma", "trigamma"
                  )
+     for(f in members) {
+         funs <-
+             if(f %in% c("log", "trunc"))
+                 .addBasicGeneric(funs, f,
+                                  function(x, ...) standardGeneric(""),
+                                  "Math")
 
-    for(f in members)
-	funs <- .addBasicGeneric(funs, f, function(x) standardGeneric(""),
-				 "Math")
+             else
+                 .addBasicGeneric(funs, f,
+                                  function(x) standardGeneric(""),
+                                  "Math")
+    }
 
     setGroupGeneric(where=where,"Math", function(x)NULL,
 		    knownMembers = members, package = "base")
 
-    ## The Math2 group.  In spite of the documented behavior, there
-    ## is an S3 method for trunc with a SECOND argument.  Until we get
-    ## a better solution, we have to put trunc in the Math2 group.
-
-    funs <- .addBasicGeneric(funs, "trunc",
-			     function(x, digits = 0) standardGeneric(""),
-			     "Math2")
-
+    ## The Math2 group.
     funs <- .addBasicGeneric(funs, "round",
 			     function(x, digits = 0) standardGeneric(""),
 			     "Math2")

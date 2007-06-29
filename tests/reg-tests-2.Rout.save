@@ -1,5 +1,5 @@
 
-R version 2.6.0 Under development (unstable) (2007-06-16 r41964)
+R version 2.6.0 Under development (unstable) (2007-06-27 r42089)
 Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1446,7 +1446,7 @@ Y    4   10   16   22
 > sink(type="message")
 > sink()
 > try(log("a"))
-Error in log(x) : Non-numeric argument to mathematical function
+Error in log("a") : Non-numeric argument to mathematical function
 > 
 > ## capture all the output to a file.
 > zz <- file("all.Rout", open="wt")
@@ -1460,7 +1460,7 @@ Error in log(x) : Non-numeric argument to mathematical function
      description class mode text isopen can read can write
 > stopifnot(nrow(foo) == 0)
 > try(log("a"))
-Error in log(x) : Non-numeric argument to mathematical function
+Error in log("a") : Non-numeric argument to mathematical function
 > unlink("all.Rout")
 > ## many of these were untested before 1.4.0.
 > 
@@ -1744,7 +1744,7 @@ Sep 1961  20  30
 > try(glm(y ~ x, family = poisson(identity)))
 Error : no valid set of coefficients has been found: please supply starting values
 In addition: Warning message:
-In log(x) : NaNs produced
+In log(ifelse(y == 0, 1, y/mu)) : NaNs produced
 > ## failed because start = NULL in 1.4.1
 > ## now gives useful error message
 > glm(y ~ x, family = poisson(identity), start = c(1,0))

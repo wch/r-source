@@ -1003,7 +1003,8 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    if (DispatchGroup("Math", call, op, args, env, &s))
+    if (PRIMVAL(op) != 46 &&
+	DispatchGroup("Math", call, op, args, env, &s))
 	return s;
 
     if (isComplex(CAR(args)))
@@ -1350,24 +1351,68 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s;
-    int n;
-    if (DispatchGroup("Math", call, op, args, env, &s))
-	return s;
+    SEXP s, res, args2=args, call2=call;
+    int n = length(args), nprotect = 0;
 
-    switch (n = length(args)) {
+    if (n == 1 && PRIMVAL(op) == 10003) {
+    /* we need to set a second arg for log() if none is supplied. */
+#ifdef M_E
+	double e = M_E;
+#else
+	double e = exp(1.);
+#endif
+	SEXP tmp = CONS(ScalarReal(e), R_NilValue);
+	PROTECT(args2 = duplicate(args));
+	PROTECT(call2 = duplicate(call));
+	nprotect += 2;
+	SETCDR(args2, tmp);
+	SETCDR(CDR(call2), tmp);
+    }
+
+    if (DispatchGroup("Math", call2, op, args2, env, &s)) {
+	UNPROTECT(nprotect);
+	return s;
+    }
+    UNPROTECT(nprotect);
+
+    if(PRIMVAL(op) == 10010) { /* log10 */
+	SEXP Call;
+	PROTECT(Call = lang3(install("log"), CAR(args), ScalarReal(10.0)));
+	res = eval(Call, env);
+	UNPROTECT(1);
+	return res;
+    }
+    if(PRIMVAL(op) == 10012) { /* log 2 */
+	SEXP Call;
+	PROTECT(Call = lang3(install("log"), CAR(args), ScalarReal(2.0)));
+	res = eval(Call, env);
+	UNPROTECT(1);
+	return res;
+    }
+
+    switch (n) {
     case 1:
 	if (isComplex(CAR(args)))
 	    return complex_math1(call, op, args, env);
 	else
 	    return math1(CAR(args), R_log, call);
     case 2:
+    {
+	/* match argument names if supplied */
+	SEXP ap;
+	PROTECT(ap = list2(R_NilValue, R_NilValue));
+	SET_TAG(ap, install("x"));
+	SET_TAG(CDR(ap), install("base"));	
+	PROTECT(args = matchArgs(ap, args, call));
 	if (length(CADR(args)) == 0)
 	    errorcall(call, _("invalid argument 'base' of length 0"));
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
-	    return complex_math2(call, op, args, env);
+	    res = complex_math2(call, op, args, env);
 	else
-	    return math2(CAR(args), CADR(args), logbase, call);
+	    res = math2(CAR(args), CADR(args), logbase, call);
+	UNPROTECT(2);
+	return res;
+    }
     default:
 	error(_("%d arguments passed to 'log' which requires 1 or 2"), n);
     }
