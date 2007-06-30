@@ -1339,84 +1339,93 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 /* The S4 Math2 group, round and signif */
 SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a;
-    if (DispatchGroup("Math", call, op, args, env, &a))
-	return a;
+    SEXP res;
+
+    if (! DispatchGroup("Math", call, op, args, env, &res)) {
+	checkArity(op, args);
+	if (length(CADR(args)) == 0)
+	    errorcall(call, _("invalid second argument of length 0"));
+	res = do_math2(call, op, args, env);
+    }
+    return res;
+}
+
+SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP res, Call, tmp = R_NilValue /* -Wall */;
 
     checkArity(op, args);
-    if (length(CADR(args)) == 0)
-	errorcall(call, _("invalid second argument of length 0"));
-    return do_math2(call, op, args, env);
+
+    if (DispatchGroup("Math", call, op, args, env, &res)) return res;
+
+    if(PRIMVAL(op) == 10) tmp = ScalarReal(10.0);
+    if(PRIMVAL(op) == 2)  tmp = ScalarReal(2.0);
+
+    PROTECT(Call = lang3(install("log"), CAR(args), tmp));
+    res = eval(Call, env);
+    UNPROTECT(1);
+    return res;
+
 }
 
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, res, args2=args, call2=call;
+    SEXP res, ap = args, call2 = call;
     int n = length(args), nprotect = 0;
 
-    if (n == 1 && PRIMVAL(op) == 10003) {
-    /* we need to set a second arg for log() if none is supplied. */
+    if (n == 1) {
+	SEXP tag, tmp;
 #ifdef M_E
 	double e = M_E;
 #else
 	double e = exp(1.);
 #endif
-	SEXP tmp = CONS(ScalarReal(e), R_NilValue);
-	PROTECT(args2 = duplicate(args));
+	/* check for match to first arg of (x=, base=) */
+	tag = TAG(args);
+	if(tag != R_NilValue && !streql("x", CHAR(PRINTNAME(tag))) )
+	    errorcall(call, 
+		      _("argument \"%s\" is missing, with no default"), "x");
+
+	/* we need to set a second arg for log(),
+	   since methods may rely on the default from the generic */
+	PROTECT(ap = duplicate(args));
 	PROTECT(call2 = duplicate(call));
 	nprotect += 2;
-	SETCDR(args2, tmp);
+	tmp = CONS(ScalarReal(e), R_NilValue);
+	SETCDR(ap, tmp);
 	SETCDR(CDR(call2), tmp);
     }
 
-    if (DispatchGroup("Math", call2, op, args2, env, &s)) {
-	UNPROTECT(nprotect);
-	return s;
+    if (! DispatchGroup("Math", call2, op, ap, env, &res)) {
+	switch (n) {
+	case 1:
+	    if (isComplex(CAR(args)))
+		res = complex_math1(call, op, args, env);
+	    else
+		res = math1(CAR(args), R_log, call);
+	    break;
+	case 2:
+	{
+	    /* match argument names if supplied */
+	    PROTECT(ap = list2(R_NilValue, R_NilValue));
+	    SET_TAG(ap, install("x"));
+	    SET_TAG(CDR(ap), install("base"));	
+	    PROTECT(args = matchArgs(ap, args, call));
+	    nprotect += 2;
+	    if (length(CADR(args)) == 0)
+		errorcall(call, _("invalid argument 'base' of length 0"));
+	    if (isComplex(CAR(args)) || isComplex(CDR(args)))
+		res = complex_math2(call, op, args, env);
+	    else
+		res = math2(CAR(args), CADR(args), logbase, call);
+	    break;
+	}
+	default:
+	    error(_("%d arguments passed to 'log' which requires 1 or 2"), n);
+	}
     }
     UNPROTECT(nprotect);
-
-    if(PRIMVAL(op) == 10010) { /* log10 */
-	SEXP Call;
-	PROTECT(Call = lang3(install("log"), CAR(args), ScalarReal(10.0)));
-	res = eval(Call, env);
-	UNPROTECT(1);
-	return res;
-    }
-    if(PRIMVAL(op) == 10012) { /* log 2 */
-	SEXP Call;
-	PROTECT(Call = lang3(install("log"), CAR(args), ScalarReal(2.0)));
-	res = eval(Call, env);
-	UNPROTECT(1);
-	return res;
-    }
-
-    switch (n) {
-    case 1:
-	if (isComplex(CAR(args)))
-	    return complex_math1(call, op, args, env);
-	else
-	    return math1(CAR(args), R_log, call);
-    case 2:
-    {
-	/* match argument names if supplied */
-	SEXP ap;
-	PROTECT(ap = list2(R_NilValue, R_NilValue));
-	SET_TAG(ap, install("x"));
-	SET_TAG(CDR(ap), install("base"));	
-	PROTECT(args = matchArgs(ap, args, call));
-	if (length(CADR(args)) == 0)
-	    errorcall(call, _("invalid argument 'base' of length 0"));
-	if (isComplex(CAR(args)) || isComplex(CDR(args)))
-	    res = complex_math2(call, op, args, env);
-	else
-	    res = math2(CAR(args), CADR(args), logbase, call);
-	UNPROTECT(2);
-	return res;
-    }
-    default:
-	error(_("%d arguments passed to 'log' which requires 1 or 2"), n);
-    }
-    return s;			/* never used; to keep -Wall happy */
+    return res;
 }
 
 

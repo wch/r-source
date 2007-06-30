@@ -277,6 +277,7 @@ SEXP do_loadhistory(SEXP, SEXP, SEXP, SEXP);
 SEXP do_localeconv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_locator(SEXP, SEXP, SEXP, SEXP);
 SEXP do_log(SEXP, SEXP, SEXP, SEXP);
+SEXP do_log1arg(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic3(SEXP, SEXP, SEXP, SEXP);
