@@ -27,12 +27,12 @@
 
   Patterns are described here as they would be printed by \code{cat}:
   \emph{do remember that backslashes need to be doubled when entering \R
-    character strings from the keyboard}.
+    character strings}, e.g. from the keyboard.
 }
 \section{Extended Regular Expressions}{
   This section covers the regular expressions allowed if \code{extended
   = TRUE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.3.6}
+  \code{gsub} and \code{strsplit}.  They use the \code{glibc 2.5}
   implementation of the POSIX 1003.2 standard.
 
   Regular expressions are constructed analogously to arithmetic
@@ -43,19 +43,20 @@
   digits, are regular expressions that match themselves.  Any
   metacharacter with special meaning may be quoted by preceding it with
   a backslash.  (Escaping other characters with a backslash is
-  undefined.)  The metacharacters are in EREs are
+  undefined in POSIX but gives the character in the \R implementation.)
+  The metacharacters are in EREs are
   \code{. \\ | ( ) [ \{ ^ $ * + ?}, but note that whether these have a
   special meaning depends on the context.
 
-  A \emph{character class} is a list of characters enclosed by \code{[}
-  and \code{]} which matches any single character in that list; if the first
-  character of the list is the caret \code{^}, then it matches any
-  character \emph{not} in the list.  For example, the regular expression
-  \code{[0123456789]} matches any single digit, and \code{[^abc]} matches
-  anything except the characters \code{a}, \code{b} or \code{c}.  A range
-  of characters may be specified by giving the first and last characters,
-  separated by a hyphen.  (Because their interpretation is so
-  system-dependent, they are best avoided.)
+  A \emph{character class} is a list of characters enclosed between
+  \code{[} and \code{]} which matches any single character in that list;
+  unless the first character of the list is the caret \code{^}, when it
+  matches any character \emph{not} in the list.  For example, the
+  regular expression \code{[0123456789]} matches any single digit, and
+  \code{[^abc]} matches anything except the characters \code{a},
+  \code{b} or \code{c}.  A range of characters may be specified by
+  giving the first and last characters, separated by a hyphen.  (Because
+  their interpretation is so locale-dependent, they are best avoided.)
 
   The precise way character ranges are interpreted depends on the values
   of \code{perl} and \code{ignore.case}.  For basic and extended regular
@@ -134,8 +135,8 @@
   that respectively match the empty string at the beginning and end of a
   line.  The symbols \code{\\<} and \code{\\>} respectively match the
   empty string at the beginning and end of a word.  The symbol \code{\\b}
-  matches the empty string at the edge of a word, and \code{\\B} matches
-  the empty string provided it is not at the edge of a word.
+  matches the empty string at either edge of a word, and \code{\\B} matches
+  the empty string provided it is not at an edge of a word.
 
   A regular expression may be followed by one of several repetition
   quantifiers:
@@ -198,7 +199,7 @@
   with just a few differences}.
 
   For complete details please consult the man pages for PCRE, especially
-  \code{man pcrepattern} and \code{man pcreapi}) on your system or from
+  \code{man pcrepattern} and \code{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE
   support was compiled from the sources within \R, the PCRE version is 7.0
   as described here (version \eqn{\ge}{>=} 4.0 is required if \R is
@@ -238,9 +239,9 @@
   The escape sequences \code{\\d}, \code{\\s} and \code{\\w} represent any
   decimal digit, space character and \sQuote{word} character
   (letter, digit or underscore in the current locale) respectively, and
-  their upper-case versions represent their negation.
-  Unlike POSIX and earlier versions of Perl and PCRE, vertical tab is
-  not regarded as a whitespace character.
+  their upper-case versions represent their negation.  Unlike POSIX and
+  earlier versions of Perl and PCRE, vertical tab is not regarded as a
+  whitespace character.
 
   Escape sequence \code{\\a} is \code{BEL}, \code{\\e} is \code{ESC},
   \code{\\f} is \code{FF}, \code{\\n} is \code{LF}, \code{\\r} is
@@ -255,6 +256,7 @@
   subject or before newline at end, \code{\\z} matches at end of a
   subject. and \code{\\G} matches at first matching position in a
   subject. \code{\\C} matches a single byte. including a newline.
+  In a UTF-8 locale,
   \code{\\R} matches any Unicode newline character (not just CR).
   \code{\\X} matches any number of Unicode characters that form an
   extended Unicode sequence.

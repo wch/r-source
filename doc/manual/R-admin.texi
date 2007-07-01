@@ -302,8 +302,10 @@ make check
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
 discrepancies.  (Note that the tests may not run successfully in all
-locales: if you have problems try @code{C} or an English locale -- a
-UTF-8 locale if you usually use UTF-8.)
+locales: we expect them to do so using an 8-bit or UTF-8 character set,
+but probably not using other multibyte character sets.  If you have
+problems try @code{C} or an English locale -- a UTF-8 locale if you
+usually use UTF-8.)
 
 To re-run the tests including those successfully run you would need
 
