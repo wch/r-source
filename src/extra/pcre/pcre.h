@@ -42,9 +42,9 @@ POSSIBILITY OF SUCH DAMAGE.
 /* The current PCRE version information. */
 
 #define PCRE_MAJOR          7
-#define PCRE_MINOR          1
-#define PCRE_PRERELEASE
-#define PCRE_DATE           2007-04-24
+#define PCRE_MINOR          2
+#define PCRE_PRERELEASE     
+#define PCRE_DATE           2007-06-19
 
 /* When an application links to a PCRE DLL in Windows, the symbols that are
 imported have to be identified as such. When building PCRE, the appropriate
@@ -150,6 +150,8 @@ extern "C" {
 #define PCRE_INFO_NAMETABLE          9
 #define PCRE_INFO_STUDYSIZE         10
 #define PCRE_INFO_DEFAULT_TABLES    11
+#define PCRE_INFO_OKPARTIAL         12
+#define PCRE_INFO_JCHANGED          13
 
 /* Request types for pcre_config(). Do not re-arrange, in order to remain
 compatible. */
