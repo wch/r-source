@@ -1,4 +1,11 @@
 \name{log}
+\alias{log}
+\alias{logb}
+\alias{log10}
+\alias{log2}
+\alias{log1p}
+\alias{exp}
+\alias{expm1}
 \title{Logarithms and Exponentials}
 \usage{
 log(x, base = exp(1))
@@ -6,21 +13,14 @@ logb(x, base = exp(1))
 log10(x)
 log2(x)
 
+log1p(x)
+
 exp(x)
 expm1(x)
-
-log1p(x)
 }
-\alias{log}
-\alias{logb}
-\alias{log1p}
-\alias{log10}
-\alias{log2}
-\alias{exp}
-\alias{expm1}
 \arguments{
   \item{x}{a numeric or complex vector.}
-  \item{base}{positive number.  The base with respect to which
+  \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
   }
 \description{

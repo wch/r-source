@@ -25,7 +25,10 @@ BUG FIXES
     o   logb() is now strictly a wrapper for log(), so if S4 methods
 	are set on log(), logb() will also dispatch on them.
 
-    o	conflict(where=) did not work correctly. (PR#9760)
+    o	conflicts(where=) did not work correctly. (PR#9760)
+
+    o	log(x, base) was intended to handle complex 'base' even for
+	real 'x', but there was a typo in the code to do so.
 
 
 

@@ -1353,7 +1353,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2:
 	if (length(CADR(args)) == 0)
 	    errorcall(call, _("invalid second argument of length 0"));
-	if (isComplex(CAR(args)) || isComplex(CDR(args)))
+	if (isComplex(CAR(args)) || isComplex(CADR(args)))
 	    return complex_math2(call, op, args, env);
 	else
 	    return math2(CAR(args), CADR(args), logbase, call);
