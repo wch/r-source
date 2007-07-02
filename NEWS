@@ -25,6 +25,8 @@ BUG FIXES
     o   logb() is now strictly a wrapper for log(), so if S4 methods
 	are set on log(), logb() will also dispatch on them.
 
+    o	conflict(where=) did not work correctly. (PR#9760)
+
 
 
 		CHANGES IN R VERSION 2.5.1
