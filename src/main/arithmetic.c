@@ -1414,7 +1414,7 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	    nprotect += 2;
 	    if (length(CADR(args)) == 0)
 		errorcall(call, _("invalid argument 'base' of length 0"));
-	    if (isComplex(CAR(args)) || isComplex(CDR(args)))
+	    if (isComplex(CAR(args)) || isComplex(CADR(args)))
 		res = complex_math2(call, op, args, env);
 	    else
 		res = math2(CAR(args), CADR(args), logbase, call);

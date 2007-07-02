@@ -1,4 +1,11 @@
 \name{log}
+\alias{log}
+\alias{logb}
+\alias{log10}
+\alias{log2}
+\alias{log1p}
+\alias{exp}
+\alias{expm1}
 \title{Logarithms and Exponentials}
 \usage{
 log(x, base = exp(1))
@@ -6,21 +13,14 @@ logb(x, base = exp(1))
 log10(x)
 log2(x)
 
+log1p(x)
+
 exp(x)
 expm1(x)
-
-log1p(x)
 }
-\alias{log}
-\alias{logb}
-\alias{log1p}
-\alias{log10}
-\alias{log2}
-\alias{exp}
-\alias{expm1}
 \arguments{
   \item{x}{a numeric or complex vector.}
-  \item{base}{positive number.  The base with respect to which
+  \item{base}{a positive or complex number: the base with respect to which
     logarithms are computed.  Defaults to \eqn{e}=\code{exp(1)}.}
   }
 \description{
@@ -67,7 +67,8 @@ log1p(x)
   \code{log1p} are S4 generic and are members of the
   \code{\link[methods:S4groupGeneric]{Math}} group generic.  Note that
   this means that the S4 generic for \code{log} has a signature with
-  only one argument, \code{x}.
+  only one argument, \code{x}, but that \code{base} can be passed to
+  methods but will not be used for method selection.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
