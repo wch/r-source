@@ -6,6 +6,8 @@
 }
 \usage{
 chooseCRANmirror(graphics = getOption("menu.graphics"))
+
+getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \arguments{
   \item{graphics}{Logical.
@@ -17,6 +19,10 @@ chooseCRANmirror(graphics = getOption("menu.graphics"))
     widget, or if under the AQUA interface use a MacOS X widget,
 #endif
     otherwise use \code{\link{menu}}.}
+  \item{call}{Logical, get all known mirrors or only the ones flagged as
+    OK.}
+  \item{local.only}{Logical, try to get most recent list from CRAN or
+    use file on local disk only.}
 }
 \details{
   A list of mirrors is stored in file
@@ -29,8 +35,12 @@ chooseCRANmirror(graphics = getOption("menu.graphics"))
   initial dummy value of \code{\link{options}("repos")}.
 }
 \value{
-  None.  This function is invoked for its side effect of updating
-  \code{options("repos")}
+  None for \code{chooseCRANmirror()}, this function is invoked for its
+  side effect of updating
+  \code{options("repos")}.
+
+  \code{getCRANmirrors()} returns a data frame
+  with mirror information.
 }
 \seealso{
   \code{\link{setRepositories}}, \code{\link{contrib.url}}.

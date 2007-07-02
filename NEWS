@@ -322,6 +322,12 @@ UTILITIES
 	Rdconv now renders (rather than ignores) \var{} inside \code{}
 	markup in latex conversion.
 
+    o   The list of CRAN mirrors now has a new (manually maintained)
+        column "OK" which flags mirrors that sem to be OK, only those
+        are used by chooseCRANmirror(). The now exported function
+        getCRANmirrors() can be used to get all known mirrors or only
+        the ones that are OK.
+
 
 C-LEVEL FACILITIES
 

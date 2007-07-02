@@ -525,13 +525,35 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 }
 
 
+getCRANmirrors <- function(all=FALSE, local.only=FALSE)
+{
+    m <- NULL
+    if(!local.only){
+        m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
+                          as.is=TRUE))
+    }
+    
+    if(is.null(m) || inherits(m, "try-error")){
+        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"),
+                      as.is=TRUE)
+    }
+    
+    if(!is.null(m$OK)){
+        m$OK <- as.logical(m$OK)
+
+        if(!all){
+            m <- m[m$OK,]
+        }
+    }
+    m
+}
+
+
+
 chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
-    m <- try(read.csv(url("http://cran.r-project.org/CRAN_mirrors.csv"),
-                      as.is=TRUE))
-    if(inherits(m, "try-error"))
-        m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
+    m <- getCRANmirrors(all=FALSE, local.only=FALSE)
     res <- menu(m[,1], graphics, "CRAN mirror")
     if(res > 0) {
         URL <- m[res, "URL"]
