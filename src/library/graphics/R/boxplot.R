@@ -172,6 +172,13 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	pars$ylim <- NULL
     }
 
+    if(is.null(pars$xlim))
+        xlim <- c(0.5, n + 0.5)
+    else {
+	xlim <- pars$xlim
+	pars$xlim <- NULL
+    }
+
     if(length(border) == 0) border <- par("fg")
 
     if (!add) {
@@ -179,21 +186,17 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	## shall we switch log for horizontal with
 	## switch(log, x="y", y="x", log) ??
 	if (horizontal)
-	    plot.window(ylim = c(0.5, n + 0.5), xlim = ylim, log = log,
-			xaxs = pars$yaxs)
+	    plot.window(ylim = xlim, xlim = ylim, log = log, xaxs = pars$yaxs)
 	else
-	    plot.window(xlim = c(0.5, n + 0.5), ylim = ylim, log = log,
-			yaxs = pars$yaxs)
+	    plot.window(xlim = xlim, ylim = ylim, log = log, yaxs = pars$yaxs)
     }
     xlog <- (par("ylog") && horizontal) || (par("xlog") && !horizontal)
 
-    pcycle <- function(p, def1, def2=NULL)# or rather NA {to be rep()ed}?
+    pcycle <- function(p, def1, def2 = NULL)# or rather NA {to be rep()ed}?
 	rep(if(length(p)) p else if(length(def1)) def1 else def2,
 	    length.out = n)
     ## we have to be careful to avoid partial matching here
-    nmpars <- names(pars)
-    p <- function(sym)
-        if(match(sym, nmpars, 0) > 0) pars[[sym]] else NULL
+    p <- function(sym) pars[[sym, exact = TRUE]]
 
     boxlty    <- pcycle(pars$boxlty,	p("lty"), par("lty"))
     boxlwd    <- pcycle(pars$boxlwd,	p("lwd"), par("lwd"))
@@ -246,7 +249,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 
     ok <- TRUE
     for(i in 1:n)
-	ok <- ok & bplt(at[i], wid=width[i],
+	ok <- ok & bplt(at[i], wid = width[i],
 			stats= z$stats[,i],
 			out  = z$out[z$group==i],
 			conf = z$conf[,i],

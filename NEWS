@@ -273,6 +273,8 @@ NEW FEATURES
 	plots to be made (the new default) or computed for each plot
 	(the previous default).
 
+    o   bxp() now allows 'xlim' to be specified. (PR#9754)
+
 
 DEPRECATED & DEFUNCT
 
