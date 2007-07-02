@@ -267,6 +267,12 @@ NEW FEATURES
 	cummin(), digamma(), trigamma() and trunk() are members of the
 	S4 group.  gammaCody() is no longer in the S3 Math group.
 
+    o   termplot() has a default for 'ask' that uses dev.interactive().
+
+	It allows 'ylim' to be set, or computed to cover all the
+	plots to be made (the new default) or computed for each plot
+	(the previous default).
+
 
 DEPRECATED & DEFUNCT
 
