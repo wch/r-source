@@ -394,9 +394,10 @@ BUG FIXES
     o   Added a promise evaluation stack so interrupted promise
         evaluations can be restarted.
 
-
-
     o	R.version[1:10] now nicely prints.
+
+
+
 
 	**************************************************
 	*						 *
@@ -423,6 +424,8 @@ BUG FIXES
 
     o   logb() is now strictly a wrapper for log(), so if S4 methods
 	are set on log(), logb() will also dispatch on them.
+
+    o	conflict(where=) did not work correctly. (PR#9760)
 
 
 
