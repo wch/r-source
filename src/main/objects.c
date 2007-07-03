@@ -108,7 +108,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 	vmaxset(vmax);
     }
     /* In other places we add a context to builtins when profiling,
-       but we have not bothered here (as there seem to be no primitives 
+       but we have not bothered here (as there seem to be no primitives
        used as methods, and this would have to be a primitive to be
        found).
      */
@@ -191,7 +191,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	    error(_("bad generic definition environment"));
     if (defrho == R_BaseEnv)
 	defrho = R_BaseNamespace;
-    
+
     /* This evaluates promises */
     val = findVar1(method, callrho, FUNSXP, TRUE);
     if (isFunction(val))
@@ -346,13 +346,13 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     callenv = cptr->sysparent;
     if (nargs)
 	PROTECT(generic = eval(CAR(args), env));
-    else 
+    else
 	errorcall(call, _("there must be a first argument"));
     if(!isString(generic) || length(generic) != 1)
 	errorcall(call, _("first argument must be a character string"));
     /* We need to find the generic to find out where it is defined.
        This is set up to avoid getting caught by things like
- 
+
         mycoef <- function(x)
        {
            mycoef <- function(x) stop("not this one")
@@ -372,7 +372,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	PrintValue(generic);
 	PrintValue(ENCLOS(env));
     }
-*/  
+*/
 
     if (nargs > 2)  /* R-lang says there should be a warning */
 	warningcall(call, _("arguments after the first two are ignored"));
@@ -405,7 +405,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
     else
-	errorcall(call, _("no applicable method for \"%s\""), 
+	errorcall(call, _("no applicable method for \"%s\""),
 		  translateChar(STRING_ELT(generic, 0)));
     return R_NilValue; /* NOT Used */
 }
@@ -489,11 +489,11 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* set up the arglist */
     s = R_LookupMethod(CAR(cptr->call), env, callenv, defenv);
-    if (TYPEOF(s) == SYMSXP && s == R_UnboundValue) 
+    if (TYPEOF(s) == SYMSXP && s == R_UnboundValue)
 	error(_("no calling generic was found: was a method called directly?"));
     if (TYPEOF(s) != CLOSXP){ /* R_LookupMethod looked for a function */
-	errorcall(R_NilValue, 
-		  _("'function' is not a function, but of type %d"), 
+	errorcall(R_NilValue,
+		  _("'function' is not a function, but of type %d"),
 		  TYPEOF(s));
     }
     /* get formals and actuals; attach the names of the formals to
@@ -510,7 +510,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(t = allocList(i+length(actuals)-1));
 	for(s = actuals, m = t; s != R_NilValue; s = CDR(s)) {
 	    if(TYPEOF(CAR(s)) == DOTSXP) {
-		for(i = 1, a = CAR(s); a != R_NilValue; 
+		for(i = 1, a = CAR(s); a != R_NilValue;
 		    a = CDR(a), i++, m = CDR(m)) {
 		    sprintf(tbuf, "..%d", i);
 		    SET_TAG(m, mkSYMSXP(mkChar(tbuf), R_UnboundValue));
@@ -616,7 +616,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     nextfun = R_NilValue;
 
-    /* 
+    /*
        Find the method currently being invoked and jump over the current call
        If t is R_UnboundValue then we called the current method directly
     */
@@ -651,7 +651,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 		 CHAR(PRINTNAME(CAR(cptr->call))));
 	sprintf(b, "%s", CHAR(PRINTNAME(CAR(cptr->call))));
     }
-    
+
     sb = translateChar(STRING_ELT(basename, 0));
     for (j = 0; j < length(klass); j++) {
 	sk = translateChar(STRING_ELT(klass, j));
@@ -668,7 +668,7 @@ SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* we need the value of i on exit from the for loop to figure out
 	   how many classes to drop. */
-    
+
     sg = translateChar(STRING_ELT(generic, 0));
     for (i = j ; i < length(klass); i++) {
 	sk = translateChar(STRING_ELT(klass, i));
@@ -786,6 +786,12 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("'which' must be a length 1 logical vector"));
     isvec = asLogical(which);
 
+#ifdef _be_too_picky_
+    if(IS_S4_OBJECT(x) && nwhat == 1 && !isvec &&
+       !isNull(R_getClassDef(translateChar(STRING_ELT(what, 0)))))
+	warning(_("use 'is()' instead of 'inherits()' on S4 objects"));
+#endif
+
     if(isvec)
 	rval = allocVector(INTSXP, nwhat);
 
@@ -812,7 +818,7 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 /*
    ==============================================================
 
-     code from here on down is support for the methods package 
+     code from here on down is support for the methods package
 
    ==============================================================
 */
@@ -940,14 +946,14 @@ SEXP attribute_hidden do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env
 {
     SEXP arg, value, fdef; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
     if(!ptr) {
-	warningcall(call, 
+	warningcall(call,
 		    _("standardGeneric called without methods dispatch enabled (will be ignored)"));
 	R_set_standardGeneric_ptr(dispatchNonGeneric, NULL);
 	ptr = R_get_standardGeneric_ptr();
     }
 /*    PROTECT(args);
       PROTECT(arg = CAR(args)); args are always protected */
-    
+
     checkArity(op, args);
     arg = CAR(args);
     if(!isValidStringF(arg))
@@ -1196,8 +1202,8 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
 SEXP attribute_hidden
 R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP fundef, value, mlist=R_NilValue; 
-    int offset; 
+    SEXP fundef, value, mlist=R_NilValue;
+    int offset;
     prim_methods_t current;
     offset = PRIMOFFSET(op);
     if(offset < 0 || offset > curMaxOffset)
@@ -1252,6 +1258,23 @@ SEXP R_do_MAKE_CLASS(const char *what)
 	s_getClass = Rf_install("getClass");
     PROTECT(call = allocVector(LANGSXP, 2));
     SETCAR(call, s_getClass);
+    SETCAR(CDR(call), mkString(what));
+    e = eval(call, R_GlobalEnv);
+    UNPROTECT(1);
+    return(e);
+}
+
+/* this very similar, but gives NULL instead of an error for a non-existing class */
+SEXP R_getClassDef(const char *what)
+{
+    static SEXP s_getClassDef = NULL;
+    SEXP e, call;
+    if(!what)
+	error(_("R_getClassDef(.) called with NULL string pointer"));
+    if(!s_getClassDef)
+	s_getClassDef = Rf_install("getClassDef");
+    PROTECT(call = allocVector(LANGSXP, 2));
+    SETCAR(call, s_getClassDef);
     SETCAR(CDR(call), mkString(what));
     e = eval(call, R_GlobalEnv);
     UNPROTECT(1);
@@ -1326,7 +1349,7 @@ SEXP R_isS4Object(SEXP object)
     return IS_S4_OBJECT(object) ? mkTrue() : mkFalse(); ;
 }
 
-SEXP R_setS4Object(SEXP object, SEXP onOff) 
+SEXP R_setS4Object(SEXP object, SEXP onOff)
 {
     Rboolean flag = asLogical(onOff);
     /* wanted     return asS4(object, flag); */
@@ -1339,7 +1362,7 @@ SEXP R_setS4Object(SEXP object, SEXP onOff)
     return object;
 }
 
-SEXP R_get_primname(SEXP object) 
+SEXP R_get_primname(SEXP object)
 {
     SEXP f;
     if(TYPEOF(object) != BUILTINSXP && TYPEOF(object) != SPECIALSXP)

@@ -783,6 +783,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 
 /* class definition, new objects */
 SEXP R_do_MAKE_CLASS(const char *what);
+SEXP R_getClassDef  (const char *what);
 SEXP R_do_new_object(SEXP class_def);
 
 /* preserve objects across GCs */
@@ -942,7 +943,7 @@ int R_system(const char *);
 #else
 /* need remapped names here for use with R_NO_REMAP */
 
-/* 
+/*
    These are the inlinable functions that are provided in Rinlinedfuns.h
    It is *essential* that these do not appear in any other header file,
    with or without the Rf_ prefix.
