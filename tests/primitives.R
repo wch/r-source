@@ -16,6 +16,9 @@ for(f in ls(.GenericArgsEnv, all.names=TRUE))
             assign(method, function(x, value) xx, .GlobalEnv)
             y <- x
             res <- eval(substitute(ff(y, value=pi), list(ff=as.name(f))))
+        } else if(length(grep("log$", f)) > 0) {
+            assign(method, function(x, base) xx, .GlobalEnv)
+            res <- eval(substitute(ff(x), list(ff=as.name(f))))
         } else {
             assign(method, function(x) xx, .GlobalEnv)
             res <- eval(substitute(ff(x), list(ff=as.name(f))))
@@ -99,7 +102,8 @@ for(f in S4gen) {
     ff <- g
     body(ff) <- quote(x)
     setMethod(f, "foo", ff)
-    na <- nargs(g)
+    na <- nargs(g) # length(formals(g))
+    message("nargs(g)[sic] ", na, " : ", f)
     switch(na,
            `1` = stopifnot(get(f)(xx) == xx),
            `2` = stopifnot(get(f)(xx, NULL) == xx),
