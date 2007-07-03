@@ -78,8 +78,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
 }
 
 \details{
-  All these devices are implemented as \code{windows} devices, the
-  \code{display} parameter selects which is actually used.
+  All these devices are implemented as \code{windows} devices.
 
   The size of a window is computed from information provided about the
   display: it depends on the system being configured accurately.
@@ -88,13 +87,9 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   \code{xpinch} and \code{ypinch} or the corresponding options
   \code{"xpinch"} and \code{"ypinch"}.
 
-  A graphics window is not allowed to be specified at more that 85\% of
-  the screen width or height: the width and height are rescaled
-  proportionally. The window can be resized to a larger size.  In MDI mode,
-  the limit is 85\% of the MDI client region.
-
-  If the \code{filename} is omitted for a \code{win.metafile} device, the
-  output is copied to the clipboard when the device is closed.
+  If the \code{filename} is omitted (or specified as \code{""} for a
+  \code{win.metafile} device, the output is copied to the clipboard
+  when the device is closed.
 
   If a screen device is re-sized, the default behaviour is to redraw the
   plot(s) as if the new size had been specified originally.  Using
@@ -109,7 +104,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   rescaled proportionally if necessary, and if \code{rescale = "fit"}
   the plot(s) are rescaled accordingly.  If \code{rescale = "fixed"}
   the initially displayed portion is selected within these constraints,
-  separately for width and height.
+  separately for width and height.  In MDI mode,
+  the limit is 85\% of the MDI client region.
 
   Using \code{\link{strwidth}} or \code{\link{strheight}} after a window
   has been rescaled (when using \code{"fit"}) gives dimensions in the
@@ -117,11 +113,11 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   metrics of the rescaled fonts (which are in integer sizes)
 
   The displayed region may be bigger than the \sQuote{paper} size, and
-  areas outside the \sQuote{paper} are coloured in the Windows
+  area(s) outside the \sQuote{paper} are coloured in the Windows
   application background colour.  Graphics parameters such as
   \code{"din"} refer to the scaled plot if rescaling is in effect.
 
-  The different colours need to be distinguished carefully. The area
+  The different colours need to be distinguished carefully.  Area(s)
   outside the device region is coloured in the Windows application background
   colour.  The device region is coloured in the canvas colour.  This is
   over-painted by the background colour of a plot when a new page is
