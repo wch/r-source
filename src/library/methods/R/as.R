@@ -23,8 +23,8 @@ as <-
         asMethod <- selectMethod("coerce", sig, TRUE,
                                  FALSE, #optional, no inheritance
                                  fdef = coerceFun, mlist = coerceMethods)
+        canCache <- TRUE
         if(is.null(asMethod)) {
-            canCache <- TRUE
             inherited <- FALSE
             if(is(object, Class)) {
                 ClassDef <- getClassDef(Class, where)
@@ -37,10 +37,7 @@ as <-
                   test <- ext@test
                   asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
                   canCache <- (!is(test, "function")) || identical(body(test), TRUE)
-                  if(canCache) { # make into method definition
-                    asMethod <- .asCoerceMethod(asMethod, sig, FALSE)
-                  }
-                }
+                 }
             }
             if(is.null(asMethod) && extends(Class, thisClass)) {
                 ClassDef <- getClassDef(Class, where)
@@ -55,6 +52,8 @@ as <-
                                          coerceMethods)
                 inherited <- TRUE
             }
+            else if(canCache)  # make into method definition
+                asMethod <- .asCoerceMethod(asMethod, sig, FALSE)
             ## cache in the coerce function's environment
             if(canCache && !is.null(asMethod)) {
                 cacheMethod("coerce", sig, asMethod, fdef = coerceFun,
