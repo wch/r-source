@@ -377,6 +377,8 @@ INSTALLATION
 	(which had long been used but not tested for).  ('make check'
 	would have failed in earlier versions without these calls.)
 
+    o	'evince' is now considered as a PDF viewer.
+
 
 BUG FIXES
 
