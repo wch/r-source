@@ -137,6 +137,8 @@ void  gdrawline(drawing d, int width, int style, rgb c, point p1, point p2,
 void  gdrawrect(drawing d, int width, int style, rgb c, rect r, int fast,
 		int lend, int ljoin, float lmitre);
 void  gfillrect(drawing d, rgb fill, rect r);
+void  gcopy(drawing d, drawing d2, rect r);
+void  gcopyalpha(drawing d, drawing d2, rect r, int alpha);
 void  gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
 		   int lend, int ljoin, float lmitre);
 void  gfillellipse(drawing d, rgb fill, rect r);

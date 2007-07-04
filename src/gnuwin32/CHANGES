@@ -24,6 +24,10 @@ FUNCTION CHANGES
 
 OTHERS
 
+    o	There is support for semi-transparent colours under Windows 2000
+	and later.  Currently only on the windows() device, for lines,
+	fills and text.
+
     o	Cross-building does now lazy-load the base package.
 
     o	The Lea malloc is now used by regex.c, src/extra/pcre and
@@ -33,8 +37,8 @@ OTHERS
 	in earlier versions of R.
 
     o	[The default for a build environment is to use gcc >= 4.2.0.
-	Set BUILD=GCC3 if you have gcc 3.4.5.  (Binary tools for
-	gcc 4.2.0 are not yet released but expected in June 2007.)
+	Set BUILD=GCC3 if you have gcc 3.4.5.  (Binary tools for gcc
+	4.2.0 are not yet released but were expected in June 2007.)
 	This change has been reverted until then.]
 
 

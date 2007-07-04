@@ -36,10 +36,11 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   the \code{red}, \code{green} and \code{blue} values.
 
   Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
-  some devices: at the time of writing only on the \code{\link{pdf}} and
-  (on MacOS X) \code{quartz} devices as well as several third-party
-  devices such as those in packages \pkg{Cairo}, \pkg{cairoDevice},
-  \pkg{JavaJD} and \pkg{RSvgDevice}.
+  some devices: at the time of writing only on the \code{\link{pdf}},
+  \code{windows}  and (on MacOS X) \code{quartz} devices as well as
+  several third-party devices such as those in packages \pkg{Cairo},
+  \pkg{cairoDevice}, \pkg{JavaJD} and \pkg{RSvgDevice}.  On most of
+  these devices the actual alpha values used are multiples of 1/255.
 }
 \value{
   A character vector with elements of 7 or 9 characters, \code{"#"}

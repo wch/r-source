@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998--2004  Guido Masarotto and Brian Ripley
- *  Copyright (C) 2005-6      The R Development Core Team
+ *  Copyright (C) 2005-7      The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,48 @@ extern unsigned int TopmostDialogs; /* from dialogs.c */
 #define alloca(x) __builtin_alloca((x)) /* always GNUC */
 
 static int getcharset(void);
+
+/* The ideas here are borrowed from Cairo */
+typedef BOOL 
+(WINAPI *alpha_blend_t) (HDC hdcDest,
+			 int nXOriginDest,
+			 int nYOriginDest,
+			 int nWidthDest,
+			 int hHeightDest,
+			 HDC hdcSrc,
+			 int nXOriginSrc,
+			 int nYOriginSrc,
+			 int nWidthSrc,
+			 int nHeightSrc,
+			 BLENDFUNCTION blendFunction);
+
+static alpha_blend_t AlphaBlend;
+
+static int haveAlpha()
+{
+    static int haveAlphaBlend = -1;
+
+    if(haveAlphaBlend < 0) {    
+	/* AlphaBlend is in msimg32.dll.  
+	   It may not be present on older OSes, and apparently is broken
+	   on Win 98. */
+	OSVERSIONINFO os;
+	os.dwOSVersionInfoSize = sizeof (os);
+        GetVersionEx (&os);
+	if (VER_PLATFORM_WIN32_WINDOWS != os.dwPlatformId ||
+	    os.dwMajorVersion != 4 || os.dwMinorVersion != 10)
+	{
+            HMODULE msimg32 = LoadLibrary ("msimg32");
+            if (msimg32) {
+                AlphaBlend = 
+		    (alpha_blend_t) GetProcAddress(msimg32, "AlphaBlend");
+		haveAlphaBlend = 1;
+		/* printf("loaded AlphaBlend %p\n", (void *) AlphaBlend); */
+	    } else haveAlphaBlend = 0;
+	}
+    }
+    return haveAlphaBlend;
+}
 
 static HDC GETHDC(drawing d)
 {
@@ -314,6 +356,28 @@ void gfillrect(drawing d, rgb fill, rect r)
     PatBlt(dc, r.x, r.y, r.width, r.height, PATCOPY);
     SelectObject(dc, GetStockObject(NULL_BRUSH));
     DeleteObject(br);
+}
+
+void gcopy(drawing d, drawing d2, rect r)
+{
+    HDC dc = GETHDC(d), sdc = GETHDC(d2);
+    BitBlt(dc, r.x, r.y, r.width, r.height, sdc, r.x, r.y, SRCCOPY);
+}
+
+void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
+{
+    if(alpha <= 0 || !haveAlpha()) return;
+    {
+	HDC dc = GETHDC(d), sdc = GETHDC(d2);
+	BLENDFUNCTION bl;
+	bl.BlendOp = AC_SRC_OVER;
+	bl.BlendFlags = 0;
+	bl.SourceConstantAlpha = alpha;
+	bl.AlphaFormat = 0;
+	AlphaBlend(dc, r.x, r.y, r.width, r.height,
+		   sdc, r.x, r.y, r.width, r.height,
+		   bl);
+    }
 }
 
 void gdrawellipse(drawing d, int width, rgb border, rect r, int fast,
