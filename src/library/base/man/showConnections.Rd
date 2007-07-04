@@ -21,7 +21,7 @@ stderr()
 }
 \arguments{
   \item{all}{logical: if true all connections, including closed ones
-    and the standard ones are displayed. If false only open user-created
+    and the standard ones are displayed.  If false only open user-created
     connections are included.}
 
   \item{what}{integer: a row number of the table given by
@@ -47,7 +47,7 @@ stderr()
   connection it will be closed automatically at the next garbage
   collection.
 
-  \code{closeAllConnections} closes (and destroys) all open user
+  \code{closeAllConnections} closes (and destroys) all user
   connections, restoring all \code{\link{sink}} diversions as it does so.
 }
 \note{
