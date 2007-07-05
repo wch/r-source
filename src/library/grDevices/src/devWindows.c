@@ -2002,9 +2002,14 @@ static void GA_Resize(NewDevDesc *dd)
 		R_ShowMessage(_("Insufficient memory for resize. Killing device"));
 		KillDevice(GetDevice(devNumber((DevDesc*) dd)));
 	    }
-	    xd->bm2 = newbitmap(iw, ih, getdepth(xd->gawin));
-	    if (!xd->bm2)
-		R_ShowMessage(_("Insufficient memory for resize. Disabling alphablending"));
+	    if(xd->have_alpha) {
+		del(xd->bm2);
+		xd->bm2 = newbitmap(iw, ih, getdepth(xd->gawin));
+		if (!xd->bm2) {
+		    R_ShowMessage(_("Insufficient memory for resize. Disabling alpha blending"));
+		    xd->have_alpha = FALSE;
+		}
+	    }
 
 	    gfillrect(xd->gawin, xd->outcolor, getrect(xd->gawin));
 	    gfillrect(xd->bm, xd->outcolor, getrect(xd->bm));
