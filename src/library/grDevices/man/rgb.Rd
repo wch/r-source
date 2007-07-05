@@ -39,7 +39,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   some devices: at the time of writing only on the \code{\link{pdf}} and
   (on MacOS X) \code{quartz} devices as well as several third-party
   devices such as those in packages \pkg{Cairo}, \pkg{cairoDevice},
-  \pkg{JavaJD} and \pkg{RSvgDevice}.
+  \pkg{JavaGD} and \pkg{RSvgDevice}.
 }
 \value{
   A character vector with elements of 7 or 9 characters, \code{"#"}
