@@ -162,9 +162,10 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   device is opened.  
 
   There is support for semi-transparent colours of lines, fills and text
-  on the \code{windows()} device under Windows 2000, XP and later.
-  (Semi-transparent colours will be fully transparent on systems that do
-  not support alpha blending.)
+  on the \code{windows()} device under Windows 2000, XP and later when
+  buffering is enabled.  (Semi-transparent colours will be fully
+  transparent on systems that do not support alpha blending.  A warning
+  is issued at first use.)
 }
 
 \value{

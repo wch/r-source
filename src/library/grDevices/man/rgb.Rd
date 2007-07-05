@@ -37,10 +37,13 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
 
   Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
   some devices: at the time of writing only on the \code{\link{pdf}},
-  \code{windows}  and (on MacOS X) \code{quartz} devices as well as
+  \code{windows} and \code{quartz} devices as well as
   several third-party devices such as those in packages \pkg{Cairo},
   \pkg{cairoDevice}, \pkg{JavaJD} and \pkg{RSvgDevice}.  On most of
   these devices the actual alpha values used are multiples of 1/255.
+
+  Typically other graphics devices silently plot semi-transparent colors
+  as fully transparent.
 }
 \value{
   A character vector with elements of 7 or 9 characters, \code{"#"}

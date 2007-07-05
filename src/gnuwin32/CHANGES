@@ -24,9 +24,9 @@ FUNCTION CHANGES
 
 OTHERS
 
-    o	There is support for semi-transparent colours under Windows 2000
-	and later.  Currently only on the windows() device, for lines,
-	fills and text.
+    o	There is some support for semi-transparent colours under Windows
+	2000 and later.  Currently only on the windows() device with
+	buffering enabled, for lines, fills and text.
 
     o	Cross-building does now lazy-load the base package.
 

@@ -1698,6 +1698,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, const char *dsp,
     if (!dsp[0]) {
 	if (!setupScreenDevice(dd, xd, w, h, recording, resize, xpos, ypos))
 	    return FALSE;
+	xd->have_alpha = TRUE;
     } else if (!strncmp(dsp, "win.print:", 10)) {
 	xd->kind = PRINTER;
 	xd->fast = 0; /* use scalable line widths */
@@ -2223,23 +2224,37 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	SetColor(gc->fill, gc->gamma, dd);
 	DRAW(gfillrect(_d, xd->fgcolor, r));
 
-    } else if(R_ALPHA(gc->fill) > 0 && xd->have_alpha) {
-	SetColor(gc->fill, gc->gamma, dd);
-	gcopy(xd->bm2, _d, r);
-	gfillrect(xd->bm2, xd->fgcolor, r);
-	DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->fill)));
+    } else if(R_ALPHA(gc->fill) > 0) {
+	if(xd->have_alpha) {
+	    SetColor(gc->fill, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, r);
+	    gfillrect(xd->bm2, xd->fgcolor, r);
+	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->fill)));
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, gc->gamma, dd);
 	SetLineStyle(gc, dd);
 	DRAW(gdrawrect(_d, xd->lwd, xd->lty, xd->fgcolor, r, 0, xd->lend,
 		       xd->ljoin, xd->lmitre));
-    } else if(R_ALPHA(gc->col) > 0 && xd->have_alpha) {
-	SetColor(gc->col, gc->gamma, dd);
-	gcopy(xd->bm2, _d, r);
-	gdrawrect(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, r, 0, xd->lend,
-		  xd->ljoin, xd->lmitre);
-	DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+    } else if(R_ALPHA(gc->col) > 0) {
+	if(xd->have_alpha) {
+	    SetColor(gc->col, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, r);
+	    gdrawrect(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, r, 0, xd->lend,
+		      xd->ljoin, xd->lmitre);
+	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
     SH;
 }
@@ -2278,23 +2293,37 @@ static void GA_Circle(double x, double y, double r,
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, gc->gamma, dd);
 	DRAW(gfillellipse(_d, xd->fgcolor, rr));
-    } else if(R_ALPHA(gc->fill) > 0 && xd->have_alpha) {
-	SetColor(gc->fill, gc->gamma, dd);
-	gcopy(xd->bm2, _d, rr);
-	gfillellipse(xd->bm2, xd->fgcolor, rr);
-	DRAW(gcopyalpha(_d, xd->bm2, rr, R_ALPHA(gc->fill)));
+    } else if(R_ALPHA(gc->fill) > 0) {
+	if (xd->have_alpha) {
+	    SetColor(gc->fill, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, rr);
+	    gfillellipse(xd->bm2, xd->fgcolor, rr);
+	    DRAW(gcopyalpha(_d, xd->bm2, rr, R_ALPHA(gc->fill)));
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
     if (R_OPAQUE(gc->col)) {
 	SetLineStyle(gc, dd);
 	SetColor(gc->col, gc->gamma, dd);
 	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, rr, 0, xd->lend,
 			  xd->ljoin, xd->lmitre));
-    } else if(R_ALPHA(gc->col) > 0 && xd->have_alpha) {
-	SetColor(gc->col, gc->gamma, dd);
-	gcopy(xd->bm2, _d, rr);
-	gdrawellipse(xd->bm2, xd->lwd, xd->fgcolor, rr, 0, xd->lend,
-		     xd->ljoin, xd->lmitre);
-	DRAW(gcopyalpha(_d, xd->bm2, rr, R_ALPHA(gc->col)));
+    } else if(R_ALPHA(gc->col) > 0) {
+	if(xd->have_alpha) {
+	    SetColor(gc->col, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, rr);
+	    gdrawellipse(xd->bm2, xd->lwd, xd->fgcolor, rr, 0, xd->lend,
+			 xd->ljoin, xd->lmitre);
+	    DRAW(gcopyalpha(_d, xd->bm2, rr, R_ALPHA(gc->col)));
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
     SH;
 }
@@ -2328,6 +2357,29 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 		       pt(xx1, yy1), pt(xx2, yy2), 0, xd->lend,
 			  xd->ljoin, xd->lmitre));
 	SH;
+    } else if(R_ALPHA(gc->col) > 0) {
+	if(xd->have_alpha) {
+	    int   mx0, mx1, my0, my1;
+	    rect r;
+	    mx0 = imin2(xx1, xx2);
+	    mx1 = imax2(xx1, xx2);
+	    my0 = imin2(yy1, yy2);
+	    my1 = imax2(yy1, yy2);
+	    r.x = mx0; r.width = mx1 - mx0;
+	    r.y = my0; r.height = my1 = my0;
+	    SetColor(gc->col, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, r);
+	    gdrawline(xd->bm2, xd->lwd, xd->lty, xd->fgcolor,
+		      pt(xx1, yy1), pt(xx2, yy2), 0, xd->lend,
+		      xd->ljoin, xd->lmitre);
+	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+	    SH;
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
 }
 
@@ -2366,15 +2418,22 @@ static void GA_Polyline(int n, double *x, double *y,
 	SetLineStyle(gc, dd);
 	DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0,
 			   xd->lend, xd->ljoin, xd->lmitre));
-    } else if(R_ALPHA(gc->col) > 0 && xd->have_alpha) {
-	rect r;
-	r.x = mx0; r.width = mx1 - mx0;
-	r.y = my0; r.height = my1 = my0;
-	SetColor(gc->col, gc->gamma, dd);
-	gcopy(xd->bm2, _d, r);
-	gdrawpolyline(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0,
-		      xd->lend, xd->ljoin, xd->lmitre);
-	DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+    } else if(R_ALPHA(gc->col) > 0) {
+	if(xd->have_alpha) {
+	    rect r;
+	    r.x = mx0; r.width = mx1 - mx0;
+	    r.y = my0; r.height = my1 = my0;
+	    SetColor(gc->col, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, r);
+	    gdrawpolyline(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0,
+			  xd->lend, xd->ljoin, xd->lmitre);
+	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
     vmaxset(vmax);
     SH;
@@ -2419,29 +2478,43 @@ static void GA_Polygon(int n, double *x, double *y,
     if (R_OPAQUE(gc->fill)) {
 	SetColor(gc->fill, gc->gamma, dd);
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
-    } else if(R_ALPHA(gc->fill) > 0 && xd->have_alpha) {
-	rect r;
-	r.x = mx0; r.width = mx1 - mx0;
-	r.y = my0; r.height = my1 = my0;
-	SetColor(gc->fill, gc->gamma, dd);
-	gcopy(xd->bm2, _d, r);
-	gfillpolygon(xd->bm2, xd->fgcolor, points, n);
-	DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->fill)));
+    } else if(R_ALPHA(gc->fill) > 0) {
+	if(xd->have_alpha) {
+	    rect r;
+	    r.x = mx0; r.width = mx1 - mx0;
+	    r.y = my0; r.height = my1 = my0;
+	    SetColor(gc->fill, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, r);
+	    gfillpolygon(xd->bm2, xd->fgcolor, points, n);
+	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->fill)));
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
     if (R_OPAQUE(gc->col)) {
 	SetColor(gc->col, gc->gamma, dd);
 	SetLineStyle(gc, dd);
 	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n, 0,
 			  xd->lend, xd->ljoin, xd->lmitre));
-    } else if(R_ALPHA(gc->col) > 0 && xd->have_alpha) {
-	rect r;
-	r.x = mx0; r.width = mx1 - mx0;
-	r.y = my0; r.height = my1 = my0;
-	SetColor(gc->col, gc->gamma, dd);
-	gcopy(xd->bm2, _d, r);
-	gdrawpolygon(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, points, n, 0,
-		     xd->lend, xd->ljoin, xd->lmitre);
-	DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+    } else if(R_ALPHA(gc->col) > 0) {
+	if(xd->have_alpha) {
+	    rect r;
+	    r.x = mx0; r.width = mx1 - mx0;
+	    r.y = my0; r.height = my1 = my0;
+	    SetColor(gc->col, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, r);
+	    gdrawpolygon(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, points, n, 0,
+			 xd->lend, xd->ljoin, xd->lmitre);
+	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+	} else {
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
+	}
     }
     vmaxset(vmax);
     SH;
@@ -2482,16 +2555,23 @@ static void GA_Text(double x, double y, const char *str,
 	} else {
 	    DRAW(gdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y), str, hadj));
 	}
-    } else if(R_ALPHA(gc->col) > 0 && xd->have_alpha) {
-	rect r = xd->clip; /*  it is to hard to get a correct bounding box */
-	SetColor(gc->col, gc->gamma, dd);
-	gcopy(xd->bm2, _d, r);
-	if(mbcslocale && gc->fontface != 5) {
-	    DRAW(gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj));
+    } else if(R_ALPHA(gc->col) > 0) {
+	if(xd->have_alpha) {
+	    rect r = xd->clip; /*  it is to hard to get a correct bounding box */
+	    SetColor(gc->col, gc->gamma, dd);
+	    gcopy(xd->bm2, _d, r);
+	    if(mbcslocale && gc->fontface != 5) {
+		DRAW(gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj));
+	    } else {
+		DRAW(gdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj));
+	    }
+	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
 	} else {
-	    DRAW(gdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj));
+	    if(!xd->warn_trans)
+		warningcall(R_NilValue,
+			    _("semi-transparency is not supported on this device"));
+	    xd->warn_trans = TRUE;
 	}
-	DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
     }
     SH;
 }
@@ -2661,6 +2741,8 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
     dd->startlty = LTY_SOLID;
     dd->startgamma = gamma;
     xd->bm2 = NULL;
+    xd->have_alpha = FALSE; /* selectively overridden in GA_Open */
+    xd->warn_trans = FALSE;
 
     /* Start the Device Driver and Hardcopy.  */
 
@@ -2694,7 +2776,6 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
     dd->metricInfo = GA_MetricInfo;
     xd->newFrameConfirm = GA_NewFrameConfirm;
     xd->cntxt = NULL;
-    xd->have_alpha = (xd->kind == SCREEN) ? 1 : 0;
 
     /* set graphics parameters that must be set by device driver */
     /* Window Dimensions in Pixels */
@@ -2755,6 +2836,8 @@ Rboolean GADeviceDriver(NewDevDesc *dd, const char *display, double width,
     xd->resize = (resize == 3);
     xd->locator = FALSE;
     xd->buffered = buffered;
+    /* alpha-blending does not work properly directly on-screen */
+    if(xd->kind == SCREEN) xd->have_alpha &= buffered;
     xd->psenv = psenv;
     {
 	SEXP timeouts = GetOption(install("windowsTimeouts"), R_BaseEnv);

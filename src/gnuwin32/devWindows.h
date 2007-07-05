@@ -98,5 +98,6 @@ typedef struct {
     Rboolean (*newFrameConfirm)();
     double lwdscale;   /* scale factor for lwd */
     RCNTXT *cntxt;     /* context for unwinding on error */
-    int have_alpha;    /* support for AlphaBlend */
+    Rboolean have_alpha; /* support for AlphaBlend */
+    Rboolean warn_trans; /* Warn on use of translucency if not supported */
 } gadesc;
