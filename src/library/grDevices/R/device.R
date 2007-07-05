@@ -1,5 +1,6 @@
 
-.known_interactive.devices <- c("X11", "GTK", "quartz", "windows", "JavaGD")
+.known_interactive.devices <-
+    c("X11", "GTK", "quartz", "windows", "JavaGD", "CairoWin", "CairoX11")
 dev.interactive <- function(orNone = FALSE) {
     iDevs <- .known_interactive.devices
     interactive() &&
