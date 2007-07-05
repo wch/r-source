@@ -39,7 +39,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   some devices: at the time of writing only on the \code{\link{pdf}},
   \code{windows} and \code{quartz} devices as well as
   several third-party devices such as those in packages \pkg{Cairo},
-  \pkg{cairoDevice}, \pkg{JavaJD} and \pkg{RSvgDevice}.  On most of
+  \pkg{cairoDevice}, \pkg{JavaGD} and \pkg{RSvgDevice}.  On most of
   these devices the actual alpha values used are multiples of 1/255.
 
   Typically other graphics devices silently plot semi-transparent colors
