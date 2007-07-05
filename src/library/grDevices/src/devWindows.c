@@ -2184,6 +2184,13 @@ static void GA_Deactivate(NewDevDesc *dd)
     settext(xd->gawin, t);
 }
 
+#define WARN_SEMI_TRANS { \
+	    if(!xd->warn_trans) warningcall(R_NilValue, _("semi-transparency is not supported on this device")); \
+	    xd->warn_trans = TRUE; \
+	}
+
+#define DRAW2(col) {gcopyalpha(xd->bm,xd->bm2,r,R_ALPHA(col)); if(!xd->buffered) gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));} 
+
 	/********************************************************/
 	/* device_Rect should have the side-effect that a 	*/
 	/* rectangle is drawn with the given locations for its 	*/
@@ -2220,45 +2227,33 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	y1 = tmp;
     }
     r = rect((int) x0, (int) y0, (int) x1 - (int) x0, (int) y1 - (int) y0);
-    if (R_OPAQUE(gc->fill)) {
-	SetColor(gc->fill, gc->gamma, dd);
-	DRAW(gfillrect(_d, xd->fgcolor, r));
 
+    SetColor(gc->fill, gc->gamma, dd);
+    if (R_OPAQUE(gc->fill)) {
+	DRAW(gfillrect(_d, xd->fgcolor, r));
     } else if(R_ALPHA(gc->fill) > 0) {
 	if(xd->have_alpha) {
 	    /* We are only working with the screen device here, so
 	       we can assume that x->bm is the current state.
 	       Copying from the screen window does not work. */
-	    SetColor(gc->fill, gc->gamma, dd);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gfillrect(xd->bm2, xd->fgcolor, r);
-	    /* If unbuffered this writes twice: could bitblt the second time */
-	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->fill)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    DRAW2(gc->fill);
+	} else WARN_SEMI_TRANS;
     }
+
+    SetColor(gc->col, gc->gamma, dd);
+    SetLineStyle(gc, dd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, gc->gamma, dd);
-	SetLineStyle(gc, dd);
 	DRAW(gdrawrect(_d, xd->lwd, xd->lty, xd->fgcolor, r, 0, xd->lend,
 		       xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
 	if(xd->have_alpha) {
-	    SetColor(gc->col, gc->gamma, dd);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawrect(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, r, 0, xd->lend,
 		      xd->ljoin, xd->lmitre);
-	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    DRAW2(gc->col);
+	} else WARN_SEMI_TRANS;
     }
     SH;
 }
@@ -2278,56 +2273,46 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	/* coordinates						*/
 	/********************************************************/
 
-static void GA_Circle(double x, double y, double r,
+static void GA_Circle(double x, double y, double radius,
 		      R_GE_gcontext *gc,
 		      NewDevDesc *dd)
 {
     int   ir, ix, iy;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
-    rect  rr;
+    rect  r;
 
     TRACEDEVGA("circle");
-    ir = floor(r + 0.5);
+    ir = floor(radius + 0.5);
     if (ir < 1) ir = 1;
     /* In-place conversion ok */
 
     ix = (int) x;
     iy = (int) y;
-    rr = rect(ix - ir, iy - ir, 2 * ir, 2 * ir);
+    r = rect(ix - ir, iy - ir, 2 * ir, 2 * ir);
+
+    SetColor(gc->fill, gc->gamma, dd);
     if (R_OPAQUE(gc->fill)) {
-	SetColor(gc->fill, gc->gamma, dd);
-	DRAW(gfillellipse(_d, xd->fgcolor, rr));
+	DRAW(gfillellipse(_d, xd->fgcolor, r));
     } else if(R_ALPHA(gc->fill) > 0) {
 	if (xd->have_alpha) {
-	    SetColor(gc->fill, gc->gamma, dd);
-	    gcopy(xd->bm2, xd->bm, rr);
-	    gfillellipse(xd->bm2, xd->fgcolor, rr);
-	    DRAW(gcopyalpha(_d, xd->bm2, rr, R_ALPHA(gc->fill)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    gcopy(xd->bm2, xd->bm, r);
+	    gfillellipse(xd->bm2, xd->fgcolor, r);
+	    DRAW2(gc->fill);
+	} else WARN_SEMI_TRANS;
     }
+
+    SetColor(gc->col, gc->gamma, dd);
+    SetLineStyle(gc, dd);
     if (R_OPAQUE(gc->col)) {
-	SetLineStyle(gc, dd);
-	SetColor(gc->col, gc->gamma, dd);
-	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, rr, 0, xd->lend,
+	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, r, 0, xd->lend,
 			  xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
 	if(xd->have_alpha) {
-	    SetColor(gc->col, gc->gamma, dd);
-	    gcopy(xd->bm2, xd->bm, rr);
-	    gdrawellipse(xd->bm2, xd->lwd, xd->fgcolor, rr, 0, xd->lend,
+	    gcopy(xd->bm2, xd->bm, r);
+	    gdrawellipse(xd->bm2, xd->lwd, xd->fgcolor, r, 0, xd->lend,
 			 xd->ljoin, xd->lmitre);
-	    DRAW(gcopyalpha(_d, xd->bm2, rr, R_ALPHA(gc->col)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    DRAW2(gc->col);
+	} else WARN_SEMI_TRANS;
     }
     SH;
 }
@@ -2354,9 +2339,9 @@ static void GA_Line(double x1, double y1, double x2, double y2,
     xx2 = (int) x2;
     yy2 = (int) y2;
 
+    SetColor(gc->col, gc->gamma, dd);
+    SetLineStyle(gc, dd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, gc->gamma, dd);
-	SetLineStyle(gc, dd);
 	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		       pt(xx1, yy1), pt(xx2, yy2), 0, xd->lend,
 			  xd->ljoin, xd->lmitre));
@@ -2371,19 +2356,13 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 	    my1 = imax2(yy1, yy2);
 	    r.x = mx0; r.width = mx1 - mx0;
 	    r.y = my0; r.height = my1 = my0;
-	    SetColor(gc->col, gc->gamma, dd);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawline(xd->bm2, xd->lwd, xd->lty, xd->fgcolor,
 		      pt(xx1, yy1), pt(xx2, yy2), 0, xd->lend,
 		      xd->ljoin, xd->lmitre);
-	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
+	    DRAW2(gc->col);
 	    SH;
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	} else WARN_SEMI_TRANS;
     }
 }
 
@@ -2417,9 +2396,10 @@ static void GA_Polyline(int n, double *x, double *y,
 	my0 = imin2(my0, p[i].y);
 	my1 = imax2(my1, p[i].y);
     }
+
+    SetColor(gc->col, gc->gamma, dd);
+    SetLineStyle(gc, dd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, gc->gamma, dd);
-	SetLineStyle(gc, dd);
 	DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0,
 			   xd->lend, xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
@@ -2427,17 +2407,11 @@ static void GA_Polyline(int n, double *x, double *y,
 	    rect r;
 	    r.x = mx0; r.width = mx1 - mx0;
 	    r.y = my0; r.height = my1 = my0;
-	    SetColor(gc->col, gc->gamma, dd);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawpolyline(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0,
 			  xd->lend, xd->ljoin, xd->lmitre);
-	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    DRAW2(gc->col);
+	} else WARN_SEMI_TRANS;
     }
     vmaxset(vmax);
     SH;
@@ -2461,6 +2435,7 @@ static void GA_Polygon(int n, double *x, double *y,
 {
     char *vmax = vmaxget();
     point *points;
+    rect r;
     double devx, devy;
     int   i, mx0 = 0, mx1 = 0, my0 = 0, my1 = 0;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2479,46 +2454,32 @@ static void GA_Polygon(int n, double *x, double *y,
 	my0 = imin2(my0, points[i].y);
 	my1 = imax2(my1, points[i].y);
     }
+    r.x = mx0; r.width = mx1 - mx0;
+    r.y = my0; r.height = my1 = my0;
+
+    SetColor(gc->fill, gc->gamma, dd);
     if (R_OPAQUE(gc->fill)) {
-	SetColor(gc->fill, gc->gamma, dd);
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
     } else if(R_ALPHA(gc->fill) > 0) {
 	if(xd->have_alpha) {
-	    rect r;
-	    r.x = mx0; r.width = mx1 - mx0;
-	    r.y = my0; r.height = my1 = my0;
-	    SetColor(gc->fill, gc->gamma, dd);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gfillpolygon(xd->bm2, xd->fgcolor, points, n);
-	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->fill)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    DRAW2(gc->fill);
+	} else WARN_SEMI_TRANS;
     }
+
+    SetColor(gc->col, gc->gamma, dd);
+    SetLineStyle(gc, dd);
     if (R_OPAQUE(gc->col)) {
-	SetColor(gc->col, gc->gamma, dd);
-	SetLineStyle(gc, dd);
 	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n, 0,
 			  xd->lend, xd->ljoin, xd->lmitre));
     } else if(R_ALPHA(gc->col) > 0) {
 	if(xd->have_alpha) {
-	    rect r;
-	    r.x = mx0; r.width = mx1 - mx0;
-	    r.y = my0; r.height = my1 = my0;
-	    SetColor(gc->col, gc->gamma, dd);
 	    gcopy(xd->bm2, xd->bm, r);
 	    gdrawpolygon(xd->bm2, xd->lwd, xd->lty, xd->fgcolor, points, n, 0,
 			 xd->lend, xd->ljoin, xd->lmitre);
-	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    DRAW2(gc->col);
+	} else WARN_SEMI_TRANS;
     }
     vmaxset(vmax);
     SH;
@@ -2550,6 +2511,7 @@ static void GA_Text(double x, double y, const char *str,
     rot1 = rot * DEG2RAD;
     x += -xl * cos(rot1) + yl * sin(rot1);
     y -= -xl * sin(rot1) - yl * cos(rot1);
+
     SetFont(gc->fontfamily, gc->fontface, size, rot, dd);
     SetColor(gc->col, gc->gamma, dd);
     if (R_OPAQUE(gc->col)) {
@@ -2560,22 +2522,16 @@ static void GA_Text(double x, double y, const char *str,
 	    DRAW(gdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y), str, hadj));
 	}
     } else if(R_ALPHA(gc->col) > 0) {
+	/*  it is too hard to get a correct bounding box */
 	if(xd->have_alpha) {
-	    rect r = xd->clip; /*  it is to hard to get a correct bounding box */
-	    SetColor(gc->col, gc->gamma, dd);
+	    rect r = xd->clip; 
 	    gcopy(xd->bm2, xd->bm, r);
-	    if(mbcslocale && gc->fontface != 5) {
-		DRAW(gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj));
-	    } else {
-		DRAW(gdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj));
-	    }
-	    DRAW(gcopyalpha(_d, xd->bm2, r, R_ALPHA(gc->col)));
-	} else {
-	    if(!xd->warn_trans)
-		warningcall(R_NilValue,
-			    _("semi-transparency is not supported on this device"));
-	    xd->warn_trans = TRUE;
-	}
+	    if(mbcslocale && gc->fontface != 5)
+		gwdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj);
+	    else
+		gdrawstr1(xd->bm2, xd->font, xd->fgcolor, pt(x, y), str, hadj);
+	    DRAW2(gc->col);
+	} else WARN_SEMI_TRANS;
     }
     SH;
 }
