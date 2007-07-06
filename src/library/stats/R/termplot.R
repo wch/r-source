@@ -76,8 +76,9 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     ylims <- ylim
     if(identical(ylims, "common")) {
         ylims <- if(!se) range(tms, na.rm = TRUE)
-        else range(tms + 1.05*2*matrix(c(-1,1), nrow(tms), 2, byrow=TRUE)
-                   * terms$se.fit, na.rm = TRUE)
+        else range(tms + 1.05*2*terms$se.fit,
+                   tms - 1.05*2*terms$se.fit,
+                   na.rm = TRUE)
         if (partial.resid) ylims <- range(ylims, pres, na.rm = TRUE)
         if (rug) ylims[1] <- ylims[1] - 0.07*diff(ylims)
     }
