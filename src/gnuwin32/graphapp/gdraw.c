@@ -33,7 +33,7 @@ extern unsigned int TopmostDialogs; /* from dialogs.c */
 
 static int getcharset(void);
 
-/* Some of the ideas here are borrowed from Cairo */
+/* Some of the ideas in haveAlpha are borrowed from Cairo */
 typedef BOOL 
 (WINAPI *alpha_blend_t) (HDC, int, int, int, int, HDC, int, int, int, int,
 			 BLENDFUNCTION);
@@ -48,11 +48,11 @@ static int haveAlpha()
 	/* AlphaBlend is in msimg32.dll.  
 	   It is apparently is broken on Win 98, so we require NT >= 5 */
 	OSVERSIONINFO os;
-	os.dwOSVersionInfoSize = sizeof (os);
+	os.dwOSVersionInfoSize = sizeof(os);
         GetVersionEx (&os);
 	if (os.dwPlatformId == VER_PLATFORM_WIN32_NT && os.dwMajorVersion >= 5)
 	{
-            HMODULE msimg32 = LoadLibrary ("msimg32");
+            HMODULE msimg32 = LoadLibrary("msimg32");
             if (msimg32) {
                 AlphaBlend = 
 		    (alpha_blend_t) GetProcAddress(msimg32, "AlphaBlend");
