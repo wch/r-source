@@ -2190,7 +2190,7 @@ static void GA_Deactivate(NewDevDesc *dd)
 }
 
 #define WARN_SEMI_TRANS { \
-	    if(!xd->warn_trans) warningcall(R_NilValue, _("semi-transparency is not supported on this device")); \
+	    if(!xd->warn_trans) warning(_("semi-transparency is not supported on this device: reported only once")); \
 	    xd->warn_trans = TRUE; \
 	}
 

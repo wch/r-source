@@ -275,6 +275,11 @@ NEW FEATURES
 
     o   bxp() now allows 'xlim' to be specified. (PR#9754)
 
+    o   postscript(), xfig() and the Windows devices win.print(),
+	win.metafile(), bmp(), jpeg() and png() now warn if
+	semi-transparent colours are used (rather than silently
+	treating them as transparent).
+
 
 DEPRECATED & DEFUNCT
 
