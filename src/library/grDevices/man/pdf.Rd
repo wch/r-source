@@ -39,7 +39,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     and \code{height} specify the paper size.  A further choice is
     \code{"default"}; if this is selected, the
     papersize is taken from the option \code{"papersize"}
-    if that is set and to \code{"a4"} if it is unset or empty.}
+    if that is set and as \code{"a4"} if it is unset or empty.}
   \item{encoding}{the name of an encoding file.  See
     \code{\link{postscript}} for details.}
   \item{bg}{the default background color to be used.}
@@ -68,8 +68,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   to a PDF-specific font family description.  (See the
   documentation for \code{\link{pdfFonts}}.)
 
-  \R does \emph{not} embed fonts in the PDF file though, so it is only
-  possible straightforward to use mappings to the font families that are
+  \R does \emph{not} embed fonts in the PDF file, so it is only
+  straightforward to use mappings to the font families that can be
   assumed to be available in any PDF viewer: \code{"Times"}
   (equivalently \code{"serif"}), \code{"Helvetica"} (equivalently
   \code{"sans"}), \code{"Courier"} (equivalently \code{"mono"}) and
@@ -78,7 +78,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   fonts are available on the system and third-party software, e.g.,
   ghostscript, may be required to embed the fonts so that the PDF can be
   included in other documents (e.g., LaTeX).  The URW-based families
-  described for \code{\link{postscript}}  can be used with viewers such
+  described for \code{\link{postscript}} can be used with viewers such
   as GSView which are based on URW fonts.
   
   See \code{\link{postscript}} for details of encodings, as the internal
@@ -95,12 +95,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   graphics objects at the level of the driver interface.
 
   The \code{version} argument declares the version of PDF that gets
-  produced.  The version must be at least 1.4 for semitransparent output
-  to be understood, and at least 1.3 if CID fonts are to be used: if
-  these features are used the version number will be increased (with a
-  warning).  Specifying a low version number (as the default) is useful
-  if you want to produce PDF output that can be viewed on older or
-  non-Adobe PDF viewers.  (PDF 1.4 requires Acrobat 5 or later.)
+  produced.  The version must be at least 1.4 for semi-transparent
+  output to be understood, and at least 1.3 if CID fonts are to be used:
+  if these features are used the version number will be increased (with
+  a warning).  Specifying a low version number (as the default) is
+  useful if you want to produce PDF output that can be viewed on older
+  or non-Adobe PDF viewers.  (PDF 1.4 requires Acrobat 5 or later.)
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch="."} with

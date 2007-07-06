@@ -133,6 +133,7 @@ typedef struct {
     Rboolean handleOwnEvents;           /* Flag indicating whether events will be handled externally from R (TRUE),
                                            or whether R is to handle the events (FALSE) */
     int res_dpi;			/* used for png/jpeg */
+    Rboolean warn_trans;		/* have we warned about translucent cols? */
 } newX11Desc;
 
 
