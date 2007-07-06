@@ -8,8 +8,8 @@
 shapiro.test(x)
 }
 \arguments{
-  \item{x}{a numeric vector of data values, the number of which must be
-    between 3 and 5000.  Missing values are allowed.}
+  \item{x}{a numeric vector of data values. Missing values are allowed,
+    but the number of non-missing values must be between 3 and 5000.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -36,6 +36,9 @@ shapiro.test(x)
 \source{
   The algorithm used is a C translation of the Fortran code described in
   Royston (1995) and found at \url{http://lib.stat.cmu.edu/apstat/R94}.
+  The calculation of the p value is exact for \eqn{n = 3}, otherwise
+  approximations are used, separately for \eqn{4 \le n \le 11} and
+  \eqn{n \ge 12}.
 }
 \seealso{
   \code{\link[base:qqnorm]{qqnorm}} for producing a normal quantile-quantile plot.
