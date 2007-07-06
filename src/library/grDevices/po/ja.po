@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-06-12 18:51+0100\n"
+"POT-Creation-Date: 2007-07-06 09:09+0100\n"
 "PO-Revision-Date: 2007-04-02 20:15+0900\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -39,7 +39,7 @@ msgstr " CharInfo を構文解析できませんでした"
 msgid "unknown AFM entity encountered"
 msgstr " 未知の AFM 項目に出会いました"
 
-#: devPS.c:735 devPS.c:738 devPS.c:4014 devPS.c:6674 devPicTeX.c:501
+#: devPS.c:735 devPS.c:738 devPS.c:4037 devPS.c:6719 devPicTeX.c:501
 #: devPicTeX.c:503
 #, c-format
 msgid "invalid string in '%s'"
@@ -131,96 +131,102 @@ msgstr " フォントのデータベースに CMap フォントが見付かり�
 msgid "cannot load afm file '%s'"
 msgstr " afm ファイル '%s' をロードできませんでした"
 
-#: devPS.c:2377
+#: devPS.c:2378
 msgid "Corrupt loaded encodings;  encoding not recorded"
 msgstr ""
 " ロードされたエンコーディングが破損しています；　　エンコーディングは記録され"
 "ませんでした"
 
-#: devPS.c:2388
+#: devPS.c:2389
 msgid "Failed to record device encoding"
 msgstr " デバイスのエンコーディングを記録することに失敗しました"
 
-#: devPS.c:2558
+#: devPS.c:2559
 msgid "Object .ps.prolog is not a character vector"
 msgstr " オブジェクト .ps.prolog は文字列ベクトルではありません"
 
-#: devPS.c:2612 devPS.c:5659 devQuartz.c:1402 devWindows.c:700
+#: devPS.c:2613 devPS.c:5704 devQuartz.c:1402 devWindows.c:707
 msgid "Invalid line end"
 msgstr " 行末が不正です"
 
-#: devPS.c:2631 devPS.c:5678 devQuartz.c:1422 devWindows.c:713
+#: devPS.c:2632 devPS.c:5723 devQuartz.c:1422 devWindows.c:720
 msgid "Invalid line join"
 msgstr " 行のつながりが不正です"
 
-#: devPS.c:2639 devQuartz.c:1432
+#: devPS.c:2640 devQuartz.c:1432
 msgid "Invalid line mitre"
 msgstr " 不正な line mitre です"
 
-#: devPS.c:2850
+#: devPS.c:2851
 msgid "only gray colors are allowed in this color model"
 msgstr " この色モデルではグレイ色だけが可能です"
 
-#: devPS.c:2930
+#: devPS.c:2931
 msgid "filename too long in postscript"
 msgstr " ファイル名がポストスクリプトでは長すぎます"
 
-#: devPS.c:2949 devPS.c:5186
+#: devPS.c:2950 devPS.c:5231
 msgid "encoding path is too long"
 msgstr " エンコーディングのパスが長すぎます"
 
-#: devPS.c:2964 devPS.c:4341
+#: devPS.c:2965 devPS.c:4375
 msgid "failed to load encoding"
 msgstr " エンコーディングのロードに失敗しました"
 
-#: devPS.c:3007 devPS.c:3070 devPS.c:5245 devPS.c:5300 devPS.c:6474
+#: devPS.c:3008 devPS.c:3071 devPS.c:5290 devPS.c:5345 devPS.c:6519
 msgid "Invalid font type"
 msgstr " 不正なフォントタイプです"
 
-#: devPS.c:3032 devPS.c:5268
+#: devPS.c:3033 devPS.c:5313
 msgid "Failed to initialise default PostScript font"
 msgstr " 既定のポストスクリプトフォントの初期化に失敗しました"
 
-#: devPS.c:3102 devPS.c:5327
+#: devPS.c:3103 devPS.c:5372
 msgid "Failed to initialise additional PostScript fonts"
 msgstr " 追加のポストスクリプトフォントの初期化に失敗しました"
 
-#: devPS.c:3123
+#: devPS.c:3124
 msgid "invalid foreground/background color (postscript)"
 msgstr " 不正な前景/背景色 (ポストスクリプト)"
 
-#: devPS.c:3133
+#: devPS.c:3134
 msgid "'command' is too long"
 msgstr " 'command' が長すぎます"
 
-#: devPS.c:3137
+#: devPS.c:3138
 msgid "postscript(print.it=TRUE) used with an empty print command"
 msgstr " postscript(print.it=TRUE)　が空の描画命令とともに使われました"
 
-#: devPS.c:3190
+#: devPS.c:3191
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr " 不正なページ '%s'  (ポストスクリプト)"
 
-#: devPS.c:3395
+#: devPS.c:3315 devPS.c:4180 devWindows.c:2200
+msgid ""
+"semi-transparency is not supported on this device: reported only once per "
+"page"
+msgstr ""
+
+#: devPS.c:3406
 msgid "printing via file = \"\" is not implemented in this version"
 msgstr " file = \"\" による描画はこのバージョンでは実装されていません"
 
-#: devPS.c:3403 devPS.c:3416
+#: devPS.c:3414 devPS.c:3427
 #, fuzzy, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr " ’％s' に対する 'postscript' パイプを開くことができません"
 
-#: devPS.c:3409
+#: devPS.c:3420
 msgid "file = \"|cmd\" is not implemented in this version"
 msgstr " file = \"|cmd\" はこのバージョンでは実装されていません"
 
-#: devPS.c:3427
+#: devPS.c:3438
 #, c-format
 msgid "cannot open 'postscript' file argument '%s'"
 msgstr " 'postscript' ファイル引数 '%s'　を開くことができません　"
 
-#: devPS.c:3550 devPS.c:3565
+#: devPS.c:3562 devPS.c:3577
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -229,154 +235,154 @@ msgstr ""
 " 実行中の postscript() からのエラー:\n"
 " %s"
 
-#: devPS.c:3600
+#: devPS.c:3612
 #, c-format
 msgid "CID family '%s' not included in PostScript device"
 msgstr " ポストスクリプトデバイス中に CID ファミリ '%s' は含まれていません"
 
-#: devPS.c:3613 devPS.c:3624 devPS.c:3832 devPS.c:3863
+#: devPS.c:3625 devPS.c:3636 devPS.c:3852 devPS.c:3883
 #, c-format
 msgid "family '%s' not included in PostScript device"
 msgstr " ポストスクリプトデバイス中にフォントファミリ '%s' は含まれていません"
 
-#: devPS.c:3825 devPS.c:3853 devPS.c:4813 devPS.c:6524 devPS.c:6572
+#: devPS.c:3845 devPS.c:3873 devPS.c:4857 devPS.c:6569 devPS.c:6617
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr " 不正なフォント %d を使おうとしましたが、フォント 1 で置き換えました"
 
-#: devPS.c:3912
+#: devPS.c:3933
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr " 'mbcsToSbcs' 中に未知のエンコーディング '%s' があります"
 
-#: devPS.c:3922
+#: devPS.c:3943
 msgid "conversion failure in 'mbcsToSbcs'"
 msgstr " 'mbcsToSbcs'　中で変換に失敗"
 
-#: devPS.c:4001 devPS.c:4868 devPS.c:6660
+#: devPS.c:4023 devPS.c:4913 devPS.c:6705
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr " テキストをエンコーディング '%s' に変換することに失敗しました"
 
-#: devPS.c:4161
+#: devPS.c:4194
 msgid "run out of colors in xfig()"
 msgstr " xfig() 中で色数が多すぎました"
 
-#: devPS.c:4190
+#: devPS.c:4223
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr " 実装されていない線種 %08x: Dash-double-dotted を使います"
 
-#: devPS.c:4261
+#: devPS.c:4294
 #, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr ""
 " 未知のポストスクリプトフォントファミリ　'%s' です。Helvetica を使います"
 
-#: devPS.c:4301
+#: devPS.c:4334
 msgid "filename too long in xfig"
 msgstr " xfig でファイル名が長すぎます"
 
-#: devPS.c:4327
+#: devPS.c:4360
 msgid "invalid foreground/background color (xfig)"
 msgstr " 不正な前景/背景色です (xfig)"
 
-#: devPS.c:4359
+#: devPS.c:4393
 msgid "Only Type 1 fonts supported for XFig"
 msgstr " XFig に対しては Type 1 フォントだけがサポートされています"
 
-#: devPS.c:4372
+#: devPS.c:4406
 msgid "Failed to initialise default XFig font"
 msgstr " 既定の XFig フォントの初期化に失敗しました"
 
-#: devPS.c:4409
+#: devPS.c:4443
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr " 不正なページタイプ '%s' (xfig)"
 
-#: devPS.c:4417
+#: devPS.c:4451
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr " xfig(%s, onefile=FALSE) は最後のプロットだけを返します"
 
-#: devPS.c:4536
+#: devPS.c:4570
 msgid "empty file name"
 msgstr " ファイル名がありません"
 
-#: devPS.c:4595 devPS.c:4645
+#: devPS.c:4629 devPS.c:4681
 msgid "write failed"
 msgstr " 書き込みに失敗しました"
 
-#: devPS.c:4857
+#: devPS.c:4902
 #, c-format
 msgid "unable to use encoding '%s'"
 msgstr " エンコーディング '%s' を使うことができません"
 
-#: devPS.c:4873
+#: devPS.c:4918
 msgid "re-encoding is not possible on this system"
 msgstr " このシステムでは再エンコーディングは不可能です"
 
-#: devPS.c:5106
+#: devPS.c:5151
 msgid "Corrupt loaded encodings;  font not added"
 msgstr ""
 " ロードされたエンコーディングが破損しています；　　フォントは追加されません"
 
-#: devPS.c:5115
+#: devPS.c:5160
 msgid "Failed to record device encoding; font not added"
 msgstr ""
 " デバイスエンコーディングの記録に失敗しました；　フォントは追加されません"
 
-#: devPS.c:5148
+#: devPS.c:5193
 msgid "filename too long in pdf"
 msgstr " pdf に対するファイル名が長すぎます"
 
-#: devPS.c:5163
+#: devPS.c:5208
 msgid "cannot allocate pd->pos"
 msgstr " pd->pos　を割り当てられません"
 
-#: devPS.c:5168
+#: devPS.c:5213
 msgid "cannot allocate pd->pageobj"
 msgstr " pd->pagebj　を割り当てられません"
 
-#: devPS.c:5202
+#: devPS.c:5247
 msgid "failed to load default encoding"
 msgstr " 既定のエンコーディングのロードに失敗しました"
 
-#: devPS.c:5398
+#: devPS.c:5443
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr " 不正なペーパサイズ '%s' (pdf)"
 
-#: devPS.c:5428
+#: devPS.c:5473
 msgid "invalid foreground/background color (pdf)"
 msgstr " 不正な前景/背景色 (pdf)"
 
-#: devPS.c:5564
+#: devPS.c:5609
 msgid "Invalid alpha value in PDF"
 msgstr " PDF 中に不正なアルファ値"
 
-#: devPS.c:5589
+#: devPS.c:5634
 msgid "increasing the PDF version to 1.4"
 msgstr " PDF のバージョンを 1.4 に更新"
 
-#: devPS.c:5981
+#: devPS.c:6026
 msgid "Corrupt encodings in PDF device"
 msgstr " PDF デバイス中に破損したエンコーディング"
 
-#: devPS.c:6062
+#: devPS.c:6107
 msgid "increasing the PDF version to 1.3"
 msgstr " PDF のバージョンを 1.3 に更新"
 
-#: devPS.c:6160
+#: devPS.c:6205
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr " 'pdf\" ファイル引数 '%s' を開くことができません"
 
-#: devPS.c:6216
+#: devPS.c:6261
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr " ページの上限を増やすことができません： pdf デバイスを閉じてください"
 
-#: devPS.c:6229
+#: devPS.c:6274
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -385,33 +391,33 @@ msgstr ""
 " 'pdf\" ファイル引数 '%s' を開くことができません\n"
 " PDF デバイスを閉じてください"
 
-#: devPS.c:6499 devPS.c:6778 devPS.c:6821
+#: devPS.c:6544 devPS.c:6823 devPS.c:6866
 msgid "Failed to find or load PDF font"
 msgstr " PDF フォントが見付からないかロードできませんでした"
 
-#: devPS.c:6615 devPS.c:6735
+#: devPS.c:6660 devPS.c:6780
 msgid "Failed to find or load PDF CID font"
 msgstr " PDF CID フォントが見付からないかロードできませんでした"
 
-#: devPS.c:6928 devPS.c:6932 devPS.c:7087 devPS.c:7091
+#: devPS.c:6973 devPS.c:6977 devPS.c:7132 devPS.c:7136
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr " %s 中に不正な 'family' パラメータ"
 
-#: devPS.c:6951 devPS.c:7103
+#: devPS.c:6996 devPS.c:7148
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr " %s 中に不正な 'fonts' パラメータ"
 
-#: devPS.c:6968
+#: devPS.c:7013
 msgid "unable to start device PostScript"
 msgstr " ポストスクリプトデバイスを開始できませんでした"
 
-#: devPS.c:7037
+#: devPS.c:7082
 msgid "unable to start device xfig"
 msgstr " xfig デバイスを開始できませんでした"
 
-#: devPS.c:7121
+#: devPS.c:7166
 msgid "unable to start device pdf"
 msgstr " pdf デバイスを開始できませんでした"
 
@@ -431,7 +437,7 @@ msgstr " quartz デバイスの幅か高さが不正です"
 msgid "unable to start device Quartz"
 msgstr " quartz デバイスを開始できません"
 
-#: devQuartz.c:1024 devWindows.c:533
+#: devQuartz.c:1024 devWindows.c:540
 msgid "Invalid font specification"
 msgstr " 不正なフォント指定"
 
@@ -443,151 +449,156 @@ msgstr " Quartz フォントのデータベースにフォントファミリが�
 msgid "Quartz device not available on this platform"
 msgstr " Quartz デバイスはこのプラットフォームでは利用できません"
 
-#: devWindows.c:265 devWindows.c:297 devWindows.c:362
+#: devWindows.c:272 devWindows.c:304 devWindows.c:369
 msgid "Not enough memory to copy graphics window"
 msgstr " グラフィックスウィンドをコピーするのに十分なメモリがありません"
 
-#: devWindows.c:270 devWindows.c:302 devWindows.c:367
+#: devWindows.c:277 devWindows.c:309 devWindows.c:374
 msgid "No device available to copy graphics window"
 msgstr " グラフィックスウィンドをコピーするのに使えるデバイスがありません"
 
-#: devWindows.c:572
+#: devWindows.c:579
 msgid "Font family not found in Windows font database"
 msgstr " Windows のフォントデータベースにフォントファミリが見付かりません"
 
-#: devWindows.c:989
+#: devWindows.c:996
 msgid "plot history seems corrupted"
 msgstr " 描画履歴が破損しているようです"
 
-#: devWindows.c:996
+#: devWindows.c:1003
 msgid "no plot history!"
 msgstr " 描画履歴がありません"
 
-#: devWindows.c:1703
+#: devWindows.c:1713
 #, c-format
 msgid "filename too long in %s() call"
 msgstr " 呼出し %s() 中に長すぎるファイル名 "
 
-#: devWindows.c:1707 devWindows.c:1736
+#: devWindows.c:1717 devWindows.c:1746
 msgid "Unable to load Rbitmap.dll"
 msgstr " Rbitmap.dll　をロードできませんでした"
 
-#: devWindows.c:1712 devWindows.c:1745
+#: devWindows.c:1722 devWindows.c:1755
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr " 'width=%d, height=%d' はピクセル単位でありそうもない値です"
 
-#: devWindows.c:1720 devWindows.c:1748
+#: devWindows.c:1730 devWindows.c:1758
 msgid "Unable to allocate bitmap"
 msgstr " ビットマップを割り当てられません"
 
-#: devWindows.c:1726 devWindows.c:1754 devWindows.c:2034
+#: devWindows.c:1736 devWindows.c:1764 devWindows.c:2053
 #, c-format
 msgid "Unable to open file '%s' for writing"
 msgstr " ファイル '%s' を書込み用に開くことができません"
 
-#: devWindows.c:1742
+#: devWindows.c:1752
 msgid "filename too long in jpeg() call"
 msgstr " 呼出し jpeg() 中に長すぎるファイル名"
 
-#: devWindows.c:1772
+#: devWindows.c:1782
 msgid "filename too long in win.metafile() call"
 msgstr " 呼出し win.metafile() 中に長すぎるファイル名"
 
-#: devWindows.c:1782
+#: devWindows.c:1792
 #, c-format
 msgid "Unable to open metafile '%s' for writing"
 msgstr " メタファイル '%s' を書込み用に開くことができません"
 
-#: devWindows.c:1784
+#: devWindows.c:1794
 msgid "Unable to open clipboard to write metafile"
 msgstr " メタファイルを書込むためにクリップボードを開くことができません"
 
-#: devWindows.c:1794
+#: devWindows.c:1804
 msgid "can't find any fonts"
 msgstr " いかなるフォントも見付かりません"
 
-#: devWindows.c:1992
+#: devWindows.c:2002
 msgid "Insufficient memory for resize. Killing device"
 msgstr " メモリ不足でサイズ変更できません。デバイスを停止します"
 
-#: devWindows.c:2019
+#: devWindows.c:2009
+#, fuzzy
+msgid "Insufficient memory for resize. Disabling alpha blending"
+msgstr " メモリ不足でサイズ変更できません。デバイスを停止します"
+
+#: devWindows.c:2038
 msgid "A clipboard metafile can store only one figure."
 msgstr " クリップボードメタファイルは一つの図だけを保管できます"
 
-#: devWindows.c:2025
+#: devWindows.c:2044
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr " メタファイル '%s' を作成できませんでした"
 
-#: devWindows.c:2439 devWindows.c:3025
+#: devWindows.c:2564 devWindows.c:3153
 msgid "R Graphics"
 msgstr " R グラフィックス"
 
-#: devWindows.c:2683
+#: devWindows.c:2811
 msgid "option 'windowsTimeouts' should be integer"
 msgstr " オプション 'windowsTimeouts' は整数でなければなりません"
 
-#: devWindows.c:2705
+#: devWindows.c:2833
 msgid "invalid device number in savePlot"
 msgstr " savePlot　中に不正なデバイス番号"
 
-#: devWindows.c:2707
+#: devWindows.c:2835
 msgid "invalid device in savePlot"
 msgstr " savePlot 中に不正なデバイス"
 
-#: devWindows.c:2710
+#: devWindows.c:2838
 msgid "invalid filename argument in savePlot"
 msgstr " savePlot 中に不正なファイル名引数"
 
-#: devWindows.c:2714
+#: devWindows.c:2842
 msgid "invalid type argument in savePlot"
 msgstr " savePlot　に不正な型の引数"
 
-#: devWindows.c:2737
+#: devWindows.c:2865
 msgid "unknown type in savePlot"
 msgstr " savePlot 中に未知の型"
 
-#: devWindows.c:2812 devWindows.c:2848 devWindows.c:2880 devWindows.c:2915
+#: devWindows.c:2940 devWindows.c:2976 devWindows.c:3008 devWindows.c:3043
 msgid "processing of the plot ran out of memory"
 msgstr " プロット中にメモリ不足になりました"
 
-#: devWindows.c:2828 devWindows.c:2861 devWindows.c:2894
+#: devWindows.c:2956 devWindows.c:2989 devWindows.c:3022
 msgid "Impossible to load Rbitmap.dll"
 msgstr " Rbitmap.dll をロードできません"
 
-#: devWindows.c:2900
+#: devWindows.c:3028
 msgid "Impossible to open "
 msgstr " オープンできません"
 
-#: devWindows.c:2941
+#: devWindows.c:3069
 msgid "invalid width or height in devWindows"
 msgstr " devWindows 中に不正な幅か高さ"
 
-#: devWindows.c:2946
+#: devWindows.c:3074
 msgid "invalid value of 'recording' in devWindows"
 msgstr " devWindows 中の 'recording' の値が不正です"
 
-#: devWindows.c:2950
+#: devWindows.c:3078
 msgid "invalid value of 'resize' in devWindows"
 msgstr " devWindows 中の 'resize' の値が不正です"
 
-#: devWindows.c:2958
+#: devWindows.c:3086
 msgid "invalid value of 'canvas' in devWindows"
 msgstr " devWindows 中の 'canvas' の値が不正です"
 
-#: devWindows.c:2969
+#: devWindows.c:3097
 msgid "invalid value of 'buffered' in devWindows"
 msgstr " devWindows 中の 'buffered' の値が不正です"
 
-#: devWindows.c:2975
+#: devWindows.c:3103
 msgid "invalid value of 'bg' in devWindows"
 msgstr " devWindows 中の 'bg' の値が不正です"
 
-#: devWindows.c:2997
+#: devWindows.c:3125
 msgid "unable to start device devWindows"
 msgstr " devWindows デバイスを開始できません"
 
-#: devWindows.c:3070
+#: devWindows.c:3198
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr " getGraphicsEvent の再帰的な使用はサポートされていません"
