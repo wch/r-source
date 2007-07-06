@@ -958,7 +958,7 @@ static void CheckAlpha(int color, newX11Desc *xd)
 {
     unsigned int alpha = R_ALPHA(color);
     if (alpha > 0 && alpha < 255 && !xd->warn_trans) {
-	warning(_("semi-transparency is not supported on this device: reported only once"));
+	warning(_("semi-transparency is not supported on this device: reported only once per page"));
 	xd->warn_trans = TRUE;
     }
 }
@@ -1669,6 +1669,7 @@ static void newX11_NewPage(R_GE_gcontext *gc,
 {
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
+    xd->warn_trans = FALSE;
     if (xd->type > WINDOW) {
 	if (xd->npages++) {
 	    /* try to preserve the page we do have */

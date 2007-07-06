@@ -44,7 +44,8 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
     vertically.}
   \item{bg}{color.  The default background color.}
   \item{canvas}{color.  The color of the canvas which is visible
-    when the background color is transparent.}
+    when the background color is transparent.  Should be a solid color
+    (and any alpha value will be ignoed).}
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors perceived are linearly related to
     RGB values (see \code{\link{hsv}}).  By default this is taken from

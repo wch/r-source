@@ -3312,7 +3312,7 @@ static void CheckAlpha(int color, PostScriptDesc *pd)
 {
     unsigned int alpha = R_ALPHA(color);
     if (alpha > 0 && alpha < 255 && !pd->warn_trans) {
-	warning(_("semi-transparency is not supported on this device: reported only once"));
+	warning(_("semi-transparency is not supported on this device: reported only once per page"));
 	pd->warn_trans = TRUE;
     }
 }
@@ -3530,7 +3530,7 @@ static void PS_NewPage(R_GE_gcontext *gc,
     } else pd->pageno++;
     PostScriptStartPage(pd->psfp, pd->pageno);
     Invalidate(dd);
-
+    CheckAlpha(gc->fill, pd);
     if(R_OPAQUE(gc->fill)) {
 	/*
 	 * Override some gc settings
@@ -3538,6 +3538,7 @@ static void PS_NewPage(R_GE_gcontext *gc,
 	gc->col = R_TRANWHITE;
 	PS_Rect(0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight, gc, dd);
     }
+    pd->warn_trans = FALSE;
 }
 
 #ifdef Win32
@@ -4176,7 +4177,7 @@ static void XF_CheckAlpha(int color, XFigDesc *pd)
 {
     unsigned int alpha = R_ALPHA(color);
     if (alpha > 0 && alpha < 255 && !pd->warn_trans) {
-	warning(_("semi-transparency is not supported on this device: reported only once"));
+	warning(_("semi-transparency is not supported on this device: reported only once per page"));
 	pd->warn_trans = TRUE;
     }
 }
@@ -4185,12 +4186,7 @@ static void XF_CheckAlpha(int color, XFigDesc *pd)
 static int XF_SetColor(int color, XFigDesc *pd)
 {
     int i;
-    unsigned int alpha = color & 0xff000000;
-    if (alpha > 0 && alpha < 0xff && !pd->warn_trans) {
-	warning(_("semi-transparent colors are not supported on the xfig"));
-	pd->warn_trans = FALSE;
-    }
-    if(alpha < 0xff)  return -1;
+    if(!R_OPAQUE(color))  return -1;
     color = color & 0xffffff;
     for (i = 0; i < pd->nXFigColors; i++)
 	if(color == pd->XFigColors[i]) return i;
@@ -4662,6 +4658,7 @@ static void XFig_NewPage(R_GE_gcontext *gc,
 	fprintf(fp, "%d %d ", ix1, iy0);
 	fprintf(fp, "%d %d\n", ix0, iy0);
     }
+    pd->warn_trans = FALSE;
 }
 
 #ifdef HAVE_UNISTD_H
