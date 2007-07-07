@@ -52,7 +52,7 @@ extends <-
 	## the [[1]] below handles old-style classes & throws away package attributes
 	## {Really? :} A cleaner version needed, to also ignore attr's of class2
 	if(.identC(class1[[1]], class2) || .identC(class2, "ANY") ||
-	   class2 %in% names(classDef1@contains))
+	   (!is.null(classDef1) && class2 %in% names(classDef1@contains)))
 	    return(TRUE)
 	else
 	    classDef2 <- getClassDef(class2)
