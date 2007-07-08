@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-06-26
+@set FAQ_DATE @value{FAQ_YEAR}-07-07
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -1811,6 +1811,8 @@ A MORE flexible neural network package, providing the TAO robust neural
 network algorithm.
 @item ARES
 Allelic richness estimation, with extrapolation beyond the sample size.
+@item AcceptanceSampling
+Creation and evaluation of acceptance sampling plans,
 @item AdaptFit
 Adaptive semiparametic regression.
 @item AlgDesign
@@ -2753,6 +2755,8 @@ data.
 @item class
 Functions for classification (@math{k}-nearest neighbor and LVQ).
 Contained in the @file{VR} bundle.  @emph{Recommended}.
+@item classGraph
+Construct graph of S4 class hierarchies.
 @item classInt
 Choose univariate class intervals for mapping or other graphics
 purposes.
@@ -3279,7 +3283,7 @@ Various functions to draw plots.
 Importing vector graphics.
 @item graph
 Handling of graph data structures.
-@item grasper
+@item grasp
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
 Miscellaneous functions written/maintained by Gregory R. Warnes.
@@ -3467,6 +3471,8 @@ Kolmogorov-Zurbenko Adpative filter for locating change points in a time
 series.
 @item kzft
 Kolmogorov-Zurbenko Fourier Transform and application.
+@item kzs
+Kolmogorov-Zurbenko Spline.
 @item labdsv
 Laboratory for Dynamic Synthetic Vegephenomenology.
 @item labstatR
@@ -3519,6 +3525,8 @@ LInear Models for MicroArray data.
 @item linprog
 Solve linear programming/linear optimization problems by using the
 simplex algorithm.
+@item ljr
+Logistic Joinpoint Regression.
 @item lme4
 Fit linear and generalized linear mixed-effects models.
 @item lmeSplines
@@ -3931,6 +3939,8 @@ other distance matrices and performs multi-dimensional scaling and
 principal component analyses.
 @item pear
 Periodic Autoregression Analysis.
+@item penalized
+Penalized estimation in generalized linear models.
 @item permax
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
@@ -4264,6 +4274,8 @@ data.
 Semiparametric Bayesian Gaussian copula estimation.
 @item sca
 Simple Component Analysis.
+@item scagnostics
+Compute scagnostics.
 @item scaleboot
 Approximately unbiased @math{p}-values via multiscale bootstrap.
 @item scape
@@ -4705,6 +4717,8 @@ Natively read and write Excel files.
 Export data to @LaTeX{} and @HTML{} tables.
 @item yaImpute
 Performs popular nearest neighbor routines.
+@item yest
+Gaussian independence models.
 @item zicounts
 Fit classical, zero-inflated and interval censored count data regression
 models.
