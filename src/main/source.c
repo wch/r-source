@@ -65,10 +65,10 @@ SEXP attribute_hidden getParseContext()
 	    PROTECT(ans = ans2);
 	}
 	i = last;
-	while((c = context[++i])) {
+	while((c = context[i++])) {
 	    if(c == '\n') break;
 	}
-	context[i] = '\0';
+	context[i-1] = '\0';
 	SET_STRING_ELT(ans, nread-1, mkChar(context + last));
 	last = i;
     }

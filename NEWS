@@ -29,6 +29,8 @@ BUG FIXES
 
     o	log(x, base) was intended to handle complex 'base' even for
 	real 'x', but there was a typo in the code to do so.
+	
+    o	Syntax errors would sometimes misreport the error context.
 
 
 
