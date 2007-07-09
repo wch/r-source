@@ -549,7 +549,7 @@ clean-recommended:
 
 ifeq ($(strip $(HELP)),YES)
 ifeq ($(strip $(WINHELP)),CHM)
-DOCSTYPE=chm
+DOCSTYPE=all
 else
 DOCSTYPE=normal
 endif
