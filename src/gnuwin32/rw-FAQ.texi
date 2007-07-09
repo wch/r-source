@@ -148,15 +148,16 @@ takes up about 60Mb of disk space and a minimal one less than 20Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
-with spaces in will probably work, but is little-tested.)
-Users of Vista installing for a single users using in an account with
-administrator rights should consider installing into a non-system area
-(such as @file{C:\R}).  If you are installing to a network drive, you
-should consider changing the default form of help during the
-install @strong{not} to be Compiled HTML help: @xref{Help is not shown
-for some of the packages}.  Installing to a network share (a filepath
-starting with @code{\\machine\...}) is not supported: such paths will
-need to mapped to a network drive.
+with spaces in will probably work, but is little-tested.)  Users of
+Vista installing for a single user using an account with administrator
+rights@footnote{Non-administrator accounts will automatically be offered
+a default installation directory in the user area.} should consider
+installing into a non-system area (such as @file{C:\R}).  If you are
+installing to a network drive, you should consider changing the default
+form of help during the install @strong{not} to be Compiled HTML help:
+@xref{Help is not shown for some of the packages}.  Installing to a
+network share (a filepath starting with @code{\\machine\...}) is not
+supported: such paths will need to mapped to a network drive.
 
 To install use @samp{@RWVER@-win32.exe}.  Just double-click on the
 icon and follow the instructions.  If you installed R this way you can
@@ -274,13 +275,14 @@ to run R without creating a shortcut in a writable folder.
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
 @section How do I UNinstall R?
 
-Normally you can do this from the R group on the Start Menu or from
-the @samp{Add/Remove Programs} in the Control Panel.  If it does not
-appear there or if you want to remove an old version, run
-@file{unins000.exe} in the top-level installation directory.  (There
-should be a separate uninstall item in the R group for each installed
-version of R. On Windows Vista, you may well be asked to confirm that
-you wish to run a program from an `unidentified publisher'.)
+Normally you can do this from the R group on the Start Menu or from the
+@samp{Add/Remove Programs}@footnote{@samp{Programs and Features} under
+Vista} in the Control Panel.  If it does not appear there or if you want
+to remove an old version, run @file{unins000.exe} in the top-level
+installation directory.  (There should be a separate uninstall item in
+the R group for each installed version of R. On Windows Vista, you may
+well be asked to confirm that you wish to run a program from an
+`unidentified publisher'.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -661,7 +663,7 @@ may want to experiment with disabling it.
 @section Does R run under Windows Vista?
 
 It does.  Vista was launched in January 2007 and experience with it is
-still scanty.  A few issues have been reported that related to the way
+still limited.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
 issues, but changes in user experiences.)  As there are many settings that
 system administrators can change, it is clear that only a tiny fraction
@@ -758,8 +760,7 @@ seems much more reliable with Vista.
 On suitably recent hardware Vista can prevent the execution of code
 from data areas via `Data Execution Prevention' (from a tab in
 System Properties -> Advanced -> Performance), and sysadmins can turn
-this on for all programs.  R should (and in limited testing appears
-to) run with DEP enabled.
+this on for all programs.  R runs correctly with DEP enabled.
 
 
 @newchap{}

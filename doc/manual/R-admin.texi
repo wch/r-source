@@ -3918,8 +3918,10 @@ sutherland.com/Rtools}} for the current locations and other updates to
 these instructions.  (Most Windows users will not need to build add-on
 packages from source; see @ref{Add-on packages} for details.)
 
-There are known problems with this toolset on Windows Vista and
-especially Vista 64, so those are not currently supported.
+There are known problems with this toolset on Windows Vista@footnote{see
+the workaround below} and especially Vista 64@footnote{where a snapshot
+version of @file{cygwin1.dll} is required, as well as updates to some of
+the tools.}, so those are not currently supported.
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -3982,6 +3984,14 @@ comes first or second in the path: there are typically like-named
 tools in other directories, and they will @strong{not} work.  The
 ordering of the other directories is less important, but if in doubt,
 use the order above.
+
+On Vista systems you will need to add
+@example
+c:\Rtools\MinGW\libexec\gcc\mingw\3.4.5
+@end example
+
+@noindent
+to the path.
 
 Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate
 paths as needed and to set the type(s) of help that you want built.

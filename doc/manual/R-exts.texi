@@ -389,14 +389,14 @@ Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
 
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
-should contain an @samp{Encoding} field specifying an encoding.  This
-is currently used as the encoding of the @file{DESCRIPTION} file
-itself and of the @file{R} and @file{NAMESPACE} files, and may in the
-future be taken as the encoding for other documentation in the
-package.  Only encoding names @code{latin1}, @code{latin2} and
-@code{UTF-8} are known to be portable.  (Do not specify an encoding
-unless one is actually needed: doing so makes the package @emph{less}
-portable.)
+should contain an @samp{Encoding} field specifying an encoding.  This is
+currently used as the encoding of the @file{DESCRIPTION} file itself and
+of the @file{R} and @file{NAMESPACE} files, and may in the future be
+taken as the encoding for other documentation (such as help files and
+vignettes) in the package.  Only encoding names @code{latin1},
+@code{latin2} and @code{UTF-8} are known to be portable.  (Do not
+specify an encoding unless one is actually needed: doing so makes the
+package @emph{less} portable.)
 
 
 The optional @samp{Type} field specifies the type of the package:
