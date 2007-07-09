@@ -22,6 +22,12 @@ FUNCTION CHANGES
     o	embedFonts() now accepts paths in 'GS_CMD' which contain spaces.
 
 
+INSTALLER
+
+    o	The components now have two levels, and the Tcl/Tk docs can be
+	deselected independently.
+
+
 OTHERS
 
     o	The windows() device supports semi-transparent colours under
