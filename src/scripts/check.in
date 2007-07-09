@@ -699,7 +699,9 @@ foreach my $pkg (@ARGV) {
 				  "Line truncated at \\(1\\)",
 				  "ASSIGN statement at \\(1\\)",
 				  "Assigned GOTO statement at \\(1\\)",
-				  "arithmetic IF statement at \\(1\\)")) .
+				  "arithmetic IF statement at \\(1\\)",
+				  "Nonconforming tab character (in|at)"
+				 )) .
 			    ")";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
