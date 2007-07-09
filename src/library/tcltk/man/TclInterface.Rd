@@ -248,10 +248,6 @@ tclRequire(package, warn = TRUE)
 
   \code{\link{capabilities}("tcltk")} to see if Tcl/Tk support was
   compiled into this build of \R.
-#ifdef windows
-  (It is possible to build with Tcl/Tk support but not be able to run it,
-  if the DLLs are not available or \code{TCL_LIBRARY} is not set.)
-#endif
 }
 \examples{
 \dontrun{

@@ -162,7 +162,6 @@ Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkab
 Name: "html/help"; Description: "HTML versions of Help Files"; Types: user full custom; Flags: dontinheritcheck
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: user full custom
-Name: "tcl/docs"; Description: "Tcl/Tk Help (Winhelp)"; Types: full custom; Flags: dontinheritcheck
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
@@ -399,9 +398,9 @@ sub listFiles {
 	    	$component = "latex";
 	} elsif (m/^library\\[^\\]*\\man/) {
 	    	$component = "Rd";
-	} elsif (m/^Tcl\\doc/) {
-	    $component = "tcl/docs";
-	} elsif (m/^Tcl\\.*chm$/) {
+#	} elsif (m/^Tcl\\doc/) {
+#	    $component = "tcl/docs";
+	} elsif (m/^Tcl\\doc\\.*chm$/) {
 	    $component = "tcl/chm";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";

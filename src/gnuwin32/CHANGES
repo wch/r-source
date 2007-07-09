@@ -25,7 +25,8 @@ FUNCTION CHANGES
 INSTALLER
 
     o	The components now have two levels, and the Tcl/Tk docs can be
-	deselected independently.
+	deselected independently.  Only CHM help for Tcl/Tk is shipped
+	(since Winhelp does not work on Vista).
 
 
 OTHERS
