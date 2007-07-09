@@ -418,6 +418,9 @@ BUG FIXES
 
     o	R.version[1:10] now nicely prints.
 
+    o  Prototypes are now inherited for the .Data "slot"; i.e., for classes
+        that contain one of the basic data types.
+
 
 
 

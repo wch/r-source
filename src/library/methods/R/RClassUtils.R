@@ -562,6 +562,7 @@ reconcilePropertiesAndPrototype <-
       StandardPrototype <- defaultPrototype()
       slots <-  validSlotNames(allNames(properties))
       dataPartClass <- elNamed(properties, ".Data")
+      dataPartValue <- FALSE
       if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass, name)))
           stop(gettextf("in defining class \"%s\", the supplied data part class, \"%s\" is not valid (must be a basic class or a virtual class combining basic classes)", name, dataPartClass), domain = NA)
       prototypeClass <- getClass(class(prototype), where = where)
@@ -577,8 +578,13 @@ reconcilePropertiesAndPrototype <-
                       if(!is.na(match(thisDataPart, c("NULL", "environment"))))
                           warning(gettextf("class \"%s\" cannot be used as the data part of another class",
                                            thisDataPart), domain = NA)
-                      else
+                      else {
                           dataPartClass <- thisDataPart
+                          if(!is.null(clDef@prototype)) {
+                            newObject <- clDef@prototype
+                            dataPartValue <- TRUE
+                          }
+                      }
                   }
                   else if(!extends(dataPartClass, thisDataPart) &&
                           !isVirtualClass(thisDataPart, where = where))
@@ -598,7 +604,9 @@ reconcilePropertiesAndPrototype <-
                        domain = NA)
               pslots <- NULL
               if(is.null(prototype)) {
-                  if(isVirtualClass(dataPartClass, where = where))
+                  if(dataPartValue)
+                      prototype <- newObject
+                  else if(isVirtualClass(dataPartClass, where = where))
                       ## the equivalent of new("vector")
                       prototype <- newBasic("logical")
                   else
@@ -609,7 +617,8 @@ reconcilePropertiesAndPrototype <-
                   if(extends(prototypeClass, "classPrototypeDef")) {
                       hasDataPart <- identical(prototype@dataPart, TRUE)
                       if(!hasDataPart) {
-                          newObject <- new(dataPartClass)
+                          if(!dataPartValue) # didn't get a .Data object
+                            newObject <- new(dataPartClass)
                           pobject <- prototype@object
                           ## small amount of head-standing to preserve
                           ## any attributes in newObject & not in pobject
@@ -1135,15 +1144,14 @@ setDataPart <- function(object, value) {
     else
         ClassDef <- getClass(cl, TRUE)
 
-    value <- elNamed(ClassDef@slots, ".Data")
+    switch(cl, ts =, matrix = , array = value <- cl,
+           value <- elNamed(ClassDef@slots, ".Data"))
     if(is.null(value)) {
         if(.identC(cl, "structure"))
             value <- "vector"
         else if((extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
             value <- cl
         else if(extends(cl, "oldClass") && isVirtualClass(cl)) {
-            if(.identC(cl, "ts"))
-                value <- cl
             ## The following warning is obsolete if S3 classes can be
             ## non-virtual--the subclass can have a prototype
 
