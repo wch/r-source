@@ -158,14 +158,19 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
 Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full custom
-Name: "html"; Description: "HTML Help Files"; Types: user full custom
-Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
+Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
+Name: "html/help"; Description: "HTML versions of Help Files"; Types: user full custom; Flags: dontinheritcheck
+Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: user full custom
+Name: "tcl/docs"; Description: "Tcl/Tk Help (Winhelp)"; Types: full custom; Flags: dontinheritcheck
+Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
+Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
+Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
+Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
-Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom
 Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
-Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
 Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 
 [Code]
@@ -371,20 +376,33 @@ sub listFiles {
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
-	} elsif (m/^doc\\html/
-		 || m/^doc\\manual\\[^\\]*\.html/
-		 || m/^library\\[^\\]*\\html/
+	} elsif (m/^library\\[^\\]*\\html/
 		 || m/^library\\[^\\]*\\CONTENTS/
 		 || $_ eq "library\\R.css") {
+	    $component = "html/help";
+	} elsif (m/^doc\\html/
+		 || m/^doc\\manual\\[^\\]*\.html/ ) {
 	    $component = "html";
+	} elsif ($_ eq "doc\\manual\\R-data.pdf"
+		 || $_ eq "doc\\manual\\R-intro.pdf") {
+	    $component = "manuals/basic";
+	} elsif ($_ eq "doc\\manual\\R-admin.pdf" 
+		 || $_ eq "doc\\manual\\R-exts.pdf"
+		 || $_ eq "doc\\manual\\R-ints.pdf"
+		 || $_ eq "doc\\manual\\R-lang.pdf") {
+	    $component = "manuals/technical";
 	} elsif ($_ eq "doc\\manual\\refman.pdf") {
-	    $component = "refman";
+	    $component = "manuals/refman";
 	} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
 	    $component = "manuals";
 	} elsif (m/^library\\[^\\]*\\latex/) {
 	    	$component = "latex";
 	} elsif (m/^library\\[^\\]*\\man/) {
 	    	$component = "Rd";
+	} elsif (m/^Tcl\\doc/) {
+	    $component = "tcl/docs";
+	} elsif (m/^Tcl\\.*chm$/) {
+	    $component = "tcl/chm";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
 	} elsif (exists($develfiles{$_})
