@@ -4020,11 +4020,14 @@ path.
 @node Perl, The Microsoft HTML Help Workshop, The Windows toolset, The Windows toolset
 @section Perl
 
-You will need the Windows port of @code{perl5}.  A package containing
-this is available from
+You will need a Windows port of @code{perl5} (but only the basic
+functionality, not any of the third-party Win32 extensions).  A package
+containing this is available from
 @url{http://www.activestate.com/Products/ActivePerl/,
 @code{www.activestate.com/@/Products/@/ActivePerl}}.  Perl is @emph{not}
-included in @file{Rtools.exe}.
+included in @file{Rtools.exe}.  Alternatives are listed at
+@url{http://win32.perl.org, @code{win32.perl.org}}: we have for example
+built R using Vanilla Perl.
 
 @strong{Beware}: you do need the @emph{Windows} port and not the Cygwin one.
 
