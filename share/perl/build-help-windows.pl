@@ -23,6 +23,7 @@ use Getopt::Long;
 use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
+use R::Dcf;
 
 fileparse_set_fstype; # Unix, in case one gets anything else.
 
@@ -64,11 +65,19 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
 
 ($pkg, $version, $lib, @mandir) = buildinit();
 $dest = $ARGV[2];
-if (!$dest) {
-    $dest = file_path($lib, $pkg);
-}
+if (!$dest) {$dest = file_path($lib, $pkg);}
 
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
+
+my $def_encoding = "unknown";
+if(-r &file_path($dest, "DESCRIPTION")) {
+    my $rdcf = R::Dcf->new(&file_path($dest, "DESCRIPTION"));
+    if($rdcf->{"Encoding"}) {
+	    $def_encoding = $rdcf->{"Encoding"};
+	    chomp $def_encoding;
+	    # print "Using $def_encoding as the default encoding\n";
+	}
+}
 
 if($opt_chm) {
     $chmdir = "../chm";
@@ -77,6 +86,7 @@ if($opt_chm) {
     }
     open_hhp($pkg);
 }
+
 build_index($lib, $dest, $version, $chmdir);
 if($opt_index){
     exit 0;
@@ -164,7 +174,6 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
 		$types .= "txt,";
-		# Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -176,7 +185,6 @@ foreach $manfile (@mandir) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
 		$types .= "html,";
-		# Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -186,7 +194,6 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
 		$types .= "latex,";
-		# Rdconv($manfile, "latex", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -195,14 +202,13 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
-		# Rdconv($manfile, "example", "", "$destfile", $pkg, $version);
 		$types .= "example,";
 		$do_example = "yes";
-		#if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
 
-	Rdconv($manfile, $types, "", "$dest", $pkg, $version) if $types ne "";
+	Rdconv($manfile, $types, "", "$dest", $pkg, $version, 
+	       $def_encoding) if $types ne "";
 	if($do_example && -f $destfile) {$exampleflag = "example";}
 
 	if($opt_chm){
