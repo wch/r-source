@@ -1553,8 +1553,10 @@ sub check_pkg {
 
     if(-d "man") {
 	$log->checking("Rd files");
+	my $def_enc = 0;
+	$def_enc = 1 if defined($description->{"Encoding"});
 
-	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\")\n";
+	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\",$def_enc)\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);

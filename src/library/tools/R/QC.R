@@ -2537,13 +2537,14 @@ function(package, lib.loc = NULL)
     if(is.null(names(db)))
         stop("Package Rd sources were installed without preserving Rd file names.\n",
              "Please reinstall using a current version of R.")
+    ## FIXME check for encoding in DESCRIPTION file
     .check_Rd_files_in_Rd_db(db)
 }
 
 ### * check_Rd_files_in_man_dir
 
 check_Rd_files_in_man_dir <-
-function(dir)
+function(dir, def_enc = FALSE)
 {
     if(!file_test("-d", dir))
         stop(gettextf("directory '%s' does not exist", dir),
@@ -2555,13 +2556,13 @@ function(dir)
     db <- lapply(Rd_files, .read_Rd_lines_quietly)
     z <- strsplit(Rd_files, "/", fixed = TRUE)
     names(db) <- sapply(z, function(x) x[length(x)])
-    .check_Rd_files_in_Rd_db(db)
+    .check_Rd_files_in_Rd_db(db, def_enc)
 }
 
 ### * .check_Rd_files_in_Rd_db
 
 .check_Rd_files_in_Rd_db <-
-function(db)
+function(db, def_enc = FALSE)
 {
     standard_keywords <- .get_standard_Rd_keywords()
     mandatory_tags <- c("name", "title", "description")
@@ -2608,7 +2609,7 @@ function(db)
         if(length(x$rest))
             files_with_likely_bad_Rd[[f]] <- x$rest
 
-        if(length(x$meta$encoding) && is.na(x$meta$encoding))
+        if(!def_enc && length(x$meta$encoding) && is.na(x$meta$encoding))
             files_with_unknown_encoding <-
                 c(files_with_unknown_encoding, f)
 
