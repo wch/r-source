@@ -3911,17 +3911,17 @@ substitute for the Java search.
 @node The Windows toolset, Function and variable index, Enabling search in HTML help, Top
 @appendix The Windows toolset
 
-If you want to build @R{} or add-on packages from source in Windows,
-you will need to collect, install and test an extensive set of tools.
-See @url{http://www.murdoch-sutherland.com/Rtools/, @code{www.murdoch-
-sutherland.com/Rtools}} for the current locations and other updates to
-these instructions.  (Most Windows users will not need to build add-on
-packages from source; see @ref{Add-on packages} for details.)
+If you want to build @R{} or add-on packages from source in Windows, you
+will need to collect, install and test an extensive set of tools.  See
+@url{http://www.murdoch-sutherland.com/Rtools/,
+@code{www.murdoch-sutherland.com/Rtools}} for the current locations and
+other updates to these instructions.  (Most Windows users will not need
+to build add-on packages from source; see @ref{Add-on packages} for
+details.)
 
-There are known problems with this toolset on Windows Vista@footnote{see
-the workaround below} and especially Vista 64@footnote{where a snapshot
-version of @file{cygwin1.dll} is required, as well as updates to some of
-the tools.}, so those are not currently supported.
+There are known problems with this toolset on Windows Vista: see
+the workaround below. (With that workaround it has been used on 32- and
+64-bit versions of Vista.)
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -3937,10 +3937,11 @@ to R-help unless you have followed all the prescriptions.}
 
 We have collected some of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer named
-@file{Rtools.exe}, available from @url{http://www.murdoch-
-sutherland.com/Rtools}. You should download and run it, choosing the
-default ``Package authoring installation'' to build add-on packages,
-or the ``full installation'' if you intend to build @R{}.
+@file{Rtools.exe}, available from
+@url{http://www.murdoch-sutherland.com/Rtools}. You should download and
+run it, choosing the default ``Package authoring installation'' to build
+add-on packages, or the ``full installation'' if you intend to build
+@R{}.
 
 You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.

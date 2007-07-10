@@ -39,7 +39,7 @@ USE_ACML_LAPACK=NO
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
-HHWDIR=C:/Program Files/HTML Help Workshop
+HHWDIR=C:/Program Files (x86)/HTML Help Workshop
 
 # Define this to enable memory profiling.
 # R_MEMORY_PROFILING=YES
