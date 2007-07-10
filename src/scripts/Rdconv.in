@@ -42,7 +42,7 @@ $OSdir = $R::Vars::OSTYPE;
 ## </NOTE>
 
 my @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
-		    "o|output:s", "os|OS=s" => \$OSdir);
+		    "o|output:s", "os|OS=s" => \$OSdir, "encoding=s");
 GetOptions (@knownoptions) || &usage();
 &R_version($name, $version) if $opt_v;
 &usage() if $opt_h;
@@ -58,6 +58,8 @@ if(defined $opt_o) {
     }
 }
 $out = 0 if $out eq "-";
+my $enc = "unknown";
+$enc = $opt_encoding if $opt_encoding;
 
 my %types_and_exts = ("txt", "",
 		      "html", ".html",
@@ -73,7 +75,7 @@ foreach my $type (keys(%types_and_exts)) {
 	if(defined $opt_o && length($opt_o) == 0) {
 	    $out .= $types_and_exts{$type};
 	}
-	Rdconv($ARGV[0], $opt_type, $opt_debug, $out, "unknown");
+	Rdconv($ARGV[0], $opt_type, $opt_debug, $out, "unknown", "", $enc);
 	$opt_type_ok = 1;
 	last;
     }
@@ -96,6 +98,7 @@ Options:
   -v, --version		print Rdconv version info and exit
   -d, --debug		turn on debugging (increase verbosity)
   -t, --type=TYPE	convert to format TYPE
+  --encoding=enc        use 'enc' as the default encoding
   -o, --output=OUT	use 'OUT' as the output file
       --os=NAME		use OS subdir 'NAME' (unix or windows)
       --OS=NAME		the same as '--os'

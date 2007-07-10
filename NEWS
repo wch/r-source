@@ -328,6 +328,9 @@ UTILITIES
 	Rdconv now renders (rather than ignores) \var{} inside \code{}
 	markup in latex conversion.
 
+	R CMD  Rdconv gains a --encoding argument to set the default
+	encoding for conversions.
+
     o   The list of CRAN mirrors now has a new (manually maintained)
         column "OK" which flags mirrors that sem to be OK, only those
         are used by chooseCRANmirror(). The now exported function
