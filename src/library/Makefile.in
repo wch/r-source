@@ -115,7 +115,10 @@ install: installdirs
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/library"
 install-strip:
-	@$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+	@$(MAKE) install
+	@if test -n "$(STRIP_LIBS)"; then \
+	  $(STRIP_LIBS) "$(DESTDIR)$(rhome)/library"/*/libs/*${SHLIB_EXT}; \
+	fi
 uninstall:
 	@echo "uninstalling packages ..."
 	@(cd "$(DESTDIR)$(rhome)/library"; \

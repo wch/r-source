@@ -594,7 +594,8 @@ make install-strip
 
 @noindent
 will install stripped executables, and on platforms where this is
-supported, stripped libraries in directories @file{lib} and @file{modules}.
+supported, stripped libraries in directories @file{lib} and
+@file{modules} and in the standard packages.
 
 @cindex Manuals, installing
 
