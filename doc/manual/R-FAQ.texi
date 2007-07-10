@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2007
-@set FAQ_DATE @value{FAQ_YEAR}-07-07
+@set FAQ_DATE @value{FAQ_YEAR}-07-10
 @set REL_YEAR 2007
 @set REL_MAJOR 2
 @set REL_MINOR 5
@@ -2372,6 +2372,8 @@ Interface to the LSF queuing system.
 @c </COMMENT>
 @item Rmdr
 R-Multifactor Dimensionality Reduction.
+@item Rmetrics
+Financial engineering and computational finance.
 @item Rmpi
 An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides an interactive R slave environment in which distributed
@@ -2492,6 +2494,8 @@ Tools for creating universal numeric fingerprints for data.
 @item USPS
 Unsupervised and Supervised methods of Propensity Score adjustment for
 bias.
+@item Umacs
+Universal MArkov Chain Sampler.
 @item UsingR
 Data sets to accompany the textbook ``Using R for Introductory
 Statistics'' by J. Verzani, 2005, Chapman & Hall/CRC.
@@ -2790,6 +2794,8 @@ Searching for optimal clustering procedure for a data set.
 Explore clustering interactively using R and GGobi.
 @item clustvarsel
 Variable selection for model-based clustering.
+@item clv
+Cluster validation techniques.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
@@ -3058,21 +3064,23 @@ facts''.  Rmetrics is an environment and software collection for
 teaching financial engineering and computational finance
 (@url{http://www.Rmetrics.org/}).
 @item fCalendar
-The Rmetrics module for ``Date, Time and Calendars''.
+The Rmetrics module for ``Date, time and calendars''.
+@item fCopulae
+The Rmetrics module for ``Dependence structures with copulae''.
 @item fEcofin
 The Rmetrics module with ``Selected economic and financial data sets''.
 @item fExtremes
-The Rmetrics module for ``Beyond the Sample, Dealing with Extreme
-Values''.
+The Rmetrics module for ``Beyond the sample, dealing with extreme
+values''.
 @item fMultivar
-The Rmetrics module for ``Multivariate Data Analysis''.
+The Rmetrics module for ``Multivariate data analysis''.
 @item fOptions
-The Rmetrics module for ``The Valuation of Options''.
+The Rmetrics module for ``The valuation of options''.
 @item fPortfolio
-The Rmetrics module for ``Pricing and Hedging of Options''.
+The Rmetrics module for ``Pricing and hedging of options''.
 @item fSeries
-The Rmetrics module for ``The Dynamical Process Behind Financial
-Markets''.
+The Rmetrics module for ``The dynamical process behind financial
+markets''.
 @item fame
 Interface for FAME time series database.
 @item far
@@ -4575,6 +4583,8 @@ Transmission/disequilibrium tests for extended marker haplotypes.
 Tensor product of arrays.
 @item tensorA
 Advanced tensors arithmetic with named indices.
+@item termstrc
+Term structure and credit spread estimation.
 @item tframe
 Time Frame coding kernel: functions for writing code that is independent
 of the way time is represented.
