@@ -3919,9 +3919,10 @@ other updates to these instructions.  (Most Windows users will not need
 to build add-on packages from source; see @ref{Add-on packages} for
 details.)
 
-There are known problems with this toolset on Windows Vista: see
-the workaround below. (With that workaround it has been used on 32- and
-64-bit versions of Vista.)
+There are known problems with this toolset on Windows Vista: see the
+workaround below. (With that workaround it has been used on 32- and
+64-bit versions of Vista, the latter with a snapshot version of
+@file{cygwin1.dll}.)
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
