@@ -153,6 +153,7 @@ endif
 	@for pkg in $(R_PKGS0); do \
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-$${pkg} || exit 1; \
 	done
+	@gzip -9f ../../library/grDevices/afm/*.afm
 	@$(CP) ../library/datasets/data/morley.tab ../../library/datasets/data
 
 rpackageindices:
