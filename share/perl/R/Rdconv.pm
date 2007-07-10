@@ -743,8 +743,8 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 0;
-    $encoding = mime_canonical_encoding($blocks{"encoding"})
-	if defined $blocks{"encoding"};
+    $encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
+    $encoding = mime_canonical_encoding($encoding) unless $encoding eq "unknown";
     $encoding = "iso-8859-1" if $encoding eq "unknown";
     print $htmlout (html_functionhead(html_striptitle($blocks{"title"}),
 				      $pkgname,
@@ -1401,8 +1401,9 @@ sub rdoc2txt { # (filename); 0 for STDOUT
 	$txtout = "STDOUT";
     }
     local $encoding = $_[1];
-    $encoding = latex_canonical_encoding($blocks{"encoding"})
-	if defined $blocks{"encoding"};
+    $encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
+    $encoding = latex_canonical_encoding($encoding) 
+	unless $encoding eq "unknown";
 
     $INDENT = 3;  # indent for \itemize and \enumerate first line
     $INDENTD = 0; # indent for \describe list first line
@@ -2520,8 +2521,9 @@ sub rdoc2latex {# (filename)
 
     my $c, $a, $blname;
     local $encoding = $_[1];
-    $encoding = latex_canonical_encoding($blocks{"encoding"})
-	if defined $blocks{"encoding"};
+    $encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
+    $encoding = latex_canonical_encoding($encoding) 
+	unless $encoding eq "unknown";
 
     local $latexout;
 
@@ -2969,8 +2971,9 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $encoding = $_[1];
-    $encoding = mime_canonical_encoding($blocks{"encoding"})
-	if defined $blocks{"encoding"};
+    $encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
+    $encoding = mime_canonical_encoding($encoding) unless $encoding eq "unknown";
+    $encoding = "iso-8859-1" if $encoding eq "unknown";
     $using_chm = 1;
     $nlink = 0;
     print $htmlout (chm_functionhead(html_striptitle($blocks{"title"}),
