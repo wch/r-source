@@ -745,6 +745,7 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
     $using_chm = 0;
     $encoding = mime_canonical_encoding($blocks{"encoding"})
 	if defined $blocks{"encoding"};
+    $encoding = "iso-8859-1" if $encoding eq "unknown";
     print $htmlout (html_functionhead(html_striptitle($blocks{"title"}),
 				      $pkgname,
 				      &html_escape_name($blocks{"name"}),
