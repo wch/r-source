@@ -23,6 +23,7 @@ use Getopt::Long;
 use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
+use R::Dcf;
 
 my $revision = ' $Rev$ ';
 my $version;
@@ -83,11 +84,20 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
 ## !!! of doing this, but trying to do it in a manner which will not
 ## !!! interfere with other things calling this besides INSTALL. JG
 $dest = $ARGV[2];
-if (!$dest) {
-    $dest = file_path($lib, $pkg);
-}
+if (!$dest) {$dest = file_path($lib, $pkg);}
 
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
+
+my $def_encoding = "unknown";
+if(-r &file_path($dest, "DESCRIPTION")) {
+    my $rdcf = R::Dcf->new(&file_path($dest, "DESCRIPTION"));
+    if($rdcf->{"Encoding"}) {
+	    $def_encoding = $rdcf->{"Encoding"};
+	    chomp $def_encoding;
+	    # print "Using $def_encoding as the default encoding\n";
+	}
+}
+
 
 build_index($lib, $dest, $version, "");
 if($opt_index){
@@ -159,7 +169,6 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
 		$types .= "txt,";
-		# Rdconv($manfile, "txt", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -171,7 +180,6 @@ foreach $manfile (@mandir) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
 		$types .= "html,";
-		# Rdconv($manfile, "html", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -181,7 +189,6 @@ foreach $manfile (@mandir) {
 	    if(fileolder($destfile, $manage)) {
 		$latexflag = "latex";
 		$types .= "latex,";
-		# Rdconv($manfile, "latex", "", "$destfile", $pkg, $version);
 	    }
 	}
 
@@ -190,14 +197,13 @@ foreach $manfile (@mandir) {
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
 		if(-f $destfile) {unlink $destfile;}
-		# Rdconv($manfile, "example", "", "$destfile", $pkg, $version);
 		$types .= "example,";
 		$do_example = "yes";
-		#if(-f $destfile) {$exampleflag = "example";}
 	    }
 	}
 
-	Rdconv($manfile, $types, "", "$dest", $pkg, $version) if $types ne "";
+	Rdconv($manfile, $types, "", "$dest", $pkg, $version, 
+	       $def_encoding) if $types ne "";
 	if($do_example && -f $destfile) {$exampleflag = "example";}
 	write if ($textflag || $htmlflag || $latexflag || $exampleflag);
 	print "     missing link(s): $misslink\n"

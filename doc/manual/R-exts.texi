@@ -385,14 +385,13 @@ Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
 
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
-should contain an @samp{Encoding} field specifying an encoding.  This is
-currently used as the encoding of the @file{DESCRIPTION} file itself and
-of the @file{R} and @file{NAMESPACE} files, and may in the future be
-taken as the encoding for other documentation (such as help files and
-vignettes) in the package.  Only encoding names @code{latin1},
-@code{latin2} and @code{UTF-8} are known to be portable.  (Do not
-specify an encoding unless one is actually needed: doing so makes the
-package @emph{less} portable.)
+should contain an @samp{Encoding} field specifying an encoding.  This
+is currently used as the encoding of the @file{DESCRIPTION} file
+itself and of the @file{R} and @file{NAMESPACE} files, and is taken as
+the default encoding of @file{.Rd} files as from @R{} 2.6.0.  Only
+encoding names @code{latin1}, @code{latin2} and @code{UTF-8} are known
+to be portable.  (Do not specify an encoding unless one is actually
+needed: doing so makes the package @emph{less} portable.)
 
 
 The optional @samp{Type} field specifies the type of the package:
@@ -3449,16 +3448,19 @@ can be put in a @file{unix} or @file{windows} subdirectory.
 @cindex encoding
 
 Rd files are text files and so it is impossible to deduce the encoding
-they are written in unless @acronym{ASCII}: files with 8-bit characters
-could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP, @emph{etc}.  So the
-@code{\encoding@{@}} directive must be used to specify the encoding if
-it is not @acronym{ASCII}.  (The @code{\encoding@{@}} directive must be
-on a line by itself, and in particular one containing no
-non-@acronym{ASCII} characters.)  This is used when creating the header
-of the @HTML{} conversion (if not present, for back-compatibility the
-processing to @HTML{} assumes that the file is in Latin-1 (ISO-8859-1))
-and to make a comment in the examples file.  It is also used to indicate
-to @LaTeX{} how to process the file (see below).
+they are written in unless @acronym{ASCII}: files with 8-bit
+characters could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP,
+@emph{etc}.  So the @code{\encoding@{@}} directive must be used to
+specify the encoding if it is not @acronym{ASCII}.  (The
+@code{\encoding@{@}} directive must be on a line by itself, and in
+particular one containing no non-@acronym{ASCII} characters.  As from
+@R{} 2.6.0 the encoding declared in the @file{DESCRIPTION} file will
+be used if none is declared in the file.)  This is used when creating
+the header of the @HTML{} conversion (if not present, for
+back-compatibility the processing to @HTML{} assumes that the file is
+in Latin-1 (ISO-8859-1)) and to add comments to the text and examples
+conversions.  It is also used to indicate to @LaTeX{} how to process
+the file (see below).
 
 Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and even
 symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},

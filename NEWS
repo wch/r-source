@@ -389,6 +389,12 @@ INSTALLATION
 	packages.
 
 
+PACKAGE INSTALLATION
+
+    o	The encoding declared in the DESCRIPTION file is now used as
+	the default encoding for .Rd files.
+
+
 BUG FIXES
 
     o	Internally generic primitives no longer dispatch S4 methods on

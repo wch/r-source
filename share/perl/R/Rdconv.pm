@@ -67,24 +67,31 @@ $MAXLOOPS = 10000;
 my $EDASH = "escaped-dash";	# maybe something better?
 my $ECMD = "escaped-command";	# maybe something better?
 
+
 ## In addition to \code, the following commands are special: dashes in
 ## their arguments need to be left alone (otherwise, e.g. \samp{--no}
 ## would give '-no' when converted to text).
 my @special_commands = ("command", "env", "file", "kbd", "option",
 			"samp", "url", "var");
 
-sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
+sub isNonASCII {
+    return $_[0] =~ /[^A-Za-z0-9[:punct:][:space:]]/
+}
+
+sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version, def_encoding)
 
     $Rdname = $_[0];
     open(my $rdfile, "<$Rdname") or 
 	die "Rdconv(): Couldn't open '$Rdname': $!\n";
-    ## This was not previously being closesd: now closed when
+    ## This was not previously being closed: now closed when
     ## goes out of scope.
 
     $type = $_[1];
     $debug = $_[2];
     $pkgname = $_[4];
     $version = $_[5];
+    $def_encoding = $_[6];
+    $def_encoding = "unknown" unless $def_encoding;
 
     if($type !~ /,/) {
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one
@@ -160,6 +167,9 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
     }
     printf STDERR "-- read file '%s';\n",$_[0] if $debug;
 
+    ## don't want encoding unless non-ASCII
+    $def_encoding = "unknown" unless &isNonASCII($complete_text);
+
     macro_subs();
     mark_brackets();
     ##HARD Debug:print "$complete_text\n"; exit;
@@ -191,12 +201,12 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname, version)
 	    warn "\n** Rdconv --type '..' : no valid type specified\n";
 	}
 
-	rdoc2html($htmlfile)	if $type =~ /html/i;
-	rdoc2txt($txtfile)	if $type =~ /txt/i;
+	rdoc2html($htmlfile, $def_encoding)	if $type =~ /html/i;
+	rdoc2txt($txtfile, $def_encoding)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/;
 	rdoc2Ssgm($Sdfile)	if $type =~ /Ssgm/;
-	rdoc2latex($latexfile)	if $type =~ /tex/i;
-	rdoc2chm($chmfile)	if $type =~ /chm/i;
+	rdoc2latex($latexfile, $def_encoding)	if $type =~ /tex/i;
+	rdoc2chm($chmfile, $def_encoding)	if $type =~ /chm/i;
 
 	while($text =~ /$EPREFORMAT($ID)/){
 	    my $id = $1;
@@ -725,7 +735,7 @@ sub striptitle { # text
 sub rdoc2html { # (filename) ; 0 for STDOUT
 
     local $htmlout;
-    local $encoding = "iso-8859-1";
+    local $encoding = $_[1];
     if($_[0]) {
 	$htmlout = new FileHandle;
 	open $htmlout, "> $_[0]";  # will be closed when goes out of scope
@@ -1389,7 +1399,7 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     } else {
 	$txtout = "STDOUT";
     }
-    local $encoding = "unknown";
+    local $encoding = $_[1];
     $encoding = latex_canonical_encoding($blocks{"encoding"})
 	if defined $blocks{"encoding"};
 
@@ -2508,7 +2518,7 @@ sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 sub rdoc2latex {# (filename)
 
     my $c, $a, $blname;
-    local $encoding = "unknown";
+    local $encoding = $_[1];
     $encoding = latex_canonical_encoding($blocks{"encoding"})
 	if defined $blocks{"encoding"};
 
@@ -2957,6 +2967,7 @@ sub rdoc2chm { # (filename) ; 0 for STDOUT
     } else {
 	$htmlout = "STDOUT";
     }
+    $encoding = $_[1];
     $encoding = mime_canonical_encoding($blocks{"encoding"})
 	if defined $blocks{"encoding"};
     $using_chm = 1;
