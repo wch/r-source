@@ -201,9 +201,9 @@ setAs <-
         args <- formalArgs(def)
         if(!is.na(match("strict", args))) args <- args[-match("strict", args)]
         if(length(args) == 1)
-            def <- substituteFunctionArgs(def, "from")
+            def <- substituteFunctionArgs(def, "from", functionName = "coerce")
         else if(length(args) == 2)
-            def <- substituteFunctionArgs(def, c("from", "to"))
+            def <- substituteFunctionArgs(def, c("from", "to"), functionName = "coerce")
         else stop(gettextf("'as' method must have one or two arguments, plus optional 'strict'; got (%s)",
                            paste(formalArgs(def), collapse = ", ")),
                   domain = NA)

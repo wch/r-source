@@ -734,7 +734,7 @@ listFromMlist <-
 ## Define a trivial version of asMethodDefinition for bootstrapping.
 ## The real version requires several class definitions as well as
 ## methods for as<-
-asMethodDefinition <- function(def, signature = list(), sealed = FALSE) {
+asMethodDefinition <- function(def, signature = list(), sealed = FALSE, functionName = character()) {
   if(is.primitive(def))
     def
   else {

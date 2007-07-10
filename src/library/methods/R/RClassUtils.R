@@ -1389,19 +1389,23 @@ newClassRepresentation <- function(...) {
         cl
 }
 
-substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent = FALSE) {
+substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent = FALSE, functionName = "a function") {
     if(!identical(args, newArgs)) {
+        if( !missing(functionName) )
+            functionName = paste("for", functionName)
+        
         n <- length(args)
         if(n != length(newArgs))
-            stop(gettextf("trying to change the argument list of a function with %d arguments to have arguments (%s)",
-                          n, paste(newArgs, collapse = ", ")),
+            stop(gettextf("trying to change the argument list of %s with %d arguments to have arguments (%s)",
+                          functionName, n, paste(newArgs, collapse = ", ")),
                  domain = NA)
         bdy <- body(def)
         ## check for other uses of newArgs
         checkFor <- newArgs[is.na(match(newArgs, args))]
         locals <- all.vars(bdy)
         if(length(checkFor) > 0 && any(!is.na(match(checkFor, locals))))
-            stop(gettextf("get rid of variables in definition (%s); they conflict with the needed change to argument names (%s)",
+            stop(gettextf("get rid of variables in definition %s (%s); they conflict with the needed change to argument names (%s)",
+                          functionName,
                           paste(checkFor[!is.na(match(checkFor, locals))], collapse = ", "),
                           paste(newArgs, collapse = ", ")), domain = NA)
         ll <- vector("list", 2*n)
@@ -1413,7 +1417,8 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         body(def, envir = environment(def)) <- substituteDirect(bdy, ll)
         if(!silent) {
             msg <-
-                gettextf("arguments in definition changed from (%s) to (%s)",
+                gettextf("arguments in definition %s changed from (%s) to (%s)",
+                         functionName,
                          paste(args, collapse = ", "),
                          paste(newArgs, collapse = ", "))
             message(strwrap(msg), domain = NA)
@@ -1423,12 +1428,10 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 }
 
 .makeValidityMethod <- function(Class, validity) {
-    if(is.null(validity)) {
-    }
-    else {
+    if(!is.null(validity)) {
         if(!is(validity, "function"))
             stop(gettextf("a validity method must be a function of one argument, got an object of class \"%s\"", class(validity)), domain = NA)
-        validity <- substituteFunctionArgs(validity, "object")
+        validity <- substituteFunctionArgs(validity, "object", functionName = paste("validity method for class", Class))
     }
     validity
 }

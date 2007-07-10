@@ -313,6 +313,12 @@ setMethod <-
   function(f, signature = character(), definition, where = topenv(parent.frame()), valueClass = NULL,
            sealed = FALSE)
 {
+
+    ischar <- try(is.character(f), silent = TRUE)
+    funcName = if (inherits(ischar, "try-error")) deparse(substitute(f)) else f
+    if(is(funcName, "standardGeneric") || is(funcName, "MethodDefinition"))
+       funcName = funcName@generic
+    
     ## Methods are stored in metadata in database where.  A generic function will be
     ## assigned if there is no current generic, and the function is NOT a primitive.
     ## Primitives are dispatched from the main C code, and an explicit generic NEVER
@@ -447,7 +453,7 @@ setMethod <-
     nSig <- .getGenericSigLength(fdef, fenv, TRUE)
     signature <- .matchSigLength(signature, fdef, fenv, TRUE)
     margs  <- (fdef@signature)[1:length(signature)]
-    definition <- asMethodDefinition(definition, signature, sealed)
+    definition <- asMethodDefinition(definition, signature, sealed, funcName)
     if(is(definition, "MethodDefinition"))
       definition@generic <- fdef@generic
     whereMethods <- .getOrMakeMethodsList(f, where, fdef)
