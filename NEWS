@@ -348,6 +348,9 @@ UTILITIES
         getCRANmirrors() can be used to get all known mirrors or only
         the ones that are OK.
 
+    o	R CMD SHLIB gains arguments --clean and --preclean to clean up
+	intermediate files after and before building.
+
 
 C-LEVEL FACILITIES
 
@@ -411,6 +414,13 @@ PACKAGE INSTALLATION
     o	install.packages() on a Unix-alike now updates
 	doc/html/packages.html only if packages are installed to
 	.Library (by that exact name).
+
+    o	R CMD INSTALL --clean now cleans up objects in subdirectories
+	of src as well as in source itself.
+
+	R CMD INSTALL --preclean cleans up the sources after a
+	previous installation (as if that had used --clean) before
+	attempting to install.
 
 
 BUG FIXES

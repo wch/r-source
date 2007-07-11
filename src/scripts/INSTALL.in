@@ -32,7 +32,8 @@ Options:
 			(if any)
       --configure-vars=VARS
                         set variables for the configure script (if any)
-  -c, --clean		remove all files created during installation
+  -c, --clean		remove files created during installation
+  --preclean		remove files created during a previous run
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -179,6 +180,7 @@ do_cleanup_tmpdir () {
 pkgs=
 lib=
 clean=false
+preclean=false
 debug=false
 build_text=true
 build_html=true
@@ -200,6 +202,7 @@ lazy_data=false
 lock=true
 libs_only=false
 tar_up=false
+shargs=
 
 while test -n "${1}"; do
   ##DBG echo "   in 'R INSTALL' --arg checking-- \$1 = '${1}'" # Debugging
@@ -209,7 +212,13 @@ while test -n "${1}"; do
     -v|--version)
       echo "${version}"; do_cleanup_tmpdir; exit 0 ;;
     -c|--clean)
-      clean=true ;;
+      clean=true
+      shargs="${shargs} ${1}"
+      ;;
+    --preclean)
+      preclean=true 
+      shargs="${shargs} --preclean"
+      ;;
     -d|--debug)
       debug=true ;;
     --with-package-versions)
@@ -467,6 +476,9 @@ do_install_source () {
   Type=`get_dcf_field Type DESCRIPTION`
   if test "$Type" = "Frontend" ; then
     message "Installing *Frontend* package '${pkg_name}' ..."
+    if ${preclean}; then
+      ${MAKE} clean
+    fi
     if ${use_configure} && test -x ./configure ; then
       eval ${configure_vars} ./configure ${configure_args}
       if test ${?} -ne 0; then
@@ -536,6 +548,22 @@ do_install_source () {
     fi
   fi
 
+  if ${preclean}; then
+    if test -d src; then
+      cd src
+      if test -f Makefile; then
+        ${MAKE} clean
+      else
+	## we will be using SHLIB --preclean
+        rm -f *@SHLIB_EXT@
+      fi
+      cd ..
+    fi
+    if test -x ./cleanup ; then
+      ./cleanup
+    fi
+  fi
+
   if ${use_configure} && test -x ./configure ; then
     eval ${configure_vars} ./configure ${configure_args}
     if test ${?} -ne 0; then
@@ -600,7 +628,7 @@ do_install_source () {
 	    arch=`echo ${R_ARCH} | ${SED} -e 's+^/++'`
 	    message "arch - ${arch}"
 	  fi
-	  sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
+	  sh "${R_HOME}/bin/SHLIB" ${shargs} -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
 	    && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs${R_ARCH}" \
 	    || has_error=true;
 	  chmod 755 "${R_PACKAGE_DIR}/libs${R_ARCH}/"*
@@ -915,8 +943,8 @@ do_install_source () {
       if test -f Makefile; then
         ${MAKE} clean
       else
-        rm -rf .libs _libs
-        rm -f *.o *@SHLIB_EXT@
+	## we used SHLIB --clean
+        rm -f *@SHLIB_EXT@
       fi
       cd ..
     fi
