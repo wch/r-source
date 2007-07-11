@@ -2504,7 +2504,7 @@ Title: Italian Translations for R 2.2.1
 Description: Italian Translations for R 2.2.1
 Author: The translators
 Maintainer: Some Body <somebody@@some.where.net>
-Licence: GPL Version 2 or later.
+License: GPL Version 2 or later.
 @end example
 
 @node Services,  , Package types, Creating R packages
