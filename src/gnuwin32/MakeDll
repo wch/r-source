@@ -81,6 +81,9 @@ else
 $(DLLNAME).dll : $(OBJS) $(RCOBJ)
 endif
 
+shlib-clean:
+	@$(RM) -f $(DLLNAME)_res.rc $(OBJS) $(RCOBJ) *.d Makedeps
+
 # Dependencies
 CXXSOURCES1=$(wildcard -f *.cc)
 CXXSOURCES2=$(wildcard -f *.cpp)

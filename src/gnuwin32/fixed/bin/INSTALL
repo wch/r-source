@@ -74,7 +74,7 @@ sub Cleanup {
 }
 
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
-		    "clean|c", "docs:s",
+		    "clean|c", "preclean", "docs:s",
 		    "with-package-versions",
 		    "use-zip", "use-zip-data", "use-zip-help",
 		    "auto-zip", "build", "fake", "unsafe");
@@ -344,6 +344,7 @@ foreach $pkg (@ARGV){
 	$dpkg = $library. "/" . $decpkgname;
 	# if exists, move existing installation to $lockdir
 	system("mv $dpkg $lockdir") if ($safe && -d $dpkg);
+	system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_preclean);
 
 	$description = new R::Dcf("$pkgdir/$pkgname/DESCRIPTION");
 
@@ -519,7 +520,8 @@ Then optionally pack the installed package into a zip file.
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
-  -c, --clean		remove all files created during installation
+  -c, --clean		remove files created during installation
+  --preclean		remove files created during a previous run
 
   -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB

@@ -62,7 +62,7 @@ pkgfake-%:
 
 
 pkgclean-%:
-	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
+	@$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGD)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:

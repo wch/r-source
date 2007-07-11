@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000-2006 R Development Core Team
+# Copyright (C) 2000-2007 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 
 my $debug, $dllname="", $first="";
+my $clean=0, $preclean=0;
 
 my @cfsrcs, @csrcs, @cxxsrcs, @libs, $item;
 while(@ARGV > 0) {
@@ -43,6 +44,10 @@ while(@ARGV > 0) {
     R_version($name, $version) if $item eq "-v" || $item eq "--version";
     if ($item eq "-d" || $item eq "--debug") {
 	$debug = "DEBUG=T"; 
+    } elsif ($item eq "-c" || $item eq "--clean") {
+	$clean = 1;
+    } elsif ($item eq "--preclean") {
+	$preclean = 1;
     } elsif ($item eq "-o") {
 	$dllname = shift (@ARGV);
 	$dllname  =~ s/\.dll$//;
@@ -94,7 +99,13 @@ if (-r "$HOME/.R/Makevars.win32") {
     $makefiles="$makefiles -f \"$HOME/.R/Makevars\"";
 }
 
+if($preclean) {
+    system("make $makefiles RHOME=$R_HOME $debug DLLNAME=$dllname CSOURCES='$csrcs' FSOURCES='$fsrcs' CXXSOURCES='$cxx' FCSOURCES='$fcsrcs' MSOURCES='$msrcs' OBJ= PKG_LIBS2='$pkg_libs' shlib-clean");
+}
 system("make $makefiles RHOME=$R_HOME $debug DLLNAME=$dllname CSOURCES='$csrcs' FSOURCES='$fsrcs' CXXSOURCES='$cxx' FCSOURCES='$fcsrcs' MSOURCES='$msrcs' OBJ= PKG_LIBS2='$pkg_libs'");
+if($clean) {
+    system("make $makefiles RHOME=$R_HOME $debug DLLNAME=$dllname CSOURCES='$csrcs' FSOURCES='$fsrcs' CXXSOURCES='$cxx' FCSOURCES='$fcsrcs' MSOURCES='$msrcs' OBJ= PKG_LIBS2='$pkg_libs' shlib-clean");
+}
 
 
 sub usage {
@@ -109,8 +120,10 @@ is determined from the first source or object file.
 Options:
   -d, --debug           build a debug DLL
   -h, --help		print short help message and exit
-  -o, --output=LIB	use LIB as the name for the DLL
   -v, --version		print version info and exit
+  -o, --output=LIB	use LIB as the name for the DLL
+  -c, --clean		remove files created during compilation
+  --preclean		remove files created during a previous run
 
 Report bugs to <r-bugs\@r-project.org>.
 END
