@@ -88,7 +88,9 @@ lfactorial(x)
 \seealso{
   \code{\link{Arithmetic}} for simple, \code{\link{sqrt}} for
   miscellaneous mathematical functions and \code{\link{Bessel}} for the
-  real Bessel functions.
+  real Bessel functions.  Note that \code{\link{gammaCody}(x)} is
+  considerably faster than \code{gamma(x)} but slightly less accurate
+  and (potentially) less reliable.
 
   For the incomplete gamma function see \code{\link{pgamma}}.
 }
