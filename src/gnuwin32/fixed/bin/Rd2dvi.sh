@@ -14,7 +14,7 @@ version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
 Copyright (C) 2000-2006 The R Core Development Team.
-This is free software; see the GNU General Public Licence version 2
+This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty." 
 
 usage="Usage: R CMD Rd2dvi [options] files
