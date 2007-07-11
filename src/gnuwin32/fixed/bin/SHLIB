@@ -11,8 +11,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
 # General Public License for more details.
 #
-# A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
+# A copy of the GNU General Public License can be obtained by
 # writing to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301  USA.
 
