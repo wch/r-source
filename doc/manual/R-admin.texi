@@ -3920,9 +3920,8 @@ to build add-on packages from source; see @ref{Add-on packages} for
 details.)
 
 There are known problems with this toolset on Windows Vista: see the
-workaround below. (With that workaround it has been used on 32- and
-64-bit versions of Vista, the latter with a snapshot version of
-@file{cygwin1.dll}.)
+workaround below. (With that workaround it has been used on both 32- and
+64-bit versions of Vista.)
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -4030,7 +4029,7 @@ included in @file{Rtools.exe}.  Alternatives are listed at
 @url{http://win32.perl.org, @code{win32.perl.org}}: we have for example
 built R using Vanilla Perl.
 
-@strong{Beware}: you do need the @emph{Windows} port and not the Cygwin one.
+@strong{Beware}: you do need a @emph{Windows} port and not the Cygwin one.
 
 @node The Microsoft HTML Help Workshop, LaTeX, Perl, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
