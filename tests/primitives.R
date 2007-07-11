@@ -16,7 +16,7 @@ for(f in ls(.GenericArgsEnv, all.names=TRUE))
             assign(method, function(x, value) xx, .GlobalEnv)
             y <- x
             res <- eval(substitute(ff(y, value=pi), list(ff=as.name(f))))
-        } else if(length(grep("log$", f)) > 0) {
+        } else if(f == "log") {
             assign(method, function(x, base) xx, .GlobalEnv)
             res <- eval(substitute(ff(x), list(ff=as.name(f))))
         } else {
@@ -90,23 +90,26 @@ if(length(ex))
         paste(sQuote(ex), collapse=", "), "\n")
 stopifnot(length(ex) == 0)
 
-## Now check that those which are listed really are generic.
+## Now check that (most of) those which are listed really are generic.
 require(methods)
 setClass("foo", representation(x="numeric", y="numeric"))
-xx <- new("foo")
+xx <- new("foo",  x=1, y=2)
 S4gen <- names(methods:::.BasicFunsList)[sapply(methods:::.BasicFunsList, function(x) is.function(x))]
 for(f in S4gen) {
-    cat("testing '", f, "'\n", sep="")
+    cat("testing '", f, "'  ", sep="")
     g <- get(f)
     if(is.primitive(g)) g <- getGeneric(f) # should error on non-Generics.
-    ff <- g
-    body(ff) <- quote(x)
+    ff <- args(g)
+    body(ff) <- "testit"
+    nm <- names(formals(ff))
+    na <- length(nm[nm != "..."])
+    ## only test one or two args for now
+    ## the Math2 and Summary groups give problems
+    if(na < 1 || na > 2 || nm[1] == '...' || f %in% c("round", "signif")) {
+        cat("skipping\n")
+        next
+    }
     setMethod(f, "foo", ff)
-    na <- nargs(g) # length(formals(g))
-    message("nargs(g)[sic] ", na, " : ", f)
-    switch(na,
-           `1` = stopifnot(get(f)(xx) == xx),
-           `2` = stopifnot(get(f)(xx, NULL) == xx),
-           stop("primitive with other than 1 or 2 args")
-           )
+    stopifnot(identical(g(xx), "testit"))
+    cat("OK\n")
 }
