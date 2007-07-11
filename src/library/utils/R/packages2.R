@@ -312,7 +312,10 @@ install.packages <-
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
                                normalizePath(tmpd)), "\n", sep = "")
-        link.html.help(verbose = TRUE)
+        ## update packages.html on Unix only if .Library was installed into
+        libs_used <- unique(update[, 2])
+        if(.Platform$OS.type == "unix" && .Library %in% libs_used)
+            link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()

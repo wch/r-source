@@ -397,6 +397,10 @@ PACKAGE INSTALLATION
     o	The encoding declared in the DESCRIPTION file is now used as
 	the default encoding for .Rd files.
 
+    o	install.packages() on a Unix-alike now updates
+	doc/html/packages.html only if packages are installed to
+	.Library (by that exact name).
+
 
 BUG FIXES
 
