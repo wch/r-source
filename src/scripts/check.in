@@ -627,9 +627,11 @@ foreach my $pkg (@ARGV) {
 		    }
 		    ## There could still be some important warnings that
 		    ## we'd like to report.  For the time being, start
-		    ## with compiler warnings about non ISO C code (Or
-		    ## at least, what looks like it.)  In theory, we
-		    ## should only do this when using GCC ...
+		    ## with compiler warnings about non ISO C code (or
+		    ## at least, what looks like it), and also include
+		    ## warnings resulting from the const char * CHAR()
+		    ## change in R 2.6.0.  (In theory, we should only do
+		    ## this when using GCC ...)
 		    @lines = &read_lines($out)
 			unless($opt_install eq "check");
 		    my $warn_re =
@@ -637,6 +639,7 @@ foreach my $pkg (@ARGV) {
 					 "^Warning:",
 					 ": warning: .*ISO C",
 					 ": warning: implicit declaration of function",
+					 ": warning: .* discards qualifiers from pointer target type",
 					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
 
