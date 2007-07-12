@@ -741,6 +741,9 @@ the extra files into your intended @R{} source directory, e.g.
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
 will call this directory @var{R_HOME} below.
 
+To avoid warnings you may want to set the environment variable
+@env{CYGWIN} to @samp{nodosfilewarning}.
+
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
 
