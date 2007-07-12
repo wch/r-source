@@ -2,6 +2,8 @@
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
 
+.PHONY: shlib-clean
+
 $(SHLIB): $(OBJECTS)
 	$(SHLIB_LINK) -o $@ $(OBJECTS) $(ALL_LIBS)
 
